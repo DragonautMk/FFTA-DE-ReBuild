@@ -34,6 +34,8 @@ buy back sold things on shop
 
 remove debuff from prison
 
+more detailed shop with effect shown
+
 Long term:
 
 Extract data from FFTA2
