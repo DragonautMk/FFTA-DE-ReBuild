@@ -22,11 +22,11 @@ termination of another owner's process or changing another thread's goal state.
 
 ### U31-P0-UPSTREAM-AUDIT
 
-- State: suspended
+- State: active
 - Outcome: partial
-- Verified: U31-01..12 reports; U31-02 EUR and USA 7/4 lists paged by fork core; USA early first request ineffective. Upstream EUR adapter recognized copied fields. U31-03/Party proposals drafted; primary model unknown.
-- Missing: U31-02 early readiness cause, upstream redraw, GUI drag/replay and native; U31-03 GUI/approval and partial geometry; Party approval/device; remaining audit and U31-07 decisions/tests.
-- Resume: user requested upstream TODO; runtime proposals await specific approval. Do not repeat accepted EUR/USA wheel baselines; GUI and native remain distinct.
+- Verified: U31-01..12 reports; U31-02 candidate: 6 replay/5 core tests, exact USA 529-frame harness, old binary identity refused. Decisions: upstream-audit/U31-approved-decisions.md.
+- Missing: U31-02 event ownership, fresh app recording/verification, EUR, input contention, GUI/native/cache; menu fix and partial reveal, Party device, autosave and other audit. Approval is not acceptance.
+- Resume: isolated U31-02 candidate `/tmp/u31-replay-repair-R7vMxO/worktree`; patch/logs `target/u31-shop-replay-repair-B9AOtX/`. Complete missing gates; do not repeat passed harness.
 
 ### ENGLISH-FIRST-PROJECT
 
@@ -229,9 +229,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: U31-P0-UPSTREAM-AUDIT partial; U31-02 USA wheel baseline compared.
-- Last verified result: after settling, USA 7/4 list paged 0→3→0; early first input ineffective.
-- Remaining work: early readiness, GUI drag/replay, upstream redraw and other audit.
-- Errors or blockers: early assertion failed; cleanup rejects U31; primary model unknown.
-- Next action: select a missing criterion; preserve failed early-input evidence.
-- References: `docs/development/upstream-audit/U31-02-scrollbars.md`.
+- Task: U31-P0-UPSTREAM-AUDIT partial; approved U31-02 replay candidate in isolated checkout.
+- Last verified result: 6 replay/5 core tests pass; USA endpoint matches parser/dispatch harness; old binary identity refused.
+- Remaining work: semantic-event ownership, new app recording/verify, EUR, GUI/native/cache and regressions.
+- Errors or blockers: pending semantic event observed; MinGW/Xvfb unavailable in PATH; no Windows validation.
+- Next action: trace event lifetime and test replay-to-live ownership; preserve existing candidate and prior results.
+- References: `docs/development/upstream-audit/U31-02-shop-category-replay-proposal.md`, `target/u31-shop-replay-repair-B9AOtX/`.

@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "compare-nonadjacent-usa-shop-recording",
+  "title": "Compare nonadjacent USA shop recording replay",
+  "kind": "docs",
+  "platforms": [
+    "Windows GNU under Wine/Xvfb and Linux interpreter replay model"
+  ],
+  "changes": [
+    "Record a nonadjacent USA shop category change and compare key-only against modeled semantic replay."
+  ],
+  "validation": [
+    "The real 411-frame recording contains mouse:1028 and verifier rejects it. Key-only replay differed from the captured endpoint; modeled-event replay matched the recorded serialized state and clock. Protected input hashes unchanged."
+  ],
+  "limitations": [
+    "Synthetic pointer movement and click were combined; modeled replay bypassed the parser and dispatcher. No actual successful application replay, native Windows, Android or broad category coverage.",
+    "Managed cleanup rejects U31 units; private diagnostic evidence remains isolated."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-02-scrollbars.md",
+    "docs/development/upstream-audit/U31-02-shop-category-replay-proposal.md"
+  ],
+  "references": []
+}

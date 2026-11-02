@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "reproduce-wine-action-menu-miss",
+  "title": "Reproduce off-panel action-menu click under Wine",
+  "kind": "docs",
+  "platforms": [
+    "Windows GNU build under Wine, Xvfb and Vulkan llvmpipe"
+  ],
+  "changes": [
+    "Record an isolated application-window click and no-click control for the recognized action-menu miss."
+  ],
+  "validation": [
+    "Actual XTest click at (3,3) generated four frames of A and opened the movement grid; the no-click control kept the menu. Both recordings began at identical state/frame/clock and individually passed final-state/clock replay verification; ROM, original save, snapshot and executable hashes unchanged."
+  ],
+  "limitations": [
+    "Control and click runs had different durations; exact window-event frame was not independently captured. One EUR scene, no partial-reveal event, patched build or native Windows. First control script failed and its incomplete recording was retained.",
+    "Managed cleanup rejects non-rom-data U31 units; evidence and the interrupted control remain isolated."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-03-panel-visual-fixes.md",
+    "docs/development/upstream-audit/U31-03-recognized-menu-miss-proposal.md"
+  ],
+  "references": [
+    "docs/ffta_action_frame_width.md"
+  ]
+}

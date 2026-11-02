@@ -30,6 +30,10 @@ Divergent save form to accept custom things added in this project
 
 Preferred save and units (up to original slots) In order to keep save compatibility in future changed content must be regulated. Mission, item races and everithing must controller when exporting to original save file.
 
+buy back sold things on shop
+
+remove debuff from prison
+
 Long term:
 
 Extract data from FFTA2

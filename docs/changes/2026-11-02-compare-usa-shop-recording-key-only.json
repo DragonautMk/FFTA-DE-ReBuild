@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "compare-usa-shop-recording-key-only",
+  "title": "Compare key-only replay of a USA shop recording",
+  "kind": "docs",
+  "platforms": [
+    "Linux interpreter replay model of Wine recording"
+  ],
+  "changes": [
+    "Compare the actual USA shop recording with and without a modeled category event while preserving the original input."
+  ],
+  "validation": [
+    "Both variants reproduced all 407 serialized states identically and matched the recorded end state and clock; recording inputs, copied ROM, states and manifest hashes unchanged."
+  ],
+  "limitations": [
+    "The observed category change was adjacent and included Right; the actual parser still rejects 1025, and the model bypassed that parser. No claim for nonadjacent transitions, host queues, native or GUI replay.",
+    "Managed cleanup rejects U31 units; isolated evidence remains."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-02-scrollbars.md",
+    "docs/development/upstream-audit/U31-02-shop-category-replay-proposal.md"
+  ],
+  "references": []
+}

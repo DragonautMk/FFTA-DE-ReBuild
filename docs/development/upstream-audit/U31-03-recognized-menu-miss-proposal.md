@@ -24,9 +24,10 @@ The evidence is one EUR action menu. The isolated fork-core model observed a
 click outside the layout queue A and change the subsequent state relative to a
 no-click control; it did not deliver a window event. Upstream's background
 confirmation guard blocks a recognized-menu miss, but its full recognizers and
-coordinate transforms differ and were not run on the same scene. A real GUI
-reproduction remains a pre-implementation evidence gate; do not label the
-partial-reveal case fixed by this proposal.
+coordinate transforms differ and were not run on the same scene. A later [Wine GUI baseline](U31-03-panel-visual-fixes.md#follow-up-isolated-wine-gui-click-and-no-click-control)
+reproduced an off-panel click opening Move, with a no-click control and two
+verified recordings. This one baseline does not establish event-frame
+attribution or the partial-reveal behavior; do not label either fixed.
 
 ## Candidate change and boundaries
 
@@ -100,3 +101,7 @@ Stop if a reliable owned GUI setup, stable frame/event attribution, menu
 ownership or any preserved input path cannot be demonstrated. A successful unit
 would address only recognized-menu misses, leaving the partial-reveal and
 visual-geometry criteria open.
+
+The Wine GUI baseline above supplies one positive reproduction and a no-click
+control; exact event-frame attribution, a changed-build comparison and all
+other acceptance gates remain open. The proposal remains unapproved.

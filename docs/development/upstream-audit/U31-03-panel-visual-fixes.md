@@ -305,3 +305,79 @@ The managed cleanup helper rejected this U31 unit because its accepted scope is
 A separate [recognized-menu miss proposal](U31-03-recognized-menu-miss-proposal.md)
 sets out the bounded candidate change and its GUI, replay and regression gates.
 It remains unapproved and does not close the partial-reveal or geometry work.
+
+## Follow-up: isolated Wine GUI click and no-click control
+
+On 2026-11-02 a new isolated Windows GNU release build of the current fork
+was exercised under Wine, a private Xvfb display and Vulkan llvmpipe. The
+existing EUR action-menu ROM, cartridge save and snapshot were copied through
+`debug-session create --interp`; their original hashes and the test executable
+hash were unchanged. This is Wine/X11 with a software Vulkan adapter, not
+native Windows or a physical mouse. The build completed without warnings.
+
+In a snapshot-relative recording, the actual window showed the action menu with
+Move selected. An XTest left click at client coordinate `(3,3)`, visibly far
+outside that menu, was the only injected input. The next screenshot showed the
+movement grid. The recording contains neutral `0x3ff`, then `0x3fe` at
+relative frame 132 through 135, then neutral. It completed normally after 213
+frames; `debug-record verify` replayed it successfully with matching final
+serialized-state hash and guest clock. The exact window-event frame relative
+to the key latch was not independently captured, and no comparison against a
+patched build was made.
+
+A second isolated session used the same binary and seed. Its recording started
+at the same guest frame and clock with an identical starting-state hash; no
+input was injected, and its screenshot still showed the action menu. Its
+recording contains only neutral keys, completed after 194 frames and passed
+its own final-state/clock verification. The differing lengths mean these are
+not a matched-frame full-state comparison. Together the screenshots and input
+records establish a concrete Wine GUI reproduction for this one recognized
+menu and off-panel point, not behavior during the partial reveal or in other
+scenes or regions.
+
+The test first attempted to start Xvfb inside the sandbox; listener creation
+failed and no GUI started. A private Xvfb could be started with the required
+socket permission. The first no-click control script then failed with a
+`NameError`; its X connection closed, the owned supervisor PID was absent on
+inspection, and its recording stayed incomplete. The corrected control ran in
+a new session and prefix. Only the test-owned Xvfb servers were terminated after their sessions closed;
+the incomplete control and its logs were retained. `target/u31-menu-gui-wRiQQ9/` contains
+the isolated executables, configurations, recordings, screenshots, logs and
+input-hash receipts and must not be committed or packaged. The GUI test does
+not approve a runtime change; compare any selected fix against this baseline
+and separately address partial-reveal ownership and regression criteria.
+
+Managed cleanup rejected the U31 directory because it accepts only
+`target/rom-data-*`; its evidence remains isolated.
+
+## Follow-up: matched-frame comparison of the GUI recordings
+
+An isolated Linux interpreter harness loaded the identical raw starting state
+from the two completed Wine recordings above and applied their recorded key
+masks at the recorded relative frames. It checked that the input files contained
+only the documented neutral/A/neutral sequence and no semantic mouse events.
+At 194 completed frames, the no-click machine's serialized state exactly
+matched its recording's actual end state; continuing the clicked machine to
+213 frames likewise reproduced that recording's actual end state. The input
+recordings, copied ROM and state files retained their hashes. This supplies an
+independent matched-frame comparison without reopening a window.
+
+The two serialized states and clocks were equal through 132 completed frames,
+immediately before the recorded A latch at relative frame 132. After the next
+completed frame the states differed. At the common 194-frame boundary the
+states remained different; guest clocks differed by two cycles. The no-click
+end-state hash was the one independently reported by its original verifier.
+This connects the different GUI results to the captured input timeline, but
+it still does not independently timestamp the X window event itself or prove
+which earlier host recognizer branch handled it. The headless replay did not
+recreate the frontend mouse recognizer, so its menu-recognition fields are not
+used as evidence. It does not cover a partial reveal, a changed build, another
+region, native Windows or a physical pointer.
+
+The ignored `target/u31-menu-frame-pair-jVQl1N/` contains the harness, bounded
+trace and hash receipt. Its isolated release build had no warnings. The
+recordings and copied game data remain private and must not be committed or
+packaged.
+
+Managed cleanup rejected this U31 unit because the helper accepts only
+`target/rom-data-*`; its evidence remains isolated.

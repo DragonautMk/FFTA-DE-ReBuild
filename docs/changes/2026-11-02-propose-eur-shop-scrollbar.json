@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "propose-eur-shop-scrollbar",
+  "title": "Propose bounded EUR shop scrollbar integration",
+  "kind": "docs",
+  "platforms": [
+    "Desktop proposal; implementation and GUI pending"
+  ],
+  "changes": [
+    "Specify a single EUR shop scrollbar unit with input ownership, safe page requests, replay prerequisites and regional regression gates."
+  ],
+  "validation": [
+    "Reviewed existing EUR and USA isolated core evidence, pinned upstream adapter, wheel and recording call sites, and project integration policy; no new game run."
+  ],
+  "limitations": [
+    "Proposal requires explicit unit approval; readiness, actual upstream redraw, GUI interaction, native dispatch and recording compatibility remain unverified."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-02-shop-scrollbar-proposal.md",
+    "docs/development/upstream-audit/U31-02-scrollbars.md"
+  ],
+  "references": []
+}

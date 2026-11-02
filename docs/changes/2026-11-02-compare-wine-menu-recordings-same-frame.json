@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "compare-wine-menu-recordings-same-frame",
+  "title": "Compare Wine menu click and control at the same frame",
+  "kind": "docs",
+  "platforms": [
+    "Linux interpreter replay of Wine GUI recordings"
+  ],
+  "changes": [
+    "Compare the existing Wine action-menu click and no-click recordings at the same completed guest frame."
+  ],
+  "validation": [
+    "Both recorded final states were reproduced at their respective 213/194 frame lengths; states matched through frame 132 and diverged on the recorded A input. Original recordings, copied ROM and state files were unchanged; build had no warnings."
+  ],
+  "limitations": [
+    "Replay used recorded key masks and no frontend window events; exact X event frame and recognizer branch remain unobserved. At 194 frames guest clocks differ by two cycles. No patched build, partial reveal, USA or native Windows.",
+    "Managed cleanup rejects U31 units; evidence is retained."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-03-panel-visual-fixes.md"
+  ],
+  "references": [
+    "docs/ffta_action_frame_width.md"
+  ]
+}

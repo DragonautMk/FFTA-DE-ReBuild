@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "model-eur-shop-category-replay-order",
+  "title": "Model EUR shop category replay ordering",
+  "kind": "docs",
+  "platforms": [
+    "Linux interpreter and modeled replay dispatch; GUI untested"
+  ],
+  "changes": [
+    "Compare one EUR shop category transition against a modeled semantic replay using recorded event and latched key order."
+  ],
+  "validation": [
+    "All 80 completed frames had matching serialized-state hashes and guest clocks; category 0 changed to 1. ROM, snapshot and route input hashes remained unchanged."
+  ],
+  "limitations": [
+    "The harness bypassed the currently rejecting parser and missing dispatcher; no actual recording, native, GUI, USA, later event consumption or broad replay acceptance. Two unused-code warnings.",
+    "Managed cleanup rejects non-rom-data U31 units; isolated evidence remains."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-02-scrollbars.md"
+  ],
+  "references": []
+}

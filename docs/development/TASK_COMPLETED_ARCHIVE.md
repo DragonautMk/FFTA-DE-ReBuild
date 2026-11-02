@@ -18889,3 +18889,94 @@ LOCAL-ARTIFACT-SWEEP-2026-10-31 — CLOSED. Latest request: clean residual proje
 - Verified criteria: recognized 7 total/4 visible; after 40 neutral frames six down/up requests moved first index 0→3→0 while control stayed 0; ROM and checkpoint unchanged.
 - Evidence: `docs/changes/2026-11-02-observe-usa-shop-wheel-pagination.json`, `target/u31-shop-usa-settle-GwDw9Y/run.log` and `target/u31-shop-usa-6roLpp/run.log`.
 - Limits: early request accepted without observed movement, cause unknown; no real GUI, native, replay or full-state equivalence after return. Cleanup rejects U31 directories; units retained.
+
+### U31-02-SHOP-SCROLLBAR-PROPOSAL
+
+- Outcome: completed reviewable bounded EUR desktop shop scrollbar proposal.
+- Verified criteria: stated user contract, list/gesture ownership, alternative page mechanisms, existing recording prerequisite, scope, files, costs, acceptance and stop conditions.
+- Evidence: `docs/changes/2026-11-02-propose-eur-shop-scrollbar.json` and `docs/development/upstream-audit/U31-02-shop-scrollbar-proposal.md`.
+- Limits: runtime unmodified; specific-unit approval, readiness, GUI, redraw, native and replay remain outstanding.
+
+### U31-02-EUR-SHOP-CATEGORY-EVENT
+
+- Outcome: completed bounded real-scene core producer and extracted-parser comparison.
+- Verified criteria: EUR category 0→1 produced 1025 and changed guest category; parser rejected the generated event; control remained at 0 and protected inputs unchanged.
+- Evidence: `docs/changes/2026-11-02-observe-eur-shop-category-event-parser.json` and `target/u31-shop-event-PneDIy/run.log`/`result.json`.
+- Limits: no application recording/export/replay, GUI, native or other regions; one unused-field warning. Cleanup rejects U31; evidence retained.
+
+### U31-02-EUR-CATEGORY-REPLAY-MODEL
+
+- Outcome: completed bounded category replay-order model; not an application replay.
+- Verified criteria: EUR category event/key sequence modeled through existing core matched serialized state and clock across 80 frames; protected ROM, snapshot and route unchanged.
+- Evidence: `docs/changes/2026-11-02-model-eur-shop-category-replay-order.json`, `target/u31-shop-replay-model-BvUWG4/run.log` and `result.json`.
+- Limits: model bypassed rejecting parser and missing dispatcher; no application recording, GUI, native, USA or later-event checks. Two warnings; cleanup rejects U31.
+
+### U31-02-EUR-MULTI-CATEGORY-REPLAY-MODEL
+
+- Outcome: completed bounded multi-event EUR category replay-order model.
+- Verified criteria: events 1025/1026/1024 produced categories 0→1→2→0 with matching serialized states and clocks for 240 frames; protected inputs unchanged.
+- Evidence: `docs/changes/2026-11-02-model-multiple-eur-shop-category-events.json`, `target/u31-shop-replay-multi-wljogL/run.log` and `result.json`.
+- Limits: bypasses rejecting parser and missing dispatcher; no rapid/physical inputs, item selection, native, USA or GUI. Two warnings; cleanup rejects U31.
+
+### U31-03-WINE-RECOGNIZED-MISS-GUI
+
+- Outcome: completed bounded GUI baseline and no-click control for EUR recognized action menu.
+- Verified criteria: current Windows GNU build under Wine/Xvfb, XTest off-panel click produced A and opened Move; no-click retained menu; both recordings replay-verified from identical starting state; protected inputs unchanged.
+- Evidence: `docs/changes/2026-11-02-reproduce-wine-action-menu-miss.json`, `target/u31-menu-gui-wRiQQ9/result.json`, `control2-result.json`, screenshots and verify logs.
+- Limits: Wine/llvmpipe, different control durations, exact event frame unobserved; no patched build, partial reveal, USA or native Windows. First control interrupted; cleanup rejects U31.
+
+### U31-03-MATCHED-GUI-RECORDINGS
+
+- Outcome: completed matched-frame interpreter comparison of two existing Wine GUI recordings.
+- Verified criteria: states/clocks equal through 132 frames, diverge on recorded A; no-click end reproduced at 194 and clicked end at 213; inputs unchanged.
+- Evidence: `docs/changes/2026-11-02-compare-wine-menu-recordings-same-frame.json`, `target/u31-menu-frame-pair-jVQl1N/run.log` and `result.json`.
+- Limits: no exact X event timestamp or frontend recognizer trace, no partial reveal or patched/native Windows run; clocks differ by two cycles at frame194. Cleanup rejects U31.
+
+### U31-02-USA-SHOP-GUI-RECORDING
+
+- Outcome: completed bounded GUI recording reproduction; existing verifier rejects recorded category event.
+- Verified criteria: USA shop changed headgear to armor; complete 407-frame recording contains mouse:1025; debug-record verify exited 1 out of range; protected inputs unchanged.
+- Evidence: `docs/changes/2026-11-02-reproduce-usa-shop-recording-rejection.json`, `target/u31-shop-gui-retry-QGxyPX/result.json`, `verify.log` and screenshots.
+- Limits: Wine/Xvfb synthetic movement plus click, hover/click attribution unknown; no successful replay or native Windows. Initial attempt EOF retained, cleanup rejects U31.
+
+### U31-02-SHOP-CATEGORY-REPLAY-PROPOSAL
+
+- Outcome: completed a reviewable bounded proposal for existing shop category replay incompatibility.
+- Verified criteria: specified exact token range/dispatch, safe context refusal, frame ordering, existing executable-identity constraint, separate new-recording acceptance and regression gates.
+- Evidence: `docs/changes/2026-11-02-propose-shop-category-replay-repair.json` and `docs/development/upstream-audit/U31-02-shop-category-replay-proposal.md`.
+- Limits: proposal only; no runtime change, approval or post-fix recording/replay.
+
+### U31-02-USA-RECORDING-KEY-ONLY
+
+- Outcome: completed bounded key-only and modeled-event replay comparison for one USA recording.
+- Verified criteria: both matched serialized state every frame and the actual 407-frame endpoint/clock; protected recording inputs and copied ROM unchanged.
+- Evidence: `docs/changes/2026-11-02-compare-usa-shop-recording-key-only.json`, `target/u31-usa-recording-model-Q9QTtW/run.log` and `result.json`.
+- Limits: adjacent category change only, parser bypassed; no basis to strip events generally. No native or GUI replay; cleanup rejects U31.
+
+### U31-02-USA-NONADJACENT-RECORDING
+
+- Outcome: completed bounded nonadjacent USA shop recording and modeled replay comparison.
+- Verified criteria: real 411-frame Wine recording contains 1028 and verifier rejects it; key-only replay diverged, modeled event matched actual final serialized state/clock; protected inputs unchanged.
+- Evidence: `docs/changes/2026-11-02-compare-nonadjacent-usa-shop-recording.json`, `target/u31-shop-nonadj-7gR1nI/result.json` and `target/u31-nonadj-model-3GyDMP/run.log`.
+- Limits: modeled dispatch bypasses parser; hover/click not separated, no native Windows or successful actual replay. Cleanup rejects U31.
+
+
+### U31-02-USA-SHOP-ITEM-CANCEL-REPLAY-MODEL — closed 2026-11-02
+
+- Outcome: 529-frame USA Wine/Xvfb recording captured nonadjacent category, item selection and cancellation. Actual verifier rejected mouse:1028. Isolated interpreter comparison: modeled category event matched the recorded serialized endpoint and guest clock; keys alone diverged after 273 completed frames. GUI originals and authenticated model inputs remained unchanged.
+- Evidence: `docs/development/upstream-audit/U31-02-scrollbars.md`; `docs/changes/2026-11-02-compare-shop-item-cancellation-replay.json`; ignored `target/u31-shop-item-mElF40/result.json` and `target/u31-shop-item-model-zQwxBU/{result.json,run.log}`.
+- Limits: model bypasses parser/dispatcher; no actual replay fix, native Windows or physical input claim. Managed cleanup rejected both U31 paths, retaining evidence. Parent U31-P0 remains partial; no runtime implementation approved.
+
+
+### U31-01-150-PERCENT-PROPOSAL — closed 2026-11-02
+
+- Outcome: Prepared a source-backed, unapproved desktop proposal for 100–800% in 10-point choices, retaining clamped ±20 shortcuts, legacy serialization and explicit pacing, audio and GUI gates. Existing fixed-index menu test must change for 71 choices; older versions ignore new percentage values.
+- Evidence: `docs/development/upstream-audit/U31-01-150-percent-proposal.md`; `docs/changes/2026-11-02-propose-upstream-150-percent-fast-forward.json`. Source inspected; isolated Python arithmetic confirmed grid closure and 150% frame totals.
+- Limits: proposal only, no product code, runtime, GUI, audio, native Windows, device or Android test. Specific implementation approval pending; parent audit remains partial.
+
+
+### U31-05-SAVE-BACKGROUND-GUARD — closed 2026-11-02
+
+- Outcome: Source trace corrected the U31-05 audit: EUR save callbacks can enable background rendering when the cached full-map motif flag is false. Desktop extra-row path still checks the flag; desktop and separate Android save painters have different output regions. No actual visual defect is established.
+- Evidence: `docs/development/upstream-audit/U31-05-widescreen.md`; `docs/changes/2026-11-02-audit-upstream-save-background-guard.json`. Inspected pinned extracted sources, existing test source and current fork committed diff.
+- Limits: static only; no test was run, no actual scene, device or runtime change. Parent U31-P0 remains partial and specific implementation approval is pending.

@@ -55,6 +55,11 @@ at 150%, including transitions out of fast forward. Treat controller, native
 Windows and Android as separately scoped checks. Existing source tests for
 other percentages are not proof of a 150% implementation.
 
+A [specific desktop proposal](U31-01-150-percent-proposal.md) defines a
+10-point choice grid and the behavior of ±20 shortcuts, with configuration,
+dropdown, pacing and compatibility gates. It remains unapproved and does not
+implement or validate 150% in the fork.
+
 
 ## Targeted upstream module validation
 

@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "propose-shop-category-replay-repair",
+  "title": "Propose focused shop category replay repair",
+  "kind": "docs",
+  "platforms": [
+    "Desktop proposal; runtime implementation pending"
+  ],
+  "changes": [
+    "Specify a bounded repair for already-produced shop category recording events and preserve executable identity and existing input compatibility."
+  ],
+  "validation": [
+    "Reviewed the reproduced USA recording, existing EUR replay models, parser/dispatch callers and focused verifier identity checks; no new game session or source modification."
+  ],
+  "limitations": [
+    "Proposal requires specific unit approval; actual parser, dispatcher, GUI replay, native and compatibility acceptance remain open."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-02-shop-category-replay-proposal.md",
+    "docs/development/upstream-audit/U31-02-scrollbars.md"
+  ],
+  "references": []
+}

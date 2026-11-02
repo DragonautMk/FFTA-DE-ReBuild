@@ -2094,6 +2094,46 @@ Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.j
 
 [Change record](docs/changes/2026-11-02-review-android-frontend-and-tooling-english.json)
 
+## 2026-11-02 — Reproduce off-panel action-menu click under Wine
+
+Type: docs. Platforms: Windows GNU build under Wine, Xvfb and Vulkan llvmpipe.
+
+**Changes**
+
+- Record an isolated application-window click and no-click control for the recognized action-menu miss.
+
+**Validation**
+
+- Actual XTest click at (3,3) generated four frames of A and opened the movement grid; the no-click control kept the menu. Both recordings began at identical state/frame/clock and individually passed final-state/clock replay verification; ROM, original save, snapshot and executable hashes unchanged.
+
+**Limitations**
+
+- Control and click runs had different durations; exact window-event frame was not independently captured. One EUR scene, no partial-reveal event, patched build or native Windows. First control script failed and its incomplete recording was retained.
+- Managed cleanup rejects non-rom-data U31 units; evidence and the interrupted control remain isolated.
+
+Documentation: [ffta_action_frame_width.md](docs/ffta_action_frame_width.md).
+
+[Change record](docs/changes/2026-11-02-reproduce-wine-action-menu-miss.json)
+
+## 2026-11-02 — Reproduce USA shop recording verification rejection
+
+Type: docs. Platforms: Windows GNU under Wine, Xvfb and Vulkan llvmpipe.
+
+**Changes**
+
+- Record a real USA shop category change in an isolated application session and run the existing recording verifier.
+
+**Validation**
+
+- The GUI changed from headgear to armor; the complete 407-frame recording contains mouse:1025 and the actual debug-record verify exited 1 with mouse target out of range. ROM, source save, snapshot and executable hashes unchanged.
+
+**Limitations**
+
+- Synthetic XTest movement and click were combined; hover versus click was not isolated. No native Windows, Android or successful replay. First GUI script encountered EOF and its incomplete session was retained.
+- Managed cleanup rejects U31 units; both successful and incomplete session evidence remains isolated.
+
+[Change record](docs/changes/2026-11-02-reproduce-usa-shop-recording-rejection.json)
+
 ## 2026-11-02 — Record the partial senary compact OBJ runtime integration
 
 Type: docs. Platforms: EUR; Windows GNU test compilation recorded; runtime acceptance pending.
@@ -2116,6 +2156,60 @@ Type: docs. Platforms: EUR; Windows GNU test compilation recorded; runtime accep
 Documentation: [2026-11-01-model-european-compact-obj-sixth-root.json](docs/changes/2026-11-01-model-european-compact-obj-sixth-root.json), [TASK_HANDOFF.md](docs/development/TASK_HANDOFF.md).
 
 [Change record](docs/changes/2026-11-02-record-partial-senary-compact-obj-integration.json)
+
+## 2026-11-02 — Propose desktop 150 percent fast forward
+
+Type: docs. Platforms: Desktop source audit.
+
+**Changes**
+
+- Define an unapproved 10-point percentage choice grid, 20-point shortcuts, legacy configuration behavior and specific validation gates for 150 percent fast forward.
+
+**Validation**
+
+- Inspected the fork percentage normalizer, parser, menu choices and navigation, shortcut dispatch and desktop pacing/audio paths; checked candidate grid closure and 150 percent frame arithmetic in an isolated Python calculation.
+
+**Limitations**
+
+- Proposal only: no runtime code, product tests, pacing or audio measurements, native Windows, physical controller or Android validation. Old releases ignore newly valid percentage values.
+
+[Change record](docs/changes/2026-11-02-propose-upstream-150-percent-fast-forward.json)
+
+## 2026-11-02 — Propose focused shop category replay repair
+
+Type: docs. Platforms: Desktop proposal; runtime implementation pending.
+
+**Changes**
+
+- Specify a bounded repair for already-produced shop category recording events and preserve executable identity and existing input compatibility.
+
+**Validation**
+
+- Reviewed the reproduced USA recording, existing EUR replay models, parser/dispatch callers and focused verifier identity checks; no new game session or source modification.
+
+**Limitations**
+
+- Proposal requires specific unit approval; actual parser, dispatcher, GUI replay, native and compatibility acceptance remain open.
+
+[Change record](docs/changes/2026-11-02-propose-shop-category-replay-repair.json)
+
+## 2026-11-02 — Propose bounded EUR shop scrollbar integration
+
+Type: docs. Platforms: Desktop proposal; implementation and GUI pending.
+
+**Changes**
+
+- Specify a single EUR shop scrollbar unit with input ownership, safe page requests, replay prerequisites and regional regression gates.
+
+**Validation**
+
+- Reviewed existing EUR and USA isolated core evidence, pinned upstream adapter, wheel and recording call sites, and project integration policy; no new game run.
+
+**Limitations**
+
+- Proposal requires explicit unit approval; readiness, actual upstream redraw, GUI interaction, native dispatch and recording compatibility remain unverified.
+
+[Change record](docs/changes/2026-11-02-propose-eur-shop-scrollbar.json)
 
 ## 2026-11-02 — Propose bounded desktop recognized-menu miss guard
 
@@ -2213,6 +2307,25 @@ Documentation: [ffta_shop_bank_mouse.md](docs/ffta_shop_bank_mouse.md).
 
 [Change record](docs/changes/2026-11-02-observe-eur-shop-wheel-pagination.json)
 
+## 2026-11-02 — Observe real EUR shop category event rejected by parser
+
+Type: docs. Platforms: Linux interpreter and extracted desktop parser; GUI untested.
+
+**Changes**
+
+- Connect a semantic category event from a real EUR shop state to the current recording input parser.
+
+**Validation**
+
+- Category 0 to 1 emitted event 1025 and changed the guest category while control stayed at 0; the exact extracted parser refused that event. ROM, checkpoint and input sequence hashes unchanged.
+
+**Limitations**
+
+- No full application recording, export, replay, native or GUI execution; single EUR category. Isolated harness emitted one unused-field warning.
+- Managed cleanup rejects U31 units; isolated diagnostic evidence is retained.
+
+[Change record](docs/changes/2026-11-02-observe-eur-shop-category-event-parser.json)
+
 ## 2026-11-02 — Observe real EUR action-panel reveal geometry
 
 Type: docs. Platforms: Desktop core interpreter on Linux; GUI and native Windows untested.
@@ -2232,6 +2345,44 @@ Type: docs. Platforms: Desktop core interpreter on Linux; GUI and native Windows
 Documentation: [ffta_action_frame_width.md](docs/ffta_action_frame_width.md).
 
 [Change record](docs/changes/2026-11-02-observe-action-panel-reveal.json)
+
+## 2026-11-02 — Model multiple EUR shop category replay events
+
+Type: docs. Platforms: Linux interpreter and modeled replay dispatch; GUI untested.
+
+**Changes**
+
+- Extend the isolated shop category replay comparison to three spaced changes and a return to the initial category.
+
+**Validation**
+
+- Events 1025, 1026 and 1024 reproduced category sequence 0 to 1 to 2 to 0 with matching serialized-state hashes and clocks for 240 completed frames; protected inputs unchanged.
+
+**Limitations**
+
+- The model bypasses the rejecting parser and missing application dispatcher; it does not cover rapid changes, physical input, item selection, native, USA or GUI. Two unused-code warnings.
+- Managed cleanup rejects non-rom-data U31 units; diagnostic evidence remains isolated.
+
+[Change record](docs/changes/2026-11-02-model-multiple-eur-shop-category-events.json)
+
+## 2026-11-02 — Model EUR shop category replay ordering
+
+Type: docs. Platforms: Linux interpreter and modeled replay dispatch; GUI untested.
+
+**Changes**
+
+- Compare one EUR shop category transition against a modeled semantic replay using recorded event and latched key order.
+
+**Validation**
+
+- All 80 completed frames had matching serialized-state hashes and guest clocks; category 0 changed to 1. ROM, snapshot and route input hashes remained unchanged.
+
+**Limitations**
+
+- The harness bypassed the currently rejecting parser and missing dispatcher; no actual recording, native, GUI, USA, later event consumption or broad replay acceptance. Two unused-code warnings.
+- Managed cleanup rejects non-rom-data U31 units; isolated evidence remains.
+
+[Change record](docs/changes/2026-11-02-model-eur-shop-category-replay-order.json)
 
 ## 2026-11-02 — Model action reveal click fallback against control
 
@@ -2512,6 +2663,46 @@ Documentation: [FFTARecomp_Upstream_v3_1_Analisi_Decisioni_v0_2.md](docs/To_DO/F
 
 [Change record](docs/changes/2026-11-02-compile-upstream-input-config-cargo.json)
 
+## 2026-11-02 — Compare Wine menu click and control at the same frame
+
+Type: docs. Platforms: Linux interpreter replay of Wine GUI recordings.
+
+**Changes**
+
+- Compare the existing Wine action-menu click and no-click recordings at the same completed guest frame.
+
+**Validation**
+
+- Both recorded final states were reproduced at their respective 213/194 frame lengths; states matched through frame 132 and diverged on the recorded A input. Original recordings, copied ROM and state files were unchanged; build had no warnings.
+
+**Limitations**
+
+- Replay used recorded key masks and no frontend window events; exact X event frame and recognizer branch remain unobserved. At 194 frames guest clocks differ by two cycles. No patched build, partial reveal, USA or native Windows.
+- Managed cleanup rejects U31 units; evidence is retained.
+
+Documentation: [ffta_action_frame_width.md](docs/ffta_action_frame_width.md).
+
+[Change record](docs/changes/2026-11-02-compare-wine-menu-recordings-same-frame.json)
+
+## 2026-11-02 — Compare key-only replay of a USA shop recording
+
+Type: docs. Platforms: Linux interpreter replay model of Wine recording.
+
+**Changes**
+
+- Compare the actual USA shop recording with and without a modeled category event while preserving the original input.
+
+**Validation**
+
+- Both variants reproduced all 407 serialized states identically and matched the recorded end state and clock; recording inputs, copied ROM, states and manifest hashes unchanged.
+
+**Limitations**
+
+- The observed category change was adjacent and included Right; the actual parser still rejects 1025, and the model bypassed that parser. No claim for nonadjacent transitions, host queues, native or GUI replay.
+- Managed cleanup rejects U31 units; isolated evidence remains.
+
+[Change record](docs/changes/2026-11-02-compare-usa-shop-recording-key-only.json)
+
 ## 2026-11-02 — Compare synthetic panel reveal geometry
 
 Type: docs. Platforms: Linux standalone Rust source fixture.
@@ -2571,6 +2762,24 @@ Type: docs. Platforms: Linux fork and upstream core comparison; GUI untested.
 - Managed cleanup accepts only target/rom-data-* and rejected this U31 unit; private evidence remains isolated.
 
 [Change record](docs/changes/2026-11-02-compare-upstream-eur-shop-adapter.json)
+
+## 2026-11-02 — Compare shop category and item cancellation replay
+
+Type: docs. Platforms: Windows GNU under Wine/Xvfb; Linux interpreter model.
+
+**Changes**
+
+- Document an isolated USA shop recording that changes to a nonadjacent category, selects an item and cancels, and compare its endpoint with two replay models.
+
+**Validation**
+
+- The 529-frame recording completed; the modeled category event matched its recorded final serialized state and guest clock, while key-only execution diverged. Protected originals and authenticated recording inputs remained unchanged.
+
+**Limitations**
+
+- The actual verifier rejects mouse:1028 before replay; the model bypasses parser and dispatcher. Wine synthetic input is not native Windows or physical input. Managed cleanup rejected the U31 directories and preserved the evidence.
+
+[Change record](docs/changes/2026-11-02-compare-shop-item-cancellation-replay.json)
 
 ## 2026-11-02 — Compare real EUR Party touch in Android host engines
 
@@ -2649,6 +2858,25 @@ Type: docs. Platforms: Android engine with Linux x86-64 TinyCC; Android ARM64 un
 
 [Change record](docs/changes/2026-11-02-compare-party-host-native-dispatch.json)
 
+## 2026-11-02 — Compare nonadjacent USA shop recording replay
+
+Type: docs. Platforms: Windows GNU under Wine/Xvfb and Linux interpreter replay model.
+
+**Changes**
+
+- Record a nonadjacent USA shop category change and compare key-only against modeled semantic replay.
+
+**Validation**
+
+- The real 411-frame recording contains mouse:1028 and verifier rejects it. Key-only replay differed from the captured endpoint; modeled-event replay matched the recorded serialized state and clock. Protected input hashes unchanged.
+
+**Limitations**
+
+- Synthetic pointer movement and click were combined; modeled replay bypassed the parser and dispatcher. No actual successful application replay, native Windows, Android or broad category coverage.
+- Managed cleanup rejects U31 units; private diagnostic evidence remains isolated.
+
+[Change record](docs/changes/2026-11-02-compare-nonadjacent-usa-shop-recording.json)
+
 ## 2026-11-02 — Compare Android Party dispatch with shared synthetic state
 
 Type: docs. Platforms: Android core on host Linux; actual Android untested.
@@ -2668,6 +2896,26 @@ Type: docs. Platforms: Android core on host Linux; actual Android untested.
 Documentation: [U31-06-android-touch.md](docs/development/upstream-audit/U31-06-android-touch.md).
 
 [Change record](docs/changes/2026-11-02-compare-android-party-dispatch-synthetic.json)
+
+## 2026-11-02 — Begin approved shop category replay repair
+
+Type: changed. Platforms: Linux interpreter and desktop test build; Windows/Wine pending.
+
+**Changes**
+
+- Prepare an isolated desktop parser and dispatcher candidate for recorded shop category events 1024 through 1029, without changing or merging the main checkout runtime.
+
+**Validation**
+
+- Six targeted desktop replay tests and five serial shop-core tests passed on Linux. A separate harness compiled the actual candidate parser and dispatcher and matched the authenticated 529-frame USA recorded endpoint and clock; all six available slots and three invalid contexts were exercised. A new executable rejected an old recording identity as required. Protected inputs remained unchanged.
+
+**Limitations**
+
+- Candidate remains isolated and unintegrated. A pending shop semantic event was observed after replay and requires ownership validation. Fresh actual recording/verification, EUR, native/cache, input contention and Windows/Wine GUI checks remain. Initial ALSA metadata, harness literal and executable-size failures were resolved with retained diagnostics; no native Windows result.
+
+Documentation: [U31-approved-decisions.md](docs/development/upstream-audit/U31-approved-decisions.md).
+
+[Change record](docs/changes/2026-11-02-begin-approved-shop-category-replay-repair.json)
 
 ## 2026-11-02 — Audit remaining upstream display and packaging families
 
@@ -2728,6 +2976,24 @@ Type: docs. Platforms: Desktop source comparison; Android validation gates inspe
 Documentation: [FFTARecomp_Upstream_v3_1_Analisi_Decisioni_v0_2.md](docs/To_DO/FFTARecomp_Upstream_v3_1_Analisi_Decisioni_v0_2.md).
 
 [Change record](docs/changes/2026-11-02-audit-upstream-save-ui-and-rom-policy.json)
+
+## 2026-11-02 — Clarify upstream save background rendering guards
+
+Type: docs. Platforms: Desktop and Android source comparison.
+
+**Changes**
+
+- Clarify that upstream save callback rendering can bypass the cached full-map motif check, and distinguish desktop and Android callers.
+
+**Validation**
+
+- Inspected the extracted pinned upstream PPU, save painters, frontend caller conditions and existing fallback test source; checked current fork HEAD and committed relevant runtime diff against the audited fork revision.
+
+**Limitations**
+
+- Static source evidence only; the existing upstream test was not run, and no visual defect, real transition, runtime fix, native Windows or Android device behavior is established.
+
+[Change record](docs/changes/2026-11-02-audit-upstream-save-background-guard.json)
 
 ## 2026-11-02 — Audit upstream panel geometry and presentation motion
 

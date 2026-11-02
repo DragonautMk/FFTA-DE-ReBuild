@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "audit-upstream-save-background-guard",
+  "title": "Clarify upstream save background rendering guards",
+  "kind": "docs",
+  "platforms": [
+    "Desktop and Android source comparison"
+  ],
+  "changes": [
+    "Clarify that upstream save callback rendering can bypass the cached full-map motif check, and distinguish desktop and Android callers."
+  ],
+  "validation": [
+    "Inspected the extracted pinned upstream PPU, save painters, frontend caller conditions and existing fallback test source; checked current fork HEAD and committed relevant runtime diff against the audited fork revision."
+  ],
+  "limitations": [
+    "Static source evidence only; the existing upstream test was not run, and no visual defect, real transition, runtime fix, native Windows or Android device behavior is established."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-05-widescreen.md"
+  ],
+  "references": []
+}

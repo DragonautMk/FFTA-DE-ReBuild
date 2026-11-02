@@ -16,7 +16,9 @@ for host rows without repeating foreground windows/objects. Desktop
 are unavailable; upstream Android save rendering also calls the background
 routine. A synthetic upstream test checks motif repetition at selected widths
 and rows, rejects an altered map and checks VRAM/OAM preservation. These are
-source assertions, not current real-scene results.
+source assertions, not current real-scene results. The save-screen exception
+and its different desktop/Android callers are described below; the complete
+motif check is not a universal precondition for every background-row call.
 
 The fork has the Clan Atlas host pause menu with its own native adaptive layout,
 minimum 480×360 and its own input model. Its original-game renderer is a
@@ -36,3 +38,42 @@ the EUR pattern to USA without region-specific evidence. Synthetic positive and
 negative motif tests, exact central pixels/state/clock, frames during scene
 transitions, multiple aspect ratios and inspected GUI captures are required.
 No cross-region, native Windows, 32:9 or gameplay acceptance is claimed here.
+
+## Follow-up: save-screen rendering is a separate path
+
+The upstream `repeating_menu_background` detector checks the EUR profile,
+display registers and, for Save/Resume Battle and Party, every entry in the
+repeating tilemap before setting `menu_pattern`. However,
+`render_menu_background_row` also accepts either EUR save callback
+`0x0813dd75` or `0x0813d049` when `menu_pattern` is false. In that case it
+renders BG0 and substitutes the palette backdrop for transparent pixels; the
+function does not itself repeat the complete-map validation. An upstream
+synthetic test named `original_pattern_can_render_before_cached_menu_flag_is_ready`
+explicitly asserts the callback fallback using a blank synthetic machine. The
+test's source was inspected, not executed for this follow-up. The exception
+appears intended to let the save UI paint before the cached pattern flag is
+ready; whether a particular transition can expose stale or foreground pixels
+is not established by this source trace.
+
+The distinction matters at the call sites. Desktop `display_frame` asks for
+extra rows only when `menu_pattern` is true; separately, when its save screen
+is active, `autosave::paint` calls the row renderer and copies the central
+240 pixels of 150 rows before painting its card UI. Upstream Android has a
+separate `gba-core` copy with the same callback exception; its active save
+screen calls `save_states::paint`, which copies rendered background rows across
+the whole output. Android's `render_frontend_background_row` also accepts the
+save callback. These are separate frontend uses, not proof that each paints an
+incorrect image in an actual scene.
+
+Consequently, a future fork adaptation must not infer that every upstream
+save-screen background has passed the full motif check or copy the callback
+exception without its ownership, transition and rendering context. Test
+callbacks with an invalid or changing map, stale ownership and enter/exit
+frames, alongside valid backgrounds, native center pixels and mouse alignment.
+The inspected upstream files came from the previously extracted pinned source;
+desktop `ppu.rs` SHA-256 was
+`f8d27cf2bdb476e5e18930d9d706c9c6783278972bce5215f6c5d346534f5ac3`.
+The current fork HEAD is `c680b29517ac3dc99890a9d856122289c97f623f`;
+the relevant runtime trees have no tracked committed changes since the fork
+revision used in the initial audit. This follow-up is static: no game, build,
+test, real transition, native Windows or Android device result is claimed.

@@ -305,3 +305,229 @@ contain private state and must stay out of commits and packages.
 
 Managed cleanup rejected the successful U31 unit because the helper accepts
 only `target/rom-data-*`; both the successful and failed units remain.
+
+The [EUR shop scrollbar proposal](U31-02-shop-scrollbar-proposal.md) describes
+one reviewable integration unit, including the already-working wheel path,
+early-readiness uncertainty and the existing category replay prerequisite.
+It is not approved or implemented.
+
+## Follow-up: category event from the EUR shop scene
+
+A bounded Linux interpreter comparison used the existing EUR route to the
+recognized shop list at frame 300. Two fork machines had identical serialized
+state before input. On one machine `ffta_shop_mouse::select_category` requested
+category 1 of six from category 0 and emitted semantic event `1025` through
+`take_event`. The core applied the original selection path: at four frames the
+requested machine reported category 1 while the no-input control remained at
+0, and those observed category indices remained distinct through frame 80.
+
+The harness placed the emitted event into a minimal `gba-input v1` text and
+passed it to the current `InputScript::parse` function extracted verbatim from
+`crates/recomp/src/main.rs`, using the real `LanguageMouse::valid_target`. It
+returned `mouse target out of range`. This combines a real-scene core producer
+with the actual parser logic and confirms the previously synthetic range
+mismatch for this particular event. It does not show that an application
+recording was created, or test the full recorder, exporter or replay runner.
+The no-input control and changed category are separate timelines; no complete
+state equivalence is claimed.
+
+The local ignored unit `target/u31-shop-event-PneDIy/` retains the harness,
+minimal input text, trace and protected-input receipt. The EUR ROM, snapshot
+and existing route input hashes were unchanged. The isolated build passed with
+one unused-field warning. This is a recording-compatibility prerequisite for a
+future shop scrollbar, not a fix or evidence that ordinary wheel events fail.
+A complete repair still needs explicit approval, producer/parser/dispatch and
+ordering tests, existing-file compatibility and a real recording/replay.
+
+The managed cleanup helper rejected this U31 unit because it accepts only
+`target/rom-data-*`; the isolated evidence remains.
+
+## Follow-up: modeled category-event replay ordering
+
+A bounded Linux interpreter comparison reconstructed the same EUR shop
+category 0→1 transition in two fresh fork-core machines. At the recognized
+frame-300 list, their serialized states matched. The first machine requested
+category 1, then recorded its actual semantic event and latched key for each of
+80 guest frames. In the second machine a small harness **modeled** a candidate
+shop-event dispatch: at the recorded frame it enabled replay and called the
+existing `select_category` for event 1025, assigned the recorded key and called
+`replay_keys` in the same order used by the current headless verification loop.
+No parser or application code was changed or executed for this dispatch.
+
+The recorded first key was `0x3ef`; the guest category became 1 by the fourth
+frame. Every one of the 80 completed frames matched the first machine's full
+serialized-state hash and guest clock. Both machines started from the same
+validated EUR snapshot and route; ROM, snapshot and route hashes were unchanged.
+The local ignored unit `target/u31-shop-replay-model-BvUWG4/` retains the
+harness and logs; its release build emitted two unused-code warnings.
+
+This is evidence that one candidate dispatch/order can reproduce this **one**
+transition in the interpreter. It is not a working input format: the current
+parser still rejects 1025, the current dispatcher has no shop-category branch,
+and the harness bypassed both. It also did not exercise an application
+recording, other category changes, physical-input contention, later event
+consumption, native blocks, USA or a GUI. A fix must validate those paths and
+preserve old recordings rather than merely expanding the accepted parser range.
+
+Managed cleanup rejected this U31 unit because it accepts only
+`target/rom-data-*`; the isolated evidence remains.
+
+## Follow-up: multiple modeled category events
+
+A separate isolated Linux interpreter comparison extends the preceding
+single-event model with the EUR category sequence 0→1→2→0. The same validated
+shop route produced two identical starting machines. The live side requested
+categories 1, 2 and 0 at relative frames 0, 80 and 160, respectively; it
+emitted events 1025, 1026 and 1024 and recorded the latched key at each frame.
+The replay-model side dispatched those semantic targets through the existing
+core selection function and called `replay_keys`, while applying the recorded
+keys. The category reached each requested target; all 240 completed frames
+matched the live machine's serialized-state hashes and guest clocks. The ROM,
+snapshot and existing route input hashes remained unchanged. The isolated
+unit `target/u31-shop-replay-multi-wljogL/` retains the harness and result; its
+release build emitted two unused-code warnings.
+
+This extends the earlier **one-event** result to three spaced requests and a
+return to the starting category. It does not execute the current parser or
+application replay dispatcher, which still cannot handle these events. It also
+does not cover rapid or simultaneous changes, physical input, wrong context,
+subsequent item selection, native execution, USA or GUI. Serialized-state
+matching is limited to the fields included by that format; it is not proof of
+identical host queues or a complete recording/replay contract. No runtime change
+or approval follows from the model.
+
+Managed cleanup rejected this U31 unit because it accepts only
+`target/rom-data-*`; the isolated evidence remains.
+
+## Follow-up: real USA shop recording refused by verification
+
+On 2026-11-02 an isolated debug session used the catalogued USA DS-18 snapshot,
+matching ROM and cartridge save with the Windows GNU executable previously
+built from the fork. Under Wine, private Xvfb and Vulkan llvmpipe, two Z-key
+presses advanced from the shop greeting to Buy. The screenshot showed the
+headgear category and its list. XTest then moved the pointer to client
+coordinate `(185,25)` over the second category and sent a left click; the
+subsequent screenshot showed the armor category and a different item list.
+Pointer movement preceded the click, so this observation does not distinguish
+hover selection from click selection.
+
+The actual snapshot-relative recorder closed normally with status `complete`
+after 407 frames. Its input contains `mouse:1025` and the `0x3ef` key at
+relative frame 285. The actual `debug-record verify` command exited 1 with
+`recording input: mouse target out of range`. This is a concrete application
+recording that its own current verifier refuses, extending the earlier EUR
+core/parser comparison to a USA GUI path. It does not show a successful replay
+or establish that every shop recording fails.
+
+The first attempt reached the shop but its test script encountered EOF while
+waiting for a coordinate; the X connection closed, the owned supervisor PID
+was absent on inspection and its recording remained incomplete. The corrected
+attempt used a new isolated session and prefix. Original USA ROM, source save,
+snapshot and test executable hashes were unchanged in both attempts. The
+ignored `target/u31-shop-gui-al8X5b/` and
+`target/u31-shop-gui-retry-QGxyPX/` retain the incomplete and completed
+recordings, screenshots, scripts, logs and hash receipts; they contain private
+game data and must not be committed or packaged. This is Wine/X11 with
+software Vulkan and synthetic pointer/keys, not native Windows, Android or a
+physical input test. It does not authorize a runtime change.
+
+Managed cleanup rejected this U31 unit because it accepts only
+`target/rom-data-*`; both isolated attempts remain.
+
+The [focused shop-category replay proposal](U31-02-shop-category-replay-proposal.md)
+sets out a bounded candidate and its recording-identity and regression gates.
+It is separate from the scrollbar and remains unapproved and unimplemented.
+
+## Follow-up: key-only comparison for the recorded USA change
+
+A separate isolated Linux interpreter harness authenticated the input, start
+and end hashes from the real USA shop recording described above. It loaded
+the recorded start state into two machines and replayed all 407 recorded
+frames. One applied the recorded key masks while ignoring `mouse:1025`; the
+other modeled a shop-category dispatch for that event before applying the
+existing `replay_keys` logic. Both reproduced the recording's exact serialized
+end state and guest clock, and their serialized states matched after every
+completed frame. The input, copied ROM, states and manifest remained unchanged.
+The isolated release build emitted no warnings. The ignored unit
+`target/u31-usa-recording-model-Q9QTtW/` retains the harness and receipt.
+
+This particular recording moves from category 0 to adjacent category 1 and
+contains the original Right key at the event frame; the observed result shows
+that **in this case** those keys suffice to reproduce the serialized endpoint.
+It does not establish that semantic events are redundant for nonadjacent
+categories, rapid changes, native execution or other scenes. The actual
+`debug-record verify` still rejects the original `mouse:1025` before replay;
+the harness bypassed the parser and modeled dispatch and did not change the
+recording or its executable identity. Matching serialized state does not prove
+all transient host-side queues or GUI outputs match. Do not strip the event as
+a general repair based on this adjacent-category observation.
+
+Managed cleanup rejected this U31 unit because it accepts only
+`target/rom-data-*`; its isolated evidence remains.
+
+## Follow-up: nonadjacent USA category recording
+
+A new isolated Wine/Xvfb session started from the same catalogued USA shop
+checkpoint and the same Windows GNU executable as the preceding GUI test.
+After the greeting and Buy selection, XTest moved the pointer and clicked the
+fifth category at client `(328,25)`. The screenshots show the category changing
+from headgear to the fifth category and the list changing to boots and related
+items. As in the earlier test, pointer movement preceded the button press, so
+hover versus click was not isolated. The completed 411-frame recording contains
+`mouse:1028` and Right (`0x3ef`) at relative frame 289. The actual
+`debug-record verify` exited 1 because that mouse target is out of range.
+Original ROM, source cartridge save, snapshot and executable hashes remained
+unchanged. The isolated Wine/Xvfb unit is
+`target/u31-shop-nonadj-7gR1nI/`.
+
+A separate Linux interpreter comparison authenticated the actual recording's
+manifest, input and start/end hashes and ran its 411 frames twice. The
+**key-only** variant ignored the semantic event; the **modeled-event** variant
+called the existing shop category selector for event 1028 before
+`replay_keys`. States matched through 291 completed frames and first differed
+after frame 292. At the end, the key-only serialized state did **not** match
+the recorded endpoint; the modeled-event serialized state and clock **did**
+match. The two final guest clocks differed by three cycles. The recording and
+copied ROM hashes remained unchanged; the release harness built without
+warnings. Its isolated unit is `target/u31-nonadj-model-3GyDMP/`.
+
+This demonstrates why dropping category events is unsafe for this recorded
+nonadjacent transition, unlike the earlier adjacent 0→1 example. The
+modeled-event run bypassed the current parser and dispatcher, and its endpoint
+match is not a successful application replay or proof of identical host queues.
+No runtime fix, native Windows, physical mouse, Android or all-category
+coverage is claimed. Both ignored units contain private game data and must not
+be committed or packaged.
+
+Managed cleanup rejected these U31 units because the helper accepts only
+`target/rom-data-*`; the isolated evidence remains.
+
+## Follow-up: item selection and cancellation after a category change
+
+Another isolated USA Wine/Xvfb session started from the same shop checkpoint.
+After moving to the fifth category with the synthetic pointer, the recorded
+inputs selected an item and then cancelled. Screenshots show the quantity
+overlay for Battle Boots and the subsequent return to the list. Pointer motion
+preceded the button press, so this does not isolate hover from click. The
+529-frame recording contains `mouse:1028` and Right at frame 270, followed by
+the A and B inputs. The actual `debug-record verify` exited 1 with `recording
+input: mouse target out of range`. The original ROM, source save, snapshot and
+executable hashes remained unchanged. The GUI receipt and screenshots are in
+`target/u31-shop-item-mElF40/`.
+
+An isolated Linux interpreter comparison authenticated the recording's input
+and start/end hashes and ran all 529 frames. Ignoring the category event
+produced a different final serialized state; modeling the existing category
+selector before `replay_keys` produced the exact recorded final serialized
+state and guest clock. The variants first differed after 273 completed frames;
+their final clocks differed by one cycle. The recording and copied ROM hashes
+remained unchanged. The harness and receipt are in
+`target/u31-shop-item-model-zQwxBU/`.
+
+This is evidence for this sequence, not a successful application replay: the
+model bypassed the rejecting parser and dispatcher and does not establish
+identical host queues or GUI output. Native Windows, physical input, Android
+and other shop sequences remain unverified. No runtime fix was made. Both
+ignored units contain private data and must not be committed or packaged.
+Managed cleanup rejected both units because it accepts only
+`target/rom-data-*`; their evidence remains.
