@@ -1,26 +1,27 @@
 # TODO — Debug saves
 
-Aggiornato il 26 ottobre 2026. Numerazione stabile **DS-01…DS-26**, nello stesso
-ordine della lista originale. Il nome breve è riportato in ciascuna voce.
+Updated October 26, 2026. Stable numbering **DS-01…DS-26**, in the same order as
+the original list. Each entry includes its short name.
 
-Per gli strumenti con cui catalogare, registrare e riprodurre questi casi vedere
-il [TODO debug tools](DEBUG_TOOLS_TODO.md): gli ID **DBG** indicano strumenti,
-gli ID **DS** continuano a indicare le scene e le relative prove.
+For tools to catalog, record and replay these cases, see the
+[debug tools TODO](DEBUG_TOOLS_TODO.md): **DBG** IDs identify tools; **DS** IDs
+continue to identify scenes and their evidence.
 
-Ricognizione aggiornata: **18 casistiche validate, 6 parziali, 2 non coperte**.
-La ripresa aggiunge **DS-04/05/06/09/10/11/13/14/23/24/25**
-alle precedenti DS-01/02/16/18/19/22. DS-26 ha ora un punto postgame parziale. Il nuovo file utente EUR completa
-**DS-20** il 26 ottobre. La prima ricognizione
-rimane conservata nel suo record: 3 validate, 10 parziali, 13 non coperte.
-Una spunta vale soltanto per lo scenario e la prova indicati. Le verifiche già
-concluse sono riutilizzate; non sono stati rifatti build, benchmark o confronti
-completi per ricostruire il contesto. Nuove ispezioni: Windows/Wine, tastiera,
-interprete e BIOS HLE, su copie isolate.
+Updated inventory: **18 validated cases, 6 partial, 2 uncovered**. The resumed
+work adds **DS-04/05/06/09/10/11/13/14/23/24/25** to the earlier
+DS-01/02/16/18/19/22. DS-26 now has a partial postgame point. The new user EUR
+file completes **DS-20** on October 26. The initial inventory remains preserved
+in its record: 3 validated, 10 partial, 13 uncovered. A check applies only to
+the stated scenario and evidence. Completed checks are reused; builds,
+benchmarks and complete comparisons were not repeated to reconstruct context.
+New inspections: Windows/Wine, keyboard, interpreter and HLE BIOS, on isolated
+copies.
 
-- **Validata**: evento o percorso richiesto osservato, con riscontro conservato.
-- **Parziale**: snapshot candidato e alcuni controlli presenti; restano criteri espliciti.
-- **Non coperta**: nessun punto mirato individuato nel campione. Non significa che
-  sia impossibile raggiungerlo giocando dai salvataggi disponibili.
+- **Validated**: requested event or path observed with retained evidence.
+- **Partial**: candidate snapshot and some checks present; explicit criteria remain.
+- **Uncovered**: no targeted point identified in the sample. This does not mean
+  it is impossible to reach through play from the available saves.
+
 
 ## Raccolta numerata locale
 

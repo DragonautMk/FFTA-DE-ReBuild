@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-debug-tools-foundations-and-p0",
+  "title": "Translate shared debug tool foundations and P0",
+  "kind": "docs",
+  "platforms": [
+    "Shared desktop debug documentation"
+  ],
+  "changes": [
+    "Translate the shared debug tools introduction, existing foundations, common rules and completed DBG-01 through DBG-08 P0 entries into English, preserving the recorded acceptance evidence and limits."
+  ],
+  "validation": [
+    "Compare ordered checklist states, task IDs, inline literals, links and legacy anchors against the original; verify local link targets and confirm P1 onward is unchanged."
+  ],
+  "limitations": [
+    "P1, P2 and maintenance sections of the same document remain untranslated; no debug, Wine, runtime, ROM or hardware tests were run."
+  ],
+  "files": [
+    "docs/development/DEBUG_TOOLS_TODO.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

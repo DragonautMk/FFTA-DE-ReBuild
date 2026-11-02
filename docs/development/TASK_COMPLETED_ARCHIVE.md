@@ -18328,3 +18328,31 @@ LOCAL-ARTIFACT-SWEEP-2026-10-31 — CLOSED. Latest request: clean residual proje
 - Verified: historical Wine limits, literals, links and 10 legacy anchors preserved; sections 4–10 byte-identical; only the selected todo2 sentence changed.
 - Evidence: `docs/changes/2026-11-02-translate-atlas-spec-introduction.json`; audit ledger records the completed note and remaining specification.
 - Limits: documentation only; no implementation or runtime validation performed.
+
+### ENGLISH-FIRST-ATLAS-SPEC-REST
+
+- Outcome: completed; Clan Atlas implementation specification now translated in full.
+- Verified: sections 4–10 retain 28 ordered acceptance states, inline literals, links and 37 legacy heading anchors; earlier sections unchanged and local targets exist.
+- Evidence: `docs/changes/2026-11-02-translate-atlas-specification-remainder.json`; complete document hash in `docs/development/ENGLISH_FIRST_AUDIT.json`.
+- Limits: documentation only; historical baseline and validation limits remain, with no new runtime or hardware tests.
+
+### ENGLISH-FIRST-DEBUG-TOOLS-P0
+
+- Outcome: completed for the introduction, common foundations/rules and P0 (DBG-01..08); shared debug tools plan remains partial.
+- Verified: checklist order, IDs, inline literals, links, four legacy heading anchors and validation limits preserved; P1 onward byte-identical.
+- Evidence: `docs/changes/2026-11-02-translate-debug-tools-foundations-and-p0.json`; remaining document stays pending in the audit ledger.
+- Limits: documentation only; no debug, runtime, Wine, ROM or hardware tests performed.
+
+### ENGLISH-FIRST-DEBUG-TOOLS-REST
+
+- Outcome: completed; shared debug tools plan translated in full.
+- Verified: P1/P2 preserve 14 ordered task states, identifiers, inline literals, links, three legacy anchors and recorded limits; prior P0 unchanged and local link targets exist.
+- Evidence: `docs/changes/2026-11-02-complete-shared-debug-tools-translation.json`; reviewed document hash in `docs/development/ENGLISH_FIRST_AUDIT.json`.
+- Limits: documentation only; no diagnostic, runtime, Wine, ROM or hardware tests repeated.
+
+### ENGLISH-FIRST-OPERATIONAL-SUMMARIES
+
+- Outcome: completed for selected introductory status summaries; performance and debug-save documents remain partially translated.
+- Verified: task IDs, literals, links and legacy anchors preserved, local targets exist and remaining sections are unchanged.
+- Evidence: `docs/changes/2026-11-02-translate-performance-and-save-status-summaries.json`; both documents remain pending in the audit ledger.
+- Limits: documentation only; no fixture, benchmark, runtime or save exploration performed.

@@ -24,9 +24,9 @@ termination of another owner's process or changing another thread's goal state.
 
 - State: active
 - Outcome: partial
-- Verified: previous runtime/report/guide/export units accepted, including shared debug guides. Command/event consoles and operation cards use English/Italian presentation; targeted tests PASS. Audit: 213 reviewed files, 38 Markdown pending.
+- Verified: previous runtime/report/guide/export units accepted, including shared debug guides. Command/event consoles and operation cards use English/Italian presentation; targeted tests PASS. Audit: 215 reviewed files, 36 Markdown pending.
 - Missing: remaining documentation, other dynamic report producers/metadata, helper/test modules, tools/build text, source comments and full audit across both trees. Planned-task checklist/reference translated and synchronized. Preserve optional locales, imported content and immutable history.
-- Resume: Atlas specification introduction and sections 0–3 translated with legacy anchors; sections 4–10 remain Italian. Next selection may translate those remaining sections, preserving task status, evidence and machine tokens.
+- Resume: latest English-first request selects ENGLISH-FIRST-DEBUG-SAVES-SOURCES. Debug-save summary translated; collection and source sections remain Italian. Missing: translate those sections, preserving paths, provenance, game names and evidence limits. Next: inspect and translate without accessing private data.
 
 ### ROMDATA-03-04-E105-SENARY-COMPACT-OBJ
 
@@ -221,9 +221,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: ENGLISH-FIRST-PROJECT partial; Atlas specification sections 0–3 translated.
-- Last verified result: legacy anchors, literals and links retained; remaining Atlas sections byte-identical.
-- Remaining work: Atlas sections 4–10, 38 pending Markdown files and other cross-tree surfaces.
-- Errors or blockers: none; no runtime work performed.
-- Next action: select and checkpoint the next English-first unit.
-- References: `docs/changes/2026-11-02-translate-atlas-spec-introduction.json`, `docs/development/ENGLISH_FIRST_AUDIT.json`.
+- Task: ENGLISH-FIRST-PROJECT partial; ENGLISH-FIRST-DEBUG-SAVES-SOURCES selected.
+- Last verified result: debug-save summary translated; collection and source sections remain Italian.
+- Remaining work: translate collection and source sections while preserving identifiers and provenance.
+- Errors or blockers: none; no private save access or runtime work selected.
+- Next action: inspect selected sections, translate and verify structure.
+- References: `docs/development/debug saves.md`, `docs/development/ENGLISH_FIRST_AUDIT.json`.

@@ -1,60 +1,66 @@
-# TODO ottimizzazioni desktop FFTARecomp
+<a id="todo-ottimizzazioni-desktop-fftarecomp"></a>
 
-Piano del 20 ottobre 2026, basato sul codice alla revisione `e39cdb6`.
-Priorità: stabilità, correttezza del gioco, compatibilità Linux/Windows e
-semplicità del codice. Il problema segnalato riguarda Ubuntu 26 e possibili
-rallentamenti nei turni nemici. Le caselle indicano il completamento di tutti
-i criteri di ciascuna attività; i progressi parziali sono registrati qui sotto.
+# FFTARecomp desktop optimization TODO
 
-La sequenza consigliata è **misurare il rallentamento reale, eliminare lavoro
-ridondante, intervenire sul sottosistema dominante, poi valutare altro lavoro
-sulla GPU**. Un aumento dell'uso GPU, da solo, non è un risultato utile.
+Plan from October 20, 2026, based on code at revision `e39cdb6`.
+Priorities: stability, game correctness, Linux/Windows compatibility and code
+simplicity. The reported problem concerns Ubuntu 26 and possible slowdowns during
+enemy turns. Checkboxes indicate completion of every criterion for each task;
+partial progress is recorded below.
 
-## Stato dell'esecuzione
+The recommended sequence is to **measure the actual slowdown, eliminate
+redundant work, address the dominant subsystem, then assess further GPU work**.
+Increased GPU utilization alone is not a useful result.
 
-Stato riallineato il 21 ottobre ai criteri e alle prove correnti. Leggere
-[TASK_HANDOFF.md](TASK_HANDOFF.md) prima di scegliere lavoro: un padre aperto
-non riapre sottopassi conclusi o esperimenti scartati. Le sezioni delle prime
-prove sotto sono storiche; i conteggi/export lì riportati valgono per quella fase.
+<a id="stato-dellesecuzione"></a>
 
-- **PERF-01 — parziale:** replay nemico, worldmap e zoom6 già disponibili e
-  misurati; il raro rallentamento originale non è riprodotto/isolato. Non
-  ricreare fixture e baseline per ricostruire contesto.
-- **PERF-02 — parziale:** profili CPU/PPU/GPU, callback audio, gate di frame,
-  richieste raw enhanced, osservazione PipeWire e cadenza presentazioni sono
-  implementati. Restano attribuzione della scena realmente lenta, overhead
-  realtime controllato e copertura hardware/Windows nativo. Richieste vuote
-  non equivalgono a difetti udibili; ERR PipeWire non copre ogni XRUN hardware.
-- **PERF-03 — concluso:** procedura A/B con hash/configurazione, verifica
-  separata dal timing, confronto stato/frame/audio e rollback; guard incompleto
-  fermato prima di storia temporale e contatori frontend. Riutilizzare i
-  [controlli dispatch](../changes/2026-10-20-preserve-native-dispatch-in-cost-profiling.json)
-  e le verifiche complete dei candidati, senza rifare la loro implementazione.
-- **PERF-04 — parziale:** recovery, upload saltati, invalidazione device
-  controllata e lifecycle X11/Wine verificati; restano Wayland/native Windows
-  e la matrice di schermi/DPI/GPU fisici indicata nella voce.
-- **PERF-05/06 — conclusi:** revisioni LUT/FPS, cache input packing UI, upload
-  mondo condiviso nella chiamata e riuso FIFO. I prototipi scartati restano tali.
-- **PERF-07 — parziale:** censimento e campionamento CPU conclusi; nessuna
-  nuova traduzione accettata. Conteggi/cicli guest non isolano costo host.
-- **PERF-08 — concluso:** riduzioni scanline/UI mantenute con riferimento CPU,
-  stato completo e benefici headless/GUI; worldmap/zoom6/lifecycle verificati.
-  [Ultima riduzione mantenuta](../changes/2026-10-21-evaluate-world-only-ui-pixels.json).
-  La quota CPU residua non riapre automaticamente questa voce.
-- **PERF-09 — parziale:** diagnostica/gate/sorgenti/backend già disponibili;
-  nei campioni attuali non emerge contesa che giustifichi SPSC o più buffering.
-- **PERF-10 — parziale:** observer e matrice di cadenza conclusi; composizione
-  prima dell'attesa scartata (p99 peggiore in4/5coppie). Restano criteri su
-  monitor60/high-Hz fisici, deriva audio e reattività input.
-- **PERF-11/12/13 — condizionali, non implementati/accettati:** i costi
-  disponibili non giustificano ancora nuovi filtri GPU o una PPU GPU. Il pool
-  opzionale zoom esiste già; non sostituirlo con un altro o creare thread/frame.
+## Execution status
 
-Export correnti e hash sono nel handoff:344test Windows/Wine e345Linux,
-15opzionali esclusi per target. Sono risultati di compatibilità/esportazione,
-non prestazioni Windows native o prova della risoluzione del lag originale.
-Il [workflow di misura](PERFORMANCE_WORKFLOW.md) e i record `docs/changes/`
-conservano i dettagli e i limiti. Questo audit non ripete build o benchmark.
+Status reconciled with current criteria and evidence on October 21. Read
+[TASK_HANDOFF.md](TASK_HANDOFF.md) before selecting work: an open parent does
+not reopen completed substeps or rejected experiments. The early test sections
+below are historical; their counts/exports apply to that phase.
+
+- **PERF-01 — partial:** enemy replay, worldmap and zoom6 already available and
+  measured; the rare original slowdown is not reproduced/isolated. Do not
+  recreate fixtures and baselines to reconstruct context.
+- **PERF-02 — partial:** CPU/PPU/GPU profiles, audio callback, frame gate, raw
+  enhanced requests, PipeWire observation and presentation cadence are
+  implemented. Attribution of the actually slow scene, controlled realtime
+  overhead and hardware/native Windows coverage remain. Empty requests do not
+  equal audible defects; ERR PipeWire does not cover every hardware XRUN.
+- **PERF-03 — completed:** A/B procedure with hash/configuration, verification
+  separate from timing, state/frame/audio comparison and rollback; incomplete
+  guard stopped before temporal history and frontend counters. Reuse
+  [dispatch checks](../changes/2026-10-20-preserve-native-dispatch-in-cost-profiling.json)
+  and complete candidate checks without reimplementing them.
+- **PERF-04 — partial:** recovery, skipped uploads, controlled device
+  invalidation and X11/Wine lifecycle verified; Wayland/native Windows and the
+  physical display/DPI/GPU matrix specified in the entry remain.
+- **PERF-05/06 — completed:** LUT/FPS revisions, UI input-packing cache,
+  call-local shared world upload and FIFO reuse. Rejected prototypes stay rejected.
+- **PERF-07 — partial:** CPU inventory and sampling completed; no new
+  translation accepted. Guest counts/cycles do not isolate host cost.
+- **PERF-08 — completed:** scanline/UI reductions retained with CPU reference,
+  full state and headless/GUI benefits; worldmap/zoom6/lifecycle verified.
+  [Latest retained reduction](../changes/2026-10-21-evaluate-world-only-ui-pixels.json).
+  Remaining CPU share does not automatically reopen this item.
+- **PERF-09 — partial:** diagnostics/gates/sources/backend already available;
+  current samples show no contention that justifies SPSC or more buffering.
+- **PERF-10 — partial:** observer and cadence matrix completed; composition
+  before waiting rejected (worse p99 in 4/5 pairs). Criteria for physical
+  60/high-Hz monitors, audio drift and input responsiveness remain.
+- **PERF-11/12/13 — conditional, not implemented/accepted:** available costs do
+  not yet justify new GPU filters or a GPU PPU. The optional zoom pool already
+  exists; do not replace it with another or create threads per frame.
+
+Current exports and hashes are in the handoff: 344 Windows/Wine tests and 345
+Linux tests, 15 optional tests excluded per target. These are compatibility/
+export results, not native Windows performance or proof that the original lag
+is resolved. The [measurement workflow](PERFORMANCE_WORKFLOW.md) and
+`docs/changes/` records retain details and limits. This audit repeats no builds
+or benchmarks.
+
 
 ## Fixture locali e prima verifica della battaglia
 

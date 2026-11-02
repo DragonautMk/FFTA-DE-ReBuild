@@ -596,6 +596,11 @@
       "scope": "Planning guide translated in English; task status, IDs, literal tokens, links and legacy heading anchors preserved; no development work authorized."
     },
     {
+      "path": "docs/To_DO/FFTARecomp_Menu_Atlante_del_Clan_SPEC.md",
+      "sha256": "48d57d58a45007817ae89aef04629ed82af0fa603e3363281b1192176806ab4d",
+      "scope": "Clan Atlas implementation specification translated to English; historical baseline, acceptance states, technical literals, links and legacy anchors preserved."
+    },
+    {
       "path": "docs/android_docker.md",
       "sha256": "032936e853ff50d16580d3b7cbdfb31b1dbd5c7caef98c1e5ba931b0ca484b08",
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
@@ -751,6 +756,11 @@
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
     },
     {
+      "path": "docs/development/DEBUG_TOOLS_TODO.md",
+      "sha256": "1c66d39aa17954cbd188c2b64babb519db5d8463e58f00362000eb336145c1ec",
+      "scope": "Shared debug tools plan translated to English; historical task states, acceptance limits, technical literals, links and legacy anchors preserved."
+    },
+    {
       "path": "docs/development/DEBUG_TOOLS_V2_TODO.md",
       "sha256": "2b2875e9ab3e975f39ef2923c30255bc1b5886f7191dd7c76973fd173310ed5e",
       "scope": "English checklist and audit notes translated; 28 task IDs, states, evidence and links retained, plus 11 original heading anchors and original user-request quotation."
@@ -777,7 +787,7 @@
     },
     {
       "path": "docs/development/TASK_HANDOFF.md",
-      "sha256": "c5e17ea208a825f561d04945b158c9e99c6cf60b7e10c4282f394fccd6e9cb34",
+      "sha256": "e7a931d038b0863bbd276f412baa50bfe78874827bebfba9b871e52a616cd052",
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
     },
     {
@@ -1088,9 +1098,7 @@
     "AndroidPort/Licenses/THIRD_PARTY_NOTICES.md",
     "CHANGELOG.md",
     "Licenses/THIRD_PARTY_NOTICES.md",
-    "docs/To_DO/FFTARecomp_Menu_Atlante_del_Clan_SPEC.md",
     "docs/architecture.md",
-    "docs/development/DEBUG_TOOLS_TODO.md",
     "docs/development/LOCAL_ARTIFACTS.md",
     "docs/development/PERFORMANCE_TODO.md",
     "docs/development/PERFORMANCE_WORKFLOW.md",
@@ -1197,7 +1205,7 @@
     }
   ],
   "next_actions": [
-    "Complete the partial Clan Atlas implementation specification: introduction and sections 0–3 translated, sections 4–10 still pending.",
+    "Continue partial performance and debug-save documentation: introductory status summaries translated, remaining sections pending.",
     "Audit remaining offline exporters, CLI/tool messages and source-generated metadata; campaign, artifact and coverage fixed templates are translated.",
     "Translate remaining technical/debug/development guides in bounded sections, preserving anchors, commands, IDs and validation limits.",
     "Audit remaining dynamic report metadata, console/tooling text, source comments and all other maintained content across both trees.",
@@ -1233,6 +1241,10 @@
     "docs/changes/2026-11-02-review-android-support-english.json",
     "docs/changes/2026-11-02-translate-godot-and-cloud-planning-guides.json",
     "docs/changes/2026-11-02-translate-desktop-bug-feature-checklist.json",
-    "docs/changes/2026-11-02-translate-atlas-spec-introduction.json"
+    "docs/changes/2026-11-02-translate-atlas-spec-introduction.json",
+    "docs/changes/2026-11-02-translate-atlas-specification-remainder.json",
+    "docs/changes/2026-11-02-translate-debug-tools-foundations-and-p0.json",
+    "docs/changes/2026-11-02-complete-shared-debug-tools-translation.json",
+    "docs/changes/2026-11-02-translate-performance-and-save-status-summaries.json"
   ]
 }

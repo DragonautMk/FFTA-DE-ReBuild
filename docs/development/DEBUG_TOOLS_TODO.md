@@ -1,475 +1,493 @@
-# TODO — Strumenti di debug condivisi
+<a id="todo--strumenti-di-debug-condivisi"></a>
 
-Aggiornato il **29 ottobre 2026**. La checklist segue progettazione e sviluppo:
-le spunte identificano gli strumenti completati. Gli strumenti devono servire sia
-all'utente, attraverso menu e procedure brevi, sia all'assistente, attraverso
-comandi riproducibili e risultati strutturati.
+# TODO — Shared debug tools
 
-**DBG identifica uno strumento; DS identifica una scena di prova.** I casi
-DS-01…DS-26 restano nel [TODO debug saves](debug%20saves.md), con i rispettivi
-stati e limiti. Non si crea una seconda lista di scene validate.
+Updated **October 29, 2026**. This checklist tracks design and development:
+checks identify completed tools. The tools must serve both the user, through
+menus and short procedures, and the assistant, through reproducible commands
+and structured results.
 
-Priorità attuale: aiutare l'[estrazione ROM](ROM_DATA_TODO.md), concentrandosi
-su EUR. Windows è il riferimento desktop; le nuove verifiche funzionali
-seguono l'attuale percorso Wine, indicando separatamente quelle native ancora
-mancanti. Nessun benchmark è richiesto da questo piano. Il
-[frontend Godot](GODOT_FRONTEND_TODO.md) resta rinviato e non è un prerequisito.
+**DBG identifies a tool; DS identifies a test scene.** DS-01…DS-26 remain in
+the [debug saves TODO](debug%20saves.md), with their respective states and
+limits. Do not create a second list of validated scenes.
 
-Il successore [Debug integrato — DBG2](DEBUG_TOOLS_V2_TODO.md) pianifica
-selettori interni, parametri/script da menu, console eventi/comandi e cheat
-per il debug. Le sue voci sono nuove e non riaprono DBG-01…DBG-22.
+Current priority: help [ROM extraction](ROM_DATA_TODO.md), focusing on EUR.
+Windows is the desktop reference; new functional checks follow the current Wine
+path, separately identifying native checks still missing. This plan requires no
+benchmark. The [Godot frontend](GODOT_FRONTEND_TODO.md) remains deferred and is
+not a prerequisite.
 
-## Basi già disponibili da riutilizzare
+The successor [Integrated debugging — DBG2](DEBUG_TOOLS_V2_TODO.md) plans
+internal selectors, menu parameters/scripts, event/command consoles and debug
+cheats. Its items are new and do not reopen DBG-01…DBG-22.
 
-Le spunte qui indicano capacità esistenti, con l'ambito documentato nei link;
-non significano che siano già raccolte in un unico debugger.
+<a id="basi-già-disponibili-da-riutilizzare"></a>
 
-- [x] **Slot di debug:** fino a 99 snapshot e 99 salvataggi standard, copie,
-  anteprime e Undo; [Extended saves](../extended_saves.md). Il catalogo locale
-  mantiene provenienza, regione e stato dei casi, ma il menu usa nomi generici.
-- [x] **Registrazione e replay:** `RECOMP_RECORD_INPUT`, `frames`/`runc`/`verify`
-  con input registrati; `runc --state` riprende snapshot in sola lettura.
-  Il [workflow di replay](PERFORMANCE_WORKFLOW.md#record-a-battle-from-a-supplied-snapshot)
-  documenta il limite attuale sui caricamenti durante la registrazione.
-- [x] **Confronti e catture:** verifica CLI degli hash dei frame, test mirati
-  di stato completo/clock/audio e dump di framebuffer/PPU/audio. Queste capacità
-  hanno ambiti diversi: `verify` da solo non equivale a tutte le prove dei test
-  mirati. Riferimenti: [CLI](../../crates/recomp/src/main.rs),
-  [confronti](../../scripts/compare_native_backends.py),
-  [analisi log](../../scripts/ffta_log_analysis.py).
-- [x] **Codice e fallback:** disassemblatore `dis`, trace dell'interprete,
-  raccolta e import/export di [label](../labels.md), contatori native/fallback.
-- [x] **Dataset e mappa:** estrazione/verifica/preparazione e
-  [ROM coverage](ROM_COVERAGE.md) offline via Docker, con identità, revisione
-  e data di generazione separate dalle prove ordinarie.
-- [x] **Audit ROM opzionale:** collector bus/host e catture filtrate con contesto
-  di esecuzione, dietro la feature `rom-data-read-audit`;
-  [capacità e limiti](../rom_data_runtime.md#optional-bus-and-host-rom-read-audit).
-  Ora esposto dal menu e dalla CLI in DBG-06; le estensioni Bank mantengono
-  una prova circoscritta separata, descritta nello stesso documento.
-- [x] **Gestione artefatti:** helper e regole di
-  [conservazione locale](LOCAL_ARTIFACTS.md) già presenti. La chiusura delle
-  verifiche della pulizia interrotta rimane distinta dalla loro esistenza;
-  i miglioramenti sono raccolti in DBG-18.
+## Existing foundations to reuse
 
-## Regole comuni per i nuovi strumenti
+Checks here identify existing capabilities within the scope documented in the
+links; they do not mean these are already collected in one debugger.
 
-- Stessa operazione e stesso significato dal menu e dal comando equivalente;
-  la CLI deve funzionare senza automatizzare clic e coordinate dello schermo.
-- Ogni esecuzione identifica binario, ROM/BIOS, dataset, snapshot, input e
-  configurazione effettivi. Commit e working tree modificata non bastano a
-  identificare un vecchio binario: servono hash e provenienza della build.
-- Output breve leggibile, JSON versionato per l'assistente e codice di uscita
-  distinto per successo, divergenza, timeout o input incompatibile.
-- Diagnostica disattivata nel percorso normale; attivazione esplicita, durata,
-  filtri e quantità massima di output. Log troncati e hook non coperti devono
-  essere riconoscibili, mai interpretati come assenza di problemi.
-- ROM, snapshot, SRAM, registrazioni, dump e asset restano locali e ignorati
-  da Git. Le sessioni lavorano su copie e non salvano sulla partita personale.
-- L'osservazione deve preservare stato e clock guest; le letture diagnostiche
-  non devono alterare registri I/O, conteggi del test o flusso del gioco.
-- Una spunta richiede implementazione, istruzioni d'uso, prova del risultato
-  atteso e del caso d'errore, evidenza e limiti. La sola presenza di un flag
-  o di un'immagine corretta non chiude la verifica.
+- [x] **Debug slots:** up to 99 snapshots and 99 standard saves, copies,
+  previews and Undo; [Extended saves](../extended_saves.md). The local catalog
+  retains case provenance, region and status, but the menu uses generic names.
+- [x] **Recording and replay:** `RECOMP_RECORD_INPUT`, `frames`/`runc`/`verify`
+  with recorded input; `runc --state` resumes snapshots read-only. The
+  [replay workflow](PERFORMANCE_WORKFLOW.md#record-a-battle-from-a-supplied-snapshot)
+  documents the current limit on loads during recording.
+- [x] **Comparisons and captures:** CLI frame-hash verification, targeted
+  full-state/clock/audio tests and framebuffer/PPU/audio dumps. These have
+  different scopes: `verify` alone is not equivalent to all targeted-test
+  checks. References: [CLI](../../crates/recomp/src/main.rs),
+  [comparisons](../../scripts/compare_native_backends.py),
+  [log analysis](../../scripts/ffta_log_analysis.py).
+- [x] **Code and fallback:** `dis` disassembler, interpreter trace, collection
+  and import/export of [labels](../labels.md), native/fallback counters.
+- [x] **Dataset and map:** extraction/verification/preparation and offline
+  [ROM coverage](ROM_COVERAGE.md) through Docker, with identity, revision and
+  generation date separate from ordinary-use evidence.
+- [x] **Optional ROM audit:** bus/host collector and filtered captures with
+  execution context, behind the `rom-data-read-audit` feature;
+  [capabilities and limits](../rom_data_runtime.md#optional-bus-and-host-rom-read-audit).
+  Now exposed through menu and CLI in DBG-06; Bank extensions retain separate
+  bounded evidence described in the same document.
+- [x] **Artifact management:** existing helpers and
+  [local retention](LOCAL_ARTIFACTS.md) rules. Closing validation of the
+  interrupted cleanup remains distinct from their existence; improvements are
+  collected in DBG-18.
 
-## P0 — Rendere i problemi riproducibili e aiutare l'estrazione
+<a id="regole-comuni-per-i-nuovi-strumenti"></a>
 
-- [x] **DBG-01 — Diagnosi della sessione e controllo iniziale.**
-  Menu «Copia diagnosi» e controllo CLI senza avviare la scena: mostrare profilo,
-  build, modalità native/interprete, dataset attivo, ROM/BIOS, slot, input,
-  percorso dati effettivo e cartella del report. Segnalare file mancanti,
-  generazioni incompatibili e strumenti non compilati nella build scelta.
-  **Chiusura:** lo stesso report si ottiene da menu/CLI; un input errato viene
-  individuato prima dell'esecuzione e la causa indica come correggerlo.
-  **Completato:** [diagnosi della sessione](../debug_diagnostics.md), menu
-  «Copy diagnosis» e CLI `diagnose`, JSON comune e report singolo atomico.
-  Verificati 47 test Windows sotto Wine, otto casi CLI su dati EUR e menu/appunti
-  in una sessione Wine/Xvfb isolata; 139 file protetti invariati. Windows nativo
-  e Linux restano da verificare. Native prima dell'avvio è una richiesta esplicita,
-  non una compilazione già eseguita. [Record](../changes/2026-10-27-add-shared-session-diagnosis.json).
+## Common rules for new tools
 
-- [x] **DBG-02 — Sessione di debug isolata.**
-  Avviare una copia di lavoro del caso scelto, indicando chiaramente la partita
-  attiva. Snapshot load, Undo, autosave, backup e uscita devono restare nella
-  sessione; tornare alla partita normale deve essere esplicito.
-  **Chiusura:** hash degli originali invariati dopo Load/Undo/riavvio/errore e
-  percorso portable trasferibile. **Dipende da:** DBG-01; riusa gli slot esistenti.
-  **Completato:** [sessioni isolate](../debug_sessions.md), menu Start/Close
-  debug session e CLI `debug-session create/open/inspect`. Copie portable con
-  input autenticati, scritture locali e override esterni esclusi. Verificati
-  64 test Wine, i 41 del menu finale, sette casi CLI e le prove GUI di operazioni,
-  spostamento e ritorno esplicito alla partita normale; 73 input protetti invariati.
-  Native Windows/Linux e gameplay native nella copia restano da verificare.
-  [Record](../changes/2026-10-27-add-isolated-debug-sessions.json).
+- Same operation and meaning from the menu and equivalent command; the CLI must
+  work without automating screen clicks and coordinates.
+- Every run identifies the actual binary, ROM/BIOS, dataset, snapshot, input and
+  configuration. Commit and modified working tree are insufficient to identify
+  an old binary: build hash and provenance are required.
+- Short readable output, versioned JSON for the assistant and distinct exit
+  codes for success, divergence, timeout or incompatible input.
+- Diagnostics disabled in the normal path; explicit activation, duration,
+  filters and maximum output. Truncated logs and uncovered hooks must be
+  recognizable, never interpreted as absence of problems.
+- ROMs, snapshots, SRAM, recordings, dumps and assets stay local and ignored by
+  Git. Sessions work on copies and do not save over the personal game.
+- Observation must preserve guest state and clock; diagnostic reads must not
+  change I/O registers, test counts or game flow.
+- A check requires implementation, usage instructions, evidence of the expected
+  result and error case, evidence and limits. A flag or correct image alone
+  does not close validation.
 
-- [x] **DBG-03 — Catalogo DS navigabile e interrogabile.**
-  Mostrare nome scena, regione, slot, variante, fonte, stato e prova disponibile;
-  filtrare dal menu e ottenere gli stessi dati in JSON. Importare in uno slot
-  libero con anteprima, senza confondere DS, IN, GEN e numeri delle varianti.
-  **Chiusura:** selezionare DS-20 apre il punto previsto nella copia EUR;
-  DS-03/DS-15 restano non coperti finché manca una nuova prova. Rilevare cataloghi
-  con file mancanti o checksum diversi. **Dipende da:** DBG-01/02.
-  **Completato:** [catalogo condiviso](../debug_catalog.md), menu Debug catalog
-  e CLI `debug-catalog list/open/import`, filtri, provenienza, checksum e anteprime.
-  Verificati 61 test Wine, 15 casi CLI e apertura DS-20/importazione nello slot 2/
-  caricamento/ritorno in GUI Wine/Xvfb; 140 input protetti invariati. Le 92 voci
-  mantengono distinti DS, varianti e fonti; DS-03/15 restano non coperti.
-  Windows nativo, Linux e controller fisici restano da verificare.
+<a id="p0--rendere-i-problemi-riproducibili-e-aiutare-lestrazione"></a>
+
+## P0 — Make problems reproducible and help extraction
+
+- [x] **DBG-01 — Session diagnosis and initial check.**
+  Menu “Copy diagnosis” and CLI check without starting the scene: show profile,
+  build, native/interpreter mode, active dataset, ROM/BIOS, slot, input, actual
+  data path and report folder. Report missing files, incompatible generations
+  and tools not compiled into the chosen build.
+  **Closure:** the same report is obtained from menu/CLI; bad input is identified
+  before execution and the cause indicates how to correct it.
+  **Completed:** [session diagnosis](../debug_diagnostics.md), menu
+  “Copy diagnosis” and CLI `diagnose`, shared JSON and a single atomic report.
+  Verified 47 Windows tests under Wine, eight CLI cases on EUR data and menu/
+  clipboard in an isolated Wine/Xvfb session; 139 protected files unchanged.
+  Native Windows and Linux remain unverified. Native before startup is an explicit
+  request, not a compilation already performed.
+  [Record](../changes/2026-10-27-add-shared-session-diagnosis.json).
+
+- [x] **DBG-02 — Isolated debug session.**
+  Start a working copy of the chosen case, clearly identifying the active game.
+  Snapshot load, Undo, autosave, backup and exit must remain in the session;
+  return to the normal game must be explicit.
+  **Closure:** original hashes unchanged after Load/Undo/restart/error and a
+  transferable portable path. **Depends on:** DBG-01; reuses existing slots.
+  **Completed:** [isolated sessions](../debug_sessions.md), Start/Close debug
+  session menu and CLI `debug-session create/open/inspect`. Portable copies with
+  authenticated inputs, local writes and external overrides excluded. Verified
+  64 Wine tests, 41 final menu tests, seven CLI cases and GUI checks of
+  operations, relocation and explicit return to the normal game; 73 protected
+  inputs unchanged. Native Windows/Linux and native gameplay in the copy remain
+  unverified. [Record](../changes/2026-10-27-add-isolated-debug-sessions.json).
+
+- [x] **DBG-03 — Browsable and queryable DS catalog.**
+  Show scene name, region, slot, variant, source, status and available evidence;
+  filter from the menu and obtain the same data as JSON. Import into a free slot
+  with preview, without confusing DS, IN, GEN and variant numbers.
+  **Closure:** selecting DS-20 opens the expected point in the EUR copy;
+  DS-03/DS-15 remain uncovered until new evidence exists. Detect catalogs with
+  missing files or different checksums. **Depends on:** DBG-01/02.
+  **Completed:** [shared catalog](../debug_catalog.md), Debug catalog menu and
+  CLI `debug-catalog list/open/import`, filters, provenance, checksums and
+  previews. Verified 61 Wine tests, 15 CLI cases and DS-20 opening/import into
+  slot 2/loading/return in Wine/Xvfb GUI; 140 protected inputs unchanged. The
+  92 entries keep DS, variants and sources distinct; DS-03/15 remain uncovered.
+  Native Windows, Linux and physical controllers remain unverified.
   [Record](../changes/2026-10-28-add-shared-debug-save-catalog.json).
 
-- [x] **DBG-04 — Registrazione semplice a partire da uno snapshot.**
-  Comandi «Registra/Termina» e corrispondente avvio CLI: associare snapshot
-  iniziale, origine dei frame, tasti già premuti e sequenza ordinata degli input.
-  In caso di Load/Undo durante la registrazione, arrestare con un messaggio o
-  iniziare un segmento esplicito; non indebolire il blocco attuale producendo
-  una registrazione apparentemente valida.
-  **Chiusura:** il replay raggiunge l'endpoint atteso con stato/clock coerenti,
-  anche iniziando con un tasto tenuto premuto. **Dipende da:** DBG-02/03.
-  **Completato:** [registrazione da snapshot](../debug_recordings.md), menu
-  Start/Stop input recording e CLI `debug-record start/verify`. Snapshot iniziale,
-  frame relativi, tasti iniziali espliciti, eventi ordinati ed endpoint autenticato;
-  limiti senza eliminazione automatica. Load/Undo load salvano la cattura e
-  rifiutano il primo rewind. Verificati 57 test Wine e cinque catture reali DS-20
-  con replay identico per stato completo/clock, più spostamento, file alterati,
-  sessione attiva, chiusura e fallimento di scrittura. 140 input originali invariati.
-  Verifica native, Windows nativo e controller fisici restano aperti.
-  [Record](../changes/2026-10-28-add-snapshot-input-recording.json).
+- [x] **DBG-04 — Simple recording from a snapshot.**
+  “Record/Stop” commands and corresponding CLI start: associate the initial
+  snapshot, frame origin, already-held keys and ordered input sequence. On
+  Load/Undo during recording, stop with a message or start an explicit segment;
+  do not weaken the current guard by producing an apparently valid recording.
+  **Closure:** replay reaches the expected endpoint with consistent state/clock,
+  including when starting with a held key. **Depends on:** DBG-02/03.
+  **Completed:** [recording from a snapshot](../debug_recordings.md), Start/Stop
+  input recording menu and CLI `debug-record start/verify`. Initial snapshot,
+  relative frames, explicit initial keys, ordered events and authenticated
+  endpoint; limits without automatic deletion. Load/Undo load save the capture
+  and refuse the first rewind. Verified 57 Wine tests and five real DS-20
+  captures with identical full-state/clock replay, plus relocation, altered
+  files, active session, closure and write failure. 140 original inputs
+  unchanged. Native validation, native Windows and physical controllers remain
+  open. [Record](../changes/2026-10-28-add-snapshot-input-recording.json).
 
-- [x] **DBG-05 — Riproduzione con un comando o un pulsante.**
-  Un profilo locale contiene caso, binario e dataset selezionati, input, numero
-  di frame, condizione d'arresto e timeout. L'utente sceglie «Riproduci caso»;
-  l'assistente esegue lo stesso profilo e riceve progressione ed esito JSON.
-  Non attivare misure di performance per un controllo funzionale.
-  **Chiusura:** ripetibilità dell'endpoint; errore chiaro su input incompatibile,
-  timeout e interruzione, senza scritture personali. **Dipende da:** DBG-01…04.
-  **Completato:** [profili di replay](../debug_replays.md), menu Replay case/
-  Choose replay profile/Cancel replay e CLI `debug-replay create/run/cancel`.
-  Worker isolato senza writer di gioco, endpoint esatto, JSON di avanzamento/
-  risultato e codici distinti. Verificati 60 test Wine, ripetibilità/spostamento,
-  errori/timeout/annullamento/doppio avvio e menu con genitore invariato;
-  171 input selezionati invariati. La vecchia libreria native locale completa
-  il caso con clock identico e stato diverso: divergenza segnalata, parità
-  non accettata. Windows nativo/Linux/controller restano da verificare.
+- [x] **DBG-05 — Replay with one command or button.**
+  A local profile contains the selected case, binary and dataset, input, frame
+  count, stop condition and timeout. The user chooses “Replay case”; the
+  assistant runs the same profile and receives progress and JSON outcome.
+  Do not enable performance measurements for a functional check.
+  **Closure:** repeatable endpoint; clear errors on incompatible input, timeout
+  and interruption, without personal writes. **Depends on:** DBG-01…04.
+  **Completed:** [replay profiles](../debug_replays.md), Replay case/Choose
+  replay profile/Cancel replay menu and CLI `debug-replay create/run/cancel`.
+  Isolated worker without game writer, exact endpoint, JSON progress/result and
+  distinct codes. Verified 60 Wine tests, repeatability/relocation, errors/
+  timeout/cancellation/double start and menu with unchanged parent; 171 selected
+  inputs unchanged. The old local native library completes the case with
+  identical clock and different state: divergence reported, parity not accepted.
+  Native Windows/Linux/controllers remain unverified.
   [Record](../changes/2026-10-28-add-supervised-debug-replay-profiles.json).
 
-- [x] **DBG-06 — Audit delle letture ROM utilizzabile senza test ad hoc.**
-  Esporre i collector esistenti con preset, intervallo di frame, filtro indirizzi
-  e limite di eventi. Distinguere bus/host, letture typed/raw, fetch esclusi e
-  accessi non osservati. Quando disponibile riportare PC/modalità, mantenendo
-  distinto il contesto ereditato da DMA/HLE dall'istruzione che legge direttamente.
-  **Chiusura:** report di intervalli fisici e byte distinti, confronto con i dati
-  noti e scarto dei mirror duplicati; controllo di stato/clock con audit spento
-  e acceso. Una lettura fuori owner è una pista, non una nuova famiglia provata.
-  **Dipende da:** DBG-01/05 e chiusura delle estensioni audit già in lavorazione.
-  **Completato:** [audit ROM](../debug_rom_audit.md), CLI
-  `debug-rom-audit create/run/cancel` e menu Audit replay su profili isolati.
-  Filtri, finestra, eventi limitati, servizio typed/raw effettivo, scope PC/modo,
-  unioni fisiche e confronto con un piano identificato. Troncatura e finestre
-  parziali esplicite; feature assente rifiutata. Verificati 61 test Wine, casi CLI
-  raw/typed con stato/clock identici, conti indipendenti, menu/cancel e genitore
-  invariato; 238 input protetti invariati. Due frame DS20: 12.416 B distinti,
-  11.495 B serviti typed con il dataset e76. Nessuna nuova accettazione ROM/DS.
+- [x] **DBG-06 — ROM read audit usable without ad hoc tests.**
+  Expose existing collectors with presets, frame interval, address filter and
+  event limit. Distinguish bus/host, typed/raw reads, excluded fetches and
+  unobserved accesses. Report PC/mode when available, keeping context inherited
+  from DMA/HLE separate from the instruction that reads directly.
+  **Closure:** report physical intervals and distinct bytes, compare known data
+  and discard duplicate mirrors; check state/clock with audit off and on. A read
+  outside an owner is a lead, not a newly proven family.
+  **Depends on:** DBG-01/05 and completion of audit extensions already underway.
+  **Completed:** [ROM audit](../debug_rom_audit.md), CLI
+  `debug-rom-audit create/run/cancel` and Audit replay menu on isolated profiles.
+  Filters, window, bounded events, actual typed/raw service, PC/mode scope,
+  physical unions and comparison with an identified plan. Truncation and partial
+  windows explicit; missing feature rejected. Verified 61 Wine tests, raw/typed
+  CLI cases with identical state/clock, independent counts, menu/cancel and
+  unchanged parent; 238 protected inputs unchanged. Two DS20 frames: 12,416
+  distinct B, 11,495 B served typed with dataset e76. No new ROM/DS acceptance.
   [Record](../changes/2026-10-28-add-bounded-rom-read-audit-tools.json).
 
-- [x] **DBG-07 — Collegare scene, letture e ROM coverage.**
-  Importare gli audit per caso DS ed esporre i livelli «identificato», «servito
-  dal runtime», «letto nelle scene selezionate», «condiviso» e «sconosciuto».
-  Clic su una regione → risorsa, scene e prove; confronto tra due generazioni
-  con data/identità visibili. Conservare separatamente candidati codice e dati.
-  **Chiusura:** contare le unioni senza sommare riletture, separare intervalli
-  delle famiglie positive da byte osservati, rifiutare report con ROM diversa
-  e dichiarare la copertura dei collector. **Dipende da:** DBG-06.
-  **Completato:** [mappa e istruzioni](ROM_COVERAGE.md#scene-letture-e-confronto-dbg-07),
-  importazione esplicita via Docker, unioni ricostruite dagli eventi, selezione
-  dei report e dettaglio risorsa/caso/prove. Schema 3 con confronto datato,
-  identità e intervalli aggiunti/rimossi; filtri, gap, TRONCATO/PARZIALE visibili.
-  26 test generatore, otto Bash e 12 controlli PowerShell passano; Docker reale
-  e browser 1400/620 px verificati. Tre audit DS20 esistenti: 31.061 B come
-  minimo troncato; brevi completi 12.416 B, typed 11.495 B. Nessun nuovo replay,
-  dato estratto o caso DS promosso; snapshot e76 esplicitamente storico.
+- [x] **DBG-07 — Connect scenes, reads and ROM coverage.**
+  Import audits by DS case and expose “identified”, “served by runtime”, “read in
+  selected scenes”, “shared” and “unknown” levels. Click a region → resource,
+  scenes and evidence; compare two generations with visible date/identity.
+  Keep code and data candidates separate.
+  **Closure:** count unions without adding rereads, distinguish positive-family
+  intervals from observed bytes, reject reports with a different ROM and declare
+  collector coverage. **Depends on:** DBG-06.
+  **Completed:** [map and instructions](ROM_COVERAGE.md#scene-letture-e-confronto-dbg-07),
+  explicit import via Docker, unions reconstructed from events, report selection
+  and resource/case/evidence detail. Schema 3 with dated comparison, identity
+  and added/removed intervals; filters, gaps, TRONCATO/PARZIALE (truncated/partial) visible.
+  26 generator tests, eight Bash and 12 PowerShell checks pass; real Docker and
+  browser at 1400/620 px verified. Three existing DS20 audits: 31,061 B as a
+  truncated minimum; short complete captures 12,416 B, typed 11,495 B. No new
+  replay, extracted data or promoted DS case; snapshot e76 explicitly historical.
   [Record](../changes/2026-10-28-link-rom-coverage-to-scene-audits.json).
 
-- [x] **DBG-08 — Arresto e cattura quando si raggiunge un caso.**
-  Permettere condizioni come prima lettura di una risorsa, ingresso in un PC
-  verificato o evento noto. Fermarsi a un confine sicuro e creare uno snapshot
-  derivato con origine, input e motivo della cattura, pronto per il catalogo.
-  **Chiusura:** un trigger noto produce un punto riutilizzabile; un trigger mai
-  raggiunto termina al limite dichiarato senza promuovere il caso. Le scene
-  ordinarie si raggiungono tramite input reali. **Dipende da:** DBG-03/05/06.
-  **Completato:** [catture su trigger](../debug_captures.md), CLI
-  `debug-capture create/run/cancel` e menu «Capture on trigger». Prima lettura
-  di risorsa autenticata, ingresso interprete in un PC/opcode verificato o
-  evento di frame; snapshot al confine sicuro con origine/input/motivo e catalogo
-  variante. Limite senza match → `not-reached` (7), nessuno snapshot; otto bundle
-  per profilo, senza sovrascrittura. 66 test Wine, 25 casi CLI più annullamento
-  e quattro controlli feature, GUI reached/not-reached/cancel/owner-close passano.
-  DS20: tre trigger concordano su stato completo/clock dopo un frame; catalogo
-  riutilizzabile. 203 originali invariati, nessuna nuova accettazione DS.
+- [x] **DBG-08 — Stop and capture when a case is reached.**
+  Allow conditions such as first read of a resource, entry into a verified PC
+  or known event. Stop at a safe boundary and create a derived snapshot with
+  origin, input and capture reason, ready for the catalog.
+  **Closure:** a known trigger produces a reusable point; a never-reached trigger
+  ends at the declared limit without promoting the case. Ordinary scenes are
+  reached through real input. **Depends on:** DBG-03/05/06.
+  **Completed:** [trigger captures](../debug_captures.md), CLI
+  `debug-capture create/run/cancel` and “Capture on trigger” menu. First read
+  of authenticated resource, interpreter entry into a verified PC/opcode or frame
+  event; snapshot at safe boundary with origin/input/reason and catalog variant.
+  Limit without match → `not-reached` (7), no snapshot; eight bundles per
+  profile, without overwrite. 66 Wine tests, 25 CLI cases plus cancellation and
+  four feature checks, GUI reached/not-reached/cancel/owner-close pass. DS20:
+  three triggers agree on full state/clock after one frame; reusable catalog.
+  203 originals unchanged, no new DS acceptance.
   [Record](../changes/2026-10-28-add-bounded-debug-trigger-captures.json).
 
-## P1 — Capire dove e perché compare una differenza
 
-- [x] **DBG-09 — Confronto al primo punto di divergenza.**
-  Confrontare interprete/native oppure dati raw/typed riutilizzando i controlli
-  esistenti: stato completo, clock, framebuffer centrale/wide, OAM e stream audio.
-  Evidenziare il primo frame e i campi diversi, con immagini affiancate e JSON.
-  **Chiusura:** localizzare una differenza nota senza limitarsi all'hash finale;
-  indicare esattamente quali componenti sono state confrontate.
-  **Dipende da:** DBG-05; output pesanti solo attorno alla divergenza.
-  **Implementato (2026-10-28):** [confronto per frame](../debug_comparisons.md),
-  `debug-compare create/run/cancel` e menu «Compare first difference».
-  Riferimento interprete/raw e candidato interprete/native con dataset opzionale;
-  campi CPU/Bus serializzati esatti, registri, immagini affiancate e stream audio.
-  Finestra massima 3.600 frame, otto report per profilo; snapshot/PNG/audio soltanto
-  al primo confine diverso, metadati per prefisso uguale o interrotto.
-  Passano 67 test Wine, 20 casi CLI più annullamento, tre controlli default,
-  GUI e browser desktop/mobile. DS20: primo frame diverso, clock +4 cicli e
-  solo r15; immagini/OAM/audio coincidono. È una localizzazione del confine,
-  senza verdetto sulla causa o accettazione della parità native. Tutti i 276
-  originali controllati e i normali eseguibili restano invariati.
+<a id="p1--capire-dove-e-perché-compare-una-differenza"></a>
+
+## P1 — Understand where and why a difference appears
+
+- [x] **DBG-09 — Compare at the first divergence.**
+  Compare interpreter/native or raw/typed data using existing checks: full
+  state, clock, central/wide framebuffer, OAM and audio stream. Highlight the
+  first frame and differing fields, with side-by-side images and JSON.
+  **Closure:** locate a known difference beyond the final hash; indicate exactly
+  which components were compared. **Depends on:** DBG-05; heavy output only
+  around the divergence.
+  **Implemented (2026-10-28):** [frame comparison](../debug_comparisons.md),
+  `debug-compare create/run/cancel` and “Compare first difference” menu.
+  Interpreter/raw reference and interpreter/native candidate with optional
+  dataset; exact serialized CPU/Bus fields, registers, side-by-side images and
+  audio stream. Maximum window 3,600 frames, eight reports per profile;
+  snapshot/PNG/audio only at the first differing boundary, metadata for equal or
+  interrupted prefix. 67 Wine tests, 20 CLI cases plus cancellation, three
+  default checks, GUI and desktop/mobile browser pass. DS20: first differing
+  frame, clock +4 cycles and only r15; images/OAM/audio agree. This locates the
+  boundary without a verdict on cause or acceptance of native parity. All 276
+  checked originals and normal executables remain unchanged.
   [Record](../changes/2026-10-28-add-first-frame-debug-comparisons.json).
 
-- [x] **DBG-10 — Pausa, avanzamento di un frame e ripresa controllata.**
-  Fornire scorciatoie e comandi equivalenti per fermarsi e avanzare di N frame.
-  Rendere visibili frame guest, clock e motivo dell'arresto; evitare che il tasto
-  del debugger diventi anche un input del gioco.
-  **Chiusura:** avanzamento esatto, ripresa senza salti di stato o accumuli audio
-  causati dalla pausa host. **Dipende da:** DBG-02/05.
-  **Implementato (2026-10-28):** [controllo della copia isolata](../debug_control.md),
-  menu Step 1/10 e Resume, F6/F7/F8 consumati prima dell'input guest e CLI
-  `debug-control status/pause/step/resume`; avvio `debug-session open DIR --paused`.
-  Budget di 1–600 frame, input neutro o maschera CLI, frame/clock/motivo visibili,
-  code audio svuotate e pacing ripristinato alla ripresa. 69 test Wine, 24 casi
-  CLI/GUI e nove default passano; 22 frame menu/tastiera coincidono nello stato
-  completo con CLI e le registrazioni di 22/80 frame coincidono con l'interprete
-  continuo. Interruzioni, client concorrente e replay durante un budget verificati.
-  202 originali invariati; piattaforme native/controller/passi native non verificati.
+- [x] **DBG-10 — Pause, frame stepping and controlled resume.**
+  Provide shortcuts and equivalent commands to stop and advance N frames. Show
+  guest frame, clock and stop reason; prevent the debugger key from also becoming
+  game input. **Closure:** exact stepping, resumption without state skips or audio
+  buildup caused by host pause. **Depends on:** DBG-02/05.
+  **Implemented (2026-10-28):** [isolated copy control](../debug_control.md),
+  Step 1/10 and Resume menu, F6/F7/F8 consumed before guest input and CLI
+  `debug-control status/pause/step/resume`; start with `debug-session open DIR --paused`.
+  Budget of 1–600 frames, neutral input or CLI mask, visible frame/clock/reason,
+  audio queues flushed and pacing restored on resume. 69 Wine tests, 24 CLI/GUI
+  cases and nine defaults pass; 22 menu/keyboard frames match the CLI in full
+  state and 22/80-frame recordings match the continuous interpreter.
+  Interruptions, concurrent client and replay during a budget verified. 202
+  originals unchanged; native platforms/controllers/native steps unverified.
   [Record](../changes/2026-10-28-add-controlled-debug-frame-stepping.json).
 
-- [x] **DBG-11 — Breakpoint, watchpoint e memoria in sola lettura.**
-  Selezionare PC/ARM/Thumb, intervallo letto/scritto o valore osservato; mostrare
-  registri e memoria con label, offset ROM e owner. Distinguere l'arresto a
-  istruzione da quello a blocco nativo: non dichiarare granularità non supportata.
-  **Chiusura:** due trigger mirati verificati e letture diagnostiche senza effetti
-  I/O; nessuna modifica arbitraria di RAM necessaria. **Dipende da:** DBG-10/06.
-  **Implementato (2026-10-28):** [ricerca e ispezione readonly](../debug_probes.md),
-  `debug-control break/watch/inspect` e menu Inspect PC / registers nella copia.
-  PC/modo prima del passo, accessi bus/valore dopo il passo con HLE/DMA espliciti;
-  ricerca interprete limitata, native rifiutato, watch con feature audit. Registri,
-  finestre 1–256 byte, mirror/offset/label e owner da source-plan autenticato.
-  Passano 88 test Wine distinti, 21 casi CLI/GUI e nove default più interruzioni:
-  PC Thumb e due accessi IRQ reali, letture senza mutazioni, guardie e chiusura.
-  Risolta anche la perdita di conferma su sostituzione temporaneamente negata
-  da Windows: ripubblicazione della stessa risposta senza rieseguire il comando.
-  202 originali invariati; nessuna nuova accettazione ROM/DS/native.
+- [x] **DBG-11 — Breakpoints, watchpoints and read-only memory.**
+  Select PC/ARM/Thumb, read/written interval or observed value; show registers
+  and memory with labels, ROM offset and owner. Distinguish instruction stop
+  from native-block stop: do not claim unsupported granularity.
+  **Closure:** two targeted triggers verified and diagnostic reads without I/O
+  effects; no arbitrary RAM modification required. **Depends on:** DBG-10/06.
+  **Implemented (2026-10-28):** [read-only search and inspection](../debug_probes.md),
+  `debug-control break/watch/inspect` and Inspect PC / registers menu in the copy.
+  PC/mode before the step, bus/value accesses after the step with HLE/DMA explicit;
+  bounded interpreter search, native refused, watch requires audit feature.
+  Registers, 1–256-byte windows, mirror/offset/label and owner from authenticated
+  source-plan. 88 distinct Wine tests, 21 CLI/GUI cases and nine defaults plus
+  interruptions pass: Thumb PC and two real IRQ accesses, reads without mutation,
+  guards and closure. Also fixed lost confirmation on a replacement temporarily
+  denied by Windows: republish the same response without re-executing the command.
+  202 originals unchanged; no new ROM/DS/native acceptance.
   [Record](../changes/2026-10-28-add-bounded-debug-breakpoints-and-memory-inspection.json).
 
-- [x] **DBG-12 — Ispettore grafico e confronto visivo.**
-  Riunire i dump esistenti: BG/OBJ, OAM, palette, tile, finestre, framebuffer
-  originale, estensione widescreen e composizione finale. Collegare il pixel
-  selezionato alla sorgente quando la provenienza è dimostrata.
-  **Chiusura:** spiegare un caso noto di palette/ritaglio/layout con vista e
-  report riproducibili, senza alterare registri o rendering guest.
-  **Dipende da:** DBG-05/09; riusa i dati estratti e i confronti grafici correnti.
-  **Esito:** [ispettore offline](../debug_graphics.md) da copia ferma, menu/CLI,
-  massimo otto report privati con buffer/PNG/JSON e confronto precedente.
-  BG/OBJ/OAM/palette/tile/finestre, centrale/wide e composizione CPU con/senza UI;
-  pixel backing esplicito, provenienza ROM e vincitore finale sconosciuti.
-  DS-20 frame22220 spiega padding/ritaglio UI: finestra852×480, canvas con x=-294,
-  contenuto effettivo89.856pixel in [114,48,738,192), dentro il clip.58test Wine,
-  21casi CLI/GUI, browser desktop/mobile e5report verificati;202originali e
-  runtime normali invariati. Effetti GPU, piattaforme native e altre scene non
-  certificati. [Record](../changes/2026-10-28-add-readonly-graphics-inspector.json).
+- [x] **DBG-12 — Graphics inspector and visual comparison.**
+  Combine existing dumps: BG/OBJ, OAM, palettes, tiles, windows, original
+  framebuffer, widescreen extension and final composition. Link a selected pixel
+  to its source when provenance is demonstrated.
+  **Closure:** explain a known palette/clipping/layout case with reproducible
+  view and report, without altering guest registers or rendering.
+  **Depends on:** DBG-05/09; reuses extracted data and current graphics comparisons.
+  **Outcome:** [offline inspector](../debug_graphics.md) from a paused copy,
+  menu/CLI, up to eight private reports with buffer/PNG/JSON and prior comparison.
+  BG/OBJ/OAM/palette/tile/windows, central/wide and CPU composition with/without
+  UI; explicit pixel backing, ROM provenance and final winner unknown. DS-20
+  frame 22220 explains UI padding/clipping: 852×480 window, canvas at x=-294,
+  actual content 89,856 pixels in [114,48,738,192), inside clip. 58 Wine tests,
+  21 CLI/GUI cases, desktop/mobile browser and five reports verified; 202
+  originals and normal runtimes unchanged. GPU effects, native platforms and
+  other scenes not certified.
+  [Record](../changes/2026-10-28-add-readonly-graphics-inspector.json).
 
-- [x] **DBG-13 — Diagnosi di menu, testo e input.**
-  Mostrare menu riconosciuto, focus, azione host/guest, bbox e metriche del testo;
-  tracciare pressione/rilascio, rimappatura e conferma consumata dal menu.
-  Conservare un controllo da tastiera/gamepad e uno da CLI con input registrati.
-  **Chiusura:** una conferma doppia o un testo tagliato è attribuibile a un
-  passaggio preciso, senza affidarsi al solo screenshot. **Dipende da:** DBG-04/12.
-  **Esito:** [trace UI/input](../debug_ui.md), Start/Save dal menu e CLI,
-  focus in `status` incluse opzioni/geometry del dropdown, metriche dello stesso
-  font, bbox e PNG diagnostico senza modificare rendering o input. Limiti
-  30s/1.024eventi/600frame, otto report privati. Autorepeat tastiera:14ripetizioni,
-  un solo dispatch; XInput simulato:una rimappatura A, nessuna conferma doppia né
-  frame guest. Registrazione CLI A/rilascio verificata su2frame dopo chiusura.
-  Testo tagliato attribuito a545,89px richiesti/472disponibili,64/75caratteri,
-  clip canvas falso.69test Wine distinti, browser desktop/mobile e6report;
-  202originali/runtime normali invariati. Errori di navigazione del test conservati
-  separati dai prefissi accettati; controller fisici/testo guest non certificati.
+- [x] **DBG-13 — Menu, text and input diagnostics.**
+  Show recognized menu, focus, host/guest action, bbox and text metrics; trace
+  press/release, remapping and menu-consumed confirmation. Retain a keyboard/
+  gamepad check and a CLI check with recorded input.
+  **Closure:** attribute a double confirmation or clipped text to a precise step
+  without relying on a screenshot alone. **Depends on:** DBG-04/12.
+  **Outcome:** [UI/input trace](../debug_ui.md), Start/Save from menu and CLI,
+  focus in `status` including dropdown options/geometry, same-font metrics, bbox
+  and diagnostic PNG without modifying rendering or input. Limits: 30 s/1,024
+  events/600 frames, eight private reports. Keyboard autorepeat: 14 repeats,
+  one dispatch; simulated XInput: one A remapping, no double confirmation or
+  guest frame. CLI A/release recording verified over two frames after closure.
+  Clipped text attributed to 545.89 px required/472 available, 64/75 characters,
+  false canvas clip. 69 distinct Wine tests, desktop/mobile browser and six
+  reports; 202 originals/normal runtimes unchanged. Test navigation errors kept
+  separate from accepted prefixes; physical controllers/guest text not certified.
   [Record](../changes/2026-10-28-add-bounded-menu-text-input-diagnostics.json).
 
-- [x] **DBG-14 — Diagnostica audio circoscritta.**
-  Rendere selezionabili le catture mixed/PSG/FIFO/HLE, i relativi eventi e un
-  intervallo breve attorno al difetto; confronto e riproduzione locale dei dump.
-  Esporre mute, Fast e reset rilevanti senza avviare benchmark.
-  **Chiusura:** individuare una divergenza nota e distinguere audio generato da
-  audio effettivamente consegnato al dispositivo; I/O fuori dal callback audio.
-  **Dipende da:** DBG-05/09; limiti di byte/durata e listener hardware dichiarato.
-  **Esito:** [catture e confronto audio](../debug_audio.md), menu Start/Save e
-  CLI con selezione stream/finestra, WAV/raw/HTML/JSON privati. Buffer guest,
-  decisione producer e buffer callback effettivo restano distinti; mute/Fast/
-  gain/code/reset espliciti. Nessun I/O/clock/allocazione/lock nuovo nel callback.
-  Divergenza conservata al frame8514: mixed81918/81919 −704 contro −576, senza
-  riesecuzione.66test Wine distinti e2riesecuzioni mirate, registrazione4frame
-  con endpoint esatto, menu/default e CLI/feature, browser desktop/mobile con
-  WAV/seek e homepage37indici/8audio passano;197originali e runtime normali
-  invariati. Report finale identifica anche seed/BIOS/dataset/build/input.
-  Windows/Linux nativi, hardware/listener e altre scene restano non verificati.
+- [x] **DBG-14 — Bounded audio diagnostics.**
+  Make mixed/PSG/FIFO/HLE captures, their events and a short interval around the
+  defect selectable; compare and play dumps locally. Expose relevant mute, Fast
+  and resets without starting a benchmark.
+  **Closure:** locate a known divergence and distinguish generated audio from
+  audio actually delivered to the device; I/O outside the audio callback.
+  **Depends on:** DBG-05/09; declare byte/duration limits and hardware listener.
+  **Outcome:** [audio captures and comparison](../debug_audio.md), Start/Save
+  menu and CLI with stream/window selection, private WAV/raw/HTML/JSON. Guest
+  buffer, producer decision and actual callback buffer remain distinct; mute/
+  Fast/gain/queues/resets explicit. No new callback I/O/clock/allocation/lock.
+  Divergence preserved at frame 8514: mixed 81918/81919 −704 versus −576, without
+  rerunning. 66 distinct Wine tests and two targeted reruns, four-frame recording
+  with exact endpoint, menu/default and CLI/feature, desktop/mobile browser with
+  WAV/seek and homepage 37 indexes/8 audio pass; 197 originals and normal
+  runtimes unchanged. Final report also identifies seed/BIOS/dataset/build/input.
+  Native Windows/Linux, hardware/listener and other scenes remain unverified.
   [Record](../changes/2026-10-29-add-bounded-audio-diagnostics.json).
 
-- [x] **DBG-15 — Codice, label e fallback nello stesso rapporto.**
-  Collegare PC osservato, disassemblato, label, blocco compilato e motivo del
-  fallback, con filtri e catture limitate. Distinguere codice ROM, codice in RAM,
-  candidati statici ed esecuzione osservata.
-  **Chiusura:** una transizione interprete/native è ricostruibile e l'import di
-  label per ROM diversa è segnalato; nessuna percentuale di codice estratto viene
-  dedotta dal solo numero di ingressi. **Dipende da:** DBG-01/06/11.
-  **Esito:** [trace codice/label/fallback](../debug_code.md), Start/Save menu/CLI,
-  PC/modo/backing/disassemblato e scelta effettiva, filtri e prefisso limitato.
-  Label ROM diversa rifiutata; ROM/RAM e candidati statici restano distinti.
-  Nel prefisso native reale gli eventi17/18 passano da08145c10Thumb compilato a
-  0801bde8Thumb mancante:41native/470missing/1IRQ. Stessa libreria con observer
-  spento/acceso conserva stato completo e6547blocchi/14991passi nell'intero frame.
-  74test Wine, menu/CLI con endpoint registrato2frame esatto, errori/capacità,
-  browser desktop/mobile e4report passano; sei input/runtime originali invariati.
-  Nessuna nuova parità interprete/native o percentuale di codice estratto.
+- [x] **DBG-15 — Code, labels and fallback in one report.**
+  Connect observed PC, disassembly, label, compiled block and fallback reason,
+  with filters and bounded captures. Distinguish ROM code, RAM code, static
+  candidates and observed execution.
+  **Closure:** reconstruct an interpreter/native transition and flag label import
+  for a different ROM; do not infer code-extraction percentage from entry count
+  alone. **Depends on:** DBG-01/06/11.
+  **Outcome:** [code/label/fallback trace](../debug_code.md), Start/Save menu/CLI,
+  PC/mode/backing/disassembly and actual choice, filters and bounded prefix.
+  Different-ROM label rejected; ROM/RAM and static candidates remain distinct.
+  In the real native prefix events 17/18 transition from compiled 08145c10 Thumb
+  to missing 0801bde8 Thumb: 41 native/470 missing/1 IRQ. The same library with
+  observer off/on preserves full state and 6547 blocks/14991 steps in the entire
+  frame. 74 Wine tests, menu/CLI with exact two-frame recorded endpoint, errors/
+  capacities, desktop/mobile browser and four reports pass; six original inputs/
+  runtimes unchanged. No new interpreter/native parity or code-extraction percentage.
   [Record](../changes/2026-10-29-add-bounded-code-dispatch-diagnostics.json).
 
-- [x] **DBG-16 — Report del problema pronto da leggere insieme.**
-  Generare indice HTML locale, riepilogo e JSON con sintomo, caso, frame, input,
-  identità, confronto e prossima verifica suggerita. Pulsanti per aprire cartella
-  e copiare il comando esatto; distinguere allegati privati e metadati condivisibili.
-  **Chiusura:** l'utente può indicare un report e l'assistente riprodurlo senza
-  ricostruire a mano le variabili d'ambiente; nessun invio automatico di file.
-  **Dipende da:** DBG-01/05/09; report presente anche in caso di errore.
-  **Esito:** [report locale del problema](../debug_issues.md), menu/CLI e indice
-  HTML/JSON con sintomo, identità, frame registrati/finestra/completati, prima
-  differenza, allegati privati e prossima verifica. Preflight incompatibile salva
-  comunque; otto report/2MiB con lock, nessun replay/invio automatico. Launcher
-  relativo dopo spostamento con spazi/apostrofo/Unicode raggiunge endpoint2frame
-  esatto; clipboard/cartella reali e browser desktop/mobile passano.72test Wine
-  distinti+1riesecuzione mirata, menu/CLI con stato guest invariato,28input
-  originali intatti; homepage49indici/8issue. PowerShell/Windows e Linux nativi
-  restano da verificare. [Record](../changes/2026-10-29-add-reproducible-local-issue-reports.json).
+- [x] **DBG-16 — Issue report ready to read together.**
+  Generate a local HTML index, summary and JSON with symptom, case, frame, input,
+  identities, comparison and suggested next check. Buttons to open the folder
+  and copy the exact command; distinguish private attachments from shareable metadata.
+  **Closure:** the user can point to a report and the assistant reproduce it
+  without manually reconstructing environment variables; no automatic file upload.
+  **Depends on:** DBG-01/05/09; report also present on error.
+  **Outcome:** [local issue report](../debug_issues.md), menu/CLI and HTML/JSON
+  index with symptom, identity, recorded/window/completed frames, first difference,
+  private attachments and next check. Incompatible preflight still saves; eight
+  reports/2 MiB with lock, no automatic replay/upload. Relative launcher after
+  relocation with spaces/apostrophe/Unicode reaches exact two-frame endpoint;
+  real clipboard/folder and desktop/mobile browser pass. 72 distinct Wine tests
+  plus one targeted rerun, menu/CLI with guest state unchanged, 28 original inputs
+  intact; homepage 49 indexes/8 issues. Native PowerShell/Windows and Linux
+  remain unverified.
+  [Record](../changes/2026-10-29-add-reproducible-local-issue-reports.json).
 
-## P2 — Estendere la diagnosi senza accumulare lavoro e dati
+<a id="p2--estendere-la-diagnosi-senza-accumulare-lavoro-e-dati"></a>
 
-- [x] **DBG-17 — Ispettore di task, script e unità.**
-  Esporre strutture già verificate, cursori, attori e collegamenti alle risorse,
-  con provenienza per campo. Lasciare sconosciuti i campi non decodificati e
-  distinguere dati ROM da stato RAM e valori sentinella.
-  **Chiusura:** una sequenza nota è ricostruibile da eventi osservati senza
-  inventare limiti globali o identità fisse delle unità. **Dipende da:** DBG-06/11
-  e dai contratti ROM specifici già completati.
-  **Esito:** menu/CLI condivisi, filtri famiglia/contesto e report offline con
-  provenienza per campo, risorse dei modelli EUR autenticati e campi sconosciuti.
-  Limiti30s/60frame/512eventi/1MiB, otto cartelle2MiBJSON, nessun nuovo snapshot.
-  79test Wine, GUI con traccia codice simultanea e stato completo identico:
-  70eventi ricostruiscono countdown10→9→8 dello stesso indirizzo task in due
-  frame, senza identità persistente. Report menu/filtro vuoto/contesto selezionato
-  e browser passano; nessuno script osservato in questa finestra, senza inferire
-  non-uso globale. Native Windows/Linux e cattura gameplay native restano aperti.
-  [Uso](../debug_gameplay.md), [record](../changes/2026-10-29-add-bounded-gameplay-inspection.json).
+## P2 — Extend diagnosis without accumulating work and data
 
-- [x] **DBG-18 — Gestore delle sessioni e degli artefatti di debug.**
-  Riutilizzare la pulizia esistente e completarne verifica/distribuzione:
-  contesti Docker con tutti i moduli richiesti, ricevuta di rimozione, scelta
-  delle sessioni da conservare, spazio stimato e limiti per trace/catture.
-  Proteggere sessioni attive e cache in uso mediante coordinamento esplicito;
-  preservare errori, originali, input e prove, eliminando copie ridondanti concluse.
-  **Chiusura:** preview/apply coerenti, nuova sessione e pulizia concorrente non
-  si danneggiano, test di errore/interruzione e percorsi con spazi superati.
-  **Dipende da:** DBG-01; applicabile fin dai primi strumenti P0.
-  **Esito:** preview/apply/--keep con spazio stimato, limiti e ricevute;
-  lease comuni per creazione/runtime/pulizia/cache e letture storiche readonly.
-  Contesti legacy, falliti, attivi/interrotti e unità con marker annidati protetti;
-  nessuna rimozione automatica dei lease o degli originali. Moduli Docker completi,
-  derivata con Git e launcher con log. Passano33test Python e34Wine, contesa
-  Windows/Python reale in pausa, creazione distinta concorrente, errore/interruzione,
-  Docker keep/apply/piano obsoleto/lettore readonly e browser1400/620.
-  Tutte le rimozioni nuove sono fixture sintetiche; nessun vecchio sweep o
-  replay ROM rieseguito. PowerShell/Windows nativo restano da verificare.
-  [Uso](../debug_artifacts.md), [record](../changes/2026-10-29-coordinate-debug-artifact-retention.json).
+- [x] **DBG-17 — Task, script and unit inspector.**
+  Expose already verified structures, cursors, actors and resource links, with
+  per-field provenance. Leave undecoded fields unknown and distinguish ROM data
+  from RAM state and sentinel values.
+  **Closure:** reconstruct a known sequence from observed events without
+  inventing global bounds or fixed unit identities. **Depends on:** DBG-06/11
+  and already completed ROM-specific contracts.
+  **Outcome:** shared menu/CLI, family/context filters and offline report with
+  per-field provenance, authenticated EUR model resources and unknown fields.
+  Limits 30 s/60 frames/512 events/1 MiB, eight folders/2 MiB JSON, no new
+  snapshot. 79 Wine tests, GUI with simultaneous code trace and identical full
+  state: 70 events reconstruct countdown 10→9→8 of the same task address in two
+  frames, without persistent identity. Menu/empty-filter/selected-context report
+  and browser pass; no script observed in this window, without inferring global
+  non-use. Native Windows/Linux and native gameplay capture remain open.
+  [Usage](../debug_gameplay.md), [record](../changes/2026-10-29-add-bounded-gameplay-inspection.json).
 
-- [x] **DBG-19 — Registro circolare degli eventi recenti.**
-  Conservare una quantità limitata di input, cambi scena, letture selezionate,
-  fallback ed errori; congelarla su richiesta o trigger, senza dump continui
-  dell'intera macchina. Indicare eventi scartati e finestra effettiva.
-  **Chiusura:** limite rispettato anche su un'esecuzione lunga e contesto utile
-  salvato su un errore controllato. **Dipende da:** DBG-08/16/18.
-  **Verificato (29 ottobre):** finestra mobile1.024eventi/256KiB,8KiB/evento;
-  input effettivo, firma UI parziale,16chiavi ROM/frame e dispatch/errori.
-  Menu/CLI Freeze/Save e trigger errore salvano HTML/JSON senza snapshot.
-  Un milione di eventi sintetici rispetta i cap; GUI resta attiva dopo31s,
-  espelle60eventi e salva contesto utile su errore controllato senza cambiare
-  stato guest.81test Windows/Wine e11Python passano, observer interprete due
-  frame identico e browser desktop/stretto verificati. Default letture non
-  disponibili distinto da zero; piattaforme native non verificate.
-  [Uso](../debug_recent.md), [record](../changes/2026-10-29-add-recent-event-ring.json).
+- [x] **DBG-18 — Debug session and artifact manager.**
+  Reuse existing cleanup and complete its verification/distribution: Docker
+  contexts with all required modules, removal receipt, selection of sessions
+  to retain, estimated space and trace/capture limits. Protect active sessions
+  and in-use caches through explicit coordination; preserve errors, originals,
+  inputs and evidence while deleting completed redundant copies.
+  **Closure:** consistent preview/apply, new session and concurrent cleanup do
+  not damage each other, error/interruption and paths-with-spaces tests pass.
+  **Depends on:** DBG-01; applicable from the first P0 tools.
+  **Outcome:** preview/apply/--keep with estimated space, limits and receipts;
+  common leases for creation/runtime/cleanup/cache and historical read-only
+  reads. Legacy, failed, active/interrupted contexts and units with nested markers
+  protected; no automatic removal of leases or originals. Complete Docker modules,
+  Git-derived image and launcher with log. 33 Python and 34 Wine tests pass,
+  real Windows/Python contention while paused, separate concurrent creation,
+  error/interruption, Docker keep/apply/stale plan/read-only reader and browser
+  at 1400/620. All new removals are synthetic fixtures; no old sweep or ROM
+  replay rerun. Native PowerShell/Windows remain unverified.
+  [Usage](../debug_artifacts.md), [record](../changes/2026-10-29-coordinate-debug-artifact-retention.json).
 
-- [x] **DBG-20 — Controllo locale di una sessione aperta.**
-  Valutare un canale strutturato locale per interrogare stato, mettere in pausa,
-  avanzare e catturare, condiviso con i comandi del menu. Preferire la soluzione
-  più piccola che consenta all'assistente di operare senza clic fragili.
-  **Chiusura:** comandi versionati, timeout/cancellazione, identificazione della
-  sessione e risposta strutturata; accesso locale esplicito e nessun servizio
-  esposto per impostazione predefinita. **Dipende da:** DBG-01/02/10/16.
-  **Verificato (29 ottobre):** esteso il canale su file già condiviso dal menu,
-  senza networking. Query status/cancel separate dal client operativo in attesa;
-  cancellazione con ID preciso, deadline e timeout configurabile20–120000ms,
-  identità manifest/run/richiesta e risposte JSON anche su errore locale.
-  30test Wine distinti e un rerun mirato sulla classificazione closed; GUI reale
-  default19CLI prova stato durante attesa, ID errato, annullamento parziale,
-  scadenza250ms con arresto server, cattura readonly e sessione errata/chiusa.
-  Prove DBG10/11/12/16 riusate, nessun vecchio replay riaperto.
-  [Uso](../debug_control.md), [record](../changes/2026-10-29-complete-local-session-control.json).
+- [x] **DBG-19 — Recent events ring buffer.**
+  Keep a bounded amount of input, scene changes, selected reads, fallback and
+  errors; freeze on request or trigger without continuous whole-machine dumps.
+  Indicate discarded events and actual window.
+  **Closure:** respect limits even in a long run and save useful context on a
+  controlled error. **Depends on:** DBG-08/16/18.
+  **Verified (October 29):** rolling window 1,024 events/256 KiB, 8 KiB/event;
+  actual input, partial UI signature, 16 ROM keys/frame and dispatch/errors.
+  Freeze/Save menu/CLI and error trigger save HTML/JSON without snapshot. One
+  million synthetic events respect caps; GUI remains active after 31 s, evicts
+  60 events and saves useful context on controlled error without changing guest
+  state. 81 Windows/Wine and 11 Python tests pass, two-frame interpreter observer
+  identical and desktop/narrow browser verified. Default unavailable reads
+  distinguished from zero; native platforms unverified.
+  [Usage](../debug_recent.md), [record](../changes/2026-10-29-add-recent-event-ring.json).
 
-- [x] **DBG-21 — Campagne mirate di casi e regressioni.**
-  Selezionare DS, famiglie o transizioni interessate da una modifica; mostrare
-  esiti positivo/negativo/incompatibile/non eseguito e prove precedenti riusate.
-  I dati di gioco restano locali: i test pubblici del runner usano fixture sintetiche.
-  **Chiusura:** il rapporto distingue «zero letture in questa scena» da
-  «funzionalità non usata nel gioco»; nessun replay automatico di tutte le prove
-  concluse per ricostruire il contesto. **Dipende da:** DBG-03/05/07/09/18.
-  **Verificato (29 ottobre):** manifest/pin e selezione esplicita DS/famiglia/
-  transizione, quattro esiti e riuso delle prove. Report senza esecuzione;
-  run-case delega un solo profilo al supervisore esistente con motivo/receipt
-  e riapertura esplicita per prove precedenti.32casi/8output/2MiB, zero nella
-  finestra distinto dall'uso globale sconosciuto.23test Python, dispatch pubblico
-  sintetico, due prove DS20 riusate readonly, Bash/Docker e browser passano;
-  zero nuovi frame guest, nessun build/runtime/vecchia accettazione ripetuto.
-  [Uso](../debug_campaigns.md), [record](../changes/2026-10-29-add-targeted-debug-campaigns.json).
+- [x] **DBG-20 — Local control of an open session.**
+  Assess a structured local channel to query state, pause, advance and capture,
+  shared with menu commands. Prefer the smallest solution allowing the assistant
+  to operate without fragile clicks.
+  **Closure:** versioned commands, timeout/cancellation, session identification
+  and structured response; explicit local access and no service exposed by default.
+  **Depends on:** DBG-01/02/10/16.
+  **Verified (October 29):** extended the file-based channel already shared by
+  the menu, without networking. Status/cancel queries separate from the waiting
+  operational client; cancellation by exact ID, deadline and configurable
+  20–120000 ms timeout, manifest/run/request identity and JSON responses even
+  for local errors. 30 distinct Wine tests and one targeted rerun for closed
+  classification; real GUI with default 19 CLI checks exercises status while
+  waiting, wrong ID, partial cancellation, 250 ms deadline with server stop,
+  read-only capture and wrong/closed session. DBG10/11/12/16 checks reused; no
+  old replay reopened.
+  [Usage](../debug_control.md), [record](../changes/2026-10-29-complete-local-session-control.json).
 
-- [x] **DBG-22 — Distribuzione e guida comune degli strumenti.**
-  Documentare pochi percorsi completi: segnalare un bug, registrare una scena,
-  confrontare due runtime, cercare letture non coperte e liberare i temporanei.
-  Allineare help/menu/CLI; prevedere avvio PowerShell e Docker per gli strumenti
-  offline quando utile, con log d'errore sempre rintracciabile.
-  **Chiusura:** procedure ripetibili dal percorso portable spostato, prerequisiti
-  espliciti, pacchetti senza dati personali e matrice Wine/Windows nativo/Linux
-  dichiarata. **Dipende da:** gli strumenti effettivamente selezionati; non
-  richiede completare tutto il piano né il frontend Godot.
-  **Verificato (29 ottobre):** [guida comune](../debug_tools.md) con cinque
-  percorsi completi, prerequisiti/matrice e log persistenti; help allineato,
-  launcher PS/Bash/Python/Docker. Dieci test pubblici packager,13PowerShell7.4.6
-  Linux simulati, due TinyCC sintetici e ZIP offline readonly passano. Bundle
-  spostato con spazi/Unicode: registrazione/menu, due runtime, bug/audit/pulizia,
-  browser1400/620;5frame nuovi totali, endpoint completo/clock identico anche
-  col binario finale rimappato.76file pubblici/75payload autenticati, Data vuota,
-  nessun ROM/BIOS/progresso/log/fixture/traduzione, prefissi personali rifiutati.
-  Windows nativo/PS5.1 e runtime Linux recente non certificati; normali runtime
-  e input originali invariati. [Record](../changes/2026-10-29-distribute-shared-debug-tools.json).
+- [x] **DBG-21 — Targeted case and regression campaigns.**
+  Select DS, families or transitions affected by a change; show positive/
+  negative/incompatible/not-run outcomes and reused earlier evidence. Game data
+  remain local: public runner tests use synthetic fixtures.
+  **Closure:** the report distinguishes “zero reads in this scene” from “feature
+  unused in the game”; no automatic replay of all completed checks to reconstruct
+  context. **Depends on:** DBG-03/05/07/09/18.
+  **Verified (October 29):** manifest/pins and explicit DS/family/transition
+  selection, four outcomes and evidence reuse. Report without execution;
+  run-case delegates one profile to the existing supervisor with reason/receipt
+  and explicit reopening for previous evidence. 32 cases/8 outputs/2 MiB, zero
+  in the window distinct from unknown global use. 23 Python tests, synthetic
+  public dispatch, two DS20 checks reused read-only, Bash/Docker and browser
+  pass; zero new guest frames, no build/runtime/old acceptance repeated.
+  [Usage](../debug_campaigns.md), [record](../changes/2026-10-29-add-targeted-debug-campaigns.json).
 
-## Mantenere gli strumenti completati
+- [x] **DBG-22 — Distribution and shared tool guide.**
+  Document a few complete workflows: report a bug, record a scene, compare two
+  runtimes, find uncovered reads and free temporary files. Align help/menu/CLI;
+  provide PowerShell and Docker launch for offline tools where useful, with
+  error logs always traceable.
+  **Closure:** repeatable procedures from relocated portable path, explicit
+  prerequisites, packages without personal data and declared Wine/native
+  Windows/Linux matrix. **Depends on:** tools actually selected; does not require
+  the entire plan or Godot frontend to be complete.
+  **Verified (October 29):** [shared guide](../debug_tools.md) with five complete
+  workflows, prerequisites/matrix and persistent logs; aligned help, PS/Bash/
+  Python/Docker launchers. Ten public packager tests, 13 simulated PowerShell
+  7.4.6 Linux tests, two synthetic TinyCC tests and offline read-only ZIP pass.
+  Bundle relocated with spaces/Unicode: recording/menu, two runtimes, bug/audit/
+  cleanup, browser 1400/620; five new frames total, full endpoint/clock identical
+  even with final remapped binary. 76 public files/75 authenticated payloads,
+  empty Data, no ROM/BIOS/progress/log/fixture/translation, personal prefixes
+  refused. Native Windows/PS5.1 and recent Linux runtime not certified; normal
+  runtimes and original inputs unchanged.
+  [Record](../changes/2026-10-29-distribute-shared-debug-tools.json).
 
-DBG-01…DBG-22 sono completati nell'ambito e sulle piattaforme dichiarate nei
-record. Partire dalla [guida comune](../debug_tools.md) per scegliere un percorso;
-la numerazione resta stabile. Le limitazioni native/hardware e le divergenze
-segnalate non sono prove superate e non riaprono automaticamente le unità concluse.
+<a id="mantenere-gli-strumenti-completati"></a>
 
-Per nuovi lavori scegliere un criterio mancante o una regressione concreta,
-registrando motivo, input cambiato e prossimo controllo nel
-[TASK_HANDOFF.md](TASK_HANDOFF.md). Riusare le prove esistenti; non riprodurre
-tutti i casi per ricostruire il contesto. Aggiornare documento e record coerenti
-con l'esito effettivo. Questa checklist non sostituisce le priorità ROM in corso.
+## Maintain completed tools
+
+DBG-01…DBG-22 are complete within the scopes and platforms declared in their
+records. Start from the [shared guide](../debug_tools.md) to choose a workflow;
+numbering remains stable. Native/hardware limitations and reported divergences
+are not passed checks and do not automatically reopen completed units.
+
+For new work select a missing criterion or concrete regression, recording the
+reason, changed input and next check in [TASK_HANDOFF.md](TASK_HANDOFF.md).
+Reuse existing evidence; do not repeat every case to reconstruct context.
+Update the document and records consistently with the actual result. This
+checklist does not replace ongoing ROM priorities.

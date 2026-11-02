@@ -84,6 +84,26 @@ Documentation: [debug_issues.md](docs/debug_issues.md), [debug_gameplay.md](docs
 
 [Change record](docs/changes/2026-11-02-translate-remaining-debug-reports.json)
 
+## 2026-11-02 — Translate performance and debug-save status summaries
+
+Type: docs. Platforms: Desktop development documentation.
+
+**Changes**
+
+- Translate the introductory execution status of the performance plan and the debug-save inventory summary into English while retaining their historical dates, results, open criteria and limits.
+
+**Validation**
+
+- Compare identifiers, inline literals, links and legacy heading anchors against both original summaries; verify local link targets and unchanged remaining sections.
+
+**Limitations**
+
+- Both documents remain only partially translated; no fixtures, builds, benchmarks, runtime checks or save exploration were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-performance-and-save-status-summaries.json)
+
 ## 2026-11-02 — Translate operation, probe and content-selector guides
 
 Type: docs. Platforms: project-wide.
@@ -239,6 +259,26 @@ Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.j
 
 [Change record](docs/changes/2026-11-02-translate-desktop-bug-feature-checklist.json)
 
+## 2026-11-02 — Translate shared debug tool foundations and P0
+
+Type: docs. Platforms: Shared desktop debug documentation.
+
+**Changes**
+
+- Translate the shared debug tools introduction, existing foundations, common rules and completed DBG-01 through DBG-08 P0 entries into English, preserving the recorded acceptance evidence and limits.
+
+**Validation**
+
+- Compare ordered checklist states, task IDs, inline literals, links and legacy anchors against the original; verify local link targets and confirm P1 onward is unchanged.
+
+**Limitations**
+
+- P1, P2 and maintenance sections of the same document remain untranslated; no debug, Wine, runtime, ROM or hardware tests were run.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-debug-tools-foundations-and-p0.json)
+
 ## 2026-11-02 — Translate diagnosis, isolated-session and recording guides
 
 Type: docs. Platforms: project-wide.
@@ -297,6 +337,26 @@ Type: docs. Platforms: project-wide.
 - Documentation-only translation; failed native endpoint comparison remains failed and capture/DS limits remain explicit. No build, runtime, ROM, replay or platform acceptance checks repeated; wider migration remains partial.
 
 [Change record](docs/changes/2026-11-02-translate-catalog-replay-capture-guides.json)
+
+## 2026-11-02 — Complete English translation of Clan Atlas specification
+
+Type: docs. Platforms: Desktop menu documentation.
+
+**Changes**
+
+- Translate sections 4–10 of the Clan Atlas menu specification, covering Game and Debug functions, interaction design, architecture, work plan, acceptance criteria and deliverables; preserve historical baseline and verification limits.
+
+**Validation**
+
+- Compare all 28 ordered checkbox states, inline literals, link destinations and 37 legacy heading anchors with the prior text; check local links and confirm the previously translated introduction is unchanged.
+
+**Limitations**
+
+- Documentation translation only; the acceptance statements describe the recorded historical baseline and do not add runtime, native Windows, physical controller or ROM validation.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-atlas-specification-remainder.json)
 
 ## 2026-11-02 — Translate the Clan Atlas specification introduction
 
@@ -614,6 +674,26 @@ Type: docs. Platforms: Both source trees; Python tooling on Linux; HTML interfac
 Documentation: [ENGLISH_FIRST.md](docs/development/ENGLISH_FIRST.md), [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json), [MEMORY_WORKFLOW.md](docs/development/MEMORY_WORKFLOW.md), [report_home.md](docs/report_home.md), [menu_clan_atlas.md](docs/menu_clan_atlas.md), [2026-11-02-record-partial-senary-compact-obj-integration.json](docs/changes/2026-11-02-record-partial-senary-compact-obj-integration.json).
 
 [Change record](docs/changes/2026-11-02-document-english-first-foundation-and-repair-ci-coverage.json)
+
+## 2026-11-02 — Complete English translation of shared debug tools plan
+
+Type: docs. Platforms: Shared desktop debug documentation.
+
+**Changes**
+
+- Translate P1, P2 and maintenance sections of the shared debug tools plan, retaining historical outcomes, accepted scopes, validation limits, task identifiers and legacy anchors.
+
+**Validation**
+
+- Compare all 14 ordered checklist states, identifiers, inline literals, links and three legacy anchors against the original; verify local targets and confirm the translated P0 prefix is unchanged.
+
+**Limitations**
+
+- Documentation translation only; no diagnostic, runtime, Wine, ROM or hardware validation was rerun.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-complete-shared-debug-tools-translation.json)
 
 ## 2026-11-01 — Verify European compact OBJ fifth CLI
 

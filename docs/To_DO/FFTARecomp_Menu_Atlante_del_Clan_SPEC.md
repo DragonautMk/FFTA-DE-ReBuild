@@ -220,115 +220,162 @@ documented recovery path.
 ---
 
 
-## 4. Scheda Gioco: comportamento completo
+<a id="4-scheda-gioco-comportamento-completo"></a>
 
-### 4.1 Panoramica
+## 4. Game tab: complete behavior
 
-**Ordine verticale fissato:**
+<a id="41-panoramica"></a>
 
-1. **Torna al gioco** — dentro il suo pannello, allineato con gli altri.
-2. **Salvataggi rapidi** — selettore immediato (senza entrare in Salvataggi).
-3. **Volume** e **Fast Forward** — due riquadri affiancati su larghezze ampie, disposti nella stessa area interna compatta su larghezze minori.
+### 4.1 Overview
 
-La geometria dei primi due riquadri non deve dipendere dall'altezza dei due controlli inferiori. Se questi richiedono altro spazio, **scorrono nella sola zona a loro destinata**.
+**Fixed vertical order:**
 
-### 4.2 Salvataggi rapidi e salvataggio standard
+1. **Return to game** — inside its panel, aligned with the others.
+2. **Quick saves** — immediate selector (without entering Saves).
+3. **Volume** and **Fast Forward** — two side-by-side panels at wide widths, arranged in the same compact internal area at narrower widths.
 
-Preservare **Save states**, **Load state**, **Save state**, **Replace state con conferma**, **Undo last operation** e relativi errori/stati di indisponibilità. Supportare i **9 slot standard** e i **99 slot** quando `Extended saves` è abilitato, senza nascondere i rimanenti o limitarli ai primi 9.
+The geometry of the first two panels must not depend on the height of the two
+lower controls. If these need more space, **they scroll only in their own area**.
 
-- Alla riapertura del menu, **l'ultimo slot rapido utilizzato/salvato deve rimanere selezionato**, pronto per **Sovrascrivi** o **Carica**. Conservare correttamente selezione, slot esistente, eventuale undo e stato corrente.
-- Selezionare uno slot **non deve salvarlo**. Carica è disabilitato per slot vuoti. Sovrascrivere richiede conferma se già previsto dall'handler corrente.
-- Mostrare timestamp reale dello slot quando reperibile, altrimenti «Data non disponibile». Non creare date di fantasia.
-- Sotto il selettore mostrare **«Ultimo salvataggio standard del gioco»** con data/ora reali ricavate dalle informazioni attendibili sul salvataggio `.sav`. Se si usa la `mtime` del file, denominarla correttamente **«Ultima modifica file .sav»** anziché inventare un timestamp interno al gioco. Se non esiste alcun salvataggio, dire «Nessun salvataggio standard trovato».
-- I salvataggi rapidi e quelli standard sono **due sistemi distinti**. Non leggere la data dell'uno dall'altro.
+<a id="42-salvataggi-rapidi-e-salvataggio-standard"></a>
 
-### 4.3 Salvataggi — gestione completa
+### 4.2 Quick saves and standard saving
 
-Oltre all'accesso rapido in Panoramica:
+Preserve **Save states**, **Load state**, **Save state**, **Replace state with
+confirmation**, **Undo last operation** and related errors/unavailable states.
+Support **9 standard slots** and **99 slots** when `Extended saves` is enabled,
+without hiding the remainder or limiting them to the first 9.
 
-- `Extended saves` ON/OFF, compatibilità con struttura su disco e 99 slot.
-- `Game saves`: slot, disponibilità, slot cartuccia attivo, **Use and restart**, **Copy current save**; conferma esplicita per sostituzione/sovrascrittura.
-- `Save backups`: **Copy 1 — latest**, **Copy 2 — previous**, **Restore and restart** con conferma; selezione di backup e gestione errori.
-- Proteggere da perdita di dati in caso di annullamento, slot vuoto, operazione invalida, ROM cambiata o copia incompatibile.
+- When reopening the menu, **the last quick slot used/saved must remain selected**, ready to **Overwrite** or **Load**. Preserve selection, existing slot, any undo and current state correctly.
+- Selecting a slot **must not save it**. Load is disabled for empty slots. Overwriting requires confirmation if already required by the current handler.
+- Show the real slot timestamp when available, otherwise “Date unavailable”. Do not invent dates.
+- Below the selector show **“Last standard game save”** with actual date/time from reliable `.sav` save information. If file `mtime` is used, label it **“Last .sav file modification”** rather than inventing an internal game timestamp. If no save exists, say “No standard save found”.
+- Quick saves and standard saves are **two separate systems**. Do not read one's date from the other.
 
-### 4.4 Controlli globali di volume e Fast Forward
+<a id="43-salvataggi--gestione-completa"></a>
 
-**Attivi sempre mentre il menu è aperto**, anche da Debug e quando il focus è su liste, titoli, altri controlli o dropdown dove l'interazione non deve essere consumata dal campo in editing.
+### 4.3 Saves — complete management
 
-| Combinazione proposta | Risultato |
+In addition to quick access in Overview:
+
+- `Extended saves` ON/OFF, compatibility with the on-disk structure and 99 slots.
+- `Game saves`: slots, availability, active cartridge slot, **Use and restart**, **Copy current save**; explicit confirmation for replacement/overwrite.
+- `Save backups`: **Copy 1 — latest**, **Copy 2 — previous**, **Restore and restart** with confirmation; backup selection and error handling.
+- Protect against data loss on cancellation, empty slot, invalid operation, changed ROM or incompatible copy.
+
+<a id="44-controlli-globali-di-volume-e-fast-forward"></a>
+
+### 4.4 Global volume and Fast Forward controls
+
+**Always active while the menu is open**, including in Debug and when focus is
+on lists, headings, other controls or dropdowns where interaction must not be
+consumed by the field being edited.
+
+| Proposed combination | Result |
 | --- | --- |
-| `L1` | Volume −10 punti percentuali; intervallo 0–100% (coerente con gli step 0.1 oggi presenti) |
-| `R1` | Volume +10 punti percentuali |
-| `L1 + R1` | Attiva/disattiva `Mute`, **preservando il valore di volume** |
-| `L2` | Fast Forward −20 punti percentuali |
-| `R2` | Fast Forward +20 punti percentuali |
-| `L2 + R2` | Attiva/disattiva Fast Forward, **preservando la velocità selezionata** |
+| `L1` | Volume −10 percentage points; range 0–100% (consistent with the current 0.1 steps) |
+| `R1` | Volume +10 percentage points |
+| `L1 + R1` | Toggle `Mute`, **preserving the volume value** |
+| `L2` | Fast Forward −20 percentage points |
+| `R2` | Fast Forward +20 percentage points |
+| `L2 + R2` | Toggle Fast Forward, **preserving the selected speed** |
 
-Le combinazioni vanno disambiguate: `L1+R1` non deve prima regolare il volume; `L2+R2` non deve prima alterare la velocità. Precedenza alle chord, con gestione di press/release/edge e ripetizione coerente. Il test deve includere la pressione quasi simultanea e il rilascio di un solo tasto. A menu chiuso i pulsanti rimangono assegnati al gioco come da binding esistente, senza sottrarre L/R o zoom al gameplay.
+Disambiguate the combinations: `L1+R1` must not first adjust volume; `L2+R2`
+must not first change speed. Give chords precedence, with consistent press/
+release/edge handling and repeat. Tests must include nearly simultaneous presses
+and release of just one button. When the menu is closed, buttons remain assigned
+to the game according to existing bindings, without taking L/R or zoom from gameplay.
 
-**Fast Forward a scatti del 20%:** impostazioni visive e runtime devono coincidere. Requisito progettato: `100%, 120%, 140%, …, 800%` (1.0×–8.0×); spegnendo il Fast Forward il gioco torna effettivamente a **100%** senza perdere il valore preferito. Il codice attuale supporta `2×`, `4×`, `8×` e audio `silent | fast | normal`: servirà estendere anche **scheduler/emulazione, audio-clock, serializzazione/configurazione e test**, non soltanto disegnare una percentuale nuova. Se questo sottocompito non è ancora funzionante **non visualizzare valori arbitrari come se fossero operativi**: mostra l'attuale comportamento e mantieni l'estensione come lavoro non completato.
+**Fast Forward in 20% steps:** visual settings and runtime must agree. Designed
+requirement: `100%, 120%, 140%, …, 800%` (1.0×–8.0×); turning Fast Forward off
+actually returns the game to **100%** without losing the preferred value. The
+current code supports `2×`, `4×`, `8×` and audio `silent | fast | normal`:
+**scheduler/emulation, audio clock, serialization/configuration and tests**
+would also need extension, not just drawing a new percentage. If this subtask
+is not yet working **do not display arbitrary values as operational**: show the
+current behavior and keep the extension as incomplete work.
 
-La modalità di attivazione momentanea/toggle dei binding originali deve continuare a funzionare; non sostituire `ff_key`/`ff_pad` o le rispettive opzioni toggle senza integrare le due semantiche.
+Momentary/toggle activation for the original bindings must keep working; do not
+replace `ff_key`/`ff_pad` or their toggle options without integrating both semantics.
 
 ### 4.5 Fast Forward
 
-- Velocità selezionata/effettiva, ON/OFF e controlli globali.
-- **Audio mode**: `silent`, `fast`, `normal` (mantenere il comportamento implementato).
-- Feedback separato per «velocità impostata» e «Fast Forward attivo».
+- Selected/effective speed, ON/OFF and global controls.
+- **Audio mode**: `silent`, `fast`, `normal` (retain implemented behavior).
+- Separate feedback for “configured speed” and “Fast Forward active”.
 
-### 4.6 Finestre di testo
+<a id="46-finestre-di-testo"></a>
 
-Mantenere **Size** e **Length**, con intervalli e passi reali del progetto: `Size` 0.5–2.0 a passi 0.1, `Length` 1.0–2.0 a passi 0.1.
+### 4.6 Text windows
+
+Keep **Size** and **Length**, with the project's actual ranges and steps: `Size`
+0.5–2.0 in 0.1 steps, `Length` 1.0–2.0 in 0.1 steps.
 
 ### 4.7 Audio
 
-- Volume reale 0–100%; Mute persistente indipendente dal livello.
+- Real volume 0–100%; persistent Mute independent of level.
 - **Enhanced Audio** ON/OFF.
-- Cambiamenti applicati tramite i `Changed`/handler originali.
+- Changes applied through the original `Changed`/handlers.
 
 ### 4.8 Video
 
-Tutte le voci originali del menu:
+All original menu items:
 
-- **Aspect**: `auto`, `3:2`, `16:10`, `16:9`, `20:9`, `21:9`, `32:9` dove confermate dalle costanti correnti.
+- **Aspect**: `auto`, `3:2`, `16:10`, `16:9`, `20:9`, `21:9`, `32:9` where confirmed by current constants.
 - **Fullscreen (F11)**.
 - **Screen**: `raw`, `unlit`, `frontlit`, `backlit`, `classic`.
-- **Brightness** 0.5–1.5 a passi 0.1.
-- **Darken**: `auto` oppure 0.0–1.0.
-- **Response**: leggere esattamente `ResponseMode::ALL` dalla branch.
-- **Grid**: `auto` oppure 0.0–1.0.
-- **Scaling**: usare i valori esatti di `SCALING_MODES` dal codice; non inventare opzioni.
-- **Vsync** e **FPS counter** (`off`, `internal`, `external`, `both`).
+- **Brightness** 0.5–1.5 in 0.1 steps.
+- **Darken**: `auto` or 0.0–1.0.
+- **Response**: read `ResponseMode::ALL` exactly from the branch.
+- **Grid**: `auto` or 0.0–1.0.
+- **Scaling**: use exact `SCALING_MODES` values from code; do not invent options.
+- **Vsync** and **FPS counter** (`off`, `internal`, `external`, `both`).
 
-I parametri presenti **solo in configurazione** e non nel menu originale, come `display_gamut` e `response_keep`, possono essere raggruppati sotto «Avanzate» purché siano etichettati correttamente, con validazione effettiva e senza perdere la possibilità di impostarli dal file. Dove una modifica richiede il riavvio/nuovo lancio (es. certe proporzioni), dichiararlo invece di presentarla falsamente come immediata.
+Parameters present **only in configuration** and not in the original menu, such
+as `display_gamut` and `response_keep`, may be grouped under “Advanced” if
+correctly labeled and actually validated, without losing file configuration.
+Where a change requires restart/relaunch (e.g. some aspect ratios), state that
+instead of falsely presenting it as immediate.
 
-### 4.9 Controlli
+<a id="49-controlli"></a>
 
-Tre tab interni: **Tastiera**, **Gamepad**, **Mouse + tastiera**. Preservare:
+### 4.9 Controls
 
-- Binding `A`, `B`, `L`, `R`, `Start`, `Select`, `Up`, `Down`, `Left`, `Right`.
-- Binding **Open menu**, **Fast Fwd**, **Toggle Fast Fwd**, **Zoom In**, **Zoom Out**.
-- **Default layout** per gamepad.
-- **Mouse & Keyboard** ON/OFF e logica di cambio tab.
-- Rilevamento etichette gamepad, configurazione sorgente D-pad e deadzone dove presenti nella configurazione, senza inventare funzioni UI già esistenti.
-- Cattura chord e persistenza `input.cfg` senza rompere press/release, annullamento e `Escape` di recupero.
+Three internal tabs: **Keyboard**, **Gamepad**, **Mouse + keyboard**. Preserve:
 
-Gli input di testo usati dal prototipo non devono diventare la nuova modalità principale di rimappatura: mantenere la **cattura nativa del dispositivo**.
+- Bindings `A`, `B`, `L`, `R`, `Start`, `Select`, `Up`, `Down`, `Left`, `Right`.
+- **Open menu**, **Fast Fwd**, **Toggle Fast Fwd**, **Zoom In**, **Zoom Out** bindings.
+- **Default layout** for gamepad.
+- **Mouse & Keyboard** ON/OFF and tab-switching logic.
+- Gamepad label detection, D-pad source configuration and deadzone where present in configuration, without inventing existing UI features.
+- Chord capture and `input.cfg` persistence without breaking press/release, cancellation or recovery `Escape`.
 
-### 4.10 Sistema
+The prototype's text inputs must not become the main remapping method: retain
+**native device capture**.
+
+<a id="410-sistema"></a>
+
+### 4.10 System
 
 - **Restart ROM**.
 - **Switch ROM**: `Return to game` / `Choose ROM…`.
-- **Exit**: conferma `Yes, exit` / `No, go back`.
-- Messaggi/annullamenti coerenti; nessuna chiusura imprevista del gioco.
+- **Exit**: confirmation `Yes, exit` / `No, go back`.
+- Consistent messages/cancellation; no unexpected game closure.
 
 ---
 
-## 5. Scheda Debug: inventario da mantenere
+<a id="5-scheda-debug-inventario-da-mantenere"></a>
 
-Le voci sono raggruppate secondo l'interfaccia approvata; **gli handler restano quelli della repo**. Dove il comando è accessibile solo da CLI, contrassegnarlo «CLI» fino a un'integrazione effettiva nella UI. Ogni azione che richiede una copia isolata deve continuare a bloccare l'operazione in assenza di sessione.
+## 5. Debug tab: inventory to retain
 
-### 5.1 Sessioni e casi
+Items are grouped according to the approved interface; **handlers remain those
+in the repository**. Where a command is available only through CLI, label it
+“CLI” until actual UI integration. Every action requiring an isolated copy
+must continue to block the operation when there is no session.
+
+<a id="51-sessioni-e-casi"></a>
+
+### 5.1 Sessions and cases
 
 - `Extended saves`
 - `Game saves`
@@ -337,11 +384,13 @@ Le voci sono raggruppate secondo l'interfaccia approvata; **gli handler restano 
 - `Debug catalog`
 - `Start input recording`
 - `Stop input recording`
-- `Copy diagnosis` (può anche essere visibile in Report)
-- Debug catalog: **Region**, **Recorded status**, **Kind**, **DS case**, **Entry**, **Import to free snapshot slot**, **Open isolated case**, **Choose / reload catalog**, con anteprima e messaggi di errore.
-- CLI collegate a sessioni, catalogo e registrazioni, se già supportate e validate.
+- `Copy diagnosis` (may also be visible in Reports)
+- Debug catalog: **Region**, **Recorded status**, **Kind**, **DS case**, **Entry**, **Import to free snapshot slot**, **Open isolated case**, **Choose / reload catalog**, with preview and error messages.
+- CLIs linked to sessions, catalog and recordings, if already supported and validated.
 
-### 5.2 Replay e confronti
+<a id="52-replay-e-confronti"></a>
+
+### 5.2 Replay and comparisons
 
 - `Replay case`
 - `Choose replay profile`
@@ -349,18 +398,22 @@ Le voci sono raggruppate secondo l'interfaccia approvata; **gli handler restano 
 - `Audit replay`
 - `Capture on trigger`
 - `Compare first difference`
-- Eventuali campagne e audit CLI **esistenti**, chiaramente etichettati quando non integrati nel menu.
+- Any **existing** CLI campaigns and audits, clearly labeled when not integrated in the menu.
 
-### 5.3 Esecuzione e memoria
+<a id="53-esecuzione-e-memoria"></a>
+
+### 5.3 Execution and memory
 
 - `Step 1 frame (F7)`
 - `Step 10 frames (F8)`
 - `Resume (F6)`
 - `Inspect PC / registers`
-- Operazioni disponibili in `debug-control` (pause/status/inspect/break/watch) con distinzioni di supporto per esecuzione compiled/interpreter; non inventare capacità mancanti.
-- I futuri trigger nominati e valori fissati a schermo sono *V2*, non funzionalità già presenti.
+- Operations available in `debug-control` (pause/status/inspect/break/watch), distinguishing compiled/interpreter support; do not invent missing capabilities.
+- Future named triggers and on-screen pinned values are *V2*, not existing features.
 
-### 5.4 Tracce e ispettori
+<a id="54-tracce-e-ispettori"></a>
+
+### 5.4 Traces and inspectors
 
 - `Capture graphics report`
 - `Start UI / input trace`
@@ -374,192 +427,249 @@ Le voci sono raggruppate secondo l'interfaccia approvata; **gli handler restano 
 - `Start recent events`
 - `Freeze / save recent events`
 
-### 5.5 Console e script
+<a id="55-console-e-script"></a>
 
-- Mostrare gli strumenti locali/CLI già presenti e le loro capacità reali.
-- Prevedere gli ingressi per **Console eventi**, **Console comandi**, **Script e ricette**. In baseline sono **estensioni V2 pianificate**: le finestre demo non costituiscono un'implementazione funzionante.
-- Quando le console diventeranno operative, devono essere **apribili dalla barra superiore come overlay ancorato** e non modificare la geometria dei pannelli sottostanti. Console eventi sola lettura; console comandi con validazione e dispatcher condiviso con il menu, non shell arbitraria.
+### 5.5 Console and scripts
 
-### 5.6 Cheat
+- Show existing local/CLI tools and their actual capabilities.
+- Provide entry points for **Event console**, **Command console**, **Scripts and recipes**. At the baseline these are **planned V2 extensions**: demo windows are not a working implementation.
+- When consoles become operational, they must be **openable from the top bar as an anchored overlay** without changing underlying panel geometry. Event console read-only; command console with validation and a dispatcher shared with the menu, not an arbitrary shell.
 
-- Catalogo locale CH e import **solo quando saranno completate le dipendenze DBG2**.
-- Non includere o pubblicare il catalogo privato gitignored né i relativi codici nel repository.
-- Non affermare che i **341 blocchi documentati** siano verificati, utilizzabili o decodificati; nella baseline risultano `not-runtime-tested`.
-- Applicazione limitata a copia di debug isolata, con conferma, compatibilità e provenienza; `Disattiva` non equivale a rollback. Per annullare gli effetti richiedere checkpoint esplicito.
+<a id="56-cheat"></a>
 
-### 5.7 Report e archivio
+### 5.6 Cheats
+
+- Local CH catalog and import **only when DBG2 dependencies have been completed**.
+- Do not include or publish the gitignored private catalog or its codes in the repository.
+- Do not claim the **341 documented blocks** are verified, usable or decoded; at the baseline they are `not-runtime-tested`.
+- Apply only to an isolated debug copy, with confirmation, compatibility and provenance; `Disattiva` (Disable) is not rollback. Require an explicit checkpoint to undo effects.
+
+<a id="57-report-e-archivio"></a>
+
+### 5.7 Reports and archive
 
 - `Copy diagnosis`
 - `Create issue report`
-- Report UI/audio/codice/gameplay/recenti in continuità con gli handler già esistenti.
-- Strumenti e script CLI disponibili per homepage e pulizia/preview degli artefatti, con protezione delle prove e dei salvataggi.
+- UI/audio/code/gameplay/recent reports in continuity with existing handlers.
+- CLI tools and scripts available for the homepage and artifact cleanup/preview, protecting evidence and saves.
 
-### 5.8 Debug Tools V2 — esattamente 28 attività pianificate
+<a id="58-debug-tools-v2--esattamente-28-attività-pianificate"></a>
 
-Mostrare un filtro o una vista separata «**Debug V2 — pianificato**», con i codici stabili e i nomi della checklist originale. La UI non deve far passare queste voci per completate.
+### 5.8 Debug Tools V2 — exactly 28 planned tasks
 
-| Gruppo nella nuova sidebar | Attività |
+Show a filter or separate **“Debug V2 — planned”** view with stable codes and
+names from the original checklist. The UI must not present these as completed.
+
+| Group in new sidebar | Tasks |
 | --- | --- |
-| Sessioni e casi | `DBG2-01` Inventario azioni; `02` Catalogo comune; `03` Selettore interno; `04` Migrazione delle scelte; `05` Parametri e preset; `06` Libreria script e strumenti; `07` Persistenza portable |
-| Tracce e ispettori | `DBG2-08` Schema eventi; `09` Selezioni/azioni host; `10` Eventi runtime; `11` Console eventi live; `12` Limiti e prestazioni |
-| Console e script | `DBG2-13` Linguaggio comandi; `14` Editor/completamento; `15` Risposte strutturate/job; `16` Ricette e batch |
-| Cheat | `DBG2-17` Import catalogo; `18` Decoder; `19` Applicazione controllata; `20` Pagina cheat; `21` Primo sottoinsieme EUR; `22` Cheat avanzati; `23` Provenienza/checkpoint/replay |
-| Esecuzione e memoria | `DBG2-24` Trigger e arresti nominati; `25` Valori e differenze fissati a schermo |
-| Report e archivio | `DBG2-26` Timeline; `27` Verifiche di regressione; `28` Guida/distribuzione |
+| Sessions and cases | `DBG2-01` Action inventory; `02` Shared catalog; `03` Internal selector; `04` Choice migration; `05` Parameters and presets; `06` Script and tool library; `07` Portable persistence |
+| Traces and inspectors | `DBG2-08` Event schema; `09` Host selections/actions; `10` Runtime events; `11` Live event console; `12` Limits and performance |
+| Console and scripts | `DBG2-13` Command language; `14` Editor/completion; `15` Structured responses/jobs; `16` Recipes and batches |
+| Cheats | `DBG2-17` Catalog import; `18` Decoder; `19` Controlled application; `20` Cheats page; `21` First EUR subset; `22` Advanced cheats; `23` Provenance/checkpoint/replay |
+| Execution and memory | `DBG2-24` Named triggers and stops; `25` Pinned values and differences |
+| Reports and archive | `DBG2-26` Timeline; `27` Regression checks; `28` Guide/distribution |
 
-**Sono attività trasversali:** questa collocazione serve alla navigazione, non sostituisce la sequenza di dipendenze della checklist `DEBUG_TOOLS_V2_TODO.md`.
+**These tasks cut across groups:** this placement supports navigation; it does
+not replace the dependency sequence in `DEBUG_TOOLS_V2_TODO.md`.
 
 ---
 
-## 6. Pattern di interazione da implementare
+<a id="6-pattern-di-interazione-da-implementare"></a>
 
-### 6.1 Pannello a due aree per gli strumenti Debug
+## 6. Interaction patterns to implement
 
-La lista e i dettagli devono essere due aree **con geometria indipendente**:
+<a id="61-pannello-a-due-aree-per-gli-strumenti-debug"></a>
+
+### 6.1 Two-area panel for Debug tools
+
+The list and details must be two areas **with independent geometry**:
 
 ```text
 ┌───────────────────────────────┬────────────────────────────────────────┐
-│ [Menu + CLI] [V2 pianificati] │ Titolo strumento + disponibilità      │
+│ [Menu + CLI] [Planned V2]     │ Tool title + availability              │
 ├───────────────────────────────┤────────────────────────────────────────┤
-│ [01 Strumento A]              │ Parametri / filtri / info            │
-│ [02 Strumento B]              │ Scroll interno SOLO se necessario    │
-│ [03 Strumento C]              │                                        │
-│     SCROLL INTERNO ↓          │                                        │
+│ [01 Tool A]                   │ Parameters / filters / info            │
+│ [02 Tool B]                   │ Internal scroll ONLY if needed         │
+│ [03 Tool C]                   │                                        │
+│     INTERNAL SCROLL ↓         │                                        │
 ├───────────────────────────────┤────────────────────────────────────────┤
-│                               │ [stato/prerequisiti] [Avvia / Conferma]│
+│                               │ [status/prerequisites] [Start / Confirm]│
 └───────────────────────────────┴────────────────────────────────────────┘
 ```
 
-Il titolo e il pulsante di avvio rimangono fermi anche con descrizioni lunghe. La selezione della voce non porta il pannello dettagli a un'altra coordinata. Quando la larghezza non è sufficiente, **ridisporre soltanto queste aree interne** in una divisione verticale, assegnando un'altezza fissa relativa a ciascuna.
+The title and start button remain fixed even with long descriptions. Selecting
+an item does not move the detail panel to another coordinate. When width is
+insufficient, **rearrange only these internal areas** in a vertical split,
+assigning a relative fixed height to each.
 
-### 6.2 Focus, mouse e controller
+<a id="62-focus-mouse-e-controller"></a>
 
-- Navigazione per focus/tab e D-pad, tasti di conferma/annulla, mouse hover/click, wheel e scrollbar quando presenti.
-- Focus e selezione sono stati distinti dal semplice mouse hover, salvo le regole già implementate. Non introdurre doppia esecuzione per input tenuto.
-- Non cambiare scroll offset di una lista quando si aggiorna un valore o si seleziona un elemento. Resettarlo solo quando si entra volutamente in una sezione diversa o cambia la fonte dei dati.
-- Modali di conferma sovrapposte all'area corrente senza modificarne la geometria; `Cancel` torna al contesto precedente, focus ripristinato.
-- Prima di eseguire un comando distruttivo mostrare target, slot, profilo o sessione e il suo effetto reale. Non accoppiare selezione ed esecuzione.
+### 6.2 Focus, mouse and controller
 
-### 6.3 Stato e persistenza
+- Focus/tab and D-pad navigation, confirm/cancel buttons, mouse hover/click, wheel and scrollbar where present.
+- Focus and selection are distinct states from mouse hover alone, subject to existing implemented rules. Do not introduce double execution for held input.
+- Do not change a list's scroll offset when updating a value or selecting an item. Reset it only when deliberately entering another section or changing the data source.
+- Confirmation modals overlay the current area without changing geometry; `Cancel` returns to the previous context with focus restored.
+- Before executing a destructive command show target, slot, profile or session and its real effect. Do not couple selection and execution.
 
-Separare chiaramente:
+<a id="63-stato-e-persistenza"></a>
 
-- Preferenze persistenti (`AvConfig`, input cfg, opzioni video, velocità preferita quando supportata).
-- Stato della sessione corrente (Fast Forward ON/OFF, debug copy attiva, registrazioni, job).
-- Stato della UI (scheda corrente, voce selezionata, scroll offset, filtri, dropdown aperti).
-- Metadati letti dal disco (save timestamp, file disponibili, backup, cataloghi).
+### 6.3 State and persistence
 
-Non sovrascrivere file di configurazione per operazioni puramente visive. Non far dipendere il gameplay dai dati temporanei della UI.
+Clearly separate:
 
----
+- Persistent preferences (`AvConfig`, input cfg, video options, preferred speed when supported).
+- Current session state (Fast Forward ON/OFF, active debug copy, recordings, jobs).
+- UI state (current tab, selected item, scroll offset, filters, open dropdowns).
+- Metadata read from disk (save timestamp, available files, backups, catalogs).
 
-## 7. Architettura tecnica consigliata
-
-**Riutilizza** il renderer presente in `crates/menu/src/theme.rs` e gli handler di `crates/menu/src/lib.rs`. Possibile refactor incrementale:
-
-1. **Catalogo di navigazione:** per ogni voce mostrare `id`, `label`, `group`, stato supporto, azione o pagina di destinazione, eventuali prerequisiti. Fare riferimento alle vere `Row`/`MenuAction`, senza duplicare la logica del debugger.
-2. **Layout nativo:** funzione deterministica che calcola rettangoli di `sidebar`, `header`, `body`, `footer`, `tool_list`, `detail`, `modal` a partire da larghezza/altezza effettive; unico risultato per rendering e hit-testing.
-3. **Rendering:** palette e componenti riutilizzabili (`Panel`, `NavRow`, `SettingRow`, `SlotButton`, `KeyCap`, `ConsolePanel`, `ConfirmDialog`). Nessun asset esterno non necessario.
-4. **Input:** routing globale delle combinazioni L/R **solo quando il menu è aperto**; priorità alla combo e cattura/consumo dei singoli eventi. Gestire conflitti con rimappatura dei tasti e i controlli di gameplay.
-5. **Sottomenu:** le funzioni reali restano collegate agli handler; conservare le transizioni `Changed` perché il runtime applichi immediatamente gli aggiornamenti che già supporta.
-6. **Menu Debug:** riutilizzare selettori reali/catalogo DS esistenti; funzioni solo CLI con integrazione reale solo se è progettata/validata. Evitare falsi pulsanti «Esegui» che non fanno nulla.
-7. **Prestazioni:** evitare rebuild, allocazioni e invalidazioni di framebuffer quando non cambiano pagina, stato, animazione o selezione. Testare entrambe le vie di presentazione GPU/CPU dove supportate.
-
-Se il refactor richiede nuovi moduli, mantenerli dentro `crates/menu/src/` con responsabilità precise (es. `layout`, `navigation`, `widgets`), evitando di trasformare tutto in un unico file enorme.
+Do not overwrite configuration files for purely visual operations. Do not make
+gameplay depend on temporary UI data.
 
 ---
 
-## 8. Piano di lavoro raccomandato
+<a id="7-architettura-tecnica-consigliata"></a>
 
-### Fase A — Sicurezza / inventario
+## 7. Recommended technical architecture
 
-- Leggere e mappare tutte le righe di `MAIN_ROWS`, `rows_of(Page::...)`, `MenuAction`, tutte le opzioni configurabili e i shortcut.
-- Preparare un **inventario prima/dopo** e una piccola matrice «voce originale → sezione nuova → handler» da conservare nei documenti di sviluppo.
-- Eseguire i test attuali e registrare l'esito. Non rimuovere gli esistenti.
+**Reuse** the renderer in `crates/menu/src/theme.rs` and handlers in
+`crates/menu/src/lib.rs`. Possible incremental refactor:
 
-### Fase B — Struttura e stile nativo
+1. **Navigation catalog:** for each item show `id`, `label`, `group`, support status, action or destination page and any prerequisites. Refer to real `Row`/`MenuAction` values without duplicating debugger logic.
+2. **Native layout:** deterministic function calculating `sidebar`, `header`, `body`, `footer`, `tool_list`, `detail`, `modal` rectangles from actual width/height; one result for rendering and hit-testing.
+3. **Rendering:** palette and reusable components (`Panel`, `NavRow`, `SettingRow`, `SlotButton`, `KeyCap`, `ConsolePanel`, `ConfirmDialog`). No unnecessary external assets.
+4. **Input:** global routing of L/R combinations **only while the menu is open**; combination priority and capture/consumption of individual events. Handle conflicts with remapping and gameplay controls.
+5. **Submenus:** real functions remain connected to handlers; retain `Changed` transitions so the runtime immediately applies updates it already supports.
+6. **Debug menu:** reuse real selectors/existing DS catalog; integrate CLI-only functions only if designed/validated. Avoid fake “Execute” buttons that do nothing.
+7. **Performance:** avoid rebuilds, allocations and framebuffer invalidation when page, state, animation and selection do not change. Test both GPU/CPU presentation paths where supported.
 
-- Implementare navbar sinistra e selettore `Gioco/Debug`.
-- Aggiungere layout fluido con limiti minimi e scroll confinati.
-- Implementare pannelli e stile «Atlante del Clan», incluso `Torna al gioco` coerente.
-- Collegare tutte le azioni esistenti preservando conferme e state handling.
-
-### Fase C — Funzioni approvate oltre la baseline
-
-- Save state rapido in Panoramica con ultimo slot ricordato, sovrascrittura/caricamento e metadata veri.
-- Data dell'ultimo salvataggio standard senza fonti fittizie.
-- Footer scorciatoia di apertura/chiusura basata sui binding effettivi.
-- Volume L1/R1 e mute chord; Fast Forward L2/R2 e toggle chord con consumo corretto.
-- Estensione della scala Fast Forward 100–800%, passi 20%, **solo dopo** aver integrato il motore e i test di timing/audio.
-
-### Fase D — Debug e validazione completa
-
-- Migrare tutte le voci Debug attuali nella sidebar organizzata in 8 gruppi, mantenendo la distinzione `Menu / CLI / V2`.
-- Collegare il catalogo DS, il debug session guard e gli altri handler reali.
-- Mettere le V2 come *pianificate* oppure implementarle **separatamente** seguendo i task DBG2 e i loro criteri di chiusura, senza proclamare funzionalità future come già funzionanti.
-- Eseguire test e smoke visuali del renderer con diversi aspect ratio e lunghezze di testo.
+If the refactor needs new modules, keep them inside `crates/menu/src/` with
+precise responsibilities (e.g. `layout`, `navigation`, `widgets`), avoiding
+turning everything into one enormous file.
 
 ---
 
-## 9. Test di accettazione obbligatori
+<a id="8-piano-di-lavoro-raccomandato"></a>
 
-### Layout e navigazione
+## 8. Recommended work plan
 
-- [x] A 1280×720, 1024×768, 854×480 e un viewport stretto supportato: **nessuno scroll orizzontale della finestra principale**.
-- [x] Side menu, switch Gioco/Debug, barra superiore, titolo, footer shortcut, pulsanti L/R e status finale rimangono alle stesse coordinate durante scroll.
-- [x] Le liste Debug da 3, 9 e 20+ voci scorrono **solo all'interno** del loro riquadro; il pannello dettagli non salta.
-- [x] Cambiando strumento o modificando un parametro, scroll dell'elenco e selezione rimangono stabili.
-- [x] A larghezza stretta, solo il contenuto interno si dispone verticalmente; sidebar, tabs e footer rimangono in posizione.
-- [x] `Torna al gioco` condivide cornice/padding/focus/hover dei pannelli e non esce dalla griglia.
-- [x] Nessun testo importante viene troncato senza possibilità di aprire il dettaglio o leggere il valore intero.
+<a id="fase-a--sicurezza--inventario"></a>
 
-### Gioco e input
+### Phase A — Safety / inventory
 
-- [x] Tutte le 12 opzioni originali del menu sono raggiungibili nella nuova navigazione.
-- [x] Save/load/replace/undo, 9/99 slot, game saves, copia e restore backup funzionano come prima, con conferme.
-- [x] Ultimo slot rapido correttamente preselezionato alla riapertura; selezione non scrive sul disco.
-- [x] Timestamp standard reale o assenza esplicita; data del `.sav` non confusa con quella degli save states.
-- [x] L1/R1 regolano il volume da **ogni pagina** del menu; combo simultanea muta senza variare il valore.
-- [x] L2/R2 regolano la velocità da **ogni pagina**; combo simultanea toggla senza variarla.
-- [x] A menu chiuso non ci sono regressioni sui comandi L/R, zoom, fast toggle e input GBA.
-- [x] Se l'FF 20% è implementato: prove su 100, 120, 140, 200, 400, 800%, on/off, audio modes, serializzazione, clock e runtime. Altrimenti evidenziare espressamente il mancato completamento.
-- [x] Rimapparsi la combinazione di menu aggiorna subito i keycap in basso a sinistra; `Escape` di recupero e combo press/release funzionano.
-- [x] Navigazione e conferme mouse/tastiera/gamepad testate, inclusa cancellazione dropdown e modali.
+- Read and map all `MAIN_ROWS`, `rows_of(Page::...)`, `MenuAction` rows, all configurable options and shortcuts.
+- Prepare a **before/after inventory** and a small “original item → new section → handler” matrix to retain in development documentation.
+- Run current tests and record the outcome. Do not remove existing tests.
 
-### Debug e sicurezza
+<a id="fase-b--struttura-e-stile-nativo"></a>
 
-- [x] Confronto **uno a uno** tra tutte le righe di `Page::Debug` e l'inventario delle nuove sezioni: nessuna azione orfana.
-- [x] Catalogo DS conserva filtri, anteprima, importazione e segnalazione degli errori.
-- [x] Le funzioni che richiedono copia isolata non si avviano senza sessione.
-- [x] Step frame, resume, trace, report, replay e diagnosi richiamano gli handler esistenti.
-- [x] Le CLI non diventano automaticamente «azioni Menu» se manca un'integrazione verificata.
-- [x] Le 28 DBG2 seguono lo stato reale della checklist: 01…09 completate, 10…28 pianificate; nessun cheat non verificato compare come attivo.
-- [x] Nessun file `.sav`, stato, log/prova o artefatto viene sovrascritto senza le condizioni e conferme previste.
+### Phase B — Native structure and style
 
-### Qualità del progetto
+- Implement left navbar and `Gioco/Debug` selector (Game/Debug).
+- Add fluid layout with minimum limits and confined scrolling.
+- Implement “Clan Atlas” panels and style, including consistent `Torna al gioco` (Return to game).
+- Connect all existing actions while preserving confirmations and state handling.
 
-- [x] Compilazione e test dei crate interessati secondo i comandi documentati nella repository.
-- [x] Test unitari per geometria/hit-testing, clamp/scroll, switch scheda, combo controller, persistenza e conferme.
-- [x] Smoke test grafici per canvas piccolo/grande, renderer CPU/GPU dove disponibili.
-- [x] Documentazione aggiornata quando cambiano shortcut e opzioni.
+<a id="fase-c--funzioni-approvate-oltre-la-baseline"></a>
+
+### Phase C — Approved features beyond the baseline
+
+- Quick save state in Overview with last slot remembered, overwrite/load and real metadata.
+- Last standard save date without fictional sources.
+- Open/close shortcut footer based on actual bindings.
+- L1/R1 volume and mute chord; L2/R2 Fast Forward and toggle chord with correct event consumption.
+- Extend the Fast Forward scale to 100–800% in 20% steps **only after** integrating the engine and timing/audio tests.
+
+<a id="fase-d--debug-e-validazione-completa"></a>
+
+### Phase D — Debug and full validation
+
+- Migrate all current Debug items to the sidebar organized into 8 groups, retaining the `Menu / CLI / V2` distinction.
+- Connect the DS catalog, debug session guard and other real handlers.
+- Mark V2 items as *planned* or implement them **separately** following DBG2 tasks and their closure criteria, without claiming future features already work.
+- Run tests and visual renderer smoke checks at different aspect ratios and text lengths.
 
 ---
 
-## 10. Output richiesto all'agente che implementa
+<a id="9-test-di-accettazione-obbligatori"></a>
 
-Consegnare:
+## 9. Mandatory acceptance tests
 
-1. **Codice reale nel repository** (non un nuovo mockup HTML) e lista dei file cambiati.
-2. **Inventario «prima → dopo»** completo delle voci menu/debug con relativo handler.
-3. Breve documentazione della struttura/sidebar e della logica del layout adattativo.
-4. Risultati dei test e istruzioni per avviare il menu modificato.
-5. Elenco preciso delle funzionalità **completate**, **rimaste operative come prima**, **ancora da realizzare** e degli eventuali limiti incontrati.
-6. Se il Fast Forward 20% non è stato implementato nel motore, dirlo esplicitamente e non far apparire la UI come se applicasse velocità inesistenti.
+<a id="layout-e-navigazione"></a>
 
-### Definizione di completamento
+### Layout and navigation
 
-Il compito è completato **solo** quando il menu nativo presenta lo stile «Atlante del Clan», la barra laterale approvata, il layout orizzontale adattativo con geometrie stabili, il pulsante `Torna al gioco` integrato, i controlli rapidi desiderati e **tutte le funzioni preesistenti ancora raggiungibili e operative**, con test superati. Ogni funzionalità Debug V2 non implementata deve restare dichiarata come futura, non simulata come reale.
+- [x] At 1280×720, 1024×768, 854×480 and a supported narrow viewport: **no horizontal scroll of the main window**.
+- [x] Side menu, Game/Debug switch, top bar, title, shortcut footer, L/R buttons and final status remain at the same coordinates while scrolling.
+- [x] Debug lists of 3, 9 and 20+ items scroll **only inside** their panel; detail panel does not jump.
+- [x] Changing tools or modifying a parameter keeps list scroll and selection stable.
+- [x] At narrow width, only internal content is arranged vertically; sidebar, tabs and footer remain in position.
+- [x] `Torna al gioco` (Return to game) shares panel frame/padding/focus/hover and stays in the grid.
+- [x] No important text is truncated without a way to open details or read the full value.
+
+<a id="gioco-e-input"></a>
+
+### Game and input
+
+- [x] All 12 original menu options are reachable in the new navigation.
+- [x] Save/load/replace/undo, 9/99 slots, game saves, copy and backup restore work as before, with confirmations.
+- [x] Last quick slot correctly preselected on reopening; selection does not write to disk.
+- [x] Real standard timestamp or explicit absence; `.sav` date not confused with save-state dates.
+- [x] L1/R1 adjust volume from **every menu page**; simultaneous combo mutes without changing its value.
+- [x] L2/R2 adjust speed from **every page**; simultaneous combo toggles without changing it.
+- [x] With menu closed there are no regressions in L/R, zoom, fast toggle and GBA input.
+- [x] If 20% FF is implemented: tests at 100, 120, 140, 200, 400, 800%, on/off, audio modes, serialization, clock and runtime. Otherwise explicitly identify the incomplete work.
+- [x] Remapping the menu combination immediately updates bottom-left keycaps; recovery `Escape` and combo press/release work.
+- [x] Mouse/keyboard/gamepad navigation and confirmations tested, including dropdown and modal cancellation.
+
+<a id="debug-e-sicurezza"></a>
+
+### Debug and safety
+
+- [x] **One-to-one** comparison of all `Page::Debug` rows with the new section inventory: no orphan actions.
+- [x] DS catalog retains filters, preview, import and error reporting.
+- [x] Functions requiring an isolated copy do not start without a session.
+- [x] Step frame, resume, trace, report, replay and diagnosis call existing handlers.
+- [x] CLIs do not automatically become “Menu actions” without verified integration.
+- [x] All 28 DBG2 tasks follow the actual checklist status: 01…09 complete, 10…28 planned; no unverified cheat appears active.
+- [x] No `.sav` file, state, log/evidence or artifact is overwritten without the prescribed conditions and confirmations.
+
+<a id="qualità-del-progetto"></a>
+
+### Project quality
+
+- [x] Build and tests of affected crates according to commands documented in the repository.
+- [x] Unit tests for geometry/hit-testing, clamp/scroll, tab switch, controller combinations, persistence and confirmations.
+- [x] Graphics smoke tests for small/large canvas, CPU/GPU renderer where available.
+- [x] Updated documentation when shortcuts and options change.
 
 ---
 
-*Specifica redatta a partire dalle richieste di progettazione del menu e dall'inventario della branch `decomp` consultato il 29/10/2026. Prima di procedere, verificare eventuali commit successivi alla baseline e adattare la mappa senza perdere le funzioni introdotte nel frattempo.*
+<a id="10-output-richiesto-allagente-che-implementa"></a>
+
+## 10. Output required from the implementing agent
+
+Deliver:
+
+1. **Real code in the repository** (not a new HTML mockup) and a list of changed files.
+2. Complete **“before → after” inventory** of menu/debug items with corresponding handler.
+3. Brief documentation of the sidebar structure and adaptive layout logic.
+4. Test results and instructions for starting the changed menu.
+5. Precise list of features **completed**, **still working as before**, **still to be implemented** and any limits encountered.
+6. If 20% Fast Forward was not implemented in the engine, explicitly say so and do not make the UI appear to apply nonexistent speeds.
+
+<a id="definizione-di-completamento"></a>
+
+### Definition of completion
+
+The task is complete **only** when the native menu presents “Clan Atlas” style,
+the approved sidebar, adaptive horizontal layout with stable geometry, integrated
+`Torna al gioco` (Return to game), desired shortcuts and **all preexisting
+functions still reachable and operational**, with passing tests. Every Debug V2
+feature not implemented must remain declared future work, not simulated as real.
+
+---
+
+*Specification written from menu design requests and the `decomp` branch
+inventory consulted October 29, 2026. Before proceeding, check for commits after
+the baseline and adapt the map without losing functions introduced meanwhile.*
