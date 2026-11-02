@@ -84,6 +84,46 @@ Documentation: [debug_issues.md](docs/debug_issues.md), [debug_gameplay.md](docs
 
 [Change record](docs/changes/2026-11-02-translate-remaining-debug-reports.json)
 
+## 2026-11-02 — Translate performance priority P2
+
+Type: docs. Platforms: Desktop performance planning documentation.
+
+**Changes**
+
+- Translate performance priority P2 into English, preserving task states, recorded measurements, accepted and rejected experiments and platform coverage limits.
+
+**Validation**
+
+- Compare four ordered checkbox states, task identifiers, inline literals, links, numeric values and the legacy heading anchor with the original; confirm surrounding sections are unchanged.
+
+**Limitations**
+
+- Performance history and P3–P4 remain untranslated; no benchmarks, builds, fixtures or runtime checks were run.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-performance-priority-p2.json)
+
+## 2026-11-02 — Translate performance priorities P0 and P1
+
+Type: docs. Platforms: Desktop performance planning documentation.
+
+**Changes**
+
+- Translate performance priorities P0 and P1 into English while retaining task states, results, measurements, rejected experiments and platform coverage limits.
+
+**Validation**
+
+- Compare all six ordered checkbox states, task identifiers, inline literals, links and two legacy heading anchors with the prior text; confirm surrounding sections remain unchanged.
+
+**Limitations**
+
+- Performance history and P2–P4 remain untranslated; no benchmarks, builds, fixtures or runtime checks were run.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-performance-priorities-p0-p1.json)
+
 ## 2026-11-02 — Translate performance and debug-save status summaries
 
 Type: docs. Platforms: Desktop development documentation.
@@ -296,6 +336,46 @@ Type: docs. Platforms: project-wide.
 - Documentation-only translation; historical Wine evidence remains within its original scope, no runtime/build/replay/platform checks repeated. Remaining guides, dynamic metadata, tools, source comments and cross-tree audit stay pending.
 
 [Change record](docs/changes/2026-11-02-translate-debug-session-guides.json)
+
+## 2026-11-02 — Translate debug-save collection and source documentation
+
+Type: docs. Platforms: Desktop debug-save documentation.
+
+**Changes**
+
+- Translate the local numbered collection, source inventory and generated-save descriptions into English while retaining identifiers, game names, paths, provenance and historical validation limits.
+
+**Validation**
+
+- Compare identifiers, inline literals, links and four legacy anchors with the prior text; confirm the introduction and case sections remain unchanged.
+
+**Limitations**
+
+- The case-by-case and subsequent sections remain untranslated; no private saves, fixtures, gameplay or runtime checks were accessed or run.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-debug-save-collection-sources.json)
+
+## 2026-11-02 — Translate debug-save cases DS-01 through DS-13
+
+Type: docs. Platforms: Desktop debug-save documentation.
+
+**Changes**
+
+- Translate debug-save case descriptions DS-01 through DS-13 into English, preserving case statuses, evidence, source identities, game terms and validation limits.
+
+**Validation**
+
+- Compare all 13 ordered checkbox states, identifiers, inline literals and 14 legacy anchors with the original; verify surrounding sections remain unchanged.
+
+**Limitations**
+
+- DS-14 through DS-26 and subsequent sections remain untranslated; no private saves, gameplay, benchmark or runtime checks were accessed or run.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-debug-save-cases-01-13.json)
 
 ## 2026-11-02 — Translate the integrated debug checklist and synchronize its reference
 
@@ -694,6 +774,26 @@ Type: docs. Platforms: Shared desktop debug documentation.
 Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
 
 [Change record](docs/changes/2026-11-02-complete-shared-debug-tools-translation.json)
+
+## 2026-11-02 — Complete English translation of debug-save cases
+
+Type: docs. Platforms: Desktop debug-save documentation.
+
+**Changes**
+
+- Translate debug-save cases DS-14 through DS-26 and the final evidence notes into English while retaining coverage status, provenance, original game/author quotations and validation limits.
+
+**Validation**
+
+- Compare all 13 ordered checkbox states, identifiers, inline literals, links and 14 legacy anchors with the original; verify local targets, original quotations and unchanged earlier sections.
+
+**Limitations**
+
+- Documentation translation only; no private saves, gameplay, benchmark or runtime checks were accessed or run.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-complete-debug-save-document-translation.json)
 
 ## 2026-11-01 — Verify European compact OBJ fifth CLI
 

@@ -18356,3 +18356,38 @@ LOCAL-ARTIFACT-SWEEP-2026-10-31 — CLOSED. Latest request: clean residual proje
 - Verified: task IDs, literals, links and legacy anchors preserved, local targets exist and remaining sections are unchanged.
 - Evidence: `docs/changes/2026-11-02-translate-performance-and-save-status-summaries.json`; both documents remain pending in the audit ledger.
 - Limits: documentation only; no fixture, benchmark, runtime or save exploration performed.
+
+### ENGLISH-FIRST-DEBUG-SAVES-SOURCES
+
+- Outcome: completed for numbered collection and source inventory; the debug-save document remains partially translated.
+- Verified: identifiers, paths, inline literals, links and four legacy anchors preserved; introduction and case sections unchanged.
+- Evidence: `docs/changes/2026-11-02-translate-debug-save-collection-sources.json`; document remains pending in the audit ledger.
+- Limits: documentation only; no private save access, fixtures, gameplay or runtime checks.
+
+### ENGLISH-FIRST-DEBUG-SAVES-CASES-A
+
+- Outcome: completed for DS-01..13; debug-save document remains partially translated.
+- Verified: 13 ordered case states, IDs, inline literals and 14 legacy anchors preserved; surrounding sections unchanged.
+- Evidence: `docs/changes/2026-11-02-translate-debug-save-cases-01-13.json`; document remains pending in audit ledger.
+- Limits: documentation only; no private saves, gameplay, benchmark or runtime checks accessed or performed.
+
+### ENGLISH-FIRST-DEBUG-SAVES-CASES-B
+
+- Outcome: completed; debug-save document translated in full.
+- Verified: 13 ordered case states, identifiers, literals, links, original game/author quotations and 14 legacy anchors preserved; earlier sections unchanged.
+- Evidence: `docs/changes/2026-11-02-complete-debug-save-document-translation.json`; reviewed document hash in `docs/development/ENGLISH_FIRST_AUDIT.json`.
+- Limits: documentation only; no private saves, gameplay, benchmark or runtime checks accessed or performed.
+
+### ENGLISH-FIRST-PERFORMANCE-P0-P1
+
+- Outcome: completed for P0/P1; performance plan remains partially translated.
+- Verified: six ordered task states, identifiers, inline literals, links and two legacy anchors preserved; surrounding sections unchanged.
+- Evidence: `docs/changes/2026-11-02-translate-performance-priorities-p0-p1.json`; document remains pending in audit ledger.
+- Limits: documentation only; no benchmarks, builds, fixtures or runtime checks.
+
+### ENGLISH-FIRST-PERFORMANCE-P2
+
+- Outcome: completed for P2; performance plan remains partially translated.
+- Verified: four ordered task states, identifiers, inline literals, links, numeric values and legacy anchor preserved; surrounding sections unchanged.
+- Evidence: `docs/changes/2026-11-02-translate-performance-priority-p2.json`; document remains pending in audit ledger.
+- Limits: documentation only; no benchmarks, builds, fixtures or runtime checks.

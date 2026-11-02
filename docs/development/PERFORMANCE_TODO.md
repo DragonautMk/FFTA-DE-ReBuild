@@ -315,397 +315,392 @@ fra cui zoom elevato: non ripetere la baseline ordinaria per coprirli.
   sequenza introduttiva headless sotto Wine. Non dimostra il costo di un turno
   nemico, la fluidità della finestra o il comportamento di Windows nativo.
 
-## P0 — Rendere il problema riproducibile
+<a id="p0--rendere-il-problema-riproducibile"></a>
 
-- [ ] **PERF-01 — Registrare scene e baseline rappresentative.**
-  Rischio basso; primo passo, nessuna dipendenza.
-  Preparare replay separati per turno nemico lento, movimento/effetti in
-  battaglia, dialoghi/menu e zoom elevato. Conservare ROM, save e registrazioni
-  solo nelle directory locali ignorate. Registrare build, backend, risoluzione,
-  zoom, filtri, VSync, modalità audio, driver e cache fredda/calda.
-  Estendere [benchmark_windows_runtime.py](../../scripts/benchmark_windows_runtime.py)
-  al rilevamento corretto della piattaforma e riusare il confronto deterministico.
-  **Completato quando:** lo stesso turno si ripete da input/stato iniziale
-  controllati e ci sono almeno cinque esecuzioni alternate per confronto.
-  Distinguere rallentamento host da un'attesa già presente nel gioco quando
-  l'emulazione mantiene circa 59,73 frame al secondo.
+## P0 — Make the problem reproducible
 
-- [ ] **PERF-02 — Misurare tempi, picchi e attese separatamente.**
-  Rischio basso; dipende da PERF-01.
-  In `play.rs`, `main.rs`, PPU e presenter aggiungere diagnostica opt-in:
-  esecuzione guest, PPU, preparazione UI, filtri, handoff audio, salvataggio,
-  upload, acquisizione della superficie, invio dei comandi e attesa del clock.
-  Evitare timer per singola istruzione e log sincroni per frame. Non sommare
-  intervalli annidati come se fossero indipendenti. Contare distintamente
-  blocchi nativi, fallback, hook intenzionalmente interpretati e frame incompleti.
-  **Avanzamento:** il censimento `RECOMP_COST_FROM` usa ora lo stesso dispatch
-  nativo del runtime, preservando gli hook audio/sprite/mouse. Distingue blocchi
-  nativi, traduzioni mancanti, passi di sistema e hook interpretati; attribuisce
-  cicli guest, non tempo CPU host, e resta separato dai confronti temporali.
-  Sono disponibili anche tempi CPU per frame delle scanline GBA, delle righe
-  zoom e del resto del core (`--ppu-profile` / `FFTA_PROFILE=1`), con controllo
-  dei conteggi, campioni limitati e nessuna modifica del clock/stato guest.
-  **Nuovo sottopasso concluso:** il profilo callback opt-in separa attesa mutex,
-  rendering, totale e intervallo d'arrivo, con contatori di hold faithful/drop
-  per gioco, priming, pausa e fast-forward. Storage limitato e report dopo
-  teardown; parità DSP/campioni/code verificata per formati e canali diversi.
-  La prova CPAL Linux 44,1 kHz misura p99 totale 0,500 ms e attesa mutex
-  0,000912 ms durante gioco, nessun callback oltre il proprio periodo. I 1790
-  hold faithful in 6 callback includono transizioni/ripresa: non sono una prova
-  di underrun udibile o un'analisi isolata del turno AI. L'overhead sintetico
-  mediano è circa 129 ns/callback (+0,34%). I sottopassi successivi (PERF-09/10)
-  hanno aggiunto gate di frame, contatori enhanced, osservazione backend e cadenza.
-  Restano la scena lenta originale, overhead realtime controllato, significato
-  udibile dei dati sorgente e copertura completa hardware/Windows nativo.
-  Gli export passano 328 test Windows/Wine e 329 Linux; profilo on/off,
-  caricamenti/Undo/FF e bypass audio del benchmark passano sul portable Linux.
-  **Completato quando:** il report contiene mediana, p95, p99, massimo,
-  frame oltre 16,74/33,49 ms, durata del turno e underrun audio; l'overhead della
-  diagnostica è misurato. Il tempo GPU usa timestamp opzionali e lettura
-  differita dove supportati: il tempo di `submit` non è il tempo di esecuzione
-  GPU. Le [API Queue di wgpu 26](https://docs.rs/wgpu/26.0.1/wgpu/struct.Queue.html)
-  descrivono invio, trasferimenti e timestamp.
+- [ ] **PERF-01 — Record representative scenes and baselines.**
+  Low risk; first step, no dependency. Prepare separate replays for a slow enemy
+  turn, battle movement/effects, dialogue/menus and high zoom. Keep ROM, saves
+  and recordings only in ignored local directories. Record build, backend,
+  resolution, zoom, filters, VSync, audio mode, driver and cold/warm cache.
+  Extend [benchmark_windows_runtime.py](../../scripts/benchmark_windows_runtime.py)
+  for correct platform detection and reuse deterministic comparison.
+  **Complete when:** the same turn repeats from controlled input/initial state
+  and there are at least five alternating runs for comparison. Distinguish host
+  slowdown from a wait already present in the game when emulation maintains
+  approximately 59.73 frames per second.
 
-- [x] **PERF-03 — Fissare i controlli di correttezza e la procedura A/B.**
-  **PERF-03-FRACTIONAL-UI-TEXELS — concluso.**
-  Mappe intere RG32Uint calcolate con le formule CPU esistenti eliminano
-  differenze nei ritagli frazionari senza cambiare zoom/FOV. Chiavi complete e
-  limiti del device; bounding box trasparenza e scissor conservativi evitano
-  lavoro inutile. Matrice Radeon di 32 stati zoom/resize/DPI e test di risorse
-  condivise/invalidation passano con parità CPU esatta. Replay 3530 frame e
-  worldmap preservano immagini/stato/contatori, GUI load/Undo/reload/close e
-  Wayland passano. Cinque coppie migliorano 8,230 -> 7,775 ms (-5,53%); il
-  precedente prototipo senza scissor (+4,17%) resta scartato. Questo risultato
-  non prova un'accelerazione IA o prestazioni Windows native. Export Docker:
-  332 test Windows/Wine, 333 Linux (14 opzionali esclusi ciascuno); integrità,
-  privacy, import PE e GLIBC 2.35 verificati. Portable Linux con cache fredda:
-  load/Undo/reload/resume/chiusura e schermate controllate.
-  Rischio basso; dipende da PERF-01.
-  Riutilizzare replay, confronto interprete/nativo, framebuffer/OAM e test
-  savestate esistenti. Per modifiche al core confrontare anche registri, RAM,
-  IO, VRAM, cicli guest, save e campioni audio deterministici prima del device.
-  I contatori di blocchi possono cambiare con una diversa traduzione:
-  non confonderli con lo stato del gioco.
-  **Completato quando:** ogni confronto ha configurazione e hash dei binari,
-  verifica separata dal timing e una procedura per tornare alla baseline.
-  Controllare che il limite `max_steps` non faccia avanzare storia temporale e
-  contatori di frame completi quando `run_frame_native` non completa un frame.
+- [ ] **PERF-02 — Measure times, spikes and waits separately.**
+  Low risk; depends on PERF-01. Add opt-in diagnostics in `play.rs`, `main.rs`,
+  PPU and presenter: guest execution, PPU, UI preparation, filters, audio handoff,
+  save, upload, surface acquisition, command submission and clock wait. Avoid
+  per-instruction timers and synchronous per-frame logs. Do not add nested
+  intervals as if independent. Count native blocks, fallback, intentionally
+  interpreted hooks and incomplete frames separately.
+  **Progress:** the `RECOMP_COST_FROM` inventory now uses the runtime's same
+  native dispatch, preserving audio/sprite/mouse hooks. It distinguishes native
+  blocks, missing translations, system steps and interpreted hooks; it attributes
+  guest cycles, not host CPU time, and remains separate from timing comparisons.
+  Per-frame CPU times for GBA scanlines, zoom rows and the rest of the core
+  (`--ppu-profile` / `FFTA_PROFILE=1`) are also available, with count checks,
+  bounded samples and no guest clock/state change.
+  **New completed substep:** opt-in callback profiling separates mutex wait,
+  rendering, total and arrival interval, with faithful hold/drop counters for
+  play, priming, pause and fast-forward. Bounded storage and report after
+  teardown; DSP/sample/queue parity verified for different formats and channels.
+  The Linux CPAL 44.1 kHz check measures total p99 0.500 ms and mutex wait
+  0.000912 ms during play, with no callback exceeding its period. The 1790
+  faithful holds in 6 callbacks include transitions/resumption: they are not
+  evidence of audible underrun or isolated analysis of the AI turn. Median
+  synthetic overhead is about 129 ns/callback (+0.34%). Later substeps
+  (PERF-09/10) added frame gate, enhanced counters, backend observation and cadence.
+  Original slow scene, controlled realtime overhead, audible meaning of source
+  data and full hardware/native Windows coverage remain. Exports pass 328
+  Windows/Wine and 329 Linux tests; profile on/off, loads/Undo/FF and benchmark
+  audio bypass pass on portable Linux.
+  **Complete when:** report contains median, p95, p99, maximum, frames over
+  16.74/33.49 ms, turn duration and audio underruns; diagnostic overhead measured.
+  GPU time uses optional timestamps and deferred read where supported: `submit`
+  time is not GPU execution time. [wgpu 26 Queue APIs](https://docs.rs/wgpu/26.0.1/wgpu/struct.Queue.html)
+  describe submission, transfers and timestamps.
 
-## P1 — Correzioni circoscritte e lavoro ridondante
+- [x] **PERF-03 — Establish correctness checks and A/B procedure.**
+  **PERF-03-FRACTIONAL-UI-TEXELS — completed.** Integer RG32Uint maps computed
+  using existing CPU formulas eliminate fractional-crop differences without
+  changing zoom/FOV. Full keys and device limits; conservative transparency
+  bounding box and scissor avoid unnecessary work. Radeon matrix of 32
+  zoom/resize/DPI states and shared-resource/invalidation tests pass with exact
+  CPU parity. 3530-frame replay and worldmap preserve images/state/counters;
+  GUI load/Undo/reload/close and Wayland pass. Five pairs improve 8.230 ->
+  7.775 ms (-5.53%); the previous prototype without scissor (+4.17%) remains
+  rejected. This result does not prove AI acceleration or native Windows
+  performance. Docker export: 332 Windows/Wine tests, 333 Linux (14 optional
+  excluded each); integrity, privacy, PE imports and GLIBC 2.35 verified.
+  Portable Linux with cold cache: load/Undo/reload/resume/closure and screens
+  checked.
+  Low risk; depends on PERF-01. Reuse replay, interpreter/native comparison,
+  framebuffer/OAM and existing savestate tests. For core changes also compare
+  registers, RAM, IO, VRAM, guest cycles, saves and deterministic audio samples
+  before the device. Block counters can change with a different translation:
+  do not confuse them with game state.
+  **Complete when:** each comparison has configuration and binary hashes,
+  verification separate from timing and a procedure to return to baseline.
+  Check that the `max_steps` limit does not advance temporal history and
+  completed-frame counters when `run_frame_native` does not complete a frame.
 
-- [ ] **PERF-04 — Recuperare dagli errori grafici temporanei.**
-  Rischio medio; dipende da PERF-02/03.
-  In `Presenter::present` e `PlayApp::present_rgba` distinguere timeout, superficie
-  da riconfigurare, perdita del device e fallimento definitivo. Un timeout
-  isolato dovrebbe poter saltare quella presentazione e riprovare, senza
-  disattivare per sempre la GPU. Definire tentativi limitati, conteggi e un
-  fallback software funzionante; evitare cicli di ricreazione o log continui.
-  **Avanzamento:** implementati timeout con frame saltato senza perdere la GPU,
-  un solo tentativo di riconfigurazione per frame su Lost/Outdated e fallback
-  dopo tre recuperi consecutivi falliti. Memoria esaurita/errori sconosciuti
-  attivano subito il fallback; solo le presentazioni riuscite contano negli FPS EXT.
-  I test simulano timeout prolungati, recupero, budget e fallimenti definitivi.
-  Il caso iniziale Xvfb/Radeon-GL Invalid surface è ora gestito con error scope
-  bilanciati: la configurazione fallita ritorna al renderer software senza panic.
-  Lo stesso controllo copre resize, VSync e riconfigurazione di recupero; VSync
-  restituisce un Result al chiamante. Verificati il caso reale di fallback,
-  resize/VSync ON-OFF su Vulkan valido e replay/chiusura su Radeon Wayland.
-  **PERF-04-SKIPPED-UPLOADS:** corretti gli upload pendenti sui frame saltati:
-  invio dei soli trasferimenti, senza draw/present/timestamp o attese GPU.
-  Il frontend evita nuove preparazioni per finestre di dimensione zero e
-  conserva l'errore del benchmark quando una presentazione viene saltata.
-  Test di consumo batch e prova Presenter su 1200 batch zero-size passano;
-  492 MB di traffico logico, RSS stabile tra batch 600 e 1200. GUI normale
-  load/Undo/reload/close passa; export finali verificati (333 test Windows/Wine,
-  334 Linux, 14 opzionali esclusi ciascuno), con prova GUI a cache fredda
-  sul portable Linux e controllo delle schermate. Non è una misura
-  di accelerazione dei turni IA né una prova di minimizzazione del compositor.
-  **PERF-04-MINIMIZE-RESTORE — concluso per Linux X11 e Wine/Vulkan.**
-  Nuovo diagnostico senza ROM: tre minimizzazioni/ripristini osservati dal WM,
-  tre resize e VSync ON/OFF, con rendering riuscito dopo ogni ripristino e
-  teardown corretto. Verifica indipendente degli stati Iconic/Normal.
-  Linux Openbox/llvmpipe: 27 Presented, zero Skipped; Windows GNU sotto Wine
-  con Vulkan: 18 Presented, 9 Skipped, dimensioni zero durante la minimizzazione.
-  Il primo tentativo D3D12 Wine fallisce la creazione del device: resta un
-  risultato negativo, non copertura Windows nativa. Anche il portable Linux
-  corrente supera tre cicli in battaglia e poi Undo/reload/resume/chiusura.
-  Nessuna modifica runtime o rigenerazione dei pacchetti richiesta.
-  **PERF-04-MONITOR-TRANSITIONS — concluso per uscite virtuali X11/Wine.**
-  Modalità `--monitors` del diagnostico: due handle monitor distinti, sequenza
-  A/B/A/B/A osservata e confermata dalle posizioni X, resize effettivi fra
-  640x360 e 640x480, VSync ON/OFF e teardown corretto. Xorg/dummy con uscite
-  1280x720/1280x960: 20 Presented, zero Skipped su Linux e Windows GNU/Wine/Vulkan.
-  Portable Linux invariato: battaglia, quattro spostamenti, Undo/reload/resume/
-  chiusura verificati anche con schermate. Nessuna modifica runtime o nuovo
-  benchmark. Il primo scenario con tastiera non configurata non è stato accettato.
-  **PERF-04-DEVICE-LOSS — concluso per distruzione controllata del device.**
-  Test privato con distruzione reale del device: i frame/UI esistenti ritornavano
-  un errore, ma creare una nuova UI causava panic su texture invalide. Il
-  Presenter conserva ora il primo errore uncaptured/loss del proprio Device e
-  lo passa al fallback software; niente allocazioni o attese GPU per frame.
-  Provati plain/cached/new UI e resize, isolamento degli error scope, errore
-  persistente, rifiuto di nuove scritture/VSync e presentazione software.
-  Native e Windows/Wine/Vulkan passano; GUI normale senza fallback inatteso e
-  replay Radeon/Wayland3530frame/stato/contatori invariati con chiusura corretta.
-  Export Docker:333 test Windows/Wine e334 Linux (15 opzionali esclusi),
-  controlli archivio/privacy/import DLL/GLIBC2.35 e GUI portable Linux a cache
-  fredda passano; copia precedente preservata. La distruzione controllata non
-  prova ogni reset asincrono del driver o fault fisico.
-  Restano minimizza/ripristina su Wayland e Windows nativo, schermi fisici,
-  mixed-DPI/migrazione GPU/hotplug e perdita del device in esecuzione.
-  **Completato quando:** resize, minimizza/ripristina, cambio schermo e un errore
-  transitorio simulato recuperano senza blocchi. Verificare chiusura Wayland
-  anche dopo recupero e fallback, preservando l'ordine di rilascio in `exiting`.
+<a id="p1--correzioni-circoscritte-e-lavoro-ridondante"></a>
 
-- [x] **PERF-05 — Aggiornare texture UI e LUT solo quando cambiano.**
-  Rischio basso/medio; dipende da PERF-02/03.
-  In `ui_layer.rs`, `fps.rs` e `refresh_ui_layers` introdurre revisioni esplicite
-  dei contenuti: LUT alla modifica dei colori, FPS alla modifica del testo,
-  UI quando cambia davvero. Separare variazioni di layout da variazioni dei
-  pixel. Condividere l'upload del mondo solo per livelli con stessa sorgente,
-  dimensioni e generazione; il pannello statistiche ha uno sfondo proprio.
-  **Esito:** revisioni LUT/FPS, cache input del packing UI e riuso del mondo
-  nella singola presentazione sono implementati e verificati. Mondi con la
-  stessa sorgente e dimensioni condividono texture/upload; fonti distinte,
-  incluso Stats, restano separate. Tutti i mondi unici si aggiornano a ogni
-  chiamata: nessuna cache persistente per indirizzo. Payload 530 -> 316 MB
-  nel replay, cinque coppie 8,251 -> 8,219 ms (-0,39%) con p95/p99 migliori.
-  GPU indipendente/condivisa, mutazioni, grafi di sorgenti, dimensioni,
-  ricreazione e GUI load/Undo/zoom passano; export 329 test Windows/Wine e
-  330 Linux, anche GUI sul portable Linux con cache fredda. Il successivo
-  intervento sulle coordinate frazionarie è descritto in PERF-03.
-  **Completato quando:** contatori di byte/upload dimostrano la riduzione e
-  immagini, HUD, colori, menu, zoom e caricamento/Undo restano equivalenti.
-  Invalidare le revisioni al cambio ROM, caricamento stato e ricreazione GPU.
-  Valutare staging riutilizzabile solo se il profilo lo giustifica: anche gli
-  upload hanno costi di copia/allocazione
-  ([documentazione wgpu](https://docs.rs/wgpu/26.0.1/wgpu/struct.Queue.html#method.write_texture)).
+## P1 — Bounded fixes and redundant work
 
-- [x] **PERF-06 — Riutilizzare buffer e risultati intermedi misurati come costosi.**
-  Rischio basso/medio; dipende da PERF-02/03.
-  Controllare `handoff_audio`: il consumo con `mem::take` di `fifo_tap`
-  abbandona il buffer dopo il trasferimento. Valutare un drenaggio che conservi
-  la capacità. Misurare anche packing/bounds ripetuti dei pannelli e conservarli
-  per revisione del contenuto. Evitare cache basate solo sull'indirizzo o
-  ottimizzazioni di allocazioni presenti esclusivamente nei test.
-  **Esperimento valutato:** la scansione dei soli estremi visibili per riga
-  riduce il costo della funzione sui pannelli sintetici, ma due confronti
-  end-to-end da 3.000 frame hanno mostrato una regressione del candidato.
-  Non attivata nel runtime: conservata solo nei test con equivalenza e
-  microbenchmark release a cinque coppie alternate.
-  **Esito finale:** riuso FIFO già verificato; cache del packing UI mantenuta
-  con chiavi complete e memoria limitata ai buffer correnti, invalidazione al
-  ripristino e test contro il packing diretto. Cinque coppie sulla battaglia
-  misurano -1,41% nel ciclo GUI, preparazione UI 0,157 -> 0,122 ms. Replay,
-  world map, GUI/Undo/stile e build Linux/Windows-Wine passano; nessun cambio
-  al flusso degli eventi audio. Evidenza: record della cache input UI del 21/10.
-  **Completato quando:** diminuiscono allocazioni o tempo nel percorso misurato,
-  senza crescita continua della memoria, eventi audio persi o pannelli obsoleti.
+- [ ] **PERF-04 — Recover from temporary graphics errors.**
+  Medium risk; depends on PERF-02/03. In `Presenter::present` and
+  `PlayApp::present_rgba`, distinguish timeout, surface needing reconfiguration,
+  device loss and permanent failure. An isolated timeout should be able to skip
+  that presentation and retry without permanently disabling the GPU. Define
+  bounded retries, counters and a working software fallback; avoid recreation
+  loops or continuous logs.
+  **Progress:** timeouts implemented with skipped frame without losing GPU, one
+  reconfiguration attempt per frame on Lost/Outdated and fallback after three
+  consecutive failed recoveries. Out-of-memory/unknown errors trigger immediate
+  fallback; only successful presentations count in FPS EXT. Tests simulate
+  prolonged timeouts, recovery, budget and permanent failures. The initial
+  Xvfb/Radeon-GL Invalid surface case is now handled with balanced error scopes:
+  failed configuration returns to software renderer without panic. The same
+  check covers resize, VSync and recovery reconfiguration; VSync returns a Result
+  to the caller. Verified actual fallback case, resize/VSync ON-OFF on valid
+  Vulkan and replay/closure on Radeon Wayland.
+  **PERF-04-SKIPPED-UPLOADS:** fixed pending uploads on skipped frames: submit
+  transfers only, without draw/present/timestamp or GPU waits. The frontend
+  avoids new preparation for zero-size windows and preserves the benchmark
+  error when a presentation is skipped. Batch consumption tests and Presenter
+  check on 1200 zero-size batches pass; 492 MB logical traffic, stable RSS
+  between batches 600 and 1200. Normal GUI load/Undo/reload/close passes; final
+  exports verified (333 Windows/Wine tests, 334 Linux, 14 optional excluded
+  each), with cold-cache GUI check on portable Linux and screen inspection.
+  This is not a measurement of AI-turn acceleration or compositor minimization.
+  **PERF-04-MINIMIZE-RESTORE — completed for Linux X11 and Wine/Vulkan.**
+  New ROM-free diagnostic: three minimizations/restores observed by the WM,
+  three resizes and VSync ON/OFF, successful rendering after every restore and
+  correct teardown. Independent Iconic/Normal state verification. Linux
+  Openbox/llvmpipe: 27 Presented, zero Skipped; Windows GNU under Wine with
+  Vulkan: 18 Presented, 9 Skipped, zero dimensions during minimization. The
+  first Wine D3D12 attempt fails device creation: it remains a negative result,
+  not native Windows coverage. Current portable Linux also passes three cycles
+  in battle followed by Undo/reload/resume/closure. No runtime change or package
+  regeneration required.
+  **PERF-04-MONITOR-TRANSITIONS — completed for virtual X11/Wine outputs.**
+  Diagnostic `--monitors` mode: two distinct monitor handles, A/B/A/B/A sequence
+  observed and confirmed by X positions, actual resizes between 640x360 and
+  640x480, VSync ON/OFF and correct teardown. Xorg/dummy with 1280x720/1280x960
+  outputs: 20 Presented, zero Skipped on Linux and Windows GNU/Wine/Vulkan.
+  Portable Linux unchanged: battle, four moves, Undo/reload/resume/closure
+  verified with screens. No runtime change or new benchmark. The first scenario
+  with unconfigured keyboard was not accepted.
+  **PERF-04-DEVICE-LOSS — completed for controlled device destruction.**
+  Private test with actual device destruction: existing frames/UI returned an
+  error, but creating a new UI caused panic on invalid textures. Presenter now
+  retains the first uncaptured/loss error from its Device and passes it to
+  software fallback; no per-frame GPU allocations or waits. Tested plain/cached/
+  new UI and resize, error-scope isolation, persistent error, refusal of new
+  writes/VSync and software presentation. Native and Windows/Wine/Vulkan pass;
+  normal GUI without unexpected fallback and Radeon/Wayland 3530-frame replay/
+  state/counters unchanged with correct closure. Docker export: 333 Windows/Wine
+  tests and 334 Linux (15 optional excluded), archive/privacy/DLL import/GLIBC
+  2.35 checks and cold-cache portable Linux GUI pass; previous copy retained.
+  Controlled destruction does not prove every asynchronous driver reset or
+  physical fault. Wayland and native Windows minimize/restore, physical screens,
+  mixed-DPI/GPU migration/hotplug and device loss during execution remain.
+  **Complete when:** resize, minimize/restore, monitor change and simulated
+  transient error recover without stalls. Also verify Wayland closure after
+  recovery and fallback, preserving release order in `exiting`.
 
-## P2 — Ottimizzare il collo di bottiglia dimostrato
+- [x] **PERF-05 — Update UI textures and LUTs only when they change.**
+  Low/medium risk; depends on PERF-02/03. In `ui_layer.rs`, `fps.rs` and
+  `refresh_ui_layers`, introduce explicit content revisions: LUT when colors
+  change, FPS when text changes, UI when it actually changes. Separate layout
+  changes from pixel changes. Share world upload only for layers with the same
+  source, dimensions and generation; the statistics panel has its own background.
+  **Outcome:** LUT/FPS revisions, UI packing input cache and world reuse within
+  a single presentation are implemented and verified. Worlds with the same
+  source and dimensions share texture/upload; distinct sources, including Stats,
+  remain separate. All unique worlds update on every call: no persistent
+  address-based cache. Payload 530 -> 316 MB in replay, five pairs 8.251 ->
+  8.219 ms (-0.39%) with better p95/p99. Independent/shared GPU, mutations,
+  source graphs, dimensions, recreation and GUI load/Undo/zoom pass; export 329
+  Windows/Wine and 330 Linux tests, including GUI on cold-cache portable Linux.
+  The later fractional-coordinate change is described in PERF-03.
+  **Complete when:** byte/upload counters demonstrate reduction and images,
+  HUD, colors, menu, zoom and load/Undo remain equivalent. Invalidate revisions
+  on ROM change, state load and GPU recreation. Assess reusable staging only if
+  justified by profile: uploads also have copy/allocation costs
+  ([wgpu documentation](https://docs.rs/wgpu/26.0.1/wgpu/struct.Queue.html#method.write_texture)).
 
-- [ ] **PERF-07 — Ridurre i fallback costosi durante i turni nemici.**
-  Rischio medio/alto; dipende da PERF-01/02/03.
-  Profilare `run_frame_native`, `BlockTable`, interprete e codice generato in
-  [recomp-core](../../crates/recomp-core/src). Il lookup ROM/IWRAM è già diretto:
-  non sostituirlo senza evidenza. Usare il censimento dei fallback per trovare
-  ingressi mancanti, distinguendoli dagli hook interpretati intenzionalmente.
-  **PERF-07-FALLBACK-CANDIDATES — triage concluso, nessuna traduzione modificata.**
-  Nuovo censimento sul replay nemico già registrato: dopo120frame di warm-up,
-  22,63M blocchi nativi,79,14M passi per traduzioni mancanti,55,91M hook e6820
-  passi di sistema;3804 ingressi mancanti distinti sull'intero replay. Parità
-  dei3530frame/stato/contatori verificata. I cicli guest non sono costo host.
-  Una campionatura CPU nativa ottimizzata con simboli,3928campioni/zero persi,
-  indica capture_dialogue_part31,52%, sprite8,63%, composizione7,76%; interprete
-  step_inner6,21% e Machine::step4,56%. Non isola il costo dei singoli ingressi
-  mancanti. Priorità al lavoro residuo di estrazione UI (PERF-08), senza
-  ripetere selettori scartati o riscrivere lookup/ABI sulla base dei soli conteggi.
-  **PERF-07-POST-PPU-HOST-TRIAGE — concluso.** Nuovo campione dopo le modifiche
-  PPU mantenute, senza ricreare fixture/censimento/baseline:3798campioni,zero persi,
-  stato finale/contatori identici. UI capture31,20%,sprite9,19%,compose8,85%,
-  step_inner7,64% self; percentuali di costo, non uno speedup né costo dei singoli
-  ingressi mancanti. Binario con simboli isolato, runtime normale ripristinato
-  per hash. I selettori e le cache scartate restano chiusi.
-  **PERF-07-IMMUTABLE-ROM-SEEDS — scartato per produzione.**18ingressi ROM
-  già osservati, nessun nuovo seed RAM:28859->29196blocchi. Baseline ricostruita
-  identica byte per byte alla traduzione precedente. Tutti3530frame/OAM,
-  stato iniziale e scena warm-up uguali, ma hash dello stato completo finale
-  diverso. Prova fermata prima del timing; runtime/cache/gamedb/archivi invariati.
-  [Evidenza](../changes/2026-10-21-evaluate-immutable-rom-entry-seeds.json).
-  Il calo dei fallback non è prova di velocità o correttezza. Prima di ampliare
-  la copertura, correggere e verificare l'ordine audio/timer senza indebolire
-  i controlli. **PERF-07-ROM-SEED-STATE-DIVERGENCE — diagnosi conclusa:** prima
-  differenza al frame relativo38 (guest8514), CPU/clock uguali; due campioni del
-  mixer e stato del verificatore HLE diversi. Il diagnostico riproduce entrambi
-  gli hash finali originali. Fixture senza ROM:tick600 e600*tick1 hanno clock e
-  DAC finali uguali ma campioni e bookkeeping timer diversi. Questa sensibilità
-  sostiene l'ipotesi sull'ordine degli eventi, senza provare ancora tutta la
-  catena causale nella battaglia. Nessuna correzione core o nuova traduzione
-  accettata; prossimo criterio PERF-07-TIMER-AUDIO-ORDER, con controllo di DMA,
-  attese, cicli e audio prima di riprendere misure prestazionali.
-  [Diagnosi](../changes/2026-10-21-isolate-rom-coverage-audio-divergence.json).
-  **PERF-07-TIMER-AUDIO-ORDER — concluso e consegnato.**
-  Eventi al proprio timestamp, ordine audio/timer uguale al riferimento a ciclo
-  singolo, DMA senza rientro video e cicli sottratti aggiunti al lavoro CPU;
-  halt/IntrWait usa lo stesso percorso. Cinque nuove regressioni,179test core
-  nativi/Wine e66runtime passano; replay nativo3530frame/OAM/contatori identici
-  alla baseline. Stato corretto verificato separatamente: cambia intenzionalmente
-  solo audio/HLE/bookkeeping timer finale, non CPU/clock. Cinque coppie misurano
-  +0,066607ms (+1,157%) mediano: correzione di correttezza, non speedup. Slot v1
-  e GUI load/zoom/Undo/reload/chiusura passano. Export Docker349test Windows/Wine
-  e350Linux (15opzionali esclusi), integrità/privacy/compatibilità verificati;
-  archive Linux estratto passa3530frame/stato corretto e GUI a cache fredda con
-  slot v1/load/zoom/Undo/reload/chiusura. Archivi dist aggiornati solo dopo i
-  controlli, con versioni precedenti conservate. Nessun commit o release pubblica.
-  Nuovi seed ancora esclusi: dopo la correzione la prima divergenza è CPU/clock
-  al frame212; non basta risolvere l'audio per ampliare la traduzione.
-  [Correzione e limiti](../changes/2026-10-21-order-timer-audio-events.json).
-  **PERF-07-NATIVE-FRAME-BOUNDARY — candidato verificato per correttezza.**
-  Il codice nativo proseguiva fino al back-edge con IRQ già pendente: riprodotto
-  anche senza ROM e con byte diversi nello stack IRQ. Guard di budget a ogni
-  ingresso e dopo store/shell eliminano il problema, mantenendo batch nativi
-  lontano dagli eventi e la separazione dai controlli del contenuto RAM. Cache
-  traduzioni7, stesso schema savestate/ABI. Nativi181test core/66runtime e
-  regressione TinyCC11casi passano; anche Windows/Wine. Entrambe le coperture
-  ROM ora coincidono in tutto lo stato a ogni3530frame, incluse code continue
-  con7,7M campioni per mixer/PSG/HLE e931920eventi perFIFO. CLI reale e immagini
-  precedenti verificati. Costo/GUI/export ancora da accettare; triplette temporali
-  in corso. Nessuna espansione automatica dei seed o nuovo portable pubblicato.
-  [Candidato e prove](../changes/2026-10-21-preserve-native-event-boundaries.json).
-  Estendere la traduzione solo per codice la cui validità è garantita; RAM
-  modificabile e overlay richiedono controlli e invalidazione.
-  **Completato quando:** il replay AI impiega meno tempo host oltre il rumore
-  delle misure e conserva decisioni, RNG, cicli, interrupt e stato finale.
-  Aggiornare revisione cache/ABI quando cambia il contratto del codice generato.
+- [x] **PERF-06 — Reuse buffers and intermediate results measured as costly.**
+  Low/medium risk; depends on PERF-02/03. Check `handoff_audio`: `mem::take`
+  consumption of `fifo_tap` abandons the buffer after transfer. Assess draining
+  that retains capacity. Also measure repeated panel packing/bounds and retain
+  them by content revision. Avoid caches based only on addresses or allocation
+  optimizations present solely in tests.
+  **Experiment evaluated:** scanning only visible extremes per row reduces
+  function cost on synthetic panels, but two 3,000-frame end-to-end comparisons
+  showed a candidate regression. Not enabled in runtime: retained only in tests
+  with equivalence and a five-alternating-pair release microbenchmark.
+  **Final outcome:** FIFO reuse already verified; UI packing cache retained with
+  complete keys and memory bounded to current buffers, invalidation on restore
+  and tests against direct packing. Five battle pairs measure -1.41% in GUI loop,
+  UI preparation 0.157 -> 0.122 ms. Replay, world map, GUI/Undo/style and
+  Linux/Windows-Wine builds pass; no audio event flow change. Evidence: October 21
+  UI input cache record.
+  **Complete when:** allocations or time decrease in the measured path without
+  continuous memory growth, lost audio events or stale panels.
 
-- [x] **PERF-08 — Ridurre il costo della PPU CPU senza cambiarne il timing.**
-  Rischio medio; dipende da PERF-02/03.
-  Profilare `render_scanline`, tile, sprite e `compose_into`, separando i
-  240×160 pixel originali dall'estensione widescreen/zoom. Riutilizzare dati
-  invarianti dentro la stessa scanline e limitare l'elaborazione alle aree
-  necessarie. Valutare cache di tile decodificati solo con invalidazione
-  completa per scritture VRAM/palette, DMA, caricamento e ripristino.
-  **Completato quando:** immagini raw e stato guest sono identici anche con
-  finestre, blending, sprite semitrasparenti ed effetti a scanline.
-  **PERF-08-UI-PANEL-ROW-CLASSIFICATION — concluso e mantenuto.**
-  Regole banner/bounds memorizzate per chiamata e appartenenza calcolata solo al
-  primo BG eleggibile di ogni pixel. Preservati bounds lazy, finestre, blending,
-  ritratti, sort e stato/ABI. Native e Windows/Wine173test core/5opzionali esclusi;
-  parità3530frame/stato/contatori anche a zoom6. Cinque coppie headless:
-  6,002->5,841ms(-2,69%); cinque GUI complete:7,767->7,591ms(-2,26%), tutte
-  migliori, anche p95/p99. Worldmap e GUI load/Undo/zoom/reload/close passano.
-  Distinta dalla cache WIN0/WIN1 già conclusa e dai selettori scartati; non è
-  prova di risoluzione del raro lag originale o di prestazioni Windows native.
-  Export335 test Windows/Wine e336 Linux (15 opzionali esclusi ciascuno),
-  controlli archivio/privacy/import DLL/GLIBC2.35 e portable Linux con cache
-  fredda/load/Undo/reload/chiusura e schermate verificati. Versioni precedenti
-  conservate; salvataggi e cache di traduzione compatibili.
-  **PERF-08-UI-WORLD-ONLY-PIXELS — concluso e mantenuto.** Salta
-  sort/blend soltanto quando nessun candidato può entrare nella texture UI,
-  scrivendo comunque UiPixel::default per cancellare dati precedenti. Distinto
-  dalle righe completamente vuote già concluse e dai selettori frontali scartati;
-  Implementato con prova di stato completa per ritratti, blend sul mondo e dati
-  precedenti da cancellare. Native/Wine174test core passano;3530frame headless
-  identici con stato/contatori, cinque coppie5,846->5,600ms(-4,20%).
-  GUI3530frame identici e cinque coppie7,584->7,382ms(-2,67%), tutte migliori.
-  Worldmap240frame/stato/contatori e due coppie diagnostiche passano; zoom6
-  identico su3530frame. GUI normale load/Undo/reload/zoom/chiusura e schermate
-  passano senza fallback. Export Docker336test Windows/Wine e337Linux (15opzionali esclusi ciascuno);
-  archivi/privacy/DLL/GLIBC2.35 e portable Linux estratto a cache fredda passano.
-  Dist locale aggiornata preservando gli archivi precedenti.
-  **PERF-08-COMPACT-UI-LAYER-ID — scartato, baseline ripristinata.** Tag locali
-  u8 invece di usize, stessi algoritmi. Native/Wine174test core e tutti3530frame/
-  stato/contatori GUI/headless identici. Cinque coppie headless:-1,348%; singolo
-  profilo diagnostico contrario (+1,367%). GUI con CPU profile:-0,454%, senza
-  diagnostica:-0,774%; entrambe con una coppia sfavorevole e massimi peggiori.
-  Beneficio GUI modesto/incostante rispetto alla variabilità: nessun vantaggio
-  robusto utile dimostrato per cambiare il codice già validato. Sorgente/binario
-  precedenti ripristinati byte per byte, evidenze conservate; archivi invariati.
-  Non ripetere l'esperimento per contesto o per la sola apertura del padre.
-  Gli effetti fuori schermo che influenzano lo stato GBA devono restare attivi.
 
-- [ ] **PERF-09 — Ridurre contesa e lavoro bloccante nell'audio.**
-  Rischio medio/alto; dipende da PERF-02/03.
-  Misurare il mutex comune fra `build_stream` in
-  [main.rs](../../crates/recomp/src/main.rs) e `handoff_audio`: il callback lo
-  mantiene durante l'elaborazione dei campioni. Controllare anche il percorso
-  fast-forward in [ff_audio.rs](../../crates/recomp/src/ff_audio.rs).
-  La prima misura con il nuovo observer mostra attese mutex p99 inferiori a
-  1 microsecondo nel campione Linux: non giustifica da sola un refactor SPSC.
-  Riutilizzare questi dati e il callback testabile; non ricreare la diagnostica.
-  **PERF-09-INTERACTIVE-GATING — concluso.** Finestra opzionale di frame guest
-  per una sola traversata, pausa/priming/fast-forward separati; load/Undo durante
-  la cattura la interrompe. Stessa battaglia inattiva, frame8596:9196 dopo load8476:
-  236/235callback fedele/enhanced, zero hold della sorgente fedele/drop/over-period;
-  p99 totale0,548/0,665ms, mutex0,000912/0,000711ms. Non sono tempi IA, confronto
-  prestazionale fra modalità o misura di starvation enhanced/XRUN. GUI con zoom/
-  Undo osserva invece1309hold in7callback playing (transizioni e compilazione
-  concorrente): non è un confronto steady-state né prova di un difetto udibile.
-  Native60test runtime e container338Wine/339Linux passano,15opzionali esclusi
-  negli export; portable Linux a cache fredda e comportamento off/benchmark
-  verificati. Riutilizzare il gate, senza ripetere questa implementazione.
-  **PERF-09-ENHANCED-SOURCE-EVENTS — concluso.** Contatori raw e destinazione
-  configurata per PSG/HLE/FIFO, con gate/context esistenti e contatori per
-  richiesta esclusi dalla specializzazione DSP normale. Parità campioni/code/
-  stato interpolatori verificata anche con coppie parziali, hold DAC, routing,
-  HLE inattivo e backlog;63test runtime passano. Nella finestra inattiva8596:9196,
-  236callback per modalità e nessuna lettura vuota di alcuna sorgente. In enhanced
-  PSG/HLE sono destinazione configurata, FIFO solo warm; nessuna destinazione
-  enhanced in modalità fedele. GUI con transizioni osserva invece2741richieste
-  vuote PSG/HLE e660perFIFO in un callback playing, senza destinazione enhanced:
-  dati distinti dalla misura idle, non difetti udibili dedotti dai contatori.
-  Export341test Wine/342Linux (15opzionali esclusi ciascuno), archivio/privacy/
-  compatibilità e portable Linux a cache fredda/load/Undo/off/benchmark passano.
-  **PERF-09-BACKEND-OBSERVABILITY — concluso per PipeWire locale.** Uno stesso
-  pw-top con output a righe, associazione PID->client->stream->link->sink e seriali
-  stabili. Nei campioni running di battaglia inattiva (~9s/10campioni), pausa
-  (~2s/3) e ripresa (~5s/6) i delta ERR di stream e sink sono0; cadenza verificata
-  con gap massimo<1,001s. Il sink ha già ERR1 al primo campione idle: gli zeri
-  iniziali dello stato creating non sono baseline running. Non è prova di zero
-  XRUN ALSA/hardware né della causa di quel conteggio. La prima traccia con output
-  bufferizzato è esclusa dall'attribuzione alle fasi e conservata come negativa.
-  Gate app completo235callback playing senza hold/drop/over-period/errori device,
-  battaglia e ripresa visualizzate e chiusura pulita; dati privati invariati.
-  Nessun cambio runtime/CPAL/configurazione o rebuild richiesto. Le scene provate
-  non giustificano code SPSC/buffering più grande; restano Windows nativo, hardware
-  e scene realmente lente. Rivalutare il costo CPU con la PPU ora ottimizzata
-  prima di aggiungere altre modifiche audio. Non confondere conteggi con costo.
-  Prima ridurre sezioni critiche e allocazioni; considerare ring SPSC limitati
-  solo se la contesa rimane dominante. Mantenere ordine degli eventi, capacità,
-  reset, crossfade e recupero del device.
-  **Completato quando:** migliorano picchi/underrun senza aumentare la latenza,
-  con prove di pausa, cambio modalità, fast-forward, load/Undo e chiusura.
+<a id="p2--ottimizzare-il-collo-di-bottiglia-dimostrato"></a>
 
-- [ ] **PERF-10 — Correggere il pacing solo dopo aver distinto lavoro e attese.**
-  Rischio medio; dipende da PERF-02/03.
-  **PERF-10-PRESENTATION-CADENCE — concluso.** Osservatore opzionale su timestamp
-  FPS esistente: intervalli di presentazioni riuscite e avanzamenti guest,
-  18000campioni massimi, finestra di frame e ancoraggi di lifecycle. Skip superficie
-  visibili come intervalli più lunghi, nessun gap fra pause/priming/FF/zero-size,
-  restore/zoom/resize o backend diversi. Nessun cambio al pacing o ai clock off.
-  Matrice CPAL/Xvfb/llvmpipe frame8596:9196:clock600presentazioni/599intervalli,
-  mean16,7445/16,7427ms,p99~17,96ms; audio237/236,multi-guest in ogni intervallo,
-  mean42,6843/42,6692ms,p9952,77/52,31ms. VSync richiesto non equivale a copertura
-  hardware60/high-Hz; clock è già default Linux/Windows. Passano fallback silente
-  con configurazione ALSA invalida solo nel processo,66test runtime e344Wine/
-  345Linux (15opzionali esclusi negli export). Archive/privacy/compatibilità e
-  portable Linux a cache fredda/load/Undo/off/benchmark passano; archivi aggiornati.
-  Non ripetere strumento/matrice per ricostruire contesto.
-  **PERF-10-POST-WAIT-COMPOSE — scartato, baseline ripristinata.** Purezza
-  verificata; cinque coppie realtime hanno p99 peggiore in4/5casi, nonostante
-  il piccolo miglioramento p95. Sorgente/runtime precedenti ripristinati esatti,
-  archivi invariati; nessuna verifica del candidato resta pendente.
-  [Decisione e misure](../changes/2026-10-21-evaluate-composition-before-deadline.json).
-  Non riaprire il tentativo per la sola apertura del padre.
-  Confrontare modalità `FFTA_FRAME_PACING=clock`/`audio`, VSync e tempi di
-  acquisizione superficie. Verificare l'interazione fra sleep e blocchi della
-  presentazione prima di cambiare la schedulazione. Valutare un'attesa gestita
-  dall'event loop invece di sleep nel callback, mantenendo la gestione input.
-  Misurare separatamente eventuali pause causate dall'autosave ogni 300 frame:
-  spostarlo su un worker richiede ordine delle scritture e flush affidabile.
-  **Completato quando:** migliora il p99 della cadenza su monitor a 60 e alta
-  frequenza, senza deriva audio, rallentamento guest o input meno reattivo.
-  Non legare il clock GBA alla frequenza del monitor e non saltare simulazione.
+## P2 — Optimize the demonstrated bottleneck
+
+- [ ] **PERF-07 — Reduce expensive fallback during enemy turns.**
+  Medium/high risk; depends on PERF-01/02/03. Profile `run_frame_native`,
+  `BlockTable`, interpreter and generated code in
+  [recomp-core](../../crates/recomp-core/src). ROM/IWRAM lookup is already
+  direct: do not replace it without evidence. Use the fallback inventory to find
+  missing entries, distinguishing them from intentionally interpreted hooks.
+  **PERF-07-FALLBACK-CANDIDATES — triage completed, no translation changed.**
+  New inventory on the already recorded enemy replay: after 120 warm-up frames,
+  22.63M native blocks, 79.14M missing-translation steps, 55.91M hooks and 6820
+  system steps; 3804 distinct missing entries over the entire replay. Parity of
+  3530 frames/state/counters verified. Guest cycles are not host cost.
+  Optimized native CPU sampling with symbols, 3928 samples/zero lost, indicates
+  capture_dialogue_part 31.52%, sprites 8.63%, composition 7.76%; interpreter
+  step_inner 6.21% and Machine::step 4.56%. It does not isolate the cost of
+  individual missing entries. Prioritize remaining UI extraction work (PERF-08),
+  without repeating rejected selectors or rewriting lookup/ABI based only on counts.
+  **PERF-07-POST-PPU-HOST-TRIAGE — completed.** New sample after retained PPU
+  changes, without recreating fixtures/inventory/baseline: 3798 samples, zero
+  lost, identical final state/counters. UI capture 31.20%, sprites 9.19%, compose
+  8.85%, step_inner 7.64% self; cost percentages, not speedup or cost of
+  individual missing entries. Isolated binary with symbols, normal runtime
+  restored by hash. Rejected selectors and caches remain closed.
+  **PERF-07-IMMUTABLE-ROM-SEEDS — rejected for production.** 18 already observed
+  ROM entries, no new RAM seeds: 28859->29196 blocks. Baseline reconstructed
+  byte-for-byte identical to previous translation. All 3530 frames/OAM,
+  initial state and warm-up scene equal, but final full-state hash different.
+  Test stopped before timing; runtime/cache/gamedb/archives unchanged.
+  [Evidence](../changes/2026-10-21-evaluate-immutable-rom-entry-seeds.json).
+  Reduced fallback is not evidence of speed or correctness. Before expanding
+  coverage, fix and verify audio/timer order without weakening checks.
+  **PERF-07-ROM-SEED-STATE-DIVERGENCE — diagnosis completed:** first difference
+  at relative frame 38 (guest 8514), equal CPU/clock; two mixer samples and HLE
+  verifier state differ. Diagnostic reproduces both original final hashes.
+  ROM-free fixture: tick600 and 600*tick1 have equal final clock and DAC but
+  different samples and timer bookkeeping. This sensitivity supports the event
+  ordering hypothesis without yet proving the entire causal chain in battle.
+  No core fix or new translation accepted; next criterion PERF-07-TIMER-AUDIO-ORDER,
+  checking DMA, waits, cycles and audio before resuming performance measurements.
+  [Diagnosis](../changes/2026-10-21-isolate-rom-coverage-audio-divergence.json).
+  **PERF-07-TIMER-AUDIO-ORDER — completed and delivered.** Events at their own
+  timestamp, audio/timer order equal to the single-cycle reference, DMA without
+  video re-entry and subtracted cycles added to CPU work; halt/IntrWait uses the
+  same path. Five new regressions, 179 native/Wine core and 66 runtime tests
+  pass; native 3530-frame/OAM/counter replay identical to baseline. Correct state
+  verified separately: only final audio/HLE/timer bookkeeping changes intentionally,
+  not CPU/clock. Five pairs measure median +0.066607 ms (+1.157%): correctness
+  fix, not speedup. Slot v1 and GUI load/zoom/Undo/reload/closure pass. Docker
+  export 349 Windows/Wine and 350 Linux tests (15 optional excluded), integrity/
+  privacy/compatibility verified; extracted Linux archive passes 3530 frames/
+  corrected state and cold-cache GUI with slot v1/load/zoom/Undo/reload/closure.
+  Dist archives updated only after checks, with previous versions retained. No
+  commit or public release. New seeds still excluded: after the fix the first
+  divergence is CPU/clock at frame 212; fixing audio alone does not justify
+  expanding translation.
+  [Fix and limits](../changes/2026-10-21-order-timer-audio-events.json).
+  **PERF-07-NATIVE-FRAME-BOUNDARY — correctness-verified candidate.** Native
+  code continued to the back-edge with IRQ already pending: reproduced without
+  ROM too, with differing IRQ stack bytes. Budget guards at each entry and after
+  store/shell eliminate the problem, retaining native batching away from events
+  and separation from RAM-content checks. Translation cache 7, same savestate/
+  ABI schema. Native 181 core/66 runtime tests and 11-case TinyCC regression
+  pass; also Windows/Wine. Both ROM coverages now match in all state at every
+  one of 3530 frames, including continuous queues with 7.7M samples per mixer/
+  PSG/HLE and 931920 events per FIFO. Real CLI and previous images verified.
+  Cost/GUI/export still to be accepted; timing triplets underway. No automatic
+  seed expansion or new portable published.
+  [Candidate and evidence](../changes/2026-10-21-preserve-native-event-boundaries.json).
+  Extend translation only for code with guaranteed validity; mutable RAM and
+  overlays require checks and invalidation.
+  **Complete when:** AI replay takes less host time beyond measurement noise and
+  preserves decisions, RNG, cycles, interrupts and final state. Update cache/ABI
+  revision when the generated-code contract changes.
+
+- [x] **PERF-08 — Reduce CPU PPU cost without changing timing.**
+  Medium risk; depends on PERF-02/03. Profile `render_scanline`, tiles, sprites
+  and `compose_into`, separating the original 240×160 pixels from widescreen/
+  zoom extension. Reuse invariant data within the same scanline and limit
+  processing to necessary areas. Assess decoded-tile caching only with complete
+  invalidation for VRAM/palette writes, DMA, loading and restoration.
+  **Complete when:** raw images and guest state are identical with windows,
+  blending, semitransparent sprites and scanline effects too.
+  **PERF-08-UI-PANEL-ROW-CLASSIFICATION — completed and retained.** Banner/
+  bounds rules cached per call and membership computed only for the first
+  eligible BG of each pixel. Lazy bounds, windows, blending, portraits, sort and
+  state/ABI preserved. Native and Windows/Wine 173 core tests/5 optional excluded;
+  parity of 3530 frames/state/counters even at zoom6. Five headless pairs:
+  6.002->5.841 ms (-2.69%); five full GUI pairs: 7.767->7.591 ms (-2.26%), all
+  better, including p95/p99. Worldmap and GUI load/Undo/zoom/reload/close pass.
+  Distinct from already completed WIN0/WIN1 cache and rejected selectors; not
+  evidence of resolving rare original lag or native Windows performance.
+  Export 335 Windows/Wine and 336 Linux tests (15 optional excluded each),
+  archive/privacy/DLL import/GLIBC 2.35 checks and cold-cache portable Linux
+  load/Undo/reload/closure and screens verified. Previous versions retained;
+  saves and translation cache compatible.
+  **PERF-08-UI-WORLD-ONLY-PIXELS — completed and retained.** Skip sort/blend only
+  when no candidate can enter the UI texture, still writing UiPixel::default to
+  clear previous data. Distinct from already completed fully empty rows and
+  rejected front selectors; implemented with full-state evidence for portraits,
+  blending onto the world and previous data to clear. Native/Wine 174 core tests
+  pass; 3530 identical headless frames with state/counters, five pairs
+  5.846->5.600 ms (-4.20%). GUI 3530 identical frames and five pairs
+  7.584->7.382 ms (-2.67%), all better. Worldmap 240 frames/state/counters and
+  two diagnostic pairs pass; zoom6 identical over 3530 frames. Normal GUI
+  load/Undo/reload/zoom/closure and screens pass without fallback. Docker export
+  336 Windows/Wine and 337 Linux tests (15 optional excluded each); archives/
+  privacy/DLL/GLIBC 2.35 and extracted cold-cache portable Linux pass. Local dist
+  updated with previous archives retained.
+  **PERF-08-COMPACT-UI-LAYER-ID — rejected, baseline restored.** Local u8 tags
+  instead of usize, same algorithms. Native/Wine 174 core tests and all 3530 GUI/
+  headless frames/state/counters identical. Five headless pairs: -1.348%; one
+  diagnostic profile opposite (+1.367%). GUI with CPU profile: -0.454%, without
+  diagnostics: -0.774%; both with one unfavorable pair and worse maxima. Modest/
+  inconsistent GUI benefit relative to variability: no robust useful advantage
+  demonstrated for changing already validated code. Previous source/binary
+  restored byte-for-byte, evidence retained; archives unchanged. Do not repeat
+  the experiment for context or merely because the parent is open. Off-screen
+  effects affecting GBA state must remain active.
+
+- [ ] **PERF-09 — Reduce contention and blocking work in audio.**
+  Medium/high risk; depends on PERF-02/03. Measure the mutex shared between
+  `build_stream` in [main.rs](../../crates/recomp/src/main.rs) and
+  `handoff_audio`: the callback holds it while processing samples. Also check
+  fast-forward path in [ff_audio.rs](../../crates/recomp/src/ff_audio.rs).
+  The first measurement with the new observer shows mutex wait p99 below
+  1 microsecond in the Linux sample: this alone does not justify an SPSC
+  refactor. Reuse these data and the testable callback; do not recreate diagnostics.
+  **PERF-09-INTERACTIVE-GATING — completed.** Optional guest-frame window for
+  one traversal, pause/priming/fast-forward separated; load/Undo during capture
+  interrupts it. Same idle battle, frames 8596:9196 after load 8476: 236/235
+  faithful/enhanced callbacks, zero faithful source hold/drop/over-period; total
+  p99 0.548/0.665 ms, mutex 0.000912/0.000711 ms. These are not AI times,
+  inter-mode performance comparison or enhanced starvation/XRUN measurement.
+  GUI with zoom/Undo instead observes 1309 holds in 7 playing callbacks
+  (transitions and concurrent compilation): not a steady-state comparison or
+  evidence of an audible defect. Native 60 runtime tests and container 338
+  Wine/339 Linux pass, 15 optional excluded in exports; cold-cache portable
+  Linux and off/benchmark behavior verified. Reuse the gate without repeating
+  this implementation.
+  **PERF-09-ENHANCED-SOURCE-EVENTS — completed.** Raw counters and configured
+  destination for PSG/HLE/FIFO, with existing gate/context and per-request
+  counters excluded from normal DSP specialization. Sample/queue/interpolator
+  state parity verified with partial pairs, DAC hold, routing, inactive HLE and
+  backlog too; 63 runtime tests pass. In idle window 8596:9196, 236 callbacks
+  per mode and no empty reads from any source. In enhanced mode PSG/HLE are
+  configured destinations, FIFO only warm; no enhanced destination in faithful
+  mode. GUI with transitions instead observes 2741 empty PSG/HLE and 660 per-FIFO
+  requests in one playing callback, without enhanced destination: data distinct
+  from idle measurement, not audible defects inferred from counters. Export 341
+  Wine/342 Linux tests (15 optional excluded each), archive/privacy/compatibility
+  and cold-cache portable Linux load/Undo/off/benchmark pass.
+  **PERF-09-BACKEND-OBSERVABILITY — completed for local PipeWire.** One pw-top
+  with line output, PID->client->stream->link->sink association and stable
+  serials. In running samples of idle battle (~9s/10 samples), pause (~2s/3)
+  and resume (~5s/6), stream and sink ERR deltas are 0; cadence verified with
+  maximum gap <1.001s. Sink already has ERR 1 at first idle sample: initial zeros
+  in creating state are not a running baseline. This does not prove zero ALSA/
+  hardware XRUNs or the cause of that count. The first buffered-output trace is
+  excluded from phase attribution and retained as negative. Full app gate 235
+  playing callbacks without hold/drop/over-period/device errors, battle and
+  resume displayed and clean closure; private data unchanged. No runtime/CPAL/
+  configuration change or rebuild required. Tested scenes do not justify SPSC
+  queues/larger buffering; native Windows, hardware and genuinely slow scenes
+  remain. Reassess CPU cost with PPU now optimized before adding audio changes.
+  Do not confuse counts with cost. First reduce critical sections and
+  allocations; consider bounded SPSC rings only if contention remains dominant.
+  Preserve event order, capacity, reset, crossfade and device recovery.
+  **Complete when:** spikes/underruns improve without increasing latency, with
+  checks for pause, mode change, fast-forward, load/Undo and closure.
+
+- [ ] **PERF-10 — Fix pacing only after distinguishing work and waits.**
+  Medium risk; depends on PERF-02/03.
+  **PERF-10-PRESENTATION-CADENCE — completed.** Optional observer on existing
+  FPS timestamp: intervals of successful presentations and guest advances,
+  maximum 18000 samples, frame window and lifecycle anchors. Surface skips visible
+  as longer intervals; no gap across pause/priming/FF/zero-size, restore/zoom/
+  resize or different backends. No pacing or clock changes when off.
+  CPAL/Xvfb/llvmpipe matrix, frames 8596:9196: clock 600 presentations/599
+  intervals, mean 16.7445/16.7427 ms, p99 ~17.96 ms; audio 237/236, multiple
+  guest frames in every interval, mean 42.6843/42.6692 ms, p99 52.77/52.31 ms.
+  Requested VSync is not hardware 60/high-Hz coverage; clock is already the
+  Linux/Windows default. Silent fallback with ALSA invalid only in the process,
+  66 runtime tests and 344 Wine/345 Linux tests pass (15 optional excluded in
+  exports). Archive/privacy/compatibility and cold-cache portable Linux load/
+  Undo/off/benchmark pass; archives updated. Do not repeat tool/matrix to
+  reconstruct context.
+  **PERF-10-POST-WAIT-COMPOSE — rejected, baseline restored.** Purity verified;
+  five realtime pairs have worse p99 in 4/5 cases despite small p95 improvement.
+  Previous source/runtime restored exactly, archives unchanged; no candidate
+  verification remains pending.
+  [Decision and measurements](../changes/2026-10-21-evaluate-composition-before-deadline.json).
+  Do not reopen the attempt merely because the parent is open.
+  Compare `FFTA_FRAME_PACING=clock`/`audio` modes, VSync and surface acquisition
+  times. Verify interaction between sleep and presentation blocking before
+  changing scheduling. Assess an event-loop-managed wait instead of sleep in the
+  callback while retaining input handling. Separately measure any pauses caused
+  by autosave every 300 frames: moving it to a worker requires write ordering
+  and reliable flush.
+  **Complete when:** cadence p99 improves on 60 and high-frequency monitors
+  without audio drift, guest slowdown or less responsive input. Do not tie the
+  GBA clock to monitor refresh or skip simulation.
+
 
 ## P3 — GPU e parallelismo incrementali
 

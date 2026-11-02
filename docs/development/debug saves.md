@@ -23,563 +23,586 @@ copies.
   it is impossible to reach through play from the available saves.
 
 
-## Raccolta numerata locale
+<a id="raccolta-numerata-locale"></a>
 
-La nuova raccolta **`debug_saves/ready/`** contiene `README.local.md` e
-`catalog.json`, cartelle regionali **USA/** e **EUR/**, i 27 salvataggi standard
-estratti, la precedente base EUR e **32 checkpoint numerati per casistica**
-(14 EUR, 18 USA), tre nuovi standard GEN-30/31/33 e la cartuccia
-vuota NEW-32 per le scene del nome. L'intera `debug_saves/` è esclusa da Git con
-`/debug_saves/`; nessun file della cartella è tracciato. Nessun push eseguito.
+## Local numbered collection
 
-Le due numerazioni sono indipendenti:
+The new **`debug_saves/ready/`** collection contains `README.local.md` and
+`catalog.json`, regional **USA/** and **EUR/** folders, the 27 extracted standard
+saves, the earlier EUR base and **32 numbered checkpoints by case** (14 EUR,
+18 USA), three new standard saves GEN-30/31/33 and the empty NEW-32 cartridge
+for naming scenes. All of `debug_saves/` is excluded from Git via
+`/debug_saves/`; no file in the folder is tracked. No push was performed.
 
-- **IN-04 → Game saves, slot 4**, file `ffta-slot-04.sav`: identifica
-  l'originale importato. USA `ffta.sav` è IN-01; EUR `ffta.sav` conserva F-01.
-  I nuovi file EUR sono negli slot 7, 8, 13 e 19; IN-19 è ora verificato su EUR.
-- **DS-18 → Save states, slot 18**, file `slot-18.ffstate`: identifica la
-  casistica negozio. Il catalogo specifica regione, fonte e ambito del punto.
-  Una nuova validazione USA non promuove automaticamente il vecchio punto EUR.
+The two numbering schemes are independent:
 
-Inoltre `loaded/` conserva **31 checkpoint di caricamento** (inclusi i nuovi
-File No.2 di IN-03/IN-05, IN-19 su EUR, GEN-30/31 e Resume Battle GEN-33), mentre `USA/variants/` ha
-**25 punti**, compresi prima del KO/dopo la rianimazione, Help leggi, i punti
-precedenti sostituiti e lo schieramento di Decision Time.
-Le **14 varianti negli slot 51…64** sono già selezionabili dal menu USA:
-51 prima KO, 52 dopo rianimazione, 53 prima tastiera, 54 conferma nome,
-55 tre leggi Prison Break, 56 schieramento Decision Time, 57 dialogo breve,
-58 due missioni attive, 59 White Magic assegnata, 60 bersaglio Firaga,
-61 prima Auto-Life, 62 ricompense, 63 inventario pieno, 64 requisito mancante.
-Inoltre **EUR slot 65** è la variante DS-20 già dopo la fuga, prima del
-rientro fallito. `EUR/variants/` ne conserva la copia descrittiva; i 25 punti
-precedenti sotto `USA/variants/` restano invariati. Gli altri file vanno
-importati in uno slot libero.
-Le copie standard sono esatte; gli snapshot derivano da input ordinari,
-senza modificare RAM, flag o inventario. Le anteprime aggiunte ai checkpoint
-del replay non alterano il payload core. Gli originali restano invariati.
+- **IN-04 → Game saves, slot 4**, file `ffta-slot-04.sav`: identifies the
+  imported original. USA `ffta.sav` is IN-01; EUR `ffta.sav` retains F-01.
+  The new EUR files are in slots 7, 8, 13 and 19; IN-19 is now verified on EUR.
+- **DS-18 → Save states, slot 18**, file `slot-18.ffstate`: identifies the shop
+  case. The catalog specifies the point's region, source and scope. A new USA
+  validation does not automatically promote the old EUR point.
 
-La cartella ignorata **`saves/debug-cases/`** contiene una copia di `ffta.sav`,
-`catalog.json`, `README.local.md` e **13 slot** sotto
-`SaveStates/<SHA-256-ROM-EUR>/`. Il numero dello slot corrisponde al caso:
-DS-01 → `slot-1.ffstate`, DS-19 → `slot-19.ffstate`, ecc.
-I casi non coperti restano vuoti; gli slot parziali sono candidati, non spunte.
-Sono copie esatte di **sei snapshot distinti**: lo stesso punto può coprire più
-casi. Il nome descrittivo e lo stato sono nel catalogo; il menu conserva le
-etichette generiche Slot N. Nessun originale è stato rinominato o sovrascritto.
+In addition, `loaded/` retains **31 load checkpoints** (including the new
+IN-03/IN-05 File No.2, IN-19 on EUR, GEN-30/31 and Resume Battle GEN-33), while
+`USA/variants/` has **25 points**, including before KO/after revival, law Help,
+the replaced earlier points and Decision Time deployment.
+The **14 variants in slots 51…64** are already selectable from the USA menu:
+51 before KO, 52 after revival, 53 before keyboard, 54 name confirmation,
+55 three Prison Break laws, 56 Decision Time deployment, 57 short dialogue,
+58 two active missions, 59 White Magic assigned, 60 Firaga target,
+61 before Auto-Life, 62 rewards, 63 full inventory, 64 missing requirement.
+Also, **EUR slot 65** is the DS-20 variant after escape, before the failed
+return. `EUR/variants/` retains its descriptive copy; the 25 earlier points
+under `USA/variants/` remain unchanged. Other files must be imported into a free
+slot. Standard copies are exact; snapshots come from ordinary inputs without
+changing RAM, flags or inventory. Previews added to replay checkpoints do not
+alter the core payload. Originals remain unchanged.
 
-Per usare gli slot oltre 9 abilitare **Debug > Extended saves**. La cartella degli
-slot è affiancata al `.sav` selezionato: usare la copia della raccolta, oppure
-importare soltanto i file desiderati in posizioni libere della propria cartella.
-Preservare prima eventuali slot personali. I dati di gioco restano fuori da Git
-e dai pacchetti. Vedi [Extended saves](../extended_saves.md).
+The ignored **`saves/debug-cases/`** folder contains a copy of `ffta.sav`,
+`catalog.json`, `README.local.md` and **13 slots** under
+`SaveStates/<SHA-256-ROM-EUR>/`. The slot number matches the case:
+DS-01 → `slot-1.ffstate`, DS-19 → `slot-19.ffstate`, etc. Uncovered cases stay
+empty; partial slots are candidates, not checked cases. These are exact copies
+of **six distinct snapshots**: one point can cover multiple cases. Descriptive
+name and status are in the catalog; the menu retains generic Slot N labels. No
+original has been renamed or overwritten.
 
-## Fonti disponibili
+To use slots beyond 9, enable **Debug > Extended saves**. The slots folder sits
+beside the selected `.sav`: use the collection copy, or import only desired
+files into free positions in your own folder. Preserve any personal slots first.
+Game data stay out of Git and packages. See [Extended saves](../extended_saves.md).
 
-- **F-01 — Progresso cartuccia**: `saves/saves.zip` → `saves/ffta.sav`, copia di
-  lavoro `target/desktop-perf/user-fixture/ffta.sav`. Uguaglianza verificata.
-- **F-02 — Battaglia fornita**: slot 1 nello stesso ZIP, copia verificata in
+<a id="fonti-disponibili"></a>
+
+## Available sources
+
+- **F-01 — Cartridge progress**: `saves/saves.zip` → `saves/ffta.sav`, working
+  copy `target/desktop-perf/user-fixture/ffta.sav`. Equality verified.
+- **F-02 — Supplied battle**: slot 1 in the same ZIP, verified copy at
   `target/desktop-perf/user-fixture/slot-1.ffstate`.
-- **F-03 — Schieramento italiano**: `saves/slot-3.ffstate`.
-- **F-04 — Mappa e menu**: `target/desktop-perf/user-fixture/worldmap.ffstate`.
-- **F-05 — Mappa/pub inglese**: slot 5 in
+- **F-03 — Italian deployment**: `saves/slot-3.ffstate`.
+- **F-04 — Map and menu**: `target/desktop-perf/user-fixture/worldmap.ffstate`.
+- **F-05 — English map/pub**: slot 5 in
   `target/rom-data-bg-alternate-callers/native-color-options/Data/saves/SaveStates/<EUR>/`.
-- **F-06 — Spedizione accettata, giorno 9**: slot 2 in
+- **F-06 — Accepted dispatch, day 9**: slot 2 in
   `target/rom-data-progression-gates/windows-dispatch/Data/saves/SaveStates/<EUR>/`.
-- **F-07 — Prima del rientro, giorno 18**: slot 3 nella cartella di F-06.
-- **F-08 — Mission Cleared, giorno 19**: slot 4 nella cartella di F-06.
-- **F-09 — Prima del turno nemico**:
-  `target/desktop-perf/ai-turn-replay/start.ffstate` e `input.input`.
-
-Sono otto snapshot ordinari e un salvataggio cartuccia selezionati. SHA-256,
-checksum delle anteprime e dei payload, versione 1, identità ROM e percorsi esatti sono nel manifest locale
-`target/debug-saves-audit/source-manifest.json`. Il vecchio inventario di 49
-payload include stati sintetici/esperimenti scartati: non sono nuove casistiche
-ordinarie e non vengono promossi automaticamente a prove.
+- **F-07 — Before return, day 18**: slot 3 in the F-06 folder.
+- **F-08 — Mission Cleared, day 19**: slot 4 in the F-06 folder.
+- **F-09 — Before enemy turn**:
+  `target/desktop-perf/ai-turn-replay/start.ffstate` and `input.input`.
 
-### Nuovi file IN-01…IN-28
+Eight ordinary snapshots and one cartridge save were selected. SHA-256, preview
+and payload checksums, version 1, ROM identity and exact paths are in the local
+manifest `target/debug-saves-audit/source-manifest.json`. The old inventory of
+49 payloads includes synthetic states/rejected experiments: these are not new
+ordinary cases and are not automatically promoted to evidence.
 
-Ricevuti 5 ZIP e 23 SPS: **27 SRAM da 65536 byte estratte**, **25 payload
-distinti** avviati e caricati sulla mappa con Windows/Wine, interprete e BIOS
-HLE. **IN-18**, `final-fantasy-tactics-advance.3442.sps`, ha un contenitore
-BGBA non supportato: nessuna estrazione ipotizzata.
+<a id="nuovi-file-in-01in-28"></a>
 
-IN-06/IN-11 sono duplicati USA. Anche IN-01/IN-19 hanno SRAM identica, ma
-IN-19 ha intestazione EUR. Dopo la prima ricognizione è stato eseguito un
-nuovo avvio/caricamento **con EUR**, arrivando sulla mappa: entrambe le regioni
-sono ora provate direttamente, con gli stessi byte SRAM.
-I quattro SPS IN-14/21/22/28 hanno checksum del contenitore non corrispondente;
-le copie SRAM inalterate caricano correttamente. Nessun checksum riparato.
-I cinque ZIP privi di intestazione regionale sono stati provati con USA.
-Il parser SPS segue il framing e la variante storica signed-char del checksum;
-il riferimento consultato è il [codice SharkPort di mGBA](https://github.com/mgba-emu/mgba/blob/master/src/gba/sharkport.c).
+### New IN-01…IN-28 files
 
-Fonti utili individuate:
+Received 5 ZIP and 23 SPS: **27 extracted 65536-byte SRAMs**, **25 distinct
+payloads** booted and loaded onto the map with Windows/Wine, interpreter and
+HLE BIOS. **IN-18**, `final-fantasy-tactics-advance.3442.sps`, has an unsupported
+BGBA container: no extraction assumed.
 
-- **IN-04** — `fftafinal1.zip`, USA: clan livello 42, 206 missioni;
-  squadra e inventario avanzati, 62/64 oggetti missione. Fonte dei nuovi
-  checkpoint DS-04/12/16/17/18/21/24/25 e della battaglia Swimming Meet.
-- **IN-01** — `Final Fantasy Tactics Advance.zip`, provato USA:
-  300 missioni, fonte della banca popolata DS-22.
-- **IN-08** — `final-fantasy-tactics-advance.21006.sps`, EUR:
-  File No.1 mostra 300 missioni, clan livello 86. Caricato sulla mappa;
-  il tentativo di raggiungere la banca incontra un clan e non la verifica.
-- **IN-05** — `fftafinal2.zip`, USA: entrambi i file mostrano 300 missioni.
-  File No.2 è ora caricato: Decision Time è attiva a Sprohm, dialogo e
-  battaglia postgame sono raggiunti. Vittoria/finale restano da verificare.
+IN-06/IN-11 are USA duplicates. IN-01/IN-19 also have identical SRAM, but
+IN-19 has a EUR header. After the first inventory, a new boot/load **with EUR**
+reached the map: both regions are now directly tested with the same SRAM bytes.
+The four SPS files IN-14/21/22/28 have mismatched container checksums; unaltered
+SRAM copies load correctly. No checksum repaired. The five ZIP files without a
+region header were tested with USA. The SPS parser follows framing and the
+historical signed-char checksum variant; the reference consulted is
+[mGBA's SharkPort code](https://github.com/mgba-emu/mgba/blob/master/src/gba/sharkport.c).
 
-Tutti i file importati conservano entrambi gli eventuali salvataggi interni:
-nella prima ricognizione fu giocato soltanto File No.1. Nella ripresa sono
-stati caricati anche **File No.2 di IN-03 e IN-05**; gli altri restano non giocati.
-IN-03 File No.2 mostra effettivamente **300 missioni**, non un punto a 299.
-La sola schermata di scelta non dimostra caricamento o contenuto effettivo. Inventario completo dei
-nomi, SHA-256, duplicati, checksum, regione e risultati nel catalogo locale;
-prove originali sotto `target/debug-saves-expansion/`.
+Useful sources identified:
 
-### Nuovo salvataggio standard GEN-30
+- **IN-04** — `fftafinal1.zip`, USA: clan level 42, 206 missions; advanced
+  party and inventory, 62/64 mission items. Source of new DS-04/12/16/17/18/
+  21/24/25 checkpoints and the Swimming Meet battle.
+- **IN-01** — `Final Fantasy Tactics Advance.zip`, tested USA: 300 missions,
+  source of populated DS-22 bank.
+- **IN-08** — `final-fantasy-tactics-advance.21006.sps`, EUR: File No.1 shows
+  300 missions, clan level 86. Loaded onto the map; the attempt to reach the
+  bank encounters a clan and does not verify it.
+- **IN-05** — `fftafinal2.zip`, USA: both files show 300 missions. File No.2
+  has now been loaded: Decision Time is active at Sprohm, dialogue and postgame
+  battle reached. Victory/ending remain unverified.
 
-**USA, Game saves slot 30**, `ffta-slot-30.sav`: deriva da **IN-05 File No.2**.
-Il normale comando System → Save del gioco ha salvato il progresso nel
-**File No.1** di una copia isolata, a Sprohm prima di Decision Time. Il frontend
-Windows già disponibile ha caricato il checkpoint dopo Save e ha scritto la
-SRAM uscendo normalmente (**exit0**). Nuovo avvio, caricamento di File No.1 e
-disponibilità di Decision Time a Sprohm verificati. Il File No.2 rimane presente;
-nessun originale o byte di progressione è stato modificato fuori dal gioco.
-La numerazione GEN-30 distingue questa derivazione dagli originali IN-01…28.
+All imported files retain both internal saves where present: only File No.1 was
+played in the first inventory. On resumption **IN-03 and IN-05 File No.2** were
+also loaded; the others remain unplayed. IN-03 File No.2 actually shows
+**300 missions**, not a 299 point. The selection screen alone does not prove
+loading or actual content. Full inventory of names, SHA-256, duplicates,
+checksums, region and results is in the local catalog; original evidence under
+`target/debug-saves-expansion/`.
 
-**GEN-31, USA Game saves slot 31**, File No.1: nuovo Save a Sprohm con
-**Decision Time e Prison Break entrambe attive** e **White Magic** secondaria
-assegnata a Marche. Esportazione con normale chiusura exit0; nuovo avvio,
-caricamento e persistenza di abilità e due missioni verificati.
+<a id="nuovo-salvataggio-standard-gen-30"></a>
 
-**GEN-33, USA Game saves slot 33**: creato tramite **System → Save Now**
-durante Prison Break, prima di agire. È un salvataggio sospeso: scegliere
-**Saved Game → Resume Battle**, confermare il riepilogo con A, proseguire
-l'avviso e scegliere **Yes** alla conferma finale (inizialmente su No).
-Load/File No.1 carica invece il progresso sulla mappa. Il nuovo avvio e
-caricamento effettivo della battaglia sono verificati; il gioco avvisa che la
-ripresa cancella il punto sospeso. I master GEN-30/31/33 restano separati in
-`debug_saves/generated/`, oltre alle copie di lavoro numerate.
+### New GEN-30 standard save
 
-**NEW-32, USA Game saves slot 32**: memoria cartuccia vuota di fabbrica,
-non un salvataggio di progresso. Selezionarla prima di caricare DS-23 o
-varianti 53/54. Gli snapshot ripristinano anche SRAM, che la chiusura può
-scrivere nello slot standard attivo; usare le copie di lavoro della raccolta.
-Un master NEW-32 resta nella cartella `generated/`.
+**USA, Game saves slot 30**, `ffta-slot-30.sav`: derived from **IN-05 File No.2**.
+The normal in-game System → Save command saved progress to **File No.1** of an
+isolated copy, at Sprohm before Decision Time. The existing Windows frontend
+loaded the checkpoint after Save and wrote SRAM on normal exit (**exit0**).
+New startup, loading File No.1 and availability of Decision Time at Sprohm
+verified. File No.2 remains present; no original or progression byte was changed
+outside the game. GEN-30 numbering distinguishes this derivation from originals
+IN-01…28.
 
+**GEN-31, USA Game saves slot 31**, File No.1: new Save at Sprohm with both
+**Decision Time and Prison Break active** and **White Magic** assigned to Marche
+as a secondary ability. Export with normal exit0; new startup, loading and
+persistence of ability and both missions verified.
 
-## Casistiche
+**GEN-33, USA Game saves slot 33**: created with **System → Save Now** during
+Prison Break, before acting. It is a suspended save: choose **Saved Game → Resume
+Battle**, confirm the summary with A, proceed past the notice and choose **Yes**
+at the final confirmation (initially on No). Load/File No.1 instead loads map
+progress. New startup and actual battle loading verified; the game warns that
+resuming deletes the suspended point. GEN-30/31/33 masters remain separate in
+`debug_saves/generated/`, in addition to numbered working copies.
 
+**NEW-32, USA Game saves slot 32**: factory-empty cartridge memory, not a progress
+save. Select it before loading DS-23 or variants 53/54. Snapshots also restore
+SRAM, which closing can write to the active standard slot; use collection
+working copies. A NEW-32 master remains in the `generated/` folder.
 
-### DS-01 — Crescita clan
 
-- [x] **VALIDATA** — `crescita_clan`.
+<a id="casistiche"></a>
 
-Richiesta: Missione che aumenta un’abilità/statistica del clan: prima dell’ultimo colpo o della conferma del risultato. È il passaggio più utile da verificare adesso.
+## Cases
 
-Fonte: F-07; riscontro F-08. Raccolta: **slot 1**.
+<a id="ds-01--crescita-clan"></a>
 
-Riscontro: Mad Alchemist conclusa con Sigmund: due abilità del clan salgono da 1 a 2 e da 3 a 4. Schermata RESULTS ispezionata; prova esistente di 1000 frame con stato completo, immagini e audio uguali. Riprendere il viaggio al giorno 18, attendere il giorno 19 e confermare i risultati con A.
+### DS-01 — Clan growth
 
-Ambito restante: Valida per questo incremento; altri parametri e soglie restano fuori dal campione.
+- [x] **VALIDATED** — `crescita_clan`.
 
-### DS-02 — Rientro da spedizione riuscita
+Request: A mission that increases a clan ability/statistic: before the final blow or result confirmation. This is the most useful transition to check now.
 
-- [x] **VALIDATA** — `rientro_spedizione`.
+Source: F-07; evidence F-08. Collection: **slot 1**.
 
-Richiesta: Rientro da una missione di spedizione riuscita: sulla mappa, poco prima che trascorrano gli ultimi giorni necessari, con indicazioni su come farla terminare.
+Evidence: Mad Alchemist completed with Sigmund: two clan abilities rise from 1 to 2 and 3 to 4. RESULTS screen inspected; existing 1000-frame check with identical full state, images and audio. Resume travel on day 18, wait for day 19 and confirm results with A.
 
-Fonte: F-07; riscontro F-08, avvio F-06. Raccolta: **slot 2**.
+Remaining scope: Valid for this increment; other parameters and thresholds remain outside the sample.
 
-Riscontro: Messaggi Mission Cleared e Dispatched unit returned osservati al giorno 19. Confermati ritorno di Sigmund e ricompense. Stessa prova completa già conclusa di DS-01, riutilizzata senza ripeterla.
+<a id="ds-02--rientro-da-spedizione-riuscita"></a>
 
-Ambito restante: Valida per Mad Alchemist, durata 10 giorni; il fallimento è DS-20.
+### DS-02 — Return from a successful dispatch
 
-### DS-03 — Premio sbloccato dalla progressione del clan
+- [x] **VALIDATED** — `rientro_spedizione`.
 
-- [ ] **NON COPERTA** — `premio_progressione_clan`.
+Request: Return from a successful dispatch mission: on the map shortly before the final days elapse, with instructions to finish it.
 
-Richiesta: Sblocco di un premio legato alla crescita del clan: prima del risultato che lo assegna, se riesci a individuare un caso.
+Source: F-07; evidence F-08, start F-06. Collection: **slot 2**.
 
-Fonte: Nessun checkpoint ordinario individuato.
+Evidence: Mission Cleared and Dispatched unit returned messages observed on day 19. Sigmund's return and rewards confirmed. The same completed full check as DS-01 was reused without repeating it.
 
-Riscontro: Il risultato di Mad Alchemist assegna ricompense della missione. Non dimostra un premio aggiuntivo sbloccato da una soglia del clan: i relativi campi return/output hanno zero uso ordinario nella prova disponibile.
+Remaining scope: Valid for Mad Alchemist, duration 10 days; failure is DS-20.
 
-Nuova ricerca: IN-06 File No.1 mostra una voce di abilità clan a **28**, a fronte del metadato autore “Diplomacy at level 30”. Nessuna etichetta/prize in gioco confermata. Girl In Love è una possibile spedizione ma richiede White Thread assente: il pub rifiuta l'accettazione. Non è un nuovo premio né un fallimento di spedizione.
+<a id="ds-03--premio-sbloccato-dalla-progressione-del-clan"></a>
 
-Ambito restante: Serve un punto prima dello sblocco effettivo; i test isolati sulle tabelle e il metadato autore non chiudono questa casistica.
+### DS-03 — Reward unlocked by clan progress
 
-### DS-04 — Schieramento della squadra
+- [ ] **UNCOVERED** — `premio_progressione_clan`.
 
-- [x] **VALIDATA** — `schieramento_squadra`.
+Request: Unlocking a reward tied to clan growth: before the result that awards it, if a case can be identified.
 
-Richiesta: Schieramento prima della battaglia: con una squadra abbastanza varia da poter cambiare personaggi e posizioni.
+Source: No ordinary checkpoint identified.
 
-Fonte: IN-04 USA, slot 4 alla conferma Begin battle; F-03 e vecchi punti EUR conservati.
+Evidence: The Mad Alchemist result awards mission rewards. It does not demonstrate an additional reward unlocked by a clan threshold: the corresponding return/output fields have zero ordinary use in the available check.
 
-Riscontro: Due membri schierati (2/4), Montblanc riposizionato su un’altra casella, rimozione/rientro già visibili nei passaggi conservati e nuova conferma Start → Yes che avvia effettivamente la battaglia. Replay fino al turno di Marche e poi Montblanc. Prove: `deploy-multi/`, `resume-deploy-two/`, `resume-deploy-start/` e `resume-montblanc-turn/`.
+Further search: IN-06 File No.1 shows a clan ability entry at **28**, compared with author metadata “Diplomacy at level 30”. No in-game label/prize confirmed. Girl In Love is a possible dispatch but requires missing White Thread: the pub refuses acceptance. This is neither a new reward nor a failed dispatch.
 
-Ambito restante: Valida questa sequenza di due membri, posizionamento e avvio; altre formazioni restano fuori campione.
+Remaining scope: A point before the actual unlock is needed; isolated table tests and author metadata do not close this case.
 
-### DS-05 — Più leggi attive e relativo aiuto
+<a id="ds-04--schieramento-della-squadra"></a>
 
-- [x] **VALIDATA** — `leggi_multiple`.
+### DS-04 — Party deployment
 
-Richiesta: Battaglia con più leggi attive: da cui aprire sia l’elenco sia l’aiuto delle leggi.
+- [x] **VALIDATED** — `schieramento_squadra`.
 
-Fonte: IN-04 USA, slot 5 con elenco leggi di Swimming Meet.
+Request: Deployment before battle, with a varied enough party to change characters and positions.
 
-Riscontro: System → Law Cards mostra due divieti contemporanei: **Law Cards** e **Target All**, con **Target Area** consigliato. Down seleziona Target All; Select apre Help e A passa alla seconda pagina, che descrive le A-abilities sull’intero campo. Prove `resume-lawcards/`, `resume-law-help/`, `resume-law-help-complete/`. Non è il solo layout con righe vuote.
+Source: IN-04 USA, slot 4 at Begin battle confirmation; F-03 and old EUR points retained.
 
-Ambito restante: Valida questa coppia e il relativo aiuto; altre combinazioni non sono tutte censite.
+Evidence: Two members deployed (2/4), Montblanc repositioned to another tile, removal/re-entry already visible in retained steps, and a new Start → Yes confirmation that actually starts battle. Replay through Marche's turn and then Montblanc's. Evidence: `deploy-multi/`, `resume-deploy-two/`, `resume-deploy-start/` and `resume-montblanc-turn/`.
 
-### DS-06 — Infrazione e intervento del giudice
+Remaining scope: Valid for this two-member sequence, positioning and start; other formations remain outside the sample.
 
-- [x] **VALIDATA** — `infrazione_legge`.
+<a id="ds-05--più-leggi-attive-e-relativo-aiuto"></a>
 
-Richiesta: Infrazione di una legge: immediatamente prima dell’azione, per vedere intervento del giudice e penalità.
+### DS-05 — Multiple active laws and their help
 
-Fonte: IN-04 USA, slot 6 prima della conferma di Totema/Mateus.
+- [x] **VALIDATED** — `leggi_multiple`.
 
-Riscontro: Confermare con A e attendere: effetto di Mateus sull’intero campo, infrazione di **Target All**, cartellino rosso e messaggio che manda Marche in prigione. Seguono assenza dell’unico membro schierato e Game Over. Prove `resume-cast-totema/`, `resume-totema-end/`, `resume-prison-end/`.
+Request: A battle with multiple active laws from which both the list and law help can be opened.
 
-Ambito restante: Validata questa infrazione con espulsione; non tutte le penalità o il cartellino giallo.
+Source: IN-04 USA, slot 5 with the Swimming Meet law list.
 
-### DS-07 — Battaglia affollata e unità differenti
+Evidence: System → Law Cards shows two simultaneous prohibitions: **Law Cards** and **Target All**, with **Target Area** recommended. Down selects Target All; Select opens Help and A advances to the second page, which describes A-abilities across the entire field. Evidence `resume-lawcards/`, `resume-law-help/`, `resume-law-help-complete/`. This is not just the layout with empty rows.
 
-- [ ] **PARZIALE** — `battaglia_affollata`.
+Remaining scope: Valid for this pair and its help; other combinations have not all been inventoried.
 
-Richiesta: Battaglia affollata: molte unità, razze e mostri diversi contemporaneamente visibili.
+<a id="ds-06--infrazione-e-intervento-del-giudice"></a>
 
-Fonte: F-02; replay derivato F-09. Raccolta: **slot 7**.
+### DS-06 — Law violation and judge intervention
 
-Riscontro: Battaglia ordinaria e pubblicazione di più corpi già osservate. Esistono prove su sprite, HUD e turno nemico.
+- [x] **VALIDATED** — `infrazione_legge`.
 
-Ambito restante: Restano una scena sufficientemente affollata, varietà di razze/mostri e osservazione contemporanea dei gruppi richiesti. Non equivalgono al solo conteggio di sprite pubblicati.
+Request: A law violation immediately before the action, to observe judge intervention and penalty.
 
-### DS-08 — Turno nemico lento o problematico
+Source: IN-04 USA, slot 6 before confirming Totema/Mateus.
 
-- [ ] **PARZIALE** — `turno_nemico_lento`.
+Evidence: Confirm with A and wait: Mateus affects the entire field, **Target All** is violated, a red card appears and a message sends Marche to prison. The only deployed member is then absent and Game Over follows. Evidence `resume-cast-totema/`, `resume-totema-end/`, `resume-prison-end/`.
 
-Richiesta: Turno nemico particolarmente lungo o problematico: prima di passare il turno, indicando come riprodurlo.
+Remaining scope: This violation with expulsion is validated; not every penalty or the yellow card.
 
-Fonte: F-09 e target/desktop-perf/ai-turn-replay/input.input. Raccolta: **slot 8**.
+<a id="ds-07--battaglia-affollata-e-unità-differenti"></a>
 
-Riscontro: Replay ordinario di 3530 frame: attivazione e movimento di un nemico, poi ritorno al giocatore, già verificati.
+### DS-07 — Crowded battle and different units
 
-Ambito restante: Il rallentamento originale non è riprodotto. Serve identificarne un caso concreto; non sono stati avviati nuovi benchmark.
+- [ ] **PARTIAL** — `battaglia_affollata`.
 
-### DS-09 — Magie, evocazioni ed effetti ad area
+Request: A crowded battle with many different units, races and monsters visible at the same time.
 
-- [x] **VALIDATA** — `magie_effetti_area`.
+Source: F-02; derived replay F-09. Collection: **slot 7**.
 
-Richiesta: Magia o abilità con effetti vistosi: prima della conferma del bersaglio. Sono utili esempi diversi, soprattutto effetti ad area ed evocazioni.
+Evidence: Ordinary battle and publication of multiple bodies already observed. Sprite, HUD and enemy-turn evidence exists.
 
-Fonte: IN-04 USA, slot 9 prima di Do it di Firaga; slot 6 offre anche Mateus.
+Remaining scope: A sufficiently crowded scene, variety of races/monsters and simultaneous observation of the requested groups remain. Publishing a sprite count alone is not equivalent.
 
-Riscontro: Selezionati magia, area e bersaglio, confermato l’effetto di **Firaga** con variazione di HP (72 nel primo esempio su sé stessi). Separatamente eseguita l’evocazione **Mateus**, con animazione sul campo e danni ai nemici. Prove `resume-firaga/`, `resume-firaga-cast/`, `resume-cast-totema/`. Le prove sono su copie e includono deliberatamente fuoco amico per preparare DS-11.
+<a id="ds-08--turno-nemico-lento-o-problematico"></a>
 
-Ambito restante: Valida questi due effetti e le rispettive conferme; altre magie/evocazioni restano fuori campione.
+### DS-08 — Slow or problematic enemy turn
 
-### DS-10 — Alterazioni di stato
+- [ ] **PARTIAL** — `turno_nemico_lento`.
 
-- [x] **VALIDATA** — `alterazioni_stato`.
+Request: A particularly long or problematic enemy turn: before passing the turn, with reproduction instructions.
 
-Richiesta: Unità con alterazioni di stato: icone visibili e, possibilmente, effetti che modificano movimento, azioni o ordine dei turni.
+Source: F-09 and target/desktop-perf/ai-turn-replay/input.input. Collection: **slot 8**.
 
-Fonte: IN-05 USA File No.2, slot 10 sul campo; variante slot 61 prima di confermare Auto-Life.
+Evidence: Ordinary 3530-frame replay: activation and movement of an enemy, then return to the player, already verified.
 
-Riscontro: Marche mostra icone alternate sopra l'unità, visibili anche in Status. White Magic → Auto-Life offre 100% sul bersaglio; conferma, animazione e MP **85 → 69** osservati. Prove `resume-autolife-cast/`, `resume-autolife-status/`, `resume-status-pages/`. La presenza delle icone è verificata; non si attribuisce ogni icona al nuovo lancio, dato che ne compaiono già prima.
+Remaining scope: The original slowdown was not reproduced. A concrete case still needs identification; no new benchmarks were started.
 
-Ambito restante: Non verificati il KO che attiva la rianimazione automatica, l'identità di ciascuna icona o ulteriori alterazioni che cambiano movimento/azioni/ordine. Questi effetti erano aggiuntivi, non necessari alla scena con icone richiesta.
+<a id="ds-09--magie-evocazioni-ed-effetti-ad-area"></a>
 
-### DS-11 — KO e rianimazione
+### DS-09 — Magic, summons and area effects
 
-- [x] **VALIDATA** — `ko_rianimazione`.
+- [x] **VALIDATED** — `magie_effetti_area`.
 
-Richiesta: KO e rianimazione: prima del colpo che manda KO oppure prima della conferma della rianimazione.
+Request: Magic or an ability with striking effects before target confirmation. Different examples are useful, especially area effects and summons.
 
-Fonte: IN-04 USA, slot 11 prima di confermare Phoenix Down; variante `DS-11-before-KO.ffstate`.
+Source: IN-04 USA, slot 9 before Firaga Do it; slot 6 also offers Mateus.
 
-Riscontro: La sequenza ordinaria Firaga/Return Magic porta Marche a **HP0**, verificati nella selezione dell’oggetto e nell’assenza dall’ordine dei turni. Montblanc si avvicina con Move; seleziona Phoenix Down e Marche, con anteprima **Revive KO**, 100%, +221 HP. Conferma ed effetto osservati: Marche torna in piedi. Conservati prima del KO, prima di Do it e dopo la rianimazione. Prove `resume-third-firaga/`, `resume-ko-observe/`, `resume-phoenix-adjacent/`, `resume-phoenix-cast/`.
+Evidence: Selected magic, area and target and confirmed the **Firaga** effect with HP change (72 in the first self-target example). Separately performed the **Mateus** summon, with field animation and damage to enemies. Evidence `resume-firaga/`, `resume-firaga-cast/`, `resume-cast-totema/`. Checks use copies and deliberately include friendly fire to prepare DS-11.
 
-Ambito restante: Valida questo KO e questa rianimazione; non sono stati modificati HP/status nei file o nella RAM. I primi tentativi fuori portata non sono prove di rianimazione fallita.
+Remaining scope: Valid for these two effects and their confirmations; other spells/summons remain outside the sample.
 
-### DS-12 — Terreno, dislivelli e ostacoli
+<a id="ds-10--alterazioni-di-stato"></a>
 
-- [ ] **PARZIALE** — `terreno_complesso`.
+### DS-10 — Status effects
 
-Richiesta: Terreno complesso: dislivelli, acqua, ostacoli e personaggi parzialmente coperti dallo scenario.
+- [x] **VALIDATED** — `alterazioni_stato`.
 
-Fonte: F-03; altra mappa F-02; IN-04 USA Swimming Meet. Raccolta: **slot 12**.
+Request: Units with status effects: visible icons and, if possible, effects changing movement, actions or turn order.
 
-Riscontro: La scena di schieramento mostra dislivelli marcati, pareti e vegetazione; caricamento e rappresentazione ispezionati.
+Source: IN-05 USA File No.2, slot 10 on the field; slot 61 variant before confirming Auto-Life.
 
-Estensione IN-04: acqua, piattaforme, pareti e palme visibili nella nuova
-battaglia; checkpoint anche al primo turno giocatore.
+Evidence: Marche shows alternating icons above the unit, also visible in Status. White Magic → Auto-Life offers 100% on the target; confirmation, animation and MP **85 → 69** observed. Evidence `resume-autolife-cast/`, `resume-autolife-status/`, `resume-status-pages/`. Icons are verified; not every icon is attributed to the new cast, since some already appear beforehand.
 
-Ambito restante: Restano movimento tra quote e occlusioni durante il percorso.
-Le caselle blu di schieramento della vecchia scena non erano prova di acqua.
+Remaining scope: The KO that triggers automatic revival, each icon's identity and further effects changing movement/actions/order were not verified. These effects were additional, not necessary to the requested scene with icons.
 
-### DS-13 — Vittoria in battaglia e ricompense
+<a id="ds-11--ko-e-rianimazione"></a>
 
-- [x] **VALIDATA** — `vittoria_ricompense`.
+### DS-11 — KO and revival
 
-Richiesta: Fine battaglia con ricompense: prima dell'ultimo colpo, possibilmente con aumento di livello o apprendimento di un'abilità.
+- [x] **VALIDATED** — `ko_rianimazione`.
 
-Fonte: IN-05 USA File No.2, slot 13 prima di Do it di Totema/Mateus in Prison Break; variante slot 62 alla schermata RESULTS. GEN-33 riparte dalla battaglia prima dell'azione.
+Request: KO and revival, before the blow causing KO or before revival confirmation.
 
-Riscontro: Mateus elimina le guardie rimanenti; seguono dialogo di Julian, **MISSION CLEARED** e risultati di **Prison Break**: **7000 Gil, 40 AP, Helje Key, Perseus Bow, Chivalry**, poi **20 punti clan**. Ultimo attacco e schermate osservati nei replay `resume-prison-mateus/`, `resume-prison-victory/`. Non sono le sole ricompense di una spedizione.
+Source: IN-04 USA, slot 11 before confirming Phoenix Down; variant `DS-11-before-KO.ffstate`.
 
-Ambito restante: Nessun aumento di livello/apprendimento di abilità attribuito. Segue **Too many items**, con scelta dell'oggetto da scartare (variante slot 63): la risoluzione di quel menu e la conclusione completa del rientro restano da fare.
+Evidence: The ordinary Firaga/Return Magic sequence brings Marche to **HP0**, verified in item selection and absence from turn order. Montblanc approaches with Move; selects Phoenix Down and Marche, with preview **Revive KO**, 100%, +221 HP. Confirmation and effect observed: Marche stands again. Points before KO, before Do it and after revival retained. Evidence `resume-third-firaga/`, `resume-ko-observe/`, `resume-phoenix-adjacent/`, `resume-phoenix-cast/`.
 
-### DS-14 — Sconfitta o fallimento dell’obiettivo
+Remaining scope: Valid for this KO and revival; HP/status were not changed in files or RAM. Initial out-of-range attempts are not evidence of failed revival.
 
-- [x] **VALIDATA** — `sconfitta_obiettivo`.
+<a id="ds-12--terreno-dislivelli-e-ostacoli"></a>
 
-Richiesta: Sconfitta o fallimento dell’obiettivo: poco prima dell’evento conclusivo.
+### DS-12 — Terrain, elevation and obstacles
 
-Fonte: IN-04 USA, slot 14 al messaggio di prigione, prima di Game Over.
+- [ ] **PARTIAL** — `terreno_complesso`.
 
-Riscontro: La violazione Target All con Marche unico schierato conduce alla sua espulsione e a **Game Over**, osservato prima sul campo e poi sullo sfondo nero. Il checkpoint precede l’esito, riprodotto attendendo. Prove `resume-totema-end/`, `resume-prison-end/`.
+Request: Complex terrain: elevation changes, water, obstacles and characters partly hidden by scenery.
 
-Ambito restante: Valido questo esito conclusivo; nessun altro fallimento di obiettivo viene dedotto.
+Source: F-03; another map F-02; IN-04 USA Swimming Meet. Collection: **slot 12**.
 
-### DS-15 — Obiettivo di battaglia alternativo
+Evidence: The deployment scene shows marked elevation changes, walls and vegetation; loading and presentation inspected.
 
-- [ ] **NON COPERTA** — `obiettivo_alternativo`.
+IN-04 extension: water, platforms, walls and palms visible in the new battle; checkpoint also at the first player turn.
 
-Richiesta: Battaglia con obiettivo diverso dall’eliminazione dei nemici: prima di soddisfarlo o fallirlo, indicando l’obiettivo.
+Remaining scope: Movement between elevations and occlusion during the path remain. Blue deployment tiles in the old scene were not evidence of water.
 
-Fonte: Nessun obiettivo alternativo identificato.
+<a id="ds-13--vittoria-in-battaglia-e-ricompense"></a>
 
-Riscontro: Nelle fonti selezionate non è documentata una vittoria/fallimento con requisito diverso dall’eliminazione dei nemici.
-Swimming Meet descrive leggi speciali, ma l'obiettivo osservato è DEFEAT ALL
-ENEMIES: non valida un obiettivo alternativo.
+### DS-13 — Battle victory and rewards
 
-Ambito restante: Indicare missione e requisito; salvare prima di completarlo o fallirlo.
+- [x] **VALIDATED** — `vittoria_ricompense`.
 
-### DS-16 — Squadra e classi avanzate
+Request: End of battle with rewards before the final blow, preferably with a level increase or ability learning.
 
-- [x] **VALIDATA** — `squadra_classi_avanzate`.
+Source: IN-05 USA File No.2, slot 13 before Totema/Mateus Do it in Prison Break; slot 62 variant at RESULTS screen. GEN-33 restarts from battle before the action.
 
-Richiesta: Squadra avanzata: molte classi sbloccate, razze diverse e numerose abilità; da cui esplorare cambio classe, statistiche ed equipaggiamento.
+Evidence: Mateus eliminates the remaining guards; Julian's dialogue, **MISSION CLEARED** and **Prison Break** results follow: **7000 Gil, 40 AP, Helje Key, Perseus Bow, Chivalry**, then **20 clan points**. Final attack and screens observed in `resume-prison-mateus/`, `resume-prison-victory/` replays. These are not merely dispatch rewards.
 
-Fonte: **IN-04 USA**, slot 16; i vecchi punti F-04/F-05 EUR restano candidati iniziali.
+Remaining scope: No level increase/ability learning attributed. **Too many items** follows, with a choice of item to discard (slot 63 variant): resolving that menu and completing the return remain to be done.
 
-Riscontro: squadra di razze diverse con unità ai livelli 40–50, anello Change
-Jobs con numerose classi disponibili. Cambio effettivo Soldier → Thief
-osservato, con nuova classe e statistiche nella scheda. Consultati diversi
-set di abilità, tra cui Battle Tech, Black Magic, Chivalry, Fighter Tech e
-Steal, oltre alle voci reazione/supporto/combo. Equipaggiamento e inventario
-avanzati consultati. Checkpoint all'anello delle classi prima del cambio;
-catture `jobs-advanced.png`, `job-changed.png`, `abilities-advanced.png`.
 
-Ambito restante: validata l'esplorazione richiesta di questa squadra; la
-descrizione dell'autore «tutte le abilità padroneggiate» non è stata verificata.
+<a id="ds-14--sconfitta-o-fallimento-dellobiettivo"></a>
 
-### DS-17 — Inventario, categorie e scorrimento
+### DS-14 — Defeat or objective failure
 
-- [ ] **PARZIALE** — `inventario_categorie`.
+- [x] **VALIDATED** — `sconfitta_obiettivo`.
 
-Richiesta: Inventario ricco: categorie diverse, oggetti con descrizioni lunghe e liste che richiedono scorrimento.
+Request: Defeat or objective failure shortly before the concluding event.
 
-Fonte: **IN-04 USA**, slot 17; precedenti F-04/F-05 EUR conservati.
+Source: IN-04 USA, slot 14 at the prison message, before Game Over.
 
-Riscontro: Prove esistenti sull’elenco copricapi e relative proprietà. Nuova GUI: Party → unità → Equip → elenco oggetti, con cinque copricapi visibili e indicatore di scorrimento. Seconda sessione breve ha ricontrollato Party, senza raggiungere l’inventario generale.
+Evidence: The Target All violation with Marche as the only deployed unit leads to his expulsion and **Game Over**, observed first on the field and then on the black background. The checkpoint precedes the outcome, reproduced by waiting. Evidence `resume-totema-end/`, `resume-prison-end/`.
 
-Estensione IN-04: raggiunto l'inventario generale con sei icone di categoria;
-ispezionati copricapi, armature e consumabili. Scorrimento effettivo fino a
-Barrette/Bangaa Helm/Acacia Hat/Parade Helm. **Select** apre Help di Bronze
-Helm, con descrizione su due righe; R mostra informazioni/abilità e un'altra
-vista mostra la compatibilità dell'equipaggiamento. Le catture chiamate
-weapon-long-help mostrano quest'ultima, non una descrizione lunga.
+Remaining scope: Valid for this concluding outcome; no other objective failure is inferred.
 
-Ambito restante: descrizioni lunghe e verifica di tutte le categorie. La prima
-sessione SIGTERM143 e la nuova sessione GUI interrotta restano prive di prova
-di chiusura normale; le osservazioni conservate non chiudono l'intero caso.
+<a id="ds-15--obiettivo-di-battaglia-alternativo"></a>
 
-### DS-18 — Negozio avanzato e transazioni
+### DS-15 — Alternative battle objective
 
-- [x] **VALIDATA** — `negozio_avanzato`.
+- [ ] **UNCOVERED** — `obiettivo_alternativo`.
 
-Richiesta: Negozio avanzato: molte categorie e oggetti disponibili, con denaro sufficiente per provare acquisto, vendita e conferme.
+Request: Battle with an objective other than eliminating enemies, before meeting or failing it, with the objective identified.
 
-Fonte: **IN-04 USA**, slot 18 all'ingresso Shop di Sprohm; vecchi F-05/F-04 EUR conservati.
+Source: No alternative objective identified.
 
-Riscontro: assortimento/categorie, denaro abbondante, acquisto di una Potion
-per **42 gil** confermato (99399199 → 99399157), annullamento esplicito di
-un secondo acquisto senza variazione di fondi, vendita di un Bronze Helm
-per **250 gil** (99399157 → 99399407). Conferme e risposta del negoziante
-ispezionate. Riscontri `sell-quantity.png` (risposta dopo Buy),
-`buy-explicit-cancel.png`, `sell-final-confirmation.png`, `sell-committed.png`.
+Evidence: The selected sources do not document a victory/failure with a requirement other than eliminating enemies. Swimming Meet describes special laws, but the observed objective is DEFEAT ALL ENEMIES: this does not validate an alternative objective.
 
-Ambito restante: valida per queste transazioni; non per ogni oggetto, limite di quantità o disponibilità.
+Remaining scope: Identify mission and requirement; save before completing or failing it.
 
-### DS-19 — Pub e accettazione di una missione
+<a id="ds-16--squadra-e-classi-avanzate"></a>
 
-- [x] **VALIDATA** — `pub_accettazione_missione`.
+### DS-16 — Advanced party and jobs
 
-Richiesta: Pub con molte missioni disponibili: dettagli, requisiti, selezione del partecipante e conferma della spedizione accessibili.
+- [x] **VALIDATED** — `squadra_classi_avanzate`.
 
-Fonte: F-05; avvio accettato F-06. Raccolta: **slot 19**.
+Request: An advanced party with many unlocked jobs, different races and numerous abilities, from which to explore job changes, statistics and equipment.
 
-Riscontro: Navigazione tra missioni, pagine dettagli/requisiti, Mad Alchemist, scelta di Sigmund e conferma della spedizione già osservate nella GUI ordinaria. Costo di 600 gil applicato. Le catture e il risultato terminale sono stati ricontrollati.
+Source: **IN-04 USA**, slot 16; old F-04/F-05 EUR points remain initial candidates.
 
-Ambito restante: Valida per questo percorso del pub; non per ogni missione o requisito di classe/oggetto.
+Evidence: Party of different races with units at levels 40–50, Change Jobs ring with numerous available jobs. Actual Soldier → Thief change observed, with new job and statistics on the sheet. Several ability sets consulted, including Battle Tech, Black Magic, Chivalry, Fighter Tech and Steal, as well as reaction/support/combo entries. Advanced equipment and inventory inspected. Checkpoint at the job ring before the change; captures `jobs-advanced.png`, `job-changed.png`, `abilities-advanced.png`.
 
-### DS-20 — Spedizione fallita
+Remaining scope: Requested exploration of this party validated; the author's description «tutte le abilità padroneggiate» (“all abilities mastered”) was not verified.
 
-- [x] **VALIDATA** — `spedizione_fallita`.
+<a id="ds-17--inventario-categorie-e-scorrimento"></a>
 
-Richiesta: Spedizione fallita: poco prima del rientro o della comunicazione del risultato.
+### DS-17 — Inventory, categories and scrolling
 
-Fonte: nuovo `slot-4.ffstate` fornito nella root, ROM **EUR**, formato 1 e BIOS HLE. Rinominato e spostato, con byte e SHA-256 invariati, in **`debug_saves/DS-20-spedizione-fallita-EUR.ffstate`**. Copia pronta in **Save states slot 20 EUR**.
+- [ ] **PARTIAL** — `inventario_categorie`.
 
-Riproduzione: la conferma «Vuoi fuggire dalla battaglia?» parte su **No**. Premere **Sinistra → A** per scegliere Sì e attendere la sequenza **SCONFITTA**, la dissolvenza e il ritorno alla mappa. **Polly** comunica «Mi dispiace, davvero. Ho fatto un pasticcio». Confermare con A: compare il rapporto **«Rientrata unità in trasferta»**. Segue anche un rapporto negativo di Sigmund. La generica intestazione «Missione Completata» nel riepilogo non è stata usata come prova di successo: il rientro fallito è verificato dal dialogo di Polly e dalla notifica di trasferta.
+Request: A rich inventory with different categories, items with long descriptions and lists requiring scrolling.
 
-Riscontro: caricamento e ricaricamento dei checkpoint nel helper Windows già disponibile; ramo No annullato, ramo Sì seguito fino alla mappa e ai rapporti. Anche la GUI Windows/Wine carica effettivamente lo **slot 20**, mostra il messaggio di Polly e il rapporto, poi termina normalmente **exit0**. Nessun build o modifica a payload, RAM o salvataggi cartuccia originali. Prove in `target/debug-saves-expansion/ds20-user-{yes,after-defeat,frontend}/` e `target/debug-saves-ds20/`.
+Source: **IN-04 USA**, slot 17; earlier F-04/F-05 EUR retained.
 
-Variante **slot 65 EUR**: già dopo la fuga/sconfitta, prima del passaggio alla mappa e del messaggio di Polly; basta attendere. Master locale `EUR/variants/DS-20-prima-del-rientro.ffstate`. L'originale utente resta conservato integralmente.
+Evidence: Existing checks of the headgear list and its properties. New GUI: Party → unit → Equip → item list, with five visible headgear items and a scroll indicator. A second short session rechecked Party without reaching the general inventory.
 
-Ambito restante: validato questo rientro fallito; altri partecipanti/missioni e tutte le possibili cause di fallimento restano fuori campione. Il solo banner SCONFITTA non sarebbe bastato a chiudere DS-20.
+IN-04 extension: reached general inventory with six category icons; headgear, armor and consumables inspected. Actual scrolling to Barrette/Bangaa Helm/Acacia Hat/Parade Helm. **Select** opens Bronze Helm Help with a two-line description; R shows information/abilities and another view shows equipment compatibility. Captures named weapon-long-help show the latter, not a long description.
 
-### DS-21 — Oggetti missione e utilizzo
+Remaining scope: Long descriptions and verification of all categories. The first SIGTERM143 session and the new interrupted GUI session still lack evidence of normal closure; retained observations do not close the whole case.
 
-- [ ] **PARZIALE** — `oggetti_missione`.
+<a id="ds-18--negozio-avanzato-e-transazioni"></a>
 
-Richiesta: Oggetti missione: elenco popolato e una missione che ne richiede la selezione o l’utilizzo.
+### DS-18 — Advanced shop and transactions
 
-Fonte: F-04 EUR; **IN-04 USA**, slot 21 prima della scelta dell'oggetto da portare.
+- [x] **VALIDATED** — `negozio_avanzato`.
 
-Riscontro: Clan → Mission Item mostra Chocobo Egg, elenco 1/64; prova esistente di 520 frame con uso positivo dei dati di visualizzazione.
+Request: An advanced shop with many categories and available items, and enough money to try purchasing, selling and confirmations.
 
-Estensione IN-04: elenco **62/64**, con Gold Vessel, Clock Gear, medaglie e
-altri oggetti. Nel pub selezionato ed equipaggiato **Gold Vessel** per
-Swimming Meet, quindi accettata la missione e addebitati **850 gil**.
-Lo slot 21 precede la scelta; la variante mission-items conserva l'elenco.
+Source: **IN-04 USA**, slot 18 at the Sprohm Shop entrance; old F-05/F-04 EUR retained.
 
-Ambito restante: l'equipaggiamento scelto non prova un requisito obbligatorio
-o il consumo dell'oggetto. Ulteriore prova IN-06: Girl In Love mostra
-**White Thread / used** nei requisiti; l'accettazione viene negata con
-“This mission requires … White Thread”. Variante slot 64. È un requisito
-obbligatorio osservato in negativo; il consumo riuscito resta da provare.
-Per questo il caso resta parziale.
+Evidence: Stock/categories, plentiful money, confirmed Potion purchase for **42 gil** (99399199 → 99399157), explicit cancellation of a second purchase without a funds change, sale of a Bronze Helm for **250 gil** (99399157 → 99399407). Confirmations and shopkeeper response inspected. Evidence `sell-quantity.png` (response after Buy), `buy-explicit-cancel.png`, `sell-final-confirmation.png`, `sell-committed.png`.
 
-### DS-22 — Banca mostri popolata e cattura
+Remaining scope: Valid for these transactions, not every item, quantity limit or availability.
 
-- [x] **VALIDATA** — `banca_mostri_popolata`.
+<a id="ds-19--pub-e-accettazione-di-una-missione"></a>
 
-Richiesta: Banca mostri popolata: con più mostri consultabili; utile anche un punto da cui provare una cattura.
+### DS-19 — Pub and mission acceptance
 
-Fonte: **IN-01 provato USA**, slot 22 nella banca di Cyril.
+- [x] **VALIDATED** — `pub_accettazione_missione`.
 
-Riscontro: consultati **Red Cap Lv23, Jelly Lv24 e Ice Flan Lv25**, con
-ritratti; aperta anche la scheda di Ice Flan (HP/MP, movimento e statistiche).
-Non è il solo catalogo delle specie: le tre voci hanno mostri presenti con
-livelli effettivi, mentre la voce ???? mostra Lv--. Replay completato exit0;
-riscontro `bank-IN01-owned/contact.png` e checkpoint ricaricato dal helper.
+Request: A pub with many available missions: accessible details, requirements, participant selection and dispatch confirmation.
 
-Ambito restante: validata la consultazione della banca popolata; manca il punto aggiuntivo prima di una cattura.
+Source: F-05; accepted start F-06. Collection: **slot 19**.
 
-### DS-23 — Reclutamento o inserimento del nome
+Evidence: Navigation between missions, details/requirements pages, Mad Alchemist, selection of Sigmund and dispatch confirmation already observed in the ordinary GUI. Cost of 600 gil applied. Captures and terminal result were rechecked.
 
-- [x] **VALIDATA** — `reclutamento_nome`.
+Remaining scope: Valid for this pub path, not every mission or job/item requirement.
 
-Richiesta: Reclutamento o inserimento di un nome: subito prima della scelta o dell'apertura della tastiera.
+<a id="ds-20--spedizione-fallita"></a>
 
-Fonte: New Game su memoria vuota NEW-32 USA; slot 23 salvato realmente dal frontend alla tastiera, varianti slot 53 prima dell'apertura e 54 alla conferma.
+### DS-20 — Failed dispatch
 
-Riscontro: Proseguito normalmente il dialogo nel cortile fino alla tastiera del nome. Inserimento e cancellazione di caratteri, Start → conferma inizialmente No, annullamento con ritorno alla tastiera e Yes osservati. Il dialogo successivo usa il nome scelto. Ripetuta la sequenza essenziale nella GUI Windows/Wine: MarcheA, aggiunta/rimozione di A, annullamento e conferma; screenshot nativo e snapshot slot 23 conservati. Sessione chiusa normalmente exit0, sorgenti invariati. Prove `resume-school-dialogue2/`, `resume-name-edit/`, `resume-name-confirm/`, `resume-name-frontend/`.
+- [x] **VALIDATED** — `spedizione_fallita`.
 
-Ambito restante: Validata l'alternativa nome; nessun reclutamento attribuito. Usare Game Save32 prima di caricare questi snapshot di nuova partita.
+Request: Failed dispatch shortly before return or notification of the result.
 
-### DS-24 — Mappa avanzata ed eventi
+Source: new `slot-4.ffstate` supplied in the root, **EUR** ROM, format 1 and HLE BIOS. Renamed and moved with unchanged bytes and SHA-256 to **`debug_saves/DS-20-spedizione-fallita-EUR.ffstate`**. Ready copy in **Save states slot 20 EUR**.
 
-- [x] **VALIDATA** — `mappa_avanzata`.
+Reproduction: the confirmation «Vuoi fuggire dalla battaglia?» (“Do you want to flee the battle?”) starts on **No**. Press **Left → A** to choose **Sì** (Yes) and wait for **SCONFITTA** (defeat), the fade and return to the map. **Polly** says «Mi dispiace, davvero. Ho fatto un pasticcio». Confirm with A: the report **«Rientrata unità in trasferta»** appears. A negative Sigmund report follows too. The generic heading «Missione Completata» in the summary was not used as evidence of success: the failed return is verified by Polly's dialogue and the dispatch notification.
 
-Richiesta: Mappa avanzata: molte località sbloccate, eventi disponibili e possibilità di entrare in città e battaglie diverse.
+Evidence: loading and reloading checkpoints in the existing Windows helper; No branch cancelled, Sì branch followed through map and reports. The Windows/Wine GUI also actually loads **slot 20**, shows Polly's message and the report, then exits normally **exit0**. No build or change to original payload, RAM or cartridge saves. Evidence in `target/debug-saves-expansion/ds20-user-{yes,after-defeat,frontend}/` and `target/debug-saves-ds20/`.
 
-Fonte: IN-05 USA File No.2, slot 24 nel menu di Sprohm con due missioni attive; GEN-31 come standard equivalente sulla mappa. Vecchio punto IN-04 presso Ambervale conservato nelle varianti.
+**EUR slot 65** variant: already after escape/defeat, before transition to the map and Polly's message; just wait. Local master `EUR/variants/DS-20-prima-del-rientro.ffstate`. The user's original remains fully preserved.
 
-Riscontro: Su IN-04 censite **29 destinazioni** e verificati viaggio a città, pub/negozio e ingresso Swimming Meet. Su IN-05 File No.2 raggiunti **Decision Time e Prison Break**, due scene e battaglie diverse da uno stesso progresso avanzato: Decision Time già attiva, Prison Break accettata pagando 500 Gil. GEN-31 conserva entrambe e White Magic dopo nuovo avvio. Prove `resume-IN05-decision-enter/`, `resume-prison-enter/`, `resume-GEN31-quests/`. Il numero 29 appartiene al censimento IN-04 e non viene esteso automaticamente a IN-05.
+Remaining scope: This failed return is validated; other participants/missions and all possible causes of failure remain outside the sample. The SCONFITTA banner alone would not have sufficed to close DS-20.
 
-Ambito restante: Validati questi eventi e accessi, non tutti gli eventi/località. IN-04 non ha missioni attive nel menu Quit Mission; Ambervale fa avanzare il giorno e apre Save, senza finale osservato.
+<a id="ds-21--oggetti-missione-e-utilizzo"></a>
 
-### DS-25 — Scene narrative differenti
+### DS-21 — Mission items and use
 
-- [x] **VALIDATA** — `scene_narrative`.
+- [ ] **PARTIAL** — `oggetti_missione`.
 
-Richiesta: Scene narrative differenti: dialoghi lunghi, più interlocutori, cambi di sfondo, dissolvenze o animazioni particolari. Bastano alcuni esempi rappresentativi.
+Request: Mission items: a populated list and a mission requiring their selection or use.
 
-Fonte: IN-05 USA File No.2, slot 25 prima del lungo dialogo di Decision Time.
+Source: F-04 EUR; **IN-04 USA**, slot 21 before choosing the item to take.
 
-Riscontro: Ingresso da Sprohm, dissolvenza/cambio dalla mappa alla stanza, dialogo prolungato fra **Cid, Marche e giudici**, ritratti e cambio d’inquadratura; conclusione del dialogo fino allo schieramento e avvio della battaglia. Prove `resume-IN05-decision-next/`, `resume-IN05-dialogue/`, `resume-IN05-dialogue2/`, `resume-IN05-battle/`. Il breve dialogo iniziale di Swimming Meet resta come secondo esempio nelle varianti.
+Evidence: Clan → Mission Item shows Chocobo Egg, list 1/64; existing 520-frame check with positive use of display data.
 
-Ambito restante: Valide queste sequenze narrative e transizioni; non sono crediti o finale del gioco.
+IN-04 extension: **62/64** list, with Gold Vessel, Clock Gear, medals and other items. In the pub **Gold Vessel** was selected and equipped for Swimming Meet, then the mission accepted and **850 gil** charged. Slot 21 precedes selection; the mission-items variant retains the list.
 
-### DS-26 — Boss o finale
+Remaining scope: The selected equipment does not prove a mandatory requirement or item consumption. Further IN-06 check: Girl In Love shows **White Thread / used** in requirements; acceptance is refused with “This mission requires … White Thread”. Slot 64 variant. This is a mandatory requirement observed negatively; successful consumption remains to be proven. The case therefore remains partial.
 
-- [ ] **PARZIALE** — `boss_finale`.
+<a id="ds-22--banca-mostri-popolata-e-cattura"></a>
 
-Richiesta: Boss, battaglia finale o finale del gioco: se hai già progressi vicini a questi punti.
+### DS-22 — Populated monster bank and capture
 
-Fonte: IN-05 USA File No.2; slot 26 al turno di Cid in Decision Time, varianti prima dell’ingresso e allo schieramento.
+- [x] **VALIDATED** — `banca_mostri_popolata`.
 
-Riscontro: La missione postgame **Decision Time** risulta già accettata. I dettagli indicano Sprohm e il responsabile della corruzione; ingresso, lungo dialogo con Cid e giudici, squadra di tre membri e battaglia effettiva sono raggiunti. È un punto avanzato concreto, oltre alla sola descrizione dell’autore. GEN-30 consente di rientrare normalmente da Sprohm.
+Request: A populated monster bank with multiple monsters to inspect; a point from which to try a capture is also useful.
 
-Ambito restante: Vittoria della missione, scena conclusiva e finale/crediti del gioco non osservati. La natura di ultimo scontro è ancora un indizio dai metadati, non una prova dell’epilogo. IN-04 presso Ambervale è un tentativo negativo: nessuna missione attiva e soltanto avanzamento giorno/Save, senza evento finale.
+Source: **IN-01 tested USA**, slot 22 in Cyril's bank.
 
-## Prove e prossimi controlli
+Evidence: **Red Cap Lv23, Jelly Lv24 and Ice Flan Lv25** inspected with portraits; Ice Flan's sheet also opened (HP/MP, movement and statistics). This is not only the species catalog: the three entries have present monsters with actual levels, while the ???? entry shows Lv--. Replay completed exit0; evidence `bank-IN01-owned/contact.png` and checkpoint reloaded by helper.
 
-Le prove del rientro/crescita e del percorso al pub sono descritte nel
-[record della spedizione ordinaria](../changes/2026-10-23-consume-european-progression-gates-and-receipt-records.json).
-La coppia di 1000 frame è conclusa e non è stata ripetuta. Le immagini RESULTS,
-Mission Cleared e accettazione sono state ricontrollate. Premi di missione e
-premi di progressione del clan rimangono casi separati, DS-02 e DS-03.
+Remaining scope: Inspection of the populated bank validated; the additional point before a capture is missing.
 
-Per gli altri sottocasi riutilizzare le prove di [leggi e schieramento](../ffta_laws_layout.md),
-[negozio/banca](../ffta_shop_bank_mouse.md), il
-[replay nemico](../changes/2026-10-20-record-observed-enemy-activation-replay.json)
-e i contratti/scenari già registrati in [dati di gioco](../rom_data_gameplay.md).
+<a id="ds-23--reclutamento-o-inserimento-del-nome"></a>
 
-Le osservazioni della prima ricognizione e i risultati terminali sono in
-`target/debug-saves-audit/{DS-04,DS-17-global}/`, con catture e guardie sugli
-originali. La sessione intermedia `DS-17/` è incompleta (SIGTERM143), conserva
-solo le osservazioni fino a Equip e non dà una prova di chiusura normale.
-Quella ricognizione non creò nuovi snapshot di gioco.
+### DS-23 — Recruitment or name entry
 
-L'espansione sui nuovi file è conservata in **`target/debug-saves-expansion/`**:
+- [x] **VALIDATED** — `reclutamento_nome`.
+
+Request: Recruitment or name entry immediately before selection or opening the keyboard.
+
+Source: New Game on empty NEW-32 USA memory; slot 23 actually saved by the frontend at the keyboard, slot 53 variant before opening and 54 at confirmation.
+
+Evidence: Continued the courtyard dialogue normally to the name keyboard. Character entry and deletion, Start → confirmation initially No, cancellation returning to keyboard and Yes observed. Essential sequence repeated in Windows/Wine GUI: MarcheA, addition/removal of A, cancellation and confirmation; native screenshot and slot 23 snapshot retained. Session closed normally exit0, sources unchanged. Evidence `resume-school-dialogue2/`, `resume-name-edit/`, `resume-name-confirm/`, `resume-name-frontend/`.
+
+Remaining scope: The name-entry alternative is validated; no recruitment attributed. Use Game Save32 before loading these new-game snapshots.
+
+<a id="ds-24--mappa-avanzata-ed-eventi"></a>
+
+### DS-24 — Advanced map and events
+
+- [x] **VALIDATED** — `mappa_avanzata`.
+
+Request: An advanced map with many unlocked locations, available events and access to different towns and battles.
+
+Source: IN-05 USA File No.2, slot 24 in the Sprohm menu with two active missions; GEN-31 as equivalent standard save on the map. Old IN-04 point near Ambervale retained among variants.
+
+Evidence: On IN-04, **29 destinations** inventoried and travel to town, pub/shop and Swimming Meet entry verified. On IN-05 File No.2, **Decision Time and Prison Break** reached, two different scenes and battles from the same advanced progress: Decision Time already active, Prison Break accepted for 500 Gil. GEN-31 retains both and White Magic after a new start. Evidence `resume-IN05-decision-enter/`, `resume-prison-enter/`, `resume-GEN31-quests/`. The count 29 belongs to the IN-04 inventory and is not automatically extended to IN-05.
+
+Remaining scope: These events and entries are validated, not every event/location. IN-04 has no active missions in the Quit Mission menu; Ambervale advances the day and opens Save, without an ending observed.
+
+<a id="ds-25--scene-narrative-differenti"></a>
+
+### DS-25 — Different narrative scenes
+
+- [x] **VALIDATED** — `scene_narrative`.
+
+Request: Different narrative scenes with long dialogue, multiple speakers, background changes, fades or special animations. A few representative examples suffice.
+
+Source: IN-05 USA File No.2, slot 25 before the long Decision Time dialogue.
+
+Evidence: Entry from Sprohm, fade/change from map to room, extended dialogue among **Cid, Marche and judges**, portraits and camera change; dialogue completed through deployment and battle start. Evidence `resume-IN05-decision-next/`, `resume-IN05-dialogue/`, `resume-IN05-dialogue2/`, `resume-IN05-battle/`. The short opening Swimming Meet dialogue remains a second example in variants.
+
+Remaining scope: These narrative sequences and transitions are valid; they are not game credits or an ending.
+
+<a id="ds-26--boss-o-finale"></a>
+
+### DS-26 — Boss or ending
+
+- [ ] **PARTIAL** — `boss_finale`.
+
+Request: Boss, final battle or game ending, if progress is already close to these points.
+
+Source: IN-05 USA File No.2; slot 26 at Cid's turn in Decision Time, variants before entry and at deployment.
+
+Evidence: Postgame mission **Decision Time** is already accepted. Details indicate Sprohm and the person responsible for corruption; entry, long dialogue with Cid and judges, three-member party and actual battle reached. This is a concrete advanced point beyond the author's description alone. GEN-30 allows normal re-entry from Sprohm.
+
+Remaining scope: Mission victory, concluding scene and game ending/credits were not observed. Its nature as the last battle remains a lead from metadata, not evidence of the epilogue. IN-04 near Ambervale is a negative attempt: no active mission and only day advancement/Save, without a final event.
+
+<a id="prove-e-prossimi-controlli"></a>
+
+## Evidence and next checks
+
+Evidence for dispatch return/growth and the pub path is described in the
+[ordinary dispatch record](../changes/2026-10-23-consume-european-progression-gates-and-receipt-records.json).
+The 1000-frame pair is complete and was not repeated. RESULTS, Mission Cleared
+and acceptance images were rechecked. Mission rewards and clan-progression
+rewards remain separate cases, DS-02 and DS-03.
+
+For other subcases reuse evidence for [laws and deployment](../ffta_laws_layout.md),
+[shop/bank](../ffta_shop_bank_mouse.md), the
+[enemy replay](../changes/2026-10-20-record-observed-enemy-activation-replay.json)
+and contracts/scenarios already recorded in [game data](../rom_data_gameplay.md).
+
+The first inventory's observations and terminal results are in
+`target/debug-saves-audit/{DS-04,DS-17-global}/`, with captures and guards on
+originals. The intermediate `DS-17/` session is incomplete (SIGTERM143), retains
+only observations up to Equip and does not prove normal closure. That inventory
+did not create new game snapshots.
+
+The new-file expansion is retained in **`target/debug-saves-expansion/`**:
 `input-manifest.json`, `boot-results.json`, `helper-build.json`,
-`package-result.json`, directory dei replay e `USA-final/` con input/catture.
-Un helper Windows privato, collegato al core già costruito, ha eseguito input
-ordinari ed esportato checkpoint, verificandone il ricaricamento in una nuova
-Machine. Non è stata ricostruita l'applicazione. I tentativi iniziali di link
-falliti e un percorso errato del helper sono conservati come errori degli
-strumenti, senza attribuirli al gioco.
+`package-result.json`, replay directories and `USA-final/` with input/captures.
+A private Windows helper linked to the already built core executed ordinary
+inputs and exported checkpoints, verifying reload in a new Machine. The
+application was not rebuilt. Initial failed link attempts and a wrong helper
+path are retained as tool errors, without attributing them to the game.
 
-I 25 boot/caricamenti e i replay citati sono terminali exit0. La sessione GUI
-**è stata interrotta**: il log termina con X connection broken e manca
-`final.json`. Le catture intermedie documentano le azioni osservate; nessuna
-chiusura normale, equivalenza completa, qualità audio o prestazione è dedotta
-da quella sessione. Nessuna nuova prova su Windows nativo, controller fisico,
-Linux o Android. Le verifiche finali conservano hash degli originali e fonti,
-checksum anteprime/payload, ROM/versione e assenza di file tracciati in Git.
+The 25 boots/loads and cited replays are terminal exit0. The GUI session **was
+interrupted**: the log ends with X connection broken and `final.json` is missing.
+Intermediate captures document observed actions; no normal closure, full
+equivalence, audio quality or performance is inferred from that session. No new
+native Windows, physical controller, Linux or Android evidence. Final checks
+retain hashes of originals and sources, preview/payload checksums, ROM/version
+and absence of tracked Git files.
 
-Ricognizione complessiva **parziale**: **18 validati, 6 parziali, 2 non coperti**.
-Restano parziali DS-07 folla/varietà, DS-08 riproduzione del turno lento,
-DS-12 percorso tra quote/occlusioni, DS-17 descrizioni lunghe/categorie,
-DS-21 consumo di un oggetto richiesto e DS-26 conclusione/finale.
-Non coperti DS-03 premio di soglia e DS-15 obiettivo alternativo. DS-20 è ora
-validato dal nuovo punto EUR e dal rientro fallito osservato di Polly. Il tentativo Girl In Love si ferma al requisito mancante;
-Prison Break ha obiettivo DEFEAT ALL ENEMIES e nessun oggetto obbligatorio.
-Le anteprime Bind a 0% restano tentativi negativi, distinti dalla scena con
-icone DS-10. Non ripetere le validazioni concluse per ricostruire il contesto.
+Overall inventory **partial**: **18 validated, 6 partial, 2 uncovered**.
+DS-07 crowd/variety, DS-08 slow-turn reproduction, DS-12 elevation/occlusion
+path, DS-17 long descriptions/categories, DS-21 required-item consumption and
+DS-26 conclusion/ending remain partial. DS-03 threshold reward and DS-15
+alternative objective remain uncovered. DS-20 is now validated by the new EUR
+point and Polly's observed failed return. The Girl In Love attempt stops at the
+missing requirement; Prison Break has objective DEFEAT ALL ENEMIES and no
+mandatory item. Bind previews at 0% remain negative attempts, distinct from the
+DS-10 icon scene. Do not repeat completed validations to reconstruct context.
 
-Verificati anche **26 menu Resume Battle** da checkpoint esistenti: nessuno
-carica uno scontro con A. Il nuovo **GEN-33**, prodotto dal normale Save Now,
-serve da controllo positivo: riepilogo, avviso, conferma Yes e campo al turno
-di Marche effettivamente raggiunti con un nuovo avvio. Nessuna SRAM originale
-viene riscritta dal replay. Le tre GUI di esportazione standard e la GUI del
-nome terminano normalmente exit0; resta separata la prima GUI interrotta.
-I master generati, il catalogo e le istruzioni sono in `debug_saves/` ignorata;
-i risultati terminali e le catture rimangono sotto `target/debug-saves-expansion/`.
+Also verified **26 Resume Battle menus** from existing checkpoints: none loads a
+battle with A. New **GEN-33**, produced by normal Save Now, serves as a positive
+control: summary, notice, Yes confirmation and the field at Marche's turn were
+actually reached after a new start. No original SRAM is rewritten by replay.
+The three standard-export GUIs and the naming GUI exit normally with exit0; the
+first interrupted GUI remains separate. Generated masters, catalog and
+instructions are in ignored `debug_saves/`; terminal results and captures remain
+under `target/debug-saves-expansion/`.
