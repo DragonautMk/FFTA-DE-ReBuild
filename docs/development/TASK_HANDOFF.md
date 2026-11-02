@@ -26,7 +26,7 @@ termination of another owner's process or changing another thread's goal state.
 - Outcome: partial
 - Verified: previous runtime/report/guide/export units accepted, including shared debug guides. Command/event consoles and operation cards use English/Italian presentation; targeted tests PASS. Audit: 178 reviewed files, 42 Markdown pending.
 - Missing: remaining documentation, other dynamic report producers/metadata, helper/test modules, tools/build text, source comments and full audit across both trees. Planned-task checklist/reference translated and synchronized. Preserve optional locales, imported content and immutable history.
-- Resume: select another pending guide/source area from the audit. Android-specific frontend and tooling text is reviewed; shared Android core, tests and build metadata remain. No ROM exploration or repeated builds solely for context.
+- Resume: latest English-first request selects ENGLISH-FIRST-ANDROID-SUPPORT-AUDIT. Android-specific frontend/tooling is accepted; shared decoder/recompiler, Kotlin tests and build metadata remain unreviewed. Missing: inspect maintained English text/comments in these tracked files and correct any violations, preserving machine identifiers. Next: review and record exact coverage without runtime work.
 
 ### ROMDATA-03-04-E105-SENARY-COMPACT-OBJ
 
@@ -221,9 +221,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: ENGLISH-FIRST-PROJECT partial; ENGLISH-FIRST-ANDROID-FRONTEND-AUDIT completed.
-- Last verified result: 33 Android frontend/tooling files reviewed, Python/XML parse PASS; Android guide corrected. Audit: 178 reviewed, 42 Markdown pending.
-- Remaining work: Android shared core/tests/build metadata and other guides, runtime/tool text and full cross-tree audit.
-- Errors or blockers: no Android build/device validation; concurrent todo2 edits preserved.
-- Next action: select another pending source or guide; no ROM exploration solely for translation.
-- References: `docs/development/ENGLISH_FIRST_AUDIT.json`, `docs/changes/2026-11-02-review-android-frontend-and-tooling-english.json`.
+- Task: ENGLISH-FIRST-PROJECT partial; ENGLISH-FIRST-ANDROID-SUPPORT-AUDIT selected.
+- Last verified result: Android-specific frontend/tooling reviewed; decoder/recompiler and tests remain.
+- Remaining work: review Android decoder/recompiler source, Kotlin tests and build metadata; then continue cross-tree audit.
+- Errors or blockers: none; no device, save or ROM work selected.
+- Next action: inspect maintained text and record exact file coverage.
+- References: `AndroidPort/crates/armv4t`, `AndroidPort/crates/recomp-core`, `AndroidPort/android`.
