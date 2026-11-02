@@ -18480,3 +18480,189 @@ LOCAL-ARTIFACT-SWEEP-2026-10-31 — CLOSED. Latest request: clean residual proje
 - Outcome: completed bounded translation of metadata4 and metadata2 source-oracle, data, consumption and scene/CLI evidence. EUR/Wine scope and open criteria retained.
 - Evidence: numeric tokens, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
 - Record: `docs/changes/2026-11-02-translate-romdata-metadata4-metadata2-evidence.json`.
+
+### ENGLISH-FIRST-ROMDATA-02-CONSTRUCTORS
+
+- Outcome: completed bounded translation of default48 and constructor-alternates source, model, consumption and scene/CLI evidence. EUR/Wine scope and open criteria retained.
+- Evidence: numeric tokens, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-constructor-evidence.json`.
+
+### ENGLISH-FIRST-ROMDATA-02-METADATA14-12
+
+- Outcome: completed bounded translation of metadata14 and metadata12 static roots, source-oracle, data, consumption and scene/CLI evidence. EUR/Wine scope and open criteria retained.
+- Evidence: numeric tokens, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-metadata14-metadata12-evidence.json`.
+
+### ENGLISH-FIRST-ROMDATA-02-GLOBAL-EVALUATION
+
+- Outcome: completed bounded translation of global pair flag and evaluation parameter source, data, consumption and scene/CLI evidence. EUR/Wine scope and open criteria retained.
+- Evidence: numeric tokens, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-global-evaluation-evidence.json`.
+
+### ENGLISH-FIRST-ROMDATA-02-PROGRESSION
+
+- Outcome: completed bounded translation of progression rewards and gates static roots, source-oracle, data and consumption evidence. EUR/Wine scope and open criteria retained.
+- Evidence: numeric tokens, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-progression-evidence.json`.
+
+### ENGLISH-FIRST-ROMDATA-05-CRITERIA
+
+- Outcome: completed bounded translation of ROMDATA-05 criteria, text consumption and initial OBJ validation evidence; existing statuses and deferred measurements retained.
+- Evidence: numeric values, IDs, links, inline literals and checkboxes match the preimage; legacy heading anchor preserved and surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-equivalence-criteria.json`.
+
+### ENGLISH-FIRST-ROMDATA-05-BG
+
+- Outcome: completed bounded translation of BG scene costs, readable JSON and base/alternate palette evidence. Historical limits and updated data-size preference retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-bg-validation-evidence.json`.
+
+### ENGLISH-FIRST-ROMDATA-05-PROGRESSION-SCENES
+
+- Outcome: completed bounded translation of progression rewards, gates and evaluation threshold scene/CLI evidence, retaining provenance and open criteria.
+- Evidence: numeric values, IDs, links and inline literals match the preimage after separating a concatenated CLI handle/frame count; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-progression-scene-evidence.json`.
+
+### ENGLISH-FIRST-ROMDATA-05-SELECTION-GATES
+
+- Outcome: completed bounded translation of progression selection-gates source, data, consumption and scene/CLI evidence; outcomes and open criteria retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage after separating six concatenated field/counter pairs; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-selection-gates-evidence.json`.
+
+### ENGLISH-FIRST-ROMDATA-05-AGGREGATE-KEYS
+
+- Outcome: completed bounded translation of aggregate flag key source, data, consumption and scene/CLI evidence; outcomes and open criteria retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-aggregate-keys-evidence.json`.
+
+### ENGLISH-FIRST-ROMDATA-05-TRADE
+
+- Outcome: completed bounded translation of adjacent lookup and trade parameter static, source, data, consumption and scene/CLI evidence; outcomes and open criteria retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage after separating one concatenated field/counter; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-trade-evidence.json`.
+
+### ENGLISH-FIRST-ROMDATA-05-ITEM-EFFECT
+
+- Outcome: completed bounded translation of item-effect parameter static, source, data, consumption and scene/CLI evidence; EUR/USA limits and open criteria retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage after separating two concatenated field/counter pairs; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-item-effect-evidence.json`.
+
+### ENGLISH-FIRST-AUDIO-DIRECTORY
+
+- Outcome: completed bounded translation of initial M4A typed catalog, source-oracle, consumption and scene/CLI evidence; outcomes and limits retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-audio-directory-evidence.json`.
+
+### ENGLISH-FIRST-AUDIO-TONE
+
+- Outcome: completed bounded translation of M4A tone producer, model, consumption and scene/CLI evidence; outcomes and limits retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-audio-tone-evidence.json`.
+
+### ENGLISH-FIRST-AUDIO-SEQUENCE
+
+- Outcome: completed bounded translation of M4A sequence model, consumption and scene/CLI evidence; outcomes and limits retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-audio-sequence-evidence.json`.
+
+### ENGLISH-FIRST-AUDIO-DRIVER
+
+- Outcome: completed bounded translation of M4A driver tables, model, consumption and scene/CLI evidence; corrected hypotheses and limits retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-audio-driver-evidence.json`.
+
+### ENGLISH-FIRST-PALETTE-DISPATCH
+
+- Outcome: completed bounded translation of wrapper reclassification and palette dispatch model, consumption and scene/CLI evidence; outcomes and limits retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-palette-dispatch-evidence.json`.
+
+### ENGLISH-FIRST-PALETTE-PROGRAM
+
+- Outcome: completed bounded translation of palette program producer, indexed domain, model, runtime, CLI and scene evidence; outcomes and limits retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-palette-program-evidence.json`.
+
+### ENGLISH-FIRST-BLEND-PROGRAM
+
+- Outcome: completed bounded translation of blend program producer, model, runtime, CLI and scene evidence; outcomes and limits retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-blend-program-evidence.json`.
+
+### ENGLISH-FIRST-TASK-DESCRIPTORS
+
+- Outcome: completed bounded translation of task descriptor source, model, runtime, CLI and scene evidence; outcomes and limits retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-task-descriptor-evidence.json`.
+
+### ENGLISH-FIRST-EVENT-DIRECTORY
+
+- Outcome: completed bounded translation of effect event directory source, model, runtime, CLI and scene evidence; outcomes and limits retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-event-directory-evidence.json`.
+
+### ENGLISH-FIRST-SCRIPT-DIRECTORY
+
+- Outcome: completed bounded translation of script command directory source, model, runtime, CLI and scene evidence; outcomes and limits retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-script-directory-evidence.json`.
+
+### ENGLISH-FIRST-SCRIPT-ARCHIVE
+
+- Outcome: completed bounded translation of script archive inventory, model, runtime, CLI and scene evidence; outcomes and limits retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-script-archive-evidence.json`.
+
+### ENGLISH-FIRST-SCRIPT-TEXT
+
+- Outcome: completed bounded translation of script-selected localized text inventory, model, runtime, CLI and ordinary scene evidence; outcomes and limits retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-script-text-evidence.json`.
+
+### ENGLISH-FIRST-SCRIPT-COORDINATES
+
+- Outcome: completed bounded translation of script coordinate source, model, runtime, CLI and scene evidence; outcomes and limits retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-script-coordinate-evidence.json`.
+
+### ENGLISH-FIRST-AUX-SCRIPT
+
+- Outcome: completed bounded translation of auxiliary script archive inventory, model, runtime, CLI and scene evidence; outcomes and limits retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-auxiliary-script-evidence.json`.
+
+### ENGLISH-FIRST-MAP-RASTER
+
+- Outcome: completed bounded translation of terrain map and raster palette source, model, runtime, CLI and scene evidence; outcomes and limits retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-map-raster-evidence.json`.
+
+### ENGLISH-FIRST-UI-LISTS
+
+- Outcome: completed bounded translation of empty OBJ caller and UI choice-list source, model, runtime, CLI and scene evidence; outcomes and limits retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-ui-list-evidence.json`.
+
+### ENGLISH-FIRST-UNIT-OBJ-POSE
+
+- Outcome: completed bounded translation of unit OBJ initial pose source, model, runtime, CLI and scene evidence; outcomes and limits retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-unit-obj-pose-evidence.json`.
+
+### ENGLISH-FIRST-UNIT-COLOR
+
+- Outcome: completed bounded translation of unit color palette source, model, runtime, CLI and scene evidence; outcomes and limits retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage after separating three concatenated handles and counts; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-unit-color-evidence.json`.
+
+### ENGLISH-FIRST-UNIT-EQUIPMENT
+
+- Outcome: completed bounded translation of unit OBJ equipment source, model, runtime, CLI and authorized scene evidence; outcomes and limits retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-unit-equipment-evidence.json`.
+
+### ENGLISH-FIRST-UNIT-BATTLE
+
+- Outcome: completed bounded translation of unit OBJ normal battle source, model, runtime, CLI and scene evidence; outcomes and limits retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-unit-battle-evidence.json`.

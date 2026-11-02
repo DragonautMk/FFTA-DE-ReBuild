@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-romdata-equivalence-criteria",
+  "title": "Translate ROM data equivalence criteria and initial evidence",
+  "kind": "docs",
+  "platforms": [
+    "Desktop ROM-data planning documentation"
+  ],
+  "changes": [
+    "Translated ROMDATA-05 criteria, text-consumption evidence and initial OBJ validation evidence into English while retaining the legacy heading anchor, statuses and deferred cost measurements."
+  ],
+  "validation": [
+    "Compared numeric values, task identifiers, links, inline literals and checkboxes with the preimage; confirmed all text outside the selected entries is unchanged."
+  ],
+  "limitations": [
+    "ROMDATA-05 from BG scene costs onward and later evidence remain to be translated; no ROM access or runtime checks performed."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_TODO.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

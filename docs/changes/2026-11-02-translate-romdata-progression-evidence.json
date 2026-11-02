@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-romdata-progression-evidence",
+  "title": "Translate ROM data progression evidence",
+  "kind": "docs",
+  "platforms": [
+    "Desktop ROM-data planning documentation"
+  ],
+  "changes": [
+    "Translated progression reward and gate static roots, source-oracle, managed-data and consumption evidence into English while preserving identifiers, outcomes and open criteria."
+  ],
+  "validation": [
+    "Compared numeric tokens, task identifiers, links and inline literals with the preimage; confirmed all text outside the selected entries is unchanged."
+  ],
+  "limitations": [
+    "ROMDATA-05 and later evidence remain to be translated; no ROM access or runtime checks performed."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_TODO.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

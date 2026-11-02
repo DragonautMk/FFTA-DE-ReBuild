@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-romdata-audio-directory-evidence",
+  "title": "Translate ROM data audio directory evidence",
+  "kind": "docs",
+  "platforms": [
+    "Desktop ROM-data planning documentation"
+  ],
+  "changes": [
+    "Translated initial M4A typed catalog, source-oracle, consumption and scene/CLI evidence into English while retaining outcomes and limits."
+  ],
+  "validation": [
+    "Compared numeric tokens, task identifiers, links and inline literals with the preimage; confirmed all text outside the selected entries is unchanged."
+  ],
+  "limitations": [
+    "Audio tone and sequence evidence and later untranslated material remain; no ROM access or runtime checks performed."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_TODO.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

@@ -792,7 +792,7 @@
     },
     {
       "path": "docs/development/TASK_HANDOFF.md",
-      "sha256": "d29c4f5ecbce2dbde2ab31aae1db6535a15de2ee62bdac5c07e688c5f8cc1b47",
+      "sha256": "0f69fad20305d35f77864f756b16cd7c42d95c12551ba0d74d71e811ec454b82",
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
     },
     {
@@ -1271,6 +1271,37 @@
     "docs/changes/2026-11-02-translate-romdata-obj-ui-graphics-evidence.json",
     "docs/changes/2026-11-02-translate-romdata-item-metadata-evidence.json",
     "docs/changes/2026-11-02-translate-romdata-metadata52-evidence.json",
-    "docs/changes/2026-11-02-translate-romdata-metadata4-metadata2-evidence.json"
+    "docs/changes/2026-11-02-translate-romdata-metadata4-metadata2-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-constructor-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-metadata14-metadata12-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-global-evaluation-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-progression-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-equivalence-criteria.json",
+    "docs/changes/2026-11-02-translate-romdata-bg-validation-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-progression-scene-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-selection-gates-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-aggregate-keys-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-trade-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-item-effect-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-audio-directory-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-audio-tone-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-audio-sequence-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-audio-driver-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-palette-dispatch-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-palette-program-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-blend-program-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-task-descriptor-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-event-directory-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-script-directory-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-script-archive-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-script-text-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-script-coordinate-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-auxiliary-script-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-map-raster-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-ui-list-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-unit-obj-pose-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-unit-color-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-unit-equipment-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-unit-battle-evidence.json"
   ]
 }
