@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "audit-upstream-save-ui-and-rom-policy",
+  "title": "Audit upstream save cards and regional ROM policy",
+  "kind": "docs",
+  "platforms": [
+    "Desktop source comparison; Android validation gates inspected"
+  ],
+  "changes": [
+    "Distinguish in-game machine-state cards from fork cartridge and snapshot slots; compare release region claims with actual identity and feature gates."
+  ],
+  "validation": [
+    "Inspected pinned save UI and ROM validation callers, fork save contracts and recorded Wine scope; no new builds, ROM access or runtime tests."
+  ],
+  "limitations": [
+    "In-game UX equivalence and per-region feature behavior remain unverified; Android save UX is not fully audited."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-08-save-cards.md",
+    "docs/development/upstream-audit/U31-12-rom-compatibility.md"
+  ],
+  "references": [
+    "docs/To_DO/FFTARecomp_Upstream_v3_1_Analisi_Decisioni_v0_2.md"
+  ]
+}

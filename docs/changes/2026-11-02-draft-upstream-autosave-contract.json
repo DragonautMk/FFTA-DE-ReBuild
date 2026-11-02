@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "draft-upstream-autosave-contract",
+  "title": "Draft fork-native machine autosave contract",
+  "kind": "docs",
+  "platforms": [
+    "Desktop design; Android deferred"
+  ],
+  "changes": [
+    "Describe a candidate fork-native machine autosave lifecycle, crash recovery, cartridge timeline protection and validation increments without selecting configuration defaults."
+  ],
+  "validation": [
+    "Inspected fork save-state, frontend restore, cartridge flush and debug-session source; documentation proposal only."
+  ],
+  "limitations": [
+    "No implementation, runtime tests, approved activation or interval, filesystem durability proof, or Android validation."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-07-autosave-proposal.md",
+    "docs/development/upstream-audit/U31-07-machine-autosave.md"
+  ],
+  "references": [
+    "docs/save_states.md",
+    "docs/extended_saves.md"
+  ]
+}

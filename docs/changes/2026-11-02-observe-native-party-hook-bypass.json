@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "observe-native-party-hook-bypass",
+  "title": "Observe Party native hook bypass",
+  "kind": "docs",
+  "platforms": [
+    "Android engine on Linux x86-64 TinyCC; Android ARM64 untested"
+  ],
+  "changes": [
+    "Record a focused Sol diagnosis and a six-frame instrumented observation of the retained upstream native object and pending Party request."
+  ],
+  "validation": [
+    "The EUR scene hit and queued target 1; after six frames request remained pending, dispatcher hook/gate counters were zero, and the native hook literal read at the hook PC occurred 24 times. Six protected input and cache hashes unchanged."
+  ],
+  "limitations": [
+    "One EUR scene with explicitly loaded retained object, host adaptive compilation disabled; exact native caller, other hook boundaries, complete state, Android ARM64 and device behavior remain unverified. The prior failed test unit is retained. Primary model and reasoning effort could not be independently verified.",
+    "Local artifact complete --apply refused the non-ROMDATA unit; all evidence remains in place."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-06-android-party-gallery.md",
+    "docs/development/upstream-audit/U31-06-android-touch.md"
+  ],
+  "references": []
+}

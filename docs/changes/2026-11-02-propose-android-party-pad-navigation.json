@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "propose-android-party-pad-navigation",
+  "title": "Propose bounded Android Party touch navigation",
+  "kind": "docs",
+  "platforms": [
+    "Android Party gallery proposal; device validation pending"
+  ],
+  "changes": [
+    "Define a reviewable EUR Party touch unit using observed pad navigation, explicit empty-area behavior, cancellation and input ownership, with native/cache and device acceptance gates."
+  ],
+  "validation": [
+    "Compared existing Android touch, worker/JNI lifecycle, semantic button queue and native emitter boundaries against recorded EUR interpreter and native evidence; documentation only."
+  ],
+  "limitations": [
+    "Proposal awaits the upstream TODO specific-unit approval; multi-row routes, timing, reliable scene identity, lifecycle cancellation, native cache and Android device behavior remain unverified. No runtime implementation."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-06-party-implementation-proposal.md",
+    "docs/development/upstream-audit/U31-06-android-party-gallery.md"
+  ],
+  "references": [
+    "docs/development/upstream-audit/U31-06-android-touch.md"
+  ]
+}

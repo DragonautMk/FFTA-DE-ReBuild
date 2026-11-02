@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "audit-shop-recording-dispatch-compatibility",
+  "title": "Audit shop recording and native dispatch compatibility",
+  "kind": "docs",
+  "platforms": [
+    "Desktop source trace; Linux synthetic parser"
+  ],
+  "changes": [
+    "Trace an existing shop category recording token mismatch and the native dispatch boundary relevant to a future scrollbar."
+  ],
+  "validation": [
+    "One standalone extracted-parser test passed: rejects all category tokens 1024–1029 and accepts selected other-range boundaries; source producer, recording readers and dispatch examined."
+  ],
+  "limitations": [
+    "No actual shop recording, app build, replay, game or ROMDATA/native equivalence test; one unused-field warning in isolated harness."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-02-scrollbars.md"
+  ],
+  "references": [
+    "docs/development/upstream-audit/U31-01-fast-forward.md"
+  ]
+}

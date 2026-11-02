@@ -3,6 +3,26 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-02 — Validate upstream fractional fast-forward input tests
+
+Type: docs. Platforms: Linux isolated upstream input-config module.
+
+**Changes**
+
+- Record targeted upstream fractional-budget, activation and configuration test results and their limits.
+
+**Validation**
+
+- Extracted pinned upstream input-config; compiled unmodified Linux source with rustc 1.94.0 --test and passed three individually selected tests.
+
+**Limitations**
+
+- No Cargo workspace build, fork 150 percent implementation, runtime pacing, audio, GUI or Windows evidence.
+
+Documentation: [FFTARecomp_Upstream_v3_1_Analisi_Decisioni_v0_2.md](docs/To_DO/FFTARecomp_Upstream_v3_1_Analisi_Decisioni_v0_2.md).
+
+[Change record](docs/changes/2026-11-02-validate-upstream-fractional-input-tests.json)
+
 ## 2026-11-02 — Translate the shared portable debug tools guide
 
 Type: docs. Platforms: project-wide.
@@ -1839,6 +1859,46 @@ Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.j
 
 [Change record](docs/changes/2026-11-02-translate-atlas-spec-introduction.json)
 
+## 2026-11-02 — Trace upstream shop scrollbar and Android entry points
+
+Type: docs. Platforms: Desktop source comparison; Android source audit; Linux synthetic geometry.
+
+**Changes**
+
+- Trace EUR shop page redraw and desktop drag ownership, identify Android frontend gap, and prepare a bounded integration proposal with replay and native risks.
+
+**Validation**
+
+- Compiled exact upstream ui_scrollbar.rs with rustc 1.94.0 --test: four tests passed; inspected pinned shop, Android, recording and replay call sites.
+
+**Limitations**
+
+- No application build, GUI, game, region, native-dispatch or Android device test; upstream geometry is not fork integration.
+
+Documentation: [FFTARecomp_Upstream_v3_1_Analisi_Decisioni_v0_2.md](docs/To_DO/FFTARecomp_Upstream_v3_1_Analisi_Decisioni_v0_2.md).
+
+[Change record](docs/changes/2026-11-02-trace-upstream-scrollbar-shop-android.json)
+
+## 2026-11-02 — Trace fork action panel ownership and reveal evidence
+
+Type: docs. Platforms: Desktop source and retained evidence review.
+
+**Changes**
+
+- Trace per-frame action-panel ownership, fallback, packing and input; distinguish existing static-width and cursor-jitter evidence from reveal coverage.
+
+**Validation**
+
+- Inspected PPU/frontend source, prior action-frame and input-cache records, and availability and driver of retained style captures; no new game or build.
+
+**Limitations**
+
+- Stable real owner and visible foreground throughout reveal, hit alignment and platform runtime remain unverified; older named captures unavailable locally.
+
+Documentation: [ffta_action_frame_width.md](docs/ffta_action_frame_width.md), [2026-10-21-evaluate-ui-packing-input-cache.json](docs/changes/2026-10-21-evaluate-ui-packing-input-cache.json).
+
+[Change record](docs/changes/2026-11-02-trace-fork-action-panel-owner.json)
+
 ## 2026-11-02 — Synchronize matching ROM inventory translations
 
 Type: docs. Platforms: Desktop ROM-data inventory.
@@ -2057,6 +2117,86 @@ Documentation: [2026-11-01-model-european-compact-obj-sixth-root.json](docs/chan
 
 [Change record](docs/changes/2026-11-02-record-partial-senary-compact-obj-integration.json)
 
+## 2026-11-02 — Propose bounded Android Party touch navigation
+
+Type: docs. Platforms: Android Party gallery proposal; device validation pending.
+
+**Changes**
+
+- Define a reviewable EUR Party touch unit using observed pad navigation, explicit empty-area behavior, cancellation and input ownership, with native/cache and device acceptance gates.
+
+**Validation**
+
+- Compared existing Android touch, worker/JNI lifecycle, semantic button queue and native emitter boundaries against recorded EUR interpreter and native evidence; documentation only.
+
+**Limitations**
+
+- Proposal awaits the upstream TODO specific-unit approval; multi-row routes, timing, reliable scene identity, lifecycle cancellation, native cache and Android device behavior remain unverified. No runtime implementation.
+
+Documentation: [U31-06-android-touch.md](docs/development/upstream-audit/U31-06-android-touch.md).
+
+[Change record](docs/changes/2026-11-02-propose-android-party-pad-navigation.json)
+
+## 2026-11-02 — Observe Party native hook bypass
+
+Type: docs. Platforms: Android engine on Linux x86-64 TinyCC; Android ARM64 untested.
+
+**Changes**
+
+- Record a focused Sol diagnosis and a six-frame instrumented observation of the retained upstream native object and pending Party request.
+
+**Validation**
+
+- The EUR scene hit and queued target 1; after six frames request remained pending, dispatcher hook/gate counters were zero, and the native hook literal read at the hook PC occurred 24 times. Six protected input and cache hashes unchanged.
+
+**Limitations**
+
+- One EUR scene with explicitly loaded retained object, host adaptive compilation disabled; exact native caller, other hook boundaries, complete state, Android ARM64 and device behavior remain unverified. The prior failed test unit is retained. Primary model and reasoning effort could not be independently verified.
+- Local artifact complete --apply refused the non-ROMDATA unit; all evidence remains in place.
+
+[Change record](docs/changes/2026-11-02-observe-native-party-hook-bypass.json)
+
+## 2026-11-02 — Observe real EUR action-panel reveal geometry
+
+Type: docs. Platforms: Desktop core interpreter on Linux; GUI and native Windows untested.
+
+**Changes**
+
+- Record a bounded action-menu close and reopen, observed changing backing and owner bounds, and diagnostic 100/150 percent packed layers.
+
+**Validation**
+
+- Two corrected 72-frame interpreter captures produced identical frame metadata; selected packed layers were inspected. Existing EUR ROM and snapshot hashes remained unchanged.
+
+**Limitations**
+
+- Initial zero-extension setup disabled capture and is invalid; corrected run used 22-pixel side extension. Diagnostic layers do not prove a visible GUI defect, mouse alignment, stable owner, native execution, USA, Android or native Windows behavior.
+
+Documentation: [ffta_action_frame_width.md](docs/ffta_action_frame_width.md).
+
+[Change record](docs/changes/2026-11-02-observe-action-panel-reveal.json)
+
+## 2026-11-02 — Model action reveal click fallback against control
+
+Type: docs. Platforms: Linux interpreter and modeled desktop input path.
+
+**Changes**
+
+- Record one partial-reveal visible-panel click modeled through the current core fallback and compared with a no-click control.
+
+**Validation**
+
+- At frame 37 menu and shop recognition were absent; the unhandled point queued A. At frame 40 the control menu was recognized while the modeled-click menu was not, continuing through sampled frame 71. ROM and snapshot hashes were unchanged.
+
+**Limitations**
+
+- No actual GUI event or physical input; one point, timing and panel scale only. Two harness compile attempts failed before correction; final isolated build has three unused-code warnings.
+- The managed artifact cleanup helper accepts only target/rom-data-* units and rejected this U31 unit; its files were retained.
+
+Documentation: [ffta_action_frame_width.md](docs/ffta_action_frame_width.md).
+
+[Change record](docs/changes/2026-11-02-model-action-reveal-click-fallback.json)
+
 ## 2026-11-02 — Localize readonly operation reference cards
 
 Type: changed. Platforms: Desktop: Linux unit tests; Windows GUI not rechecked.
@@ -2166,6 +2306,46 @@ Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.j
 
 [Change record](docs/changes/2026-11-02-localize-cheat-catalog-and-refresh-language-build.json)
 
+## 2026-11-02 — Inspect action-panel software composition and hit mapping
+
+Type: docs. Platforms: Desktop source routines on Linux interpreter; actual GUI untested.
+
+**Changes**
+
+- Record bounded diagnostic software composition and first-row coordinate round trips across the EUR action-menu reveal at two lengths.
+
+**Validation**
+
+- For each length, 33 visible recognized-menu samples mapped back to row zero; 39 frames including partial reveal had no recognized menu. Six protected ROM, snapshot and source hashes remained unchanged.
+
+**Limitations**
+
+- The first point was transparent and invalid; the corrected test derives its screen point from the menu hit geometry. It did not inject a mouse event or prove glyph alignment, GUI/GPU output, native Windows, Android or absence of underlying actions. Isolated build emitted three unused-code warnings.
+
+Documentation: [ffta_action_frame_width.md](docs/ffta_action_frame_width.md).
+
+[Change record](docs/changes/2026-11-02-inspect-action-composition-hit-mapping.json)
+
+## 2026-11-02 — Draft fork-native machine autosave contract
+
+Type: docs. Platforms: Desktop design; Android deferred.
+
+**Changes**
+
+- Describe a candidate fork-native machine autosave lifecycle, crash recovery, cartridge timeline protection and validation increments without selecting configuration defaults.
+
+**Validation**
+
+- Inspected fork save-state, frontend restore, cartridge flush and debug-session source; documentation proposal only.
+
+**Limitations**
+
+- No implementation, runtime tests, approved activation or interval, filesystem durability proof, or Android validation.
+
+Documentation: [save_states.md](docs/save_states.md), [extended_saves.md](docs/extended_saves.md).
+
+[Change record](docs/changes/2026-11-02-draft-upstream-autosave-contract.json)
+
 ## 2026-11-02 — Document the English-first foundation and restore CI change coverage
 
 Type: docs. Platforms: Both source trees; Python tooling on Linux; HTML interfaces checked in headless Chrome.
@@ -2254,6 +2434,362 @@ Type: docs. Platforms: Desktop debug-save documentation.
 Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
 
 [Change record](docs/changes/2026-11-02-complete-debug-save-document-translation.json)
+
+## 2026-11-02 — Compile pinned upstream input configuration with Cargo
+
+Type: docs. Platforms: Linux isolated upstream workspace.
+
+**Changes**
+
+- Record an offline locked Cargo compilation of the pinned upstream input configuration test target.
+
+**Validation**
+
+- cargo test --locked --offline -p input-config --no-run succeeded in a temporary tree; two Linux dead-code warnings in directinput.
+
+**Limitations**
+
+- Tests were not rerun; no application, Windows, GUI, audio or actual pacing acceptance.
+
+Documentation: [FFTARecomp_Upstream_v3_1_Analisi_Decisioni_v0_2.md](docs/To_DO/FFTARecomp_Upstream_v3_1_Analisi_Decisioni_v0_2.md).
+
+[Change record](docs/changes/2026-11-02-compile-upstream-input-config-cargo.json)
+
+## 2026-11-02 — Compare synthetic panel reveal geometry
+
+Type: docs. Platforms: Linux standalone Rust source fixture.
+
+**Changes**
+
+- Compare fork and pinned upstream panel translation under changing synthetic backing widths for both anchors.
+
+**Validation**
+
+- rustc 1.94.0 --test on extracted source and minimal UiPixel shim: one test passed; four widths on both anchors compared. Two unused-item compiler warnings.
+
+**Limitations**
+
+- Synthetic owner geometry is assumed; no real scene, application build, Windows, input alignment or runtime fix established.
+
+Documentation: [FFTARecomp_Upstream_v3_1_Analisi_Decisioni_v0_2.md](docs/To_DO/FFTARecomp_Upstream_v3_1_Analisi_Decisioni_v0_2.md).
+
+[Change record](docs/changes/2026-11-02-compare-upstream-panel-geometry-synthetic.json)
+
+## 2026-11-02 — Compare upstream menu miss guard with fork fallback
+
+Type: docs. Platforms: Linux interpreter and desktop source; GUI untested.
+
+**Changes**
+
+- Compare the upstream desktop background-confirm guard against a recognized action-menu miss modeled through the fork core.
+
+**Validation**
+
+- For an in-view point rejected by the fork Actions layout at frame 40, the modeled fork fallback queued A; the upstream guard expression disallowed A for a recognized menu. Control and click states diverged and ROM/snapshot hashes remained unchanged.
+
+**Limitations**
+
+- No window event or upstream runtime was exercised; the guard does not by itself prove protection during a partial reveal without a recognized menu. Isolated build emitted seven unused-code warnings.
+- The managed cleanup helper rejected the U31 unit because it accepts only target/rom-data-*; evidence is retained.
+
+Documentation: [ffta_action_frame_width.md](docs/ffta_action_frame_width.md).
+
+[Change record](docs/changes/2026-11-02-compare-upstream-menu-miss-guard.json)
+
+## 2026-11-02 — Compare real EUR Party touch in Android host engines
+
+Type: docs. Platforms: Android engine interpreter on host Linux; native Android untested.
+
+**Changes**
+
+- Document one reproducible EUR Party gallery where upstream selects the touched member and the fork confirms the previously selected member.
+
+**Validation**
+
+- Both isolated Android Engine::tap host interpreter tests pass at frame 3113; initial 240x160 framebuffer files match; ROM, source save and two input scripts retain pre-run hashes.
+
+**Limitations**
+
+- One EUR scene and 240x160 viewport; no pad comparison, complete state equivalence, native blocks, JNI, Android emulator or physical device. Offline builds emitted unused-code warnings; an initial exact-filter invocation ran zero tests and was corrected.
+
+Documentation: [U31-02-scrollbars.md](docs/development/upstream-audit/U31-02-scrollbars.md).
+
+[Change record](docs/changes/2026-11-02-compare-real-android-party-tap.json)
+
+## 2026-11-02 — Compare Party pad, scaled touch and blank area
+
+Type: docs. Platforms: Android engine interpreter on host Linux; native Android untested.
+
+**Changes**
+
+- Document pad selection and confirmation, a scaled-world touch and a blank-area touch in the same EUR Party gallery on fork and upstream.
+
+**Validation**
+
+- All six isolated host engine scenarios pass their observation assertions; pad selects member 1 on both, scaled touch selects member 1 only upstream, and blank touch opens member 0 on both. Four protected input hashes remain unchanged.
+
+**Limitations**
+
+- One EUR scene and an explicitly supplied host world rectangle; no complete state/timing equivalence, actual Android layout calculation, JNI, native blocks, emulator or device. Builds emitted unused-code warnings.
+
+Documentation: [U31-06-android-touch.md](docs/development/upstream-audit/U31-06-android-touch.md).
+
+[Change record](docs/changes/2026-11-02-compare-party-pad-and-scaled-touch.json)
+
+## 2026-11-02 — Record Party normal native cache discrepancy
+
+Type: docs. Platforms: Android engine on Linux x86-64 TinyCC; Android ARM64 untested.
+
+**Changes**
+
+- Record cold compilation, warm cache load and Party tap observations for isolated upstream and fork Android engines.
+
+**Validation**
+
+- Fork test passed; both cold preparations and warm loads succeeded with 21298 blocks and verified cache digest before replay. All five protected inputs retained their hashes.
+
+**Limitations**
+
+- Upstream test failed: selection remained 0 at six frames instead of 1; it stopped before 24-frame or hook-counter observations. Cause unverified; host adaptive compilation disabled, no JNI, ARM64 or Android device evidence. Failed unit retained.
+
+[Change record](docs/changes/2026-11-02-compare-party-normal-warm-cache.json)
+
+## 2026-11-02 — Check Party touch against targeted host native dispatch
+
+Type: docs. Platforms: Android engine with Linux x86-64 TinyCC; Android ARM64 untested.
+
+**Changes**
+
+- Document a targeted Party native-block dispatch and interpreter-hook comparison for the existing EUR scene in isolated upstream and fork engines.
+
+**Validation**
+
+- Both host tests pass; upstream observes one interpreter-gated hook and two native Party dispatches, fork one native Party dispatch. ROM, source save, both input scripts and local TinyCC library retain their pre-run hashes.
+
+**Limitations**
+
+- First 3113 frames interpreted; only 92 manually selected Party blocks compiled in memory, no normal compiler/cache or full state equivalence, JNI, Android ARM64, emulator or device. Builds emitted unused-code warnings.
+- Local artifact complete --apply refused this unit because the helper only accepts target/rom-data-*; evidence and unit are retained, no cleanup claimed.
+
+[Change record](docs/changes/2026-11-02-compare-party-host-native-dispatch.json)
+
+## 2026-11-02 — Compare Android Party dispatch with shared synthetic state
+
+Type: docs. Platforms: Android core on host Linux; actual Android untested.
+
+**Changes**
+
+- Record paired fork and pinned upstream Party gallery dispatcher and direct hook tests using matching synthetic state and isolated source copies.
+
+**Validation**
+
+- Two synthetic tests pass in each isolated offline host build: upstream handles modeled member and updates the modeled hook fields; fork does not.
+
+**Limitations**
+
+- Profiles and ROM signature were fabricated; no full guest execution, authenticated ROM, JNI tap, real scene, native dispatch, cache, emulator or device test. Upstream emitted two unused-function warnings.
+
+Documentation: [U31-06-android-touch.md](docs/development/upstream-audit/U31-06-android-touch.md).
+
+[Change record](docs/changes/2026-11-02-compare-android-party-dispatch-synthetic.json)
+
+## 2026-11-02 — Audit remaining upstream display and packaging families
+
+Type: docs. Platforms: Desktop and Android source comparison.
+
+**Changes**
+
+- Compare original-game widescreen backdrop, Android display color pass and release packaging with fork-specific surfaces and protections.
+
+**Validation**
+
+- Inspected pinned upstream and fork rendering, packaging, callers and test source; no new builds, packages or runtime tests.
+
+**Limitations**
+
+- No visual or hardware comparison, actual archive inspection, performance result or implementation acceptance.
+
+Documentation: [FFTARecomp_Upstream_v3_1_Analisi_Decisioni_v0_2.md](docs/To_DO/FFTARecomp_Upstream_v3_1_Analisi_Decisioni_v0_2.md).
+
+[Change record](docs/changes/2026-11-02-audit-upstream-widescreen-color-packaging.json)
+
+## 2026-11-02 — Audit upstream original-game scrollbars
+
+Type: docs. Platforms: Desktop source comparison; Android partially inspected.
+
+**Changes**
+
+- Compare upstream list scrollbar implementation and callers with existing fork input paths; propose a bounded adaptation and acceptance criteria.
+
+**Validation**
+
+- Read pinned upstream and fork sources; confirmed common ancestor and remote tag/target distinction. No tests or builds run.
+
+**Limitations**
+
+- Audit is partial: Android call sites, list-specific runtime behavior and integration remain unverified.
+
+Documentation: [FFTARecomp_Upstream_v3_1_Analisi_Decisioni_v0_2.md](docs/To_DO/FFTARecomp_Upstream_v3_1_Analisi_Decisioni_v0_2.md).
+
+[Change record](docs/changes/2026-11-02-audit-upstream-scrollbar.json)
+
+## 2026-11-02 — Audit upstream save cards and regional ROM policy
+
+Type: docs. Platforms: Desktop source comparison; Android validation gates inspected.
+
+**Changes**
+
+- Distinguish in-game machine-state cards from fork cartridge and snapshot slots; compare release region claims with actual identity and feature gates.
+
+**Validation**
+
+- Inspected pinned save UI and ROM validation callers, fork save contracts and recorded Wine scope; no new builds, ROM access or runtime tests.
+
+**Limitations**
+
+- In-game UX equivalence and per-region feature behavior remain unverified; Android save UX is not fully audited.
+
+Documentation: [FFTARecomp_Upstream_v3_1_Analisi_Decisioni_v0_2.md](docs/To_DO/FFTARecomp_Upstream_v3_1_Analisi_Decisioni_v0_2.md).
+
+[Change record](docs/changes/2026-11-02-audit-upstream-save-ui-and-rom-policy.json)
+
+## 2026-11-02 — Audit upstream panel geometry and presentation motion
+
+Type: docs. Platforms: Desktop source comparison; Android call sites identified.
+
+**Changes**
+
+- Compare an upstream stable-owner panel geometry candidate and host transition/zoom behavior with fork caches, input and restore boundaries.
+
+**Validation**
+
+- Inspected pinned source, callers, synthetic test source and existing fork validation record; no new builds or runtime tests.
+
+**Limitations**
+
+- No visual defect reproduced, no motion implementation selected, and Android/native Windows behavior unverified.
+
+Documentation: [FFTARecomp_Upstream_v3_1_Analisi_Decisioni_v0_2.md](docs/To_DO/FFTARecomp_Upstream_v3_1_Analisi_Decisioni_v0_2.md).
+
+[Change record](docs/changes/2026-11-02-audit-upstream-panel-motion.json)
+
+## 2026-11-02 — Audit upstream machine autosave compatibility
+
+Type: docs. Platforms: Desktop source comparison; Android integration identified.
+
+**Changes**
+
+- Compare automatic machine-save control flow, on-disk formats, recovery and fork restore guards; identify a fork-native design boundary.
+
+**Validation**
+
+- Inspected pinned upstream and fork serialization, callers, recovery paths and test source. No builds or tests run.
+
+**Limitations**
+
+- No cross-format adapter, runtime recovery, interrupted-write or Android validation; configuration and retention decisions remain open.
+
+Documentation: [FFTARecomp_Upstream_v3_1_Analisi_Decisioni_v0_2.md](docs/To_DO/FFTARecomp_Upstream_v3_1_Analisi_Decisioni_v0_2.md).
+
+[Change record](docs/changes/2026-11-02-audit-upstream-machine-autosave.json)
+
+## 2026-11-02 — Audit upstream fast forward and Steam Deck shortcut
+
+Type: docs. Platforms: Desktop source comparison.
+
+**Changes**
+
+- Compare fractional fast-forward configuration and pacing with fork percent clock; identify contextual Y shortcut conflicts.
+
+**Validation**
+
+- Inspected pinned upstream and fork input, menu and runtime source and relevant test source; no tests run.
+
+**Limitations**
+
+- 150 percent stepping, audio and device behavior not implemented or validated; physical Deck and Steam Input remain unverified.
+
+Documentation: [FFTARecomp_Upstream_v3_1_Analisi_Decisioni_v0_2.md](docs/To_DO/FFTARecomp_Upstream_v3_1_Analisi_Decisioni_v0_2.md).
+
+[Change record](docs/changes/2026-11-02-audit-upstream-ff-and-deck-input.json)
+
+## 2026-11-02 — Audit upstream Android dialogue touch selection
+
+Type: docs. Platforms: Android source comparison.
+
+**Changes**
+
+- Trace touch delivery and compare upstream two-answer handling with existing fork Notice and fallback behavior; propose one bounded scene.
+
+**Validation**
+
+- Inspected pinned Android UI, JNI, engine, guest hook and relevant test sources; historical fork touch documentation reviewed. No tests run.
+
+**Limitations**
+
+- Actual scene, ROM-region coverage, native behavior, device and remaining Android touch families are unverified.
+
+Documentation: [FFTARecomp_Upstream_v3_1_Analisi_Decisioni_v0_2.md](docs/To_DO/FFTARecomp_Upstream_v3_1_Analisi_Decisioni_v0_2.md).
+
+[Change record](docs/changes/2026-11-02-audit-upstream-android-touch.json)
+
+## 2026-11-02 — Compare upstream Android Party gallery touch
+
+Type: docs. Platforms: Android source comparison; host Linux synthetic tests.
+
+**Changes**
+
+- Trace one Party gallery touch candidate, existing fork dispatch, upstream guest hooks and Android native cache boundaries; specify evidence and stop conditions for a future scoped unit.
+
+**Validation**
+
+- Upstream pinned Android gba-core gallery_ synthetic tests: 3 passed offline on host Linux; inspected both source trees and Android callers.
+
+**Limitations**
+
+- Two unused-function compilation warnings; tests model publisher completion and do not exercise guest execution, JNI, Android device or emulator, fork runtime, native hook/cache or real scenes.
+
+Documentation: [EXPERIMENTAL_TOUCH.md](AndroidPort/docs/EXPERIMENTAL_TOUCH.md).
+
+[Change record](docs/changes/2026-11-02-audit-upstream-android-party-gallery.json)
+
+## 2026-11-02 — Audit shop recording and native dispatch compatibility
+
+Type: docs. Platforms: Desktop source trace; Linux synthetic parser.
+
+**Changes**
+
+- Trace an existing shop category recording token mismatch and the native dispatch boundary relevant to a future scrollbar.
+
+**Validation**
+
+- One standalone extracted-parser test passed: rejects all category tokens 1024–1029 and accepts selected other-range boundaries; source producer, recording readers and dispatch examined.
+
+**Limitations**
+
+- No actual shop recording, app build, replay, game or ROMDATA/native equivalence test; one unused-field warning in isolated harness.
+
+Documentation: [U31-01-fast-forward.md](docs/development/upstream-audit/U31-01-fast-forward.md).
+
+[Change record](docs/changes/2026-11-02-audit-shop-recording-dispatch-compatibility.json)
+
+## 2026-11-02 — Audit Android autosave lifecycle and cartridge storage
+
+Type: docs. Platforms: Android source comparison; device untested.
+
+**Changes**
+
+- Trace current fork cartridge saving and pinned upstream machine-state autosave across JNI, lifecycle, storage and restore boundaries.
+
+**Validation**
+
+- Inspected current Android frontend, JNI and engine, and pinned upstream engine, worker, card and lifecycle source; no ROM or runtime session used.
+
+**Limitations**
+
+- Static analysis does not establish device lifecycle timing, process-death recovery, storage durability or Android state compatibility. Autosave policy and implementation remain unapproved.
+
+[Change record](docs/changes/2026-11-02-audit-android-autosave-lifecycle.json)
 
 ## 2026-11-01 — Verify European compact OBJ fifth CLI
 

@@ -20,6 +20,14 @@ termination of another owner's process or changing another thread's goal state.
 
 ## Running or suspended tasks
 
+### U31-P0-UPSTREAM-AUDIT
+
+- State: active
+- Outcome: partial
+- Verified: U31-01..12 reports; U31-03 modeled both partial click and recognized-menu miss; upstream guard differs for recognized menu. U31-07 Android source compared. Party proposal drafted; primary model unknown.
+- Missing: U31-03 real GUI/mouse and partial recognition; Party approval, route/blank and device/implementation; shop replay fix; remaining audit, U31-07 decisions and tests.
+- Resume: user requested upstream TODO; prepare bounded recognized-menu miss proposal with acceptance and stop criteria. Party runtime mutation awaits approval.
+
 ### ENGLISH-FIRST-PROJECT
 
 - State: active
@@ -221,9 +229,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: ENGLISH-FIRST-PROJECT partial; matching ROM inventory evidence synchronized.
-- Last verified result: 120 entries in 13 blocks matched original plan preimages exactly; IDs, links and literals retained, numeric runs checked.
-- Remaining work: localized table graphics and later untranslated inventory evidence; 30 pending Markdown files and source/tool audit.
-- Errors or blockers: none; no ROM access or runtime work performed.
-- Next action: select and checkpoint the next inventory translation unit.
-- References: `docs/changes/2026-11-02-sync-rom-inventory-validated-plan-translations.json`, `docs/development/ENGLISH_FIRST_AUDIT.json`.
+- Task: U31-P0-UPSTREAM-AUDIT partial; selected recognized-menu input proposal.
+- Last verified result: modeled fork miss queued A; upstream guard blocks recognized menu.
+- Remaining work: reviewable proposal, GUI, partial recognition, Party approval and audit.
+- Errors or blockers: no isolated GUI server; primary model unknown.
+- Next action: inspect input/recording paths and draft bounded acceptance criteria.
+- References: `docs/development/upstream-audit/U31-03-panel-visual-fixes.md`.

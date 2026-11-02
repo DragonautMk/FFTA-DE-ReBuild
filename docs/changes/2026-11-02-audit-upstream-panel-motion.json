@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "audit-upstream-panel-motion",
+  "title": "Audit upstream panel geometry and presentation motion",
+  "kind": "docs",
+  "platforms": [
+    "Desktop source comparison; Android call sites identified"
+  ],
+  "changes": [
+    "Compare an upstream stable-owner panel geometry candidate and host transition/zoom behavior with fork caches, input and restore boundaries."
+  ],
+  "validation": [
+    "Inspected pinned source, callers, synthetic test source and existing fork validation record; no new builds or runtime tests."
+  ],
+  "limitations": [
+    "No visual defect reproduced, no motion implementation selected, and Android/native Windows behavior unverified."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-03-panel-visual-fixes.md",
+    "docs/development/upstream-audit/U31-04-ui-motion.md"
+  ],
+  "references": [
+    "docs/To_DO/FFTARecomp_Upstream_v3_1_Analisi_Decisioni_v0_2.md"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "compare-party-pad-and-scaled-touch",
+  "title": "Compare Party pad, scaled touch and blank area",
+  "kind": "docs",
+  "platforms": [
+    "Android engine interpreter on host Linux; native Android untested"
+  ],
+  "changes": [
+    "Document pad selection and confirmation, a scaled-world touch and a blank-area touch in the same EUR Party gallery on fork and upstream."
+  ],
+  "validation": [
+    "All six isolated host engine scenarios pass their observation assertions; pad selects member 1 on both, scaled touch selects member 1 only upstream, and blank touch opens member 0 on both. Four protected input hashes remain unchanged."
+  ],
+  "limitations": [
+    "One EUR scene and an explicitly supplied host world rectangle; no complete state/timing equivalence, actual Android layout calculation, JNI, native blocks, emulator or device. Builds emitted unused-code warnings."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-06-android-party-gallery.md"
+  ],
+  "references": [
+    "docs/development/upstream-audit/U31-06-android-touch.md"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "compare-real-android-party-tap",
+  "title": "Compare real EUR Party touch in Android host engines",
+  "kind": "docs",
+  "platforms": [
+    "Android engine interpreter on host Linux; native Android untested"
+  ],
+  "changes": [
+    "Document one reproducible EUR Party gallery where upstream selects the touched member and the fork confirms the previously selected member."
+  ],
+  "validation": [
+    "Both isolated Android Engine::tap host interpreter tests pass at frame 3113; initial 240x160 framebuffer files match; ROM, source save and two input scripts retain pre-run hashes."
+  ],
+  "limitations": [
+    "One EUR scene and 240x160 viewport; no pad comparison, complete state equivalence, native blocks, JNI, Android emulator or physical device. Offline builds emitted unused-code warnings; an initial exact-filter invocation ran zero tests and was corrected."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-06-android-party-gallery.md",
+    "docs/development/upstream-audit/U31-06-android-touch.md"
+  ],
+  "references": [
+    "docs/development/upstream-audit/U31-02-scrollbars.md"
+  ]
+}

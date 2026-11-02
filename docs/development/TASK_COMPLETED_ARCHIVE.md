@@ -18840,3 +18840,24 @@ LOCAL-ARTIFACT-SWEEP-2026-10-31 — CLOSED. Latest request: clean residual proje
 - Outcome: synchronized 120 inventory evidence entries from FFFF readers through world records with previously translated plan entries; source blocks matched plan preimages exactly.
 - Evidence: 13 exact preimage comparisons; IDs, links and inline literals preserved. Numeric runs differ only by one separated address label and one explicit zero. Surrounding text unchanged; no ROM access or runtime validation performed.
 - Record: `docs/changes/2026-11-02-sync-rom-inventory-validated-plan-translations.json`.
+
+### U31-03-REVEAL-FALLBACK-MODEL
+
+- Outcome: completed bounded modeled-click comparison; partial reveal fallback queued A and diverged from no-click control.
+- Verified criteria: one visible EUR panel point at 150% and opening frame 37; same pre-click state, menu and shop absent, accepted fallback A, divergent recognition at sampled frames 40–71.
+- Evidence: `docs/changes/2026-11-02-model-action-reveal-click-fallback.json`; `target/u31-action-click-npL7Fp/run.log` and `result.json`; ROM and snapshot unchanged.
+- Limits: isolated interpreter and modeled desktop branch, not a window event or physical input; one point, scale and timing. Two compile failures corrected; three unused-code warnings.
+
+### U31-07-ANDROID-LIFECYCLE-SOURCE
+
+- Outcome: completed bounded source comparison of Android cartridge saving and upstream machine autosave lifecycle.
+- Verified criteria: compared fork and pinned upstream Kotlin lifecycle, JNI, engine, asynchronous writer, restore/reset and storage identity; identified differing `gbaSave` semantics and test/design implications.
+- Evidence: `docs/changes/2026-11-02-audit-android-autosave-lifecycle.json` and U31-07 audit/proposal.
+- Limits: static analysis only; no Android device, filesystem crash, state compatibility or recovery test. No design or runtime implementation approved.
+
+### U31-03-RECOGNIZED-MISS-COMPARISON
+
+- Outcome: completed bounded modeled comparison of recognized action-menu miss and upstream background guard.
+- Verified criteria: EUR frame 40 menu recognized, layout rejected in-view point, fork queued A and diverged from control; upstream guard expression rejects the recognized-menu case. ROM/snapshot unchanged.
+- Evidence: `docs/changes/2026-11-02-compare-upstream-menu-miss-guard.json`, `target/u31-menu-miss-KG2OUl/run.log` and `result.json`.
+- Limits: no actual window event or upstream runtime; partial reveal and cross-region remain unproven; seven unused-code warnings. Managed cleanup rejects U31 units; evidence retained.

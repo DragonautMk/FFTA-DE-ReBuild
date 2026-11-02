@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "compile-upstream-input-config-cargo",
+  "title": "Compile pinned upstream input configuration with Cargo",
+  "kind": "docs",
+  "platforms": [
+    "Linux isolated upstream workspace"
+  ],
+  "changes": [
+    "Record an offline locked Cargo compilation of the pinned upstream input configuration test target."
+  ],
+  "validation": [
+    "cargo test --locked --offline -p input-config --no-run succeeded in a temporary tree; two Linux dead-code warnings in directinput."
+  ],
+  "limitations": [
+    "Tests were not rerun; no application, Windows, GUI, audio or actual pacing acceptance."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-01-fast-forward.md"
+  ],
+  "references": [
+    "docs/To_DO/FFTARecomp_Upstream_v3_1_Analisi_Decisioni_v0_2.md"
+  ]
+}
