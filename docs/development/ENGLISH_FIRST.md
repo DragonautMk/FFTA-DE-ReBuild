@@ -48,3 +48,7 @@ English default product/tooling content, a compatible English-first memory
 workflow, preserved optional translations/provenance and relevant checks.
 No ROM exploration, dataset rebuild or benchmark is needed solely to translate
 documentation. Existing accepted evidence remains valid within its original scope.
+
+The [audit ledger](ENGLISH_FIRST_AUDIT.json) records reviewed file hashes, pending
+Markdown documents and remaining source areas. Its status remains partial until
+all maintained surfaces have been reviewed and the completion criteria above hold.

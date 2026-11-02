@@ -3,6 +3,58 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-02 — Record the partial senary compact OBJ runtime integration
+
+Type: docs. Platforms: EUR; Windows GNU test compilation recorded; runtime acceptance pending.
+
+**Changes**
+
+- Document two senary compact OBJ integration files omitted from change coverage in the original optimizations push range. The typed projection authenticates source spans, composes sparse bytes with prior-resource/ROM fallback and tracks bus/source-byte counters.
+- Document the explicitly ignored managed/native-read test: prior-resource preservation, sparse boundaries/mirrors, transactional tamper refusal and source-backed selector/fallback comparisons. Existing source is unchanged by this memory correction.
+
+**Validation**
+
+- Read-only review of both source diffs and the original failing CI range. Their current SHA256 hashes match target/rom-data-compact-obj-senary-runtime/selection.json source pins.
+- Existing build-result.json records Windows test compilation PASS, exit 0, no messages, executable SHA256 c4372b3c79df20e325950c5b4b1d5723828a6369bf06c180ac29f75a937830b8. This verifies compilation only; no runtime result.json exists in that unit. No build, Wine replay, fixture creation or ROM read performed for this correction.
+
+**Limitations**
+
+- Runtime publication/loader/composition acceptance and ordinary-use criteria remain open under ROMDATA-03-04-E105-SENARY-COMPACT-OBJ. Compiled ignored test source is not evidence it passed. Linux/USA/native Windows and performance remain unverified.
+- The earlier model record covers its accepted source/model tests, not these runtime criteria. Process ownership/current host activity is not inferred from the stale recorded build handle; no unrelated job was resumed, signaled or stopped.
+
+Documentation: [2026-11-01-model-european-compact-obj-sixth-root.json](docs/changes/2026-11-01-model-european-compact-obj-sixth-root.json), [TASK_HANDOFF.md](docs/development/TASK_HANDOFF.md).
+
+[Change record](docs/changes/2026-11-02-record-partial-senary-compact-obj-integration.json)
+
+## 2026-11-02 — Document the English-first foundation and restore CI change coverage
+
+Type: docs. Platforms: Both source trees; Python tooling on Linux; HTML interfaces checked in headless Chrome.
+
+**Changes**
+
+- Record the English-first policy, always-applied authoring rule, translated Android/menu/debug/tooling guides and compatible English operational-memory format introduced in b9c1a69. Legacy Italian memory aliases remain readable; duplicate aliases are rejected and immutable archive bytes are preserved.
+- Record English fixed UI for the local report homepage and code/UI/audio/recent-event report templates, including labels, search feedback, counts, unavailable states and date formatting. Captured data, optional locales, machine tokens and compatibility anchors retain identity.
+- Add the audit ledger already referenced by PROJECT_STATE, identifying reviewed file hashes and the complete pending Markdown list plus pending source areas. The whole-project translation goal remains partial. Restore documentation coverage of all English-first implementation paths rather than weaken the checker or bypass its original push-base range.
+
+**Validation**
+
+- GitHub run 41310848093/job124860696621 confirms Test memory tooling and bounded handoff pass; Check change documentation fails against MEMORY_BASE 35920d8192c0539d3b7b32bcbc2a14fd9070335d. Local comparison against preceding commit 3fec4eccc2386e8d02b2fbb2867e4e2fbf7f7236 independently reproduces the English-first record omission.
+- Five project-memory tests and eleven handoff tests passed on 2026-11-02. Earlier English/legacy migration verification preserved all 22 task IDs/states and exact archive bytes; local evidence target/english-first-project/handoff-migration.json.
+- Existing homepage checks passed at actual browser widths 1400 and 500: 12 groups, three quick links, English dates/counts, case-insensitive search, empty/reset, keyboard focus and no horizontal overflow. Screenshots inspected; report bytes/mtimes, literal tokens, escaping and Unicode/reserved relative links preserved. Eleven portable-package tests passed. Evidence target/english-first-project/report-home-results.json.
+- Existing public synthetic browser fixtures pass JavaScript parsing/execution and DOM interactions for code, UI, audio and recent-event templates. No guest frames, private game data or runtime build used; evidence target/english-first-project/runtime-reports/result.json.
+- Final repair checks pass with default coverage and both original bases 35920d8192c0539d3b7b32bcbc2a14fd9070335d and 3fec4eccc2386e8d02b2fbb2867e4e2fbf7f7236, plus handoff preservation and git diff --check. All 38 reviewed hashes and the 116-path pending Markdown inventory match; 15 translated heading hierarchies/legacy anchors preserved; 130 local links checked, with one unchanged historical ignored-APK reference unavailable locally. Evidence target/english-first-project/ci-repair-result.json.
+
+**Limitations**
+
+- Project-wide translation and audit are unfinished. Remaining technical/TODO guides, other reports, source-generated metadata, default runtime/console/script messages, comments and structured records require review. The ledger records this remaining scope explicitly.
+- The initial Chrome sandbox launch was blocked by setsockopt; successful local browser checks ran with approved host access. An optional Node syntax step was unavailable; actual Chrome parsing/execution supplied the JavaScript check. No new native Windows/Android/gameplay/IME/controller/performance acceptance is claimed.
+- The old failed workflow remains a historical failure until a corrected commit is published and checked. This documentation repair does not rerun its unchanged old commit or change CI/coverage requirements.
+- AndroidPort/docs/DIALOGUE_ROWS.md retains its pre-existing link to a historical ignored local APK that is absent in this checkout. This availability limit does not invalidate recorded checks or authorize rebuilding the old artifact.
+
+Documentation: [ENGLISH_FIRST.md](docs/development/ENGLISH_FIRST.md), [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json), [MEMORY_WORKFLOW.md](docs/development/MEMORY_WORKFLOW.md), [report_home.md](docs/report_home.md), [menu_clan_atlas.md](docs/menu_clan_atlas.md), [2026-11-02-record-partial-senary-compact-obj-integration.json](docs/changes/2026-11-02-record-partial-senary-compact-obj-integration.json).
+
+[Change record](docs/changes/2026-11-02-document-english-first-foundation-and-repair-ci-coverage.json)
+
 ## 2026-11-01 — Verify European compact OBJ fifth CLI
 
 Type: docs. Platforms: EUR; Wine.

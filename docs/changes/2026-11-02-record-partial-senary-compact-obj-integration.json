@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "record-partial-senary-compact-obj-integration",
+  "title": "Record the partial senary compact OBJ runtime integration",
+  "kind": "docs",
+  "platforms": [
+    "EUR; Windows GNU test compilation recorded; runtime acceptance pending"
+  ],
+  "changes": [
+    "Document two senary compact OBJ integration files omitted from change coverage in the original optimizations push range. The typed projection authenticates source spans, composes sparse bytes with prior-resource/ROM fallback and tracks bus/source-byte counters.",
+    "Document the explicitly ignored managed/native-read test: prior-resource preservation, sparse boundaries/mirrors, transactional tamper refusal and source-backed selector/fallback comparisons. Existing source is unchanged by this memory correction."
+  ],
+  "validation": [
+    "Read-only review of both source diffs and the original failing CI range. Their current SHA256 hashes match target/rom-data-compact-obj-senary-runtime/selection.json source pins.",
+    "Existing build-result.json records Windows test compilation PASS, exit 0, no messages, executable SHA256 c4372b3c79df20e325950c5b4b1d5723828a6369bf06c180ac29f75a937830b8. This verifies compilation only; no runtime result.json exists in that unit. No build, Wine replay, fixture creation or ROM read performed for this correction."
+  ],
+  "limitations": [
+    "Runtime publication/loader/composition acceptance and ordinary-use criteria remain open under ROMDATA-03-04-E105-SENARY-COMPACT-OBJ. Compiled ignored test source is not evidence it passed. Linux/USA/native Windows and performance remain unverified.",
+    "The earlier model record covers its accepted source/model tests, not these runtime criteria. Process ownership/current host activity is not inferred from the stale recorded build handle; no unrelated job was resumed, signaled or stopped."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data/runtime/compact_obj_animations_senary.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_senary_runtime_tests.rs"
+  ],
+  "references": [
+    "docs/changes/2026-11-01-model-european-compact-obj-sixth-root.json",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

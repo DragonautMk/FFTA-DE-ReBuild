@@ -1,0 +1,412 @@
+{
+  "schema": 1,
+  "task": "ENGLISH-FIRST-PROJECT",
+  "updated": "2026-11-02",
+  "status": "partial",
+  "objective": "English-first maintained documentation, comments, default UI, CLI, reports and tools across the root workspace and AndroidPort.",
+  "review_method": [
+    "Manual review/translation of the exact file versions below; hashes identify the reviewed bytes, not an automated proof of English.",
+    "Pending Markdown is a complete tracked Markdown inventory minus reviewed files and the immutable archive. Pending source areas still require full per-file review.",
+    "Search hits are heuristic candidates only. Zero hits or passing tooling checks cannot close the whole-project goal. New/changed files require renewed language review."
+  ],
+  "reviewed_files": [
+    {
+      "path": ".cursor/rules/english-first.mdc",
+      "sha256": "d532781c15857526d591f545fccc19038a59c845c6698994596599f249b42483",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": ".cursor/skills/ffta-debugging/SKILL.md",
+      "sha256": "fadee169159e9b621de34bde05c276111d06d12e8cf47746d13351f7ad6afdaa",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": ".cursor/skills/ffta-development/SKILL.md",
+      "sha256": "c0dfe5a3e74ec9722b17b73237cf81c7cd2362cfcc3d0d297c13eb737e12983c",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": ".cursor/skills/ffta-project-memory/SKILL.md",
+      "sha256": "055229ae7647d7577ee3b91465d5ed0ed9933ac1255538617bcf9e3397687db5",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": ".cursor/skills/ffta-windows-validation/SKILL.md",
+      "sha256": "9e1f5ee86015d6ac9cc95dbc0d782071d49060e34fde74ce4047440a61af2827",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "282f3367c9deb30cf707f6ba61daa877f58859259a8cebd90f3f842ed2ee544e",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "AndroidPort/README.md",
+      "sha256": "2d519050cc53bc43fc994230225781f99ed30657e83f782688c5a8c1a35ace94",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "AndroidPort/docs/DIALOGUE_PERFORMANCE.md",
+      "sha256": "1698a30899c16e252fb7942f4623482d8471c10ab07a8d4ed8e664b465c563a4",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "AndroidPort/docs/DIALOGUE_ROWS.md",
+      "sha256": "599ee71574c965dbfe95cfd3a8ff12f6a2e63c99fa9ff4c98ea030053db1a834",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "AndroidPort/docs/EXPERIMENTAL_TOUCH.md",
+      "sha256": "761b4d1a54d0d60640cdec0ab4937a2cf4dce92cd3b70812688fdd5124422dee",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "AndroidPort/docs/FRAME_OPTIMIZATION.md",
+      "sha256": "cf6d315a921bc2e1259bb38a52aa897f2a33164409d0235a7a6061b241996d0c",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "AndroidPort/docs/FRAME_SPIKES.md",
+      "sha256": "8f0a37e9491fd22aec0d73cf11c375671c76c786e65c3575fc97b84e3959a7d5",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "AndroidPort/docs/PERFORMANCE.md",
+      "sha256": "0bf9def65d505dbb91137dc4177139e38ecfd4cf44ee6999b73633c5967a50bf",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "AndroidPort/docs/URGENT_FIXES.md",
+      "sha256": "021370bc8261f99ef671018210cd339b63e63c36160e5678fd752ecc3bd69f12",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "crates/installer/README.md",
+      "sha256": "0826ba9331183685cb147758165da9e2fe59bd84ef00adba7d4fc8e8c6100d29",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "crates/recomp/src/debug_audio/report.html",
+      "sha256": "26b55d93bb5bc6862a7682dccf9bc54afbaa98713fa1f90b6992e7c15cd2f5be",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "crates/recomp/src/debug_code/report.html",
+      "sha256": "c87470b71b2f52f717a71ee111f4080c86ef5454af05c3bbbbd631f9b504fc00",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "crates/recomp/src/debug_recent/report.html",
+      "sha256": "c9d25fc458a46dd82c78cbbf5c2443abf9245381d52d1efa883fcabb0cd20862",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "crates/recomp/src/debug_ui/report.html",
+      "sha256": "6ccc555bc9881ab6638af87afc3d03a88294a699ade04d34dc7933c2984943c6",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "docs/android_docker.md",
+      "sha256": "032936e853ff50d16580d3b7cbdfb31b1dbd5c7caef98c1e5ba931b0ca484b08",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "docs/debug_audio.md",
+      "sha256": "367f49f1efeb5fff76d7311f9e157ad98703a97ba079713e12ecae461eb99045",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "docs/debug_code.md",
+      "sha256": "e581c6be6d437ddf687d1147a306a07d6dfe325348171bfafc02c67c4b6aa3b9",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "docs/debug_content.md",
+      "sha256": "99d8653faaa3ad2792116f0ddeadb935b31ec0e6398d78dfe88061159fa25de6",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "docs/debug_recent.md",
+      "sha256": "afc0fd849d09d7a5213ac244609aa05e533f9034203245483be530855fa573a2",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "docs/debug_ui.md",
+      "sha256": "0809c2977193a96efb439bd974e4dde87557635df4c5cec29b03564b5cc2d50f",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "docs/development/DEBUGGING_WORKFLOW.md",
+      "sha256": "27825228c7df6c511d374a077e7351c20312a3a642de320fdef7def4735a8abf",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "docs/development/ENGLISH_FIRST.md",
+      "sha256": "af6048eba8cac59490bede3b07f21e6b60bac3d09239dd765b3eade17eb0921c",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "docs/development/MEMORY_WORKFLOW.md",
+      "sha256": "8907f8e9383adb6d661bb820b83465c3cdf5ca05c74a7574b2edb80bb33fa583",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "docs/development/TASK_HANDOFF.md",
+      "sha256": "d8f7545f3b2c19a164bb1c40af490b70ff7ded77d46fb410b9eebac47ecea986",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "docs/menu_clan_atlas.md",
+      "sha256": "6519d3e1a2c6f43774aa7d5977f935bc219f207ba974ff994212372ba1441ef0",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "docs/menu_localization.md",
+      "sha256": "c123317752c281000704016d0a236666f1e6b2c50fa8556074794c6da045e8c2",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "docs/private_debug_assets.md",
+      "sha256": "141334ce8378b9877733bd324f04a9e421f2329ae3a1c68d0baa1d513904fd21",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "docs/report_home.md",
+      "sha256": "f407f4f37399c56d10cf88ed32391650886772d4070d8b53a307d325e861c333",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "scripts/README.md",
+      "sha256": "6c2b1e117052945cdbfae4a84a09b5e9fb937cc5855c0d19abf6f860b17286e1",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "scripts/report_home.html",
+      "sha256": "f8af8ac3adb5047026cc983eb698e793b80cfcfcb20b9a319e69df59ce1cbc30",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "scripts/report_home.py",
+      "sha256": "8821c3c4c68a00d66cb56aa1a4a2bb680c30800e78596e43f04470073b0ad845",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "scripts/task_handoff.py",
+      "sha256": "ceae04037e59ec86348db883a4582f98a15b03d492e889462c091e63e5b7f8df",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "scripts/tests/test_task_handoff.py",
+      "sha256": "e501a09ee5d09e6bc85f9626c8056f142bec571cb23e88cc8b788a5d3f57c30b",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    }
+  ],
+  "preserved_history": [
+    {
+      "path": "docs/development/TASK_COMPLETED_ARCHIVE.md",
+      "reason": "Append-only provenance archive; immutable legacy snapshot remains verbatim. Current operational handoff and new records use English.",
+      "snapshot_sha256": "85562ac0e8b146c2e51b819c8ba58054104274f37facc1aca425aea7a5edc57e",
+      "verification": "python3 scripts/task_handoff.py check"
+    }
+  ],
+  "pending_markdown": [
+    "AndroidPort/Licenses/ANDROID.md",
+    "AndroidPort/Licenses/CREDITS.md",
+    "AndroidPort/Licenses/README.md",
+    "AndroidPort/Licenses/THIRD_PARTY_NOTICES.md",
+    "AndroidPort/android/README.md",
+    "AndroidPort/android/TODO.md",
+    "BUILDING.md",
+    "CHANGELOG.md",
+    "Licenses/ANDROID.md",
+    "Licenses/CREDITS.md",
+    "Licenses/README.md",
+    "Licenses/THIRD_PARTY_NOTICES.md",
+    "README.md",
+    "TinyCC/README.md",
+    "android/README.md",
+    "android/TODO.md",
+    "docs/To_DO/CODEX_WEB_TODO.md",
+    "docs/To_DO/FFTARecomp_Menu_Atlante_del_Clan_SPEC.md",
+    "docs/architecture.md",
+    "docs/audio_controls.md",
+    "docs/cheats.md",
+    "docs/debug_artifacts.md",
+    "docs/debug_campaigns.md",
+    "docs/debug_captures.md",
+    "docs/debug_catalog.md",
+    "docs/debug_comparisons.md",
+    "docs/debug_control.md",
+    "docs/debug_diagnostics.md",
+    "docs/debug_events.md",
+    "docs/debug_gameplay.md",
+    "docs/debug_graphics.md",
+    "docs/debug_issues.md",
+    "docs/debug_operations.md",
+    "docs/debug_probes.md",
+    "docs/debug_recordings.md",
+    "docs/debug_replays.md",
+    "docs/debug_rom_audit.md",
+    "docs/debug_selector.md",
+    "docs/debug_sessions.md",
+    "docs/debug_tools.md",
+    "docs/desktop_android_eur.md",
+    "docs/desktop_live_video.md",
+    "docs/desktop_tinycc.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/development/GODOT_FRONTEND_TODO.md",
+    "docs/development/LOCAL_ARTIFACTS.md",
+    "docs/development/PERFORMANCE_TODO.md",
+    "docs/development/PERFORMANCE_WORKFLOW.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_COVERAGE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION.md",
+    "docs/development/debug saves.md",
+    "docs/development/todo2.md",
+    "docs/development/todo_bug_fix.md",
+    "docs/dialogue_layout.md",
+    "docs/directinput.md",
+    "docs/docker.md",
+    "docs/extended_saves.md",
+    "docs/fast_forward_audio.md",
+    "docs/ffta_action_frame_width.md",
+    "docs/ffta_bg_patch.md",
+    "docs/ffta_character_metric.md",
+    "docs/ffta_estado.md",
+    "docs/ffta_interaction_grid.md",
+    "docs/ffta_laws_layout.md",
+    "docs/ffta_mouse_battle.md",
+    "docs/ffta_mouse_frontend.md",
+    "docs/ffta_mouse_language.md",
+    "docs/ffta_mouse_pending_2026-10-17.md",
+    "docs/ffta_mouse_world.md",
+    "docs/ffta_movement_bg.md",
+    "docs/ffta_notice_confirmation.md",
+    "docs/ffta_notice_layout.md",
+    "docs/ffta_portrait_ears.md",
+    "docs/ffta_shared_save.md",
+    "docs/ffta_shop_bank_mouse.md",
+    "docs/ffta_spell_help_banner.md",
+    "docs/ffta_sprite_routines.md",
+    "docs/ffta_sprite_runtime.md",
+    "docs/ffta_switch_rom_picker.md",
+    "docs/ffta_usa_frontend_mouse.md",
+    "docs/ffta_usa_town_menus.md",
+    "docs/fps_overlay.md",
+    "docs/fullscreen.md",
+    "docs/labels.md",
+    "docs/launcher.md",
+    "docs/linux_gamepad_snapshots.md",
+    "docs/menu_shortcuts.md",
+    "docs/packaging.md",
+    "docs/portable.md",
+    "docs/release_audit.md",
+    "docs/restart_rom.md",
+    "docs/rom_data.md",
+    "docs/rom_data_audio.md",
+    "docs/rom_data_color_palettes.md",
+    "docs/rom_data_events.md",
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_graphics.md",
+    "docs/rom_data_indexed_graphics.md",
+    "docs/rom_data_maps.md",
+    "docs/rom_data_obj.md",
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_scripts.md",
+    "docs/rom_data_tasks.md",
+    "docs/rom_data_text.md",
+    "docs/rom_data_ui.md",
+    "docs/rom_data_ui_graphics.md",
+    "docs/rom_data_ui_palettes.md",
+    "docs/rom_data_ui_raw_transfers.md",
+    "docs/rom_data_unit_obj.md",
+    "docs/save_backups.md",
+    "docs/save_states.md",
+    "docs/windows_runtime_performance.md"
+  ],
+  "pending_source_areas": [
+    {
+      "area": "Remaining runtime report templates and their source-generated metadata",
+      "known_paths": [
+        "crates/recomp/src/debug_gameplay/report.html",
+        "crates/recomp/src/debug_issue/report.html",
+        "crates/recomp/src/debug_compare/report.html",
+        "crates/recomp/src/debug_graphics/report.html"
+      ],
+      "status": "pending"
+    },
+    {
+      "area": "Offline reports/exporters, CLI/help/errors and authored build messages",
+      "known_paths": [
+        "scripts/rom_coverage.html",
+        "scripts/rom_coverage.py",
+        "scripts/debug_campaign.html",
+        "scripts/debug_campaign.py",
+        "scripts/debug_artifacts.html",
+        "scripts/debug_artifacts.py",
+        "scripts/export_debug_assets.py",
+        "scripts/package_ffta_portable.py"
+      ],
+      "status": "pending"
+    },
+    {
+      "area": "Menu/console/runtime strings and comments in both source trees",
+      "known_paths": [
+        "crates/menu/",
+        "crates/recomp/",
+        "crates/installer/",
+        "AndroidPort/crates/",
+        "AndroidPort/android/",
+        "android/"
+      ],
+      "status": "pending; inspect full tracked source scope, not only known search hits"
+    },
+    {
+      "area": "Generated references and generators",
+      "known_paths": [
+        "docs/development/MENU_ATLAS_INVENTORY.json",
+        "scripts/menu_atlas_inventory.py",
+        "crates/recomp/src/debug_operations.json",
+        "crates/menu/assets/debug_v2.tsv",
+        "scripts/menu_atlas_tasks.py",
+        "docs/development/rom-coverage/index.html"
+      ],
+      "status": "pending; translate authoritative sources before regenerating outputs"
+    },
+    {
+      "area": "Structured change records and generated changelog",
+      "known_paths": [
+        "docs/changes/",
+        "CHANGELOG.md"
+      ],
+      "status": "pending language audit; do not rewrite immutable archive bytes"
+    },
+    {
+      "area": "Other tracked text, comments, tests, manifests, notices and build/CI files",
+      "known_paths": [
+        "crates/",
+        "AndroidPort/",
+        "scripts/",
+        "TinyCC/",
+        "Licenses/",
+        "tools/",
+        "Installer/",
+        ".github/"
+      ],
+      "status": "pending full inventory/classification; preserve actual upstream legal text and explicit locale/test/imported data, review project-authored prose"
+    }
+  ],
+  "next_actions": [
+    "CI memory coverage repair is closed; publish the reviewed correction when ready, then continue the remaining full-project scope.",
+    "Translate remaining technical/debug/development guides in bounded sections, preserving anchors, commands, IDs and validation limits.",
+    "Translate remaining report templates and dynamic default metadata, then console/tooling text and source comments across both trees.",
+    "Audit all remaining tracked natural-language surfaces and exceptions; reconcile changed hashes before deciding completion."
+  ],
+  "evidence_records": [
+    "docs/changes/2026-11-02-document-english-first-foundation-and-repair-ci-coverage.json",
+    "docs/changes/2026-11-02-record-partial-senary-compact-obj-integration.json"
+  ]
+}

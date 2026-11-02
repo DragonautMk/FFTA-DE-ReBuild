@@ -2,11 +2,10 @@
 
 ## Operational status
 
-Updated 2026-11-01. Latest request: continue the whole-project English-first
-goal. Selected `ENGLISH-FIRST-PROJECT`. The intervening Android request was
-already implemented and verified read-only; it did not advance this goal.
-Existing policy, guide translations and compatible memory-parser edits are
-partial work to validate and continue. No accepted ROM/runtime build resumed.
+Updated 2026-11-02. Whole-project English-first goal remains active and partial.
+The latest CI screenshot selected a documentation-coverage repair, now closed
+with checks against both original comparison bases. No ROM/runtime execution
+resumed. See the audit ledger for reviewed files and remaining translation scope.
 
 Read this entire file and its final handover, then only the relevant sections
 linked below. Do not automatically load the archive, full CHANGELOG,
@@ -26,17 +25,17 @@ termination of another owner's process or changing another thread's goal state.
 
 - State: active
 - Outcome: partial
-- Verified: English-first policy/rule and Android/menu/Docker/private-assets guide translations are in the working tree; parser accepts English and legacy memory fields, with 11 focused tests passing. Initial inventory found 53 document candidates and text in 18 Rust/7 Python/8 HTML/JSON/TSV files; it is heuristic, not a completeness proof. Existing Docker scripts/APK hashes were verified without rebuilding.
-- Missing: translate the remaining maintained documentation across both trees, default UI/console/report/script/comment text, and complete an audited inventory. Preserve optional translations and immutable historical evidence. No scope reduction to the initial guides.
-- Resume: verify the English handoff retains task IDs/states/evidence/limits and unchanged archive hashes; continue Android technical guides and remaining documentation/runtime surfaces in reviewable groups, recording acceptance and missing criteria.
+- Verified: b9c1a69 contains policy, translated guides, English/legacy memory parser, homepage and four report templates. CI repair adds records/CHANGELOG and ENGLISH_FIRST_AUDIT.json (38 reviewed files, 116 pending Markdown paths plus source areas). Five memory/11 handoff tests and coverage against original bases 35920d8192c0539d3b7b32bcbc2a14fd9070335d and 3fec4ec pass. Browser and 22-task/archive preservation evidence retained in target/english-first-project; repair archived as ENGLISH-FIRST-CI-MEMORY.
+- Missing: all remaining maintained guides across both trees, default UI/console/report/script/comment text, structured reference/record language and full per-file audit. Preserve optional locales, imported data and immutable history. This foundation is not whole-project completion.
+- Resume: choose pending guides or gameplay/issue/compare/graphics templates and dynamic metadata from ENGLISH_FIRST_AUDIT.json. Verify reviewed hashes; reuse unchanged accepted checks. Translation authorizes no ROM exploration or repeated builds.
 
 ### ROMDATA-03-04-E105-SENARY-COMPACT-OBJ
 
 - State: active
-- Outcome: not_started
-- Verified: source and 756-byte sparse model PASS under Wine, two spans and gap2; accepted e105 dataset has 95 resources.
-- Missing: publication, loader authentication and runtime composition preserving gaps, inputs and previous resources.
-- Resume: integration and tests written; isolated Windows build recorded as active in session 51589, logs in `target/rom-data-compact-obj-senary-runtime/`. Check its current handle/output/owner before acting; if PASS, use the prepared Wine test. Fallback81 verified statically, gap preserved.
+- Outcome: integrated_unverified
+- Verified: source/756-byte sparse model PASS Wine, two spans/gap2; e105 has 95 resources. Read-only CI repair found Windows test compilation PASS/exit0/no messages in build-result.json, with both integration hashes matching selection.json. This supersedes recorded build session51589's stale next action, not proof of host inactivity.
+- Missing: runtime acceptance of publication, loader authentication and composition preserving gaps, inputs and previous resources; no runtime result.json exists in the unit. Compiling an ignored test is not executing it.
+- Resume: only on a relevant ROM request, check owner/handle/output before prepared Wine runtime test. target/rom-data-compact-obj-senary-runtime retains evidence; fallback81 remains statically verified. Scope: docs/changes/2026-11-02-record-partial-senary-compact-obj-integration.json. No runtime work selected here.
 
 ### ROM-DATA-FULL-EUR
 
@@ -223,9 +222,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: ENGLISH-FIRST-PROJECT, active whole-project English-first goal.
-- Last verified result: existing policy and four translated guides inspected; English/legacy handoff parser passes 11 tests; Docker implementation and accepted APK hashes match.
-- Remaining work: remaining maintained documentation and default program/tooling text, project-wide audit and memory publication.
-- Errors or blockers: none; preserve optional translations, immutable archive bytes and unrelated task ownership.
-- Next action: verify handoff migration preservation, then translate remaining Android technical guides; do not resume ROM work or repeat accepted builds.
-- References: `docs/development/ENGLISH_FIRST.md`, `scripts/task_handoff.py`, `docs/menu_localization.md`, `docs/android_docker.md`, `AndroidPort/README.md`.
+- Task: ENGLISH-FIRST-PROJECT active/partial; ENGLISH-FIRST-CI-MEMORY closed.
+- Last verified result: repaired records/CHANGELOG pass original push-base checks 35920d8 and 3fec4ec; five memory/11 handoff tests pass. Audit ledger and prior browser evidence retained.
+- Remaining work: 116 pending Markdown documents and every pending source area in the ledger; whole-project completion unproven.
+- Errors or blockers: no local check blocker; the old remote run stays failed until the correction is published. Preserve unrelated ownership/history.
+- Next action: continue the next pending guide/report group; reuse accepted results and avoid unrelated ROM/build work. Current repair is ready for review/publication.
+- References: `docs/development/ENGLISH_FIRST_AUDIT.json`, `docs/changes/2026-11-02-document-english-first-foundation-and-repair-ci-coverage.json`, `target/english-first-project/`.
