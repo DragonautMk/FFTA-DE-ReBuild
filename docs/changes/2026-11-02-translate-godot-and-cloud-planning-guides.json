@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-godot-and-cloud-planning-guides",
+  "title": "Translate Godot and Codex Web planning guides",
+  "kind": "docs",
+  "platforms": [
+    "Cross-platform planning documentation"
+  ],
+  "changes": [
+    "Translate the deferred Godot frontend assessment and Codex Web roadmap into English while retaining checklist status, technical limits, task IDs, literal tokens, links and legacy heading anchors."
+  ],
+  "validation": [
+    "Compared ordered checkbox states and task IDs, literal backtick spans, link destinations and legacy anchors with both preimages; checked local Markdown link targets and git diff whitespace."
+  ],
+  "limitations": [
+    "Documentation translation only: neither Godot development nor cloud assignments were started or validated; project-wide English migration remains open."
+  ],
+  "files": [
+    "docs/development/GODOT_FRONTEND_TODO.md",
+    "docs/To_DO/CODEX_WEB_TODO.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

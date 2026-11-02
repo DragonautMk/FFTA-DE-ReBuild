@@ -41,6 +41,11 @@
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
     },
     {
+      "path": "AndroidPort/Cargo.toml",
+      "sha256": "6703eb303aa87c916af1468e34b5c1392417119e794aa99e88a4e2ddee874108",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
       "path": "AndroidPort/Licenses/ANDROID.md",
       "sha256": "d7b148093c8839d68c90a441cbbb1283e2dcd7295755e0271138745b274e7079",
       "scope": "English maintained entry/build/Android/license-guide prose reviewed in each tree; two Android TODOs translated with legacy anchors; legal text/commands/recorded limits otherwise unchanged; no legal or platform recertification"
@@ -69,6 +74,26 @@
       "path": "AndroidPort/android/TODO.md",
       "sha256": "ec15bd8039a66551a11d9f00174ca9fc180c57595a6e3ea9d70d6e7e93d6f86f",
       "scope": "English maintained entry/build/Android/license-guide prose reviewed in each tree; two Android TODOs translated with legacy anchors; legal text/commands/recorded limits otherwise unchanged; no legal or platform recertification"
+    },
+    {
+      "path": "AndroidPort/android/app/build.gradle.kts",
+      "sha256": "325d61483341c4824fc603c35a718326c7c9d30d861eecd674d6e73808264bfa",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/android/app/src/androidTest/java/com/fftarecomp/port/ExampleInstrumentedTest.kt",
+      "sha256": "e51de3173f2389300d61779c9d157c9e0be351943bdeed98ee630b6b96fc3064",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/android/app/src/androidTest/java/com/fftarecomp/port/GamepadDetectionTest.kt",
+      "sha256": "444d529cdefe693b91ded704baaf4e963046546a5182b0a7f999a6ae89c20469",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/android/app/src/androidTest/java/com/fftarecomp/port/TouchSelectionDeviceTest.kt",
+      "sha256": "95cbed7826683fd39fac88d7dadff69cb9162b5c210e14a1c9ddad07a36d07b5",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
     },
     {
       "path": "AndroidPort/android/app/src/main/AndroidManifest.xml",
@@ -156,6 +181,96 @@
       "scope": "Android-specific production source, default resources or authored build/benchmark tooling: natural-language strings and comments reviewed as English; game data, external text and machine tokens retained."
     },
     {
+      "path": "AndroidPort/android/app/src/test/java/com/fftarecomp/port/FrameMailboxTest.kt",
+      "sha256": "41e58fc0d26c3ecb86f6c2105da6e03bd55cdf9d1c375d5761c8dc490bfa1830",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/android/app/src/test/java/com/fftarecomp/port/GamepadTest.kt",
+      "sha256": "e05609a4dea3140b53592620f16ed8405f739cf57832ec5b057057f55028129d",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/android/app/src/test/java/com/fftarecomp/port/StartupPolicyTest.kt",
+      "sha256": "a3a136d112c0759fa3b3b7cadc4cdff69e5b1b3e4f029f99ecb306bf10f7fff2",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/android/app/src/test/java/com/fftarecomp/port/TouchLayoutTest.kt",
+      "sha256": "1158d3cdb87a91484530ae9db3f450812babec79be8cbd6fd383fe774b65de3b",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/android/app/src/test/java/com/fftarecomp/port/TouchSelectionTest.kt",
+      "sha256": "c9866e194c51769a61d6210cf69d33e9afb837570cd8c049ba369deebbdb3f52",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/android/app/src/test/java/com/fftarecomp/port/ViewAndInputTest.kt",
+      "sha256": "0ba008bd91d7095f48e25a4eaf390b0e0f0712d3d7d36c0738a26b29b051f4a1",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/android/build.gradle.kts",
+      "sha256": "3d131b51e2782442500c7d9375498b7561c4201b4de8a87a1145e1f76c27117c",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/android/gradle.properties",
+      "sha256": "369335745863cd079a7e79009f89bddabf039237d3a66d7af96ec9a5767e6f38",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/android/gradle/gradle-daemon-jvm.properties",
+      "sha256": "6c13aa5ba36690ccfbbb25a8807d01d98c15833e446d7ae82ddc726472cb8ef7",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/android/gradle/libs.versions.toml",
+      "sha256": "e4e295fdb2d8645a782f7e013cedb0d3cd7c917dba427b5e03d3f217e2bc914a",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/android/gradle/wrapper/gradle-wrapper.properties",
+      "sha256": "c2fb5f3000ca1b3d0a2708109cc2f53891a96f84f2d8a37f74d267b7ee7be49a",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/android/settings.gradle.kts",
+      "sha256": "30bac7fd1993b3def2f1777827cbf409cd19f5265dec4c0ebb1a5e4df864cc19",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/crates/armv4t/Cargo.toml",
+      "sha256": "65470772806f9b5672b5a3112a94619987098b2bc7a7588bca809bea740ed122",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/crates/armv4t/src/arm.rs",
+      "sha256": "701c0dbb1f5f9307f210d139ced592ffe7e95eabdfb144f3793f18a60fb82172",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/crates/armv4t/src/disasm.rs",
+      "sha256": "a93e42bf022214012f54393d43222b8bc0f6ea572480198ce93335054156a791",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/crates/armv4t/src/lib.rs",
+      "sha256": "978d2b764e25bc14b77d3d0069279cc8a06712532d6c759e923ebf847591853f",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/crates/armv4t/src/thumb.rs",
+      "sha256": "0b2ba93cee9144ee65b869a6fb33c8c5d85c6a3042e6f704899b488c9ae2cf1f",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/crates/gba-android/Cargo.toml",
+      "sha256": "b2554e2cf1c622ce6e3f3fe489060b4a64bbe970dd96907a28aab503dbe0e334",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
       "path": "AndroidPort/crates/gba-android/build.rs",
       "sha256": "fe238f23eb42dad626c69b960b5c9d0c721266f94119d7d59f8c2b40d749a97e",
       "scope": "Android-specific production source, default resources or authored build/benchmark tooling: natural-language strings and comments reviewed as English; game data, external text and machine tokens retained."
@@ -204,6 +319,46 @@
       "path": "AndroidPort/crates/gba-android/src/ui_layout.rs",
       "sha256": "af57bbd4ab878b63ee5a5ee4b2764e57b8685d6bcbd9051c133a502747b5910e",
       "scope": "Android-specific production source, default resources or authored build/benchmark tooling: natural-language strings and comments reviewed as English; game data, external text and machine tokens retained."
+    },
+    {
+      "path": "AndroidPort/crates/gba-core/Cargo.toml",
+      "sha256": "fd72339f667d61ef28ef4d2e589454fd643b7885fba3d74ce1a87d99069e0c0a",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/crates/recomp-core/Cargo.toml",
+      "sha256": "fda337ae33c12ba1d8c2c07f6648a76b1e0a4122a0dbaa27f0ade39675e93243",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/crates/recomp-core/src/analyze.rs",
+      "sha256": "e726d56bbcd7d14a5d25c71f90447ec5bdfe8fe8005be44ea33a5981fd519978",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/crates/recomp-core/src/build.rs",
+      "sha256": "e5508f4df39be1186e8345c142169efedca1354c9ddb713d9329333231f8d2e2",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/crates/recomp-core/src/emit.rs",
+      "sha256": "23f181cf0b77b48cc5ca9f28bab23a7a2461bd2d4e2dfc73a8f2beab33aca86e",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/crates/recomp-core/src/labels.rs",
+      "sha256": "ea477d39e95fa9d04116812732242d41cb63759f16de8682acdc52ac88011a54",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/crates/recomp-core/src/lib.rs",
+      "sha256": "b3de4f851f8078281e9b286455e359aa77e06f489d0b98162c17bde7c18b410f",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/crates/recomp-core/src/tcc.rs",
+      "sha256": "86e7d33105734d21489fe11694ec79c959b077c22a02f6e8101dc2e28d6c2fb5",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
     },
     {
       "path": "AndroidPort/docs/DIALOGUE_PERFORMANCE.md",
@@ -436,6 +591,11 @@
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
     },
     {
+      "path": "docs/To_DO/CODEX_WEB_TODO.md",
+      "sha256": "a6f2d254221f9a834e14934ef91ef8deb3c5f900526682c85b383e0202c7e3a3",
+      "scope": "Planning guide translated in English; task status, IDs, literal tokens, links and legacy heading anchors preserved; no development work authorized."
+    },
+    {
       "path": "docs/android_docker.md",
       "sha256": "032936e853ff50d16580d3b7cbdfb31b1dbd5c7caef98c1e5ba931b0ca484b08",
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
@@ -601,6 +761,11 @@
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
     },
     {
+      "path": "docs/development/GODOT_FRONTEND_TODO.md",
+      "sha256": "31de65fee9234de4e6ffa2c4b32e5fdeeb435095ee788684fae4b4484a246c46",
+      "scope": "Planning guide translated in English; task status, IDs, literal tokens, links and legacy heading anchors preserved; no development work authorized."
+    },
+    {
       "path": "docs/development/MEMORY_WORKFLOW.md",
       "sha256": "8907f8e9383adb6d661bb820b83465c3cdf5ca05c74a7574b2edb80bb33fa583",
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
@@ -612,7 +777,7 @@
     },
     {
       "path": "docs/development/TASK_HANDOFF.md",
-      "sha256": "2fa5fc2f47dcb22ff8a0a8f9f94af907a79f3380084f4e7aeb7fb5d5ec683832",
+      "sha256": "a2f87e17b59ec1ed967d37cfd11ce73a01a24e59643856cda5783ce7d0102413",
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
     },
     {
@@ -913,11 +1078,9 @@
     "AndroidPort/Licenses/THIRD_PARTY_NOTICES.md",
     "CHANGELOG.md",
     "Licenses/THIRD_PARTY_NOTICES.md",
-    "docs/To_DO/CODEX_WEB_TODO.md",
     "docs/To_DO/FFTARecomp_Menu_Atlante_del_Clan_SPEC.md",
     "docs/architecture.md",
     "docs/development/DEBUG_TOOLS_TODO.md",
-    "docs/development/GODOT_FRONTEND_TODO.md",
     "docs/development/LOCAL_ARTIFACTS.md",
     "docs/development/PERFORMANCE_TODO.md",
     "docs/development/PERFORMANCE_WORKFLOW.md",
@@ -988,7 +1151,7 @@
         "AndroidPort/android/",
         "android/"
       ],
-      "status": "Desktop consoles and selected catalog/reference presentations localized. Android-specific Kotlin/Rust frontend and default resources reviewed in English; shared Android core, tests, other desktop selectors and runtime strings remain pending."
+      "status": "Desktop consoles and selected catalog/reference presentations localized. Android-specific frontend, decoder/recompiler and Kotlin tests reviewed in English; shared Android gba-core, other desktop selectors and runtime strings remain pending."
     },
     {
       "area": "Generated references and generators",
@@ -1022,7 +1185,7 @@
         "Installer/",
         ".github/"
       ],
-      "status": "pending full inventory/classification; preserve actual upstream legal text and explicit locale/test/imported data, review project-authored prose"
+      "status": "Android Cargo/Gradle configuration reviewed; other tracked text still needs full inventory/classification. Preserve upstream legal text, explicit locale/test/imported data and the tracked legacy labels.rs.bak; review project-authored prose."
     }
   ],
   "next_actions": [
@@ -1057,6 +1220,8 @@
     "docs/changes/2026-11-02-translate-debug-checklist-and-reference.json",
     "docs/changes/2026-11-02-localize-cheat-catalog-and-refresh-language-build.json",
     "docs/changes/2026-11-02-localize-debug-save-catalog.json",
-    "docs/changes/2026-11-02-review-android-frontend-and-tooling-english.json"
+    "docs/changes/2026-11-02-review-android-frontend-and-tooling-english.json",
+    "docs/changes/2026-11-02-review-android-support-english.json",
+    "docs/changes/2026-11-02-translate-godot-and-cloud-planning-guides.json"
   ]
 }

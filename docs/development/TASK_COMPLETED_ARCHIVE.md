@@ -18300,3 +18300,17 @@ LOCAL-ARTIFACT-SWEEP-2026-10-31 — CLOSED. Latest request: clean residual proje
 - Verified criteria: reviewed natural-language production text/comments in 13 Kotlin, 10 Android-specific Rust, 6 Python and 4 XML files; inspected frontend defaults and authored tool output are English. All six Python sources parse and four XML files parse; selected source files have no worktree changes. Android guide corrected for USA/Europe selection, audio modes, gamepad remapping, English interface and actual port APK path.
 - Evidence: `docs/changes/2026-11-02-review-android-frontend-and-tooling-english.json`; exact hashes in `ENGLISH_FIRST_AUDIT.json` (178 reviewed, 42 Markdown pending).
 - Limits: no Android build, APK, device/emulator, ROM, save or performance test. No Android UI locale selector; shared core, tests and build metadata remain to review. Parent migration partial; concurrent todo2 edits preserved.
+
+### ENGLISH-FIRST-ANDROID-SUPPORT-AUDIT
+
+- Outcome: completed within the selected language-review scope.
+- Verified: 10 Android decoder/recompiler sources, 9 Kotlin tests and 12 build/configuration files have English authored text; selected TOML files parse and source files have no worktree diff. Machine tokens and the tracked legacy backup were preserved.
+- Evidence: `docs/changes/2026-11-02-review-android-support-english.json`; exact reviewed hashes in `docs/development/ENGLISH_FIRST_AUDIT.json`.
+- Limits: no build, tests, device, ROM or save; review does not validate technical accuracy. Shared Android gba-core and other cross-tree surfaces remain open.
+
+### ENGLISH-FIRST-PLANNING-GUIDES
+
+- Outcome: completed within the two selected planning guides.
+- Verified: translated deferred Godot assessment and Codex Web roadmap; ordered checkbox states, IDs, inline literal spans, link destinations, local links and legacy heading anchors checked against preimages.
+- Evidence: `docs/changes/2026-11-02-translate-godot-and-cloud-planning-guides.json`; reviewed hashes in `docs/development/ENGLISH_FIRST_AUDIT.json`.
+- Limits: documentation only; no Godot or cloud work performed. Broader English-first audit remains open.

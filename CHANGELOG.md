@@ -180,6 +180,26 @@ Type: docs. Platforms: project-wide.
 
 [Change record](docs/changes/2026-11-02-translate-historical-mouse-session-guide.json)
 
+## 2026-11-02 — Translate Godot and Codex Web planning guides
+
+Type: docs. Platforms: Cross-platform planning documentation.
+
+**Changes**
+
+- Translate the deferred Godot frontend assessment and Codex Web roadmap into English while retaining checklist status, technical limits, task IDs, literal tokens, links and legacy heading anchors.
+
+**Validation**
+
+- Compared ordered checkbox states and task IDs, literal backtick spans, link destinations and legacy anchors with both preimages; checked local Markdown link targets and git diff whitespace.
+
+**Limitations**
+
+- Documentation translation only: neither Godot development nor cloud assignments were started or validated; project-wide English migration remains open.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-godot-and-cloud-planning-guides.json)
+
 ## 2026-11-02 — Generate English portable and private-export instructions
 
 Type: changed. Platforms: Windows, Linux.
@@ -351,6 +371,26 @@ Type: docs. Platforms: project-wide.
 Documentation: [en.json](crates/input-config/languages/en.json).
 
 [Change record](docs/changes/2026-11-02-review-desktop-storage-build-guides-english.json)
+
+## 2026-11-02 — Review Android decoder and build support in English
+
+Type: docs. Platforms: Android source review; no device or build validation.
+
+**Changes**
+
+- Review maintained comments, diagnostics and other authored natural-language text in 10 decoder/recompiler Rust sources, 9 Kotlin tests and 12 Cargo/Gradle configuration files. The reviewed text is English; code, machine identifiers and test fixtures remain unchanged.
+
+**Validation**
+
+- Manually inspect selected comments, messages and configuration; parse selected TOML files with Python tomllib and confirm selected source files have no worktree diff.
+
+**Limitations**
+
+- No Android build, tests, device, ROM or save was used. The shared Android gba-core and other cross-tree files remain unreviewed; language review does not validate technical accuracy.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-review-android-support-english.json)
 
 ## 2026-11-02 — Review Android frontend and tooling in English
 

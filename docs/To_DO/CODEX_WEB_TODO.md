@@ -1,144 +1,181 @@
-# FFTARecomp — TODO per Codex Web
+<a id="fftarecomp--todo-per-codex-web"></a>
 
-**Stato:** pianificazione; nessuna voce è considerata completata solo perché presente in questo documento.  
-**Repository:** `DragonautMk/FFTARecomp`  
-**Branch di riferimento:** `decomp`  
-**Obiettivo:** sviluppare strumenti complementari alla ricompilazione e all'estrazione ROMDATA, attraverso incarichi cloud indipendenti e pull request revisionabili.
+# FFTARecomp — Codex Web TODO
 
-> **Istruzione per Codex Web:** questa è una roadmap, **non** un ordine di implementare tutto in una sola sessione. Scegli la prima unità aperta compatibile con il codice corrente, concludila e proponi una PR limitata a quell'unità. Prima di ogni incarico rileggi la branch aggiornata: lo stato locale di Codex può essere più avanzato di GitHub.
+**Status:** planning; no item is considered complete solely because it appears in this document.
 
-## 0. Confini del lavoro e regole obbligatorie
+**Repository:** `DragonautMk/FFTARecomp`
 
-- [ ] Leggere `AGENTS.md`, `README.md` e le istruzioni di sviluppo effettive della branch.
-- [ ] Consultare, in sola lettura, `docs/development/ROM_DATA_TODO.md`, `ROM_DATA_INVENTORY.md`, `TASK_HANDOFF.md`, `DEBUG_TOOLS_TODO.md` e i contratti delle famiglie interessate.
-- [ ] Individuare le funzionalità già implementate prima di progettare alternative: controllare anche `tools/`, `scripts/`, `docs/report_home.md` e i moduli esistenti.
-- [ ] Annotare il commit SHA di partenza, la branch e i file che si intendono modificare.
-- [ ] Creare una branch dedicata per **una sola** unità di lavoro; preparare una PR verso `decomp`, senza merge automatico.
-- [ ] Non modificare senza autorizzazione specifica: estrattori/decoder originali, `rom_data.rs`, lettori runtime, mappa delle sorgenti, manifest, revisione ROMDATA, algoritmi guest, ABI, salvataggi, codice di ricompilazione nativa e test di equivalenza già accettati.
-- [ ] Non modificare `TASK_HANDOFF.md` o le checklist condivise gestite dal lavoro locale; aggiornare soltanto la documentazione strettamente relativa alla PR e questa checklist quando il proprietario del progetto la integra.
-- [ ] Non caricare né committare ROM, BIOS, salvataggi, registrazioni, dump, dataset estratti, asset originali, cataloghi cheat privati o materiale di terzi non autorizzato.
-- [ ] Usare **fixture sintetiche** e riproducibili, con dati fittizi. Non richiedere che la ROM sia resa pubblica per sviluppare o testare uno strumento.
-- [ ] Non dichiarare «verificato sul gioco» ciò che è stato soltanto testato con dati sintetici; distinguere compilazione, test unitari, test con dataset reale e parità runtime.
-- [ ] Eseguire soltanto test pertinenti all'unità, senza campagne di performance o verifiche ROM/Wine già concluse dal Codex locale.
-- [ ] Evitare operazioni che cancellino dati dell'utente o riscrivano in modo implicito file esistenti. Output privati, separati e ignorati da Git.
+**Reference branch:** `decomp`
 
-## P0 — Prima attività consigliata: esploratore e wiki offline ROMDATA
+**Objective:** develop tools complementary to recompilation and ROMDATA extraction through independent cloud assignments and reviewable pull requests.
 
-**Scopo:** trasformare un dataset già estratto in una documentazione consultabile, senza interferire con l'estrazione. **Questa è la prima attività da proporre a Codex Web.**
+> **Instruction for Codex Web:** this is a roadmap, **not** an order to implement everything in one session. Choose the first open unit compatible with the current code, finish it and propose a PR limited to that unit. Before each assignment, reread the updated branch: local Codex state may be ahead of GitHub.
 
-### CW-01 — Analisi e contratto del generatore
+<a id="0-confini-del-lavoro-e-regole-obbligatorie"></a>
 
-- [ ] Ispezionare il manifest effettivo, gli schemi JSON/TOML e le identità/versioni documentate nella branch attuale.
-- [ ] Scegliere **una o due** famiglie con formato e relazioni sufficientemente verificati (per esempio oggetti e collegamenti), motivando la scelta; non partire necessariamente dagli ultimi record ancora opachi.
-- [ ] Definire una CLI indipendente e un modulo collocato in `tools/` o posizione equivalente già coerente con il repository.
-- [ ] Stabilire input, output, limiti dimensionali, comportamento su dati mancanti e modalità offline; non duplicare la logica di estrazione della ROM.
-- [ ] Scrivere un breve contratto: quali campi sono semanticamente verificati, quali sono meri identificativi e quali restano opachi.
+## 0. Work boundaries and mandatory rules
 
-**Chiusura:** documento tecnico breve con i file coinvolti, esempio sintetico, schema supportato e comando previsto; nessuna modifica al core.
+- [ ] Read `AGENTS.md`, `README.md` and the effective development instructions on the branch.
+- [ ] Consult `docs/development/ROM_DATA_TODO.md`, `ROM_DATA_INVENTORY.md`, `TASK_HANDOFF.md`, `DEBUG_TOOLS_TODO.md` and the relevant family contracts read-only.
+- [ ] Identify features already implemented before designing alternatives: also check `tools/`, `scripts/`, `docs/report_home.md` and existing modules.
+- [ ] Record the starting commit SHA, branch and files to be changed.
+- [ ] Create a dedicated branch for **one** work unit; prepare a PR against `decomp`, without automatic merge.
+- [ ] Do not change without specific authorization: original extractors/decoders, `rom_data.rs`, runtime readers, source map, manifest, ROMDATA revision, guest algorithms, ABI, saves, native recompilation code and already accepted equivalence tests.
+- [ ] Do not change `TASK_HANDOFF.md` or shared checklists managed by local work; update only documentation directly related to the PR and this checklist when the project owner integrates it.
+- [ ] Do not upload or commit ROMs, BIOS, saves, recordings, dumps, extracted datasets, original assets, private cheat catalogs or unauthorized third-party material.
+- [ ] Use reproducible **synthetic fixtures** with fictitious data. Do not require the ROM to be made public to develop or test a tool.
+- [ ] Do not call something “verified on the game” when tested only with synthetic data; distinguish compilation, unit tests, real-dataset tests and runtime parity.
+- [ ] Run only tests relevant to the unit, without performance campaigns or ROM/Wine checks already completed by local Codex.
+- [ ] Avoid operations that delete user data or implicitly rewrite existing files. Keep private outputs separate and ignored by Git.
 
-### CW-02 — MVP wiki statica
+<a id="p0--prima-attività-consigliata-esploratore-e-wiki-offline-romdata"></a>
 
-- [ ] Leggere e validare un dataset locale già estratto, senza accesso alla ROM.
-- [ ] Generare una homepage HTML statica e un indice delle famiglie effettivamente presenti.
-- [ ] Generare schede consultabili per le famiglie selezionate con ID stabili, campi documentati e riferimenti incrociati **solo quando realmente dimostrati**.
-- [ ] Aggiungere ricerca/filtro locale, collegamenti navigabili e un'indicazione visibile dei campi sconosciuti o incompleti.
-- [ ] Riportare provenienza, versione e hash del dataset, distinguendoli dalla versione del generatore.
-- [ ] Escape di ogni stringa inserita nell'HTML; proteggere da path traversal, link non sicuri, JSON malformato e file troppo grandi.
-- [ ] Nessun caricamento online, telemetria, CDN o dipendenza remota necessaria per consultare l'output.
-- [ ] Preparare test con fixture sintetiche, inclusi casi di errore e relazioni mancanti.
-- [ ] Documentare un comando d'uso su Windows e Linux, output previsto e limiti.
+## P0 — Recommended first activity: offline ROMDATA explorer and wiki
 
-**Chiusura:** sito HTML generato localmente dalle fixture, pagine navigabili, test superati, nessun asset originale nel commit. Il test con dati reali **resta da fare in locale**.
+**Purpose:** turn an already extracted dataset into browsable documentation without interfering with extraction. **This is the first activity to propose to Codex Web.**
 
-### CW-03 — Estensione futura della wiki (non automatica)
+<a id="cw-01--analisi-e-contratto-del-generatore"></a>
 
-- [ ] Aggiungere progressivamente missioni, unità, incontri, lavori, abilità, mappe e script **solo quando i relativi schemi e collegamenti sono comprovati**.
-- [ ] Distinguere `identificato`, `integrato nel runtime`, `osservato in un test mirato` e `osservato in gameplay ordinario`.
-- [ ] Collegare eventuali evidenze e source offset senza inventare significati dei campi.
-- [ ] Supportare modifiche di schema e dataset incompleti con messaggi espliciti, senza correggerli silenziosamente.
-- [ ] Consentire esportazioni tabellari (CSV/JSON) senza alterare il dataset sorgente.
+### CW-01 — Generator analysis and contract
 
-**Chiusura:** una PR per ciascuna estensione; test per nuove famiglie e retrocompatibilità verificata su fixture precedenti.
+- [ ] Inspect the actual manifest, JSON/TOML schemas and documented identities/versions on the current branch.
+- [ ] Choose **one or two** families with sufficiently verified formats and relationships (for example objects and links), explaining the choice; do not necessarily start with the latest still opaque records.
+- [ ] Define an independent CLI and a module in `tools/` or an equivalent location already consistent with the repository.
+- [ ] Establish input, output, size limits, behavior on missing data and offline operation; do not duplicate ROM extraction logic.
+- [ ] Write a short contract: which fields are semantically verified, which are identifiers only and which remain opaque.
 
-## P1 — Esportazione degli asset (strumenti separati)
+**Completion:** short technical document with involved files, a synthetic example, supported schema and proposed command; no core changes.
 
-### CW-04 — Convertitore grafico offline
+<a id="cw-02--mvp-wiki-statica"></a>
 
-- [ ] Studiare i decoder effettivamente presenti (`obj_graphics`, `bg_graphics`, palette, font, animazioni) e documentare ciò che è già ricostruibile senza indovinare layout o trasparenza.
-- [ ] Creare conversioni pure, verificabili su tile/palette **sintetiche**, per i formati supportati e realmente dimostrati.
-- [ ] Generare PNG e metadati di provenienza soltanto quando la combinazione tile + palette + layout è definita con certezza.
-- [ ] Preservare gli indici palette, i colori e i riferimenti originali in un file metadati; non sostituire i dati ROMDATA con PNG.
-- [ ] Gestire errori, indici fuori intervallo, dimensioni anomale e trasparenza non dimostrata senza assumere valori arbitrari.
-- [ ] Tenere spritesheet e ricostruzione delle animazioni come estensioni successive, con frame/timing verificati separatamente.
+### CW-02 — Static wiki MVP
 
-**Chiusura:** fixture grafiche sintetiche convertite con pixel esatti e test automatici; nessuna affermazione di copertura completa degli sprite del gioco.
+- [ ] Read and validate an already extracted local dataset without ROM access.
+- [ ] Generate a static HTML homepage and an index of the families actually present.
+- [ ] Generate browsable pages for selected families with stable IDs, documented fields and cross-references **only when actually demonstrated**.
+- [ ] Add local search/filtering, navigable links and a visible indication of unknown or incomplete fields.
+- [ ] Report dataset provenance, version and hash, distinguishing them from the generator version.
+- [ ] Escape every string inserted into HTML; protect against path traversal, unsafe links, malformed JSON and oversized files.
+- [ ] No online uploads, telemetry, CDN or remote dependency required to browse the output.
+- [ ] Prepare tests with synthetic fixtures, including errors and missing relationships.
+- [ ] Document a usage command for Windows and Linux, expected output and limitations.
 
-### CW-05 — Convertitore audio offline
+**Completion:** HTML site generated locally from fixtures, navigable pages, passing tests, no original assets in the commit. Real-data testing **remains to be done locally**.
 
-- [ ] Studiare i campioni PCM e i relativi parametri realmente decodificati in `audio_tones`.
-- [ ] Esportare WAV da campioni sintetici con frequenza, signedness, lunghezza e canali esplicitamente definiti.
-- [ ] Preservare in metadati gli eventuali loop e riferimenti a strumenti/toni.
-- [ ] Non chiamare «brano completo» un campione isolato; il rendering delle sequenze M4A richiede un lavoro e una validazione specifici.
-- [ ] Verificare forma d'onda, intestazioni WAV e dimensioni con test deterministici.
+<a id="cw-03--estensione-futura-della-wiki-non-automatica"></a>
 
-**Chiusura:** un convertitore WAV per il sottoinsieme dimostrato, documentato e testato su fixture sintetiche.
+### CW-03 — Future wiki extension (not automatic)
 
-## P1 — Fondamenta del catalogo cheat, senza modifiche live alla memoria
+- [ ] Progressively add missions, units, encounters, jobs, abilities, maps and scripts **only when their schemas and links are proven**.
+- [ ] Distinguish `identificato` (identified), `integrato nel runtime` (integrated into the runtime), `osservato in un test mirato` (observed in a targeted test) and `osservato in gameplay ordinario` (observed in ordinary gameplay).
+- [ ] Link available evidence and source offsets without inventing field meanings.
+- [ ] Support schema changes and incomplete datasets with explicit messages, without silently correcting them.
+- [ ] Allow tabular exports (CSV/JSON) without changing the source dataset.
 
-### CW-06 — Catalogo e modello dei cheat
+**Completion:** one PR per extension; tests for new families and backwards compatibility verified against earlier fixtures.
 
-- [ ] Esaminare soltanto l'interfaccia pubblica e i contratti disponibili; **non** importare nel cloud il catalogo locale privato di codici raccolti da terzi.
-- [ ] Definire un modello versionato di voci cheat con nome, descrizione, regione, formato, provenienza, requisiti e stato di verifica.
-- [ ] Distinguere codici di semplice scrittura, codici condizionali, formati specifici dei dispositivi e master code; non trattarli tutti come indirizzo/valore.
-- [ ] Realizzare ricerca, filtri, import/export e parsing limitato con codici completamente sintetici.
-- [ ] Rifiutare codici non supportati o ambigui; niente esecuzione di espressioni arbitrarie o script forniti dal catalogo.
-- [ ] Produrre un prototipo di interfaccia o CLI riutilizzabile, **senza** abilitare scritture RAM/ROM nel runtime.
-- [ ] Documentare il contratto futuro con sessioni isolate, replay, audit e provenienza delle modifiche.
+<a id="p1--esportazione-degli-asset-strumenti-separati"></a>
 
-**Chiusura:** catalogo e parser con test positivi/negativi, nessuna modifica allo stato guest. L'eventuale motore di cheat e il menu in-game richiedono successiva integrazione **locale**, con test di parità interprete/native e log dei write deterministici.
+## P1 — Asset export (separate tools)
 
-## P2 — Report e qualità del progetto
+<a id="cw-04--convertitore-grafico-offline"></a>
 
-### CW-07 — Report diagnostici unificati
+### CW-04 — Offline graphics converter
 
-- [ ] Verificare prima ciò che esiste già in `docs/report_home.md`, negli strumenti DBG e nel relativo HTML/generatore; **non creare un secondo indice duplicato**.
-- [ ] Individuare una sola lacuna circoscritta (ad es. esportazione di un riepilogo leggibile, filtro di identità, collegamento a report esistenti).
-- [ ] Estendere l'implementazione esistente soltanto se l'intervento è indipendente dal runtime e provabile con report JSON sintetici.
-- [ ] Mostrare chiaramente `pass`, `divergente`, `non eseguito`, `parziale`, `troncato` e `incompatibile` senza promuovere automaticamente una prova.
-- [ ] Mantenere privati i percorsi locali e gli allegati di gioco; nessun caricamento automatico.
+- [ ] Study the decoders actually present (`obj_graphics`, `bg_graphics`, palettes, fonts, animations) and document what can already be reconstructed without guessing layout or transparency.
+- [ ] Create pure conversions verifiable against **synthetic** tiles/palettes for supported, actually demonstrated formats.
+- [ ] Generate PNGs and provenance metadata only when the tile + palette + layout combination is established with certainty.
+- [ ] Preserve original palette indices, colors and references in a metadata file; do not replace ROMDATA with PNGs.
+- [ ] Handle errors, out-of-range indices, unusual dimensions and unproven transparency without arbitrary assumptions.
+- [ ] Keep spritesheets and animation reconstruction as later extensions, with frames/timing verified separately.
 
-**Chiusura:** una piccola PR con test di parsing/HTML e output offline verificato.
+**Completion:** synthetic graphics fixtures converted with exact pixels and automated tests; no claim of complete coverage of game sprites.
 
-### CW-08 — Test di robustezza e integrazione continua
+<a id="cw-05--convertitore-audio-offline"></a>
 
-- [ ] Identificare una lacuna effettiva nella copertura di test del nuovo tool, non ripetere test ROMDATA già accettati.
-- [ ] Aggiungere fixture sintetiche di input valido, troncato, incoerente, ostile e versioni incompatibili.
-- [ ] Creare comandi automatici riproducibili che non richiedano ROM, Wine, BIOS, dati privati né servizi esterni.
-- [ ] Se utile, aggiungere CI limitata ai nuovi tool, con permessi minimi e senza pubblicare artefatti di gioco.
-- [ ] Documentare i limiti delle verifiche cloud rispetto ai test reali locali.
+### CW-05 — Offline audio converter
 
-**Chiusura:** esecuzione cloud riproducibile, test verdi e log non contenenti dati di gioco.
+- [ ] Study the PCM samples and related parameters actually decoded in `audio_tones`.
+- [ ] Export WAV from synthetic samples with explicitly defined rate, signedness, length and channels.
+- [ ] Preserve any loops and instrument/tone references in metadata.
+- [ ] Do not call an isolated sample a “complete track”; rendering M4A sequences requires dedicated work and validation.
+- [ ] Verify waveform, WAV headers and sizes with deterministic tests.
 
-## Flusso operativo obbligatorio per ogni incarico
+**Completion:** a WAV converter for the demonstrated subset, documented and tested with synthetic fixtures.
 
-1. [ ] **Rilettura:** aggiornare la branch di base, leggere i contratti e controllare che nessun'altra modifica abbia già completato l'incarico.
-2. [ ] **Piano breve:** proporre soluzione minima, file toccati, dipendenze e test; se l'unità richiede di modificare ROMDATA/core/ABI, fermarsi e segnalarlo invece di farlo implicitamente.
-3. [ ] **Implementazione circoscritta:** lavorare su una branch dedicata con modifiche minime, senza riformattazioni di massa.
-4. [ ] **Verifica:** eseguire unit test e casi negativi con fixture sintetiche; controllare diff, file non previsti e artefatti generati.
-5. [ ] **Documentazione:** scrivere comando d'uso, esempi fittizi, limiti e attività riservate al test locale.
-6. [ ] **Consegna:** creare una PR verso `decomp` con riepilogo, file cambiati, risultati test, rischi, verifiche non eseguite e istruzioni per testare su un dataset reale **senza committarlo**.
-7. [ ] **Integrazione locale:** dopo revisione, testare sul computer con i dati privati; fare merge solo quando compatibile con l'estrazione in corso.
+<a id="p1--fondamenta-del-catalogo-cheat-senza-modifiche-live-alla-memoria"></a>
 
-## Ordine di esecuzione consigliato
+## P1 — Cheat catalog foundations, without live memory changes
 
-1. **CW-01 → CW-02:** primo esploratore/wiki offline ROMDATA. *(Avviare da qui.)*
-2. **CW-04 oppure CW-05:** esportatore grafico o audio isolato; scegliere quello con contratto più completo.
-3. **CW-06:** modello e catalogo cheat, senza manipolazione runtime nel cloud.
-4. **CW-07:** solo una lacuna reale dei report esistenti.
-5. **CW-03/CW-08:** estensioni wiki e test/CI per i tool già nati.
+<a id="cw-06--catalogo-e-modello-dei-cheat"></a>
 
-**Non avviare più incarichi concorrenti sugli stessi file.** Non sostituire il lavoro locale di estrazione con una nuova analisi ROM non supportata da test reali.
+### CW-06 — Cheat catalog and model
 
-## Prima richiesta da incollare in Codex Web
+- [ ] Examine only the public interface and available contracts; **do not** import the private local catalog of third-party codes into the cloud.
+- [ ] Define a versioned model of cheat entries with name, description, region, format, provenance, requirements and verification status.
+- [ ] Distinguish simple write codes, conditional codes, device-specific formats and master codes; do not treat them all as address/value pairs.
+- [ ] Implement search, filters, import/export and limited parsing with entirely synthetic codes.
+- [ ] Reject unsupported or ambiguous codes; do not execute arbitrary expressions or catalog-provided scripts.
+- [ ] Produce a reusable interface or CLI prototype **without** enabling RAM/ROM writes in the runtime.
+- [ ] Document the future contract with isolated sessions, replay, auditing and change provenance.
 
-> Leggi `CODEX_WEB_TODO.md` e `AGENTS.md` nella branch `decomp` di `DragonautMk/FFTARecomp`. Esegui **solo CW-01**, il contratto e l'architettura minima dell'esploratore/wiki ROMDATA; analizza gli schemi reali prima di scegliere le prime famiglie. Non toccare gli estrattori, il runtime o le checklist del Codex locale. Usa esclusivamente dati sintetici e prepara una pull request separata con il piano e le verifiche possibili nell'ambiente cloud. Non procedere autonomamente alle unità successive.
+**Completion:** catalog and parser with positive/negative tests, no guest state changes. Any cheat engine and in-game menu require subsequent **local** integration with interpreter/native parity tests and deterministic write logs.
+
+<a id="p2--report-e-qualità-del-progetto"></a>
+
+## P2 — Reports and project quality
+
+<a id="cw-07--report-diagnostici-unificati"></a>
+
+### CW-07 — Unified diagnostic reports
+
+- [ ] First check what already exists in `docs/report_home.md`, DBG tools and their HTML/generator; **do not create a second duplicate index**.
+- [ ] Identify a single bounded gap (e.g. readable summary export, identity filter, links to existing reports).
+- [ ] Extend the existing implementation only if the change is independent of the runtime and testable with synthetic JSON reports.
+- [ ] Clearly show `pass`, `divergente` (divergent), `non eseguito` (not run), `parziale` (partial), `troncato` (truncated) and `incompatibile` (incompatible) without automatically promoting evidence.
+- [ ] Keep local paths and game attachments private; no automatic upload.
+
+**Completion:** a small PR with parsing/HTML tests and verified offline output.
+
+<a id="cw-08--test-di-robustezza-e-integrazione-continua"></a>
+
+### CW-08 — Robustness tests and continuous integration
+
+- [ ] Identify a real test coverage gap in the new tool; do not repeat accepted ROMDATA tests.
+- [ ] Add synthetic fixtures for valid, truncated, inconsistent and hostile input and incompatible versions.
+- [ ] Create reproducible automated commands requiring no ROM, Wine, BIOS, private data or external services.
+- [ ] If useful, add CI limited to the new tools, with minimum permissions and without publishing game artifacts.
+- [ ] Document the limits of cloud checks relative to real local tests.
+
+**Completion:** reproducible cloud execution, passing tests and logs without game data.
+
+<a id="flusso-operativo-obbligatorio-per-ogni-incarico"></a>
+
+## Mandatory workflow for each assignment
+
+1. [ ] **Reread:** update the base branch, read contracts and check that no other change has already completed the assignment.
+2. [ ] **Short plan:** propose a minimal solution, touched files, dependencies and tests; if the unit requires ROMDATA/core/ABI changes, stop and report that instead of changing them implicitly.
+3. [ ] **Bounded implementation:** work on a dedicated branch with minimal changes, without mass reformatting.
+4. [ ] **Verification:** run unit tests and negative cases with synthetic fixtures; check the diff, unexpected files and generated artifacts.
+5. [ ] **Documentation:** write a usage command, fictitious examples, limits and tasks reserved for local testing.
+6. [ ] **Delivery:** create a PR against `decomp` with a summary, changed files, test results, risks, checks not run and instructions to test a real dataset **without committing it**.
+7. [ ] **Local integration:** after review, test on the computer with private data; merge only when compatible with ongoing extraction.
+
+<a id="ordine-di-esecuzione-consigliato"></a>
+
+## Recommended execution order
+
+1. **CW-01 → CW-02:** first offline ROMDATA explorer/wiki. *(Start here.)*
+2. **CW-04 or CW-05:** isolated graphics or audio exporter; choose the one with the more complete contract.
+3. **CW-06:** cheat model and catalog, without cloud runtime manipulation.
+4. **CW-07:** only a real gap in existing reports.
+5. **CW-03/CW-08:** wiki extensions and tests/CI for tools already created.
+
+**Do not start concurrent assignments on the same files.** Do not replace local extraction work with new ROM analysis unsupported by real tests.
+
+<a id="prima-richiesta-da-incollare-in-codex-web"></a>
+
+## First request to paste into Codex Web
+
+> Read `CODEX_WEB_TODO.md` and `AGENTS.md` on the `decomp` branch of `DragonautMk/FFTARecomp`. Perform **only CW-01**, the contract and minimum architecture for the ROMDATA explorer/wiki; analyze the actual schemas before selecting the first families. Do not touch extractors, the runtime or local Codex checklists. Use only synthetic data and prepare a separate pull request with the plan and checks possible in the cloud environment. Do not proceed autonomously to later units.

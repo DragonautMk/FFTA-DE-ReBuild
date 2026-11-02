@@ -1,152 +1,174 @@
-# Valutazione e TODO — frontend Godot 4
+<a id="valutazione-e-todo--frontend-godot-4"></a>
 
-Aggiornato il 26 ottobre 2026. **Solo pianificazione; sviluppo rinviato.**
-La priorità resta terminare l'estrazione della ROM e il relativo consumo dei
-dati nel runtime. Questo documento non autorizza build, installazioni, refactor
-o prototipi. La bozza iniziale di codice è stata rimossa su richiesta utente.
+# Assessment and TODO — Godot 4 frontend
 
-## Valutazione
+Updated October 26, 2026. **Planning only; development deferred.** The priority
+remains completing ROM extraction and consumption of the resulting data in the
+runtime. This document does not authorize builds, installations, refactoring or
+prototypes. The initial code draft was removed at the user's request.
 
-Godot è un candidato ragionevole per finestra, menu, navigazione con controller,
-layout e presentazione. Rust dovrebbe continuare a gestire CPU, memoria,
-clock guest, ricompilazione, dati estratti e salvataggi. Cambiare il frontend
-non richiede riscrivere il gioco come scene Godot né importare nuovamente tutti
-gli asset estratti attraverso un secondo decoder.
+<a id="valutazione"></a>
 
-Il vantaggio atteso è la facilità di sviluppo dell'interfaccia. Non è ancora
-dimostrato un vantaggio di velocità o latenza rispetto al frontend attuale.
-I costi da valutare saranno trasferimento dei frame, sincronizzazione audio,
-gestione dell'input e distribuzione dell'engine insieme all'estensione.
+## Assessment
 
-La raccomandazione è **finire prima il lavoro ROM, poi valutare una prova
-circoscritta**, senza impegnarsi ora in una migrazione completa.
+Godot is a reasonable candidate for the window, menus, controller navigation,
+layout and presentation. Rust should continue to manage the CPU, memory, guest
+clock, recompilation, extracted data and saves. Changing the frontend does not
+require rewriting the game as Godot scenes or reimporting all extracted assets
+through a second decoder.
 
-## Situazione del codice
+The expected benefit is easier interface development. A speed or latency
+advantage over the current frontend has not been demonstrated. Costs to assess
+include frame transfer, audio synchronization, input handling and distribution
+of the engine with the extension.
 
-- [Machine](../../crates/gba-core/src/machine.rs) è già un'interfaccia di
-  libreria utilizzabile per esecuzione interpretata e stato della macchina.
-- [recomp-core](../../crates/recomp-core/src/lib.rs) espone analisi e
-  compilazione; questo non equivale a esporre tutto il runtime di gioco.
-- Il dispatch misto nativo/interprete è ancora una funzione privata in
-  [main.rs](../../crates/recomp/src/main.rs), richiamata dal ciclo di
-  [play.rs](../../crates/recomp/src/play.rs). Quest'ultimo coordina anche input,
-  audio, presentazione, pause e scrittura della memoria cartuccia.
-- Preparazione e caricamento del dataset sono nel modulo dell'applicazione
-  [rom_data.rs](../../crates/recomp/src/rom_data.rs). Il futuro frontend deve
-  riutilizzarne identità, controlli e owner immutabili.
-- Gli [snapshot core](../../crates/gba-core/src/save_state.rs) sono distinti
-  dagli [slot desktop](../../crates/recomp/src/save_state.rs), che aggiungono
-  anteprima, scritture atomiche e Undo. Collegare soltanto Machine non porta
-  automaticamente queste funzioni in Godot.
+The recommendation is to **finish the ROM work first, then assess a limited
+trial**, without committing to a complete migration now.
 
-Quindi una prova con interprete è possibile senza rifare l'architettura nativa.
-Un frontend che mantenga anche la ricompilazione e tutte le funzioni desktop
-richiede prima un confine runtime riutilizzabile. Questo è il requisito
-architetturale principale, non una limitazione di GDExtension.
+<a id="situazione-del-codice"></a>
 
-## Prerequisiti e ordine
+## Current code
 
-### GD-00 — Valutazione preliminare
+- [Machine](../../crates/gba-core/src/machine.rs) is already a usable library
+  interface for interpreted execution and machine state.
+- [recomp-core](../../crates/recomp-core/src/lib.rs) exposes analysis and
+  compilation; this does not expose the entire game runtime.
+- Mixed native/interpreter dispatch is still a private function in
+  [main.rs](../../crates/recomp/src/main.rs), called by the loop in
+  [play.rs](../../crates/recomp/src/play.rs). The latter also coordinates input,
+  audio, presentation, pause and cartridge memory writes.
+- Dataset preparation and loading live in the application module
+  [rom_data.rs](../../crates/recomp/src/rom_data.rs). A future frontend must
+  reuse its identity, checks and immutable owners.
+- [Core snapshots](../../crates/gba-core/src/save_state.rs) differ from
+  [desktop slots](../../crates/recomp/src/save_state.rs), which add previews,
+  atomic writes and Undo. Connecting Machine alone does not automatically bring
+  those features to Godot.
 
-- [x] Individuare il core riutilizzabile e le parti ancora legate all'eseguibile.
-- [x] Distinguere prova del collegamento e sostituzione completa del frontend.
-- [x] Registrare il rinvio ed eliminare lo scheletro di implementazione iniziato.
+An interpreter trial is therefore possible without redoing the native
+architecture. A frontend that also preserves recompilation and all desktop
+features first needs a reusable runtime boundary. This is the main architectural
+requirement, not a GDExtension limitation.
 
-### GD-01 — Concludere il lavoro ROM prima dello sviluppo Godot
+<a id="prerequisiti-e-ordine"></a>
 
-- [ ] Chiudere l'ambito EUR concordato di inventario, estrazione/decodifica,
-  preparazione, consumo diretto e verifica: [ROM_DATA_TODO](ROM_DATA_TODO.md).
-- [ ] Fissare una baseline riproducibile: revisione del codice, identità ROM,
-  manifest/versione del dataset e prove funzionali accettate.
-- [ ] Dichiarare risorse o lingue ancora aperte e dipendenze residue dalla ROM;
-  la percentuale della mappa non è da sola un criterio di completamento.
-- [ ] Selezionare esplicitamente in futuro il lavoro Godot. La chiusura di un
-  incremento ROM non deve far partire automaticamente questo TODO.
+## Prerequisites and order
 
-Le mod, l'eliminazione completa della `.gba`, la conclusione di ogni caso DS,
-Android e la parità USA non sono requisiti tecnici per una prima prova EUR.
-Il loro eventuale inserimento nella fase preliminare richiede una scelta di
-ambito; non vanno aggiunti automaticamente come blocchi.
+<a id="gd-00--valutazione-preliminare"></a>
 
-### GD-02 — Definire l'interfaccia runtime
+### GD-00 — Preliminary assessment
 
-- [ ] Decidere cosa deve dimostrare il primo prototipo: comunicazione con
-  Machine oppure anche esecuzione nativa. Il risultato di un prototipo solo
-  interprete non permette conclusioni sulle prestazioni del percorso nativo.
-- [ ] Definire creazione/distruzione, caricamento ROM/dataset, avanzamento di
-  un frame completo, input, video, audio, pause, reset ed errori.
-- [ ] Per includere il nativo, pianificare una libreria headless condivisa che
-  riusi dispatch, cache e fallback esistenti. Evitare una seconda copia del
-  dispatcher mantenuta separatamente nel plugin.
-- [ ] Trattare tale separazione come intervento distinto e successivo al lavoro
-  ROM. Non sostituire l'eseguibile normale durante lo studio; eventuali refactor
-  del frontend esistente richiedono una fase propria con verifica di equivalenza.
+- [x] Identify the reusable core and parts still tied to the executable.
+- [x] Distinguish a connection trial from a complete frontend replacement.
+- [x] Record the deferral and remove the implementation skeleton already started.
 
-Proposta di responsabilità, ancora da implementare:
+<a id="gd-01--concludere-il-lavoro-rom-prima-dello-sviluppo-godot"></a>
+
+### GD-01 — Complete ROM work before Godot development
+
+- [ ] Complete the agreed EUR scope for inventory, extraction/decoding,
+  preparation, direct consumption and verification: [ROM_DATA_TODO](ROM_DATA_TODO.md).
+- [ ] Establish a reproducible baseline: code revision, ROM identity,
+  dataset manifest/version and accepted functional evidence.
+- [ ] Declare resources or languages still open and remaining ROM dependencies;
+  the map percentage alone is not a completion criterion.
+- [ ] Explicitly select Godot work in the future. Completion of a ROM increment
+  must not start this TODO automatically.
+
+Mods, complete removal of the `.gba`, completion of every DS case, Android and
+USA parity are not technical prerequisites for an initial EUR trial. Including
+any of them in the preliminary phase requires a scope decision; do not add them
+automatically as blockers.
+
+<a id="gd-02--definire-linterfaccia-runtime"></a>
+
+### GD-02 — Define the runtime interface
+
+- [ ] Decide what the first prototype must demonstrate: communication with
+  Machine or native execution as well. An interpreter-only prototype does not
+  support conclusions about native-path performance.
+- [ ] Define creation/destruction, ROM/dataset loading, advancing one complete
+  frame, input, video, audio, pause, reset and errors.
+- [ ] To include native execution, plan a shared headless library that reuses
+  existing dispatch, cache and fallback. Avoid a second dispatcher copy
+  maintained separately in the plugin.
+- [ ] Treat that separation as distinct work after the ROM work. Do not replace
+  the normal executable during the study; any existing frontend refactor needs
+  its own phase with equivalence verification.
+
+Proposed responsibilities, not yet implemented:
 
 ```mermaid
 flowchart LR
-    G[Godot: interfaccia e presentazione] --> B[GDExtension: comandi e buffer]
-    B --> R[Interfaccia runtime Rust]
-    R --> M[Macchina e clock guest]
-    R --> N[Dispatch nativo e fallback]
-    R --> D[Dataset verificato e cache]
+    G[Godot: interface and presentation] --> B[GDExtension: commands and buffers]
+    B --> R[Rust runtime interface]
+    R --> M[Machine and guest clock]
+    R --> N[Native dispatch and fallback]
+    R --> D[Verified dataset and cache]
 ```
 
-### GD-03 — Concordare i contratti prima del prototipo
+<a id="gd-03--concordare-i-contratti-prima-del-prototipo"></a>
 
-- [ ] **Tempo e input:** Rust conserva il clock guest. Il refresh Godot non
-  deve trasformare una sequenza identica di input in un'esecuzione diversa.
-  Definire pausa, perdita del focus e rilascio dei pulsanti.
-- [ ] **Video:** scegliere un frame classico 240×160 per la prima prova.
-  Censire separatamente widescreen, HUD/UI nativa e filtri attuali: una texture
-  classica non ne dimostra la parità. Stabilire formato, dimensioni e durata
-  dei buffer senza far leggere a Godot puntatori Rust non più validi.
-- [ ] **Audio:** definire frequenza effettiva dei campioni, canali, coda
-  limitata, sincronizzazione, pausa e svuotamento dopo Load/reset. Valutare
-  l'invio in blocco tramite GDExtension ad AudioStreamGenerator.
-- [ ] **Dati:** mantenere in Rust manifest, hash, dipendenze e lettura delle
-  risorse tipizzate; nessuna seconda estrazione o interpretazione autonoma in
-  GDScript. Le cache native restano legate a ROM e ABI corrette.
-- [ ] **Persistenza:** riutilizzare formato e validazioni di snapshot e SRAM.
-  Definire ripristino delle code e del contesto nativo, anteprime e Undo;
-  lavorare inizialmente solo con copie e cartelle del prototipo.
-- [ ] **Ciclo di vita:** assegnare un proprietario al runtime e ai buffer,
-  definire chiusura delle code/thread e caricamento/scaricamento delle librerie.
-  Non introdurre hot reload dell'estensione nella prima prova.
+### GD-03 — Agree on contracts before the prototype
 
-### GD-04 — Predisporre l'isolamento, quando lo sviluppo sarà selezionato
+- [ ] **Time and input:** Rust retains the guest clock. Godot refresh must not
+  turn an identical input sequence into different execution. Define pause, loss
+  of focus and button release.
+- [ ] **Video:** choose a classic 240×160 frame for the first trial. Inventory
+  widescreen, native HUD/UI and current filters separately: a classic texture
+  does not demonstrate their parity. Establish buffer format, size and lifetime
+  without letting Godot read invalidated Rust pointers.
+- [ ] **Audio:** define effective sample rate, channels, bounded queue,
+  synchronization, pause and flushing after Load/reset. Assess sending blocks
+  through GDExtension to AudioStreamGenerator.
+- [ ] **Data:** keep the manifest, hashes, dependencies and typed resource
+  reading in Rust; no second extraction or independent interpretation in
+  GDScript. Native caches remain tied to the correct ROM and ABI.
+- [ ] **Persistence:** reuse snapshot and SRAM formats and validation. Define
+  restoration of queues and native context, previews and Undo; initially work
+  only with copies and prototype directories.
+- [ ] **Lifecycle:** assign an owner to the runtime and buffers; define queue
+  and thread shutdown and library loading/unloading. Do not introduce extension
+  hot reload in the first trial.
 
-- [ ] Scegliere una coppia Godot/godot-rust supportata e versionata; ricontrollare
-  la compatibilità al momento dello sviluppo.
-- [ ] Usare progetto e workspace Cargo separati, lockfile e directory di build
-  propri; congelare il runtime su una revisione concordata.
-- [ ] Non usare i target, cache, percorsi di salvataggio o Wine prefix della
-  produzione e dell'estrazione. Escludere dati di gioco e binari generati da Git.
-- [ ] Preparare una procedura Windows riproducibile. Docker è un'opzione per
-  le dipendenze di compilazione; la distribuzione del progetto Godot va valutata
-  separatamente. Nessuna modifica ai normali comandi di estrazione o packaging.
+<a id="gd-04--predisporre-lisolamento-quando-lo-sviluppo-sarà-selezionato"></a>
 
-### GD-05 — Prova minima futura e criterio di decisione
+### GD-04 — Prepare isolation when development is selected
 
-- [ ] Verificare caricamento reale della GDExtension e avvio/chiusura puliti.
-- [ ] Provare ROM, input, frame classico, audio, pausa e caricamento di uno
-  snapshot in una cartella di lavoro separata.
-- [ ] Confrontare sequenze identiche fra runtime headless e bridge: stato,
-  clock guest, immagini e audio; controllare gli errori senza perdere il gioco
-  già caricato. Riutilizzare i punti ordinari accettati appropriati.
-- [ ] Se è previsto il nativo, verificare anche cache, fallback, Load/reset e
-  dataset, oltre al semplice avvio del core interprete.
-- [ ] Solo dopo queste prove decidere se il vantaggio per l'interfaccia
-  giustifica integrazione completa, packaging e porting delle funzioni avanzate.
+- [ ] Choose a supported, versioned Godot/godot-rust pair; recheck compatibility
+  when development starts.
+- [ ] Use a separate project and Cargo workspace, with their own lockfile and
+  build directory; freeze the runtime at an agreed revision.
+- [ ] Do not use production or extraction targets, caches, save paths or Wine
+  prefixes. Exclude game data and generated binaries from Git.
+- [ ] Prepare a reproducible Windows procedure. Docker is an option for build
+  dependencies; assess distribution of the Godot project separately. Do not
+  change the normal extraction or packaging commands.
 
-Widescreen/HUD completi, controller fisici, Linux e altre piattaforme,
-integrazione completa di backup/Undo e misure di prestazioni sono criteri di
-adozione successivi. Restano espliciti e non diventano prove già superate con
-il solo collegamento della libreria. Nessun benchmark è previsto ora.
+<a id="gd-05--prova-minima-futura-e-criterio-di-decisione"></a>
 
-## Riferimenti tecnici
+### GD-05 — Future minimal trial and decision criterion
 
-- [Compatibilità godot-rust e versioni API/runtime](https://godot-rust.github.io/book/toolchain/compatibility.html).
-- [AudioStreamGenerator](https://docs.godotengine.org/en/stable/classes/class_audiostreamgenerator.html): frequenza del flusso e invio audio da codice compilato.
-- [Thread-safe APIs](https://docs.godotengine.org/en/stable/tutorials/performance/thread_safe_apis.html): gestione del scene tree e delle risorse Godot.
+- [ ] Verify real GDExtension loading and clean startup/shutdown.
+- [ ] Try ROM, input, classic frame, audio, pause and snapshot loading in a
+  separate working directory.
+- [ ] Compare identical sequences between the headless runtime and bridge:
+  state, guest clock, images and audio; check errors without losing the already
+  loaded game. Reuse appropriate accepted ordinary checkpoints.
+- [ ] If native execution is planned, also verify cache, fallback, Load/reset and
+  dataset, beyond simply starting the interpreter core.
+- [ ] Only after these trials decide whether the interface benefit justifies
+  full integration, packaging and porting advanced features.
+
+Full widescreen/HUD, physical controllers, Linux and other platforms, complete
+backup/Undo integration and performance measurements are later adoption
+criteria. They remain explicit and do not become passed checks merely by
+connecting the library. No benchmark is planned now.
+
+<a id="riferimenti-tecnici"></a>
+
+## Technical references
+
+- [godot-rust compatibility and API/runtime versions](https://godot-rust.github.io/book/toolchain/compatibility.html).
+- [AudioStreamGenerator](https://docs.godotengine.org/en/stable/classes/class_audiostreamgenerator.html): stream rate and audio submission from compiled code.
+- [Thread-safe APIs](https://docs.godotengine.org/en/stable/tutorials/performance/thread_safe_apis.html): Godot scene tree and resource handling.
