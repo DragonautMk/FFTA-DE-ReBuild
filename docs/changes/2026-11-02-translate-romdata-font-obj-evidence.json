@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-romdata-font-obj-evidence",
+  "title": "Translate font and initial OBJ evidence",
+  "kind": "docs",
+  "platforms": [
+    "Desktop ROM-data planning documentation"
+  ],
+  "changes": [
+    "Translate six ROMDATA-02 font/keyboard and initial OBJ evidence entries into English while preserving numeric results, positive and negative coverage and validation limits."
+  ],
+  "validation": [
+    "Compare task identifiers, inline literals, links and numeric values with the original; verify local targets and unchanged surrounding sections."
+  ],
+  "limitations": [
+    "Further ROMDATA-02, ROMDATA-05 and detailed evidence remain untranslated; no ROM access, dataset creation or runtime checks were performed."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_TODO.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

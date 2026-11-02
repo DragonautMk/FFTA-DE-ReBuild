@@ -24,9 +24,9 @@ termination of another owner's process or changing another thread's goal state.
 
 - State: active
 - Outcome: partial
-- Verified: previous runtime/report/guide/export units accepted, including shared debug guides. Command/event consoles and operation cards use English/Italian presentation; targeted tests PASS. Audit: 216 reviewed files, 35 Markdown pending.
+- Verified: previous runtime/report/guide/export units accepted, including shared debug guides. Command/event consoles and operation cards use English/Italian presentation; targeted tests PASS. Audit: 217 reviewed files, 34 Markdown pending.
 - Missing: remaining documentation, other dynamic report producers/metadata, helper/test modules, tools/build text, source comments and full audit across both trees. Planned-task checklist/reference translated and synchronized. Preserve optional locales, imported content and immutable history.
-- Resume: latest English-first request selects ENGLISH-FIRST-PERFORMANCE-P3-P4. P0–P2 translated; P3/P4 and acceptance rules remain Italian. Missing: translate remaining priorities/rules while preserving states and conditions. Next: inspect and translate without measurements.
+- Resume: ROMDATA-02 metadata4 and metadata2 evidence translated; resume at ROMDATA-01-GAMEPLAY-DEFAULT48-TEMPLATE. Remaining ROMDATA-02, 05 and later evidence need translation; preserve statuses and compatibility tokens.
 
 ### ROMDATA-03-04-E105-SENARY-COMPACT-OBJ
 
@@ -221,9 +221,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: ENGLISH-FIRST-PROJECT partial; ENGLISH-FIRST-PERFORMANCE-P3-P4 selected.
-- Last verified result: performance P0–P2 translated with states and evidence preserved.
-- Remaining work: translate P3/P4 and acceptance rules without changing conditions or status.
-- Errors or blockers: none; no benchmark, fixture or runtime work selected.
-- Next action: inspect selected sections, translate and verify invariants.
-- References: `docs/development/PERFORMANCE_TODO.md`, `docs/development/ENGLISH_FIRST_AUDIT.json`.
+- Task: ENGLISH-FIRST-PROJECT partial; metadata4 and metadata2 evidence translated.
+- Last verified result: IDs, numeric values, literals and links preserved; surrounding sections unchanged.
+- Remaining work: ROMDATA-02 from default48 onward, ROMDATA-05 and later evidence.
+- Errors or blockers: none; no ROM access or runtime work performed.
+- Next action: select and checkpoint the next English-first unit.
+- References: `docs/changes/2026-11-02-translate-romdata-metadata4-metadata2-evidence.json`, `docs/development/ENGLISH_FIRST_AUDIT.json`.

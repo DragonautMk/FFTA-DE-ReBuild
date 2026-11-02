@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-performance-priorities-p3-p4",
+  "title": "Translate performance priorities P3 and P4",
+  "kind": "docs",
+  "platforms": [
+    "Desktop performance planning documentation"
+  ],
+  "changes": [
+    "Translate performance priorities P3/P4 and acceptance rules into English while retaining deferred task states, dependencies and correctness conditions."
+  ],
+  "validation": [
+    "Compare three ordered checkbox states, task identifiers, inline literals and three legacy anchors with the prior text; confirm preceding sections are unchanged."
+  ],
+  "limitations": [
+    "Historical performance sections remain untranslated; no benchmarks, builds, fixtures or runtime checks were run."
+  ],
+  "files": [
+    "docs/development/PERFORMANCE_TODO.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

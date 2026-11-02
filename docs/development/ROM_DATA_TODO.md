@@ -1,766 +1,778 @@
-# TODO — Estrazione ROM, dati decodificati e mod
+<a id="todo--estrazione-rom-dati-decodificati-e-mod"></a>
 
-Richiesta aggiornata il 22 ottobre 2026. **FEAT-04-ROM-DATA** è in esecuzione;
-inventario e contratto iniziale sono definiti. Le migrazioni runtime restano aperte.
-Ambito: workspace desktop, Windows come piattaforma principale di verifica;
-Linux come controllo aggiuntivo. `AndroidPort/` richiede lavoro separato.
+# TODO — ROM extraction, decoded data and mods
 
-Il [frontend Godot](GODOT_FRONTEND_TODO.md) è soltanto una valutazione con TODO
-rinviato a dopo la conclusione dell'estrazione concordata. Non è un nuovo passo
-esecutivo di questo TODO e non va sviluppato durante la migrazione dei dati.
+Request updated October 22, 2026. **FEAT-04-ROM-DATA** is in progress;
+inventory and initial contract are defined. Runtime migrations remain open.
+Scope: desktop workspace, Windows as the primary validation platform; Linux as
+an additional check. `AndroidPort/` requires separate work.
 
-Il [TODO degli strumenti di debug](DEBUG_TOOLS_TODO.md) raccoglie i miglioramenti
-per utente e assistente: riproduzione dei casi, audit delle letture, confronto
-delle divergenze e collegamento alla ROM coverage. È una checklist da selezionare
-per necessità, non una nuova campagna parallela obbligatoria all'estrazione.
+The [Godot frontend](GODOT_FRONTEND_TODO.md) is only an assessment with its TODO
+deferred until agreed extraction is complete. It is not a new execution step
+of this TODO and must not be developed during data migration.
 
-## Obiettivo e ordine di lavoro
+The [debug tools TODO](DEBUG_TOOLS_TODO.md) collects improvements for user and
+assistant: case replay, read audits, divergence comparison and ROM coverage
+links. It is a checklist selected as needed, not a new parallel campaign
+mandatory for extraction.
 
-L'obiettivo principale è scompattare la ROM selezionata in file di risorse,
-decodificarli in formati utilizzabili e far leggere al runtime quei dati.
-Al primo avvio si prepara il dataset; agli avvii successivi si riutilizza la
-versione valida. Il supporto alle mod e a modifiche più ampie viene dopo.
+<a id="obiettivo-e-ordine-di-lavoro"></a>
 
-Priorità utente aggiornata: per ora **non misurare le regressioni di performance**;
-l'ottimizzazione verrà dopo. Non avviare benchmark, profili o campagne di avvio/
-RSS, né comprimere o ritoccare formati per rispettare vecchi budget di spazio.
-Le misure già raccolte restano storiche; non bloccano il lavoro funzionale.
-Priorità regionale aggiornata: **concentrarsi sulla versione europea**;
-le nuove verifiche USA restano aperte. Conservare le prove USA già concluse
-come evidenza storica, senza ripeterle durante questa fase EUR.
-Priorità piattaforma aggiornata: **ridurre i test ed eseguirli solo su Wine**;
-segnare i nuovi controlli Linux come da fare. Le verifiche Linux già concluse
-restano storiche, senza ripeterle per le nuove integrazioni.
-Restano necessarie le prove di equivalenza, incluso il clock guest, l'uso reale
-dei file e la compatibilità di native/save/Load.
+## Objective and work order
 
-Ordine: **inventario → estrazione e decodifica → preparazione all'avvio →
-consumo diretto → verifica → mod → modifiche estese**.
-Creare file che il gioco non usa non soddisfa l'obiettivo. Anche ricomporre
-soltanto una ROM dai file estratti è un passaggio eventualmente utile al
-confronto, ma non completa il percorso di lettura dei dati decodificati.
+The main objective is to unpack the selected ROM into resource files, decode
+them into usable formats and have the runtime read that data. The dataset is
+prepared on first startup; later startups reuse the valid version. Mod support
+and broader modifications follow.
 
-Il caricamento dei file può avvenire all'avvio o prima del loro utilizzo, con
-cache in memoria: «lettura dai file» non richiede accessi al disco per pixel,
-campione audio o istruzione. I miglioramenti di velocità restano da misurare.
+Updated user priority: for now **do not measure performance regressions**;
+optimization comes later. Do not start benchmarks, profiles or startup/RSS
+campaigns, or compress or alter formats to satisfy old space budgets. Existing
+measurements remain historical; they do not block functional work.
+Updated regional priority: **focus on the European version**; new USA checks
+remain open. Keep completed USA evidence as historical without repeating it
+during this EUR phase.
+Updated platform priority: **reduce tests and run them only on Wine**; mark new
+Linux checks as pending. Completed Linux checks remain historical without
+repeating them for new integrations. Equivalence evidence remains necessary,
+including guest clock, actual file use and native/save/Load compatibility.
 
-## Punto di partenza verificato e vincoli
+Order: **inventory → extraction and decoding → startup preparation → direct
+consumption → verification → mods → extended changes**. Creating files the game
+does not use does not satisfy the objective. Reconstructing a ROM from extracted
+files alone may help comparison, but does not complete reading decoded data.
 
-- [play.rs](../../crates/recomp/src/play.rs) legge già tutta la ROM con
-  `std::fs::read` e la passa alla macchina. In
-  [mem.rs](../../crates/gba-core/src/mem.rs), `MemMap.rom` è un `Vec<u8>`;
-  le normali letture guest accedono a quel buffer in RAM.
-- Una ROM contiene codice, tabelle, puntatori e risorse anche compresse o
-  condivise. Non è un archivio con un filesystem da estrarre genericamente:
-  formati e confini vanno individuati per ciascuna famiglia di risorse.
-- [ffta_rom.rs](../../crates/gba-core/src/ffta_rom.rs) riconosce profili EUR/USA
-  tramite hash esatti. [ensure_native](../../crates/recomp/src/main.rs) lega
-  la cache di traduzione all'immagine e agli altri parametri di compilazione.
-  Non basta cambiare un hash dichiarato per rendere compatibili nuovi dati.
-- Gli [stati macchina](../../crates/gba-core/src/save_state.rs) e gli
-  [slot desktop](../../crates/recomp/src/save_state.rs) usano l'identità ROM.
-  Il nuovo dataset dovrà restare coerente con salvataggi, load e Undo.
-- Il codice eseguibile guest e le strutture non ancora migrate possono
-  richiedere l'immagine originale. Eliminare del tutto la dipendenza dalla
-  `.gba` è un criterio separato, da valutare dopo aver censito tali dipendenze;
-  non è una conseguenza automatica dell'estrazione delle risorse.
+Files can be loaded at startup or before use, with an in-memory cache: “reading
+from files” does not require disk access per pixel, audio sample or instruction.
+Speed improvements remain to be measured.
 
-## ROMDATA-01 — Inventario e contratto dei dati
+<a id="punto-di-partenza-verificato-e-vincoli"></a>
 
-**Dipendenze:** nessuna. **Priorità:** prima fase obbligatoria.
+## Verified starting point and constraints
 
-- [x] Censire grafica, palette, tile/mappe, sprite/animazioni, testi, tabelle
-  di gioco e audio. Per ogni famiglia annotare formato, compressione, confini,
-  puntatori, riferimenti incrociati, routine di lettura e grado di verifica.
-  Distinguere dati statici della ROM e stato dinamico in RAM.
-- [ ] Verificare separatamente EUR/USA e lingue. Riutilizzare i lettori già
-  presenti come evidenza parziale; non dedurre offset per sola analogia.
-- [x] Definire ID stabili delle risorse, schema versionato e manifest con
-  hash della ROM sorgente, versione estrattore/decoder, file e hash dei contenuti,
-  dipendenze e copertura. Conservare la provenienza dagli intervalli originali.
-- [x] Scegliere una prima famiglia verificabile dall'estrazione fino al gioco,
-  in base alle routine individuate. Separare contenuti decodificati e metadati
-  necessari: per esempio una sola immagine non conserva palette indicizzate,
-  priorità, trasparenza e animazioni; un PCM non conserva il sequenziamento audio.
-- [x] Pubblicare la matrice di migrazione: per ogni famiglia indicare estrattore,
-  decoder, lettore runtime, verifiche e dipendenze residue dalla ROM.
+- [play.rs](../../crates/recomp/src/play.rs) already reads the entire ROM with
+  `std::fs::read` and passes it to the machine. In
+  [mem.rs](../../crates/gba-core/src/mem.rs), `MemMap.rom` is a `Vec<u8>`;
+  normal guest reads access that buffer in RAM.
+- A ROM contains code, tables, pointers and resources that can be compressed or
+  shared. It is not an archive with a filesystem to extract generically: formats
+  and boundaries must be identified for each resource family.
+- [ffta_rom.rs](../../crates/gba-core/src/ffta_rom.rs) recognizes EUR/USA
+  profiles by exact hashes. [ensure_native](../../crates/recomp/src/main.rs) ties
+  the translation cache to the image and other compilation parameters. Changing
+  a declared hash alone does not make new data compatible.
+- [Machine states](../../crates/gba-core/src/save_state.rs) and
+  [desktop slots](../../crates/recomp/src/save_state.rs) use ROM identity. The
+  new dataset must remain consistent with saves, load and Undo.
+- Guest executable code and structures not yet migrated may require the original
+  image. Completely removing the `.gba` dependency is a separate criterion to
+  assess after inventorying those dependencies; it is not an automatic result of
+  resource extraction.
 
-**Chiusura:** contratto e prima famiglia definiti con evidenza; famiglie ancora
-ignote elencate esplicitamente. L'inventario non è la migrazione completa.
+<a id="romdata-01--inventario-e-contratto-dei-dati"></a>
 
-**ROMDATA-01-CONTRACT completato; ROMDATA-01 parziale:**
-[inventario e contratto](ROM_DATA_INVENTORY.md).
-Prima famiglia: `graphics.obj-dimensions`, metadati statici verificati sui due
-profili esatti. L'inventario distingue le fonti note da confini/cataloghi/lingue
-non verificati; non dichiara un catalogo completo delle risorse del gioco.
-La verifica EUR/USA è completa per la prima famiglia; cataloghi regionali e
-linguistici delle altre famiglie restano da individuare e verificare.
+## ROMDATA-01 — Data inventory and contract
 
-**ROMDATA-01-GRAPHICS-LZ77 completato per i produttori iniziali osservati:**
-quattro sorgenti LZ77 per regione verificate su avvii puliti1200frame Linux e
-Windows/Wine; confini dei flussi e uscite guest coincidono. Individuati anche
-due root regionali di descrittori da88byte. Limiti del catalogo, campi interni,
-interpretazione dei pacchetti e lingue restano aperti.
-[Contratto e prove](../rom_data_graphics.md).
+**Dependencies:** none. **Priority:** mandatory first phase.
 
-**ROMDATA-01-BG-DESCRIPTOR-PREFIX completato per il blocco contiguo verificato:**
-162record/14256byte, tutti i riferimenti entro i limiti, primo payload distinto
-dai record e metadati identici nei due profili. Selettori condizionati verificati
-con le routine originali per ogni record, sentinelle e fallback. Riferimenti
-relativi, triple di trasferimento, puntatore variante e byte non interpretati
-sono distinti. La famiglia grafica01resta parziale per asset/programmi collegati,
-altri cataloghi e lingue. [Contratto](../rom_data_graphics.md#authenticated-descriptor-metadata).
+- [x] Inventory graphics, palettes, tiles/maps, sprites/animations, text, game
+  tables and audio. For each family record format, compression, boundaries,
+  pointers, cross-references, read routines and verification level. Distinguish
+  static ROM data from dynamic RAM state.
+- [ ] Verify EUR/USA and languages separately. Reuse existing readers as partial
+  evidence; do not infer offsets by analogy alone.
+- [x] Define stable resource IDs, versioned schema and manifest with source ROM
+  hash, extractor/decoder version, files and content hashes, dependencies and
+  coverage. Retain provenance from original intervals.
+- [x] Choose a first family verifiable from extraction through the game, based
+  on identified routines. Separate decoded content and necessary metadata: for
+  example, one image does not preserve indexed palettes, priority, transparency
+  and animations; PCM does not preserve audio sequencing.
+- [x] Publish the migration matrix: for each family identify extractor, decoder,
+  runtime reader, checks and remaining ROM dependencies.
 
+**Closure:** contract and first family defined with evidence; still-unknown
+families explicitly listed. Inventory is not complete migration.
 
-**ROMDATA-01-BG-PALETTES completato per il catalogo base dichiarato:** tutte
-le162voci puntano a127sorgenti per regione,125LZ77e2grezze. Intervalli, alias e
-buffer decodificati coincidono tra EUR/USA. Quattro oracoli originali Linux/Wine
-passano1296chiamate/72792istruzioni ciascuno, output/guardie completi e bit15
-preservato. I flussi per palette alternative sono classificati separatamente sotto; le
-precondizioni dei cinque indici FFrestano da chiarire. Modello tipizzato e consumo delle palette sono completati
-separatamente nelle unità02/04sotto.
-[Contratto e prove](../rom_data_graphics.md#base-background-palette-catalog).
+**ROMDATA-01-CONTRACT completed; ROMDATA-01 partial:**
+[inventory and contract](ROM_DATA_INVENTORY.md).
+First family: `graphics.obj-dimensions`, static metadata verified on both exact
+profiles. Inventory distinguishes known sources from unverified boundaries/
+catalogs/languages; it does not claim a complete game resource catalog.
+EUR/USA verification is complete for the first family; regional and language
+catalogs of other families remain to be identified and verified.
 
-**ROMDATA-01-BG-ALTERNATE-PALETTE-PROGRAMS completato per gli indici validi:**
-due cataloghi da157chiavi0..156per regione,314flussi con header BE e formato
-LZ/RLE distinto dal BIOS; ciascuno produce256B. Tabelle, sorgenti e output
-coincidono tra EUR/USA; quattro oracoli originali Linux/Wine passano1256chiamate
-ciascuno, output/guardie completi ed EWRAM/SP invariati. Cinque record con FF
-restano distinti: nessuna dereferenziazione o fallback inventato, precondizioni
-dei chiamanti ancora da verificare. Il parser tipizzato02è ora verificato sotto; estrazione gestita e consumo04
-sono conclusi nelle unità02/04sotto. Nessuna misura prestazionale.
-[Contratto](../rom_data_graphics.md#alternate-background-palette-catalogs).
+**ROMDATA-01-GRAPHICS-LZ77 completed for initial observed producers:** four LZ77
+sources per region verified on clean 1200-frame Linux and Windows/Wine startups;
+stream boundaries and guest outputs match. Two regional roots of 88-byte
+descriptors also identified. Catalog limits, internal fields, packet
+interpretation and languages remain open.
+[Contract and evidence](../rom_data_graphics.md).
 
-**ROMDATA-01-BG-ALTERNATE-CALLER-CONTRACT: inventario diretto e modalità EUR
-completati; precondizioni globaliFF aperte.** Quattro chiamanti Thumb per regione,
-setter originale e relativa conferma individuati. Il menu Options applica LCD A=0,
-LCD B=1(secondo catalogo), TV=2(primo catalogo) solo dopo Save changes→Yes.
-Snapshot della GUI nativa EUR confermano i valori senza forzare RAM. Nessun
-controllo locale del byte56FF nei percorsi ispezionati; il controllo ID00ff è
-distinto. GUI mappa/Party e deployment non leggono gli stream alternativi:
-le scene pub con uso positivo sono concluse sotto; restano le precondizioniFF.
-[Contratto e limiti](../rom_data_graphics.md#alternate-palette-callers-and-color-mode).
+**ROMDATA-01-BG-DESCRIPTOR-PREFIX completed for verified contiguous block:**
+162 records/14256 bytes, all references within bounds, first payload distinct
+from records and identical metadata in both profiles. Conditional selectors
+verified with original routines for every record, sentinels and fallback.
+Relative references, transfer triples, variant pointer and uninterpreted bytes
+are distinguished. Graphics family 01 remains partial for linked assets/programs,
+other catalogs and languages.
+[Contract](../rom_data_graphics.md#authenticated-descriptor-metadata).
 
-**ROMDATA-01-BG-PACKET-CATALOG completato per i campi04/08/10 dichiarati:**
-352sorgenti distinte per regione (122paired,117halfword,113auxiliary), involucri
-01grezzo/11LZ77con padre opzionale, inizializzazione e dizionari verificati.
-Tutti i riferimenti/alias/hash coincidono EUR/USA, niente sovrapposizioni/cicli,
-catene al massimo di2nodi. Quattro casi Linux/Wine con i lettori originali
-passano486invocazioni ciascuno, buffer completi/guardie/SP. Il decoder ora
-espone anche l'estensione letta dei dizionari. Modello tipizzato/file gestito e
-consumo effettivo restano02/03/04; campo00e programmi transfer/variant separati.
-[Contratto](../rom_data_graphics.md#complete-descriptor-packet-catalogs).
+**ROMDATA-01-BG-PALETTES completed for declared base catalog:** all 162 entries
+point to 127 sources per region, 125 LZ77 and 2 raw. Intervals, aliases and
+decoded buffers match between EUR/USA. Four original Linux/Wine oracles pass
+1296 calls/72792 instructions each, complete output/guards and bit 15 preserved.
+Alternate-palette streams are separately classified below; prerequisites of the
+five FF indices remain to be clarified. Typed model and palette consumption are
+completed separately in units 02/04 below.
+[Contract and evidence](../rom_data_graphics.md#base-background-palette-catalog).
 
-**ROMDATA-01-BG-MAIN-GRAPHICS completato per il catalogo EUR dichiarato:**
-162link/50sorgenti disgiunte,23tag20e27tag22,621923byte sorgente e835232uscita.
-Produttore a stadi0801b688e codec custom LZ/RLE080054a0verificati; tag22conserva
-offset di destinazione e header20annidato. Tutte le50uscite/cursori/guardie/SP
-coincidono con l'originale su Wine; i due trasferimenti DMA sono verificati per
-un caso20e uno22. Nuovi controlli Linux/USA da fare.
-[Contratto](../rom_data_graphics.md#european-main-background-graphics).
+**ROMDATA-01-BG-ALTERNATE-PALETTE-PROGRAMS completed for valid indices:** two
+catalogs of 157 keys 0..156 per region, 314 streams with BE headers and LZ/RLE
+format distinct from BIOS; each produces 256 B. Tables, sources and outputs match
+between EUR/USA; four original Linux/Wine oracles pass 1256 calls each, complete
+output/guards and unchanged EWRAM/SP. Five FF records remain distinct: no
+invented dereference or fallback, caller prerequisites still to verify. Typed
+parser 02 is now verified below; managed extraction and consumption 04 are
+completed in units 02/04 below. No performance measurement.
+[Contract](../rom_data_graphics.md#alternate-background-palette-catalogs).
 
-**ROMDATA-01-BG-TRANSFER-VARIANT completato per il catalogo EUR dichiarato:**
-97triple attive nei cinque slot (83/6/5/3/0),42controlli e34banchi tile grezzi
-condivisi,76intervalli disgiunti. Tutti i162puntatori variant sono nulli in
-questo blocco; nessun programma variant inventato. Produttori originali EUR
-confermano durata, ordine dei frame e DMA con limite dinamico; Linux/USA da fare.
-[Contratto](../rom_data_graphics.md#european-background-transfer-programs).
+**ROMDATA-01-BG-ALTERNATE-CALLER-CONTRACT: direct inventory and EUR modes
+completed; global FF prerequisites open.** Four Thumb callers per region,
+original setter and related confirmation identified. Options menu applies LCD
+A=0, LCD B=1 (second catalog), TV=2 (first catalog) only after Save changes→Yes.
+EUR native GUI snapshots confirm values without forcing RAM. No local check of
+byte 56 FF in inspected paths; ID 00ff check is separate. Map/Party and
+deployment GUI do not read alternate streams: pub scenes with positive use are
+completed below; FF prerequisites remain.
+[Contract and limits](../rom_data_graphics.md#alternate-palette-callers-and-color-mode).
 
-**ROMDATA-01-TEXT-AUXILIARY-ROOTS / ROMDATA-02-FONT-KEYBOARD-DATA completati
-per EUR/Wine dichiarato:** inventario16chiamanti diretti e archivio tastiera
-nome separato, tre programmi/18larghezze righe/180celle. L'ultimo glifo3174
-verifica il termine del banco completo3175glifi/metriche. Due controlli Wine
-mirati passano: JSON/sorgente/guardie e3047nuovi glifi originali, tre pagine/
-180selettori (3230chiamate); nessuna ripetizione dei128glifi già chiusi.
-Unicode/altri puntatori dinamici e nuovi controlli Linux/USA da fare.
-[Contratto](../rom_data_text.md#complete-european-font-and-name-keyboard).
+**ROMDATA-01-BG-PACKET-CATALOG completed for declared fields 04/08/10:** 352
+distinct sources per region (122 paired, 117 halfword, 113 auxiliary), 01 raw/
+11 LZ77 wrappers with optional parent, initialization and dictionaries verified.
+All references/aliases/hashes match EUR/USA, no overlaps/cycles, chains at most
+2 nodes. Four Linux/Wine cases with original readers pass 486 invocations each,
+complete buffers/guards/SP. The decoder now also exposes dictionary read extent.
+Typed model/managed file and actual consumption remain 02/03/04; field 00 and
+transfer/variant programs separate.
+[Contract](../rom_data_graphics.md#complete-descriptor-packet-catalogs).
 
-**ROMDATA-01-OBJ-STATIC-LISTS / ROMDATA-02-OBJ-STATIC-DATA completati per EUR/Wine
-dichiarato:**107riferimenti letterali diretti individuano66liste disgiunte,
-160oggetti/1092byte sorgente. Coordinate firmate e tutti i campi attributi
-conservati. Due controlli Wine mirati passano: campi/confini/JSON e1056chiamate
-alle due routine originali con clipping/flip/wrap/capacità/ritorno anticipato,
-interi buffer OAM/matrici/guardie uguali. Altre radici indirette, animazioni e
-grafica OBJ restano aperte; Linux/USA da fare. [Contratto](../rom_data_obj.md).
+**ROMDATA-01-BG-MAIN-GRAPHICS completed for declared EUR catalog:** 162 links/
+50 disjoint sources, 23 tag 20 and 27 tag 22, 621923 source bytes and 835232
+output. Staged producer 0801b688 and custom LZ/RLE codec 080054a0 verified;
+tag 22 retains destination offset and nested tag 20 header. All 50 outputs/
+cursors/guards/SP match original on Wine; both DMA transfers verified for one
+20 and one 22 case. New Linux/USA checks pending.
+[Contract](../rom_data_graphics.md#european-main-background-graphics).
 
-**ROMDATA-01-GAMEPLAY-ITEM-ROOTS: inventario dichiarato completato,
-contratto originale ora verificato sotto.** Lettore proprietà080ce1ec/tabella6e0bd0,
-376record×32byte/12032byte fino al root indipendente6e3ad0. Chiamanti negozio/
-classificatore e enumerazione originale1..361/362..375confermano i limiti;
-19proprietà espongono halfword/byte/signed e modificatori live02002030.
-Tutti32byte per record conservati, nessuna sovrapposizione e22; semantiche non
-provate non inventate. Oracolo/modello/gestione/consumo EUR ora completati sotto;
-tabella seguente20byte, altre famiglie e Linux/USA restano aperti.
-[Contratto](../rom_data_gameplay.md).
+**ROMDATA-01-BG-TRANSFER-VARIANT completed for declared EUR catalog:** 97 active
+triples in five slots (83/6/5/3/0), 42 controls and 34 shared raw tile banks,
+76 disjoint intervals. All 162 variant pointers are null in this block; no
+variant program invented. Original EUR producers confirm duration, frame order
+and DMA with dynamic limit; Linux/USA pending.
+[Contract](../rom_data_graphics.md#european-background-transfer-programs).
 
-## ROMDATA-02 — Estrattori e decoder
+**ROMDATA-01-TEXT-AUXILIARY-ROOTS / ROMDATA-02-FONT-KEYBOARD-DATA completed
+for declared EUR/Wine scope:** inventory of 16 direct callers and separate name
+keyboard archive, three programs/18 row widths/180 cells. Last glyph 3174
+verifies the end of the full bank of 3175 glyphs/metrics. Two targeted Wine
+checks pass: JSON/source/guards and 3047 new original glyphs, three pages/
+180 selectors (3230 calls); no repetition of the already closed 128 glyphs.
+Unicode/other dynamic pointers and new Linux/USA checks pending.
+[Contract](../rom_data_text.md#complete-european-font-and-name-keyboard).
 
-**ROMDATA-01-TEXT-REMAINING-CATALOGS / ROMDATA-02-TEXT-CATALOG-DATA completati
-per il blocco lettori EUR dichiarato:**9cataloghi a puntatori/45tabelle/16100
-stringhe,29selettori relativi/145archivi/17035programmi. Flag, comandi/operandi,
-LZ/RLE custom esatto, padding decodificato e128glifi referenziati conservati;
-33581intervalli disgiunti. Due test Wine mirati passano, inclusi inventari
-indipendenti completi e80bordi puntatori/145radici/300uscite script/63nuovi
-glifi originali (968chiamate). Contesto dinamico valido esplicito nell'oracolo;
-nessuna prova scena dedotta. Collegamento gestito/runtime esteso ancora aperto,
-e11conserva il sottoinsieme precedente. Linux/USA da fare.
-[Contratto e limiti](../rom_data_text.md#broad-pointer-catalogs-and-relative-text-archives).
+**ROMDATA-01-OBJ-STATIC-LISTS / ROMDATA-02-OBJ-STATIC-DATA completed for declared
+EUR/Wine scope:** 107 direct literal references identify 66 disjoint lists,
+160 objects/1092 source bytes. Signed coordinates and all attribute fields
+retained. Two targeted Wine checks pass: fields/boundaries/JSON and 1056 calls
+to the two original routines with clipping/flip/wrap/capacity/early return,
+entire OAM/matrix/guard buffers equal. Other indirect roots, animations and OBJ
+graphics remain open; Linux/USA pending. [Contract](../rom_data_obj.md).
 
-**ROMDATA-02-TEXT-CATALOG-MANAGED completato per EUR/Wine:** decimo file fisso
-text-catalogs.json, revisione1/12/11,33581intervalli e autenticazione/identità
-dell'insieme. Pubblicazione/riuso, errore atomico/riparazione, controlli reali
-EUR su dati/modifiche coerenti/metadata/percorsi/dipendenze/limiti, move e
-attivazione fallita transazionale passano in tre controlli Wine ridotti. CLI
-reale prepare/riuso senza scritture/attivazione di un frame con cache vecchia
-passano. e11e otto file precedenti invariati, USA resta e8. Consumo esteso04
-verified-only e lifecycle/scene05ancora aperti; Linux/USA da fare.
-
-**ROMDATA-01-TEXT-SHORT-STRINGS / ROMDATA-02-TEXT-SHORT-DATA completati
-per il catalogo EUR dichiarato:** cinque tabelle originali da107voci,
-535stringhe distinte (478compatte/57estese),5468byte sorgente. Modello tipizzato
-con codici glifo/byte controllo esatti e soli65glifi packed4bpp/metriche usati;
-670intervalli con provenienza/hash. Due test Wine mirati passano: codec/guardie
-e tutte le routine originali di selezione/copia/glifi/larghezze,1331chiamate/
-89446istruzioni. JSON rigoroso e modifiche coerenti rifiutate. Pubblicazione
-gestita/startup/consumo runtime restano aperti, schema e10invariato. Altri
-cataloghi, font completo/Unicode/comandi, Linux/USA da fare.
-[Contratto e prove](../rom_data_text.md).
-
-**ROMDATA-02-TEXT-SHORT-MANAGED completato per EUR/Wine:** nono file fisso
-short-texts.json, revisione1/11/10e670intervalli con provenienza. Autenticazione
-dell'insieme completo/identità, pubblicazione atomica, riuso/riparazione/move e
-attivazione fallita transazionale passano in tre test Wine mirati. CLI reale:
-prepare/riuso senza scritture/attivazione di un frame con cache nativa conservata
-passano. e10e sette file dati precedenti invariati; USA resta e8. Il nuovo
-catalogo è verified-only; consumo04e scene/lifecycle05aperti, Linux/USA da fare.
-
-**Dipendenze:** ROMDATA-01. Procedere per famiglie senza dichiarare finito il
-resto del catalogo quando funziona il primo prototipo.
-
-- [x] Implementare parser con controlli su lunghezze, offset, puntatori,
-  dimensioni decodificate e riferimenti; rifiutare input troncati o incoerenti.
-- [x] Estrarre e decodificare la prima famiglia nel formato concordato,
-  mantenendo le informazioni necessarie a riprodurre il comportamento originale.
-  Blocchi sconosciuti possono restare grezzi, marcati come non decodificati.
-- [x] Rendere l'output deterministico e ispezionabile: gli stessi input e la
-  stessa versione producono manifest e dati equivalenti, senza percorsi assoluti.
-- [x] Verificare con fixture sintetiche e confronti locali con il decoder
-  originale o con dati osservati nel gioco. Quando il formato lo consente,
-  verificare anche il roundtrip, senza richiedere compressione byte-identica
-  se più codifiche rappresentano gli stessi dati.
-- [ ] Estendere estrattori e decoder alle altre famiglie della matrice,
-  registrando per ciascuna contenuti supportati e limiti.
-
-**Chiusura per famiglia:** file decodificati corretti, metadati sufficienti e
-input errati gestiti. La sola esportazione di blocchi binari non basta.
-
-**ROMDATA-02-OBJ-DIMENSIONS completato:** estrattore e decoder tipizzato,
-CLI `rom-data extract|verify`, manifest e controlli di provenienza.
-Le prime quattro voci sono completate per questa famiglia (senza puntatori o
-compressione); parser delle altre famiglie rimangono da implementare.
-Test Linux e Windows/Wine passano anche con le due ROM locali. Dettagli e
-limiti in [risorse decodificate](../rom_data.md). Il consumo diretto della prima
-famiglia è ora collegato nel percorso opt-in04.
-
-**ROMDATA-02-LZ77-DECODER completato come componente offline:** input e memoria
-limitati, riferimenti sovrapposti, consumo esatto senza padding e rifiuto di
-input malformati. Quattro test sintetici per target e confronto con le uscite
-guest già catturate passano su Linux/Wine. Non aggiunge ancora una famiglia al
-manifest: servono prima i contratti semantici del catalogo grafico.
-
-**ROMDATA-02-BG-PACKETS completato come componente offline:** parser tipizzati
-dei pacchetti a16bit e delle coppie indicizzate, con limiti di destinazione,
-scritture e numero di pacchetti. Tre test sintetici per target e confronti delle
-routine originali EUR/USA passano su Linux/Wine:7invocazioni/87160istruzioni
-per caso, tutta l'EWRAM confrontata e continuazione a blocchi verificata.
-Il ramo con coppie letterali conserva la sintassi, con guardia sulle destinazioni
-dopo una prova originale contraria all'ipotesi iniziale.
-[Contratto, prove e limiti](../rom_data_graphics.md#typed-background-packets).
-Catalogo e integrazione delle nuove risorse restano aperti.
-
-**ROMDATA-02-BG-DESCRIPTOR-METADATA completato come componente offline:** decoder
-tipizzato, controlli sui limiti, autenticazione della sorgente, roundtrip esatto
-e TOML deterministico. Tre test sintetici per target e quattro casi EUR/USA su
-Linux/Wine passano:2612chiamate originali/134629istruzioni per caso. I file di
-prova da106309byte coincidono sui quattro percorsi. Integrazione nel manifest,
-preparazione e consumo runtime sono stati selezionati separatamente come segue.
-
-**ROMDATA-02-BG-MANAGED completato per estrazione/verifica/preparazione:**
-nuovo file descrittori nel manifest, schema1/estrattore3/decoder2 e directory
-v1/e3-d2, con versioni precedenti conservate. Limiti16KiB manifest/OBJ,
-256KiB BG e272KiB totali; pubblicazione atomica di tre file, riuso completo,
-recupero, identità dell'intero dataset e attivazione autenticata. Passano25test
-Linux/23Wine,18controlli dei veri CLI per target e scenari privacy tar/zip.
-[Prove e limiti](../rom_data_graphics.md#managed-descriptor-extraction-and-preparation).
-Questa unità prova la preparazione; il successivo consumo diretto04è descritto sotto.
+**ROMDATA-01-GAMEPLAY-ITEM-ROOTS: declared inventory completed, original contract
+now verified below.** Property reader 080ce1ec/table 6e0bd0, 376 records × 32
+bytes/12032 bytes to independent root 6e3ad0. Shop/classifier callers and
+original enumeration 1..361/362..375 confirm bounds; 19 properties expose
+halfword/byte/signed and live modifiers 02002030. All 32 bytes per record
+retained, no overlap and e22; unproven semantics not invented. EUR oracle/model/
+management/consumption now completed below; following 20-byte table, other
+families and Linux/USA remain open. [Contract](../rom_data_gameplay.md).
 
 
-**ROMDATA-02-BG-BASE-PALETTE-DATA completato:** modello di banchi da16valori
-u16, bit15conservato, parser limitato raw0/LZ7710e intervalli esatti senza
-padding. Tutte le162voci sono estratte in JSON leggibile; manifest con tutte
-le provenienze, quattro file e revisione1/5/4, vecchie generazioni conservate.
-Passano39test Linux/37Wine e22controlli CLI per target, inclusi oracoli originali,
-integrità/riparazione/rilocazione e compatibilità delle risorse già consumate.
-[Contratto e limiti](../rom_data_graphics.md#typed-palette-extraction-and-preparation).
-Questa unità copre la preparazione; il successivo consumo04è completato sotto
-con revisione1/6/5e metadati di compatibilità. Nessun lavoro di compressione/spazio.
+<a id="romdata-02--estrattori-e-decoder"></a>
 
-**ROMDATA-02-BG-ALTERNATE-PALETTE-CODEC completato per il catalogo verificato:**
-codec custom limitato, header BE, tutti i token e controlli originali03..0F,
-consumo esatto e rifiuto di troncamenti, riferimenti fuori storia e overrun.
-Modello con banchiu16completi, metadati sorgente/link e cinqueFFconservati.
-Linux/Wine:4test core,314buffer per regione uguali agli oracoli conservati,
-70flussi sintetici/1120chiamate originali per caso regionale/target e prova
-negativa dell'overrun originale. JSON leggibile deterministico sui quattro
-percorsi; nessuna misura prestazionale. Estrazione/preparazione gestita e
-consumo dei file alternativi sono selezionati separatamente sotto.
-[Contratto e prove](../rom_data_graphics.md#typed-alternate-palette-codec).
+## ROMDATA-02 — Extractors and decoders
 
-**ROMDATA-02-BG-ALTERNATE-PALETTE-MANAGED completato:** quinto file JSON
-leggibile con tutti i banchi/chiavi/link e316intervalli di provenienza; schema1/
-estrattore7/decoder6, vecchie generazionie6conservate. Scrittura/verifica atomica
-dell'insieme, riuso senza scritture, riparazione e attivazione autenticata con
-identità completa. Linux23default+4privati e Wine21+4passano;23verifiche dei
-veri CLI per target, inclusi EUR/USA, recupero e rilocazione. Nessuna misura
-prestazionale o riduzione di spazio. L'attivazione degli alternativi è ancora
-`verified-only`al termine di questa unità; il consumo04è completato sotto.
-[Prove e limiti](../rom_data_graphics.md#managed-alternate-palette-datasets).
+**ROMDATA-01-TEXT-REMAINING-CATALOGS / ROMDATA-02-TEXT-CATALOG-DATA completed
+for the declared EUR reader block:** 9 pointer catalogs/45 tables/16100 strings,
+29 relative selectors/145 archives/17035 programs. Flags, commands/operands,
+exact custom LZ/RLE, decoded padding and 128 referenced glyphs retained; 33581
+disjoint intervals. Two targeted Wine tests pass, including complete independent
+inventories and 80 pointer boundaries/145 roots/300 script outputs/63 new
+original glyphs (968 calls). Valid dynamic context explicit in the oracle; no
+scene evidence inferred. Managed integration/extended runtime consumption still
+open, e11 retains the previous subset. Linux/USA pending.
+[Contract and limits](../rom_data_text.md#broad-pointer-catalogs-and-relative-text-archives).
 
-**ROMDATA-02-BG-PACKET-DATA completato per EUR; verifica USA rinviata:**
-modello offline con352programmi unici/486link, scritture ordinate tipizzate,
-padri/alias e metadati originali wrapper/body. Limiti, cicli, ID, sovrapposizioni,
-incoerenze e modifiche base coerenti sono controllati. Otto test core, un test
-JSON e un caso EUR con tutti i buffer conservati passano su Linux/Wine; JSON
-leggibile identico. Nessun nuovo replay originale, schema attivo o consumer
-runtime. Il sesto file gestito è concluso sotto; rimane il consumo04. [Contratto e prove](../rom_data_graphics.md#typed-descriptor-packet-programs).
+**ROMDATA-02-TEXT-CATALOG-MANAGED completed for EUR/Wine:** tenth fixed file
+text-catalogs.json, revision 1/12/11, 33581 intervals and set authentication/
+identity. Publication/reuse, atomic error/repair, actual EUR checks on data/
+consistent changes/metadata/paths/dependencies/limits, move and transactional
+failed activation pass in three reduced Wine checks. Actual CLI prepare/reuse
+without writes/one-frame activation with old cache pass. e11 and eight previous
+files unchanged, USA remains e8. Extended 04 consumption verified-only and
+lifecycle/scenes 05 still open; Linux/USA pending.
 
-**ROMDATA-02-BG-PACKET-MANAGED completato per EUR/Wine:** sesto file fisso
-`bg-packet-programs.json`, manifest con352intervalli e dipendenza BG, revisione
-1/8/7con generazioni e7conservate. Guardie input64MiBper file packet/set,
-parse/verifica dell'intero dataset prima di pubblicazione/attivazione. Quattro
-casi mirati Wine e sette comandi Windows reali passano; canonici/originali
-protetti. Stato runtime verified-only al termine della pubblicazione; il
-consumoEUR04è ora concluso sotto.
-Nuovi controlli Linux/USA da fare, nessuna campagna performance o suite ampia.
-[Contratto e prove](../rom_data_graphics.md#managed-packet-program-datasets).
+**ROMDATA-01-TEXT-SHORT-STRINGS / ROMDATA-02-TEXT-SHORT-DATA completed for the
+declared EUR catalog:** five original tables of 107 entries, 535 distinct strings
+(478 compact/57 extended), 5468 source bytes. Typed model with exact glyph codes/
+control bytes and only 65 packed 4bpp glyphs/metrics used; 670 intervals with
+provenance/hash. Two targeted Wine tests pass: codec/guards and all original
+selection/copy/glyph/width routines, 1331 calls/89446 instructions. Strict JSON
+and consistent changes rejected. Managed publication/startup/runtime consumption
+remain open, schema e10 unchanged. Other catalogs, complete font/Unicode/commands,
+Linux/USA pending. [Contract and evidence](../rom_data_text.md).
 
-**ROMDATA-02-BG-GRAPHICS-DATA completato per EUR/Wine:** modello tipizzato
-offline con word little-endian completi, offset, sorgente esatta, alias e ID
-canonici; parser limitato con autenticazione della ROM. Codec condiviso con
-palette alternative mantenendo le loro guardie256/4096byte. Nove test Wine
-mirati passano, inclusi JSON leggibile/roundtrip e54chiamate originali a stadi.
-Nessuna nuova revisione manifest o migrazione runtime; estrazione gestita e
-consumo restano da collegare. Linux/USA da fare, nessuna misura prestazionale.
-[Contratto e prove](../rom_data_graphics.md#european-main-background-graphics).
+**ROMDATA-02-TEXT-SHORT-MANAGED completed for EUR/Wine:** ninth fixed file
+short-texts.json, revision 1/11/10 and 670 intervals with provenance. Complete
+set/identity authentication, atomic publication, reuse/repair/move and
+transactional failed activation pass in three targeted Wine tests. Actual CLI:
+prepare/reuse without writes/one-frame activation with retained native cache
+pass. e10 and seven previous data files unchanged; USA remains e8. New catalog
+is verified-only; consumption 04 and scenes/lifecycle 05 open, Linux/USA pending.
 
-**ROMDATA-02-BG-GRAPHICS-MANAGED completato per EUR/Wine:** settimo file fisso
-`bg-main-graphics.json`, revisione1/9/8e50intervalli autenticati; USA conserva
-sei file/e8-d7senza nuove verifiche. Pubblicazione atomica, riuso senza scritture,
-riparazione, identità completa e generazioni e8precedenti conservate. Quattro
-test Wine mirati e sette veri comandi Windows CLI passano, inclusa attivazione
-con cache nativa precedente. Runtime della nuova grafica verified-only a quel
-confine; nessuna prova d'uso dedotta dal primo frame. Consumo04completato sotto. Linux/USA da
-fare, nessun benchmark o riduzione di spazio.
-[Contratto e prove](../rom_data_graphics.md#managed-european-main-graphics).
+**Dependencies:** ROMDATA-01. Proceed by family without declaring the rest of
+the catalog finished when the first prototype works.
 
-**ROMDATA-02-BG-TRANSFER-DATA completato offline per EUR/Wine:** controlli
-con duratau16/offset tile32byte, dimensione trasferimento e byte3conservato;
-tile come wordu32completi, alias/ID indipendenti e destinazioni tipizzate.
-Cinque controlli mirati Wine passano (3core/1JSON/1oracolo privato): quattro
-animazioni originali, due cicli completi, VRAM/guardie dopo ogni copia e34chunk
-DMA parziali;634chiamate/80766istruzioni. Provenienza completa, roundtrip e
-modifiche coerenti rifiutate. Nessun nuovo manifest o consumer a quel confine:
-file gestito completato sotto, consumo04successivo. Linux/USA da fare, nessuna misura prestazionale.
-[Contratto e prove](../rom_data_graphics.md#european-background-transfer-programs).
+- [x] Implement parsers with checks on lengths, offsets, pointers, decoded sizes
+  and references; reject truncated or inconsistent input.
+- [x] Extract and decode the first family in the agreed format, retaining
+  information needed to reproduce original behavior. Unknown blocks may remain
+  raw, marked as undecoded.
+- [x] Make output deterministic and inspectable: same inputs and version produce
+  equivalent manifest and data without absolute paths.
+- [x] Verify with synthetic fixtures and local comparisons with the original
+  decoder or data observed in game. Where the format permits, also verify
+  roundtrip without requiring byte-identical compression when multiple encodings
+  represent the same data.
+- [ ] Extend extractors and decoders to other matrix families, recording
+  supported content and limits for each.
 
-**ROMDATA-02-BG-TRANSFER-MANAGED completato per EUR/Wine:** ottavo file fisso
-`bg-transfer-programs.json`, revisione1/10/9,76intervalli autenticati e identità
-completa dell'insieme. Quattro test Wine mirati e tre veri comandi CLI Windows
-passano preparazione/riuso/riparazione/rilocazione/attivazione transazionale e
-cache nativa precedente. Generazioni e9e sei file decodificati precedenti
-conservati; USA resta con sei filee8-d7. Runtime transfer verified-only a quel
-confine, nessuna prova d'uso dedotta dal primo frame; consumo04concluso sotto.
-Linux/USA da fare, nessun benchmark.
-[Contratto e prove](../rom_data_graphics.md#managed-european-transfer-programs).
+**Closure per family:** correct decoded files, sufficient metadata and invalid
+inputs handled. Exporting binary blocks alone is insufficient.
+
+**ROMDATA-02-OBJ-DIMENSIONS completed:** extractor and typed decoder, CLI
+`rom-data extract|verify`, manifest and provenance checks. First four items are
+complete for this family (without pointers or compression); parsers for other
+families remain to be implemented. Linux and Windows/Wine tests pass with both
+local ROMs too. Details and limits in [decoded resources](../rom_data.md).
+Direct consumption of the first family is now connected in opt-in path 04.
+
+**ROMDATA-02-LZ77-DECODER completed as an offline component:** bounded input
+and memory, overlapping references, exact consumption without padding and
+malformed input rejection. Four synthetic tests per target and comparison with
+already captured guest outputs pass on Linux/Wine. It does not yet add a family
+to the manifest: graphics-catalog semantic contracts are needed first.
+
+**ROMDATA-02-BG-PACKETS completed as an offline component:** typed parsers for
+16-bit packets and indexed pairs, with destination, write and packet-count
+limits. Three synthetic tests per target and comparisons with original EUR/USA
+routines pass on Linux/Wine: 7 invocations/87160 instructions per case, entire
+EWRAM compared and block continuation verified. The literal-pair branch retains
+syntax, with destination guard after an original check contradicted the initial
+assumption. [Contract, evidence and limits](../rom_data_graphics.md#typed-background-packets).
+Catalog and integration of new resources remain open.
+
+**ROMDATA-02-BG-DESCRIPTOR-METADATA completed as an offline component:** typed
+decoder, bounds checks, source authentication, exact roundtrip and deterministic
+TOML. Three synthetic tests per target and four EUR/USA cases on Linux/Wine pass:
+2612 original calls/134629 instructions per case. The 106309-byte test files
+match across the four paths. Manifest integration, preparation and runtime
+consumption were selected separately as follows.
+
+**ROMDATA-02-BG-MANAGED completed for extraction/verification/preparation:** new
+descriptor file in manifest, schema 1/extractor 3/decoder 2 and v1/e3-d2
+directory, retaining previous versions. Limits 16 KiB manifest/OBJ, 256 KiB BG
+and 272 KiB total; atomic publication of three files, full reuse, recovery,
+whole-dataset identity and authenticated activation. 25 Linux/23 Wine tests,
+18 real CLI checks per target and tar/zip privacy scenarios pass.
+[Evidence and limits](../rom_data_graphics.md#managed-descriptor-extraction-and-preparation).
+This unit proves preparation; subsequent direct consumption 04 is described below.
+
+**ROMDATA-02-BG-BASE-PALETTE-DATA completed:** model of banks of 16 u16 values,
+bit 15 retained, bounded raw 0/LZ77 10 parser and exact intervals without
+padding. All 162 entries extracted to readable JSON; manifest with all
+provenance, four files and revision 1/5/4, old generations retained. 39 Linux/
+37 Wine tests and 22 CLI checks per target pass, including original oracles,
+integrity/repair/relocation and compatibility of already consumed resources.
+[Contract and limits](../rom_data_graphics.md#typed-palette-extraction-and-preparation).
+This unit covers preparation; subsequent consumption 04 is completed below
+with revision 1/6/5 and compatibility metadata. No compression/space work.
+
+
+**ROMDATA-02-BG-ALTERNATE-PALETTE-CODEC completed for the verified catalog:**
+bounded custom codec, BE header, all tokens and original checks 03..0F, exact
+consumption and rejection of truncation, out-of-history references and overrun.
+Model with complete u16 banks, source/link metadata and five FF values retained.
+Linux/Wine: 4 core tests, 314 buffers per region equal to retained oracles,
+70 synthetic streams/1120 original calls per regional case/target and negative
+check of original overrun. Deterministic readable JSON across four paths; no
+performance measurement. Managed extraction/preparation and alternative-file
+consumption are selected separately below.
+[Contract and evidence](../rom_data_graphics.md#typed-alternate-palette-codec).
+
+**ROMDATA-02-BG-ALTERNATE-PALETTE-MANAGED completed:** fifth readable JSON file
+with all banks/keys/links and 316 provenance intervals; schema 1/extractor 7/
+decoder 6, old e6 generations retained. Atomic set write/verification, no-write
+reuse, repair and authenticated activation with full identity. Linux 23 default
++ 4 private and Wine 21 + 4 pass; 23 real CLI checks per target, including
+EUR/USA, recovery and relocation. No performance measurement or space reduction.
+Alternate activation is still `verified-only` at the end of this unit;
+consumption 04 is completed below.
+[Evidence and limits](../rom_data_graphics.md#managed-alternate-palette-datasets).
+
+**ROMDATA-02-BG-PACKET-DATA completed for EUR; USA verification deferred:**
+offline model with 352 unique programs/486 links, typed ordered writes, parents/
+aliases and original wrapper/body metadata. Bounds, cycles, IDs, overlaps,
+inconsistencies and consistent base changes are checked. Eight core tests, one
+JSON test and one EUR case with all retained buffers pass on Linux/Wine; readable
+JSON identical. No new original replay, active schema or runtime consumer. Sixth
+managed file completed below; consumption 04 remains.
+[Contract and evidence](../rom_data_graphics.md#typed-descriptor-packet-programs).
+
+**ROMDATA-02-BG-PACKET-MANAGED completed for EUR/Wine:** sixth fixed file
+`bg-packet-programs.json`, manifest with 352 intervals and BG dependency, revision
+1/8/7 with e7 generations retained. Input guards 64 MiB per packet file/set,
+whole-dataset parse/verification before publication/activation. Four targeted
+Wine cases and seven real Windows commands pass; canonical files/originals
+protected. Runtime status verified-only at publication; EUR consumption 04 is
+now completed below. New Linux/USA checks pending, no performance campaign or
+broad suite. [Contract and evidence](../rom_data_graphics.md#managed-packet-program-datasets).
+
+**ROMDATA-02-BG-GRAPHICS-DATA completed for EUR/Wine:** offline typed model with
+complete little-endian words, offsets, exact source, aliases and canonical IDs;
+bounded parser with ROM authentication. Codec shared with alternate palettes,
+retaining their 256/4096-byte guards. Nine targeted Wine tests pass, including
+readable JSON/roundtrip and 54 original staged calls. No new manifest revision or
+runtime migration; managed extraction and consumption remain to be connected.
+Linux/USA pending, no performance measurement.
+[Contract and evidence](../rom_data_graphics.md#european-main-background-graphics).
+
+**ROMDATA-02-BG-GRAPHICS-MANAGED completed for EUR/Wine:** seventh fixed file
+`bg-main-graphics.json`, revision 1/9/8 and 50 authenticated intervals; USA
+retains six files/e8-d7 without new checks. Atomic publication, no-write reuse,
+repair, full identity and previous e8 generations retained. Four targeted Wine
+tests and seven real Windows CLI commands pass, including activation with
+previous native cache. New graphics runtime verified-only at that boundary; no
+use evidence inferred from the first frame. Consumption 04 completed below.
+Linux/USA pending, no benchmark or space reduction.
+[Contract and evidence](../rom_data_graphics.md#managed-european-main-graphics).
+
+**ROMDATA-02-BG-TRANSFER-DATA completed offline for EUR/Wine:** controls with
+u16 duration/32-byte tile offset, transfer size and byte 3 retained; tiles as
+complete u32 words, independent aliases/IDs and typed destinations. Five
+targeted Wine checks pass (3 core/1 JSON/1 private oracle): four original
+animations, two full cycles, VRAM/guards after every copy and 34 partial DMA
+chunks; 634 calls/80766 instructions. Full provenance and roundtrip; consistent
+changes rejected. No new manifest or consumer at that boundary: managed file
+completed below, consumption 04 subsequent. Linux/USA pending, no performance
+measurement. [Contract and evidence](../rom_data_graphics.md#european-background-transfer-programs).
+
+**ROMDATA-02-BG-TRANSFER-MANAGED completed for EUR/Wine:** eighth fixed file
+`bg-transfer-programs.json`, revision 1/10/9, 76 authenticated intervals and
+full set identity. Four targeted Wine tests and three real Windows CLI commands
+pass preparation/reuse/repair/relocation/transactional activation and previous
+native cache. e9 generations and six prior decoded files retained; USA remains
+with six files e8-d7. Transfer runtime verified-only at that boundary, no use
+evidence inferred from first frame; consumption 04 completed below. Linux/USA
+pending, no benchmark.
+[Contract and evidence](../rom_data_graphics.md#managed-european-transfer-programs).
+
 
 **ROMDATA-02-FONT-KEYBOARD-MANAGED / ROMDATA-04-FONT-KEYBOARD-CONSUMPTION
-completati per EUR/Wine dichiarato:** due nuovi file fissi font-bank.json e
-name-keyboard.json, dataset1/13/12da12file/11risorse; e12e precedenti file
-conservati, USA resta e8-d7. Autenticazione delle sette provenienze e dell'intero
-insieme; owner tipizzato immutabile per glifi/metriche/indici/programmi/righe.
-Tre controlli Wine mirati passano pubblicazione/errore atomico/riuso/riparazione/
-spostamento, rifiuto modifiche e attivazione transazionale; cinque chiamate
-originali/native con tutte sette sorgenti alterate e stati/clock uguali;
-Load/Undo/backup/riavvio con copie temporanee indisponibili. Nessun cambio ABI
-save/native o istruzione guest saltata. Linux/USA da fare.
+completed for declared EUR/Wine scope:** two new fixed files font-bank.json and
+name-keyboard.json, dataset 1/13/12 with 12 files/11 resources; e12 and prior
+files retained, USA remains e8-d7. Authentication of seven provenance sources
+and the entire set; immutable typed owner for glyphs/metrics/indices/programs/
+rows. Three targeted Wine checks pass publication/atomic error/reuse/repair/
+relocation, change rejection and transactional activation; five original/native
+calls with all seven sources altered and equal states/clock; Load/Undo/backup/
+restart with temporary copies unavailable. No save/native ABI change or guest
+instruction skipped. Linux/USA pending.
 
-**ROMDATA-05-FONT-KEYBOARD-SCENE-CLI completato per una transizione EUR/Wine:**
-397frame pubCyril con stati/clock/immagini/OAM/dispatch/audio uguali e8064byte
-glifi/93metriche dal banco completo. CLI reale prepara/riusa e13senza scritture
-e vecchia cache, stesso risultato legacy conservato. La scena non usa la
-tastiera: scena nome ordinaria/GUI/archivi restano da fare. Nessuna misura
-prestazionale o ottimizzazione spazio. [Prove](../rom_data_text.md#complete-european-font-and-name-keyboard).
+**ROMDATA-05-FONT-KEYBOARD-SCENE-CLI completed for one EUR/Wine transition:**
+397-frame Cyril pub with equal states/clock/images/OAM/dispatch/audio and 8064
+glyph bytes/93 metrics from the complete bank. Actual CLI prepares/reuses e13
+without writes and old cache, same retained legacy result. The scene does not
+use the keyboard: ordinary name scene/GUI/archives remain pending. No performance
+measurement or space optimization.
+[Evidence](../rom_data_text.md#complete-european-font-and-name-keyboard).
 
-**ROMDATA-02-OBJ-STATIC-MANAGED / ROMDATA-04-OBJ-STATIC-CONSUMPTION completati
-per EUR/Wine dichiarato:** file fisso obj-static-lists.json,1/14/13con13file/
-12risorse e66provenienze; e13e file precedenti conservati, USA resta e8-d7.
-Tre controlli Wine mirati passano pubblicazione/riuso/riparazione/spostamento,
-rifiuto modifiche e attivazione transazionale, otto chiamate originali/native
-con tutte66sorgenti alterate e stati/clock uguali, bordi/mirror/SWI/DMA,
-otto casi host draw/pubblicazione e Load/Undo/backup/riavvio. Nessun cambio ABI
-o istruzione guest saltata. Un controllo aggiuntivo Wine passa792casi host draw/visibilità/battaglia e
-modifiche vive di liste RAM/ROM fuori catalogo; nuovi Linux/USA da fare.
+**ROMDATA-02-OBJ-STATIC-MANAGED / ROMDATA-04-OBJ-STATIC-CONSUMPTION completed
+for declared EUR/Wine scope:** fixed file obj-static-lists.json, 1/14/13 with
+13 files/12 resources and 66 provenance sources; e13 and prior files retained,
+USA remains e8-d7. Three targeted Wine checks pass publication/reuse/repair/
+relocation, change rejection and transactional activation, eight original/
+native calls with all 66 sources altered and equal states/clock, boundaries/
+mirrors/SWI/DMA, eight host draw/publication cases and Load/Undo/backup/restart.
+No ABI change or guest instruction skipped. An additional Wine check passes
+792 host draw/visibility/battle cases and live changes to RAM/ROM lists outside
+the catalog; new Linux/USA checks pending.
 
-**ROMDATA-05-OBJ-STATIC-SCENE-CLI completato per una transizione EUR/Wine:**
-397frame pub con ogni stato/clock/immagine/OAM/dispatch/audio uguale e5470byte
-OBJ tipizzati/958letture host. Tre processi CLI reali da cwd estranea preparano/
-riusano senza scritture e riproducono con cache vecchia, risultato legacy
-conservato uguale. Nessuna misura prestazionale/spazio. GUI/archivi più ampi e
-altri cataloghi OBJ restano aperti. [Prove](../rom_data_obj.md#verification).
+**ROMDATA-05-OBJ-STATIC-SCENE-CLI completed for one EUR/Wine transition:**
+397-frame pub with every state/clock/image/OAM/dispatch/audio equal and 5470
+typed OBJ bytes/958 host reads. Three actual CLI processes from an unrelated cwd
+prepare/reuse without writes and replay with old cache, retained legacy result
+equal. No performance/space measurement. Broader GUI/archives and other OBJ
+catalogs remain open. [Evidence](../rom_data_obj.md#verification).
 
-**ROMDATA-01-OBJ-UI-ANIMATION-ROOTS / ROMDATA-02-OBJ-UI-ANIMATION-DATA completati
-per EUR/Wine dichiarato:**30coppie letterali individuano10banchi OBJ/sequenze,
-167liste/284oggetti/95sequenze/184frame e282intervalli. Indici relativi, campi
-OBJ e durateu16conservati; contatori restano RAM. Due controlli Wine passano
-JSON/sorgente/guardie,115costruttori originali e2292tick originali con task,
-loop/ultimo frame, OAM/matrici/guardie uguali. Tre sequenze vuote conservate,
-domini diretti ora classificati sotto ROMDATA-01-OBJ-EMPTY-CALLERS;
-scheduling indiretto/live non verificato. Le sette ulteriori liste dirette
-sono ora migrate sotto e16; altri chiamanti indiretti restano aperti. Linux/USA da fare.
+**ROMDATA-01-OBJ-UI-ANIMATION-ROOTS / ROMDATA-02-OBJ-UI-ANIMATION-DATA completed
+for declared EUR/Wine scope:** 30 literal pairs identify 10 OBJ banks/sequences,
+167 lists/284 objects/95 sequences/184 frames and 282 intervals. Relative
+indices, OBJ fields and u16 durations retained; counters remain RAM. Two Wine
+checks pass JSON/source/guards, 115 original constructors and 2292 original
+ticks with equal task, loop/last frame, OAM/matrices/guards. Three empty sequences
+retained, direct domains now classified under ROMDATA-01-OBJ-EMPTY-CALLERS;
+indirect/live scheduling unverified. The seven additional direct lists are now
+migrated under e16; other indirect callers remain open. Linux/USA pending.
 
 **ROMDATA-02-OBJ-ANIMATION-MANAGED / ROMDATA-04-OBJ-ANIMATION-CONSUMPTION
-completati per EUR/Wine dichiarato:** obj-animation-banks.json,1/15/14con14file/
-13risorse e282provenienze; e14e tutti i file precedenti conservati. Tre prove
-Wine mirate passano autenticazione/pubblicazione/riuso/riparazione/spostamento,
-49chiamate costruttori/body originali/native con sorgenti alterate e stati/clock
-uguali, tutti sei tipi letti da codice compilato, bordi/mirror/SWI/DMA, dieci
-banchi host e Load/Undo/backup/riavvio senza file. ABI e lavoro guest invariati.
-La breve scena battaglia240frame coincide interamente ma usa0byte di questi
-banchi: il gate positivo la rifiuta. Una scena mappa+Start160frame ora passa
-ogni stato/clock/immagine/OAM/dispatch/audio con36513byte tipizzati/3200letture
-host; tre CLI reali preparano/riusano senza scritture e riproducono con cache
-vecchia. Menu finale ispezionato. Linux/USA da fare. [Contratto e prove](../rom_data_obj.md#indexed-ui-animation-banks).
+completed for declared EUR/Wine scope:** obj-animation-banks.json, 1/15/14 with
+14 files/13 resources and 282 provenance sources; e14 and all prior files
+retained. Three targeted Wine checks pass authentication/publication/reuse/
+repair/relocation, 49 original/native constructor/body calls with altered
+sources and equal states/clock, all six types read by compiled code, boundaries/
+mirrors/SWI/DMA, ten host banks and Load/Undo/backup/restart without files. ABI
+and guest work unchanged. The short 240-frame battle scene matches completely but
+uses 0 bytes from these banks: the positive gate rejects it. A 160-frame map+
+Start scene now passes every state/clock/image/OAM/dispatch/audio with 36513
+typed bytes/3200 host reads; three real CLIs prepare/reuse without writes and
+replay with old cache. Final menu inspected. Linux/USA pending.
+[Contract and evidence](../rom_data_obj.md#indexed-ui-animation-banks).
+
 
 **ROMDATA-02-OBJ-EXTRA-DIRECT-LISTS / ROMDATA-04-OBJ-EXTRA-CONSUMPTION /
-ROMDATA-05-OBJ-EXTRA-SCENE-CLI completati per EUR/Wine dichiarato:** sedici
-riferimenti aggiuntivi/sette nuove liste portano il catalogo statico a 123
-riferimenti, 73 liste, 173 oggetti e 1184 byte sorgente. e16-d15 conserva e15,
-tutti i 66 record precedenti e gli altri file decodificati; restano 14 file/
-13 risorse. Tre controlli Wine mirati passano autenticazione/pubblicazione/
-riuso/riparazione/spostamento, 14 chiamate originali/interprete/native con le
-sette sorgenti alterate e stati/clock uguali, bordi/mirror/SWI/DMA, 14 casi host
-e Load/Undo/backup/riavvio senza file. Flag guest/host per sorgente impediscono
-che liste precedenti soddisfino il gate nuovo. Battaglia/Party/menu personaggio
-sono osservazioni a copertura negativa conservate; la selezione lingua EUR
-all'avvio usa tre nuove liste. Un solo confronto di 240 frame passa ogni stato/
-clock/immagine/OAM/dispatch/audio; CLI reale prepara/riusa senza scritture e
-riproduce con cache vecchia da cwd estranea, immagine finale ispezionata.
-Nessun test chiuso ripetuto. Altre scene/GUI/archivi, nuovi Linux/USA e radici
-switch/indirette da fare. [Prove](../rom_data_obj.md#additional-direct-lists-in-e16).
+ROMDATA-05-OBJ-EXTRA-SCENE-CLI completed for declared EUR/Wine scope:** sixteen
+additional references/seven new lists bring the static catalog to 123 references,
+73 lists, 173 objects and 1184 source bytes. e16-d15 retains e15, all 66 prior
+records and other decoded files; 14 files/13 resources remain. Three targeted
+Wine checks pass authentication/publication/reuse/repair/relocation, 14 original/
+interpreter/native calls with seven sources altered and equal states/clock,
+boundaries/mirrors/SWI/DMA, 14 host cases and Load/Undo/backup/restart without
+files. Per-source guest/host flags prevent prior lists from satisfying the new
+gate. Battle/Party/character-menu observations are retained as negative coverage;
+EUR language selection at startup uses three new lists. One 240-frame comparison
+passes every state/clock/image/OAM/dispatch/audio; actual CLI prepares/reuses
+without writes and replays with old cache from an unrelated cwd, final image
+inspected. No closed test repeated. Other scenes/GUI/archives, new Linux/USA
+checks and switch/indirect roots pending.
+[Evidence](../rom_data_obj.md#additional-direct-lists-in-e16).
 
 **ROMDATA-01-OBJ-ZERO-COUNT-PAIR-CONTRACT / ROMDATA-02-OBJ-ZERO-COUNT-DATA /
 ROMDATA-04-OBJ-ZERO-COUNT-CONSUMPTION / ROMDATA-05-OBJ-ZERO-COUNT-SCENE-CLI
-completati per EUR/Wine nonrepeat dichiarato:** undicesimo banco b4d8e8/b4f4e8,
-una lista/due oggetti/cinque conteggi zero. Selettori espliciti e riferimenti
-alla durata conservano gli header zero e riusano proprietari tipizzati degli
-header/indici successivi. Otto intervalli nuovi/58 byte; e17-d16 conserva i
-dieci record precedenti, gli altri file ed e16, senza cambiare ABI. Un controllo
-Wine originale passa 14 costruttori/104 tick e indirizzi letti/stati task/OAM/
-matrici/guardie. Due prove Wine mirate passano autenticazione/alias/modifiche
-coerenti/pubblicazione/riuso/riparazione/spostamento/Load/Undo/backup/riavvio,
-otto confronti interprete/native con sorgenti e durata condivisa alterate e
-stati/clock uguali, bordi/mirror/SWI/DMA e host. Una scena Party di 240 frame
-passa ogni stato/clock/immagine/OAM/dispatch/audio con 288 byte selettori e
-288 letture host nuovi; CLI reale prepara/riusa senza scritture e riproduce
-con cache precedente, immagine ispezionata. Domini diretti delle tre sequenze
-vuote precedenti ora classificati sotto ROMDATA-01-OBJ-EMPTY-CALLERS;
-repeat1/precondizioni diverse e altre radici restano aperti. Linux/USA da fare.
-[Contratto](../rom_data_obj.md#zero-count-hold-bank-in-e17).
+completed for declared EUR/Wine nonrepeat scope:** eleventh bank b4d8e8/b4f4e8,
+one list/two objects/five zero counts. Explicit selectors and duration references
+retain zero headers and reuse typed owners of subsequent headers/indices. Eight
+new intervals/58 bytes; e17-d16 retains the ten prior records, other files and
+e16 without ABI change. One original Wine check passes 14 constructors/104 ticks
+and addresses read/task states/OAM/matrices/guards. Two targeted Wine checks pass
+authentication/aliases/consistent changes/publication/reuse/repair/relocation/
+Load/Undo/backup/restart, eight interpreter/native comparisons with sources and
+shared duration altered and equal states/clock, boundaries/mirrors/SWI/DMA and
+host. A 240-frame Party scene passes every state/clock/image/OAM/dispatch/audio
+with 288 new selector bytes and 288 new host reads; actual CLI prepares/reuses
+without writes and replays with prior cache, image inspected. Direct domains of
+the three prior empty sequences now classified under ROMDATA-01-OBJ-EMPTY-CALLERS;
+repeat1/different prerequisites and other roots remain open. Linux/USA pending.
+[Contract](../rom_data_obj.md#zero-count-hold-bank-in-e17).
 
 **ROMDATA-02-OBJ-LOCALIZED-UI-BANKS / ROMDATA-04-OBJ-LOCALIZED-CONSUMPTION /
-ROMDATA-05-OBJ-LOCALIZED-SCENE-CLI completati per EUR/Wine dichiarato:** cinque
-banchi selezionati dalla lingua tramite due tabelle di puntatori; 149 liste/
-574 oggetti/144 frame e 166 intervalli/4984 byte aggiuntivi. e18-d17 conserva
-11 banchi precedenti, gli altri file e le generazioni e17. Il catalogo ha ora
-16 coppie/317 liste/105 sequenze/328 frame, sempre 14 file/13 risorse. Originali
-selezioni e durata u16 256 con contatore u8 conservati. Un controllo Wine passa
-15 selezioni/10 costruttori/1589 tick e stati task/OAM/matrici/guardie; due prove
-mirate passano autenticazione/riuso/riparazione/spostamento/Load/Undo/backup/
-riavvio, 30 confronti originali/interprete/native con 166 sorgenti alterate,
-nuovi bordi/mirror/SWI/DMA e cinque pubblicazioni host. La battaglia conservata
-e i primi tentativi direzionali mappa hanno copertura zero, conservati senza
-confronto doppio o ripetizione. La scena reale “Engage!” da mappa usa il normale
-puntamento mouse a Lutia Pass e A: 400 frame con ogni stato/clock/immagine/OAM/
-dispatch/audio uguale, 8 byte tabella/5906 byte banco/228 letture host nuovi.
-CLI reale prepara/riusa senza scritture e usa cache vecchia da cwd estranea;
-immagine finale ispezionata. Nuovi Linux/USA da fare. Grafica OBJ compressa
-collegata resta aperta; domini diretti dei tre vecchi record vuoti ora
-classificati sotto ROMDATA-01-OBJ-EMPTY-CALLERS, ingressi indiretti/live non
-verificati.
-[Prove](../rom_data_obj.md#language-selected-ui-banks-in-e18).
+ROMDATA-05-OBJ-LOCALIZED-SCENE-CLI completed for declared EUR/Wine scope:** five
+language-selected banks through two pointer tables; 149 lists/574 objects/144
+frames and 166 additional intervals/4984 bytes. e18-d17 retains 11 prior banks,
+other files and e17 generations. The catalog now has 16 pairs/317 lists/105
+sequences/328 frames, still 14 files/13 resources. Original selections and u16
+256 duration with u8 counter retained. One Wine check passes 15 selections/10
+constructors/1589 ticks and task states/OAM/matrices/guards; two targeted checks
+pass authentication/reuse/repair/relocation/Load/Undo/backup/restart, 30 original/
+interpreter/native comparisons with 166 sources altered, new boundaries/mirrors/
+SWI/DMA and five host publications. The retained battle and first directional
+map attempts have zero coverage, retained without duplicate comparison or repeat.
+The actual “Engage!” scene from the map uses normal mouse targeting at Lutia Pass
+and A: 400 frames with every state/clock/image/OAM/dispatch/audio equal, 8 table
+bytes/5906 bank bytes/228 new host reads. Actual CLI prepares/reuses without
+writes and uses old cache from an unrelated cwd; final image inspected. New
+Linux/USA checks pending. Linked compressed OBJ graphics remain open; direct
+domains of the three old empty records now classified under
+ROMDATA-01-OBJ-EMPTY-CALLERS, indirect/live entries unverified.
+[Evidence](../rom_data_obj.md#language-selected-ui-banks-in-e18).
+
 
 **ROMDATA-01-OBJ-GRAPHICS-PAYLOADS / ROMDATA-02-OBJ-CUSTOM-GRAPHICS /
-ROMDATA-04-OBJ-CUSTOM-CONSUMPTION / ROMDATA-05-OBJ-CUSTOM-SCENE-CLI completati per il catalogo EUR/Wine dichiarato:**
-39banchi custom e sei tabelle da cinque puntatori,45intervalli/62674byte sorgente/
-131872byte decodificati; tredici riferimenti diretti e sei percorsi indicizzati
-canonici. EUR e19-d18aggiunge obj-graphics.json (15file/14risorse), conserva
-tutti i13file decodificati precedenti e le generazioni e18. Letterali/puntatori
-tipizzati alimentano il decoder/copie originali; scratch, trasformazioni,
-trasferimenti parziali e coda RAM viva restano attivi. Wine verifica39decoder/
-30selettori/6copie originali, pubblicazione/riuso/recupero/spostamento/Load/Undo/
-backup/restart e39decoder/30selettori/4copie interprete/native con sorgenti
-alterate e stati/clock uguali. Una correzione indirizzo fixture DMA è verificata
-separatamente con20byte tipizzati positivi. Una scena Engage400frame passa
-stati/immagini/OAM/dispatch/audio con1194byte sorgente/460letterali/4selettore.
-CLI Windows reale crea/riusa senza scritture/esegue da cwd estranea con cache
-nativa precedente; eseguibile canonico e sorgenti originali invariati.
-Altri payload/palette OBJ, scheduling indiretto/live dei tre record vuoti e
-Linux/USA restano aperti; domini diretti ora classificati sotto
-ROMDATA-01-OBJ-EMPTY-CALLERS;
-nessuna misura prestazionale. [Contratto e prove](../rom_data_obj.md#custom-obj-word-banks-in-e19).
+ROMDATA-04-OBJ-CUSTOM-CONSUMPTION / ROMDATA-05-OBJ-CUSTOM-SCENE-CLI completed
+for the declared EUR/Wine catalog:** 39 custom banks and six tables of five
+pointers, 45 intervals/62674 source bytes/131872 decoded bytes; thirteen direct
+references and six canonical indexed paths. EUR e19-d18 adds obj-graphics.json
+(15 files/14 resources), retains all 13 prior decoded files and e18 generations.
+Typed literals/pointers feed original decoder/copies; scratch, transformations,
+partial transfers and live RAM tail remain active. Wine verifies 39 original
+decoders/30 selectors/6 copies, publication/reuse/recovery/relocation/Load/Undo/
+backup/restart and 39 interpreter/native decoders/30 selectors/4 copies with
+altered sources and equal states/clock. A DMA fixture address fix is verified
+separately with 20 positive typed bytes. A 400-frame Engage scene passes states/
+images/OAM/dispatch/audio with 1194 source bytes/460 literals/selector: 4.
+Actual Windows CLI creates/reuses without writes/executes from an unrelated cwd
+with previous native cache; canonical executable and original sources unchanged.
+Other OBJ payloads/palettes, indirect/live scheduling of the three empty records
+and Linux/USA remain open; direct domains now classified under
+ROMDATA-01-OBJ-EMPTY-CALLERS; no performance measurement.
+[Contract and evidence](../rom_data_obj.md#custom-obj-word-banks-in-e19).
 
 **ROMDATA-01-OBJ-PALETTE-SOURCES / ROMDATA-02-UI-RAW-PALETTE-MANAGED /
 ROMDATA-04-UI-RAW-PALETTE-CONSUMPTION / ROMDATA-05-UI-RAW-PALETTE-SCENE-CLI
-completati per il catalogo EUR/Wine dichiarato:**21banchi/23riferimenti diretti,
-derivati o Color Mode,1328u16/2656byte senza sovrapposizioni, per entrambe le
-metà BG/OBJ del buffer palette. EUR e20-d19aggiunge ui-palettes.json,
-16file/15risorse; tutti i14file decodificati precedenti/e19restano invariati.
-Wine verifica l’inizializzatore originale176byte,27copie/10casi Color Mode,
-JSON/fonti/bit15, pubblicazione/riuso/recupero/spostamento/Load/Undo/backup/
-restart e parità completa interprete/native con tutte le21fonti alterate e
-3528byte compilati positivi. Bus/DMA160byte e pubblicazione di cambi RAM vivi
-passano. Avvio ordinario240frame/CLI reale coincide per stati/clock/immagini/
-OAM/dispatch/audio con33letture/130byte palette. Altre fonti indirette e
-Linux/USA/Windows nativo restano aperti; nessuna misura prestazionale.
-[Contratto e prove](../rom_data_ui_palettes.md).
+completed for the declared EUR/Wine catalog:** 21 banks/23 direct, derived or
+Color Mode references, 1328 u16 values/2656 bytes without overlaps, for both
+BG/OBJ halves of the palette buffer. EUR e20-d19 adds ui-palettes.json, 16 files/
+15 resources; all 14 prior decoded files/e19 unchanged. Wine verifies original
+176-byte initializer, 27 copies/10 Color Mode cases, JSON/sources/bit 15,
+publication/reuse/recovery/relocation/Load/Undo/backup/restart and full
+interpreter/native parity with all 21 sources altered and 3528 positive compiled
+bytes. Bus/DMA 160 bytes and publication of live RAM changes pass. Ordinary
+240-frame startup/actual CLI match states/clock/images/OAM/dispatch/audio with
+33 reads/130 palette bytes. Other indirect sources and Linux/USA/native Windows
+remain open; no performance measurement. [Contract and evidence](../rom_data_ui_palettes.md).
 
 **ROMDATA-01-RETURN-LENGTH-CUSTOM-GRAPHICS / ROMDATA-02-UI-CUSTOM-GRAPHICS /
-ROMDATA-04-UI-CUSTOM-CONSUMPTION / ROMDATA-05-UI-CUSTOM-SCENE-CLI completati
-per il catalogo EUR/Wine dichiarato:** nove banchi custom(ottoBG/unOBJ),
-dieci percorsi originali literal/decoder/upload,57038byte sorgente/84160decodificati.
-I conteggi derivati da r0e la copia parziale544/2944byte restano istruzioni
-originali. EUR e21-d20aggiunge ui-graphics.json(17file/16risorse), conserva
-tutti i15file decodificati precedenti/e20. Wine passa sorgenti/JSON/metadati,
-pubblicazione/riuso/recupero/spostamento/Load/Undo/backup/restart e tutti i dieci
-percorsi interprete/native con nove intervalli alterati e stati/clock uguali;
-68906byte compilati/39861letterali e tutti i banchi positivi. Bus/mirrors/BIOS/
-CpuSet/FastSet/DMA32byte passano. Primo locator Party→Unit320frame negativo
-conservato; scena Clan320frame positiva con1642byte sorgente/764letterali,
-stati/clock/immagini/OAM/dispatch/audio uguali e CLI reale create/no-write
-reuse/vecchia cache. Altre sorgenti/varianti indirette restano aperte, Linux/USA
-da fare, nessuna misura prestazionale. [Contratto](../rom_data_ui_graphics.md).
+ROMDATA-04-UI-CUSTOM-CONSUMPTION / ROMDATA-05-UI-CUSTOM-SCENE-CLI completed for
+the declared EUR/Wine catalog:** nine custom banks (eight BG/one OBJ), ten
+original literal/decoder/upload paths, 57038 source bytes/84160 decoded. Counts
+derived from r0 and the 544/2944-byte partial copy remain original instructions.
+EUR e21-d20 adds ui-graphics.json (17 files/16 resources), retains all 15 prior
+decoded files/e20. Wine passes sources/JSON/metadata, publication/reuse/recovery/
+relocation/Load/Undo/backup/restart and all ten interpreter/native paths with
+nine intervals altered and equal states/clock; 68906 compiled bytes/39861
+literals and all banks positive. Bus/mirrors/BIOS/CpuSet/FastSet/DMA 32 bytes
+pass. First Party→Unit 320-frame locator negative and retained; positive 320-frame
+Clan scene with 1642 source bytes/764 literals, equal states/clock/images/OAM/
+dispatch/audio and actual CLI create/no-write reuse/old cache. Other indirect
+sources/variants remain open, Linux/USA pending, no performance measurement.
+[Contract](../rom_data_ui_graphics.md).
 
 **ROMDATA-01-UI-LANGUAGE-GRAPHICS / ROMDATA-02-UI-LOCALIZED-GRAPHICS /
 ROMDATA-04-UI-LOCALIZED-CONSUMPTION / ROMDATA-05-UI-LOCALIZED-SCENE-CLI
-completati per l'ambito EUR/Wine dichiarato:** sette banchi nuovi/due selettori
-per cinque lingue/due link a proprietari OBJ esistenti.17nuovi intervalli/
-14436byte(14396payload+40puntatori)/35008decodificati; totale16banchi/
-26intervalli/71474byte sorgente/119168decodificati. EUR e22-d21mantiene17file/
-16risorse, nove record UI/tutti15altri file decodificati/e21immutati. Lingua live,
-jump table di codice, fallback inglese vs salto e copia5056OBJ/2688BG restano
-originali. Tre controlli Wine mirati passano14percorsi selettori/sette nuovi
-produttori/due sole code BG condivise, autenticazione/proprietari/transazioni/
-pubblicazione/riuso/riparazione/spostamento/Load/Undo/backup/restart e native con
-17intervalli alterati/stati-clock uguali;48byte selettori compilati/14310nuove
-sorgenti/6449letterali/tutti7banchi positivi, bus/BIOS/SWI/DMA4byte. Corrette solo
-fixture nuove fallite: modulo duplicato e chain nativa oltre gli stop dei soli
-selettori; evidenza conservata, nessuna modifica runtime per quei problemi.
-CLI create/no-write reuse passa; Clan320frame è negativo per i nuovi dati e
-non viene confrontato di nuovo. Avvio normale1200frame con input esistente usa
-4byte selettore/2347nuova sorgente b7d9e4/1124letterali: una coppia completa
-stati/clock/immagini/OAM/dispatch/audio passa, immagine finale ispezionata.
-Altre scene linguistiche ordinarie/sorgenti indirette restano aperte, Linux/USA/
-Windows nativo da fare; nessuna misura prestazionale/spazio.
-[Contratto](../rom_data_ui_graphics.md#localized-ui-selectors-in-e22).
+completed for declared EUR/Wine scope:** seven new banks/two selectors for five
+languages/two links to existing OBJ owners. 17 new intervals/14436 bytes
+(14396 payload + 40 pointers)/35008 decoded; total 16 banks/26 intervals/71474
+source bytes/119168 decoded. EUR e22-d21 retains 17 files/16 resources, nine UI
+records/all 15 other decoded files/e21 unchanged. Live language, code jump table,
+English fallback versus skip and 5056 OBJ/2688 BG copy remain original. Three
+targeted Wine checks pass 14 selector paths/seven new producers/two shared BG
+suffixes only, authentication/owners/transactions/publication/reuse/repair/
+relocation/Load/Undo/backup/restart and native with 17 intervals altered/equal
+states-clock; 48 compiled selector bytes/14310 new source bytes/6449 literals/
+all 7 banks positive, bus/BIOS/SWI/DMA 4 bytes. Only failed new fixtures fixed:
+duplicate module and native chain beyond selector-only stops; evidence retained,
+no runtime change for those issues. CLI create/no-write reuse passes; 320-frame
+Clan is negative for new data and not compared again. Normal 1200-frame startup
+with existing input uses 4 selector bytes/2347 new source bytes b7d9e4/1124
+literals: one full states/clock/images/OAM/dispatch/audio pair passes, final
+image inspected. Other ordinary language scenes/indirect sources remain open,
+Linux/USA/native Windows pending; no performance/space measurement.
+[Contract](../rom_data_ui_graphics.md#localized-ui-selectors-in-e22).
+
 
 **ROMDATA-02-GAMEPLAY-ITEM-SOURCE-ORACLE / ROMDATA-02-GAMEPLAY-ITEM-DATA /
-ROMDATA-04-GAMEPLAY-ITEM-CONSUMPTION completati per EUR/Wine dichiarato:**
-376record/32byte/12032sorgente, items.json/resource gameplay.item-records,
-EUR e23-d22/18file/17risorse, tutti16file decodificati precedenti/e22immutati.
-Campi halfword/byte/signed/tail conservano ogni bit; proprietà/bonus live/
-inventario/clamp unsigned e tabella secondaria restano originali. Un oracolo
-Wine passa14371chiamate su tutti i record/19proprietà/due rami bonus, speciali/
-troncamenti/invalidi e240casi signed negativi isolati; i campi ROM distribuiti
-sono tutti non negativi. Prima assunzione errata della fixture corretta prima
-dell'esecuzione, log fallito conservato. Due integrazioni Wine passano gestione/
-recupero/retention/transazioni/provenienza/Load/Undo/backup/restart e86chiamate
-native con12032byte raw alterati/stati-clock uguali;100byte compilati(24prefix/
-40signed/36altri). Tutti byte/edges/mirrors/BIOS/SWI/DMA4byte passano.
-ROMDATA-05-GAMEPLAY-ITEM-SCENE-CLI è completo per una scena Unit320frame:
-CLI create/no-write reuse/vecchia cache e una coppia completa stati/clock/
-immagini/OAM/dispatch/audio passano con40nuovi byte signed; immagine finale
-ispezionata. Prefix/tail ordinari non rivendicati; altri cataloghi e Linux/USA/
-Windows nativo restano aperti, nessuna misura prestazionale/spazio.
-[Contratto](../rom_data_gameplay.md).
+ROMDATA-04-GAMEPLAY-ITEM-CONSUMPTION completed for declared EUR/Wine scope:**
+376 records/32 bytes/12032 source bytes, items.json/resource gameplay.item-records,
+EUR e23-d22/18 files/17 resources, all 16 prior decoded files/e22 unchanged.
+Halfword/byte/signed/tail fields preserve every bit; properties/live bonuses/
+inventory/unsigned clamp and secondary table remain original. One Wine oracle
+passes 14371 calls across all records/19 properties/two bonus branches, special/
+truncated/invalid cases and 240 isolated negative signed cases; all distributed
+ROM fields are nonnegative. First incorrect fixture assumption corrected before
+execution, failed log retained. Two Wine integrations pass management/recovery/
+retention/transactions/provenance/Load/Undo/backup/restart and 86 native calls
+with 12032 raw bytes altered/equal states-clock; 100 compiled bytes (24 prefix/
+40 signed/36 other). All bytes/edges/mirrors/BIOS/SWI/DMA 4 bytes pass.
+ROMDATA-05-GAMEPLAY-ITEM-SCENE-CLI is complete for one 320-frame Unit scene:
+CLI create/no-write reuse/old cache and one full states/clock/images/OAM/dispatch/
+audio pair pass with 40 new signed bytes; final image inspected. Ordinary prefix/
+tail not claimed; other catalogs and Linux/USA/native Windows remain open, no
+performance/space measurement. [Contract](../rom_data_gameplay.md).
 
 **ROMDATA-01-GAMEPLAY-ITEM-SECONDARY-ROOTS / ROMDATA-02-GAMEPLAY-ITEM-LINK-SOURCE-ORACLE
-completati per il contratto EUR/Wine dichiarato:**6e3ad0..6e4c64,
-225record×20byte/4500byte, count0..9/byte opaco/nove coppie,472attive/ottoFF.
-Dodici literal LDR e root seguente indipendente confermano i limiti;376oggetti
-riferiscono220righe, tutte225conservate. Catalogo tipizzato lossless/JSON/source/
-owner/extent/coherent edit passa Wine:378selettori/1394ricerche/464prefissi normali/
-8prefissiFF,4query sintetiche zero/duplicati/unused e8casi separati dal confronto
-precedente al ramoFF.2244casi/61906istruzioni principali+80del gate, nessuna
-misura prestazionale. Unit bit7/byte3drestano live; chiamate job/abilità successive
-non rivendicate. Il contratto precede la successiva integrazione e24riportata sotto;
-nuove verifiche Linux/USA/Windows nativo restano da fare.
-[Contratto](../rom_data_gameplay.md#item-linked-pair-source-contract).
+completed for declared EUR/Wine contract:** 6e3ad0..6e4c64, 225 records × 20
+bytes/4500 bytes, count 0..9/opaque byte/nine pairs, 472 active/eight FF. Twelve
+literal LDRs and independent next root confirm boundaries; 376 items reference
+220 rows, all 225 retained. Lossless typed catalog/JSON/source/owner/extent/
+coherent edit passes Wine: 378 selectors/1394 searches/464 normal prefixes/
+8 FF prefixes, 4 synthetic zero/duplicate/unused queries and 8 cases separate
+from the earlier comparison at the FF branch. 2244 cases/61906 main instructions
++ 80 in the gate, no performance measurement. Unit bit 7/byte 3d remain live;
+subsequent job/ability calls not claimed. The contract precedes subsequent e24
+integration reported below; new Linux/USA/native Windows checks remain pending.
+[Contract](../rom_data_gameplay.md#item-linked-pair-source-contract).
 
 **ROMDATA-02-GAMEPLAY-ITEM-LINK-DATA / ROMDATA-04-GAMEPLAY-ITEM-LINK-CONSUMPTION
-completati per EUR/Wine dichiarato:** e24-d23aggiunge item-links.json/resource
- gameplay.item-links con dipendenza esplicita dai376oggetti parsed;19file/
-18risorse, tutti17file decodificati precedenti/e23immutati.225record/4500byte
-count/selector/value/opaque alimentano i lettori CPU/DMA/native; query, unit
-bit7/FFbyte3d, chiamate successive, clock/save/native ABI restano originali.
-Due controlli Wine passano pubblicazione/failure/riuso/riparazione/spostamento/
-retention/transazioni/lifecycle e62percorsi nativi con sorgente alterata/stati-
-clock uguali:36byte count/114selector/56value, otto forme count e gateFFreali.
-Opaque non letto da questi percorsi ma verificato con tutti i4500byte bus;
-edges/mirrors/BIOS/SWI/DMA4byte e crossing2byte vecchi+2nuovi con entrambi i
-raw alterati passano. Nessun vecchio oracolo ripetuto.
-ROMDATA-05-GAMEPLAY-ITEM-LINK-SCENE-CLI è completo per scena EUR/Wine dichiarata:
-CLI create/no-write reuse/vecchia cache passa; locator Equip slot400frame legge0
-nuovi byte, conservato senza coppia/ripetizione. Down/Aordinari aprono la lista
-copricapi(immagine finale ispezionata); CLI560frame e una coppia completa stati/
-clock/immagini/OAM/dispatch/audio passano con574byte nuovi(287count/205selector/
-82value). I nomi privati weapon-list sono locator, non prova di una scena armi.
-Linux/USA/Windows nativo e resto TODO aperti, niente
-misure prestazionali/spazio. [Contratto](../rom_data_gameplay.md#managed-and-direct-item-link-consumption).
+completed for declared EUR/Wine scope:** e24-d23 adds item-links.json/resource
+gameplay.item-links with explicit dependency on the 376 parsed items; 19 files/
+18 resources, all 17 prior decoded files/e23 unchanged. 225 records/4500 bytes
+of count/selector/value/opaque feed CPU/DMA/native readers; queries, unit bit 7/
+FF byte 3d, subsequent calls, clock/save/native ABI remain original. Two Wine
+checks pass publication/failure/reuse/repair/relocation/retention/transactions/
+lifecycle and 62 native paths with altered source/equal states-clock: 36 count/
+114 selector/56 value bytes. Opaque is not read by these paths but is verified
+through the bus with all 4500 bytes; edges/mirrors/BIOS/SWI/DMA 4 bytes and a
+crossing of 2 old bytes + 2 new bytes with both raw sources altered pass. No old
+oracle repeated.
+ROMDATA-05-GAMEPLAY-ITEM-LINK-SCENE-CLI is complete for the declared EUR/Wine
+scene: CLI create/no-write reuse/old cache passes; 400-frame Equip slot locator
+reads 0 new bytes, retained without pair/repeat. Ordinary Down/A open the
+headgear list (final image inspected); 560-frame CLI and one full states/clock/
+images/OAM/dispatch/audio pair pass with 574 new bytes (287 count/205 selector/
+82 value). Private weapon-list names are locators, not evidence of a weapon
+scene. Linux/USA/native Windows and the rest of the TODO remain open, no
+performance/space measurements.
+[Contract](../rom_data_gameplay.md#managed-and-direct-item-link-consumption).
 
 **ROMDATA-01-GAMEPLAY-METADATA16-ROOTS / ROMDATA-02-GAMEPLAY-METADATA16-SOURCE-ORACLE
-completati per il contratto EUR/Wine dichiarato:**128record×16byte/2048byte,
-6e4c64..6e5464,23literal LDR e root successivo indipendente. Modello lossless
-u16alias+14byte/JSON/source/extent e inventario indipendente passano. Un solo
-controllo Wine passa2581casi originali display/alias nonzero/lista live/somme/
-flag/scelta e19sintetici per priorità1assente nei dati/somma u8/shift. Stato LCG
-originale e guardie RAM/stack/callee verificati; nessun nome legge/missione/
-abilità inventato, alias0non rivendicato.156038istruzioni/319PC sono copertura,
-nessuna misura prestazionale. EUR gestito resta e24-d23/19file/18risorse;
-preparazione, consumo diretto/lifecycle/scena/CLI di questa nuova tabella aperti.
-Linux/USA/Windows nativo da fare. [Contratto](../rom_data_gameplay.md#sixteen-byte-linked-metadata-source-contract).
+completed for declared EUR/Wine contract:** 128 records × 16 bytes/2048 bytes,
+6e4c64..6e5464, 23 literal LDRs and independent next root. Lossless u16 alias +
+14-byte model/JSON/source/extent and independent inventory pass. One Wine check
+passes 2581 original display/nonzero-alias/live-list/sum/flag/choice cases and
+19 synthetic cases for priority 1 absent in data/u8 sum/shift. Original LCG state
+and RAM/stack/callee guards verified; no law/mission/ability name invented, alias
+0 not claimed. 156038 instructions/319 PCs are coverage, not performance
+measurements. EUR managed remains e24-d23/19 files/18 resources; preparation,
+direct consumption/lifecycle/scene/CLI of this new table open. Linux/USA/native
+Windows pending. [Contract](../rom_data_gameplay.md#sixteen-byte-linked-metadata-source-contract).
 
 **ROMDATA-02-GAMEPLAY-METADATA16-DATA / ROMDATA-04-GAMEPLAY-METADATA16-CONSUMPTION
-completati per EUR/Wine dichiarato:** e25-d24aggiunge linked-metadata16.json/
-resource gameplay.linked-metadata16,20file/19risorse; tutti18file decodificati
-precedenti/e24conservati, USAe8-d7. Campi alias/display/flag/value/opaque tipizzati
-alimentano CPU/DMA/native mantenendo lista live/RNG/somme/shift/clock/save/native
-ABI originali. Due controlli Wine passano pubblicazione/failure/riuso/riparazione/
-spostamento/retention/transazioni/lifecycle e42percorsi nativi con2048byte raw
-alterati/stati-clock uguali:8byte alias/17display/22flag/24value compilati.
-Opaque verificato al bus con tutti i byte/edges/mirrors/BIOS/SWI/DMA4byte e
-crossing2byte vecchi link+2nuovi metadata entrambi alterati. Oracolo sorgente
-2581+19non ripetuto. ROMDATA-05-GAMEPLAY-METADATA16-SCENE-CLI è completo:
-CLI crea/riusa e controllo22file hash/mtime senza scritture passa; locator
-Area List/Start/Party/inventario normale leggono0nuovi byte e non sono ripetuti
-né confrontati a coppia. Clan→Mission Item520frame legge6byte display nuovi,
-immagine Chocobo Egg ispezionata; una coppia stati/clock/immagini/OAM/dispatch/
-audio passa con gli stessi6byte. Alias/flag/value ordinari non rivendicati.
-Errore iniziale header input corretto prima dell'esecuzione; solo il replay
-corretto e poi il criterio no-write prima non raggiunto sono stati eseguiti.
-Nuovi Linux/USA/Windows nativo e resto TODO aperti; nessuna misura prestazionale/spazio.
-[Contratto](../rom_data_gameplay.md#managed-and-direct-metadata16-consumption).
+completed for declared EUR/Wine scope:** e25-d24 adds linked-metadata16.json/
+resource gameplay.linked-metadata16, 20 files/19 resources; all 18 prior decoded
+files/e24 retained, USA e8-d7. Typed alias/display/flag/value/opaque fields
+feed CPU/DMA/native while retaining original live list/RNG/sums/shifts/clock/
+save/native ABI. Two Wine checks pass publication/failure/reuse/repair/
+relocation/retention/transactions/lifecycle and 42 native paths with 2048 raw
+bytes altered/equal states-clock: 8 alias/17 display/22 flag/24 value compiled
+bytes. Opaque verified on the bus with all bytes/edges/mirrors/BIOS/SWI/DMA 4
+bytes and crossing 2 old link + 2 new metadata bytes with both altered. Source
+oracle 2581+19 not repeated. ROMDATA-05-GAMEPLAY-METADATA16-SCENE-CLI is
+complete: CLI creates/reuses and 22-file hash/mtime no-write check passes;
+Area List/Start/Party/normal inventory locators read 0 new bytes and are neither
+repeated nor paired. Clan→Mission Item 520 frames reads 6 new display bytes,
+Chocobo Egg image inspected; one states/clock/images/OAM/dispatch/audio pair
+passes with the same 6 bytes. Ordinary alias/flag/value not claimed. Initial
+input-header error corrected before execution; only corrected replay and then
+the previously unmet no-write criterion were run. New Linux/USA/native Windows
+and the rest of the TODO remain open; no performance/space measurement.
+[Contract](../rom_data_gameplay.md#managed-and-direct-metadata16-consumption).
+
 
 **ROMDATA-01-GAMEPLAY-METADATA52-ROOTS / ROMDATA-02-GAMEPLAY-METADATA52-SOURCE-ORACLE
-completati per il contratto EUR/Wine dichiarato:** 116 record da 52 byte /
-6032 byte, 6e5464..6e6bf4, otto literal LDR, enumeratore 0..115 e root
-successivo indipendente. Modello lossless con route esplicita e tre array fissi;
-48 proprietà unsigned/bitfield mantengono rinvii FF all'indice del chiamante,
-rinvii nonzero e cicli originali, senza fallback inventati. Un controllo Wine
-passa 6369 chiamate reali / 4 probe non ritornanti limitati e 294 chiamate
-sintetiche high-bit/rinvii / 2 probe ciclici; lettori tail32/33 da indice live e
-guardie JSON/source/extent/RAM/stack/callee passano. I 464 selettori normali
-precedenti rientrano nel nuovo owner; otto FF restano distinti. Nessun vecchio
-oracolo ripetuto, 223421 istruzioni / 524 PC sono solo copertura. Dataset
-rimane e25-d24 / 20 file / 19 risorse: preparazione, consumo diretto/lifecycle/
-scena/CLI di questa tabella e nuovi Linux/USA/Windows nativo restano aperti.
-[Contratto](../rom_data_gameplay.md#fifty-two-byte-linked-metadata-source-contract).
+completed for the stated EUR/Wine contract:** 116 records of 52 bytes /
+6032 bytes, 6e5464..6e6bf4, eight LDR literals, enumerator 0..115 and an
+independent next root. Lossless model with an explicit route and three fixed
+arrays; 48 unsigned/bitfield properties preserve FF referrals to the caller's
+index, nonzero referrals and original cycles, without invented fallbacks. A Wine
+check passes 6369 real calls / 4 bounded non-returning probes and 294 synthetic
+high-bit/referral calls / 2 cyclic probes; tail32/33 readers from a live index and
+JSON/source/extent/RAM/stack/callee guards pass. The previous 464 normal
+selectors fit within the new owner; eight FF remain distinct. No old oracle was
+repeated; 223421 instructions / 524 PCs are coverage only. The dataset remains
+e25-d24 / 20 files / 19 resources: preparation, direct/lifecycle/scene/CLI
+consumption of this table and new Linux/USA/native Windows checks remain open.
+[Contract](../rom_data_gameplay.md#fifty-two-byte-linked-metadata-source-contract).
 
 **ROMDATA-02-GAMEPLAY-METADATA52-DATA / ROMDATA-04-GAMEPLAY-METADATA52-CONSUMPTION
-completati per EUR/Wine dichiarato:** e26-d25 aggiunge linked-metadata52.json /
-resource gameplay.linked-metadata52, 21 file / 20 risorse; tutti i 19 file
-decodificati precedenti e le generazioni e25 conservati, USA e8-d7. Owner parsed
-dei selettori normali validato entro 116, FF distinto. Letture tipizzate header/
-routing/packed/tail/opaque mantengono getter, indici alternativi, rinvii, record
-live, clock e ABI save/native originali. Due controlli Wine passano pubblicazione/
-failure/riuso/riparazione/spostamento/retention/transazioni/lifecycle e 75 percorsi
-nativi con tutti i 6032 byte raw alterati e stati-clock uguali: 18 byte header /
-83 routing / 68 packed / 8 tail compilati. Opaque al bus con tutti i byte/edges/
-mirrors/BIOS/SWI/DMA4 e crossing 2 byte metadata16 + 2 metadata52 entrambi
-alterati. Oracolo sorgente/cicli non ripetuto.
-ROMDATA-05-GAMEPLAY-METADATA52-SCENE-CLI completo: CLI crea/riusa senza cambiare
-hash/mtime, usa la vecchia cache da cwd diverso e apre Change Jobs con input
-ordinario. Una coppia 540 frame stati/clock/immagini/OAM/dispatch/audio passa con
-664 byte nuovi (74 header / 335 routing / 255 packed), immagine finale Marsh/
-Thief ispezionata. Tail/opaque ordinari non rivendicati. Nessun locator fallito,
-harness/test fallito o controllo precedente ripetuto. Nuovi Linux/USA/Windows
-nativo e resto TODO aperti; nessuna misura prestazionale/spazio.
-[Contratto](../rom_data_gameplay.md#managed-and-direct-metadata52-consumption).
+completed for the stated EUR/Wine scope:** e26-d25 adds linked-metadata52.json /
+resource gameplay.linked-metadata52, 21 files / 20 resources; all 19 previous
+decoded files and the e25 generations preserved, USA e8-d7. The parsed owner of
+the normal selectors is validated within 116, with FF distinct. Typed header/
+routing/packed/tail/opaque reads preserve original getters, alternate indices,
+referrals, live records, clock and save/native ABI. Two Wine checks pass
+publication/failure/reuse/repair/movement/retention/transactions/lifecycle and
+75 native paths with all 6032 raw bytes altered and equal state-clock results:
+18 header / 83 routing / 68 packed / 8 tail bytes compiled. Opaque at the bus
+with all bytes/edges/mirrors/BIOS/SWI/DMA4 and the crossing of 2 metadata16 bytes
++ 2 metadata52 bytes both altered. Source/cycle oracle not repeated.
+ROMDATA-05-GAMEPLAY-METADATA52-SCENE-CLI complete: CLI creates/reuses without
+changing hash/mtime, uses the old cache from a different cwd and opens Change Jobs
+with ordinary input. A 540-frame pair passes state/clock/images/OAM/dispatch/audio
+with 664 new bytes (74 header / 335 routing / 255 packed); final Marsh/Thief
+image inspected. Ordinary tail/opaque use is not claimed. No failed locator,
+failed harness/test or previous check repeated. New Linux/USA/native Windows
+checks and the rest of the TODO remain open; no performance/space measurements.
+[Contract](../rom_data_gameplay.md#managed-and-direct-metadata52-consumption).
 
 **ROMDATA-01-GAMEPLAY-METADATA4-ROOTS / ROMDATA-02-GAMEPLAY-METADATA4-SOURCE-ORACLE
-completati per i prefissi EUR/Wine dichiarati:** 20 record da quattro byte /
-80 byte, 6e6bf4..6e6c44, due coppie selector/value, 26 attive. Due literal e
-root successivo indipendente, indici cross-owner parsed con metadata52 passano.
-Un controllo Wine passa 320 casi reali / 24 sintetici Count/Select/Gate/Threshold
-per entrambe le versioni originali: tutti i record, job chiamanti 2..43, soglie
-sotto/uguale/sopra, buchi, payload unused, value255, confronto signed e tally u8.
-Conteggio di entrambi gli slot e cammino fino al primo zero restano distinti;
-scansioni live delle abilità e intere funzioni non rivendicate o congelate.
-9560 istruzioni / 136 PC sono copertura, nessun vecchio oracolo ripetuto.
-Dataset rimane e26-d25 / 21 file / 20 risorse: preparazione, consumo diretto,
-lifecycle, scena/CLI e nuovi Linux/USA/Windows nativo restano aperti.
-[Contratto](../rom_data_gameplay.md#four-byte-two-pair-source-contract).
+completed for the stated EUR/Wine prefixes:** 20 four-byte records /
+80 bytes, 6e6bf4..6e6c44, two selector/value pairs, 26 active. Two literals and
+an independent next root; parsed cross-owner indices with metadata52 pass.
+A Wine check passes 320 real / 24 synthetic Count/Select/Gate/Threshold cases
+for both original versions: all records, calling jobs 2..43, below/equal/above
+thresholds, gaps, unused payload, value255, signed comparison and u8 tally.
+Counting both slots and walking to the first zero remain distinct; live ability
+scans and entire functions are not claimed or frozen.
+9560 instructions / 136 PCs are coverage; no old oracle repeated.
+The dataset remains e26-d25 / 21 files / 20 resources: preparation, direct
+consumption, lifecycle, scene/CLI and new Linux/USA/native Windows checks remain open.
+[Contract](../rom_data_gameplay.md#four-byte-two-pair-source-contract).
 
 **ROMDATA-02-GAMEPLAY-METADATA4-DATA / ROMDATA-04-GAMEPLAY-METADATA4-CONSUMPTION
-completati per EUR/Wine dichiarato:** e27-d26 aggiunge linked-metadata4.json /
-resource gameplay.linked-metadata4, 22 file / 21 risorse; tutti i 20 file
-decodificati precedenti/e26 conservati, USA e8-d7. Owner metadata52 parsed e
-indici/selettori validati; byte tipizzati mantengono conteggio/cammino contiguo,
-scansioni live, valori unsigned/confronto signed/tally u8 e clock/ABI originali.
-Due controlli Wine passano pubblicazione/failure/riuso/riparazione/spostamento/
-retention/transazioni/lifecycle e 56 prefissi nativi con 80 byte raw alterati e
-stati-clock uguali: 54 byte selector / 34 value compilati, tutti i byte/edges/
-mirrors/BIOS/SWI/DMA4 e crossing 2 byte metadata52 + 2 metadata4 passano.
-ROMDATA-05-GAMEPLAY-METADATA4-SCENE-CLI completo: CLI crea/riusa senza cambiare
-hash/mtime, vecchia cache/cwd diverso; una coppia 540 frame Change Jobs stati/
-clock/immagini/OAM/dispatch/audio passa con 32 byte selector / 6 value nuovi,
-immagine Marsh/Thief ispezionata. Input conservato giustificato dalla nuova
-famiglia/nuovo gate; e26 non riaperto. Oracolo sorgente320+24 non ripetuto,
-prefissi non rivendicati come intere funzioni. Nuovi Linux/USA/Windows nativo e
-resto TODO aperti; nessuna misura prestazionale/spazio.
-[Contratto](../rom_data_gameplay.md#managed-and-direct-metadata4-consumption).
+completed for the stated EUR/Wine scope:** e27-d26 adds linked-metadata4.json /
+resource gameplay.linked-metadata4, 22 files / 21 resources; all 20 previous
+decoded files/e26 preserved, USA e8-d7. Parsed metadata52 owner and validated
+indices/selectors; typed bytes preserve counting/contiguous walking, live scans,
+unsigned values/signed comparison/u8 tally and original clock/ABI.
+Two Wine checks pass publication/failure/reuse/repair/movement/retention/
+transactions/lifecycle and 56 native prefixes with 80 raw bytes altered and
+equal state-clock results: 54 selector / 34 value bytes compiled; all bytes/edges/
+mirrors/BIOS/SWI/DMA4 and the crossing of 2 metadata52 + 2 metadata4 bytes pass.
+ROMDATA-05-GAMEPLAY-METADATA4-SCENE-CLI complete: CLI creates/reuses without changing
+hash/mtime, old cache/different cwd; one 540-frame Change Jobs pair passes state/
+clock/images/OAM/dispatch/audio with 32 new selector / 6 value bytes, Marsh/Thief
+image inspected. Preserved input justified by the new family/new gate; e26 not
+reopened. Source oracle 320+24 not repeated; prefixes not claimed as entire
+functions. New Linux/USA/native Windows checks and the rest of the TODO remain
+open; no performance/space measurements.
+[Contract](../rom_data_gameplay.md#managed-and-direct-metadata4-consumption).
 
 **ROMDATA-01-GAMEPLAY-METADATA2-MAP-ROOTS / ROMDATA-02-GAMEPLAY-METADATA2-SOURCE-ORACLE
-completati per EUR/Wine dichiarato:** 44 coppie key/value / 88 byte a
-6e6c44..6e6c9c, ultimo record43 reale e successiva sorgente48B indipendente.
-Forward originale tronca u8 e legge indice0..43 senza bound locale; inverse
-tronca u8, cerca solo0..42 e restituisce primo stored key / zero se assente.
-Owner metadata52 parsed/JSON/source/extent e 348 casi reali + 13 sintetici
-Wine passano, inclusi alias, high byte, chiavi non uguali all'indice e match
-solo nell'ultimo record escluso inversamente. Wrapper live byte7 provato fino
-al ritorno del getter con frame mantenuto; intere funzioni, bound globali e
-semantica dei valori non rivendicati. Dataset e27-d26/22file/21risorse invariato;
-preparazione/consumo/lifecycle/scena-CLI e nuovi Linux/USA/Windows nativo da fare.
-Nessuna misura prestazionale/spazio, nessun vecchio oracolo ripetuto.
-[Contratto](../rom_data_gameplay.md#two-byte-forward-and-inverse-source-contract).
+completed for the stated EUR/Wine scope:** 44 key/value pairs / 88 bytes at
+6e6c44..6e6c9c, last real record 43 and the independent next 48B source.
+Original forward truncates to u8 and reads index 0..43 without a local bound;
+inverse truncates to u8, searches only 0..42 and returns the first stored key /
+zero if absent. Parsed metadata52 owner/JSON/source/extent and 348 real + 13
+synthetic Wine cases pass, including aliases, high byte, keys unequal to the
+index and a match only in the last record excluded from the inverse search.
+Live byte 7 wrapper tested through getter return with the frame retained; entire
+functions, global bounds and value semantics are not claimed. Dataset
+e27-d26/22 files/21 resources unchanged; preparation/consumption/lifecycle/
+scene-CLI and new Linux/USA/native Windows checks remain to do. No performance/
+space measurements, no old oracle repeated.
+[Contract](../rom_data_gameplay.md#two-byte-forward-and-inverse-source-contract).
 
 **ROMDATA-02-GAMEPLAY-METADATA2-DATA / ROMDATA-04-GAMEPLAY-METADATA2-CONSUMPTION
-completati per EUR/Wine dichiarato:** e28-d27 aggiunge linked-metadata2.json /
-resource gameplay.linked-metadata2,23file/22risorse, tutti i21file precedenti/e27
-conservati; USAe8-d7. Owner metadata52parsed/byte key-value autenticati conservano
-istruzioni originali forward44/inverse43, alias/first storedkey/miss0/u8 e live
-byte7/clock/save/native ABI. Due controlli Wine passano pubblicazione/transazioni/
-riuso/riparazione/spostamento/retention/lifecycle e21percorsi originali/nativi,
-88byte raw alterati/stati-clock uguali,7key/235value compilati, tutti byte/bordi/
-mirrors/BIOS/SWI/DMA4/crossing2metadata4+2metadata2. Build corretta warning-free
-(dopo tre argomenti zero mancanti nei vecchi test budget); sorgente348+13 chiusa.
-ROMDATA-05-GAMEPLAY-METADATA2-SCENE-CLI completo: CLI prepara/riusa senza scritture
-con cache vecchia/cwd diverso. ChangeJobs540/Rumors560/prefissi e Missions620/
-1260sono locator negativi conservati; conferme ordinarie aggiuntive danno una
-coppia Pub1840stati/clock/immagini/OAM/dispatch/audio uguali e4value/0keyBnuovi.
-Inverse key provato solo nei test mirati, immagine finale Pub con pannelli nativi
-separati non prova unità/outcome missione. Nessun vecchio oracolo/full pair sui
-negativi, nessuna misura performance/spazio. Nuovi Linux/USA/Windows nativo e
-resto TODO aperti. [Contratto](../rom_data_gameplay.md#managed-and-direct-metadata2-consumption).
+completed for the stated EUR/Wine scope:** e28-d27 adds linked-metadata2.json /
+resource gameplay.linked-metadata2, 23 files/22 resources, all 21 previous files/
+e27 preserved; USA e8-d7. Parsed metadata52 owner/authenticated key-value bytes
+preserve original forward 44/inverse 43 instructions, alias/first stored key/
+miss 0/u8 and live byte 7/clock/save/native ABI. Two Wine checks pass publication/
+transactions/reuse/repair/movement/retention/lifecycle and 21 original/native
+paths, 88 raw bytes altered/equal state-clock results, 7 key/235 value compiled,
+all bytes/edges/mirrors/BIOS/SWI/DMA4/crossing 2 metadata4 + 2 metadata2.
+Corrected build warning-free (after three missing zero arguments in old budget
+tests); source 348+13 closed.
+ROMDATA-05-GAMEPLAY-METADATA2-SCENE-CLI complete: CLI prepares/reuses without writes
+with old cache/different cwd. ChangeJobs 540/Rumors 560/prefixes and Missions 620/
+1260 are preserved negative locators; additional ordinary confirmations yield a
+Pub 1840 pair with equal state/clock/images/OAM/dispatch/audio and 4 new value /
+0 key B. Inverse key tested only in targeted tests; final Pub image with separate
+native panels does not prove mission unit/outcome. No old oracle/full pair on the
+negatives, no performance/space measurements. New Linux/USA/native Windows checks
+and the rest of the TODO remain open.
+[Contract](../rom_data_gameplay.md#managed-and-direct-metadata2-consumption).
 
 **ROMDATA-01-GAMEPLAY-DEFAULT48-TEMPLATE / ROMDATA-02-GAMEPLAY-DEFAULT48-SOURCE-ORACLE
 completati per EUR/Wine dichiarato:**48byte strutturali6e6c9c..6e6ccc, root e
@@ -1039,181 +1051,178 @@ CLI/scena05completati sotto; receiptUI-FK/newLinux-USA-Windowsnativo restano,
 nessunamisuraperformance.
 [Contratto](../rom_data_gameplay.md#managed-and-direct-progression-gates).
 
-## ROMDATA-03 — Preparazione automatica e riuso all'avvio
+<a id="romdata-03--preparazione-automatica-e-riuso-allavvio"></a>
 
+## ROMDATA-03 — Automatic preparation and reuse at startup
 
-**Dipendenze:** ROMDATA-02 per la prima famiglia.
+**Dependencies:** ROMDATA-02 for the first family.
 
-- [x] Integrare la preparazione dopo selezione/verifica della ROM e prima
-  dell'avvio del gioco: estrarre quando il dataset manca o la versione cambia;
-  riutilizzarlo quando identità e contenuti sono validi.
-- [x] Definire i percorsi attraverso lo storage installed/portable esistente.
-  Proposta da confermare: `Data/resources/<rom-hash>/<schema>/` in portable;
-  rispettare [le regole di rilocazione](../portable.md). Tenere separati dati
-  base rigenerabili, future mod utente, cache native e salvataggi.
-- [x] Scrivere in una directory temporanea, validare e pubblicare soltanto un
-  dataset completo; gestire annullamento, spazio insufficiente, avvio concorrente
-  e crash senza sostituire l'ultima versione valida con un risultato parziale.
-- [x] Mostrare avanzamento ed errori comprensibili; prevedere la rigenerazione
-  di dati mancanti/corrotti dalla ROM sorgente senza sovrascrivere mod o save.
-- [x] Verificare primo avvio, riavvio senza riestrazione, cambio ROM/regione,
-  aggiornamento decoder e spostamento della cartella portable. Definire come
-  riconoscere una sorgente cambiata prima di riutilizzare il suo dataset.
+- [x] Integrate preparation after ROM selection/verification and before game
+  startup: extract when the dataset is missing or version changes; reuse when
+  identity and contents are valid.
+- [x] Define paths through existing installed/portable storage. Proposal to
+  confirm: `Data/resources/<rom-hash>/<schema>/` in portable mode; follow
+  [relocation rules](../portable.md). Keep regenerable base data, future user
+  mods, native caches and saves separate.
+- [x] Write to a temporary directory, validate and publish only a complete
+  dataset; handle cancellation, insufficient space, concurrent startup and
+  crash without replacing the last valid version with a partial result.
+- [x] Show understandable progress and errors; support regeneration of missing/
+  corrupted data from the source ROM without overwriting mods or saves.
+- [x] Verify first startup, restart without re-extraction, ROM/region change,
+  decoder update and portable-folder relocation. Define how to detect a changed
+  source before reusing its dataset.
 
-**Chiusura:** un primo avvio prepara le risorse; quelli successivi riusano un
-dataset valido. L'estrazione resta locale e non modifica la ROM sorgente.
+**Closure:** first startup prepares resources; subsequent starts reuse a valid
+dataset. Extraction remains local and does not modify the source ROM.
 
-**ROMDATA-03-OBJ-STARTUP completato nel percorso opt-in della prima famiglia:**
-`rom-data prepare` e `play --rom-data`, generazioni immutabili, selezione atomica,
-lock OS, riuso/verifica e recupero. Le voci sopra si riferiscono alla famiglia
-`graphics.obj-dimensions`; le altre famiglie non sono implicitamente migrate.
-Test Linux e Windows/Wine, compresi arresti forzati e due avvii GUI prima/dopo
-lo spostamento portable, passano. Esaurimento spazio simulato; power-loss fisico
-e Windows nativo non verificati. Dettagli in [risorse decodificate](../rom_data.md).
-Il consumo diretto è ora collegato in04; l'abilitazione normale attende i gate05.
+**ROMDATA-03-OBJ-STARTUP completed in the first family's opt-in path:**
+`rom-data prepare` and `play --rom-data`, immutable generations, atomic
+selection, OS lock, reuse/verification and recovery. The checks above concern
+`graphics.obj-dimensions`; other families are not implicitly migrated. Linux
+and Windows/Wine tests pass, including forced stops and two GUI starts before/
+after portable relocation. Space exhaustion simulated; physical power loss and
+native Windows unverified. Details in [decoded resources](../rom_data.md).
+Direct consumption is now connected in 04; normal enablement awaits gate 05.
 
-## ROMDATA-04 — Uso diretto dei dati estratti nel runtime
+<a id="romdata-04--uso-diretto-dei-dati-estratti-nel-runtime"></a>
 
-**Dipendenze:** ROMDATA-01/02/03. **Cuore dell'obiettivo principale.**
+## ROMDATA-04 — Direct runtime use of extracted data
 
-- [x] Introdurre un accesso alle risorse tramite ID e strutture tipizzate,
-  con caricamento/precaricamento dai file decodificati. Definire budget di memoria,
-  durata dei dati e invalidazione; evitare I/O nei callback audio e nei percorsi
-  per pixel o istruzione.
-- [ ] Per ogni famiglia seguire tutti i consumatori: codice nativo tradotto,
-  interprete, letture CPU/DMA e percorsi host come rendering e audio. Individuare
-  dove il gioco richiede byte grezzi, decomprime, copia o interpreta le risorse.
-- [x] Collegare la prima famiglia al caricatore e sostituire il consumo della
-  corrispondente risorsa ROM con quello dei dati estratti. Se occorre trasferire
-  dati in RAM/VRAM guest, preservarli con layout, registri ed effetti osservabili
-  corretti; non applicare lookup generici a ogni lettura del bus.
-- [ ] Quando si sostituiscono routine guest, preservare cicli, IRQ, DMA, RNG e
-  ordine degli eventi. Dimostrare come si conserva il tempo guest se una
-  decompressione viene anticipata all'estrazione: saltarla senza contabilizzarne
-  gli effetti non è una sostituzione equivalente.
-- [x] Distinguere identità della ROM base, dataset e codice compilato. Rivedere
-  costanti incorporate, hook e cache native: nessuna libreria deve riutilizzare
-  dati o ipotesi incompatibili con il dataset effettivamente caricato.
-- [x] Aggiungere diagnostica di provenienza e contatori di uso/fallback per
-  famiglia. Nei test delle risorse migrate rendere rilevabile un accesso al
-  vecchio percorso; verificare anche che file mancanti non vengano ignorati
-  silenziosamente a favore della ROM.
-- [ ] Migrare progressivamente tutte le famiglie inventariate. Registrare
-  separatamente codice, dati ancora grezzi e letture ROM residue; un fallback
-  temporaneo mantiene la compatibilità ma lascia aperta la relativa migrazione.
+**Dependencies:** ROMDATA-01/02/03. **Core of the main objective.**
 
-**Chiusura per famiglia:** il gioco usa il file decodificato e la provenienza è
-verificata. **Chiusura complessiva:** tutte le famiglie di dati previste dalla
-matrice sono migrate e verificate; le esclusioni motivate sono dichiarate.
-Un solo esempio funzionante è una consegna parziale, non il completamento.
+- [x] Introduce resource access through IDs and typed structures, with loading/
+  preloading from decoded files. Define memory budget, data lifetime and
+  invalidation; avoid I/O in audio callbacks and per-pixel or per-instruction paths.
+- [ ] For each family follow all consumers: translated native code, interpreter,
+  CPU/DMA reads and host paths such as rendering and audio. Identify where the
+  game requires raw bytes, decompresses, copies or interprets resources.
+- [x] Connect the first family to the loader and replace consumption of the
+  corresponding ROM resource with extracted data. If data must be transferred to
+  guest RAM/VRAM, preserve it with correct layout, registers and observable
+  effects; do not apply generic lookups to every bus read.
+- [ ] When replacing guest routines, preserve cycles, IRQ, DMA, RNG and event
+  order. Demonstrate how guest time is retained if decompression is moved earlier
+  to extraction: skipping it without accounting for its effects is not equivalent.
+- [x] Distinguish base ROM, dataset and compiled code identity. Review embedded
+  constants, hooks and native caches: no library may reuse data or assumptions
+  incompatible with the dataset actually loaded.
+- [x] Add provenance diagnostics and use/fallback counters per family. In tests
+  of migrated resources make access to the old path detectable; also verify
+  missing files are not silently ignored in favor of the ROM.
+- [ ] Progressively migrate all inventoried families. Record code, still-raw
+  data and remaining ROM reads separately; temporary fallback preserves
+  compatibility but leaves the corresponding migration open.
 
-**ROMDATA-04-OBJ-CONSUMPTION completato per implementazione e prove iniziali:**
-la prima famiglia viene letta dai file in `play/frames/runc --rom-data`;
-proiezioni fisse per CPU/DMA/API native, letture host tipizzate, RAM modificata
-preservata, contatori e risorse non serializzate mantenute in Load/Undo/backup.
-Budget misurato432B; nessuna istruzione o decompressione saltata. Corretto anche
-il lettore host EUR, verificando la sorgente ROM contro le istruzioni originali.
-L'estrattore2 registra l'ulteriore alias EUR e mantiene le vecchie generazioni.
-Dettagli e prove in [consumo runtime](../rom_data_runtime.md).
-Le voci spuntate coprono l'infrastruttura e la prima famiglia, non le altre.
-La matrice di routine originali copre48casi EUR/USA con letture guest effettive;
-il confronto nativo600frame prova uso host e parità di stati/immagini/audio,
-senza attribuire letture guest non eseguite in quella schermata iniziale.
-La nuova tranche05 verifica scene/transizione EUR e costi locali descritti sotto;
-il trace USA è ora verificato separatamente come descritto sotto. Gli altri
-gate e le altre famiglie restano aperti.
+**Closure per family:** the game uses the decoded file and provenance is
+verified. **Overall closure:** all data families planned in the matrix are
+migrated and verified; justified exclusions are declared. One working example
+is a partial delivery, not completion.
 
-**ROMDATA-04-BG-CONSUMPTION completato per metadati e prove iniziali:**
-162descrittori autenticati conservati come dati tipizzati immutabili; proiezioni
-CPU/DMA/API native e contatori BG separati. Schema/estrattore/decoder1/3/2,
-identità ROM/save/native e ABI invariati. Misurati440Bcondivisi/OBJ+28672BBG,
-entro i limiti1KiB/64KiB dichiarati prima dei test. Linux/Wine204core e98/97
-frontend passano; quattro casi regionali da2608chiamate confrontano originale,
-interprete e TinyCC anche con ROM sorgente in memoria alterata dopo attivazione.
-3867letture BG native per caso; Load/Undo/backup e file mancante verificati.
-Due avvii EUR nativi1200frame coincidono per tutti gli stati/immagini/OAM/audio,
-con53letture BG effettive. [Prove e limiti](../rom_data_graphics.md#direct-descriptor-consumption).
-Scene/GUI/costi05BG, asset/programmi collegati e altre famiglie restano aperti.
+**ROMDATA-04-OBJ-CONSUMPTION completed for implementation and initial checks:**
+the first family is read from files in `play/frames/runc --rom-data`; fixed
+projections for CPU/DMA/native APIs, typed host reads, modified RAM preserved,
+counters and nonserialized resources retained through Load/Undo/backup. Measured
+budget 432 B; no instruction or decompression skipped. EUR host reader also
+fixed by verifying ROM source against original instructions. Extractor 2 records
+the additional EUR alias and retains old generations. Details and evidence in
+[runtime consumption](../rom_data_runtime.md).
+Checked items cover infrastructure and the first family, not others. Original
+routine matrix covers 48 EUR/USA cases with actual guest reads; 600-frame native
+comparison proves host use and state/image/audio parity without attributing guest
+reads not executed on that initial screen. New tranche 05 verifies EUR scenes/
+transition and local costs described below; USA trace is now verified separately
+as described below. Other gates and families remain open.
 
-**ROMDATA-04-BG-BASE-PALETTE-CONSUMPTION completato per il catalogo base:**
-162palette conservate nel proprietario immutabile; banchi decodificati per HLE
-LZ77e rappresentazione sorgente esatta per CPU/DMA/API native/BIOS guest.
-Revisione1/6/5, e5conservata; scritture, clock e identità ROM/save/native invariati.
-Linux/Wine210core e101/100frontend passano. Quattro casi originali/native da
-1296chiamate/72792istruzioni coincidono anche alterando tutti i vecchi intervalli
-ROM dopo attivazione;1272chiamate LZ77leggono i banchi per caso. Load/Undo/
-backup/file rimossi passano. Nuovi avvii nativi EUR1200frame coincidono per
-stati/immagini/OAM/audio con una palette160B effettivamente letta dai file;
-CLI e5refusal/retention e coppie interprete/native passano. Proprietario123833B
-su entrambi i target; nessuna ottimizzazione di spazio.
-[Prove e limiti](../rom_data_graphics.md#direct-base-palette-consumption).
-Programmi alternativi, altre famiglie/lingue e ulteriori gate05restano aperti.
+**ROMDATA-04-BG-CONSUMPTION completed for metadata and initial checks:** 162
+authenticated descriptors retained as immutable typed data; separate CPU/DMA/
+native API projections and BG counters. Schema/extractor/decoder 1/3/2, ROM/
+save/native identity and ABI unchanged. Measured 440 B shared/OBJ + 28672 B BG,
+within 1 KiB/64 KiB limits declared before tests. Linux/Wine 204 core and 98/97
+frontend tests pass; four regional cases of 2608 calls compare original,
+interpreter and TinyCC even with source ROM in memory altered after activation.
+3867 native BG reads per case; Load/Undo/backup and missing file verified. Two
+native EUR 1200-frame startups match for all states/images/OAM/audio, with 53
+actual BG reads. [Evidence and limits](../rom_data_graphics.md#direct-descriptor-consumption).
+Scenes/GUI/costs 05 BG, linked assets/programs and other families remain open.
 
-**ROMDATA-04-BG-ALTERNATE-PALETTE-CONSUMPTION completato per il catalogo valido:**
-owner immutabile e letture CPU/DMA/native dai banchi decodificati per i letterali,
-link tipizzati e metadati di controllo esatti. Nessuna istruzione/copia/ciclo
-saltato, I/O nel gameplay o cambio di schema/cache nativa; dataset ancorae7-d6.
-Linux216core/104runtime e Wine216/103passano, più quattro prove regionali dei
-produttori originali/nativi con ROM dati avvelenati:1256chiamate/caso, stato
-completo e clock uguali, uso positivo dei banchi e prova separata dei byte
-letterali tramiteAPI nativa. Load/Undo/backup/riavvio conservano owner/contatori
-anche con file eliminati. Restano scene alternate reali, precondizioniFF,
-GUI/archivi e Windows nativo; nessuna misura prestazionale.
-[Contratto e prove](../rom_data_graphics.md#direct-alternate-palette-consumption).
+**ROMDATA-04-BG-BASE-PALETTE-CONSUMPTION completed for base catalog:** 162
+palettes retained in immutable owner; decoded banks for HLE LZ77 and exact
+source representation for CPU/DMA/native APIs/guest BIOS. Revision 1/6/5, e5
+retained; writes, clock and ROM/save/native identity unchanged. Linux/Wine 210
+core and 101/100 frontend tests pass. Four original/native cases of 1296 calls/
+72792 instructions match even when altering all old ROM intervals after
+activation; 1272 LZ77 calls read banks per case. Load/Undo/backup/removed files
+pass. New native EUR 1200-frame startups match for states/images/OAM/audio with
+one 160 B palette actually read from files; CLI e5 refusal/retention and
+interpreter/native pairs pass. Owner 123833 B on both targets; no space optimization.
+[Evidence and limits](../rom_data_graphics.md#direct-base-palette-consumption).
+Alternate programs, other families/languages and further gate 05 checks remain open.
 
-**ROMDATA-04-BG-PACKET-CONSUMPTION completato per EUR/Wine ridotto:**
-352programmi tipizzati conservati nell'owner immutabile; valori raw/letterali
-LZ77dai word decodificati, body tipizzato per HLE, controlli originali esatti.
-Letture CPU/DMA/API native e paginaEUR895collegate; letture miste palette/packet
-composte correttamente. Inizializzazione dinamica, padri, scritture e clock guest
-conservati; schema1/8/7e identità save/native invariati. Tre test Wine mirati
-passano: sintetico letture/SWI/DMA/owner, nove chiamate originali/nativeEUR con
-intervalli ROM packet alterati e stato completo uguale, Load/Undo/backup/riavvio
-con copia temporanea dei file resa indisponibile.18byte tipizzati letti dalle
-istruzioni native e10506byte HLE. USA resta verified-only; nuovi controlli
-Linux/USA da fare, nessun benchmark o suite ampia.
-[Contratto e prove](../rom_data_graphics.md#direct-european-packet-consumption).
+**ROMDATA-04-BG-ALTERNATE-PALETTE-CONSUMPTION completed for valid catalog:**
+immutable owner and CPU/DMA/native reads from decoded banks for literals, typed
+links and exact control metadata. No instruction/copy/cycle skipped, gameplay I/O
+or schema/native cache change; dataset still e7-d6. Linux 216 core/104 runtime
+and Wine 216/103 pass, plus four regional original/native producer checks with
+poisoned ROM data: 1256 calls/case, equal full state and clock, positive bank use
+and separate literal-byte evidence via native API. Load/Undo/backup/restart
+retain owner/counters even with files removed. Actual alternate scenes, FF
+prerequisites, GUI/archives and native Windows remain; no performance measurement.
+[Contract and evidence](../rom_data_graphics.md#direct-alternate-palette-consumption).
 
-**ROMDATA-05-BG-PACKET-SCENE completato per una transizione EUR/Wine:**
-slot5LCD B/input397frame già conservati, entrata pubCyrilBG62. Ogni stato
-completo/clock, immagine/OAM/dispatch e campione audio coincide; tre chiamate HLE
-consumano4720byte body/2640byte tipizzati. Le12letture wrapper non contengono
-valori raw: la prova nativa04copre quel percorso separatamente. Altre scene,
-GUI/archivi, nuovi controlli Linux/USA e Windows nativo restano aperti.
+**ROMDATA-04-BG-PACKET-CONSUMPTION completed for reduced EUR/Wine scope:** 352
+typed programs retained in immutable owner; raw/literal LZ77 values from decoded
+words, typed body for HLE, exact original checks. CPU/DMA/native API reads and
+EUR page 895 connected; mixed palette/packet reads compose correctly. Dynamic
+initialization, parents, writes and guest clock retained; schema 1/8/7 and save/
+native identity unchanged. Three targeted Wine tests pass: synthetic reads/
+SWI/DMA/owner, nine original/native EUR calls with altered packet ROM intervals
+and equal full state, Load/Undo/backup/restart with temporary file copies made
+unavailable. 18 typed bytes read by native instructions and 10506 HLE bytes.
+USA remains verified-only; new Linux/USA checks pending, no benchmark or broad suite.
+[Contract and evidence](../rom_data_graphics.md#direct-european-packet-consumption).
 
-**ROMDATA-04-BG-GRAPHICS-CONSUMPTION completato per EUR/Wine ridotto:**
-word immutabili del settimo filee9e mappe dei letterali del codec originale;
-letture CPU/DMA/API native, header/controlli esatti e pagineEUR769..895.
-Nessuna istruzione/scrittura/ciclo guest saltato. Tre test Wine mirati passano:
-sintetico con sorgenti/letterali duplicati alterati, quattro chiamate originali/
-native con tutte50sorgenti ROM alterate e stato completo/clock uguale, owner
-conservato in Load/Undo/backup/riavvio con sole copie temporanee indisponibili.
-29023byte tipizzati letti dalle istruzioni native. Schema1/9/8e identità
-save/native invariati. Linux/USA da fare, nessuna misura prestazionale.
-[Contratto e prove](../rom_data_graphics.md#direct-european-main-graphics-consumption).
+**ROMDATA-05-BG-PACKET-SCENE completed for one EUR/Wine transition:** retained
+slot 5 LCD B/input 397 frames, entering Cyril pub BG62. Every full state/clock,
+image/OAM/dispatch and audio sample matches; three HLE calls consume 4720 body/
+2640 typed bytes. The 12 wrapper reads contain no raw values: native 04 evidence
+covers that path separately. Other scenes, GUI/archives, new Linux/USA checks
+and native Windows remain open.
 
-**ROMDATA-05-BG-GRAPHICS-SCENE completato per una transizione EUR/Wine:**
-stessoslot5LCD B/input397frame conservati, ingresso pubCyrilBG62. Ogni stato
-completo/clock, immagine/OAM/dispatch e campione audio coincide;14815letture
-grafica/16209byte sorgente/10334byte letterali decodificati. Altre scene/GUI/
-archivi, nuovi controlli Linux/USA e Windows nativo restano aperti.
+**ROMDATA-04-BG-GRAPHICS-CONSUMPTION completed for reduced EUR/Wine scope:**
+immutable words of seventh file e9 and literal maps of original codec; CPU/DMA/
+native API reads, exact header/controls and EUR pages 769..895. No guest
+instruction/write/cycle skipped. Three targeted Wine tests pass: synthetic with
+altered duplicate sources/literals, four original/native calls with all 50 ROM
+sources altered and equal full state/clock, owner retained across Load/Undo/
+backup/restart with only temporary copies unavailable. 29023 typed bytes read
+by native instructions. Schema 1/9/8 and save/native identity unchanged.
+Linux/USA pending, no performance measurement.
+[Contract and evidence](../rom_data_graphics.md#direct-european-main-graphics-consumption).
 
-**ROMDATA-04-BG-TRANSFER-CONSUMPTION completato per EUR/Wine ridotto:**
-controlli/tile del filee10conservati come strutture immutabili; letture CPU/DMA/
-native tipizzate nelle pagine778..897e contatori separati. Countdown/flag/
-progresso DMA/clock guest invariati. Tre test Wine mirati passano, inclusi due
-casi originali/native con tutte76sorgenti ROM alterate, stato completo uguale
-dopo60chiamate,66byte controlli compilati e9984byte tile tramite DMA nativo.
-Load/Undo/backup/riavvio mantengono l'owner con copie temporanee indisponibili.
-Schema1/10/9e identità save/native invariati. Linux/USA da fare.
-[Contratto e prove](../rom_data_graphics.md#direct-european-transfer-consumption).
+**ROMDATA-05-BG-GRAPHICS-SCENE completed for one EUR/Wine transition:** same
+retained slot 5 LCD B/input 397 frames, entering Cyril pub BG62. Every full
+state/clock, image/OAM/dispatch and audio sample matches; 14815 graphics reads/
+16209 source bytes/10334 decoded literal bytes. Other scenes/GUI/archives, new
+Linux/USA checks and native Windows remain open.
 
-**ROMDATA-05-BG-TRANSFER-SCENE/CLI completati per EUR/Wine dichiarato:**
-transizione LCD B397frame/pubCyrilBG62con ogni stato/clock/immagine/OAM/dispatch/
-audio uguale,1203byte controlli/21504tile effettivi. Un nuovo CLI decoded riusa
-e10senza scritture e la cache nativa, stesso risultato del riferimento legacy
-conservato senza ripeterlo. Altre scene/GUI/archivi, Linux/USA e Windows nativo
-restano aperti; nessuna misura prestazionale.
+**ROMDATA-04-BG-TRANSFER-CONSUMPTION completed for reduced EUR/Wine scope:**
+file e10 controls/tiles retained as immutable structures; typed CPU/DMA/native
+reads on pages 778..897 and separate counters. Countdown/flags/DMA progress/
+guest clock unchanged. Three targeted Wine tests pass, including two original/
+native cases with all 76 ROM sources altered, equal full state after 60 calls,
+66 compiled control bytes and 9984 tile bytes via native DMA. Load/Undo/backup/
+restart retain owner with temporary copies unavailable. Schema 1/10/9 and save/
+native identity unchanged. Linux/USA pending.
+[Contract and evidence](../rom_data_graphics.md#direct-european-transfer-consumption).
+
+**ROMDATA-05-BG-TRANSFER-SCENE/CLI completed for declared EUR/Wine scope:** LCD B
+397-frame transition/Cyril pub BG62 with every state/clock/image/OAM/dispatch/
+audio equal, 1203 control/21504 actual tile bytes. A new decoded CLI reuses e10
+without writes and the native cache, same result as retained legacy reference
+without repeating it. Other scenes/GUI/archives, Linux/USA and native Windows
+remain open; no performance measurement.
+
 
 ## ROMDATA-05 — Equivalenza, salvataggi e prestazioni
 
@@ -1558,64 +1567,70 @@ limiteprecedente: nessunfood-count/confirmclaim. Altri14item/20monstri/cap>99UI/
 nuoviLinux-USA-Windowsnativo dafare; restoTODO aperto, niente performance/spazio.
 [Prova](../rom_data_gameplay.md#ordinary-item-effect-parameters-in-the-european-monster-bank).
 
-## ROMDATA-06 — Mod tramite sostituzione delle risorse
+<a id="romdata-06--mod-tramite-sostituzione-delle-risorse"></a>
 
-**ROMDATA-05-TEXT-CATALOG-SCENE-CLI completato per EUR/Wine dichiarato:**
-una coppia ordinaria397frame LCD B/ingresso pubCyrilBG62riusa slot/input/cache.
-Ogni stato/clock/immagine/OAM/dispatch/audio coincide, con52byte puntatori/
-185stringhe/2indici/4header/27programma decodificato/8064glifi/93metriche letti
-dai file. È un programma grezzo: uso compresso provato separatamente nel04.
-Un solo nuovo CLI decoded riusa e12senza scritture e la cache vecchia, stesso
-risultato del riferimento legacy conservato senza ripeterlo. Binario Windows
-senza warning/canonico ripristinato; altri gate/GUI/archivi/Linux/USAaperti.
-[Prove e limiti](../rom_data_text.md#ordinary-transition-and-production-cli).
+## ROMDATA-06 — Mods through resource replacement
 
-**Dipendenze:** completare la consegna principale ROMDATA-01…05.
+**ROMDATA-05-TEXT-CATALOG-SCENE-CLI completed for declared EUR/Wine scope:**
+one ordinary 397-frame LCD B/Cyril pub BG62 entry pair reuses slot/input/cache.
+Every state/clock/image/OAM/dispatch/audio matches, with 52 pointer bytes/
+185 strings/2 indices/4 headers/decoded program: 27/8064 glyphs/93 metrics
+read from files. This is a raw program: compressed use proven separately in 04.
+One new decoded CLI reuses e12 without writes and the old cache, same result as
+the retained legacy reference without repeating it. Warning-free Windows binary/
+canonical restored; other gates/GUI/archives/Linux/USA open.
+[Evidence and limits](../rom_data_text.md#ordinary-transition-and-production-cli).
 
-- [ ] Definire una directory `mods/` nello storage applicativo e un manifest
-  versionato con ID, versione, profili/dataset compatibili, dipendenze e risorse
-  sostituite. Risolvere percorsi relativi entro il pacchetto, con limiti su
-  dimensioni e formati; preservare i file utente durante la rigenerazione base.
-- [ ] Definire ordine deterministico e gestione dei conflitti. Validare gli
-  override con gli stessi contratti delle risorse base prima di avviare il gioco;
-  mostrare errori di dipendenze/versione invece di caricare una combinazione parziale.
-- [ ] Aggiungere attivazione/disattivazione persistente e indicazione delle mod
-  attive. Per la prima versione applicare i cambi al riavvio della sessione;
-  nessuna necessità di ricaricamento a caldo per completare il supporto iniziale.
-- [ ] Collegare hash dei contenuti e ordine delle mod a cache e salvataggi;
-  isolare gli slot incompatibili e proteggere i `.sav` originali quando la mod
-  cambia dati di gioco. Disattivare le mod deve ripristinare le risorse base.
-- [ ] Provare mod originali/minime per le famiglie supportate, modifica visibile
-  nel gioco, conflitti, file mancanti e ripristino. Distribuire soltanto esempi
-  originali o descrizioni/patch, non gli asset estratti dalla ROM dell'utente.
+**Dependencies:** complete main ROMDATA-01…05 delivery.
 
-**Chiusura:** mod caricate davvero dal percorso risorse, selezione riproducibile,
-base recuperabile, compatibilità ed errori verificati.
+- [ ] Define a `mods/` directory in application storage and a versioned manifest
+  with ID, version, compatible profiles/datasets, dependencies and replaced
+  resources. Resolve relative paths within the package, with size and format
+  limits; preserve user files during base regeneration.
+- [ ] Define deterministic order and conflict handling. Validate overrides
+  against the same base-resource contracts before game startup; show dependency/
+  version errors instead of loading a partial combination.
+- [ ] Add persistent enable/disable and indication of active mods. For the first
+  version apply changes on session restart; hot reload is not required to
+  complete initial support.
+- [ ] Tie content hashes and mod order to caches and saves; isolate incompatible
+  slots and protect original `.sav` files when a mod changes game data. Disabling
+  mods must restore base resources.
+- [ ] Test original/minimal mods for supported families, visible in-game change,
+  conflicts, missing files and restoration. Distribute only original examples or
+  descriptions/patches, not assets extracted from the user's ROM.
 
-## ROMDATA-07 — Modifiche estese a contenuti e logica
+**Closure:** mods actually loaded through the resource path, reproducible
+selection, recoverable base, compatibility and errors verified.
 
-**Dipendenze:** ROMDATA-06 e verifica delle strutture interessate.
+<a id="romdata-07--modifiche-estese-a-contenuti-e-logica"></a>
 
-- [ ] Estendere i formati a testi più lunghi, nuove risorse, mappe, animazioni e
-  tabelle di gameplay, affrontando limiti di ID, dimensioni, puntatori e interfacce.
-  Distinguere sostituzione di contenuti esistenti e aggiunta di nuovi contenuti.
-- [ ] Progettare separatamente script, patch di codice e regole di gioco:
-  stabilire necessità di ricompilazione, revisione ABI, invalidazione delle cache
-  e disabilitazione degli hook non compatibili. Un override grafico non abilita
-  automaticamente modifiche alla logica.
-- [ ] Definire strumenti e documentazione per autori, migrazioni di schema e
-  verifica dei pacchetti; aggiungere esempi originali e regressioni pertinenti.
+## ROMDATA-07 — Extended content and logic changes
 
-**Chiusura:** ogni nuova capacità ha un contratto, esempi e compatibilità
-verificata; le modifiche non supportate sono dichiarate.
+**Dependencies:** ROMDATA-06 and verification of affected structures.
 
-## Regole di avanzamento
+- [ ] Extend formats for longer text, new resources, maps, animations and gameplay
+  tables, addressing ID, size, pointer and interface limits. Distinguish
+  replacement of existing content from addition of new content.
+- [ ] Design scripts, code patches and game rules separately: determine need for
+  recompilation, ABI revision, cache invalidation and disabling incompatible
+  hooks. A graphics override does not automatically enable logic changes.
+- [ ] Define author tools and documentation, schema migrations and package
+  validation; add original examples and relevant regressions.
 
-Selezionare una sottofase in [TASK_HANDOFF.md](TASK_HANDOFF.md), registrando
-risultati e criteri mancanti per famiglia. Non chiudere il genitore finché i
-suoi criteri restano aperti e non riaprire figli conclusi senza nuova evidenza.
-Seguire [MEMORY_WORKFLOW.md](MEMORY_WORKFLOW.md) per documentazione, record e
-verifiche; mantenere ROM, risorse estratte e prove personali fuori da Git.
+**Closure:** every new capability has a contract, examples and verified
+compatibility; unsupported changes are declared.
+
+<a id="regole-di-avanzamento"></a>
+
+## Progress rules
+
+Select a subphase in [TASK_HANDOFF.md](TASK_HANDOFF.md), recording results and
+missing criteria by family. Do not close the parent while its criteria remain
+open or reopen completed children without new evidence. Follow
+[MEMORY_WORKFLOW.md](MEMORY_WORKFLOW.md) for documentation, records and checks;
+keep ROM, extracted resources and personal evidence out of Git.
+
 
 **ROMDATA-01-AUDIO-TYPED-CATALOG-ROOTS completato per le radici iniziali EUR:**
 M4A originale/live verificato senza nuovo replay;3player36B, directory640voci/

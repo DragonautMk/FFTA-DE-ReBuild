@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-romdata-mod-plans",
+  "title": "Translate ROM-data mod plans and progression rules",
+  "kind": "docs",
+  "platforms": [
+    "Desktop ROM-data planning documentation"
+  ],
+  "changes": [
+    "Translate ROMDATA-06/07 mod plans and introductory progression rules into English, preserving deferred checklist states, recorded EUR/Wine evidence, dependencies and technical identifiers."
+  ],
+  "validation": [
+    "Compare eight ordered checkbox states, task identifiers, inline literals, links, numeric values and three legacy anchors with the original; verify local targets and unchanged surrounding sections."
+  ],
+  "limitations": [
+    "ROMDATA-02, ROMDATA-05 and later detailed evidence remain untranslated; no ROM access, dataset creation, performance measurement or runtime checks were performed."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_TODO.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

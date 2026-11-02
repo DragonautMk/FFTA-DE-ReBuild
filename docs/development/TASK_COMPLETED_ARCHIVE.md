@@ -18391,3 +18391,92 @@ LOCAL-ARTIFACT-SWEEP-2026-10-31 — CLOSED. Latest request: clean residual proje
 - Verified: four ordered task states, identifiers, inline literals, links, numeric values and legacy anchor preserved; surrounding sections unchanged.
 - Evidence: `docs/changes/2026-11-02-translate-performance-priority-p2.json`; document remains pending in audit ledger.
 - Limits: documentation only; no benchmarks, builds, fixtures or runtime checks.
+
+### ENGLISH-FIRST-PERFORMANCE-P3-P4
+
+- Outcome: completed for P3/P4 and acceptance rules; performance historical sections remain partially translated.
+- Verified: three ordered deferred task states, IDs, inline literals and three legacy anchors preserved; preceding sections unchanged.
+- Evidence: `docs/changes/2026-11-02-translate-performance-priorities-p3-p4.json`; document remains pending in audit ledger.
+- Limits: documentation only; no benchmarks, builds, fixtures or runtime checks.
+
+### ENGLISH-FIRST-PERFORMANCE-HISTORY
+
+- Outcome: completed; performance plan translated in full.
+- Verified: historical numeric values, task IDs, inline literals, links and nine legacy anchors preserved; surrounding sections unchanged.
+- Evidence: `docs/changes/2026-11-02-complete-performance-plan-translation.json`; reviewed hash in `docs/development/ENGLISH_FIRST_AUDIT.json`.
+- Limits: documentation only; no benchmarks, builds, fixtures or runtime checks rerun.
+
+### ENGLISH-FIRST-ROMDATA-INTRO-01
+
+- Outcome: completed for ROM-data introduction and ROMDATA-01; the larger plan remains partially translated.
+- Verified: ordered checklist states, task IDs, literals, links, numeric values and four legacy anchors preserved; subsequent sections unchanged.
+- Evidence: `docs/changes/2026-11-02-translate-romdata-introduction-and-inventory.json`; plan remains pending in audit ledger.
+- Limits: documentation only; no ROM access, dataset creation, performance measurement or runtime checks.
+
+### ENGLISH-FIRST-ROMDATA-03-04
+
+- Outcome: completed for startup preparation and direct consumption; larger ROM-data plan remains partially translated.
+- Verified: 12 ordered checkbox states, task IDs, literals, links, numeric values and two legacy anchors preserved; surrounding sections unchanged.
+- Evidence: `docs/changes/2026-11-02-translate-romdata-preparation-and-consumption.json`; plan remains pending in audit ledger.
+- Limits: documentation only; no ROM access, dataset creation, performance measurement or runtime checks.
+
+### ENGLISH-FIRST-ROMDATA-06-07
+
+- Outcome: completed for mod criteria and introductory progression rules; larger ROM-data plan remains partially translated.
+- Verified: eight ordered checkbox states, task IDs, literals, links, numeric values and three legacy anchors preserved; surrounding sections unchanged.
+- Evidence: `docs/changes/2026-11-02-translate-romdata-mod-plans.json`; plan remains pending in audit ledger.
+- Limits: documentation only; no ROM access, dataset creation, performance measurement or runtime checks.
+
+### ENGLISH-FIRST-ROMDATA-02-INITIAL
+
+- Outcome: completed for initial extractor criteria and bounded evidence; ROMDATA-02 and the larger plan remain partially translated.
+- Verified: five ordered checkbox states, task IDs, literals, links, numeric values and legacy anchor preserved; surrounding sections unchanged.
+- Evidence: `docs/changes/2026-11-02-translate-romdata-extractor-criteria.json`; plan remains pending in audit ledger.
+- Limits: documentation only; no ROM access, dataset creation or runtime checks.
+
+### ENGLISH-FIRST-ROMDATA-02-GRAPHICS
+
+- Outcome: completed for eight background codec/managed evidence entries; ROMDATA-02 remains partially translated.
+- Verified: task IDs, literals, links and numeric values preserved; surrounding sections unchanged.
+- Evidence: `docs/changes/2026-11-02-translate-romdata-background-codec-evidence.json`; plan remains pending in audit ledger.
+- Limits: documentation only; no ROM access, dataset creation or runtime checks.
+
+### ENGLISH-FIRST-ROMDATA-02-FONT-OBJ
+
+- Outcome: completed for six font/keyboard and initial OBJ evidence entries; ROMDATA-02 remains partially translated.
+- Verified: task IDs, literals, links and numeric values preserved; surrounding sections unchanged.
+- Evidence: `docs/changes/2026-11-02-translate-romdata-font-obj-evidence.json`; plan remains pending in audit ledger.
+- Limits: documentation only; no ROM access, dataset creation or runtime checks.
+
+### ENGLISH-FIRST-ROMDATA-02-OBJ-LISTS
+
+- Outcome: completed for three extra, zero-count and localized OBJ evidence entries; ROMDATA-02 remains partially translated.
+- Verified: task IDs, literals, links, numeric values and quoted game text preserved; surrounding sections unchanged.
+- Evidence: `docs/changes/2026-11-02-translate-romdata-obj-list-evidence.json`; plan remains pending in audit ledger.
+- Limits: documentation only; no ROM access, dataset creation or runtime checks.
+
+### ENGLISH-FIRST-ROMDATA-02-UI-GRAPHICS
+
+- Outcome: completed for four OBJ/UI graphics and palette evidence entries; ROMDATA-02 remains partially translated.
+- Verified: task IDs, literals, links and numeric values preserved; surrounding sections unchanged.
+- Evidence: `docs/changes/2026-11-02-translate-romdata-obj-ui-graphics-evidence.json`; plan remains pending in audit ledger.
+- Limits: documentation only; no ROM access, dataset creation or runtime checks.
+
+### ENGLISH-FIRST-ROMDATA-02-ITEMS
+
+- Outcome: completed for five item, item-link and metadata16 evidence entries; ROMDATA-02 remains partially translated.
+- Verified: task IDs, literals, links and numeric values preserved; surrounding sections unchanged.
+- Evidence: `docs/changes/2026-11-02-translate-romdata-item-metadata-evidence.json`; plan remains pending in audit ledger.
+- Limits: documentation only; no ROM access, dataset creation or runtime checks.
+
+### ENGLISH-FIRST-ROMDATA-02-METADATA52
+
+- Outcome: completed bounded documentation translation of metadata52 source-oracle, data, consumption and scene/CLI evidence. EUR/Wine scope and open criteria retained.
+- Evidence: numeric tokens, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-metadata52-evidence.json`.
+
+### ENGLISH-FIRST-ROMDATA-02-METADATA4-2
+
+- Outcome: completed bounded translation of metadata4 and metadata2 source-oracle, data, consumption and scene/CLI evidence. EUR/Wine scope and open criteria retained.
+- Evidence: numeric tokens, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-metadata4-metadata2-evidence.json`.

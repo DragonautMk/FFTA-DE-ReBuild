@@ -41,6 +41,226 @@ Type: docs. Platforms: project-wide.
 
 [Change record](docs/changes/2026-11-02-translate-scene-rendering-guides.json)
 
+## 2026-11-02 — Translate ROM-data preparation and consumption sections
+
+Type: docs. Platforms: Desktop ROM-data planning documentation.
+
+**Changes**
+
+- Translate ROMDATA-03 and ROMDATA-04 into English while preserving checklist states, recorded evidence, family and platform limits, identifiers and compatibility anchors.
+
+**Validation**
+
+- Compare twelve ordered checkbox states, task identifiers, inline literals, links, numeric values and two legacy anchors with the original; verify local targets and unchanged surrounding sections.
+
+**Limitations**
+
+- ROMDATA-02 and ROMDATA-05 onward remain untranslated; no ROM access, dataset creation, performance measurement or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-romdata-preparation-and-consumption.json)
+
+## 2026-11-02 — Translate OBJ and UI graphics evidence
+
+Type: docs. Platforms: Desktop ROM-data planning documentation.
+
+**Changes**
+
+- Translate four ROM-data OBJ graphics, raw palette, custom UI graphics and localized UI evidence entries into English while preserving positive and negative coverage and verification limits.
+
+**Validation**
+
+- Compare task identifiers, inline literals, links and numeric values with the original; verify local targets and unchanged surrounding sections.
+
+**Limitations**
+
+- Further ROMDATA-02, ROMDATA-05 and detailed evidence remain untranslated; no ROM access, dataset creation or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-romdata-obj-ui-graphics-evidence.json)
+
+## 2026-11-02 — Translate OBJ list and localized bank evidence
+
+Type: docs. Platforms: Desktop ROM-data planning documentation.
+
+**Changes**
+
+- Translate three ROM-data evidence entries for additional direct lists, zero-count selectors and localized OBJ banks while preserving positive and negative coverage and original game text.
+
+**Validation**
+
+- Compare task identifiers, inline literals, links, numeric values and the quoted game text with the original; verify local targets and unchanged surrounding sections.
+
+**Limitations**
+
+- Further ROMDATA-02, ROMDATA-05 and detailed evidence remain untranslated; no ROM access, dataset creation or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-romdata-obj-list-evidence.json)
+
+## 2026-11-02 — Translate ROM-data mod plans and progression rules
+
+Type: docs. Platforms: Desktop ROM-data planning documentation.
+
+**Changes**
+
+- Translate ROMDATA-06/07 mod plans and introductory progression rules into English, preserving deferred checklist states, recorded EUR/Wine evidence, dependencies and technical identifiers.
+
+**Validation**
+
+- Compare eight ordered checkbox states, task identifiers, inline literals, links, numeric values and three legacy anchors with the original; verify local targets and unchanged surrounding sections.
+
+**Limitations**
+
+- ROMDATA-02, ROMDATA-05 and later detailed evidence remain untranslated; no ROM access, dataset creation, performance measurement or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-romdata-mod-plans.json)
+
+## 2026-11-02 — Translate ROM data metadata52 evidence
+
+Type: docs. Platforms: Desktop ROM-data planning documentation.
+
+**Changes**
+
+- Translated the metadata52 source-oracle, managed-data, direct-consumption and scene/CLI evidence into English while preserving identifiers, outcomes and remaining platform limits.
+
+**Validation**
+
+- Compared numeric tokens, task identifiers, links and inline literals with the preimage; confirmed all text outside the selected entries is unchanged.
+
+**Limitations**
+
+- ROMDATA-02 from metadata4 onward, ROMDATA-05 and later evidence remain to be translated; no ROM access or runtime checks performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-romdata-metadata52-evidence.json)
+
+## 2026-11-02 — Translate ROM data metadata4 and metadata2 evidence
+
+Type: docs. Platforms: Desktop ROM-data planning documentation.
+
+**Changes**
+
+- Translated metadata4 and metadata2 source-oracle, managed-data, consumption and scene/CLI evidence into English while preserving identifiers, outcomes and remaining platform limits.
+
+**Validation**
+
+- Compared numeric tokens, task identifiers, links and inline literals with the preimage; confirmed all text outside the selected entries is unchanged.
+
+**Limitations**
+
+- ROMDATA-02 from default48 onward, ROMDATA-05 and later evidence remain to be translated; no ROM access or runtime checks performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-romdata-metadata4-metadata2-evidence.json)
+
+## 2026-11-02 — Translate item and linked metadata evidence
+
+Type: docs. Platforms: Desktop ROM-data planning documentation.
+
+**Changes**
+
+- Translate five ROM-data item, item-link and sixteen-byte metadata evidence entries into English while preserving numeric results, negative coverage and verification limits.
+
+**Validation**
+
+- Compare task identifiers, inline literals, links and numeric values with the original; verify local targets and unchanged surrounding sections.
+
+**Limitations**
+
+- Further ROMDATA-02, ROMDATA-05 and detailed evidence remain untranslated; no ROM access, dataset creation or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-romdata-item-metadata-evidence.json)
+
+## 2026-11-02 — Translate ROM-data objectives and inventory status
+
+Type: docs. Platforms: Desktop ROM-data planning documentation.
+
+**Changes**
+
+- Translate the ROM-data objective, constraints and ROMDATA-01 inventory/contract section into English, preserving task states, recorded evidence, regional limits and technical identifiers.
+
+**Validation**
+
+- Compare ordered checklist states, task identifiers, inline literals, links, numeric values and four legacy anchors with the original; verify local link targets and unchanged later sections.
+
+**Limitations**
+
+- ROMDATA-02 onward remains untranslated; no ROM access, dataset creation, performance measurement or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-romdata-introduction-and-inventory.json)
+
+## 2026-11-02 — Translate font and initial OBJ evidence
+
+Type: docs. Platforms: Desktop ROM-data planning documentation.
+
+**Changes**
+
+- Translate six ROMDATA-02 font/keyboard and initial OBJ evidence entries into English while preserving numeric results, positive and negative coverage and validation limits.
+
+**Validation**
+
+- Compare task identifiers, inline literals, links and numeric values with the original; verify local targets and unchanged surrounding sections.
+
+**Limitations**
+
+- Further ROMDATA-02, ROMDATA-05 and detailed evidence remain untranslated; no ROM access, dataset creation or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-romdata-font-obj-evidence.json)
+
+## 2026-11-02 — Translate initial ROM-data extractor criteria
+
+Type: docs. Platforms: Desktop ROM-data planning documentation.
+
+**Changes**
+
+- Translate initial ROMDATA-02 extractor/decoder criteria and bounded text, object, packet and palette evidence into English while retaining statuses and platform limits.
+
+**Validation**
+
+- Compare five ordered checkbox states, task identifiers, inline literals, links, numeric values and the legacy heading anchor with the original; verify local targets and unchanged surrounding sections.
+
+**Limitations**
+
+- Remaining ROMDATA-02 evidence, ROMDATA-05 and later detailed evidence remain untranslated; no ROM access, dataset creation or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-romdata-extractor-criteria.json)
+
+## 2026-11-02 — Translate background codec and managed dataset evidence
+
+Type: docs. Platforms: Desktop ROM-data planning documentation.
+
+**Changes**
+
+- Translate eight ROMDATA-02 background palette, packet, graphics and transfer codec/managed evidence entries into English while preserving metrics, verification scope and pending work.
+
+**Validation**
+
+- Compare task identifiers, inline literals, links and numeric values with the original; verify local targets and unchanged surrounding sections.
+
+**Limitations**
+
+- Further ROMDATA-02, ROMDATA-05 and detailed evidence remain untranslated; no ROM access, dataset creation or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-romdata-background-codec-evidence.json)
+
 ## 2026-11-02 — Translate ROM-read audit and shared-event guides
 
 Type: docs. Platforms: project-wide.
@@ -103,6 +323,26 @@ Type: docs. Platforms: Desktop performance planning documentation.
 Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
 
 [Change record](docs/changes/2026-11-02-translate-performance-priority-p2.json)
+
+## 2026-11-02 — Translate performance priorities P3 and P4
+
+Type: docs. Platforms: Desktop performance planning documentation.
+
+**Changes**
+
+- Translate performance priorities P3/P4 and acceptance rules into English while retaining deferred task states, dependencies and correctness conditions.
+
+**Validation**
+
+- Compare three ordered checkbox states, task identifiers, inline literals and three legacy anchors with the prior text; confirm preceding sections are unchanged.
+
+**Limitations**
+
+- Historical performance sections remain untranslated; no benchmarks, builds, fixtures or runtime checks were run.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-performance-priorities-p3-p4.json)
 
 ## 2026-11-02 — Translate performance priorities P0 and P1
 
@@ -774,6 +1014,26 @@ Type: docs. Platforms: Shared desktop debug documentation.
 Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
 
 [Change record](docs/changes/2026-11-02-complete-shared-debug-tools-translation.json)
+
+## 2026-11-02 — Complete English translation of performance plan
+
+Type: docs. Platforms: Desktop performance planning documentation.
+
+**Changes**
+
+- Translate the historical measurement, replay, optimization and build sections of the performance plan into English while preserving numerical results, provenance and acceptance limits.
+
+**Validation**
+
+- Compare all numeric tokens, task identifiers, inline literals, links and nine legacy anchors against the original; verify local link targets and unchanged surrounding sections.
+
+**Limitations**
+
+- Documentation translation only; no benchmarks, builds, fixtures or runtime checks were rerun.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-complete-performance-plan-translation.json)
 
 ## 2026-11-02 — Complete English translation of debug-save cases
 

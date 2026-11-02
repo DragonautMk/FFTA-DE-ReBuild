@@ -781,13 +781,18 @@
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
     },
     {
+      "path": "docs/development/PERFORMANCE_TODO.md",
+      "sha256": "eb137087f44108701fcfa01373109fbe0bc0d0c1170774ce5d96286f108f30b9",
+      "scope": "Performance plan translated to English; historical measurements, task states, acceptance limits, technical literals and legacy anchors preserved."
+    },
+    {
       "path": "docs/development/ROM_COVERAGE.md",
       "sha256": "9fb29c212e6a89abf8f5893e0e968b975ce024d1c4cbd5ed338ab1bba42d2655",
       "scope": "English maintained prose and fixed report text; machine keys, paths, anchors and historical evidence preserved"
     },
     {
       "path": "docs/development/TASK_HANDOFF.md",
-      "sha256": "ecff1a6f6609298b342da4f980187d089937d6111727b7cf9a23bb0ae2affc02",
+      "sha256": "d29c4f5ecbce2dbde2ab31aae1db6535a15de2ee62bdac5c07e688c5f8cc1b47",
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
     },
     {
@@ -1105,7 +1110,6 @@
     "Licenses/THIRD_PARTY_NOTICES.md",
     "docs/architecture.md",
     "docs/development/LOCAL_ARTIFACTS.md",
-    "docs/development/PERFORMANCE_TODO.md",
     "docs/development/PERFORMANCE_WORKFLOW.md",
     "docs/development/PROJECT_STATE.md",
     "docs/development/ROM_DATA_INVENTORY.md",
@@ -1209,7 +1213,7 @@
     }
   ],
   "next_actions": [
-    "Continue the partial performance documentation: status summary and P0–P2 translated; historical sections and P3–P4 pending.",
+    "Continue the partial ROM-data plan: introduction, ROMDATA-01, 03/04, 06/07 and initial ROMDATA-02 including background codecs, font/keyboard, OBJ lists, UI graphics and item/metadata16 evidence translated; remaining ROMDATA-02, 05 and detailed evidence pending.",
     "Audit remaining offline exporters, CLI/tool messages and source-generated metadata; campaign, artifact and coverage fixed templates are translated.",
     "Translate remaining technical/debug/development guides in bounded sections, preserving anchors, commands, IDs and validation limits.",
     "Audit remaining dynamic report metadata, console/tooling text, source comments and all other maintained content across both trees.",
@@ -1254,6 +1258,19 @@
     "docs/changes/2026-11-02-translate-debug-save-cases-01-13.json",
     "docs/changes/2026-11-02-complete-debug-save-document-translation.json",
     "docs/changes/2026-11-02-translate-performance-priorities-p0-p1.json",
-    "docs/changes/2026-11-02-translate-performance-priority-p2.json"
+    "docs/changes/2026-11-02-translate-performance-priority-p2.json",
+    "docs/changes/2026-11-02-translate-performance-priorities-p3-p4.json",
+    "docs/changes/2026-11-02-complete-performance-plan-translation.json",
+    "docs/changes/2026-11-02-translate-romdata-introduction-and-inventory.json",
+    "docs/changes/2026-11-02-translate-romdata-preparation-and-consumption.json",
+    "docs/changes/2026-11-02-translate-romdata-mod-plans.json",
+    "docs/changes/2026-11-02-translate-romdata-extractor-criteria.json",
+    "docs/changes/2026-11-02-translate-romdata-background-codec-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-font-obj-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-obj-list-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-obj-ui-graphics-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-item-metadata-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-metadata52-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-metadata4-metadata2-evidence.json"
   ]
 }

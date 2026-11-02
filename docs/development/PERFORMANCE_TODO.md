@@ -62,258 +62,268 @@ is resolved. The [measurement workflow](PERFORMANCE_WORKFLOW.md) and
 or benchmarks.
 
 
-## Fixture locali e prima verifica della battaglia
+<a id="fixture-locali-e-prima-verifica-della-battaglia"></a>
 
-Il nuovo archivio locale `saves.zip` e la sua eventuale estrazione `saves/`
-sono ignorati da Git; `.sav` e `.ffstate` sono già esclusi anche altrove.
-Le prove usano copie in `target/`: nessun progresso personale entra nei
-record di progetto, nel contesto Docker o nei pacchetti.
+## Local fixtures and first battle check
 
-Il caricamento effettivo dello slot fornito è riuscito con il runtime Linux
-esportato dal container. Il salvataggio cartuccia permette inoltre di aprire
-la world map dalla voce Saved Game > Load. Entrambe le scene sono state
-riconosciute visivamente, senza dedurle dal solo nome del file.
+The new local `saves.zip` archive and any extraction to `saves/` are ignored by
+Git; `.sav` and `.ffstate` are already excluded elsewhere too. Checks use
+copies in `target/`: no personal progress enters project records, Docker context
+or packages.
 
-Una sessione esplorativa della battaglia, ripresa esplicitamente dal menu
-host e lasciata avanzare per 20 secondi, ha prodotto 1.074 campioni core,
-171.840 scanline e nessun intervallo PPU invalido. Il profilo include anche
-l'avvio: mediana core 23,084 ms e scanline 17,545 ms; p95 rispettivamente
-25,520 e 19,434 ms. Lo zoom non ha eseguito righe aggiuntive.
-Questa è una **misura preliminare Xvfb/llvmpipe**, non una baseline Radeon né
-un replay identificato del turno nemico. I tentativi rimasti nel menu host
-sono esclusi da questa valutazione.
+The supplied slot was actually loaded successfully with the Linux runtime
+exported from the container. The cartridge save also allows the world map to be
+opened through Saved Game > Load. Both scenes were visually recognized, not
+inferred solely from file names.
 
-La PPU CPU è quindi una priorità da approfondire in PERF-02/08: separare
-rendering BG/OBJ, composizione ed estrazione dei pannelli; verificare in
-particolare i passaggi ripetuti per riga in `capture_dialogue_part`.
-Quella funzione ordina i candidati BG/OBJ per ogni pixel, pur avendo priorità
-BG costanti per riga: misurare separatamente questo lavoro e confrontare una
-selezione dei primi due livelli con il riferimento prima di cambiarlo.
-Non è ancora dimostrato quale funzione domini né un beneficio dello
-spostamento sulla GPU. Il runner ora supporta `--state` anche nel confronto
-Python: 600 frame aggiuntivi, 120 di warm-up e cinque coppie native sulla stessa
-build hanno prodotto framebuffer/OAM, stato finale e conteggi identici.
-Le mediane di lavoro sono 20,950/20,856 ms; le due catture diagnostiche attribuiscono
-circa il 76% del core alle scanline. Il caricamento e l'avvio sono esclusi dal
-campione. Un controllo separato verifica anche lo zoom relativo allo snapshot.
-Questa è una baseline della battaglia inattiva, senza ancora un turno nemico
-identificato: non è un guadagno di prestazioni e PERF-01/02/03 restano aperti.
+An exploratory battle session explicitly resumed from the host menu and allowed
+to advance for 20 seconds produced 1,074 core samples, 171,840 scanlines and no
+invalid PPU intervals. The profile also includes startup: core median 23.084 ms
+and scanline median 17.545 ms; p95 25.520 and 19.434 ms respectively. Zoom ran
+no additional rows. This is a **preliminary Xvfb/llvmpipe measurement**, not a
+Radeon baseline or an identified enemy-turn replay. Attempts that stayed in the
+host menu are excluded from this evaluation.
 
-## Correzione delle condizioni di misura e selettore UI valutato
+CPU PPU is therefore a priority for further investigation in PERF-02/08:
+separate BG/OBJ rendering, composition and panel extraction; particularly
+check repeated per-row passes in `capture_dialogue_part`. That function sorts
+BG/OBJ candidates for every pixel despite constant per-row BG priority: measure
+this work separately and compare a top-two-layer selection with the reference
+before changing it. Neither the dominant function nor a benefit from moving to
+GPU is yet demonstrated. The runner now supports `--state` in Python comparison
+too: 600 additional frames, 120 warm-up and five native pairs on the same build
+produced identical framebuffer/OAM, final state and counts. Work medians are
+20.950/20.856 ms; the two diagnostic captures attribute about 76% of core time
+to scanlines. Loading and startup are excluded from the sample. A separate
+check also verifies zoom relative to the snapshot. This is an idle-battle
+baseline without an identified enemy turn: it is not a performance gain and
+PERF-01/02/03 remain open.
 
-Una ricerca automatica npm di VS Code nella workspace seguiva anche gli alberi
-ignorati ed era attiva da oltre mezz'ora, occupando circa dieci core. È stata
-interrotta dopo averne identificato l'origine automatica; `npm.autoDetect` è
-stato disattivato soltanto nelle impostazioni locali ignorate della workspace.
-Nessuna impostazione globale o preferenza preesistente è stata cambiata.
-Il portable con renderer originale ha poi superato caricamento, Annulla,
-ricaricamento e chiusura in Xvfb/llvmpipe: nella battaglia inattiva il contatore
-osservato è circa 59–60 FPS INT/EXT. Non è una misura Radeon né del turno AI.
-Il [workflow](PERFORMANCE_WORKFLOW.md#host-load-before-timing) descrive il controllo.
+<a id="correzione-delle-condizioni-di-misura-e-selettore-ui-valutato"></a>
 
-Con **lo stesso intervallo da 1.200 frame**, snapshot, binario baseline,
-traduzione, input, audio e affinità CPU, la mediana baseline è 18,655 ms con
-quel carico e 10,777 ms dopo la sua rimozione. Le precedenti prove da 600 frame
-intorno ai 21 ms restano dati storici sotto contesa, non una baseline senza
-interferenze; non confrontare direttamente lunghezze diverse. Questo è un
-cambiamento dell'ambiente di sviluppo, non un'accelerazione del codice di gioco.
+## Corrected measurement conditions and evaluated UI selector
 
-Sono stati valutati due selettori dei soli due livelli UI frontali al posto
-dei due ordinamenti per pixel. Entrambi conservano risultati esatti su 196.608
-combinazioni di priorità/presenza e sui replay. Sul sistema senza la scansione:
-la variante a chiave compatta peggiora la mediana dell'1,64%; quella semplice
-migliora la mediana dell'1,56%, ma la cattura diagnostica non mostra un vantaggio
-sui picchi (p95/p99 maggiori). Il beneficio complessivo non giustifica sostituire
-l'ordinamento standard: **nessuna variante è stata mantenuta nel runtime**.
-I singoli profili dei picchi non provano una regressione causale universale;
-sono comunque insufficienti per accettare un'ottimizzazione del pacing.
+An automatic VS Code npm search in the workspace was also following ignored
+trees and had run for over half an hour, occupying about ten cores. It was
+stopped after its automatic origin was identified; `npm.autoDetect` was
+turned off only in ignored local workspace settings. No global setting or
+preexisting preference changed. The portable build with original renderer then
+passed load, Undo, reload and closure in Xvfb/llvmpipe: the observed idle-battle
+counter is approximately 59–60 FPS INT/EXT. This is not a Radeon or AI-turn
+measurement. The [workflow](PERFORMANCE_WORKFLOW.md#host-load-before-timing)
+describes the check.
 
-La world map è stata raggiunta di nuovo partendo da una copia del `.sav`,
-registrando gli input e creando uno snapshot locale classificato visivamente.
-Il replay da quello snapshot passa cinque coppie da 1.200 frame sul renderer
-originale: mediana circa 2,1 ms/frame, stato finale e immagini identici,
-nessun frame oltre budget nei due profili. È una calibrazione sullo stesso
-binario, non un miglioramento. I file restano sotto `target/`, fuori da Git
-e dai pacchetti. Prima di altri
-interventi PPU/GPU va identificato il turno nemico lento sul sistema senza
-questa interferenza; PERF-01/02/03/08 restano aperti.
+With **the same 1,200-frame interval**, snapshot, baseline binary, translation,
+input, audio and CPU affinity, baseline median is 18.655 ms under that load and
+10.777 ms after removing it. Previous 600-frame checks around 21 ms remain
+historical data under contention, not an interference-free baseline; do not
+compare different lengths directly. This is a development-environment change,
+not game-code acceleration.
 
-## Replay con attivazione nemica identificata
+Two selectors for only the top two UI layers were evaluated in place of two
+per-pixel sorts. Both retain exact results across 196,608 priority/presence
+combinations and replays. On the system without the scan: the compact-key variant
+worsens median by 1.64%; the simple variant improves median by 1.56%, but the
+diagnostic capture shows no peak advantage (higher p95/p99). The overall benefit
+does not justify replacing the standard sort: **neither variant was retained in
+the runtime**. Individual peak profiles do not prove a universal causal
+regression; they are nevertheless insufficient to accept a pacing optimization.
 
-È stata preparata una nuova sequenza locale dalla copia dello snapshot fornito:
-salvataggio sospeso tramite il comando del gioco, nuovo avvio con registrazione,
-ripresa della battaglia e attesa delle unità del giocatore. La sequenza comprende
-l'attivazione e il movimento di un mostro nemico, poi il ritorno al menu di
-un personaggio del giocatore. Questi passaggi sono stati osservati nella finestra;
-non si tratta più del solo replay della battaglia inattiva.
+The world map was reached again from a `.sav` copy, recording input and creating
+a visually classified local snapshot. Replay from that snapshot passes five
+1,200-frame pairs on the original renderer: median about 2.1 ms/frame, identical
+final state and images, no over-budget frames in the two profiles. This calibrates
+the same binary; it is not an improvement. Files remain under `target/`, outside
+Git and packages. Before other PPU/GPU changes, identify the slow enemy turn on
+the system without this interference; PERF-01/02/03/08 remain open.
 
-Uno snapshot intermedio e gli input successivi ribasati delimitano 3.530 frame.
-Il replay headless raggiunge lo stesso frame finale e lo stesso hash del
-framebuffer della sessione grafica; anche l'immagine finale è stata ispezionata.
-Le due verifiche A/B coincidono su framebuffer e OAM di tutti i frame.
-Il [workflow](PERFORMANCE_WORKFLOW.md#record-a-battle-from-a-supplied-snapshot)
-descrive la procedura senza rimuovere la protezione che vieta di caricare uno
-snapshot durante la registrazione. Tutte le fixture rimangono ignorate.
+<a id="replay-con-attivazione-nemica-identificata"></a>
 
-Il confronto completo passa cinque coppie alternate sullo stesso codice, con
-120 frame di warm-up: mediane 8,346/8,290 ms per i 3.410 frame misurati,
-stato macchina finale e conteggi di esecuzione identici. I due profili separati
-hanno zero frame oltre 16,74 ms, p99 10,055/10,129 ms e massimi
-12,535/16,518 ms. Le scanline occupano circa il 73% del core (6,07/6,08 ms
-medi); il resto circa 2,25/2,24 ms, senza righe zoom aggiuntive. È una nuova
-baseline, non uno speedup: la differenza fra binari identici calibra il rumore.
-La prima esecuzione interrotta con errore di output resta conservata come
-parziale; questi risultati provengono dal successivo confronto completato.
+## Replay with identified enemy activation
 
-Questo intervallo include input del giocatore, animazioni e attese: non misura
-solo il calcolo AI e non dimostra che sia il turno lento originariamente
-segnalato. PERF-01 resta aperto per gli altri scenari e la caratterizzazione del
-rallentamento; nessuna accelerazione del runtime è ancora attribuita al replay.
+A new local sequence was prepared from a copy of the supplied snapshot: suspend
+save using the in-game command, new start with recording, resume battle and wait
+for player units. The sequence includes an enemy monster's activation and
+movement, then return to a player-character menu. These steps were observed in
+the window; this is no longer only the idle-battle replay.
 
-## Attribuzione delle fasi PPU completata
+An intermediate snapshot and rebased subsequent inputs bound 3,530 frames. The
+headless replay reaches the same final frame and framebuffer hash as the GUI
+session; the final image was inspected too. Both A/B checks agree on framebuffer
+and OAM for every frame. The
+[workflow](PERFORMANCE_WORKFLOW.md#record-a-battle-from-a-supplied-snapshot)
+describes the procedure without removing the guard against loading a snapshot
+while recording. All fixtures remain ignored.
 
-`FFTA_PPU_STAGES=1` aggiunge intervalli disgiunti per BG, OBJ, composizione,
-estrazione UI, setup UI e residuo. Il confronto del nuovo codice diagnostico
-con la baseline passa cinque coppie sul replay esistente, immagini/OAM per
-frame, stato macchina e conteggi. Mediane con raccolta spenta 8,289/8,317 ms
-(differenza +0,34% in questa prova). La cattura dettagliata usa 8,373 ms/frame,
-circa +0,67% rispetto alla mediana dello stesso candidato: è una stima singola
-soggetta al rumore, non una garanzia universale di overhead.
+The full comparison passes five alternating pairs on the same code, with 120
+warm-up frames: medians 8.346/8.290 ms for the 3,410 measured frames, identical
+final machine state and execution counts. The two separate profiles have zero
+frames over 16.74 ms, p99 10.055/10.129 ms and maxima 12.535/16.518 ms.
+Scanlines occupy about 73% of core time (6.07/6.08 ms mean); the rest about
+2.25/2.24 ms, with no additional zoom rows. This is a new baseline, not a
+speedup: the difference between identical binaries calibrates noise. The first
+run interrupted by an output error remains retained as partial; these results
+come from the later completed comparison.
 
-Medie per frame: BG 0,246 ms, OBJ 0,288 ms, composizione 0,531 ms,
-UI capture 4,912 ms, setup UI 0,071 ms, residuo scanline 0,078 ms.
-L'estrazione UI occupa circa l'80% delle scanline e il 59% del core.
-Nessun intervallo invalido o frame oltre budget nei due profili; p99 core
-baseline/candidato 10,237/10,116 ms. Questo chiude il sottopasso diagnostico
-PERF-02-PPU-STAGES su Linux, non l'intero PERF-02 o una nuova ottimizzazione.
-Il profilo ha guidato il precalcolo delle finestre per riga di
-`capture_dialogue_part`, già concluso nella sezione seguente; i selettori frontali
-scartati non sono stati ripetuti.
+This interval includes player input, animations and waits: it does not measure AI
+computation alone and does not prove this is the originally reported slow turn.
+PERF-01 remains open for other scenarios and slowdown characterization; no
+runtime acceleration is yet attributed to the replay.
 
-## Prima ottimizzazione dell'estrazione UI mantenuta
+<a id="attribuzione-delle-fasi-ppu-completata"></a>
 
-PERF-08-UI-ROW-INVARIANTS è concluso: registri finestra e appartenenza verticale,
-origine nativa e flag modale sono calcolati una volta per chiamata. La precedenza
-WIN0/WIN1/OBJ/esterno e gli intervalli circolari restano identici; 2.457.600 casi
-confrontati con il riferimento precedente, 169 test core e 48 runtime passati.
-Nessuna cache persistente, modifica del timing guest o versione stato nuova.
+## PPU stage attribution completed
 
-Cinque coppie sul replay esistente: mediana 8,412 → 8,229 ms/frame, circa
-**2,18% di lavoro host in meno**, immagini/OAM per frame, stato finale e conteggi
-identici. Il profilo separato attribuisce UI capture 4,941 → 4,779 ms medi.
-p95/p99 core migliorano (10,117/10,540 → 9,890/10,346 ms); i rari frame oltre
-budget sono 2/4 nelle singole catture, con massimi 18,489/18,634 ms. Non è una
-prova di eliminazione dei picchi, né del lag originariamente segnalato.
+`FFTA_PPU_STAGES=1` adds disjoint intervals for BG, OBJ, composition, UI
+extraction, UI setup and remainder. Comparison of the new diagnostic code with
+the baseline passes five pairs on the existing replay, per-frame images/OAM,
+machine state and counts. Medians with collection off 8.289/8.317 ms (+0.34%
+difference in this test). Detailed capture uses 8.373 ms/frame, about +0.67%
+relative to the same candidate's median: a single estimate subject to noise, not
+a universal overhead guarantee.
 
-Il nuovo codice passa anche cinque coppie sulla world map: mediane
-1,958/1,967 ms (+0,43%), stato/immagini/conteggi identici e zero frame oltre
-budget nei profili. Una sessione Xvfb/llvmpipe con il nuovo runtime passa
-load, Annulla, reload, ripresa e chiusura; anteprime e messaggi ispezionati,
-profilazione dettagliata senza intervalli invalidi, slot e ZIP originali invariati.
-Windows nativo, Radeon e controller fisico restano fuori da questa validazione.
-Non ripetere questi task senza una nuova modifica o un criterio scoperto.
+Means per frame: BG 0.246 ms, OBJ 0.288 ms, composition 0.531 ms, UI capture
+4.912 ms, UI setup 0.071 ms, scanline remainder 0.078 ms. UI extraction occupies
+about 80% of scanlines and 59% of core time. No invalid intervals or over-budget
+frames in the two profiles; baseline/candidate core p99 10.237/10.116 ms. This
+closes the PERF-02-PPU-STAGES diagnostic substep on Linux, not all of PERF-02 or
+a new optimization. The profile guided precomputation of windows per row in
+`capture_dialogue_part`, already completed in the next section; rejected front
+selectors were not repeated.
 
-## Riuso dei BG nativi UI mantenuto
+<a id="prima-ottimizzazione-dellestrazione-ui-mantenuta"></a>
 
-PERF-08-UI-PREPARED-BG-ROWS è concluso: BG2/BG3 nativi sono preparati una volta
-per scanline e condivisi fra pannelli/passaggi. Il backing filtra una copia
-privata del testo; Stats conserva la sua maschera nulla. Il riferimento con
-preparazione fresca per passaggio coincide nello stato macchina finale su 48
-configurazioni e tutte le 160 righe, con piani non vuoti, filtri e BG abilitati
-in combinazioni diverse. Passati 170 test core e 48 runtime.
+## First UI extraction optimization retained
 
-Cinque coppie sul replay esistente contro la versione con finestre precalcolate:
-**8,244 → 7,903 ms/frame, 4,14% di lavoro host in meno**. Immagini/OAM per
-frame, stato finale e conteggi identici. UI capture media 4,781 → 4,476 ms;
-p95/p99 core 9,895/10,328 → 9,487/9,909 ms. Nessun frame oltre budget nei due
-profili, ma il massimo isolato cresce da 10,862 a 12,277 ms: nessuna promessa
-universale di eliminazione dei picchi.
+PERF-08-UI-ROW-INVARIANTS is complete: window registers and vertical membership,
+native origin and modal flag are computed once per call. WIN0/WIN1/OBJ/outside
+precedence and circular intervals remain identical; 2,457,600 cases compared with
+the previous reference, 169 core and 48 runtime tests passed. No persistent cache,
+guest timing change or new state version.
 
-Cinque coppie world map: mediane 1,962/1,950 ms, differenza piccola, immagini,
-stato e conteggi identici, zero frame oltre budget. Nuovo runtime verificato
-anche su load/Annulla/reload/ripresa/chiusura in Xvfb/llvmpipe, con ispezione
-delle anteprime e del gioco; 989 frame e zero intervalli PPU invalidi. Slot e
-ZIP originali invariati. Nessun nuovo dato persistente, ABI o formato stato;
-nessuna misura Windows nativa o Radeon è dedotta da questi risultati.
+Five pairs on the existing replay: median 8.412 → 8.229 ms/frame, approximately
+**2.18% less host work**, per-frame images/OAM, final state and counts identical.
+The separate profile attributes mean UI capture 4.941 → 4.779 ms. Core p95/p99
+improve (10.117/10.540 → 9.890/10.346 ms); rare over-budget frames are 2/4 in
+individual captures, maxima 18.489/18.634 ms. This does not prove peak
+elimination or resolution of the originally reported lag.
 
-## Righe UI vuote: ordinamento e blending evitati
+The new code also passes five world-map pairs: medians 1.958/1.967 ms (+0.43%),
+identical state/images/counts and zero over-budget frames in profiles. An
+Xvfb/llvmpipe session with the new runtime passes load, Undo, reload, resume and
+closure; previews and messages inspected, detailed profiling without invalid
+intervals, original slots and ZIP unchanged. Native Windows, Radeon and physical
+controller remain outside this validation. Do not repeat these tasks without a
+new change or uncovered criterion.
 
-PERF-08-UI-EMPTY-ROWS è concluso. Dopo preparazione, cattura sprite e reset dei
-flag, una riga con tutte le sorgenti UI vuote viene azzerata esplicitamente e
-non ordina/fonde i candidati del mondo: questi non possono diventare pixel UI.
-Non vengono saltati frame, scanline hardware, cicli o decisioni guest. Il
-vecchio ciclo completo resta il riferimento di test; le righe non vuote lo
-mantengono invariato. Passati 171 test core e 48 runtime, inclusi contenuti
-precedenti da cancellare, maschere Stats, modali e blending di oggetti mondo.
+<a id="riuso-dei-bg-nativi-ui-mantenuto"></a>
 
-Cinque coppie sul replay esistente contro la versione con BG condivisi:
-**7,891 → 6,194 ms/frame, 21,50% di lavoro host in meno**. Immagini/OAM per
-frame, stato finale e conteggi identici. UI capture media 4,467 → 2,770 ms;
-p95/p99 core 9,481/9,906 → 7,497/7,793 ms, zero frame oltre budget nei due
-profili. Il massimo isolato cresce 10,770 → 14,502 ms: non dedurre una garanzia
-sui picchi rari o la risoluzione del lag originariamente segnalato.
+## Native UI BG reuse retained
 
-Cinque coppie world map: 1,978/1,942 ms, uguaglianza immagini/stato/conteggi e
-zero frame oltre budget. Il nuovo runtime passa load/Annulla/reload/ripresa/
-chiusura in Xvfb/llvmpipe, con ispezione di anteprime e gioco; 987 frame e zero
-intervalli PPU invalidi. Slot e archivio originale restano invariati. Il passo
-di validazione delle build correnti Windows/Linux è stato completato nella
-sezione seguente; gli archivi Docker aggiornati incorporano il renderer corrente.
+PERF-08-UI-PREPARED-BG-ROWS is complete: native BG2/BG3 are prepared once per
+scanline and shared among panels/passes. Backing filters a private text copy;
+Stats retains its null mask. The reference with fresh preparation per pass
+matches final machine state across 48 configurations and all 160 rows, with
+nonempty planes, filters and BG enabled in different combinations. 170 core and
+48 runtime tests passed.
 
-## Build e archivi desktop aggiornati
+Five pairs on the existing replay against the precalculated-window version:
+**8.244 → 7.903 ms/frame, 4.14% less host work**. Per-frame images/OAM, final
+state and counts identical. Mean UI capture 4.781 → 4.476 ms; core p95/p99
+9.895/10.328 → 9.487/9.909 ms. No over-budget frames in the two profiles, but
+isolated maximum rises from 10.862 to 12.277 ms: no universal promise of peak
+elimination.
 
-PERF-03-CURRENT-DESKTOP-BUILDS è concluso per il suo ambito: Windows GNU/MinGW
-in Docker con **317 test Wine**, Linux Bookworm con **318 test**; 9 casi opzionali
-ignorati per piattaforma. Integrità, percorsi e contenuti degli archivi verificati:
-solo lo scaffold Data vuoto, nessuna ROM/save/registrazione/cache gioco o DLL di
-test, TinyCC e licenze inclusi. PE con risorse e import invariati; ELF eseguibili
-con requisito massimo GLIBC 2.35. Hash degli input registrati invariati.
+Five world-map pairs: medians 1.962/1.950 ms, small difference, identical
+images, state and counts, zero over-budget frames. New runtime also verified for
+load/Undo/reload/resume/closure in Xvfb/llvmpipe, inspecting previews and game;
+989 frames and zero invalid PPU intervals. Original slots and ZIP unchanged.
+No new persistent data, ABI or state format; no native Windows or Radeon
+measurement is inferred from these results.
 
-Il nuovo runtime Windows esportato passa il replay esistente da 3.530 frame:
-framebuffer/OAM per frame, stato finale e conteggi coincidono sia col precedente
-runtime Windows sia con la build Linux già validata. È una prova di correttezza
-sotto Wine, non un confronto di prestazioni Windows nativo. Il nuovo archivio
-Linux passa avvio a cache vuota, load/Annulla/reload/ripresa/chiusura in
-Xvfb/llvmpipe: anteprime e gioco ispezionati, 1.001 frame e zero intervalli PPU
-invalidi; slot e ZIP originali invariati.
+<a id="righe-ui-vuote-ordinamento-e-blending-evitati"></a>
 
-Gli archivi e BUILD-INFO correnti sono aggiornati in `dist/docker-windows/` e
-`dist/docker-linux/`; i precedenti restano conservati nella directory locale di
-validazione. Nessuna pubblicazione remota. Restano aperti Windows nativo,
-controller fisici, GPU hardware/pacing e gli scenari non ancora caratterizzati,
-fra cui zoom elevato: non ripetere la baseline ordinaria per coprirli.
+## Empty UI rows: sorting and blending avoided
 
-## Osservazioni sulla revisione iniziale (storiche)
+PERF-08-UI-EMPTY-ROWS is complete. After preparation, sprite capture and flag
+reset, a row with all UI sources empty is explicitly cleared and does not sort/
+blend world candidates: these cannot become UI pixels. No frames, hardware
+scanlines, cycles or guest decisions are skipped. The old complete loop remains
+the test reference; nonempty rows retain it unchanged. 171 core and 48 runtime
+tests passed, including previous content to clear, Stats masks, modals and world
+object blending.
 
-- La GPU è già usata per scalatura, griglia e composizione dei livelli UI:
-  [present.rs](../../crates/screen/src/present.rs), `Presenter::present`, e
-  [ui_layer.rs](../../crates/screen/src/ui_layer.rs), `Gpu::draw`.
-  Rendering GBA, preparazione dei livelli e filtri temporali restano sulla CPU.
-- `Gpu::update` ricarica texture UI, mondo e LUT a ogni aggiornamento del
-  livello. La LUT contiene 32.768 colori; anche il contatore
-  [FPS](../../crates/recomp/src/fps.rs), ridisegnato circa una volta al secondo,
-  percorre questo caricamento a ogni presentazione.
-  I livelli possono avere mondi/LUT differenti: non vanno unificati alla cieca.
-- Nella baseline di [play.rs](../../crates/recomp/src/play.rs), `emu_ema_ms` comprende esecuzione,
-  aggiornamento UI e `Temporal::push`, ma esclude `Temporal::compose`,
-  presentazione, attese e parte del lavoro audio/persistenza. Il valore
-  `native %` confronta blocchi nativi con singole istruzioni interpretate:
-  non misura la percentuale di tempo CPU. La prima tranche sostituisce questa
-  percentuale con conteggi separati e aggiunge un profilo CPU per fase.
-- Un errore restituito da `Presenter::present` fa abbandonare il presenter GPU
-  per il resto della sessione. Anche il timeout nell'acquisizione del frame
-  passa oggi da questa strada. È una possibile causa di peggioramento
-  improvviso, da verificare nel log; non è ancora la diagnosi del lag segnalato.
-- [Temporal](../../crates/screen/src/blend.rs) elabora la storia dei frame
-  emulati, con sei frame per la modalità Smart. La fusione usa colori già
-  codificati per il display: spostarla in spazio lineare cambierebbe l'immagine.
-- La [PPU](../../crates/gba-core/src/ppu.rs) dispone già di un percorso parallelo
-  per le sole righe aggiuntive dello zoom, con test di equivalenza. È
-  disabilitato per default su desktop; il pool persistente richiede la feature
-  `parallel-ppu`, altrimenti vengono creati thread scoped durante il rendering.
-- Il [benchmark precedente](../windows_runtime_performance.md) misura una
-  sequenza introduttiva headless sotto Wine. Non dimostra il costo di un turno
-  nemico, la fluidità della finestra o il comportamento di Windows nativo.
+Five pairs on the existing replay against the shared-BG version:
+**7.891 → 6.194 ms/frame, 21.50% less host work**. Per-frame images/OAM, final
+state and counts identical. Mean UI capture 4.467 → 2.770 ms; core p95/p99
+9.481/9.906 → 7.497/7.793 ms, zero over-budget frames in the two profiles.
+Isolated maximum rises 10.770 → 14.502 ms: do not infer a guarantee on rare
+peaks or resolution of the originally reported lag.
+
+Five world-map pairs: 1.978/1.942 ms, equal images/state/counts and zero
+frames over budget. The new runtime passes load/Undo/reload/resume/closure in
+Xvfb/llvmpipe, with previews and game inspected; 987 frames and zero invalid
+PPU intervals. Original slots and archive remain unchanged. Current Windows/
+Linux build validation was completed in the next section; updated Docker
+archives incorporate the current renderer.
+
+<a id="build-e-archivi-desktop-aggiornati"></a>
+
+## Desktop builds and archives updated
+
+PERF-03-CURRENT-DESKTOP-BUILDS is complete within its scope: Windows GNU/MinGW
+in Docker with **317 Wine tests**, Linux Bookworm with **318 tests**; 9 optional
+cases ignored per platform. Archive integrity, paths and contents verified:
+only empty Data scaffold, no ROM/save/recording/game cache or test DLL, TinyCC
+and licenses included. PE resources and imports unchanged; executable ELFs with
+maximum GLIBC 2.35 requirement. Recorded input hashes unchanged.
+
+The new exported Windows runtime passes the existing 3,530-frame replay:
+per-frame framebuffer/OAM, final state and counts match both previous Windows
+runtime and already validated Linux build. This is a correctness check under
+Wine, not a native Windows performance comparison. The new Linux archive passes
+cold-cache startup, load/Undo/reload/resume/closure in Xvfb/llvmpipe: previews
+and game inspected, 1,001 frames and zero invalid PPU intervals; original slots
+and ZIP unchanged.
+
+Current archives and BUILD-INFO are updated in `dist/docker-windows/` and
+`dist/docker-linux/`; previous versions remain in the local validation directory.
+No remote publication. Native Windows, physical controllers, hardware GPU/
+pacing and scenarios not yet characterized, including high zoom, remain open:
+do not repeat the ordinary baseline to cover them.
+
+<a id="osservazioni-sulla-revisione-iniziale-storiche"></a>
+
+## Initial revision observations (historical)
+
+- The GPU is already used for scaling, grid and UI-layer composition:
+  [present.rs](../../crates/screen/src/present.rs), `Presenter::present`, and
+  [ui_layer.rs](../../crates/screen/src/ui_layer.rs), `Gpu::draw`. GBA rendering,
+  layer preparation and temporal filters remain on CPU.
+- `Gpu::update` reloads UI, world and LUT textures on every layer update. The
+  LUT contains 32,768 colors; the [FPS](../../crates/recomp/src/fps.rs) counter,
+  redrawn approximately once per second, also goes through this upload on every
+  presentation. Layers may have different worlds/LUTs: do not unify them blindly.
+- In the [play.rs](../../crates/recomp/src/play.rs) baseline, `emu_ema_ms`
+  includes execution, UI update and `Temporal::push`, but excludes
+  `Temporal::compose`, presentation, waits and part of audio/persistence work.
+  The `native %` value compares native blocks with individual interpreted
+  instructions: it does not measure CPU time percentage. The first tranche
+  replaces this percentage with separate counts and adds per-stage CPU profiling.
+- An error returned by `Presenter::present` causes the GPU presenter to be
+  abandoned for the rest of the session. Frame-acquisition timeout currently
+  takes this path too. This is a possible cause of sudden degradation to check
+  in the log; it is not yet the diagnosis of the reported lag.
+- [Temporal](../../crates/screen/src/blend.rs) processes emulated frame history,
+  with six frames for Smart mode. Blending uses colors already encoded for the
+  display: moving it to linear space would change the image.
+- The [PPU](../../crates/gba-core/src/ppu.rs) already has a parallel path only
+  for additional zoom rows, with equivalence tests. It is disabled by default
+  on desktop; the persistent pool requires the `parallel-ppu` feature,
+  otherwise scoped threads are created during rendering.
+- The [previous benchmark](../windows_runtime_performance.md) measures a
+  headless introductory sequence under Wine. It does not demonstrate enemy-turn
+  cost, window smoothness or native Windows behavior.
 
 <a id="p0--rendere-il-problema-riproducibile"></a>
 
@@ -702,77 +712,81 @@ fra cui zoom elevato: non ripetere la baseline ordinaria per coprirli.
   GBA clock to monitor refresh or skip simulation.
 
 
-## P3 — GPU e parallelismo incrementali
+<a id="p3--gpu-e-parallelismo-incrementali"></a>
 
-- [ ] **PERF-11 — Prototipare LUT e filtri temporali sulla GPU.**
-  Rischio medio/alto; dipende da PERF-02/03/05. Procedere solo se questi passaggi
-  occupano una parte significativa del budget CPU.
-  Conservare core e framebuffer BGR555 sulla CPU; caricare il frame raw e usare
-  LUT/storia in texture. Partire da Off/Simple, poi Smart e infine Persistence.
-  Preferire un pass grafico semplice; un compute shader non è obbligatorio.
-  Preservare arrotondamenti e fusione nello spazio dei colori già codificati.
-  **Completato quando:** costo totale CPU+trasferimenti+GPU e p99 migliorano,
-  con confronti CPU/GPU e fallback CPU. La storia avanza per ogni frame guest,
-  anche se una presentazione viene saltata o il fast-forward produce più frame.
-  Pausa, caricamento, Undo, zoom e cambio LUT devono mantenere il comportamento
-  attuale. Niente readback sincrono per frame; anteprime e salvataggi devono
-  funzionare senza introdurre attese GPU nel normale ciclo del gioco.
+## P3 — Incremental GPU work and parallelism
 
-- [ ] **PERF-12 — Valutare sul desktop il parallelismo già presente per lo zoom.**
-  Rischio medio; dipende da PERF-02/03/08.
-  Provare `render_zoom_parallel` solo sulle righe aggiuntive, a stato guest
-  congelato nel VBlank. Usare un pool persistente, una soglia misurata e il
-  percorso seriale per lavori piccoli. Non aggiungere thread per ogni frame.
-  **Completato quando:** equivalenza raw anche per pannelli e blending, nessuna
-  mutazione concorrente del guest e vantaggio su CPU con pochi e molti core,
-  senza peggiorare audio o p99. Il test `parallel_rows_match_serial...` è una
-  base, non una prova di prestazioni desktop.
+- [ ] **PERF-11 — Prototype LUT and temporal filters on the GPU.**
+  Medium/high risk; depends on PERF-02/03/05. Proceed only if these stages
+  occupy a significant share of the CPU budget. Keep core and BGR555 framebuffer
+  on CPU; upload the raw frame and use LUT/history in textures. Start with
+  Off/Simple, then Smart and finally Persistence. Prefer a simple graphics pass;
+  a compute shader is not mandatory. Preserve rounding and blending in the
+  already encoded color space.
+  **Complete when:** total CPU+transfer+GPU cost and p99 improve, with CPU/GPU
+  comparisons and CPU fallback. History advances for every guest frame, even if
+  a presentation is skipped or fast-forward produces multiple frames. Pause,
+  load, Undo, zoom and LUT change must retain current behavior. No synchronous
+  per-frame readback; previews and saves must work without introducing GPU waits
+  in the normal game loop.
 
-## P4 — Esperimenti da rimandare
+- [ ] **PERF-12 — Evaluate existing zoom parallelism on desktop.**
+  Medium risk; depends on PERF-02/03/08. Try `render_zoom_parallel` only on
+  additional rows with guest state frozen in VBlank. Use a persistent pool, a
+  measured threshold and the serial path for small jobs. Do not add threads per
+  frame. **Complete when:** raw equivalence including panels and blending, no
+  concurrent guest mutation and advantage on CPUs with few and many cores,
+  without worsening audio or p99. The `parallel_rows_match_serial...` test is a
+  starting point, not desktop performance evidence.
 
-- [ ] **PERF-13 — PPU estesa sulla GPU, solo con evidenza residua forte.**
-  Rischio alto; dipende dalle misure dopo PERF-08/11/12.
-  Valutare prima una porzione isolata delle estensioni host a snapshot stabile.
-  Una PPU GPU completa deve rappresentare correttamente cambi di registri,
-  VRAM, palette, finestre e DMA durante il frame: una fotografia a fine frame
-  non basta in generale. Servono confronto col riferimento CPU e percorso
-  sperimentale disattivato per default.
-  **Completato quando:** vantaggio sostanziale e ripetibile anche con costi di
-  sincronizzazione, equivalenza e recupero su backend differenti. Scartare
-  l'esperimento se la complessità supera il beneficio.
+<a id="p4--esperimenti-da-rimandare"></a>
 
-Non metterei l'IA guest sulla GPU nel piano iniziale: il percorso attuale
-esegue istruzioni ARM/Thumb con dipendenze da memoria, RNG e interrupt.
-Trasformarlo in kernel o sostituire l'IA con una riscrittura host richiederebbe
-una nuova prova di equivalenza. Anche parallelizzare arbitrariamente CPU,
-PPU e audio, usare fast-math o eliminare controlli di sicurezza per aumentare
-gli FPS introduce rischi sproporzionati rispetto alle opzioni precedenti.
+## P4 — Experiments to defer
 
-## Regole per accettare ogni intervento
+- [ ] **PERF-13 — Extended GPU PPU, only with strong residual evidence.**
+  High risk; depends on measurements after PERF-08/11/12. First assess an
+  isolated portion of host extensions at a stable snapshot. A complete GPU PPU
+  must correctly represent register, VRAM, palette, window and DMA changes
+  during the frame: an end-of-frame snapshot is not generally sufficient.
+  CPU reference comparison and an experimental path disabled by default are
+  required. **Complete when:** substantial repeatable advantage including
+  synchronization costs, equivalence and recovery across backends. Reject the
+  experiment if complexity exceeds benefit.
 
-Una modifica alla volta, con diff piccolo e una responsabilità chiara. Estrarre
-moduli solo quando aiuta l'intervento corrente; evitare refactoring massivi di
-`play.rs`/PPU insieme alla modifica algoritmica. Riutilizzare `wgpu`, strumenti
-e test esistenti; nuove dipendenze o `unsafe` richiedono una necessità concreta.
+The initial plan would not put guest AI on the GPU: the current path executes
+ARM/Thumb instructions with memory, RNG and interrupt dependencies. Turning it
+into a kernel or replacing AI with a host rewrite would require new equivalence
+proof. Arbitrarily parallelizing CPU, PPU and audio, using fast-math or removing
+safety checks to increase FPS also introduces disproportionate risk relative to
+the preceding options.
 
-- Correttezza: replay e controlli PERF-03 passano; test core seriali per i
-  globali di display condivisi. Per filtri GPU, specificare prima eventuali
-  tolleranze motivate; nessuna tolleranza sullo stato guest o sui save.
-- Prestazioni: beneficio ripetibile oltre la variabilità fra run nella scena
-  bersaglio, senza regressioni significative nelle altre. Conservare anche
-  misure sfavorevoli; scartare modifiche senza beneficio utile.
-- Compatibilità: Ubuntu Wayland/RADV e X11, fallback software, Windows nativo
-  quando disponibile; Wine è una verifica distinta. Backend alternativi e
-  hardware non provati devono restare esplicitamente non verificati.
-- Persistenza e lifecycle: caricamento/Undo, backup/ripristino, cambio ROM,
-  spostamento portable, resize e chiusura pulita secondo l'area toccata.
-  Cache e risorse host devono essere ricostruibili e invalidabili. Cambiare
-  versione dei savestate solo se cambia il loro contratto, non per un filtro.
-- Memoria di progetto: registrare risultati reali, limitazioni e decisione
-  tenere/scartare in `docs/changes`, poi rigenerare il changelog. Un TODO resta
-  aperto fino a implementazione e verifica; AndroidPort richiede lavoro separato.
+<a id="regole-per-accettare-ogni-intervento"></a>
 
-**Prima tranche consigliata:** PERF-01/02/03, quindi PERF-04/05/06.
-Le priorità successive vanno riordinate con i dati: PERF-07 se domina
-l'esecuzione dei turni, PERF-08/12 se domina lo zoom, PERF-09 se domina
-l'audio, PERF-10 se dominano le attese, PERF-11 se dominano LUT e filtri.
+## Rules for accepting each change
+
+One change at a time, with a small diff and clear responsibility. Extract
+modules only when helpful to the current change; avoid massive `play.rs`/PPU
+refactors alongside an algorithm change. Reuse `wgpu`, existing tools and tests;
+new dependencies or `unsafe` require a concrete need.
+
+- Correctness: replay and PERF-03 checks pass; serial core tests for shared
+  display globals. For GPU filters, specify justified tolerances beforehand;
+  no tolerance for guest state or saves.
+- Performance: repeatable benefit beyond run-to-run variability in the target
+  scene, without significant regressions elsewhere. Retain unfavorable
+  measurements too; reject changes without useful benefit.
+- Compatibility: Ubuntu Wayland/RADV and X11, software fallback, native Windows
+  where available; Wine is a separate check. Untested alternative backends and
+  hardware must remain explicitly unverified.
+- Persistence and lifecycle: load/Undo, backup/restore, ROM change, portable
+  relocation, resize and clean closure according to the affected area. Host
+  caches and resources must be reconstructible and invalidatable. Change
+  savestate version only when its contract changes, not for a filter.
+- Project memory: record actual results, limitations and keep/reject decision in
+  `docs/changes`, then regenerate the changelog. A TODO remains open until
+  implementation and verification; AndroidPort requires separate work.
+
+**Recommended first tranche:** PERF-01/02/03, then PERF-04/05/06. Reorder later
+priorities using data: PERF-07 if turn execution dominates, PERF-08/12 if zoom
+dominates, PERF-09 if audio dominates, PERF-10 if waits dominate, PERF-11 if LUT
+and filters dominate.

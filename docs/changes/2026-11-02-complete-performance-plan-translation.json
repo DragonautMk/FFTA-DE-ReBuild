@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "complete-performance-plan-translation",
+  "title": "Complete English translation of performance plan",
+  "kind": "docs",
+  "platforms": [
+    "Desktop performance planning documentation"
+  ],
+  "changes": [
+    "Translate the historical measurement, replay, optimization and build sections of the performance plan into English while preserving numerical results, provenance and acceptance limits."
+  ],
+  "validation": [
+    "Compare all numeric tokens, task identifiers, inline literals, links and nine legacy anchors against the original; verify local link targets and unchanged surrounding sections."
+  ],
+  "limitations": [
+    "Documentation translation only; no benchmarks, builds, fixtures or runtime checks were rerun."
+  ],
+  "files": [
+    "docs/development/PERFORMANCE_TODO.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}
