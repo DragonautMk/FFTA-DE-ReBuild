@@ -1,6 +1,6 @@
 # USA town menus, 2026-10-18
 
-MEDIDO: private replays from frame zero, USA exact hash, only copied saves.
+MEASURED: private replays from frame zero, USA exact hash, only copied saves.
 Root menu at frame 3300: Pub 4 rows, X=8/Y=92/right=104; Shop 3 rows at
 the same origin; Monster Bank 2 rows, X=0/Y=92/right=96. Pub Rumors has
 8 rows at X=56/Y=20. Buy inventory and category handlers match the existing
@@ -28,7 +28,7 @@ target/usa-bank-list-after.png. Each measured snapshot reconstructs the native
 frame with changed_pixels=0. Synthetic regressions cover detached root/cursor,
 unchanged framebuffer/OAM/RAM, parent owner validation, and both bank regions.
 
-NO MEDIDO: actual Prison entry/selection. The world-map route with private
+NOT MEASURED: actual Prison entry/selection. The world-map route with private
 saves did not reach it, including a newer private save copy. The shared USA
 service detector is implemented, but no claim that the real Prison window
 matches it. A populated Monster Bank list and all mission/shop dialogs also

@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-scene-rendering-guides",
+  "title": "Translate rendering and interaction notes into English",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Review 14 rendering and interaction guides; translate terrain-edge and tutorial-character-metric prose, remaining Spanish measurement labels and one PowerShell comment. Retain four legacy heading anchors and original capture filenames."
+  ],
+  "validation": [
+    "Manual review and structural comparison of all 14 guides preserve numeric/hex tokens, inline code, link destinations and executable examples; four old anchors retained. Only the documented fenced comment changes. Whitespace check passes."
+  ],
+  "limitations": [
+    "Language-only changes; all recorded failures, conditional acceptance and manual/platform limits remain. No runtime/build/ROM checks repeated; the broader project migration remains partial."
+  ],
+  "files": [
+    "docs/ffta_action_frame_width.md",
+    "docs/ffta_bg_patch.md",
+    "docs/ffta_character_metric.md",
+    "docs/ffta_interaction_grid.md",
+    "docs/ffta_laws_layout.md",
+    "docs/ffta_notice_confirmation.md",
+    "docs/ffta_notice_layout.md",
+    "docs/ffta_portrait_ears.md",
+    "docs/ffta_shared_save.md",
+    "docs/ffta_shop_bank_mouse.md",
+    "docs/ffta_spell_help_banner.md",
+    "docs/ffta_switch_rom_picker.md",
+    "docs/ffta_usa_frontend_mouse.md",
+    "docs/ffta_usa_town_menus.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": []
+}

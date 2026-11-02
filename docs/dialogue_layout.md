@@ -157,7 +157,7 @@ text, portrait and backing together at their shared screen anchor.
 New regression test publishes an OAM-replacing HostSprite and compares every
 rendered pixel against raw OAM at both edges, three sizes and seven zoom levels.
 It also asserts the portrait bounds against the shared dialogue transform.
-MEDIDO: 158 suite tests passed, 4 ignored. Live user appearance remains to confirm.
+MEASURED: 158 suite tests passed, 4 ignored. Live user appearance remains to confirm.
 
 
 ## Continuation marker and root settings entry
@@ -189,7 +189,7 @@ continues to use the existing left/right edge. Both axes use one uniform factor.
 The continuation marker is excluded when choosing attachment, preventing its
 bounce from moving the entire layer, while the full native screen envelope
 reserves room for its tip. GPU, software and paused backdrop share the layout.
-MEDIDO: same captured scene at Size=110 and 200 percent stays inside vertically;
+MEASURED: same captured scene at Size=110 and 200 percent stays inside vertically;
 100-percent PNG SHA256 remains AAC332A69764523F514F797CA545D5678F6C55140FFD8D326549282621299E6B.
 192 tests passed, 5 ignored. EUR/USA extra=0 framebuffer/OAM unchanged for 600 frames.
 Captures: target/bubble-size-window-before.png (actual window),

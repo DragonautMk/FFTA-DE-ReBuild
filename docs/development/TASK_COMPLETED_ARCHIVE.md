@@ -18152,3 +18152,45 @@ LOCAL-ARTIFACT-SWEEP-2026-10-31 — CLOSED. Latest request: clean residual proje
 - Verified criteria: audio, fullscreen, menu shortcut and ROM restart user guides reviewed; remaining shortcut menu labels match the English locale catalog. Existing headings, commands, links and validation limits preserved. Whole-project parent remains partial.
 - Evidence: docs/changes/2026-11-02-review-desktop-user-guides-english.json; direct catalog and structural checks, plus audit ledger hashes.
 - Limits: documentation-only review; no runtime, platform or controller checks repeated. Other guides and source areas remain open.
+
+### ENGLISH-FIRST-DESKTOP-GUIDES-02
+
+- Outcome: completed
+- Verified criteria: reviewed all 12 selected desktop/controller/storage/build guides; translated Italian extended-save menu paths and Spanish measurement labels. English catalog confirms menu wording; headings, inline code, link destinations and fenced blocks match HEAD in all 12.
+- Evidence: `docs/changes/2026-11-02-review-desktop-storage-build-guides-english.json`; reviewed hashes in `ENGLISH_FIRST_AUDIT.json` (71 reviewed files, 93 Markdown paths pending).
+- Limits: language-only review; recorded platform/hardware/acceptance limits preserved. No builds, ROM/runtime checks or new release audits. Parent English migration remains partial.
+
+### ENGLISH-FIRST-SCENE-GUIDES
+
+- Outcome: completed
+- Verified criteria: reviewed 14 rendering/interaction notes; translated 12, including terrain-edge/tutorial-metric Spanish prose and measurement labels. Numeric/hex tokens, inline code, links and executable examples preserved; one fenced comment translated and four legacy heading anchors retained. Whitespace check PASS.
+- Evidence: `docs/changes/2026-11-02-translate-scene-rendering-guides.json`; exact hashes in `ENGLISH_FIRST_AUDIT.json` (85 reviewed files, 79 Markdown paths pending).
+- Limits: language-only review; failed eight-character criterion, assumptions, conditional results and manual/platform limits remain unchanged. No runtime/build/ROM exploration. Parent migration remains partial.
+
+### ENGLISH-FIRST-MOUSE-OBJ-GUIDES
+
+- Outcome: completed
+- Verified criteria: reviewed eight mouse/OBJ/movement/dialogue guides, translated seven. Spanish OBJ ABI/clipping/hook prose and measurement/assumption labels now English; four legacy anchors retained. Structural comparison preserves numeric/hex tokens, inline code, links and complete fenced examples.
+- Evidence: `docs/changes/2026-11-02-translate-mouse-obj-guides.json`; exact hashes in `ENGLISH_FIRST_AUDIT.json` (93 reviewed files, 71 Markdown paths pending).
+- Limits: documentation-only language work. Literal logs and recorded platform, physical-input, gameplay and performance limits retained. No runtime/build/ROM revalidation; parent migration remains partial.
+
+### ENGLISH-FIRST-EXPORT-INSTRUCTIONS
+
+- Outcome: completed
+- Verified criteria: portable README, checkout-reference labels, private debug instructions and export status/errors use English. LEGGIMI filenames/archive paths retained; both English and legacy Italian base README markers accepted. Eleven package tests PASS; synthetic English/legacy exports pass manifest hash/CRC/source preservation/no-overwrite checks, unknown marker rejected without output or leftover temporary files. Whitespace PASS.
+- Evidence: `docs/changes/2026-11-02-translate-export-package-instructions.json`; feature docs `docs/portable.md`, `docs/private_debug_assets.md`; reviewed source hashes in `ENGLISH_FIRST_AUDIT.json` (96 files, 71 pending Markdown paths).
+- Limits: synthetic Linux-host packaging/export tests, no real private collection, runtime/native Windows/hardware validation or release rebuild. Legacy imported base prose stays verbatim. Remaining source/docs and parent migration partial.
+
+### ENGLISH-FIRST-ENTRY-ANDROID-GUIDES
+
+- Outcome: completed
+- Verified criteria: reviewed 13 entry/build/Android/license guides separately across root and AndroidPort. Eleven remain byte-identical to HEAD, including CRLF build instructions and selected licensing prose. Both Android TODOs now English, retaining their two open items and legacy android-pendientes anchor.
+- Evidence: `docs/changes/2026-11-02-review-entry-android-guides-english.json`; exact reviewed hashes in `ENGLISH_FIRST_AUDIT.json` (109 reviewed files, 58 pending Markdown paths).
+- Limits: language review only, no build/runtime/device validation or feature/legal recertification. Large generated notices, other docs/sources and parent migration remain pending. No legal text changed.
+
+### ENGLISH-FIRST-DEBUG-SESSION-GUIDES
+
+- Outcome: completed
+- Verified criteria: session diagnosis, isolated debug sessions and snapshot-recording guides translated into English. All 16 old heading anchors retained; structural comparisons preserve inline code, fenced examples, link destinations and numeric/hex evidence (locale thousands separators normalized). Whitespace check PASS.
+- Evidence: `docs/changes/2026-11-02-translate-debug-session-guides.json`; exact reviewed hashes in `ENGLISH_FIRST_AUDIT.json` (112 reviewed files, 55 pending Markdown paths).
+- Limits: documentation-only translation, historical acceptance/failures and Wine/platform/hardware limits unchanged. No new build/runtime/replay/ROM checks; remaining docs/sources and parent migration stay partial.

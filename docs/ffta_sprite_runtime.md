@@ -8,7 +8,7 @@ the actual original instructions, registers/cycles, writes and host attributes.
 See [decoded metadata runtime](rom_data_runtime.md) for file-backed consumption,
 the additional EUR copied alias, source provenance and remaining scene limits.
 
-MEDIDO: native battle DMA submits OAM in at least two pieces:
+MEASURED: native battle DMA submits OAM in at least two pieces:
 
 ```text
 FFTA_DMA frame=13680 channel=0 src=0x03002DD8 dst=0x07000000 count=8 unit=4 timing=0 control=0x8400
@@ -19,7 +19,7 @@ The first submission contains cursor/UI objects; character descriptors also
 use the second submission. The old decoder accepted only 03000030/03000430,
 and publication accepted only destination 07000000. Both restrictions
 prevented character host lists from reaching the PPU.
-MEDIDO: isolated BG2/BG3 images also contain static scene elements such as
+MEASURED: isolated BG2/BG3 images also contain static scene elements such as
 trees and fences. Those are backgrounds and retain the existing BG patch;
 the OBJ change cannot manufacture extra background tilemap contents.
 
@@ -55,7 +55,7 @@ No installer changes or commits are part of this task.
 
 ## Tests and literal results
 
-MEDIDO: cargo test -p gba-core -p recomp-core -p recomp --lib --bins:
+MEASURED: cargo test -p gba-core -p recomp-core -p recomp --lib --bins:
 80 passed in gba-core, 6 in recomp, 3 in recomp-core; no failures.
 The later RAM integration test is ignored by default and run explicitly.
 The new partial-transfer test covers cursor/character merging, shifted
@@ -80,7 +80,7 @@ The RAM cases vary bank, X/Y, flips, per-object priority, mosaic and original
 capacity. The test copies the routine into test RAM from the user-owned ROM
 at runtime; no game instruction bytes are embedded in the test.
 
-MEDIDO: native SPR=0 versus SPR=1, extra=0, 600 boot frames:
+MEASURED: native SPR=0 versus SPR=1, extra=0, 600 boot frames:
 
 ```text
 frames: 600 hash: 727e9157e9bcb0a6
@@ -96,7 +96,7 @@ SPR=1 executed 833 verified hook entries. These are final hashes after
 
 ## Native battle A/B in 32:9
 
-MEDIDO: same input recording and common warm-up, frames 13680..14999.
+MEASURED: same input recording and common warm-up, frames 13680..14999.
 The control and patched runs have equal final central framebuffer and OAM
 SHA256, and equal starting EWRAM/IWRAM/IO/OAM scene hashes.
 
@@ -108,7 +108,7 @@ FFTA_HOST_TILES frame=15000 objects=44 original_rejected_or_capped=3 all_tiles_z
 
 The two initial no-input transfers occur at the common warm-up boundary;
 there is no pending host list before the first hooked frame rebuild.
-NO MEDIDO: absence of a transient on every possible enable/disable boundary.
+NOT MEASURED: absence of a transient on every possible enable/disable boundary.
 
 Captured extrema of this traversal, not proved global map limits:
 
@@ -119,18 +119,18 @@ Captured extrema of this traversal, not proved global map limits:
 | Top | 13992 | 168 / 8 | 0 | 154 |
 | Bottom | 14428 | 152 / 87 | 0 | 169 |
 
-MEDIDO: visual A/B restores character pixels at image X=404..411 in the
+MEASURED: visual A/B restores character pixels at image X=404..411 in the
 right margin of all four images. It does not prove left-margin recovery
 when this recording places no rejected character there.
 Evidence: target/ffta-movement/sprites-control-*.png and
 sprites-combined-*.png. Corresponding PPMs are unmodified native output.
 
-MEDIDO: headless native elapsed time over the same 1320-frame interval:
+MEASURED: headless native elapsed time over the same 1320-frame interval:
 SPR=0 7.321428 ms/frame; SPR=1 7.374606 ms/frame.
-This run has a populated host list. NO MEDIDO: desktop GPU presentation,
+This run has a populated host list. NOT MEASURED: desktop GPU presentation,
 LOG+SPR interaction or statistical confidence from multiple repeats.
 
-MEDIDO: the same native traversal at 1536 pixels completed at
+MEASURED: the same native traversal at 1536 pixels completed at
 11.262409 ms/frame with 44 host objects, 2638 publications and zero
 attribute mismatches. All four images are in sprites-1536-*.png in the
 capture directory. The 9-bit OAM X limit does not constrain the host i32
@@ -139,10 +139,10 @@ The OAM_LOG tile diagnostic now also samples partial OAM destinations,
 so a new user capture can observe the combined character list rather
 than only the first cursor submission.
 
-MEDIDO only at the final frame: all three recovered/capped objects have
+MEASURED only at the final frame: all three recovered/capped objects have
 nonzero tile data and valid OBJ VRAM references; 15899 of 32768 OBJ bytes
 are nonzero. Nonzero data is not proof that every tile contains correct
-art. NO MEDIDO: tile availability throughout every battle, camera-driven
+art. NOT MEASURED: tile availability throughout every battle, camera-driven
 tile eviction, upstream object-list culling, or full-map object enumeration.
 These limitations prevent claiming that all conceivable clipping is solved.
 

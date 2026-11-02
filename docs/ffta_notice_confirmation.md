@@ -1,6 +1,6 @@
 # Notice battle confirmation
 
-2026-10-17. MEDIDO: live EUR Begin battle confirmation, private snapshot
+2026-10-17. MEASURED: live EUR Begin battle confirmation, private snapshot
 target/battle-start-live-*.bin and screenshot target/battle-start-before.png.
 BG2/BG3 are 5C08/4A09. Choice cursor OAM slot 0: 002C/001B/0125,
 native X=27,Y=44. The two identical BG2 bullet images start at X=27 and 65.
@@ -27,10 +27,10 @@ overlap into a permanent hole. The real snapshot has 73 such pixels; the native
 reconstruction diagnostic therefore reports 73 differences for this intended
 host composition change. Hardware framebuffer and OAM remain unchanged.
 
-MEDIDO: Windows release build succeeded. Full gba-core suite: 154 passed,
+MEASURED: Windows release build succeeded. Full gba-core suite: 154 passed,
 4 ignored before the final portrait-occlusion adjustment; targeted Notice tests
 were rerun after it. Captures: target/battle-start-after.png and
 target/battle-start-after-zoom2.png.
 
-NO MEDIDO: manual mouse interaction after relaunch, other language variants,
+NOT MEASURED: manual mouse interaction after relaunch, other language variants,
 and warnings whose options use a different glyph layout. Those fail closed.

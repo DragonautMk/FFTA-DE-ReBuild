@@ -219,9 +219,11 @@ def export(args):
                 found.add(name)
             if found != set(expected): raise ValueError('Base package manifest does not match ZIP')
             base_readme=source.read(BASE_PREFIX+'LEGGIMI.txt')
-            old=b'Nessun caso personale o risultato e incluso.'
-            if old not in base_readme:raise ValueError('Unexpected portable base instructions')
-            add_bytes(z,'LEGGIMI.txt',base_readme.replace(old,b'Questa copia privata include casi debug: leggi LEGGIMI-DEBUG.txt.'),'updated base instructions')
+            # Accept the legacy Italian marker in previously generated base ZIPs.
+            markers=(b'No personal cases or results are included.',b'Nessun caso personale o risultato e incluso.')
+            old=next((marker for marker in markers if marker in base_readme),None)
+            if old is None:raise ValueError('Unexpected portable base instructions')
+            add_bytes(z,'LEGGIMI.txt',base_readme.replace(old,b'This private copy includes debug cases: read LEGGIMI-DEBUG.txt.'),'updated base instructions')
             add_bytes(z,'.gitignore',b'*\n','private extracted-folder ignore')
             add_file(z,'FFTARecomp.exe',launcher,'selected Windows launcher')
             add_file(z,'recomp.exe',runtime,'selected Windows runtime')
@@ -259,26 +261,26 @@ def export(args):
             if all(p.is_file() for p in pair):
                 for path in pair:add_file(z,'DebugAssets/replay-F-09/'+path.name,path,'F-09 replay/'+path.name)
             add_bytes(z,'Data/config/av.cfg',b'debug = true\ndebug.extended_saves = true\n','debug portable defaults')
-            instructions = ("""FFTARecomp - debug assets privati (Windows x86-64)
+            instructions = ("""FFTARecomp - private debug assets (Windows x86-64)
 
-1. Estrai la cartella FFTARecomp-debug-EUR nella root del progetto o dove preferisci.
-2. Avvia FFTARecomp.exe e seleziona la tua ROM europea. La ROM non e inclusa.
-3. Debug e Extended saves sono abilitati nella copia portable. In Gioco > Salvataggi
-   trovi le copie di lavoro EUR (slot e SaveStates). Il catalogo completo e in
-   Debug > Sessioni e casi > Debug catalog. Per aprire un caso usa Open isolated case;
-   per importare uno snapshot usa Import to free snapshot slot in una copia isolata.
-4. I master del catalogo sono in Data/config/debug-catalog; altri originali e
-   precedenti sono in DebugAssets. L'intera raccolta preesistente USA e inclusa
-   nel catalogo, ma la compatibilita USA non e stata verificata da questa esportazione.
-5. Gli snapshot richiedono ROM/hash e BIOS compatibili (normalmente HLE/no BIOS).
-   NON sovrascrivere dati personali; questa e una cartella separata con copie private.
+1. Extract FFTARecomp-debug-EUR to the project root or another location of your choice.
+2. Launch FFTARecomp.exe and select your own European ROM. No ROM is included.
+3. Debug and Extended saves are enabled in the portable copy. Game > Saves contains
+   the EUR working copies (slots and SaveStates). The complete catalog is under
+   Debug > Sessions and cases > Debug catalog. Use Open isolated case to open a case;
+   use Import to free snapshot slot to import a snapshot in an isolated copy.
+4. Catalog masters are in Data/config/debug-catalog; other originals and previous
+   cases are in DebugAssets. The entire existing USA collection is included in
+   the catalog, but this export has not verified USA compatibility.
+5. Snapshots require compatible ROM/hash and BIOS identities (normally HLE/no BIOS).
+   Do NOT overwrite personal data; this is a separate folder with private copies.
 
-ZIP privato: contiene salvataggi e dati generati. Non pubblicarlo o committarlo.
-Il pacchetto di base e i binari provengono dagli input indicati allo script.
-Include fonti originali verificate, registrazioni complete selezionate e il
-replay F-09 se disponibili.
-Non contiene ROM, BIOS, cache o dataset di target. Le registrazioni sono legate
-alle identita originali: consultare recording.json prima di usarle.
+Private ZIP: contains saves and generated data. Do not publish or commit it.
+The base package and binaries come from the inputs selected for the script.
+Includes verified original sources, selected complete recordings and the
+F-09 replay when available.
+Contains no ROM, BIOS, cache or target datasets. Recordings are bound to their
+original identities: check recording.json before using them.
 """).encode('utf-8')
             add_bytes(z,'LEGGIMI-DEBUG.txt',instructions,'generated instructions')
             output_manifest={'schema':1,'kind':'ffta-private-debug-assets','region_default':'EUR',
@@ -297,7 +299,7 @@ alle identita originali: consultare recording.json prima di usarle.
                 if h.hexdigest()!=metadata['sha256'] or count!=metadata['bytes']:
                     raise ValueError(f'ZIP validation failed: {name}')
         os.link(temp,out)  # atomic no-overwrite publish, same filesystem
-        print(f'Creato {out} ({out.stat().st_size:,} byte); {len(entries)} file; catalogo: {len(catalog)} file verificati.')
+        print(f'Created {out} ({out.stat().st_size:,} bytes); {len(entries)} files; catalog: {len(catalog)} verified files.')
     finally:
         temp.unlink(missing_ok=True)
 
@@ -316,6 +318,6 @@ def main():
     args=p.parse_args()
     try: export(args)
     except (OSError,ValueError,KeyError,zipfile.BadZipFile,json.JSONDecodeError) as exc:
-        p.exit(1,f'Esportazione non riuscita: {exc}\n')
+        p.exit(1,f'Export failed: {exc}\n')
 
 if __name__ == '__main__': main()

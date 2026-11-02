@@ -71,10 +71,10 @@ def bundled_document(name, content, names):
         if resolved in names:
             return match.group(0)
         changed = True
-        return label + ' (riferimento nel checkout: ' + destination + ')'
+        return label + ' (checkout reference: ' + destination + ')'
     text = re.sub(r'(!?)\[([^\]\n]+)\]\(([^)\n]+)\)', link, text)
     if changed:
-        text = '> Copia distribuita: i riferimenti a prove/sorgenti non incluse sono indicati come testo del checkout.\n\n' + text
+        text = '> Distributed copy: references to evidence/source files not included are shown as checkout text.\n\n' + text
     return text.encode('utf-8')
 
 
@@ -86,7 +86,7 @@ def main(default_platform="windows", argv=None):
     parser.add_argument('--private-prefix', action='append', default=[], help='Reject an embedded UTF-8/UTF-16LE build prefix; repeatable, no binary rewriting')
     args = parser.parse_args(argv)
     if any(not prefix or len(prefix)>4096 for prefix in args.private_prefix):
-        parser.error('--private-prefix needs1..4096characters')
+        parser.error('--private-prefix needs 1..4096 characters')
     forbidden_prefixes = [encoded for prefix in args.private_prefix for encoded in (prefix.encode('utf-8'), prefix.encode('utf-16-le'))]
     linux = args.platform == 'linux'
     extension = '.tar.gz' if linux else '.zip'
@@ -113,28 +113,28 @@ def main(default_platform="windows", argv=None):
         raise SystemExit('Package output must not replace a selected input or symlink')
     prefix = 'FFTARecomp-portable'
     readme = '''FFTARecomp portable - {platform} x86_64
-Estrai tutta la cartella in una posizione scrivibile e avvia {launch}.
-Al primo avvio scegli la tua ROM FFTA USA/Europa: viene copiata come ffta.gba.
-Puoi anche copiarla manualmente accanto agli eseguibili prima di avviare.
-Nessuna ROM o BIOS e incluso nel pacchetto. Nessuna installazione richiesta.
+Extract the whole folder to a writable location and launch {launch}.
+On first launch, select your own FFTA USA/Europe ROM: it is copied as ffta.gba.
+You can also copy it manually beside the executables before launching.
+No ROM or BIOS is included in the package. No installation is required.
 
-Tutti i dati dell'app restano nella cartella Data. Per spostare il gioco,
-copia TUTTA la cartella, inclusi Data, ffta.gba e portable.txt, a gioco chiuso.
-Per importare progressi: a gioco chiuso copia il tuo .sav in Data/saves/ffta.sav.
-Se esiste gia, conservane prima una copia. Dettagli: docs/portable.md.
-Menu: Esc oppure Start+Back/Select sul controller; combo in Gioco > Controlli.
-Savestate: Gioco > Salvataggi > Save states (9/99 slot, anteprima e annulla).
-Backup del .sav: Gioco > Salvataggi > Save backups (le ultime 2 copie all'avvio).
-Per errori di avvio consulta play-error.log nella cartella principale.
-Guida debug: docs/debug_tools.md (bug, registrazione, confronto, letture, pulizia).
-Launcher con log: scripts/windows/debug_runtime.ps1 oppure scripts/linux/debug_runtime.sh.
-Strumenti offline Python e launcher PS/Bash/Docker sono inclusi; richiedono i
-prerequisiti dichiarati nella guida. Nessun caso personale o risultato e incluso.
-PACKAGE-MANIFEST.json identifica tutti i payload, non certifica la piattaforma.
+All app data stays in the Data folder. To move the game, copy the WHOLE folder,
+including Data, ffta.gba and portable.txt, while the game is closed.
+To import progress: close the game and copy your .sav to Data/saves/ffta.sav.
+If it already exists, keep a copy first. Details: docs/portable.md.
+Menu: Esc or Start+Back/Select on the controller; combination in Game > Controls.
+Save states: Game > Saves > Save states (9/99 slots, preview and undo).
+Cartridge .sav backups: Game > Saves > Save backups (the latest 2 startup copies).
+For startup errors, see play-error.log in the main folder.
+Debug guide: docs/debug_tools.md (bugs, recording, comparison, reads, cleanup).
+Launchers with logs: scripts/windows/debug_runtime.ps1 or scripts/linux/debug_runtime.sh.
+Offline Python tools and PS/Bash/Docker launchers are included; they require the
+prerequisites listed in the guide. No personal cases or results are included.
+PACKAGE-MANIFEST.json identifies all payloads; it does not certify the platform.
 '''.format(platform=args.platform, launch='./FFTARecomp' if linux else launcher)
     if linux:
-        readme += '\nRichiede Ubuntu/Linux x86_64 con sessione grafica, ALSA e libudev.\n'
-        readme += 'Non richiede Wine. Se il desktop chiede cosa fare, scegli Esegui.\n'
+        readme += '\nRequires Ubuntu/Linux x86_64 with a graphical session, ALSA and libudev.\n'
+        readme += 'Wine is not required. If the desktop asks what to do, choose Run.\n'
     generated = {
         'portable.txt': b'FFTARecomp portable mode. Keep beside both executables.\n',
         'LEGGIMI.txt': readme.encode('utf-8'),

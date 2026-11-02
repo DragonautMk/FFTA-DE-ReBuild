@@ -1,68 +1,70 @@
-# Metrica del tutorial
+<a id="metrica-del-tutorial"></a>
 
-MEDIDO: replay nativo completo desde frame 0, entrada ffta-batalla-3.input,
-save privado target/ffta-replay3/start.sav, sin ventana ni vsync.
-Tramo analizado: 11340..12540, 1201 frames consecutivos.
+# Tutorial character metric
 
-MEDIDO: tabla de unidades 020223A4, paso 0x90. Cada registro contiene
-ID en +0x64, instancia corporal en +0x5C e instancia auxiliar en +0x60.
-Se agrupan las piezas por instancia corporal y luego por ID logico 0..7.
-No se cuentan entradas OAM individuales. El cursor 0201C988 no pertenece
-a esos registros corporales; las instancias auxiliares y los productores
-de interfaz tampoco se cuentan. Las piezas publicadas conservan el propietario
-y el grupo de llamada, para comprobar publicaciones duplicadas.
+MEASURED: complete native replay from frame 0, input ffta-batalla-3.input,
+private save target/ffta-replay3/start.sav, without a window or vsync.
+Analyzed interval: 11340..12540, 1201 consecutive frames.
 
-SUPOSICION pendiente de confirmar con el usuario: los ocho personajes de
-referencia corresponden a IDs 0..7. Hay otro registro, ID 8, cuerpo 0201C698,
-nombre Leslaie, categoria 3 frente a 0/2 de los otros registros. Se informa
-por separado; no se oculta ni se considera un duplicado de otra unidad.
-La semantica de esas categorias no se ha demostrado desensamblando su consumidor.
+MEASURED: unit table 020223A4, stride 0x90. Each record contains
+ID at +0x64, body instance at +0x5C and auxiliary instance at +0x60.
+Pieces are grouped by body instance and then by logical ID 0..7.
+Individual OAM entries are not counted. Cursor 0201C988 does not belong
+to those body records; auxiliary instances and UI producers are not
+counted either. Published pieces retain their owner and call group
+to check for duplicate publications.
 
-MEDIDO: present cuenta IDs publicados hacia el PPU; visible cuenta IDs con
-pixeles corporales ganadores en la composicion final. Ambos se registran
-por frame. Un cuerpo fuera de Y=0..159 puede estar publicado sin tener pixeles.
-Con extra=0 se usa OAM etiquetada por el observador, sin activar la lista host.
+ASSUMPTION awaiting user confirmation: the eight reference characters
+correspond to IDs 0..7. There is another record, ID 8, body 0201C698,
+named Leslaie, category 3 versus 0/2 for the other records. It is reported
+separately; it is neither hidden nor treated as a duplicate of another unit.
+The meaning of these categories has not been established by disassembling their consumer.
 
-MEDIDO: actual, FFTA_PATCH_SPR=1 y FFTA_PATCH_VIS=0, 32:9:
-995 frames con present<8; 998 con visible<8. Rango present 2..8.
-MEDIDO: propuesto, FFTA_PATCH_SPR=1 y FFTA_PATCH_VIS=1, 32:9:
-493 frames con present<8; 512 con visible<8. Rango present 2..8.
-El criterio de exito NO se cumple. Cero grupos duplicados observados.
-Incluyendo el cuerpo adicional hay 9 cuerpos publicados en 204 frames
-del actual y 702 del propuesto; no se afirma que la escena tenga solo 8 cuerpos.
+MEASURED: present counts IDs published to the PPU; visible counts IDs with
+body pixels that win in the final composition. Both are recorded per frame.
+A body outside Y=0..159 may be published without contributing pixels.
+With extra=0, observer-tagged OAM is used without enabling the host list.
 
-MEDIDO: listas completas, una fila por frame con cantidad e IDs ausentes:
-target/ffta-eight/current32-failures.csv y proposed32-failures.csv.
-Las variantes visible-failures.csv contienen la prueba de pixeles.
-Los archivos frames.csv incluyen todos los frames, no solo los fallos.
-Se regeneran con python scripts/ffta_character_metric.py target/ffta-eight.
-El analizador toma proposed32-corrected.log; el log provisional anterior
-contenia un error de calculo de Y y queda excluido de los resultados.
+MEASURED: current, FFTA_PATCH_SPR=1 and FFTA_PATCH_VIS=0, 32:9:
+995 frames with present<8; 998 with visible<8. Range of present: 2..8.
+MEASURED: proposed, FFTA_PATCH_SPR=1 and FFTA_PATCH_VIS=1, 32:9:
+493 frames with present<8; 512 with visible<8. Range of present: 2..8.
+The success criterion is NOT met. Zero duplicate groups observed.
+Including the additional body, 9 bodies are published in 204 frames
+of the current run and 702 of the proposed run; there is no claim that the scene has only 8 bodies.
 
-MEDIDO: en frame 12539, predicado 030062EC, LR 0808F837:
+MEASURED: complete lists, one row per frame with counts and missing IDs:
+target/ffta-eight/current32-failures.csv and proposed32-failures.csv.
+The visible-failures.csv variants contain the pixel evidence.
+The frames.csv files include every frame, not only failures.
+Regenerate with python scripts/ffta_character_metric.py target/ffta-eight.
+The analyzer uses proposed32-corrected.log; the earlier provisional log
+contained a Y calculation error and is excluded from the results.
+
+MEASURED: at frame 12539, predicate 030062EC, LR 0808F837:
 x=288 y=-16 -> 0; x=256 y=-16 -> 0; x=176 y=-8 -> 0;
 x=240 y=-40 -> 0; x=144 y=-8 -> 0; x=208 y=-40 -> 0.
-Las seis instancias siguen en RAM. En 12540 solo se publican IDs 1 y 2.
-El nuevo predicado amplia X, pero conserva el rechazo vertical original.
+All six instances remain in RAM. At 12540 only IDs 1 and 2 are published.
+The new predicate extends X but retains the original vertical rejection.
 ROM Thumb 08A38F90 cmp r0,#0; 08A38F92 blt 08A38FA6;
 08A38F94 cmp r1,#0x9f; 08A38FA0 bgt 08A38FA6.
-El consumidor no llama al productor para los cuerpos rechazados.
-NO MEDIDO: atribucion exhaustiva de cada uno de los 493 fallos a una unica
-condicion; el desfase de publicacion requiere correlacion por instancia.
-MEDIDO: el productor alternativo 030068A4 no se llamo en el tramo final
-del recorrido anterior. No se generaliza a otras escenas.
-MEDIDO: las seis instancias finales tienen 320 bytes de tiles examinados,
-175..191 bytes no nulos y cero direcciones fuera de OBJ VRAM.
-NO MEDIDO: integridad visual de todos sus tiles, o de unidades nunca producidas.
+The consumer does not call the producer for rejected bodies.
+NOT MEASURED: exhaustive attribution of each of the 493 failures to a single
+condition; the publication delay requires correlation by instance.
+MEASURED: alternative producer 030068A4 was not called in the final interval
+of the earlier run. This is not generalized to other scenes.
+MEASURED: the six final instances each have 320 tile bytes examined,
+175..191 nonzero bytes and zero addresses outside OBJ VRAM.
+NOT MEASURED: visual integrity of all their tiles, or of units never produced.
 
-MEDIDO: extra=0 original contra propuesto: 1201 metricas identicas;
-41 muestras de framebuffer, OAM y OBJ VRAM identicas, cero diferencias.
-Prueba contra el predicado original de la ROM del usuario: 70 casos identicos.
-No se distribuyen bytes largos de ROM; las comprobaciones usan hashes y
-cabeceras cortas. No se modifica la ROM ni el save original.
+MEASURED: extra=0, original versus proposed: 1201 identical metrics;
+41 identical framebuffer, OAM and OBJ VRAM samples, zero differences.
+Check against the original predicate in the user's ROM: 70 identical cases.
+No long ROM byte sequences are distributed; checks use hashes and short
+headers. Neither the ROM nor the original save is modified.
 
-Propuesta siguiente, NO IMPLEMENTADA: eliminar tambien el rechazo Y del
-predicado en widescreen para conservar todos los cuerpos en el flujo host,
-con las mismas comprobaciones de ROM y RAM. Requiere aprobacion porque cambia
-la decision del juego. Esto no hace visibles cuerpos fuera de los 160 pixels
-verticales; la prueba de ocho publicados y la de ocho visibles son distintas.
+Next proposal, NOT IMPLEMENTED: also remove the predicate's Y rejection in
+widescreen to retain all bodies in the host pipeline, with the same ROM and
+RAM checks. It requires approval because it changes the game's decision.
+This does not make bodies outside the 160 vertical pixels visible; the
+checks for eight published and eight visible bodies are distinct.

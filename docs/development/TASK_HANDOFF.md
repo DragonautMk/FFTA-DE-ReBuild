@@ -2,9 +2,9 @@
 
 ## Operational status
 
-Updated 2026-11-02. User confirmed English-first project and optional Italian.
-User confirmed English-first with optional Italian. Runtime/offline reports and
-desktop guide review units are accepted; cross-tree audit remains open.
+Updated 2026-11-02. User confirmed English-first project with optional Italian. Runtime/offline
+reports, guide reviews and portable/private exporter instructions are accepted
+within their recorded scopes; the cross-tree audit remains open.
 
 Read this entire file and its final handover, then only the relevant sections
 linked below. Do not automatically load the archive, full CHANGELOG,
@@ -24,9 +24,9 @@ termination of another owner's process or changing another thread's goal state.
 
 - State: active
 - Outcome: partial
-- Verified: runtime and offline report units accepted; 57 offline Python tests and eight browser checks passed. Translated coverage snapshot retains original analysis provenance and unchanged 15 layers. Audit lists 59 reviewed files, 105 Markdown paths pending; menu catalogs are complete.
-- Missing: remaining maintained documentation, dynamic report metadata, exporters, tool text, source comments and full audit across both trees. Preserve optional locales, imported content and immutable history.
-- Resume: select another bounded guide or tooling unit from the audit, inspect authoritative sources, translate and validate without ROM exploration or repeat builds solely for translation.
+- Verified: runtime/offline reports accepted; 57 prior Python tests, eight browser checks and 15 unchanged coverage layers. Five guide units reviewed 50 files (26 translated); code/links/numeric evidence/legacy anchors retained. Export instructions English; 11 package tests and synthetic English/legacy private exports PASS. Audit: 112 reviewed files, 55 Markdown paths pending; menu catalogs complete.
+- Missing: remaining maintained documentation, dynamic report metadata, other exporters/tools, source comments and full audit across both trees. Preserve optional locales, imported content and immutable history.
+- Resume: select another pending guide/tooling unit from the audit; completed guide/export units stay accepted unless inputs change. No ROM exploration or runtime/build repetition solely for translation.
 
 ### ROMDATA-03-04-E105-SENARY-COMPACT-OBJ
 
@@ -221,9 +221,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: ENGLISH-FIRST-PROJECT, partial.
-- Last verified result: runtime and offline report units accepted; 57 Python tests, eight offline browser checks and 15 unchanged coverage layers. 59 files reviewed; 105 Markdown paths pending.
-- Remaining work: remaining guides, default UI/tooling/metadata/comments and cross-tree audit.
-- Errors or blockers: none; preserve optional locale, original coverage provenance, archive bytes and unrelated task ownership.
-- Next action: select and translate another bounded guide or tooling unit; update audit and project memory.
-- References: `docs/development/ENGLISH_FIRST_AUDIT.json`, `docs/changes/2026-11-02-translate-offline-debug-reports.json`.
+- Task: ENGLISH-FIRST-PROJECT, partial; ENGLISH-FIRST-DEBUG-SESSION-GUIDES completed.
+- Last verified result: 50 guides reviewed this session, 26 translated; portable/private exporters use English, 11 package tests and synthetic old/new-base export checks PASS. Audit: 112 reviewed files, 55 pending Markdown.
+- Remaining work: technical/debug/development guides, tools, dynamic metadata/comments, generated references/notices and full cross-tree audit.
+- Errors or blockers: none; commands, compatibility anchors/tokens, optional locales, legal text and original data preserved.
+- Next action: select pending debug catalog/replay/capture guides or another source generator from the audit; preserve accepted checks and avoid runtime/ROM exploration solely for translation.
+- References: `docs/development/ENGLISH_FIRST_AUDIT.json`, `docs/changes/2026-11-02-translate-debug-session-guides.json`, `docs/changes/2026-11-02-translate-export-package-instructions.json`.

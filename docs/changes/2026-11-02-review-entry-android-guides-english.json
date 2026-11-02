@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "review-entry-android-guides-english",
+  "title": "Review entry and Android guides for English-first wording",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Review 13 entry/build/Android/license guides individually across both source trees. Translate both Spanish Android TODOs into English, retaining the old heading anchor and the existing two open items."
+  ],
+  "validation": [
+    "Eleven reviewed guides are byte-identical to HEAD, including CRLF build instructions and all selected licensing prose. Both translated TODOs retain their two list items and android-pendientes compatibility anchor."
+  ],
+  "limitations": [
+    "Language-only review; build/feature currency and legal compliance were not recertified, no build/runtime/device checks repeated. Large generated third-party notices and remaining source/docs stay pending."
+  ],
+  "files": [
+    "README.md",
+    "BUILDING.md",
+    "TinyCC/README.md",
+    "android/README.md",
+    "android/TODO.md",
+    "AndroidPort/android/README.md",
+    "AndroidPort/android/TODO.md",
+    "Licenses/ANDROID.md",
+    "Licenses/CREDITS.md",
+    "Licenses/README.md",
+    "AndroidPort/Licenses/ANDROID.md",
+    "AndroidPort/Licenses/CREDITS.md",
+    "AndroidPort/Licenses/README.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": []
+}

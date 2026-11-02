@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-mouse-obj-guides",
+  "title": "Translate mouse and OBJ runtime guides into English",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Review eight mouse, sprite, movement and dialogue guides; translate the Spanish OBJ ABI, clipping and hook descriptions plus measurement/assumption labels. Preserve four legacy anchors and existing technical evidence."
+  ],
+  "validation": [
+    "Manual review and structural comparison of eight guides preserve numeric/hex tokens, inline code, links and fenced examples; four legacy OBJ-guide heading anchors retained."
+  ],
+  "limitations": [
+    "Documentation-only language work; no new hardware, platform, performance, runtime or ROM validation. Literal diagnostic output and existing acceptance limits remain unchanged; full-project audit remains partial."
+  ],
+  "files": [
+    "docs/ffta_mouse_language.md",
+    "docs/ffta_mouse_frontend.md",
+    "docs/ffta_mouse_battle.md",
+    "docs/ffta_mouse_world.md",
+    "docs/ffta_sprite_routines.md",
+    "docs/ffta_sprite_runtime.md",
+    "docs/ffta_movement_bg.md",
+    "docs/dialogue_layout.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": []
+}

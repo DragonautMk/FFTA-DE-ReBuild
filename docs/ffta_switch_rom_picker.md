@@ -16,9 +16,9 @@ belongs to one ROM; development/dynamic builds can select either region.
 
 The file picker uses the same rfd 0.15 version already present in the project.
 Windows uses the system dialog; Linux uses rfd's portal backend.
-NO MEDIDO: manual interaction with the dialog and full process handoff.
+NOT MEASURED: manual interaction with the dialog and full process handoff.
 
-MEDIDO: Windows release build succeeded. Submenu and invalid/missing-file
+MEASURED: Windows release build succeeded. Submenu and invalid/missing-file
 tests passed. Explicit read-only validation tests accepted both exact user
 ROMs (USA and EUR), with launch=false and save=false. No original saves
 were written during validation.

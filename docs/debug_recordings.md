@@ -1,124 +1,132 @@
-# Registrare gli input da uno snapshot — DBG-04
+<a id="registrare-gli-input-da-uno-snapshot--dbg-04"></a>
 
-La registrazione nuova associa uno snapshot iniziale, una sequenza relativa di
-input e uno stato finale. Si usa dentro una [copia di debug](debug_sessions.md),
-anche aperta dal [catalogo DS](debug_catalog.md). La partita personale non è
-una destinazione di registrazione.
+# Record input from a snapshot — DBG-04
 
-## Dal menu
+The new recorder associates a starting snapshot, a relative input sequence
+and a final state. Use it inside a [debug copy](debug_sessions.md), including
+one opened from the [DS catalog](debug_catalog.md). The personal game is not
+a recording destination.
 
-Mettere in pausa la copia e scegliere **Debug → Start input recording**.
-Il punto attuale viene conservato senza avanzare la macchina. Scegliere Resume,
-riprodurre il problema, poi tornare in **Debug → Stop input recording**.
-Il titolo della finestra mostra `[REC]` durante la registrazione. La chiusura
-normale della copia conclude la registrazione; un errore runtime la lascia
-incompleta.
+<a id="dal-menu"></a>
 
-La cartella è `Data/config/recordings/recording-…` nella copia portable. Il log
-riporta il percorso completo e il menu conferma la cartella salvata. Vengono
-conservati al massimo otto tentativi prima di chiedere di spostarli: nessuno
-viene cancellato automaticamente. Ogni tentativo ha limiti di 360.000 frame,
-200.000 eventi e 8 MiB di input. Errori di scrittura, cambio di timeline o di
-dimensioni del rendering interrompono il tentativo e lo segnalano nel menu.
+## From the menu
 
-Load e Undo di un caricamento concludono la registrazione e **rifiutano quel
-primo comando**: ripetere la scelta dopo aver letto il messaggio. Il rewind non
-viene inserito in una sequenza lineare. Salvare uno snapshot e annullare una
-scrittura di file restano possibili. Riavvio, cambio salvataggio e nuova copia
-richiedono di terminare prima la registrazione.
+Pause the copy and choose **Debug → Start input recording**.
+The current point is preserved without advancing the machine. Choose Resume,
+reproduce the problem, then return to **Debug → Stop input recording**.
+The window title shows `[REC]` while recording. Closing the copy normally
+completes the recording; a runtime error leaves it incomplete.
 
-## Dalla CLI
+The folder is `Data/config/recordings/recording-…` in the portable copy. The log
+shows the full path and the menu confirms the saved folder. At most eight
+attempts are retained before asking you to move them: none is deleted
+automatically. Each attempt is limited to 360,000 frames, 200,000 events and
+8 MiB of input. Write errors, timeline changes or render-dimension changes
+stop the attempt and are reported in the menu.
 
-Preparare una copia con uno snapshot, per esempio con `debug-catalog open` o
-`debug-session create --state`. Quindi, con la copia chiusa:
+Load and Undo load complete the recording and **refuse that first command**:
+repeat the choice after reading the message. Rewinding is not inserted into a
+linear sequence. Saving a snapshot and undoing a file write remain possible.
+Restarting, switching saves and creating another copy require stopping the
+recording first.
+
+<a id="dalla-cli"></a>
+
+## From the CLI
+
+Prepare a copy with a snapshot, for example with `debug-catalog open` or
+`debug-session create --state`. Then, with the copy closed:
 
 ```powershell
 .\recomp.exe debug-record start 'C:\Debug\DS-20'
 ```
 
-Il comando apre la copia con gli stessi input fissati e comincia a registrare
-prima del primo frame di gioco. La registrazione parte dal punto effettivo dopo
-l'inizializzazione del frontend, conservato in `start.ffstate`. Il menu permette
-di terminarla; il processo supervisore attende la chiusura della copia.
-Non sono accettati override del gioco o una seconda apertura concorrente.
+The command opens the copy with the same pinned inputs and starts recording
+before the first game frame. Recording starts at the actual point after
+frontend initialization, preserved in `start.ffstate`. The menu can stop it;
+the supervisor process waits for the copy to close. Game overrides and a
+second concurrent opening are not accepted.
 
-Per il controllo funzionale di una registrazione fatta con l'interprete:
+To check the behavior of an interpreter recording:
 
 ```powershell
 .\recomp.exe debug-record verify 'C:\Debug\DS-20\Data\config\recordings\recording-…' `
   --session 'C:\Debug\DS-20'
 ```
 
-Il controllo usa ROM/BIOS e dataset fissati nella copia chiusa. Verifica hash,
-origine e ordine degli eventi, poi riproduce su una macchina temporanea senza
-scrivere salvataggi. Il JSON `ffta-recording-verification`, schema 1, confronta
-l'intero stato serializzato e il clock finali. Divergenza o errore terminano con
-codice 1; il tempo massimo del replay è 120 secondi. Non è un benchmark.
+The check uses the ROM/BIOS and dataset pinned in the closed copy. It verifies
+hashes, event origin and order, then replays on a temporary machine without
+writing saves. The `ffta-recording-verification` JSON, schema 1, compares the
+complete final serialized state and clock. Divergence or error exits with
+code 1; the replay timeout is 120 seconds. This is not a benchmark.
 
-Il binario deve coincidere con quello della registrazione. Questo controllo
-circoscritto richiede una registrazione interpreter. I
-[profili DBG-05](debug_replays.md) permettono invece di scegliere un runtime,
-avviare dal menu, annullare e distinguere gli esiti della riproduzione. I vecchi comandi
-`frames/runc/verify --input` continuano a leggere il file `gba-input v1`.
+The binary must match the one used for recording. This bounded check requires
+an interpreter recording. [DBG-05 profiles](debug_replays.md) allow choosing
+a runtime, starting from the menu, cancelling and distinguishing replay
+outcomes. The old `frames/runc/verify --input` commands continue to read
+the `gba-input v1` file.
 
-## Contenuto e semantica
+<a id="contenuto-e-semantica"></a>
 
-- `start.ffstate`: stato completo all'inizio, legato a ROM e BIOS.
-- `input.input`: `gba-input v1`, con frame relativi da zero, maschera iniziale
-  esplicita dei tasti già premuti e cambi successivi. Le maschere sono active-low:
-  `3ff` rilascia tutti i tasti. Gli eventi dello stesso frame mantengono l'ordine
-  nel file; mouse e tasti seguono le semantiche di replay esistenti.
-- `end.ffstate`: stato finale di una registrazione conclusa normalmente.
-- `recording.json`: schema 1, tipo `ffta-input-recording`, stato recording/
-  complete/incomplete, hash del binario/ROM/BIOS/dataset e dei payload, frame e
-  clock assoluti di origine/fine, dimensioni del rendering e motivo di arresto.
-- `av.cfg`, `input.cfg`: configurazione iniziale, utile per riprodurre il contesto.
+## Contents and semantics
 
-I nomi dei payload sono relativi. La cartella può essere spostata insieme alla
-copia o da sola, conservando una sessione compatibile per il controllo. Un
-processo interrotto non pubblica un risultato complete. Un checkpoint integro
-non dimostra da solo che gli input raggiungano il risultato desiderato: serve
-il confronto finale, e una divergenza rimane visibile.
+- `start.ffstate`: complete starting state, bound to ROM and BIOS.
+- `input.input`: `gba-input v1`, with relative frames starting at zero, an
+  explicit initial mask of already held keys and subsequent changes. Masks
+  are active-low: `3ff` releases all keys. Events in the same frame retain
+  file order; mouse and keys follow the existing replay semantics.
+- `end.ffstate`: final state of a recording completed normally.
+- `recording.json`: schema 1, kind `ffta-input-recording`, status recording/
+  complete/incomplete, binary/ROM/BIOS/dataset and payload hashes, absolute
+  start/end frames and clocks, render dimensions and stop reason.
+- `av.cfg`, `input.cfg`: starting configuration, useful for reproducing context.
 
-Il percorso storico `RECOMP_RECORD_INPUT` resta disponibile e separato: registra
-frame assoluti e una copia iniziale della SRAM, senza il nuovo manifest. Il
-comando Stop può chiuderlo, ma non lo trasforma in una registrazione da snapshot.
-I suoi blocchi su Load/Undo/riavvio rimangono validi. Non si possono sovrapporre
-registrazione storica e nuova.
+Payload names are relative. The folder can move with the copy or on its own,
+while retaining a compatible session for verification. An interrupted process
+does not publish a complete result. An intact checkpoint alone does not prove
+the inputs reach the desired outcome: final comparison is required, and a
+divergence remains visible.
 
-Snapshot, input, configurazione e report contengono dati privati. Restano nella
-copia ignorata da Git e non vengono inseriti nei pacchetti.
+The historical `RECOMP_RECORD_INPUT` path remains available and separate: it
+records absolute frames and an initial SRAM copy without the new manifest.
+Stop can close it but does not turn it into a snapshot recording. Its
+Load/Undo/restart blocks remain valid. Historical and new recordings cannot overlap.
 
-## Verifiche del 28 ottobre 2026
+Snapshots, input, configuration and reports contain private data. They remain
+in the Git-ignored copy and are not included in packages.
 
-Build release Windows offline da base pubblica congelata `2fbf9f7` e tredici
-file degli strumenti sovrapposti, con cache separata. Candidato finale
+<a id="verifiche-del-28-ottobre-2026"></a>
+
+## Validation on 28 October 2026
+
+Offline Windows release build from frozen public base `2fbf9f7` with thirteen
+overlaid tool files and a separate cache. Final candidate:
 `target/debug-tools-recording/recomp.exe`, SHA-256
 `fcd271732ca1a898392ef3a589133a1a45268a8fc9fd98048f109d060c641db4`.
-Gli eseguibili normali e il lavoro concorrente di estrazione sono preservati.
+Normal executables and concurrent extraction work are preserved.
 
-- **57 test Wine:** sette del registratore, 44 del menu e sei delle sessioni.
-  Comprendono origine non zero e tasto A inizialmente premuto, replay esatto,
-  ordine degli eventi, limiti, rewind, scritture fallite, checksum/ROM/build,
-  divergenza dichiarata e spostamento della cartella.
-- **Cinque catture reali EUR DS-20** riproducono stato serializzato completo e
-  clock identici: avvio CLI, avvio/stop menu, arresto per Undo load e Load,
-  chiusura con registrazione attiva. Un replay aggiuntivo dopo spostamento passa.
-- **15 comandi CLI di prova**, oltre ai processi GUI: creazione delle copie,
-  confronto degli endpoint, rifiuti per file alterati, cattura incompleta,
-  sessione già aperta e sessione senza snapshot.
-- Un errore reale simulato nella pubblicazione di `end.ffstate` della sola copia
-  restituisce codice 1 e risultato sessione fallito; non pubblica una registrazione
-  complete. Gli hash/mtime dei 140 input originali e degli input fissati nelle
-  copie rimangono invariati. Schermate di Start/Stop e rifiuto Load/Undo ispezionate.
+- **57 Wine tests:** seven recorder, 44 menu and six session tests.
+  They cover nonzero origin and an initially held A key, exact replay, event
+  order, limits, rewind, failed writes, checksum/ROM/build, reported divergence
+  and moving the folder.
+- **Five real EUR DS-20 captures** reproduce identical complete serialized
+  state and clock: CLI start, menu start/stop, stopping for Undo load and Load,
+  and closing while recording. An additional replay after relocation passes.
+- **15 CLI test commands**, besides GUI processes: copy creation, endpoint
+  comparison, refusals for altered files, incomplete capture, an already open
+  session and a session without a snapshot.
+- An induced publication failure for `end.ffstate` in the copy alone
+  returns code 1 and a failed session result; it does not publish a complete
+  recording. Hashes/mtime of the 140 original inputs and the pinned inputs in
+  the copies remain unchanged. Start/Stop and Load/Undo refusal screenshots inspected.
 
-La prima build dei test ha richiesto una conversione del target mouse da u8 a
-u16. Dopo i test e le prime tre catture sono stati rifiniti soltanto i messaggi
-e la propagazione dell'errore di chiusura; la build finale e le altre due catture
-verificano quei percorsi. Evidenza locale in `target/debug-tools-recording/`:
+The first test build required converting the mouse target from u8 to u16.
+After the tests and first three captures, only messages and close-error
+propagation were refined; the final build and other two captures verify
+those paths. Local evidence in `target/debug-tools-recording/`:
 `test-results.json`, `gui-results.json`, `final-gui-results.json`, `cli-results.json`
-e `final-cli-results.json`.
+and `final-cli-results.json`.
 
-Windows nativo, Linux/Wayland, controller fisici, nuovi percorsi mouse nel gioco
-e registrazioni native non sono verificati da questa unità. Nessuna nuova
-accettazione DS, estrazione ROM, prova di performance o modifica ad Android/Godot.
+Native Windows, Linux/Wayland, physical controllers, new in-game mouse paths
+and native recordings are not verified by this unit. No new DS acceptance,
+ROM extraction, performance test or Android/Godot change.

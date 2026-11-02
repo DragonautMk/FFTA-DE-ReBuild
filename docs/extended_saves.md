@@ -4,8 +4,8 @@ First unlock Debug in the pause menu with **Up Up Down Down Left Left Right Righ
 or set `debug = true` in `av.cfg` and restart. The unlock is persistent.
 See [menu visibility](menu_clan_atlas.md#sblocco-permanente-di-debug).
 
-Open the pause menu, choose **Gioco > Salvataggi** (also available under
-**Debug > Sessioni e casi**), then enable **Extended saves** with
+Open the pause menu, choose **Game > Saves** (also available under
+**Debug > Sessions and cases**), then enable **Extended saves** with
 Confirm, choose ON in the selector, then Confirm again. The default is OFF. The choice
 is stored as `debug.extended_saves` in `av.cfg`, including portable
 `Data/config/av.cfg`.
@@ -52,7 +52,7 @@ translation compatibility are unchanged. See [Save states](save_states.md).
 
 ## Standard game saves
 
-With Extended saves enabled, **Gioco > Salvataggi > Game saves** selects up to 99 cartridge
+With Extended saves enabled, **Game > Saves > Game saves** selects up to 99 cartridge
 save files. Confirm on Slot opens the numbered picker; directions highlight a
 number and Confirm applies it. Cancel discards the pending number. The page shows the filename, whether the file is saved, empty or
 unreadable, and which slot is active.

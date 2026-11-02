@@ -1,6 +1,6 @@
 # Spell description strip
 
-2026-10-17. MEDIDO: live EUR Lightning damage prediction saved as
+2026-10-17. MEASURED: live EUR Lightning damage prediction saved as
 target/lightning-before.png and private target/lightning-live-*.bin.
 BG2=5C08, BG3=4A09. WIN0H=10E0, WIN0V=0818, WININ=001F.
 The native help strip occupies X=16..223,Y=8..23. Its complete text exists
@@ -20,10 +20,10 @@ windows fail the strip classifier.
 Spell-effect repetition: user reports it already resolved by an earlier fix.
 No effect-rendering or character-sprite changes made in this task.
 
-MEDIDO: full gba-core suite 156 passed, 4 ignored. Windows release compiled.
+MEASURED: full gba-core suite 156 passed, 4 ignored. Windows release compiled.
 Snapshots target/lightning-after.png and target/lightning-after-zoom2.png show
 the complete Lightning damage! text and rounded right cap. Native composition
 diagnostic: old binary 1316 differing pixels, patched binary 326, at zoom 1/2.
 This is not an exact-reconstruction pass; residual forecast/UI differences
 remain unclassified. The synthetic hardware framebuffer/OAM identity check
-passes. NO MEDIDO: user confirmation of the running patched binary.
+passes. NOT MEASURED: user confirmation of the running patched binary.

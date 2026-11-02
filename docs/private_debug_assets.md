@@ -61,6 +61,11 @@ and hashes, symbolic links, paths, ROM/BIOS exclusions and ZIP CRC/hash values.
 Use `--output` for an explicit destination; an existing file is not overwritten.
 No build, emulation or source modification is performed.
 
+Generated debug instructions and export messages use English. The instruction
+files keep their legacy `LEGGIMI.txt` and `LEGGIMI-DEBUG.txt` names. The exporter
+accepts both English base instructions and the older Italian base marker;
+imported catalogs, original source files and their contents remain verbatim.
+
 Local validation on 2026-10-31 checked 104 catalog files, 10 original sources,
 two recordings and the F-09 replay. Through Wine, the extracted Windows runtime
 listed the EUR catalog and created an isolated DS-20 copy; the copy's GUI opened

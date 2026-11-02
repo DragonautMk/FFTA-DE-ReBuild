@@ -1,45 +1,50 @@
-# Sessioni di debug isolate — DBG-02
+<a id="sessioni-di-debug-isolate--dbg-02"></a>
 
-Una sessione è una copia portable del caso scelto. Contiene un eseguibile,
-ROM, eventuale BIOS e dataset, configurazione, salvataggio e snapshot iniziale.
-La copia lavora nella propria cartella: salvataggi periodici, uscita, slot,
-Undo, backup, impostazioni e cache non usano i percorsi della partita originale.
+# Isolated debug sessions — DBG-02
 
-Per partire da una scena della raccolta usare il [catalogo DS](debug_catalog.md):
-**Debug → Debug catalog → Open isolated case** oppure `debug-catalog open`.
-La copia conserva nome, provenienza e voce selezionata; gli snapshot si possono
-anche importare in uno slot libero della copia, senza caricarli automaticamente.
-Per registrare una riproduzione dal punto corrente usare
-[Start/Stop input recording](debug_recordings.md); `debug-record start` avvia
-la stessa registrazione dalla CLI in una copia chiusa con snapshot iniziale.
-Da una registrazione completa si può creare un [profilo di replay](debug_replays.md):
-menu e CLI eseguono il caso in un worker separato, senza scrivere i progressi
-della sessione sorgente o della partita normale.
+A session is a portable copy of the selected case. It contains an executable,
+ROM, optional BIOS and dataset, configuration, save and starting snapshot.
+The copy works in its own folder: periodic saves, exit, slots, Undo, backups,
+settings and cache do not use the original game's paths.
 
-## Dal gioco
+To start from a collection scene, use the [DS catalog](debug_catalog.md):
+**Debug → Debug catalog → Open isolated case** or `debug-catalog open`.
+The copy retains the name, provenance and selected entry; snapshots can also
+be imported into a free slot in the copy without loading them automatically.
+To record a reproduction from the current point, use
+[Start/Stop input recording](debug_recordings.md); `debug-record start` starts
+the same recording from the CLI in a closed copy with a starting snapshot.
+A complete recording can become a [replay profile](debug_replays.md): menu and
+CLI run the case in a separate worker without writing progress to the source
+session or normal game.
 
-Mettere in pausa e aprire **Debug → Start debug session**. Il runtime cattura
-il punto attuale e la memoria del salvataggio, copia la configurazione corrente
-e apre una seconda finestra. La partita normale resta in pausa. La nuova
-finestra porta il titolo **FFTARecomp - DEBUG: nome**; il suo menu mostra anche
-un indicatore **DEBUG COPY** nel margine (abbreviato nelle finestre strette),
-visibile a schermo intero.
+<a id="dal-gioco"></a>
 
-Nella copia si possono caricare snapshot, salvare, annullare e riavviare usando
-le funzioni già presenti. **Debug → Close debug session** chiude la copia;
-ritornare alla finestra originale e scegliere Resume riprende la partita normale.
-Non c'è una promozione automatica dei progressi di debug nella partita personale.
-Nella copia sono bloccati Start debug session e Switch ROM: per cambiare caso si
-chiude prima la copia. La creazione è rifiutata durante una registrazione input.
+## From the game
 
-Le sessioni create dal menu sono sotto `Data/debug-sessions/` in modalità
-portable, oppure `debug-sessions/` sotto la directory di configurazione installata.
-Il log indica la cartella completa. Dopo otto cartelle, il menu chiede di
-riaprire una sessione o spostare quelle da conservare: non elimina prove o errori.
+Pause and open **Debug → Start debug session**. The runtime captures the
+current point and save memory, copies the current configuration and opens a
+second window. The normal game stays paused. The new window is titled
+**FFTARecomp - DEBUG: name**; its menu also shows a **DEBUG COPY** indicator in
+the margin (abbreviated in narrow windows), visible in fullscreen.
 
-## Dalla CLI
+The copy can load snapshots, save, undo and restart with the existing features.
+**Debug → Close debug session** closes the copy; return to the original window
+and choose Resume to continue the normal game. Debug progress is not promoted
+automatically to the personal game. Start debug session and Switch ROM are
+blocked in the copy: close it before changing cases. Creation is refused
+during input recording.
 
-Esempio PowerShell:
+Menu-created sessions are under `Data/debug-sessions/` in portable mode, or
+`debug-sessions/` under the installed configuration directory. The log shows
+the full folder path. After eight folders, the menu asks you to reopen a
+session or move those to retain: it does not delete evidence or failed attempts.
+
+<a id="dalla-cli"></a>
+
+## From the CLI
+
+PowerShell example:
 
 ```powershell
 .\recomp.exe debug-session create 'C:\Giochi\FFTA EUR.gba' `
@@ -47,111 +52,115 @@ Esempio PowerShell:
   --state 'C:\Debug\DS-20.ffstate' --no-bios --interp --open
 ```
 
-`--open` è facoltativo. Senza questo flag viene creata la cartella e stampato
-un risultato JSON, senza avviare il gioco. La destinazione deve essere nuova.
-Il salvataggio e lo snapshot sorgente vengono letti e copiati, mai spostati.
-Se si omette `--sav`, valgono le regole di scelta del controllo `diagnose`;
-una scelta ambigua richiede un percorso esplicito.
+`--open` is optional. Without this flag, the folder is created and a JSON
+result printed without starting the game. The destination must be new.
+The source save and snapshot are read and copied, never moved.
+If `--sav` is omitted, the `diagnose` check's selection rules apply;
+an ambiguous choice requires an explicit path.
 
-Per riaprire o controllare una cartella:
+To reopen or inspect a folder:
 
 ```powershell
 .\recomp.exe debug-session inspect 'C:\Debug\DS-20'
 .\recomp.exe debug-session open 'C:\Debug\DS-20'
 ```
 
-`inspect` restituisce il manifest e verifica i file, senza eseguire il gioco.
-`open` aspetta la chiusura della copia e propaga l'esito del processo. Si può
-anche aprire direttamente il `recomp.exe` nella cartella. Linux usa la stessa
-sintassi con `./recomp`; il binario copiato conserva il permesso di esecuzione.
-La verifica documentata di questa unità riguarda Windows sotto Wine.
+`inspect` returns the manifest and verifies files without running the game.
+`open` waits for the copy to close and propagates the process outcome. You can
+also open `recomp.exe` directly in the folder. Linux uses the same syntax with
+`./recomp`; the copied binary retains execute permission. This unit's documented
+validation covers Windows under Wine.
 
-`--bios FILE` copia un BIOS reale, `--no-bios` sceglie HLE. `--dataset DIR`
-copia un dataset già autenticato; `--rom-data` seleziona quello gestito corrente,
-senza estrarlo o ripararlo. Sono opzioni alternative. Senza dataset il runtime
-usa la ROM normalmente. Il menu copia il dataset effettivamente collegato.
+`--bios FILE` copies a real BIOS; `--no-bios` selects HLE. `--dataset DIR` copies
+an already authenticated dataset; `--rom-data` selects the current managed one
+without extracting or repairing it. These are alternative options. Without a
+dataset the runtime uses the ROM normally. The menu copies the dataset actually attached.
 
-`--interp` sceglie l'interprete. Per una copia native serve il TinyCC del runtime
-sorgente: la libreria viene copiata nella sessione e le traduzioni sono create
-nella sua cache. La creazione richiede il runtime di sviluppo; i pacchetti
-full-recomp con manifest di distribuzione non vengono convertiti da questo tool.
+`--interp` selects the interpreter. A native copy needs the source runtime's
+TinyCC: the library is copied into the session and translations are created
+in its cache. Creation requires the development runtime; full-recomp packages
+with a distribution manifest are not converted by this tool.
 
-## Riapertura e spostamento
+<a id="riapertura-e-spostamento"></a>
 
-Lo snapshot iniziale resta in `seed.ffstate` ed è copiato anche nello slot 1.
-Ogni apertura della sessione con uno snapshot riparte da quel punto; gli altri
-slot e le modifiche ai salvataggi restano nella copia e sono caricabili dal menu.
-Restart ROM usa il normale riavvio con la memoria cartridge attuale, senza
-caricare implicitamente il seed né ruotare i backup. La chiusura e riapertura del
-processo crea invece il normale backup iniziale del salvataggio della copia.
+## Reopening and moving
 
-Chiudere la sessione prima di spostare **tutta la cartella**. Manifest e input
-usano nomi relativi; `portable.txt` individua la directory dal vero eseguibile,
-anche se il comando parte da una directory di lavoro diversa. Non modificare
-file o collegamenti mentre la sessione è aperta.
+The starting snapshot remains in `seed.ffstate` and is also copied to slot 1.
+Each opening of a session with a snapshot restarts there; other slots and save
+changes stay in the copy and can be loaded from the menu. Restart ROM uses the
+normal reboot with current cartridge memory, without implicitly loading the
+seed or rotating backups. Closing and reopening the process instead creates
+the normal startup backup of the copy's save.
 
-Il manifest `debug-session.json` identifica il caso e conserva gli hash di ROM,
-BIOS, eseguibile, seed, dataset e TinyCC. Salvataggi, configurazioni e cache sono
-mutabili. `session.lock` impedisce due aperture simultanee della stessa copia;
-`last-result.json` conserva l'ultimo esito di avvio/uscita. Il report di
-[diagnosi](debug_diagnostics.md) si trova nella configurazione della copia.
+Close the session before moving **the whole folder**. Manifest and inputs use
+relative names; `portable.txt` locates the directory from the actual executable,
+even if the command starts from another working directory. Do not change files
+or links while the session is open.
 
-Gli avvii tramite `open` o menu eliminano le variabili ereditate `FFTA_*`,
-`RECOMP_*` e `GBA_*`: gli override non possono riagganciare il salvataggio, la
-registrazione o i dump personali. L'avvio diretto con tali variabili presenti
-viene rifiutato. Gli override di `play` nella copia vengono rifiutati: usare
-`debug-session create` per configurare un nuovo caso.
+The `debug-session.json` manifest identifies the case and retains hashes for
+ROM, BIOS, executable, seed, dataset and TinyCC. Saves, configuration and cache
+are mutable. `session.lock` prevents two simultaneous openings of the same copy;
+`last-result.json` retains the latest startup/exit outcome. The
+[diagnosis](debug_diagnostics.md) report is in the copy's configuration directory.
 
-La cartella nuova riceve subito un `.gitignore` che ne esclude tutto il contenuto.
-ROM, BIOS, dataset, snapshot e salvataggi restano privati; non vanno inseriti
-nei pacchetti. La copia iniziale è limitata a 768 MiB; l'ispezione rifiuta alberi
-oltre 2 GiB, 4096 voci o 16 livelli e file collegati. Una copia incompleta per
-un errore I/O rimane per la diagnosi, priva di un manifest valido: non viene
-avviata né rimossa automaticamente.
+Launches through `open` or the menu remove inherited `FFTA_*`, `RECOMP_*` and
+`GBA_*` variables: overrides cannot reconnect personal saves, recordings or
+dumps. Direct launch with those variables present is refused. `play` overrides
+in the copy are refused: use `debug-session create` to configure a new case.
 
-## Verifica del 27 ottobre 2026
+The new folder immediately receives a `.gitignore` excluding all its contents.
+ROM, BIOS, dataset, snapshots and saves remain private and must not be included
+in packages. The initial copy is bounded to 768 MiB; inspection rejects trees
+over 2 GiB, 4096 entries or 16 levels, and linked files. A copy left incomplete
+by an I/O error remains for diagnosis without a valid manifest: it is neither
+launched nor removed automatically.
 
-Build Windows release offline con dipendenze bloccate, da una copia pubblica
-stabile dei sorgenti più le modifiche di questo strumento. L'estrazione in corso
-e gli eseguibili di produzione restano separati dagli output della compilazione.
+<a id="verifica-del-27-ottobre-2026"></a>
 
-Sotto Wine sono passati sei test delle sessioni, 41 del menu, dieci degli slot e
-sette dei backup; il precedente test backup che richiede un dataset specifico
-resta ignorato. I 41 test del menu finale sono passati anche dopo la correzione
-visiva dell'indicatore. Sette casi CLI reali EUR verificano creazione, ispezione,
-copia di TinyCC e rifiuto di destinazioni/input/override incompatibili.
+## Validation on 27 October 2026
 
-Le prove Wine/Xvfb verificano partenza dallo snapshot, dataset copiato, esclusione
-degli override esterni, apertura esclusiva, Save/Load/Undo, riavvio, ripristino
-backup e chiusura. La cartella spostata si riapre da una directory di lavoro
-estranea, conservando snapshot e due backup. La copia creata dal menu si chiude
-normalmente; tornando alla finestra originale, frame, clock e file del progresso
-sono invariati. Tutti i 73 file sorgente protetti conservano hash e date, così
-come i due eseguibili di produzione Windows/Linux.
+Offline Windows release build with locked dependencies from a stable public
+source copy plus this tool's changes. Ongoing extraction and production
+executables stay separate from build outputs.
 
-Il rilevamento X11 e l'attesa dei report nel solo harness hanno richiesto
-correzioni. Nel ritorno alla finestra originale, XSetInputFocus da solo mostrava
-un'immagine nera: una sonda Windows ha verificato finestra visibile, non ridotta
-a icona e responsiva; ShowWindow/SetForegroundWindow, come l'attivazione dalla
-barra delle applicazioni, completa correttamente il ritorno. Le schermate finali
-sono state ispezionate; l'indicatore non copre più i titoli degli slot.
+Under Wine, six session, 41 menu, ten slot and seven backup tests passed; the
+existing backup test requiring a specific dataset remains ignored. The final
+41 menu tests also passed after the indicator's visual correction. Seven real
+EUR CLI cases verify creation, inspection, TinyCC copying and rejection of
+incompatible destinations/inputs/overrides.
 
-Windows nativo, Linux/Wayland, controller fisici e gameplay con traduzione native
-nella copia restano da verificare. La prova native copre la copia e identità della
-libreria TinyCC. Non sono stati eseguiti benchmark, nuove scene DS o vecchie prove
-di accettazione ROM. Evidenza locale in `target/debug-tools-sessions/`; sorgenti
-pubblici e cache riutilizzabile in `target/debug-tools-build/`.
+Wine/Xvfb checks verify starting from the snapshot, copied dataset, exclusion
+of external overrides, exclusive opening, Save/Load/Undo, restart, backup
+restoration and closing. The moved folder reopens from an unrelated working
+directory, preserving the snapshot and two backups. The menu-created copy
+closes normally; on returning to the original window, frame, clock and progress
+file are unchanged. All 73 protected source files retain hashes and timestamps,
+as do both Windows/Linux production executables.
 
-Per mettere in pausa la copia, avanzare di un numero esatto di frame e riprendere
-usare [DBG-10: menu, F6/F7/F8 e CLI debug-control](debug_control.md).
-`debug-session open DIR --paused` parte dal seed senza eseguire frame prima
-della prima richiesta; il normale `open DIR` mantiene l'avvio diretto.
+X11 detection and waiting for reports required corrections in the harness
+alone. When returning to the original window, XSetInputFocus alone showed a
+black image: a Windows probe verified that the window was visible, not
+minimized and responsive; ShowWindow/SetForegroundWindow, like taskbar
+activation, completes the return correctly. Final screenshots were inspected;
+the indicator no longer covers slot titles.
 
+Native Windows, Linux/Wayland, physical controllers and native-translation
+gameplay in the copy remain unverified. The native check covers copying and
+identity of the TinyCC library. No benchmarks, new DS scenes or old ROM
+acceptance tests were run. Local evidence is in `target/debug-tools-sessions/`;
+public sources and reusable cache are in `target/debug-tools-build/`.
 
-## Coordinamento con la pulizia — DBG-18
+To pause the copy, advance an exact number of frames and resume, use
+[DBG-10: menu, F6/F7/F8 and debug-control CLI](debug_control.md).
+`debug-session open DIR --paused` starts from the seed without executing frames
+before the first request; normal `open DIR` retains direct startup.
 
-Le nuove copie dichiarano il protocollo host directory-v1 e mantengono un lease
-anche durante creazione e uso della sessione. Un contesto attivo o interrotto
-resta protetto; una vecchia copia senza protocollo non viene considerata sicura
-per la pulizia automatica. Il normale lock della sessione resta presente.
-[Gestore, ricevute e recupero dei lease](debug_artifacts.md).
+<a id="coordinamento-con-la-pulizia--dbg-18"></a>
+
+## Cleanup coordination — DBG-18
+
+New copies declare the directory-v1 host protocol and retain a lease during
+session creation and use. An active or interrupted context remains protected;
+an old copy without the protocol is not considered safe for automatic cleanup.
+The normal session lock remains in place.
+[Manager, receipts and lease recovery](debug_artifacts.md).

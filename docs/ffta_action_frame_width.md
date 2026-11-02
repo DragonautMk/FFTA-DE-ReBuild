@@ -1,6 +1,6 @@
 # Variable action menu width
 
-2026-10-17. MEDIDO: EUR Lester, Giza, live snapshot
+2026-10-17. MEASURED: EUR Lester, Giza, live snapshot
 target/action-long-name-live-*.bin. BG2=5C08/BG3=4A09. The menu containing
 Fight, White Magic and Item has its BG2 header C005/C006 at X=152,Y=80,
 footer C009/C00A at Y=144. Cursor OAM slot 0 is 0075/0097/0125,
@@ -16,10 +16,10 @@ previous split rather than guessing a rectangle.
 
 Synthetic regression checks four native menu widths, header and cursor
 ownership, and unchanged native framebuffer/OAM. No installer/save changes.
-MEDIDO: full gba-core suite 155 passed, 4 ignored. Windows release build
+MEASURED: full gba-core suite 155 passed, 4 ignored. Windows release build
 succeeded. Real Lester snapshot at zoom 1 and 2: native reconstruction has
 0 changed pixels. Captures target/action-long-name-after.png and
 target/action-long-name-after-zoom2.png show no displaced left frame fragment.
 
-NO MEDIDO: user confirmation after relaunch. Repeated spell effects remain
+NOT MEASURED: user confirmation after relaunch. Repeated spell effects remain
 pending as the next separate task; this patch does not address them.

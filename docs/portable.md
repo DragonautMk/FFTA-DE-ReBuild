@@ -156,6 +156,9 @@ The packaging script selects runtime/compiler/docs/licenses explicitly and
 never includes an existing `Data` folder, ROMs, saves or generated translations.
 Without the marker, existing installed-mode storage remains supported.
 
+Generated startup instructions and checkout-reference labels use English.
+The instruction file retains its legacy `LEGGIMI.txt` name for compatibility.
+
 The desktop bundles include the [Atlas menu guide](menu_clan_atlas.md) and
 [9/99-slot guide](extended_saves.md); the same public-file list is available in
 both Docker build contexts. Build-method checks and their limits are recorded

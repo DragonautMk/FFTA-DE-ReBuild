@@ -3,6 +3,24 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-02 — Translate rendering and interaction notes into English
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Review 14 rendering and interaction guides; translate terrain-edge and tutorial-character-metric prose, remaining Spanish measurement labels and one PowerShell comment. Retain four legacy heading anchors and original capture filenames.
+
+**Validation**
+
+- Manual review and structural comparison of all 14 guides preserve numeric/hex tokens, inline code, link destinations and executable examples; four old anchors retained. Only the documented fenced comment changes. Whitespace check passes.
+
+**Limitations**
+
+- Language-only changes; all recorded failures, conditional acceptance and manual/platform limits remain. No runtime/build/ROM checks repeated; the broader project migration remains partial.
+
+[Change record](docs/changes/2026-11-02-translate-scene-rendering-guides.json)
+
 ## 2026-11-02 — Translate gameplay, issue, comparison and graphics reports into English
 
 Type: changed. Platforms: Desktop report HTML; headless Chrome on Linux with synthetic fixtures.
@@ -48,6 +66,79 @@ Type: changed. Platforms: Linux browser and Python synthetic checks.
 
 [Change record](docs/changes/2026-11-02-translate-offline-debug-reports.json)
 
+## 2026-11-02 — Translate mouse and OBJ runtime guides into English
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Review eight mouse, sprite, movement and dialogue guides; translate the Spanish OBJ ABI, clipping and hook descriptions plus measurement/assumption labels. Preserve four legacy anchors and existing technical evidence.
+
+**Validation**
+
+- Manual review and structural comparison of eight guides preserve numeric/hex tokens, inline code, links and fenced examples; four legacy OBJ-guide heading anchors retained.
+
+**Limitations**
+
+- Documentation-only language work; no new hardware, platform, performance, runtime or ROM validation. Literal diagnostic output and existing acceptance limits remain unchanged; full-project audit remains partial.
+
+[Change record](docs/changes/2026-11-02-translate-mouse-obj-guides.json)
+
+## 2026-11-02 — Generate English portable and private-export instructions
+
+Type: changed. Platforms: Windows, Linux.
+
+**Changes**
+
+- Translate portable startup instructions, repository-reference labels and private debug export instructions/status/errors into English. Retain legacy LEGGIMI filenames and archive paths; accept both English and old Italian base README markers.
+- Document English generated instructions and compatibility; align the existing package test expectation and audit the two exporters plus their test source.
+
+**Validation**
+
+- All 11 existing portable packaging tests pass. Synthetic private exports pass with English and legacy Italian base markers, validate CRC and every manifest hash, preserve sources and refuse existing destinations. Unknown marker is rejected without output; no temporary export files remain. Whitespace check passes.
+
+**Limitations**
+
+- Synthetic payload validation on Linux only; no runtime, native Windows, physical controller, real private collection export or release rebuild performed. Existing legacy-base prose and imported data stay verbatim; remaining source/docs migration remains partial.
+
+[Change record](docs/changes/2026-11-02-translate-export-package-instructions.json)
+
+## 2026-11-02 — Translate diagnosis, isolated-session and recording guides
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Translate three maintained debug guides into English: session diagnosis, isolated portable sessions and recording input from snapshots. Preserve all 16 legacy heading anchors and the original acceptance limits.
+
+**Validation**
+
+- Manual review and structural comparison against HEAD preserve inline code, fenced examples, link destinations and numeric/hex tokens in all three guides. Every original heading has a compatibility anchor; English thousands separators preserve numeric values. Whitespace check passes.
+
+**Limitations**
+
+- Documentation-only translation; historical Wine evidence remains within its original scope, no runtime/build/replay/platform checks repeated. Remaining guides, dynamic metadata, tools, source comments and cross-tree audit stay pending.
+
+[Change record](docs/changes/2026-11-02-translate-debug-session-guides.json)
+
+## 2026-11-02 — Review entry and Android guides for English-first wording
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Review 13 entry/build/Android/license guides individually across both source trees. Translate both Spanish Android TODOs into English, retaining the old heading anchor and the existing two open items.
+
+**Validation**
+
+- Eleven reviewed guides are byte-identical to HEAD, including CRLF build instructions and all selected licensing prose. Both translated TODOs retain their two list items and android-pendientes compatibility anchor.
+
+**Limitations**
+
+- Language-only review; build/feature currency and legal compliance were not recertified, no build/runtime/device checks repeated. Large generated third-party notices and remaining source/docs stay pending.
+
+[Change record](docs/changes/2026-11-02-review-entry-android-guides-english.json)
+
 ## 2026-11-02 — Review desktop user guides for English-first wording
 
 Type: docs. Platforms: project-wide.
@@ -65,6 +156,26 @@ Type: docs. Platforms: project-wide.
 - Documentation-only review; no runtime, platform or controller test was repeated. Other documentation and source areas remain under review.
 
 [Change record](docs/changes/2026-11-02-review-desktop-user-guides-english.json)
+
+## 2026-11-02 — Review desktop storage and build guides for English-first wording
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Review 12 desktop, controller, storage and packaging guides; translate Italian menu paths in extended saves and Spanish measurement labels in the maintained release audit.
+
+**Validation**
+
+- Manual review of all 12 guides; Game, Saves, Sessions and cases and Game saves match the English catalog. Structural comparison against HEAD preserves headings, inline code, link destinations and fenced blocks in all 12.
+
+**Limitations**
+
+- Documentation-only language review; historical validation scope remains unchanged. No build, runtime, physical controller, ROM or release audit was repeated; remaining guides and source areas stay pending.
+
+Documentation: [en.json](crates/input-config/languages/en.json).
+
+[Change record](docs/changes/2026-11-02-review-desktop-storage-build-guides-english.json)
 
 ## 2026-11-02 — Record the partial senary compact OBJ runtime integration
 

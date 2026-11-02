@@ -41,9 +41,34 @@
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
     },
     {
+      "path": "AndroidPort/Licenses/ANDROID.md",
+      "sha256": "d7b148093c8839d68c90a441cbbb1283e2dcd7295755e0271138745b274e7079",
+      "scope": "English maintained entry/build/Android/license-guide prose reviewed in each tree; two Android TODOs translated with legacy anchors; legal text/commands/recorded limits otherwise unchanged; no legal or platform recertification"
+    },
+    {
+      "path": "AndroidPort/Licenses/CREDITS.md",
+      "sha256": "34c9cecc5bd074b5176ca015c1acc75b381efa7727726deb739a4dbd3c642c42",
+      "scope": "English maintained entry/build/Android/license-guide prose reviewed in each tree; two Android TODOs translated with legacy anchors; legal text/commands/recorded limits otherwise unchanged; no legal or platform recertification"
+    },
+    {
+      "path": "AndroidPort/Licenses/README.md",
+      "sha256": "b834b63c2908a1706c584c383891a5477cbf6d2b07430c136b635bab863cf1b8",
+      "scope": "English maintained entry/build/Android/license-guide prose reviewed in each tree; two Android TODOs translated with legacy anchors; legal text/commands/recorded limits otherwise unchanged; no legal or platform recertification"
+    },
+    {
       "path": "AndroidPort/README.md",
       "sha256": "2d519050cc53bc43fc994230225781f99ed30657e83f782688c5a8c1a35ace94",
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "AndroidPort/android/README.md",
+      "sha256": "b3d4626f0854b3f3eeb9cb112444b8d5040fc36755b3f2b3bd86c8a69238948d",
+      "scope": "English maintained entry/build/Android/license-guide prose reviewed in each tree; two Android TODOs translated with legacy anchors; legal text/commands/recorded limits otherwise unchanged; no legal or platform recertification"
+    },
+    {
+      "path": "AndroidPort/android/TODO.md",
+      "sha256": "ec15bd8039a66551a11d9f00174ca9fc180c57595a6e3ea9d70d6e7e93d6f86f",
+      "scope": "English maintained entry/build/Android/license-guide prose reviewed in each tree; two Android TODOs translated with legacy anchors; legal text/commands/recorded limits otherwise unchanged; no legal or platform recertification"
     },
     {
       "path": "AndroidPort/docs/DIALOGUE_PERFORMANCE.md",
@@ -79,6 +104,46 @@
       "path": "AndroidPort/docs/URGENT_FIXES.md",
       "sha256": "021370bc8261f99ef671018210cd339b63e63c36160e5678fd752ecc3bd69f12",
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "BUILDING.md",
+      "sha256": "dace98af48905d42b8ab06e0e14e3d656164cdcdc289f9a47917903f7336f25f",
+      "scope": "English maintained entry/build/Android/license-guide prose reviewed in each tree; two Android TODOs translated with legacy anchors; legal text/commands/recorded limits otherwise unchanged; no legal or platform recertification"
+    },
+    {
+      "path": "Licenses/ANDROID.md",
+      "sha256": "d7b148093c8839d68c90a441cbbb1283e2dcd7295755e0271138745b274e7079",
+      "scope": "English maintained entry/build/Android/license-guide prose reviewed in each tree; two Android TODOs translated with legacy anchors; legal text/commands/recorded limits otherwise unchanged; no legal or platform recertification"
+    },
+    {
+      "path": "Licenses/CREDITS.md",
+      "sha256": "c1809c67fbd6388e141351e4bc38a72946852b5fa65ccde3c6e6b1b0b4372d68",
+      "scope": "English maintained entry/build/Android/license-guide prose reviewed in each tree; two Android TODOs translated with legacy anchors; legal text/commands/recorded limits otherwise unchanged; no legal or platform recertification"
+    },
+    {
+      "path": "Licenses/README.md",
+      "sha256": "43a36417a58c9252c7475e9884c4a8e33714a12b3bbbe1c475e05ccf4512d382",
+      "scope": "English maintained entry/build/Android/license-guide prose reviewed in each tree; two Android TODOs translated with legacy anchors; legal text/commands/recorded limits otherwise unchanged; no legal or platform recertification"
+    },
+    {
+      "path": "README.md",
+      "sha256": "b7f465a36a5296853f0230b152eb2ff451ec7518bb75267401ce21e751b2c984",
+      "scope": "English maintained entry/build/Android/license-guide prose reviewed in each tree; two Android TODOs translated with legacy anchors; legal text/commands/recorded limits otherwise unchanged; no legal or platform recertification"
+    },
+    {
+      "path": "TinyCC/README.md",
+      "sha256": "e6c2f2a9729fb3c2c000ca951b9901812d5e6a207b9625ae791a7b06b22577c6",
+      "scope": "English maintained entry/build/Android/license-guide prose reviewed in each tree; two Android TODOs translated with legacy anchors; legal text/commands/recorded limits otherwise unchanged; no legal or platform recertification"
+    },
+    {
+      "path": "android/README.md",
+      "sha256": "cf3390f8fee510fdc90b7ab5ff4175c82a956e394f5a23fbdd17cd563b65fd30",
+      "scope": "English maintained entry/build/Android/license-guide prose reviewed in each tree; two Android TODOs translated with legacy anchors; legal text/commands/recorded limits otherwise unchanged; no legal or platform recertification"
+    },
+    {
+      "path": "android/TODO.md",
+      "sha256": "ec15bd8039a66551a11d9f00174ca9fc180c57595a6e3ea9d70d6e7e93d6f86f",
+      "scope": "English maintained entry/build/Android/license-guide prose reviewed in each tree; two Android TODOs translated with legacy anchors; legal text/commands/recorded limits otherwise unchanged; no legal or platform recertification"
     },
     {
       "path": "crates/installer/README.md",
@@ -166,6 +231,11 @@
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
     },
     {
+      "path": "docs/debug_diagnostics.md",
+      "sha256": "87acb1576ffe30de22cb712454186340654abea8e1ac901efc0eec49e9746afc",
+      "scope": "English session diagnosis/isolation/snapshot-recording guide translated; all legacy heading anchors, inline code, fenced examples, links, numeric evidence and recorded acceptance limits retained"
+    },
+    {
       "path": "docs/debug_gameplay.md",
       "sha256": "3ca5854dcd4b0d275c13213a31b0c991d32a8ccf66889080ace691130cf0b767",
       "scope": "English maintained prose or fixed default report text; original game/imported text and legacy anchors preserved"
@@ -186,9 +256,34 @@
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
     },
     {
+      "path": "docs/debug_recordings.md",
+      "sha256": "35073a0115817f9a25fa8de4bf535a78cfd96ee54362236c30cd7bd8ed2a243f",
+      "scope": "English session diagnosis/isolation/snapshot-recording guide translated; all legacy heading anchors, inline code, fenced examples, links, numeric evidence and recorded acceptance limits retained"
+    },
+    {
+      "path": "docs/debug_sessions.md",
+      "sha256": "356c8fd90e3ff04feaa715d017f27684cabfd977419d9a8e1033d23b105ceb3d",
+      "scope": "English session diagnosis/isolation/snapshot-recording guide translated; all legacy heading anchors, inline code, fenced examples, links, numeric evidence and recorded acceptance limits retained"
+    },
+    {
       "path": "docs/debug_ui.md",
       "sha256": "0809c2977193a96efb439bd974e4dde87557635df4c5cec29b03564b5cc2d50f",
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "docs/desktop_android_eur.md",
+      "sha256": "2bd3e0f69dbbdcb6e47cb729af15bcadee057715f54a06a4763bff24ed3ff112",
+      "scope": "English maintained desktop/storage/build prose reviewed; menu labels matched to English catalog; commands, links, headings and historical validation limits preserved"
+    },
+    {
+      "path": "docs/desktop_live_video.md",
+      "sha256": "2d02b4127ede78c4bebbc5a4fa393f5d236bfd50fd6ccb5fc12eaea55103190a",
+      "scope": "English maintained desktop/storage/build prose reviewed; menu labels matched to English catalog; commands, links, headings and historical validation limits preserved"
+    },
+    {
+      "path": "docs/desktop_tinycc.md",
+      "sha256": "512d1de200d32f4e6d08bb812593a6dec87f3aedc490c98e65754b777a5b6ebc",
+      "scope": "English maintained desktop/storage/build prose reviewed; menu labels matched to English catalog; commands, links, headings and historical validation limits preserved"
     },
     {
       "path": "docs/development/DEBUGGING_WORKFLOW.md",
@@ -212,7 +307,7 @@
     },
     {
       "path": "docs/development/TASK_HANDOFF.md",
-      "sha256": "e4721fc6e52cabf16d175509e7557cfdf6613da17e63bcfa60d9426fb84dd68b",
+      "sha256": "47eec17f9b9ea473b85affbc7d6ad878749243bed925f9fa90ca9c96e6400294",
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
     },
     {
@@ -231,9 +326,139 @@
       "scope": "Translated saved presentation text with provenance; all other snapshot data preserved by structural comparison; source analysis not revalidated"
     },
     {
+      "path": "docs/dialogue_layout.md",
+      "sha256": "825e6eea8590b87730a951a3486e5dc1ff4b3716eb1039b03e4b9e5978656bf9",
+      "scope": "English mouse/OBJ/movement/dialogue prose reviewed; Spanish OBJ ABI/hook prose and measurement labels translated; technical evidence, commands, anchors and acceptance limits retained"
+    },
+    {
+      "path": "docs/directinput.md",
+      "sha256": "a9c965b8eb7ac6d0d31028b991f04fa2f3b1c00442ca14da291191fee8ca227b",
+      "scope": "English maintained desktop/storage/build prose reviewed; menu labels matched to English catalog; commands, links, headings and historical validation limits preserved"
+    },
+    {
+      "path": "docs/extended_saves.md",
+      "sha256": "226e3ebc794f378f49a62f7cca01f225013537c7688a2ab2aad8a27d36e8da38",
+      "scope": "English maintained desktop/storage/build prose reviewed; menu labels matched to English catalog; commands, links, headings and historical validation limits preserved"
+    },
+    {
+      "path": "docs/ffta_action_frame_width.md",
+      "sha256": "ed0ed7928ef5eaf72ca5d4d0ea8fafc885ecc355a8a87cf9d67d655d471fc0cb",
+      "scope": "English rendering/interaction prose reviewed; Spanish text and measurement labels translated; technical tokens, commands, legacy anchors and recorded acceptance limits preserved"
+    },
+    {
+      "path": "docs/ffta_bg_patch.md",
+      "sha256": "47e1859b3c98ec33dcb037ca638a3ac131b0b66cab9a14468ac4222d89005731",
+      "scope": "English rendering/interaction prose reviewed; Spanish text and measurement labels translated; technical tokens, commands, legacy anchors and recorded acceptance limits preserved"
+    },
+    {
+      "path": "docs/ffta_character_metric.md",
+      "sha256": "44b5ce72611e6eb88cffe7c81148f02b1db44fc8d07e4848929b9fcba4949cb2",
+      "scope": "English rendering/interaction prose reviewed; Spanish text and measurement labels translated; technical tokens, commands, legacy anchors and recorded acceptance limits preserved"
+    },
+    {
+      "path": "docs/ffta_interaction_grid.md",
+      "sha256": "1fab4c973683f2e01ed2075b59d3c3b7d7be2a28e07832a8641da75cebfe7556",
+      "scope": "English rendering/interaction prose reviewed; Spanish text and measurement labels translated; technical tokens, commands, legacy anchors and recorded acceptance limits preserved"
+    },
+    {
+      "path": "docs/ffta_laws_layout.md",
+      "sha256": "096f10fe02c1ffff192ae1cbde004fb4aabfa5a965f37e2766bbfb951ba73e13",
+      "scope": "English rendering/interaction prose reviewed; Spanish text and measurement labels translated; technical tokens, commands, legacy anchors and recorded acceptance limits preserved"
+    },
+    {
+      "path": "docs/ffta_mouse_battle.md",
+      "sha256": "af0692bd92f6177b8e8792ef297beb51107ede24b395fcbb114fa09ca27f8fc3",
+      "scope": "English mouse/OBJ/movement/dialogue prose reviewed; Spanish OBJ ABI/hook prose and measurement labels translated; technical evidence, commands, anchors and acceptance limits retained"
+    },
+    {
+      "path": "docs/ffta_mouse_frontend.md",
+      "sha256": "4d9addd0a379df0b6ea3131c6c50b7cc5f0e7e2a33ac2a9b8ce7fb35ab1cc9ae",
+      "scope": "English mouse/OBJ/movement/dialogue prose reviewed; Spanish OBJ ABI/hook prose and measurement labels translated; technical evidence, commands, anchors and acceptance limits retained"
+    },
+    {
+      "path": "docs/ffta_mouse_language.md",
+      "sha256": "d765dd51e65a07db0d3493ca8a59f6290f09be4b9ce85ba06a3023db167bbb70",
+      "scope": "English mouse/OBJ/movement/dialogue prose reviewed; Spanish OBJ ABI/hook prose and measurement labels translated; technical evidence, commands, anchors and acceptance limits retained"
+    },
+    {
+      "path": "docs/ffta_mouse_world.md",
+      "sha256": "7448758e8a88f4296b458d24b43511d95e60bab293f82b59df73048f0c3c3619",
+      "scope": "English mouse/OBJ/movement/dialogue prose reviewed; Spanish OBJ ABI/hook prose and measurement labels translated; technical evidence, commands, anchors and acceptance limits retained"
+    },
+    {
+      "path": "docs/ffta_movement_bg.md",
+      "sha256": "c534193924e16f453f257fd0b488576086bebf94b92f804472b448f59c8c0563",
+      "scope": "English mouse/OBJ/movement/dialogue prose reviewed; Spanish OBJ ABI/hook prose and measurement labels translated; technical evidence, commands, anchors and acceptance limits retained"
+    },
+    {
+      "path": "docs/ffta_notice_confirmation.md",
+      "sha256": "a2fcff86ba1373c8e0f654542542bcdb7c57ba771bac42c483f81528aba7cb17",
+      "scope": "English rendering/interaction prose reviewed; Spanish text and measurement labels translated; technical tokens, commands, legacy anchors and recorded acceptance limits preserved"
+    },
+    {
+      "path": "docs/ffta_notice_layout.md",
+      "sha256": "d059486cf33d39678806b76a5e14230bac6b96f3f1bc0879c08e8030ccd040e0",
+      "scope": "English rendering/interaction prose reviewed; Spanish text and measurement labels translated; technical tokens, commands, legacy anchors and recorded acceptance limits preserved"
+    },
+    {
+      "path": "docs/ffta_portrait_ears.md",
+      "sha256": "80f669e742d55db85ddd55a8eb54f7db2db300ae53e8f28c31d4128c9c8632bb",
+      "scope": "English rendering/interaction prose reviewed; Spanish text and measurement labels translated; technical tokens, commands, legacy anchors and recorded acceptance limits preserved"
+    },
+    {
+      "path": "docs/ffta_shared_save.md",
+      "sha256": "e4af44d6b763adc420e537070df0a3b29f927960981dca29520c1be17f502b26",
+      "scope": "English rendering/interaction prose reviewed; Spanish text and measurement labels translated; technical tokens, commands, legacy anchors and recorded acceptance limits preserved"
+    },
+    {
+      "path": "docs/ffta_shop_bank_mouse.md",
+      "sha256": "7815accd4873d006b4556abd922070ffca9f5af9645e8447143d8733f19a99c2",
+      "scope": "English rendering/interaction prose reviewed; Spanish text and measurement labels translated; technical tokens, commands, legacy anchors and recorded acceptance limits preserved"
+    },
+    {
+      "path": "docs/ffta_spell_help_banner.md",
+      "sha256": "b25dae762e715c312c0a21d7863c4f591b6c59b3b8c5990458e546af4b263dc9",
+      "scope": "English rendering/interaction prose reviewed; Spanish text and measurement labels translated; technical tokens, commands, legacy anchors and recorded acceptance limits preserved"
+    },
+    {
+      "path": "docs/ffta_sprite_routines.md",
+      "sha256": "122d53e8787949512b352841505a383768154050b723fa9ebe3e2d849f76fb4f",
+      "scope": "English mouse/OBJ/movement/dialogue prose reviewed; Spanish OBJ ABI/hook prose and measurement labels translated; technical evidence, commands, anchors and acceptance limits retained"
+    },
+    {
+      "path": "docs/ffta_sprite_runtime.md",
+      "sha256": "af4c4552164d762eeafc1c1f2969f8c0d52f9eeeab16259e2a2f4b446f710798",
+      "scope": "English mouse/OBJ/movement/dialogue prose reviewed; Spanish OBJ ABI/hook prose and measurement labels translated; technical evidence, commands, anchors and acceptance limits retained"
+    },
+    {
+      "path": "docs/ffta_switch_rom_picker.md",
+      "sha256": "3cb663a24ed57fdf3c87a5ece98a8afea682c84a76f26c1d02cfe0b49e199f09",
+      "scope": "English rendering/interaction prose reviewed; Spanish text and measurement labels translated; technical tokens, commands, legacy anchors and recorded acceptance limits preserved"
+    },
+    {
+      "path": "docs/ffta_usa_frontend_mouse.md",
+      "sha256": "aa857f4e61ac5ca9543f6f91e14e9d43c4084b6f13aa0baa160f68fdce29b7c5",
+      "scope": "English rendering/interaction prose reviewed; Spanish text and measurement labels translated; technical tokens, commands, legacy anchors and recorded acceptance limits preserved"
+    },
+    {
+      "path": "docs/ffta_usa_town_menus.md",
+      "sha256": "aecf9f7de875596f4533811bfd49db6792b2253d017c4462009c2abf9fdef3bd",
+      "scope": "English rendering/interaction prose reviewed; Spanish text and measurement labels translated; technical tokens, commands, legacy anchors and recorded acceptance limits preserved"
+    },
+    {
       "path": "docs/fullscreen.md",
       "sha256": "b13b666ca0d346880fb1d80ba5ce7ac968e0b53cf68c62f62c03f42619bed1ed",
       "scope": "English maintained guide reviewed; existing commands, links, headings and validation limits preserved"
+    },
+    {
+      "path": "docs/launcher.md",
+      "sha256": "ca4b8f3f73b5fdd0802b6650210eb74b39d2f9ffc67b7d2d95390740030497b8",
+      "scope": "English maintained desktop/storage/build prose reviewed; menu labels matched to English catalog; commands, links, headings and historical validation limits preserved"
+    },
+    {
+      "path": "docs/linux_gamepad_snapshots.md",
+      "sha256": "18428a089cee4ae15d437e6db658d4b7fd24c74661a15c662327de5153454227",
+      "scope": "English maintained desktop/storage/build prose reviewed; menu labels matched to English catalog; commands, links, headings and historical validation limits preserved"
     },
     {
       "path": "docs/menu_clan_atlas.md",
@@ -251,9 +476,24 @@
       "scope": "English maintained guide reviewed; existing commands, links, headings and validation limits preserved"
     },
     {
+      "path": "docs/packaging.md",
+      "sha256": "a3939360bb1f0f1d718f0d4b75b8a545ae69d326c39f5b697b52941be8be15da",
+      "scope": "English maintained desktop/storage/build prose reviewed; menu labels matched to English catalog; commands, links, headings and historical validation limits preserved"
+    },
+    {
+      "path": "docs/portable.md",
+      "sha256": "11b617eb13bd13021b55d5bef32e0b2e674c0ce3950c7404d45e45dfe16e2e73",
+      "scope": "English maintained desktop/storage/build prose reviewed; menu labels matched to English catalog; commands, links, headings and historical validation limits preserved"
+    },
+    {
       "path": "docs/private_debug_assets.md",
-      "sha256": "141334ce8378b9877733bd324f04a9e421f2329ae3a1c68d0baa1d513904fd21",
+      "sha256": "a93ffd5a55b5101ceea1fe7f330231396d4192b6fc7cf46103dc9d910fe5cb30",
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "docs/release_audit.md",
+      "sha256": "76404ae148b5b4f49b714ca3d89f19be77e610143c67c872e09b8c910e89aadd",
+      "scope": "English maintained desktop/storage/build prose reviewed; menu labels matched to English catalog; commands, links, headings and historical validation limits preserved"
     },
     {
       "path": "docs/report_home.md",
@@ -264,6 +504,16 @@
       "path": "docs/restart_rom.md",
       "sha256": "4e54a275c937fcb4f89f948be2e6500ca5852b1ca2b75d83b21d0d37fa2b783c",
       "scope": "English maintained guide reviewed; existing commands, links, headings and validation limits preserved"
+    },
+    {
+      "path": "docs/save_backups.md",
+      "sha256": "195b31069502ce571bf25107a209a871f8ff9150e1b46a634a79426383816fe0",
+      "scope": "English maintained desktop/storage/build prose reviewed; menu labels matched to English catalog; commands, links, headings and historical validation limits preserved"
+    },
+    {
+      "path": "docs/save_states.md",
+      "sha256": "be2a9429a9b814095067d4ae46ee69d7e32eed243a3c3b2a11b9c2474c4ca050",
+      "scope": "English maintained desktop/storage/build prose reviewed; menu labels matched to English catalog; commands, links, headings and historical validation limits preserved"
     },
     {
       "path": "scripts/README.md",
@@ -279,6 +529,16 @@
       "path": "scripts/debug_campaign.html",
       "sha256": "39649d18f3530275c20da587dae069815d13c676f8bfb3ac7163d2946e97d52c",
       "scope": "English maintained prose and fixed report text; machine keys, paths, anchors and historical evidence preserved"
+    },
+    {
+      "path": "scripts/export_debug_assets.py",
+      "sha256": "55c44c8c36fecd94674d5075898bd1349c2aaaf14f51879e03b7e5532a8b1e62",
+      "scope": "English authored source, generated instructions and console messages reviewed; legacy paths/Italian base marker and literal test fixtures preserved; synthetic package/export checks pass"
+    },
+    {
+      "path": "scripts/package_ffta_portable.py",
+      "sha256": "b676e7f59d61ba8485d888dcb78ace3eaf7ce2e78baa07d21ff2fa588555a047",
+      "scope": "English authored source, generated instructions and console messages reviewed; legacy paths/Italian base marker and literal test fixtures preserved; synthetic package/export checks pass"
     },
     {
       "path": "scripts/report_home.html",
@@ -301,6 +561,11 @@
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
     },
     {
+      "path": "scripts/tests/test_package_ffta_portable.py",
+      "sha256": "0fbb8f17ada2392908bc6fc25c25af34f338de5adcb92bb2eddc7d8cbe016d96",
+      "scope": "English authored source, generated instructions and console messages reviewed; legacy paths/Italian base marker and literal test fixtures preserved; synthetic package/export checks pass"
+    },
+    {
       "path": "scripts/tests/test_task_handoff.py",
       "sha256": "e501a09ee5d09e6bc85f9626c8056f142bec571cb23e88cc8b788a5d3f57c30b",
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
@@ -315,22 +580,9 @@
     }
   ],
   "pending_markdown": [
-    "AndroidPort/Licenses/ANDROID.md",
-    "AndroidPort/Licenses/CREDITS.md",
-    "AndroidPort/Licenses/README.md",
     "AndroidPort/Licenses/THIRD_PARTY_NOTICES.md",
-    "AndroidPort/android/README.md",
-    "AndroidPort/android/TODO.md",
-    "BUILDING.md",
     "CHANGELOG.md",
-    "Licenses/ANDROID.md",
-    "Licenses/CREDITS.md",
-    "Licenses/README.md",
     "Licenses/THIRD_PARTY_NOTICES.md",
-    "README.md",
-    "TinyCC/README.md",
-    "android/README.md",
-    "android/TODO.md",
     "docs/To_DO/CODEX_WEB_TODO.md",
     "docs/To_DO/FFTARecomp_Menu_Atlante_del_Clan_SPEC.md",
     "docs/architecture.md",
@@ -338,19 +590,13 @@
     "docs/debug_captures.md",
     "docs/debug_catalog.md",
     "docs/debug_control.md",
-    "docs/debug_diagnostics.md",
     "docs/debug_events.md",
     "docs/debug_operations.md",
     "docs/debug_probes.md",
-    "docs/debug_recordings.md",
     "docs/debug_replays.md",
     "docs/debug_rom_audit.md",
     "docs/debug_selector.md",
-    "docs/debug_sessions.md",
     "docs/debug_tools.md",
-    "docs/desktop_android_eur.md",
-    "docs/desktop_live_video.md",
-    "docs/desktop_tinycc.md",
     "docs/development/DEBUG_TOOLS_TODO.md",
     "docs/development/DEBUG_TOOLS_V2_TODO.md",
     "docs/development/GODOT_FRONTEND_TODO.md",
@@ -364,41 +610,12 @@
     "docs/development/debug saves.md",
     "docs/development/todo2.md",
     "docs/development/todo_bug_fix.md",
-    "docs/dialogue_layout.md",
-    "docs/directinput.md",
     "docs/docker.md",
-    "docs/extended_saves.md",
     "docs/fast_forward_audio.md",
-    "docs/ffta_action_frame_width.md",
-    "docs/ffta_bg_patch.md",
-    "docs/ffta_character_metric.md",
     "docs/ffta_estado.md",
-    "docs/ffta_interaction_grid.md",
-    "docs/ffta_laws_layout.md",
-    "docs/ffta_mouse_battle.md",
-    "docs/ffta_mouse_frontend.md",
-    "docs/ffta_mouse_language.md",
     "docs/ffta_mouse_pending_2026-10-17.md",
-    "docs/ffta_mouse_world.md",
-    "docs/ffta_movement_bg.md",
-    "docs/ffta_notice_confirmation.md",
-    "docs/ffta_notice_layout.md",
-    "docs/ffta_portrait_ears.md",
-    "docs/ffta_shared_save.md",
-    "docs/ffta_shop_bank_mouse.md",
-    "docs/ffta_spell_help_banner.md",
-    "docs/ffta_sprite_routines.md",
-    "docs/ffta_sprite_runtime.md",
-    "docs/ffta_switch_rom_picker.md",
-    "docs/ffta_usa_frontend_mouse.md",
-    "docs/ffta_usa_town_menus.md",
     "docs/fps_overlay.md",
     "docs/labels.md",
-    "docs/launcher.md",
-    "docs/linux_gamepad_snapshots.md",
-    "docs/packaging.md",
-    "docs/portable.md",
-    "docs/release_audit.md",
     "docs/rom_data.md",
     "docs/rom_data_audio.md",
     "docs/rom_data_color_palettes.md",
@@ -417,8 +634,6 @@
     "docs/rom_data_ui_palettes.md",
     "docs/rom_data_ui_raw_transfers.md",
     "docs/rom_data_unit_obj.md",
-    "docs/save_backups.md",
-    "docs/save_states.md",
     "docs/windows_runtime_performance.md"
   ],
   "pending_source_areas": [
@@ -444,7 +659,7 @@
         "scripts/export_debug_assets.py",
         "scripts/package_ffta_portable.py"
       ],
-      "status": "Campaign, artifact and coverage fixed templates and coverage authored notes translated; generator messages sampled. Remaining exporters, tools, source comments and dynamic metadata require full review."
+      "status": "Portable packager and private debug exporter fully reviewed: generated instructions, checkout-reference labels and CLI messages use English; legacy paths/base marker preserved. Campaign, artifact and coverage fixed templates/coverage notes translated; remaining tools, full generator source/comments and dynamic metadata require review."
     },
     {
       "area": "Menu/console/runtime strings and comments in both source trees",
@@ -504,6 +719,12 @@
     "docs/changes/2026-11-02-record-partial-senary-compact-obj-integration.json",
     "docs/changes/2026-11-02-translate-remaining-debug-reports.json",
     "docs/changes/2026-11-02-translate-offline-debug-reports.json",
-    "docs/changes/2026-11-02-review-desktop-user-guides-english.json"
+    "docs/changes/2026-11-02-review-desktop-user-guides-english.json",
+    "docs/changes/2026-11-02-review-desktop-storage-build-guides-english.json",
+    "docs/changes/2026-11-02-translate-scene-rendering-guides.json",
+    "docs/changes/2026-11-02-translate-mouse-obj-guides.json",
+    "docs/changes/2026-11-02-translate-export-package-instructions.json",
+    "docs/changes/2026-11-02-review-entry-android-guides-english.json",
+    "docs/changes/2026-11-02-translate-debug-session-guides.json"
   ]
 }

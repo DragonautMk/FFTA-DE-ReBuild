@@ -1,39 +1,44 @@
-# Diagnosi della sessione — DBG-01
+<a id="diagnosi-della-sessione--dbg-01"></a>
 
-La diagnosi raccoglie identità e percorsi necessari per riprodurre un problema.
-Il menu e il comando `diagnose` usano lo stesso collector e lo stesso JSON
-versionato (`schema = 1`, `kind = ffta-session-diagnosis`). La raccolta è
-esplicita: non aggiunge log a ogni frame.
+# Session diagnosis — DBG-01
 
-## Dal gioco
+Diagnosis collects the identities and paths needed to reproduce a problem.
+The menu and `diagnose` command use the same collector and versioned JSON
+(`schema = 1`, `kind = ffta-session-diagnosis`). Collection is explicit:
+it does not add logs every frame.
 
-Aprire **Debug → Copy diagnosis**. Non serve abilitare Extended saves.
-Il gioco resta in pausa: il report viene copiato negli appunti e scritto in
-`diagnostics/session.json` sotto la directory di configurazione. In modalità
-portable il file è `Data/config/diagnostics/session.json` accanto all'eseguibile.
-Ogni richiesta aggiorna lo stesso file, senza creare una serie di cartelle.
+<a id="dal-gioco"></a>
 
-Il report contiene il percorso completo della propria cartella. Se gli appunti
-non sono disponibili, il menu lo segnala e conserva il file; il log di avvio
-indica il percorso. Il JSON può contenere percorsi personali: esaminarlo prima
-di condividerlo.
+## From the game
 
-La diagnosi della sessione usa gli hash dei byte ROM/BIOS effettivamente caricati,
-la modalità effettiva, frame e clock guest e l'identità del dataset collegato.
-Segnala se i file originali o il dataset su disco sono stati sostituiti.
-Lo slot snapshot è la **selezione del menu**, non una promessa che lo stato
-attuale coincida ancora con il file. Una registrazione attiva viene identificata
-senza dichiararla già pronta per il replay.
+Open **Debug → Copy diagnosis**. Extended saves need not be enabled.
+The game stays paused: the report is copied to the clipboard and written to
+`diagnostics/session.json` under the configuration directory. In portable mode
+the file is `Data/config/diagnostics/session.json` beside the executable.
+Each request updates the same file without creating a series of folders.
 
-## Prima dell'avvio, dalla CLI
+The report contains its folder's full path. If the clipboard is unavailable,
+the menu reports this and retains the file; the startup log shows its path.
+The JSON may contain personal paths: review it before sharing.
 
-Esempio PowerShell, dal percorso dell'eseguibile scelto:
+Session diagnosis uses the hashes of the ROM/BIOS bytes actually loaded,
+the actual mode, guest frame and clock, and the attached dataset's identity.
+It reports whether the original files or on-disk dataset have been replaced.
+The snapshot slot is the **menu selection**, not a promise that the current
+state still matches the file. An active recording is identified without
+claiming it is already ready for replay.
+
+<a id="prima-dellavvio-dalla-cli"></a>
+
+## Before startup, from the CLI
+
+PowerShell example, from the selected executable's directory:
 
 ```powershell
 .\recomp.exe diagnose 'C:\Giochi\FFTA EUR.gba' --no-bios --interp --json
 ```
 
-Per un caso registrato con dataset esplicito:
+For a recorded case with an explicit dataset:
 
 ```powershell
 .\recomp.exe diagnose 'C:\Giochi\FFTA EUR.gba' --no-bios --interp `
@@ -42,71 +47,75 @@ Per un caso registrato con dataset esplicito:
   --out 'C:\Debug\diagnosis.json' --json
 ```
 
-Su Linux il comando è `./recomp diagnose ...`. `recomp help diagnose` elenca
-le opzioni. `--bios FILE` seleziona un BIOS reale; senza le due opzioni BIOS si
-usa la stessa ricerca delle immagini installate del runtime. `--rom-data`
-controlla la generazione gestita selezionata da `current`; `--dataset DIR`
-controlla una directory esplicita. Il controllo non prepara né ripara dati:
-se mancano, il report suggerisce `recomp rom-data prepare <rom>`.
+On Linux the command is `./recomp diagnose ...`. `recomp help diagnose` lists
+the options. `--bios FILE` selects a real BIOS; without either BIOS option,
+the runtime's normal installed-image search applies. `--rom-data` checks the
+managed generation selected by `current`; `--dataset DIR` checks an explicit
+directory. The check neither prepares nor repairs data: if missing,
+the report suggests `recomp rom-data prepare <rom>`.
 
-`--slot N` controlla uno dei 99 snapshot accanto al salvataggio selezionato;
-è alternativo a `--state FILE`. `--sav` e `FFTA_SAVE_PATH` evitano ambiguità nella
-scelta del salvataggio. La risoluzione usa le regole normali, ma non crea
-cartelle né apre un selettore: se ci sono più candidati occorre sceglierne uno.
-Un percorso `--sav` esplicito deve esistere; senza selezione esplicita una nuova
-partita è valida e il report indica l'assenza del file.
+`--slot N` checks one of the 99 snapshots beside the selected save;
+it is an alternative to `--state FILE`. `--sav` and `FFTA_SAVE_PATH` avoid
+ambiguous save selection. Resolution follows the normal rules but does not
+create folders or open a picker: multiple candidates require an explicit choice.
+An explicit `--sav` path must exist; without an explicit selection, a new
+game is valid and the report identifies the missing file.
 
-Senza `--out` la CLI scrive solo su stdout. Senza `--json` mostra un riepilogo
-breve con cause e rimedi. Gli input non validi producono `ok = false`, problemi
-strutturati e codice di uscita **1**; una diagnosi valida restituisce **0**.
-Gli errori di sintassi o di scrittura del report sono riportati su stderr.
+Without `--out` the CLI writes only to stdout. Without `--json` it displays a
+brief summary with causes and remedies. Invalid inputs produce `ok = false`,
+structured issues and exit code **1**; a valid diagnosis returns **0**.
+Syntax errors or report-write failures are reported on stderr.
 
-## Contenuto e limiti
+<a id="contenuto-e-limiti"></a>
 
-- Build: versione, revisione e working tree modificata al momento della build,
-  target/profilo, feature disponibili, percorso e SHA-256 del binario effettivo.
-  Una revisione sconosciuta resta esplicita nelle build senza metadati Git.
-- File: hash e dimensioni di ROM, BIOS, SRAM, snapshot, input e configurazioni;
-  profilo EUR/USA solo per immagini riconosciute esattamente.
-- Dataset: directory e hash del manifest, revisione estrattore/decoder, risorse
-  e identità autenticata contro la ROM tramite il validatore del runtime.
-- Snapshot: decodifica completa nella CLI con il validatore normale, su una
-  macchina temporanea; nessuna istruzione guest viene eseguita.
-- Input: parsing del formato e dei valori; non dimostra raggiungibilità della
-  scena, compatibilità temporale con lo snapshot o uguaglianza dell'endpoint.
-- Modalità native: prima dell'avvio è una richiesta, non una libreria già
-  caricata o una compilazione riuscita. Il report lo dichiara; dal menu indica
-  invece la modalità realmente attiva.
-- `--require-rom-audit` fallisce quando manca la feature compilata
-  `rom-data-read-audit`. Non avvia una cattura: l'interfaccia audit è DBG-06.
+## Contents and limits
 
-Il report è limitato a 512 KiB e pubblicato atomicamente; viene sostituito solo
-un precedente report dello stesso tipo/schema, mai un file arbitrario o un link.
-Nessun contenuto ROM, BIOS, RAM, SRAM, screenshot o asset è incorporato nel JSON.
-Il controllo non avvia traduzioni native, replay o benchmark e non salva la
-partita. Le [sessioni isolate](debug_sessions.md) aggiungono copie portable del
-caso scelto; i profili di replay restano una voce successiva della
+- Build: version, revision and working-tree modification status at build time,
+  target/profile, available features, path and SHA-256 of the actual binary.
+  An unknown revision remains explicit in builds without Git metadata.
+- Files: hashes and sizes of ROM, BIOS, SRAM, snapshot, input and configuration;
+  EUR/USA profile only for exactly recognized images.
+- Dataset: directory and manifest hash, extractor/decoder revision, resources
+  and identity authenticated against the ROM through the runtime validator.
+- Snapshot: full CLI decoding with the normal validator on a temporary
+  machine; no guest instruction is executed.
+- Input: format/value parsing; it does not establish scene reachability,
+  timing compatibility with the snapshot or endpoint equality.
+- Native mode: before startup this is a request, not an already loaded library
+  or successful compilation. The report states this; from the menu it identifies
+  the mode actually active.
+- `--require-rom-audit` fails when the compiled feature
+  `rom-data-read-audit` is absent. It does not start a capture: the audit interface is DBG-06.
+
+The report is bounded to 512 KiB and published atomically; it replaces only a
+previous report of the same kind/schema, never an arbitrary file or link.
+No ROM, BIOS, RAM, SRAM, screenshot or asset content is embedded in the JSON.
+The check does not start native translation, replay or benchmarks, or save the
+game. [Isolated sessions](debug_sessions.md) add portable copies of the selected
+case; replay profiles remain a later item in the
 [checklist](development/DEBUG_TOOLS_TODO.md).
 
-## Verifica del 27 ottobre 2026
+<a id="verifica-del-27-ottobre-2026"></a>
 
-Build Windows con dipendenze bloccate e senza rete; 47 test sotto Wine passati
-(5 diagnosi, 40 menu, 2 scelta salvataggi). Otto casi CLI reali EUR verificano
-identità del dataset esplicito/gestito, vecchia generazione incompatibile, input
-malformato, BIOS dello snapshot diverso, feature audit assente, protezione di un
-salvataggio usato come destinazione del report e slot fuori intervallo.
+## Validation on 27 October 2026
 
-Una sessione Wine/Xvfb con configurazione portable e salvataggio copiato verifica
-la voce del menu, JSON negli appunti identico al file, frame/clock invariati tra
-due raccolte, aggiornamento di un solo report e chiusura normale. Esaminato anche
-lo screenshot del menu. I 139 file selezionati come input protetti, inclusi ROM,
-snapshot, registrazione, salvataggio e dataset, conservano hash e date originali;
-anche i due eseguibili di produzione Windows/Linux sono preservati.
+Windows build with locked dependencies and no network; 47 tests passed under
+Wine (5 diagnosis, 40 menu, 2 save selection). Eight real EUR CLI cases verify
+explicit/managed dataset identity, an incompatible old generation, malformed
+input, a different snapshot BIOS, missing audit feature, protection of a save
+used as the report destination, and an out-of-range slot.
 
-La prima apertura grafica con un prefix già avviato senza display si è fermata
-prima della creazione della finestra; il controllo è passato con un prefix
-Wine grafico dedicato. Windows nativo, Linux, Wayland, controller fisici e una
-sessione con traduzione nativa attiva non sono stati verificati in questa unità.
-Il report identifica la SRAM senza validarne i checksum interni del gioco.
-Le prove non includono benchmark, nuove scene DS o replay delle vecchie
-accettazioni ROM. Evidenza locale in `target/debug-tools-diagnosis/`.
+A Wine/Xvfb session with portable configuration and a copied save verifies
+the menu entry, clipboard JSON identical to the file, unchanged frame/clock
+between two collections, updating a single report and normal close. The menu
+screenshot was also inspected. The 139 selected protected input files, including
+ROM, snapshot, recording, save and dataset, retain original hashes and timestamps;
+both Windows/Linux production executables are also preserved.
+
+The first GUI launch with a prefix already started without a display stopped
+before creating the window; the check passed with a dedicated graphical Wine
+prefix. Native Windows, Linux, Wayland, physical controllers and a session with
+active native translation were not verified in this unit. The report identifies
+SRAM without validating the game's internal checksums. The checks do not include
+benchmarks, new DS scenes or replaying old ROM acceptance tests.
+Local evidence is in `target/debug-tools-diagnosis/`.
