@@ -1,22 +1,33 @@
 # U31-07: Fork-native machine-autosave proposal
 
-Status: **proposal; decisions and implementation pending**. This is a desktop
+Status: **desktop product settings approved; implementation pending**. This is a desktop
 design candidate derived from the [source audit](U31-07-machine-autosave.md),
 not a claim of implemented behavior or validation. Android has a separate
 frontend and needs its own lifecycle and storage analysis. The existing
 cartridge save, manual states, backups and debug-session rules remain the
 baseline. No upstream bundle, legacy `.sav` migration or card UI is imported.
 
-## Decisions still open
+## Approved desktop settings and open details
 
-Activation and its default, capture interval and bounds, safe-point predicate,
-retention budget, recovery presentation, startup behavior and exact format and
-namespace require a product decision. Options include an opt-in switch and a
-configurable interval, with recovery offered rather than performed silently;
-these are candidates, not approved defaults. Upstream's five-second timer and
-eligibility conditions are not adopted by this proposal. In particular, no
-automatic startup restore, fixed generation count or Android behavior is
-specified as approved.
+On 2026-11-02 the user accepted these desktop settings:
+
+- Autosave is opt-in and disabled by default.
+- The configurable interval defaults to five minutes of play. Capture occurs at
+  the first safe opportunity after the interval, not necessarily at the exact
+  deadline.
+- Retain the three most recent valid recovery copies. Retire the oldest only
+  after the new copy has been written and verified.
+- Offer available recovery copies for explicit selection; never restore one
+  automatically. Recovery uses a separate cartridge save and preserves the
+  current save.
+- A normal exit does not delete recovery copies; users can explicitly delete
+  them in settings.
+
+The safe-point predicate, definition of play time, configurable interval bounds,
+exact recovery presentation, storage identity, filesystem behavior and other
+technical details remain open. Upstream's five-second timer and eligibility
+conditions are not adopted. Android requires a separate decision and design.
+These settings are not evidence of an implementation or validated behavior.
 
 ## Identity, capture and scheduling
 
@@ -99,13 +110,10 @@ through every exit and error path. Compare the active save identity and current
 disk content with the capture context, and recheck at commit; a matching digest
 alone does not prove that overwriting an earlier timeline is safe.
 
-The conservative candidate is to offer recovery into a new isolated cartridge
-save, selected explicitly by the user, with subsequent writes confined there.
-An alternative that writes the existing save requires an explicit choice,
-independently verified pre-recovery backup, a coordinated commit and conflict
-recheck. It must remain safe against external changes, failure, cancellation
-and clean shutdown; the exact lock and transaction design is still open. If
-these guarantees cannot be provided, refuse that recovery path. Never replace
+Recovery is to use a new isolated cartridge save, selected explicitly by the
+user, with subsequent writes confined there. Writing recovery into the existing
+save is outside the approved scope. The exact lock and transaction design is
+still open; refuse recovery if preservation cannot be established. Never replace
 or rename the original cartridge save as a side effect of discovering recovery.
 
 Before live commit, validate in scratch and preserve a pre-recovery state. Use
@@ -122,9 +130,8 @@ unchanged. The proposed save gate and recovery transaction do not exist yet.
 
 ## Implementation increments and acceptance
 
-1. Resolve identity, activation, retention, filesystem and chronology decisions;
-   specify observable UI and failure behavior. No runtime default is selected
-   by this document.
+1. Resolve the remaining identity, timing, filesystem and chronology details;
+   specify observable UI and failure behavior consistent with the approved settings.
 2. Implement the isolated storage and lock protocol with synthetic bytes and
    injected failures, independently of capture. Test competing processes and
    each publication boundary on supported filesystems.

@@ -301,3 +301,7 @@ or xdotool; the available display is shared and was not used.
 
 The managed cleanup helper rejected this U31 unit because its accepted scope is
 `target/rom-data-*`; the evidence remains in place.
+
+A separate [recognized-menu miss proposal](U31-03-recognized-menu-miss-proposal.md)
+sets out the bounded candidate change and its GUI, replay and regression gates.
+It remains unapproved and does not close the partial-reveal or geometry work.

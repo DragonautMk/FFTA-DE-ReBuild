@@ -187,3 +187,121 @@ interrupt handling, rollback/cancel and interactions with ROMDATA-backed reads
 and resource lifetime. The presence of authenticated runtime resources and
 separate native entry lists is not proof of safe equivalence. No ABI or cache
 change is established as necessary from this source trace alone.
+
+## Follow-up: EUR overflowing shop and wheel baseline
+
+On 2026-11-02 a bounded Linux interpreter probe used the catalogued EUR DS-18
+checkpoint and the existing `target/rom-data-metadata10/shop-buy.input`
+sequence. Its snapshot checksum matches both the catalog and the earlier F-05
+slot-5 checkpoint. The verified snapshot preview is a world map, not a shop;
+the catalog marks this EUR case partial. The prior ROMDATA evidence documents
+this same route to Buy but does not show the detached list in its raw image.
+No previous acceptance was reopened or a new fixture constructed.
+
+Two fresh fork-core machines loaded the same authenticated EUR ROM and snapshot
+and followed the recorded key sequence for 300 frames with the mouse path
+installed and a 22-pixel side extension. At that point the validated shop
+callback and list fields reported seven total items, four visible, first index
+0 and page-relative selection 0; `MenuScene::read` reported four rows. Their
+serialized states matched before the new input. This is a concrete overflowing
+EUR list, not proof that every shop category or another region behaves alike.
+
+Calling the fork's `ffta_shop_mouse::scroll` on one machine accepted six
+successive down requests, 20 guest frames apart. The page-relative selection
+advanced 0→1→2→3, then stayed at 3 while the first index advanced 0→1→2→3.
+Six corresponding up requests returned the observed first index and selection
+to 0/0. The no-input control stayed at 0/0 throughout. All twelve requests were
+accepted; the result concerns these list indices, not full-state equality after
+return, a purchase, a physical wheel or a GUI drag. The isolated release-mode
+harness and trace are `target/u31-shop-pagination-0WzxAu/`; ROM, checkpoint and
+input-sequence hashes were unchanged, and the build produced no warnings.
+
+An earlier exploratory run waited until frame 600, after the route had entered
+a different state; its scroll request returned false and both controls remained
+unchanged. That is a correctly bounded negative for that later point, not a
+wheel failure in the recognized list. The separate one-step check at frame 300
+observed selection 0→1, and the twelve-request comparison above adds the page
+boundary and return. These traces remain in `target/u31-shop-route-VFNYm2/`
+and `target/u31-shop-wheel-og94zr/` respectively. Managed cleanup rejects these
+U31 directories because it only accepts `target/rom-data-*`; evidence remains.
+
+This narrows the U31-02 candidate: the fork already has effective wheel
+navigation in this overflowing EUR list, while a draggable original-game
+scrollbar remains absent in the inspected source. The value and correctness of
+an added drag target still need an actual GUI comparison, transformed geometry,
+scroll endpoints, selection/confirmation and recording/replay tests, and a
+separate USA evaluation. The probe did not run the upstream application,
+native dispatch, Android or a real window event and does not authorize a
+runtime change.
+
+## Follow-up: upstream adapter on the observed EUR list
+
+A separate isolated Linux comparison replayed the existing 300-frame EUR route
+only to capture the guest EWRAM, I/O and frame number at the recognized shop
+list. It initialized the exact pinned upstream desktop `gba-core` with the same
+verified ROM and those copied fields, rather than attempting to load the fork's
+incompatible machine-state format. The upstream `ffta_shop_mouse::list` returned
+`total=7`, `visible=4`, `first=0`, matching the fork observation. A direct
+`scroll_to(3)` request returned true; its next neutral-key query remained
+`0x3ff`, the list still reported first 0, and the copied EWRAM/I/O hashes were
+unchanged immediately after the request. With mouse disabled the upstream list
+was absent and the same request was refused. This verifies recognition and
+request setup only; no upstream guest instructions or redraw were run.
+
+Using those observed list values and the pinned desktop frontend's shop bounds
+`[8,0,216,88]` as a **conditional** input, the exact upstream `Bar::new`
+produced track `[210,16,214,84]`, thumb `[210,16,214,55]` and maximum first
+index 3. A standalone geometry probe checked hit/grab and clamped top/bottom
+mapping, and a thumb-grab round trip for all four first indices. It did not
+establish that the full frontend selected that node, that the bar was rendered
+at these screen coordinates, or that a pointer drag invokes a successful guest
+redraw. Those are separate GUI and execution gates.
+
+The input ROM, original snapshot and route file retained their hashes in the
+fork capture; the upstream run also retained its ROM and transferred inputs.
+The local isolated unit `target/u31-shop-upstream-fTl0sP/` contains private
+copied guest memory, harnesses and logs and must not be committed or packaged.
+The upstream core build emitted four unused-code warnings; the standalone
+geometry build emitted one. No native dispatcher, replay, USA, Android,
+physical input or upstream full-game acceptance follows from this comparison.
+
+The managed cleanup helper rejected this U31 unit because it accepts only
+`target/rom-data-*`; its private evidence remains isolated.
+
+## Follow-up: USA shop wheel baseline and early recognition
+
+On 2026-11-02 an isolated Linux interpreter harness loaded the catalogued
+USA DS-18 checkpoint with the matching USA ROM. The checkpoint is at the shop
+greeting. A bounded sequence of A presses and neutral frames reached a
+recognized shop inventory after 119 guest frames. The validated USA callback
+and menu reader reported seven items, four visible, first index 0 and selected
+row 0. This is a separate USA observation, not a reuse of the EUR result.
+
+The first attempt issued down as soon as that list was recognized. All six
+requests were accepted, but the first did not move the selection in the next
+20 frames; after six requests the first index was 2, not the expected 3, and
+the endpoint assertion failed. ROM and checkpoint hashes remained unchanged.
+The failed harness, trace and result remain in
+`target/u31-shop-usa-6roLpp/`. This does not establish why the first request
+was ineffective or prove an application-window defect.
+
+A separate run repeated the bounded route and waited 40 neutral frames after
+recognition. Both machines still reported the same 7/4 list and identical
+serialized state before the new input. Six down requests, 20 frames apart,
+advanced the selected row 0→1→2→3 and then the first index 0→1→2→3; six up
+requests returned both indices to 0. The no-input control stayed at 0/0. All
+12 requests were accepted. The isolated run passed without build warnings;
+ROM and checkpoint hashes matched their preimages. Evidence is in
+`target/u31-shop-usa-settle-GwDw9Y/`.
+
+This tests the fork core's wheel adapter and guest list indices for one USA
+shop scene. It neither sends a GUI wheel/drag nor establishes full-state
+identity after returning, native execution, replay, every category or an
+upstream USA scrollbar. In the earlier source audit, upstream's direct shop
+list is EUR-only. The early recognition result is a reason to validate a
+stable input-readiness condition when designing a scrollbar, not a proven
+cause or a license to add a fixed delay universally. Both ignored units
+contain private state and must stay out of commits and packages.
+
+Managed cleanup rejected the successful U31 unit because the helper accepts
+only `target/rom-data-*`; both the successful and failed units remain.

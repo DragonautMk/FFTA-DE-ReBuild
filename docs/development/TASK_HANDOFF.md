@@ -22,11 +22,11 @@ termination of another owner's process or changing another thread's goal state.
 
 ### U31-P0-UPSTREAM-AUDIT
 
-- State: active
+- State: suspended
 - Outcome: partial
-- Verified: U31-01..12 reports; U31-03 modeled both partial click and recognized-menu miss; upstream guard differs for recognized menu. U31-07 Android source compared. Party proposal drafted; primary model unknown.
-- Missing: U31-03 real GUI/mouse and partial recognition; Party approval, route/blank and device/implementation; shop replay fix; remaining audit, U31-07 decisions and tests.
-- Resume: user requested upstream TODO; prepare bounded recognized-menu miss proposal with acceptance and stop criteria. Party runtime mutation awaits approval.
+- Verified: U31-01..12 reports; U31-02 EUR and USA 7/4 lists paged by fork core; USA early first request ineffective. Upstream EUR adapter recognized copied fields. U31-03/Party proposals drafted; primary model unknown.
+- Missing: U31-02 early readiness cause, upstream redraw, GUI drag/replay and native; U31-03 GUI/approval and partial geometry; Party approval/device; remaining audit and U31-07 decisions/tests.
+- Resume: user requested upstream TODO; runtime proposals await specific approval. Do not repeat accepted EUR/USA wheel baselines; GUI and native remain distinct.
 
 ### ENGLISH-FIRST-PROJECT
 
@@ -229,9 +229,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: U31-P0-UPSTREAM-AUDIT partial; selected recognized-menu input proposal.
-- Last verified result: modeled fork miss queued A; upstream guard blocks recognized menu.
-- Remaining work: reviewable proposal, GUI, partial recognition, Party approval and audit.
-- Errors or blockers: no isolated GUI server; primary model unknown.
-- Next action: inspect input/recording paths and draft bounded acceptance criteria.
-- References: `docs/development/upstream-audit/U31-03-panel-visual-fixes.md`.
+- Task: U31-P0-UPSTREAM-AUDIT partial; U31-02 USA wheel baseline compared.
+- Last verified result: after settling, USA 7/4 list paged 0→3→0; early first input ineffective.
+- Remaining work: early readiness, GUI drag/replay, upstream redraw and other audit.
+- Errors or blockers: early assertion failed; cleanup rejects U31; primary model unknown.
+- Next action: select a missing criterion; preserve failed early-input evidence.
+- References: `docs/development/upstream-audit/U31-02-scrollbars.md`.

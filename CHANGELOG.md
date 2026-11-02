@@ -2117,6 +2117,24 @@ Documentation: [2026-11-01-model-european-compact-obj-sixth-root.json](docs/chan
 
 [Change record](docs/changes/2026-11-02-record-partial-senary-compact-obj-integration.json)
 
+## 2026-11-02 — Propose bounded desktop recognized-menu miss guard
+
+Type: docs. Platforms: Desktop proposal; GUI and implementation pending.
+
+**Changes**
+
+- Specify a reviewable desktop input unit for recognized battle-menu misses, with baseline, replay and platform acceptance gates.
+
+**Validation**
+
+- Inspected the existing event handler, mouse queue, recording frame latch, relevant upstream TODO and previous EUR modeled evidence; no new runtime or ROM access.
+
+**Limitations**
+
+- The proposal requires specific-unit approval and real GUI baseline; it does not establish a fix for unrecognized partial reveals or change runtime behavior.
+
+[Change record](docs/changes/2026-11-02-propose-desktop-recognized-menu-miss-guard.json)
+
 ## 2026-11-02 — Propose bounded Android Party touch navigation
 
 Type: docs. Platforms: Android Party gallery proposal; device validation pending.
@@ -2137,6 +2155,25 @@ Documentation: [U31-06-android-touch.md](docs/development/upstream-audit/U31-06-
 
 [Change record](docs/changes/2026-11-02-propose-android-party-pad-navigation.json)
 
+## 2026-11-02 — Observe USA shop wheel pagination and early recognition
+
+Type: docs. Platforms: Linux interpreter, USA fork core; GUI untested.
+
+**Changes**
+
+- Compare wheel pagination against a control in the catalogued USA shop and record an initial early-input failure.
+
+**Validation**
+
+- After 40 neutral frames from list recognition, six down and six up requests traversed and returned across a 7-item/4-visible list while control stayed at 0; ROM and checkpoint hashes unchanged.
+
+**Limitations**
+
+- At first recognition the first request did not move and the six-step assertion failed; cause unproven and evidence retained. No GUI, native, replay, other categories or upstream USA scrollbar was tested.
+- Managed cleanup rejects non-rom-data U31 directories; both failed and successful units remain.
+
+[Change record](docs/changes/2026-11-02-observe-usa-shop-wheel-pagination.json)
+
 ## 2026-11-02 — Observe Party native hook bypass
 
 Type: docs. Platforms: Android engine on Linux x86-64 TinyCC; Android ARM64 untested.
@@ -2155,6 +2192,26 @@ Type: docs. Platforms: Android engine on Linux x86-64 TinyCC; Android ARM64 unte
 - Local artifact complete --apply refused the non-ROMDATA unit; all evidence remains in place.
 
 [Change record](docs/changes/2026-11-02-observe-native-party-hook-bypass.json)
+
+## 2026-11-02 — Observe EUR shop wheel pagination against control
+
+Type: docs. Platforms: Linux interpreter, EUR fork core; GUI untested.
+
+**Changes**
+
+- Identify a catalogued EUR overflowing shop list and compare bounded wheel pagination with a no-input control.
+
+**Validation**
+
+- At 300 frames the validated list had seven items and four visible; six down and six up requests moved first index 0 to 3 and back while the control stayed at 0. ROM, checkpoint and input hashes were unchanged; isolated release build had no warnings.
+
+**Limitations**
+
+- No GUI wheel, scrollbar drag, native dispatch, upstream execution, USA or Android result. A separate frame-600 request was refused after the scene changed; the managed cleanup helper does not accept U31 units.
+
+Documentation: [ffta_shop_bank_mouse.md](docs/ffta_shop_bank_mouse.md).
+
+[Change record](docs/changes/2026-11-02-observe-eur-shop-wheel-pagination.json)
 
 ## 2026-11-02 — Observe real EUR action-panel reveal geometry
 
@@ -2495,6 +2552,25 @@ Type: docs. Platforms: Linux interpreter and desktop source; GUI untested.
 Documentation: [ffta_action_frame_width.md](docs/ffta_action_frame_width.md).
 
 [Change record](docs/changes/2026-11-02-compare-upstream-menu-miss-guard.json)
+
+## 2026-11-02 — Compare upstream shop adapter on observed EUR list
+
+Type: docs. Platforms: Linux fork and upstream core comparison; GUI untested.
+
+**Changes**
+
+- Check pinned upstream list recognition and scrollbar geometry against captured guest fields from the observed overflowing EUR shop.
+
+**Validation**
+
+- Upstream recognized 7 total and 4 visible, accepted scroll_to(3) without immediate guest-memory changes, and refused the request with mouse disabled. Geometry reached endpoints 0 and 3 with all four thumb positions round-tripping; protected inputs unchanged.
+
+**Limitations**
+
+- Transferred fields are not an upstream game session; no guest redraw, window event, native dispatch, replay, USA or Android test. Upstream core emitted four unused-code warnings and geometry probe one.
+- Managed cleanup accepts only target/rom-data-* and rejected this U31 unit; private evidence remains isolated.
+
+[Change record](docs/changes/2026-11-02-compare-upstream-eur-shop-adapter.json)
 
 ## 2026-11-02 — Compare real EUR Party touch in Android host engines
 

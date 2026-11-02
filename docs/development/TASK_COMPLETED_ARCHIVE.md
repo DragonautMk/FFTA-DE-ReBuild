@@ -18861,3 +18861,31 @@ LOCAL-ARTIFACT-SWEEP-2026-10-31 — CLOSED. Latest request: clean residual proje
 - Verified criteria: EUR frame 40 menu recognized, layout rejected in-view point, fork queued A and diverged from control; upstream guard expression rejects the recognized-menu case. ROM/snapshot unchanged.
 - Evidence: `docs/changes/2026-11-02-compare-upstream-menu-miss-guard.json`, `target/u31-menu-miss-KG2OUl/run.log` and `result.json`.
 - Limits: no actual window event or upstream runtime; partial reveal and cross-region remain unproven; seven unused-code warnings. Managed cleanup rejects U31 units; evidence retained.
+
+### U31-03-RECOGNIZED-MISS-PROPOSAL
+
+- Outcome: completed reviewable bounded desktop input proposal without runtime mutation.
+- Verified criteria: recorded pre-aim recognized-menu candidate, scope, concurrent files, regression/recording and GUI acceptance gates, costs and stop conditions.
+- Evidence: `docs/changes/2026-11-02-propose-desktop-recognized-menu-miss-guard.json` and `docs/development/upstream-audit/U31-03-recognized-menu-miss-proposal.md`.
+- Limits: modeled EUR evidence only; GUI baseline, other scenes/regions and specific-unit approval remain outstanding.
+
+### U31-02-EUR-SHOP-WHEEL-BASELINE
+
+- Outcome: completed bounded EUR interpreter comparison of wheel pagination and control.
+- Verified criteria: catalogued scene yielded 7 total/4 visible; six down and six up requests moved the first index 0→3→0 while control stayed at 0. ROM, checkpoint and input unchanged.
+- Evidence: `docs/changes/2026-11-02-observe-eur-shop-wheel-pagination.json`; `target/u31-shop-pagination-0WzxAu/run.log` and `result.json`.
+- Limits: fork core only, no real GUI, scrollbar drag, upstream runtime, native dispatch, USA or Android. A frame-600 wheel was refused after scene change; cleanup helper rejected U31 units and artifacts remain.
+
+### U31-02-UPSTREAM-SHOP-ADAPTER
+
+- Outcome: completed bounded upstream adapter and geometry comparison on transferred EUR shop fields.
+- Verified criteria: recognized total 7/visible 4, accepted first=3 request without immediate guest-memory change, refused when disabled; conditional shop bar reaches endpoints 0/3. Inputs unchanged.
+- Evidence: `docs/changes/2026-11-02-compare-upstream-eur-shop-adapter.json`, `target/u31-shop-upstream-fTl0sP/upstream.log`, `upstream-result.json` and `bar-result.log`.
+- Limits: no upstream guest execution, redraw, GUI, native, replay or USA; four core and one geometry warnings. Cleanup rejects U31; private copied guest memory retained in ignored unit.
+
+### U31-02-USA-SHOP-WHEEL-BASELINE
+
+- Outcome: completed bounded USA wheel comparison after settling; initial early-input assertion failed and is retained.
+- Verified criteria: recognized 7 total/4 visible; after 40 neutral frames six down/up requests moved first index 0→3→0 while control stayed 0; ROM and checkpoint unchanged.
+- Evidence: `docs/changes/2026-11-02-observe-usa-shop-wheel-pagination.json`, `target/u31-shop-usa-settle-GwDw9Y/run.log` and `target/u31-shop-usa-6roLpp/run.log`.
+- Limits: early request accepted without observed movement, cause unknown; no real GUI, native, replay or full-state equivalence after return. Cleanup rejects U31 directories; units retained.

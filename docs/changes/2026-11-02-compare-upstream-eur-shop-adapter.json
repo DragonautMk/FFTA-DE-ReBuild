@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "compare-upstream-eur-shop-adapter",
+  "title": "Compare upstream shop adapter on observed EUR list",
+  "kind": "docs",
+  "platforms": [
+    "Linux fork and upstream core comparison; GUI untested"
+  ],
+  "changes": [
+    "Check pinned upstream list recognition and scrollbar geometry against captured guest fields from the observed overflowing EUR shop."
+  ],
+  "validation": [
+    "Upstream recognized 7 total and 4 visible, accepted scroll_to(3) without immediate guest-memory changes, and refused the request with mouse disabled. Geometry reached endpoints 0 and 3 with all four thumb positions round-tripping; protected inputs unchanged."
+  ],
+  "limitations": [
+    "Transferred fields are not an upstream game session; no guest redraw, window event, native dispatch, replay, USA or Android test. Upstream core emitted four unused-code warnings and geometry probe one.",
+    "Managed cleanup accepts only target/rom-data-* and rejected this U31 unit; private evidence remains isolated."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-02-scrollbars.md"
+  ],
+  "references": []
+}

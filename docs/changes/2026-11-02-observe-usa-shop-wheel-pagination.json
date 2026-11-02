@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "observe-usa-shop-wheel-pagination",
+  "title": "Observe USA shop wheel pagination and early recognition",
+  "kind": "docs",
+  "platforms": [
+    "Linux interpreter, USA fork core; GUI untested"
+  ],
+  "changes": [
+    "Compare wheel pagination against a control in the catalogued USA shop and record an initial early-input failure."
+  ],
+  "validation": [
+    "After 40 neutral frames from list recognition, six down and six up requests traversed and returned across a 7-item/4-visible list while control stayed at 0; ROM and checkpoint hashes unchanged."
+  ],
+  "limitations": [
+    "At first recognition the first request did not move and the six-step assertion failed; cause unproven and evidence retained. No GUI, native, replay, other categories or upstream USA scrollbar was tested.",
+    "Managed cleanup rejects non-rom-data U31 directories; both failed and successful units remain."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-02-scrollbars.md"
+  ],
+  "references": []
+}
