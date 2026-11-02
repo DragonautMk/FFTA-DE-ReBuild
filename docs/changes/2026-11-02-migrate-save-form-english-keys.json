@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "migrate-save-form-english-keys",
+  "title": "Use English source keys in save forms",
+  "kind": "changed",
+  "platforms": [
+    "Desktop menu"
+  ],
+  "changes": [
+    "Migrate twelve save form message keys to English while retaining legacy Italian keys and identical English and Italian presentations."
+  ],
+  "validation": [
+    "Offline Linux combined menu/screen build passed eight localization tests and the save-state layout test, including legacy-key equivalence and rendered empty-slot text in both languages. Both 523-entry language catalogs passed consistency checks."
+  ],
+  "limitations": [
+    "Native Windows, physical input and full runtime frontend builds were not checked; the wider English-first audit remains open."
+  ],
+  "files": [
+    "crates/menu/src/save_forms.rs",
+    "crates/menu/src/i18n/tests.rs",
+    "crates/input-config/languages/en.json",
+    "crates/input-config/languages/it.json",
+    "docs/extended_saves.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

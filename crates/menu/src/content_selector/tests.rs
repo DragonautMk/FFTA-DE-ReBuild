@@ -1,6 +1,57 @@
 use super::*;
 
 #[test]
+fn cheat_action_labels_use_english_keys_and_preserve_italian_presentation() {
+    let mut selector = Selector::default();
+    selector.cheat_mode = true;
+    let italian = input_config::Language::parse("it");
+    let expected = [
+        "Dettagli", "Preferito", "Dettagli / scorri", "Ricarica",
+        "Importa catalogo...", "Scegli cartella...", "Indietro",
+    ];
+    for (index, (&key, &translation)) in CHEAT_ACTIONS.iter().zip(&expected).enumerate() {
+        selector.focus = index + 6;
+        assert_eq!(selector.focus_label(), key);
+        assert_eq!(input_config::Language::default().text(key), key);
+        assert_eq!(italian.text(key), translation);
+    }
+}
+
+#[test]
+fn selector_instructions_and_footer_follow_language_without_replacing_values() {
+    let mut selector = Selector::default();
+    selector.set("Synthetic".into(), vec![ContentEntry {
+        id: "x{id}".into(), name: "Example".into(), ..Default::default()
+    }], "{count}".into(), 0);
+    selector.confirmed = Some("x{id}".into());
+    selector.busy = true;
+    let capture = |selector: &Selector, language| {
+        let mut pixels = vec![[0, 0, 0, 255]; 940 * 620];
+        diagnostics::capture(|| draw(selector, &mut pixels, 940, 620, language))
+            .unwrap().runs.into_iter().map(|run| run.text).collect::<Vec<_>>()
+    };
+    for (language, footer, filter, title, hint) in [
+        (input_config::Language::default(), "1 items / working | {count} | Selected x{id}",
+         "Filter choice: arrows · OK applies · Cancel discards", "CHEAT DETAILS · READ ONLY", "Up/Down: scroll · OK/Cancel: return"),
+        (input_config::Language::parse("it"), "1 elementi / in corso | {count} | Selezionato x{id}",
+         "Scelta filtro: frecce · OK applica · Annulla scarta", "DETTAGLI CHEAT · SOLA LETTURA", "Su/Giù: scorri · OK/Annulla: torna"),
+    ] {
+        assert!(capture(&selector, language).iter().any(|text| text == footer));
+        selector.focus = 1;
+        selector.choice_edit = Some(0);
+        assert!(capture(&selector, language).iter().any(|text| text == filter));
+        selector.choice_edit = None;
+        selector.cheat_mode = true;
+        selector.detail_mode = true;
+        let details = capture(&selector, language);
+        assert!(details.iter().any(|text| text == title));
+        assert!(details.iter().any(|text| text == hint));
+        selector.cheat_mode = false;
+        selector.detail_mode = false;
+    }
+}
+
+#[test]
 fn cheat_view_keeps_all_rows_and_never_dispatches_selection(){
     let mut s=Selector::default();s.cheat_mode=true;
     s.set("Cheat".into(),(0..600).map(|i|ContentEntry{id:format!("CH-{i:04}"),name:format!("CH-{i:04}"),available:true,..Default::default()}).collect(),String::new(),0);

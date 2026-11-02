@@ -53,7 +53,15 @@ const ACTIONS: [&str; 7] = [
     "Add folder...",
     "Back / cancel",
 ];
-const CHEAT_ACTIONS:[&str;7]=["Dettagli", "Preferito", "Dettagli / scorri", "Ricarica", "Importa catalogo...", "Scegli cartella...", "Indietro"];
+const CHEAT_ACTIONS: [&str; 7] = [
+    "Details",
+    "Favorite",
+    "Details / scroll",
+    "Reload",
+    "Import catalog...",
+    "Choose folder...",
+    "Back",
+];
 const KEYS: [&str; 4] = [
     "abcdefghijklmnopqrstuvwxyz0123456789",
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
@@ -877,12 +885,12 @@ pub(super) fn draw(s: &Selector, px: &mut [[u8; 4]], w: usize, h: usize, languag
         [89, 121, 139],
     );
     if s.cheat_mode && s.detail_mode {
-        c.text((x+10) as f32,(y+5) as f32,locale.tr("DETTAGLI CHEAT · SOLA LETTURA"),ink,size*1.1,true,pw.saturating_sub(20) as f32);
+        c.text((x+10) as f32,(y+5) as f32,locale.tr("CHEAT DETAILS · READ ONLY"),ink,size*1.1,true,pw.saturating_sub(20) as f32);
         let lines=Canvas::wrap_text(&s.cheat_details(&locale),size,pw.saturating_sub(24) as f32);
         let pitch=(size*1.5).ceil() as usize;let top=y+g.row+4;let bottom=(y+ph).saturating_sub(g.row);
         let rows=bottom.saturating_sub(top)/pitch.max(1);let offset=s.detail_scroll.get().min(lines.len().saturating_sub(rows));s.detail_scroll.set(offset);
         for (n,line) in lines.iter().skip(offset).take(rows).enumerate(){c.text((x+10) as f32,(top+n*pitch) as f32,line,ink,size,false,pw.saturating_sub(20) as f32);}
-        c.text((x+10) as f32,bottom as f32,locale.tr("Su/Giù: scorri · OK/Annulla: torna"),ink,size,false,pw.saturating_sub(20) as f32);
+        c.text((x+10) as f32,bottom as f32,locale.tr("Up/Down: scroll · OK/Cancel: return"),ink,size,false,pw.saturating_sub(20) as f32);
         c.finish(px);return;
     }
     c.text(
@@ -910,7 +918,7 @@ pub(super) fn draw(s: &Selector, px: &mut [[u8; 4]], w: usize, h: usize, languag
         if s.editing { " | " } else { "" },
         s.preedit
     );
-    let search=if s.choice_focus(){locale.tr("Scelta filtro: frecce · OK applica · Annulla scarta").into()}else{search};
+    let search=if s.choice_focus(){locale.tr("Filter choice: arrows · OK applies · Cancel discards").into()}else{search};
     button(&mut c, g.search, &search, s.focus == 0 || s.editing, size);
     let kinds = s.kinds();
     let mut indices=[s.kind,s.filter,s.sort,s.collection];
@@ -1055,15 +1063,14 @@ pub(super) fn draw(s: &Selector, px: &mut [[u8; 4]], w: usize, h: usize, languag
         let confirmed = s
             .confirmed
             .as_ref()
-            .map(|id| format!(" | Selected {}", id.get(8..16).unwrap_or(id)))
+            .map(|id| super::i18n::format(language, " | Selected {id}", &[("id", id.get(8..16).unwrap_or(id).into())]))
             .unwrap_or_default();
-        let footer = format!(
-            "{} items{} | {}{}",
-            s.visible.len(),
-            if s.busy { locale.tr(" / working") } else { "" },
-            locale.tr(&s.message),
-            confirmed
-        );
+        let footer = super::i18n::format(language, "{count} items{working} | {message}{selected}", &[
+            ("count", s.visible.len().to_string()),
+            ("working", if s.busy { locale.tr(" / working") } else { "" }.into()),
+            ("message", locale.tr(&s.message).into()),
+            ("selected", confirmed),
+        ]);
         c.text(
             (x + 10) as f32,
             (y + ph).saturating_sub(g.row) as f32,

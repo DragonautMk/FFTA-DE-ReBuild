@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "use-english-cheat-actions-save-status-keys",
+  "title": "Use English source keys for cheat actions and save status",
+  "kind": "changed",
+  "platforms": [
+    "Desktop menu and runtime"
+  ],
+  "changes": [
+    "Use English source keys for cheat selector actions and standard-save availability/metadata messages, retaining legacy Italian keys and equivalent Italian catalog translations."
+  ],
+  "validation": [
+    "Offline Linux menu and screen test build succeeded with the combined feature selection; the complete menu suite passed 112 tests with one optional test ignored, including both locales and legacy lookup. The first menu-only build lacked wayland-client pkg-config metadata."
+  ],
+  "limitations": [
+    "The runtime frontend was not rebuilt and native Windows and real-device presentation were not checked; wider English-first source and documentation audit remains open."
+  ],
+  "files": [
+    "crates/menu/src/content_selector.rs",
+    "crates/menu/src/content_selector/tests.rs",
+    "crates/menu/src/clan_atlas.rs",
+    "crates/menu/src/lib.rs",
+    "crates/menu/src/i18n/tests.rs",
+    "crates/recomp/src/play.rs",
+    "crates/input-config/languages/en.json",
+    "crates/input-config/languages/it.json",
+    "docs/cheats.md",
+    "docs/extended_saves.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

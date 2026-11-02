@@ -10,6 +10,10 @@ Confirm, choose ON in the selector, then Confirm again. The default is OFF. The 
 is stored as `debug.extended_saves` in `av.cfg`, including portable
 `Data/config/av.cfg`.
 
+Standard-save availability and metadata messages follow the selected menu
+language, with English as the default and fallback. Save forms use English
+source keys while retaining existing translated labels and compatibility keys.
+
 The [debug scene checklist](development/debug%20saves.md) assigns stable
 DS-01 through DS-26 names/numbers to test situations, with evidence and explicit
 validated/partial/uncovered status. The local ignored `saves/debug-cases/`

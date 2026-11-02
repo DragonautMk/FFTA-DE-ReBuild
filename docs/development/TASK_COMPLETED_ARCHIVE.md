@@ -19064,3 +19064,93 @@ LOCAL-ARTIFACT-SWEEP-2026-10-31 — CLOSED. Latest request: clean residual proje
 - Outcome: `debug-compare` matched interpreter/raw and revision-t8 native cache across all 56 EUR pointer-exit frames including marker 1030; 439727 native dispatches and 370657 fallbacks. Separate verifier certified recorded endpoint; protected inputs unchanged.
 - Evidence: `docs/development/upstream-audit/U31-02-shop-category-replay-proposal.md`; ignored `target/u31-shop-replay-repair-B9AOtX/native-compare-eur-pointer-exit/`.
 - Limits: one XTest pointer exit on Linux, not all pointer paths, physical devices or Windows; cleanup helper rejects U31 path. Parent partial.
+
+### ENGLISH-FIRST-INVENTORY-LOCALIZED-GAMEPLAY
+
+- Outcome: synchronized 31 inventory entries covering localized graphics and gameplay lookups with English plan translations.
+- Evidence: two original blocks matched the plan preimages byte for byte; IDs, links, inline literals and numeric runs preserved. No ROM access or runtime checks.
+- Record: `docs/changes/2026-11-02-sync-inventory-localized-graphics-gameplay-translations.json`.
+
+### ENGLISH-FIRST-INVENTORY-DYNAMIC-GAP
+
+- Outcome: translated 22 inventory summaries on localized dynamic transfers, clan aliases and conditional gameplay lookups, retaining evidence scope and limitations.
+- Evidence: task IDs, link destinations, inline literals, numeric runs and entry count match the source. No ROM access or runtime checks.
+- Record: `docs/changes/2026-11-02-translate-inventory-dynamic-transfers-alias-evidence.json`.
+
+### ENGLISH-FIRST-INVENTORY-TAIL
+
+- Outcome: synchronized six inventory summaries with matching plan translations and translated thirteen compact OBJ summaries, retaining evidence scope and limits.
+- Evidence: six original entries matched plan preimages; all nineteen preserve task IDs, link destinations, inline literals and numeric runs. No ROM access or runtime checks.
+- Record: `docs/changes/2026-11-02-translate-inventory-gameplay-compact-obj-tail.json`.
+
+### ENGLISH-FIRST-THREE-GUIDES-REVIEW
+
+- Outcome: manually reviewed local artifact retention, task descriptor and UI palette guides for English-first policy; original game labels and technical evidence retained.
+- Evidence: exact reviewed file hashes recorded in `docs/development/ENGLISH_FIRST_AUDIT.json`; no ROM access or runtime checks.
+- Record: `docs/changes/2026-11-02-review-artifact-task-palette-guides-english.json`.
+
+### ENGLISH-FIRST-FOUR-GUIDES-REVIEW
+
+- Outcome: manually reviewed fast-forward audio, FPS overlay, event directory and color-mode palette guides for English-first policy; original game labels and technical evidence retained.
+- Evidence: exact reviewed hashes recorded in `docs/development/ENGLISH_FIRST_AUDIT.json`; no ROM access or runtime checks.
+- Record: `docs/changes/2026-11-02-review-audio-fps-event-palette-guides-english.json`.
+
+### ENGLISH-FIRST-SELECTOR-SAVE-KEYS
+
+- Outcome: migrated cheat action and standard-save status source keys to English; Italian presentation and old key translations retained.
+- Evidence: offline combined menu/screen Linux build and full menu suite passed 112 tests, one ignored, including both locales and legacy lookup. Initial menu-only build lacked Wayland pkg-config metadata.
+- Limits: runtime frontend was not rebuilt; native Windows and physical presentation not checked.
+- Record: `docs/changes/2026-11-02-use-english-cheat-actions-save-status-keys.json`.
+
+### ENGLISH-FIRST-SELECTOR-PRESENTATION
+
+- Outcome: migrated selector detail/filter prompts to English source keys and localized count/selection footer, retaining legacy keys and dynamic values.
+- Evidence: offline combined menu/screen Linux build and 16 selector tests pass, including rendered English/Italian and literal placeholder values; both 513-entry language catalogs validate.
+- Limits: runtime frontend, native Windows and physical input were not checked.
+- Record: `docs/changes/2026-11-02-localize-selector-instructions-and-footer.json`.
+
+### ENGLISH-FIRST-SAVE-FORM-KEYS
+
+- Outcome: migrated twelve save form source keys to English, preserving legacy keys and identical localized text.
+- Evidence: offline combined menu/screen Linux build, eight localization tests and save-state layout test pass; both 523-entry language catalogs validate.
+- Limits: runtime frontend, native Windows and physical input were not checked.
+- Record: `docs/changes/2026-11-02-migrate-save-form-english-keys.json`.
+
+### ENGLISH-FIRST-ATLAS-INFO-KEYS
+
+- Outcome: migrated 59 Atlas, information and debug-tool keys to English while retaining legacy keys, localized text and placeholders.
+- Evidence: offline combined menu/screen Linux build and full suite pass 115 tests, one ignored; focused regression compares all keys in both languages and both 574-entry catalogs validate.
+- Limits: runtime frontend, native Windows and physical input were not checked.
+- Record: `docs/changes/2026-11-02-migrate-atlas-information-tool-english-keys.json`.
+
+### ENGLISH-FIRST-MENU-LABELS
+
+- Outcome: migrated sidebar presentation, selected row labels and control hints to English source keys; legacy debug route tokens and localized text remain unchanged.
+- Evidence: offline combined menu/screen Linux build and 25 targeted Atlas, route, control and localization tests pass, one optional image export ignored; both 593-entry catalogs validate.
+- Limits: runtime frontend, native Windows and physical input were not checked.
+- Record: `docs/changes/2026-11-02-migrate-menu-labels-preserve-debug-routes.json`.
+
+### ENGLISH-FIRST-INPUT-DIAGNOSTICS
+
+- Outcome: localized input-tab and information focus labels while preserving structured page and item identifiers.
+- Evidence: offline combined menu/screen Linux build, six selection tests and input-tab navigation test pass; both 594-entry catalogs validate.
+- Limits: runtime frontend, native Windows and physical input were not checked.
+- Record: `docs/changes/2026-11-02-localize-input-focus-diagnostics.json`.
+
+### ENGLISH-FIRST-INDEXED-UI-GUIDES
+
+- Outcome: manually reviewed indexed graphics archives and UI choice list guides for English-first policy, retaining game names and technical evidence.
+- Evidence: exact reviewed hashes recorded in `docs/development/ENGLISH_FIRST_AUDIT.json`; no ROM access or runtime checks.
+- Record: `docs/changes/2026-11-02-review-indexed-graphics-ui-guides-english.json`.
+
+### ENGLISH-FIRST-DOCKER-VALIDATION-GUIDES
+
+- Outcome: manually reviewed Docker build and decoded resource validation guides for English-first policy; technical evidence and commands retained.
+- Evidence: exact reviewed hashes recorded in `docs/development/ENGLISH_FIRST_AUDIT.json`; no historical builds, measurements or ROM checks repeated.
+- Record: `docs/changes/2026-11-02-review-docker-rom-validation-guides-english.json`.
+
+### ENGLISH-FIRST-SCRIPT-TRANSFER-GUIDES
+
+- Outcome: manually reviewed script resource and raw UI transfer guides for English-first policy; original names and technical evidence retained.
+- Evidence: exact reviewed hashes recorded in `docs/development/ENGLISH_FIRST_AUDIT.json`; no ROM access or runtime checks.
+- Record: `docs/changes/2026-11-02-review-script-raw-transfer-guides-english.json`.

@@ -617,7 +617,7 @@
     },
     {
       "path": "docs/cheats.md",
-      "sha256": "5d3f421f73c339784762885fdbd9c17a53ff0644bfd4d7ce63be6b34965ada10",
+      "sha256": "afcba7b5b81fde09a5cd41c44b9fe2c5062cd63bef432a9608ec5b0d25abab2d",
       "scope": "English public guide reviewed; corrected current menu labels and distinguished original readonly catalog validation from the later bounded one-shot; original local catalog paths and provenance retained."
     },
     {
@@ -781,6 +781,11 @@
       "scope": "Planning guide translated in English; task status, IDs, literal tokens, links and legacy heading anchors preserved; no development work authorized."
     },
     {
+      "path": "docs/development/LOCAL_ARTIFACTS.md",
+      "sha256": "1afcb4f1f5d208cc62bd7a195f5fbc59414ffa2f1e42a2b56fd92776908acacb",
+      "scope": "Manually reviewed maintained prose; original game labels, evidence identifiers, paths and historical data retained."
+    },
+    {
       "path": "docs/development/MEMORY_WORKFLOW.md",
       "sha256": "8907f8e9383adb6d661bb820b83465c3cdf5ca05c74a7574b2edb80bb33fa583",
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
@@ -801,8 +806,13 @@
       "scope": "maintained plan and evidence in English; compatibility anchors and original game-label references retained"
     },
     {
+      "path": "docs/development/ROM_DATA_VALIDATION.md",
+      "sha256": "779df09f5685492911cb25f3e210080edaba8d8bbd562240ea515b3e1a860999",
+      "scope": "Manually reviewed maintained prose; historical evidence, commands, paths and technical identifiers retained."
+    },
+    {
       "path": "docs/development/TASK_HANDOFF.md",
-      "sha256": "61fb46f7902a51a4447b240d880e274ea928da6bf5ad53d49d7f24a5cca9f505",
+      "sha256": "600e89b606c81cbe4f406d8581913330a6495a29a88f8329f8d9cc2c0dc26cac",
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
     },
     {
@@ -827,7 +837,7 @@
     },
     {
       "path": "docs/development/todo2.md",
-      "sha256": "ba91a075dcd2e7c76d3b947e69e3f22ab8f8d0178bc9cbc56cbaf62997f7f803",
+      "sha256": "ea33a45397632e93e3aae7a8f939bac6e261f8f1a65be54c86b4c6bdf573d8ff",
       "scope": "Existing English proposals retained; Italian audio-separation proposal translated. Proposals are not validated implementations."
     },
     {
@@ -846,9 +856,19 @@
       "scope": "English maintained desktop/storage/build prose reviewed; menu labels matched to English catalog; commands, links, headings and historical validation limits preserved"
     },
     {
+      "path": "docs/docker.md",
+      "sha256": "a7a7b354bfe41424f8a3ec36a5dfc251a3a851f551f35ff911530b3e97ef8dd3",
+      "scope": "Manually reviewed maintained prose; historical evidence, commands, paths and technical identifiers retained."
+    },
+    {
       "path": "docs/extended_saves.md",
-      "sha256": "226e3ebc794f378f49a62f7cca01f225013537c7688a2ab2aad8a27d36e8da38",
+      "sha256": "3baf2292d5930e0698132fc929c5ed798444797d879800ddaf0924b9612c940b",
       "scope": "English maintained desktop/storage/build prose reviewed; menu labels matched to English catalog; commands, links, headings and historical validation limits preserved"
+    },
+    {
+      "path": "docs/fast_forward_audio.md",
+      "sha256": "e2342c411d20e1931c6c12bfece7fb0ab2d66457ccea9024970c934c79b87459",
+      "scope": "Manually reviewed maintained prose; original game labels, evidence identifiers, paths and historical data retained."
     },
     {
       "path": "docs/ffta_action_frame_width.md",
@@ -961,6 +981,11 @@
       "scope": "English rendering/interaction prose reviewed; Spanish text and measurement labels translated; technical tokens, commands, legacy anchors and recorded acceptance limits preserved"
     },
     {
+      "path": "docs/fps_overlay.md",
+      "sha256": "7769afbbc22d58499b3cf6c20f114daf86c574e707147bf56b257eb72d657eb8",
+      "scope": "Manually reviewed maintained prose; original game labels, evidence identifiers, paths and historical data retained."
+    },
+    {
       "path": "docs/fullscreen.md",
       "sha256": "b13b666ca0d346880fb1d80ba5ce7ac968e0b53cf68c62f62c03f42619bed1ed",
       "scope": "English maintained guide reviewed; existing commands, links, headings and validation limits preserved"
@@ -987,7 +1012,7 @@
     },
     {
       "path": "docs/menu_localization.md",
-      "sha256": "d633763366f58817c1f3a566fe7560e8b5bb0fed2b4dcc784997cb2c16ccc24b",
+      "sha256": "1d7ead398a5f5932b2e5c12d4c911300ae7dca7dc62890c38c4fd7d606e584a5",
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
     },
     {
@@ -1024,6 +1049,46 @@
       "path": "docs/restart_rom.md",
       "sha256": "4e54a275c937fcb4f89f948be2e6500ca5852b1ca2b75d83b21d0d37fa2b783c",
       "scope": "English maintained guide reviewed; existing commands, links, headings and validation limits preserved"
+    },
+    {
+      "path": "docs/rom_data_color_palettes.md",
+      "sha256": "eeea73177f76e1fd70da17b0fbd7c39838e92e437d3de142b1e955a2c590d3d9",
+      "scope": "Manually reviewed maintained prose; original game labels, evidence identifiers, paths and historical data retained."
+    },
+    {
+      "path": "docs/rom_data_events.md",
+      "sha256": "69105c4271a1374e011a5940dbdaa6baa1c1f5ba716941df576de56c5b64a53b",
+      "scope": "Manually reviewed maintained prose; original game labels, evidence identifiers, paths and historical data retained."
+    },
+    {
+      "path": "docs/rom_data_indexed_graphics.md",
+      "sha256": "0a969d3a9e31d922a28bd0f88361870c289c620700a96310b8d3a2718b9f2238",
+      "scope": "Manually reviewed maintained prose; original game labels, evidence identifiers, paths and historical data retained."
+    },
+    {
+      "path": "docs/rom_data_scripts.md",
+      "sha256": "fd88ff0668d14c68b91539b95b9f97aa748231d990ef900c4db0aeb4275cf90e",
+      "scope": "Manually reviewed maintained prose; original game labels, evidence identifiers, paths and historical data retained."
+    },
+    {
+      "path": "docs/rom_data_tasks.md",
+      "sha256": "8503ac6472cbb9ae740a669dbb80752916cb5b8a32436728e37f2fbe7e98f4ac",
+      "scope": "Manually reviewed maintained prose; original game labels, evidence identifiers, paths and historical data retained."
+    },
+    {
+      "path": "docs/rom_data_ui.md",
+      "sha256": "03e302d2e49905218217777618b887a90c4e7cee1b74cac0db021071cf381ce0",
+      "scope": "Manually reviewed maintained prose; original game labels, evidence identifiers, paths and historical data retained."
+    },
+    {
+      "path": "docs/rom_data_ui_palettes.md",
+      "sha256": "239e708a0fa87da22ee8c072e46d98d77148f8624f2dc74c8c4977568b375db3",
+      "scope": "Manually reviewed maintained prose; original game labels, evidence identifiers, paths and historical data retained."
+    },
+    {
+      "path": "docs/rom_data_ui_raw_transfers.md",
+      "sha256": "91feb3485b54c1d513e196ba02c1b614a371a24261d9705cb3b8909ac6e49477",
+      "scope": "Manually reviewed maintained prose; original game labels, evidence identifiers, paths and historical data retained."
     },
     {
       "path": "docs/save_backups.md",
@@ -1128,32 +1193,19 @@
     "AndroidPort/Licenses/THIRD_PARTY_NOTICES.md",
     "CHANGELOG.md",
     "Licenses/THIRD_PARTY_NOTICES.md",
-    "docs/development/LOCAL_ARTIFACTS.md",
     "docs/development/PERFORMANCE_WORKFLOW.md",
     "docs/development/PROJECT_STATE.md",
     "docs/development/ROM_DATA_INVENTORY.md",
-    "docs/development/ROM_DATA_VALIDATION.md",
-    "docs/docker.md",
-    "docs/fast_forward_audio.md",
     "docs/ffta_estado.md",
-    "docs/fps_overlay.md",
     "docs/rom_data.md",
     "docs/rom_data_audio.md",
-    "docs/rom_data_color_palettes.md",
-    "docs/rom_data_events.md",
     "docs/rom_data_gameplay.md",
     "docs/rom_data_graphics.md",
-    "docs/rom_data_indexed_graphics.md",
     "docs/rom_data_maps.md",
     "docs/rom_data_obj.md",
     "docs/rom_data_runtime.md",
-    "docs/rom_data_scripts.md",
-    "docs/rom_data_tasks.md",
     "docs/rom_data_text.md",
-    "docs/rom_data_ui.md",
     "docs/rom_data_ui_graphics.md",
-    "docs/rom_data_ui_palettes.md",
-    "docs/rom_data_ui_raw_transfers.md",
     "docs/rom_data_unit_obj.md"
   ],
   "pending_source_areas": [
@@ -1191,7 +1243,7 @@
         "AndroidPort/android/",
         "android/"
       ],
-      "status": "Desktop consoles and selected catalog/reference presentations localized. Android-specific frontend, decoder/recompiler and Kotlin tests reviewed in English; shared Android gba-core, other desktop selectors and runtime strings remain pending."
+      "status": "Desktop consoles and selected catalog/reference presentations localized. Android-specific frontend, decoder/recompiler and Kotlin tests reviewed in English; shared Android gba-core, other desktop selectors and runtime strings remain pending. Cheat selector actions and standard-save statuses now use English source keys, with legacy keys retained; other menu source keys remain pending. Selector detail/filter instructions and footer now follow the current locale. Save form keys migrated to English; legacy translations remain available. Atlas, information and tool prompt source keys migrated; legacy translations retained. Sidebar presentation, selected rows and control hints migrated; legacy debug routes preserved. Input-tab and information diagnostic labels follow the menu language; semantic IDs are retained."
     },
     {
       "area": "Generated references and generators",
@@ -1347,6 +1399,20 @@
     "docs/changes/2026-11-02-translate-rom-inventory-script-alternate-override.json",
     "docs/changes/2026-11-02-translate-rom-inventory-registry-property-evidence.json",
     "docs/changes/2026-11-02-translate-rom-inventory-property-getter-ui-evidence.json",
-    "docs/changes/2026-11-02-sync-rom-inventory-validated-plan-translations.json"
+    "docs/changes/2026-11-02-sync-rom-inventory-validated-plan-translations.json",
+    "docs/changes/2026-11-02-sync-inventory-localized-graphics-gameplay-translations.json",
+    "docs/changes/2026-11-02-translate-inventory-dynamic-transfers-alias-evidence.json",
+    "docs/changes/2026-11-02-translate-inventory-gameplay-compact-obj-tail.json",
+    "docs/changes/2026-11-02-review-artifact-task-palette-guides-english.json",
+    "docs/changes/2026-11-02-review-audio-fps-event-palette-guides-english.json",
+    "docs/changes/2026-11-02-use-english-cheat-actions-save-status-keys.json",
+    "docs/changes/2026-11-02-localize-selector-instructions-and-footer.json",
+    "docs/changes/2026-11-02-migrate-save-form-english-keys.json",
+    "docs/changes/2026-11-02-migrate-atlas-information-tool-english-keys.json",
+    "docs/changes/2026-11-02-migrate-menu-labels-preserve-debug-routes.json",
+    "docs/changes/2026-11-02-localize-input-focus-diagnostics.json",
+    "docs/changes/2026-11-02-review-indexed-graphics-ui-guides-english.json",
+    "docs/changes/2026-11-02-review-docker-rom-validation-guides-english.json",
+    "docs/changes/2026-11-02-review-script-raw-transfer-guides-english.json"
   ]
 }

@@ -479,7 +479,7 @@ pub(super) fn draw(s: &ToolForm, px: &mut [[u8; 4]], w: usize, h: usize, languag
         pw.saturating_sub(20) as f32,
     );
     let mut instruction=g.search;instruction[2]=g.panel[2].saturating_sub((instruction[0]-x)*2);
-    button(&mut c,instruction,if s.choice_focus(){locale.tr("Scelta: frecce regolano · OK applica · Annulla scarta")}else{locale.tr("Frecce: naviga · OK modifica · usa i pulsanti per eseguire")},false,size);
+    button(&mut c,instruction,if s.choice_focus(){locale.tr("Choice: arrows adjust · OK applies · Cancel discards")}else{locale.tr("Arrows: navigate · OK edits · use buttons to execute")},false,size);
     let first = s.first(g.visible);
     for (n, f) in s.fields.iter().skip(first).take(g.visible).enumerate() {
         let r = [

@@ -31,6 +31,28 @@ pub const DEBUG_SECTIONS: [&str; 8] = [
     "Cheat",
     "Report e archivio",
 ];
+// Legacy section names remain stable route tokens.
+pub(super) const GAME_SECTIONS_LABELS: [&str; 8] = [
+    "Overview",
+    "Saves",
+    "Fast Forward",
+    "Text windows",
+    "Audio",
+    "Video",
+    "Controls",
+    "System",
+];
+pub(super) const DEBUG_SECTIONS_LABELS: [&str; 8] = [
+    "Overview",
+    "Sessions and cases",
+    "Replays and comparisons",
+    "Execution and memory",
+    "Traces and inspectors",
+    "Consoles and scripts",
+    "Cheat",
+    "Reports and archive",
+];
+
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct Rect {
     pub x: usize,
@@ -255,7 +277,7 @@ impl Default for State {
             frame: None,
             fast_active: false,
             fast_effective: 100,
-            standard_save: "Nessun salvataggio standard trovato".into(),
+            standard_save: "No standard save found".into(),
             standard_save_stamp: None,
             information:String::new(),
             information_hover:false,
@@ -272,9 +294,9 @@ impl State {
     }
     pub fn title(&self) -> &'static str {
         if self.domain == Domain::Game {
-            GAME_SECTIONS[self.selected_section()]
+            GAME_SECTIONS_LABELS[self.selected_section()]
         } else {
-            DEBUG_SECTIONS[self.selected_section()]
+            DEBUG_SECTIONS_LABELS[self.selected_section()]
         }
     }
 }

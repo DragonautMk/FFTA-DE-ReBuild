@@ -3,6 +3,33 @@ use std::collections::BTreeMap;
 fn state(menu:&Menu,av:&AvConfig,cfg:&InputConfig)->BTreeMap<String,String>{menu.selection_state(av,cfg).into_iter().collect()}
 
 #[test]
+fn input_tab_and_information_diagnostics_follow_menu_language_without_changing_ids() {
+    let mut menu = Menu::unlocked_for_test(true, false);
+    let cfg = InputConfig::default();
+    menu.open(Page::Inputs);
+    for (language, labels, prefix, details) in [
+        (Language::default(), ["KEYBOARD", "GAMEPAD", "MOUSE & KEYBOARD"], "Device", "Details · read only"),
+        (Language::parse("it"), ["TASTIERA", "GAMEPAD", "MOUSE E TASTIERA"], "Dispositivo", "Dettagli · sola lettura"),
+    ] {
+        menu.language.set(language);
+        let av = AvConfig { menu_language: language, ..AvConfig::default() };
+        for (index, label) in labels.iter().enumerate() {
+            menu.input_tabs_focus = Some(index as u8);
+            let observed = state(&menu, &av, &cfg);
+            assert_eq!(observed["item_id"], format!("input-tab/{index}"));
+            assert_eq!(observed["label"], *label);
+            let focus = menu.debug_focus(854, 480);
+            assert_eq!(focus.selected, index);
+            assert_eq!(focus.label, format!("{prefix}: {label}"));
+        }
+        menu.input_tabs_focus = None;
+        menu.open(Page::Information);
+        assert_eq!(menu.debug_focus(854, 480).label, details);
+        menu.open(Page::Inputs);
+    }
+}
+
+#[test]
 fn dropdown_selection_value_and_cancel_are_semantic_and_observation_is_readonly(){
     let mut menu=Menu::unlocked_for_test(true,false);let mut av=AvConfig::default();let cfg=InputConfig::default();
     menu.atlas_section(clan_atlas::Domain::Debug,1);menu.selected=0;

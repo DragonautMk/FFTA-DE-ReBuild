@@ -40,24 +40,24 @@ pub(super) fn text(c: &mut Canvas, r: Rect, s: &str, size: f32, title: bool, col
 }
 fn title(menu: &Menu) -> &str {
     match menu.page {
-        Page::Information => menu.tr("Dettagli · sola lettura"),
-        Page::CliReference => menu.tr("Riferimenti Menu / CLI · sola lettura"),
-        Page::Exit => menu.tr("Conferma uscita"),
-        Page::SwitchRom => menu.tr("Cambia ROM"),
-        Page::ReplaceState => menu.tr("Sovrascrivi lo stato?"),
-        Page::RestoreBackup => menu.tr("Ripristina il backup?"),
-        Page::SwitchGameSave => menu.tr("Usa salvataggio e riavvia"),
-        Page::ReplaceGameSave => menu.tr("Sostituisci salvataggio cartuccia"),
-        Page::DebugCatalog => menu.tr("Catalogo DS"),
-        Page::CheatCatalog => menu.tr("Catalogo cheat"),
-        Page::ContentSelector => menu.tr("Selezione contenuti"),
-        Page::DebugTool => menu.tr("Parametri dello strumento"),
-        Page::ToolInputs => menu.tr("Input e selezioni correnti"),
-        Page::DebugTools => menu.tr("Parametri e profili"),
-        Page::ScriptLibrary => menu.tr("Script e strumenti"),
+        Page::Information => menu.tr("Details · read only"),
+        Page::CliReference => menu.tr("Menu / CLI reference · read only"),
+        Page::Exit => menu.tr("Confirm exit"),
+        Page::SwitchRom => menu.tr("Switch ROM"),
+        Page::ReplaceState => menu.tr("Overwrite this state?"),
+        Page::RestoreBackup => menu.tr("Restore this backup?"),
+        Page::SwitchGameSave => menu.tr("Use save and restart"),
+        Page::ReplaceGameSave => menu.tr("Replace game save"),
+        Page::DebugCatalog => menu.tr("DS catalog"),
+        Page::CheatCatalog => menu.tr("Cheat catalog"),
+        Page::ContentSelector => menu.tr("Content selection"),
+        Page::DebugTool => menu.tr("Tool parameters"),
+        Page::ToolInputs => menu.tr("Inputs and current selections"),
+        Page::DebugTools => menu.tr("Parameters and profiles"),
+        Page::ScriptLibrary => menu.tr("Scripts and tools"),
         Page::SaveStates => menu.tr("Save states"),
-        Page::GameSaves => menu.tr("Salvataggi cartuccia"),
-        Page::SaveBackups => menu.tr("Copie di sicurezza"),
+        Page::GameSaves => menu.tr("Game saves"),
+        Page::SaveBackups => menu.tr("Backups"),
         _ => menu.tr(menu.atlas.title()),
     }
 }
@@ -147,7 +147,7 @@ pub(super) fn draw(
         c.text(
             10.,
             10.,
-            menu.tr("ATLANTE DEL CLAN"),
+            menu.tr("CLAN ATLAS"),
             TEXT,
             14.,
             true,
@@ -156,7 +156,7 @@ pub(super) fn draw(
         c.text(
             10.,
             40.,
-            menu.tr("Minimo menu: 480 x 360. Ridimensiona o premi Esc."),
+            menu.tr("Menu minimum: 480 x 360. Resize or press Esc."),
             MUTED,
             11.,
             false,
@@ -208,7 +208,7 @@ pub(super) fn draw(
     c.text(
         cx + 22. * s,
         cy - 12. * s,
-        menu.tr("ATLANTE"),
+        menu.tr("ATLAS"),
         TEXT,
         (13. * s).max(9.),
         true,
@@ -217,7 +217,7 @@ pub(super) fn draw(
     c.text(
         g.sidebar.x as f32 + 10.,
         g.sidebar.y as f32 + 48. * s,
-        menu.tr("Registro del Clan"),
+        menu.tr("Clan ledger"),
         MUTED,
         (11. * s).max(9.),
         false,
@@ -225,7 +225,7 @@ pub(super) fn draw(
     );
     let domains=if menu.debug_enabled(){2}else{1};
     let half = g.domain.w / domains;
-    for (i, label) in [menu.tr("Gioco"), "Debug"].iter().take(domains).enumerate() {
+    for (i, label) in [menu.tr("Game"), "Debug"].iter().take(domains).enumerate() {
         let r = Rect {
             x: g.domain.x + i * half,
             w: if i == 0 { half } else { g.domain.w - half },
@@ -237,9 +237,9 @@ pub(super) fn draw(
         text(&mut c, r, label, fs, true, if focused {BG} else if on { BRASS } else { TEXT });
     }
     let labels = if menu.atlas.domain == atlas::Domain::Game {
-        atlas::GAME_SECTIONS
+        atlas::GAME_SECTIONS_LABELS
     } else {
-        atlas::DEBUG_SECTIONS
+        atlas::DEBUG_SECTIONS_LABELS
     };
     for (i, r) in g.nav.iter().copied().enumerate() {
         let on = menu.atlas.selected_section() == i;
@@ -259,7 +259,7 @@ pub(super) fn draw(
     c.text(
         (g.binding.x + 8) as f32,
         (g.binding.y + 7) as f32,
-        menu.tr("APRI / CHIUDI MENU"),
+        menu.tr("OPEN / CLOSE MENU"),
         MUTED,
         (10. * s).max(8.),
         true,
@@ -292,7 +292,7 @@ pub(super) fn draw(
         if menu.hints_gamepad() {
             "Gamepad"
         } else {
-            menu.tr("Tastiera · Esc recupero")
+            menu.tr("Keyboard · Esc recovery")
         },
         MUTED,
         (9. * s).max(8.),
@@ -302,7 +302,7 @@ pub(super) fn draw(
     let back_focused=menu.atlas.sidebar_focus && menu.atlas.nav_cursor==9;
     if back_focused {focused_panel(&mut c,g.back);}else{panel(&mut c,g.back,false);}
     let back=menu.hint_button("East","Esc");let focus=menu.hint_button("West","Tab");
-    let back_hint=if g.back.w<160 {menu.tr_format("{back}: indietro", &[("back", (back).to_string())])}else{menu.tr_format("{back} indietro · {focus} focus", &[("back", (back).to_string()), ("focus", (focus).to_string())])};
+    let back_hint=if g.back.w<160 {menu.tr_format("{back}: back", &[("back", (back).to_string())])}else{menu.tr_format("{back} back · {focus} focus", &[("back", (back).to_string()), ("focus", (focus).to_string())])};
     text(
         &mut c,
         g.back,
@@ -317,7 +317,7 @@ pub(super) fn draw(
         &format!(
             "{} / {}",
             if menu.atlas.domain == atlas::Domain::Game {
-                menu.tr("Gioco")
+                menu.tr("Game")
             } else {
                 "Debug"
             },
@@ -335,9 +335,9 @@ pub(super) fn draw(
         if menu.atlas.fast_active { menu.tr("ON") } else { menu.tr("OFF") },
         menu.atlas
             .frame
-            .map_or_else(|| menu.tr("non disponibile").into(), |v| v.to_string()),
+            .map_or_else(|| menu.tr("unavailable").into(), |v| v.to_string()),
         if menu.debug_session {
-            menu.tr("  ·  COPIA DEBUG ISOLATA")
+            menu.tr("  ·  ISOLATED DEBUG COPY")
         } else {
             ""
         }
@@ -374,14 +374,14 @@ pub(super) fn draw(
     ]
     .into_iter()
     .find(|v| !v.is_empty())
-    .unwrap_or(menu.tr("Frecce: naviga · OK: modifica/conferma · Annulla: indietro"));
+    .unwrap_or(menu.tr("Arrows: navigate · OK: edit/confirm · Cancel: back"));
     text(&mut c, Rect{w:g.feedback.w.saturating_sub(g.information.w+5),..g.feedback}, menu.tr(feedback), fs * 0.85, false, MUTED);
     panel(&mut c,g.information,menu.atlas.information_hover&&menu.information_available());
-    let info=if menu.page==Page::Information {menu.tr_format("{back} Chiudi", &[("back", (back).to_string())])}else{format!("{} Info",menu.hint_button("RightThumb","F1"))};
+    let info=if menu.page==Page::Information {menu.tr_format("{back} Close", &[("back", (back).to_string())])}else{format!("{} Info",menu.hint_button("RightThumb","F1"))};
     text(&mut c,g.information,&info,fs*0.85,false,if menu.information_available(){TEXT}else{MUTED});
     if menu.debug_enabled() && g.breadcrumb.w > 300 {
         let bw = (90. * s) as usize;
-        for (i, label) in [menu.tr("Eventi · previsto"), menu.tr("CMD · previsto")].iter().enumerate() {
+        for (i, label) in [menu.tr("Events · planned"), menu.tr("CMD · planned")].iter().enumerate() {
             let r = Rect {
                 x: g.breadcrumb.x + g.breadcrumb.w - (2 - i) * bw,
                 y: g.breadcrumb.y,
@@ -448,18 +448,18 @@ fn draw_overview(menu: &Menu, av: &AvConfig, px: &mut [[u8; 4]], w: usize, h: us
         .copied()
         .flatten()
         .and_then(atlas::timestamp_utc)
-        .unwrap_or_else(|| menu.tr("Data non disponibile").into());
+        .unwrap_or_else(|| menu.tr("Date unavailable").into());
     let labels = [
-        menu.tr("Torna al gioco").into(),
-        menu.tr_format("Stato rapido {} / {} · {} · {}", &[("0", (menu.state_slot + 1).to_string()), ("1", (menu.state_slots.len()).to_string()), ("2", menu.tr(&slot.status).to_string()), ("3", (stamp).to_string())]),
+        menu.tr("Return to game").into(),
+        menu.tr_format("Quick state {0} / {1} · {2} · {3}", &[("0", (menu.state_slot + 1).to_string()), ("1", (menu.state_slots.len()).to_string()), ("2", menu.tr(&slot.status).to_string()), ("3", (stamp).to_string())]),
         if slot.occupied {
-            menu.tr("Sovrascrivi")
+            menu.tr("Overwrite")
         } else {
-            menu.tr("Salva")
+            menu.tr("Save")
         }
         .into(),
-        menu.tr("Carica").into(),
-        menu.tr("Annulla ultima operazione").into(),
+        menu.tr("Load").into(),
+        menu.tr("Undo last operation").into(),
         format!("Volume  {}%", (av.audio_volume * 100.).round() as u32),
         menu.tr_format("Mute  {value}", &[("value", if av.audio_mute {menu.tr("ON")} else {menu.tr("OFF")}.into())]),
         menu.tr_format("Fast Forward  {value}%", &[("value", input_config::fast_forward::selected_percent(av.ff_speed).to_string())]),
@@ -510,11 +510,11 @@ fn draw_debug_details(menu: &Menu, px: &mut [[u8; 4]], w: usize, h: usize) {
         r.w.saturating_sub(24) as f32,
     );
     let description = if menu.atlas.selected_section() == 6 {
-        menu.tr("Catalogo locale consultabile in sola lettura. Voci disattivate; decoder e applicazione non disponibili. Nessun codice privato viene incluso.")
+        menu.tr("Local catalog for read-only browsing. Entries disabled; decoding and application unavailable. No private codes are included.")
     } else if menu.debug_session {
-        menu.tr("Copia isolata attiva. Conferma richiama gli handler esistenti; validazioni e prerequisiti vengono ricontrollati prima dell'operazione.")
+        menu.tr("Isolated copy active. Confirm invokes existing handlers; validation and prerequisites are checked again before the operation.")
     } else {
-        menu.tr("Le operazioni guest richiedono una copia di debug isolata. Selezionare una voce non esegue comandi. Apri una sessione dagli strumenti Sessioni e casi.")
+        menu.tr("Guest operations require an isolated debug copy. Selecting an entry does not run commands. Open a session from Sessions and cases.")
     };
     let max_lines = r.h.saturating_sub(80) / (fs as usize + 5).max(1);
     for (i, line) in Canvas::wrap_text(menu.tr(description), fs, r.w.saturating_sub(24) as f32)
@@ -539,7 +539,7 @@ fn draw_debug_tabs(menu: &Menu, px: &mut [[u8; 4]], w: usize, h: usize) {
     let mut c = Canvas::new(px, w, h);
     let fs = (g.scale_milli as f32 / 1000. * 12.).max(9.);
     let half = g.debug_tabs.w / 2;
-    for (i, label) in [format!("Menu/CLI · {}",menu.hint_button("North","Shift+Tab")), menu.tr("Debug V2 · riferimenti").into()]
+    for (i, label) in [format!("Menu/CLI · {}",menu.hint_button("North","Shift+Tab")), menu.tr("Debug V2 · reference").into()]
         .iter()
         .enumerate()
     {
@@ -579,7 +579,7 @@ fn draw_references(menu: &Menu, px: &mut [[u8; 4]], w: usize, h: usize) {
         text(
             &mut c,
             g.list,
-            menu.tr("Nessuna voce in questo gruppo"),
+            menu.tr("No entries in this group"),
             fs,
             false,
             MUTED,
@@ -606,7 +606,7 @@ fn draw_references(menu: &Menu, px: &mut [[u8; 4]], w: usize, h: usize) {
     let description = items
         .get(cursor)
         .map(|(_, details)| details.as_str())
-        .unwrap_or(menu.tr("Nessuna capacità disponibile. Questa vista non esegue operazioni."));
+        .unwrap_or(menu.tr("No capability available. This view does not execute operations."));
     let lines: Vec<_> = description
         .split('\n')
         .flat_map(|p| Canvas::wrap_text(p, fs, r.w.saturating_sub(24) as f32))
@@ -629,7 +629,7 @@ fn draw_references(menu: &Menu, px: &mut [[u8; 4]], w: usize, h: usize) {
     c.text(
         (r.x + 10) as f32,
         (r.y + r.h.saturating_sub(25)) as f32,
-        &menu.tr_format("↑↓ elenco · ←→ dettagli · {} indietro", &[("0", (menu.hint_button("East","Esc")).to_string())]),
+        &menu.tr_format("↑↓ list · ←→ details · {0} back", &[("0", (menu.hint_button("East","Esc")).to_string())]),
         MUTED,
         fs * 0.72,
         false,

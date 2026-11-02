@@ -23,6 +23,26 @@ Documentation: [FFTARecomp_Upstream_v3_1_Analisi_Decisioni_v0_2.md](docs/To_DO/F
 
 [Change record](docs/changes/2026-11-02-validate-upstream-fractional-input-tests.json)
 
+## 2026-11-02 — Use English source keys for cheat actions and save status
+
+Type: changed. Platforms: Desktop menu and runtime.
+
+**Changes**
+
+- Use English source keys for cheat selector actions and standard-save availability/metadata messages, retaining legacy Italian keys and equivalent Italian catalog translations.
+
+**Validation**
+
+- Offline Linux menu and screen test build succeeded with the combined feature selection; the complete menu suite passed 112 tests with one optional test ignored, including both locales and legacy lookup. The first menu-only build lacked wayland-client pkg-config metadata.
+
+**Limitations**
+
+- The runtime frontend was not rebuilt and native Windows and real-device presentation were not checked; wider English-first source and documentation audit remains open.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-use-english-cheat-actions-save-status-keys.json)
+
 ## 2026-11-02 — Translate the shared portable debug tools guide
 
 Type: docs. Platforms: project-wide.
@@ -1622,6 +1642,46 @@ Type: docs. Platforms: project-wide.
 
 [Change record](docs/changes/2026-11-02-translate-local-debug-control-guide.json)
 
+## 2026-11-02 — Translate gameplay and compact OBJ inventory evidence
+
+Type: docs. Platforms: Desktop ROM-data inventory.
+
+**Changes**
+
+- Synchronize six gameplay mask and dynamic usage summaries with matching English plan translations, and translate thirteen compact OBJ inventory summaries.
+
+**Validation**
+
+- Compared the six synchronized entries with their plan preimage and checked all nineteen entries preserve task IDs, link destinations, inline literals and numeric runs.
+
+**Limitations**
+
+- The inventory and wider cross-tree English-first audit still require full review; no ROM access or runtime checks were performed.
+
+Documentation: [ROM_DATA_TODO.md](docs/development/ROM_DATA_TODO.md), [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-inventory-gameplay-compact-obj-tail.json)
+
+## 2026-11-02 — Translate dynamic transfer and alias inventory evidence
+
+Type: docs. Platforms: Desktop ROM-data inventory.
+
+**Changes**
+
+- Translate 22 inventory summaries covering localized dynamic transfers, clan table aliases and conditional gameplay lookups while retaining their original evidence scope and limits.
+
+**Validation**
+
+- Compared the translated block with its preimage; task IDs, link destinations, inline literals, numeric runs and entry count match.
+
+**Limitations**
+
+- Other inventory sections and the wider cross-tree English-first audit remain open; no ROM access or runtime checks were performed.
+
+Documentation: [ROM_DATA_TODO.md](docs/development/ROM_DATA_TODO.md), [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-inventory-dynamic-transfers-alias-evidence.json)
+
 ## 2026-11-02 — Translate historical mouse-session notes
 
 Type: docs. Platforms: project-wide.
@@ -1919,6 +1979,46 @@ Documentation: [ROM_DATA_TODO.md](docs/development/ROM_DATA_TODO.md), [ENGLISH_F
 
 [Change record](docs/changes/2026-11-02-sync-rom-inventory-validated-plan-translations.json)
 
+## 2026-11-02 — Synchronize localized graphics and gameplay inventory translations
+
+Type: docs. Platforms: Desktop ROM-data inventory.
+
+**Changes**
+
+- Synchronize 31 localized graphics and gameplay lookup entries with existing English plan translations after checking their original text matches the inventory exactly.
+
+**Validation**
+
+- Compared both source blocks byte for byte with plan preimages and checked that task IDs, links, inline literals and numeric runs match their translations.
+
+**Limitations**
+
+- Other inventory sections and the wider cross-tree English-first audit remain open; no ROM access or runtime checks were performed.
+
+Documentation: [ROM_DATA_TODO.md](docs/development/ROM_DATA_TODO.md), [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-sync-inventory-localized-graphics-gameplay-translations.json)
+
+## 2026-11-02 — Review script and raw UI transfer guides
+
+Type: docs. Platforms: Desktop ROM-data documentation.
+
+**Changes**
+
+- Review the script resource and raw UI transfer guides for English-first policy and record exact file hashes.
+
+**Validation**
+
+- Manually read both guides in full; maintained prose is English, with original game labels, technical evidence and limitations preserved.
+
+**Limitations**
+
+- The inventory and remaining Markdown and source areas still require review; no ROM access or runtime checks were performed.
+
+Documentation: [rom_data_scripts.md](docs/rom_data_scripts.md), [rom_data_ui_raw_transfers.md](docs/rom_data_ui_raw_transfers.md).
+
+[Change record](docs/changes/2026-11-02-review-script-raw-transfer-guides-english.json)
+
 ## 2026-11-02 — Review runtime report producer text
 
 Type: changed. Platforms: project-wide.
@@ -1977,6 +2077,26 @@ Type: changed. Platforms: project-wide.
 
 [Change record](docs/changes/2026-11-02-review-offline-report-generators-english.json)
 
+## 2026-11-02 — Review indexed graphics and UI choice guides
+
+Type: docs. Platforms: Desktop ROM-data documentation.
+
+**Changes**
+
+- Review the indexed graphics archives and UI choice list guides for English-first policy and record exact file hashes.
+
+**Validation**
+
+- Manually read both guides in full; maintained prose is English, with original game names, technical evidence and limitations preserved.
+
+**Limitations**
+
+- The inventory and remaining Markdown and source areas still require review; no ROM access or runtime checks were performed.
+
+Documentation: [rom_data_indexed_graphics.md](docs/rom_data_indexed_graphics.md), [rom_data_ui.md](docs/rom_data_ui.md).
+
+[Change record](docs/changes/2026-11-02-review-indexed-graphics-ui-guides-english.json)
+
 ## 2026-11-02 — Review foundation guides for English-first policy
 
 Type: docs. Platforms: Desktop development documentation.
@@ -2015,6 +2135,26 @@ Type: docs. Platforms: project-wide.
 
 [Change record](docs/changes/2026-11-02-review-entry-android-guides-english.json)
 
+## 2026-11-02 — Review Docker and ROM validation guides
+
+Type: docs. Platforms: Desktop development documentation.
+
+**Changes**
+
+- Review the Docker build guide and decoded resource validation protocol for English-first policy and record exact file hashes.
+
+**Validation**
+
+- Manually read both guides in full; maintained prose is English, with commands, technical evidence and validation limitations preserved.
+
+**Limitations**
+
+- The inventory and remaining Markdown and source areas still require review; historical measurements, builds and ROM checks were not repeated.
+
+Documentation: [docker.md](docs/docker.md), [ROM_DATA_VALIDATION.md](docs/development/ROM_DATA_VALIDATION.md).
+
+[Change record](docs/changes/2026-11-02-review-docker-rom-validation-guides-english.json)
+
 ## 2026-11-02 — Review desktop user guides for English-first wording
 
 Type: docs. Platforms: project-wide.
@@ -2052,6 +2192,46 @@ Type: docs. Platforms: project-wide.
 Documentation: [en.json](crates/input-config/languages/en.json).
 
 [Change record](docs/changes/2026-11-02-review-desktop-storage-build-guides-english.json)
+
+## 2026-11-02 — Review audio, FPS, event and palette guides
+
+Type: docs. Platforms: Desktop documentation.
+
+**Changes**
+
+- Review four existing guides for the English-first audit and record their exact file hashes while preserving original labels and technical evidence.
+
+**Validation**
+
+- Manually read the fast-forward audio, FPS overlay, event directory and color-mode palette guides; their maintained prose is English.
+
+**Limitations**
+
+- The inventory and remaining Markdown and source areas still require review; no ROM access or runtime checks were performed.
+
+Documentation: [fast_forward_audio.md](docs/fast_forward_audio.md), [fps_overlay.md](docs/fps_overlay.md), [rom_data_events.md](docs/rom_data_events.md), [rom_data_color_palettes.md](docs/rom_data_color_palettes.md).
+
+[Change record](docs/changes/2026-11-02-review-audio-fps-event-palette-guides-english.json)
+
+## 2026-11-02 — Review artifact, task descriptor and palette guides
+
+Type: docs. Platforms: Desktop development documentation.
+
+**Changes**
+
+- Review three existing guides for the English-first audit and record their exact file hashes; preserve original game labels and technical evidence.
+
+**Validation**
+
+- Manually read the local artifact retention, European task descriptor and raw UI palette guides; all maintained prose is English.
+
+**Limitations**
+
+- The inventory and remaining Markdown and source areas still require review; no runtime or ROM checks were performed.
+
+Documentation: [LOCAL_ARTIFACTS.md](docs/development/LOCAL_ARTIFACTS.md), [rom_data_tasks.md](docs/rom_data_tasks.md), [rom_data_ui_palettes.md](docs/rom_data_ui_palettes.md).
+
+[Change record](docs/changes/2026-11-02-review-artifact-task-palette-guides-english.json)
 
 ## 2026-11-02 — Review Android decoder and build support in English
 
@@ -2405,6 +2585,86 @@ Documentation: [ffta_action_frame_width.md](docs/ffta_action_frame_width.md).
 
 [Change record](docs/changes/2026-11-02-model-action-reveal-click-fallback.json)
 
+## 2026-11-02 — Use English source keys in save forms
+
+Type: changed. Platforms: Desktop menu.
+
+**Changes**
+
+- Migrate twelve save form message keys to English while retaining legacy Italian keys and identical English and Italian presentations.
+
+**Validation**
+
+- Offline Linux combined menu/screen build passed eight localization tests and the save-state layout test, including legacy-key equivalence and rendered empty-slot text in both languages. Both 523-entry language catalogs passed consistency checks.
+
+**Limitations**
+
+- Native Windows, physical input and full runtime frontend builds were not checked; the wider English-first audit remains open.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-migrate-save-form-english-keys.json)
+
+## 2026-11-02 — Use English menu labels while preserving debug routes
+
+Type: changed. Platforms: Desktop menu.
+
+**Changes**
+
+- Use English source keys for sidebar presentation, five menu rows and control hints while retaining existing localized text and legacy debug route tokens.
+
+**Validation**
+
+- Offline Linux combined menu/screen build passed 25 targeted Atlas, route, control and localization tests, with one optional Atlas image export ignored. Both 593-entry language catalogs validate; tests compare English/Italian presentation and all legacy debug route groups.
+
+**Limitations**
+
+- Runtime frontend build, native Windows and physical input were not checked; the broader English-first audit remains open.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-migrate-menu-labels-preserve-debug-routes.json)
+
+## 2026-11-02 — Use English source keys for Atlas and information views
+
+Type: changed. Platforms: Desktop menu.
+
+**Changes**
+
+- Migrate 59 Atlas, information and debug-tool message keys to English while retaining their existing English and Italian translations, legacy keys and formatted placeholders.
+
+**Validation**
+
+- Offline Linux combined menu/screen build passed the full menu suite: 115 tests passed and one optional test was ignored. A focused regression compares all 59 legacy and new keys in both locales and checks literal placeholder values; both 574-entry catalogs validate.
+
+**Limitations**
+
+- Runtime frontend build, native Windows and physical input were not checked; the broader English-first audit remains open.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-migrate-atlas-information-tool-english-keys.json)
+
+## 2026-11-02 — Localize selector instructions and footer
+
+Type: changed. Platforms: Desktop menu.
+
+**Changes**
+
+- Use English source keys for cheat detail and filter instructions, and localize the selector item count and selected-item footer while preserving dynamic values and legacy keys.
+
+**Validation**
+
+- Offline Linux combined menu/screen build passed all 16 content selector tests, including rendered English/Italian instructions and literal placeholder-containing values. Both language catalogs passed the 513-entry consistency check.
+
+**Limitations**
+
+- Native Windows, physical input and a full runtime frontend build were not checked; broader English-first audit remains open.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-localize-selector-instructions-and-footer.json)
+
 ## 2026-11-02 — Localize readonly operation reference cards
 
 Type: changed. Platforms: Desktop: Linux unit tests; Windows GUI not rechecked.
@@ -2426,6 +2686,26 @@ Type: changed. Platforms: Desktop: Linux unit tests; Windows GUI not rechecked.
 Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
 
 [Change record](docs/changes/2026-11-02-localize-operation-reference-cards.json)
+
+## 2026-11-02 — Localize input tab and information focus diagnostics
+
+Type: changed. Platforms: Desktop menu diagnostics.
+
+**Changes**
+
+- Use the displayed input-tab labels in localized selection and focus diagnostics, and localize the read-only information focus label while retaining structured page and item identifiers.
+
+**Validation**
+
+- Offline Linux combined menu/screen build passed six semantic selection tests and the input-tab navigation test, including English/Italian focus labels and stable item IDs. Both 594-entry language catalogs validate.
+
+**Limitations**
+
+- Runtime frontend build, native Windows and physical input were not checked; broader English-first audit remains open.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-localize-input-focus-diagnostics.json)
 
 ## 2026-11-02 — Localize the debug save catalog
 

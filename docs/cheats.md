@@ -88,7 +88,9 @@ internal content selector: refresh its declared roots, select `catalogo.json`,
 return and choose **Reload**. External file/folder dialogs remain explicit
 buttons in that selector. The selected file is checked against its pinned hash
 before loading. Selecting a CH only opens its details; it cannot enable or run
-it. Details occupy a separate scrollable panel with the compatibility reasons
+it. Cheat action labels use English source keys and follow the selected menu
+language; existing Italian keys remain available for compatibility. Details
+occupy a separate scrollable panel with the compatibility reasons
 before the original record. Long individual records are marked as abbreviated
 in the view and remain available in full through `debug-cheats show`. Decoding
 and controlled application remain partial, with the one-shot scope below.

@@ -13,6 +13,178 @@ fn texts(menu: &Menu, av: &AvConfig, w: usize, h: usize) -> Vec<diagnostics::Tex
 }
 
 #[test]
+fn standard_save_status_uses_english_keys_and_italian_translations() {
+    let statuses = [
+        ("No standard save found", "Nessun salvataggio standard trovato"),
+        ("Last .sav modification: date unavailable", "Ultima modifica file .sav: data non disponibile"),
+        (".sav file: metadata unavailable", "File .sav: metadati non disponibili"),
+    ];
+    let mut menu = Menu::new(true, true);
+    assert_eq!(menu.standard_save_text(), statuses[0].0);
+    for (key, italian) in statuses {
+        menu.set_standard_save_status(key.into());
+        assert_eq!(menu.standard_save_text(), key);
+        let _ = texts(&menu, &AvConfig { menu_language: Language::parse("it"), ..AvConfig::default() }, 854, 480);
+        assert_eq!(menu.standard_save_text(), italian);
+        let _ = texts(&menu, &AvConfig::default(), 854, 480);
+    }
+    assert_eq!(text(Language::default(), "Nessun salvataggio standard trovato"), statuses[0].0);
+}
+
+#[test]
+fn save_form_english_keys_preserve_legacy_translations_and_rendering() {
+    let pairs = [
+        (" · active", " · attivo"),
+        ("Saves unavailable", "Salvataggi non disponibili"),
+        ("Cartridge backup · two automatic copies", "Backup cartuccia · due copie automatiche"),
+        ("Preview unavailable", "Anteprima non disponibile"),
+        ("Empty slot", "Slot vuoto"),
+        ("Date unavailable", "Data non disponibile"),
+        ("The game restarts from this copy. Confirm replaces the active cartridge save and the session's progress.", "Il gioco riparte da questa copia. Confermare sostituisce il salvataggio cartuccia attivo; il progresso della sessione viene sostituito."),
+        ("Automatic copies created at startup. Selecting a copy requires confirmation before restoring.", "Copie automatiche create all'avvio. Selezionare una copia richiede conferma prima del ripristino."),
+        ("Undo last operation", "Annulla ultima operazione"),
+        ("Cancel", "Annulla"),
+        ("Arrows: navigate · OK: choose/confirm · Cancel: back", "Frecce: naviga · OK: scegli/conferma · Annulla: indietro"),
+        ("{name}\nCopies contain progress saved in the game. Using a file restarts the game. Replacing requires confirmation; Cancel is selected by default.", "{name}\nLe copie contengono il progresso salvato nel gioco. Usare un file riavvia il gioco. Sostituire richiede conferma; Annulla è preselezionato."),
+    ];
+    for (english, legacy) in pairs {
+        assert_eq!(text(Language::default(), english), text(Language::default(), legacy));
+        assert_eq!(text(Language::parse("it"), english), text(Language::parse("it"), legacy));
+    }
+    for (language, expected) in [(Language::default(), "Empty slot"), (Language::parse("it"), "Slot vuoto")] {
+        let mut menu = Menu::new(true, true);
+        menu.open(Page::SaveStates);
+        let av = AvConfig { menu_language: language, ..AvConfig::default() };
+        assert!(texts(&menu, &av, 854, 480).iter().any(|run| run.text == expected));
+    }
+}
+
+#[test]
+fn atlas_information_and_tool_english_keys_preserve_existing_translations() {
+    let pairs = [
+        ("Dettagli · sola lettura", "Details · read only"),
+        ("Riferimenti Menu / CLI · sola lettura", "Menu / CLI reference · read only"),
+        ("Conferma uscita", "Confirm exit"),
+        ("Cambia ROM", "Switch ROM"),
+        ("Sovrascrivi lo stato?", "Overwrite this state?"),
+        ("Ripristina il backup?", "Restore this backup?"),
+        ("Usa salvataggio e riavvia", "Use save and restart"),
+        ("Sostituisci salvataggio cartuccia", "Replace game save"),
+        ("Catalogo DS", "DS catalog"),
+        ("Catalogo cheat", "Cheat catalog"),
+        ("Selezione contenuti", "Content selection"),
+        ("Parametri dello strumento", "Tool parameters"),
+        ("Input e selezioni correnti", "Inputs and current selections"),
+        ("Parametri e profili", "Parameters and profiles"),
+        ("Script e strumenti", "Scripts and tools"),
+        ("Salvataggi cartuccia", "Game saves"),
+        ("Copie di sicurezza", "Backups"),
+        ("ATLANTE DEL CLAN", "CLAN ATLAS"),
+        ("Minimo menu: 480 x 360. Ridimensiona o premi Esc.", "Menu minimum: 480 x 360. Resize or press Esc."),
+        ("ATLANTE", "ATLAS"),
+        ("Registro del Clan", "Clan ledger"),
+        ("Gioco", "Game"),
+        ("APRI / CHIUDI MENU", "OPEN / CLOSE MENU"),
+        ("Tastiera · Esc recupero", "Keyboard · Esc recovery"),
+        ("{back}: indietro", "{back}: back"),
+        ("{back} indietro · {focus} focus", "{back} back · {focus} focus"),
+        ("non disponibile", "unavailable"),
+        ("  ·  COPIA DEBUG ISOLATA", "  ·  ISOLATED DEBUG COPY"),
+        ("Frecce: naviga · OK: modifica/conferma · Annulla: indietro", "Arrows: navigate · OK: edit/confirm · Cancel: back"),
+        ("{back} Chiudi", "{back} Close"),
+        ("Eventi · previsto", "Events · planned"),
+        ("CMD · previsto", "CMD · planned"),
+        ("Data non disponibile", "Date unavailable"),
+        ("Torna al gioco", "Return to game"),
+        ("Stato rapido {} / {} · {} · {}", "Quick state {0} / {1} · {2} · {3}"),
+        ("Sovrascrivi", "Overwrite"),
+        ("Salva", "Save"),
+        ("Carica", "Load"),
+        ("Annulla ultima operazione", "Undo last operation"),
+        ("Catalogo locale consultabile in sola lettura. Voci disattivate; decoder e applicazione non disponibili. Nessun codice privato viene incluso.", "Local catalog for read-only browsing. Entries disabled; decoding and application unavailable. No private codes are included."),
+        ("Copia isolata attiva. Conferma richiama gli handler esistenti; validazioni e prerequisiti vengono ricontrollati prima dell'operazione.", "Isolated copy active. Confirm invokes existing handlers; validation and prerequisites are checked again before the operation."),
+        ("Le operazioni guest richiedono una copia di debug isolata. Selezionare una voce non esegue comandi. Apri una sessione dagli strumenti Sessioni e casi.", "Guest operations require an isolated debug copy. Selecting an entry does not run commands. Open a session from Sessions and cases."),
+        ("Debug V2 · riferimenti", "Debug V2 · reference"),
+        ("Nessuna voce in questo gruppo", "No entries in this group"),
+        ("Nessuna capacità disponibile. Questa vista non esegue operazioni.", "No capability available. This view does not execute operations."),
+        ("↑↓ elenco · ←→ dettagli · {} indietro", "↑↓ list · ←→ details · {0} back"),
+        ("Dettagli della selezione all’apertura", "Selection details at opening"),
+        ("Valore: {value}", "Value: {value}"),
+        ("{}\n{}\nPosizione: {}\nIdentità: {}\nStato: {}\nCompatibilità: {}\n{}", "{0}\n{1}\nLocation: {2}\nIdentity: {3}\nStatus: {4}\nCompatibility: {5}\n{6}"),
+        ("Menu tastiera: {}", "Keyboard menu: {0}"),
+        ("Menu gamepad: {}", "Gamepad menu: {0}"),
+        ("Stato {} / {}: {}", "State {0} / {1}: {2}"),
+        ("Data stato: {}", "State date: {0}"),
+        ("Stato", "Status"),
+        ("Sessione", "Session"),
+        ("File: {}\nStato: {}", "File: {0}\nStatus: {1}"),
+        ("↑↓ / rotella: scorri · F1 / R3 / Esc: chiudi", "↑↓ / wheel: scroll · F1 / R3 / Esc: close"),
+        ("Scelta: frecce regolano · OK applica · Annulla scarta", "Choice: arrows adjust · OK applies · Cancel discards"),
+        ("Frecce: naviga · OK modifica · usa i pulsanti per eseguire", "Arrows: navigate · OK edits · use buttons to execute"),
+    ];
+    for (legacy, english) in pairs {
+        for language in [Language::default(), Language::parse("it")] {
+            assert_eq!(text(language, legacy), text(language, english), "{english:?}");
+        }
+    }
+    for language in [Language::default(), Language::parse("it")] {
+        let args = [("0", "{1} <private>".into()), ("1", "next".into())];
+        assert_eq!(
+            format(language, "File: {}\nStato: {}", &args),
+            format(language, "File: {0}\nStatus: {1}", &args),
+        );
+    }
+}
+
+#[test]
+fn menu_presentation_keys_keep_localized_text_and_legacy_routes() {
+    let pairs = [
+        ("Panoramica", "Overview"),
+        ("Salvataggi", "Saves"),
+        ("Finestre di testo", "Text windows"),
+        ("Controlli", "Controls"),
+        ("Sistema", "System"),
+        ("Sessioni e casi", "Sessions and cases"),
+        ("Replay e confronti", "Replays and comparisons"),
+        ("Esecuzione e memoria", "Execution and memory"),
+        ("Tracce e ispettori", "Traces and inspectors"),
+        ("Console e script", "Consoles and scripts"),
+        ("Report e archivio", "Reports and archive"),
+        ("Riferimenti Menu / CLI", "Menu / CLI reference"),
+        ("Trasparenza menu", "Menu transparency"),
+        ("Console eventi", "Event console"),
+        ("Console comandi", "Command console"),
+        ("Catalogo cheat (sola lettura)", "Cheat catalog (read only)"),
+        ("D-pad · {} OK · {} indietro · {} focus · {} dettagli", "D-pad · {0} OK · {1} back · {2} focus · {3} details"),
+        ("VOL {}− / {}+ / {}+{} mute · FAST {}− / {}+ / {}+{} ON", "VOL {0}− / {1}+ / {2}+{3} mute · FAST {4}− / {5}+ / {6}+{7} ON"),
+        ("Frecce · Invio OK · Esc indietro · Tab focus · F1 dettagli", "Arrows · Enter OK · Esc back · Tab focus · F1 details"),
+        ("Volume / Fast: voce + Invio · Shift+Tab: vista Debug", "Volume / Fast: entry + Enter · Shift+Tab: Debug view"),
+        ("Volume / Fast: scegli la voce + Invio", "Volume / Fast: choose an entry + Enter"),
+    ];
+    for (legacy, english) in pairs {
+        for language in [Language::default(), Language::parse("it")] {
+            assert_eq!(text(language, legacy), text(language, english), "{english:?}");
+        }
+    }
+    let legacy_sections = [
+        "Panoramica", "Sessioni e casi", "Replay e confronti", "Esecuzione e memoria",
+        "Tracce e ispettori", "Console e script", "Cheat", "Report e archivio",
+    ];
+    assert_eq!(crate::clan_atlas::DEBUG_SECTIONS, legacy_sections);
+    for (index, legacy) in legacy_sections.into_iter().enumerate() {
+        assert_eq!(crate::clan_atlas::reference_group(&format!("Debug / {legacy} / action")), index);
+        for language in [Language::default(), Language::parse("it")] {
+            assert_eq!(text(language, legacy), text(language, crate::clan_atlas::DEBUG_SECTIONS_LABELS[index]));
+        }
+    }
+    for index in 0..crate::clan_atlas::GAME_SECTIONS.len() {
+        for language in [Language::default(), Language::parse("it")] {
+            assert_eq!(text(language, crate::clan_atlas::GAME_SECTIONS[index]), text(language, crate::clan_atlas::GAME_SECTIONS_LABELS[index]));
+        }
+    }
+}
+
+#[test]
 fn catalog_keys_are_unique_and_translated_placeholders_match() {
     for language in Language::ALL {
         let mut keys = BTreeSet::new();

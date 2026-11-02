@@ -445,6 +445,7 @@ fn rows_of(page: Page) -> &'static [Row] {
 
 /// Fast-forward multipliers offered by the menu.
 const FF_SPEEDS: [u32; 36] = input_config::fast_forward::PERCENTS;
+const INPUT_TAB_LABELS: [&str; 3] = ["KEYBOARD", "GAMEPAD", "MOUSE & KEYBOARD"];
 
 impl Row {
     fn localized_label(self, language: Language) -> &'static str {
@@ -458,10 +459,10 @@ impl Row {
 
     fn label(self) -> &'static str {
         match self {
-            Row::CliReference => "Riferimenti Menu / CLI",
+            Row::CliReference => "Menu / CLI reference",
             Row::FastForwardToggle => "Fast Forward ON/OFF",
             Row::Language => "Language",
-            Row::MenuTransparency => "Trasparenza menu",
+            Row::MenuTransparency => "Menu transparency",
             Row::DebugMenu => "Debug",
             Row::ToolInputsMenu => "Tool inputs / current selections",
             Row::DebugToolsMenu => "Parameters / prepare profiles",
@@ -480,8 +481,8 @@ impl Row {
             Row::StartAudioCapture => "Start audio capture",
             Row::SaveAudioReport => "Save audio report",
             Row::StartUiTrace => "Start UI / input trace",
-            Row::ToggleEventConsole => "Console eventi",
-            Row::OpenCommandConsole => "Console comandi",
+            Row::ToggleEventConsole => "Event console",
+            Row::OpenCommandConsole => "Command console",
             Row::SaveUiReport => "Save UI / input report",
             Row::InspectPC => "Inspect PC / registers",
             Row::DebugStepOne => "Step 1 frame (F7)",
@@ -500,7 +501,7 @@ impl Row {
             Row::CloseDebugSession => "Close debug session",
             Row::ContentPicker => "Content selector",
             Row::DebugCatalog => "Debug catalog",
-            Row::CheatCatalog => "Catalogo cheat (sola lettura)",
+            Row::CheatCatalog => "Cheat catalog (read only)",
             Row::CatalogRegion => "Region", Row::CatalogStatus => "Recorded status",
             Row::CatalogKind => "Kind", Row::CatalogCase => "DS case",
             Row::CatalogEntry => "Entry", Row::CatalogImport => "Import to free snapshot slot",
@@ -900,7 +901,7 @@ impl Menu {
     pub fn debug_focus(&self,w:usize,h:usize)->diagnostics::Focus {
         if let Some(index)=self.input_tabs_focus {
             let r=self.input_tab_rect(index,w,h);let b=clan_atlas::geometry(w,h).body;
-            return diagnostics::Focus{page:format!("{:?}",self.page),selected:index as usize,label:format!("Dispositivo: {}",["Tastiera","Gamepad","Mouse e tastiera"][index as usize]),capture:None,panel:[b.x,b.y,b.w,b.h],first_visible:0,dropdown:None,selected_bounds:Some([r.x,r.y,r.w,r.h])};
+            return diagnostics::Focus{page:format!("{:?}",self.page),selected:index as usize,label:self.tr_format("Device: {device}",&[("device",self.tr(INPUT_TAB_LABELS[index as usize]).into())]),capture:None,panel:[b.x,b.y,b.w,b.h],first_visible:0,dropdown:None,selected_bounds:Some([r.x,r.y,r.w,r.h])};
         }
         if self.tool_active() || self.content_active() || self.cheat_active(){
             let b=clan_atlas::geometry(w,h).body;
@@ -910,7 +911,7 @@ impl Menu {
             if let Some(drop)=focus.dropdown.as_mut(){drop.panel[0]+=b.x;drop.panel[1]+=b.y;}
             return focus;
         }
-        if self.page==Page::Information{let b=clan_atlas::geometry(w,h).body;return diagnostics::Focus{page:"Information".into(),selected:0,label:"Dettagli · sola lettura".into(),capture:None,panel:[b.x,b.y,b.w,b.h],first_visible:self.atlas.detail_scroll,dropdown:None,selected_bounds:None};}
+        if self.page==Page::Information{let b=clan_atlas::geometry(w,h).body;return diagnostics::Focus{page:"Information".into(),selected:0,label:self.tr("Details · read only").into(),capture:None,panel:[b.x,b.y,b.w,b.h],first_visible:self.atlas.detail_scroll,dropdown:None,selected_bounds:None};}
         if self.atlas_reference_active(){
             let g=clan_atlas::geometry(w,h);let(first,visible,pitch)=self.atlas_reference_first(w,h);let cursor=self.atlas_reference_cursor();
             return diagnostics::Focus{page:if self.atlas.planned{"DebugV2"}else{"CliReference"}.into(),selected:cursor,label:self.atlas_reference_items().get(cursor).map(|v|v.0.clone()).unwrap_or_default(),capture:None,panel:[g.body.x,g.body.y,g.body.w,g.body.h],first_visible:first,dropdown:None,selected_bounds:if cursor>=first && cursor<first+visible{Some([g.list.x+5,g.list.y+6+(cursor-first)*pitch,g.list.w.saturating_sub(16),pitch-3])}else{None}};
@@ -996,7 +997,7 @@ impl Menu {
     pub fn set_standard_save_timestamp(&mut self,stamp:u64){self.atlas.standard_save_stamp=Some(stamp);}
     fn standard_save_text(&self)->String {
         match self.atlas.standard_save_stamp {
-            Some(value)=>clan_atlas::timestamp_utc(value).map(|stamp|self.tr_format("Last .sav modification: {stamp}",&[("stamp",stamp)])).unwrap_or_else(||self.tr("Ultima modifica file .sav: data non disponibile").into()),
+            Some(value)=>clan_atlas::timestamp_utc(value).map(|stamp|self.tr_format("Last .sav modification: {stamp}",&[("stamp",stamp)])).unwrap_or_else(||self.tr("Last .sav modification: date unavailable").into()),
             None=>self.tr(&self.atlas.standard_save).into(),
         }
     }

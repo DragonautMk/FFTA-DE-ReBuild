@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "migrate-menu-labels-preserve-debug-routes",
+  "title": "Use English menu labels while preserving debug routes",
+  "kind": "changed",
+  "platforms": [
+    "Desktop menu"
+  ],
+  "changes": [
+    "Use English source keys for sidebar presentation, five menu rows and control hints while retaining existing localized text and legacy debug route tokens."
+  ],
+  "validation": [
+    "Offline Linux combined menu/screen build passed 25 targeted Atlas, route, control and localization tests, with one optional Atlas image export ignored. Both 593-entry language catalogs validate; tests compare English/Italian presentation and all legacy debug route groups."
+  ],
+  "limitations": [
+    "Runtime frontend build, native Windows and physical input were not checked; the broader English-first audit remains open."
+  ],
+  "files": [
+    "crates/menu/src/clan_atlas.rs",
+    "crates/menu/src/atlas_theme.rs",
+    "crates/menu/src/controls.rs",
+    "crates/menu/src/lib.rs",
+    "crates/menu/src/i18n/tests.rs",
+    "crates/input-config/languages/en.json",
+    "crates/input-config/languages/it.json",
+    "docs/menu_localization.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

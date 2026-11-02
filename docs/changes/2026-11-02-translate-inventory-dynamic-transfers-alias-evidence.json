@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-inventory-dynamic-transfers-alias-evidence",
+  "title": "Translate dynamic transfer and alias inventory evidence",
+  "kind": "docs",
+  "platforms": [
+    "Desktop ROM-data inventory"
+  ],
+  "changes": [
+    "Translate 22 inventory summaries covering localized dynamic transfers, clan table aliases and conditional gameplay lookups while retaining their original evidence scope and limits."
+  ],
+  "validation": [
+    "Compared the translated block with its preimage; task IDs, link destinations, inline literals, numeric runs and entry count match."
+  ],
+  "limitations": [
+    "Other inventory sections and the wider cross-tree English-first audit remain open; no ROM access or runtime checks were performed."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_INVENTORY.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

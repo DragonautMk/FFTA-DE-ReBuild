@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "migrate-atlas-information-tool-english-keys",
+  "title": "Use English source keys for Atlas and information views",
+  "kind": "changed",
+  "platforms": [
+    "Desktop menu"
+  ],
+  "changes": [
+    "Migrate 59 Atlas, information and debug-tool message keys to English while retaining their existing English and Italian translations, legacy keys and formatted placeholders."
+  ],
+  "validation": [
+    "Offline Linux combined menu/screen build passed the full menu suite: 115 tests passed and one optional test was ignored. A focused regression compares all 59 legacy and new keys in both locales and checks literal placeholder values; both 574-entry catalogs validate."
+  ],
+  "limitations": [
+    "Runtime frontend build, native Windows and physical input were not checked; the broader English-first audit remains open."
+  ],
+  "files": [
+    "crates/menu/src/atlas_theme.rs",
+    "crates/menu/src/information.rs",
+    "crates/menu/src/debug_tool.rs",
+    "crates/menu/src/i18n/tests.rs",
+    "crates/input-config/languages/en.json",
+    "crates/input-config/languages/it.json",
+    "docs/menu_localization.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

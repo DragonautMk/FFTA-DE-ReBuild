@@ -33,10 +33,10 @@ impl Menu {
             .unwrap_or(self.atlas.title());
         let mut parts = vec![
             format!("{} / {}", self.tr(self.atlas.title()), label),
-            self.tr("Dettagli della selezione all’apertura").into(),
+            self.tr("Selection details at opening").into(),
         ];
         if let Some((_, value)) = properties.iter().find(|(k, _)| k == "value") {
-            parts.push(self.tr_format("Valore: {value}", &[("value", (value).to_string())]));
+            parts.push(self.tr_format("Value: {value}", &[("value", (value).to_string())]));
         }
         if self.tool_active() {
             parts.push(self.tool.message.clone());
@@ -55,7 +55,7 @@ impl Menu {
                 .and_then(|id| self.content.entries.iter().find(|e| e.id == id))
             {
                 parts.push(self.tr_format(
-                    "{}\n{}\nPosizione: {}\nIdentità: {}\nStato: {}\nCompatibilità: {}\n{}",
+                    "{0}\n{1}\nLocation: {2}\nIdentity: {3}\nStatus: {4}\nCompatibility: {5}\n{6}",
                     &[
                         ("0", (entry.name).to_string()),
                         ("1", (entry.description).to_string()),
@@ -86,15 +86,15 @@ impl Menu {
             parts.push(self.catalog.details(self.language()));
             parts.push(self.tr(&self.catalog.message).into());
         }
-        parts.push(self.tr_format("Menu tastiera: {}", &[("0", (cfg.menu_key).to_string())]));
-        parts.push(self.tr_format("Menu gamepad: {}", &[("0", (cfg.menu_pad).to_string())]));
+        parts.push(self.tr_format("Keyboard menu: {0}", &[("0", (cfg.menu_key).to_string())]));
+        parts.push(self.tr_format("Gamepad menu: {0}", &[("0", (cfg.menu_pad).to_string())]));
         if matches!(
             self.page,
             Page::Main | Page::SaveStates | Page::ReplaceState
         ) {
             if let Some(slot) = self.state_slots.get(self.state_slot) {
                 parts.push(self.tr_format(
-                    "Stato {} / {}: {}",
+                    "State {0} / {1}: {2}",
                     &[
                         ("0", (self.state_slot + 1).to_string()),
                         ("1", (self.state_slots.len()).to_string()),
@@ -103,7 +103,7 @@ impl Menu {
                 ));
                 parts.push(
                     self.tr_format(
-                        "Data stato: {}",
+                        "State date: {0}",
                         &[(
                             "0",
                             (self
@@ -112,7 +112,7 @@ impl Menu {
                                 .copied()
                                 .flatten()
                                 .and_then(clan_atlas::timestamp_utc)
-                                .unwrap_or_else(|| self.tr("non disponibile").into()))
+                                .unwrap_or_else(|| self.tr("unavailable").into()))
                             .to_string(),
                         )],
                     ),
@@ -121,11 +121,11 @@ impl Menu {
             parts.push(self.standard_save_text());
         }
         for (label, message) in [
-            (self.tr("Stato"), &self.state_message),
-            (self.tr("Salvataggi cartuccia"), &self.game_save_message),
+            (self.tr("Status"), &self.state_message),
+            (self.tr("Game saves"), &self.game_save_message),
             ("Backup", &self.backup_message),
             ("Debug", &self.debug_message),
-            (self.tr("Sessione"), &self.session_message),
+            (self.tr("Session"), &self.session_message),
         ] {
             if !message.is_empty() {
                 parts.push(format!("{label}: {message}"));
@@ -137,7 +137,7 @@ impl Menu {
                 Page::GameSaves | Page::SwitchGameSave | Page::ReplaceGameSave
             ) {
                 parts.push(self.tr_format(
-                    "File: {}\nStato: {}",
+                    "File: {0}\nStatus: {1}",
                     &[
                         ("0", (slot.name).to_string()),
                         ("1", self.tr(&slot.status).to_string()),
@@ -222,7 +222,7 @@ pub(super) fn draw(menu: &Menu, px: &mut [[u8; 4]], w: usize, h: usize) {
     c.text(
         (r.x + 12) as f32,
         (r.y + r.h.saturating_sub(26)) as f32,
-        menu.tr("↑↓ / rotella: scorri · F1 / R3 / Esc: chiudi"),
+        menu.tr("↑↓ / wheel: scroll · F1 / R3 / Esc: close"),
         [168, 189, 199],
         (fs * 0.8).max(9.),
         false,

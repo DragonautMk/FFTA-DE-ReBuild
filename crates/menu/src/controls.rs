@@ -29,7 +29,7 @@ impl Menu {
             let pad = |token| self.hint_button(token, "");
             [
                 self.tr_format(
-                    "D-pad · {} OK · {} indietro · {} focus · {} dettagli",
+                    "D-pad · {0} OK · {1} back · {2} focus · {3} details",
                     &[
                         ("0", (pad("South")).to_string()),
                         ("1", (pad("East")).to_string()),
@@ -38,7 +38,7 @@ impl Menu {
                     ],
                 ),
                 self.tr_format(
-                    "VOL {}− / {}+ / {}+{} mute · FAST {}− / {}+ / {}+{} ON",
+                    "VOL {0}− / {1}+ / {2}+{3} mute · FAST {4}− / {5}+ / {6}+{7} ON",
                     &[
                         ("0", (pad("LeftTrigger")).to_string()),
                         ("1", (pad("RightTrigger")).to_string()),
@@ -53,12 +53,12 @@ impl Menu {
             ]
         } else {
             [
-                self.tr("Frecce · Invio OK · Esc indietro · Tab focus · F1 dettagli")
+                self.tr("Arrows · Enter OK · Esc back · Tab focus · F1 details")
                     .into(),
                 if self.debug_enabled() {
-                    self.tr("Volume / Fast: voce + Invio · Shift+Tab: vista Debug")
+                    self.tr("Volume / Fast: entry + Enter · Shift+Tab: Debug view")
                 } else {
-                    self.tr("Volume / Fast: scegli la voce + Invio")
+                    self.tr("Volume / Fast: choose an entry + Enter")
                 }
                 .into(),
             ]

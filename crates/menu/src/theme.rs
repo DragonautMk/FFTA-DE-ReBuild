@@ -131,7 +131,7 @@ pub(super) fn draw_rows(
         menu.page,
         Page::Inputs | Page::Gamepad | Page::MouseKeyboard
     ) {
-        for (i, label) in [menu.tr("KEYBOARD"), menu.tr("GAMEPAD"), menu.tr("MOUSE & KEYBOARD")]
+        for (i, label) in INPUT_TAB_LABELS.map(|label| menu.tr(label))
             .iter()
             .enumerate()
         {

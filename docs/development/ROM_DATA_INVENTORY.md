@@ -3741,619 +3741,612 @@ open; sparse 27 ordinary remains partial.
 [Case and limits](../rom_data_indexed_graphics.md#ordinary-world-map-menu-equivalence).
 
 
-**ROMDATA-01-LOCALIZED-TABLE-GRAPHICS completato contratto sorgente EUR
-(2026-10-30).** Otto gruppi indipendenti71E590/5A4/5B8/5CC/644/680/6BC/6D0
-rawu8lingua02001F6E×4/LE32pointer→054A0,40nuovibanchi customLZ-RLE/nonindexed.
-48span53667sourceB(53507bank+160selector)/114880decodedB, tutti token/source/
-outputricostruiti esatti;14finestre10nuove4cached/48pin/8rootliteral/111guardie/
-nooverlap83owner50522span/all84acceptedfileesatti. Output pergroupfivebanks
-1472/2688/768/4928/1920/7488/1344/2368B, nessun count-by-distance o guestcap/
-fallbackskipinventato. LiveRAM/helpertransfer/laterworkrestanooriginali,
-fulltransferABI nonchiuso. Known71E5E0vecchiUIbanks/tablealias separatoe
-settealtrigruppi rawlooking/tails/indirect/globalextent nonclassificati.
-Staticosoltanto/no build-Wine-game-fixture-navigation/vecchia prova o metrica;
-schema1/e91-d90 invariati. Modello/oracoloWine/runtime/CLI/ordinario/Linux-USA-
-Windowsnativo/new32:9/fullTODO aperti.
-[Contratto e limiti](../rom_data_ui_graphics.md#additional-european-table-selected-source-contract).
+**ROMDATA-01-LOCALIZED-TABLE-GRAPHICS EUR source contract completed
+(2026-10-30).** Eight independent groups 71E590/5A4/5B8/5CC/644/680/6BC/6D0
+raw u8 language 02001F6E×4/LE32 pointer→054A0, 40 new custom LZ-RLE/nonindexed
+banks. 48 spans 53667 source B (53507 bank + 160 selector)/114880 decoded B, all
+tokens/source/output reconstructed exactly; 14 windows 10 new 4 cached/48 pins/
+8 root literals/111 guards/no overlap 83 owners 50522 spans/all 84 accepted files
+exact. Output per group five banks 1472/2688/768/4928/1920/7488/1344/2368B, no
+invented count-by-distance or guest cap/fallback skip. Live RAM/helper transfer/
+later work remain original, full transfer ABI not closed. Known 71E5E0 old UI
+banks/table alias separate and seven other raw-looking groups/tails/indirect calls/
+global extent unclassified. Static only/no build-Wine-game-fixture-navigation/old
+proof or metric; schema 1/e91-d90 unchanged. Model/Wine oracle/runtime/CLI/ordinary/
+Linux-USA-native Windows/new 32:9/full TODO open.
+[Contract and limits](../rom_data_ui_graphics.md#additional-european-table-selected-source-contract).
 
 
-**ROMDATA-02-LOCALIZED-TABLE-GRAPHICS completato EUR/Wine (2026-10-30).**
-Nuovo coreui_graphics::table_selected riusaGraphic/customLZ:strict8tables×5
-contiguousBankPointers/40orderedbanks/rawencodedbyte+LEwords/groupoutputs,
-shape modificabile distinta daexactEURauth/14fingerprints. PhysicalselectNone
-per5/255 maencodedviewraworiginale. Catalogseparato nonancoraabilitato nella
-risorsaUIgestita:old16banks/twoinline switches/e91 invariati. Un600frozen/260core
-buildcb46ccb1 warningfree da598ordinary+twoleaves/onepubmodule; unWine23guardie/
-40neworiginal054A0calls56rawselectorprefixes PASS. Tutti53667sourceB/48spans/
-114880decodedB/cursor-produced-returned-size/SP-R4..R11/fullEWRAM/IWRAMfuori
-40Bstackoriginale/VRAM-OAM-palette/finalROM esatti.1335470istruzioni solocoverage.
-26unit111sourceguards/600frozen598preimage/3correnti/inversehub esatti; noold
-16UI/20indexed/native35/41ordinary/CLIproof replay/fixture-navigation/metrica.
-Offlinecontrollabel23B2Ecorretto0150word/1344B, nongroupset02A0halfword,
-originali/inputsinvariati/noproofreplay. Runtimegestito/nativeclock/CLI/ordinario/
-fullhelperABI/livecontexts/71E5E0alias/sevenrawgroups/globalextent/indirect/
-Linux-USA-Windowsnativo/new32:9/fullTODO aperti.
-[Modello e prove](../rom_data_ui_graphics.md#typed-table-model-and-new-original-decoder-proof).
+**ROMDATA-02-LOCALIZED-TABLE-GRAPHICS completed EUR/Wine (2026-10-30).**
+New core ui_graphics::table_selected reuses Graphic/custom LZ: strict 8 tables × 5
+contiguous BankPointers/40 ordered banks/raw encoded byte + LE words/group outputs,
+editable shape distinct from exact EUR auth/14 fingerprints. Physical select None
+for 5/255 but original raw encoded view. Separate catalog not yet enabled in managed
+UI resource: old 16 banks/two inline switches/e91 unchanged. One 600 frozen/260 core
+build cb46ccb1 warning-free from 598 ordinary + two leaves/one public module; one
+Wine run 23 guards/40 new original 054A0 calls 56 raw selector prefixes PASS. All
+53667 source B/48 spans/114880 decoded B/cursor-produced-returned-size/SP-R4..R11/
+full EWRAM/IWRAM outside 40B original stack/VRAM-OAM-palette/final ROM exact.
+1335470 instructions coverage only. 26 unit 111 source guards/600 frozen 598 preimages/
+3 current/inverse hub exact; no old 16 UI/20 indexed/native 35/41 ordinary/CLI proof
+replay/fixture-navigation/metric. Offline control label 23B2E corrected to 0150 word/
+1344B, not group set 02A0 halfword, originals/inputs unchanged/no proof replay. Managed
+runtime/native clock/CLI/ordinary/full helper ABI/live contexts/71E5E0 alias/seven raw
+groups/global extent/indirect calls/Linux-USA-native Windows/new 32:9/full TODO open.
+[Model and evidence](../rom_data_ui_graphics.md#typed-table-model-and-new-original-decoder-proof).
 
 
-**ROMDATA-03-04-LOCALIZED-TABLE-GRAPHICS-RUNTIME completato EUR/Wine
-(2026-10-30).** e92-d91/same84files83IDs/UIindex15 56banks10selectors106bindings,
-allother82records-files/old16banks-twoinline-sharedOBJ esatti.40bank+40pointer
-80newruntimebindings byteunion48canonicalspans53667B esatta;6newtablecounters
-separati daold6UIstats, originaldecode-scratch-helper-uploadwork/ABI preservati.
-Un601source/260core d4a73eb2 warningfree da600model+onehostleaf; ONEWine PASS
-pubblicazione-changedUIinterruption/14attach2fullset/22complete-state-clock
-(12load+1newbankdecoder+9rawselector)/3famiglie stop-safe.499SERVEDnewB5prior
-indexed/fallback[3,0], nonunione distinta/alldirectnative;356istruzioni71dispatch
-solocoverage. Tutti53667busB24328literal160selector40banks8groups/all48edges/
-widths-mirrors-priorindexed-raw-oldUI/LoadslotUndo/DMA3mixedfullstate-clock
-esatti.267guards601frozen600model/sevencurrent84prior exact/helperinterrupted
-only. No old40model/16UI/20indexed/native35/41ordinary/CLIprepare proofs replay
-néfixture-navigation/metrica. ActualCLI/ordinario/fullhelperABI-livecontexts/
-71E5E0alias/sevenrawgroups/globalextent-indirect-tails/Linux-USA-Windowsnativo/
-new32:9/fullTODO aperti.
-[Runtime e prove](../rom_data_ui_graphics.md#managed-table-selected-graphics-and-runtime-consumption).
+**ROMDATA-03-04-LOCALIZED-TABLE-GRAPHICS-RUNTIME completed EUR/Wine
+(2026-10-30).** e92-d91/same 84 files 83 IDs/UI index 15 56 banks 10 selectors
+106 bindings, all other 82 records-files/old 16 banks-two inline-shared OBJ exact.
+40 banks + 40 pointers 80 new runtime bindings byte union 48 canonical spans 53667B
+exact; 6 new table counters separate from old 6 UI stats, original decode-scratch-
+helper-upload work/ABI retained. One 601-source/260-core d4a73eb2 warning-free from
+600 model + one host leaf; ONE Wine PASS publication-changed UI interruption/
+14 attach 2 full-set/22 complete state-clock (12 loads + 1 new bank decoder + 9 raw
+selectors)/3 stop-safe families. 499 SERVED new B 5 prior indexed/fallback [3,0],
+not distinct union/all direct native; 356 instructions 71 dispatch coverage only.
+All 53667 bus B 24328 literal 160 selector 40 banks 8 groups/all 48 edges/widths-
+mirrors-prior indexed-raw-old UI/Load slot Undo/DMA3 mixed full state-clock exact.
+267 guards 601 frozen 600 model/seven current 84 prior exact/helper interrupted only.
+No old 40 model/16 UI/20 indexed/native 35/41 ordinary/CLI prepare proofs replay or
+fixture-navigation/metric. Actual CLI/ordinary/full helper ABI-live contexts/71E5E0
+alias/seven raw groups/global extent-indirect-tails/Linux-USA-native Windows/new 32:9/
+full TODO open.
+[Runtime and evidence](../rom_data_ui_graphics.md#managed-table-selected-graphics-and-runtime-consumption).
 
 
-**ROMDATA-04-LOCALIZED-TABLE-GRAPHICS-CLI completato creazione/riuso/avvio
-EUR/Wine (2026-10-30).** Un601runtimeidentical production31c0f298 warningfree/
-nooverlays/canonicalhashmtimefinallyexact; ONEWine3commands child0 crea-riusa-
-neutro1normal24755copy→24756.84runtimefileexact83IDhash86managednowrite/cache
-28859exact, e92-d91/UIindex15 56banks10selectors106bindings/same84files83IDs.
-Seinewtablecounts0/registrazione-compatibilitàonly/no positiveordinary-fullpair.
-202guards601CLI+601runtime/84accepted/ROM-seed-cache-TinyCC-canonical esatti.
-No old40model/16UI/indexed20/native22-35/41ordinary/CLIprepare proofreplay/
-newcheckpointderivation-navigation/metrica. Positivoordinario/fullhelperABI/
-livecontexts/globalextent-indirect/71E5E0alias/sevenrawgroups/tails/Linux-USA-
-Windowsnativo/new32:9/fullTODO aperti.
-[CLI e limiti](../rom_data_ui_graphics.md#actual-table-extension-cli-registration).
+**ROMDATA-04-LOCALIZED-TABLE-GRAPHICS-CLI EUR/Wine create/reuse/startup completed
+(2026-10-30).** One 601 runtime-identical production 31c0f298 warning-free/no overlays/
+canonical hash mtime finally exact; ONE Wine orchestration 3 commands child 0 creates-
+reuses-neutral 1 normal 24755 copy→24756. 84 runtime-exact files 83 ID hashes 86 managed
+no-write/cache 28859 exact, e92-d91/UI index 15 56 banks 10 selectors 106 bindings/same
+84 files 83 IDs. Six new table counts 0/registration-compatibility only/no positive
+ordinary-full pair. 202 guards 601 CLI + 601 runtime/84 accepted/ROM-seed-cache-TinyCC-
+canonical exact. No old 40 model/16 UI/indexed 20/native 22-35/41 ordinary/CLI prepare
+proof replay/new checkpoint derivation-navigation/metric. Positive ordinary/full helper
+ABI/live contexts/global extent-indirect/71E5E0 alias/seven raw groups/tails/Linux-USA-
+native Windows/new 32:9/full TODO open.
+[CLI and limits](../rom_data_ui_graphics.md#actual-table-extension-cli-registration).
 
 
-**ROMDATA-04-LOCALIZED-TABLE-GRAPHICS-ORDINARY parziale; dueboundnegativi
-chiusi EUR/Wine (2026-10-30).** Cached/rawsource244D6→2C8C4/root71E6D0 e
-oldnormalFightpredictionimage selezionano64f23851→23915; distinct71E590
-COMBOMENUasset/30608constructor+30FDAredraw eActionseed23611 dueDown+A
-selezionano160f→23771. SAME31c0CLI entrambi child0/all6newcounts0/83IDhash
-86managednowrite/cache28859exact. Staticinitializerlinknonprova nuovoload;
-PPMometteHUD/menu separati, Combo raggiunto nonasserito. Nessunobserverbuild/
-guard/fullpair/endpointstate/longerretry/RNGresampling/oldrouterecreation.
-Diagnostica trattenuta/discoverystopped; positivoordinario/full-equivalenza
-aperti inattesacontesto costruttoreconcreto. Source-model-runtime-CLIregistro
-restanochiusi; Linux-USA-Windowsnativo/new32:9/fullTODO aperti/nometriche.
-[Stato e limiti](../rom_data_ui_graphics.md#ordinary-table-extension-reachability-remains-partial).
+**ROMDATA-04-LOCALIZED-TABLE-GRAPHICS-ORDINARY partial; two negative bounds
+closed EUR/Wine (2026-10-30).** Cached/raw source 244D6→2C8C4/root 71E6D0 and old
+normal Fight prediction image select 64f 23851→23915; distinct 71E590 COMBOMENU
+asset/30608 constructor + 30FDA redraw and Action seed 23611 two Down+A select 160f
+→23771. SAME 31c0 CLI both child 0/all 6 new counts 0/83 ID hashes 86 managed
+no-write/cache 28859 exact. Static initializer link does not prove new load; PPM
+omits separate HUD/menu, Combo not claimed reached. No observer build/guard/full pair/
+endpoint state/longer retry/RNG resampling/old route recreation. Diagnostics retained/
+discovery stopped; positive ordinary/full equivalence open pending concrete constructor
+context. Source-model-runtime-CLI registration remain closed; Linux-USA-native Windows/
+new 32:9/full TODO open/no metrics.
+[Status and limits](../rom_data_ui_graphics.md#ordinary-table-extension-reachability-remains-partial).
 
 
-**ROMDATA-01-LOCALIZED-RAW-TABLE-SOURCES completato per le viste fisse EUR
-(2026-10-30).** Sette radici indipendenti71E5F4/608/66C/694/6A8/6E4/6F8,
-cinque slot fisici ciascuna e selettore lingua u8 non limitato:35viste/42span/
-38220B(38080payload+140selector), SHAe11ef4d5f16feea8ef90e7fce58056e19d689004b7ca973270285e3cd31b8f80.
-Sei prefissi224/160/768/1600/2048/2432B e solo+0200..0380/384B del settimo;
-lunghezze da copie originali/rami alternativi, non distanza/header. FusedBL
-12EE24→145230/CpuSet halfword e6F8→000AD0/control80000040 halfword verificati,
-prima ipotesi corretta prima di produrre output.32finestre23nuove9cached/
-193pin/13rootliteral/13copie fisse/130guardie/nooverlap83owner50602binding/
-all84accepted file esatti. Quattro viste dinamiche6F8/u8task+2−4/u16offset<<5
-non stabiliscono un cap: metadata/prefisso inferiore/tail e dominio completi
-restano aperti. Solo analisi statica, schema1/e92-d91/runtime invariati;
-modello/oracoloWine/runtime/CLI/ordinario/fullABI/alias71E5E0/indirect/fullTODO
-aperti; nuoviLinux-USA-Windowsnativo-32:9 da fare, nessuna metrica/build/game/
-fixture/navigation/vecchia prova ripetuta.
-[Contratto e limiti](../rom_data_ui_raw_transfers.md#declared-source-contract).
+**ROMDATA-01-LOCALIZED-RAW-TABLE-SOURCES completed for fixed EUR views
+(2026-10-30).** Seven independent roots 71E5F4/608/66C/694/6A8/6E4/6F8, five
+physical slots each and unbounded u8 language selector: 35 views/42 spans/38220B
+(38080 payload + 140 selector), SHA
+e11ef4d5f16feea8ef90e7fce58056e19d689004b7ca973270285e3cd31b8f80. Six prefixes
+224/160/768/1600/2048/2432B and only +0200..0380/384B of seventh; lengths from
+original copies/alternate branches, not distance/header. Fused BL 12EE24→145230/
+CpuSet halfword and 6F8→000AD0/control 80000040 halfword verified, first hypothesis
+corrected before output. 32 windows 23 new 9 cached/193 pins/13 root literals/
+13 fixed copies/130 guards/no overlap 83 owners 50602 bindings/all 84 accepted files
+exact. Four dynamic 6F8 views/u8 task+2−4/u16 offset<<5 do not establish a cap:
+metadata/lower prefix/tail and full domain remain open. Static analysis only, schema
+1/e92-d91/runtime unchanged; model/Wine oracle/runtime/CLI/ordinary/full ABI/71E5E0
+alias/indirect/full TODO open; new Linux-USA-native Windows-32:9 to do, no metric/
+build/game/fixture/navigation/old proof repeated.
+[Contract and limits](../rom_data_ui_raw_transfers.md#declared-source-contract).
 
 
-**ROMDATA-02-LOCALIZED-RAW-TRANSFERS completato EUR/Wine (2026-10-30).**
-Nuovo coreui_raw_transfers/RawTransfers+BankView: sette tabelle fisiche/35viste
-ordinate,42span38220B/LEwords e settimo gruppo sparso+0200..0380 soltanto.
-Forma modificabile distinta da autenticazione EUR/32fingerprint; indirizzi
-lingua u8 fuori0..4 raw, nessun fallback/cap. Build603source/262core35bdc5fd
-senza warning; tre build e due tentativi Wine, un filtro finale PASS21guardie/
-91prefissi originali/60copie helper isolate/25copie esecutore coda DMA originale.
-Tutti byte, EWRAM/VRAM/OAM/palette, IWRAM fuori stack originale36B quando serve,
-SP/callee/finalROM esatti. Prime correzioni solo test: stack20→36B primaWine,
-bordo tra tabelle adiacenti atteso raw erroneamente; diagnostica e preimage
-conservati, modello/fonte invariati.44guardie unità130fonte/601baseline603frozen/
-3correnti/inversehub esatti;6635istruzioni solo coverage. Schemae92-d91 e
-84accepted file invariati; runtime/nativeclock/CLI/ordinario/fullcallerABI/
-dominio6F8-lowerprefix-metadata-tail/alias71E5E0/fullTODO aperti. NuoviLinux-
-USA-Windowsnativo-32:9 da fare; nessuna vecchia prova/game/fixture/checkpoint/
-navigation/metrica ripetuta.
-[Modello e prove](../rom_data_ui_raw_transfers.md#typed-model).
+**ROMDATA-02-LOCALIZED-RAW-TRANSFERS completed EUR/Wine (2026-10-30).**
+New core ui_raw_transfers/RawTransfers+BankView: seven physical tables/35 ordered
+views, 42 spans 38220B/LE words and seventh sparse group +0200..0380 only. Editable
+shape distinct from EUR authentication/32 fingerprints; u8 language addresses outside
+0..4 raw, no fallback/cap. Build 603 sources/262 core 35bdc5fd warning-free; three
+builds and two Wine attempts, one final filter PASS 21 guards/91 original prefixes/
+60 isolated helper copies/25 original DMA queue executor copies. All bytes, EWRAM/
+VRAM/OAM/palette, IWRAM outside original 36B stack when needed, SP/callee/final ROM
+exact. First corrections test-only: stack 20→36B before Wine, boundary between adjacent
+tables incorrectly expected raw; diagnostics and preimage retained, model/source
+unchanged. 44 unit 130 source guards/601 baseline 603 frozen/3 current/inverse hub exact;
+6635 instructions coverage only. Schema e92-d91 and 84 accepted files unchanged;
+runtime/native clock/CLI/ordinary/full caller ABI/6F8-lower prefix-metadata-tail domain/
+71E5E0 alias/full TODO open. New Linux-USA-native Windows-32:9 to do; no old proof/
+game/fixture/checkpoint/navigation/metric repeated.
+[Model and evidence](../rom_data_ui_raw_transfers.md#typed-model).
 
 
-**ROMDATA-03-04-LOCALIZED-RAW-TRANSFERS-RUNTIME completato EUR/Wine
-(2026-10-30).** e93-d92/index83 graphics.ui-raw-transfers/85file84ID, tutti83
-record/payload precedenti esatti.42span38220B da parole raw e puntatori tipizzati,
-sei contatori separati; selettori/copie/coda DMA/ABI-clock originali preservati.
-Due build605source/263core, accettata4b219adc senza warning; un filtroWine PASS
-pubblicazione-interruzione/14attach2fullset/23stati-clock completi nativi
-(12load+1CpuSet+1esecutorecoda+9prefissilingua)/4famiglie stop-safe.939SERVED
-nuoviB3precedenti/fallback[768,0], non union distinta né tutti diretti nativi;
-115istruzioni25dispatch solo coverage. Tutti38220B/35viste7gruppi/42bordi/
-width-mirror/adiacenze tra nuovi e vecchi/buchi raw/LoadslotUndo/quattro trasferimenti
-misti64B DMA16-DMA32-CpuSet-FastSet passano.309guardie605frozen603model/
-7correnti84vecchi/inversehub esatti. PrimaWine solo test corretto:441608 è
-inizio archivio indexed precedente, non buco raw; codice prodotto invariato tra
-build e diagnostica prima950bea97 trattenuta. Runnerlabel e92/DMA3 obsolete solo
-metadata: JSON prova[1,93,92]/4trasferimenti, nessun replay. CLI reale/ordinario/
-fullcallerABI/dominio6F8-metadata-prefix-tail/alias71E5E0/indirect/fullTODO aperti;
-nuoviLinux-USA-Windowsnativo-32:9 da fare. Nessuna vecchia prova/source-model/
-game-fixture-checkpoint-navigation/metrica ripetuta.
-[Runtime e prove](../rom_data_ui_raw_transfers.md#managed-raw-transfer-resource).
+**ROMDATA-03-04-LOCALIZED-RAW-TRANSFERS-RUNTIME completed EUR/Wine
+(2026-10-30).** e93-d92/index 83 graphics.ui-raw-transfers/85 files 84 IDs, all
+83 previous records/payload exact. 42 spans 38220B from typed raw words and pointers,
+six separate counters; original selectors/copies/DMA queue/ABI-clock preserved. Two
+builds 605 sources/263 core, accepted 4b219adc warning-free; one Wine filter PASS
+publication-interruption/14 attach 2 full-set/23 native full states-clock (12 loads +
+1 CpuSet + 1 queue executor + 9 language prefixes)/4 stop-safe families. 939 SERVED
+new B 3 previous/fallback [768,0], not distinct union or all direct native; 115
+instructions 25 dispatch coverage only. All 38220B/35 views 7 groups/42 edges/width-
+mirror/adjacency between new and old/raw gaps/Load slot Undo/four mixed 64B transfers
+DMA16-DMA32-CpuSet-FastSet pass. 309 guards 605 frozen 603 model/7 current 84 old/
+inverse hub exact. Before Wine only test corrected: 441608 starts previous indexed
+archive, not raw gap; product code unchanged between builds and first diagnostic
+950bea97 retained. Runner labels e92/DMA3 obsolete metadata only: JSON proves [1,93,92]/
+4 transfers, no replay. Real CLI/ordinary/full caller ABI/6F8-metadata-prefix-tail domain/
+71E5E0 alias/indirect/full TODO open; new Linux-USA-native Windows-32:9 to do. No old
+proof/source-model/game-fixture-checkpoint-navigation/metric repeated.
+[Runtime and evidence](../rom_data_ui_raw_transfers.md#managed-raw-transfer-resource).
 
 
-**ROMDATA-04-LOCALIZED-RAW-TRANSFERS-CLI completato creazione/riuso/avvio
-EUR/Wine (2026-10-30).** Una build produzione605runtimeidentical ffda6c59 senza
-warning/nooverlays/canonicalhashmtimefinallyexact; una orchestrazioneWine tre
-comandi child0 crea-riusa-neutro1/normal24755copy→24756.85file runtime-identici/
-84IDhash87managednowrite/cache28859esatta. e93-d92/index83/35viste7tabelle/
-42binding38220B. Sei contatori nuovi0: solo registrazione/compatibilità, non uso
-ordinario positivo néfullpair.203guardie605CLI+605runtime/85accepted/ROM-seed-
-cache-TinyCC-canonical esatti; nessun nuovo endpoint/checkpoint derivato/input
-azione/navigation/vecchia prova ripetuta/metrica. Positivoordinario/fullABI/
-dominio6F8-metadata-prefix-tail/alias71E5E0/indirect/globalcatalog/fullTODO aperti;
-nuoviLinux-USA-Windowsnativo-32:9 da fare.
-[CLI e limiti](../rom_data_ui_raw_transfers.md#actual-cli-registration).
+**ROMDATA-04-LOCALIZED-RAW-TRANSFERS-CLI EUR/Wine create/reuse/startup completed
+(2026-10-30).** One 605 runtime-identical production build ffda6c59 warning-free/no
+overlays/canonical hash mtime finally exact; one Wine orchestration three child 0
+commands create-reuse-neutral 1/normal 24755 copy→24756. 85 runtime-identical files/
+84 ID hashes 87 managed no-write/cache 28859 exact. e93-d92/index 83/35 views 7 tables/
+42 bindings 38220B. Six new counters 0: registration/compatibility only, not positive
+ordinary use or full pair. 203 guards 605 CLI + 605 runtime/85 accepted/ROM-seed-cache-
+TinyCC-canonical exact; no new endpoint/derived checkpoint/action input/navigation/old
+proof repeated/metric. Positive ordinary/full ABI/6F8-metadata-prefix-tail domain/
+71E5E0 alias/indirect/global catalog/full TODO open; new Linux-USA-native Windows-32:9
+to do.
+[CLI and limits](../rom_data_ui_raw_transfers.md#actual-cli-registration).
 
-**ROMDATA-04-LOCALIZED-RAW-TRANSFERS-ORDINARY completato per un avvio
-EUR/Wine (2026-10-31).** Il CLI e93 osserva 5.488 byte serviti, inclusi
-selettori e payload di quattro gruppi; una coppia di 1.200 frame con lo stesso
-dataset verifica stato/clock/video/OAM/dispatch/audio. La stessa cache nativa
-è usata in entrambi i rami; altri percorsi e Linux/USA restano da verificare.
-[Prove e limiti](../rom_data_ui_raw_transfers.md#ordinary-european-boot-equivalence).
+**ROMDATA-04-LOCALIZED-RAW-TRANSFERS-ORDINARY completed for one EUR/Wine
+startup (2026-10-31).** CLI e93 observes 5.488 bytes served, including
+selectors and payloads for four groups; a 1.200-frame pair using the same
+dataset verifies state/clock/video/OAM/dispatch/audio. The same native cache
+is used in both branches; other paths and Linux/USA remain to verify.
+[Evidence and limits](../rom_data_ui_raw_transfers.md#ordinary-european-boot-equivalence).
 
-**ROMDATA-01-LOCALIZED-RAW-DYNAMIC-DOMAIN parziale (2026-10-31).** Le chiamate
-originali documentano selettori 7/8/9 e 1.304 byte candidati non sovrapposti;
-altri produttori leggono valori vivi e il limite globale non è noto. Al momento
-della scoperta non esisteva un owner runtime; la successiva integrazione è sotto.
-[Dettagli](../rom_data_ui_raw_transfers.md#bounded-dynamic-view-producer-discovery).
+**ROMDATA-01-LOCALIZED-RAW-DYNAMIC-DOMAIN partial (2026-10-31).** Original
+calls document selectors 7/8/9 and 1.304 non-overlapping candidate bytes;
+other producers read live values and the global limit is unknown. At discovery
+there was no runtime owner; subsequent integration is described below.
+[Details](../rom_data_ui_raw_transfers.md#bounded-dynamic-view-producer-discovery).
 
-**ROMDATA-02-LOCALIZED-RAW-DYNAMIC-FRAGMENTS completato per il modello
-EUR/Wine (2026-10-31).** Righe e prefissi hanno un modello tipizzato lossless
-con verifica sorgente/confini per 1.304 byte. La successiva integrazione è
-documentata sotto; nessun limite globale dei selettori è dedotto.
-[Modello](../rom_data_ui_raw_transfers.md#dynamic-fragment-source-model).
+**ROMDATA-02-LOCALIZED-RAW-DYNAMIC-FRAGMENTS completed for the EUR/Wine
+model (2026-10-31).** Rows and prefixes have a lossless typed model with
+source and boundary verification for 1.304 bytes. Subsequent integration is
+documented below; no global selector limit is inferred.
+[Model](../rom_data_ui_raw_transfers.md#dynamic-fragment-source-model).
 
-**ROMDATA-03/04-DYNAMIC-RAW-FRAGMENTS EUR/Wine (2026-10-31).** Risorsa
-separata e94-d93/index84, 1.304 byte in sette intervalli autenticati;
-letture, composizione e un DMA stato/clock verificati. CLI, esecuzione nativa,
-uso ordinario, dominio globale, Linux e USA restano aperti.
-[Prove](../rom_data_ui_raw_transfers.md#managed-dynamic-fragment-resource).
+**ROMDATA-03/04-DYNAMIC-RAW-FRAGMENTS EUR/Wine (2026-10-31).** Separate
+resource e94-d93/index84, 1.304 bytes in seven authenticated ranges;
+reads, composition and one DMA state/clock verified. CLI, native execution,
+ordinary use, global domain, Linux and USA remain open.
+[Evidence](../rom_data_ui_raw_transfers.md#managed-dynamic-fragment-resource).
 
-**ROMDATA-04-DYNAMIC-RAW-FRAGMENTS-CLI EUR/Wine (2026-10-31).** Creazione,
-riuso e caricamento di tutte le 85 risorse e94-d93 verificati con un frame
-neutro; identità e file gestiti esatti. Uso ordinario dinamico, esecuzione
-nativa, dominio globale e Linux/USA restano aperti.
-[Prove](../rom_data_ui_raw_transfers.md#dynamic-fragment-production-cli).
+**ROMDATA-04-DYNAMIC-RAW-FRAGMENTS-CLI EUR/Wine (2026-10-31).** Creation,
+reuse and loading of all 85 e94-d93 resources verified with one neutral frame;
+identities and managed files exact. Dynamic ordinary use, native execution,
+global domain and Linux/USA remain open.
+[Evidence](../rom_data_ui_raw_transfers.md#dynamic-fragment-production-cli).
 
-**ROMDATA-04-DYNAMIC-RAW-ORIGINAL-NATIVE EUR/Wine (2026-10-31).** Routine
-originale, accodamento e DMA verificati per selettori7/8/9, entrambi i rami e
-cinque lingue: 30 casi isolati, stato/clock uguali su interprete ROM,
-interprete dataset e codice tradotto dataset. Uso ordinario e dominio globale,
-Linux e USA restano aperti.
-[Prove](../rom_data_ui_raw_transfers.md#original-dynamic-routine-and-translated-execution).
+**ROMDATA-04-DYNAMIC-RAW-ORIGINAL-NATIVE EUR/Wine (2026-10-31).** Original
+routine, queueing and DMA verified for selectors 7/8/9, both branches and
+five languages: 30 isolated cases, equal state/clock on the ROM interpreter,
+dataset interpreter and translated dataset code. Ordinary use and global domain,
+Linux and USA remain open.
+[Evidence](../rom_data_ui_raw_transfers.md#original-dynamic-routine-and-translated-execution).
 
-**ROMDATA-05-DYNAMIC-RAW-ORDINARY-REACHABILITY parziale (2026-10-31).**
-Gate guest `0200203d` e callback di attivazione/disattivazione identificati;
-14 checkpoint EUR e un percorso Unit320 non mostrano il trasferimento entro
-l'ambito osservato. Uso ordinario positivo e verifiche Linux/USA rimangono aperti.
-[Prove](../rom_data_ui_raw_transfers.md#ordinary-dynamic-reachability-investigation).
+**ROMDATA-05-DYNAMIC-RAW-ORDINARY-REACHABILITY partial (2026-10-31).**
+Guest gate `0200203d` and activation/deactivation callbacks identified;
+14 EUR checkpoints and one Unit320 path show no transfer within the observed
+scope. Positive ordinary use and Linux/USA checks remain open.
+[Evidence](../rom_data_ui_raw_transfers.md#ordinary-dynamic-reachability-investigation).
 
-**ROMDATA-01-DYNAMIC-RAW-DISPATCH-LIFECYCLE parziale EUR/Wine (2026-10-31).**
-Identificati callback e flag condizionale di registrazione; il percorso Area List
-esistente non ha mostrato letture dinamiche o flag attivo ai punti campionati.
-Non è dimostrata l'assenza globale; uso ordinario positivo, dominio globale e
-verifiche Linux/USA restano aperti.
-[Prove](../rom_data_ui_raw_transfers.md#dispatcher-lifecycle-and-area-list-observation).
+**ROMDATA-01-DYNAMIC-RAW-DISPATCH-LIFECYCLE partial EUR/Wine (2026-10-31).**
+Callbacks and conditional registration flag identified; the existing Area List
+path showed no dynamic reads or active flag at sampled points. Global absence
+is not proven; positive ordinary use, global domain and Linux/USA checks remain
+open.
+[Evidence](../rom_data_ui_raw_transfers.md#dispatcher-lifecycle-and-area-list-observation).
 
-**ROMDATA-01-LOCALIZED-TABLE-ALIAS fonte EUR delimitata (2026-10-31).**
-Tabella indipendente `71e5e0`, 20 byte non posseduti, cinque banchi clan già
-posseduti, sei sequenze originali individuate. Integrazione e verifiche
-Linux/USA restano aperte.
-[Contratto](../rom_data_ui_graphics.md#european-alias-of-the-existing-clan-banks).
+**ROMDATA-01-LOCALIZED-TABLE-ALIAS bounded EUR source (2026-10-31).**
+Independent table `71e5e0`, 20 unmanaged bytes, five already managed clan banks,
+six original sequences identified. Integration and Linux/USA checks remain open.
+[Contract](../rom_data_ui_graphics.md#european-alias-of-the-existing-clan-banks).
 
 **ROMDATA-03-04-LOCALIZED-TABLE-ALIAS EUR/Wine (2026-10-31).** e95-d94
-pubblica i 20 byte della tabella `71e5e0` nella risorsa UI, riusando i cinque
-banchi clan. Letture e 42 prefissi interprete stato/clock verificati; CLI,
-native, uso ordinario e verifiche Linux/USA restano aperti.
-[Prove](../rom_data_ui_graphics.md#managed-european-clan-table-alias).
+publishes the 20 bytes of table `71e5e0` in the UI resource, reusing the five
+clan banks. Reads and 42 interpreter prefixes with state/clock verified; CLI,
+native, ordinary use and Linux/USA checks remain open.
+[Evidence](../rom_data_ui_graphics.md#managed-european-clan-table-alias).
 
-**ROMDATA-04-CLAN-TABLE-ALIAS-NATIVE EUR/Wine (2026-10-31).** I sei prefissi
-originali tradotti coincidono con interprete ROM per 24 casi stato/clock;
-CLI, ordinary, ABI completa e Linux/USA restano aperti.
-[Prove](../rom_data_ui_graphics.md#translated-clan-alias-selector-prefixes).
+**ROMDATA-04-CLAN-TABLE-ALIAS-NATIVE EUR/Wine (2026-10-31).** The six
+translated original prefixes match the ROM interpreter for 24 state/clock cases;
+CLI, ordinary use, full ABI and Linux/USA remain open.
+[Evidence](../rom_data_ui_graphics.md#translated-clan-alias-selector-prefixes).
 
-**ROMDATA-04-CLAN-TABLE-ALIAS-CLI EUR/Wine (2026-10-31).** CLI e95 verifica
-creazione, riuso, identità delle 85 risorse e un frame; uso ordinario positivo
-e verifiche Linux/USA restano aperti.
-[Prove](../rom_data_ui_graphics.md#clan-alias-production-cli).
+**ROMDATA-04-CLAN-TABLE-ALIAS-CLI EUR/Wine (2026-10-31).** CLI e95 verifies
+creation, reuse, identity of the 85 resources and one frame; positive ordinary use
+and Linux/USA checks remain open.
+[Evidence](../rom_data_ui_graphics.md#clan-alias-production-cli).
 
-**ROMDATA-05-CLAN-TABLE-ALIAS-ORDINARY negativo delimitato EUR/Wine
-(2026-10-31).** L'avvio esistente di 1.200 frame non mostra letture bus
-dell'alias nel filtro osservato; uso ordinario positivo e Linux/USA restano aperti.
-[Prove](../rom_data_ui_graphics.md#clan-alias-ordinary-boot-observation).
+**ROMDATA-05-CLAN-TABLE-ALIAS-ORDINARY bounded negative EUR/Wine
+(2026-10-31).** The existing 1.200-frame startup shows no alias bus reads in
+the observed filter; positive ordinary use and Linux/USA remain open.
+[Evidence](../rom_data_ui_graphics.md#clan-alias-ordinary-boot-observation).
 
-**ROMDATA-05-CLAN-TABLE-ALIAS-BANK-ENTRY EUR/Wine (2026-10-31).** Due letture
-ordinarie tipizzate dell'alias durante un ingresso Bank; una coppia separata di
-120 frame con lo stesso stato e input verifica stato/clock, immagini e audio.
-Altri percorsi, Linux e USA restano aperti.
-[Prove](../rom_data_ui_graphics.md#ordinary-clan-alias-use-during-bank-entry).
+**ROMDATA-05-CLAN-TABLE-ALIAS-BANK-ENTRY EUR/Wine (2026-10-31).** Two typed
+ordinary alias reads during a Bank entry; a separate 120-frame pair with the same
+state and input verifies state/clock, images and audio. Other paths, Linux and
+USA remain open.
+[Evidence](../rom_data_ui_graphics.md#ordinary-clan-alias-use-during-bank-entry).
 
-**ROMDATA-01-E95-HISTORICAL-READ-RESIDUE delimitato (2026-10-31).** Delle
-1.146 posizioni non gestite nell'audit storico F09/e71, 74 sono ora coperte da
-e95; le altre 1.072 hanno prove precedenti di supporto al codice. Non è una
-nuova osservazione o un inventario globale.
-[Prove](../rom_data_runtime.md#historical-f09-residue-against-e95).
+**ROMDATA-01-E95-HISTORICAL-READ-RESIDUE bounded (2026-10-31).** Of the
+1.146 unmanaged locations in the historical F09/e71 audit, 74 are now covered by
+e95; the other 1.072 have previous code-support evidence. This is not a new
+observation or a global inventory.
+[Evidence](../rom_data_runtime.md#historical-f09-residue-against-e95).
 
-**ROMDATA-01-GAMEPLAY-6E6DBC-LOOKUP fonte EUR delimitata (2026-10-31).**
-Proiezione di 74 righe a due campi u16, sostenuta da produttori originali;
-gli indici vivi fuori proiezione e il limite globale restano aperti. Modello e
-consumo runtime ancora da implementare.
-[Contratto](../rom_data_gameplay.md#european-conditional-four-byte-lookup-projection).
+**ROMDATA-01-GAMEPLAY-6E6DBC-LOOKUP bounded EUR source (2026-10-31).**
+Projection of 74 two-field u16 rows, supported by original producers;
+live indices outside the projection and the global limit remain open. Model and
+runtime consumption still need implementation.
+[Contract](../rom_data_gameplay.md#european-conditional-four-byte-lookup-projection).
 
-**ROMDATA-02-GAMEPLAY-6E6DBC-LOOKUP modello EUR/Wine (2026-10-31).**
-Modello tipizzato lossless e lettori originali verificati per la proiezione di
-74 righe; pubblicazione gestita e consumo runtime restano aperti.
-[Prove](../rom_data_gameplay.md#typed-conditional-four-byte-lookup-model).
-
-
-**ROMDATA-03-04-GAMEPLAY-6E6DBC-LOOKUP gestito EUR/Wine (2026-10-31).**
-e96-d95 pubblica la proiezione condizionale di 74 righe: 85 risorse precedenti
-identiche, letture tipizzate e bordi verificati, rifiuto transazionale di dati
-alterati. Tre prefissi nativi originali e sei indici coincidono con stato/clock
-dell'interprete; gli indici fuori proiezione non sono limitati. CLI di produzione,
-uso ordinario e verifiche Linux/USA restano aperti; nessuna misura prestazionale.
-[Prove](../rom_data_gameplay.md#managed-conditional-four-byte-lookup).
+**ROMDATA-02-GAMEPLAY-6E6DBC-LOOKUP EUR/Wine model (2026-10-31).**
+Lossless typed model and original readers verified for the 74-row projection;
+managed publication and runtime consumption remain open.
+[Evidence](../rom_data_gameplay.md#typed-conditional-four-byte-lookup-model).
 
 
-**ROMDATA-04-GAMEPLAY-6E6DBC-CLI EUR/Wine (2026-10-31).** La CLI di
-produzione crea e riusa e96-d95 e avanza un frame: 87 file identici al dataset
-accettato, 86 identità runtime verificate e nessuna modifica ai file gestiti.
-Uso ordinario e verifiche Linux/USA restano aperti; nessuna misura prestazionale.
-[Prove](../rom_data_gameplay.md#conditional-lookup-production-cli).
+**ROMDATA-03-04-GAMEPLAY-6E6DBC-LOOKUP managed EUR/Wine (2026-10-31).**
+e96-d95 publishes the conditional projection of 74 rows: 85 previous resources
+identical, typed reads and boundaries verified, transactional rejection of altered
+data. Three original native prefixes and six indices match interpreter state/clock;
+indices outside the projection are not bounded. Production CLI, ordinary use and
+Linux/USA checks remain open; no performance measurement.
+[Evidence](../rom_data_gameplay.md#managed-conditional-four-byte-lookup).
 
 
-**ROMDATA-05-GAMEPLAY-6E6DBC-ORDINARY-ROUTE candidato EUR (2026-10-31).**
-Un input Abilità già conservato e il ramo originale della prima categoria
-indicano un candidato per la lettura tipizzata; stato raggiunto e lista non vuota
-sono ipotesi da osservare. Un solo prefisso Wine di 540 frame è il prossimo
-controllo; Linux/USA restano aperti. Nessuna misura prestazionale.
-[Prove](../rom_data_gameplay.md#conditional-lookup-ordinary-route-candidate).
+**ROMDATA-04-GAMEPLAY-6E6DBC-CLI EUR/Wine (2026-10-31).** The production
+CLI creates and reuses e96-d95 and advances one frame: 87 files identical to the
+accepted dataset, 86 runtime identities verified and no changes to managed files.
+Ordinary use and Linux/USA checks remain open; no performance measurement.
+[Evidence](../rom_data_gameplay.md#conditional-lookup-production-cli).
 
 
-**ROMDATA-05-GAMEPLAY-6E6DBC-ORDINARY positivo EUR/Wine (2026-10-31).**
-L'input ordinario Abilità già conservato produce 55 letture/byte tipizzati,
-27 del primo campo e 28 del secondo, nel segmento di 540 frame. Il contatore
-è aggregato; confronto completo della scena e Linux/USA restano aperti.
-[Prove](../rom_data_gameplay.md#ordinary-conditional-lookup-use-in-ability-navigation).
+**ROMDATA-05-GAMEPLAY-6E6DBC-ORDINARY-ROUTE EUR candidate (2026-10-31).**
+An already retained Abilità input and the original first-category branch indicate
+a candidate for the typed read; reached state and a nonempty list are hypotheses
+to observe. A single 540-frame Wine prefix is the next check; Linux/USA remain
+open. No performance measurement.
+[Evidence](../rom_data_gameplay.md#conditional-lookup-ordinary-route-candidate).
+
+
+**ROMDATA-05-GAMEPLAY-6E6DBC-ORDINARY positive EUR/Wine (2026-10-31).**
+The already retained ordinary Abilità input produces 55 typed reads/bytes,
+27 from the first field and 28 from the second, in the 540-frame segment. The
+counter is aggregate; full scene comparison and Linux/USA remain open.
+[Evidence](../rom_data_gameplay.md#ordinary-conditional-lookup-use-in-ability-navigation).
 
 
 **ROMDATA-05-GAMEPLAY-6E6DBC-ORDINARY-PAIR EUR/Wine (2026-10-31).**
-Sulla stessa sequenza Abilità di 540 frame, stato/clock completi, video, OAM,
-dispatch e cinque uscite audio coincidono fra ROM originale e runtime gestito;
-55 byte tipizzati coprono entrambi i campi nella stessa prova. Altre scene e
-verifiche Linux/USA restano aperte; nessuna misura prestazionale.
-[Prove](../rom_data_gameplay.md#ordinary-ability-scene-differential).
+For the same 540-frame Abilità sequence, full state/clock, video, OAM, dispatch
+and five audio outputs match between original ROM and managed runtime; 55 typed
+bytes cover both fields in the same test. Other scenes and Linux/USA checks remain
+open; no performance measurement.
+[Evidence](../rom_data_gameplay.md#ordinary-ability-scene-differential).
 
 
-**ROMDATA-01-GAMEPLAY-6E6EE4-ROOT fonte EUR condizionale (2026-10-31).**
-Tre lettori originali usano un indice u16 da un descrittore a passo otto; il
-ramo tipo5 ha testimoni statici per indici1..33, pari a132 byte senza overlap
-e96. Accessibilità ordinaria, riga0 e limite globale non sono dimostrati; altri
-tipi possono leggere owner precedenti. Modello e runtime restano aperti;
-Linux/USA da fare, nessuna misura prestazionale.
-[Contratto](../rom_data_gameplay.md#european-conditional-packed-four-byte-projection).
+**ROMDATA-01-GAMEPLAY-6E6EE4-ROOT conditional EUR source (2026-10-31).**
+Three original readers use a u16 index from a stride-eight descriptor; the type 5
+branch has static witnesses for indices 1..33, totaling 132 bytes without overlap
+e96. Ordinary reachability, row 0 and global limit are unproven; other types may read
+previous owners. Model and runtime remain open; Linux/USA to do, no performance
+measurement.
+[Contract](../rom_data_gameplay.md#european-conditional-packed-four-byte-projection).
 
 
-**ROMDATA-02-GAMEPLAY-6E6EE4-PACKED modello EUR/Wine (2026-10-31).**
-Modello rigoroso delle33 righe tipizzate, ricostruzione di132 byte e lettori
-originali verificati per zero, estremi1/33 e alias251 verso metadata14. Non
-introduce limiti guest; pubblicazione gestita, runtime e Linux/USA restano aperti.
-[Prove](../rom_data_gameplay.md#typed-conditional-packed-lookup-model).
+**ROMDATA-02-GAMEPLAY-6E6EE4-PACKED EUR/Wine model (2026-10-31).** Strict model
+of 33 typed rows, reconstruction of 132 bytes and original readers checked for zero,
+endpoints 1/33 and alias 251 to metadata14. It introduces no guest limits; managed
+publication, runtime and Linux/USA remain open.
+[Evidence](../rom_data_gameplay.md#typed-conditional-packed-lookup-model).
 
 
-**ROMDATA-03-04-GAMEPLAY-6E6EE4-PACKED gestito EUR/Wine (2026-10-31).**
-e97-d96 pubblica132 byte tipizzati: 86 risorse precedenti identiche, bordi
-condivisi e alias251 ancora serviti da metadata14, rifiuto transazionale di
-modifiche e due prefissi nativi equivalenti all'interprete. CLI, uso ordinario
-e verifiche Linux/USA restano aperti; nessuna misura prestazionale.
-[Prove](../rom_data_gameplay.md#managed-conditional-packed-lookup).
+**ROMDATA-03-04-GAMEPLAY-6E6EE4-PACKED managed EUR/Wine (2026-10-31).**
+e97-d96 publishes 132 typed bytes: 86 previous resources identical, shared boundaries
+and alias 251 still served by metadata14, transactional rejection of changes and two
+native prefixes equivalent to interpreter. CLI, ordinary use and Linux/USA checks
+remain open; no performance measurement.
+[Evidence](../rom_data_gameplay.md#managed-conditional-packed-lookup).
 
 
-**ROMDATA-04-GAMEPLAY-6E6EE4-CLI EUR/Wine (2026-10-31).** La CLI di
-produzione crea e riusa e97-d96 e avanza un frame: 88 file identici al dataset
-accettato, 87 identità runtime verificate e nessuna modifica ai file gestiti.
-Uso ordinario e Linux/USA restano aperti; nessuna misura prestazionale.
-[Prove](../rom_data_gameplay.md#conditional-packed-lookup-production-cli).
+**ROMDATA-04-GAMEPLAY-6E6EE4-CLI EUR/Wine (2026-10-31).** Production CLI creates
+and reuses e97-d96 and advances one frame: 88 files identical to accepted dataset,
+87 runtime identities verified and no change to managed files. Ordinary use and
+Linux/USA remain open; no performance measurement.
+[Evidence](../rom_data_gameplay.md#conditional-packed-lookup-production-cli).
 
 
-**ROMDATA-05-GAMEPLAY-6E6EE4-ORDINARY-ROUTE candidato EUR (2026-10-31).**
-Un attacco Polly→Hildegard già registrato contiene un wrapper con descrittore
-tipo5/indice1 e una catena originale compatibile con il lettore. Alcuni rami
-restano da osservare; un precedente sospetto di blocco bit43 era errato. Una
-sola osservazione Wine limitata al segmento esistente può distinguere l'uso.
-[Prove](../rom_data_gameplay.md#conditional-packed-lookup-ordinary-route-candidate).
+**ROMDATA-05-GAMEPLAY-6E6EE4-ORDINARY-ROUTE EUR candidate (2026-10-31).** An
+already recorded Polly→Hildegard attack contains a wrapper with type 5/index 1
+descriptor and an original chain compatible with the reader. Some branches remain
+to observe; an earlier suspicion of bit 43 blocking was wrong. One Wine observation
+limited to the existing segment can distinguish use.
+[Evidence](../rom_data_gameplay.md#conditional-packed-lookup-ordinary-route-candidate).
 
 
-**ROMDATA-05-GAMEPLAY-6E6EE4-ORDINARY negativo delimitato EUR/Wine
-(2026-10-31).** Il combattimento F09 esistente di 500 frame non mostra letture
-del lookup impacchettato. È un negativo della sola scena osservata, non una
-prova di assenza globale; uso ordinario positivo e Linux/USA restano aperti.
-Nessuna misura prestazionale.
-[Prove](../rom_data_gameplay.md#conditional-packed-lookup-f09-observation).
+**ROMDATA-05-GAMEPLAY-6E6EE4-ORDINARY bounded negative EUR/Wine
+(2026-10-31).** Existing 500-frame F09 combat shows no packed lookup reads. This is
+a negative for the observed scene alone, not proof of global absence; positive
+ordinary use and Linux/USA remain open. No performance measurement.
+[Evidence](../rom_data_gameplay.md#conditional-packed-lookup-f09-observation).
 
 
-**ROMDATA-01-GAMEPLAY-6DF4D4-DESCRIPTORS fonte EUR condizionale
-(2026-10-31).** Il produttore originale di conteggi sostiene23 puntatori e684
-record a otto byte nelle banche1..23. Il conteggio11 della banca22 esclude
-48 byte prima del puntatore successivo; bank0 resta separata e raw. Nessun
-limite globale guest; modello/runtime e Linux/USA restano aperti.
-[Contratto](../rom_data_gameplay.md#european-conditional-eight-byte-descriptor-banks).
+**ROMDATA-01-GAMEPLAY-6DF4D4-DESCRIPTORS conditional EUR source
+(2026-10-31).** Original count producer supports 23 pointers and 684 eight-byte
+records in banks 1..23. Count 11 of bank 22 excludes 48 bytes before the next pointer;
+bank 0 remains separate and raw. No global guest limit; model/runtime and Linux/USA
+remain open.
+[Contract](../rom_data_gameplay.md#european-conditional-eight-byte-descriptor-banks).
 
 
-**ROMDATA-02-GAMEPLAY-6DF4D4-DESCRIPTORS modello EUR/Wine (2026-10-31).**
-Modello lossless delle23 banche e684 record, con conteggi e scritture originali
-verificati su Wine; banca0 e gap banca22 restano raw e senza limiti guest
-inventati. Pubblicazione/runtime e verifiche Linux/USA restano aperte.
-[Prove](../rom_data_gameplay.md#typed-conditional-descriptor-bank-model).
+**ROMDATA-02-GAMEPLAY-6DF4D4-DESCRIPTORS EUR/Wine model (2026-10-31).**
+Lossless model of 23 banks and 684 records, with original counts and writes verified
+on Wine; bank 0 and bank 22 gap remain raw and without invented guest limits.
+Publication/runtime and Linux/USA checks remain open.
+[Evidence](../rom_data_gameplay.md#typed-conditional-descriptor-bank-model).
 
 
-**ROMDATA-03-04-GAMEPLAY-6DF4D4-DESCRIPTORS gestito EUR/Wine
-(2026-10-31).** e98-d97 pubblica23 puntatori e684 descrittori tipizzati:
-87 risorse precedenti identiche, banca0 e gap banca22 restano raw, modifica
-coerente rifiutata e cinque prefissi nativi equivalenti all'interprete. CLI,
-uso ordinario e Linux/USA restano aperti; nessuna misura prestazionale.
-[Prove](../rom_data_gameplay.md#managed-conditional-descriptor-banks).
+**ROMDATA-03-04-GAMEPLAY-6DF4D4-DESCRIPTORS managed EUR/Wine
+(2026-10-31).** e98-d97 publishes 23 pointers and 684 typed descriptors: 87 previous
+resources identical, bank 0 and bank 22 gap remain raw, consistent edit rejected and
+five native prefixes equivalent to interpreter. CLI, ordinary use and Linux/USA remain
+open; no performance measurement.
+[Evidence](../rom_data_gameplay.md#managed-conditional-descriptor-banks).
 
 
-**ROMDATA-04-GAMEPLAY-6DF4D4-CLI EUR/Wine (2026-10-31).** La CLI di
-produzione crea e riusa e98-d97 e avanza un frame: 89 file identici al dataset
-accettato, 88 identità runtime verificate e file gestiti invariati. Contatori
-dei descrittori a zero nel frame; uso ordinario e Linux/USA restano aperti.
-[Prove](../rom_data_gameplay.md#conditional-descriptor-banks-production-cli).
+**ROMDATA-04-GAMEPLAY-6DF4D4-CLI EUR/Wine (2026-10-31).** Production CLI creates
+and reuses e98-d97 and advances one frame: 89 files identical to accepted dataset,
+88 runtime identities verified and managed files unchanged. Descriptor counters zero
+in the frame; ordinary use and Linux/USA remain open.
+[Evidence](../rom_data_gameplay.md#conditional-descriptor-banks-production-cli).
 
 
-**ROMDATA-05-GAMEPLAY-6DF4D4-ORDINARY-ROUTE candidato EUR (2026-10-31).**
-Il renderer originale del pannello Abilità legge puntatori e descrittori della
-banca dell'unità; stato e input già conservati raggiungono il pannello. L'uso
-e98 non è ancora osservato. Un solo segmento Wine di540 frame lo verifica.
-[Prove](../rom_data_gameplay.md#conditional-descriptor-banks-ordinary-route-candidate).
+**ROMDATA-05-GAMEPLAY-6DF4D4-ORDINARY-ROUTE EUR candidate (2026-10-31).** Original
+Abilità panel renderer reads pointers and descriptors from unit bank; already retained
+state and input reach the panel. e98 use is not yet observed. One 540-frame Wine segment
+checks it.
+[Evidence](../rom_data_gameplay.md#conditional-descriptor-banks-ordinary-route-candidate).
 
 
-**ROMDATA-05-GAMEPLAY-6DF4D4-ORDINARY positivo EUR/Wine (2026-10-31).**
-La sequenza Abilità di540 frame legge64 byte tipizzati:52 puntatori,6 campo0,
-6 campo2; gli altri campi restano non osservati. Confronto completo, altre
-scene e Linux/USA restano aperti; nessuna misura prestazionale.
-[Prove](../rom_data_gameplay.md#ordinary-descriptor-use-in-ability-navigation).
+**ROMDATA-05-GAMEPLAY-6DF4D4-ORDINARY positive EUR/Wine (2026-10-31).** The
+540-frame Abilità sequence reads 64 typed bytes: 52 pointers, 6 field 0, 6 field 2;
+other fields remain unobserved. Full comparison, other scenes and Linux/USA remain
+open; no performance measurement.
+[Evidence](../rom_data_gameplay.md#ordinary-descriptor-use-in-ability-navigation).
 
 
-**ROMDATA-05-GAMEPLAY-6DF4D4-ORDINARY-PAIR EUR/Wine (2026-10-31).**
-Sulla stessa sequenza Abilità di540 frame coincidono stato/clock, video, OAM,
-dispatch e audio; nella stessa prova52 byte puntatore e6+6 byte dei campi0/2
-sono tipizzati. Campo4/tipo/byte7 e Linux/USA restano aperti; nessuna misura
-prestazionale. [Prove](../rom_data_gameplay.md#ordinary-ability-descriptor-scene-differential).
+**ROMDATA-05-GAMEPLAY-6DF4D4-ORDINARY-PAIR EUR/Wine (2026-10-31).** In the same
+540-frame Abilità sequence, state/clock, video, OAM, dispatch and audio match; in the
+same test 52 pointer bytes and 6+6 bytes of fields 0/2 are typed. Field 4/type/byte 7
+and Linux/USA remain open; no performance measurement.
+[Evidence](../rom_data_gameplay.md#ordinary-ability-descriptor-scene-differential).
 
 
-**ROMDATA-01-GAMEPLAY-6DF4D4-BANK0 fonte EUR condizionale (2026-10-31).**
-Il produttore originale legge pointer0 e può enumerare record1..15 quando
-unit+37 è nonzero; un inizializzatore può impostarlo per unit+7=24. Nessun
-testimone ordinario nei62 snapshot esaminati; record0 e altri indici restano
-raw, senza limite guest inventato. Modello/runtime e Linux/USA restano aperti.
-[Contratto](../rom_data_gameplay.md#conditional-descriptor-bank-0-source).
+**ROMDATA-01-GAMEPLAY-6DF4D4-BANK0 conditional EUR source (2026-10-31).** Original
+producer reads pointer 0 and may enumerate records 1..15 when unit+37 is nonzero;
+an initializer may set it for unit+7=24. No ordinary witness in 62 snapshots examined;
+record 0 and other indices remain raw, with no invented guest limit. Model/runtime and
+Linux/USA remain open.
+[Contract](../rom_data_gameplay.md#conditional-descriptor-bank-0-source).
 
 
-**ROMDATA-02-GAMEPLAY-6DF4D4-BANK0 modello EUR/Wine (2026-10-31).**
-Modello rigoroso per pointer0 e record1..15; predicato, store, modalità3 e
-scansione originali passano su Wine per slot zero/nonzero. Record0 rimane raw;
-uso ordinario, pubblicazione/runtime e Linux/USA restano aperti.
-[Prove](../rom_data_gameplay.md#typed-conditional-descriptor-bank-0-model).
+**ROMDATA-02-GAMEPLAY-6DF4D4-BANK0 EUR/Wine model (2026-10-31).** Strict model for
+pointer 0 and records 1..15; original predicate, store, mode 3 and scan pass on Wine
+for zero/nonzero slots. Record 0 remains raw; ordinary use, publication/runtime and
+Linux/USA remain open.
+[Evidence](../rom_data_gameplay.md#typed-conditional-descriptor-bank-0-model).
 
 
-**ROMDATA-03-04-GAMEPLAY-6DF4D4-BANK0 gestito EUR/Wine (2026-10-31).**
-e99-d98 pubblica pointer0 e15 descrittori: 88 risorse precedenti identiche,
-confini con banca1 composti e record0 raw, modifica coerente rifiutata, tre
-prefissi nativi equivalenti. CLI, uso ordinario e Linux/USA restano aperti;
-nessuna misura prestazionale.
-[Prove](../rom_data_gameplay.md#managed-conditional-descriptor-bank-0).
+**ROMDATA-03-04-GAMEPLAY-6DF4D4-BANK0 managed EUR/Wine (2026-10-31).** e99-d98
+publishes pointer 0 and 15 descriptors: 88 previous resources identical, boundaries
+with bank 1 composed and record 0 raw, consistent edit rejected, three native prefixes
+equivalent. CLI, ordinary use and Linux/USA remain open; no performance measurement.
+[Evidence](../rom_data_gameplay.md#managed-conditional-descriptor-bank-0).
 
 
-**ROMDATA-04-GAMEPLAY-6DF4D4-BANK0-CLI EUR/Wine (2026-10-31).** La CLI
-di produzione crea e riusa e99-d98 e avanza un frame: 90 file identici al
-dataset accettato, 89 identità runtime verificate e file gestiti invariati.
-Uso ordinario e Linux/USA restano aperti; nessuna misura prestazionale.
-[Prove](../rom_data_gameplay.md#conditional-descriptor-bank-0-production-cli).
+**ROMDATA-04-GAMEPLAY-6DF4D4-BANK0-CLI EUR/Wine (2026-10-31).** Production CLI
+creates and reuses e99-d98 and advances one frame: 90 files identical to accepted
+dataset, 89 runtime identities verified and managed files unchanged. Ordinary use and
+Linux/USA remain open; no performance measurement.
+[Evidence](../rom_data_gameplay.md#conditional-descriptor-bank-0-production-cli).
 
 
-**ROMDATA-05-GAMEPLAY-6DF4D4-BANK0-ORDINARY-PAIR EUR/Wine (2026-10-31).**
-La schermata informazioni Item usa pointer0 e i campi0/2/tipo/byte7 dei
-record. Sulla stessa sequenza ordinaria di800 frame il confronto ROM grezza
-e dataset e99 coincide per stato/clock, video, OAM, dispatch e audio; il
-campo4 non è osservato. Entrambi i lati condividono la cache nativa: Linux,
-USA e Windows nativo restano da verificare. Nessuna misura prestazionale.
-[Prove](../rom_data_gameplay.md#ordinary-item-info-access-to-descriptor-bank-0).
+**ROMDATA-05-GAMEPLAY-6DF4D4-BANK0-ORDINARY-PAIR EUR/Wine (2026-10-31).** Item
+information screen uses pointer 0 and fields 0/2/type/byte 7 of records. On the same
+800-frame ordinary sequence raw ROM and e99 dataset comparison matches state/clock,
+video, OAM, dispatch and audio; field 4 not observed. Both sides share native cache:
+Linux, USA and native Windows remain to verify. No performance measurement.
+[Evidence](../rom_data_gameplay.md#ordinary-item-info-access-to-descriptor-bank-0).
 
 
-**ROMDATA-05-GAMEPLAY-6DF4D4-BANK0-FIELD4-PAIR EUR/Wine (2026-10-31).**
-Nel menu Item in battaglia una sequenza esistente di340 frame legge32 byte
-tipizzati del campo4 della banca0. Il confronto ROM grezza/e99 coincide
-per stato/clock, video, OAM, dispatch e audio, usando la stessa cache nativa
-in entrambi i lati. Linux, USA e Windows nativo restano da verificare; nessuna
-misura prestazionale. [Prove](../rom_data_gameplay.md#ordinary-battle-item-menu-bank-0-field-4).
+**ROMDATA-05-GAMEPLAY-6DF4D4-BANK0-FIELD4-PAIR EUR/Wine (2026-10-31).** In battle
+Item menu an existing 340-frame sequence reads 32 typed bytes of bank 0 field 4. Raw
+ROM/e99 comparison matches state/clock, video, OAM, dispatch and audio, using the same
+native cache on both sides. Linux, USA and native Windows remain to verify; no performance
+measurement.
+[Evidence](../rom_data_gameplay.md#ordinary-battle-item-menu-bank-0-field-4).
 
 
-**ROMDATA-05-GAMEPLAY-6DF4D4-BANKS-KIND-RECONCILE EUR/Wine (2026-10-31).**
-Il log già conservato della scena Item in battaglia registra anche4 byte
-puntatore e1 byte tipo della risorsa descrittori banche1..23. È uso aggregato,
-senza attribuzione al singolo record/PC; il confronto della scena verifica
-la banca0 senza asserire questa risorsa secondaria. Campo4/byte7 ordinari,
-Linux e USA restano aperti. Nessun replay o misura prestazionale.
-[Prove](../rom_data_gameplay.md#ordinary-ability-descriptor-scene-differential).
+**ROMDATA-05-GAMEPLAY-6DF4D4-BANKS-KIND-RECONCILE EUR/Wine (2026-10-31).** Already
+retained battle Item scene log also records 4 pointer bytes and 1 type byte of the
+banks 1..23 descriptor resource. This is aggregate use, without individual record/PC
+attribution; scene comparison verifies bank 0 without asserting this secondary resource.
+Ordinary field 4/byte 7, Linux and USA remain open. No replay or performance measurement.
+[Evidence](../rom_data_gameplay.md#ordinary-ability-descriptor-scene-differential).
 
 
-**ROMDATA-05-GAMEPLAY-6DF4D4-BANKS-INFO-PAIR EUR/Wine (2026-10-31).**
-La schermata Battle Tech già registrata legge10 byte tipo e10 byte7 tipizzati
-dei descrittori banche1..23. Su800 frame il confronto ROM grezza/e99 coincide
-per stato/clock, video, OAM, dispatch e audio; campo4 non osservato e cache
-nativa condivisa. Linux, USA e Windows nativo restano da verificare; nessuna
-misura prestazionale. [Prove](../rom_data_gameplay.md#ordinary-battle-tech-descriptor-information).
+**ROMDATA-05-GAMEPLAY-6DF4D4-BANKS-INFO-PAIR EUR/Wine (2026-10-31).** Already
+recorded Battle Tech screen reads 10 typed type bytes and 10 byte 7 values of descriptors
+in banks 1..23. Over 800 frames raw ROM/e99 comparison matches state/clock, video, OAM,
+dispatch and audio; field 4 not observed and native cache shared. Linux, USA and native
+Windows remain to verify; no performance measurement.
+[Evidence](../rom_data_gameplay.md#ordinary-battle-tech-descriptor-information).
 
 
-**ROMDATA-05-GAMEPLAY-6DF4D4-BANKS-FIELD4-PAIR EUR/Wine (2026-10-31).**
-Nel menu Steal una sequenza conservata di280 frame legge60 byte tipizzati del
-campo4 nelle banche1..23. Il confronto ROM grezza/e99 coincide per stato/clock,
-video, OAM, dispatch e audio; entrambi i lati usano la stessa cache nativa.
-Linux, USA e Windows nativo restano da verificare; nessuna misura prestazionale.
-[Prove](../rom_data_gameplay.md#ordinary-steal-menu-descriptor-field-4).
+**ROMDATA-05-GAMEPLAY-6DF4D4-BANKS-FIELD4-PAIR EUR/Wine (2026-10-31).** In Steal
+menu a retained 280-frame sequence reads 60 typed bytes of field 4 in banks 1..23.
+Raw ROM/e99 comparison matches state/clock, video, OAM, dispatch and audio; both sides
+use same native cache. Linux, USA and native Windows remain to verify; no performance
+measurement.
+[Evidence](../rom_data_gameplay.md#ordinary-steal-menu-descriptor-field-4).
 
 
-**ROMDATA-01-GAMEPLAY-6E0B44-MASKS fonte EUR condizionale (2026-10-31).**
-Tre lettori originali indicizzano maschere u32 con proprietà metadata52 0x24.
-Le116 righe autenticate producono tutti gli indici0..34; l'intervallo sorgente
-6e0b44..6e0bd0 contiene35 parole ed è distinto dalle risorse e99. Selettori
-dinamici/invalidi non sono globalmente limitati: nessun cap guest. Modello,
-runtime, uso ordinario e Linux/USA restano aperti; nessuna misura prestazionale.
-[Contratto](../rom_data_gameplay.md#conditional-property-selected-mask-table).
+**ROMDATA-01-GAMEPLAY-6E0B44-MASKS conditional EUR source (2026-10-31).**
+Three original readers index u32 masks using metadata52 property 0x24. The 116
+authenticated rows produce all indices 0..34; source range 6e0b44..6e0bd0 contains
+35 words and is distinct from e99 resources. Dynamic/invalid selectors are not globally
+bounded: no guest cap. Model, runtime, ordinary use and Linux/USA remain open; no
+performance measurement.
+[Contract](../rom_data_gameplay.md#conditional-property-selected-mask-table).
 
 
-**ROMDATA-02-GAMEPLAY-6E0B44-MASKS modello EUR/Wine (2026-10-31).**
-Modello rigoroso lossless di35 maschere u32/140 byte, senza limiti guest
-aggiunti; Wine verifica byte, confini, selettori originali e indici esterni.
-Pubblicazione/runtime, uso ordinario, Linux e USA restano aperti; nessuna
-misura prestazionale. [Prove](../rom_data_gameplay.md#conditional-property-selected-mask-table).
+**ROMDATA-02-GAMEPLAY-6E0B44-MASKS EUR/Wine model (2026-10-31).** Strict lossless
+model of 35 u32 masks/140 bytes, without added guest limits; Wine checks bytes,
+boundaries, original selectors and external indices. Publication/runtime, ordinary
+use, Linux and USA remain open; no performance measurement.
+[Evidence](../rom_data_gameplay.md#conditional-property-selected-mask-table).
 
 
-**ROMDATA-03-04-GAMEPLAY-6E0B44-MASKS gestito EUR/Wine (2026-10-31).**
-e100-d99 pubblica35 maschere tipizzate, conserva esattamente89 risorse
-precedenti, compone i confini con i proprietari adiacenti e rifiuta modifiche
-coerenti; un prefisso nativo originale coincide con l'interprete nei sei casi
-selezionati. CLI, uso ordinario, Linux e USA restano aperti; nessuna misura
-prestazionale. [Prove](../rom_data_gameplay.md#conditional-property-selected-mask-table).
+**ROMDATA-03-04-GAMEPLAY-6E0B44-MASKS managed EUR/Wine (2026-10-31).** e100-d99
+publishes 35 typed masks, retains exactly 89 previous resources, composes boundaries
+with adjacent owners and rejects consistent edits; one original native prefix matches
+the interpreter in the six selected cases. CLI, ordinary use, Linux and USA remain
+open; no performance measurement.
+[Evidence](../rom_data_gameplay.md#conditional-property-selected-mask-table).
 
 
-**ROMDATA-04-GAMEPLAY-6E0B44-MASKS-CLI EUR/Wine (2026-10-31).**
-La CLI di produzione crea e riusa e100-d99 e avanza un frame neutro:91 file
-identici al dataset accettato,90 identità runtime verificate e file gestiti
-invariati. Le maschere non sono lette nel frame; uso ordinario e Linux/USA
-restano aperti. Nessuna misura prestazionale.
-[Prove](../rom_data_gameplay.md#conditional-property-selected-mask-table).
+**ROMDATA-04-GAMEPLAY-6E0B44-MASKS-CLI EUR/Wine (2026-10-31).** Production CLI
+creates and reuses e100-d99 and advances one neutral frame: 91 files identical to
+accepted dataset, 90 runtime identities verified and managed files unchanged. Masks
+are not read in the frame; ordinary use and Linux/USA remain open. No performance
+measurement.
+[Evidence](../rom_data_gameplay.md#conditional-property-selected-mask-table).
 
 
 **ROMDATA-05-GAMEPLAY-6E0B44-MASKS-ORDINARY-PAIR EUR/Wine (2026-10-31).**
-La lista copricapi conservata legge91 volte le maschere tipizzate (364 byte
-aggregati). Il confronto ROM grezza/e100 per560 frame coincide per stato/clock,
-video, OAM, dispatch e audio; i due lati condividono la cache nativa. Linux,
-USA e Windows nativo restano da verificare; nessuna misura prestazionale.
-[Prove](../rom_data_gameplay.md#conditional-property-selected-mask-table).
+Retained headgear list reads typed masks 91 times (364 aggregate bytes). Raw ROM/e100
+comparison over 560 frames matches state/clock, video, OAM, dispatch and audio; both
+sides share native cache. Linux, USA and native Windows remain to verify; no performance
+measurement.
+[Evidence](../rom_data_gameplay.md#conditional-property-selected-mask-table).
 
 
-**ROMDATA-04-DYNAMIC-FRAGMENT-USAGE-CLI EUR/Wine (2026-10-31).**
-I frammenti dinamici espongono contatori separati per richieste, byte selettore
-e payload. Un frame neutro della CLI Windows sotto Wine emette la nuova riga
-con contatori zero, riusando il dataset e100 senza modifiche; uso ordinario,
-Linux e USA restano aperti. Nessuna misura prestazionale.
-[Prove](../rom_data_ui_raw_transfers.md#managed-dynamic-fragment-resource).
+**ROMDATA-04-DYNAMIC-FRAGMENT-USAGE-CLI EUR/Wine (2026-10-31).** Dynamic fragments
+expose separate counters for requests, selector bytes and payload. One neutral frame
+of Windows CLI under Wine emits the new line with zero counters, reusing e100 dataset
+without changes; ordinary use, Linux and USA remain open. No performance measurement.
+[Evidence](../rom_data_ui_raw_transfers.md#managed-dynamic-fragment-resource).
 
 
-**ROMDATA-01-E100-UNOWNED-ROOT-CENSUS candidati EUR (2026-10-31).**
-Una ricerca limitata nell'intervallo storico 6b3428..6df2dc, esclusi gli
-intervalli già posseduti dal manifest e100, trova71 indirizzi con possibili
-lettori Thumb PC-relative. Sono candidati statici: istruzioni effettive,
-estensioni, formato e uso ordinario restano da dimostrare. Il conteggio non
-indica risorse migrate né copertura complessiva; nessuna misura prestazionale.
+**ROMDATA-01-E100-UNOWNED-ROOT-CENSUS EUR candidates (2026-10-31).**
+A bounded search in the historical 6b3428..6df2dc range, excluding ranges
+already owned by the e100 manifest, finds 71 addresses with possible Thumb
+PC-relative readers. These are static candidates: actual instructions, extents,
+format and ordinary use remain to be demonstrated. The count does not indicate
+migrated resources or overall coverage; no performance measurement.
 
 
-**ROMDATA-01-E100-ROOT-6B9B80 fonte EUR condizionale (2026-10-31).**
-I lettori originali usano directory OBJ e sequenze compatte con offset u16.
-I selettori0..7,9,10 attestati nei chiamanti coprono174 frame e232 oggetti,
-2.028 byte in cinque intervalli senza sovrapposizione agli owner e100. La
-sequenza8 e dieci liste aggiuntive restano candidati fisicamente coerenti,
-senza testimone; non viene imposto alcun limite guest. Modello, runtime, uso
-ordinario, Linux e USA restano aperti. Nessuna misura prestazionale.
-[Contratto](../rom_data_obj.md#conditional-compact-obj-animation-source-at-6b9b80).
+**ROMDATA-01-E100-ROOT-6B9B80 conditional EUR source (2026-10-31).**
+Original readers use OBJ directories and compact sequences with u16 offsets.
+Selectors 0..7,9,10 attested by callers cover 174 frames and 232 objects,
+2.028 bytes in five ranges without overlap with e100 owners. Sequence 8 and ten
+additional lists remain physically consistent candidates without witnesses;
+no guest limit is imposed. Model, runtime, ordinary use, Linux and USA remain
+open. No performance measurement.
+[Contract](../rom_data_obj.md#conditional-compact-obj-animation-source-at-6b9b80).
 
 
-**ROMDATA-02-E100-ROOT-6B9B80 modello EUR/Wine (2026-10-31).**
-Il modello tipizzato ricostruisce i2.028 byte attestati, verifica la sorgente e
-conserva la semantica esterna alla proiezione. Un test Wine verifica confini,
-JSON, manomissioni e prefissi originali per10 sequenze,174 frame e61 liste.
-Pubblicazione/runtime, uso ordinario, Linux e USA restano aperti; nessuna misura
-prestazionale. [Prove](../rom_data_obj.md#conditional-compact-obj-animation-source-at-6b9b80).
+**ROMDATA-02-E100-ROOT-6B9B80 EUR/Wine model (2026-10-31).**
+The typed model reconstructs the 2.028 attested bytes, verifies the source and
+preserves semantics outside the projection. A Wine test verifies boundaries,
+JSON, tampering and original prefixes for 10 sequences, 174 frames and 61 lists.
+Publication/runtime, ordinary use, Linux and USA remain open; no performance
+measurement. [Evidence](../rom_data_obj.md#conditional-compact-obj-animation-source-at-6b9b80).
 
 
 **ROMDATA-03-04-E100-COMPACT-OBJ EUR/Wine (2026-10-31).**
-La generazione e101-d100 pubblica i cinque intervalli OBJ attestati:90 risorse
-precedenti identiche, byte e confini misti verificati, rifiuto transazionale
-delle modifiche e confronto nativo/interprete di un prefisso originale per
-10 selettori gestiti più il fallback8. CLI, uso ordinario, Linux e USA restano
-aperti; nessuna misura prestazionale.
-[Prove](../rom_data_obj.md#conditional-compact-obj-animation-source-at-6b9b80).
+Generation e101-d100 publishes the five attested OBJ ranges: 90 previous
+resources identical, bytes and mixed boundaries verified, transactional rejection
+of modifications and native/interpreter comparison of one original prefix for
+10 managed selectors plus fallback 8. CLI, ordinary use, Linux and USA remain
+open; no performance measurement.
+[Evidence](../rom_data_obj.md#conditional-compact-obj-animation-source-at-6b9b80).
 
 
 **ROMDATA-04-E101-COMPACT-OBJ-CLI EUR/Wine (2026-10-31).**
-La CLI di produzione crea e riusa e101-d100, conserva92 file identici al
-dataset accettato e riconosce91 risorse all'avvio di un frame neutro. Contatori
-OBJ compatti zero in quel frame; uso ordinario, Linux e USA restano aperti.
-Nessuna misura prestazionale.
-[Prove](../rom_data_obj.md#conditional-compact-obj-animation-source-at-6b9b80).
+The production CLI creates and reuses e101-d100, retains 92 files identical to
+the accepted dataset and recognizes 91 resources on startup of one neutral frame.
+Compact OBJ counters are zero in that frame; ordinary use, Linux and USA remain
+open. No performance measurement.
+[Evidence](../rom_data_obj.md#conditional-compact-obj-animation-source-at-6b9b80).
 
 
-**ROMDATA-01-E101-ROOT-6C6460 fonte EUR condizionale (2026-10-31).**
-Sei chiamanti originali attestano i selettori0/11/12/13 del formato OBJ
-compatto:29 frame,19 liste e30 oggetti,334 byte in cinque intervalli senza
-conflitti e101. Il resto della struttura fisica non ha testimone dei chiamanti;
-modello, runtime, uso ordinario, Linux e USA restano aperti. Nessun limite
-guest aggiunto o misura prestazionale.
-[Contratto](../rom_data_obj.md#conditional-compact-obj-animation-source-at-6c6460).
+**ROMDATA-01-E101-ROOT-6C6460 conditional EUR source (2026-10-31).**
+Six original callers attest selectors 0/11/12/13 of the compact OBJ format:
+29 frames, 19 lists and 30 objects, 334 bytes in five ranges without e101
+conflicts. The rest of the physical structure has no caller witness; model,
+runtime, ordinary use, Linux and USA remain open. No guest limit added or
+performance measurement.
+[Contract](../rom_data_obj.md#conditional-compact-obj-animation-source-at-6c6460).
 
 
-**ROMDATA-02-E101-ROOT-6C6460 modello EUR/Wine (2026-10-31).**
-Il modello sparso autentica e ricostruisce334 byte e mantiene fuori i vuoti;
-Wine verifica byte, confini, modifiche e lettori originali per4 sequenze,
-29 frame e19 liste. Runtime, uso ordinario, Linux e USA restano aperti;
-nessuna misura prestazionale.
-[Prove](../rom_data_obj.md#conditional-compact-obj-animation-source-at-6c6460).
+**ROMDATA-02-E101-ROOT-6C6460 EUR/Wine model (2026-10-31).**
+The sparse model authenticates and reconstructs 334 bytes while excluding gaps;
+Wine verifies bytes, boundaries, modifications and original readers for 4 sequences,
+29 frames and 19 lists. Runtime, ordinary use, Linux and USA remain open;
+no performance measurement.
+[Evidence](../rom_data_obj.md#conditional-compact-obj-animation-source-at-6c6460).
 
 
 **ROMDATA-03-04-E101-SECONDARY-COMPACT-OBJ EUR/Wine (2026-10-31).**
-La generazione e102-d101 pubblica334 byte attestati in cinque intervalli;
-91 risorse precedenti identiche, confini e rifiuto transazionale verificati,
-confronto nativo/interprete di un prefisso per4 selettori e fallback1. CLI,
-uso ordinario, Linux e USA restano aperti; nessuna misura prestazionale.
-[Prove](../rom_data_obj.md#conditional-compact-obj-animation-source-at-6c6460).
+Generation e102-d101 publishes 334 attested bytes in five ranges; 91 previous
+resources identical, boundaries and transactional rejection verified, native/
+interpreter comparison of one prefix for 4 selectors and fallback 1. CLI,
+ordinary use, Linux and USA remain open; no performance measurement.
+[Evidence](../rom_data_obj.md#conditional-compact-obj-animation-source-at-6c6460).
 
 
 **ROMDATA-04-E102-SECONDARY-COMPACT-OBJ-CLI EUR/Wine (2026-10-31).**
-La CLI crea e riusa e102-d101, mantiene93 file identici al dataset accettato
-e riconosce92 risorse all'avvio di un frame neutro. Contatori della nuova banca
-zero in quel frame; uso ordinario, Linux e USA restano aperti. Nessuna misura
-prestazionale. [Prove](../rom_data_obj.md#conditional-compact-obj-animation-source-at-6c6460).
+The CLI creates and reuses e102-d101, retains 93 files identical to the accepted
+dataset and recognizes 92 resources on startup of one neutral frame. New bank
+counters are zero in that frame; ordinary use, Linux and USA remain open. No
+performance measurement. [Evidence](../rom_data_obj.md#conditional-compact-obj-animation-source-at-6c6460).
 
 
-**ROMDATA-01-E102-ROOT-6BF490 fonte EUR condizionale (2026-10-31).**
-Cinque chiamanti originali attestano selettori2/3:11 frame,8 liste e7 oggetti,
-inclusa una lista vuota,108 byte in cinque intervalli senza conflitti e102.
-Il resto della struttura non è attestato dai chiamanti; modello, runtime,
-uso ordinario, Linux e USA restano aperti. Nessuna misura prestazionale.
-[Contratto](../rom_data_obj.md#conditional-compact-obj-animation-source-at-6bf490).
+**ROMDATA-01-E102-ROOT-6BF490 conditional EUR source (2026-10-31).**
+Five original callers attest selectors 2/3: 11 frames, 8 lists and 7 objects,
+including an empty list, 108 bytes in five ranges without e102 conflicts.
+The rest of the structure is not attested by callers; model, runtime,
+ordinary use, Linux and USA remain open. No performance measurement.
+[Contract](../rom_data_obj.md#conditional-compact-obj-animation-source-at-6bf490).
 
 
-**ROMDATA-02-E102-ROOT-6BF490 modello EUR/Wine (2026-10-31).**
-Il modello sparso autentica e ricostruisce108 byte, compresa la lista vuota;
-Wine verifica byte, confini, modifiche e lettori originali per2 sequenze,
-11 frame e8 liste. Runtime, uso ordinario, Linux e USA restano aperti;
-nessuna misura prestazionale.
-[Prove](../rom_data_obj.md#conditional-compact-obj-animation-source-at-6bf490).
+**ROMDATA-02-E102-ROOT-6BF490 EUR/Wine model (2026-10-31).**
+The sparse model authenticates and reconstructs 108 bytes, including the empty
+list; Wine verifies bytes, boundaries, modifications and original readers for
+2 sequences, 11 frames and 8 lists. Runtime, ordinary use, Linux and USA remain
+open; no performance measurement.
+[Evidence](../rom_data_obj.md#conditional-compact-obj-animation-source-at-6bf490).
 
 
 **ROMDATA-03-04-E102-TERTIARY-COMPACT-OBJ EUR/Wine (2026-10-31).**
-La generazione e103-d102 pubblica108 byte attestati in cinque intervalli;
-92 risorse precedenti identiche, confini e rifiuto transazionale verificati,
-confronto nativo/interprete di un prefisso per2 selettori e fallback0. CLI,
-uso ordinario, Linux e USA restano aperti; nessuna misura prestazionale.
-[Prove](../rom_data_obj.md#conditional-compact-obj-animation-source-at-6bf490).
+Generation e103-d102 publishes 108 attested bytes in five ranges; 92 previous
+resources identical, boundaries and transactional rejection verified, native/
+interpreter comparison of one prefix for 2 selectors and fallback 0. CLI,
+ordinary use, Linux and USA remain open; no performance measurement.
+[Evidence](../rom_data_obj.md#conditional-compact-obj-animation-source-at-6bf490).
 
 
 **ROMDATA-04-E103-TERTIARY-COMPACT-OBJ-CLI EUR/Wine (2026-10-31).**
-La CLI crea e riusa e103-d102, mantiene94 file identici al dataset accettato
-e riconosce93 risorse all'avvio di un frame neutro. Contatori della nuova banca
-zero in quel frame; uso ordinario, Linux e USA restano aperti. Nessuna misura
-prestazionale. [Prove](../rom_data_obj.md#conditional-compact-obj-animation-source-at-6bf490).
+The CLI creates and reuses e103-d102, retains 94 files identical to the accepted
+dataset and recognizes 93 resources on startup of one neutral frame. New bank
+counters are zero in that frame; ordinary use, Linux and USA remain open. No
+performance measurement. [Evidence](../rom_data_obj.md#conditional-compact-obj-animation-source-at-6bf490).

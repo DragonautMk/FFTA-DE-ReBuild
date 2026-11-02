@@ -44,6 +44,14 @@ with localized status and read-only notice; its task IDs and states are shared.
 The read-only cheat catalog localizes its labels, status and notices using the
 language selected when opened or reloaded. Original imported descriptions,
 code lines, source identifiers and catalog JSON remain unchanged.
+The content selector also localizes its filter and detail instructions, item
+count and selection footer without translating entered values or identifiers.
+Atlas, information and tool prompts use English source keys; older keys remain
+available for compatibility with existing callers.
+Sidebar labels use English presentation keys while existing debug-route names
+remain stable for operation grouping.
+Input-tab and information focus labels follow the current menu language in
+diagnostic views; their structured page and item identifiers remain unchanged.
 The debug save catalog localizes its status labels and detail headings while
 retaining its original filter tokens and imported case data.
 

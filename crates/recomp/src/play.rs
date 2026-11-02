@@ -2730,11 +2730,11 @@ impl PlayApp {
                 if let Some(stamp) = metadata.modified().ok().and_then(|time| time.duration_since(std::time::UNIX_EPOCH).ok()).map(|d| d.as_secs()) {
                     self.menu.set_standard_save_timestamp(stamp);
                 } else {
-                    self.menu.set_standard_save_status("Ultima modifica file .sav: data non disponibile".into());
+                    self.menu.set_standard_save_status("Last .sav modification: date unavailable".into());
                 }
             }
-            Err(e) if e.kind()==std::io::ErrorKind::NotFound => self.menu.set_standard_save_status("Nessun salvataggio standard trovato".into()),
-            Err(_) => self.menu.set_standard_save_status("File .sav: metadati non disponibili".into()),
+            Err(e) if e.kind()==std::io::ErrorKind::NotFound => self.menu.set_standard_save_status("No standard save found".into()),
+            Err(_) => self.menu.set_standard_save_status(".sav file: metadata unavailable".into()),
         }
         self.menu.set_state_undo_description(self.state_slots.undo_description());
         let expected = self.machine.bus.save_data().map_or(0, |data| data.len());

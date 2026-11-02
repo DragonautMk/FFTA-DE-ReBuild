@@ -55,12 +55,12 @@ pub(super) fn draw(menu: &Menu, px: &mut [[u8; 4]], w: usize, h: usize) {
                     "Slot {} / 99 · {}{}",
                     menu.game_save_slot + 1,
                     menu.tr(&s.status),
-                    if s.current { menu.tr(" · attivo") } else { "" }
+                    if s.current { menu.tr(" · active") } else { "" }
                 )
             })
-            .unwrap_or_else(|| menu.tr("Salvataggi non disponibili").into())
+            .unwrap_or_else(|| menu.tr("Saves unavailable").into())
     } else {
-        menu.tr("Backup cartuccia · due copie automatiche").into()
+        menu.tr("Cartridge backup · two automatic copies").into()
     };
     c.text(
         8.,
@@ -116,9 +116,9 @@ pub(super) fn draw(menu: &Menu, px: &mut [[u8; 4]], w: usize, h: usize) {
                 (ix + 4) as f32,
                 (iy + ih / 2) as f32,
                 if slot.occupied {
-                    menu.tr("Anteprima non disponibile")
+                    menu.tr("Preview unavailable")
                 } else {
-                    menu.tr("Slot vuoto")
+                    menu.tr("Empty slot")
                 },
                 MUTED,
                 fs * 0.8,
@@ -132,7 +132,7 @@ pub(super) fn draw(menu: &Menu, px: &mut [[u8; 4]], w: usize, h: usize) {
             .copied()
             .flatten()
             .and_then(clan_atlas::timestamp_utc)
-            .unwrap_or_else(|| menu.tr("Data non disponibile").into());
+            .unwrap_or_else(|| menu.tr("Date unavailable").into());
         c.text(
             detail.x as f32,
             (iy + ih + 5) as f32,
@@ -149,11 +149,11 @@ pub(super) fn draw(menu: &Menu, px: &mut [[u8; 4]], w: usize, h: usize) {
                 .get(menu.game_save_slot)
                 .map(|s| s.name.as_str())
                 .unwrap_or("");
-            menu.tr_format("{name}\nLe copie contengono il progresso salvato nel gioco. Usare un file riavvia il gioco. Sostituire richiede conferma; Annulla è preselezionato.", &[("name", (name).to_string())])
+            menu.tr_format("{name}\nCopies contain progress saved in the game. Using a file restarts the game. Replacing requires confirmation; Cancel is selected by default.", &[("name", (name).to_string())])
         } else if menu.page == Page::RestoreBackup {
-            menu.tr("Il gioco riparte da questa copia. Confermare sostituisce il salvataggio cartuccia attivo; il progresso della sessione viene sostituito.").into()
+            menu.tr("The game restarts from this copy. Confirm replaces the active cartridge save and the session's progress.").into()
         } else {
-            menu.tr("Copie automatiche create all'avvio. Selezionare una copia richiede conferma prima del ripristino.").into()
+            menu.tr("Automatic copies created at startup. Selecting a copy requires confirmation before restoring.").into()
         };
         for (i, line) in Canvas::wrap_text(&description, fs, detail.w as f32)
             .iter()
@@ -188,7 +188,7 @@ pub(super) fn draw(menu: &Menu, px: &mut [[u8; 4]], w: usize, h: usize) {
             Row::GameSaveSlot => format!("‹ Slot {} / 99 ›", menu.game_save_slot + 1),
             Row::UndoState => menu
                 .state_undo_text()
-                .unwrap_or_else(|| menu.tr("Annulla ultima operazione").into()),
+                .unwrap_or_else(|| menu.tr("Undo last operation").into()),
             Row::Backup(copy) => format!(
                 "{} · {}",
                 row.localized_label(menu.language()),
@@ -203,7 +203,7 @@ pub(super) fn draw(menu: &Menu, px: &mut [[u8; 4]], w: usize, h: usize) {
                         | Page::RestoreBackup
                 ) =>
             {
-                menu.tr("Annulla").into()
+                menu.tr("Cancel").into()
             }
             _ => row.localized_label(menu.language()).into(),
         };
@@ -231,7 +231,7 @@ pub(super) fn draw(menu: &Menu, px: &mut [[u8; 4]], w: usize, h: usize) {
         8.,
         (h.saturating_sub(18)) as f32,
         if message.is_empty() {
-            menu.tr("Frecce: naviga · OK: scegli/conferma · Annulla: indietro")
+            menu.tr("Arrows: navigate · OK: choose/confirm · Cancel: back")
         } else {
             menu.tr(message)
         },

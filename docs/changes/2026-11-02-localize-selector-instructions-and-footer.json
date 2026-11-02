@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "localize-selector-instructions-and-footer",
+  "title": "Localize selector instructions and footer",
+  "kind": "changed",
+  "platforms": [
+    "Desktop menu"
+  ],
+  "changes": [
+    "Use English source keys for cheat detail and filter instructions, and localize the selector item count and selected-item footer while preserving dynamic values and legacy keys."
+  ],
+  "validation": [
+    "Offline Linux combined menu/screen build passed all 16 content selector tests, including rendered English/Italian instructions and literal placeholder-containing values. Both language catalogs passed the 513-entry consistency check."
+  ],
+  "limitations": [
+    "Native Windows, physical input and a full runtime frontend build were not checked; broader English-first audit remains open."
+  ],
+  "files": [
+    "crates/menu/src/content_selector.rs",
+    "crates/menu/src/content_selector/tests.rs",
+    "crates/input-config/languages/en.json",
+    "crates/input-config/languages/it.json",
+    "docs/menu_localization.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}
