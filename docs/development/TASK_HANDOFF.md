@@ -22,11 +22,11 @@ termination of another owner's process or changing another thread's goal state.
 
 ### U31-P0-UPSTREAM-AUDIT
 
-- State: active
+- State: suspended
 - Outcome: partial
-- Verified: U31-01..12 reports; U31-02 candidate: 6 replay/5 core tests, exact USA 529-frame harness, old binary identity refused. Decisions: upstream-audit/U31-approved-decisions.md.
-- Missing: U31-02 event ownership, fresh app recording/verification, EUR, input contention, GUI/native/cache; menu fix and partial reveal, Party device, autosave and other audit. Approval is not acceptance.
-- Resume: isolated U31-02 candidate `/tmp/u31-replay-repair-R7vMxO/worktree`; patch/logs `target/u31-shop-replay-repair-B9AOtX/`. Complete missing gates; do not repeat passed harness.
+- Verified: U31-02: 7 replay/10 core tests, USA/EUR GUI and Right interruptions; EUR native category, Right and pointer-exit comparisons match; shop hook observed. Decisions: upstream-audit/U31-approved-decisions.md.
+- Missing: U31-02 other GUI pointer/native cancellation paths and Windows; menu fix, Party device, autosave and other audit. Approval is not acceptance.
+- Resume: branch `codex/u31-shop-replay-wip` in `/tmp/u31-shop-replay-wip`; private evidence `target/u31-shop-replay-repair-B9AOtX/`. Reconciliation deferred; resume only on request.
 
 ### ENGLISH-FIRST-PROJECT
 
@@ -229,9 +229,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: U31-P0-UPSTREAM-AUDIT partial; approved U31-02 replay candidate in isolated checkout.
-- Last verified result: 6 replay/5 core tests pass; USA endpoint matches parser/dispatch harness; old binary identity refused.
-- Remaining work: semantic-event ownership, new app recording/verify, EUR, GUI/native/cache and regressions.
-- Errors or blockers: pending semantic event observed; MinGW/Xvfb unavailable in PATH; no Windows validation.
-- Next action: trace event lifetime and test replay-to-live ownership; preserve existing candidate and prior results.
+- Task: U31-P0-UPSTREAM-AUDIT partial; user requested separate branch, reconciliation deferred.
+- Last verified result: EUR 56-frame native pointer-exit comparison matched; verifier matched endpoint.
+- Remaining work: other GUI/native cancellation paths, Windows and regressions.
+- Errors or blockers: legacy Right ambiguous; cleanup rejects U31 path and retains evidence.
+- Next action: leave the branch suspended; resume reconciliation only on request.
 - References: `docs/development/upstream-audit/U31-02-shop-category-replay-proposal.md`, `target/u31-shop-replay-repair-B9AOtX/`.

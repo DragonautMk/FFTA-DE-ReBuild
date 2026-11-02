@@ -18980,3 +18980,87 @@ LOCAL-ARTIFACT-SWEEP-2026-10-31 — CLOSED. Latest request: clean residual proje
 - Outcome: Source trace corrected the U31-05 audit: EUR save callbacks can enable background rendering when the cached full-map motif flag is false. Desktop extra-row path still checks the flag; desktop and separate Android save painters have different output regions. No actual visual defect is established.
 - Evidence: `docs/development/upstream-audit/U31-05-widescreen.md`; `docs/changes/2026-11-02-audit-upstream-save-background-guard.json`. Inspected pinned extracted sources, existing test source and current fork committed diff.
 - Limits: static only; no test was run, no actual scene, device or runtime change. Parent U31-P0 remains partial and specific implementation approval is pending.
+
+
+### U31-02-USA-GUI-PHYSICAL-RIGHT-REPLAY — closed 2026-11-02
+
+- Outcome: New 1713-frame isolated Linux/Xvfb USA GUI recording captured category event 1028, then physical Right interruption 1030 at the next frame without changing the 3ef latch. The actual same-binary debug-record verifier matched endpoint state and clock. Original ROM, source save, snapshot and executable hashes stayed unchanged.
+- Evidence: `docs/development/upstream-audit/U31-02-shop-category-replay-proposal.md`; ignored `target/u31-shop-replay-repair-B9AOtX/gui-linux-physical-right/{result.json,verify.log}` and screenshots.
+- Limits: XTest simulated input; no real focus, EUR, native cache, Windows or physical device coverage. Audio holds logged; cleanup helper rejected the U31 path. Candidate and parent remain partial.
+
+
+### U31-02-EUR-GUI-CATEGORY-REPLAY — closed 2026-11-02
+
+- Outcome: A new isolated EUR shop checkpoint followed the previously accepted 300-frame route. The Linux/Xvfb GUI recording changed to category 4, selected an item and cancelled; the actual same-binary verifier matched the 1274-frame endpoint and clock. Source ROM, snapshot, route, save, derived checkpoint and executable were protected.
+- Evidence: `docs/development/upstream-audit/U31-02-shop-category-replay-proposal.md`; ignored `target/u31-shop-replay-repair-B9AOtX/gui-linux-eur/{seed-result.json,result.json,verify.log}` and screenshots.
+- Limits: simulated XTest; no EUR 1030 marker, native cache, Windows or physical device. Audio holds logged; U31 cleanup rejected. Candidate and parent remain partial.
+
+
+### U31-02-EUR-SELECTED-NATIVE-CACHE-ENDPOINT — closed 2026-11-02
+
+- Outcome: The actual Linux debug-replay worker loaded a copied revision-t8 EUR TinyCC cache and matched the full 1274-frame GUI recording endpoint and clock. Source cache, TinyCC, executable and recorded inputs remained unchanged.
+- Evidence: `docs/development/upstream-audit/U31-02-shop-category-replay-proposal.md`; ignored `target/u31-shop-replay-repair-B9AOtX/native-linux-eur/{result.json,run.log,profile/Data/config/replay/result.json}`.
+- Limits: loaded cache does not prove native block execution because this report lacks dispatch counts. No 1030 marker, Windows or physical-device coverage; cleanup rejected U31. Candidate and parent remain partial.
+
+
+### U31-02-EUR-NATIVE-COMPARE-920 — timeout 2026-11-02
+
+- Outcome: The Linux supervisor stopped a 920-frame comparison at its 120-second limit after last reported progress 92; the recorded category event at frame 890 was not reached and no terminal comparison report or dispatch counts were produced. A concurrent optimized build failed with temporary-filesystem quota. Protected source inputs remained unchanged. The separate full native-cache endpoint match remains accepted.
+- Evidence: `target/u31-shop-replay-repair-B9AOtX/native-compare-timeout/` and `native-optimized-build-quota.log`; `docs/development/upstream-audit/U31-02-shop-category-replay-proposal.md`.
+- Limits: No native-dispatch claim from this timeout; failed profile/build diagnostics retained. Parent remains partial.
+
+
+### U31-02-EUR-SHORT-GUI-RECORDING — closed 2026-11-02
+
+- Outcome: New isolated Linux/Xvfb EUR recording changed to category 4 at frame 28 and completed after 67 frames. Actual same-binary interpreter verifier matched state and clock; ROM, save, checkpoint and executable hashes were unchanged. This enables the native comparison within the supervisor deadline.
+- Evidence: ignored `target/u31-shop-replay-repair-B9AOtX/gui-linux-eur-short/{result.json,verify.log}` and screenshot; `docs/development/upstream-audit/U31-02-shop-category-replay-proposal.md`.
+- Limits: XTest-simulated input; no native-dispatch or Windows claim from this recording; cleanup rejected U31. Parent remains partial.
+
+
+### U31-02-EUR-SHORT-NATIVE-COMPARE — closed 2026-11-02
+
+- Outcome: Actual debug-compare matched interpreter/raw against revision-t8 native cache across all 67 EUR GUI recording frames, including category event frame 28. It counted 528641 native dispatches and 492583 fallbacks; full state, clock, frames, buffers, OAM and observed audio matched. Source inputs remained unchanged. Independent actual verifier separately matched recording endpoint.
+- Evidence: `docs/development/upstream-audit/U31-02-shop-category-replay-proposal.md`; ignored `target/u31-shop-replay-repair-B9AOtX/native-compare-eur-short/` and its comparison.json.
+- Limits: no per-hook dispatch counts, 1030 marker, Windows or physical input. Cleanup rejected U31. Parent remains partial.
+
+
+### U31-02-EUR-SHOP-HOOK-OBSERVATION — closed 2026-11-02
+
+- Outcome: GDB observed the guarded shop category commit once on the interpreter stack and once through the native dispatcher hook. Direct worker progress reached 67 frames; source inputs unchanged.
+- Evidence: `docs/development/upstream-audit/U31-02-shop-category-replay-proposal.md`; ignored `target/u31-shop-replay-repair-B9AOtX/hook-observation/`.
+- Limits: report publication failed because the run ID reused the first failed attempt's report directory; independent prior comparison matched. No complete hook census, 1030, Windows or physical input. Parent remains partial.
+
+
+### U31-02-EUR-GUI-RIGHT-INTERRUPTION — closed 2026-11-02
+
+- Outcome: EUR Linux/Xvfb GUI recording selected category and injected XTest Right during its pending request; events 1028/1030 appeared at frames 33/34 with 3ef held. Actual verifier matched all 75 frames, state and clock; protected sources unchanged.
+- Evidence: `docs/development/upstream-audit/U31-02-shop-category-replay-proposal.md`; ignored `target/u31-shop-replay-repair-B9AOtX/gui-linux-eur-interruption/`.
+- Limits: simulated input, interpreter GUI; native-cache and physical device remain distinct. Parent partial.
+
+
+### U31-02-EUR-NATIVE-RIGHT-INTERRUPTION — closed 2026-11-02
+
+- Outcome: `debug-compare` matched interpreter/raw and revision-t8 native cache across 75 EUR GUI frames including events 1028/1030; 591541 native dispatches and 570437 fallbacks. Separate verifier certified recording endpoint; protected inputs unchanged.
+- Evidence: `docs/development/upstream-audit/U31-02-shop-category-replay-proposal.md`; ignored `target/u31-shop-replay-repair-B9AOtX/native-compare-eur-interruption/`.
+- Limits: one XTest Right interruption on Linux, not all cancellation paths, physical devices or Windows; cleanup helper rejects U31 path. Parent partial.
+
+
+### U31-02-EUR-GUI-FOCUS-INTERRUPTION — closed 2026-11-02
+
+- Outcome: Linux/Xvfb GUI focus moved to a separate owned window during pending selection. Marker 1030 appeared at frame 35; focus return with the pointer over the category produced another selection at frame 43. Actual verifier matched all 78 frames, state and clock; protected sources unchanged.
+- Evidence: `docs/development/upstream-audit/U31-02-shop-category-replay-proposal.md`; ignored `target/u31-shop-replay-repair-B9AOtX/gui-linux-eur-focus/`.
+- Limits: X11/Xvfb and interpreter GUI; Windows, Wayland and physical device remain distinct. Parent partial.
+
+
+### U31-02-EUR-GUI-POINTER-EXIT — closed 2026-11-02
+
+- Outcome: Linux/Xvfb XTest pointer left the game window during pending selection, confirmed by XQueryPointer. Marker 1030 followed event 1028 by one frame; actual verifier matched all 56 frames, state and clock. Protected sources unchanged.
+- Evidence: `docs/development/upstream-audit/U31-02-shop-category-replay-proposal.md`; ignored `target/u31-shop-replay-repair-B9AOtX/gui-linux-eur-pointer-exit/`.
+- Limits: X11/Xvfb and interpreter GUI; Windows, Wayland and physical input remain distinct. Parent partial.
+
+
+### U31-02-EUR-NATIVE-POINTER-EXIT — closed 2026-11-02
+
+- Outcome: `debug-compare` matched interpreter/raw and revision-t8 native cache across all 56 EUR pointer-exit frames including marker 1030; 439727 native dispatches and 370657 fallbacks. Separate verifier certified recorded endpoint; protected inputs unchanged.
+- Evidence: `docs/development/upstream-audit/U31-02-shop-category-replay-proposal.md`; ignored `target/u31-shop-replay-repair-B9AOtX/native-compare-eur-pointer-exit/`.
+- Limits: one XTest pointer exit on Linux, not all pointer paths, physical devices or Windows; cleanup helper rejects U31 path. Parent partial.
