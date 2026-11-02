@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-research-visibility-evidence",
+  "title": "Translate visibility investigation evidence",
+  "kind": "docs",
+  "platforms": [
+    "Desktop development documentation"
+  ],
+  "changes": [
+    "Translate the research report visibility investigation, earlier proposal and tutorial metric into English while retaining observed and unmeasured distinctions."
+  ],
+  "validation": [
+    "Compared the translated passage to its preimage: numeric runs, paths, addresses, flags, the literal disassembly-removal notice and the other=false token match."
+  ],
+  "limitations": [
+    "The remaining research report and broader Markdown/source audit are unfinished; no ROM access, replay or runtime checks were performed."
+  ],
+  "files": [
+    "docs/ffta_estado.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

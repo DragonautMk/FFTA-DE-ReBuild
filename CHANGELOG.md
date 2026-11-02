@@ -1461,6 +1461,46 @@ Documentation: [en.json](crates/input-config/languages/en.json).
 
 [Change record](docs/changes/2026-11-02-translate-rom-audit-event-guides.json)
 
+## 2026-11-02 — Translate visibility investigation evidence
+
+Type: docs. Platforms: Desktop development documentation.
+
+**Changes**
+
+- Translate the research report visibility investigation, earlier proposal and tutorial metric into English while retaining observed and unmeasured distinctions.
+
+**Validation**
+
+- Compared the translated passage to its preimage: numeric runs, paths, addresses, flags, the literal disassembly-removal notice and the other=false token match.
+
+**Limitations**
+
+- The remaining research report and broader Markdown/source audit are unfinished; no ROM access, replay or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-research-visibility-evidence.json)
+
+## 2026-11-02 — Translate research status report opening
+
+Type: docs. Platforms: Desktop development documentation.
+
+**Changes**
+
+- Translate the opening research status and first replay evidence from Spanish to English while retaining the legacy heading anchor and original game labels.
+
+**Validation**
+
+- Compared the translated passage to its preimage: link targets, numeric runs, command block, hashes, literal script output and named paths match.
+
+**Limitations**
+
+- The remaining research report and broader Markdown/source audit are unfinished; no ROM access, replay or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-research-status-opening.json)
+
 ## 2026-11-02 — Translate gameplay, issue, comparison and graphics reports into English
 
 Type: changed. Platforms: Desktop report HTML; headless Chrome on Linux with synthetic fixtures.

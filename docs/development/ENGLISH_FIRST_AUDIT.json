@@ -812,7 +812,7 @@
     },
     {
       "path": "docs/development/TASK_HANDOFF.md",
-      "sha256": "600e89b606c81cbe4f406d8581913330a6495a29a88f8329f8d9cc2c0dc26cac",
+      "sha256": "44ef6a52e3bb424a067a02dc2f897cd5e2f82914ede80fd9eb4445d8fafcbf69",
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
     },
     {
@@ -1413,6 +1413,7 @@
     "docs/changes/2026-11-02-localize-input-focus-diagnostics.json",
     "docs/changes/2026-11-02-review-indexed-graphics-ui-guides-english.json",
     "docs/changes/2026-11-02-review-docker-rom-validation-guides-english.json",
-    "docs/changes/2026-11-02-review-script-raw-transfer-guides-english.json"
+    "docs/changes/2026-11-02-review-script-raw-transfer-guides-english.json",
+    "docs/changes/2026-11-02-translate-research-status-opening.json"
   ]
 }

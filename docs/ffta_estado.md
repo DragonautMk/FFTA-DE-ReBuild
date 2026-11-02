@@ -1,59 +1,61 @@
-# FFTA: estado de investigacion del fallo real
+<a id="ffta-estado-de-investigacion-del-fallo-real"></a>
 
-2026-10-18: Pub USA separado a esquina derecha; tienda USA con lienzo centrado;
-aviso de banco vacio USA identificado. Ventanas de servicios compartidas USA
-reconocidas por propietario; Prison real sigue NO MEDIDO.
+# FFTA: investigation status for the reported issue
+
+2026-10-18: USA Pub separated into the right corner; USA shop uses a centered
+canvas; the USA empty-bank notice was identified. Shared USA service windows
+are recognized by owner; the actual Prison scene remains NOT MEASURED.
 [ffta_usa_town_menus.md](ffta_usa_town_menus.md).
 
-2026-10-17: perfil de mouse para Press Start y menu principal USA implementado
-y probado por replay. [ffta_usa_frontend_mouse.md](ffta_usa_frontend_mouse.md).
+2026-10-17: mouse profile for Press Start and the USA main menu implemented
+and tested by replay. [ffta_usa_frontend_mouse.md](ffta_usa_frontend_mouse.md).
 
-2026-10-17: usuario confirma efectos de magia ya corregidos; no tocarlos.
-Franja Lightning damage medida en WIN0 [16,8,224,24], extraida completa
-sin el corte X=160. [ffta_spell_help_banner.md](ffta_spell_help_banner.md).
+2026-10-17: user confirms magic effects already corrected; do not touch them.
+Lightning damage banner measured in WIN0 [16,8,224,24], extracted in full
+without the X=160 clipping. [ffta_spell_help_banner.md](ffta_spell_help_banner.md).
 
-2026-10-17: menu de acciones de Lester dividido por X=160; su marco real
-empieza en X=152. Extraccion segun cabecera/pie de BG2, pendiente de feedback.
+2026-10-17: Lester's action menu is split at X=160; its actual frame begins
+at X=152. Extraction follows the BG2 header/footer, pending feedback.
 [ffta_action_frame_width.md](ffta_action_frame_width.md).
-Siguiente pendiente: efectos de magias Thunder/Pyro repetidos a ambos lados.
+Next pending issue: Thunder/Pyro magic effects repeated on both sides.
 
-2026-10-17: punta de oreja de Clara en Giza capturada en vivo y corregida.
-[ffta_portrait_ears.md](ffta_portrait_ears.md): dos piezas Y=48/56 excluidas
-por el antiguo filtro Y>=64; ahora comparten la capa del retrato.
+2026-10-17: Clara's ear tip in Giza captured live and corrected.
+[ffta_portrait_ears.md](ffta_portrait_ears.md): two pieces at Y=48/56 excluded
+by the old Y>=64 filter now share the portrait layer.
 
-2026-10-17: Comprar/Vender centrados; categorias compactas de Vender y
-Monster Bank medidos por replay con clicks de coordenadas. Detalles y limites:
+2026-10-17: Comprar/Vender centered; compact Vender categories and Monster Bank
+measured by replay with coordinate clicks. Details and limits:
 [ffta_shop_bank_mouse.md](ffta_shop_bank_mouse.md).
 
-Prioridad: reproducir ffta-batalla-3.input antes de afirmar una solucion.
-La prueba previa de 44 objetos no reproduce el fallo comunicado por el usuario.
-No se aplica otro cambio de logica del juego sin aprobacion.
-Sin commits y sin cambios al instalador en esta investigacion.
+Priority: reproduce ffta-batalla-3.input before claiming a solution.
+The earlier 44-object test does not reproduce the issue reported by the user.
+No further game logic change is applied without approval.
+No commits or installer changes in this investigation.
 
-MEDIDO: AGENTS.md leido y git status --short ejecutado; el repo ya contiene
-cambios preparados, cambios sin preparar y archivos sin seguimiento.
-MEDIDO: compilacion release inicial correcta, 0.42 s; compilacion de los
-diagnosticos correcta, 26.86 s; tests de recomp: 6 aprobados.
+MEASURED: AGENTS.md read and git status --short run; the repository already
+contains staged, unstaged and untracked changes.
+MEASURED: initial release build passed in 0.42 s; diagnostics build passed in
+26.86 s; recomp tests: 6 passed.
 
-MEDIDO: ffta-batalla-3.input termina con un evento en frame 12440.
-Contiene eventos de soltar y pulsar en el mismo frame, por ejemplo 11730.
-InputScript ordenaba tuplas (frame, mascara), alterando su orden de registro.
-Se corrigio el lector para ordenar de forma estable solo por frame.
-Esto afecta al replay del host, no a la logica ni a los bytes del juego.
+MEASURED: ffta-batalla-3.input ends with an event at frame 12440.
+It contains release and press events on the same frame, for example 11730.
+InputScript sorted tuples (frame, mask), changing their recorded order.
+The reader was corrected to sort stably by frame only.
+This affects host replay, not the game logic or bytes.
 
-MEDIDO: runc ejecuta la ruta nativa con el mismo Machine, MemMap, run_dma
-y PPU que play, sin ventana, audio de escritorio, vsync ni espera por frame.
-Se anadio --sav para precargar una copia en memoria; runc no escribe el .sav.
-La entrada se reproduce desde frame 0, no desde el inicio del tramo analizado.
+MEASURED: runc executes the native path with the same Machine, MemMap, run_dma
+and PPU as play, without a window, desktop audio, vsync or frame wait.
+--sav was added to preload a copy into memory; runc does not write the .sav.
+Input is replayed from frame 0, not from the start of the analyzed segment.
 
-MEDIDO: creado E:/AI/ARC/ffta-respaldo.sav sin modificar el original.
-La copia, el original y ffta-batalla-3.input.sav tienen SHA256:
+MEASURED: created E:/AI/ARC/ffta-respaldo.sav without modifying the original.
+The copy, the original and ffta-batalla-3.input.sav have SHA256:
 71189F7FB6AED638640078FBA3A35FDA6C39C8962E74DCC75935AAC948DA9063.
-El replay usa otra copia privada: target/ffta-replay3/start.sav.
-SUPOSICION: arranque HLE como en las rutas BIOS buscadas localmente;
-se pregunto al usuario si la grabacion utilizo BIOS real.
+The replay uses another private copy: target/ffta-replay3/start.sav.
+ASSUMPTION: HLE startup, based on the BIOS paths searched locally;
+the user was asked whether the recording used a real BIOS.
 
-Comando exacto para el primer replay completo:
+Exact command for the first complete replay:
 
 ```powershell
 $env:FFTA_WIDESCREEN='32:9'
@@ -68,120 +70,120 @@ $env:FFTA_BENCH_LIBRARY='target/ffta-movement/native-normal.dll'
 .\target\release\recomp.exe runc 'Final Fantasy Tactics Advance (USA).gba' --frames 12540 --input ffta-batalla-3.input --sav target/ffta-replay3/start.sav --out target/ffta-replay3/run1-final.ppm *> target/ffta-replay3/run1.log
 ```
 
-El DLL indicado es una copia local ya compilada de la ROM del usuario;
-no es un archivo que se deba distribuir. Desde frame 10500 el log registra
-por frame camara BG, llamadas/argumentos a los tres productores conocidos,
-descriptores recibidos, lista host y entradas OAM. Cada 30 frames guarda
-hashes de ambos framebuffers, OAM y OBJ VRAM; cada 120 puede guardar una imagen.
-MEDIDO: el replay llego a la batalla; se generaron imagenes del tramo final.
-Dos ejecuciones completas desde frame 0 dieron 69 muestras identicas de
-framebuffer central, framebuffer ancho, OAM y OBJ VRAM, frames 10500..12540.
-Salida literal del script: determinism_samples 69 mismatches [].
-Hash FNV final de ambas: abc92001e317eae0.
-Hash SHA256 central final de ambas:
+The named DLL is an already compiled local copy of the user's ROM;
+it must not be distributed. From frame 10500 the log records, per frame,
+the BG camera, calls/arguments to the three known producers, received
+descriptors, host list and OAM entries. Every 30 frames it records hashes of
+both framebuffers, OAM and OBJ VRAM; every 120 it can save an image.
+MEASURED: the replay reached battle; images of the final segment were generated.
+Two complete runs from frame 0 produced 69 identical samples of the central
+framebuffer, wide framebuffer, OAM and OBJ VRAM, frames 10500..12540.
+Literal script output: determinism_samples 69 mismatches [].
+Final FNV hash for both: abc92001e317eae0.
+Final central SHA256 hash for both:
 3ffb91edfe2e1bc047624f0b43c0c30b39770af3ba031d364a260f6b48f66bc2.
-NO MEDIDO: confirmacion del usuario de que el arranque grabado era HLE;
-la grabacion no guarda metadatos de BIOS y no se encontro BIOS instalada.
+NOT MEASURED: user confirmation that the recorded startup was HLE;
+the recording stores no BIOS metadata and no installed BIOS was found.
 
-MEDIDO: hay nueve instancias graficas identificadas por el puntero
-de prioridades pasado al productor menos 0x1e, no por palette ni r5.
-En el tramo final desaparecen llamadas de algunas instancias antes de
-030065A8; no hay mismatches en la lista host ni el OAM transferido.
-Ejemplo: 0201af18 deja de llegar despues del frame 12042, junto al borde
-izquierdo original. Falta terminar la medicion de los saltos y de sus tiles.
+MEASURED: nine graphics instances are identified by the priority pointer
+passed to the producer minus 0x1e, not by palette or r5.
+In the final segment, calls for some instances disappear before
+030065A8; there are no mismatches in the host list or transferred OAM.
+For example, 0201af18 stops arriving after frame 12042, near the original
+left edge. Measurement of its jumps and tiles remains unfinished.
 
-MEDIDO por lectura: 030062EC, Thumb, origen ROM 08A38EA0..08A38FC8,
-calcula visibilidad de una lista con limites 0..239 en X y 0..159 en Y.
-08394028 contiene su puntero Thumb 030062ED. El llamador 0808F804 la invoca
-en 0808F832 por el thunk 08142254 y solo marca visible si retorna 1.
-08021DA8 devuelve NULL si flags & 0x40 == 0; el llamador 0808F1F4 sale
-en 0808F216 si obtiene NULL, antes de emitir objetos.
-MEDIDO: igualdad de los 296 bytes de RAM con el origen ROM, hash:
+MEASURED by reading: 030062EC, Thumb, ROM source 08A38EA0..08A38FC8,
+calculates list visibility with limits 0..239 in X and 0..159 in Y.
+08394028 contains its Thumb pointer 030062ED. Caller 0808F804 invokes it
+at 0808F832 through thunk 08142254 and marks it visible only if it returns 1.
+08021DA8 returns NULL if flags & 0x40 == 0; caller 0808F1F4 exits
+at 0808F216 on NULL, before emitting objects.
+MEASURED: the 296 RAM bytes match the ROM source, hash:
 1e988998a21067596046e2b303da1ad9b6924c18146f396ce0bf5f6e038433c7.
-MEDIDO: en frame de productor 12041, X=-7, la funcion retorna 1 y se
-invoca 030065A8 para 0201af18. En frame 12042, X=-10, sus seis componentes
-son rechazados a la izquierda; retorna 0 y ya no se invoca el productor.
-La traza lee instrucciones reales del interprete en la ruta nativa:
+MEASURED: at producer frame 12041, X=-7, the function returns 1 and
+030065A8 is invoked for 0201af18. At frame 12042, X=-10, its six components
+are rejected on the left; it returns 0 and the producer is no longer invoked.
+The trace reads actual interpreter instructions on the native path:
 
 The literal game disassembly was removed from the public source distribution.
 Only independently described behavior, hook addresses and verification hashes are retained.
 
-En 0300638A, los valores r0 de los seis extremos derechos son
--2, -10, -2, -10, -2, -10. Todos estan por debajo de 0 pero dentro del
-margen de 32:9, cuyo limite izquierdo es -164.
-El llamador 0808F804 no marca el resultado de visibilidad cuando retorna 0.
-MEDIDO: se pierde antes del productor y no por fallo de publicacion del host.
+At 0300638A, the r0 values for the six right edges are
+-2, -10, -2, -10, -2, -10. All are below 0 but within the
+32:9 margin, whose left limit is -164.
+Caller 0808F804 does not mark the visibility result when it returns 0.
+MEASURED: it is lost before the producer, not through host publication failure.
 
-MEDIDO: los 320 bytes de OBJ VRAM referidos por esa instancia en su ultima
-lista recibida permanecen identicos en frames de imagen 12041..12044:
+MEASURED: the 320 OBJ VRAM bytes referenced by that instance in its last
+received list remain identical in image frames 12041..12044:
 8dac051f7fa7a16c7abd58bbaef877779ae968e1b88dbb2defc903151d6d84eb.
-170 bytes no nulos, cero referencias fuera de OBJ VRAM. Por tanto, una
-liberacion de estos tiles no explica esta desaparicion concreta.
-NO MEDIDO: todos los assets de unidades nunca visibles ni todos los mapas.
-El filtrado 03006170 es un ajuste de prioridad por intersecciones, no una
-comparacion directa con 240; no se propone modificarlo por similitud.
+170 nonzero bytes, zero references outside OBJ VRAM. Therefore, freeing these
+tiles does not explain this particular disappearance.
+NOT MEASURED: all assets of units never visible or all maps.
+Filtering at 03006170 adjusts priority for intersections; it is not a direct
+comparison with 240, and no change is proposed based on similarity.
 
-MEDIDO: gamedb.sqlite no devolvio funciones de esta ROM en 0808E000..08090000;
-estas direcciones se obtuvieron de llamadas reales y lectura de instrucciones.
-Los desensamblados y logs completos quedan en target/ffta-replay3, ignorado
-por git. No se incorporan bytes de ROM ni DLL generados a la distribucion.
+MEASURED: gamedb.sqlite returned no functions for this ROM in 0808E000..08090000;
+these addresses came from actual calls and instruction reads.
+Complete disassemblies and logs remain in target/ffta-replay3, ignored
+by git. No ROM bytes or generated DLLs are included in the distribution.
 
-MEDIDO por lectura: existe otro productor Thumb en 030068A4, procedente
-de 08A39458, con comparaciones contra 239/159; no esta en el enganche actual.
-MEDIDO: la observacion de 030068A4 no registro entradas en frames
-10500..12539. La tabla del DLL tiene other=false para 030068A5: su entrada
-habria pasado por el interprete observado. No participa en este tramo;
-NO MEDIDO: su uso en otras escenas o animaciones.
-MEDIDO, frames 11334..12539: 080014C8 desde LR 08001D85, 1377 llamadas;
-080016D4 desde LR 08001DF3, 1206; ambas con limite 48 y dentro del enganche.
-030065A8 desde LR 0808F313, 5645 llamadas, y LR 0808F6CD, 1204.
-Los demas llamadores documentados de 14C8/16D4 no se observaron en ese tramo;
-las dos funciones se enganchan por PC, independientemente del llamador.
+MEASURED by reading: another Thumb producer exists at 030068A4, originating
+at 08A39458, with comparisons against 239/159; it is not in the current hook.
+MEASURED: observation of 030068A4 recorded no entries in frames
+10500..12539. The DLL table has other=false for 030068A5: its entry
+would have passed through the observed interpreter. It does not participate
+in this segment; NOT MEASURED: its use in other scenes or animations.
+MEASURED, frames 11334..12539: 080014C8 from LR 08001D85, 1377 calls;
+080016D4 from LR 08001DF3, 1206; both with limit 48 and inside the hook.
+030065A8 from LR 0808F313, 5645 calls, and LR 0808F6CD, 1204.
+Other documented callers of 14C8/16D4 were not observed in that segment;
+the two functions are hooked by PC regardless of caller.
 
-MEDIDO: capturas exactas proof-12042.png y proof-12044.png muestran el
-personaje desapareciendo en el margen izquierdo mientras el fondo sigue.
-El periodo del productor se etiqueta con bus.frames antes de ejecutarse;
-la captura se etiqueta al completarse el frame. La publicacion y el PPU
-introducen el desfase visible entre el descarte de 12042 y la imagen 12044.
-NO MEDIDO: correspondencia exclusiva de cada componente con una unidad
-logica del juego; los identificadores son punteros de instancias graficas.
+MEASURED: exact captures proof-12042.png and proof-12044.png show the
+character disappearing at the left margin while the background remains.
+The producer period is labeled with bus.frames before execution;
+the capture is labeled when the frame completes. Publication and the PPU
+introduce the visible offset between rejection at 12042 and image 12044.
+NOT MEASURED: an exclusive correspondence between each component and a logical
+game unit; the identifiers are pointers to graphics instances.
 
-MEDIDO: tests finales normales: 80 + 7 + 3 aprobados, 0 fallos;
-3 pruebas ignoradas por defecto. Prueba nueva del lector de entrada aprobada.
-Los diagnosticos de instrucciones y tiles conservaron el mismo hash final
-en los replays adicionales. No se modifico la ROM, el .sav original ni
-la condicion del juego. La aplicacion de un parche de visibilidad esta pendiente.
+MEASURED: final normal tests: 80 + 7 + 3 passed, 0 failed;
+3 tests ignored by default. The new input-reader test passed.
+Instruction and tile diagnostics retained the same final hash in additional
+replays. The ROM, original .sav and game condition were not modified.
+Applying a visibility patch is pending.
 
-Estado anterior, sustituido por la medicion de ocho unidades descrita abajo:
-Propuesta minima de enganche por PC del predicado 030062EC,
-activo bajo FFTA_PATCH_SPR y solo en widescreen. Conservar la ejecucion
-original y sus ciclos; al retornar, usar el resultado calculado para el
-rectangulo X=-extra..239+extra, manteniendo Y=0..159. Guardar argumentos
-de entrada en el host para ese calculo y comprobar SHA256 de ROM y el
-contenido completo del predicado en ROM/RAM antes de habilitarlo.
-Extra=0, hash incorrecto o bytes diferentes: resultado original intacto.
-Esto cambia el resultado que ve el juego y requiere aprobacion antes de
-implementarlo. El productor y la lista i32 existentes seguirian evitando
-el descarte posterior y el limite de X de 9 bits para los objetos ampliados.
-Pruebas propuestas: los dos replays completos A/B, presencia de la instancia
-12041..12046, tiles, OAM original, equivalencia 600 frames con extra=0 y
-32:9/1536; revisar tambien el productor 030068A4 si hay llamadas reales.
+Previous state, superseded by the eight-unit measurement described below:
+Minimal proposal to hook predicate 030062EC by PC,
+active under FFTA_PATCH_SPR and only in widescreen. Preserve original
+execution and its cycles; on return, use the result calculated for the
+rectangle X=-extra..239+extra, keeping Y=0..159. Store input arguments
+on the host for that calculation and check the ROM SHA256 and the
+complete predicate contents in ROM/RAM before enabling it.
+Extra=0, incorrect hash or different bytes: original result unchanged.
+This changes the result seen by the game and requires approval before
+implementation. The existing producer and i32 list would continue to avoid
+the later rejection and the 9-bit X limit for expanded objects.
+Proposed tests: both complete A/B replays, presence of the instance
+12041..12046, tiles, original OAM, equivalence for 600 frames with extra=0 and
+32:9/1536; also check producer 030068A4 if actual calls occur.
 
-NO MEDIDO: no se encontro un checkpoint completo utilizable para restaurar
-CPU, RAM y perifericos. Las instantaneas IWRAM del recompilador son imagenes
-de codigo y no sustituyen el estado acumulado. No se implemento un checkpoint.
+NOT MEASURED: no usable complete checkpoint was found to restore
+CPU, RAM and peripherals. The recompiler's IWRAM snapshots are code images
+and do not replace accumulated state. No checkpoint was implemented.
 
-Actualizacion: metrica por unidad del tutorial
-MEDIDO: enganche X implementado bajo FFTA_PATCH_VIS y FFTA_PATCH_SPR,
-comprobando SHA256 y funcion ROM/RAM. Resultado original con extra=0.
-MEDIDO: 1201 frames finales: actual falla en 995; propuesto falla en 493.
-NO RESUELTO: no hay ocho unidades publicadas en todos los frames.
-MEDIDO: seis cuerpos finales siguen en RAM pero reciben rechazo Y antes
-del productor. Hay tambien un cuerpo adicional Leslaie, informado separado.
-SUPOSICION: referencia ocho corresponde a IDs 0..7, excluyendo ese cuerpo.
-MEDIDO: extra=0 conserva las 1201 metricas y 41 muestras de hashes.
-Detalles, limites y listas completas en docs/ffta_character_metric.md.
-No se ha aplicado la propuesta adicional de quitar el rechazo Y.
+Update: per-unit tutorial metric
+MEASURED: X hook implemented under FFTA_PATCH_VIS and FFTA_PATCH_SPR,
+checking SHA256 and the ROM/RAM function. Original result with extra=0.
+MEASURED: final 1201 frames: current fails in 995; proposed fails in 493.
+UNRESOLVED: eight units are not published in every frame.
+MEASURED: six final bodies remain in RAM but receive Y rejection before
+the producer. There is also an additional Leslaie body, reported separately.
+ASSUMPTION: the reference eight correspond to IDs 0..7, excluding that body.
+MEASURED: extra=0 preserves all 1201 metrics and 41 hash samples.
+Details, limits and complete lists in docs/ffta_character_metric.md.
+The additional proposal to remove Y rejection has not been applied.
 
 Siguiente investigacion: casillas durante zoom-out
 MEDIDO POR EL USUARIO: personajes validados jugando en 32:9, ya no

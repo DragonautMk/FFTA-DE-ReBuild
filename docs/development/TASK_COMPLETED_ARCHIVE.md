@@ -19154,3 +19154,9 @@ LOCAL-ARTIFACT-SWEEP-2026-10-31 — CLOSED. Latest request: clean residual proje
 - Outcome: manually reviewed script resource and raw UI transfer guides for English-first policy; original names and technical evidence retained.
 - Evidence: exact reviewed hashes recorded in `docs/development/ENGLISH_FIRST_AUDIT.json`; no ROM access or runtime checks.
 - Record: `docs/changes/2026-11-02-review-script-raw-transfer-guides-english.json`.
+
+### ENGLISH-FIRST-RESEARCH-INTRO
+
+- Outcome: translated the research report opening and first replay evidence into English while retaining the legacy heading anchor and original game labels.
+- Evidence: link targets, numeric runs, command block, hashes, literal script output and named paths match the preimage. No ROM access or replay performed.
+- Record: `docs/changes/2026-11-02-translate-research-status-opening.json`.

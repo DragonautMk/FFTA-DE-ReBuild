@@ -34,7 +34,7 @@ termination of another owner's process or changing another thread's goal state.
 - Outcome: partial
 - Verified: previous runtime/report/guide/export units accepted, including shared debug guides. Command/event consoles and operation cards use English/Italian presentation; targeted tests PASS. Audit: 234 reviewed files, 17 Markdown pending.
 - Missing: remaining documentation, other dynamic report producers/metadata, helper/test modules, tools/build text, source comments and full audit across both trees. Planned-task checklist/reference translated and synchronized. Preserve optional locales, imported content and immutable history.
-- Resume: selection checkpoint for continued English-first work: ENGLISH-FIRST-RESEARCH-INTRO. Script/UI guides reviewed; research status report begins in Spanish. Next: translate its opening evidence while preserving commands, identifiers and limits.
+- Resume: selection checkpoint for continued English-first work: ENGLISH-FIRST-RESEARCH-VISIBILITY. Opening translated; graphics visibility evidence and superseded proposal remain Spanish. Next: translate while preserving observations, limits and recorded identifiers.
 
 ### ROMDATA-03-04-E105-SENARY-COMPACT-OBJ
 
@@ -229,9 +229,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: ENGLISH-FIRST-PROJECT partial; script and raw UI transfer guides reviewed.
-- Last verified result: both guides manually reviewed and exact versions hashed.
-- Remaining work: full inventory review, 17 pending Markdown files and source/tool audit; Windows validation remains outstanding.
-- Errors or blockers: none; no ROM access or runtime work performed.
-- Next action: select and checkpoint another English-first audit unit.
-- References: `docs/changes/2026-11-02-review-script-raw-transfer-guides-english.json`, `docs/development/ENGLISH_FIRST_AUDIT.json`.
+- Task: ENGLISH-FIRST-PROJECT partial; research report opening translated.
+- Last verified result: original command, hashes, numeric runs and links preserved; old heading anchor retained.
+- Remaining work: Spanish research report continuation, inventory review, 17 pending Markdown files and source/tool audit.
+- Errors or blockers: none; no ROM access or replay performed.
+- Next action: select and checkpoint the next research translation unit.
+- References: `docs/changes/2026-11-02-translate-research-status-opening.json`, `docs/development/ENGLISH_FIRST_AUDIT.json`.
