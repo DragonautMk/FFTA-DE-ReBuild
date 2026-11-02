@@ -777,7 +777,7 @@
     },
     {
       "path": "docs/development/TASK_HANDOFF.md",
-      "sha256": "a2f87e17b59ec1ed967d37cfd11ce73a01a24e59643856cda5783ce7d0102413",
+      "sha256": "c5e17ea208a825f561d04945b158c9e99c6cf60b7e10c4282f394fccd6e9cb34",
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
     },
     {
@@ -794,6 +794,16 @@
       "path": "docs/development/rom-coverage/index.html",
       "sha256": "bcdc496581c0d5f8ae4a647ff605c86ae82518132dfa2af9352e174b4804ec4f",
       "scope": "Translated saved presentation text with provenance; all other snapshot data preserved by structural comparison; source analysis not revalidated"
+    },
+    {
+      "path": "docs/development/todo2.md",
+      "sha256": "ba91a075dcd2e7c76d3b947e69e3f22ab8f8d0178bc9cbc56cbaf62997f7f803",
+      "scope": "Existing English proposals retained; Italian audio-separation proposal translated. Proposals are not validated implementations."
+    },
+    {
+      "path": "docs/development/todo_bug_fix.md",
+      "sha256": "75203aba54360f0ca9195dbdbffb20a8a32d5cffee9d93595b38e95b465c4683",
+      "scope": "Desktop bug and feature checklist translated into English; historical evidence limits, checklist status, technical literals, IDs, links and legacy anchors preserved."
     },
     {
       "path": "docs/dialogue_layout.md",
@@ -1089,8 +1099,6 @@
     "docs/development/ROM_DATA_TODO.md",
     "docs/development/ROM_DATA_VALIDATION.md",
     "docs/development/debug saves.md",
-    "docs/development/todo2.md",
-    "docs/development/todo_bug_fix.md",
     "docs/docker.md",
     "docs/fast_forward_audio.md",
     "docs/ffta_estado.md",
@@ -1189,6 +1197,7 @@
     }
   ],
   "next_actions": [
+    "Complete the partial Clan Atlas implementation specification: introduction and sections 0–3 translated, sections 4–10 still pending.",
     "Audit remaining offline exporters, CLI/tool messages and source-generated metadata; campaign, artifact and coverage fixed templates are translated.",
     "Translate remaining technical/debug/development guides in bounded sections, preserving anchors, commands, IDs and validation limits.",
     "Audit remaining dynamic report metadata, console/tooling text, source comments and all other maintained content across both trees.",
@@ -1222,6 +1231,8 @@
     "docs/changes/2026-11-02-localize-debug-save-catalog.json",
     "docs/changes/2026-11-02-review-android-frontend-and-tooling-english.json",
     "docs/changes/2026-11-02-review-android-support-english.json",
-    "docs/changes/2026-11-02-translate-godot-and-cloud-planning-guides.json"
+    "docs/changes/2026-11-02-translate-godot-and-cloud-planning-guides.json",
+    "docs/changes/2026-11-02-translate-desktop-bug-feature-checklist.json",
+    "docs/changes/2026-11-02-translate-atlas-spec-introduction.json"
   ]
 }

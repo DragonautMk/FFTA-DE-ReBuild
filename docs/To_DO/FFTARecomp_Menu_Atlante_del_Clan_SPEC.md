@@ -1,175 +1,224 @@
-# FFTARecomp — Specifica di implementazione del menu «Atlante del Clan»
+<a id="fftarecomp--specifica-di-implementazione-del-menu-atlante-del-clan"></a>
 
-> **Documento operativo per Codex / agente di sviluppo**  
-> **Stato:** implementata nel menu desktop nativo; verifica EUR su Wine completata il 30 ottobre 2026, con i limiti indicati sotto.
-> **Progetto:** `DragonautMk/FFTARecomp`, branch `decomp`  
-> **Baseline verificata:** `999d0a617296cae3b2ad9b585f1df03faa45a134` (29 ottobre 2026)  
-> **Obiettivo:** realizzare **nel menu nativo Rust** l'interfaccia approvata, preservando tutte le funzionalità disponibili e distinguendo chiaramente le funzioni Debug V2 ancora pianificate.
+# FFTARecomp — Clan Atlas menu implementation specification
 
-**Chiusura della migrazione (30/10/2026).** L'implementazione parte dalla branch
-reale al commit `945966c`, successivo alla baseline storica qui citata: DBG2-01…09
-erano già disponibili e restano tali; DBG2-10…28 sono pianificati. Le spunte di
-accettazione sotto si riferiscono a build Windows GNU release e prove **Wine**,
-con mouse/tastiera e XInput simulato, inventario degli handler e test mirati.
-Non attestano Windows nativo, Linux, controller fisici, driver GPU hardware o
-ROM USA, che rimangono da verificare. Per richiesta dell'utente non sono state
-misurate prestazioni. Le operazioni preservate riusano i backend e le prove
-esistenti; non è stata rieseguita ogni procedura CLI o prova ROM-data.
-Documentazione, comandi di avvio e risultati:
-[menu nativo](../menu_clan_atlas.md),
-[inventario prima/dopo](../development/MENU_ATLAS_INVENTORY.json),
-[file cambiati e validazione](../changes/2026-10-30-implement-native-clan-atlas-menu.json).
+> **Operational document for Codex / development agent**
+> **Status:** implemented in the native desktop menu; EUR validation on Wine completed October 30, 2026, within the limits below.
+> **Project:** `DragonautMk/FFTARecomp`, branch `decomp`
+> **Verified baseline:** `999d0a617296cae3b2ad9b585f1df03faa45a134` (October 29, 2026)
+> **Objective:** implement the approved interface **in the native Rust menu**, preserving all available functionality and clearly distinguishing still-planned Debug V2 features.
 
-## 0. Istruzione principale per l'agente
+**Migration closure (October 30, 2026).** Implementation starts from the actual
+branch at commit `945966c`, after the historical baseline cited here: DBG2-01…09
+were already available and remain so; DBG2-10…28 are planned. Acceptance checks
+below refer to Windows GNU release builds and **Wine** tests, with mouse/keyboard
+and simulated XInput, handler inventory and targeted tests. They do not attest
+native Windows, Linux, physical controllers, hardware GPU drivers or the USA ROM,
+which remain to be verified. At the user's request, performance was not measured.
+Preserved operations reuse existing backends and checks; not every CLI procedure
+or ROM-data test was rerun. Documentation, startup commands and results:
+[native menu](../menu_clan_atlas.md),
+[before/after inventory](../development/MENU_ATLAS_INVENTORY.json),
+[changed files and validation](../changes/2026-10-30-implement-native-clan-atlas-menu.json).
 
-Implementa nel progetto FFTARecomp un nuovo menu di pausa/debug nativo chiamato, a livello di *design*, **«Atlante del Clan»**. L'obiettivo è una nuova interfaccia grafica e un'organizzazione delle funzioni, **non** la sostituzione del motore di gioco, del sistema di salvataggi o del debugger. Preserva le API pubbliche, i formati dei file, gli handler e le semantiche esistenti; modifica il routing solo dove necessario e con test. Non convertire l'applicazione in HTML/Electron/WebView/Godot: il prototipo HTML era un riferimento visivo e comportamentale, non la tecnologia di destinazione.
+<a id="0-istruzione-principale-per-lagente"></a>
 
-**Vincoli non negoziabili:**
+## 0. Main instruction for the agent
 
-1. **Zero regressioni:** nessuna voce esistente deve scomparire, diventare irraggiungibile o perdere effetti/validazioni. Mantenere il menu originale come riferimento di confronto, non come seconda implementazione divergente.
-2. **Navigazione laterale permanente** con il selettore `Gioco | Debug` in alto, sulla **sinistra**, non come due schede orizzontali sopra il contenuto.
-3. **Dimensioni dei contenitori stabili:** intestazioni, sidebar, tab, footer, titolo della pagina, controlli globali e aree di lista/dettaglio non devono spostarsi durante lo scroll o il cambio selezione. Lo scorrimento avviene **solo negli elenchi interni**.
-4. **Larghezza adattativa:** niente finestra fissata a 1048 px e niente scorrimento orizzontale della pagina. Il layout deve adattarsi alla finestra del gioco, usando una diversa disposizione **solo dei contenuti interni** quando lo spazio non basta.
-5. **Torna al gioco** deve essere visivamente **un pannello dello stesso sistema di design**: stessa cornice, stesso materiale, margini, padding, hover e focus. Niente pulsante decorato in modo estraneo o fuori griglia.
-6. Le nuove scorciatoie di volume e velocità devono funzionare **in qualunque posizione del menu aperto**, senza necessità di evidenziare un controllo. Le due combinazioni simultanee hanno priorità sui tasti singoli.
-7. **Dati veri nella build reale:** nessuna data fittizia, conteggio artificiale di save state, sessione debug di esempio o risultati diagnostici simulati. Un valore mancante deve essere segnalato come tale.
-8. **Debug attuale ≠ Debug V2:** non rendere operativa una voce V2 finché il relativo backend non esiste e non è verificato. Le attività V2 devono risultare chiaramente *Pianificate* o *Non disponibili* se mostrate nella UI.
-9. Conservare l'accessibilità delle operazioni da **tastiera, mouse e gamepad** con focus visibile e corretta cattura dei binding.
-10. Non dichiarare completata un'implementazione che non compila, non è collegata ai veri handler o non ha superato i test previsti.
+Implement a new native pause/debug menu in FFTARecomp called, at the *design*
+level, **“Clan Atlas”**. The objective is a new graphical interface and feature
+organization, **not** replacement of the game engine, save system or debugger.
+Preserve public APIs, file formats, handlers and existing semantics; change
+routing only where necessary and with tests. Do not convert the application to
+HTML/Electron/WebView/Godot: the HTML prototype was a visual and behavioral
+reference, not the target technology.
 
-Prima di modificare il codice, **rileggi la branch nel workspace**: i file possono essere cambiati dopo la baseline indicata.
+**Non-negotiable constraints:**
+
+1. **Zero regressions:** no existing item may disappear, become unreachable or lose effects/validation. Keep the original menu as a comparison reference, not a second divergent implementation.
+2. **Permanent side navigation** with the `Gioco | Debug` selector (Game | Debug) at the top on the **left**, not as two horizontal tabs above the content.
+3. **Stable container dimensions:** headings, sidebar, tabs, footer, page title, global controls and list/detail areas must not move during scrolling or selection changes. Scroll **only within internal lists**.
+4. **Adaptive width:** no window fixed at 1048 px and no horizontal page scroll. Adapt to the game window, rearranging **only internal content** when space is insufficient.
+5. **Return to game** must visually be **a panel in the same design system**: same frame, material, margins, padding, hover and focus. No differently decorated or out-of-grid button.
+6. New volume and speed shortcuts must work **anywhere in the open menu**, without highlighting a control. The two simultaneous combinations take priority over individual buttons.
+7. **Real data in the real build:** no fictional dates, artificial save-state counts, example debug sessions or simulated diagnostic results. Identify missing values as such.
+8. **Current Debug ≠ Debug V2:** do not make a V2 item operational until its backend exists and is verified. V2 tasks shown in the UI must clearly be *Planned* or *Unavailable*.
+9. Preserve access to operations by **keyboard, mouse and gamepad** with visible focus and correct binding capture.
+10. Do not declare an implementation complete if it does not compile, is not connected to real handlers or has not passed the planned tests.
+
+Before changing code, **reread the workspace branch**: files may have changed
+since the indicated baseline.
 
 ---
 
-## 1. Sorgenti da esaminare prima di intervenire
+<a id="1-sorgenti-da-esaminare-prima-di-intervenire"></a>
 
-| Percorso | Ruolo |
+## 1. Sources to inspect before making changes
+
+| Path | Role |
 | --- | --- |
-| `crates/menu/src/lib.rs` | `Menu`, `Page`, `Row`, `MenuAction`, mapping delle pagine e gestione input |
-| `crates/menu/src/theme.rs` | Rendering nativo della UI in pixel/RGBA, geometria dei pannelli, dropdown, hit test |
-| `crates/menu/src/menu_icons.rs` | Risorse e icone del menu |
-| `crates/menu/src/debug_catalog.rs` | Catalogo DS, filtri, selezione e anteprima |
-| `crates/recomp/src/play.rs` | Integrazione del menu con gioco, ROM, stato, debugger e input |
-| `crates/input-config/src/lib.rs` e `storage.rs` | Binding dinamici di tastiera/gamepad, `key.menu` / `pad.menu`, persistenza |
-| `crates/screen/src/profile.rs` e relativi moduli | Modelli schermo e configurazione video |
-| `docs/menu_shortcuts.md` | Semantica effettiva di apertura/chiusura menu e combo personalizzate |
-| `docs/debug_tools.md` | Strumenti debugger esistenti, CLI e integrazioni |
-| `docs/development/DEBUG_TOOLS_V2_TODO.md` | 28 estensioni V2: **pianificazione, non implementazione** |
-| `docs/portable.md` | File, cartelle, save, migrazione e modalità portable |
+| `crates/menu/src/lib.rs` | `Menu`, `Page`, `Row`, `MenuAction`, page mapping and input handling |
+| `crates/menu/src/theme.rs` | Native pixel/RGBA UI rendering, panel geometry, dropdowns, hit testing |
+| `crates/menu/src/menu_icons.rs` | Menu resources and icons |
+| `crates/menu/src/debug_catalog.rs` | DS catalog, filters, selection and preview |
+| `crates/recomp/src/play.rs` | Menu integration with game, ROM, state, debugger and input |
+| `crates/input-config/src/lib.rs` and `storage.rs` | Dynamic keyboard/gamepad bindings, `key.menu` / `pad.menu`, persistence |
+| `crates/screen/src/profile.rs` and related modules | Screen models and video configuration |
+| `docs/menu_shortcuts.md` | Actual menu opening/closing semantics and custom combinations |
+| `docs/debug_tools.md` | Existing debugger tools, CLI and integrations |
+| `docs/development/DEBUG_TOOLS_V2_TODO.md` | 28 V2 extensions: **planning, not implementation** |
+| `docs/portable.md` | Files, folders, saves, migration and portable mode |
 
-Riferimenti online:
+Online references:
 
 - https://github.com/DragonautMk/FFTARecomp/tree/decomp
 - https://github.com/DragonautMk/FFTARecomp/blob/decomp/crates/menu/src/lib.rs
 - https://github.com/DragonautMk/FFTARecomp/blob/decomp/docs/menu_shortcuts.md
 - https://github.com/DragonautMk/FFTARecomp/blob/decomp/docs/development/DEBUG_TOOLS_V2_TODO.md
 
-**Importante:** prima delle modifiche genera un inventario programmatico delle azioni e delle voci attuali (incluse le sottomaschere, dropdown, dialoghi di conferma e comandi CLI). Mappa ogni azione alla destinazione nel nuovo menu. I nomi del prototipo non sostituiscono gli identificativi reali del codice.
+**Important:** before making changes, generate a programmatic inventory of
+current actions and items (including subpages, dropdowns, confirmation dialogs
+and CLI commands). Map each action to its destination in the new menu. Prototype
+names do not replace actual code identifiers.
 
 ---
 
-## 2. Design visivo — «Atlante del Clan»
+<a id="2-design-visivo--atlante-del-clan"></a>
 
-### 2.1 Carattere e direzione artistica
+## 2. Visual design — “Clan Atlas”
 
-Interfaccia da **RPG tattico fantasy per GBA**, non dashboard SaaS né fantasy generico prodotto da un template. Identità ispirata a un **registro di clan / atlante di missioni**: piccoli fregi geometrici, stemma semplice originale, tipografia serif discreta nei titoli, numerazioni laterali, blu minerale scuro e ottone consumato. Evitare dorature eccessive, gradienti vistosi, ombre flottanti, card arrotondate ovunque o icone decorative arbitrarie.
+<a id="21-carattere-e-direzione-artistica"></a>
 
-Palette iniziale indicativa (da armonizzare con il renderer e contrasto effettivo):
+### 2.1 Character and art direction
 
-| Ruolo | Colore |
+An interface for a **GBA fantasy tactical RPG**, not a SaaS dashboard or generic
+template fantasy. Identity inspired by a **clan ledger / mission atlas**: small
+geometric ornaments, simple original crest, restrained serif headings, side
+numbering, dark mineral blue and worn brass. Avoid excessive gilding, conspicuous
+gradients, floating shadows, rounded cards everywhere and arbitrary decorative icons.
+
+Indicative initial palette (harmonize with the renderer and actual contrast):
+
+| Role | Color |
 | --- | --- |
-| Sfondo profondo | `#091827` |
+| Deep background | `#091827` |
 | Sidebar | `#112B40` → `#1B374D` |
-| Pannelli | `#1C384E` |
-| Pannelli selezionati | `#2D4E64` |
-| Testo principale | `#E9EFEC` |
-| Testo secondario | `#A8BDC7` |
-| Ottone / elementi importanti | `#D1AF75` |
-| Oro chiaro / focus | `#F0D7A4` |
-| Bordi | `#59798B` |
-| Conferma / stato valido | `#8BC6AD` |
-| Avviso / effetto distruttivo | `#C78B77` |
+| Panels | `#1C384E` |
+| Selected panels | `#2D4E64` |
+| Primary text | `#E9EFEC` |
+| Secondary text | `#A8BDC7` |
+| Brass / important elements | `#D1AF75` |
+| Light gold / focus | `#F0D7A4` |
+| Borders | `#59798B` |
+| Confirmation / valid state | `#8BC6AD` |
+| Warning / destructive effect | `#C78B77` |
 
-- Titoli in serif esistente/disponibile nel progetto; testo delle opzioni in font leggibile e uniforme. **Non incorporare font esterni se non autorizzati e legalmente distribuibili.**
-- Usare uno stemma **originale minimale** costruito con primitive geometriche native; evitare loghi o artwork copiati dal gioco.
-- Evidenziare le righe attive con bordo ottone e cambio del tono blu; contrasto netto anche in hover/focus da gamepad.
-- I bordi dei pannelli devono essere sottili e coerenti. È sufficiente un piccolo angolo metallico, non servono cornici intricate dappertutto.
-- Ogni sezione deve avere una gerarchia leggibile: soprattitolo (facoltativo), titolo, descrizione breve, **area di lavoro stabile**, eventuale footer azioni.
+- Use a serif font existing/available in the project for headings; use a readable, consistent font for option text. **Do not embed external fonts unless authorized and legally distributable.**
+- Use a **minimal original** crest built with native geometric primitives; avoid logos or artwork copied from the game.
+- Highlight active rows with a brass border and change of blue tone; retain clear contrast on hover/gamepad focus.
+- Panel borders must be thin and consistent. A small metallic corner is enough; intricate frames everywhere are unnecessary.
+- Each section needs a readable hierarchy: overline (optional), title, short description, **stable work area** and optional action footer.
 
-### 2.2 Layout di riferimento
+<a id="22-layout-di-riferimento"></a>
+
+### 2.2 Reference layout
 
 ```text
 ┌─────────────────────────────────────────────────────────────────────────┐
 │ ✥ FFTARecomp                                        THE CLAN ARCHIVE  │
 ├────────────────────┬────────────────────────────────────────────────────┤
-│ [ stemma originale ]│ Percorso / sezione                    [Eventi][CMD]│
+│ [ original crest ] │ Path / section                         [Events][CMD]│
 │ FFTARecomp          ├────────────────────────────────────────────────────┤
-│ PAUSE & DEBUG MENU  │ VOL n% | FAST n% | SAVE/SESSIONE | FRAME ...      │
-│ [ Gioco | Debug ]   ├────────────────────────────────────────────────────┤
-│                    │ Titolo pagina / sottotitolo immobile              │
-│ 01 Panoramica      │ ┌────────────────────────────────────────────────┐ │
+│ PAUSE & DEBUG MENU  │ VOL n% | FAST n% | SAVE/SESSION | FRAME ...       │
+│ [ Game | Debug ]    ├────────────────────────────────────────────────────┤
+│                    │ Page title / fixed subtitle                       │
+│ 01 Overview        │ ┌────────────────────────────────────────────────┐ │
 │ 02 ...             │ │                                                │ │
-│ 03 ...             │ │    CONTENUTO — cambia, con scroll interni      │ │
+│ 03 ...             │ │    CONTENT — changes, with internal scrolling │ │
 │ 04 ...             │ │                                                │ │
 │ ...                │ └────────────────────────────────────────────────┘ │
 │                    ├────────────────────────────────────────────────────┤
-│ APRI / CHIUDI MENU │ VOLUME L1[-] L1+R1[MUTE] R1[+]                   │
+│ OPEN / CLOSE MENU  │ VOLUME L1[-] L1+R1[MUTE] R1[+]                   │
 │ [SELECT]+[START]   │ FAST   L2[-] L2+R2[ON/OFF] R2[+]                 │
-│ binding dinamico   ├────────────────────────────────────────────────────┤
-│ ◂ Indietro         │ Stato/risultato dell'operazione                   │
+│ dynamic binding    ├────────────────────────────────────────────────────┤
+│ ◂ Back             │ Operation status/result                           │
 └────────────────────┴────────────────────────────────────────────────────┘
 ```
 
-### 2.3 Adattività **senza spostamenti dovuti allo scroll**
+<a id="23-adattività-senza-spostamenti-dovuti-allo-scroll"></a>
 
-Il prototipo finale ha mostrato un errore da **non riprodurre**: dimensioni orizzontali fisse che richiedono lo scorrimento dell'intera interfaccia. La UI definitiva deve rispettare la finestra disponibile.
+### 2.3 Adaptability **without scroll-induced movement**
 
-Regole:
+The final prototype showed an error **not to reproduce**: fixed horizontal
+sizes requiring the entire interface to scroll. The final UI must respect the
+available window.
 
-- **Altezza e posizione** di sidebar, barra superiore, titolo, barra di stato, footer scorciatoie e barra L/R determinate dal layout della finestra e tenute ferme mentre l'utente scorre.
-- **Larghezza flessibile**: sidebar proporzionata e limitata da un minimo/massimo sensato; resto della larghezza al pannello principale. Misurare il testo reale e gli hit box nel renderer nativo.
-- A larghezze ampie, le impostazioni lunghe e gli strumenti Debug si dispongono su **due colonne interne**. L'elenco Debug scorre nella propria colonna; dettagli, titolo e azioni di conferma **rimangono nella colonna accanto**.
-- A larghezze ridotte le **colonne del contenuto** possono diventare due aree interne sovrapposte verticalmente, ciascuna con il proprio limite e scroll. La sidebar non si trasforma in una barra superiore. Non consentire al contenuto di far crescere la finestra o spingere fuori schermo i footer.
-- Su schermi estremamente piccoli, prevedere una modalità compatta leggibile e navigabile, oppure segnalare un minimo tecnico reale del renderer. Non ricorrere a overflow orizzontale dell'intera UI.
-- Quando si modifica un valore o si seleziona una riga, mantenere la posizione di scroll **della lista pertinente**, il focus e il rettangolo della zona dettagli. Cambia il contenuto, non la geometria.
-- Solo le liste o i campi testuali che lo richiedono devono scorrere. Niente scrollbar generale che sposti `Torna al gioco`, sidebar o comandi.
-- Il `Torna al gioco` della pagina iniziale è **dentro un pannello di altezza prefissata nella griglia**, usando gli stessi colori, bordo, focus, margini interni e tipografia delle altre voci. È un'azione primaria, non un banner estraneo alla griglia.
+Rules:
 
-I valori numerici di larghezza/altezza vanno derivati dalle dimensioni del canvas/frame; **non codificare 1048×720 px come unica risoluzione supportata**. Per le liste usare clipping e scroll index/offset coerenti con i calcoli di hit-testing.
+- **Height and position** of sidebar, top bar, title, status bar, shortcut footer and L/R bar are determined by window layout and remain fixed while the user scrolls.
+- **Flexible width:** proportional sidebar bounded by a sensible minimum/maximum; remaining width to the main panel. Measure real text and hit boxes in the native renderer.
+- At wide widths, long settings and Debug tools use **two internal columns**. The Debug list scrolls in its own column; details, title and confirmation actions **remain in the adjacent column**.
+- At narrow widths the **content columns** may become two vertically stacked internal areas, each with its own bounds and scrolling. The sidebar does not turn into a top bar. Do not let content grow the window or push footers off-screen.
+- On extremely small screens, provide a readable, navigable compact mode or state a real technical renderer minimum. Do not use horizontal overflow of the whole UI.
+- When changing a value or selecting a row, retain the **relevant list's** scroll position, focus and detail-area rectangle. Content changes, not geometry.
+- Only lists or text fields that need it should scroll. No global scrollbar that moves `Torna al gioco` (Return to game), the sidebar or controls.
+- The home page's `Torna al gioco` (Return to game) is **inside a fixed-height panel in the grid**, using the same colors, border, focus, inner margins and typography as other items. It is a primary action, not a banner outside the grid.
+
+Derive numerical width/height values from canvas/frame dimensions; **do not
+hard-code 1048×720 px as the only supported resolution**. For lists use clipping
+and scroll index/offset consistent with hit-testing calculations.
 
 ---
 
-## 3. Sidebar: struttura da preservare esattamente
+<a id="3-sidebar-struttura-da-preservare-esattamente"></a>
 
-Il selettore **Gioco / Debug** si trova **nella parte alta della colonna sinistra**. Ogni scheda ha una lista propria. Cambiare scheda non azzera arbitrariamente la sezione precedente né il salvataggio rapido selezionato.
+## 3. Sidebar: structure to preserve exactly
 
-### Scheda **Gioco** — 8 voci
+The **Game / Debug** selector is **at the top of the left column**. Each tab has
+its own list. Switching tabs must not arbitrarily reset the previous section or
+the selected quick save.
 
-1. **Panoramica**
-2. **Salvataggi**
+<a id="scheda-gioco--8-voci"></a>
+
+### **Game** tab — 8 items
+
+1. **Overview**
+2. **Saves**
 3. **Fast Forward**
-4. **Finestre di testo**
+4. **Text windows**
 5. **Audio**
 6. **Video**
-7. **Controlli**
-8. **Sistema**
+7. **Controls**
+8. **System**
 
-### Scheda **Debug** — 8 voci
+<a id="scheda-debug--8-voci"></a>
 
-1. **Panoramica**
-2. **Sessioni e casi**
-3. **Replay e confronti**
-4. **Esecuzione e memoria**
-5. **Tracce e ispettori**
-6. **Console e script**
-7. **Cheat**
-8. **Report e archivio**
+### **Debug** tab — 8 items
 
-La scheda Debug **non deve ridursi a poche card decorative**: l'utente deve poter accedere all'inventario reale delle opzioni. Ogni gruppo Debug supporta una vista **«Menu/CLI attuali»** e, quando rilevante, una vista **«Debug V2 pianificati»**.
+1. **Overview**
+2. **Sessions and cases**
+3. **Replay and comparisons**
+4. **Execution and memory**
+5. **Traces and inspectors**
+6. **Console and scripts**
+7. **Cheats**
+8. **Reports and archive**
 
-In fondo alla sidebar, sempre visibile: **«APRI / CHIUDI MENU»** + pulsanti correnti (es. `SELECT + START`) + indicazione del dispositivo. Il binding va letto dalla configurazione reale (`InputConfig`, `menu_key`, `menu_pad`) e dalla mappatura display del controller. I default verificati sono `Escape` su tastiera e `Start + Back/Select` su controller; il comando può essere rimappato. `Guide/Mode` resta una via aggiuntiva dove supportata. Le combinazioni si attivano una sola volta per pressione completa, non vanno ripetute al rilascio parziale; `Escape` mantiene la via di recupero documentata.
+The Debug tab **must not be reduced to a few decorative cards**: the user must
+be able to access the real option inventory. Each Debug group supports a
+**“Current Menu/CLI”** view and, where relevant, a **“Planned Debug V2”** view.
+
+At the bottom of the sidebar, always visible: **“OPEN / CLOSE MENU”** + current
+buttons (e.g. `SELECT + START`) + device indication. Read the binding from the
+actual configuration (`InputConfig`, `menu_key`, `menu_pad`) and controller
+display mapping. Verified defaults are `Escape` on keyboard and
+`Start + Back/Select` on controller; the command can be remapped. `Guide/Mode`
+remains an additional path where supported. Combinations trigger once per
+complete press and must not repeat on partial release; `Escape` retains the
+documented recovery path.
 
 ---
+
 
 ## 4. Scheda Gioco: comportamento completo
 

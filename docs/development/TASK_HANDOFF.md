@@ -24,9 +24,9 @@ termination of another owner's process or changing another thread's goal state.
 
 - State: active
 - Outcome: partial
-- Verified: previous runtime/report/guide/export units accepted, including shared debug guides. Command/event consoles and operation cards use English/Italian presentation; targeted tests PASS. Audit: 211 reviewed files, 40 Markdown pending.
+- Verified: previous runtime/report/guide/export units accepted, including shared debug guides. Command/event consoles and operation cards use English/Italian presentation; targeted tests PASS. Audit: 213 reviewed files, 38 Markdown pending.
 - Missing: remaining documentation, other dynamic report producers/metadata, helper/test modules, tools/build text, source comments and full audit across both trees. Planned-task checklist/reference translated and synchronized. Preserve optional locales, imported content and immutable history.
-- Resume: latest English-first request selects ENGLISH-FIRST-DESKTOP-TODO. Prior planning guides are accepted; the desktop bug/feature checklist remains Italian. Missing: translate maintained prose, preserving task states, evidence, identifiers, commands and legacy links. Next: inspect and translate the checklist without runtime work.
+- Resume: Atlas specification introduction and sections 0–3 translated with legacy anchors; sections 4–10 remain Italian. Next selection may translate those remaining sections, preserving task status, evidence and machine tokens.
 
 ### ROMDATA-03-04-E105-SENARY-COMPACT-OBJ
 
@@ -221,9 +221,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: ENGLISH-FIRST-PROJECT partial; ENGLISH-FIRST-DESKTOP-TODO selected.
-- Last verified result: prior planning guides translated; desktop bug/feature checklist still Italian.
-- Remaining work: translate the checklist while preserving status, evidence and legacy links.
-- Errors or blockers: none; no runtime work selected.
-- Next action: inspect and translate the desktop checklist, then verify structural invariants.
-- References: `docs/development/todo_bug_fix.md`, `docs/development/ENGLISH_FIRST_AUDIT.json`.
+- Task: ENGLISH-FIRST-PROJECT partial; Atlas specification sections 0–3 translated.
+- Last verified result: legacy anchors, literals and links retained; remaining Atlas sections byte-identical.
+- Remaining work: Atlas sections 4–10, 38 pending Markdown files and other cross-tree surfaces.
+- Errors or blockers: none; no runtime work performed.
+- Next action: select and checkpoint the next English-first unit.
+- References: `docs/changes/2026-11-02-translate-atlas-spec-introduction.json`, `docs/development/ENGLISH_FIRST_AUDIT.json`.

@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-desktop-bug-feature-checklist",
+  "title": "Translate desktop bug and feature checklist",
+  "kind": "docs",
+  "platforms": [
+    "Desktop planning and validation documentation"
+  ],
+  "changes": [
+    "Translate the desktop bug and feature checklist into English while preserving completed and open work, evidence limits, task identifiers, technical literals, links and legacy heading anchors."
+  ],
+  "validation": [
+    "Compare all 56 ordered checkbox states, technical literals, task IDs, link destinations and legacy anchors with the original; verify local link targets and git diff whitespace."
+  ],
+  "limitations": [
+    "Documentation translation only; historical status remains as recorded in the document, with current work tracked by the handoff and dedicated TODOs. No runtime, audio, hardware or ROM tests were run."
+  ],
+  "files": [
+    "docs/development/todo_bug_fix.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

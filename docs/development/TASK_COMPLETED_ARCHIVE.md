@@ -18314,3 +18314,17 @@ LOCAL-ARTIFACT-SWEEP-2026-10-31 — CLOSED. Latest request: clean residual proje
 - Verified: translated deferred Godot assessment and Codex Web roadmap; ordered checkbox states, IDs, inline literal spans, link destinations, local links and legacy heading anchors checked against preimages.
 - Evidence: `docs/changes/2026-11-02-translate-godot-and-cloud-planning-guides.json`; reviewed hashes in `docs/development/ENGLISH_FIRST_AUDIT.json`.
 - Limits: documentation only; no Godot or cloud work performed. Broader English-first audit remains open.
+
+### ENGLISH-FIRST-DESKTOP-TODO
+
+- Outcome: completed for the selected desktop bug and feature checklist.
+- Verified: English translation preserves all 56 ordered checkbox states, task IDs, technical literals, links and 10 legacy anchors; local link targets checked.
+- Evidence: `docs/changes/2026-11-02-translate-desktop-bug-feature-checklist.json`; reviewed hash in `docs/development/ENGLISH_FIRST_AUDIT.json`.
+- Limits: documentation only, historical status unchanged; no runtime, audio, hardware or ROM tests. The broader English-first audit remains open.
+
+### ENGLISH-FIRST-ATLAS-SPEC-INTRO
+
+- Outcome: completed for the selected introduction, sections 0–3 and todo2 proposal; Atlas specification as a whole remains partial.
+- Verified: historical Wine limits, literals, links and 10 legacy anchors preserved; sections 4–10 byte-identical; only the selected todo2 sentence changed.
+- Evidence: `docs/changes/2026-11-02-translate-atlas-spec-introduction.json`; audit ledger records the completed note and remaining specification.
+- Limits: documentation only; no implementation or runtime validation performed.

@@ -219,6 +219,26 @@ Type: changed. Platforms: Windows, Linux.
 
 [Change record](docs/changes/2026-11-02-translate-export-package-instructions.json)
 
+## 2026-11-02 — Translate desktop bug and feature checklist
+
+Type: docs. Platforms: Desktop planning and validation documentation.
+
+**Changes**
+
+- Translate the desktop bug and feature checklist into English while preserving completed and open work, evidence limits, task identifiers, technical literals, links and legacy heading anchors.
+
+**Validation**
+
+- Compare all 56 ordered checkbox states, technical literals, task IDs, link destinations and legacy anchors with the original; verify local link targets and git diff whitespace.
+
+**Limitations**
+
+- Documentation translation only; historical status remains as recorded in the document, with current work tracked by the handoff and dedicated TODOs. No runtime, audio, hardware or ROM tests were run.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-desktop-bug-feature-checklist.json)
+
 ## 2026-11-02 — Translate diagnosis, isolated-session and recording guides
 
 Type: docs. Platforms: project-wide.
@@ -277,6 +297,27 @@ Type: docs. Platforms: project-wide.
 - Documentation-only translation; failed native endpoint comparison remains failed and capture/DS limits remain explicit. No build, runtime, ROM, replay or platform acceptance checks repeated; wider migration remains partial.
 
 [Change record](docs/changes/2026-11-02-translate-catalog-replay-capture-guides.json)
+
+## 2026-11-02 — Translate the Clan Atlas specification introduction
+
+Type: docs. Platforms: Desktop menu documentation.
+
+**Changes**
+
+- Translate the introduction and sections 0–3 of the Clan Atlas specification, including its design, adaptive layout and sidebar requirements, while preserving historical Wine validation limits, technical tokens and legacy heading anchors.
+- Translate the Italian audio-separation proposal in the otherwise English todo2 notes without altering the other proposals.
+
+**Validation**
+
+- Compare inline literals, links, URLs and legacy anchors against the original; verify the remaining Atlas sections are byte-identical, the todo2 change is limited to one sentence and git diff whitespace checks pass.
+
+**Limitations**
+
+- Atlas specification sections 4–10 remain untranslated and pending; no menu implementation, runtime, Wine, native Windows or hardware tests were run.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-atlas-spec-introduction.json)
 
 ## 2026-11-02 — Review runtime report producer text
 

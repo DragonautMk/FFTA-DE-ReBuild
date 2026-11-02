@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-atlas-spec-introduction",
+  "title": "Translate the Clan Atlas specification introduction",
+  "kind": "docs",
+  "platforms": [
+    "Desktop menu documentation"
+  ],
+  "changes": [
+    "Translate the introduction and sections 0–3 of the Clan Atlas specification, including its design, adaptive layout and sidebar requirements, while preserving historical Wine validation limits, technical tokens and legacy heading anchors.",
+    "Translate the Italian audio-separation proposal in the otherwise English todo2 notes without altering the other proposals."
+  ],
+  "validation": [
+    "Compare inline literals, links, URLs and legacy anchors against the original; verify the remaining Atlas sections are byte-identical, the todo2 change is limited to one sentence and git diff whitespace checks pass."
+  ],
+  "limitations": [
+    "Atlas specification sections 4–10 remain untranslated and pending; no menu implementation, runtime, Wine, native Windows or hardware tests were run."
+  ],
+  "files": [
+    "docs/To_DO/FFTARecomp_Menu_Atlante_del_Clan_SPEC.md",
+    "docs/development/todo2.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

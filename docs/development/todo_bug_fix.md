@@ -1,394 +1,411 @@
-# TODO — Bug fix e funzionalità desktop
+<a id="todo--bug-fix-e-funzionalità-desktop"></a>
 
-Analisi e avanzamento del 21 ottobre 2026, basati sul codice e sulla cattura
-fornita dall'utente (immagine rimossa dalla storia Git dopo la diagnosi).
-Le caselle distinguono il lavoro verificato dalle attività ancora aperte;
-le proposte delle sezioni successive restano da sviluppare.
+# TODO — Desktop bug fixes and features
 
-Ambito: workspace desktop, con priorità di verifica su Windows.
-`AndroidPort/` è un albero separato. Per riprendere lo sviluppo consultare
-[TASK_HANDOFF.md](TASK_HANDOFF.md): riutilizzare le verifiche già concluse nel
-[PERFORMANCE_TODO.md](PERFORMANCE_TODO.md), senza riaprire esperimenti scartati.
+Analysis and progress as of October 21, 2026, based on the code and the capture
+provided by the user (the image was removed from Git history after diagnosis).
+Checkboxes distinguish verified work from still open tasks; proposals in later
+sections remain to be developed.
 
-**BUG-01-LAWS** è corretto per il layout osservato; **BUG-02-FPS** è spiegato
-per il caso Fast confermato. **BUG-03-FAST-AUDIO** ha reset, consumo effettivo
-e Normal limitato; restano ascolto/eventi/hardware. **FEAT-01-MUTE** e
-**FEAT-02-FULLSCREEN** sono implementati, con limiti di verifica espliciti.
-**FEAT-03-TACTICAL-OVERLAY** resta aperto (P3, prima dati verificati e
-visualizzazione, poi previsione). L'ultima richiesta aggiunge il piano
-**FEAT-04-ROM-DATA**: estrazione, decodifica e uso diretto dei dati, poi mod.
-Il piano ROM-data è separato dalle correzioni qui descritte.
-**FEAT-RESTART-ROM** è implementata e verificata su Linux/Wine.
-Un genitore aperto non riapre figli conclusi.
+Scope: desktop workspace, with Windows as the validation priority.
+`AndroidPort/` is a separate tree. To resume development, consult
+[TASK_HANDOFF.md](TASK_HANDOFF.md): reuse checks already completed in
+[PERFORMANCE_TODO.md](PERFORMANCE_TODO.md), without reopening rejected experiments.
 
-## BUG-01-LAWS — Schermata delle leggi in battaglia
+**BUG-01-LAWS** is fixed for the observed layout; **BUG-02-FPS** is explained
+for the confirmed Fast case. **BUG-03-FAST-AUDIO** has transition reset,
+effective consumption and a bounded Normal queue; listening/event/hardware
+coverage remains. **FEAT-01-MUTE** and **FEAT-02-FULLSCREEN** are implemented,
+with explicit validation limits. **FEAT-03-TACTICAL-OVERLAY** remains open
+(P3, verified data and display first, then prediction). The latest request adds
+the **FEAT-04-ROM-DATA** plan: extraction, decoding and direct data use, then
+mods. The ROM-data plan is separate from the fixes described here.
+**FEAT-RESTART-ROM** is implemented and verified on Linux/Wine.
+An open parent does not reopen completed children.
 
-**Stato:** correzione implementata per il layout precedente e per la variante
-compatta durante assegnazione personaggi riprodotta dallo slot3;
-resta aperta la copertura estesa sotto. **Priorità:** P1. **Complessità:** media.
+<a id="bug-01-laws--schermata-delle-leggi-in-battaglia"></a>
 
-**Causa verificata.** La tabella leggi usa BG2=5C08/BG3=4A09, come il menu
-azioni, ma non attiva WIN0 per l'aiuto. Il vecchio riconoscimento `Notice`
-non la ammetteva. Senza HUD a bordo schermo la separazione era saltata;
-con HUD poteva scattare il layout azioni e il ripiego a X=160, producendo
-il contenuto diviso e il pannello destro vuoto della segnalazione.
+## BUG-01-LAWS — Battle laws screen
 
-**Soluzione implementata.** `laws_bounds` in
-[ppu.rs](../../crates/gba-core/src/ppu.rs) riconosce cornice, righe e divisore
-della tabella, senza leggere le parole tradotte. Riutilizza il livello
-centrale `Notice` per tabella e aiuto, comprensivo di selettore e indicatore
-di continuazione; l'HUD restante rimane separato. Il sottotipo host
-`laws_layout` in [ffta_dialogue.rs](../../crates/gba-core/src/ffta_dialogue.rs)
-è ricalcolato a ogni frame e non viene serializzato. La geometria completa
-non subisce Length o il clamp dei pannelli laterali. Restano i controlli
-esistenti di ROM, terreno e registri; firme incomplete conservano il vecchio
-percorso. Vedi [documentazione e verifiche](../ffta_laws_layout.md).
+**Status:** fix implemented for the earlier layout and the compact character
+assignment variant reproduced from slot3; extended coverage below remains open.
+**Priority:** P1. **Complexity:** medium.
 
-- [x] Riprodurre lista e aiuto con ROM EUR e salvataggi locali, in italiano
-  e inglese; osservare BG, finestre e sprite. Conservare dati e catture sotto
-  `target/laws-fix/`, ignorato da Git.
-- [x] Correggere classificazione, proprietà dei pixel e dei due indicatori,
-  riutilizzando layout e modalità mouse dei pannelli modali.
-- [x] Verificare testo su entrambi i lati del vecchio taglio, HUD presente o
-  assente, tre larghezze, ricomposizione nativa esatta e VRAM/OAM/framebuffer
-  invariati; la regressione fallisce disattivando il riconoscimento.
-- [x] Verificare 72 casi da snapshot: lista/aiuto, 3:2/16:9/ultrawide, zoom
-  1 e 2, Size 0,5/1/2 e Length 1/2. Ricomposizione nativa: zero pixel diversi.
-  Parità GPU/software: zero differenze in 24 casi sintetici, incluso resize
-  fra dimensioni pari/dispari e variazioni di Size.
-- [x] Eseguire suite core e runtime native, suite core Windows/Wine e
-  regressioni finali sui byte degli snapshot; ispezionare lista/aiuto nel
-  frontend Linux e Windows/Wine e verificare caricamento e uscita normale.
-- [x] **BUG-01-LAWS-DEPLOYMENT**: riprodurre lo slot3dell'utente durante
-  assegnazione; riconoscere WIN0/tabella compatta e WIN1/HELP senza spezzare le
-  colonne, includere il selettore037C e mantenere l'HUD separato. Suite Linux/
-  Wine, schermate reali e Load/Undo/reload della scena verificate.
-- [ ] Completare la copertura aggiuntiva: Windows nativo, ROM USA, altre
-  disposizioni/quantità di leggi e zoom oltre2.
+**Verified cause.** The laws table uses BG2=5C08/BG3=4A09, like the action menu,
+but does not enable WIN0 for help. The old `Notice` recognition did not admit
+it. Without an edge HUD the separation failed; with the HUD the action layout
+and X=160 fallback could trigger, producing the reported split content and
+empty right panel.
 
-**Criterio di chiusura:** il layout verificato mantiene lista, testo e
-indicatori integri e coerenti con il framebuffer originale. Le prove
-aggiuntive elencate restano esplicite e non riaprono la correzione già
-validata. Non sono stati aggiornati i pacchetti portable.
+**Implemented solution.** `laws_bounds` in
+[ppu.rs](../../crates/gba-core/src/ppu.rs) recognizes the table frame, rows and
+divider without reading translated words. It reuses the central `Notice` layer
+for the table and help, including the selector and continuation indicator; the
+remaining HUD stays separate. The host subtype `laws_layout` in
+[ffta_dialogue.rs](../../crates/gba-core/src/ffta_dialogue.rs) is recalculated
+every frame and is not serialized. Full geometry is unaffected by Length or the
+side-panel clamp. Existing ROM, terrain and register checks remain; incomplete
+signatures retain the old path. See [documentation and validation](../ffta_laws_layout.md).
 
-## BUG-02-FPS — Differenza tra framerate interno ed esterno
+- [x] Reproduce list and help with the EUR ROM and local saves, in Italian and
+  English; observe BG, windows and sprites. Keep data and captures under
+  `target/laws-fix/`, ignored by Git.
+- [x] Fix classification, pixel ownership and both indicators, reusing modal
+  panel layout and mouse mode.
+- [x] Verify text on both sides of the old cut, HUD present or absent, three
+  widths, exact native recomposition and unchanged VRAM/OAM/framebuffer; the
+  regression fails when recognition is disabled.
+- [x] Verify 72 snapshot cases: list/help, 3:2/16:9/ultrawide, zoom 1 and 2,
+  Size 0.5/1/2 and Length 1/2. Native recomposition: zero different pixels.
+  GPU/software parity: zero differences in 24 synthetic cases, including
+  resizing between even/odd dimensions and changes in Size.
+- [x] Run native core and runtime suites, Windows/Wine core suite and final
+  snapshot byte regressions; inspect list/help in Linux and Windows/Wine
+  frontends and verify loading and normal exit.
+- [x] **BUG-01-LAWS-DEPLOYMENT**: reproduce the user's slot3 during assignment;
+  recognize WIN0/compact table and WIN1/HELP without splitting columns, include
+  selector 037C and keep the HUD separate. Linux/Wine suites, real screenshots
+  and scene Load/Undo/reload verified.
+- [ ] Complete additional coverage: native Windows, USA ROM, other law
+  arrangements/counts and zoom above 2.
 
-**Stato:** diagnosi conclusa per il caso segnalato: l'utente conferma la
-differenza solo con Fast attivo; il comportamento è previsto. Spiegazione
-aggiunta alla voce FPS del menu. **Priorità:** P1 per la diagnosi conclusa.
+**Closure criterion:** the verified layout keeps list, text and indicators
+intact and consistent with the original framebuffer. The additional checks
+listed remain explicit and do not reopen the validated fix. Portable packages
+were not updated.
 
-**Evidenza e analisi.** [fps.rs](../../crates/recomp/src/fps.rs) conta i frame
-guest completati (**INT**) e le presentazioni host riuscite (**EXT**) sul tempo
-reale. EXT non misura il refresh fisico del monitor. Il ciclo in `play.rs`
-può simulare più frame prima di presentarne uno: in fast-forward la differenza
-è quindi prevista. A 4×, se il carico lo consente, circa 239 INT e 60 EXT
-sono coerenti come esempio teorico. Le catture locali a 4× mostrano
-128,9 INT / 32,2 EXT e 130,0 / 32,5, tornando a circa59,7 / 59,7 senza Fast.
-Il rapporto resta4:1 anche quando il PC non raggiunge239 INT. Anche pacing
-audio a blocchi e presentazioni saltate possono separare i due contatori.
+<a id="bug-02-fps--differenza-tra-framerate-interno-ed-esterno"></a>
 
-La cattura allegata mostra **59,7 INT / 59,7 EXT**: documenta il difetto grafico,
-non la divergenza segnalata. Esistono già test del contatore,
-[documentazione FPS](../fps_overlay.md) e diagnostica di cadenza completata in
-`PERF-10-PRESENTATION-CADENCE`. Il pacing `clock` è già predefinito su
-Linux/Windows; non va proposto come funzionalità mancante.
+## BUG-02-FPS — Difference between internal and external frame rates
 
-**Soluzione implementata.** La riga Video > FPS counter spiega simulazione e
-presentazioni e indica che in Fast le frequenze possono differire. Il caso
-segnalato non richiede correzioni al pacing o al clock GBA.
+**Status:** diagnosis completed for the reported case: the user confirms the
+difference only with Fast active; the behavior is expected. An explanation was
+added to the menu FPS item. **Priority:** P1 for the completed diagnosis.
 
-- [x] Precisare il caso: l'utente conferma «Solo con Fast attivo». Le catture
-  e i contatori delle prove audio4× esistenti mostrano il rapporto4:1 atteso.
-- [x] Riutilizzare test del contatore e prove PERF-10/audio già concluse:
-  frame multipli per presentazione, reset pausa e presentazioni saltate;
-  nessuna nuova matrice di cadenza necessaria per questa segnalazione.
-- [x] Aggiungere una spiegazione accessibile da Video > FPS counter:
-  «INT: simulazione; EXT: presentazioni; in Fast possono differire».
-- [x] Chiudere la diagnosi del caso previsto con spiegazione e catture.
-  Non è stata segnalata una divergenza a 1× e non si forza l'uguaglianza.
-- [x] Riutilizzare il test indipendente Fast/reset pausa/frame non presentati.
-  Confronti VSync/refresh sul dispositivo e Windows nativo restano copertura
-  hardware generale in PERF-10, non una correzione richiesta da questo caso.
+**Evidence and analysis.** [fps.rs](../../crates/recomp/src/fps.rs) counts
+completed guest frames (**INT**) and successful host presentations (**EXT**)
+over wall time. EXT does not measure the monitor's physical refresh. The loop
+in `play.rs` can simulate multiple frames before presenting one: the difference
+is therefore expected in fast-forward. At 4×, if load permits, approximately
+239 INT and 60 EXT are consistent as a theoretical example. Local 4× captures
+show 128.9 INT / 32.2 EXT and 130.0 / 32.5, returning to approximately
+59.7 / 59.7 without Fast. The ratio remains 4:1 even when the PC does not reach
+239 INT. Block-based audio pacing and skipped presentations can also separate
+the two counters.
 
-**Criterio di chiusura:** ogni divergenza riprodotta ha una spiegazione
-misurabile; quelle patologiche sono corrette senza rallentare la simulazione
-o alterare la definizione dei contatori. L'uguaglianza numerica non è un requisito.
+The attached capture shows **59.7 INT / 59.7 EXT**: it documents the graphical
+issue, not the reported divergence. Counter tests,
+[FPS documentation](../fps_overlay.md) and cadence diagnostics completed in
+`PERF-10-PRESENTATION-CADENCE` already exist. `clock` pacing is already the
+default on Linux/Windows; it must not be proposed as a missing feature.
 
-## BUG-03-FAST-AUDIO — Audio fuori sincrono in modalità Fast
+**Implemented solution.** The Video > FPS counter row explains simulation and
+presentations and states that rates can differ in Fast. The reported case does
+not require pacing or GBA clock fixes.
 
-**Stato:** caso segnalato precisato (Fast audio, 4×); reset delle transizioni e
-consumo sulla produzione effettiva e limite del backlog Normal implementati.
-Restano aperti ascolto e copertura hardware/eventi.
-**Priorità:** P1. **Complessità:** medio-alta. Collegato a PERF-09/10.
+- [x] Clarify the case: the user confirms “Only with Fast active”. Existing 4×
+  audio-test captures and counters show the expected 4:1 ratio.
+- [x] Reuse completed counter tests and PERF-10/audio checks: multiple frames
+  per presentation, pause reset and skipped presentations; no new cadence
+  matrix is needed for this report.
+- [x] Add an explanation accessible from Video > FPS counter:
+  “INT: simulation; EXT: presentations; they can differ in Fast”.
+- [x] Close diagnosis of the expected case with explanation and captures. No
+  divergence at 1× was reported and equality is not forced.
+- [x] Reuse the independent Fast/pause reset/unpresented-frame test. VSync/
+  refresh comparisons on device and native Windows remain general PERF-10
+  hardware coverage, not a fix required by this case.
 
-**Evidenza e analisi.** `AvConfig` e il menu Fast forward espongono già
-`silent`, `fast` e `normal`. `set_fast_forward` svuotava già le code al cambio
-modalità, ma lasciava attive le memorie dei filtri e l'ultimo campione nel
-callback. La regressione sintetica conferma l'uscita residua a code vuote.
-Il nuovo epoch host invalida anche questi stati; pausa e perdita del device
-scartano inoltre il backlog Normal. Vedi [comportamento e prove](../fast_forward_audio.md).
-`fast` conserva il moltiplicatore selezionato come limite richiesto. Il callback
-in [main.rs](../../crates/recomp/src/main.rs) ora ne adatta il consumo alla
-produzione misurata dal clock del device e alla riserva in coda; il frontend
-continua a eseguire il gruppo di frame indipendentemente dall'audio.
+**Closure criterion:** every reproduced divergence has a measurable
+explanation; pathological divergences are corrected without slowing simulation
+or changing counter definitions. Numerical equality is not required.
 
-`normal` usa invece [NormalAudio](../../crates/recomp/src/ff_audio.rs): riproduce
-a 1× il PCM prodotto dal gioco accelerato. Il vecchio file temporaneo non
-aveva un limite di durata o dimensione; ora una coda preallocata limita il
-PCM a 2 secondi/512 KiB e salta all'audio recente con fade quando è piena.
-Questo è distinto dal difetto di `fast`: se il PC
-non sostiene il moltiplicatore richiesto, consumo nominale e produzione reale
-possono divergere. Il caso dell'utente riguarda Fast audio a 4×, non Normal.
-Nella prova locale Linux/CPAL/llvmpipe, Faithful ed Enhanced raggiungono solo
-circa 122–128 INT: tutti i 497/499 callback Fast hanno holds, con zero drop
-del produttore e circa 47% delle richieste PSG/HLE vuote. Il consumo nominale
-supera quindi la produzione; a 1× gli intervalli playing non hanno holds.
-Hold/release, toggle e pausa/ripresa sono stati eseguiti con catture ispezionate.
-Volume zero e scena inattiva non provano la qualità sonora né il ritardo di un
-evento sul dispositivo dell'utente. Il solo reset non chiudeva questa seconda
-causa: è stata quindi aggiunta la correzione del consumo descritta sotto.
+<a id="bug-03-fast-audio--audio-fuori-sincrono-in-modalità-fast"></a>
 
-**Soluzione implementata per Fast.** `fast_audio_rate::Clock` stima la produzione
-su circa200ms, corregge la riserva con risposta250ms e varia un consumo comune
-ai cinque percorsi su circa100ms. Riserva obiettivo60ms oltre al buffer del
-callback, intervallo0,05×..moltiplicatore+2%; a 1× resta il vecchio controllo.
-Il filtro sinc usa cutoff frazionari continui; priming/riempimenti emettono
-silenzio esplicito, contato da `FFTA_FAST_AUDIO`, senza ripetere campioni vecchi.
-Nessun nuovo lock, I/O, allocazione o clock host nel callback.
+## BUG-03-FAST-AUDIO — Out-of-sync audio in Fast mode
 
-**Soluzione implementata per Normal.** Menu «1× ritardato», coda da 2 secondi,
-salto agli ultimi 250 ms con fade stereo di 10 ms e coda di transizione fissa.
-Nessun file temporaneo né I/O nel callback. Il budget riguarda il PCM host,
-non la latenza aggiunta dal backend. Un'eventuale
-modalità accelerata che preservi il pitch richiederebbe time-stretch dedicato:
-è una scelta ulteriore, non una proprietà della coda 1×.
+**Status:** reported case clarified (Fast audio, 4×); transition reset,
+consumption based on actual production and Normal backlog limit implemented.
+Listening and hardware/event coverage remain open.
+**Priority:** P1. **Complexity:** medium-high. Related to PERF-09/10.
 
-- [x] Identificare modalità e velocità della segnalazione: l'utente conferma
-  **Fast audio a 4×**, sospettando riproduzione di audio arretrato.
-- [ ] Riprodurre a 2×/4×/8× con Faithful/Enhanced, transizioni hold/toggle e un
-  evento audio-visivo riconoscibile. Misurare ritardo iniziale e sua evoluzione.
-- [ ] Riutilizzare i profili audio/cadenza esistenti: correlare frame guest,
-  consumo, riempimento, holds/drops e tempo dei callback; tenere distinti
-  priming, pausa e Fast. Non usare un benchmark senza callback come prova sonora.
-- [x] **BUG-03-EFFECTIVE-RATE:** correggere il consumo nominale quando la
-  velocità richiesta non è raggiunta: clock comune smussato, riserva, cutoff
-  frazionario e priming osservabile. Regressione callback4×/produzione2×,
-  matrice72casi a2×/4×/8×, cambi di produzione/arresto/ripresa e filtraggio.
-  Nessuna modifica al tempo guest o alla serializzazione.
-- [x] Verificare il caso4× con callback Linux reali e finestra guest9400:11400:
-  Faithful357/Enhanced359callback, zero holds/PSG-HLE empty/drops/riempimenti
-  e zero silenzio di priming. Consumo medio2,2032/2,1906× segue produzione
- 2,2030/2,1906×; coda stimata massima107,3/108,0ms. Volume zero e scena
-  inattiva: non è una misura di latenza sonora su Windows nativo.
-- [x] **BUG-03-NORMAL-BOUNDS:** budget 2 secondi/512 KiB, salto agli ultimi
-  250 ms e fade stereo di 10 ms. Menu esplicito, consumo 1× Faithful anche
-  con Enhanced configurato, reset invariati, nessun file/I/O nel callback.
-  Suite native78runtime/33menu e Wine79runtime/33menu, build senza warning;
-  callback Linux reali365/376, massimi130287/130783coppie sotto131072,
-  10salti per modalità senza holds/drop/over-period. Persistenza, pausa,
-  ritorno a 1×, slot invariati e uscita verificati; volume zero.
-- [x] **BUG-03-TRANSITION-RESET:** invalidare anche DAC, interpolatori, filtri e
-  crossfade all'ingresso/uscita Fast e al cambio moltiplicatore/modalità;
-  svuotare l'audio in pausa e alla perdita del device. Load/Undo conserva la
-  ricreazione dello stream. Regressioni su uscita residua e nuovi campioni
-  confrontati con un callback appena inizializzato, native e Windows/Wine.
-- [ ] Completare ascolto e misure sul dispositivo: hold/toggle, pausa, load/Undo
-  e riconnessione fisica; il reset host non ritira i campioni già nel backend.
-- [x] Test sintetici di consumo, limite del backlog, fade e transizioni:
-  6000tick a 2×/4×/8× senza crescita di capacità e callback osservato/non
-  osservato identico, con uscita sintetica udibile e consumo1× senza holds.
-- [ ] Verificare su Windows con audio reale. Fissare prima del confronto una soglia
-  di latenza coerente con il buffer del device e controllare che non cresca
-  durante una sessione prolungata; verificare stabilità di memoria e file.
+**Evidence and analysis.** `AvConfig` and the Fast forward menu already expose
+`silent`, `fast` and `normal`. `set_fast_forward` already emptied queues when
+changing mode, but left filter memories and the last callback sample active. The
+synthetic regression confirms residual output with empty queues. The new host
+epoch also invalidates those states; pause and device loss additionally discard
+Normal backlog. See [behavior and evidence](../fast_forward_audio.md).
+`fast` keeps the selected multiplier as the requested limit. The callback in
+[main.rs](../../crates/recomp/src/main.rs) now adapts consumption to production
+measured by the device clock and the queued reserve; the frontend continues to
+run the frame group independently of audio.
 
-**Criterio di chiusura:** `fast` non accumula deriva rispetto al video nel caso
-riprodotto, e il ritorno a 1× non trascina audio arretrato. `normal` ha ritardo
-dichiarato e limitato; `silent` resta silenzioso. Nessun cambio al mix guest,
-alla serializzazione o ai timer è giustificato dalla sola segnalazione.
+`normal` instead uses [NormalAudio](../../crates/recomp/src/ff_audio.rs): it
+plays PCM produced by the accelerated game at 1×. The old temporary file had
+no duration or size limit; a preallocated queue now limits PCM to 2 seconds/
+512 KiB and jumps to recent audio with a fade when full. This differs from the
+`fast` defect: if the PC cannot sustain the requested multiplier, nominal
+consumption and actual production can diverge. The user's case concerns Fast
+audio at 4×, not Normal. In the local Linux/CPAL/llvmpipe test, Faithful and
+Enhanced reach only about 122–128 INT: all 497/499 Fast callbacks have holds,
+with zero producer drops and about 47% of PSG/HLE requests empty. Nominal
+consumption therefore exceeds production; at 1× playing intervals have no holds.
+Hold/release, toggle and pause/resume were performed with captures inspected.
+Zero volume and an inactive scene do not prove sound quality or the latency of
+an event on the user's device. Reset alone did not close this second cause, so
+the consumption correction below was added.
 
-## FEAT-01-MUTE — Comando Mute nel menu Audio
+**Implemented Fast solution.** `fast_audio_rate::Clock` estimates production
+over about 200 ms, corrects the reserve with a 250 ms response and adjusts
+consumption common to five paths over about 100 ms. Target reserve 60 ms beyond
+the callback buffer, range 0.05×..multiplier+2%; the old control remains at 1×.
+The sinc filter uses continuous fractional cutoffs; priming/refills emit explicit
+silence, counted by `FFTA_FAST_AUDIO`, without repeating old samples. No new
+lock, I/O, allocation or host clock in the callback.
 
-**Stato:** implementato e verificato nei limiti sotto. **Priorità:** P2.
+**Implemented Normal solution.** Menu “delayed 1×”, 2-second queue, jump to the
+last 250 ms with a 10 ms stereo fade and fixed transition tail. No temporary file
+or callback I/O. The budget concerns host PCM, not backend-added latency. A
+future accelerated mode preserving pitch would require dedicated time-stretch:
+that is a further choice, not a property of the 1× queue.
 
-**Soluzione implementata.** Audio > Mute On/Off salva `audio.mute`, predefinito
-Off per le configurazioni vecchie. Volume resta indipendente e può cambiare
-mentre Mute è attivo. Il callback applica l'unione del mute utente e di quello
-temporaneo Fast Silent/fallback all'uscita finale, continuando il consumo;
-la rampa esistente chiude a zero la coda sotto -100 dB. Configurazione audio
-condivisa fra avvio e modifiche live: anche il volume salvato si applica subito.
-Gli edit solo audio non ricreano la storia video. Nessun cambio a input guest,
-timer, formato dei salvataggi o pacing. Vedi [controlli audio](../audio_controls.md).
+- [x] Identify the reported mode and speed: the user confirms **Fast audio at
+  4×**, suspecting playback of delayed audio.
+- [ ] Reproduce at 2×/4×/8× with Faithful/Enhanced, hold/toggle transitions and
+  a recognizable audiovisual event. Measure initial latency and its evolution.
+- [ ] Reuse existing audio/cadence profiles: correlate guest frames, consumption,
+  fill, holds/drops and callback time; distinguish priming, pause and Fast. Do
+  not use a benchmark without a callback as sound evidence.
+- [x] **BUG-03-EFFECTIVE-RATE:** fix nominal consumption when requested speed
+  is not reached: smoothed common clock, reserve, fractional cutoff and
+  observable priming. 4× callback/2× production regression, 72-case matrix at
+  2×/4×/8×, production changes/stopping/resumption and filtering. No change to
+  guest time or serialization.
+- [x] Verify 4× with real Linux callbacks and guest window 9400:11400:
+  Faithful 357/Enhanced 359 callbacks, zero holds/PSG-HLE empty/drops/refills and
+  zero priming silence. Mean consumption 2.2032/2.1906× follows production
+  2.2030/2.1906×; maximum estimated queue 107.3/108.0 ms. Zero volume and an
+  inactive scene: not a sound-latency measurement on native Windows.
+- [x] **BUG-03-NORMAL-BOUNDS:** 2 seconds/512 KiB budget, jump to the last
+  250 ms and 10 ms stereo fade. Explicit menu, 1× Faithful consumption even
+  with Enhanced configured, unchanged resets, no callback file/I/O.
+  Native 78 runtime/33 menu and Wine 79 runtime/33 menu suites, warning-free
+  build; real Linux callbacks 365/376, maxima 130287/130783 pairs below 131072,
+  10 jumps per mode without holds/drop/over-period. Persistence, pause, return
+  to 1×, unchanged slots and exit verified; zero volume.
+- [x] **BUG-03-TRANSITION-RESET:** also invalidate DAC, interpolators, filters
+  and crossfade when entering/leaving Fast and changing multiplier/mode; empty
+  audio on pause and device loss. Load/Undo retains stream recreation.
+  Regressions on residual output and new samples compared with a freshly
+  initialized callback, native and Windows/Wine.
+- [ ] Complete listening and device measurements: hold/toggle, pause, load/Undo
+  and physical reconnection; host reset cannot retract samples already in the
+  backend.
+- [x] Synthetic consumption, backlog limit, fade and transition tests:
+  6000 ticks at 2×/4×/8× without capacity growth and identical observed/
+  unobserved callback, with audible synthetic output and 1× consumption without holds.
+- [ ] Verify on Windows with real audio. Before comparing, set a latency
+  threshold consistent with the device buffer and check that it does not grow
+  during a long session; verify memory and file stability.
 
-- [x] Default, parsing, serializzazione e compatibilità di `audio.mute` in
-  AvConfig, con percorsi installed/portable invariati.
-- [x] Riga Mute, valore e gestione menu condivisa tastiera/gamepad/mouse;
-  modifiche volume durante Mute e ripristino al livello scelto.
-- [x] Separare stato utente e temporaneo; applicare con rampa senza fermare
-  consumo/stream/pacing. Unmute non annulla Fast Silent/fallback; i reset
-  pausa/Fast/load conservano la scelta utente.
-- [x] Regressione callback Faithful/Enhanced/Fast/Normal: code e consumo uguali
-  al riferimento, rampa verificata, silenzio esatto a regime, uscita sintetica
-  udibile al ritorno e volume modificato conservato. Native27config/34menu/
- 79runtime e Wine27/34/80 passano,4runtime opzionali ignorati per target.
-- [ ] Ascolto su Windows nativo e controller fisico restano copertura hardware;
-  i test menu condivisi e Wine non costituiscono quella verifica.
+**Closure criterion:** `fast` does not accumulate drift relative to video in the
+reproduced case, and return to 1× does not drag delayed audio. `normal` has
+declared, bounded delay; `silent` remains silent. The report alone does not
+justify changing guest mix, serialization or timers.
 
-**Criterio di chiusura funzionale soddisfatto:** mute accessibile e persistente,
-volume conservato, silenzio a regime e consumo invariato. Volume0 resta distinto.
+<a id="feat-01-mute--comando-mute-nel-menu-audio"></a>
 
-## FEAT-02-FULLSCREEN — Fullscreen On/Off nel menu Video
+## FEAT-01-MUTE — Mute control in the Audio menu
 
-**Stato:** implementato e verificato su Linux e Windows/Wine; copertura fisica
-separata. **Priorità:** P2. **Complessità:** bassa-media.
+**Status:** implemented and verified within the limits below. **Priority:** P2.
 
-**Soluzione implementata.** Video > Fullscreen (F11) e F11 condividono il setter
-borderless e `video.fullscreen`, default Off e applicato al successivo avvio.
-Il controller riconcilia lo stato riferito da winit, attendendo fino a 2 secondi
-le richieste asincrone, senza leggere clock quando non c'è una richiesta pendente.
-Winit/WM conservano geometria e massimizzazione; un fallback riposiziona la
-finestra se la vecchia area non interseca più un monitor disponibile.
+**Implemented solution.** Audio > Mute On/Off saves `audio.mute`, defaulting to
+Off for older configurations. Volume remains independent and can change while
+Mute is active. The callback applies the union of user mute and temporary Fast
+Silent/fallback mute to final output while continuing consumption; the existing
+ramp closes the tail to zero below -100 dB. Audio configuration is shared
+between startup and live changes: saved volume also applies immediately.
+Audio-only edits do not recreate video history. No change to guest input, timers,
+save format or pacing. See [audio controls](../audio_controls.md).
 
-Il test reale ha inoltre trovato e corretto una corsa al resize del menu:
-upload GPU e lettura software devono usare le dimensioni del canvas già
-disegnato, non quelle di una finestra ridimensionata nel frattempo. Vedi
-[comportamento, prove e limiti](../fullscreen.md).
+- [x] Default, parsing, serialization and compatibility of `audio.mute` in
+  AvConfig, with installed/portable paths unchanged.
+- [x] Mute row, value and shared keyboard/gamepad/mouse menu handling; volume
+  changes during Mute and restoration to the chosen level.
+- [x] Separate user and temporary state; apply a ramp without stopping
+  consumption/stream/pacing. Unmute does not cancel Fast Silent/fallback;
+  pause/Fast/load resets preserve the user's choice.
+- [x] Faithful/Enhanced/Fast/Normal callback regression: queues and consumption
+  equal the reference, ramp verified, exact silence at steady state, audible
+  synthetic output on return and changed volume preserved. Native 27 config/
+  34 menu/79 runtime and Wine 27/34/80 pass, 4 optional runtime tests ignored
+  per target.
+- [ ] Listening on native Windows and a physical controller remain hardware
+  coverage; shared menu tests and Wine do not constitute that validation.
 
-- [x] Configurazione default/vecchi file/roundtrip, riga Video, navigazione,
-  mouse e scorrimento fino a Back dopo l'aumento a 11 voci.
-- [x] Unica richiesta startup/F11/menu; auto-repeat ignorato, preferenza e voce
-  sincronizzate con lo stato winit. Risposta ritardata/rifiuto/cancellazione
-  testati; cambiamenti esterni non esposti dal backend restano un limite API.
-- [x] Ripristino finestra640x360 con coordinate invariate e geometria normale/
-  massimizzata verificati su X11/Openbox e Windows/Wine. Test puro su monitor
-  rimosso, coordinate negative e limiti della finestra; hotplug fisico aperto.
-- [x] Riutilizzare resize/DPI/cursore/presenter, senza ricreare macchina guest,
-  storia video o audio, né cambiare aspect/zoom/velocità. Correggere la corsa
-  fra canvas e finestra rilevata dal test, preservando la prova negativa.
-- [x] Menu e F11 durante pausa, pressione prolungata singola, riavvio fullscreen,
-  VSyncOn, minimize/restore fullscreen e ritorno windowed. Suite native28config/
- 35menu/81runtime e Wine28/35/82,4runtime opzionali ignorati per target; build
-  senza warning, slot invariati e uscite normali. Matrice PERF-04 riutilizzata.
-- [ ] Windows nativo, controller fisico, Wayland/macOS, hotplug/DPI/refresh e
-  Alt-Tab fisico restano copertura hardware; Wine usa il frontend interprete.
+**Functional closure criterion satisfied:** mute is accessible and persistent,
+volume retained, silence at steady state and consumption unchanged. Volume 0
+remains distinct.
 
-**Criterio funzionale soddisfatto:** menu, F11 e stato riferito dalla finestra
-concordano; entrata/uscita e ripristino preferenza funzionano senza riavviare
-il gioco o perdere la geometria della sessione. Nessun pacchetto aggiornato.
+<a id="feat-02-fullscreen--fullscreen-onoff-nel-menu-video"></a>
 
-## FEAT-03-TACTICAL-OVERLAY — Riepilogo battaglia e previsione turni
+## FEAT-02-FULLSCREEN — Fullscreen On/Off in the Video menu
 
-**Stato:** da progettare; fonti dei dati ancora da verificare.
-**Priorità:** P3. **Complessità:** alta, soprattutto per la previsione.
+**Status:** implemented and verified on Linux and Windows/Wine; physical
+coverage separate. **Priority:** P2. **Complexity:** low-medium.
 
-**Richiesta preservata.** Quadrato mostra leggi, numero di turni, missione e
-ordine dei turni; la pressione prolungata rende l'overlay fisso. Prima della
-conferma di un'azione l'overlay fisso mostra eventuali modifiche all'ordine.
+**Implemented solution.** Video > Fullscreen (F11) and F11 share the borderless
+setter and `video.fullscreen`, default Off and applied at next startup. The
+controller reconciles state reported by winit, waiting up to 2 seconds for
+asynchronous requests, without reading the clock when no request is pending.
+Winit/WM retain geometry and maximization; a fallback repositions the window if
+the old area no longer intersects an available monitor.
 
-**Evidenza e analisi.** Il progetto ha binding host, livelli UI e profili ROM
-EUR/USA, ma nei percorsi ispezionati non emerge un lettore verificato che
-esponga insieme questi dati o un predittore dell'ordine. La schermata leggi
-può aiutare a confrontare i valori, ma i pixel non sono una fonte strutturata.
-Il token fisico da valutare per Quadrato è `West` (posizione X su Xbox);
-l'attuale UI dei binding usa etichette Xbox. Serve anche un binding tastiera
-e va gestito il conflitto con rimappature già salvate.
+The real test also found and fixed a menu resize race: GPU upload and software
+reading must use the size of the canvas already drawn, not a window resized in
+the meantime. See [behavior, evidence and limits](../fullscreen.md).
 
-**Soluzione proposta, prima fase: dati e overlay consultivo.** Introdurre un
-lettore tipizzato e in sola lettura dello stato di battaglia, abilitato per
-profili ROM verificati. Esporre al frontend uno snapshot coerente con validità
-e provenienza dei dati; renderizzarlo su un livello host indipendente dallo
-zoom. Non dedurre indirizzi EUR/USA per semplice analogia.
+- [x] Default/old-file/roundtrip configuration, Video row, navigation, mouse
+  and scrolling to Back after the increase to 11 items.
+- [x] Single startup/F11/menu request; auto-repeat ignored, preference and row
+  synchronized with winit state. Delayed response/refusal/cancellation tested;
+  external changes not exposed by the backend remain an API limitation.
+- [x] Restore 640x360 window with unchanged coordinates and normal/maximized
+  geometry verified on X11/Openbox and Windows/Wine. Pure test for removed
+  monitor, negative coordinates and window limits; physical hotplug open.
+- [x] Reuse resize/DPI/cursor/presenter without recreating guest machine, video
+  history or audio, or changing aspect/zoom/speed. Fix the canvas/window race
+  found by the test, preserving the negative test.
+- [x] Menu and F11 while paused, a single long press, fullscreen restart,
+  VSync On, fullscreen minimize/restore and return to windowed mode. Native
+  28 config/35 menu/81 runtime and Wine 28/35/82 suites, 4 optional runtime
+  tests ignored per target; warning-free build, unchanged slots and normal
+  exits. PERF-04 matrix reused.
+- [ ] Native Windows, physical controller, Wayland/macOS, hotplug/DPI/refresh
+  and physical Alt-Tab remain hardware coverage; Wine uses the interpreter frontend.
 
-- [ ] Identificare e verificare leggi attive, missione/obiettivo, unità,
-  contatore di turno e dati dello scheduler; definire che cosa conta come
-  «turno» rispetto alle attivazioni individuali. Confrontare con schermate e
-  sequenze reali; mostrare «non disponibile» per dati non verificati.
-- [ ] Progettare il lettore vicino a
-  [ffta_rom.rs](../../crates/gba-core/src/ffta_rom.rs) e ai moduli battaglia,
-  con controlli di limiti, identità e fase; aggiornare a fine frame/evento
-  senza scrivere nella RAM guest o modificare RNG, input e clock.
-- [ ] Aggiungere un'azione host rimappabile in Input, con Quadrato/`West` come
-  proposta iniziale; risolvere i conflitti senza sovrascrivere i binding GBA.
-  Verificare XInput, DirectInput e Gilrs e rendere comprensibile l'etichetta
-  per un controller PlayStation.
-- [ ] Implementare una macchina a stati per la pressione. Proposta da validare:
-  visibile alla pressione, nascosto al rilascio breve; tenere premuto almeno
-  400 ms lo fissa anche dopo il rilascio; una nuova pressione breve lo chiude.
-  Usare tempo reale, così Fast non modifica la soglia; ignorare auto-repeat.
-- [ ] Disegnare leggi, missione, turno e ordine corrente in un pannello
-  leggibile che non copra conferme e informazioni essenziali. Riutilizzare
-  [ui_layer](../../crates/screen/src/ui_layer.rs) e la composizione software.
-  Gestire resize, DPI, fullscreen e testo lungo; mostrare lo stato «fisso».
-- [ ] Nascondere durante i menu host e fuori battaglia; su perdita focus,
-  disconnessione pad, load/Undo, cambio ROM o fine battaglia azzerare pressioni
-  e dati obsoleti. Ricalcolare solo da una scena valida prima di riapparire.
+**Functional criterion satisfied:** menu, F11 and window-reported state agree;
+entry/exit and preference restoration work without restarting the game or
+losing session geometry. No package updated.
 
-**Soluzione proposta, seconda fase: previsione prima della conferma.**
-Prima verificare come il gioco determina l'ordine e quali azioni lo cambiano.
-Preferire dati di previsione già preparati dal guest, se esistono; altrimenti
-estrarre una funzione pura su uno snapshot. Non eseguire azioni speculative
-sulla macchina attiva e non consumare RNG per costruire l'anteprima.
+<a id="feat-03-tactical-overlay--riepilogo-battaglia-e-previsione-turni"></a>
 
-- [ ] Individuare selezione azione/bersaglio, fase di conferma e regole reali
-  dello scheduler, inclusi spareggi ed effetti di stato; delimitare le azioni
-  per cui una previsione deterministica è possibile.
-- [ ] Calcolare ordine corrente e previsto su dati immutabili; evidenziare
-  solo gli spostamenti quando l'overlay è fisso. Per esiti casuali o dati
-  insufficienti indicare previsione condizionale/non disponibile, senza
-  presentare un ordine ipotizzato come certo.
-- [ ] Aggiornare l'anteprima al cambio di azione/bersaglio e rimuoverla su
-  annullamento; dopo la conferma sostituirla con il nuovo stato autorevole.
-- [ ] Confrontare previsione e ordine osservato per azioni che lo lasciano
-  invariato e che lo modificano, unità rimosse e stati rilevanti; aggiungere
-  regressioni dopo aver verificato le regole, non prima.
-- [ ] Confrontare replay overlay acceso/spento: stesso stato guest, RNG,
-  frame nativi e audio deterministico a parità di input GBA; misurare il costo
-  della lettura/renderizzazione e verificare che la pressione non confermi
-  contemporaneamente un'azione di gioco.
+## FEAT-03-TACTICAL-OVERLAY — Battle summary and turn prediction
 
-**Criterio di chiusura:** prima fase utilizzabile e verificata separatamente;
-la funzionalità completa si chiude solo con anteprima attendibile nei casi
-supportati, limiti visibili e nessun effetto dell'overlay sull'esecuzione guest.
-La correzione BUG-01 aiuta il confronto delle leggi, ma non sostituisce la
-verifica delle strutture dati e dello scheduler.
+**Status:** design pending; data sources still need verification.
+**Priority:** P3. **Complexity:** high, especially prediction.
 
-## FEAT-04-ROM-DATA — Estrazione e uso diretto dei dati, poi mod
+**Preserved request.** Square shows laws, number of turns, mission and turn
+order; holding it pins the overlay. Before confirming an action the pinned
+overlay shows any changes to the order.
 
-**Stato:** TODO redatto; implementazione non avviata. **Complessità:** alta.
-La priorità interna è estrarre e decodificare i dati della ROM selezionata,
-prepararli al primo avvio e farli usare effettivamente dal runtime. Il supporto
-alle mod e alle modifiche della logica segue questa consegna principale.
+**Evidence and analysis.** The project has host bindings, UI layers and EUR/USA
+ROM profiles, but the inspected paths do not reveal a verified reader exposing
+these data together or an order predictor. The laws screen can help compare
+values, but pixels are not a structured source. The physical token to assess
+for Square is `West` (X position on Xbox); the current bindings UI uses Xbox
+labels. A keyboard binding is also needed and conflicts with saved remappings
+must be handled.
 
-Il [TODO dedicato](ROM_DATA_TODO.md) contiene dipendenze e criteri per:
+**Proposed solution, first phase: data and advisory overlay.** Introduce a typed,
+read-only battle-state reader enabled for verified ROM profiles. Expose a
+consistent snapshot to the frontend with data validity and provenance; render
+it on a host layer independent of zoom. Do not infer EUR/USA addresses by
+analogy alone.
 
-- [ ] ROMDATA-01 — inventario dei formati, identità e contratti delle risorse.
-- [ ] ROMDATA-02 — estrazione e decodifica verificate per famiglia.
-- [ ] ROMDATA-03 — preparazione automatica, riuso e ripristino del dataset.
-- [ ] ROMDATA-04 — consumo diretto nel runtime, con prova della provenienza.
-- [ ] ROMDATA-05 — equivalenza, salvataggi e misure delle prestazioni.
-- [ ] ROMDATA-06 — mod come override delle risorse, con conflitti e compatibilità.
-- [ ] ROMDATA-07 — estensioni dei contenuti e modifiche alla logica.
+- [ ] Identify and verify active laws, mission/objective, units, turn counter
+  and scheduler data; define what counts as a “turn” relative to individual
+  activations. Compare with real screens and sequences; show “unavailable” for
+  unverified data.
+- [ ] Design the reader near [ffta_rom.rs](../../crates/gba-core/src/ffta_rom.rs)
+  and battle modules, with bounds, identity and phase checks; update at frame/
+  event end without writing guest RAM or changing RNG, input or clock.
+- [ ] Add a remappable host action in Input, with Square/`West` as the initial
+  proposal; resolve conflicts without overwriting GBA bindings. Verify XInput,
+  DirectInput and Gilrs and make the label understandable for a PlayStation controller.
+- [ ] Implement a press state machine. Proposal to validate: visible on press,
+  hidden on short release; holding at least 400 ms pins it after release; a new
+  short press closes it. Use wall time so Fast does not change the threshold;
+  ignore auto-repeat.
+- [ ] Draw laws, mission, turn and current order in a readable panel that does
+  not cover confirmations and essential information. Reuse
+  [ui_layer](../../crates/screen/src/ui_layer.rs) and software composition.
+  Handle resize, DPI, fullscreen and long text; show the “pinned” state.
+- [ ] Hide during host menus and outside battle; on focus loss, pad disconnect,
+  load/Undo, ROM change or battle end reset presses and stale data. Recalculate
+  only from a valid scene before reappearing.
 
-**Criterio principale:** dataset realmente utilizzato dal gioco per le famiglie
-previste, con estrazione automatica, equivalenza senza mod e dipendenze residue
-dalla ROM esplicite. La ROM è già letta in RAM: un vantaggio prestazionale va
-misurato. La sola esportazione di file o ricomposizione di una ROM non basta.
+**Proposed solution, second phase: prediction before confirmation.** First
+verify how the game determines order and which actions change it. Prefer
+prediction data already prepared by the guest, if available; otherwise extract
+a pure function on a snapshot. Do not run speculative actions on the active
+machine or consume RNG to build the preview.
 
-## Consegna di ciascuna attività futura
+- [ ] Identify action/target selection, confirmation phase and actual scheduler
+  rules, including tie-breaks and status effects; delimit actions for which a
+  deterministic prediction is possible.
+- [ ] Calculate current and predicted order from immutable data; highlight only
+  movements when the overlay is pinned. For random outcomes or insufficient
+  data show conditional/unavailable prediction, without presenting an assumed
+  order as certain.
+- [ ] Update preview on action/target change and remove it on cancellation;
+  after confirmation replace it with the new authoritative state.
+- [ ] Compare prediction and observed order for actions that leave it unchanged
+  and that change it, removed units and relevant states; add regressions after
+  verifying rules, not before.
+- [ ] Compare replay with overlay on/off: same guest state, RNG, native frames
+  and deterministic audio for the same GBA input; measure reading/rendering
+  cost and verify that the press does not also confirm a game action.
 
-- [ ] Registrare nel handoff l'ID selezionato, ciò che è già concluso e il
-  criterio mancante; chiudere ogni sottofase senza riaprirla al successivo resume.
-- [ ] Eseguire verifiche mirate al cambiamento; suite core in serie quando
-  condividono globali. Annotare separatamente Windows nativo, Wine e Linux.
-- [ ] Aggiornare documentazione pertinente e record in `docs/changes/`,
-  rigenerare `CHANGELOG.md` ed eseguire `python3 scripts/project_memory.py check`.
-  Conservare ROM, salvataggi e registrazioni fuori da commit e pacchetti.
+**Closure criterion:** first phase usable and verified separately; the complete
+feature closes only with a reliable preview in supported cases, visible limits
+and no overlay effect on guest execution. The BUG-01 fix helps compare laws,
+but does not replace verification of data structures and the scheduler.
 
-## FEAT-RESTART-ROM — Riavvio rapido
+<a id="feat-04-rom-data--estrazione-e-uso-diretto-dei-dati-poi-mod"></a>
 
-- [x] Aggiunta **Restart ROM** al menu principale: conferma singola, stessa
-  finestra e traduzione, salvataggio cartuccia corrente sincronizzato prima del
-  reset, slot e backup conservati. Errori nel menu; rifiuto durante registrazione.
-- [x] Test di reset e pubblicazione fallita, navigazione/disegno del menu, build
-  Linux/Windows e prove reali Linux/Wine dalla battaglia alla schermata iniziale.
+## FEAT-04-ROM-DATA — Extract and directly use data, then mods
 
-Vedi [riavvio ROM](../restart_rom.md). Windows nativo resta da verificare.
+**Status:** TODO written; implementation not started. **Complexity:** high.
+The internal priority is to extract and decode data from the selected ROM,
+prepare it on first startup and have the runtime actually use it. Mod support
+and logic changes follow this main deliverable.
+
+The [dedicated TODO](ROM_DATA_TODO.md) contains dependencies and criteria for:
+
+- [ ] ROMDATA-01 — inventory of formats, resource identities and contracts.
+- [ ] ROMDATA-02 — verified extraction and decoding by family.
+- [ ] ROMDATA-03 — automatic preparation, reuse and dataset restoration.
+- [ ] ROMDATA-04 — direct consumption in the runtime, with provenance evidence.
+- [ ] ROMDATA-05 — equivalence, saves and performance measurements.
+- [ ] ROMDATA-06 — mods as resource overrides, with conflicts and compatibility.
+- [ ] ROMDATA-07 — content extensions and logic changes.
+
+**Main criterion:** dataset actually used by the game for the intended
+families, with automatic extraction, equivalence without mods and explicit
+remaining ROM dependencies. The ROM is already read into RAM: a performance
+advantage must be measured. Exporting files or recomposing a ROM alone is not enough.
+
+<a id="consegna-di-ciascuna-attività-futura"></a>
+
+## Delivery of each future task
+
+- [ ] Record the selected ID, what is already complete and the missing criterion
+  in the handoff; close each subphase without reopening it on the next resume.
+- [ ] Run checks targeted to the change; run core suites serially when they
+  share globals. Record native Windows, Wine and Linux separately.
+- [ ] Update relevant documentation and record in `docs/changes/`, regenerate
+  `CHANGELOG.md` and run `python3 scripts/project_memory.py check`. Keep ROMs,
+  saves and recordings out of commits and packages.
+
+<a id="feat-restart-rom--riavvio-rapido"></a>
+
+## FEAT-RESTART-ROM — Quick restart
+
+- [x] Added **Restart ROM** to the main menu: single confirmation, same window
+  and translation, current cartridge save synchronized before reset, slots and
+  backups retained. Errors in the menu; refused during recording.
+- [x] Reset and failed publication tests, menu navigation/drawing, Linux/Windows
+  builds and real Linux/Wine checks from battle to the initial screen.
+
+See [ROM restart](../restart_rom.md). Native Windows remains to be verified.
