@@ -263,7 +263,7 @@ pub(crate) fn capture(
         "scope":["Central/wide buffers are saved outputs, possibly containing a partial frame; no scanline register history is stored.","Layer/object/window projections use current frozen registers and existing readonly helpers. They do not rerender the guest or prove which layer won in an earlier output pixel.","Affine views show raw maps, without inventing earlier affine references. OAM textures in browser omit screen transforms.","Pixel provenance is exact for decoded backing data only. VRAM-to-ROM transfer provenance and final pixel ownership are unknown; no guessed ROM link.","Private copyrighted pixel/buffer data; never commit/package. At most eight reports; no automatic deletion or overwrite."]});
     let bytes = serde_json::to_vec_pretty(&report).map_err(|e| e.to_string())?;
     if bytes.len() > 2 * 1024 * 1024 {
-        return Err("Graphics metadata exceeds2MiB".into());
+        return Err("Graphics metadata exceeds 2 MiB".into());
     }
     let html = include_str!("debug_graphics/report.html").replace(
         "__GRAPHICS__",

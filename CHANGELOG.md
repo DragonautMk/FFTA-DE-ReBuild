@@ -3,6 +3,26 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-02 — Translate the shared portable debug tools guide
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Translate the five portable debug workflows, prerequisites and distribution validation into English. Preserve 10 old heading anchors, historical outcomes and platform limits; align Audit replay and explicit profile-selection instructions with the current English menu.
+
+**Validation**
+
+- Manual review and structural comparison preserve all links and their existing targets, ordered numeric tokens and 12 command blocks except translated comments, example symptom and placeholder. Ten old heading anchors retained. English menu labels checked against the catalog; whitespace check passes.
+
+**Limitations**
+
+- Documentation-only translation; no new runtime, gameplay, build, packaging, ROM or platform validation. Recorded Wine/Linux/PowerShell evidence and original failure limitations retain their original scope. Wider project language audit remains partial.
+
+Documentation: [en.json](crates/input-config/languages/en.json).
+
+[Change record](docs/changes/2026-11-02-translate-shared-debug-tools-guide.json)
+
 ## 2026-11-02 — Translate rendering and interaction notes into English
 
 Type: docs. Platforms: project-wide.
@@ -20,6 +40,26 @@ Type: docs. Platforms: project-wide.
 - Language-only changes; all recorded failures, conditional acceptance and manual/platform limits remain. No runtime/build/ROM checks repeated; the broader project migration remains partial.
 
 [Change record](docs/changes/2026-11-02-translate-scene-rendering-guides.json)
+
+## 2026-11-02 — Translate ROM-read audit and shared-event guides
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Translate the ROM-read audit and shared-event guides into English, including event console, menu semantic changes, runtime families, limits and validation sections. Preserve 13 legacy heading anchors and distinguish observation from endpoint/DS/hardware acceptance.
+
+**Validation**
+
+- Manual review and structural comparison against HEAD preserve code spans, fenced examples, links and all numeric values (English thousands separators normalized) in both guides. All 13 old heading anchors retained; Event console matches the English catalog; whitespace check passes.
+
+**Limitations**
+
+- Documentation-only language work; no new runtime/build/replay/ROM/platform/performance checks. Inherited PC, partial windows, dropped events, native/physical-hardware/IME limitations and historical failures remain explicit; broader source/docs migration remains pending.
+
+Documentation: [en.json](crates/input-config/languages/en.json).
+
+[Change record](docs/changes/2026-11-02-translate-rom-audit-event-guides.json)
 
 ## 2026-11-02 — Translate gameplay, issue, comparison and graphics reports into English
 
@@ -43,6 +83,26 @@ Type: changed. Platforms: Desktop report HTML; headless Chrome on Linux with syn
 Documentation: [debug_issues.md](docs/debug_issues.md), [debug_gameplay.md](docs/debug_gameplay.md), [debug_comparisons.md](docs/debug_comparisons.md), [debug_graphics.md](docs/debug_graphics.md), [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
 
 [Change record](docs/changes/2026-11-02-translate-remaining-debug-reports.json)
+
+## 2026-11-02 — Translate operation, probe and content-selector guides
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Translate operation-contract, breakpoint/watchpoint/memory and integrated content-selector prose into English; review the selector English sections and match menu wording to the English catalog. Translate retry syntax placeholders without changing command syntax.
+
+**Validation**
+
+- Manual review and structural comparison preserve code spans (apart from English DEADLINE/COMMAND placeholders), fenced examples, links and numeric/hex values in all three guides. Eleven old heading anchors added and two already-English headings retained. Whitespace check passes.
+
+**Limitations**
+
+- Documentation-only review; readonly, partial-frame, native-backend, IME/controller and incomplete console parity limits remain. No build, runtime, ROM or platform checks repeated; project-wide migration remains partial.
+
+Documentation: [en.json](crates/input-config/languages/en.json).
+
+[Change record](docs/changes/2026-11-02-translate-operation-probe-selector-guides.json)
 
 ## 2026-11-02 — Translate offline reports and coverage presentation into English
 
@@ -84,6 +144,42 @@ Type: docs. Platforms: project-wide.
 
 [Change record](docs/changes/2026-11-02-translate-mouse-obj-guides.json)
 
+## 2026-11-02 — Translate the local debug control guide
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Translate the local debug control, pause, stepping, cancellation, retry and diagnostic guide into English, retaining 13 historical heading anchors and distinctions between client timeout, delivery and server confirmation.
+
+**Validation**
+
+- Manual review and structural comparison preserve all links and existing targets, 13 legacy anchors, ordered numeric tokens, six command blocks and inline code except translated placeholders and one example comment. Whitespace check passes.
+
+**Limitations**
+
+- Documentation-only translation; no runtime, gameplay, ROM, replay, build or platform validation repeated. Prior Wine results, partial execution and native/hardware limits remain as recorded; broader migration is partial.
+
+[Change record](docs/changes/2026-11-02-translate-local-debug-control-guide.json)
+
+## 2026-11-02 — Translate historical mouse-session notes
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Translate the maintained October 17 mouse-session guide into English, preserving the chronological reports, contradictory successive Pub positioning instructions, acceptance limits and all 11 legacy heading anchors.
+
+**Validation**
+
+- Manual translation review and structural comparison against HEAD preserve every numeric token in order, all 11 old heading anchors, paths and selected technical identifiers. Whitespace check passes.
+
+**Limitations**
+
+- Documentation-only translation; historical user instructions are evidence, not a newly selected runtime task. No build, gameplay, physical-input, platform or ROM checks repeated; the broader English-first project remains partial.
+
+[Change record](docs/changes/2026-11-02-translate-historical-mouse-session-guide.json)
+
 ## 2026-11-02 — Generate English portable and private-export instructions
 
 Type: changed. Platforms: Windows, Linux.
@@ -120,6 +216,62 @@ Type: docs. Platforms: project-wide.
 - Documentation-only translation; historical Wine evidence remains within its original scope, no runtime/build/replay/platform checks repeated. Remaining guides, dynamic metadata, tools, source comments and cross-tree audit stay pending.
 
 [Change record](docs/changes/2026-11-02-translate-debug-session-guides.json)
+
+## 2026-11-02 — Translate debug catalog, replay and capture guides
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Translate the debug case catalog, replay profiles and trigger-capture guides into English, preserving 17 legacy heading anchors, command examples and historical validation scope.
+
+**Validation**
+
+- Manual review and structural comparison against HEAD preserve inline code, fenced examples, link destinations and numeric/hex tokens in all three guides; every old heading retains its anchor. Whitespace check passes.
+
+**Limitations**
+
+- Documentation-only translation; failed native endpoint comparison remains failed and capture/DS limits remain explicit. No build, runtime, ROM, replay or platform acceptance checks repeated; wider migration remains partial.
+
+[Change record](docs/changes/2026-11-02-translate-catalog-replay-capture-guides.json)
+
+## 2026-11-02 — Review runtime report producer text
+
+Type: changed. Platforms: project-wide.
+
+**Changes**
+
+- Review gameplay, issue, comparison and graphics report producers for English-first authored text. Clarify 16 human-readable descriptions and diagnostics while retaining machine identifiers and report schemas.
+- Document that longer gameplay event descriptions count against the existing event-byte cap; previously saved reports remain unchanged.
+
+**Validation**
+
+- Rustfmt parsed all four producer files as Rust 2021. Byte-for-byte comparison after exactly 16 expected string substitutions confirms the rest of the three modified sources is unchanged; the comparison producer is byte-identical. Whitespace check passes.
+
+**Limitations**
+
+- Static language and syntax validation only; no builds, report generation, ROM or runtime/platform tests repeated. Event metadata length can change how many records fit under the unchanged byte cap. Other producers, helper/test modules, dynamic inputs and both source trees remain under audit.
+
+[Change record](docs/changes/2026-11-02-review-runtime-report-producers-english.json)
+
+## 2026-11-02 — Review offline report generators for English-first wording
+
+Type: changed. Platforms: project-wide.
+
+**Changes**
+
+- Review full authored source, comments, metadata and CLI text of artifact/campaign/coverage generators. Correct nine English message-spacing defects in artifact/campaign tools; imported labels and machine values remain verbatim.
+- Correct missed Italian folder/name/hash placeholders in two already-reviewed guides and document the distinction between English authored text and imported metadata. This targeted reopening is justified by newly observed untranslated placeholders.
+
+**Validation**
+
+- Python AST comparison against HEAD proves only the nine expected string literals changed; coverage generator remains byte-identical. All three CLI --help commands exit 0. Guide headings, links, code/examples and schemas are preserved apart from translated placeholders and new explanatory prose. Whitespace check passes.
+
+**Limitations**
+
+- Language-only change/review; no cleanup, campaign run, ROM input, dataset/report regeneration, build or previous runtime acceptance test repeated. Auxiliary modules and remaining project source/docs still pending.
+
+[Change record](docs/changes/2026-11-02-review-offline-report-generators-english.json)
 
 ## 2026-11-02 — Review entry and Android guides for English-first wording
 
@@ -199,6 +351,50 @@ Type: docs. Platforms: EUR; Windows GNU test compilation recorded; runtime accep
 Documentation: [2026-11-01-model-european-compact-obj-sixth-root.json](docs/changes/2026-11-01-model-european-compact-obj-sixth-root.json), [TASK_HANDOFF.md](docs/development/TASK_HANDOFF.md).
 
 [Change record](docs/changes/2026-11-02-record-partial-senary-compact-obj-integration.json)
+
+## 2026-11-02 — Localize the desktop event console
+
+Type: changed. Platforms: Desktop: Linux unit tests; Windows GUI not rechecked.
+
+**Changes**
+
+- Apply the selected desktop language to the event-console title, collector status, controls and copy/export notices. English is the default and Italian remains available through the language catalogs.
+- Apply language changes on reopening while leaving existing notices, filter tokens, event content and exported JSON unchanged; preserve all collection and export limits.
+
+**Validation**
+
+- Offline recomp debug_console tests: 4 passed, including bilingual presentation, literal-brace search text, unchanged exported JSON, frozen views and bounded collection.
+- python3 scripts/menu_language.py check: both catalogs 454/454. Linux tests linked the existing ALSA runtime using isolated temporary pkg-config metadata; git diff --check passed.
+
+**Limitations**
+
+- No live event-console GUI, native Windows, physical-controller or IME validation was performed in this unit. Other operation/reference metadata and cross-tree localization remain pending.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-localize-debug-event-console.json)
+
+## 2026-11-02 — Localize the desktop debug command console
+
+Type: changed. Platforms: Desktop: Linux tests; Windows GUI not rechecked.
+
+**Changes**
+
+- Use the selected desktop language for command-console presentation, with English default and optional Italian catalog values. Localize the title, controls, completion hints, job status and notices while retaining command grammar, IDs, imported values and remote diagnostic payloads.
+- Apply changed language on reopening; preserve existing result lines and notices as produced. Locally generated preflight error JSON uses English.
+
+**Validation**
+
+- Offline recomp debug_command unit tests: 19 passed, including bilingual hints, controller actions, target identity, job progress and literal brace values. Offline menu i18n tests: 6 passed, including language selection, catalog placeholders and rendering.
+- python3 scripts/menu_language.py check: English and Italian catalogs 433/433; git diff --check passed. Linux tests linked existing ALSA and Wayland runtime libraries via isolated temporary pkg-config metadata.
+
+**Limitations**
+
+- No live command-console GUI, native Windows, physical controller or real IME validation in this unit. Other debug event-console and operation/reference metadata remain outside this localization scope.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-localize-debug-command-console.json)
 
 ## 2026-11-02 — Document the English-first foundation and restore CI change coverage
 

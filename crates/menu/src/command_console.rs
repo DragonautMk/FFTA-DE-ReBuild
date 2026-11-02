@@ -2,6 +2,7 @@
 use crate::canvas::Canvas;
 
 pub struct Display<'a> {
+    pub language: input_config::Language,
     pub target: &'a str,
     pub pending: &'a str,
     pub parameters: &'a str,
@@ -31,7 +32,7 @@ pub fn draw(view: &Display<'_>, pixels: &mut [[u8; 4]], width: usize, height: us
     pixels.fill([15, 20, 27, 255]);
     let mut canvas=Canvas::new(pixels,width,height);
     let available=(width as f32-24.0).max(0.0);
-    canvas.text(12.0,10.0,"Console comandi",[232,224,195],20.0,true,available);
+    canvas.text(12.0,10.0,view.language.text("Command console"),[232,224,195],20.0,true,available);
     canvas.text(12.0,32.0,view.target,[181,204,205],12.0,false,available);
     canvas.text(12.0,48.0,view.pending,[218,226,226],12.0,false,available);
     canvas.text(12.0,64.0,view.parameters,[165,183,187],12.0,false,available);
@@ -59,7 +60,7 @@ pub fn draw(view: &Display<'_>, pixels: &mut [[u8; 4]], width: usize, height: us
         }
     }
     canvas.text(12.0,(height as f32-48.0).max(0.0),view.notice,[240,187,130],12.0,false,available);
-    canvas.text(12.0,(height as f32-30.0).max(0.0),if view.keyboard.is_some(){"Pad: direzioni / conferma · Indietro cancella · Send invia"}else{"Invio esegue · ↑↓ cronologia · Tab completa · Esc cancella/chiude"},[165,183,187],12.0,false,available);
-    canvas.text(12.0,(height as f32-15.0).max(0.0),"Ctrl+A/C/X/V seleziona/copia/taglia/incolla · Ctrl+Shift+C copia risultato",[165,183,187],12.0,false,available);
+    canvas.text(12.0,(height as f32-30.0).max(0.0),view.language.text(if view.keyboard.is_some(){"Pad: directions / confirm · Back deletes · Send submits"}else{"Enter executes · ↑↓ history · Tab completes · Esc clears/closes"}),[165,183,187],12.0,false,available);
+    canvas.text(12.0,(height as f32-15.0).max(0.0),view.language.text("Ctrl+A/C/X/V select/copy/cut/paste · Ctrl+Shift+C copies result"),[165,183,187],12.0,false,available);
     canvas.finish(pixels);
 }

@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-operation-probe-selector-guides",
+  "title": "Translate operation, probe and content-selector guides",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Translate operation-contract, breakpoint/watchpoint/memory and integrated content-selector prose into English; review the selector English sections and match menu wording to the English catalog. Translate retry syntax placeholders without changing command syntax."
+  ],
+  "validation": [
+    "Manual review and structural comparison preserve code spans (apart from English DEADLINE/COMMAND placeholders), fenced examples, links and numeric/hex values in all three guides. Eleven old heading anchors added and two already-English headings retained. Whitespace check passes."
+  ],
+  "limitations": [
+    "Documentation-only review; readonly, partial-frame, native-backend, IME/controller and incomplete console parity limits remain. No build, runtime, ROM or platform checks repeated; project-wide migration remains partial."
+  ],
+  "files": [
+    "docs/debug_operations.md",
+    "docs/debug_probes.md",
+    "docs/debug_selector.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "crates/input-config/languages/en.json"
+  ]
+}

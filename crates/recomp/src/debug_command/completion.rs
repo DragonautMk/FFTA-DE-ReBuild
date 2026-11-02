@@ -20,7 +20,7 @@ impl Cycle {
     /// Repeated Tab cycles only the exact unchanged draft and candidate set.
     /// It changes an editable draft, never submits it or dispatches an action.
     pub fn apply(&mut self,editor:&mut super::editor::Editor,profiles:&[String],catalogs:&[String],cheats:&[String],requests:&[String],operations:&[String])->Result<Applied,&'static str>{
-        if editor.selection().is_some()||!editor.preedit().is_empty(){self.state=None;return Err("Completa senza selezione o composizione attiva");}
+        if editor.selection().is_some()||!editor.preedit().is_empty(){self.state=None;return Err("Complete without an active selection or composition");}
         if let Some(state)=self.state.as_mut(){
             if state.expected==editor.text()&&state.cursor==editor.cursor()&&state.profiles==profiles&&state.catalogs==catalogs&&state.cheats==cheats&&state.requests==requests&&state.operations==operations {
                 let index=(state.index+1)%state.alternatives.len();let value=encoded(&state.alternatives[index],state.at_end);
@@ -94,31 +94,31 @@ fn flags(command:&str)->&'static [&'static str]{match command{
     "recent-start"=>&["--events","--reads","--on-error","--start","--end"],
     "issue-report"=>&["--symptom"],"cancel"=>&["--request"],_=>&[],
 }}
-pub(crate) fn hint(text:&str)->&'static str {
+pub(crate) fn hint(text:&str,language:input_config::Language)->&'static str {
     let tokens=lex(text,text.len()).unwrap_or_default();
     let command=tokens.first().map_or("",|t|t.value.as_str());
-    match command {
-        "help"=>"help [operation-id] · lista o dettagli dal registro",
-        "profile"|"catalog"=>"profile|catalog select ID · seleziona senza eseguire",
+    language.text(match command {
+        "help"=>"help [operation-id] · list or details from the registry",
+        "profile"|"catalog"=>"profile|catalog select ID · select without executing",
         "cheats"=>"cheats select ID | refresh | list | show CH-ID | prepare CH-ID SOURCE MASTER GENERATION | apply-once CH-ID SOURCE MASTER GENERATION TOKEN",
         "content"=>"content refresh | content list [--offset N --limit 1..16 --generation N]",
-        "replay"=>"replay run [plain|audit|capture|compare] · profilo selezionato",
+        "replay"=>"replay run [plain|audit|capture|compare] · selected profile",
         "jobs"=>"jobs status | jobs cancel REQUEST-ID",
-        "retry"=>"retry RUN REQUEST-ID DEADLINE-UNIX-MS -- COMMAND · stessa richiesta, senza duplicati",
-        "cancel"=>"cancel --request REQUEST-ID · annulla solo la richiesta esatta",
-        "step"=>"step N [--keys 0xMASK] · N 1..600; maschera active-low",
-        "inspect"=>"inspect 0xADDRESS LENGTH · 1..256 byte, sola lettura",
-        "break"=>"break 0xPC arm|thumb [--steps N] · interprete",
+        "retry"=>"retry RUN REQUEST-ID DEADLINE-UNIX-MS -- COMMAND · same request, no duplicates",
+        "cancel"=>"cancel --request REQUEST-ID · cancel only the exact request",
+        "step"=>"step N [--keys 0xMASK] · N 1..600; active-low mask",
+        "inspect"=>"inspect 0xADDRESS LENGTH · 1..256 bytes, read-only",
+        "break"=>"break 0xPC arm|thumb [--steps N] · interpreter",
         "watch"=>"watch read|write 0xSTART 0xEND [--steps N --width 1|2|4 --value 0xHEX]",
-        "graphics"=>"graphics [--compare-last] · acquisizione esplicita",
+        "graphics"=>"graphics [--compare-last] · explicit capture",
         "audio-start"=>"audio-start [--frames N --streams LIST]",
         "code-start"=>"code-start [--frames N --events N --start 0xHEX --end 0xHEX --kind KIND --mode MODE]",
         "gameplay-start"=>"gameplay-start [--frames N --events N --family FAMILY --context 0xHEX]",
         "recent-start"=>"recent-start [--events N --reads on|off --on-error on|off --start 0xHEX --end 0xHEX]",
-        "issue-report"=>"issue-report [--symptom TESTO] · usa il profilo selezionato",
-        "status"|"pause"|"resume"|"ui-start"|"ui-report"|"audio-report"|"code-report"|"gameplay-report"|"recent-freeze"|"recent-report"=>"Nessun argomento · Tab mostra i completamenti disponibili",
-        _=>"Tab completa nomi, opzioni, valori e ID · help OPERATION-ID mostra i dettagli",
-    }
+        "issue-report"=>"issue-report [--symptom TEXT] · uses selected profile",
+        "status"|"pause"|"resume"|"ui-start"|"ui-report"|"audio-report"|"code-report"|"gameplay-report"|"recent-freeze"|"recent-report"=>"No arguments · Tab shows available completions",
+        _=>"Tab completes names, options, values and IDs · help OPERATION-ID shows details",
+    })
 }
 
 pub(crate) fn complete(text:&str,cursor:usize,profiles:&[String],catalogs:&[String],cheats:&[String],requests:&[String],operations:&[String])->Result<Completion,&'static str>{
@@ -189,6 +189,13 @@ mod tests {
         let text="step 1 --keys 0x3ff ";assert!(!choices(text,text.len()).alternatives.contains(&"--keys".into()));
     }
     #[test]
+    fn hints_follow_language_without_changing_command_syntax(){
+        let en=input_config::Language::default();let it=input_config::Language::parse("it");
+        assert!(hint("step 1",en).contains("active-low mask"));
+        assert!(hint("step 1",it).contains("maschera active-low"));
+        for language in [en,it] {assert!(hint("step 1",language).starts_with("step N [--keys 0xMASK]"));}
+    }
+    #[test]
     fn quoted_unicode_cursor_and_multiline_are_non_destructive(){
         let text="catalog select 'content-cat";let c=choices(text,text.len());assert_eq!(c.alternatives,vec!["content-catalog"]);
         assert_eq!(&text[c.range.clone()],"'content-cat");assert_eq!(encoded(&c.alternatives[0],c.at_end),"content-catalog ");
@@ -197,7 +204,7 @@ mod tests {
         assert!(complete("status\npause",6,&[],&[],&[],&[],&[]).is_err());
         assert!(complete("help é",6,&[],&[],&[],&[],&[]).is_err());
         assert_eq!(quoted("a \"猫\""),"\"a \\\"猫\\\"\"");
-        assert_eq!(hint("'step' 1"),hint("step 1"));
+        assert_eq!(hint("'step' 1",input_config::Language::default()),hint("step 1",input_config::Language::default()));
         let text="status\u{2003}pause";let c=choices(text,6);assert_eq!(c.alternatives,vec!["status"]);
         let text="profile select \"bad\\n";assert!(complete(text,text.len(),&[],&[],&[],&[],&[]).is_err());
     }

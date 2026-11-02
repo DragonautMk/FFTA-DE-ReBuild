@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-rom-audit-event-guides",
+  "title": "Translate ROM-read audit and shared-event guides",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Translate the ROM-read audit and shared-event guides into English, including event console, menu semantic changes, runtime families, limits and validation sections. Preserve 13 legacy heading anchors and distinguish observation from endpoint/DS/hardware acceptance."
+  ],
+  "validation": [
+    "Manual review and structural comparison against HEAD preserve code spans, fenced examples, links and all numeric values (English thousands separators normalized) in both guides. All 13 old heading anchors retained; Event console matches the English catalog; whitespace check passes."
+  ],
+  "limitations": [
+    "Documentation-only language work; no new runtime/build/replay/ROM/platform/performance checks. Inherited PC, partial windows, dropped events, native/physical-hardware/IME limitations and historical failures remain explicit; broader source/docs migration remains pending."
+  ],
+  "files": [
+    "docs/debug_rom_audit.md",
+    "docs/debug_events.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "crates/input-config/languages/en.json"
+  ]
+}

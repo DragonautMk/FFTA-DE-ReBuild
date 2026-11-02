@@ -1899,9 +1899,9 @@ impl PlayApp {
     fn toggle_event_console(&mut self, event_loop:&ActiveEventLoop) {
         if let Some(panel)=self.event_console_panel.as_mut() {
             if panel.is_visible() { panel.hide(&mut self.event_console.borrow_mut()); }
-            else { panel.show(&mut self.event_console.borrow_mut()); }
+            else { panel.show(&mut self.event_console.borrow_mut(),self.av.menu_language); }
         } else {
-            match crate::debug_console_panel::Panel::open(event_loop,&mut self.event_console.borrow_mut()) {
+            match crate::debug_console_panel::Panel::open(event_loop,&mut self.event_console.borrow_mut(),self.av.menu_language) {
                 Ok(panel)=>self.event_console_panel=Some(panel),
                 Err(e)=>{self.menu.diagnosis_result(format!("Cannot open event console: {e}"));self.menu_dirty=true;}
             }
@@ -1911,9 +1911,9 @@ impl PlayApp {
         let Some((root,session))=self.control_server.as_ref().map(|s|(s.root().to_owned(),s.event_session())) else {
             self.menu.diagnosis_result("Open an isolated debug copy before using the command console.".into());self.menu_dirty=true;return;
         };
-        if let Some(panel)=self.command_console_panel.as_mut(){panel.show();return;}
+        if let Some(panel)=self.command_console_panel.as_mut(){panel.show(self.av.menu_language);return;}
         let Some(manifest_sha256)=session.manifest_sha256.as_deref() else {self.menu.diagnosis_result("Missing session identity".into());self.menu_dirty=true;return;};
-        match crate::debug_command_panel::Panel::open(event_loop,root,&session.run_id,manifest_sha256) {
+        match crate::debug_command_panel::Panel::open(event_loop,root,&session.run_id,manifest_sha256,self.av.menu_language) {
             Ok(panel)=>self.command_console_panel=Some(panel),
             Err(error)=>{self.menu.diagnosis_result(format!("Command console: {error}"));self.menu_dirty=true;},
         }

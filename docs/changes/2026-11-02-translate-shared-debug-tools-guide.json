@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-shared-debug-tools-guide",
+  "title": "Translate the shared portable debug tools guide",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Translate the five portable debug workflows, prerequisites and distribution validation into English. Preserve 10 old heading anchors, historical outcomes and platform limits; align Audit replay and explicit profile-selection instructions with the current English menu."
+  ],
+  "validation": [
+    "Manual review and structural comparison preserve all links and their existing targets, ordered numeric tokens and 12 command blocks except translated comments, example symptom and placeholder. Ten old heading anchors retained. English menu labels checked against the catalog; whitespace check passes."
+  ],
+  "limitations": [
+    "Documentation-only translation; no new runtime, gameplay, build, packaging, ROM or platform validation. Recorded Wine/Linux/PowerShell evidence and original failure limitations retain their original scope. Wider project language audit remains partial."
+  ],
+  "files": [
+    "docs/debug_tools.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "crates/input-config/languages/en.json"
+  ]
+}

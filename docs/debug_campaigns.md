@@ -4,6 +4,9 @@
 
 A campaign declares a small set of cases and selects the DS, families or transitions affected by a change. **report** only reads the specified JSON files and reuses retained evidence: it does not run the game, create snapshots or reopen completed acceptance checks. The report interface is in English.
 
+The generator's authored messages use English. Labels, tags and recorded
+outcome messages imported from evidence retain their original text and identity.
+
 An explicit **run-case** dispatches one profile to the [existing replay supervisor](debug_replays.md). There is no automatic execution of every case.
 
 <a id="manifest-e-selezione"></a>
@@ -23,10 +26,10 @@ Create a private JSON file outside commits with this format:
       "ds": ["DS-20"],
       "families": ["task"],
       "transitions": ["entry"],
-      "profile": {"path": "profili/task/replay.json", "sha256": "SHA256_ESATTO_64_HEX"},
+      "profile": {"path": "profili/task/replay.json", "sha256": "EXACT_SHA256_64_HEX"},
       "evidence": {
-        "result": {"path": "profili/task/Data/config/replay/result.json", "sha256": "SHA256_ESATTO_64_HEX"},
-        "audit": {"path": "profili/task/Data/config/replay/rom-audit.json", "sha256": "SHA256_ESATTO_64_HEX"}
+        "result": {"path": "profili/task/Data/config/replay/result.json", "sha256": "EXACT_SHA256_64_HEX"},
+        "audit": {"path": "profili/task/Data/config/replay/rom-audit.json", "sha256": "EXACT_SHA256_64_HEX"}
       }
     },
     {"id": "DS03-unprepared", "ds": ["DS-03"], "families": ["scene-transition"]}

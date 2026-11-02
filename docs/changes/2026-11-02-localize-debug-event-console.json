@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "localize-debug-event-console",
+  "title": "Localize the desktop event console",
+  "kind": "changed",
+  "platforms": [
+    "Desktop: Linux unit tests; Windows GUI not rechecked"
+  ],
+  "changes": [
+    "Apply the selected desktop language to the event-console title, collector status, controls and copy/export notices. English is the default and Italian remains available through the language catalogs.",
+    "Apply language changes on reopening while leaving existing notices, filter tokens, event content and exported JSON unchanged; preserve all collection and export limits."
+  ],
+  "validation": [
+    "Offline recomp debug_console tests: 4 passed, including bilingual presentation, literal-brace search text, unchanged exported JSON, frozen views and bounded collection.",
+    "python3 scripts/menu_language.py check: both catalogs 454/454. Linux tests linked the existing ALSA runtime using isolated temporary pkg-config metadata; git diff --check passed."
+  ],
+  "limitations": [
+    "No live event-console GUI, native Windows, physical-controller or IME validation was performed in this unit. Other operation/reference metadata and cross-tree localization remain pending."
+  ],
+  "files": [
+    "crates/input-config/languages/en.json",
+    "crates/input-config/languages/it.json",
+    "crates/menu/src/event_console.rs",
+    "crates/recomp/src/debug_console_panel.rs",
+    "crates/recomp/src/play.rs",
+    "docs/debug_events.md",
+    "docs/menu_localization.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

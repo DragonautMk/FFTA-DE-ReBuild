@@ -24,9 +24,9 @@ termination of another owner's process or changing another thread's goal state.
 
 - State: active
 - Outcome: partial
-- Verified: runtime/offline reports accepted; 57 prior Python tests, eight browser checks and 15 unchanged coverage layers. Five guide units reviewed 50 files (26 translated); code/links/numeric evidence/legacy anchors retained. Export instructions English; 11 package tests and synthetic English/legacy private exports PASS. Audit: 112 reviewed files, 55 Markdown paths pending; menu catalogs complete.
-- Missing: remaining maintained documentation, dynamic report metadata, other exporters/tools, source comments and full audit across both trees. Preserve optional locales, imported content and immutable history.
-- Resume: select another pending guide/tooling unit from the audit; completed guide/export units stay accepted unless inputs change. No ROM exploration or runtime/build repetition solely for translation.
+- Verified: previous runtime/report/guide/export units accepted. Shared portable debug and local-control guides translated; 23 old anchors, 18 command blocks, links/numbers and timeout/platform limits retained. Command and event consoles use English/Italian catalogs; console tests 19 + 4 and menu tests 6 PASS. Audit: 137 reviewed files, 44 Markdown pending; references remain.
+- Missing: remaining documentation, other dynamic report producers/metadata, helper/test modules, tools/build text, source comments and full audit across both trees. Preserve optional locales, imported content and immutable history.
+- Resume: latest English-first request selects ENGLISH-FIRST-OPERATION-REFERENCES. Registry prose is English but readonly cards hardcode Italian labels and expose Italian route segments. Missing: English-first, language-aware card presentation preserving registry/CLI contracts, grouping and readonly behavior. Planned checklist text remains a separate generated source. Next: implement and validate.
 
 ### ROMDATA-03-04-E105-SENARY-COMPACT-OBJ
 
@@ -221,9 +221,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: ENGLISH-FIRST-PROJECT, partial; ENGLISH-FIRST-DEBUG-SESSION-GUIDES completed.
-- Last verified result: 50 guides reviewed this session, 26 translated; portable/private exporters use English, 11 package tests and synthetic old/new-base export checks PASS. Audit: 112 reviewed files, 55 pending Markdown.
-- Remaining work: technical/debug/development guides, tools, dynamic metadata/comments, generated references/notices and full cross-tree audit.
-- Errors or blockers: none; commands, compatibility anchors/tokens, optional locales, legal text and original data preserved.
-- Next action: select pending debug catalog/replay/capture guides or another source generator from the audit; preserve accepted checks and avoid runtime/ROM exploration solely for translation.
-- References: `docs/development/ENGLISH_FIRST_AUDIT.json`, `docs/changes/2026-11-02-translate-debug-session-guides.json`, `docs/changes/2026-11-02-translate-export-package-instructions.json`.
+- Task: ENGLISH-FIRST-PROJECT partial; ENGLISH-FIRST-OPERATION-REFERENCES selected.
+- Last verified result: event console localization accepted; operation cards contain Italian presentation.
+- Remaining work: translate operation cards without changing route identities or grouping; then full cross-tree audit.
+- Errors or blockers: none; prior work and concurrent todo2 addition preserved.
+- Next action: localize displayed labels and route segments, preserving registry and CLI data.
+- References: `crates/recomp/src/debug_operations.rs`, `crates/menu/src/clan_atlas/references.rs`.

@@ -197,7 +197,7 @@ def build(request, held=None):
               'candidate_count': len(candidates), 'candidate_files': leaf_files, 'capture_limits': LIMITS,
               'preservation': 'Inputs, manifests, saves, recordings, datasets, reports, errors, source preimages, unknown files and kept sessions remain. Only generated native libraries and explicit completed ROM fixture copies are eligible.'}
     if len(encoded(result)) > MAX_JSON:
-        raise ValueError('Plan metadata exceeds16MiB')
+        raise ValueError('Plan metadata exceeds 16 MiB')
     return result
 
 
@@ -213,7 +213,7 @@ def new_output(path, scopes):
 def publish(path, value):
     data = encoded(value) + b'\n'
     if len(data) > MAX_JSON:
-        raise ValueError('Receipt exceeds16MiB')
+        raise ValueError('Receipt exceeds 16 MiB')
     with tempfile.NamedTemporaryFile(dir=path.parent, delete=False) as f:
         temporary = Path(f.name)
         try:

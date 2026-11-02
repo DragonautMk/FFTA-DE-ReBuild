@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "localize-debug-command-console",
+  "title": "Localize the desktop debug command console",
+  "kind": "changed",
+  "platforms": [
+    "Desktop: Linux tests; Windows GUI not rechecked"
+  ],
+  "changes": [
+    "Use the selected desktop language for command-console presentation, with English default and optional Italian catalog values. Localize the title, controls, completion hints, job status and notices while retaining command grammar, IDs, imported values and remote diagnostic payloads.",
+    "Apply changed language on reopening; preserve existing result lines and notices as produced. Locally generated preflight error JSON uses English."
+  ],
+  "validation": [
+    "Offline recomp debug_command unit tests: 19 passed, including bilingual hints, controller actions, target identity, job progress and literal brace values. Offline menu i18n tests: 6 passed, including language selection, catalog placeholders and rendering.",
+    "python3 scripts/menu_language.py check: English and Italian catalogs 433/433; git diff --check passed. Linux tests linked existing ALSA and Wayland runtime libraries via isolated temporary pkg-config metadata."
+  ],
+  "limitations": [
+    "No live command-console GUI, native Windows, physical controller or real IME validation in this unit. Other debug event-console and operation/reference metadata remain outside this localization scope."
+  ],
+  "files": [
+    "crates/input-config/languages/en.json",
+    "crates/input-config/languages/it.json",
+    "crates/menu/src/command_console.rs",
+    "crates/recomp/src/debug_command/completion.rs",
+    "crates/recomp/src/debug_command/controller.rs",
+    "crates/recomp/src/debug_command/observation.rs",
+    "crates/recomp/src/debug_command_panel.rs",
+    "crates/recomp/src/play.rs",
+    "docs/menu_localization.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

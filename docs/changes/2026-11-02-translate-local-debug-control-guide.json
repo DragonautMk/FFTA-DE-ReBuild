@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-local-debug-control-guide",
+  "title": "Translate the local debug control guide",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Translate the local debug control, pause, stepping, cancellation, retry and diagnostic guide into English, retaining 13 historical heading anchors and distinctions between client timeout, delivery and server confirmation."
+  ],
+  "validation": [
+    "Manual review and structural comparison preserve all links and existing targets, 13 legacy anchors, ordered numeric tokens, six command blocks and inline code except translated placeholders and one example comment. Whitespace check passes."
+  ],
+  "limitations": [
+    "Documentation-only translation; no runtime, gameplay, ROM, replay, build or platform validation repeated. Prior Wine results, partial execution and native/hardware limits remain as recorded; broader migration is partial."
+  ],
+  "files": [
+    "docs/debug_control.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": []
+}

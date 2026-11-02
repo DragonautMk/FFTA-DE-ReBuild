@@ -1,161 +1,158 @@
-# Selettore integrato dei contenuti debug
+<a id="selettore-integrato-dei-contenuti-debug"></a>
 
-La scheda richiede lo [sblocco persistente di Debug](menu_clan_atlas.md#sblocco-permanente-di-debug):
-**↑ ↑ ↓ ↓ ← ← → →** nel menu, oppure `debug = true` in `av.cfg` e riavvio.
+# Integrated debug content selector
 
-DBG2-03 aggiunge **Debug > Content selector**, una pagina riutilizzabile sopra
-il [catalogo comune](debug_content.md). La scelta confermata è un riferimento
-host: nessun replay, script, caricamento di stato o cheat parte selezionandola.
-La migrazione DBG2-04 è in corso; le prove concluse rimangono distinte dalla nuova integrazione.
+The page requires [persistent Debug unlock](menu_clan_atlas.md#sblocco-permanente-di-debug):
+**↑ ↑ ↓ ↓ ← ← → →** in the menu, or `debug = true` in `av.cfg` and restart.
 
-Aprire la pagina mostra l'indice già disponibile oppure una lista vuota.
-**Refresh** aggiorna esplicitamente le radici dichiarate in un worker limitato;
-la pagina resta navigabile. **Browse external file…** aggiunge soltanto il file
-scelto, senza esaminare i suoi vicini. **Add folder…** aggiunge una cartella
-esplicita alle radici della scansione. Solo questi due pulsanti aprono dialoghi
-OS; annullarli conserva radici e scelta corrente. Al ritorno il frontend
-consuma gli eventi della chiusura e del ripristino del focus per almeno 400 ms e
-due poll neutri del controller, evitando che Escape chiuda anche il menu o che
-una conferma mantenuta avvii altre azioni. `host_modal_input` nello status indica
-questa breve attesa. La CLI equivalente per
-indicizzare un singolo file è `debug-content scan --add-file FILE --json`.
+DBG2-03 adds **Debug > Content selector**, a reusable page over the
+[shared catalog](debug_content.md). A confirmed choice is a host reference:
+selecting it starts no replay, script, state load or cheat. DBG2-04 migration
+is in progress; completed checks remain separate from the new integration.
 
-La lista offre ricerca per nome/ID/tipo/percorso/descrizione, categoria, filtri
-di disponibilità e compatibilità, ordinamento per nome/tipo/recente e raccolte
-All content/Favorites/Recent. Due omonimi restano distinti tramite ID e percorso
-nei dettagli. L'evidenziazione cambia solo la riga osservata; **Select** conferma
-la scelta dopo il ricontrollo del catalogo. File cambiati, mancanti, non ordinari,
-di tipo sconosciuto o incompatibili vengono rifiutati. Un cambio di generazione
-dell'indice impedisce di usare una riga precedente per un file diverso.
+Opening the page shows the available index or an empty list. **Refresh**
+explicitly updates declared roots in a bounded worker; the page stays navigable.
+**Browse external file…** adds only the chosen file without examining neighbors.
+**Add folder…** adds an explicit folder to scan roots. Only these two buttons
+open OS dialogs; cancelling retains roots and current selection. On return,
+the frontend consumes close/focus-restoration events for at least 400 ms and
+two neutral controller polls, preventing Escape from also closing the menu or
+a held confirm from starting other actions. `host_modal_input` in status
+identifies this brief wait. The equivalent CLI command for indexing one file
+is `debug-content scan --add-file FILE --json`.
 
-**Favorite** conserva al massimo 512 ID; Recent conserva le ultime 32 conferme.
-Le scelte rimangono in memoria nella finestra corrente: persistenza e riferimenti
-dopo riapertura sono DBG2-07. Il rientro dal selettore conserva il chiamante e
-la scelta già confermata. Una selezione ancora in lavorazione viene scartata se
-si annulla la pagina; un risultato tardivo non la riapre e non applica una scelta.
+The list offers search by name/ID/kind/path/description, category, availability
+and compatibility filters, name/kind/recent sorting and All content/Favorites/
+Recent collections. Identically named items remain distinct through ID and
+path in details. Highlighting changes only the observed row; **Select** confirms
+the choice after rechecking the catalog. Changed, missing, nonordinary,
+unknown-kind or incompatible files are refused. An index-generation change
+prevents using a previous row for a different file.
 
-**Details / preview** rende scorrevoli ID completi, percorso, identità, stato,
-motivo e messaggi. Per snapshot con immagine incorporata usa il verificatore
-readonly già disponibile, senza caricare una Machine; snapshot raw non promettono
-un'immagine. Il ricontrollo dell'hash precede la visualizzazione. La raccolta di
-metadati e l'anteprima non sostituiscono il preflight dell'azione effettiva. Il
-messaggio finale distingue anteprima autenticata, immagine assente ed errore;
-una risposta relativa a una riga ormai diversa non sostituisce l'anteprima corrente.
+**Favorite** retains at most 512 IDs; Recent retains the last 32 confirmations.
+Choices stay in memory in the current window: persistence and references after
+reopening are DBG2-07. Returning from the selector retains the caller and the
+confirmed choice. A selection still in progress is discarded when the page
+is cancelled; a late result neither reopens it nor applies a choice.
 
-Tastiera: frecce per spostare il focus, Tab per cambiare area, Invio per
-entrare nella ricerca o portare la lista sul pulsante Select. Invio su Select
-conferma; Escape annulla l'editor/dettaglio o ritorna al chiamante. Ctrl+F apre
-la ricerca. Nella ricerca i caratteri, Backspace, Tab, Invio ed Escape vengono
-consumati dal menu prima dei binding guest e delle shortcut debugger/globali.
-L'editor accetta 128 caratteri Unicode e preedit/commit IME; la copertura effettiva
-di layout/composizione e glifi dipende dalla piattaforma e dai font disponibili.
+**Details / preview** makes complete IDs, path, identity, status, reason and
+messages scrollable. For snapshots with an embedded image, it uses the existing
+readonly validator without loading a Machine; raw snapshots promise no image.
+Hash rechecking precedes display. Metadata collection and preview do not
+replace the actual action's preflight. The final message distinguishes an
+authenticated preview, absent image and error; a response for a row that has
+since changed does not replace the current preview.
 
-Mouse: hover evidenzia, click sui pulsanti esegue la singola azione host; click
-sulla lista non conferma la scelta. La rotella scorre la lista o i dettagli.
-Controller: direzioni, South/Confirm e East/Cancel percorrono gli stessi controlli;
-le direzioni navigano fra i filtri, Confirm apre la scelta del valore e un
-secondo Confirm la applica. Cancel scarta il valore in modifica. Il medesimo
-comportamento vale per le scelte nei moduli dei parametri;
-la ricerca offre una tastiera a schermo con pagine, spazio, cancellazione e Done.
-Una pressione mantenuta non deve produrre conferme multiple. Mentre l'editor ha
-focus, le shortcut non raggiungono il guest.
+Keyboard: arrows move focus, Tab changes area, Enter enters search or moves
+the list to Select. Enter on Select confirms; Escape cancels the editor/details
+or returns to the caller. Ctrl+F opens search. In search, characters, Backspace,
+Tab, Enter and Escape are consumed by the menu before guest bindings and
+debugger/global shortcuts. The editor accepts 128 Unicode characters and IME
+preedit/commit; actual layout/composition and glyph coverage depends on platform
+and available fonts.
 
-La pagina usa una sola operazione IO alla volta, con generazione dell'indice e
-identità della vista. Mantiene i cap del catalogo; i dettagli avvolgono il testo
-con gli stessi font, kerning e advance del renderer e limitano la finestra a
-16.384 caratteri. `debug-control status` include lo stato host `content_picker`
-per leggere conteggio, generazione, operazione pendente e scelta confermata.
-Non è ancora un nuovo comando di esecuzione della console DBG2-13/15.
+Mouse: hover highlights; button clicks perform one host action; clicking the
+list does not confirm a choice. The wheel scrolls the list or details.
+Controller: directions, South/Confirm and East/Cancel traverse the same controls;
+directions navigate filters, Confirm opens value selection and a second Confirm
+applies it. Cancel discards the value being edited. Parameter-form choices use
+the same behavior; search offers an on-screen keyboard with pages, space,
+delete and Done. A held press must not produce multiple confirmations. While
+the editor has focus, shortcuts do not reach the guest.
 
-Le verifiche effettive, le piattaforme e gli eventuali criteri ancora aperti
-sono registrati nel [TODO DBG2](development/DEBUG_TOOLS_V2_TODO.md) e nel
-[passaggio di consegne](development/TASK_HANDOFF.md). La prova GUI usa una fixture
-pubblica sintetica ferma al frame iniziale, distinta dalle scene DS e dai dati
-personali. I tre vecchi fallback FileDialog sono rimossi da DBG2-04.
+The page uses one I/O operation at a time, with index generation and view
+identity. It retains catalog caps; details wrap text using the renderer's same
+fonts, kerning and advances and bound the window to 16,384 characters.
+`debug-control status` includes host `content_picker` status for reading count,
+generation, pending operation and confirmed selection. This is not yet a new
+execution command for the DBG2-13/15 console.
 
-DBG2-03 è verificato con build Windows GNU e Wine: tutti i 55 casi menu,
-10 catalogo, 4 bridge, 3 contratto, 2 collector UI e 2 ritorno modale nei
-rispettivi scope; 3 test Python inventario e 10 packaging. La GUI esercita
-ricerca, omonimi, conferma mantenuta singola, preferiti/recenti, XInput simulato,
-annullamento di entrambi i dialoghi, importazione singola e anteprima a tre
-dimensioni. La prima prova Cancel ha esposto e conservato una regressione che
-riprendeva la copia sintetica; dopo la correzione la nuova prova conserva stato
-completo/frame0/clock0. Windows nativo, Linux runtime, controller fisici e IME
-nativo restano non verificati. [Record completo](changes/2026-10-29-add-integrated-debug-content-selector.json).
+Actual checks, platforms and any open criteria are recorded in the
+[DBG2 TODO](development/DEBUG_TOOLS_V2_TODO.md) and
+[handoff](development/TASK_HANDOFF.md). The GUI check uses a public synthetic
+fixture stopped at its starting frame, separate from DS scenes and personal
+data. The three old FileDialog fallbacks are removed by DBG2-04.
 
-DBG2-04 aggiunge **Debug > Tool inputs / current selections**:
-profili replay/audit/capture/compare, catalogo salvataggi, sessione, registrazione,
-snapshot, sequenza input, dataset, runtime A/B, libreria nativa, label e piano
-noto. Le liste sono vincolate al ruolo e le scelte conservano hash, ID e contesto
-ROM. Un file non hashato nel budget viene rifiutato con richiesta di restringere
-la radice e aggiornare. Un riferimento alterato resta visibile e viene rifiutato
-prima dell'uso; non si ripiega su un altro file o sui dialoghi OS.
-La stessa pagina include **Cheat reference catalog**, con il selettore interno
-vincolato al catalogo cheat. Confermare il riferimento e annullare il selettore
-mantiene il cursore sulla relativa riga; non applica né attiva codici.
+DBG2-03 is verified with Windows GNU builds and Wine: all 55 menu, 10 catalog,
+4 bridge, 3 contract, 2 UI-collector and 2 modal-return cases in their respective
+scopes; 3 Python inventory and 10 packaging tests. The GUI exercises search,
+identical names, a single held confirmation, favorites/recent, simulated XInput,
+cancelling both dialogs, single-file import and preview at three sizes. The
+first Cancel check exposed and retained a regression that resumed the synthetic
+copy; after correction, the new check preserves complete state/frame0/clock0.
+Native Windows, Linux runtime, physical controllers and native IME remain
+unverified. [Full record](changes/2026-10-29-add-integrated-debug-content-selector.json).
 
-Choose replay profile e Choose catalog aprono la pagina interna. Replay, Audit,
-Capture, Compare e Create issue senza profilo aprono la stessa pagina con il
-requisito mancante: scegliere non riprende l'azione automaticamente. Ritornare
-al menu e avviare esplicitamente. I riferimenti passati dalla CLI e il catalogo
-predefinito vengono autenticati prima dell'uso. Le label scelte alimentano la
-traccia codice; gli input per preparare nuovi profili sono separati dai payload
-immutabili dei profili già autenticati (editor DBG2-05).
+DBG2-04 adds **Debug > Tool inputs / current selections**: replay/audit/capture/
+compare profiles, save catalog, session, recording, snapshot, input sequence,
+dataset, A/B runtime, native library, labels and known plan. Lists are role-bound
+and choices retain hash, ID and ROM context. A file not hashed within budget is
+refused with a request to narrow the root and refresh. A changed reference stays
+visible and is refused before use; there is no fallback to another file or OS
+dialogs. The same page includes **Cheat reference catalog**, with its internal
+selector bound to the cheat catalog. Confirming the reference and cancelling
+the selector keeps the cursor on that row; it neither applies nor activates codes.
 
-La scelta tipizzata controlla formato e identità usando i servizi readonly
-esistenti per profili, cataloghi, sessioni e registrazioni; snapshot e sequenze
-sono controllati senza caricarli nella macchina corrente. Le label sono parse
-per la ROM; i manifest controllano schema/ROM. Runtime e librerie restano
-riferimenti hashati: il worker deve ancora verificare formato, feature e ABI,
-senza caricare codice alla semplice selezione.
+Choose replay profile and Choose catalog open the internal page. Replay, Audit,
+Capture, Compare and Create issue without a profile open the same page with the
+missing requirement: selection does not resume the action automatically. Return
+to the menu and start explicitly. CLI references and the default catalog are
+authenticated before use. Selected labels feed the code trace; inputs for
+preparing new profiles are separate from immutable payloads of already
+authenticated profiles (DBG2-05 editor).
 
-La verifica Wine esercita i dodici ruoli, i sette ingressi senza input, gli
-avvii espliciti, dieci rifiuti di profili alterati/mancanti, ROM diversa e sei
-rifiuti Choose/Open del catalogo. La traccia conferma un dialogo per pulsante
-esplicito e Cancel conserva tutte le scelte. Il processo principale delle prove
-accettate resta al frame zero; worker sintetici e un precedente errore di
-navigazione dell'harness sono documentati separatamente nel
-[record DBG2-04](changes/2026-10-29-migrate-debug-tool-input-selection.json).
+Typed selection checks format and identity using existing readonly services
+for profiles, catalogs, sessions and recordings; snapshots and sequences are
+checked without loading them into the current machine. Labels are parsed for
+the ROM; manifests check schema/ROM. Runtimes and libraries remain hashed
+references: the worker must still check format, features and ABI without
+loading code on simple selection.
 
-DBG2-05 aggiunge **Debug > Parameters / prepare profiles** aggiunge bozze
-per replay, audit, cattura, confronto, passi, ispezione, audio, codice, gameplay,
-eventi recenti, grafica e issue. Le righe input usano il selettore tipizzato;
-le frecce spostano il focus; Confirm apre la modifica della scelta o l'editor
-testuale con tastiera a schermo. Una scelta cambia la bozza solo al secondo
-Confirm; Escape scarta il valore ancora in modifica.
-Escape annulla l'editor o ritorna dal pannello; Tab cambia campo/azione.
+Wine validation exercises the twelve roles, seven entries without input,
+explicit starts, ten refusals for altered/missing profiles and different ROM,
+and six catalog Choose/Open refusals. The trace confirms one dialog per
+explicit button and Cancel retains all choices. The main process in accepted
+checks stays at frame zero; synthetic workers and an earlier harness-navigation
+error are documented separately in the
+[DBG2-04 record](changes/2026-10-29-migrate-debug-tool-input-selection.json).
 
-**Verify draft** usa i parser/preflight condivisi senza eseguire. **Save new
-preset** conserva soltanto valori scalari nella configurazione portable:
-`debug-presets/<tool>/`, massimo otto file da 16 KiB per strumento e 8 KiB di
-valori. **Load last preset** ripristina una bozza, senza cambiare riferimenti o
-avviare strumenti. Input mancanti/alterati e combinazioni non supportate hanno
-un rifiuto leggibile. Le risposte tardive non sovrascrivono una bozza riaperta.
+DBG2-05 adds **Debug > Parameters / prepare profiles** with drafts for replay,
+audit, capture, comparison, steps, inspection, audio, code, gameplay, recent
+events, graphics and issues. Input rows use the typed selector; arrows move
+focus; Confirm opens choice editing or the text editor with on-screen keyboard.
+A choice changes the draft only on the second Confirm; Escape discards the value
+still being edited. Escape cancels the editor or returns from the panel;
+Tab changes field/action.
 
-**Prepare NEW profile** crea una nuova copia in `debug-profiles/`, fino a otto,
-con parametri e input autenticati; non sovrascrive un profilo esistente e non
-avvia replay. **Run prepared profile** esegue quel profilo separatamente fissato:
-modificare la bozza richiede una nuova preparazione. Negli strumenti locali,
-**Start / apply** passa i parametri all'handler esistente; armare un observer non
-avanza automaticamente il gioco. Passi, ripresa e report restano espliciti.
-Le opzioni comprendono timeout/frame/input/range/filtri/stream/trigger/modalità
-confronto/sintomo; le label selezionate restano riferimenti con ricontrollo.
+**Verify draft** uses shared parsers/preflight without execution. **Save new
+preset** retains only scalar values in portable configuration:
+`debug-presets/<tool>/`, at most eight 16 KiB files per tool and 8 KiB of values.
+**Load last preset** restores a draft without changing references or starting
+tools. Missing/changed inputs and unsupported combinations have readable
+refusals. Late responses do not overwrite a reopened draft.
 
-La preparazione può leggere i pin immutabili della stessa sessione già aperta,
-riconoscendone root/PID/lease runtime, senza concedere un altro writer. Le altre
-sessioni attive continuano a essere rifiutate. La validazione del profilo non
-promette ABI/feature di un eseguibile arbitrario; il worker mantiene il preflight
-finale. Le verifiche effettive sono nel
-[record DBG2-05](changes/2026-10-29-add-debug-parameter-workbench.json).
+**Prepare NEW profile** creates a new copy in `debug-profiles/`, up to eight,
+with authenticated parameters and inputs; it neither overwrites an existing
+profile nor starts replay. **Run prepared profile** runs that separately pinned
+profile: changing the draft requires new preparation. For local tools,
+**Start / apply** passes parameters to the existing handler; arming an observer
+does not automatically advance the game. Steps, resumption and reports remain
+explicit. Options include timeout/frames/input/ranges/filters/streams/triggers/
+comparison mode/symptom; selected labels remain references with rechecking.
 
-DBG2-05 è verificato con 121 casi Rust distinti nei rispettivi scope Windows/
-Wine e con la catena GUI registrazione → un passo esplicito → preparazione
-replay/audit/cattura/confronto → avvio separato → report. I quattro profili
-creati con gli stessi parametri CLI coincidono in JSON ed esito/stato/clock.
-La pagina di punteggiatura permette virgole e separatori da controller;
-parametri incompleti vengono rifiutati prima dell'esecuzione. Le prime prove
-hanno corretto un canvas non pubblicato e il badge sovrapposto; immagini e log
-negativi restano distinti dalle verifiche finali a tre dimensioni.
+Preparation can read immutable pins of the same already open session,
+recognizing its root/PID/runtime lease without granting another writer. Other
+active sessions remain refused. Profile validation does not promise arbitrary
+executable ABI/features; the worker retains final preflight. Actual checks are
+in the [DBG2-05 record](changes/2026-10-29-add-debug-parameter-workbench.json).
+
+DBG2-05 is verified with 121 distinct Rust cases in their Windows/Wine scopes
+and the GUI chain recording → one explicit step → replay/audit/capture/compare
+preparation → separate start → report. Four profiles created with the same CLI
+parameters match in JSON and outcome/state/clock. The punctuation page allows
+commas and separators through the controller; incomplete parameters are refused
+before execution. Initial checks corrected an unpublished canvas and overlapping
+badge; negative images and logs remain separate from final checks at three sizes.
 
 ## Script and tool library (DBG2-06)
 

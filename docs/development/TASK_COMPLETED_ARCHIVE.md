@@ -18194,3 +18194,73 @@ LOCAL-ARTIFACT-SWEEP-2026-10-31 — CLOSED. Latest request: clean residual proje
 - Verified criteria: session diagnosis, isolated debug sessions and snapshot-recording guides translated into English. All 16 old heading anchors retained; structural comparisons preserve inline code, fenced examples, link destinations and numeric/hex evidence (locale thousands separators normalized). Whitespace check PASS.
 - Evidence: `docs/changes/2026-11-02-translate-debug-session-guides.json`; exact reviewed hashes in `ENGLISH_FIRST_AUDIT.json` (112 reviewed files, 55 pending Markdown paths).
 - Limits: documentation-only translation, historical acceptance/failures and Wine/platform/hardware limits unchanged. No new build/runtime/replay/ROM checks; remaining docs/sources and parent migration stay partial.
+
+### ENGLISH-FIRST-CATALOG-REPLAY-CAPTURE
+
+- Outcome: completed
+- Verified criteria: debug catalog, replay and trigger-capture guides translated into English. All 17 old heading anchors retained; structural comparisons preserve inline code, fenced examples, link destinations and numeric/hex evidence. Whitespace PASS; failed native endpoint comparison and distinction between capture/integrity/reachability/DS acceptance preserved.
+- Evidence: `docs/changes/2026-11-02-translate-catalog-replay-capture-guides.json`; exact hashes in `ENGLISH_FIRST_AUDIT.json` (115 reviewed files, 52 pending Markdown paths).
+- Limits: documentation-only translation; no new build/runtime/replay/ROM/platform checks. Remaining docs/sources and parent migration remain partial.
+
+### ENGLISH-FIRST-OPERATIONS-PROBES-SELECTOR
+
+- Outcome: completed
+- Verified criteria: operation-contract, probe and selector guides translated/reviewed in English. Eleven old heading anchors retained, two English headings unchanged; structural checks preserve code spans, fenced examples, links and numeric/hex evidence except translated retry placeholders DEADLINE/COMMAND. Menu labels checked against English catalog; whitespace PASS.
+- Evidence: `docs/changes/2026-11-02-translate-operation-probe-selector-guides.json`; exact hashes in `ENGLISH_FIRST_AUDIT.json` (118 reviewed files, 49 pending Markdown paths).
+- Limits: documentation-only work; readonly/native/partial-frame/IME/controller and incomplete console parity criteria unchanged. No runtime/build/ROM validation repeated; parent migration partial.
+
+### ENGLISH-FIRST-OFFLINE-GENERATORS
+
+- Outcome: completed
+- Verified criteria: full artifact/campaign/coverage generator language review; authored source/comments/metadata/CLI English. Nine message-spacing literals corrected, coverage generator unchanged. AST comparison confirms only expected literals changed; three CLI help checks PASS. Missed Italian folder/name/hash placeholders in two previously reviewed guides corrected with structure/schema preservation; whitespace PASS.
+- Evidence: `docs/changes/2026-11-02-review-offline-report-generators-english.json`; reviewed hashes in `ENGLISH_FIRST_AUDIT.json` (121 reviewed files, 49 pending Markdown paths).
+- Limits: language-only review/corrections. No cleanup, campaign run, report/dataset regeneration, ROM input, build or runtime acceptance repeated; helpers/other sources/docs and parent migration remain pending. Concurrent todo2 addition preserved.
+
+### ENGLISH-FIRST-ROM-AUDIT-EVENT-GUIDES
+
+- Outcome: completed
+- Verified criteria: ROM-read audit and shared-event guides translated into English, preserving all 13 legacy heading anchors, code spans, fenced examples, links and numeric values. Event console label checked against English catalog; whitespace PASS. Observation scope, endpoint/DS distinction, partial windows and original failures/hardware limits retained.
+- Evidence: `docs/changes/2026-11-02-translate-rom-audit-event-guides.json`; exact hashes in `ENGLISH_FIRST_AUDIT.json` (123 reviewed files, 47 pending Markdown paths).
+- Limits: language-only change, no runtime/build/replay/ROM/performance/platform checks repeated. Remaining docs/sources and parent migration partial. Concurrent todo2 addition preserved.
+
+### ENGLISH-FIRST-RUNTIME-REPORT-PRODUCERS
+
+- Outcome: completed
+- Verified criteria: gameplay, issue, comparison and graphics producer sources reviewed; 16 authored descriptions/errors clarified, machine tokens retained. Rustfmt parser PASS on all four; exact substitution comparison confirms only the 16 intended strings changed in three sources and comparison producer unchanged. Whitespace PASS.
+- Evidence: `docs/changes/2026-11-02-review-runtime-report-producers-english.json`, `docs/debug_gameplay.md` and exact hashes in `ENGLISH_FIRST_AUDIT.json` (127 reviewed files, 47 pending Markdown).
+- Limits: static language/syntax checks only, no new build, report generation, ROM or runtime/platform validation. Gameplay event-byte accounting includes descriptions, so length may alter event count despite unchanged cap. Other report producers and parent migration remain partial; existing work and concurrent todo2 retained.
+
+### ENGLISH-FIRST-MOUSE-HISTORICAL-GUIDE
+
+- Outcome: completed
+- Verified criteria: maintained Spanish mouse-session notes translated into English. All 11 historical heading anchors, ordered numeric tokens, paths and selected technical identifiers retained. Successive contrary Pub/user reports and measured/unmeasured claims preserved; whitespace PASS.
+- Evidence: `docs/changes/2026-11-02-translate-historical-mouse-session-guide.json`; reviewed hash in `ENGLISH_FIRST_AUDIT.json` (128 reviewed files, 46 pending Markdown paths).
+- Limits: language-only review; no historical action selected and no build, gameplay, input, ROM or platform checks repeated. Parent migration remains partial; concurrent todo2 addition preserved.
+
+### ENGLISH-FIRST-DEBUG-TOOLS-GUIDE
+
+- Outcome: completed
+- Verified criteria: translated the shared portable debug-tools guide and five workflows into English; retained 10 legacy heading anchors, all link targets, ordered numeric tokens and 12 command blocks apart from translated example comments, placeholder and symptom. Audit replay label and explicit issue-profile selection checked against English menu; whitespace PASS.
+- Evidence: `docs/changes/2026-11-02-translate-shared-debug-tools-guide.json`; reviewed hash in `ENGLISH_FIRST_AUDIT.json` (129 reviewed files, 45 pending Markdown paths).
+- Limits: documentation-only translation; no runtime, gameplay, build, packaging, ROM or platform checks repeated. Historical evidence and Wine/Linux/PowerShell limitations retained; parent migration remains partial. Concurrent todo2 addition preserved.
+
+### ENGLISH-FIRST-LOCAL-CONTROL-GUIDE
+
+- Outcome: completed
+- Verified criteria: local debug-control guide translated into English, preserving 13 legacy heading anchors, all links and existing targets, ordered numeric values, six fenced command blocks and inline code except translated placeholders and a comment. Client timeout, delivery, server acknowledgment and retry distinctions retained. Whitespace PASS.
+- Evidence: `docs/changes/2026-11-02-translate-local-debug-control-guide.json`; reviewed hash in `ENGLISH_FIRST_AUDIT.json` (130 reviewed files, 44 pending Markdown paths).
+- Limits: language-only translation; no runtime, gameplay, ROM, replay, build or platform tests repeated. Prior Wine and unverified native/hardware scope retained; parent migration remains partial. Concurrent todo2 addition preserved.
+
+### ENGLISH-FIRST-COMMAND-CONSOLE
+
+- Outcome: completed
+- Verified criteria: command window uses English default and Italian catalogs for title, hints, keyboard, job presentation and notices; commands, IDs, remote payloads and dynamic values retained. Linux offline tests PASS: 19 command-console and 6 menu localization; catalog 433/433 each and whitespace PASS. Temporary ALSA/Wayland metadata linked existing libraries without system changes.
+- Evidence: `docs/changes/2026-11-02-localize-debug-command-console.json`; reviewed hashes in `ENGLISH_FIRST_AUDIT.json` (135 reviewed files, 44 pending Markdown).
+- Limits: no live console GUI, native Windows, physical controller or IME check. Existing result lines and notices are not retroactively translated. Event console and operation/reference metadata remain pending; parent migration partial. Concurrent todo2 addition preserved.
+
+### ENGLISH-FIRST-EVENT-CONSOLE
+
+- Outcome: completed
+- Verified criteria: event window title, controls, status and notices use English default or Italian catalog; filter tokens, event payload, export schema and collection/export limits retained. Four Linux offline debug_console tests PASS, including bilingual text and unchanged JSON; both catalogs 454/454 and whitespace PASS.
+- Evidence: `docs/changes/2026-11-02-localize-debug-event-console.json`; reviewed hashes in `ENGLISH_FIRST_AUDIT.json` (137 reviewed files, 44 pending Markdown).
+- Limits: no live GUI, native Windows, physical controller or real IME check. Existing notices are not retroactively translated. Operation/reference metadata and parent migration remain pending; concurrent todo2 addition preserved.

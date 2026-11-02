@@ -10,6 +10,10 @@ The English page filters family, context address and text; details connect resou
 to authenticated contracts and show each field's provenance. Captured source text
 is preserved verbatim.
 
+New reports use English descriptions for the observed fields and their limits.
+The event-byte cap includes those descriptions, so wording length can affect how
+many events fit; previously saved reports retain their original text.
+
 <a id="cli-equivalente"></a>
 
 ## Equivalent CLI

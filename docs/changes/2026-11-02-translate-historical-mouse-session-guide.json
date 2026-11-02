@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-historical-mouse-session-guide",
+  "title": "Translate historical mouse-session notes",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Translate the maintained October 17 mouse-session guide into English, preserving the chronological reports, contradictory successive Pub positioning instructions, acceptance limits and all 11 legacy heading anchors."
+  ],
+  "validation": [
+    "Manual translation review and structural comparison against HEAD preserve every numeric token in order, all 11 old heading anchors, paths and selected technical identifiers. Whitespace check passes."
+  ],
+  "limitations": [
+    "Documentation-only translation; historical user instructions are evidence, not a newly selected runtime task. No build, gameplay, physical-input, platform or ROM checks repeated; the broader English-first project remains partial."
+  ],
+  "files": [
+    "docs/ffta_mouse_pending_2026-10-17.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": []
+}

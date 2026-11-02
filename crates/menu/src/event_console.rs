@@ -2,6 +2,7 @@
 use crate::canvas::Canvas;
 
 pub struct Display<'a> {
+    pub language: input_config::Language,
     pub status: &'a str,
     pub filter: &'a str,
     pub range: &'a str,
@@ -19,7 +20,7 @@ pub fn draw(view: &Display<'_>, pixels: &mut [[u8; 4]], width: usize, height: us
     let h = height as f32;
     let margin = 12.0;
     let available = (w - margin * 2.0).max(0.0);
-    canvas.text(margin, 10.0, "Console eventi", [232, 224, 195], 20.0, true, available);
+    canvas.text(margin, 10.0, view.language.text("Event console"), [232, 224, 195], 20.0, true, available);
     canvas.text(margin, 35.0, view.status, [181, 204, 205], 13.0, false, available);
     canvas.text(margin, 54.0, view.filter, [231, 210, 147], 13.0, false, available);
     canvas.text(margin, 71.0, view.range, [165, 183, 187], 12.0, false, available);
@@ -30,7 +31,7 @@ pub fn draw(view: &Display<'_>, pixels: &mut [[u8; 4]], width: usize, height: us
         canvas.text(margin, y, line, [218, 226, 226], 13.0, false, available);
     }
     canvas.text(margin, (h - 50.0).max(0.0), view.notice, [240, 187, 130], 12.0, false, available);
-    canvas.text(margin, (h - 31.0).max(0.0), "/ Cerca  C Categoria  L Livello  P Pausa vista  A Poll  ↑↓ Scorri  End Segui", [165, 183, 187], 12.0, false, available);
-    canvas.text(margin, (h - 16.0).max(0.0), "Ctrl+C Copia  Ctrl+S Salva  Esc Nascondi", [165, 183, 187], 12.0, false, available);
+    canvas.text(margin, (h - 31.0).max(0.0), view.language.text("/ Search  C Category  L Level  P Pause view  A Poll  ↑↓ Scroll  End Follow"), [165, 183, 187], 12.0, false, available);
+    canvas.text(margin, (h - 16.0).max(0.0), view.language.text("Ctrl+C Copy  Ctrl+S Save  Esc Hide"), [165, 183, 187], 12.0, false, available);
     canvas.finish(pixels);
 }

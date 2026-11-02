@@ -151,6 +151,16 @@
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
     },
     {
+      "path": "crates/menu/src/command_console.rs",
+      "sha256": "b6e12e18c251113049348b3ffd0e5ce6a2714cf99efb900dde31f51eca23b4fc",
+      "scope": "Command-console presentation reviewed; English default and optional Italian catalog, preserving command syntax, IDs and remote diagnostic payloads. Other debug surfaces are separate."
+    },
+    {
+      "path": "crates/menu/src/event_console.rs",
+      "sha256": "885284fbb2f7697a93e98e4ceb0bf74ecbb03b20e03bd8612e6579a7f68bacc2",
+      "scope": "Event-console presentation reviewed; English default and optional Italian catalog, preserving filter tokens, event data and exported JSON."
+    },
+    {
       "path": "crates/recomp/src/debug_audio/report.html",
       "sha256": "26b55d93bb5bc6862a7682dccf9bc54afbaa98713fa1f90b6992e7c15cd2f5be",
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
@@ -161,9 +171,44 @@
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
     },
     {
+      "path": "crates/recomp/src/debug_command/completion.rs",
+      "sha256": "2930d23dc2f204593582a1d8729f1bdf5348faffc8c59a187ff6cef8c6523e33",
+      "scope": "Command-console presentation reviewed; English default and optional Italian catalog, preserving command syntax, IDs and remote diagnostic payloads. Other debug surfaces are separate."
+    },
+    {
+      "path": "crates/recomp/src/debug_command/controller.rs",
+      "sha256": "1c4e0339e74620279627e6d0c6905bb36bb930f90fc300008fcdbe0cb39d0f77",
+      "scope": "Command-console presentation reviewed; English default and optional Italian catalog, preserving command syntax, IDs and remote diagnostic payloads. Other debug surfaces are separate."
+    },
+    {
+      "path": "crates/recomp/src/debug_command/observation.rs",
+      "sha256": "ea86046514f4e489e0f1bf6ec141646491ea946937eadf6f7c5d0b8dfa1c385e",
+      "scope": "Command-console presentation reviewed; English default and optional Italian catalog, preserving command syntax, IDs and remote diagnostic payloads. Other debug surfaces are separate."
+    },
+    {
+      "path": "crates/recomp/src/debug_command_panel.rs",
+      "sha256": "f6344a9f847dc31246b6c0e7c2bd175271c7e320e4311a12c7da7035cb714861",
+      "scope": "Command-console presentation reviewed; English default and optional Italian catalog, preserving command syntax, IDs and remote diagnostic payloads. Other debug surfaces are separate."
+    },
+    {
+      "path": "crates/recomp/src/debug_compare.rs",
+      "sha256": "83a60144aa1cd5a37d870617cfff4215e294619a64b7e9922510d37ffa460b81",
+      "scope": "Reviewed authored prose, diagnostics and report metadata in this producer; English text and human-readable spacing corrected where needed. Stable tokens and imported/user content preserved; external producers and comparison test module remain separately pending."
+    },
+    {
       "path": "crates/recomp/src/debug_compare/report.html",
       "sha256": "9a00f461770c0c2bd8f99bccd736a6c373ac0bbed779779b0c62a5b5f16c04d1",
       "scope": "English maintained prose or fixed default report text; original game/imported text and legacy anchors preserved"
+    },
+    {
+      "path": "crates/recomp/src/debug_console_panel.rs",
+      "sha256": "397d9975b4b7c00de1e52b4bbf40fdfc45234f4b7dbe5f7a2646289e1d9e3256",
+      "scope": "Event-console presentation reviewed; English default and optional Italian catalog, preserving filter tokens, event data and exported JSON."
+    },
+    {
+      "path": "crates/recomp/src/debug_gameplay.rs",
+      "sha256": "041162323146cfaf856c5f2797ed8a228345ffc4e6f8c13b96adf85f4e8e6f36",
+      "scope": "Reviewed authored prose, diagnostics and report metadata in this producer; English text and human-readable spacing corrected where needed. Stable tokens and imported/user content preserved; external producers and comparison test module remain separately pending."
     },
     {
       "path": "crates/recomp/src/debug_gameplay/report.html",
@@ -171,9 +216,19 @@
       "scope": "English maintained prose or fixed default report text; original game/imported text and legacy anchors preserved"
     },
     {
+      "path": "crates/recomp/src/debug_graphics.rs",
+      "sha256": "24752ebd42bc5a8619b883e7cc73d43f97821ff51835f47e325d10334a32bbea",
+      "scope": "Reviewed authored prose, diagnostics and report metadata in this producer; English text and human-readable spacing corrected where needed. Stable tokens and imported/user content preserved; external producers and comparison test module remain separately pending."
+    },
+    {
       "path": "crates/recomp/src/debug_graphics/report.html",
       "sha256": "e403c3f23f601743133028a3a8ece565e78fea2928314ab533dcfd9e8fe9222f",
       "scope": "English maintained prose or fixed default report text; original game/imported text and legacy anchors preserved"
+    },
+    {
+      "path": "crates/recomp/src/debug_issue.rs",
+      "sha256": "cd4e324ada4d4c8790567c3bdafae4f629841931bf457fd96ca3f0a5439b2845",
+      "scope": "Reviewed authored prose, diagnostics and report metadata in this producer; English text and human-readable spacing corrected where needed. Stable tokens and imported/user content preserved; external producers and comparison test module remain separately pending."
     },
     {
       "path": "crates/recomp/src/debug_issue/report.html",
@@ -202,8 +257,8 @@
     },
     {
       "path": "docs/debug_artifacts.md",
-      "sha256": "61b0b897eceffe0be90bf328f975c201146b8effdade0ede5bd31c9f60f345bc",
-      "scope": "English maintained prose and fixed report text; machine keys, paths, anchors and historical evidence preserved"
+      "sha256": "f902605ca04487a726d8746c1ef7efc6ca87afe44645dad330233c653477ce03",
+      "scope": "English guide reviewed; corrected missed Italian folder/name/hash placeholders; headings, example schemas and real references preserved; imported labels/provenance remain verbatim"
     },
     {
       "path": "docs/debug_audio.md",
@@ -212,8 +267,18 @@
     },
     {
       "path": "docs/debug_campaigns.md",
-      "sha256": "042465d2998386c3443951c98eb38d6174e171f06066cec65a9676b573067168",
-      "scope": "English maintained prose and fixed report text; machine keys, paths, anchors and historical evidence preserved"
+      "sha256": "0d88d372070031d3a33c131e4cbdb613268abd7db9f00c12dd8316d178fb3aa1",
+      "scope": "English guide reviewed; corrected missed Italian folder/name/hash placeholders; headings, example schemas and real references preserved; imported labels/provenance remain verbatim"
+    },
+    {
+      "path": "docs/debug_captures.md",
+      "sha256": "187ef3738d5141eb2b31e15c03e76708b412b53c8383dbc246951045bf37322b",
+      "scope": "English catalog/replay/capture prose translated; all legacy heading anchors, inline code, fenced examples, links, numeric evidence and original failure/acceptance limits retained"
+    },
+    {
+      "path": "docs/debug_catalog.md",
+      "sha256": "aaa00498a9ce0924f331fa5cd15944bfd9acb5d546e0cf3ff875ce3e451ceaec",
+      "scope": "English catalog/replay/capture prose translated; all legacy heading anchors, inline code, fenced examples, links, numeric evidence and original failure/acceptance limits retained"
     },
     {
       "path": "docs/debug_code.md",
@@ -231,13 +296,23 @@
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
     },
     {
+      "path": "docs/debug_control.md",
+      "sha256": "120269900769f570047c998a66de98542b42f4d99d2c46f13e53ede2ee1b4d66",
+      "scope": "Translated local-control guide into English, preserving 13 legacy anchors, command/JSON tokens, links, ordered numeric evidence and timeout/delivery/validation limits; translated example placeholders/comment only"
+    },
+    {
       "path": "docs/debug_diagnostics.md",
       "sha256": "87acb1576ffe30de22cb712454186340654abea8e1ac901efc0eec49e9746afc",
       "scope": "English session diagnosis/isolation/snapshot-recording guide translated; all legacy heading anchors, inline code, fenced examples, links, numeric evidence and recorded acceptance limits retained"
     },
     {
+      "path": "docs/debug_events.md",
+      "sha256": "223f6fb9c95bfbc25e556ed2d9c5aa4734322c0987a6c6aa75e9a852869c46d4",
+      "scope": "English ROM-read-audit/shared-event prose translated; all old heading anchors, code/examples, links, numeric evidence and original observation/validation limits retained; Event console wording checked against English catalog"
+    },
+    {
       "path": "docs/debug_gameplay.md",
-      "sha256": "3ca5854dcd4b0d275c13213a31b0c991d32a8ccf66889080ace691130cf0b767",
+      "sha256": "f36f6bc28e36581f03acb5c0c3c025cf448aca0503e84b429577cae112d38e6e",
       "scope": "English maintained prose or fixed default report text; original game/imported text and legacy anchors preserved"
     },
     {
@@ -251,6 +326,16 @@
       "scope": "English maintained prose or fixed default report text; original game/imported text and legacy anchors preserved"
     },
     {
+      "path": "docs/debug_operations.md",
+      "sha256": "956495d0d6112855c855f79ebf10bf780eb7eea66cd7dbba5a23b63e50ce8ab0",
+      "scope": "English operation-contract/probe/selector prose translated and existing English sections reviewed; code/examples/links/numeric evidence preserved except English retry placeholders; old headings remain reachable and partial-feature limits retained"
+    },
+    {
+      "path": "docs/debug_probes.md",
+      "sha256": "61507feca436c5c9272e8812b350aa90f749a15726bb9bf0df0ac26b9769741b",
+      "scope": "English operation-contract/probe/selector prose translated and existing English sections reviewed; code/examples/links/numeric evidence preserved except English retry placeholders; old headings remain reachable and partial-feature limits retained"
+    },
+    {
       "path": "docs/debug_recent.md",
       "sha256": "afc0fd849d09d7a5213ac244609aa05e533f9034203245483be530855fa573a2",
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
@@ -261,9 +346,29 @@
       "scope": "English session diagnosis/isolation/snapshot-recording guide translated; all legacy heading anchors, inline code, fenced examples, links, numeric evidence and recorded acceptance limits retained"
     },
     {
+      "path": "docs/debug_replays.md",
+      "sha256": "c91100e3f65334f3a741612c8dcdae6668a1099eeeac52e3bf682665973c722c",
+      "scope": "English catalog/replay/capture prose translated; all legacy heading anchors, inline code, fenced examples, links, numeric evidence and original failure/acceptance limits retained"
+    },
+    {
+      "path": "docs/debug_rom_audit.md",
+      "sha256": "f8d6023ac79d2a303a98024067588d59590126bca85216d115864fd566f48a9f",
+      "scope": "English ROM-read-audit/shared-event prose translated; all old heading anchors, code/examples, links, numeric evidence and original observation/validation limits retained; Event console wording checked against English catalog"
+    },
+    {
+      "path": "docs/debug_selector.md",
+      "sha256": "f4cf6df16c9fe2c2cc7f41a265a49e18c3a635e15ce83fccafb0375316e8e62b",
+      "scope": "English operation-contract/probe/selector prose translated and existing English sections reviewed; code/examples/links/numeric evidence preserved except English retry placeholders; old headings remain reachable and partial-feature limits retained"
+    },
+    {
       "path": "docs/debug_sessions.md",
       "sha256": "356c8fd90e3ff04feaa715d017f27684cabfd977419d9a8e1033d23b105ceb3d",
       "scope": "English session diagnosis/isolation/snapshot-recording guide translated; all legacy heading anchors, inline code, fenced examples, links, numeric evidence and recorded acceptance limits retained"
+    },
+    {
+      "path": "docs/debug_tools.md",
+      "sha256": "e16e7c879e9ada27c7b515acdc5b78086ffcf805bbcd792cdcb5c9dc26a44acc",
+      "scope": "Translated shared portable debug guide into English, preserving 10 old heading anchors, command paths, numeric evidence and platform limits; example placeholder, symptom and comments translated; menu labels checked against English catalog"
     },
     {
       "path": "docs/debug_ui.md",
@@ -307,7 +412,7 @@
     },
     {
       "path": "docs/development/TASK_HANDOFF.md",
-      "sha256": "47eec17f9b9ea473b85affbc7d6ad878749243bed925f9fa90ca9c96e6400294",
+      "sha256": "6f0edb280c63a009fe480f1ae05dee0af6acd667f26dc034d7c0a6ba621f519e",
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
     },
     {
@@ -379,6 +484,11 @@
       "path": "docs/ffta_mouse_language.md",
       "sha256": "d765dd51e65a07db0d3493ca8a59f6290f09be4b9ce85ba06a3023db167bbb70",
       "scope": "English mouse/OBJ/movement/dialogue prose reviewed; Spanish OBJ ABI/hook prose and measurement labels translated; technical evidence, commands, anchors and acceptance limits retained"
+    },
+    {
+      "path": "docs/ffta_mouse_pending_2026-10-17.md",
+      "sha256": "d842027569ccd27a9732a2cc4d2a6b51afb989053ee0c281d70afbe6e22d21d3",
+      "scope": "English translation of maintained historical mouse-session notes; 11 legacy heading anchors, ordered numeric evidence, paths and user reports preserved; conflicting successive observations and recorded limits remain distinct"
     },
     {
       "path": "docs/ffta_mouse_world.md",
@@ -467,7 +577,7 @@
     },
     {
       "path": "docs/menu_localization.md",
-      "sha256": "c123317752c281000704016d0a236666f1e6b2c50fa8556074794c6da045e8c2",
+      "sha256": "87eece2a33d6dcf241de351a2209e4f0f17134ea5272c88f2c809a404dc60e86",
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
     },
     {
@@ -526,9 +636,19 @@
       "scope": "English maintained prose and fixed report text; machine keys, paths, anchors and historical evidence preserved"
     },
     {
+      "path": "scripts/debug_artifacts.py",
+      "sha256": "8ccbd22a92220cce06718de35257a6ab7ccee40f570da9c76bf34c626006d6e1",
+      "scope": "Full authored source/comment/metadata/CLI language review; English text, nine artifact/campaign message-spacing corrections; imported labels and machine values preserved; dependencies require separate review"
+    },
+    {
       "path": "scripts/debug_campaign.html",
       "sha256": "39649d18f3530275c20da587dae069815d13c676f8bfb3ac7163d2946e97d52c",
       "scope": "English maintained prose and fixed report text; machine keys, paths, anchors and historical evidence preserved"
+    },
+    {
+      "path": "scripts/debug_campaign.py",
+      "sha256": "9b1491bdb299f3e25f9cae8de6c1b2a15dfe73fce38fb6c92129cc8e1fbe835d",
+      "scope": "Full authored source/comment/metadata/CLI language review; English text, nine artifact/campaign message-spacing corrections; imported labels and machine values preserved; dependencies require separate review"
     },
     {
       "path": "scripts/export_debug_assets.py",
@@ -554,6 +674,11 @@
       "path": "scripts/rom_coverage.html",
       "sha256": "a410b4809fe6868926a789d47d99b13fdb53a173e345346219041deb7bbe390b",
       "scope": "English maintained prose and fixed report text; machine keys, paths, anchors and historical evidence preserved"
+    },
+    {
+      "path": "scripts/rom_coverage.py",
+      "sha256": "f190f2d2b5b3211a4c80994fd11839e5f781cf22b3ad53e05e78607d19faccf7",
+      "scope": "Full authored source/comment/metadata/CLI language review; English text, nine artifact/campaign message-spacing corrections; imported labels and machine values preserved; dependencies require separate review"
     },
     {
       "path": "scripts/task_handoff.py",
@@ -587,16 +712,6 @@
     "docs/To_DO/FFTARecomp_Menu_Atlante_del_Clan_SPEC.md",
     "docs/architecture.md",
     "docs/cheats.md",
-    "docs/debug_captures.md",
-    "docs/debug_catalog.md",
-    "docs/debug_control.md",
-    "docs/debug_events.md",
-    "docs/debug_operations.md",
-    "docs/debug_probes.md",
-    "docs/debug_replays.md",
-    "docs/debug_rom_audit.md",
-    "docs/debug_selector.md",
-    "docs/debug_tools.md",
     "docs/development/DEBUG_TOOLS_TODO.md",
     "docs/development/DEBUG_TOOLS_V2_TODO.md",
     "docs/development/GODOT_FRONTEND_TODO.md",
@@ -613,7 +728,6 @@
     "docs/docker.md",
     "docs/fast_forward_audio.md",
     "docs/ffta_estado.md",
-    "docs/ffta_mouse_pending_2026-10-17.md",
     "docs/fps_overlay.md",
     "docs/labels.md",
     "docs/rom_data.md",
@@ -645,7 +759,7 @@
         "crates/recomp/src/debug_compare.rs",
         "crates/recomp/src/debug_graphics.rs"
       ],
-      "status": "Eight fixed runtime templates are English; descriptions in four producers were sampled, while full dynamic metadata and remaining producers require review."
+      "status": "Four named gameplay/issue/comparison/graphics producer sources reviewed; authored English descriptions and errors corrected for spacing where needed. Fixed templates were previously reviewed. Remaining producers, helper modules, test modules and imported/dynamic messages require separate classification."
     },
     {
       "area": "Offline reports/exporters, CLI/help/errors and authored build messages",
@@ -659,7 +773,7 @@
         "scripts/export_debug_assets.py",
         "scripts/package_ffta_portable.py"
       ],
-      "status": "Portable packager and private debug exporter fully reviewed: generated instructions, checkout-reference labels and CLI messages use English; legacy paths/base marker preserved. Campaign, artifact and coverage fixed templates/coverage notes translated; remaining tools, full generator source/comments and dynamic metadata require review."
+      "status": "Full language review of artifact/campaign/coverage generators and portable/private exporters complete; fixed templates and authored notes English, legacy paths/base marker preserved. Imported labels/messages stay verbatim. Auxiliary modules, other tools/build messages and cross-tree source still require review."
     },
     {
       "area": "Menu/console/runtime strings and comments in both source trees",
@@ -671,7 +785,7 @@
         "AndroidPort/android/",
         "android/"
       ],
-      "status": "pending; inspect full tracked source scope, not only known search hits"
+      "status": "Command and event consoles localized and their seven presentation source files reviewed; debug operation/reference metadata and the rest of both trees remain pending. No whole-tree completion implied."
     },
     {
       "area": "Generated references and generators",
@@ -725,6 +839,16 @@
     "docs/changes/2026-11-02-translate-mouse-obj-guides.json",
     "docs/changes/2026-11-02-translate-export-package-instructions.json",
     "docs/changes/2026-11-02-review-entry-android-guides-english.json",
-    "docs/changes/2026-11-02-translate-debug-session-guides.json"
+    "docs/changes/2026-11-02-translate-debug-session-guides.json",
+    "docs/changes/2026-11-02-translate-catalog-replay-capture-guides.json",
+    "docs/changes/2026-11-02-translate-operation-probe-selector-guides.json",
+    "docs/changes/2026-11-02-review-offline-report-generators-english.json",
+    "docs/changes/2026-11-02-translate-rom-audit-event-guides.json",
+    "docs/changes/2026-11-02-review-runtime-report-producers-english.json",
+    "docs/changes/2026-11-02-translate-historical-mouse-session-guide.json",
+    "docs/changes/2026-11-02-translate-shared-debug-tools-guide.json",
+    "docs/changes/2026-11-02-translate-local-debug-control-guide.json",
+    "docs/changes/2026-11-02-localize-debug-command-console.json",
+    "docs/changes/2026-11-02-localize-debug-event-console.json"
   ]
 }

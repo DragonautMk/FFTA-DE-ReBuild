@@ -21,7 +21,7 @@ impl Settings {
     pub fn validate(&self) -> Result<(), String> {
         if !(1..=60).contains(&self.frames) || !(1..=512).contains(&self.events)
             || !["all", "task", "script", "unit"].contains(&self.family.as_str()) {
-            return Err("Gameplay trace needs1..60frames/1..512events and family all/task/script/unit".into());
+            return Err("Gameplay trace needs 1..60 frames, 1..512 events and family all/task/script/unit".into());
         }
         Ok(())
     }
@@ -56,7 +56,7 @@ impl Models {
         for b in &auxiliary.decoded.banks {
             for p in &b.programs { for i in &p.instructions { instructions.insert(i.source_offset,json!({"contract":"aux-script","resource":format!("auxiliary-scripts/bank/{}/program/{}/instruction/{:08x}",b.id,p.id,i.source_offset),"rom_offset":i.source_offset,"bank":b.id,"program":p.id})); } }
         }
-        let sprites=units.decoded.bindings.iter().map(|s|(s.sprite_id,json!({"contract":"unit","resource":format!("unit-obj-initial-pose/sprite/{}",s.sprite_id),"sprite":s.sprite_id,"index_rom_offset":s.index_source,"sequence_rom_offset":s.sequence_source,"scope":"Default animation0/part0 projection, not the current animation or persistent unit identity"}))).collect();
+        let sprites=units.decoded.bindings.iter().map(|s|(s.sprite_id,json!({"contract":"unit","resource":format!("unit-obj-initial-pose/sprite/{}",s.sprite_id),"sprite":s.sprite_id,"index_rom_offset":s.index_source,"sequence_rom_offset":s.sequence_source,"scope":"Default animation 0/part 0 projection, not the current animation or persistent unit identity"}))).collect();
         Ok(Self { tasks:tasks.decoded,primary:primary.decoded,auxiliary:auxiliary.commands,instructions,sprites,contracts })
     }
     fn descriptor(&self, at:u32)->Value {
@@ -64,7 +64,7 @@ impl Models {
             if let Some(rel)=at.checked_sub(table.source_offset) {
                 if rel%8==0 && (rel/8) < table.entries.len() as u32 {
                     return json!({"contract":"task","resource":format!("engine/task-descriptors/{name}/{}",rel/8),"rom_offset":at,"ordinal":rel/8,"table":name,
-                        "scope":"Physical descriptor row, not a global ID. Primary/secondary selectors alias; primary345 overrides callback/size separately"});
+                        "scope":"Physical descriptor row, not a global ID. Primary/secondary selectors alias; primary 345 overrides callback/size separately"});
                 }
             }
         }
@@ -92,7 +92,7 @@ fn ram_field(m:&Machine,ctx:u32,off:u32,width:u32,name:&str,meaning:&str)->Value
 }
 fn field_value(fields:&[Value],name:&str)->Option<u32> {fields.iter().find(|f|f["name"]==name)?.get("value")?.as_u64().map(|v|v as u32)}
 fn signed_cursor(m:&Machine,ctx:u32,off:u32)->Value {
-    let mut f=ram_field(m,ctx,off,2,"cursor","Signed16 cursor, original wrapping advance and relative callbacks remain live");
+    let mut f=ram_field(m,ctx,off,2,"cursor","Signed 16-bit cursor, original wrapping advance and relative callbacks remain live");
     if let Some(v)=f["value"].as_u64(){f["signed"]=json!(v as u16 as i16);}
     f
 }
@@ -159,7 +159,7 @@ impl Trace {
         if self.settings.family!="all" && self.settings.family!=family || self.settings.context.is_some_and(|c|c!=ctx){self.filtered=self.filtered.saturating_add(1);return;}
         let mut fields=vec![reg(m,ctx_reg,"context","Address at this observation only; descriptor address for task reads, actor/task context otherwise")];
         let mut resources=Vec::new();
-        let unknown=match family {"task"=>"Task pool, allocated context, lifetime and final callback unknown here. Primary345 has a separate callback/size override", "script"=>"Other context fields, global script/actor identity and control-flow graph unknown",_=>"Other actor/task fields, allocator lifetime, persistent unit ID/name and flag semantics unknown"};
+        let unknown=match family {"task"=>"Task pool, allocated context, lifetime and final callback unknown here. Primary 345 has a separate callback/size override", "script"=>"Other context fields, global script/actor identity and control-flow graph unknown",_=>"Other actor/task fields, allocator lifetime, persistent unit ID/name and flag semantics unknown"};
         if family=="task" {
             let (off,width,name)=match pc {0x080d7064|0x080d707c|0x080d7348=>(4,2,"context_size"),0x080d70a2=>(6,2,"metadata_raw"),0x080d76b6=>(6,1,"metadata_low_byte"),_=>(0,4,"descriptor_callback")};
             fields.push(memory(m,ctx.wrapping_add(off),width,name,if off==6{"Opaque metadata, no invented flag semantics"}else{"Current descriptor backing before original load; not the final scheduled task"}));
@@ -173,14 +173,14 @@ impl Trace {
             if event.ends_with("advanced") {
                 if !aux {fields.push(reg(m,2,"callback_result","0x110 repeats primary fetch; other results return"));}
                 fields.push(reg(m,4,"directory_row","Row retained across callback; cursor already stored by original interpreter"));
-                fields.push(memory(m,m.cpu.regs[4],2,"advance","Original advance applied after callback-modified cursor, wrapping16"));
+                fields.push(memory(m,m.cpu.regs[4],2,"advance","Original advance applied after callback-modified cursor, 16-bit wrapping"));
             } else if let (Some(stream),Some(cursor))=(field_value(&fields,"stream"),field_value(&fields,"cursor")) {
                 let at=effective(stream,cursor as u16);
-                let opcode=memory(m,at,1,"opcode","Byte at signed cursor; auxiliary0 terminates before dispatch");
+                let opcode=memory(m,at,1,"opcode","Byte at signed cursor; auxiliary opcode 0 terminates before dispatch");
                 if let Some(op)=opcode["value"].as_u64(){
                     let op=op as u8;let row=if aux{rom_data::auxiliary_scripts::command_source_offset(op)}else{rom_data::script_commands::command_source_offset(op)};
                     fields.push(memory(m,0x08000000+row,2,"advance","Directory u16 advance; not normalized to a host branch"));
-                    fields.push(memory(m,0x08000002+row,4,"directory_callback","Unaligned byte-assembled Thumb pointer; aux0 row is preserved but not dispatched"));
+                    fields.push(memory(m,0x08000002+row,4,"directory_callback","Unaligned byte-assembled Thumb pointer; auxiliary opcode 0 row is preserved but not dispatched"));
                     let known=if aux{self.models.auxiliary.commands.get(op as usize).is_some()}else{self.models.primary.commands.get(op as usize).is_some()};
                     resources.push(json!({"contract":if aux{"aux-script"}else{"primary-script"},"resource":format!("engine/{}-command-directory/{op}",if aux{"auxiliary-script"}else{"script"}),"rom_offset":row,"in_projection":known,"unknown":if known{None}else{Some("Outside projection; raw backing retained, no opcode cap inferred")},"terminator":aux&&op==0}));
                 }
@@ -199,7 +199,7 @@ impl Trace {
             if event=="task-reset-entry" {
                 fields.push(reg(m,1,"sprite_argument","Raw sprite argument before original truncation"));fields.push(reg(m,2,"animation_argument","Raw animation selector"));fields.push(reg(m,3,"part_argument","Raw part selector"));
             }
-            for (off,width,name,meaning) in [(0,4,"task_flags_raw","Raw word; flag meanings not generalized"),(6,2,"sprite","Sprite field in unit graphics task"),(10,2,"countdown","Scheduler signed16 countdown, raw value retained"),(12,2,"sequence_cursor","Scheduler signed16 sequence cursor"),(14,2,"frame_count","Sequence frame count"),(0x20,4,"marker_raw","Reset stores FFFFFFFF; general semantics unknown"),(0x34,4,"sequence_frames","Sequence frame-start pointer"),(0x38,4,"current_frame","Current20-byte frame pointer")] {
+            for (off,width,name,meaning) in [(0,4,"task_flags_raw","Raw word; flag meanings not generalized"),(6,2,"sprite","Sprite field in unit graphics task"),(10,2,"countdown","Scheduler signed 16-bit countdown, raw value retained"),(12,2,"sequence_cursor","Scheduler signed 16-bit sequence cursor"),(14,2,"frame_count","Sequence frame count"),(0x20,4,"marker_raw","Reset stores FFFFFFFF; general semantics unknown"),(0x34,4,"sequence_frames","Sequence frame-start pointer"),(0x38,4,"current_frame","Current 20-byte frame pointer")] {
                 let mut f=ram_field(m,ctx,off,width,name,meaning);
                 if matches!(off,10|12){if let Some(v)=f["value"].as_u64(){f["signed"]=json!(v as u16 as i16);}}
                 if off==0x20{f["sentinel_candidate"]=json!(f["value"]==json!(u32::MAX));}
@@ -225,10 +225,10 @@ impl Trace {
             "scope":{"boundary":"Before eligible interpreter instruction or native dispatch; native block interiors are unobserved. Missing sites/events are not zero activity",
             "identity":"Context/actor/task addresses can be reused; no persistent unit identity, whole pool/allocator layout or unknown fields inferred",
             "provenance":"Per-field immutable register/RAM/ROM backing at observed PC. Calculated links identify source projection only; no guest bus reads, writes or typed/raw-service classification",
-            "limits":"30seconds/60frames/512events/1MiB event bytes; filtered/frozen suffix unobserved. Eight private2MiBJSON folders, no snapshot, pruning or overwrite",
+            "limits":"30 seconds/60 frames/512 events/1 MiB event bytes; filtered/frozen suffix unobserved. Eight private report folders, 2 MiB JSON each; no snapshot, pruning or overwrite",
             "acceptance":"No new ROM/DS/native/performance acceptance"}});
         let bytes=serde_json::to_vec(&report).map_err(|e|e.to_string())?;
-        if bytes.len()>2*1024*1024{return Err("Gameplay JSON exceeds2MiB; frozen trace retained".into());}
+        if bytes.len()>2*1024*1024{return Err("Gameplay JSON exceeds 2 MiB; frozen trace retained".into());}
         fs::create_dir_all(&base).map_err(|e|e.to_string())?;
         let name=format!("{}-{}",SystemTime::now().duration_since(UNIX_EPOCH).map_err(|e|e.to_string())?.as_nanos(),std::process::id());
         let dir=base.join(&name);fs::create_dir(&dir).map_err(|e|e.to_string())?;

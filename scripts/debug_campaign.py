@@ -80,14 +80,14 @@ def load(path):
     if not schema1(manifest) or manifest.get('kind') != 'ffta-debug-campaign':
         raise ValueError('Unsupported campaign schema/kind')
     if not isinstance(manifest.get('label'), str) or not 1 <= len(manifest['label']) <= 200:
-        raise ValueError('Campaign label needs1..200characters')
+        raise ValueError('Campaign label needs 1..200 characters')
     cases = manifest.get('cases')
     if not isinstance(cases, list) or not 1 <= len(cases) <= MAX_CASES:
-        raise ValueError('Campaign needs1..32explicit cases')
+        raise ValueError('Campaign needs 1..32 explicit cases')
     seen = set()
     for case in cases:
         if not isinstance(case, dict) or not isinstance(case.get('id'), str) or not ID.fullmatch(case['id']) or case['id'] in seen:
-            raise ValueError('Case IDs must be unique portable labels (1..64characters)')
+            raise ValueError('Case IDs must be unique portable labels (1..64 characters)')
         seen.add(case['id'])
         for key in ('ds', 'families', 'transitions'):
             tags = case.get(key, [])
@@ -158,7 +158,7 @@ def audit_summary(base, ref, profile, result):
                'dropped_requests': dropped, 'truncated': audit['truncated'], 'window': window,
                'filter': filters, 'meaning': 'Only instrumented readers in this window/filter; global feature non-use is UNKNOWN'}
     if len(encoded(summary)) > 64 * 1024:
-        raise ValueError('Audit summary exceeds64KiB')
+        raise ValueError('Audit summary exceeds 64 KiB')
     return summary
 
 
@@ -233,7 +233,7 @@ def output_dir(path):
 def publish(path, value, name):
     data = encoded(value)
     if len(data) > MAX_REPORT:
-        raise ValueError('Campaign JSON exceeds2MiB')
+        raise ValueError('Campaign JSON exceeds 2 MiB')
     (path / name).write_bytes(data)
 
 
@@ -267,12 +267,12 @@ def run_case(args, executor=os.execv):
     selection(manifest['cases'], [args.case])
     case = next(c for c in manifest['cases'] if c['id'] == args.case)
     if not args.reason.strip() or len(args.reason) > 2048:
-        raise ValueError('Record a concrete1..2048character selection reason')
+        raise ValueError('Record a concrete 1..2048 character selection reason')
     has_result = case.get('profile') is not None and (relative(path.parent, case['profile']['path']).parent / 'Data/config/replay/result.json').exists()
     if (case.get('evidence') is not None or has_result) and not (args.reopen_reason and args.reopen_reason.strip()):
         raise ValueError('Existing proof is reused by default; --reopen-reason is required for an explicit repeat')
     if args.reopen_reason and len(args.reopen_reason) > 2048:
-        raise ValueError('Reopening reason exceeds2048characters')
+        raise ValueError('Reopening reason exceeds 2048 characters')
     profile_path, profile, _ = pinned(path.parent, case.get('profile'), 128 * 1024)
     profile_valid(profile)
     names = [p for p in [profile_path.parent / 'recomp.exe', profile_path.parent / 'recomp'] if p.exists()]

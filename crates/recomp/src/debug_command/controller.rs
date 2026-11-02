@@ -7,7 +7,7 @@ const PAGES:[&str;4]=[
     "àèéìòùäëïöüáíóúâêîôûãõñçßøåæœ-_./:@ ",
     ",;=+*!?()[]{}<>%&|\"'`~$^#\\-_/.: ",
 ];
-const ACTIONS:[&str;13]=["Space","Back","Clear","Aa/#","Recent prec.","Recent succ.","Cursor -","Cursor +","Complete","Send","Close","status","help"];
+const ACTIONS:[&str;13]=["Space","Back","Clear","Aa/#","Previous","Next","Cursor -","Cursor +","Complete","Send","Close","status","help"];
 
 #[derive(Clone,Copy,Default)]
 pub(crate) struct Input {pub up:bool,pub down:bool,pub left:bool,pub right:bool,pub confirm:bool,pub cancel:bool}
@@ -24,6 +24,11 @@ impl Controller {
         let mut keys=PAGES[self.page].chars().take(36).map(|c|c.to_string()).collect::<Vec<_>>();
         while keys.len()<36{keys.push(" ".into());}
         keys.extend(ACTIONS.iter().map(|s|s.to_string()));keys
+    }
+    pub fn localized_labels(&self,language:input_config::Language)->Vec<String>{
+        let mut labels=self.labels();
+        for label in &mut labels[36..47] { *label=language.text(label).to_owned(); }
+        labels
     }
     /// A neutral sample arms input after focus arrives, so a held button cannot
     /// submit or close the panel. At most one action is produced per poll.
@@ -76,5 +81,14 @@ mod tests {
         c.selected=40;assert_eq!(press(&mut c,Input{confirm:true,..Default::default()}),Some(Action::Previous));
         c.selected=45;assert_eq!(press(&mut c,Input{confirm:true,..Default::default()}),Some(Action::Submit));
         assert_eq!(press(&mut c,Input{cancel:true,..Default::default()}),Some(Action::Cancel));
+    }
+    #[test]
+    fn localized_action_labels_do_not_change_inserted_commands(){
+        let mut c=Controller::default();let en=c.localized_labels(input_config::Language::default());
+        let it=c.localized_labels(input_config::Language::parse("it"));
+        assert_eq!(en[40],"Previous");assert_eq!(it[40],"Prec.");
+        assert_eq!(&en[..36],&it[..36]);assert_eq!(&en[47..],&it[47..]);
+        c.poll(Input::default());c.selected=47;
+        assert_eq!(press(&mut c,Input{confirm:true,..Default::default()}),Some(Action::Insert("status".into())));
     }
 }

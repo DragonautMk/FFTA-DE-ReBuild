@@ -1,260 +1,272 @@
-# Eventi comuni — DBG2-08
+<a id="eventi-comuni--dbg2-08"></a>
 
-Le osservazioni host già disponibili usano un solo punto di pubblicazione nel
-frontend. Quando la traccia UI, il registro recente o la console sono attivi, un evento
-host viene creato una volta e consegnato ai consumer attivi. Nessun observer
-invoca gli handler del menu o del controllo locale. Con tutti spenti non si
-costruiscono payload input/focus né si serializzano eventi.
+# Shared events — DBG2-08
 
-Ogni riga mantiene `stage`, `data`, `frame` e `clock` e aggiunge:
+Existing host observations use a single frontend publication point. When the
+UI trace, recent log or console is active, a host event is created once and
+delivered to active consumers. No observer invokes menu or local-control
+handlers. With all consumers off, input/focus payloads are not constructed
+and events are not serialized.
 
-- `event_schema: 1`, `event_id` e `event_sequence`: identità e ordine comuni nella
-  stessa esecuzione. La sequenza non riparte quando si avvia un altro collector.
-- `host_elapsed_ns`: tempo monotono dalla creazione del clock host; non è tempo
-  guest né una misura della latenza hardware.
-- `session.run_id` e `session.manifest_sha256`: esecuzione del canale locale e
-  manifest autenticato della copia; fuori da quel canale il manifest è nullo.
-- `category`, `severity`, `origin.producer`, `origin.source` e `observation`:
-  famiglia, livello, punto di osservazione, contesto e granularità dichiarata.
-- `request_id` e `job_id`: nulli senza una richiesta osservata. Navigazione e
-  azione menu condividono un contesto; i comandi locali mantengono l'ID reale
-  della mailbox. Passi e ricerche riportano quell'ID anche come job.
+Each row retains `stage`, `data`, `frame` and `clock` and adds:
 
-`sequence` e `host_ms` restano alias **locali al collector**, per compatibilità
-con i report schema 1. Per unire due report usare `event_id` e ordinare per
-`event_sequence`. Tempo e sequenza comuni sono assegnati nella pubblicazione
-host; frame/clock guest possono ripetersi o tornare indietro. Le lacune possono
-includere periodi non raccolti, eventi specifici dell'altro collector e scarti.
-Non si deduce una cronologia delle istruzioni guest da questo ordine.
+- `event_schema: 1`, `event_id` and `event_sequence`: shared identity and order
+  in the same run. The sequence does not restart when another collector starts.
+- `host_elapsed_ns`: monotonic time since host-clock creation; neither guest
+  time nor a hardware-latency measurement.
+- `session.run_id` and `session.manifest_sha256`: local-channel run and
+  authenticated copy manifest; outside that channel the manifest is null.
+- `category`, `severity`, `origin.producer`, `origin.source` and `observation`:
+  declared family, level, observation point, context and granularity.
+- `request_id` and `job_id`: null without an observed request. Menu navigation
+  and action share context; local commands retain the actual mailbox ID.
+  Steps and searches also report that ID as the job.
 
-Il canale comune osserva i token Winit già strumentati, cambi di poll XInput e
-rimappati, consumi input già presenti, binding, dispatch menu con focus prima e
-dopo, azioni e comandi condivisi, confini di frame e ripristino ed errori già
-instradati. Poll identici sono accorpati prima della consegna ai collector.
-Le ripetizioni keyboard conservano il proprio flag. Gli observer recenti di
-letture, dispatch e riconoscimento guest mantengono la loro granularità:
-`rom-read-batch` e `frame` sono aggregati per frame, non una sequenza interna al
-frame. Le chiavi di lettura sono ordinate e limitate come prima.
+`sequence` and `host_ms` remain **collector-local** aliases for compatibility
+with schema-1 reports. To merge two reports, use `event_id` and sort by
+`event_sequence`. Shared time and sequence are assigned at host publication;
+guest frame/clock can repeat or move backwards. Gaps may include uncollected
+periods, events specific to the other collector and drops. This order does
+not imply a guest-instruction history.
 
-La navigazione tastiera/pad accettata pubblica `host-input-request`, poi
-`host-menu-dispatch` e, se l'handler restituisce un'azione, `host-action`.
-`host-action-result` significa solo ritorno dall'handler esistente. Non certifica
-l'accettazione di una procedura che può avere già mostrato un rifiuto nel menu.
-`control-result` distingue `accepted` e `refused`; l'accettazione non significa
-fine di un job asincrono. Il controllo locale pubblica `control-complete` con lo
-stesso request/job ID quando il budget di passi/ricerca termina, anche per
-annullamento o timeout. La query `status` resta silenziosa.
+The shared channel observes already instrumented Winit tokens, changed XInput
+and remapped polls, existing input consumption, bindings, menu dispatch with
+before/after focus, shared actions and commands, frame/restore boundaries and
+already routed errors. Identical polls are coalesced before collector delivery.
+Keyboard repeats retain their flag. Recent observers of guest reads, dispatch
+and recognition retain their granularity: `rom-read-batch` and `frame` are
+frame aggregates, not an intraframe sequence. Read keys remain sorted and
+bounded as before.
 
-`status.event_coverage` e `event_coverage` nei due report espongono la stessa
-mappa versionata dei produttori supportati, condizionali, parziali e mancanti.
-`status.event_clock` espone identità e prossimo numero. Restano mancanti gli
-hook raw Gilrs/DirectInput, i percorsi touch/pen assenti dal frontend, tutti i
-dati dei cicli di vita non strumentati, gli interni dei
-blocchi native, la cronologia CPU completa, i callback audio grezzi e il ciclo
-di vita dei futuri cheat mantenuti.
-Un produttore non registrato è marcato `unknown/unregistered`.
+Accepted keyboard/pad navigation publishes `host-input-request`, then
+`host-menu-dispatch` and, if the handler returns an action, `host-action`.
+`host-action-result` means only return from the existing handler. It does not
+certify acceptance of a procedure that may already have shown a menu refusal.
+`control-result` distinguishes `accepted` and `refused`; acceptance does not
+mean an asynchronous job has finished. Local control publishes
+`control-complete` with the same request/job ID when the step/search budget
+ends, including cancellation or timeout. The `status` query stays silent.
 
-I limiti dei collector restano separati: [UI](debug_ui.md) conserva un prefisso
-esplicito; [recent](debug_recent.md) mantiene una finestra mobile con contatori di
-espulsione e oversize. Il payload non viene duplicato nell'envelope; i metadati
-rientrano nei cap di byte esistenti. Un collector pieno o congelato non blocca
-l'altro. Avviare la raccolta durante un comando può conservarne l'esito senza
-la richiesta precedente; salvare/congelare può escluderne l'esito successivo.
-L'export e il ridisegno non producono eventi ricorsivi né eseguono comandi.
+`status.event_coverage` and `event_coverage` in both reports expose the same
+versioned map of supported, conditional, partial and missing producers.
+`status.event_clock` exposes identity and next number. Missing hooks remain:
+raw Gilrs/DirectInput, touch/pen paths absent from the frontend, all
+uninstrumented lifecycle data, native-block internals, complete CPU history,
+raw audio callbacks and the lifecycle of future maintained cheats.
+An unregistered producer is marked `unknown/unregistered`.
 
-## Verifica del 30 ottobre 2026
+Collector limits remain separate: [UI](debug_ui.md) retains an explicit prefix;
+[recent](debug_recent.md) keeps a rolling window with eviction and oversize
+counters. Payload is not duplicated in the envelope; metadata fits existing
+byte caps. A full or frozen collector does not block the other. Starting
+collection during a command may retain its outcome without the preceding
+request; saving/freezing may exclude its later outcome. Export and redraw
+neither produce recursive events nor execute commands.
 
-Build Windows GNU locked/offline senza warning su606file congelati/46overlay
-host;11test Wine distinti passano, inclusi identità/fanout, contesti annidati,
-poll, limiti UI/recent, un milione di eventi e controllo locale. La nuova GUI
-usa lo stesso seed pubblico accettato con un runtime distinto:35eventi UI e
-47recent, tutti35gli eventi comuni identici salvo gli alias locali. Tre
-dispatch di navigazione producono una sola apertura del selettore; pausa
-accettata e riavvio UI rifiutato mantengono gli ID reali e gli esiti nei due
-report. Stato completo/frame0/clock0 restano esatti. GUI e Xvfb chiusi; pin e
-runtime canonici conservati. Windows nativo, Linux e hardware fisico non
-verificati da questa unità; nessuna accettazione DS o parità guest.
+<a id="verifica-del-30-ottobre-2026"></a>
 
-## Cambi del menu — DBG2-09
+## Validation on 30 October 2026
 
-Il menu espone uno stato semantico readonly distinto dalla geometria: pagina,
-ID e label della voce, valore attuale, dropdown, slot selezionati/disponibilità,
-binding in cattura, editor, filtri/conferma/preferito del contenuto, campi dello
-strumento e feedback realmente mostrato. Un ID del contenuto o catalogo resta
-distinto dalla label anche per elementi omonimi. Gli ID dei controlli ordinari
-usano pagina/variante del controllo; i campi tool usano strumento/chiave.
+Windows GNU locked/offline build without warnings on 606 frozen files/46 host
+overlays; 11 distinct Wine tests pass, including identity/fanout, nested
+contexts, polling, UI/recent limits, one million events and local control.
+The new GUI uses the same accepted public seed with a distinct runtime:
+35 UI and 47 recent events, all 35 shared events identical except local aliases.
+Three navigation dispatches produce one selector opening; accepted pause and
+refused UI restart retain real IDs and outcomes in both reports. Complete
+state/frame0/clock0 remain exact. GUI and Xvfb closed; pins and canonical
+runtimes preserved. Native Windows, Linux and physical hardware not verified
+by this unit; no DS acceptance or guest parity.
 
-`host-menu-baseline` dichiara lo stato iniziale di una nuova raccolta;
-`host-menu-change` registra soltanto proprietà cambiate o rimosse, con valore
-precedente/corrente, voce precedente/corrente e causa. Ogni proprietà produce
-una riga separata, così un aggiornamento di più campi resta entro il cap di una
-riga. Massimo96proprietà: ulteriori campi sono dichiarati come omessi. Valori
-lunghi conservano256caratteri, conteggio e hash completo, per distinguere testi
-con prefisso uguale. Nessuna immagine di slot o dump guest entra nello snapshot.
+<a id="cambi-del-menu--dbg2-09"></a>
 
-Le osservazioni avvengono dopo gli input pubblici e gli handler esistenti; i
-ritorni anticipati di editor e cancellazione sono inclusi. Le mutazioni interne
-non presentate fra due confini di input non sono una cronologia dell'implementazione.
-Un hover identico non emette cambi ripetuti. Il renderer e le sue celle di scroll
-non vengono chiamati né regolati per leggere lo stato semantico.
+## Menu changes — DBG2-09
 
-`mouse-input` distingue pulsanti/rotella raw Winit dalla consegna al menu;
-`host-pointer-dispatch` e `host-input-consumed` dichiarano instradamento e
-consumo. I movimenti mouse producono eventi di selezione soltanto quando la
-selezione cambia. Il contesto della richiesta segue anche la coda mouse fino
-all'azione. `host-text-input` osserva preedit/commit IME già ricevuti da Winit;
-i cambi della bozza rimangono separati dai campi confermati. `binding-capture-result`
-riporta token disponibili/configurazione ed esito della cattura. I poll rimappati
-indicano backend e dispositivo selezionati; sorgenti simultanee tastiera/pad
-restano combinate. I token raw Gilrs/DirectInput non sono ancora strumentati.
+The menu exposes readonly semantic state separate from geometry: page, entry
+ID and label, current value, dropdown, selected slots/availability, binding
+capture, editor, content filters/confirmation/favorite, tool fields and actual
+displayed feedback. A content or catalog ID remains distinct from its label,
+even for identically named items. Ordinary control IDs use page/control
+variant; tool fields use tool/key.
 
-`host-action-refused` usa gli errori sincroni realmente restituiti; gli altri
-handler conservano il proprio feedback nel registro delle proprietà e un esito
-`handler-returned`. La fine dei job asincroni resta separata. Nessun osservatore
-chiama di nuovo un handler per ricostruirne l'esito. I risultati DBG2-09 distinguono Wine/XInput simulato da hardware fisico e
-composizione IME; la sola compatibilità del codice non verifica questi ultimi.
+`host-menu-baseline` declares a new collection's initial state;
+`host-menu-change` records only changed or removed properties, with previous/
+current value, previous/current entry and cause. Each property produces a
+separate row, so a multi-field update stays within the per-row cap. At most
+96 properties: further fields are declared omitted. Long values retain
+256 characters, count and complete hash to distinguish texts with the same
+prefix. No slot image or guest dump enters the snapshot.
 
-### Verifica DBG2-09
+Observations occur after public inputs and existing handlers; editor and
+cancellation early returns are included. Internal mutations not presented
+between two input boundaries are not implementation history. Identical hover
+emits no repeated changes. The renderer and its scroll cells are neither
+called nor adjusted to read semantic state.
 
-Windows GNU locked/offline senza warning,609sorgenti congelati/50overlay host.
-Undici casi Rust distinti passano nelle esecuzioni mirate; il tentativo con filtro
-XInput errato che non selezionava test è escluso dal conteggio. Sei catture GUI
-sullo stesso seed pubblico contengono580eventi UI e739recent: tutti580gli eventi
-comuni hanno identità e dati uguali, senza espulsioni o oversize. Conferma tenuta,
-autorepeat, dropdown, hover, editor, ispezione/rifiuto e binding sono verificati;
-stato completo/frame0/clock0 restano esatti. I prefissi completati prima di errori
-del test sono conservati; si riprendono soltanto i criteri mancanti. La cattura
-tastiera mantiene il vocabolario esistente: G si assegna, F4 resta in attesa.
+`mouse-input` distinguishes raw Winit buttons/wheel from menu delivery;
+`host-pointer-dispatch` and `host-input-consumed` declare routing and
+consumption. Mouse movement produces selection events only when selection
+changes. Request context also follows the mouse queue through to the action.
+`host-text-input` observes IME preedit/commit already received from Winit;
+draft changes remain separate from committed fields. `binding-capture-result`
+reports available tokens/configuration and capture outcome. Remapped polls
+identify selected backend and device; simultaneous keyboard/pad sources remain
+combined. Raw Gilrs/DirectInput tokens are not yet instrumented.
 
-GUI e display isolato sono chiusi; pin dei seed e runtime canonici conservati.
-La guida è nella lista pubblica e nei COPY/ignore Docker espliciti;10test Python
-su archivi sintetici passano, senza generare una release o ricompilare Docker.
-Le prove non attestano Windows/Linux nativi, hardware fisico o IME reale.
+`host-action-refused` uses synchronous errors actually returned; other handlers
+retain feedback in the property log and a `handler-returned` outcome.
+Asynchronous job completion remains separate. No observer calls a handler again
+to reconstruct its outcome. DBG2-09 results distinguish Wine/simulated XInput
+from physical hardware and IME composition; code compatibility alone does not
+verify the latter.
 
-## Finestra eventi live — DBG2-11
+<a id="verifica-dbg2-09"></a>
 
-Aprire «Console eventi» nella sezione Debug delle catture, oppure usare F9
-quando Debug è abilitato. `key.event_console` in `input.cfg` accetta F2, F3,
-F4, F5, F9, F10 o F12; il valore predefinito è F9. La console è una finestra
-host separata: aprirla non mette in pausa il gioco. Nasconderla interrompe la
-raccolta e conserva la finestra già raccolta; riaprirla riprende la raccolta.
-Gli eventi accaduti mentre era nascosta non sono ricostruiti.
+### DBG2-09 validation
 
-La finestra ha un proprio buffer mobile di massimo1024eventi, 256KiB di JSON
-serializzato e 8KiB per evento. Mostra intervallo corrente, conteggi espulsi e
-oversize e stato del collector anche mentre la vista è in pausa. P congela o
-riprende soltanto la vista; frecce e PagSu/PagGiù scorrono, Fine torna al
-seguito automatico. C e L ciclano categoria e livello; `/` modifica la ricerca,
-Invio termina la modifica. I filtri non cambiano il buffer originale. Ctrl+C
-copia la vista JSON e Ctrl+S la salva esplicitamente in `Data/config/event-console`
-della copia, massimo32file. Escape nasconde la finestra. L'export conserva gli
-ID canonici, i filtri, lo stato del collector e la dichiarazione di copertura.
+Windows GNU locked/offline without warnings, 609 frozen sources/50 host overlays.
+Eleven distinct Rust cases pass in targeted runs; the incorrect XInput-filter
+attempt that selected no tests is excluded from the count. Six GUI captures on
+the same public seed contain 580 UI and 739 recent events: all 580 shared events
+have equal identities and data, without evictions or oversize. Held confirm,
+autorepeat, dropdown, hover, editor, inspection/refusal and bindings are
+verified; complete state/frame0/clock0 remain exact. Prefixes completed before
+test errors are retained; only missing criteria resume. Keyboard capture keeps
+the existing vocabulary: G is assigned, F4 stays waiting.
 
-A alterna l'accorpamento dei poll identici XInput/rimappati: inizialmente è
-attivo; disattivarlo pubblica ogni poll osservato verso i consumer attivi e può
-raggiungere i loro cap più rapidamente. Gli aggregati di letture guest restano
-per frame: non esiste qui una cronologia interna delle istruzioni. I produttori
-esclusivi del registro recente compaiono solo quando quel collector è attivo.
-«Tutte» include le categorie effettivamente pubblicate, comprese `unknown`;
-non abilita hook non strumentati. Lo snapshot della vista in pausa e il buffer
-live sono distinti e ciascuno rimane limitato.
+GUI and isolated display closed; seed pins and canonical runtimes preserved.
+The guide is in the public list and explicit Docker COPY/ignore rules;
+10 Python tests on synthetic archives pass without generating a release or
+rebuilding Docker. These checks do not establish native Windows/Linux,
+physical hardware or real IME.
 
-Build Windows GNU e prove Wine sintetiche verificano menu, shortcut/focus,
-filtri, pausa, scorrimento, esportazione e copia reale negli appunti, con stato
-completo/frame/clock invariati. Le prove usano Xvfb e input simulato; Windows
-nativo, Linux nativo e periferiche fisiche non sono verificati. I limiti e il
-costo in uso prolungato rimangono il lavoro successivo DBG2-12.
+<a id="finestra-eventi-live--dbg2-11"></a>
 
-## Limiti e costo — DBG2-12
+## Live event window — DBG2-11
 
-Il collector accetta al massimo32eventi per ciclo del frontend; quelli oltre il
-budget sono contati separatamente dalle espulsioni e dagli eventi troppo grandi.
-Il buffer live limita a1024righe, 256KiB di JSON e 1MiB complessivo di testo
-JSON più indice di ricerca; ogni evento ha un tetto di8KiB. La vista congelata
-condivide le righe immutabili: può conservare fino a un'ulteriore finestra
-limitata mentre quella live ruota. Questi sono limiti sui dati e sulle righe,
-non una misura esatta degli overhead dell'allocatore o della finestra grafica.
-Il disegno, massimo quattro volte al secondo, decodifica solo le righe visibili;
-filtri ed export non mutano il log. La pausa della vista, la raccolta e la pausa
-del gioco restano distinti.
+Open Event console in Debug's capture section, or use F9 when Debug is enabled.
+`key.event_console` in `input.cfg` accepts F2, F3, F4, F5, F9, F10 or F12;
+the default is F9. The console is a separate host window: opening it does not
+pause the game. Hiding stops collection and retains the collected window;
+reopening resumes collection. Events while hidden are not reconstructed.
 
-Una prova sintetica Wine di128.000 osservazioni in2000cicli ha contato64.000
-scarti per budget e rispettato i limiti, mantenendo invariata la vista congelata;
-il tempo osservato è426ms per il test, non un benchmark del gioco. Due sessioni
-isolate con lo stesso seed e dieci frame controllati hanno prodotto stato completo,
-registri e clock identici con console spenta e accesa. La durata misurata include
-il processo client e non stabilisce un costo prestazionale generale.
+The window has its own rolling buffer of at most 1024 events, 256 KiB of
+serialized JSON and 8 KiB per event. It shows current interval, evicted and
+oversize counts and collector status even while the view is paused. P freezes
+or resumes only the view; arrows and Page Up/Page Down scroll, End returns to
+automatic follow. C and L cycle category and level; `/` edits search, Enter
+ends editing. Filters do not change the original buffer. Ctrl+C copies the
+JSON view and Ctrl+S explicitly saves it in the copy's `Data/config/event-console`,
+at most 32 files. Escape hides the window. Export retains canonical IDs,
+filters, collector status and coverage declaration.
+The window uses the selected desktop menu language (English by default),
+including when reopened after changing that setting. Category and level
+tokens, event data and exported JSON remain unchanged by localization.
 
-Se uno snapshot ha disattivato i tap audio separati, il frontend usa la miscela
-fedele disponibile per pacing e output senza modificare lo snapshot o la scelta
-Enhanced salvata. Una breve osservazione Wine con console aperta e vista congelata
-ha mostrato code audio limitate e nessun messaggio di scarto, come il confronto
-con console spenta. Restano non verificati qualità percepita, hardware fisico e
-comportamento prolungato su Windows o Linux nativi.
+A toggles coalescing of identical XInput/remapped polls: initially enabled;
+disabling publishes every observed poll to active consumers and may reach
+their caps faster. Guest-read aggregates remain per frame: there is no
+intraframe instruction history here. Producers exclusive to the recent log
+appear only while that collector is active. All includes categories actually
+published, including `unknown`; it does not enable uninstrumented hooks.
+The paused-view snapshot and live buffer are distinct and each remains bounded.
 
-## Runtime e strumenti — DBG2-10
+Windows GNU builds and synthetic Wine checks verify menu, shortcuts/focus,
+filters, pause, scrolling, export and actual clipboard copying, with complete
+state/frame/clock unchanged. Checks use Xvfb and simulated input; native Windows,
+native Linux and physical devices are not verified. Limits and sustained-use
+cost remain subsequent DBG2-12 work.
 
-`runtime-event` aggiunge famiglia, fase, esito e dettagli limitati sul medesimo
-clock. `event_coverage.runtime_families` descrive origine, frequenza, requisiti e
-scope di18famiglie. La famiglia cheat è parziale: l'handler manuale pubblica
-preparazione, applicazione singola e rifiuto; non copre toggle mantenuti,
-disattivazione o cronologia dell'hook originale.
-La disponibilità degli hook non equivale a validazione hardware o parità guest.
+<a id="limiti-e-costo--dbg2-12"></a>
 
-`start_observed` indica che un consumer era attivo alla sorgente, non garantisce
-la conservazione del record oltre i limiti del consumer. Gli errori di
-pubblicazione del canale locale mantengono il contesto della sola risposta
-validata in attesa; query di stato riuscite restano silenziose.
+## Limits and cost — DBG2-12
 
-Il registro mantiene al massimo16job attivi, con request/job ID iniziali anche
-quando cambia la vista. Annullamenti e altri interventi mantengono il contesto
-iniziale e riportano `cause_request_id` separatamente. Passi e ricerche riusano
-l'ID reale del canale locale; il medesimo contesto circonda i tick esistenti.
-Il registro non avvia né ripete un'operazione. Un rimpiazzo accettato dichiara
-`superseded`/`rearmed`, senza trasformarlo in completamento.
+The collector accepts at most 32 events per frontend cycle; those beyond budget
+are counted separately from evictions and oversized events. The live buffer
+caps at 1024 rows, 256 KiB of JSON and 1 MiB total JSON text plus search index;
+each event has an 8 KiB ceiling. The frozen view shares immutable rows: it may
+retain up to one additional bounded window while the live buffer rotates.
+These are data/row limits, not exact measurements of allocator or graphical
+window overhead. Drawing, at most four times per second, decodes only visible
+rows; filters and export do not mutate the log. View pause, collection and
+game pause remain distinct.
 
-I dettagli sono al massimo4096byte; valori maggiori conservano prefisso/hash e
-flag di troncamento. L'esito resta fuori dai dettagli troncati. I progressi sono
-emessi solo quando cambiano e al massimo ogni250ms. I campioni UI/recent
-escludono i propri conteggi e clock, per non generare progressi da se stessi.
-Codice/gameplay/audio leggono contatori degli osservatori esistenti dal frontend:
-nessun nuovo I/O o lettura del clock nei callback audio, né serializzazioni
-continue dell'intera macchina. L'hash ROM del baseline avviene soltanto all'avvio
-esplicito della raccolta.
+A synthetic Wine check of 128,000 observations in 2000 cycles counted 64,000
+budget drops and respected limits while leaving the frozen view unchanged;
+observed time is 426 ms for the test, not a game benchmark. Two isolated
+sessions with the same seed and ten controlled frames produced identical
+complete state, registers and clock with the console off and on. Measured
+duration includes the client process and establishes no general performance cost.
 
-Salvataggio, caricamento, Undo, reset e backup dichiarano richiesta ed esito nei
-punti degli handler reali. Il ripristino viene osservato prima del freeze per
-discontinuità. Registrazioni e worker conservano il proprio contesto iniziale;
-la fine dell'handler non sostituisce la fine del job. Il risultato host mantiene
-i veri esiti completed/cancelled/timeout/refused, senza interpretarli dal testo
-del menu o rileggere file per produrre l'evento. I risultati di una bozza vecchia
-restano identificati e non sostituiscono quella corrente.
+If a snapshot disabled separate audio taps, the frontend uses the available
+faithful mix for pacing/output without changing the snapshot or saved Enhanced
+choice. A brief Wine observation with the console open and view frozen showed
+bounded audio queues and no drop messages, as did the console-off comparison.
+Perceived quality, physical hardware and sustained behavior on native Windows
+or Linux remain unverified.
 
-Il worker replay conserva fino a8fasi di preparazione: richiesta/attach del
-dataset e richiesta/load dell'input native/cache, oppure non selezionato/rifiuto.
-Sono ingressi offline già preparati; non attestano nuova estrazione o
-compilazione. Dettagli per fase limitati a512byte, pubblicazione preparatoria
-best effort e non bloccante, record mantenuti nei progressi/risultati e fallback
-del supervisore. I lettori di questi report hanno un cap32KiB. Sequenza e tempo
-host del worker restano distinti dalla pubblicazione nel frontend; i frame del
-worker non sono frame eseguiti dalla macchina principale.
+<a id="runtime-e-strumenti--dbg2-10"></a>
 
-Restano fuori la storia CLI prima dell'avvio del frontend, la generazione
-arbitraria di dataset/cache e gli interni native/CPU non strumentati. Il registro
-recente non salvato continua a impedire un replay separato; la traccia UI può
-osservarlo. La chiusura emette un'intenzione nel buffer già attivo, senza export
-implicito: salvare il prefisso desiderato esplicitamente prima di uscire.
-Il gameplay inspector continua a richiedere la ROM europea autenticata; una ROM
-sintetica rifiutata non viene reinterpretata come modello guest verificato.
+## Runtime and tools — DBG2-10
 
-Le prove sulla build Windows GNU sotto Wine includono dieci casi mirati e le
-interazioni di sessione, passi, stato, registrazione, catture, ricetta,
-annullamento e replay. Il blocco temporaneo della risposta di controllo ha
-prodotto errori associati all'ID effettivo della richiesta; il retry è riuscito.
-Il manifest della registrazione punta al file `recording.json` esistente,
-separato dalla sua directory. Il replay ha osservato le fasi dataset/cache non
-selezionate; non prova il caricamento di input privati. Un frame controllato
-ha conservato lo stato completo atteso. Dopo la revisione Clan Atlas una nuova
-build Windows e dieci test Wine sono passati; avvio/arresto registrazione dal
-menu e passo controllato mantengono identità e stato attesi. Windows nativo,
-controller fisici e IME non sono verificati.
+`runtime-event` adds family, phase, outcome and bounded details on the same
+clock. `event_coverage.runtime_families` describes origin, frequency,
+requirements and scope of 18 families. The cheat family is partial: the manual
+handler publishes preparation, one-shot application and refusal; it does not
+cover maintained toggles, deactivation or original-hook history. Hook
+availability does not equal hardware validation or guest parity.
+
+`start_observed` means a consumer was active at the source; it does not guarantee
+record retention beyond consumer limits. Local-channel publication errors
+retain only the validated pending response's context; successful status queries
+stay silent.
+
+The registry retains at most 16 active jobs, with original request/job IDs even
+when the view changes. Cancellation and other interventions retain original
+context and report `cause_request_id` separately. Steps and searches reuse the
+actual local-channel ID; the same context surrounds existing ticks. The
+registry neither starts nor repeats an operation. An accepted replacement
+declares `superseded`/`rearmed` without turning it into completion.
+
+Details are bounded to 4096 bytes; larger values retain prefix/hash and a
+truncation flag. Outcome remains outside truncated details. Progress is emitted
+only on change and at most every 250 ms. UI/recent samples exclude their own
+counts and clocks to avoid self-generated progress. Code/gameplay/audio read
+existing observer counters from the frontend: no new I/O or clock read in
+audio callbacks, nor continuous whole-machine serialization. Baseline ROM
+hashing occurs only at explicit collection start.
+
+Save, Load, Undo, reset and backup declare request and outcome at actual handler
+sites. Restoration is observed before freezing for discontinuity. Recordings
+and workers retain their initial context; handler completion does not replace
+job completion. Host results retain actual completed/cancelled/timeout/refused
+outcomes without interpreting menu text or rereading files to produce the
+event. Results for an old draft remain identified and do not replace the current one.
+
+The replay worker retains up to 8 preparation phases: dataset request/attach
+and native/cache input request/load, or not selected/refused. These are
+prepared offline inputs; they do not establish new extraction or compilation.
+Details per phase are bounded to 512 bytes, preparation publication is best
+effort and nonblocking, and records are retained in progress/results and the
+supervisor fallback. Readers of these reports have a 32 KiB cap. Worker host
+sequence/time remain distinct from frontend publication; worker frames are
+not frames executed by the main machine.
+
+CLI history before frontend startup, arbitrary dataset/cache generation and
+uninstrumented native/CPU internals remain outside scope. The unsaved recent
+log continues to block a separate replay; the UI trace can observe it.
+Shutdown emits intent in the already active buffer without implicit export:
+save the desired prefix explicitly before exiting. The gameplay inspector
+still requires the authenticated European ROM; a refused synthetic ROM is not
+reinterpreted as a verified guest model.
+
+Checks on the Windows GNU build under Wine include ten targeted cases and
+session, step, status, recording, capture, recipe, cancellation and replay
+interactions. Temporary control-response blocking produced errors associated
+with the actual request ID; retry succeeded. The recording manifest points
+to the existing `recording.json` file, separate from its directory. Replay
+observed unselected dataset/cache phases; it does not prove private-input
+loading. One controlled frame retained the expected complete state. After the
+Clan Atlas revision, a new Windows build and ten Wine tests passed; menu
+recording start/stop and a controlled step retain expected identities and
+state. Native Windows, physical controllers and IME are not verified.

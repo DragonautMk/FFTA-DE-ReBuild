@@ -4,6 +4,9 @@
 
 The manager produces an English **HTML/JSON preview**, with estimated space and sessions to retain. Apply uses that plan and a new receipt. It selects generated libraries in completed session caches and disposable copies of already recognized ROM test units covered by the [existing cleanup](development/LOCAL_ARTIFACTS.md).
 
+The generator's authored CLI messages use English. Paths and imported metadata
+retain their original values; their language does not change artifact identities.
+
 Sessions and their originals, inputs, saves, recordings, datasets, reports, errors, manifests, authenticated executables and source preimages are retained. `--keep` excludes a session entirely from cleanup. Unknown files are retained; the manager does not perform a global cleanup of `target/`, Docker, Cargo or normal caches. Earlier collector limits remain in effect: eight folders per type and the event/frame/time and size limits documented in the [guides](development/DEBUG_TOOLS_TODO.md) and summarized in the preview.
 
 <a id="python-o-powershell"></a>
@@ -19,7 +22,7 @@ python3 scripts/debug_artifacts.py preview --session 'Data/debug-sessions/caso u
 python3 scripts/debug_artifacts.py apply 'target/artefatti-preview-1/plan.json' --receipt 'target/artefatti-ricevuta-1.json'
 ```
 
-`--sessions-root CARTELLA` lists immediate children without searching the entire project. `--session` and `--unit target/rom-data-NOME` may be repeated; `--unit` declares that unit's checks complete and reuses the old helper's `interrupted` / `moved resources` selection. The accepted dataset, results, originals and evidence are retained. The new manager does not retire unit executables; the old explicit option remains separate.
+`--sessions-root FOLDER` lists immediate children without searching the entire project. `--session` and `--unit target/rom-data-NAME` may be repeated; `--unit` declares that unit's checks complete and reuses the old helper's `interrupted` / `moved resources` selection. The accepted dataset, results, originals and evidence are retained. The new manager does not retire unit executables; the old explicit option remains separate.
 
 To always obtain the command log, even when starting from another directory:
 

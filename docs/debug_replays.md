@@ -1,19 +1,23 @@
-# Riprodurre un caso con un profilo — DBG-05
+<a id="riprodurre-un-caso-con-un-profilo--dbg-05"></a>
 
-Un profilo portable conserva caso, runtime, ROM/BIOS, eventuale dataset,
-snapshot iniziale, input, endpoint atteso e timeout. Menu e CLI avviano lo stesso
-worker isolato; il worker non ha un writer per SRAM, slot o backup. La partita
-normale resta in pausa e riprende solo con una scelta esplicita.
+# Replay a case with a profile — DBG-05
 
-Un profilo può includere un [audit delle letture ROM](debug_rom_audit.md):
-`debug-rom-audit create` configura preset, finestra, intervalli e limite. Run,
-Cancel e gli esiti del replay restano comuni. L'audit ha propri indicatori di
-troncatura e finestra parziale, distinti dal confronto dell'endpoint.
+A portable profile retains the case, runtime, ROM/BIOS, optional dataset,
+starting snapshot, input, expected endpoint and timeout. Menu and CLI start
+the same isolated worker; it has no writer for SRAM, slots or backups.
+The normal game stays paused and resumes only by explicit choice.
 
-## Preparare il profilo
+A profile can include a [ROM-read audit](debug_rom_audit.md):
+`debug-rom-audit create` configures the preset, window, ranges and cap. Run,
+Cancel and replay outcomes remain shared. The audit has its own truncation
+and partial-window indicators, separate from endpoint comparison.
 
-Partire da una [registrazione completa](debug_recordings.md) e dalla sua
-[copia di debug](debug_sessions.md) chiusa:
+<a id="preparare-il-profilo"></a>
+
+## Prepare the profile
+
+Start with a [complete recording](debug_recordings.md) and its closed
+[debug copy](debug_sessions.md):
 
 ```powershell
 .\recomp.exe debug-replay create `
@@ -22,167 +26,171 @@ Partire da una [registrazione completa](debug_recordings.md) e dalla sua
   --case 'DS-20-EUR' --timeout-ms 120000
 ```
 
-La destinazione deve essere nuova. Il comando autentica la registrazione,
-controlla origine/endpoint e ROM/BIOS/dataset, poi copia i soli input necessari
-in una nuova sessione. `replay.json` viene pubblicato per ultimo: una copia
-incompleta non è un profilo eseguibile. La raccolta DS e la registrazione sorgente
-rimangono invariate. Il nome del caso è una descrizione, non una nuova prova DS.
+The destination must be new. The command authenticates the recording, checks
+origin/endpoint and ROM/BIOS/dataset, then copies only the required inputs into
+a new session. `replay.json` is published last: an incomplete copy is not an
+executable profile. The DS collection and source recording remain unchanged.
+The case name is a description, not new DS evidence.
 
-Il runtime scelto è l'eseguibile che esegue create; `--runtime FILE` ne sceglie
-un altro. Il profilo registra separatamente hash del runtime scelto e del binario
-che ha registrato il caso. È quindi possibile confrontare una nuova build con
-un vecchio endpoint senza rinominare la build o promuovere un esito divergente.
-Il runtime selezionato deve supportare `debug-replay worker`; vecchi eseguibili
-privi del comando terminano con errore esplicito e log conservato.
+The selected runtime is the executable running create; `--runtime FILE`
+selects another. The profile separately records hashes of the selected runtime
+and the binary that recorded the case. A new build can therefore be compared
+against an old endpoint without renaming the build or promoting a divergent
+outcome. The selected runtime must support `debug-replay worker`; old
+executables without the command exit with an explicit error and retained log.
 
-Il percorso predefinito usa l'interprete. `--library FILE` seleziona una
-traduzione native già disponibile e compatibile: la libreria e TinyCC vengono
-copiati e autenticati. Non viene compilata la ROM né consultata una cache esterna
-per sostituire la libreria scelta. Una libreria con ABI/ROM/BIOS incompatibili
-può fallire o divergere; il worker separato ne conserva l'esito. Non si deduce
-la compatibilità dal nome `.dll`.
+The default path uses the interpreter. `--library FILE` selects an already
+available compatible native translation: the library and TinyCC are copied
+and authenticated. The ROM is not compiled, nor is an external cache consulted
+to replace the selected library. A library with incompatible ABI/ROM/BIOS may
+fail or diverge; the separate worker retains its outcome. Compatibility is
+not inferred from the `.dll` name.
 
-Il dataset viene ereditato dalla sessione sorgente e deve corrispondere alla
-registrazione. Tutti i percorsi dei payload sono relativi; spostare l'intera
-cartella del profilo preserva il caso. I file personali rimangono privati,
-ignorati da Git e fuori dai pacchetti.
+The dataset is inherited from the source session and must match the recording.
+All payload paths are relative; moving the whole profile folder preserves
+the case. Personal files remain private, Git-ignored and outside packages.
 
-## Dalla CLI
+<a id="dalla-cli"></a>
+
+## From the CLI
 
 ```powershell
 .\recomp.exe debug-replay run 'C:\Debug\replay-DS-20\replay.json' --json
 ```
 
-L'output è JSON Lines schema 1, tipo `ffta-debug-replay-result`: righe con
-`outcome = running`, frame completati/totali e messaggio, poi un esito terminale.
-Ogni avvio ha un identificatore diverso. Il risultato identifica caso, runtime,
-ROM, dataset, input e libreria; all'endpoint aggiunge hash dello stato e clock.
-`--json` è facoltativo: la semantica dell'output rimane la stessa.
+Output is schema-1 JSON Lines, kind `ffta-debug-replay-result`: rows with
+`outcome = running`, completed/total frames and message, then a terminal outcome.
+Each launch has a distinct identifier. The result identifies case, runtime,
+ROM, dataset, input and library; at the endpoint it adds state hash and clock.
+`--json` is optional: output semantics remain the same.
 
-La condizione d'arresto è `exact-endpoint`: riprodurre esattamente i frame della
-registrazione e confrontare tutto lo stato serializzato e il clock attesi.
-Non basta un'immagine simile. L'origine dei frame guest rimane intatta; gli
-input sono relativi allo snapshot, con i tasti iniziali espliciti. Le semantiche
-mouse sono quelle dei runner esistenti.
+The stop condition is `exact-endpoint`: replay exactly the recorded frames
+and compare the complete expected serialized state and clock. A similar image
+is insufficient. Guest-frame origin remains intact; input is relative to the
+snapshot, with explicit initial keys. Mouse semantics follow existing runners.
 
-Codici d'uscita:
+Exit codes:
 
-- **0, passed:** endpoint completo e clock identici.
-- **2, diverged:** endpoint o clock diversi.
-- **3, incompatible:** profilo/input/build mancanti, alterati o incompatibili.
-- **4, timeout:** limite di tempo raggiunto.
-- **5, interrupted:** annullamento o chiusura del proprietario del replay.
-- **6, error:** errore del worker o frame incompleto.
+- **0, passed:** complete endpoint and clock identical.
+- **2, diverged:** endpoint or clock differs.
+- **3, incompatible:** profile/input/build missing, changed or incompatible.
+- **4, timeout:** time limit reached.
+- **5, interrupted:** cancellation or replay-owner shutdown.
+- **6, error:** worker error or incomplete frame.
 
-Il timeout è compreso fra 1 e 120.000 ms; il massimo è 360.000 frame. Il
-supervisore limita anche l'avvio/preflight del worker. Due esecuzioni dello
-stesso profilo sono rifiutate tramite lock esclusivi; profili diversi hanno
-copie e risultati separati.
+Timeout ranges from 1 to 120,000 ms; the maximum is 360,000 frames. The
+supervisor also bounds worker startup/preflight. Two runs of the same profile
+are refused through exclusive locks; distinct profiles have separate copies
+and results.
 
-Per annullare da un secondo terminale:
+To cancel from a second terminal:
 
 ```powershell
 .\recomp.exe debug-replay cancel 'C:\Debug\replay-DS-20\replay.json'
 ```
 
-Il worker controlla la richiesta fra i frame; se non risponde entro due secondi
-il supervisore lo termina. Ctrl+C richiede lo stesso arresto quando il terminale
-consegna il segnale. Un risultato già completato non viene annullato a posteriori.
+The worker checks the request between frames; if it does not respond within
+two seconds, the supervisor terminates it. Ctrl+C requests the same stop when
+the terminal delivers the signal. An already completed result is not cancelled
+retroactively.
 
-## Dal gioco
+<a id="dal-gioco"></a>
 
-Aprire **Debug → Replay case** e scegliere il `replay.json`. Il caso parte in
-un processo separato. Il menu mostra avanzamento e risultato; **Cancel replay**
-chiede l'arresto. **Choose replay profile** cambia la selezione senza avviarla.
-Il profilo rimane selezionato per la durata del processo del gioco, così il
-successivo Replay case richiede solo un pulsante.
+## From the game
 
-Per preselezionarlo all'avvio:
+Open **Debug → Replay case** and select `replay.json`. The case starts in a
+separate process. The menu shows progress and result; **Cancel replay** requests
+a stop. **Choose replay profile** changes selection without starting it. The
+profile stays selected for the game process's lifetime, so the next Replay case
+needs only one button.
+
+To preselect it at startup:
 
 ```powershell
 .\recomp.exe play 'C:\Giochi\FFTA EUR.gba' --no-bios --interp `
   --debug-replay 'C:\Debug\replay-DS-20\replay.json'
 ```
 
-Durante il replay Resume è sospeso; Quit chiude anche il worker. Alla fine
-scegliere Resume per riprendere la partita originale. Una registrazione attiva
-va terminata prima di avviare un replay. Il risultato completo viene anche
-riportato nel log del gioco.
+Resume is suspended during replay; Quit also closes the worker. When finished,
+choose Resume to continue the original game. Stop an active recording before
+starting a replay. The complete result is also written to the game log.
 
-## Output locale
+<a id="output-locale"></a>
 
-Dentro il profilo, `Data/config/replay/` contiene solo l'ultimo avanzamento,
-risultato, richiesta di annullamento e `worker.log`, sostituiti a ogni avvio.
-Ogni JSON contiene l'ID del tentativo: un vecchio risultato non vale per quello
-nuovo. La pubblicazione è atomica con tentativi limitati per una breve contesa
-Windows con il lettore. Non vengono accumulate copie a ogni run.
+## Local output
 
-Il worker carica lo snapshot e consuma l'audio come il player, senza aprire audio
-o finestra e senza misurare prestazioni. Se esecuzione, host/RTC, build o input
-producono differenze, l'esito rimane visibile. Questo strumento non aggiorna
-automaticamente stati DS, copertura ROM o prove di estrazione.
+Within the profile, `Data/config/replay/` contains only the latest progress,
+result, cancellation request and `worker.log`, replaced at each launch.
+Each JSON contains the attempt ID: an old result does not apply to a new run.
+Publication is atomic with bounded retries for brief Windows contention with
+the reader. Copies do not accumulate at every run.
 
-## Verifiche del 28 ottobre 2026
+The worker loads the snapshot and consumes audio like the player, without
+opening audio or a window and without measuring performance. If execution,
+host/RTC, build or input produces differences, the outcome remains visible.
+This tool does not automatically update DS status, ROM coverage or extraction evidence.
 
-Build release Windows offline su base pubblica congelata `2fbf9f7` e quindici
-file degli strumenti sovrapposti, con cache Cargo separata. Candidato finale
+<a id="verifiche-del-28-ottobre-2026"></a>
+
+## Validation on 28 October 2026
+
+Offline Windows release build on frozen public base `2fbf9f7` with fifteen
+overlaid tool files and a separate Cargo cache. Final candidate:
 `target/debug-tools-replay/recomp.exe`, SHA-256
 `29b135eb5f267909b4b05d0bb4e92aca5d952a3783f23acd4a1a3dbc6557047e`.
-Gli eseguibili normali, la DLL sorgente e il lavoro concorrente di estrazione
-rimangono invariati.
+Normal executables, the source DLL and concurrent extraction work remain unchanged.
 
-- **60 test distinti sotto Wine:** 8 del replay, 7 del preflight di registrazione
-  condiviso e 45 del menu. Coprono ripetibilità dello stato completo, origine e
-  tasti iniziali, progresso/codici di timeout e annullamento, divergenza, input
-  errati, limiti, sessione attiva, percorsi portable e spostamento.
-- **CLI reale:** il caso EUR DS-20 di 102 frame ripete stato e clock identici;
-  passa anche dopo lo spostamento del profilo. Due avvii concorrenti danno un
-  passaggio e un rifiuto, senza interrompere il primo. File mancanti, alterati
-  e fuori ordine danno codice 3; input alternativi validi danno divergenza 2;
-  timeout e annullamento danno rispettivamente 4 e 5. Sono passati 16 controlli
-  di comportamento; il confronto native è descritto separatamente sotto.
-- **GUI Wine/Xvfb:** Replay case raggiunge l'endpoint della CLI, Cancel replay
-  interrompe il worker e chiudere il genitore lo termina. Stato/frame/clock e
-  progressi del genitore sono invariati; 171 file selezionati fra raccolta,
-  ROM, sorgenti di registrazione, DLL e TinyCC mantengono hash/mtime.
-  Le schermate finali di risultato, annullamento e diagnosi sono state ispezionate.
+- **60 distinct tests under Wine:** 8 replay, 7 shared recording-preflight
+  and 45 menu tests. They cover complete-state repeatability, origin and
+  initial keys, timeout/cancellation progress and codes, divergence, invalid
+  inputs, limits, active session, portable paths and relocation.
+- **Real CLI:** the EUR DS-20 case of 102 frames repeats identical state and clock;
+  it also passes after profile relocation. Two concurrent launches yield one
+  pass and one refusal without interrupting the first. Missing, changed or
+  incorrectly ordered files return code 3; valid alternative inputs yield divergence 2;
+  timeout and cancellation yield 4 and 5 respectively. The 16 behavior checks
+  passed; the native comparison is described separately below.
+- **Wine/Xvfb GUI:** Replay case reaches the CLI endpoint, Cancel replay
+  interrupts the worker and closing the parent terminates it. Parent
+  state/frame/clock and progress are unchanged; 171 selected files from the
+  collection, ROM, recording sources, DLL and TinyCC retain hashes/mtime.
+  Final result, cancellation and diagnosis screenshots were inspected.
 
-Il secondo replay iniziale ha rilevato una contesa Windows sul JSON di progresso.
-Il fix aggiunge un retry atomico limitato a 32 ms: il test Windows mantiene
-appositamente aperto un lettore senza condivisione della cancellazione, poi lo
-rilascia. Quel test e gli otto del replay passano; ripetibilità/concorrenza/GUI
-sono provate sulla build corretta. La prima navigazione GUI con pressioni brevi
-non ha raggiunto Cancel prima della fine del caso; il collaudo finale usa clic
-reali accodati. Tentativi, log e profili sono conservati localmente.
+The second initial replay detected Windows contention on the progress JSON.
+The fix adds an atomic retry bounded to 32 ms: the Windows test deliberately
+holds a reader open without delete sharing, then releases it. That test and
+the eight replay tests pass; repeatability/concurrency/GUI are verified on
+the corrected build. Initial GUI navigation with short presses did not reach
+Cancel before the case ended; the final check uses queued real clicks.
+Attempts, logs and profiles are retained locally.
 
-La DLL EUR già presente (`ab7aa1808c4c14550c46ec2410f18ef47e301dbcf07a6ed021dbd015cf8f38ca`)
-è stata copiata senza ricompilarla. Completa i 102 frame con lo stesso clock
-`6269795841`, ma lo stato completo differisce dall'endpoint interpreter:
-`76a654dc…` contro `d8c4dfc8…`. Il runner restituisce **diverged, codice 2**.
-La prima aspettativa del collaudo era un passaggio: quel confronto è rimasto
-fallito e non viene trasformato in una prova di parità. La causa e la parità
-di quella DLL restano da valutare separatamente; nessun byte o confronto è stato
-corretto per farlo passare.
+The existing EUR DLL (`ab7aa1808c4c14550c46ec2410f18ef47e301dbcf07a6ed021dbd015cf8f38ca`)
+was copied without recompiling it. It completes the 102 frames with the same
+clock `6269795841`, but the complete state differs from the interpreter endpoint:
+`76a654dc…` versus `d8c4dfc8…`. The runner returns **diverged, code 2**.
+The initial test expectation was a pass: that comparison remains failed and
+is not turned into parity evidence. The cause and parity of that DLL require
+separate investigation; no byte or comparison was corrected to make it pass.
 
-Evidenza sotto `target/debug-tools-replay/`: `test-results.json`,
+Evidence under `target/debug-tools-replay/`: `test-results.json`,
 `publication-test-results.json`, `cli-results.json`, `cli-summary.json`,
-`gui-results.json` e i tentativi conservati. Windows nativo, Linux/Wayland,
-controller fisici, Ctrl+C sui terminali reali e replay con dataset non vuoto non
-sono verificati da questa unità. Nessun benchmark, nuova accettazione DS,
-estrazione ROM, pacchetto o modifica ad Android/Godot.
+`gui-results.json` and retained attempts. Native Windows, Linux/Wayland,
+physical controllers, Ctrl+C in real terminals and replay with a nonempty
+dataset are not verified by this unit. No benchmark, new DS acceptance,
+ROM extraction, package or Android/Godot change.
 
-I [profili di cattura DBG-08](debug_captures.md) estendono il formato con una
-condizione esplicita e `stop: "capture-trigger"`. Condividono lease, supervisione,
-annullamento e selezione del runtime, ma si fermano al confine sicuro dopo il
-primo match o al limite. `captured` (0) e `not-reached` (7) non sono una verifica
-dell'endpoint completo né una nuova accettazione DS. I profili senza condizione
-mantengono il precedente comportamento `exact-endpoint`.
+[DBG-08 capture profiles](debug_captures.md) extend the format with an explicit
+condition and `stop: "capture-trigger"`. They share leases, supervision,
+cancellation and runtime selection but stop at the safe boundary after the
+first match or at the limit. `captured` (0) and `not-reached` (7) are neither
+complete endpoint verification nor new DS acceptance. Profiles without a
+condition retain the previous `exact-endpoint` behavior.
 
-I [confronti DBG-09](debug_comparisons.md) estendono il profilo con `comparison`
-e `stop: "first-divergence"`. Il worker avanza due macchine indipendenti dal
-medesimo stato/input e confronta ogni frame: riferimento interprete/raw,
-candidato interprete/native con dataset opzionale. `matched` (0) certifica il
-solo prefisso dichiarato; `diverged` (2) pubblica campi, immagini e audio al primo
-confine diverso. L'endpoint registrato resta una verifica separata. Supervisione,
-lock, annullamento e limite temporale sono condivisi; audit e trigger simultanei
-vengono rifiutati. I profili ordinari mantengono `exact-endpoint`.
+[DBG-09 comparisons](debug_comparisons.md) extend the profile with `comparison`
+and `stop: "first-divergence"`. The worker advances two independent machines
+from the same state/input and compares every frame: interpreter/raw reference,
+interpreter/native candidate with an optional dataset. `matched` (0) certifies
+only the declared prefix; `diverged` (2) publishes fields, images and audio at
+the first differing boundary. The recorded endpoint remains a separate check.
+Supervision, locks, cancellation and timeout are shared; simultaneous audit
+and triggers are refused. Ordinary profiles retain `exact-endpoint`.

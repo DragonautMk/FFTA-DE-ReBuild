@@ -27,6 +27,15 @@ keyboard/controller instructions, save and confirmation forms, details and
 selector/tool controls. The standard-save timestamp and last undoable-operation
 description retain their data and redraw in the current language. Dynamic
 messages from normal save operations use the language selected when produced.
+The host command console also uses this preference for its title, hints,
+controller keyboard, job progress and notices. It picks up a changed language
+when reopened; existing result lines and notices retain the language in which
+they were produced. Locally generated preflight-error JSON uses English;
+results returned by debug operations keep their original payload.
+The event console follows the same preference for its title, controls,
+collector status and export notices. It applies a changed language when
+reopened; an existing notice remains as originally produced. Filter tokens,
+event rows and exported JSON retain their canonical values.
 
 File names and paths, bindings, configuration tokens, command syntax, entered
 values, imported descriptions, technical references and diagnostic payloads

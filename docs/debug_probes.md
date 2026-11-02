@@ -1,176 +1,190 @@
-# Breakpoint, watchpoint e memoria — DBG-11
+<a id="breakpoint-watchpoint-e-memoria--dbg-11"></a>
 
-Questi strumenti operano sulla [copia isolata in pausa](debug_control.md).
-Non scrivono valori in RAM e non installano patch nel codice. Un solo comando
-può attendere il risultato del canale locale `debug-control`.
+# Breakpoints, watchpoints and memory — DBG-11
 
-## Leggere registri e memoria
+These tools operate on the [paused isolated copy](debug_control.md).
+They do not write RAM values or patch code. Only one command can await a
+result from the local `debug-control` channel.
+
+<a id="leggere-registri-e-memoria"></a>
+
+## Read registers and memory
 
 ```powershell
 .\recomp.exe debug-control inspect 'target\caso' 080003d6 32
 .\recomp.exe debug-control inspect 'target\caso' 02000000 256
 ```
 
-L'indirizzo è esadecimale, la lunghezza decimale (**1–256 byte**). Il report
-include r0–r15, CPSR e modo ARM/Thumb, frame/clock, byte, regione e offset fisico
-per ciascun indirizzo. La voce **Debug > Inspect PC / registers** legge 16 byte
-dal PC corrente. L'ultima ispezione è in
-`Data/config/debug-control/inspection.json` e nella risposta JSON del comando;
-`status` può recuperarla insieme allo stato corrente. Frame e clock della sezione
-`inspection` identificano il punto letto, che può essere precedente allo stato
-corrente dopo un altro comando. Non viene generato uno snapshot aggiuntivo.
+The address is hexadecimal; length is decimal (**1–256 bytes**). The report
+includes r0–r15, CPSR and ARM/Thumb mode, frame/clock, bytes, region and physical
+offset for each address. **Debug > Inspect PC / registers** reads 16 bytes from
+the current PC. The latest inspection is in
+`Data/config/debug-control/inspection.json` and the command's JSON response;
+`status` can retrieve it along with current status. Frame and clock in the
+`inspection` section identify the read point, which may precede the current
+state after another command. No additional snapshot is generated.
 
-L'ispezione usa riferimenti immutabili ai buffer: BIOS backing, EWRAM/IWRAM,
-palette, VRAM, OAM e ROM backing. Espone esplicitamente mirror e ripiegamento
-VRAM, senza chiamare le funzioni Bus. **I/O, open bus e protocolli di salvataggio
-vengono rifiutati**, inclusi keypad/timer e Flash/EEPROM. Nella ROM si vedono i
-byte backing anche dove il normale bus indirizzerebbe GPIO/EEPROM: il report
-non simula tali dispositivi né la protezione BIOS. Le finestre fuori dai buffer
-e gli indirizzi che si avvolgono vengono rifiutati interamente.
+Inspection uses immutable buffer references: BIOS backing, EWRAM/IWRAM,
+palette, VRAM, OAM and ROM backing. It explicitly exposes mirrors and VRAM
+folding without calling Bus functions. **I/O, open bus and save protocols are
+refused**, including keypad/timer and Flash/EEPROM. ROM shows backing bytes
+even where the normal bus would address GPIO/EEPROM: the report does not
+simulate these devices or BIOS protection. Out-of-buffer windows and wrapping
+addresses are refused in full.
 
-Le label facoltative provengono da `debug-labels.toml` nella radice della copia:
-formato [gba-labels](labels.md), SHA della stessa ROM, nomi e limiti dichiarati.
-Una label identifica una dichiarazione; il suo `end` non dimostra codice eseguito.
-Un file di un'altra ROM viene rifiutato. Il report registra l'hash degli stessi byte analizzati dal parser; non rilegge
-il file per interpretarne una versione diversa.
+Optional labels come from `debug-labels.toml` in the copy's root:
+[gba-labels](labels.md) format, the same ROM's SHA, declared names and bounds.
+A label identifies a declaration; its `end` does not establish executed code.
+A file from another ROM is refused. The report records the hash of the same
+bytes parsed; it does not reread the file to interpret a different version.
 
-Se la copia ha un dataset autenticato, gli owner sono intersezioni con i source
-range del suo manifest. I range sovrapposti vengono autenticati contro la ROM;
-identità del manifest, ID, offset, lunghezza e ruolo restano nel report. Nessun
-match significa **owner sconosciuto**. Questi sono dati identificati: non provano
-una lettura typed, raggiungibilità o nuova accettazione ROM/DS. Per le letture
-realmente servite usare [l'audit DBG-06](debug_rom_audit.md).
+If the copy has an authenticated dataset, owners are intersections with its
+manifest's source ranges. Overlapping ranges are authenticated against the ROM;
+manifest identity, ID, offset, length and role remain in the report. No match
+means **unknown owner**. These are identified data: they do not prove a typed
+read, reachability or new ROM/DS acceptance. For reads actually served, use
+[the DBG-06 audit](debug_rom_audit.md).
 
-## Fermarsi su PC e modo
+<a id="fermarsi-su-pc-e-modo"></a>
+
+## Stop on PC and mode
 
 ```powershell
 .\recomp.exe debug-control break 'target\caso' 080003d6 thumb --steps 100000
 ```
 
-Il PC deve essere allineato per `arm` o `thumb`. La ricerca parte dal punto
-corrente e si ferma **prima del passo interprete** quando PC e modo coincidono,
-purché quel passo sia eleggibile per eseguire un'istruzione: Halt, consegna IRQ
-e stub di ritorno BIOS HLE non vengono presentati come istruzioni target.
-Un match già al punto corrente esegue zero passi e conserva lo stato guest.
-La condizione CPU dell'opcode non viene valutata dal debugger: un'istruzione
-condizionale che non esegue il proprio corpo resta un ingresso istruzione.
+The PC must be aligned for `arm` or `thumb`. Search starts at the current point
+and stops **before the interpreter step** when PC and mode match, provided that
+step is eligible to execute an instruction: Halt, IRQ delivery and BIOS HLE
+return stubs are not presented as target instructions. A match at the current
+point executes zero steps and preserves guest state. The debugger does not
+evaluate the opcode's CPU condition: a conditional instruction that does not
+execute its body is still an instruction entry.
 
-## Fermarsi su accessi bus
+<a id="fermarsi-su-accessi-bus"></a>
+
+## Stop on bus accesses
 
 ```powershell
 .\recomp.exe debug-control watch 'target\caso' read 03007ffc 03008000 --width 4 --steps 100000
 .\recomp.exe debug-control watch 'target\caso' write 02000000 02000004 --width 4 --value 00000001 --steps 100000
 ```
 
-Serve la feature **rom-data-read-audit** nel runtime della copia. Il range
-`START END` è guest ed esclusivo alla fine, senza normalizzare mirror. Si
-seleziona `read` o `write`; `--width 1|2|4` e `--value HEX` filtrano la chiamata
-bus osservata e il suo valore. Un valore deve entrare nella larghezza scelta.
-Il debugger non legge un indirizzo I/O per controllare il valore: confronta
-quello dell'accesso realmente eseguito dal gioco. Per le scritture è il valore
-richiesto al bus, anche quando il dispositivo ignora o trasforma la scrittura.
+The copy's runtime needs the **rom-data-read-audit** feature. The `START END`
+range uses guest addresses and an exclusive end, without normalizing mirrors.
+Select `read` or `write`; `--width 1|2|4` and `--value HEX` filter the observed
+bus call and its value. A value must fit the selected width. The debugger does
+not read an I/O address to check the value: it compares the access actually
+performed by the game. For writes, this is the value requested from the bus,
+even when the device ignores or transforms the write.
 
-Il primo match viene conservato, escludendo i fetch interprete. L'arresto avviene
-**dopo il passo interprete completo**, compresi HLE, DMA e tick hardware avviati
-da quel passo. La sezione `site` descrive il punto prima del passo; non attribuisce
-automaticamente l'accesso a un load/store dell'opcode. Gli accessi implementati
-tramite chiamate bus annidate possono comparire alla larghezza interna se non si
-specifica `--width`. Il primo accesso abbinato resta quello dichiarato nel report.
-Accessi host diretti ai vettori, fetch native e codice interno a blocchi native
-non sono intercettati da questo watchpoint.
+The first match is retained, excluding interpreter fetches. Execution stops
+**after the complete interpreter step**, including HLE, DMA and hardware ticks
+started by that step. The `site` section describes the point before the step;
+it does not automatically attribute the access to an opcode load/store.
+Accesses implemented through nested bus calls may appear at the internal width
+if `--width` is omitted. The first matched access remains the one declared in
+the report. Direct host accesses to vectors, native fetches and code inside
+native blocks are not intercepted by this watchpoint.
 
-## Limiti, ripresa e interruzione
+<a id="limiti-ripresa-e-interruzione"></a>
 
-Entrambe le ricerche richiedono copia in pausa, interprete, nessun budget di
-frame, recording o replay attivo. Il backend native viene rifiutato esplicitamente:
-non si dichiara un arresto per istruzione dentro i suoi blocchi. L'ispezione
-readonly può invece descrivere una copia native ferma, senza eseguirla.
+## Limits, resumption and interruption
 
-`--steps` accetta **1–5.000.000**, con default **100.000**; esiste anche un limite
-di **600 frame completati**. La ricerca avanza in tranche di massimo 2.000 passi e lascia il menu
-responsivo. Durante la ricerca il contatore laterale indica i passi rimanenti;
-negli avanzamenti DBG-10 indica i frame. Usa input guest neutro. Un match restituisce `probe.outcome:
-"hit"`; limite esaurito restituisce `"not-reached"`. Entrambi completano il
-comando con successo di trasporto e lasciano la copia in pausa. Leggere il JSON
-per distinguere i due esiti. `status.probe` conserva l'ultima ricerca terminata;
-un comando incompatibile non la sostituisce. Per l'esito della richiesta corrente
-leggere `ok/error` e la sua identità, senza scambiarla con quel risultato precedente.
-Frame, clock e snapshot hash descrivono il punto di arresto effettivo, che può essere dentro un frame; non è un frame completo fittizio.
+Both searches require a paused copy, interpreter, no frame budget and no
+active recording or replay. The native backend is explicitly refused: no
+instruction-level stop inside its blocks is claimed. Readonly inspection can
+instead describe a stopped native copy without executing it.
 
-F6/Escape, Resume, Load/Undo/Restart e chiusura possono interrompere una ricerca.
-Un comando pendente riceve l'interruzione; il timeout client di 120 secondi resta
-un'attesa scaduta, non una cancellazione. Non ci sono retry automatici.
-La ripresa o il normale Step 1 completano l'emulazione dal punto corrente senza
-riavvolgere. I tap guest prodotti in un frame parziale restano fino al successivo
-frame completo; l'audio host resta silenzioso e senza backlog mentre si cerca.
-Le immagini mostrate sono l'ultimo frame completato, non un rendering inventato
-del punto parziale. Le impostazioni e i cambi espliciti di timeline della copia
-restano sotto il controllo dell'utente.
+`--steps` accepts **1–5,000,000**, default **100,000**; there is also a limit
+of **600 completed frames**. Search advances in batches of at most 2,000 steps,
+keeping the menu responsive. During search the sidebar counter shows remaining
+steps; in DBG-10 advances it shows frames. Guest input is neutral. A match
+returns `probe.outcome:
+"hit"`; exhausting the limit returns `"not-reached"`. Both complete the command
+with transport success and leave the copy paused. Read the JSON to distinguish
+the outcomes. `status.probe` retains the latest completed search; an incompatible
+command does not replace it. For the current request's outcome, read `ok/error`
+and its identity without confusing it with that earlier result. Frame, clock
+and snapshot hash describe the actual stop point, which may be inside a frame;
+it is not a fabricated complete frame.
 
-Se Windows impedisce temporaneamente di sostituire il risultato perché un client
-lo sta leggendo, il server conserva la stessa risposta e ne ritenta la pubblicazione
-nei tick successivi, prima di consumare altre richieste. Non riesegue il comando.
-Alla chiusura il tentativo di pubblicazione finale è limitato a circa mezzo secondo;
-un errore I/O persistente resta segnalato dal timeout del client e dai log.
+F6/Escape, Resume, Load/Undo/Restart and closing can interrupt a search.
+A pending command receives the interruption; the 120-second client timeout
+means the wait expired, not cancellation. There are no automatic retries.
+Resuming or normal Step 1 completes emulation from the current point without
+rewinding. Guest taps produced in a partial frame remain until the next
+complete frame; host audio stays silent without backlog during search.
+Displayed images are the last completed frame, not an invented rendering of
+the partial point. Settings and explicit timeline changes in the copy remain
+under user control.
 
-I file restano privati nella copia, ignorati da Git. Si conservano solo ultima
-ispezione e ultima risposta, senza una cronologia di dump. Il runtime candidato
-isolato è sotto `target/debug-tools-probes/`; il normale eseguibile resta separato.
+If Windows temporarily prevents replacing the result because a client is
+reading it, the server retains the same response and retries publication on
+subsequent ticks before consuming more requests. It does not reexecute the
+command. On close, the final publication attempt is bounded to about half a
+second; persistent I/O errors remain reported through client timeout and logs.
 
-## Verifiche del 28 ottobre 2026
+Files remain private in the Git-ignored copy. Only the latest inspection and
+response are retained, without dump history. The isolated candidate runtime
+is under `target/debug-tools-probes/`; the normal executable stays separate.
 
-Build Windows release feature/default senza warning da `07be4d2` più undici
-file selezionati, includendo le basi DBG-10 già accettate ed escludendo il codice
-concorrente di estrazione. Le verifiche Wine coprono **88 test distinti**: cinque
-ricerca/ispezione, tre core readonly/watch, 25 regressioni bus, sei controllo/canale,
-46 menu e tre parser label. Esecuzioni: 84 iniziali, otto mirate dopo il parsing
-dal buffer autenticato e sei sul controller dopo la correzione della risposta.
-I controlli non modificano Machine, salvataggi o ABI native.
+<a id="verifiche-del-28-ottobre-2026"></a>
 
-**21 controlli CLI/GUI** sulla copia DS-20 verificano letture readonly di 256 byte,
-mirror RAM, registri/label, rifiuto I/O/backup/wrap/lunghezza/ROM estranea senza
-cambiare hash completo/frame/clock. Tre trigger reali passano:
+## Validation on 28 October 2026
 
-- PC Thumb `080003d6`, prima del passo dopo 66.720 passi di ricerca, clock
-  6.241.285.276 nel frame guest 22.219. Un secondo match al punto corrente esegue
-  zero passi e conserva esattamente lo stato;
-- lettura word `03007ffc` con valore `03000f10`, arresto dopo il passo di servizio
-  IRQ: la sezione `site` segnala `eligible_instruction: false`;
-- scrittura word `03007f78` con valore richiesto `6000003f`, arresto dopo il passo.
+Windows release feature/default builds without warnings from `07be4d2` plus
+eleven selected files, including accepted DBG-10 foundations and excluding
+concurrent extraction code. Wine checks cover **88 distinct tests**: five
+search/inspection, three readonly/watch core, 25 bus regressions, six
+control/channel, 46 menu and three label-parser tests. Runs: 84 initial,
+eight targeted after parsing from the authenticated buffer and six controller
+tests after response correction. The checks do not change Machine, saves or native ABI.
 
-Passano anche un limite di un passo senza match, attesa immobile al punto parziale
-e successivo completamento di un frame. Test sintetici confrontano lo stato
-completo con esecuzione non osservata, escludono i fetch e verificano provenance
-degli owner e rifiuto di fonti alterate. Questi owner sintetici non costituiscono
-una nuova accettazione di risorse reali.
+**21 CLI/GUI checks** on the DS-20 copy verify readonly 256-byte reads, RAM
+mirrors, registers/labels and refusal of I/O/backup/wrap/length/foreign ROM
+without changing full hash/frame/clock. Three real triggers pass:
 
-**Nove controlli finali sulla build default**, più due ricerche controllate,
-verificano PC/ispezione senza audit, rifiuto watch senza feature, hash della stessa
-sorgente label analizzata, menu readonly, recording/replay rifiutati durante la
-ricerca, annullamento F6 e chiusura del proprietario con conferma di interruzione.
-Le schermate sono state ispezionate. Tutti i **202 input originali controllati**
-e i normali eseguibili Windows/Linux conservano hash e data.
+- Thumb PC `080003d6`, before the step after 66,720 search steps, clock
+  6,241,285,276 in guest frame 22,219. A second match at the current point
+  executes zero steps and preserves state exactly;
+- word read `03007ffc` with value `03000f10`, stopping after the IRQ-service
+  step: the `site` section reports `eligible_instruction: false`;
+- word write `03007f78` with requested value `6000003f`, stopping after the step.
 
-La prima prova delle guardie premeva Return prima che il client Wine avesse
-consegnato la richiesta; la registrazione partiva legittimamente e la ricerca
-la rifiutava. Conservata come errore di ordinamento del test, senza ripetere i
-21 controlli già conclusi. Una successiva prova ha trovato una corsa reale nel
-canale Windows: pubblicazione di `result.json` negata mentre il client leggeva
-il vecchio file, con timeout effettivo di 120 secondi. Il server ora conserva
-la risposta da ripubblicare e un test ne forza fallimento/recupero senza rieseguire
-il comando. Le prove finali passano anche quando il log rileva un rifiuto transitorio.
-Il tentativo Cargo con `--lib` sul solo package binario è stato rifiutato prima
-della compilazione; corretto soltanto il comando di test e conservato il log.
+A one-step limit without a match, stationary waiting at the partial point and
+subsequent completion of one frame also pass. Synthetic tests compare complete
+state against unobserved execution, exclude fetches and verify owner provenance
+and refusal of altered sources. These synthetic owners do not constitute new
+acceptance of real resources.
 
-La verifica finale autentica gli undici overlay, i candidati e gli originali;
-conferma che gli hook conservino le espressioni originali del bus e che il ciclo
-di ricerca sia identico a quello delle tre prove accettate. Risultati/preimmagini/
-tentativi rimangono in `target/debug-tools-probes/`. Nessuna directory di pubblicazione
-managed o profilo browser è stata creata: il relativo cleanup ROM non si applica.
+**Nine final checks on the default build**, plus two controlled searches,
+verify PC/inspection without audit, watch refusal without the feature, hash of
+the same parsed label source, readonly menu, recording/replay refusal during
+search, F6 cancellation and owner shutdown with confirmed interruption.
+Screenshots were inspected. All **202 checked original inputs** and normal
+Windows/Linux executables retain hashes and timestamps.
 
-Windows nativo, Linux/Wayland, controller fisici, altre scene/ROM e ricerca native
-restano fuori dalla validazione. Il limite di 600 frame e i 5.000.000 passi sono
-controllati nel codice e nei limiti di configurazione; non è stata completata una
-ricerca reale di tale durata. Il processo ucciso forzatamente e gli errori I/O
-persistenti restano distinti dalla chiusura pulita verificata. Non sono stati
-eseguiti benchmark, nuove accettazioni ROM/DS, riparazioni native o lavoro Godot.
+The first guard check pressed Return before the Wine client delivered the
+request; recording started legitimately and search refused it. It is retained
+as a test-ordering error, without repeating the 21 completed checks. A later
+check found a real Windows-channel race: publication of `result.json` denied
+while the client read the old file, with an actual 120-second timeout. The
+server now retains the response for republication, and a test forces failure
+and recovery without reexecuting the command. Final checks pass even when the
+log detects a transient refusal. The Cargo attempt with `--lib` on the
+binary-only package was refused before compilation; only the test command
+was corrected and the log retained.
+
+Final verification authenticates the eleven overlays, candidates and originals;
+it confirms hooks retain original bus expressions and the search loop is
+identical to the three accepted checks. Results/preimages/attempts remain in
+`target/debug-tools-probes/`. No managed publication directory or browser profile
+was created: the associated ROM cleanup does not apply.
+
+Native Windows, Linux/Wayland, physical controllers, other scenes/ROMs and
+native search remain outside validation. The 600-frame and 5,000,000-step limits
+are checked in code and configuration bounds; no real search of that duration
+was completed. A forcibly killed process and persistent I/O errors remain
+separate from verified clean shutdown. No benchmarks, new ROM/DS acceptance,
+native repairs or Godot work were performed.

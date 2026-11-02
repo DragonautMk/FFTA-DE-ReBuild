@@ -6,7 +6,7 @@ const SH:&str = "#!/bin/sh\nset -eu\nreport_dir=$(CDPATH= cd -- \"$(dirname -- \
 fn digest(b:&[u8])->String{gba_core::ffta_rom::digest(b)}
 fn read(path:&Path,limit:u64)->Result<Vec<u8>,String>{crate::diagnostics::read(path,limit)}
 pub(crate) fn validate_symptom(s:&str)->Result<(),String>{
-    if s.len()>2048 || s.chars().any(|c|c.is_control() && c!='\n' && c!='\t'){return Err("Symptom must be at most2048bytes without control characters".into());}Ok(())
+    if s.len()>2048 || s.chars().any(|c|c.is_control() && c!='\n' && c!='\t'){return Err("Symptom must be at most 2048 bytes without control characters".into());}Ok(())
 }
 fn relative(s:&str)->bool{!s.is_empty() && Path::new(s).components().all(|c|matches!(c,Component::Normal(_))) && !s.contains('\\')}
 fn href(s:&str)->String{s.bytes().map(|b|if b.is_ascii_alphanumeric() || b"-._~/".contains(&b){(b as char).to_string()}else{format!("%{b:02X}")}).collect()}
@@ -90,7 +90,7 @@ pub(crate) fn create(profile:&Path,symptom:&str)->Result<Created,String>{
         "privacy":{"issue_json":"Private paths/error details/pins; review before sharing","summary_json":"Metadata candidate, no source paths or game bytes; symptom can still be personal","payloads":"Referenced in place, never copied/uploaded by this operation"},
         "retained_result_scope":"Only schema and available runtime/ROM/input/library/dataset identity fields matched; freshness and settings of older results are not authenticated. Comparison origin is checked separately",
         "scope":"Readonly identities and retained evidence; no guest execution, new snapshot, benchmark or automatic send. Retained result may be historical and is not a new validation"});
-    let json=serde_json::to_vec(&data).map_err(|e|e.to_string())?;if json.len()>2*1024*1024{return Err("Issue JSON exceeds2MiB".into());}
+    let json=serde_json::to_vec(&data).map_err(|e|e.to_string())?;if json.len()>2*1024*1024{return Err("Issue JSON exceeds 2 MiB".into());}
     fs::create_dir_all(&base).map_err(|e|e.to_string())?;
     let name=format!("{}-{}",SystemTime::now().duration_since(UNIX_EPOCH).map_err(|e|e.to_string())?.as_nanos(),std::process::id());let dir=base.join(name);fs::create_dir(&dir).map_err(|e|e.to_string())?;
     fs::write(dir.join(".gitignore"),"*\n").map_err(|e|e.to_string())?;

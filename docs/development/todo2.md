@@ -24,6 +24,8 @@ dividiere tipi di audio, musiche, suoni ed effetti (e magari voci se implementat
 
 ffta wiki with precise unit and equipments.
 
+guild stat exp status visible. mission exp guild status visible
+
 Long term:
 
 Extract data from FFTA2
