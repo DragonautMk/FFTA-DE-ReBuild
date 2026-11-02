@@ -2,10 +2,9 @@
 
 ## Operational status
 
-Updated 2026-11-02. Whole-project English-first goal remains active and partial.
-The latest CI screenshot selected a documentation-coverage repair, now closed
-with checks against both original comparison bases. No ROM/runtime execution
-resumed. See the audit ledger for reviewed files and remaining translation scope.
+Updated 2026-11-02. User confirmed English-first project and optional Italian.
+User confirmed English-first with optional Italian. Runtime/offline reports and
+desktop guide review units are accepted; cross-tree audit remains open.
 
 Read this entire file and its final handover, then only the relevant sections
 linked below. Do not automatically load the archive, full CHANGELOG,
@@ -25,9 +24,9 @@ termination of another owner's process or changing another thread's goal state.
 
 - State: active
 - Outcome: partial
-- Verified: b9c1a69 contains policy, translated guides, English/legacy memory parser, homepage and four report templates. CI repair adds records/CHANGELOG and ENGLISH_FIRST_AUDIT.json (38 reviewed files, 116 pending Markdown paths plus source areas). Five memory/11 handoff tests and coverage against original bases 35920d8192c0539d3b7b32bcbc2a14fd9070335d and 3fec4ec pass. Browser and 22-task/archive preservation evidence retained in target/english-first-project; repair archived as ENGLISH-FIRST-CI-MEMORY.
-- Missing: all remaining maintained guides across both trees, default UI/console/report/script/comment text, structured reference/record language and full per-file audit. Preserve optional locales, imported data and immutable history. This foundation is not whole-project completion.
-- Resume: choose pending guides or gameplay/issue/compare/graphics templates and dynamic metadata from ENGLISH_FIRST_AUDIT.json. Verify reviewed hashes; reuse unchanged accepted checks. Translation authorizes no ROM exploration or repeated builds.
+- Verified: runtime and offline report units accepted; 57 offline Python tests and eight browser checks passed. Translated coverage snapshot retains original analysis provenance and unchanged 15 layers. Audit lists 59 reviewed files, 105 Markdown paths pending; menu catalogs are complete.
+- Missing: remaining maintained documentation, dynamic report metadata, exporters, tool text, source comments and full audit across both trees. Preserve optional locales, imported content and immutable history.
+- Resume: select another bounded guide or tooling unit from the audit, inspect authoritative sources, translate and validate without ROM exploration or repeat builds solely for translation.
 
 ### ROMDATA-03-04-E105-SENARY-COMPACT-OBJ
 
@@ -222,9 +221,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: ENGLISH-FIRST-PROJECT active/partial; ENGLISH-FIRST-CI-MEMORY closed.
-- Last verified result: repaired records/CHANGELOG pass original push-base checks 35920d8 and 3fec4ec; five memory/11 handoff tests pass. Audit ledger and prior browser evidence retained.
-- Remaining work: 116 pending Markdown documents and every pending source area in the ledger; whole-project completion unproven.
-- Errors or blockers: no local check blocker; the old remote run stays failed until the correction is published. Preserve unrelated ownership/history.
-- Next action: continue the next pending guide/report group; reuse accepted results and avoid unrelated ROM/build work. Current repair is ready for review/publication.
-- References: `docs/development/ENGLISH_FIRST_AUDIT.json`, `docs/changes/2026-11-02-document-english-first-foundation-and-repair-ci-coverage.json`, `target/english-first-project/`.
+- Task: ENGLISH-FIRST-PROJECT, partial.
+- Last verified result: runtime and offline report units accepted; 57 Python tests, eight offline browser checks and 15 unchanged coverage layers. 59 files reviewed; 105 Markdown paths pending.
+- Remaining work: remaining guides, default UI/tooling/metadata/comments and cross-tree audit.
+- Errors or blockers: none; preserve optional locale, original coverage provenance, archive bytes and unrelated task ownership.
+- Next action: select and translate another bounded guide or tooling unit; update audit and project memory.
+- References: `docs/development/ENGLISH_FIRST_AUDIT.json`, `docs/changes/2026-11-02-translate-offline-debug-reports.json`.

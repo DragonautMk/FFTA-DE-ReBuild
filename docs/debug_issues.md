@@ -1,129 +1,136 @@
-# Report locale del problema — DBG-16
+<a id="report-locale-del-problema--dbg-16"></a>
 
-Il report riunisce sintomo, caso, frame/input, identità e risultato conservato
-di un [profilo di replay](debug_replays.md), con eventuale collegamento al primo
-confronto divergente e una prossima verifica suggerita. Non esegue il caso,
-non invia file e non duplica ROM, salvataggi, snapshot o dump.
+# Local issue report — DBG-16
 
-## Creare il report
+The report gathers the symptom, case, frame/input, identity and retained result
+of a [replay profile](debug_replays.md), with an optional link to the first
+divergence comparison and a suggested next check. It does not execute the case,
+send files or duplicate ROMs, saves, snapshots or dumps.
 
-CLI Windows, con il runtime aggiornato:
+<a id="creare-il-report"></a>
 
-```powershell
-.\recomp.exe debug-report create '.\profilo\replay.json' --symptom 'Descrivere cosa si vede e cosa ci si aspetta'
-```
+## Create the report
 
-Il JSON restituisce il percorso `Data/config/issues/<run>/index.html` **dentro
-il profilo selezionato**. `issue.json` contiene il contesto completo e i link;
-`summary.json` contiene soltanto metadati da controllare prima di condividere.
-La descrizione accetta al più 2.048 byte. Se omessa appare «Not supplied»;
-il report non inventa un sintomo.
-
-Nella copia isolata in pausa scegliere **Debug > Create issue report**.
-Usa il replay già selezionato, oppure apre il selettore `replay.json`.
-Una selezione non avvia il replay. L'azione prende come descrizione l'ultimo
-messaggio di replay disponibile; per una descrizione esplicita usare la CLI.
-Il comando equivalente sulla stessa finestra è:
+Windows CLI with the updated runtime:
 
 ```powershell
-.\recomp.exe debug-control issue-report '.\sessione' --profile '.\profilo\replay.json' --symptom 'Il sintomo osservato'
+.\recomp.exe debug-report create '.\profile\replay.json' --symptom 'Describe what happened and what you expected'
 ```
 
-`--profile` può essere omesso quando esiste già una selezione. `status.issue_report`
-espone l'ultimo percorso. L'azione richiede pausa, senza budget/probe/replay
-pendenti; osserva lo stato guest senza modificarlo. Il report appartiene al
-profilo scelto, che può essere diverso dalla copia usata per aprire il menu.
+JSON returns `Data/config/issues/<run>/index.html` **inside the selected profile**.
+`issue.json` contains complete context and links; `summary.json` contains only
+metadata to review before sharing. The description accepts at most 2,048 bytes.
+When omitted, it displays “Not supplied”; the report does not invent a symptom.
 
-## Leggere e riprodurre
+In a paused isolated copy, choose **Debug > Create issue report**. It uses the
+selected replay or opens the `replay.json` selector. Selecting does not run the
+replay. The action uses the latest available replay message as its description;
+use the CLI for an explicit description. The equivalent command for the same
+window is:
 
-Il report mostra preflight, risultato conservato e prossima verifica. Il riepilogo
-distingue `recorded_frames` dalla finestra `selected_frames` e dai frame
-`completed`; il confronto aggiunge `first_difference` e `different_components`. I pulsanti
-aprono la directory del report/profilo nel browser, copiano il comando esatto
-del launcher locale e, se identificato, aprono il confronto conservato.
-La scelta del terminale distingue PowerShell/Windows e shell/Linux; i profili
-Windows richiedono `wine64` quando eseguiti su Linux.
+```powershell
+.\recomp.exe debug-control issue-report '.\session' --profile '.\profile\replay.json' --symptom 'Observed symptom'
+```
 
-I file `reproduce.ps1` e `reproduce.sh` risolvono il profilo rispetto alla propria
-posizione. Eseguono il **runtime fissato nel profilo**, con `debug-replay run`,
-il relativo `replay.json` e output JSON. Non consultano una build più recente o
-ricostruiscono variabili d'ambiente di gioco. Il worker conserva la normale
-separazione dalle scritture di partita. Il codice di uscita del replay resta
-quello descritto in DBG-05.
+`--profile` may be omitted when a selection already exists. `status.issue_report`
+exposes the latest path. The action requires pause, without pending budgets,
+probes or replays; it observes guest state without changing it. The report belongs
+to the selected profile, which may differ from the copy used to open the menu.
 
-Spostare **l'intera cartella del profilo**, compresi report e payload, mantiene
-i collegamenti e i launcher. Spostare il solo HTML non trasferisce il caso.
-Aprire di nuovo l'HTML dopo lo spostamento aggiorna il comando copiabile in base
-alla posizione corrente. Non viene modificato il replay originale per generare
-il report. L'esecuzione del comando resta una scelta esplicita successiva.
+<a id="leggere-e-riprodurre"></a>
 
-## Errori e valore della prova
+## Read and reproduce
 
-La preflight verifica schema/limiti del profilo, pin della sessione, hash di
-runtime/ROM/BIOS/dataset/seed/input/endpoint/libreria e parsing dell'input. Non
-esegue istruzioni né carica la libreria native; il worker resta responsabile di
-decodifica degli snapshot, compatibilità effettiva e verifica dell'endpoint.
+The report shows preflight, the retained result and next check. The summary
+distinguishes `recorded_frames` from the `selected_frames` window and `completed`
+frames; the comparison adds `first_difference` and `different_components`. The
+English interface opens report/profile directories in the browser, copies the exact
+local-launcher command and, when identified, opens the retained comparison.
+Terminal selection distinguishes PowerShell/Windows and shell/Linux; Windows
+profiles require `wine64` when run on Linux.
 
-Un input alterato o un profilo incompatibile produce comunque HTML/JSON con
-errore e prossima verifica: la CLI standalone restituisce **3** e il percorso
-del report. **0** significa report creato con preflight compatibile, non caso
-rieseguito o bug risolto. Un percorso di destinazione invalido, lock occupato,
-parametri malformati, capacità esaurita o errore di scrittura può impedire la
-pubblicazione; l'esito CLI spiega il motivo.
+`reproduce.ps1` and `reproduce.sh` resolve the profile relative to themselves.
+They execute the **runtime pinned in the profile** with `debug-replay run`, its
+`replay.json` and JSON output. They do not consult a newer build or reconstruct
+game environment variables. The worker retains normal separation from game-save
+writes. Replay exit codes remain those described in DBG-05.
 
-Il risultato precedente viene accettato soltanto se schema e identità disponibili
-runtime/ROM/input/libreria/dataset corrispondono. La sua presenza non autentica
-la freschezza o ogni impostazione di un vecchio profilo. Il confronto, se presente,
-richiede anche ROM/runtime/input/seed/libreria e run corrispondenti. Queste sono
-verifiche su byte **già conservati**, senza nuova accettazione di correttezza.
-Un risultato assente o incompatibile rimane sconosciuto, non «caso mai eseguito».
+Moving **the entire profile directory**, including reports and payloads, preserves
+links and launchers. Moving only the HTML does not transfer the case. Reopening
+HTML after a move updates the copyable command for the current location. Report
+generation does not alter the original replay. Executing the command remains a
+separate, explicit choice.
 
-## Privacy e limiti
+<a id="errori-e-valore-della-prova"></a>
 
-- ROM, BIOS, input, stati, dataset, traduzione native e dump restano allegati
-  **privati**, referenziati con link relativi. Nessun upload o messaggio automatico.
-- `issue.json` include errori, pin e percorsi locali: è privato. `summary.json`
-  esclude percorsi sorgente e byte di gioco, ma sintomo/nome caso possono ancora
-  contenere informazioni personali. Il nome «metadati» non equivale a sicurezza
-  automatica di condivisione.
-- Al più otto cartelle per profilo, compresi tentativi incompleti, e 2 MiB JSON.
-  Nessuna sovrascrittura o pulizia automatica. Un lock writer separato coordina
-  due creazioni simultanee. I launcher non vengono eseguiti dalla creazione.
-- I limiti mailbox impongono un percorso di profilo entro 1.024 byte e una
-  richiesta serializzata entro 3.500 byte; abbreviare descrizione/percorso quando
-  gli escape superano il limite. La CLI standalone non usa quella mailbox.
+## Errors and evidentiary value
 
-La [homepage locale](report_home.md) riconosce `issue.json` dopo rigenerazione.
-Prerequisiti, prove effettive e piattaforme non verificate sono nel
-[record DBG-16](changes/2026-10-29-add-reproducible-local-issue-reports.json).
+Preflight checks profile schema/limits, session pins, runtime/ROM/BIOS/dataset/
+seed/input/endpoint/library hashes and input parsing. It executes no instructions
+and does not load the native library; the worker remains responsible for snapshot
+decoding, actual compatibility and endpoint verification.
 
-Il controllo delle directory di output continua a rifiutare link simbolici e
-reparse point Windows. La [correzione del 30 ottobre](changes/2026-10-30-remove-report-link-flag-warnings.json)
-elimina il warning Linux `unused_mut`; i blocchi interessati sono stati compilati
-senza warning per Linux e Windows, senza rieseguire le prove del report.
+Changed input or an incompatible profile still produces HTML/JSON with an error
+and next check: the standalone CLI returns **3** and the report path. **0** means
+a report was created with compatible preflight, not that the case was rerun or
+the bug fixed. An invalid destination path, busy lock, malformed parameters,
+exhausted capacity or write failure can prevent publication; the CLI explains why.
 
+A previous result is accepted only when schema and available runtime/ROM/input/
+library/dataset identities match. Its presence does not authenticate freshness or
+every setting of an old profile. A comparison also requires matching ROM/runtime/
+input/seed/library and run. These checks concern **already retained bytes**, not a
+new correctness acceptance. A missing or incompatible result remains unknown,
+not “case never executed”.
 
-## Verifiche del 29 ottobre 2026
+<a id="privacy-e-limiti"></a>
 
-Build Windows feature/default bloccate e offline senza warning; 72 test Wine
-(collector, controller, menu e frontend), più una riesecuzione mirata dopo la
-separazione dei conteggi nel riepilogo. Sette comandi CLI standalone e un launcher
-verificano creazione senza esecuzione, importazione readonly della divergenza
-conservata e report incompatibile pubblicato. Il caso appena creato da una
-registrazione già accettata viene spostato con spazi/apostrofo/Unicode: il launcher
-SH/Wine, da cwd estranea, raggiunge l'endpoint completo esatto di due frame.
+## Privacy and limits
 
-Menu e CLI nella copia in pausa conservano stato/frame/clock; 37 invocazioni
-includono navigazione e rifiuti di selezione/capacità/esecuzione libera/chiusura.
-La capacità conserva ogni hash/mtime dei report; il genitore chiude normalmente.
-I 28 input originali effettivamente selezionati restano intatti. Browser Chrome
-verifica clipboard reale uguale agli argv del launcher già eseguito, apertura
-locale della cartella, quoting PowerShell, errore/confronto e layout desktop/mobile.
-La revisione del riepilogo verifica 102 frame registrati contro 2 selezionati,
-prima differenza 1 e componenti CPU/stato/clock senza nuovo replay. La homepage
-indicizza 49 report, otto issue; screenshot ispezionati.
+- ROMs, BIOS, input, states, datasets, native translation and dumps remain
+  **private** attachments referenced by relative links. No automatic upload or
+  message occurs.
+- `issue.json` includes errors, pins and local paths and is private. `summary.json`
+  excludes source paths and game bytes, but symptom/case name can still contain
+  personal information. The term “metadata” does not automatically mean safe to share.
+- At most eight directories per profile, including incomplete attempts, and 2 MiB
+  JSON. No automatic overwrite or cleanup. A separate writer lock coordinates two
+  concurrent creations. Creation does not execute the launchers.
+- Mailbox limits require a profile path within 1,024 bytes and a serialized request
+  within 3,500 bytes; shorten the description/path when escapes exceed the limit.
+  The standalone CLI does not use that mailbox.
 
-Le prove restano sotto `target/debug-tools-issue/`; report e payload privati sono
-ignorati da Git. PowerShell e Windows nativi, Linux-native, altri browser e
-controller fisici non sono stati eseguiti. Il confronto native precedente è
-stato soltanto importato: la sua parità non viene riaperta o certificata qui.
+The [local homepage](report_home.md) recognizes `issue.json` after regeneration.
+Prerequisites, actual checks and unverified platforms are in the
+[DBG-16 record](changes/2026-10-29-add-reproducible-local-issue-reports.json).
+
+Output-directory checks continue to reject symbolic links and Windows reparse
+points. The [October 30 fix](changes/2026-10-30-remove-report-link-flag-warnings.json)
+removes the Linux `unused_mut` warning; affected blocks compiled without warnings
+for Linux and Windows without rerunning report checks.
+
+<a id="verifiche-del-29-ottobre-2026"></a>
+
+## October 29, 2026 checks
+
+Locked/offline Windows feature/default builds without warnings; 72 Wine tests
+(collector, controller, menu and frontend), plus one focused rerun after separating
+summary counts. Seven standalone CLI commands and one launcher checked creation
+without execution, readonly import of the retained divergence and publication of
+an incompatible report. A case created from an already accepted recording was
+moved with spaces/apostrophe/Unicode: SH/Wine launcher from an unrelated cwd
+reached the exact complete two-frame endpoint.
+
+Menu and CLI in the paused copy preserved state/frame/clock; 37 invocations included
+navigation and selection/capacity/free-running/closure refusals. Capacity checks
+preserved all report hashes/mtimes; the parent closed normally. All 28 actually
+selected original inputs remained intact. Chrome checked actual clipboard against
+the previously executed launcher's argv, local folder opening, PowerShell quoting,
+error/comparison and desktop/mobile layout. Summary revision checked 102 recorded
+frames versus 2 selected, first difference 1 and CPU/state/clock components without
+a new replay. Homepage indexed 49 reports, eight issues; screenshots inspected.
+
+Evidence remains under `target/debug-tools-issue/`; private reports/payloads are
+Git-ignored. Native PowerShell/Windows, native Linux, other browsers and physical
+controllers were not exercised. The preceding native comparison was only imported:
+its parity was not reopened or certified here.

@@ -23,6 +23,9 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   snapshot remains byte-identical. Whole-project translation is in progress;
   the [audit ledger](ENGLISH_FIRST_AUDIT.json) records reviewed files and pending
   scope without treating heuristic searches as proof of completeness.
+  Campaign, artifact and coverage report interfaces use English; the retained
+  coverage snapshot keeps its original analysis provenance and records its
+  later presentation translation separately.
 
 - The readonly [cheat catalog](../cheats.md) has an explicit plaintext or
   caller-supplied seeded inspection for a bounded CodeBreaker subset. A
@@ -96,8 +99,9 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   reload alone cannot discover new local files. Catalog presence/mtime does not
   establish report validity or new scene acceptance. The template, generated group
   labels, search feedback and date presentation use English. Existing report
-  titles and paths remain verbatim. Code/UI/audio/recent-event report templates
-  likewise use English fixed UI; source-generated metadata is audited separately.
+  titles and paths remain verbatim. All eight tracked runtime debug-report HTML
+  templates use English fixed UI, including gameplay, issue, comparison and
+  graphics views; source-generated metadata is audited separately.
 
 - The [local cheat reference catalog](../cheats.md) lives in ignored root
   `cheats/`, with a Markdown index and provenance-preserving JSON export for

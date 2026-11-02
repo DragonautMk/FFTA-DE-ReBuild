@@ -96,6 +96,26 @@
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
     },
     {
+      "path": "crates/recomp/src/debug_compare/report.html",
+      "sha256": "9a00f461770c0c2bd8f99bccd736a6c373ac0bbed779779b0c62a5b5f16c04d1",
+      "scope": "English maintained prose or fixed default report text; original game/imported text and legacy anchors preserved"
+    },
+    {
+      "path": "crates/recomp/src/debug_gameplay/report.html",
+      "sha256": "69c0f606a24a449b9aae4bc2207beb251b817a20ced020bc37921c2010e10acc",
+      "scope": "English maintained prose or fixed default report text; original game/imported text and legacy anchors preserved"
+    },
+    {
+      "path": "crates/recomp/src/debug_graphics/report.html",
+      "sha256": "e403c3f23f601743133028a3a8ece565e78fea2928314ab533dcfd9e8fe9222f",
+      "scope": "English maintained prose or fixed default report text; original game/imported text and legacy anchors preserved"
+    },
+    {
+      "path": "crates/recomp/src/debug_issue/report.html",
+      "sha256": "343380d589a929472681cf0244e54f436ee0114d56632cbab11706c44c9a4b22",
+      "scope": "English maintained prose or fixed default report text; original game/imported text and legacy anchors preserved"
+    },
+    {
       "path": "crates/recomp/src/debug_recent/report.html",
       "sha256": "c9d25fc458a46dd82c78cbbf5c2443abf9245381d52d1efa883fcabb0cd20862",
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
@@ -111,9 +131,24 @@
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
     },
     {
+      "path": "docs/audio_controls.md",
+      "sha256": "b06b6bccfd5e9dc66ea7df67ff66170962381689382097de785ff0470126a3ff",
+      "scope": "English maintained guide reviewed; existing commands, links, headings and validation limits preserved"
+    },
+    {
+      "path": "docs/debug_artifacts.md",
+      "sha256": "61b0b897eceffe0be90bf328f975c201146b8effdade0ede5bd31c9f60f345bc",
+      "scope": "English maintained prose and fixed report text; machine keys, paths, anchors and historical evidence preserved"
+    },
+    {
       "path": "docs/debug_audio.md",
       "sha256": "367f49f1efeb5fff76d7311f9e157ad98703a97ba079713e12ecae461eb99045",
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "docs/debug_campaigns.md",
+      "sha256": "042465d2998386c3443951c98eb38d6174e171f06066cec65a9676b573067168",
+      "scope": "English maintained prose and fixed report text; machine keys, paths, anchors and historical evidence preserved"
     },
     {
       "path": "docs/debug_code.md",
@@ -121,9 +156,29 @@
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
     },
     {
+      "path": "docs/debug_comparisons.md",
+      "sha256": "bf4f82f0e648238e7263f5d81f22694877b86e299eb00034ea79e4d3794d147b",
+      "scope": "English maintained prose or fixed default report text; original game/imported text and legacy anchors preserved"
+    },
+    {
       "path": "docs/debug_content.md",
       "sha256": "99d8653faaa3ad2792116f0ddeadb935b31ec0e6398d78dfe88061159fa25de6",
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "docs/debug_gameplay.md",
+      "sha256": "3ca5854dcd4b0d275c13213a31b0c991d32a8ccf66889080ace691130cf0b767",
+      "scope": "English maintained prose or fixed default report text; original game/imported text and legacy anchors preserved"
+    },
+    {
+      "path": "docs/debug_graphics.md",
+      "sha256": "1d059e717749784f2242b953f610dfdda558cb2e263f73463a3efff9e732ddfb",
+      "scope": "English maintained prose or fixed default report text; original game/imported text and legacy anchors preserved"
+    },
+    {
+      "path": "docs/debug_issues.md",
+      "sha256": "ab13f3fd371f8645892959af7319cabacdef850111575177bd4f0c0a87825ecb",
+      "scope": "English maintained prose or fixed default report text; original game/imported text and legacy anchors preserved"
     },
     {
       "path": "docs/debug_recent.md",
@@ -151,9 +206,34 @@
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
     },
     {
+      "path": "docs/development/ROM_COVERAGE.md",
+      "sha256": "9fb29c212e6a89abf8f5893e0e968b975ce024d1c4cbd5ed338ab1bba42d2655",
+      "scope": "English maintained prose and fixed report text; machine keys, paths, anchors and historical evidence preserved"
+    },
+    {
       "path": "docs/development/TASK_HANDOFF.md",
-      "sha256": "d8f7545f3b2c19a164bb1c40af490b70ff7ded77d46fb410b9eebac47ecea986",
+      "sha256": "e4721fc6e52cabf16d175509e7557cfdf6613da17e63bcfa60d9426fb84dd68b",
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "docs/development/rom-coverage/coverage.json",
+      "sha256": "d619cdfac5cd3d4dfb6219f292e8379e6a02807f1c80d6a29db8de8157cdb3dd",
+      "scope": "Translated saved presentation text with provenance; all other snapshot data preserved by structural comparison; source analysis not revalidated"
+    },
+    {
+      "path": "docs/development/rom-coverage/evidence.json",
+      "sha256": "aa4a7e2206d4f38dd352706c284b31ce8f6e42f13ddda2bf15fd8b5fe4ad8201",
+      "scope": "English maintained prose and fixed report text; machine keys, paths, anchors and historical evidence preserved"
+    },
+    {
+      "path": "docs/development/rom-coverage/index.html",
+      "sha256": "bcdc496581c0d5f8ae4a647ff605c86ae82518132dfa2af9352e174b4804ec4f",
+      "scope": "Translated saved presentation text with provenance; all other snapshot data preserved by structural comparison; source analysis not revalidated"
+    },
+    {
+      "path": "docs/fullscreen.md",
+      "sha256": "b13b666ca0d346880fb1d80ba5ce7ac968e0b53cf68c62f62c03f42619bed1ed",
+      "scope": "English maintained guide reviewed; existing commands, links, headings and validation limits preserved"
     },
     {
       "path": "docs/menu_clan_atlas.md",
@@ -166,6 +246,11 @@
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
     },
     {
+      "path": "docs/menu_shortcuts.md",
+      "sha256": "3ff7f776ef177d086f0a3645233f844c5ffbedcba0c018e4875125804664867c",
+      "scope": "English maintained guide reviewed; existing commands, links, headings and validation limits preserved"
+    },
+    {
       "path": "docs/private_debug_assets.md",
       "sha256": "141334ce8378b9877733bd324f04a9e421f2329ae3a1c68d0baa1d513904fd21",
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
@@ -176,9 +261,24 @@
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
     },
     {
+      "path": "docs/restart_rom.md",
+      "sha256": "4e54a275c937fcb4f89f948be2e6500ca5852b1ca2b75d83b21d0d37fa2b783c",
+      "scope": "English maintained guide reviewed; existing commands, links, headings and validation limits preserved"
+    },
+    {
       "path": "scripts/README.md",
       "sha256": "6c2b1e117052945cdbfae4a84a09b5e9fb937cc5855c0d19abf6f860b17286e1",
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "scripts/debug_artifacts.html",
+      "sha256": "993713275b0ea10744cf67881d7c6c699266c367e73d067a06a78a714118b425",
+      "scope": "English maintained prose and fixed report text; machine keys, paths, anchors and historical evidence preserved"
+    },
+    {
+      "path": "scripts/debug_campaign.html",
+      "sha256": "39649d18f3530275c20da587dae069815d13c676f8bfb3ac7163d2946e97d52c",
+      "scope": "English maintained prose and fixed report text; machine keys, paths, anchors and historical evidence preserved"
     },
     {
       "path": "scripts/report_home.html",
@@ -189,6 +289,11 @@
       "path": "scripts/report_home.py",
       "sha256": "8821c3c4c68a00d66cb56aa1a4a2bb680c30800e78596e43f04470073b0ad845",
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "scripts/rom_coverage.html",
+      "sha256": "a410b4809fe6868926a789d47d99b13fdb53a173e345346219041deb7bbe390b",
+      "scope": "English maintained prose and fixed report text; machine keys, paths, anchors and historical evidence preserved"
     },
     {
       "path": "scripts/task_handoff.py",
@@ -229,19 +334,12 @@
     "docs/To_DO/CODEX_WEB_TODO.md",
     "docs/To_DO/FFTARecomp_Menu_Atlante_del_Clan_SPEC.md",
     "docs/architecture.md",
-    "docs/audio_controls.md",
     "docs/cheats.md",
-    "docs/debug_artifacts.md",
-    "docs/debug_campaigns.md",
     "docs/debug_captures.md",
     "docs/debug_catalog.md",
-    "docs/debug_comparisons.md",
     "docs/debug_control.md",
     "docs/debug_diagnostics.md",
     "docs/debug_events.md",
-    "docs/debug_gameplay.md",
-    "docs/debug_graphics.md",
-    "docs/debug_issues.md",
     "docs/debug_operations.md",
     "docs/debug_probes.md",
     "docs/debug_recordings.md",
@@ -260,7 +358,6 @@
     "docs/development/PERFORMANCE_TODO.md",
     "docs/development/PERFORMANCE_WORKFLOW.md",
     "docs/development/PROJECT_STATE.md",
-    "docs/development/ROM_COVERAGE.md",
     "docs/development/ROM_DATA_INVENTORY.md",
     "docs/development/ROM_DATA_TODO.md",
     "docs/development/ROM_DATA_VALIDATION.md",
@@ -296,15 +393,12 @@
     "docs/ffta_usa_frontend_mouse.md",
     "docs/ffta_usa_town_menus.md",
     "docs/fps_overlay.md",
-    "docs/fullscreen.md",
     "docs/labels.md",
     "docs/launcher.md",
     "docs/linux_gamepad_snapshots.md",
-    "docs/menu_shortcuts.md",
     "docs/packaging.md",
     "docs/portable.md",
     "docs/release_audit.md",
-    "docs/restart_rom.md",
     "docs/rom_data.md",
     "docs/rom_data_audio.md",
     "docs/rom_data_color_palettes.md",
@@ -329,14 +423,14 @@
   ],
   "pending_source_areas": [
     {
-      "area": "Remaining runtime report templates and their source-generated metadata",
+      "area": "Runtime report source-generated metadata and dynamically supplied messages",
       "known_paths": [
-        "crates/recomp/src/debug_gameplay/report.html",
-        "crates/recomp/src/debug_issue/report.html",
-        "crates/recomp/src/debug_compare/report.html",
-        "crates/recomp/src/debug_graphics/report.html"
+        "crates/recomp/src/debug_gameplay.rs",
+        "crates/recomp/src/debug_issue.rs",
+        "crates/recomp/src/debug_compare.rs",
+        "crates/recomp/src/debug_graphics.rs"
       ],
-      "status": "pending"
+      "status": "Eight fixed runtime templates are English; descriptions in four producers were sampled, while full dynamic metadata and remaining producers require review."
     },
     {
       "area": "Offline reports/exporters, CLI/help/errors and authored build messages",
@@ -350,7 +444,7 @@
         "scripts/export_debug_assets.py",
         "scripts/package_ffta_portable.py"
       ],
-      "status": "pending"
+      "status": "Campaign, artifact and coverage fixed templates and coverage authored notes translated; generator messages sampled. Remaining exporters, tools, source comments and dynamic metadata require full review."
     },
     {
       "area": "Menu/console/runtime strings and comments in both source trees",
@@ -374,7 +468,7 @@
         "scripts/menu_atlas_tasks.py",
         "docs/development/rom-coverage/index.html"
       ],
-      "status": "pending; translate authoritative sources before regenerating outputs"
+      "status": "Tracked coverage presentation translated without new analysis; remaining references and authoritative generators require review before regeneration."
     },
     {
       "area": "Structured change records and generated changelog",
@@ -400,13 +494,16 @@
     }
   ],
   "next_actions": [
-    "CI memory coverage repair is closed; publish the reviewed correction when ready, then continue the remaining full-project scope.",
+    "Audit remaining offline exporters, CLI/tool messages and source-generated metadata; campaign, artifact and coverage fixed templates are translated.",
     "Translate remaining technical/debug/development guides in bounded sections, preserving anchors, commands, IDs and validation limits.",
-    "Translate remaining report templates and dynamic default metadata, then console/tooling text and source comments across both trees.",
-    "Audit all remaining tracked natural-language surfaces and exceptions; reconcile changed hashes before deciding completion."
+    "Audit remaining dynamic report metadata, console/tooling text, source comments and all other maintained content across both trees.",
+    "Audit all remaining tracked natural-language surfaces and preservation exceptions; reconcile changed hashes before deciding completion."
   ],
   "evidence_records": [
     "docs/changes/2026-11-02-document-english-first-foundation-and-repair-ci-coverage.json",
-    "docs/changes/2026-11-02-record-partial-senary-compact-obj-integration.json"
+    "docs/changes/2026-11-02-record-partial-senary-compact-obj-integration.json",
+    "docs/changes/2026-11-02-translate-remaining-debug-reports.json",
+    "docs/changes/2026-11-02-translate-offline-debug-reports.json",
+    "docs/changes/2026-11-02-review-desktop-user-guides-english.json"
   ]
 }

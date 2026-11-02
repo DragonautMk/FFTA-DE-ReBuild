@@ -3,6 +3,69 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-02 — Translate gameplay, issue, comparison and graphics reports into English
+
+Type: changed. Platforms: Desktop report HTML; headless Chrome on Linux with synthetic fixtures.
+
+**Changes**
+
+- Translate fixed text, accessibility labels and JavaScript-generated statuses in the four remaining runtime debug report templates. Preserve report IDs, links, filter values, JSON keys, imported content and interactive behavior; comparison number formatting now uses English conventions.
+- Translate the four associated maintained guides while preserving old heading anchors, commands, source references, original in-game text, validation counts and the original acceptance limits. Update the English-first audit ledger and durable project state; whole-project migration remains partial.
+
+**Validation**
+
+- Eight Chrome checks passed at actual viewport widths 1400 and 500 for four public synthetic reports, covering gameplay filters/unknowns/contracts, issue status/links/Windows and POSIX command quoting/clipboard fallback, comparison field/audio/images, and graphics palette/tile/window/OBJ interactions with both relative images loaded. Four additional alternative-state checks passed for empty gameplay, compatible issue, matched comparison without artifacts and graphics without previous report. Screenshots inspected; structural IDs, links, sources, option values, classes and types match preimages. Evidence: target/english-first-project/reports-2026-11-02/browser-results.json.
+- Guide preservation checks confirm all four heading hierarchies, old heading anchors, existing links, CLI flag counts, original numeric tokens and the original Italian game quote. Evidence: target/english-first-project/reports-2026-11-02/guide-preservation.json. Menu language catalogs checked separately: English and Italian each contain all 378 entries.
+
+**Limitations**
+
+- Initial synthetic issue path and graphics click/VRAM fixtures were corrected; failed harness attempts and successful results are retained locally. Prior successful cases were reused rather than rerun. No ROM, save, recording, guest execution or native runtime build was used.
+- These templates are embedded at compile time; running executables must be rebuilt to pick up changes. Native Windows, other browsers, physical controllers and complete dynamic metadata are not newly validated. The larger English-first project still has pending guides and source areas.
+
+Documentation: [debug_issues.md](docs/debug_issues.md), [debug_gameplay.md](docs/debug_gameplay.md), [debug_comparisons.md](docs/debug_comparisons.md), [debug_graphics.md](docs/debug_graphics.md), [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-remaining-debug-reports.json)
+
+## 2026-11-02 — Translate offline reports and coverage presentation into English
+
+Type: changed. Platforms: Linux browser and Python synthetic checks.
+
+**Changes**
+
+- Translate campaign, artifact preview and ROM coverage report interfaces, associated guides, coverage generator messages and maintained evidence descriptions; preserve machine tokens, links and heading anchors.
+- Re-present the checked-in coverage snapshot in English without rerunning analysis. Keep original generation and evidence hash; record the translation and new evidence hash separately.
+
+**Validation**
+
+- 57 targeted Python tests passed: 13 coverage, 13 coverage audit, 12 campaign, 11 artifact and 8 Docker launcher tests.
+- Eight Chrome desktop/narrow checks passed on public synthetic fixtures and the checked-in coverage metadata; report interactions and layout checked without ROM access.
+- Evidence machine fields, snapshot fields outside translated notes/limits and provenance, all 15 coverage layers, commands and generated HTML/JSON correspondence preserved.
+
+**Limitations**
+
+- No ROM or dataset was read, no guest execution, platform build or new coverage analysis was performed. Prior accepted runtime outcomes remain unchanged.
+- A future regeneration may report a metadata difference caused by the translated evidence hash even when coverage layer deltas are zero. Other project documentation and source surfaces remain under review.
+
+[Change record](docs/changes/2026-11-02-translate-offline-debug-reports.json)
+
+## 2026-11-02 — Review desktop user guides for English-first wording
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Review audio, fullscreen, menu shortcut and ROM restart guides; align remaining shortcut menu labels with the English catalog.
+
+**Validation**
+
+- Confirmed Game, Controls and Details against the English catalog; shortcut guide headings, commands and links remain unchanged.
+
+**Limitations**
+
+- Documentation-only review; no runtime, platform or controller test was repeated. Other documentation and source areas remain under review.
+
+[Change record](docs/changes/2026-11-02-review-desktop-user-guides-english.json)
+
 ## 2026-11-02 — Record the partial senary compact OBJ runtime integration
 
 Type: docs. Platforms: EUR; Windows GNU test compilation recorded; runtime acceptance pending.

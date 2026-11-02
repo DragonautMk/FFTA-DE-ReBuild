@@ -1,21 +1,22 @@
-# Campagne mirate — DBG-21
+<a id="campagne-mirate--dbg-21"></a>
 
-Una campagna dichiara pochi casi e seleziona DS, famiglie o transizioni interessate
-da una modifica. **report** legge soltanto i JSON indicati e riusa prove conservate:
-non esegue il gioco, non crea snapshot e non riapre accettazioni concluse.
+# Targeted campaigns — DBG-21
 
-L'avvio esplicito **run-case** delega un solo profilo al supervisore
-[replay esistente](debug_replays.md). Non esiste avvio automatico di tutti i casi.
+A campaign declares a small set of cases and selects the DS, families or transitions affected by a change. **report** only reads the specified JSON files and reuses retained evidence: it does not run the game, create snapshots or reopen completed acceptance checks. The report interface is in English.
 
-## Manifest e selezione
+An explicit **run-case** dispatches one profile to the [existing replay supervisor](debug_replays.md). There is no automatic execution of every case.
 
-Creare un JSON privato, fuori dai commit, con questo formato:
+<a id="manifest-e-selezione"></a>
+
+## Manifest and selection
+
+Create a private JSON file outside commits with this format:
 
 ~~~json
 {
   "schema": 1,
   "kind": "ffta-debug-campaign",
-  "label": "Modifica al reader selezionato",
+  "label": "Change to selected reader",
   "cases": [
     {
       "id": "task-entry-EUR",
@@ -33,139 +34,71 @@ Creare un JSON privato, fuori dai commit, con questo formato:
 }
 ~~~
 
-Sostituire i segnaposto con gli hash reali. I percorsi sono relativi al manifest,
-con separatori /; possono riferire una directory sorella tramite ../. Spostare
-l'antenato comune di manifest/profili/report conserva i collegamenti. Le etichette
-DS/famiglia/transizione sono dichiarate: non provano raggiungibilità o uso di
-una famiglia da parte delle letture osservate. Non confondere caso DS e slot.
+Replace the placeholders with real hashes. Paths are relative to the manifest and use `/`; they may refer to a sibling directory through `../`. Moving the common ancestor of the manifest, profiles and reports preserves the links. DS, family and transition labels are declarations: they do not prove reachability or use of a family by observed reads. Do not confuse a DS case with a slot.
 
-Omettere evidence per un profilo ancora da eseguire; omettere profile per un
-caso non preparato. Non cambiare un vecchio hash per nascondere un file alterato.
-Dopo una nuova esecuzione esplicita, dichiarare i nuovi pin in una nuova versione
-del manifest conservando la provenienza della precedente. Il tool non inventa
-un'associazione storica completa tra profilo ed esito da un semplice mtime.
+Omit evidence for a profile that has yet to run; omit profile for an unprepared case. Do not change an old hash to hide an altered file. After a new explicit run, declare new pins in a new manifest version while retaining the previous provenance. The tool does not infer a complete historical association between profile and outcome from an mtime.
 
 ~~~powershell
 python3 scripts/debug_campaign.py report campagne/modifica.json --ds DS-20 --family task --out target/campaign-reports/task-entry
 ~~~
 
-Serve almeno uno tra **--case ID / --ds DS / --family TAG / --transition TAG**.
-I valori ripetuti dello stesso filtro sono in OR; filtri diversi sono in AND.
-Un ID inesistente viene rifiutato; un filtro senza corrispondenze produce zero
-selezionati. Le prove dei casi esclusi non vengono aperte.
+At least one of **--case ID / --ds DS / --family TAG / --transition TAG** is required. Repeated values of one filter are combined with OR; different filters are combined with AND. An unknown ID is rejected; a filter without matches selects zero cases. Evidence for excluded cases is not opened.
 
-## Interpretare gli esiti
+<a id="interpretare-gli-esiti"></a>
 
-Il rapporto mostra separatamente:
+## Interpreting outcomes
 
-- **positive**: il risultato conservato dichiara passed, matched o captured,
-  con completamento della propria finestra e identità riportate coerenti.
-  Captured/matched restano distinti dal passed dell'endpoint completo.
-- **negative**: diverged, error, timeout, interrupted o not-reached già registrato;
-  non significa fallimento di ogni funzionalità o scena.
-- **incompatible**: profilo/prova mancante o alterato, identità/finestra/endpoint
-  incoerenti, schema non supportato oppure risultato registrato incompatible.
-- **not-executed**: fuori selezione, profilo non preparato o nessuna prova indicata.
+The report distinguishes:
 
-**reused-pinned** significa riuso di byte conservati autenticati dagli hash,
-non una nuova esecuzione con il runtime corrente. Il report non apre ROM,
-snapshot, SRAM o librerie e non verifica di nuovo disponibilità dei payload,
-compatibilità corrente o vecchie classificazioni DS/ROM/native.
+- **positive**: the retained result declares passed, matched or captured, with its window complete and reported identities consistent. Captured/matched remain distinct from a full endpoint pass.
+- **negative**: an already recorded diverged, error, timeout, interrupted or not-reached outcome; it does not imply failure of every feature or scene.
+- **incompatible**: a missing or altered profile/evidence, inconsistent identity/window/endpoint, unsupported schema or a recorded incompatible result.
+- **not-executed**: outside the selection, unprepared profile or no evidence specified.
 
-Per un audit associato, run/caso/identità/filtro/finestra devono corrispondere.
-**zero-in-selected-window** richiede zero richieste, finestra completa, nessun
-troncamento o scarto. **partial-zero** conserva la raccolta incompleta;
-**unavailable** significa nessun audit autenticato, mai zero letture.
-Anche uno zero completo riguarda soltanto i reader strumentati selezionati:
-**l'uso globale della funzionalità rimane sconosciuto**.
+**reused-pinned** means reuse of retained bytes authenticated by hashes, not a new run with the current runtime. The report does not open ROMs, snapshots, SRAM or libraries and does not revalidate payload availability, current compatibility or old DS/ROM/native classifications.
 
-Il report limita l'audit ai metadati utili; non copia tutti gli eventi.
-Le sessioni con directory-v1 usano il coordinamento durante la lettura.
-Per le vecchie prove il pin autentica i byte, senza inventare esclusione di
-un vecchio processo che non conosce quel protocollo.
+For an associated audit, run, case, identity, filter and window must match. **zero-in-selected-window** requires zero requests, a complete window and no truncation or drops. **partial-zero** retains the incomplete collection; **unavailable** means no authenticated audit, never zero reads. Even a complete zero applies only to the selected instrumented readers: **global feature usage remains unknown**.
 
-## Eseguire un solo caso scelto
+The report limits the audit to useful metadata; it does not copy all events. Sessions using directory-v1 coordinate reads. For older evidence the pin authenticates bytes without inventing exclusion of an old process unaware of that protocol.
+
+<a id="eseguire-un-solo-caso-scelto"></a>
+
+## Running one selected case
 
 ~~~powershell
 python3 scripts/debug_campaign.py run-case campagne/modifica.json task-entry-EUR --reason "Modificato il reader di ingresso" --reopen-reason "La modifica invalida questa specifica verifica" --out target/campaign-intents/task-entry
 ~~~
 
-**--reopen-reason** è obbligatorio se il manifest contiene una prova precedente
-oppure se esiste già result.json nel profilo, anche quando non è dichiarato.
-Un caso nuovo richiede comunque --reason. Non usare perdita di contesto o parent
-TODO aperto come motivo di ripetizione; seguire le
-[regole di memoria](development/MEMORY_WORKFLOW.md#resume-and-repeat-decisions).
+**--reopen-reason** is required if the manifest contains prior evidence or result.json already exists in the profile, even if undeclared. A new case still requires --reason. Do not use lost context or an open parent TODO as a reason to repeat work; follow the [memory rules](development/MEMORY_WORKFLOW.md#resume-and-repeat-decisions).
 
-Il tool verifica pin di profilo/runtime, salva **intent.json** e sostituisce
-il proprio processo con **recomp debug-replay run PROFILO --json**. Quello stesso
-runner gestisce preflight dei payload, lock, timeout, progressi e cancellazione.
-Un intent non è un risultato completato. Il worker conserva log/risultato nel
-profilo; la successiva campagna può referenziare esplicitamente quei nuovi pin.
+The tool verifies profile/runtime pins, saves **intent.json** and replaces its own process with **recomp debug-replay run PROFILO --json**. The same runner handles payload preflight, locking, timeouts, progress and cancellation. An intent is not a completed result. The worker retains logs/results in the profile; a subsequent campaign may explicitly reference those new pins.
 
-Su POSIX un profilo Windows richiede **--wine /percorso/reale/wine64**. Windows
-nativo e runtime Linux non richiedono il launcher. Il dispatch non compila ROM
-o runtime. Se l'exec fallisce, il receipt rimane dispatch-error. I codici finali
-sono quelli del replay. Non viene scritto alcun supervisore alternativo.
+On POSIX, a Windows profile requires **--wine /percorso/reale/wine64**. Native Windows and Linux runtimes do not require the launcher. Dispatch does not compile a ROM or runtime. If exec fails, the receipt remains dispatch-error. Final exit codes come from replay. No alternative supervisor is written.
 
-## Launcher, limiti e privacy
+<a id="launcher-limiti-e-privacy"></a>
 
-**scripts/windows/debug_campaign.ps1** e **scripts/linux/debug_campaign.sh**
-risolvono la root dalla propria posizione e mostrano sempre il log sotto
-target/build-logs. Con --docker (Bash) o -Docker (PowerShell) usano l'immagine
-già presente ffta-debug-tools:local, rete disabilitata, filesystem container
-readonly e mount del progetto per output/coordinamento. Docker ammette soltanto
-report/help; il dispatch usa il Python host. Nessuna build automatica.
+## Launchers, limits and privacy
+
+**scripts/windows/debug_campaign.ps1** and **scripts/linux/debug_campaign.sh** resolve the root from their location and always show the log under target/build-logs. With --docker (Bash) or -Docker (PowerShell), they use the existing ffta-debug-tools:local image, disabled networking, a read-only container filesystem and a project mount for output/coordination. Docker allows only report/help; dispatch uses host Python. No automatic build is performed.
 
 ~~~bash
 bash scripts/linux/debug_campaign.sh --docker report campagne/modifica.json --case task-entry-EUR --out target/campaign-reports/docker-entry
 ~~~
 
-Python 3.11 e libreria standard, più artifact_coordinator.py e il template HTML.
-Al più32casi, manifest256KiB, profilo/risultato128KiB, audit16MiB in lettura,
-riepilogo audit64KiB e report2MiB. JSON duplicati/non finiti rifiutati.
-Al più8directory per store di report/intent, tentativi falliti inclusi:
-scegliere una directory padre dedicata. Nessuna sovrascrittura/pulizia automatica.
-Link/symlink, reparse point e file condivisi vengono rifiutati.
+Python 3.11 and the standard library are required, together with artifact_coordinator.py and the HTML template. Limits: 32 cases, 256 KiB manifest, 128 KiB profile/result, 16 MiB audit read, 64 KiB audit summary and 2 MiB report. Duplicate or non-finite JSON is rejected. At most 8 directories per report/intent store, including failed attempts: choose a dedicated parent directory. No automatic overwrite or cleanup occurs. Links/symlinks, reparse points and shared files are rejected.
 
-Output e percorsi sono privati: una cartella nuova contiene .gitignore.
-Il manifest creato a mano va tenuto in un percorso già ignorato. Nessun invio,
-promozione di accettazioni o modifica della raccolta originale.
-La [homepage](report_home.md) trova i campaign.json dopo rigenerazione;
-il [gestore artefatti](debug_artifacts.md) mostra i limiti e conserva questi report.
+Outputs and paths are private: a new folder contains .gitignore. Keep the manually created manifest under an already ignored path. There is no upload, promotion of acceptance results or modification of the original collection. The [homepage](report_home.md) finds campaign.json files after regeneration; the [artifact manager](debug_artifacts.md) shows limits and retains these reports.
 
-## Verifica del 29 ottobre 2026
+<a id="verifica-del-29-ottobre-2026"></a>
 
-**23 test Python distinti passati**:12campagna (11nel test raffinato più una
-verifica aggiunta per JSON rigoroso/tipi/prova precedente non dichiarata) e11del
-gestore artefatti interessati dai limiti. Coprono selezione esplicita/OR/AND,
-esclusione senza aprire prove, quattro esiti, pin/identità/endpoint/finestra,
-zero/parziale/non disponibile, limiti, lease attivo, link/file condivisi,
-spostamento, motivo di riapertura e receipt. Il dispatch reale di test usa
-soltanto un eseguibile pubblico sintetico, senza dati di gioco.
+## Verification on October 29, 2026
 
-Un rapporto privato riusa due profili/prove DS20 già conservati (audit positivo
-e divergenza native storica), più metadati sintetici zero/incompatibile e un
-caso non preparato. **Zero nuovi frame guest**; nessuna vecchia accettazione
-rieseguita. Undici guardie di metadati/input/runtime normali conservano hash/mtime.
+**23 distinct Python tests passed**: 12 campaign tests (11 in the refined test plus one added for strict JSON/types/undeclared previous evidence) and 11 artifact manager tests affected by the limits. They cover explicit selection/OR/AND, exclusion without opening evidence, four outcomes, pins/identity/endpoint/window, zero/partial/unavailable, limits, active lease, links/shared files, relocation, reopening reason and receipt. The real test dispatch uses only a public synthetic executable, without game data.
 
-Launcher Bash da directory estranea e Docker offline su immagine esistente
-producono selezioni1e2; nessuna nuova immagine/build/runtime. Quattro viste Chrome
-desktop/stretto/selezione vuota/homepage verificano filtri/ricerca/reset, esiti,
-riuso, zero distinto dall'uso globale sconosciuto e link relativi senza overflow.
-Screenshot ispezionati; homepage72indici/4campagne al momento della prova.
+A private report reuses two retained DS20 profiles/evidence (positive audit and historical native divergence), plus synthetic zero/incompatible metadata and an unprepared case. **Zero new guest frames**; no old acceptance was rerun. Eleven normal metadata/input/runtime guards preserve hash/mtime.
 
-Verificatore finale autentica8sorgenti pubblici e quattro coppie HTML/JSON,
-pin/link e guardie. Ritirati soltanto4profili browser terminati; tutti i metadati,
-manifest, report, sorgenti/preimages, log e prove originali conservati sotto
-**target/debug-tools-campaign/**. Nessuna fixture managed/native disposable:
-il completion helper ROM non si applica. Windows/PowerShell, dispatch reale Wine
-o Linux e controller fisici non verificati in questa unità; si riusa il supervisore
-già validato senza chiamarlo sui dati di gioco.
-[Record DBG-21](changes/2026-10-29-add-targeted-debug-campaigns.json).
+The Bash launcher from another directory and offline Docker using the existing image produce selections 1 and 2; no new image/build/runtime. Four Chrome views (desktop/narrow/empty selection/homepage) verify filters/search/reset, outcomes, reuse, zero distinct from unknown global use, and relative links without overflow. Screenshots inspected; the homepage had 72 indexes/4 campaigns at the time.
 
+A final verifier authenticates 8 public sources and four HTML/JSON pairs, pins/links and guards. Only 4 finished browser profiles were retired; all metadata, manifests, reports, sources/preimages, logs and original evidence remain under **target/debug-tools-campaign/**. No managed/native disposable fixture: the ROM completion helper does not apply. Windows/PowerShell, actual Wine or Linux dispatch and physical controllers were not verified in this unit; the already validated supervisor was reused without invoking it on game data. [DBG-21 record](changes/2026-10-29-add-targeted-debug-campaigns.json).
 
-Nel launcher PowerShell -Docker precede il comando. I flag del tool, incluso
---out, sono inoltrati letteralmente senza intercettazione dei parametri comuni
-PowerShell. La [distribuzione DBG-22](debug_tools.md) aggiunge13controlli pubblici
-dei launcher su PowerShell7.4.6/Linux; Windows nativo/PowerShell5.1 resta non
-verificato.
+In the PowerShell launcher -Docker precedes the command. Tool flags, including --out, are forwarded literally without PowerShell common parameter interception. The [DBG-22 distribution](debug_tools.md) adds 13 public launcher checks on PowerShell 7.4.6/Linux; native Windows/PowerShell 5.1 remain unverified.

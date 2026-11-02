@@ -18128,3 +18128,27 @@ LOCAL-ARTIFACT-SWEEP-2026-10-31 — CLOSED. Latest request: clean residual proje
 - Verified criteria: original failed job's missing file coverage is repaired by accurate English-first and partial-senary records, without changing the checker, CI workflow or runtime source. Both original comparison bases pass; audit ledger fixes the previously dangling PROJECT_STATE reference. Whole-project English-first parent remains partial.
 - Evidence: docs/changes/2026-11-02-document-english-first-foundation-and-repair-ci-coverage.json and docs/changes/2026-11-02-record-partial-senary-compact-obj-integration.json; run41310848093/job124860696621 confirms original MEMORY_BASE35920d8192c0539d3b7b32bcbc2a14fd9070335d. Local five memory/11 handoff tests and check --base35920d8 / --base3fec4ec pass. Existing synthetic browser results retained under target/english-first-project.
 - Limits: remote old run is not rerun or claimed green; correction needs publication. No new native build, ROM access, Wine runtime test, scene/performance acceptance or unrelated job action. Senary compilation evidence is recorded separately from unexecuted runtime acceptance.
+
+
+### ENGLISH-FIRST-RUNTIME-REPORTS
+
+- Outcome: completed
+- Verified criteria: gameplay, issue, comparison and graphics HTML fixed UI and their four maintained guides use English; IDs, links, option values, source text, legacy heading anchors, commands, historical counts and limitations are preserved. All eight tracked runtime report templates now use English fixed UI. The whole-project parent remains partial.
+- Evidence: docs/changes/2026-11-02-translate-remaining-debug-reports.json; eight public synthetic Chrome checks at 1400/500 pixels and four alternate-state checks pass; screenshots inspected. Guide preservation and exact before/after source evidence in target/english-first-project/reports-2026-11-02/.
+- Limits: no native runtime build, real game data, gameplay acceptance or physical-controller check. Changed templates are embedded at compile time, requiring a later rebuild. Generated metadata and other report/guide areas remain open; failed synthetic harness attempts retained.
+
+
+### ENGLISH-FIRST-OFFLINE-REPORTS
+
+- Outcome: completed
+- Verified criteria: campaign, artifact and coverage templates and their three guides use English; coverage generator messages and 57 evidence notes plus nine limits translated. Original commands, machine fields, links, anchors and coverage measurements preserved; optional locales remain untouched. Whole-project parent remains partial.
+- Evidence: docs/changes/2026-11-02-translate-offline-debug-reports.json; 57 targeted Python tests, eight Chrome synthetic/retained-metadata desktop and narrow checks; source evidence and saved report structural preservation and all 15 layer comparisons pass. Outputs under target/english-first-project/offline-reports-2026-11-02/.
+- Limits: presentation translation did not access a ROM/dataset, execute the guest or regenerate analysis; original generation timestamp and evidence hash remain, with separate translated evidence hash. Future regeneration may show metadata differences despite zero layer deltas. Native platforms remain untested in this unit.
+
+
+### ENGLISH-FIRST-DESKTOP-GUIDES
+
+- Outcome: completed
+- Verified criteria: audio, fullscreen, menu shortcut and ROM restart user guides reviewed; remaining shortcut menu labels match the English locale catalog. Existing headings, commands, links and validation limits preserved. Whole-project parent remains partial.
+- Evidence: docs/changes/2026-11-02-review-desktop-user-guides-english.json; direct catalog and structural checks, plus audit ledger hashes.
+- Limits: documentation-only review; no runtime, platform or controller checks repeated. Other guides and source areas remain open.

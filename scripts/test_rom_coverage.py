@@ -140,7 +140,7 @@ class CoverageRefreshTests(unittest.TestCase):
             report['code']['analyzer_executable_sha256'] = 'rebuilt'
             with mock.patch.object(coverage, 'build', return_value=report), contextlib.redirect_stdout(output):
                 coverage.generate(args)
-            self.assertIn('Copertura invariata', output.getvalue())
+            self.assertIn('Coverage unchanged', output.getvalue())
             self.assertNotEqual(before['index.html'], (Path(tmp) / 'index.html').read_bytes())
 
     def test_review_requires_same_decoded_file_and_source_map(self):

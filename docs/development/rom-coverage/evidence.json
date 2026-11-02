@@ -10,7 +10,7 @@
   "resources": {
     "graphics.obj-dimensions": {
       "ordinary_positive": true,
-      "note": "Boot-to-battle: tabella diretta e alias copiato osservati, non tutti gli sprite.",
+      "note": "Boot-to-battle: direct table and copied alias observed, not every sprite.",
       "references": [
         "docs/changes/2026-10-21-validate-decoded-obj-scenes-and-costs.json"
       ],
@@ -19,7 +19,7 @@
     },
     "graphics.bg-descriptors": {
       "ordinary_positive": true,
-      "note": "Transizione: 53 letture BG, scene stabili negative. Non tutti i 162 descrittori.",
+      "note": "Transition: 53 BG reads; stable scenes negative. Not all 162 descriptors.",
       "references": [
         "docs/changes/2026-10-21-validate-decoded-base-palette-scenes.json"
       ],
@@ -28,7 +28,7 @@
     },
     "graphics.bg-base-palettes": {
       "ordinary_positive": true,
-      "note": "Transizione: un palette decoded da 160 B, non tutto il catalogo.",
+      "note": "Transition: one decoded 160 B palette, not the entire catalog.",
       "references": [
         "docs/changes/2026-10-21-validate-decoded-base-palette-scenes.json"
       ],
@@ -37,7 +37,7 @@
     },
     "graphics.bg-alternate-palettes": {
       "ordinary_positive": true,
-      "note": "Pub LCD/TV positivi; precondizioni globali e descrittori FF limitati.",
+      "note": "Pub LCD/TV positive; global prerequisites and FF descriptors remain bounded.",
       "references": [
         "docs/changes/2026-10-21-validate-alternate-palette-scenes.json"
       ],
@@ -46,7 +46,7 @@
     },
     "graphics.bg-packet-programs": {
       "ordinary_positive": true,
-      "note": "397 frame: 12 source B e 2640 typed HLE B. Byte letti ed espansi non sono sommabili.",
+      "note": "397 frames: 12 source B and 2640 typed HLE B. Read and expanded bytes are not additive.",
       "references": [
         "docs/changes/2026-10-22-consume-european-background-packet-programs.json"
       ],
@@ -55,7 +55,7 @@
     },
     "graphics.bg-main-graphics": {
       "ordinary_positive": true,
-      "note": "397 frame: 16209 source B, incluse riletture, non byte distinti.",
+      "note": "397 frames: 16209 source B including rereads, not distinct bytes.",
       "references": [
         "docs/changes/2026-10-22-consume-european-main-background-graphics.json"
       ],
@@ -64,7 +64,7 @@
     },
     "graphics.bg-transfer-programs": {
       "ordinary_positive": true,
-      "note": "397 frame: 1203 control B e 21504 tile B, incluse riletture.",
+      "note": "397 frames: 1203 control B and 21504 tile B, including rereads.",
       "references": [
         "docs/changes/2026-10-22-consume-european-background-transfer-programs.json"
       ],
@@ -73,7 +73,7 @@
     },
     "text.short-strings": {
       "ordinary_positive": false,
-      "note": "Oracle e native mirati positivi; accettazione in scena ordinaria ancora aperta.",
+      "note": "Focused oracle and native checks positive; ordinary-scene acceptance remains open.",
       "references": [
         "docs/changes/2026-10-22-consume-european-short-texts-and-referenced-font.json"
       ],
@@ -82,7 +82,7 @@
     },
     "text.catalogs": {
       "ordinary_positive": true,
-      "note": "397 frame: 8427 source B. Programma raw positivo, controlli encoded zero in questa scena.",
+      "note": "397 frames: 8427 source B. Raw program positive; encoded controls zero in this scene.",
       "references": [
         "docs/changes/2026-10-22-validate-european-text-catalog-transition-and-cli.json"
       ],
@@ -91,7 +91,7 @@
     },
     "font.complete-bank": {
       "ordinary_positive": true,
-      "note": "397 frame: 8064 glyph B e 93 metric B, non tutto il font.",
+      "note": "397 frames: 8064 glyph B and 93 metric B, not the entire font.",
       "references": [
         "docs/changes/2026-10-22-consume-european-complete-font-and-name-keyboard.json"
       ],
@@ -100,7 +100,7 @@
     },
     "text.name-keyboard": {
       "ordinary_positive": false,
-      "note": "Oracle e fixture mouse positivi; Pub con zero byte tastiera. Inserimento nome ordinario aperto.",
+      "note": "Oracle and mouse fixtures positive; Pub with zero keyboard bytes. Ordinary name input remains open.",
       "references": [
         "docs/changes/2026-10-22-consume-european-complete-font-and-name-keyboard.json"
       ],
@@ -109,7 +109,7 @@
     },
     "graphics.obj-static-lists": {
       "ordinary_positive": true,
-      "note": "Transizione ordinaria positiva, language-screen separata. Altri riferimenti indiretti aperti.",
+      "note": "Positive ordinary transition, separate language-screen. Other indirect references remain open.",
       "references": [
         "docs/changes/2026-10-22-consume-european-static-obj-lists.json"
       ],
@@ -118,7 +118,7 @@
     },
     "graphics.obj-animation-banks": {
       "ordinary_positive": true,
-      "note": "Menu, Party ed Engage positivi in prove distinte. Contratti vuoti e altri linguaggi aperti.",
+      "note": "Menu, Party and Engage positive in separate checks. Empty contracts and other languages remain open.",
       "references": [
         "docs/changes/2026-10-22-consume-european-language-selected-obj-banks.json"
       ],
@@ -127,7 +127,7 @@
     },
     "graphics.obj-custom-banks": {
       "ordinary_positive": true,
-      "note": "400 frame Engage: 1194 source B e 4 selector B.",
+      "note": "400 Engage frames: 1194 source B and 4 selector B.",
       "references": [
         "docs/changes/2026-10-22-consume-european-obj-custom-graphics.json"
       ],
@@ -136,7 +136,7 @@
     },
     "graphics.ui-raw-palettes": {
       "ordinary_positive": true,
-      "note": "Boot 240 frame: 130 source B. Inizializzatori codice e RAM dinamica restano originali.",
+      "note": "Boot, 240 frames: 130 source B. Code initializers and dynamic RAM remain original.",
       "references": [
         "docs/changes/2026-10-22-consume-european-raw-ui-palettes.json"
       ],
@@ -145,7 +145,7 @@
     },
     "graphics.ui-custom-banks": {
       "ordinary_positive": true,
-      "note": "Clan e intro inglese positivi; intro 2347 nuovi source B e 4 selector B. Altre lingue aperte.",
+      "note": "Clan and English intro positive; intro 2347 new source B and 4 selector B. Other languages remain open.",
       "references": [
         "docs/changes/2026-10-23-extend-european-localized-ui-graphics.json"
       ],
@@ -154,7 +154,7 @@
     },
     "gameplay.item-records": {
       "ordinary_positive": true,
-      "note": "Unit 320 frame: 40 signed B. Prefisso e coda ordinari non validati.",
+      "note": "Unit, 320 frames: 40 signed B. Ordinary prefix and tail not validated.",
       "references": [
         "docs/changes/2026-10-23-consume-european-static-item-records.json"
       ],
@@ -163,7 +163,7 @@
     },
     "gameplay.item-links": {
       "ordinary_positive": true,
-      "note": "Inventory 560 frame: 574 B count/selector/value; opaque zero.",
+      "note": "Inventory, 560 frames: 574 B count/selector/value; opaque zero.",
       "references": [
         "docs/changes/2026-10-23-consume-european-item-linked-pairs.json"
       ],
@@ -172,7 +172,7 @@
     },
     "gameplay.linked-metadata16": {
       "ordinary_positive": true,
-      "note": "520 frame: 6 display B. Alias/flag/value/opaque zero in questa scena.",
+      "note": "520 frames: 6 display B. Alias/flag/value/opaque zero in this scene.",
       "references": [
         "docs/changes/2026-10-23-consume-european-sixteen-byte-linked-metadata.json"
       ],
@@ -181,7 +181,7 @@
     },
     "gameplay.linked-metadata52": {
       "ordinary_positive": true,
-      "note": "540 frame: 664 B header/routing/packed; tail/opaque zero.",
+      "note": "540 frames: 664 B header/routing/packed; tail/opaque zero.",
       "references": [
         "docs/changes/2026-10-23-consume-european-fifty-two-byte-linked-metadata.json"
       ],
@@ -190,7 +190,7 @@
     },
     "gameplay.linked-metadata4": {
       "ordinary_positive": true,
-      "note": "540 frame: 38 B selector/value.",
+      "note": "540 frames: 38 B selector/value.",
       "references": [
         "docs/changes/2026-10-23-consume-european-four-byte-linked-pairs.json"
       ],
@@ -199,7 +199,7 @@
     },
     "gameplay.linked-metadata2": {
       "ordinary_positive": true,
-      "note": "1840 frame: 4 value B; key zero.",
+      "note": "1840 frames: 4 value B; key zero.",
       "references": [
         "docs/changes/2026-10-23-consume-european-two-byte-forward-inverse-map.json"
       ],
@@ -208,7 +208,7 @@
     },
     "gameplay.default-constructor-template": {
       "ordinary_positive": true,
-      "note": "397 frame: 96 source B da una risorsa di 48 B. Le riletture non sono byte distinti.",
+      "note": "397 frames: 96 source B from a 48 B resource. Rereads are not distinct bytes.",
       "references": [
         "docs/changes/2026-10-23-consume-european-default-constructor-template.json"
       ],
@@ -217,7 +217,7 @@
     },
     "gameplay.constructor-alternate-templates": {
       "ordinary_positive": true,
-      "note": "3600 frame: 45 source B inclusi 4 pointer B. Una sola variante ordinaria.",
+      "note": "3600 frames: 45 source B including 4 pointer B. Only one ordinary variant.",
       "references": [
         "docs/changes/2026-10-23-consume-european-constructor-alternate-templates.json"
       ],
@@ -226,7 +226,7 @@
     },
     "gameplay.linked-metadata14": {
       "ordinary_positive": true,
-      "note": "397 frame: 27 B da due record, non tutta la tabella.",
+      "note": "397 frames: 27 B from two records, not the entire table.",
       "references": [
         "docs/changes/2026-10-23-consume-european-fourteen-byte-special-unit-metadata.json"
       ],
@@ -235,7 +235,7 @@
     },
     "gameplay.linked-metadata12": {
       "ordinary_positive": true,
-      "note": "2200 frame: 44 primary B, un record; secondary zero.",
+      "note": "2200 frames: 44 primary B, one record; secondary zero.",
       "references": [
         "docs/changes/2026-10-23-consume-european-twelve-byte-packed-pair-banks.json"
       ],
@@ -244,7 +244,7 @@
     },
     "gameplay.global-pair-flags": {
       "ordinary_positive": false,
-      "note": "Tutti gli 11 B verificati nei test mirati. Locator ordinario 2200 frame: 0 nuovi B, nessuna accettazione positiva.",
+      "note": "All 11 B verified in focused tests. Ordinary locator, 2200 frames: 0 new B, no positive acceptance.",
       "references": [
         "docs/changes/2026-10-23-consume-european-global-packed-pair-flags.json"
       ],
@@ -253,7 +253,7 @@
     },
     "gameplay.evaluation-parameters": {
       "ordinary_positive": true,
-      "note": "400 frame Yes/fee: 16 source B inclusa una threshold; opaque zero.",
+      "note": "400 Yes/fee frames: 16 source B including one threshold; opaque zero.",
       "references": [
         "docs/changes/2026-10-23-validate-european-evaluation-threshold-acceptance.json"
       ],
@@ -262,7 +262,7 @@
     },
     "gameplay.progression-rewards": {
       "ordinary_positive": true,
-      "note": "Prezzi: 7 discount B. Dispatch successivo: 8 delta B. Non tutti i record/opaque.",
+      "note": "Prices: 7 discount B. Subsequent dispatch: 8 delta B. Not all records/opaque.",
       "references": [
         "docs/changes/2026-10-23-consume-european-progression-reward-and-price-records.json",
         "docs/changes/2026-10-23-consume-european-progression-gates-and-receipt-records.json"
@@ -272,7 +272,7 @@
     },
     "gameplay.progression-gates": {
       "ordinary_positive": true,
-      "note": "1000 frame ritorno dispatch: 209 requirement B. Return/output/unused zero; prove mirate distinte.",
+      "note": "1000 dispatch-return frames: 209 requirement B. Return/output/unused zero; focused checks are separate.",
       "references": [
         "docs/changes/2026-10-23-consume-european-progression-gates-and-receipt-records.json"
       ],
@@ -281,7 +281,7 @@
     },
     "gameplay.progression-selection-gates": {
       "ordinary_positive": true,
-      "note": "Dispatch 1000 frame: 277 source B (selector 1, minima 26/46/42, ANY 152, flag 10), primi 26 record fisici. Full-state/image/audio positivo; altri record non osservati. Oracle sorgente 831 field B distinti e 18 percorsi native mirati sono prove separate.",
+      "note": "1000 dispatch frames: 277 source B (selector 1, minima 26/46/42, ANY 152, flag 10), first 26 physical records. Full-state/image/audio positive; other records unobserved. Source oracle of 831 distinct field B and 18 focused native paths are separate evidence.",
       "references": [
         "docs/changes/2026-10-23-consume-european-progression-selection-gates.json",
         "docs/changes/2026-10-23-decode-european-progression-selection-gates.json"
@@ -301,7 +301,7 @@
     },
     "gameplay.aggregate-flag-keys": {
       "ordinary_positive": true,
-      "note": "Spedizione 1000 frame: 1204 B riletti, 300 chiavi e terminatore; non entrambe le entrypoint ordinarie.",
+      "note": "Expedition, 1000 frames: 1204 B reread, 300 keys and terminator; not both ordinary entry points.",
       "references": [
         "docs/changes/2026-10-23-consume-european-aggregate-flag-keys.json"
       ],
@@ -310,7 +310,7 @@
     },
     "gameplay.trade-parameters": {
       "ordinary_positive": true,
-      "note": "Accettazione costo 400 frame: 14 B, markup-low e alias 41, solo record fisico 2.",
+      "note": "Cost acceptance, 400 frames: 14 B, markup-low and alias 41, only physical record 2.",
       "references": [
         "docs/changes/2026-10-23-consume-european-trade-parameters.json"
       ],
@@ -319,7 +319,7 @@
     },
     "gameplay.item-effect-parameters": {
       "ordinary_positive": true,
-      "note": "Banca 400 frame: 3 B, indice osservato; non ogni effetto/oggetto.",
+      "note": "Bank, 400 frames: 3 B, observed index; not every effect/item.",
       "references": [
         "docs/changes/2026-10-23-consume-european-item-effect-parameters.json"
       ],
@@ -328,7 +328,7 @@
     },
     "audio.m4a-directory": {
       "ordinary_positive": true,
-      "note": "Scena 400 frame: 179 B fra directory/header/track; player non letti nella prova.",
+      "note": "Scene, 400 frames: 179 B across directory/header/track; player not read in this check.",
       "references": [
         "docs/changes/2026-10-23-consume-european-m4a-directory.json"
       ],
@@ -337,7 +337,7 @@
     },
     "audio.m4a-tones": {
       "ordinary_positive": true,
-      "note": "Scena 400 frame: 516956 B guest e 3093208 B shadow host, inclusi riletture PCM; CGB ordinario 0.",
+      "note": "Scene, 400 frames: 516956 guest B and 3093208 host shadow B, including PCM rereads; ordinary CGB 0.",
       "references": [
         "docs/changes/2026-10-24-consume-european-m4a-tones.json"
       ],
@@ -346,7 +346,7 @@
     },
     "audio.m4a-sequences": {
       "ordinary_positive": true,
-      "note": "Scena 400 frame: 819 B fra opcode/operandi/clock, 185 record inclusi lookahead; tabelle estese non osservate.",
+      "note": "Scene, 400 frames: 819 B across opcode/operands/clock, 185 records including lookahead; extended tables unobserved.",
       "references": [
         "docs/changes/2026-10-24-consume-european-m4a-sequences.json"
       ],
@@ -355,7 +355,7 @@
     },
     "audio.m4a-driver-tables": {
       "ordinary_positive": true,
-      "note": "Scena 400 frame: 756 B, 67 entry PCM/CGB key-base; samplecount/noise/volume ordinari 0.",
+      "note": "Scene, 400 frames: 756 B, 67 PCM/CGB key-base entries; ordinary samplecount/noise/volume 0.",
       "references": [
         "docs/changes/2026-10-24-consume-european-m4a-driver-tables.json"
       ],
@@ -364,7 +364,7 @@
     },
     "graphics.palette-effect-dispatch": {
       "ordinary_positive": true,
-      "note": "Transizione English 1000 frame: 5944 B riletti, solo kind 1; callback restanti/null mirati.",
+      "note": "English transition, 1000 frames: 5944 B reread, only kind 1; remaining/null callbacks checked separately.",
       "references": [
         "docs/changes/2026-10-24-consume-european-palette-effect-dispatch.json"
       ],
@@ -373,7 +373,7 @@
     },
     "graphics.palette-programs": {
       "ordinary_positive": true,
-      "note": "Richiamo/Pecorelle 1000 frame: 170 B, 4 programmi, 0 producer; altri 226 programmi mirati.",
+      "note": "Recall/Sheep (Richiamo/Pecorelle), 1000 frames: 170 B, 4 programs, 0 producer; another 226 programs checked separately.",
       "references": [
         "docs/changes/2026-10-24-consume-european-palette-programs.json"
       ],
@@ -382,7 +382,7 @@
     },
     "graphics.blend-programs": {
       "ordinary_positive": true,
-      "note": "Richiamo/Pecorelle 1000 frame: 18 B, 1 programma; altri 159 programmi/tabelle mirati.",
+      "note": "Recall/Sheep (Richiamo/Pecorelle), 1000 frames: 18 B, 1 program; another 159 programs/tables checked separately.",
       "references": [
         "docs/changes/2026-10-24-consume-european-blend-programs.json"
       ],
@@ -391,7 +391,7 @@
     },
     "engine.task-descriptors": {
       "ordinary_positive": true,
-      "note": "Richiamo/Pecorelle 1000 frame: 28 B, 4 record e 2 cataloghi; non ogni task/ABI.",
+      "note": "Recall/Sheep (Richiamo/Pecorelle), 1000 frames: 28 B, 4 records and 2 catalogs; not every task/ABI.",
       "references": [
         "docs/changes/2026-10-24-consume-european-task-descriptors.json"
       ],
@@ -400,7 +400,7 @@
     },
     "engine.effect-event-directories": {
       "ordinary_positive": true,
-      "note": "Libro 1800 frame: 5 B, 1 selector e 1 dispatch; righe evento ordinarie 0, altreentry mirate.",
+      "note": "Book, 1800 frames: 5 B, 1 selector and 1 dispatch; ordinary event rows 0, other entries checked separately.",
       "references": [
         "docs/changes/2026-10-24-consume-european-effect-event-directories.json",
         "docs/changes/2026-10-24-verify-ordinary-european-effect-selector.json"
@@ -410,7 +410,7 @@
     },
     "engine.script-command-directory": {
       "ordinary_positive": true,
-      "note": "Suspendboot-to-battle 8476 frame: 42 B, 7 comandi; non l’intero interprete/ABI.",
+      "note": "Suspendboot-to-battle, 8476 frames: 42 B, 7 commands; not the entire interpreter/ABI.",
       "references": [
         "docs/changes/2026-10-24-consume-european-script-command-directory.json"
       ],
@@ -419,7 +419,7 @@
     },
     "engine.script-archive": {
       "ordinary_positive": true,
-      "note": "Suspendboot-to-battle 8476 frame: 27 B, 1 banca/programma/chiave, 0 fill; non 35048 comandi.",
+      "note": "Suspendboot-to-battle, 8476 frames: 27 B, 1 bank/program/key, 0 fill; not 35048 commands.",
       "references": [
         "docs/changes/2026-10-24-consume-european-script-archive.json"
       ],
@@ -428,7 +428,7 @@
     },
     "text.script-archives": {
       "ordinary_positive": true,
-      "note": "Scuola 3000 frame: 289 B, 1 lingua/banca, 2 programmi; varianti/operandi/tails ordinari 0.",
+      "note": "School, 3000 frames: 289 B, 1 language/bank, 2 programs; ordinary variants/operands/tails 0.",
       "references": [
         "docs/changes/2026-10-24-consume-european-script-localized-text.json"
       ],
@@ -437,7 +437,7 @@
     },
     "engine.script-coordinate-paths": {
       "ordinary_positive": true,
-      "note": "Neve 6000 frame: 28 B, 1 percorso, 0 alignment; non tutte le coordinate.",
+      "note": "Snow, 6000 frames: 28 B, 1 path, 0 alignment; not all coordinates.",
       "references": [
         "docs/changes/2026-10-24-consume-european-script-coordinate-paths.json"
       ],
@@ -446,7 +446,7 @@
     },
     "engine.auxiliary-script-command-directory": {
       "ordinary_positive": true,
-      "note": "Neve 6000 frame: 96 B directory, 6 comandi; archivio ausiliario 82 B nella stessa prova.",
+      "note": "Snow, 6000 frames: 96 B directory, 6 commands; auxiliary archive 82 B in the same check.",
       "references": [
         "docs/changes/2026-10-24-consume-european-auxiliary-script-archive.json"
       ],
@@ -455,7 +455,7 @@
     },
     "engine.auxiliary-script-archive": {
       "ordinary_positive": true,
-      "note": "Neve 6000 frame: 82 B, 2 banche/programmi, 0 alignment; directory 96 B nella stessa prova.",
+      "note": "Snow, 6000 frames: 82 B, 2 banks/programs, 0 alignment; directory 96 B in the same check.",
       "references": [
         "docs/changes/2026-10-24-consume-european-auxiliary-script-archive.json"
       ],
@@ -464,7 +464,7 @@
     },
     "graphics.map-raster-palettes": {
       "ordinary_positive": true,
-      "note": "Boot 1500 frame: letture/copie palette e HBlank; crossing finale 31/indice alternativo non ordinario.",
+      "note": "Boot, 1500 frames: palette reads/copies and HBlank; final crossing 31/alternate index not ordinary.",
       "references": [
         "docs/changes/2026-10-24-consume-european-map-raster-palettes.json"
       ],
@@ -473,7 +473,7 @@
     },
     "engine.ui-choice-lists": {
       "ordinary_positive": true,
-      "note": "Party 320 frame: 32 B, 1 lista; widget/altre liste non interamente verificati.",
+      "note": "Party, 320 frames: 32 B, 1 list; widget/other lists not fully verified.",
       "references": [
         "docs/changes/2026-10-24-consume-european-ui-choice-lists.json"
       ],
@@ -482,7 +482,7 @@
     },
     "graphics.unit-obj-initial-pose": {
       "ordinary_positive": true,
-      "note": "Party 320 frame: 10962 B, 3520 pixelB, 2 sequenze; altre 119 sequenze non ordinarie.",
+      "note": "Party, 320 frames: 10962 B, 3520 pixel B, 2 sequences; 119 other sequences not ordinary.",
       "references": [
         "docs/changes/2026-10-24-consume-european-unit-obj-initial-pose.json"
       ],
@@ -491,7 +491,7 @@
     },
     "graphics.color-mode-palettes": {
       "ordinary_positive": true,
-      "note": "Party 1700 frame: 1102 B, 277 accessi, 4 frammenti; non tutti i colori/mode.",
+      "note": "Party, 1700 frames: 1102 B, 277 accesses, 4 fragments; not every color/mode.",
       "references": [
         "docs/changes/2026-10-24-consume-european-color-mode-palettes.json"
       ],
@@ -500,7 +500,7 @@
     },
     "graphics.unit-obj-equipment": {
       "ordinary_positive": true,
-      "note": "Polly verso Hildegard 500 frame: 4477 B, 1408 pixelB, 2 sequenze; altre 256 sequenze non ordinarie.",
+      "note": "Polly toward Hildegard, 500 frames: 4477 B, 1408 pixel B, 2 sequences; 256 other sequences not ordinary.",
       "references": [
         "docs/changes/2026-10-24-consume-european-unit-obj-equipment.json"
       ],
@@ -509,7 +509,7 @@
     },
     "graphics.unit-obj-normal-battle": {
       "ordinary_positive": true,
-      "note": "Battaglia 3530 frame: uso positivo e confronto completo; non tutte le 2581 sequenze.",
+      "note": "Battle, 3530 frames: positive use and complete comparison; not all 2581 sequences.",
       "references": [
         "docs/changes/2026-10-24-consume-european-normal-battle-obj-poses.json"
       ],
@@ -518,7 +518,7 @@
     },
     "graphics.unit-obj-alternate-battle": {
       "ordinary_positive": false,
-      "note": "Managed/native/CLI positivi;0 uso nel controllo di attachment, nessuna scena ordinaria positiva.",
+      "note": "Managed/native/CLI positive; 0 use in attachment check, no positive ordinary scene.",
       "references": [
         "docs/changes/2026-10-24-consume-european-alternate-battle-obj-poses.json"
       ],
@@ -830,7 +830,7 @@
           "sha256": "3de793b85b63f732a4588eb833ab14cbfca482b89c6cd2ff86a8859985456096"
         }
       ],
-      "note": "Modello sorgente normale condizionale: 33 nuovi intervalli 6436 B;151 riferimenti script/20 witness metadata. Managed/runtime non pubblicati.",
+      "note": "Conditional normal source model: 33 new ranges, 6436 B; 151 script references/20 witness metadata. Managed/runtime not published.",
       "references": [
         "docs/changes/2026-10-25-inventory-european-script-special-normal-poses.json",
         "docs/changes/2026-10-25-decode-european-script-special-normal-poses.json"
@@ -838,15 +838,15 @@
     }
   ],
   "limits": [
-    "La mappa segue il dataset autenticato dell’estrattore compilato dall’ultimo commit. La revisione delle prove ordinarie è separata: nuovi contenuti o sorgenti richiedono revisione prima di ereditare una prova positiva. EUR soltanto, non una misura USA/Android.",
-    "Codice: unione esatta degli intervalli di istruzioni scoperti dall’analizzatore attuale dai punti di ingresso ROM della cache conservata. Include candidati speculativi, non certifica ogni byte come codice o eseguito. RAM/BIOS esclusi; codice copiato in RAM non ricondotto automaticamente alla sorgente ROM.",
-    "Dati identificati: unione degli intervalli autenticati del manifest e delle proiezioni solo sorgente ancora esterne al runtime. Le proiezioni già migrate non sono conteggiate come ulteriori famiglie. Header tecnico 0x4..0xc0 separato; puntatori senza estensioni provate non classificano intere regioni.",
-    "Disponibilità runtime e uso effettivo sono distinti. Prove ordinarie storiche ereditate soltanto se identici sia il file decoded sia la mappa delle sorgenti. Nessuna singola sessione tocca tutte le famiglie. Nuove famiglie autenticate non diventano automaticamente prove di uso ordinario.",
-    "Non esiste qui una traccia ordinaria completa degli indirizzi letti: byte distinti consumati N/D. source_bytes include riletture; decoded_body_bytes e literal bytes non sono addendi della copertura ROM. Nessuna percentuale di byte effettivamente consumati viene inventata.",
-    "Condivisione: minimo verificato da descrittori/packet/transfer BG, alias manifest, song-header e riferimenti tone-wave audio. Copie uguali a offset diversi non sono condivisioni; altri grafi restano non censiti.",
-    "Sovrapposizione tra risorse: stessi byte rivendicati da famiglie distinte, inclusi font/glyph e OBJ condivisi. Livello separato dai riferimenti condivisi. Sovrapposizione codice/dati: conflitto o interleaving da esaminare, non byte da contare due volte.",
-    "Non classificato: complemento dell’unione dati/header/candidati codice. Non significa spazio libero, inutilizzato o indecifrabile. Falsi candidati codice potrebbero aumentare questa quota.",
-    "Wine non equivale a Windows nativo. Il report non ripete runtime build, scene, benchmark o fixture accettati, né misura performance, correttezza completa o progresso di decompilazione."
+    "The map follows the authenticated dataset of the extractor built from the latest commit. Ordinary evidence review is separate: new content or sources require review before inheriting positive evidence. EUR only, not a USA/Android measurement.",
+    "Code: exact union of instruction ranges discovered by the current analyzer from retained-cache ROM entry points. Includes speculative candidates; does not certify every byte as code or executed. RAM/BIOS excluded; code copied to RAM is not automatically attributed to its ROM source.",
+    "Identified data: union of authenticated manifest ranges and source-only projections still external to runtime. Already migrated projections are not counted as extra families. Technical header 0x4..0xc0 is separate; pointers without proven extents do not classify entire regions.",
+    "Runtime availability and actual use are distinct. Historical ordinary evidence is inherited only when both decoded file and source map match. No single session touches every family. Newly authenticated families are not automatically ordinary-use proof.",
+    "There is no complete ordinary trace of read addresses here: distinct consumed bytes N/A. source_bytes includes rereads; decoded_body_bytes and literal bytes are not addends of ROM coverage. No percentage of bytes actually consumed is invented.",
+    "Sharing: verified minimum from BG descriptors/packet/transfer, manifest aliases, song-header and audio tone-wave references. Equal copies at different offsets are not sharing; other graphs remain uncataloged.",
+    "Resource overlap: the same bytes claimed by distinct families, including shared font/glyph and OBJ. This layer is separate from shared references. Code/data overlap is a conflict or interleaving to examine, not bytes to count twice.",
+    "Unclassified: complement of the union of data/header/code candidates. It does not mean free, unused or undecipherable space. False code candidates could increase this share.",
+    "Wine is not equivalent to native Windows. This report does not rerun accepted runtime builds, scenes, benchmarks or fixtures, or measure performance, complete correctness or decompilation progress."
   ],
   "code_seeds_sha256": "6be05e8aa3c7ba3f81d4b15b0a7ae0470a112b0c0a0e6a4fa47f8cf687a42e3f"
 }

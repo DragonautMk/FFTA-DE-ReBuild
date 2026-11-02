@@ -1,127 +1,54 @@
-# Mappa della copertura ROM
+<a id="mappa-della-copertura-rom"></a>
 
-La [mappa navigabile](rom-coverage/index.html) rappresenta tutta la ROM EUR da
-16 MiB per offset, con selezione di celle da 64 KiB, salto a un indirizzo,
-selezione delle famiglie, prove collegate e maggiori regioni non classificate.
-Aprire il file HTML in un browser; funziona offline, senza server o dipendenze.
-I [dati JSON](rom-coverage/coverage.json) contengono gli intervalli esatti,
-mentre il colore delle celle ne riassume la densità.
+# ROM coverage map
 
-La verifica **DBG-07 del 28 ottobre 2026** usa la fotografia EUR **e76-d75**
-già autenticata, senza nuova estrazione:
-SHA-256 ROM `8fab1e390cb9d5e695bfdb86e81246892e1aa8c0cb4014db8235ff76538ea632`,
-manifest `bd0881e0c16abbf9602a1faefd2243defbd64be3c884b37962b24081060ddf3b`.
-L'estrattore committato durante la verifica è e79-d78: la pagina segnala quindi
-esplicitamente il **dataset storico**. Il percorso predefinito continua a seguire
-l'ultimo commit; generazione del dataset e revisione delle prove restano distinte.
+The [navigable map](rom-coverage/index.html) represents the entire 16 MiB EUR ROM by offset, with 64 KiB cell selection, address navigation, family selection, linked evidence and the largest unclassified regions. Open the HTML file in a browser; it works offline without a server or dependencies. The [JSON data](rom-coverage/coverage.json) contains exact intervals, while cell colors summarize their density.
 
-- **Codice candidato:** 260.472 B, **1,55%**, da 28.455 ingressi ROM conservati;
-  404 ingressi RAM esclusi. Non misura codice eseguito o decompilazione completata.
-- **Dati identificati e disponibili al runtime:** 10.325.073 B, **61,54%**,
-  in **68 famiglie**. Ogni file decoded e intervallo ROM è verificato per hash;
-  il runtime resta opt-in. Nessun residuo solo sorgente in questa fotografia.
-- **Consumo ordinario positivo:** **51 delle 68 famiglie**, ereditate dalle
-  prove e61 solo a parità di file decoded e sorgenti. Tredici famiglie hanno prove
-  da revisionare; una nuova mappa non promuove automaticamente i record storici.
-  Gli intervalli delle famiglie positive misurano 9.789.234 B, non byte letti.
-- **Audit importati:** tre report esistenti di **DS-20-EUR**, unione di
-  **31.061 B osservati**; l'audit lungo è **TRONCATO**. I due brevi completi
-  osservano entrambi **12.416 B**. Selezionando il solo breve typed: 11.495 B
-  Typed e 997 B Raw, con 76 B sovrapposti. Non sono nuove scene validate.
-- **Dati condivisi per riferimento:** almeno 1.359.934 B, **8,11%**, in
-  **294 intervalli**. La lettura comune fra casi DS diversi è un altro livello;
-  tre report del solo DS-20 non dimostrano condivisione fra scene diverse.
-- **Non classificato:** 6.253.479 B, **37,27%**, dopo dati, header e candidati
-  codice. Non significa spazio libero o inutilizzato. Gli audit non lo riducono.
+The **DBG-07 verification of October 28, 2026** uses the already authenticated **e76-d75** EUR snapshot without new extraction: ROM SHA-256 `8fab1e390cb9d5e695bfdb86e81246892e1aa8c0cb4014db8235ff76538ea632`, manifest `bd0881e0c16abbf9602a1faefd2243defbd64be3c884b37962b24081060ddf3b`. The extractor committed during verification is e79-d78, so the page explicitly identifies a **historical dataset**. The default path continues to follow the latest commit; dataset generation and evidence review are separate.
 
-Le categorie **non vanno sommate**. Restano 24.120 B con più famiglie proprietarie
-ed emergono **61.996 B di sovrapposizione codice/dati**, da esaminare come
-conflitti di classificazione. L'analizzatore può interpretare dati come
-istruzioni. Il database distribuito contiene zero funzioni per questa ROM;
-non si deducono estensioni dal simbolo successivo. I 188 B dell'header tecnico
-`0x4..0xc0` restano separati dal branch iniziale.
+- **Candidate code:** 260,472 B, **1.55%**, from 28,455 retained ROM entry points; 404 RAM entries excluded. This does not measure executed code or completed decompilation.
+- **Identified data available to the runtime:** 10,325,073 B, **61.54%**, in **68 families**. Each decoded file and ROM interval is hash-verified; the runtime remains opt-in. No source-only remainder exists in this snapshot.
+- **Positive ordinary consumption:** **51 of 68 families**, inherited from e61 evidence only when decoded files and sources match. Thirteen families have evidence awaiting review; a new map does not automatically promote historical records. Positive family intervals cover 9,789,234 B, not bytes read.
+- **Imported audits:** three existing **DS-20-EUR** reports, union of **31,061 B observed**; the long audit is **TRUNCATED**. Both complete short audits observe **12,416 B**. Selecting only the short typed audit: 11,495 B Typed and 997 B Raw, with 76 B overlap. These are not newly validated scenes.
+- **Data shared by reference:** at least 1,359,934 B, **8.11%**, in **294 intervals**. Shared reads between different DS cases are another layer; three reports for DS-20 alone do not demonstrate sharing between different scenes.
+- **Unclassified:** 6,253,479 B, **37.27%**, after data, header and candidate code. This does not mean free or unused space. Audits do not reduce it.
 
-## Interpretazione delle prove
+The categories **must not be added**. There are 24,120 B with multiple owner families and **61,996 B of code/data overlap**, to investigate as classification conflicts. The analyzer can interpret data as instructions. The distributed database contains zero functions for this ROM; extents are not inferred from the next symbol. The 188 B technical header `0x4..0xc0` remains separate from the initial branch.
 
-[evidence.json](rom-coverage/evidence.json) associa ogni famiglia ai record
-versionati e conserva i limiti sui campi realmente osservati. Le prove possono
-appartenere a generazioni precedenti i cui file sono stati mantenuti: non viene
-inventata una singola sessione con tutte le famiglie attive. File nuovi o
-modificati entrano nella mappa come autenticati, con prove ordinarie da revisionare;
-non bloccano l’aggiornamento dell’HTML. Il registro conserva gli hash sia dei file
-decoded sia delle mappe delle sorgenti delle 56 risorse revisionate e61. Ad esempio, il
-template di 48 B registra 96 source B in una scena: sono riletture, non una
-copertura di 96 byte distinti. Anche output decompressi e byte encoded hanno
-unità diverse e non sono addendi della copertura ROM.
+<a id="interpretazione-delle-prove"></a>
 
-Il livello blu della mappa rappresenta **gli intervalli delle famiglie con uso
-positivo**, non i singoli byte letti. Anche quando una famiglia è positiva,
-altri record, campi o lingue possono essere ancora aperti. I selection gates
-conservano separatamente il proprio oracle mirato (831 field B distinti su
-sorgente reale), la successiva integrazione runtime e la nuova prova ordinaria
-dispatch da 1.000 frame (277 source B, primi 26 record fisici). Quest’ultima
-non dimostra lettura di tutti i 1.024 B o dei 64 record.
+## Interpreting evidence
 
-La condivisione censita è un minimo. Le sovrapposizioni di proprietà tra font,
-glyph o banche OBJ sono calcolate separatamente; non dimostrano da sole quanti
-consumer le leggano. Non sono ancora enumerati tutti i riferimenti testuali,
-dinamici e indiretti. Il nuovo censimento audio resta limitato ai collegamenti
-song/header e tone/wave: non esaurisce sequenze, banche o altri grafi. I blocchi copiati in RAM non vengono interamente
-colorati come codice ROM solo perché ne è noto il contenitore misto.
+[evidence.json](rom-coverage/evidence.json) associates each family with versioned records and retains the limits on actually observed fields. Evidence may belong to earlier generations whose files were retained: a single session with every family active is not invented. New or changed files enter the map as authenticated, with ordinary evidence awaiting review; they do not block HTML updates. The registry retains hashes for both decoded files and source maps of the 56 reviewed e61 resources. For example, the 48 B template records 96 source B in one scene: these are rereads, not coverage of 96 distinct bytes. Decompressed outputs and encoded bytes also have different units and are not ROM coverage addends.
 
-## Scene, letture e confronto (DBG-07)
+The map's blue layer represents **intervals of families with positive use**, not individual bytes read. Even when a family is positive, other records, fields or languages may remain open. Selection gates separately retain their targeted oracle (831 distinct field B on real source), subsequent runtime integration and new ordinary dispatch evidence of 1,000 frames (277 source B, first 26 physical records). The latter does not prove reads of all 1,024 B or all 64 records.
 
-I report `rom-audit.json` di [DBG-06](../debug_rom_audit.md) si importano
-esplicitamente; non viene scandita la raccolta privata e non serve rieseguire
-il gioco. I checkbox della pagina scelgono gli audit da visualizzare, anche
-singolarmente per distinguere raw/typed o una finestra troncata. Il clic sulla
-mappa e il salto per offset mostrano famiglie, intervalli nella cella, casi DS,
-prove storiche e collegamenti all'identità/limiti dell'audit. La colonna delle
-famiglie conta soltanto i byte osservati nella selezione corrente.
+The sharing inventory is a minimum. Ownership overlaps among fonts, glyphs or OBJ banks are calculated separately; they do not by themselves establish how many consumers read them. Not all textual, dynamic and indirect references have been enumerated. The newer audio inventory remains limited to song/header and tone/wave links: it does not exhaust sequences, banks or other graphs. Blocks copied to RAM are not colored entirely as ROM code merely because their mixed container is known.
 
-I livelli restano separati:
+<a id="scene-letture-e-confronto-dbg-07"></a>
 
-- `runtime_available`: intervalli autenticati delle risorse disponibili al runtime;
-- `ordinary_resource_extents`: intere famiglie con una prova storica positiva;
-- `scene_observed`: unione fisica delle letture conservate negli audit scelti;
-- `scene_typed`, `scene_raw`, `scene_unclassified`: servizio dichiarato dai collector;
-- `scene_shared`: byte osservati da almeno due **casi DS distinti**, non due run
-  dello stesso caso; `shared_references` continua a censire i riferimenti statici;
-- `scene_outside_identified`: letture esterne ai dati identificati, comprese
-  eventuali sovrapposizioni con candidati codice, senza inventare proprietari.
+## Scenes, reads and comparison (DBG-07)
 
-Le unioni deduplicano riletture, larghezze e mirror. Bus/host, Typed/Raw,
-risorse e scene possono sovrapporsi: non sommare i loro contatori. Un filtro
-che interseca una lettura conserva la larghezza intera della lettura reale.
-`ordinary_distinct_read_bytes` resta N/D: gli audit selezionati non sostituiscono
-l'inventario mancante delle vecchie prove ordinarie.
+[DBG-06](../debug_rom_audit.md) `rom-audit.json` reports are imported explicitly; the private collection is not scanned and the game need not be rerun. Page checkboxes select audits to display, including individually to distinguish raw/typed or a truncated window. Clicking the map or jumping to an offset shows families, cell intervals, DS cases, historical evidence and links to audit identity/limits. The family column counts only bytes observed in the current selection.
 
-Il generatore ricalcola le unioni dagli eventi, verifica ROM, schema, intervalli,
-mirror, collector, filtri, frame e aritmetica richieste/scarti. Attribuisce le
-letture agli intervalli del **manifest della mappa**; un piano noto diverso resta
-solo provenienza. Se coincide, verifica anche le intersezioni dichiarate.
-L'hash del report identifica il contenuto importato; esito e run sono dichiarati
-dal collector, senza autenticare retroattivamente una nuova accettazione di scena.
-Non incorpora eventi, byte del gioco o percorsi host nel risultato.
+Layers remain separate:
 
-Limiti: massimo 32 report, 32 MiB per file e 128 MiB complessivi; schema audit 1,
-sei reader noti e massimo 50.000 eventi per audit. `TRONCATO` e `PARZIALE` restano
-visibili anche con replay riuscito. La finestra completa riguarda solo il thread,
-i collector e i filtri dichiarati: mancano altri accessi host/HLE, altri thread,
-costanti native, letture di autenticazione e altri percorsi elencati nel report.
-I fetch interprete sono esclusi; il contesto PC può essere ereditato da HLE/DMA.
-Assenze, scarti e hook mancanti non dimostrano byte mai letti.
+- `runtime_available`: authenticated intervals of resources available to the runtime;
+- `ordinary_resource_extents`: whole families with historical positive evidence;
+- `scene_observed`: physical union of reads retained in the selected audits;
+- `scene_typed`, `scene_raw`, `scene_unclassified`: service declared by collectors;
+- `scene_shared`: bytes observed by at least two **distinct DS cases**, not two runs of one case; `shared_references` continues to inventory static references;
+- `scene_outside_identified`: reads outside identified data, including any overlap with candidate code, without inventing owners.
 
-Ogni generazione confronta il precedente `coverage.json` presente nell'output.
-`--compare` / `-ComparePath` sceglie una fotografia diversa della stessa ROM.
-La pagina mostra date, generazioni, commit, manifest e hash del report precedente,
-più byte aggiunti/rimossi per livello, anche quando il totale non cambia.
-Una selezione di audit diversa è segnalata: un delta osservato non è
-avanzamento dell'estrazione. Un confronto esplicito incompatibile fallisce
-preservando l'output; un vecchio output non confrontabile viene segnalato e
-sostituito da una nuova fotografia valida. Il JSON passa a **schema 3**.
+Unions deduplicate rereads, widths and mirrors. Bus/host, Typed/Raw, resources and scenes can overlap: do not add their counters. A filter intersecting a read retains the full width of the actual read. `ordinary_distinct_read_bytes` remains N/A: selected audits do not replace the missing inventory of old ordinary evidence.
 
-Esempio (sostituire i percorsi con i propri report):
+The generator recomputes unions from events and verifies the ROM, schema, intervals, mirrors, collectors, filters, frames and request/drop arithmetic. It attributes reads to the **map manifest** intervals; a different known plan remains provenance only. If it matches, the generator also verifies declared intersections. The report hash identifies imported content; outcome and run are declared by the collector without retroactively authenticating a new scene acceptance. It embeds no events, game bytes or host paths in the result.
+
+Limits: at most 32 reports, 32 MiB per file and 128 MiB total; audit schema 1, six known readers and at most 50,000 events per audit. **TRUNCATED** and **PARTIAL** remain visible even after successful replay. A complete window covers only the declared thread, collectors and filters: other host/HLE accesses, other threads, native constants, authentication reads and other paths listed in the report are missing. Interpreter fetches are excluded; PC context may be inherited from HLE/DMA. Absences, drops and missing hooks do not prove bytes were never read.
+
+Each generation compares the previous `coverage.json` in the output. `--compare` / `-ComparePath` selects a different snapshot of the same ROM. The page shows dates, generations, commits, manifest and previous report hash, plus bytes added/removed per layer, even when the total is unchanged. A different audit selection is flagged: an observed delta is not extraction progress. An explicitly incompatible comparison fails and preserves the output; an uncomparable old output is flagged and replaced with a valid new snapshot. JSON uses **schema 3**.
+
+Example (replace paths with your own reports):
 
 ```powershell
 .\scripts\windows\rom_coverage_docker.ps1 `
@@ -136,89 +63,45 @@ bash scripts/linux/rom_coverage_docker.sh \
   --compare target/fotografia-precedente/coverage.json
 ```
 
-Audit e confronto vengono montati in sola lettura a runtime e restano fuori dal
-contesto Docker. Python non serve sull'host. Senza questi argomenti si genera
-una mappa **senza audit**: non si riutilizza silenziosamente la vecchia selezione.
-Per ripetere la selezione passare nuovamente gli stessi report.
+Audits and comparison are mounted read-only at runtime and remain outside the Docker context. Host Python is unnecessary. Without these arguments the map is generated **without audits**: the old selection is not silently reused. To repeat a selection, pass the same reports again.
 
-## Rigenerazione
+<a id="rigenerazione"></a>
 
-Con Docker non serve installare Python, Rust/Cargo o `nm` sull'host. Su Windows
-avviare Docker Desktop con **container Linux**, poi da PowerShell:
+## Regeneration
+
+Docker avoids installing Python, Rust/Cargo or `nm` on the host. On Windows, start Docker Desktop with **Linux containers**, then in PowerShell:
 
 ```powershell
 .\scripts\windows\rom_coverage_docker.ps1
 ```
 
-Su Linux, con Docker e Buildx:
+On Linux, with Docker and Buildx:
 
 ```bash
 bash scripts/linux/rom_coverage_docker.sh
 ```
 
-Entrambi usano **`Dockerfile.coverage`**, con Git e Docker sull’host.
-Preparano un contesto temporaneo con i sorgenti runtime di **un commit HEAD
-fissato all’avvio**, archiviati da Git, e gli strumenti/prove pubblici correnti.
-Le modifiche di estrazione non ancora committate restano fuori dalla build.
-Il normale eseguibile, la cache Cargo dell’host e i job di estrazione non vengono
-modificati. I sorgenti archiviati hanno date di estrazione nuove per impedire che
-una cache Cargo calda riusi binari di sorgenti diversi.
+Both use **`Dockerfile.coverage`**, with Git and Docker on the host. They prepare a temporary context with runtime sources from a **HEAD commit fixed at startup**, archived by Git, and current public tools/evidence. Uncommitted extraction changes are excluded from the build. The normal executable, host Cargo cache and extraction jobs are not modified. Archived sources receive new extraction timestamps to prevent a warm Cargo cache from reusing binaries built from different sources.
 
-L'archivio include anche `scripts/` dello stesso commit: `recomp` incorpora gli
-strumenti pubblici e i template HTML con `include_bytes!`, quindi questi file
-devono essere presenti **prima** della compilazione. Gli strumenti coverage
-correnti vengono copiati dopo, mantenendo distinti gli asset incorporati dal
-runtime e quelli che generano la mappa. Una correzione runtime soltanto locale
-non compare nella build finché non è committata.
+The archive also includes `scripts/` from the same commit: `recomp` embeds public tools and HTML templates using `include_bytes!`, so these files must be present **before** compilation. Current coverage tools are copied afterward, keeping runtime-embedded assets distinct from map generators. A runtime fix that is only local does not enter the build until committed.
 
-Il Dockerfile usa il frontend già incluso in BuildKit: non scarica separatamente
-`docker/dockerfile:1` da Docker Hub. Questo evita il fallimento preliminare
-`failed to fetch anonymous token` del frontend quando il DNS Docker non risponde.
-La build richiede comunque rete/DNS per immagini Rust, pacchetti Debian e crate
-non ancora in cache; la generazione del report continua a usare `--network none`.
-Vedere [la diagnostica Docker](../docker.md#rom-coverage-atlas).
+The Dockerfile uses BuildKit's included frontend: it does not separately download `docker/dockerfile:1` from Docker Hub. This avoids the preliminary `failed to fetch anonymous token` frontend failure when Docker DNS cannot resolve. The build still requires networking/DNS for uncached Rust images, Debian packages and crates; report generation continues to use `--network none`. See [Docker troubleshooting](../docker.md#rom-coverage-atlas).
 
-Per il percorso predefinito basta la **ROM EUR**: il container compila CLI e
-analizzatore, legge la revisione dai medesimi sorgenti compilati, prepara il
-dataset e lo conserva in `target/rom-data/coverage/<SHA-ROM>/e<extractor>-d<decoder>/`.
-Alle esecuzioni successive lo autentica e riusa senza riscriverlo. Una nuova
-revisione committata sceglie una nuova cache.
-I launcher passano `--cache-keep 2`: dopo una pubblicazione riuscita conservano
-il dataset corrente e la più recente altra generazione per quella ROM, rimuovendo
-le cache automatiche superate. I dataset espliciti restano intatti. Il comando
-Python diretto lascia la pulizia disabilitata (`--cache-keep 0`); può abilitarla
-con un conteggio positivo. Una pulizia non riuscita non invalida il report già
-pubblicato. Vedi [conservazione degli artefatti](LOCAL_ARTIFACTS.md).
-Nessuna GUI, traduzione nativa o gioco viene eseguito. Python e Rust non servono
-sull’host. Il vecchio target diretto `Dockerfile.linux --target coverage` rimane
-un percorso per sviluppatori sui sorgenti della working tree, senza l’isolamento
-Git offerto dai due launcher.
+The default path needs only the **EUR ROM**: the container builds the CLI and analyzer, reads the revision from those same compiled sources, prepares the dataset and retains it under `target/rom-data/coverage/<SHA-ROM>/e<extractor>-d<decoder>/`. Subsequent runs authenticate and reuse it without rewriting it. A newly committed revision selects a new cache. Launchers pass `--cache-keep 2`: after successful publication they retain the current dataset and the most recent other generation for that ROM, removing superseded automatic caches. Explicit datasets remain intact. Direct Python leaves cleanup disabled (`--cache-keep 0`); a positive count can enable it. Failed cleanup does not invalidate an already published report. See [artifact retention](LOCAL_ARTIFACTS.md). No GUI, native translation or game is run. Python and Rust are unnecessary on the host. The old direct `Dockerfile.linux --target coverage` target remains a developer path using working-tree sources, without the two launchers' Git isolation.
 
-I 28.455 punti d'ingresso sono metadati versionati, legati per hash alla ROM,
-alla lista conservata e alla cache da cui furono estratti. **Non serve più la
-vecchia `.dll` locale**. ROM e prove sono montate in sola lettura; solo cache
-locale e cartella di output sono scrivibili. Gli asset estratti restano fuori
-dall'immagine e da Git. La generazione usa la rete disabilitata; la prima build
-può scaricare le dipendenze. Su Linux i file appartengono all'utente chiamante.
+The 28,455 entry points are versioned metadata, hash-bound to the ROM, retained list and cache from which they were extracted. **The old local `.dll` is no longer needed**. ROM and evidence are mounted read-only; only local cache and output folder are writable. Extracted assets stay outside the image and Git. Generation uses disabled networking; the first build may download dependencies. On Linux files belong to the calling user.
 
-Output: **`docs/development/rom-coverage/index.html`** e **`coverage.json`**.
-L’HTML e il terminale mostrano **data/ora effettive di rigenerazione**, commit,
-generazione del dataset e data/revisione separate delle prove ordinarie.
-Il log confronta i conteggi con il report precedente, inclusi i piccoli incrementi
-in byte che possono sparire nell’arrotondamento percentuale. Se la copertura
-coincide compare **“Copertura invariata”**, ma HTML/JSON vengono comunque
-riscritti con una nuova data. Ricompilazione dell’analizzatore e data non vengono
-scambiate per un aumento della copertura.
-Ogni avvio conserva anche un log in **`target/build-logs/rom-coverage-*.log`**,
-inclusi gli errori. Un errore di validazione non sostituisce il report esistente.
-Su PowerShell, `-OpenReport` apre il risultato nel browser con un URL versionato
-per richiedere la nuova copia della pagina:
+Output: **`docs/development/rom-coverage/index.html`** and **`coverage.json`**. A newly generated HTML report and terminal show the **actual regeneration date/time**, commit, dataset generation and separate date/revision of ordinary evidence. The log compares counts with the previous report, including small byte increments that percentage rounding can hide. If coverage matches it shows **“Coverage unchanged”**, but HTML/JSON are still rewritten with a new date. Analyzer recompilation and date are not presented as increased coverage.
+
+The checked-in snapshot was subsequently presented in English by translating only saved resource notes and limits. Its original `generated_at` and `evidence_sha256` continue to identify the source analysis; `presentation_translation` separately records the translation and translated evidence hash. Fifteen coverage-layer comparisons showed no changes. This presentation update did not read a ROM or dataset, execute the guest, or generate new analysis or acceptance. Since the translated evidence file has a different byte hash, a future regenerated report may report a metadata difference even with zero coverage-layer deltas.
+
+Every launch also retains a log in **`target/build-logs/rom-coverage-*.log`**, including errors. A validation error does not replace the existing report. On PowerShell, `-OpenReport` opens the result in a browser with a versioned URL to request the new copy:
 
 ```powershell
 .\scripts\windows\rom_coverage_docker.ps1 -OpenReport
 ```
 
-Per usare un dataset esistente o un output separato:
+To use an existing dataset or separate output:
 
 ```powershell
 .\scripts\windows\rom_coverage_docker.ps1 -DatasetDir 'D:\FFTA dati\e65' -OutputDir 'target/coverage-preview'
@@ -228,18 +111,9 @@ Per usare un dataset esistente o un output separato:
 bash scripts/linux/rom_coverage_docker.sh --dataset '/dati/FFTA e65' --output target/coverage-preview
 ```
 
-Il dataset esplicito resta in sola lettura. Una versione diversa da quella
-dell’estrattore viene accettata come **fotografia storica**, con avviso visibile
-nell’HTML e nel terminale. Omettere `--dataset` / `-DatasetDir` per seguire la
-versione corrente. ROM, file decoded e sorgenti devono comunque autenticarsi. `-RomPath`,
-`-EvidencePath` e `-OutputDir` corrispondono a `--rom`, `--evidence`, `--output`.
-`-TranslationPath` / `--translation` rimane un controllo facoltativo sulla
-cache ELF originale conservata; non è richiesto dal percorso normale.
-Tutti i percorsi relativi partono dalla radice del progetto. Gli spazi sono
-supportati; virgole, doppi apici e ritorni a capo non sono supportati nei mount.
-Docker deve poter accedere ai percorsi host.
+An explicit dataset remains read-only. A version different from the extractor is accepted as a **historical snapshot**, with a visible HTML and terminal warning. Omit `--dataset` / `-DatasetDir` to follow the current version. The ROM, decoded files and sources must still authenticate. `-RomPath`, `-EvidencePath` and `-OutputDir` correspond to `--rom`, `--evidence`, `--output`. `-TranslationPath` / `--translation` remains an optional check on the retained original ELF cache; it is not required for the normal path. All relative paths start at the project root. Spaces are supported; commas, double quotes and newlines are unsupported in mounts. Docker must be able to access host paths.
 
-Alternativa per sviluppatori con Python 3.11+ e Rust/Cargo:
+Developer alternative with Python 3.11+ and Rust/Cargo:
 
 ```sh
 cargo build --release --locked --offline -p recomp-core --example rom_code_ranges
@@ -251,29 +125,10 @@ python3 scripts/rom_coverage.py \
 python3 -m unittest discover -s scripts -p test_rom_coverage.py -v
 ```
 
-Una nuova generazione committata aggiorna automaticamente i dati. Per promuovere
-le prove di uso ordinario occorre invece rivedere le singole accettazioni e
-aggiornare esplicitamente `evidence.json`. Il generatore rifiuta ROM, source hash,
-file decoded o cache con revisione diversa dall’estrattore che la deve produrre. Conservare la fotografia
-precedente quando serve confrontare avanzamenti. Gli intervalli usano offset
-file e fine esclusiva `[inizio, fine)`; per il primo mirror CPU aggiungere
-`0x08000000`. I mirror non moltiplicano i byte della ROM.
+A newly committed generation updates data automatically. Promoting ordinary-use evidence instead requires reviewing individual acceptances and explicitly updating `evidence.json`. The generator rejects ROMs, source hashes, decoded files or caches with a revision different from the extractor that must produce them. Retain the previous snapshot when comparing progress. Intervals use file offsets and exclusive ends `[start, end)`; add `0x08000000` for the first CPU mirror. Mirrors do not multiply ROM bytes.
 
-L'output contiene solo metadati. ROM, salvataggi, input, immagini del gioco,
-asset decoded e codice generato restano fuori dai file versionati. Nessun nuovo
-benchmark, registrazione o test runtime accettato è stato ripetuto per la mappa.
-La validazione del report comprende conteggi contro un modello indipendente
-di insiemi di byte, generazione reale autenticata e controlli del browser.
+Output contains metadata only. ROMs, saves, inputs, game images, decoded assets and generated code remain outside versioned files. No new benchmark, recording or accepted runtime test was repeated for the map. Report validation includes counts against an independent byte-set model, authenticated real generation and browser checks.
 
-Il percorso Docker è verificato con estrazione EUR e65 reale, confronto con i
-61 file già accettati, riuso senza scrittura e rigenerazione HTML/JSON. I test
-coprono generazioni nuove/storiche, risorse in attesa di revisione, migrazione
-source-only, isolamento Git, timestamp, conservazione del report su errore e
-conteggi indipendenti. Il launcher PowerShell è verificato con Docker simulato
-su Linux; Windows nativo/PowerShell 5.1/Docker Desktop restano non provati direttamente.
+The Docker path was verified with real e65 EUR extraction, comparison with the 61 already accepted files, reuse without writes and HTML/JSON regeneration. Tests cover new/historical generations, resources awaiting review, source-only migration, Git isolation, timestamps, preserving reports on error and independent counts. The PowerShell launcher was verified with mocked Docker on Linux; native Windows/PowerShell 5.1/Docker Desktop remain untested directly.
 
-DBG-07 è verificato con 26 test del generatore/importazione, otto test Bash e
-12 controlli PowerShell 7.4 in container (Docker simulato), importazione Docker
-reale degli audit conservati, rifiuto di identità errate e controlli browser
-1400/620 px. Il dataset e76 e gli audit restano in sola lettura; nessuna scena
-viene rieseguita. Windows nativo/PowerShell 5.1/Docker Desktop restano da provare.
+DBG-07 was verified with 26 generator/import tests, eight Bash tests and 12 PowerShell 7.4 checks in a container (mocked Docker), real Docker import of retained audits, rejection of incorrect identities and 1400/620 px browser checks. The e76 dataset and audits remain read-only; no scenes were rerun. Native Windows/PowerShell 5.1/Docker Desktop remain to be tested.

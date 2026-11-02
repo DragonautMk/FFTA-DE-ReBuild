@@ -210,8 +210,8 @@ def resource_evidence(resource, evidence):
             raise ValueError(f"missing evidence record {resource['id']}")
         return {**note, "evidence_status": "reviewed"}
     return {"ordinary_positive": False, "references": [], "evidence_status": "unreviewed",
-            "note": "Risorsa e sorgenti autenticate nel dataset selezionato; "
-                    "prove di consumo ordinario da revisionare."}
+            "note": "Resource and sources authenticated in the selected dataset; "
+                    "ordinary-use evidence pending review."}
 
 
 def source_only_spans(extra, rom):
@@ -239,10 +239,10 @@ def prepare_dataset(args):
         if not args.extractor:
             raise ValueError("automatic dataset preparation requires --extractor")
         dataset.parent.mkdir(parents=True, exist_ok=True)
-        print(f"Preparazione dataset e{extractor_rev}-d{decoder_rev}: {dataset}", flush=True)
+        print(f"Preparing dataset e{extractor_rev}-d{decoder_rev}: {dataset}", flush=True)
         subprocess.run([args.extractor, "rom-data", "extract", args.rom, str(dataset)], check=True)
     else:
-        print(f"Dataset conservato e{extractor_rev}-d{decoder_rev}: verifica e riuso", flush=True)
+        print(f"Retained dataset e{extractor_rev}-d{decoder_rev}: verify and reuse", flush=True)
     manifest = tomllib.loads((dataset / "manifest.toml").read_text())
     if (manifest["extractor_revision"], manifest["decoder_revision"]) != (extractor_rev, decoder_rev):
         raise ValueError("cached/extracted dataset differs from built extractor revision; "
@@ -262,8 +262,8 @@ def build(args):
     check_baseline(manifest, evidence, digest)
     if args.translation is not None and sha(args.translation) != evidence["translation_sha256"]:
         raise ValueError("translation differs from the retained evidence baseline")
-    print(f"Verifica e{manifest['extractor_revision']}-d{manifest['decoder_revision']}: "
-          f"{len(manifest['resources'])} risorse e relativi intervalli ROM", flush=True)
+    print(f"Verifying e{manifest['extractor_revision']}-d{manifest['decoder_revision']}: "
+          f"{len(manifest['resources'])} resources and their ROM ranges", flush=True)
     records, owners, all_data, ordinary = [], {}, [], []
     for resource in manifest["resources"]:
         rid = resource["id"]
@@ -297,7 +297,7 @@ def build(args):
         records.append({**extra, "id": extra_id, "ranges": spans, "source_bytes": length(spans),
                         "runtime_available": False, "ordinary_positive": False})
     data = union(all_data)
-    print("Analisi statica del codice dai punti di ingresso conservati", flush=True)
+    print("Static code analysis from retained entry points", flush=True)
     with tempfile.TemporaryDirectory() as work:
         code, code_info = code_ranges(rom_path, pathlib.Path(args.translation) if args.translation else None,
                                       pathlib.Path(args.analyzer), rom, pathlib.Path(work),
@@ -412,7 +412,7 @@ def _generate(args, lease):
             if comparison_path:
                 raise ValueError(f"invalid --compare report: {error}") from error
             previous = None
-            report["comparison_note"] = "Rapporto precedente non confrontabile: " + str(error)
+            report["comparison_note"] = "Previous report cannot be compared: " + str(error)
     payload = json.dumps(report, ensure_ascii=False, separators=(",", ":"))
     with tempfile.TemporaryDirectory(dir=output) as staging:
         staging = pathlib.Path(staging)
@@ -420,18 +420,18 @@ def _generate(args, lease):
         (staging / "index.html").write_text(template.replace("__ROM_COVERAGE_DATA__", payload.replace("<", "\\u003c")))
         os.replace(staging / "coverage.json", output / "coverage.json")
         os.replace(staging / "index.html", output / "index.html")
-    print(f"Rapporto {report['generation']} · generato {report['generated_at']} · "
-          f"{report['totals']['runtime_families']} famiglie runtime", flush=True)
-    print(f"Prove revisionate {report['reviewed_generation']} del {report['evidence_date']}; "
-          f"{len(report['pending_review'])} famiglie con prove da revisionare.", flush=True)
+    print(f"Report {report['generation']} · generated {report['generated_at']} · "
+          f"{report['totals']['runtime_families']} runtime families", flush=True)
+    print(f"Reviewed evidence {report['reviewed_generation']} of {report['evidence_date']}; "
+          f"{len(report['pending_review'])} families with evidence pending review.", flush=True)
     if report["historical_dataset"]:
-        print(f"ATTENZIONE: dataset storico esplicito; estrattore {report['extractor_generation']}. "
-              "Omettere --dataset/-DatasetDir per seguire la versione corrente.", flush=True)
+        print(f"WARNING: explicit historical dataset; extractor {report['extractor_generation']}. "
+              "Omit --dataset/-DatasetDir to follow the current version.", flush=True)
     if previous:
         if semantic_report(previous) == semantic_report(report):
-            print("Copertura invariata; index.html e coverage.json rigenerati con nuova data.", flush=True)
+            print("Coverage unchanged; index.html and coverage.json regenerated with a new timestamp.", flush=True)
         else:
-            print(f"Confronto con {previous.get('generation', '?')}:", flush=True)
+            print(f"Comparison with {previous.get('generation', '?')}:", flush=True)
             for key in ("identified_data", "runtime_available", "unclassified", "runtime_families"):
                 if key in previous["totals"] and key in report["totals"]:
                     delta = report["totals"][key] - previous["totals"][key]
@@ -442,10 +442,10 @@ def _generate(args, lease):
         try:
             removed = prune_coverage_cache(args.dataset_cache, args.dataset, args.cache_keep, lease=lease)
             if removed:
-                print(f"Cache coverage: rimosse {len(removed)} generazioni superate; "
-                      f"conservate fino a {args.cache_keep}.", flush=True)
+                print(f"Coverage cache: removed {len(removed)} superseded generations; "
+                      f"retained up to {args.cache_keep}.", flush=True)
         except (OSError, ValueError) as error:
-            print(f"Report aggiornato; pulizia cache non completata: {error}", file=sys.stderr)
+            print(f"Report updated; cache cleanup incomplete: {error}", file=sys.stderr)
     return 0
 
 
