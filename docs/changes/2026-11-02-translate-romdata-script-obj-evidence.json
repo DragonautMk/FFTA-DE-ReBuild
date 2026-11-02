@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-romdata-script-obj-evidence",
+  "title": "Translate ROM data script OBJ evidence",
+  "kind": "docs",
+  "platforms": [
+    "Desktop ROM-data planning documentation"
+  ],
+  "changes": [
+    "Translate six script OBJ pairing, observation, model, runtime and CLI evidence entries while preserving their scope and open criteria."
+  ],
+  "validation": [
+    "Checked unchanged surrounding text and matching numeric values, task IDs and link targets against the preimage."
+  ],
+  "limitations": [
+    "Later evidence and the wider English-first audit remain open; no ROM access or runtime checks were performed."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_TODO.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

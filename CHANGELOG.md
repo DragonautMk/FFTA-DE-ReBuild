@@ -41,6 +41,66 @@ Type: docs. Platforms: project-wide.
 
 [Change record](docs/changes/2026-11-02-translate-scene-rendering-guides.json)
 
+## 2026-11-02 — Translate world roads and encounter header evidence
+
+Type: docs. Platforms: Desktop ROM-data planning documentation.
+
+**Changes**
+
+- Translate world road and encounter header source, model, runtime, CLI and ordinary-use evidence while retaining coverage limits.
+
+**Validation**
+
+- Checked unchanged surrounding text and matching numeric values, task IDs, link targets and inline literals against the preimage.
+
+**Limitations**
+
+- Later evidence and the wider English-first audit remain open; no ROM access or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-romdata-world-roads-encounter-evidence.json)
+
+## 2026-11-02 — Translate world record and indexed graphics evidence
+
+Type: docs. Platforms: Desktop ROM-data planning documentation.
+
+**Changes**
+
+- Translate world record and indexed graphics source, model, runtime, CLI and ordinary-use evidence while retaining coverage limits.
+
+**Validation**
+
+- Checked unchanged surrounding text and matching numeric values, task IDs, link targets and inline literals against the preimage.
+
+**Limitations**
+
+- Later evidence and the wider English-first audit remain open; no ROM access or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-romdata-world-records-indexed-graphics-evidence.json)
+
+## 2026-11-02 — Translate world location and node evidence
+
+Type: docs. Platforms: Desktop ROM-data planning documentation.
+
+**Changes**
+
+- Translate world location selection, Giza battle entry and ordinary constructor evidence, and world-node source, model, runtime, CLI and travel evidence.
+
+**Validation**
+
+- Checked unchanged surrounding text and matching numeric values, task IDs, link targets and inline literals against the preimage.
+
+**Limitations**
+
+- Later evidence and the wider English-first audit remain open; no ROM access or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-romdata-world-location-node-evidence.json)
+
 ## 2026-11-02 — Translate ROM data unit OBJ pose evidence
 
 Type: docs. Platforms: Desktop ROM-data planning documentation.
@@ -121,6 +181,26 @@ Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.j
 
 [Change record](docs/changes/2026-11-02-translate-romdata-unit-battle-evidence.json)
 
+## 2026-11-02 — Translate ROM data alternate unit battle evidence
+
+Type: docs. Platforms: Desktop ROM-data planning documentation.
+
+**Changes**
+
+- Translated unit OBJ alternate battle static contract, model, runtime and CLI evidence into English while retaining outcomes and ordinary-use limits.
+
+**Validation**
+
+- Compared numeric tokens, task identifiers, links and inline literals with the preimage; confirmed all text outside the selected entries is unchanged.
+
+**Limitations**
+
+- Script OBJ actor pairing and later untranslated evidence remain; no ROM access or runtime checks performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-romdata-unit-alternate-evidence.json)
+
 ## 2026-11-02 — Translate ROM data UI list evidence
 
 Type: docs. Platforms: Desktop ROM-data planning documentation.
@@ -181,6 +261,26 @@ Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.j
 
 [Change record](docs/changes/2026-11-02-translate-romdata-task-descriptor-evidence.json)
 
+## 2026-11-02 — Translate task cycle and u16 OBJ bank evidence
+
+Type: docs. Platforms: Desktop ROM-data planning documentation.
+
+**Changes**
+
+- Translate task-cycle delta, Bank residue and u16 task OBJ bank source, model, runtime, CLI and ordinary evidence while retaining limits and open criteria.
+
+**Validation**
+
+- Checked unchanged surrounding text and matching numeric values, task IDs, link targets and inline literals against the preimage.
+
+**Limitations**
+
+- Later evidence and the wider English-first audit remain open; no ROM access or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-romdata-task-cycle-u16-evidence.json)
+
 ## 2026-11-02 — Translate ROM data selection-gates evidence
 
 Type: docs. Platforms: Desktop ROM-data planning documentation.
@@ -220,6 +320,66 @@ Type: docs. Platforms: Desktop ROM-data planning documentation.
 Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
 
 [Change record](docs/changes/2026-11-02-translate-romdata-script-text-evidence.json)
+
+## 2026-11-02 — Translate script registry evidence
+
+Type: docs. Platforms: Desktop ROM-data planning documentation.
+
+**Changes**
+
+- Translate special-unit and generic-direct script registry source, model, runtime, CLI and negative-lead entries while preserving historical results and open criteria.
+
+**Validation**
+
+- Checked unchanged surrounding text and matching numeric values, task IDs, link targets and inline literals against the preimage.
+
+**Limitations**
+
+- Later evidence and the wider English-first audit remain open; no ROM access or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-romdata-script-registry-evidence.json)
+
+## 2026-11-02 — Translate script special ordinary and override evidence
+
+Type: docs. Platforms: Desktop ROM-data planning documentation.
+
+**Changes**
+
+- Translate script special ordinary-use, alternate and override contracts, runtime, CLI and negative-lead entries while retaining historical limits and open criteria.
+
+**Validation**
+
+- Checked unchanged surrounding text and matching numeric values, task IDs, link targets and inline literals against the preimage.
+
+**Limitations**
+
+- Later evidence and the wider English-first audit remain open; no ROM access or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-romdata-script-ordinary-override-evidence.json)
+
+## 2026-11-02 — Translate ROM data script OBJ evidence
+
+Type: docs. Platforms: Desktop ROM-data planning documentation.
+
+**Changes**
+
+- Translate six script OBJ pairing, observation, model, runtime and CLI evidence entries while preserving their scope and open criteria.
+
+**Validation**
+
+- Checked unchanged surrounding text and matching numeric values, task IDs and link targets against the preimage.
+
+**Limitations**
+
+- Later evidence and the wider English-first audit remain open; no ROM access or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-romdata-script-obj-evidence.json)
 
 ## 2026-11-02 — Translate ROM data script command directory evidence
 
@@ -280,6 +440,46 @@ Type: docs. Platforms: Desktop ROM-data planning documentation.
 Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
 
 [Change record](docs/changes/2026-11-02-translate-romdata-script-archive-evidence.json)
+
+## 2026-11-02 — Translate registry redirect and property-word evidence
+
+Type: docs. Platforms: Desktop ROM-data planning documentation.
+
+**Changes**
+
+- Translate script registry redirect and FFFF reader classifications plus actor property-word source, model, runtime, CLI and ordinary-use evidence.
+
+**Validation**
+
+- Checked unchanged surrounding text and matching numeric values, task IDs, link targets and inline literals against the preimage.
+
+**Limitations**
+
+- Later evidence and the wider English-first audit remain open; no ROM access or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-romdata-registry-redirect-property-evidence.json)
+
+## 2026-11-02 — Translate property getter and UI list evidence
+
+Type: docs. Platforms: Desktop ROM-data planning documentation.
+
+**Changes**
+
+- Translate property getter callers, byte property-word validation and UI property-selected OBJ list evidence, retaining results and open criteria.
+
+**Validation**
+
+- Checked unchanged surrounding text and matching numeric values, task IDs, link targets and inline literals against the preimage.
+
+**Limitations**
+
+- Later evidence and the wider English-first audit remain open; no ROM access or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-romdata-property-getter-ui-list-evidence.json)
 
 ## 2026-11-02 — Translate ROM data progression scene evidence
 
@@ -381,6 +581,46 @@ Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.j
 
 [Change record](docs/changes/2026-11-02-translate-romdata-palette-dispatch-evidence.json)
 
+## 2026-11-02 — Translate packed lookup and descriptor evidence
+
+Type: docs. Platforms: Desktop ROM-data planning documentation.
+
+**Changes**
+
+- Translate conditional packed lookup and descriptor bank source, model, runtime, CLI and ordinary-use evidence while retaining coverage limits.
+
+**Validation**
+
+- Checked unchanged surrounding text and matching numeric values, task IDs, link targets and inline literals against the preimage.
+
+**Limitations**
+
+- Later evidence and the wider English-first audit remain open; no ROM access or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-romdata-packed-lookup-descriptor-evidence.json)
+
+## 2026-11-02 — Translate observed task parameter evidence
+
+Type: docs. Platforms: Desktop ROM-data planning documentation.
+
+**Changes**
+
+- Translate observed task parameter and lower residue records, constructor animation evidence and conditional phase-zero validation while retaining open criteria.
+
+**Validation**
+
+- Checked unchanged surrounding text and matching numeric values, task IDs, link targets and inline literals against the preimage.
+
+**Limitations**
+
+- Later evidence and the wider English-first audit remain open; no ROM access or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-romdata-observed-task-parameters-evidence.json)
+
 ## 2026-11-02 — Translate OBJ and UI graphics evidence
 
 Type: docs. Platforms: Desktop ROM-data planning documentation.
@@ -421,6 +661,26 @@ Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.j
 
 [Change record](docs/changes/2026-11-02-translate-romdata-obj-list-evidence.json)
 
+## 2026-11-02 — Translate native ROM residue and observed OBJ evidence
+
+Type: docs. Platforms: Desktop ROM-data planning documentation.
+
+**Changes**
+
+- Translate bounded native and host ROM residue inventories, source classifications and observed indirect OBJ list model, runtime, CLI and scene evidence.
+
+**Validation**
+
+- Checked unchanged surrounding text and matching numeric values, task IDs, link targets and inline literals against the preimage.
+
+**Limitations**
+
+- Later evidence and the wider English-first audit remain open; no ROM access or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-romdata-native-residue-obj-evidence.json)
+
 ## 2026-11-02 — Translate ROM-data mod plans and progression rules
 
 Type: docs. Platforms: Desktop ROM-data planning documentation.
@@ -440,6 +700,26 @@ Type: docs. Platforms: Desktop ROM-data planning documentation.
 Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
 
 [Change record](docs/changes/2026-11-02-translate-romdata-mod-plans.json)
+
+## 2026-11-02 — Translate mission runtime and selection table evidence
+
+Type: docs. Platforms: Desktop ROM-data planning documentation.
+
+**Changes**
+
+- Translate mission-record runtime, CLI and ordinary evidence and selection-byte-table source, model, runtime, CLI and ordinary evidence while retaining coverage limits.
+
+**Validation**
+
+- Checked unchanged surrounding text and matching numeric values, task IDs, link targets and inline literals against the preimage.
+
+**Limitations**
+
+- Later evidence and the wider English-first audit remain open; no ROM access or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-romdata-mission-runtime-selection-evidence.json)
 
 ## 2026-11-02 — Translate ROM data metadata52 evidence
 
@@ -521,6 +801,46 @@ Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.j
 
 [Change record](docs/changes/2026-11-02-translate-romdata-map-raster-evidence.json)
 
+## 2026-11-02 — Translate localized graphics and transfer evidence
+
+Type: docs. Platforms: Desktop ROM-data planning documentation.
+
+**Changes**
+
+- Translate localized table graphics and fixed raw transfer source, model, runtime, CLI and ordinary-use evidence while retaining open criteria.
+
+**Validation**
+
+- Checked unchanged surrounding text and matching numeric values, task IDs, link targets and inline literals against the preimage.
+
+**Limitations**
+
+- Later evidence and the wider English-first audit remain open; no ROM access or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-romdata-localized-graphics-transfers-evidence.json)
+
+## 2026-11-02 — Translate linked metadata and record evidence
+
+Type: docs. Platforms: Desktop ROM-data planning documentation.
+
+**Changes**
+
+- Translate linked 28-byte metadata and four-byte record source, model, runtime, CLI and ordinary-use evidence while retaining coverage limits.
+
+**Validation**
+
+- Checked unchanged surrounding text and matching numeric values, task IDs, link targets and inline literals against the preimage.
+
+**Limitations**
+
+- Later evidence and the wider English-first audit remain open; no ROM access or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-romdata-linked-metadata-records-evidence.json)
+
 ## 2026-11-02 — Translate item and linked metadata evidence
 
 Type: docs. Platforms: Desktop ROM-data planning documentation.
@@ -601,6 +921,26 @@ Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.j
 
 [Change record](docs/changes/2026-11-02-translate-romdata-global-evaluation-evidence.json)
 
+## 2026-11-02 — Translate gameplay masks and compact OBJ evidence
+
+Type: docs. Platforms: Desktop ROM-data planning documentation.
+
+**Changes**
+
+- Translate gameplay mask, dynamic fragment counter and compact OBJ progress entries at the end of the ROM-data TODO.
+
+**Validation**
+
+- Checked unchanged preceding text and matching numeric values, task IDs, link targets and inline literals against the preimage; searched for common Italian prose and accented text.
+
+**Limitations**
+
+- A whole-document review and the wider English-first audit remain open; no ROM access or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-romdata-gameplay-masks-compact-evidence.json)
+
 ## 2026-11-02 — Translate font and initial OBJ evidence
 
 Type: docs. Platforms: Desktop ROM-data planning documentation.
@@ -621,6 +961,26 @@ Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.j
 
 [Change record](docs/changes/2026-11-02-translate-romdata-font-obj-evidence.json)
 
+## 2026-11-02 — Translate FFFF reader and slot job lookup evidence
+
+Type: docs. Platforms: Desktop ROM-data planning documentation.
+
+**Changes**
+
+- Translate FFFF reader-field model, runtime, CLI and locator evidence and twenty-slot job lookup and live RAM helper records, retaining results and open criteria.
+
+**Validation**
+
+- Checked unchanged surrounding text and matching numeric values, task IDs, link targets and inline literals against the preimage.
+
+**Limitations**
+
+- Later evidence and the wider English-first audit remain open; no ROM access or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-romdata-ffff-slot-job-evidence.json)
+
 ## 2026-11-02 — Translate initial ROM-data extractor criteria
 
 Type: docs. Platforms: Desktop ROM-data planning documentation.
@@ -640,6 +1000,26 @@ Type: docs. Platforms: Desktop ROM-data planning documentation.
 Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
 
 [Change record](docs/changes/2026-11-02-translate-romdata-extractor-criteria.json)
+
+## 2026-11-02 — Translate event and sparse parameter evidence
+
+Type: docs. Platforms: Desktop ROM-data planning documentation.
+
+**Changes**
+
+- Translate event record and sparse parameter source, model, runtime, CLI and ordinary-use evidence while retaining the partial positive-use criteria.
+
+**Validation**
+
+- Checked unchanged surrounding text and matching numeric values, task IDs, link targets and inline literals against the preimage.
+
+**Limitations**
+
+- Later evidence and the wider English-first audit remain open; no ROM access or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-romdata-event-sparse-parameters-evidence.json)
 
 ## 2026-11-02 — Translate ROM data event directory evidence
 
@@ -681,6 +1061,66 @@ Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.j
 
 [Change record](docs/changes/2026-11-02-translate-romdata-equivalence-criteria.json)
 
+## 2026-11-02 — Translate encounter units and coordinates evidence
+
+Type: docs. Platforms: Desktop ROM-data planning documentation.
+
+**Changes**
+
+- Translate encounter unit template and coordinate source, model, runtime, CLI and ordinary-use evidence while retaining coverage limits.
+
+**Validation**
+
+- Checked unchanged surrounding text and matching numeric values, task IDs, link targets and inline literals against the preimage.
+
+**Limitations**
+
+- Later evidence and the wider English-first audit remain open; no ROM access or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-romdata-encounter-units-coordinates-evidence.json)
+
+## 2026-11-02 — Translate dynamic transfer and gameplay lookup evidence
+
+Type: docs. Platforms: Desktop ROM-data planning documentation.
+
+**Changes**
+
+- Translate dynamic raw transfer, clan table alias, historical residue and conditional gameplay lookup evidence while retaining outcomes and open criteria.
+
+**Validation**
+
+- Checked unchanged surrounding text and matching numeric values, task IDs, link targets and inline literals against the preimage.
+
+**Limitations**
+
+- Later evidence and the wider English-first audit remain open; no ROM access or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-romdata-dynamic-clan-lookup-evidence.json)
+
+## 2026-11-02 — Translate constructor reachability evidence
+
+Type: docs. Platforms: Desktop ROM-data planning documentation.
+
+**Changes**
+
+- Translate constructor flag and slot gates, eligible map and mission selection, and White Flowers battle navigation evidence while retaining partial outcomes.
+
+**Validation**
+
+- Checked unchanged surrounding text and matching task IDs, link targets and literals; verified numeric values after separating a concatenated address label.
+
+**Limitations**
+
+- Later evidence and the wider English-first audit remain open; no ROM access or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-romdata-constructor-reachability-evidence.json)
+
 ## 2026-11-02 — Translate ROM data constructor evidence
 
 Type: docs. Platforms: Desktop ROM-data planning documentation.
@@ -700,6 +1140,26 @@ Type: docs. Platforms: Desktop ROM-data planning documentation.
 Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
 
 [Change record](docs/changes/2026-11-02-translate-romdata-constructor-evidence.json)
+
+## 2026-11-02 — Translate conditional and mission record evidence
+
+Type: docs. Platforms: Desktop ROM-data planning documentation.
+
+**Changes**
+
+- Translate conditional eight-byte record source, model, runtime, CLI and ordinary evidence and mission record source and model evidence, retaining coverage limits.
+
+**Validation**
+
+- Checked unchanged surrounding text and matching numeric values, task IDs, link targets and inline literals against the preimage.
+
+**Limitations**
+
+- Later evidence and the wider English-first audit remain open; no ROM access or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-romdata-conditional-mission-record-evidence.json)
 
 ## 2026-11-02 — Translate ROM data blend program evidence
 
@@ -880,6 +1340,66 @@ Type: docs. Platforms: Desktop ROM-data planning documentation.
 Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
 
 [Change record](docs/changes/2026-11-02-translate-romdata-aggregate-keys-evidence.json)
+
+## 2026-11-02 — Translate ROM inventory script alternate and override evidence
+
+Type: docs. Platforms: Desktop ROM-data inventory.
+
+**Changes**
+
+- Translate script-special alternate and override source, runtime, CLI and negative-lead inventory paragraphs while retaining their scope and open criteria.
+
+**Validation**
+
+- Checked unchanged surrounding text and matching numeric values, task IDs, link targets and inline literals against the preimage.
+
+**Limitations**
+
+- The remaining inventory and wider cross-tree English-first audit are open; no ROM access or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-rom-inventory-script-alternate-override.json)
+
+## 2026-11-02 — Translate ROM inventory registry and property evidence
+
+Type: docs. Platforms: Desktop ROM-data inventory.
+
+**Changes**
+
+- Translate registry selector, redirect, FFFF reader and actor property evidence in the ROM inventory while retaining scopes and open criteria.
+
+**Validation**
+
+- Checked unchanged surrounding text and matching numeric values, task IDs, link targets and inline literals against the preimage.
+
+**Limitations**
+
+- The remaining inventory and wider cross-tree English-first audit are open; no ROM access or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-rom-inventory-registry-property-evidence.json)
+
+## 2026-11-02 — Translate ROM inventory property getter and UI list evidence
+
+Type: docs. Platforms: Desktop ROM-data inventory.
+
+**Changes**
+
+- Translate additional property getter callers, byte property complement and UI property-selected list inventory evidence, reusing matching plan translations.
+
+**Validation**
+
+- Checked matching plan preimage for four duplicated entries and verified unchanged surrounding text, numeric values, task IDs, link targets and inline literals.
+
+**Limitations**
+
+- The remaining inventory and wider cross-tree English-first audit are open; no ROM access or runtime checks were performed.
+
+Documentation: [ROM_DATA_TODO.md](docs/development/ROM_DATA_TODO.md), [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-rom-inventory-property-getter-ui-evidence.json)
 
 ## 2026-11-02 — Translate ROM-read audit and shared-event guides
 
@@ -1319,6 +1839,26 @@ Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.j
 
 [Change record](docs/changes/2026-11-02-translate-atlas-spec-introduction.json)
 
+## 2026-11-02 — Synchronize matching ROM inventory translations
+
+Type: docs. Platforms: Desktop ROM-data inventory.
+
+**Changes**
+
+- Synchronize 120 inventory evidence entries with their existing English plan translations after confirming every source block exactly matched the plan preimage.
+
+**Validation**
+
+- Compared all 13 source blocks byte for byte before replacement; task IDs, link targets and inline literals match, and numeric differences reflect one separated address label and one explicit zero.
+
+**Limitations**
+
+- Later inventory sections and the wider cross-tree English-first audit remain open; no ROM access or runtime checks were performed.
+
+Documentation: [ROM_DATA_TODO.md](docs/development/ROM_DATA_TODO.md), [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-sync-rom-inventory-validated-plan-translations.json)
+
 ## 2026-11-02 — Review runtime report producer text
 
 Type: changed. Platforms: project-wide.
@@ -1338,6 +1878,26 @@ Type: changed. Platforms: project-wide.
 
 [Change record](docs/changes/2026-11-02-review-runtime-report-producers-english.json)
 
+## 2026-11-02 — Review ROM data plan English migration
+
+Type: docs. Platforms: Desktop ROM-data planning documentation.
+
+**Changes**
+
+- Record the completed English-language pass over the ROM data plan and move the reviewed document out of the pending Markdown audit.
+
+**Validation**
+
+- Compared task IDs, inline literals, explicit anchors, link targets and numeric runs with the tracked preimage; checked 393 local file links and searched for remaining Italian prose.
+
+**Limitations**
+
+- Compatibility anchors and historical game-label references remain; the broader cross-tree language audit is still open. No ROM access or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST.md](docs/development/ENGLISH_FIRST.md).
+
+[Change record](docs/changes/2026-11-02-review-romdata-todo-english-audit.json)
+
 ## 2026-11-02 — Review offline report generators for English-first wording
 
 Type: changed. Platforms: project-wide.
@@ -1356,6 +1916,26 @@ Type: changed. Platforms: project-wide.
 - Language-only change/review; no cleanup, campaign run, ROM input, dataset/report regeneration, build or previous runtime acceptance test repeated. Auxiliary modules and remaining project source/docs still pending.
 
 [Change record](docs/changes/2026-11-02-review-offline-report-generators-english.json)
+
+## 2026-11-02 — Review foundation guides for English-first policy
+
+Type: docs. Platforms: Desktop development documentation.
+
+**Changes**
+
+- Review architecture, label tooling and Windows runtime performance documentation and record their existing English content in the language audit.
+
+**Validation**
+
+- Read all three guides, checked their local file link and recorded exact content hashes; no guide text was changed.
+
+**Limitations**
+
+- Technical accuracy and historical performance results were not revalidated; the cross-tree English-first audit remains partial.
+
+Documentation: [architecture.md](docs/architecture.md), [labels.md](docs/labels.md), [windows_runtime_performance.md](docs/windows_runtime_performance.md).
+
+[Change record](docs/changes/2026-11-02-review-foundation-guides-english-audit.json)
 
 ## 2026-11-02 — Review entry and Android guides for English-first wording
 

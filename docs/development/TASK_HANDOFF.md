@@ -24,9 +24,9 @@ termination of another owner's process or changing another thread's goal state.
 
 - State: active
 - Outcome: partial
-- Verified: previous runtime/report/guide/export units accepted, including shared debug guides. Command/event consoles and operation cards use English/Italian presentation; targeted tests PASS. Audit: 217 reviewed files, 34 Markdown pending.
+- Verified: previous runtime/report/guide/export units accepted, including shared debug guides. Command/event consoles and operation cards use English/Italian presentation; targeted tests PASS. Audit: 221 reviewed files, 30 Markdown pending.
 - Missing: remaining documentation, other dynamic report producers/metadata, helper/test modules, tools/build text, source comments and full audit across both trees. Planned-task checklist/reference translated and synchronized. Preserve optional locales, imported content and immutable history.
-- Resume: selection checkpoint for latest request to continue English-first migration: ENGLISH-FIRST-UNIT-ALTERNATE. Normal battle evidence translated; missing deliverable is translation of alternate OBJ battle evidence. Next: translate preserving statuses, tokens and limits; no ROM or runtime work.
+- Resume: ROM_DATA_INVENTORY evidence from FFFF readers through world records synchronized with verified plan translations; resume at ROMDATA-01-LOCALIZED-TABLE-GRAPHICS. Later inventory evidence needs translation; preserve statuses, values and compatibility tokens.
 
 ### ROMDATA-03-04-E105-SENARY-COMPACT-OBJ
 
@@ -221,9 +221,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: ENGLISH-FIRST-PROJECT partial; unit OBJ normal battle evidence translated.
-- Last verified result: IDs, numeric values, literals and links preserved; surrounding sections unchanged.
-- Remaining work: unit OBJ alternate battle evidence and later untranslated material.
+- Task: ENGLISH-FIRST-PROJECT partial; matching ROM inventory evidence synchronized.
+- Last verified result: 120 entries in 13 blocks matched original plan preimages exactly; IDs, links and literals retained, numeric runs checked.
+- Remaining work: localized table graphics and later untranslated inventory evidence; 30 pending Markdown files and source/tool audit.
 - Errors or blockers: none; no ROM access or runtime work performed.
-- Next action: translate the selected alternate OBJ battle evidence.
-- References: `docs/changes/2026-11-02-translate-romdata-unit-battle-evidence.json`, `docs/development/ENGLISH_FIRST_AUDIT.json`.
+- Next action: select and checkpoint the next inventory translation unit.
+- References: `docs/changes/2026-11-02-sync-rom-inventory-validated-plan-translations.json`, `docs/development/ENGLISH_FIRST_AUDIT.json`.

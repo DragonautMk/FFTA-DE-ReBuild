@@ -1,11 +1,8 @@
 # FFTARecomp — Analisi preliminare di integrazione upstream v3.1
 
-**Versione:** 0.2 — 2 novembre 2026 (decisioni di indirizzo approvate)  
-**Tipo:** documento decisionale e piano di audit; scelte di indirizzo approvate dal proprietario, **non** autorizzazione a modificare il codice o eseguire merge  
-**Ambito:** upstream `Jorge262007/FFTARecomp` → fork `DragonautMk/FFTARecomp`, branch `decomp`  
-**Autore dell'analisi:** ChatGPT, su lettura delle repository GitHub e della release, **senza build, merge o esecuzione del gioco**.
+**Versione:** 0.2 — 2 novembre 2026 (decisioni di indirizzo approvate)**Tipo:** documento decisionale e piano di audit; scelte di indirizzo approvate dal proprietario, **non** autorizzazione a modificare il codice o eseguire merge**Ambito:** upstream `Jorge262007/FFTARecomp` → fork `DragonautMk/FFTARecomp`, branch `decomp`**Autore dell'analisi:** ChatGPT, su lettura delle repository GitHub e della release, **senza build, merge o esecuzione del gioco**.
 
-> **Decisione approvata:** mantenere `decomp` come base autorevole, integrare le **funzionalità**, non necessariamente i commit upstream. Non eseguire `git merge upstream/main` né cherry-pick massivi senza audit e prove. Il progetto del fork è soggetto a una policy *English-first*: se questo documento verrà inserito nella repository, produrne una traduzione inglese revisionata, senza modificare ID, link o risultati.
+> **Decisione approvata:** mantenere `decomp` come base autorevole, integrare le **funzionalità**, non necessariamente i commit upstream. Non eseguire `git merge upstream/main` né cherry-pick massivi senza audit e prove. Il progetto del fork è soggetto a una policy _English-first_: se questo documento verrà inserito nella repository, produrne una traduzione inglese revisionata, senza modificare ID, link o risultati.
 
 ## 0. Decisioni confermate dal proprietario — 2 novembre 2026
 
@@ -15,7 +12,7 @@ Le decisioni approvate sono:
 
 1. **Porting selettivo anziché merge generale.** La branch `decomp` resta la fonte autorevole; ogni funzione upstream va confrontata con le implementazioni già presenti.
 2. **Non regredire sulle ROM.** Preservare il supporto EUR e gli eventuali percorsi USA realmente già funzionanti; la restrizione USA della v3.1 non viene adottata automaticamente.
-3. **Menu Atlante del Clan invariato come architettura.** Valutare solo miglioramenti rilevanti delle finestre *in-game*, scrollbar, animazioni e correzioni visive; non importare il menu upstream per sostituire quello del fork.
+3. **Menu Atlante del Clan invariato come architettura.** Valutare solo miglioramenti rilevanti delle finestre _in-game_, scrollbar, animazioni e correzioni visive; non importare il menu upstream per sostituire quello del fork.
 4. **Mouse/touch e scrollbar: porting per piccoli ambiti verificabili.** Priorità all'effettivo miglioramento di una scena alla volta, Android e desktop considerati separatamente.
 5. **Autosave dello stato macchina: sì alla progettazione, separato e configurabile.** Nessuna sostituzione dei salvataggi manuali, dei 9/99 snapshot, dei 99 cartridge saves, di Undo o dei backup. Non adottare automaticamente il periodo di 5 secondi né il formato upstream: prima una specifica e prove di compatibilità/recovery. **L'attivazione predefinita, l'intervallo, la rotazione e l'esperienza di ripresa devono essere definiti in specifica prima di implementare.**
 6. **Correzioni di rendering e transizioni: solo dopo confronto.** I miglioramenti host possono essere adattati, preferibilmente disattivabili, senza cambiare indebitamente la logica guest.
@@ -29,14 +26,14 @@ Le decisioni approvate sono:
 
 ## 1. Riferimenti verificati e limiti
 
-| Ruolo | Riferimento | SHA fissato |
-|---|---|---|
-| Upstream | [Jorge262007/FFTARecomp](https://github.com/Jorge262007/FFTARecomp) — `main` | `6bdddbc559ac459c4a18325c15c28d040d87f407` |
-| Fork | [DragonautMk/FFTARecomp](https://github.com/DragonautMk/FFTARecomp/tree/decomp) — `decomp` | `bd66b8763623847af9f093a03fd416e4a10e2029` |
-| Antenato comune (dalla comparazione GitHub) | commit condiviso | `fcc38cc46084793f29136419a8a15e6914a570ce` |
-| Novità dichiarate | [Release upstream 3.1](https://github.com/Jorge262007/FFTARecomp/releases/tag/3.1) | 1 novembre 2026 |
-| Modifiche upstream | [Diff dal comune antenato](https://github.com/Jorge262007/FFTARecomp/compare/fcc38cc46084793f29136419a8a15e6914a570ce...6bdddbc559ac459c4a18325c15c28d040d87f407) | 5 commit |
-| Storico fork | [Branch decomp](https://github.com/DragonautMk/FFTARecomp/tree/decomp) | 117 commit oltre l'antenato nel confronto incrociato |
+| Ruolo                                       | Riferimento                                                                                                                                                       | SHA fissato                                          |
+| ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
+| Upstream                                    | [Jorge262007/FFTARecomp](https://github.com/Jorge262007/FFTARecomp) — `main`                                                                                      | `6bdddbc559ac459c4a18325c15c28d040d87f407`           |
+| Fork                                        | [DragonautMk/FFTARecomp](https://github.com/DragonautMk/FFTARecomp/tree/decomp) — `decomp`                                                                        | `bd66b8763623847af9f093a03fd416e4a10e2029`           |
+| Antenato comune (dalla comparazione GitHub) | commit condiviso                                                                                                                                                  | `fcc38cc46084793f29136419a8a15e6914a570ce`           |
+| Novità dichiarate                           | [Release upstream 3.1](https://github.com/Jorge262007/FFTARecomp/releases/tag/3.1)                                                                                | 1 novembre 2026                                      |
+| Modifiche upstream                          | [Diff dal comune antenato](https://github.com/Jorge262007/FFTARecomp/compare/fcc38cc46084793f29136419a8a15e6914a570ce...6bdddbc559ac459c4a18325c15c28d040d87f407) | 5 commit                                             |
+| Storico fork                                | [Branch decomp](https://github.com/DragonautMk/FFTARecomp/tree/decomp)                                                                                            | 117 commit oltre l'antenato nel confronto incrociato |
 
 **Rilevazione:** 173 file modificati nell'upstream rispetto all'antenato; 30 percorsi modificati **da entrambi** i rami (nessun file identico fra i 30 per SHA). I 30 sono **potenziali conflitti logici**, non 30 conflitti Git già dimostrati. Fra essi: `crates/recomp/src/play.rs`, `main.rs`, `crates/gba-core/src/mem.rs`, `ppu.rs`, `crates/menu/src/lib.rs`, `crates/input-config/src/lib.rs`, `crates/screen/src/ui_layer.rs`.
 
@@ -58,20 +55,20 @@ Le decisioni approvate sono:
 
 Legenda: **ADOTTA** = integrare la funzione dopo prove; **ADATTA** = ricostruire solo il comportamento compatibile; **CONFRONTA** = valutare prima se c'è davvero un vantaggio; **RIMANDA** = non bloccare lo sviluppo attuale; **NON IMPORTARE** = non prendere l'implementazione upstream così com'è.
 
-| ID | Novità upstream | Stato rilevato nel fork | Decisione di indirizzo approvata | Difficoltà | Priorità |
-|---|---|---|---|---|---|
-| U31-01 | Fast Forward **1,5×** | `ff.percent` da 100% a 800% con incrementi di 20; **150% non previsto** | **ADATTA:** eventuale preset 150% nel sistema esistente, senza sostituire il clock razionale | Bassa–media | P2 |
-| U31-02 | Barre di scorrimento nei menu di gioco | Atlante gestisce già scroll interno, ma non equivale a scrollbar *nelle liste del gioco* | **ADOTTA selettivamente:** geometria/drag per liste originali realmente non servite | Media | P1 |
-| U31-03 | Correzioni di finestre e fumetti | Fork possiede proprie estensioni grafiche e strumenti diagnostici | **CONFRONTA** scena per scena; trasferire solo i bugfix riproducibili | Medio–alta | P1 |
-| U31-04 | Animazioni entrata/uscita e zoom fluido | Implementazione upstream host-only; renderer e sincronizzazione fork divergenti | **ADATTA:** isolare UI motion dalle transizioni guest, con opzione disabilitabile | Medio–alta | P2 |
-| U31-05 | Menù widescreen senza bande nere | Atlante è già un menu nativo adattativo; il rendering di gioco è distinto | **NON IMPORTARE** l'intero menu; **CONFRONTA** solo il rendering delle finestre originali | Alta se merge; media se selettivo | P2 |
-| U31-06 | Mouse e touch migliorati (soprattutto Android) | Esistono percorsi mouse/touch, Android separato; il nuovo upstream aggiunge parecchie routine dedicate | **ADOTTA per aree:** Android prima; desktop solo dopo verifica dei controlli non ancora gestiti | Alta | P1 Android / P2 desktop |
-| U31-07 | Autosave macchina ogni 5 secondi | Fork ha `.sav` automatico e snapshot manuali 9/99 con Undo: **non sono lo stesso tipo di salvataggio** | **CONFRONTA/PROTOTIPA:** autosave macchina opt-in in file dedicato e con recupero sicuro, senza sostituire le funzioni esistenti | Alta | P1 di analisi; P2 di implementazione |
-| U31-08 | Più di 2 schede/slot di salvataggio | Fork supporta 99 slot snapshot e fino a 99 file cartridge; upstream modifica anche la UI originale di salvataggio | **NON IMPORTARE** il sottosistema completo; verificare se la UI interna del gioco offre qualcosa di diverso e utile | Alta se importato | P3 |
-| U31-09 | Steam Deck: menu con tasto Y | Nel fork Y/North è già usato per cambiare vista Debug in alcuni contesti | **ADATTA** come binding contestuale/configurabile, senza sovrascrivere Y globale | Bassa–media | P2 |
-| U31-10 | Rendering video/colorimetria e cache grafiche | Modifiche estese al renderer e all'AndroidPort; alcune non sono evidenziate nella release | **RIMANDA/CONFRONTA** per componenti isolati e risultati visivi, senza import massivo | Alta | P3 |
-| U31-11 | Script di installazione/build e pacchetti | Fork dispone già di workflow Docker/portable differenti | **CONFRONTA** difetti specifici; mantenere packaging fork se funzionante | Media | P3 |
-| U31-12 | Cambio dei requisiti ROM, USA temporaneamente esclusa | Obiettivo fork include percorsi EUR e USA, con prove distinte | **NON IMPORTARE** l'esclusione USA come policy del fork | Alta (rischio regressione) | Vincolo P0 |
+| ID     | Novità upstream                                       | Stato rilevato nel fork                                                                                           | Decisione di indirizzo approvata                                                                                                 | Difficoltà                        | Priorità                             |
+| ------ | ----------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- | ------------------------------------ |
+| U31-01 | Fast Forward **1,5×**                                 | `ff.percent` da 100% a 800% con incrementi di 20; **150% non previsto**                                           | **ADATTA:** eventuale preset 150% nel sistema esistente, senza sostituire il clock razionale                                     | Bassa–media                       | P2                                   |
+| U31-02 | Barre di scorrimento nei menu di gioco                | Atlante gestisce già scroll interno, ma non equivale a scrollbar _nelle liste del gioco_                          | **ADOTTA selettivamente:** geometria/drag per liste originali realmente non servite                                              | Media                             | P1                                   |
+| U31-03 | Correzioni di finestre e fumetti                      | Fork possiede proprie estensioni grafiche e strumenti diagnostici                                                 | **CONFRONTA** scena per scena; trasferire solo i bugfix riproducibili                                                            | Medio–alta                        | P1                                   |
+| U31-04 | Animazioni entrata/uscita e zoom fluido               | Implementazione upstream host-only; renderer e sincronizzazione fork divergenti                                   | **ADATTA:** isolare UI motion dalle transizioni guest, con opzione disabilitabile                                                | Medio–alta                        | P2                                   |
+| U31-05 | Menù widescreen senza bande nere                      | Atlante è già un menu nativo adattativo; il rendering di gioco è distinto                                         | **NON IMPORTARE** l'intero menu; **CONFRONTA** solo il rendering delle finestre originali                                        | Alta se merge; media se selettivo | P2                                   |
+| U31-06 | Mouse e touch migliorati (soprattutto Android)        | Esistono percorsi mouse/touch, Android separato; il nuovo upstream aggiunge parecchie routine dedicate            | **ADOTTA per aree:** Android prima; desktop solo dopo verifica dei controlli non ancora gestiti                                  | Alta                              | P1 Android / P2 desktop              |
+| U31-07 | Autosave macchina ogni 5 secondi                      | Fork ha `.sav` automatico e snapshot manuali 9/99 con Undo: **non sono lo stesso tipo di salvataggio**            | **CONFRONTA/PROTOTIPA:** autosave macchina opt-in in file dedicato e con recupero sicuro, senza sostituire le funzioni esistenti | Alta                              | P1 di analisi; P2 di implementazione |
+| U31-08 | Più di 2 schede/slot di salvataggio                   | Fork supporta 99 slot snapshot e fino a 99 file cartridge; upstream modifica anche la UI originale di salvataggio | **NON IMPORTARE** il sottosistema completo; verificare se la UI interna del gioco offre qualcosa di diverso e utile              | Alta se importato                 | P3                                   |
+| U31-09 | Steam Deck: menu con tasto Y                          | Nel fork Y/North è già usato per cambiare vista Debug in alcuni contesti                                          | **ADATTA** come binding contestuale/configurabile, senza sovrascrivere Y globale                                                 | Bassa–media                       | P2                                   |
+| U31-10 | Rendering video/colorimetria e cache grafiche         | Modifiche estese al renderer e all'AndroidPort; alcune non sono evidenziate nella release                         | **RIMANDA/CONFRONTA** per componenti isolati e risultati visivi, senza import massivo                                            | Alta                              | P3                                   |
+| U31-11 | Script di installazione/build e pacchetti             | Fork dispone già di workflow Docker/portable differenti                                                           | **CONFRONTA** difetti specifici; mantenere packaging fork se funzionante                                                         | Media                             | P3                                   |
+| U31-12 | Cambio dei requisiti ROM, USA temporaneamente esclusa | Obiettivo fork include percorsi EUR e USA, con prove distinte                                                     | **NON IMPORTARE** l'esclusione USA come policy del fork                                                                          | Alta (rischio regressione)        | Vincolo P0                           |
 
 **P1/P2/P3 restano priorità consigliate, non risultati di test né autorizzazioni a eseguire un pacchetto.** Se un miglioramento è già presente con qualità equivalente, marcarlo `SKIP_ALREADY_PRESENT` indicando file e prova.
 
@@ -80,7 +77,7 @@ Legenda: **ADOTTA** = integrare la funzione dopo prove; **ADATTA** = ricostruire
 ### U31-01 — Fast Forward 150%
 
 - **Evidenza:** nell'upstream `ff.speed` ammette `[1.5, 2.0, 3.0, 4.0]`; nel fork `crates/input-config/src/fast_forward.rs` usa `PERCENTS` 100,120,…,800. [Upstream](https://github.com/Jorge262007/FFTARecomp/blob/6bdddbc559ac459c4a18325c15c28d040d87f407/crates/input-config/src/lib.rs) · [Fork](https://github.com/DragonautMk/FFTARecomp/blob/bd66b8763623847af9f093a03fd416e4a10e2029/crates/input-config/src/fast_forward.rs).
-- **Scelta:** offrire 150% solo se richiesto, come valore speciale o come passo di 10 in una futura scala: *non* forzare la conversione a 140/160 né migrare `ff.speed` float integralmente.
+- **Scelta:** offrire 150% come passo di 10 in una futura scala: _non_ forzare la conversione a 140/160 né migrare `ff.speed` float integralmente.
 - **Accettazione:** parsing e serializzazione vecchie configurazioni invariati, pacing/clock corrispondenti al 150%, audio coerente, spalla ±20 e opzioni menu con comportamento dichiarato. La semantica della sequenza ±20 partendo da 150% va definita prima del codice.
 
 ### U31-02 — Scrollbar e input mouse
@@ -109,10 +106,10 @@ Legenda: **ADOTTA** = integrare la funzione dopo prove; **ADATTA** = ricostruire
 
 ### U31-07/08 — Autosave, salvataggi e ripresa (principio approvato)
 
-- **Evidenza:** `upstream/crates/recomp/src/autosave.rs` contiene un trigger `Duration::from_secs(5)`, cattura `m.save_state()` e accoda il risultato a un worker; ha file `QuickSave` e `SaveN`/schede del gioco. Il fork dispone già di snapshot 9/99 con Undo e file cartridge 1–99, *non necessariamente dello stesso flusso automatico di ripresa*. [Autosave upstream](https://github.com/Jorge262007/FFTARecomp/blob/6bdddbc559ac459c4a18325c15c28d040d87f407/crates/recomp/src/autosave.rs) · [Salvataggi fork](https://github.com/DragonautMk/FFTARecomp/blob/bd66b8763623847af9f093a03fd416e4a10e2029/docs/extended_saves.md).
+- **Evidenza:** `upstream/crates/recomp/src/autosave.rs` contiene un trigger `Duration::from_secs(5)`, cattura `m.save_state()` e accoda il risultato a un worker; ha file `QuickSave` e `SaveN`/schede del gioco. Il fork dispone già di snapshot 9/99 con Undo e file cartridge 1–99, _non necessariamente dello stesso flusso automatico di ripresa_. [Autosave upstream](https://github.com/Jorge262007/FFTARecomp/blob/6bdddbc559ac459c4a18325c15c28d040d87f407/crates/recomp/src/autosave.rs) · [Salvataggi fork](https://github.com/DragonautMk/FFTARecomp/blob/bd66b8763623847af9f093a03fd416e4a10e2029/docs/extended_saves.md).
 - **Scelta approvata:** non portare l'intero modulo da ~2.000 righe. Preparare una specifica di **autosave macchina in file dedicato**, configurabile e indipendente da `.sav`, snapshot manuali, Undo e backup. Sono ancora **da definire e validare** attivazione predefinita, intervallo (5 s non approvati), offerta di ripresa al lancio, politica di retention e fallimenti/rotazione.
 - **Accettazione obbligatoria:** interruzione durante scrittura, crash/ripristino, ROM/region/versione diverse, save in corso, cache nativa, registrazioni/replay/debug, spazio disco, limite scritture, riapertura senza corrompere file manuali. Verificare se ogni 5 secondi è desiderabile o eccessivo; non imporlo come valore predefinito senza scelta.
-- **Nota:** l'esistenza di 99 slot snapshot non prova che la UI *in-game* della v3.1 sia già equivalente: sono concetti diversi. Verificare prima di scartare tutte le UX upstream.
+- **Nota:** l'esistenza di 99 slot snapshot non prova che la UI _in-game_ della v3.1 sia già equivalente: sono concetti diversi. Verificare prima di scartare tutte le UX upstream.
 
 ### U31-09 — Steam Deck Y
 
@@ -165,15 +162,15 @@ Legenda: **ADOTTA** = integrare la funzione dopo prove; **ADATTA** = ricostruire
 
 **Conferma del proprietario ricevuta il 2 novembre 2026.** Le scelte di **indirizzo** D1–D7 sono approvate; l'implementazione resta subordinata all'audit di applicabilità, alle prove e a una selezione esplicita del prossimo task.
 
-| ID | Decisione di indirizzo | Stato | Dettagli ancora aperti |
-|---|---|---|---|
-| D1 | Porting selettivo; `decomp` base autorevole; nessun merge massivo | **APPROVED_POLICY** | Scelta e ordine delle prime unità dopo audit |
-| D2 | Non importare l'esclusione USA; preservare le compatibilità dimostrate | **APPROVED_POLICY** | Matrice di regressione per regione e piattaforma |
-| D3 | Progettare un autosave macchina **separato, configurabile e recuperabile**; mantenere manuali, Undo, backup, 9/99 snapshot e cartridge saves | **APPROVED_POLICY + PENDING_DESIGN** | Default on/off, intervallo, recovery prompt, formato, retention, condizioni di sospensione |
-| D4 | Mantenere Atlante; adattare soltanto miglioramenti visivi utili e, dove possibile, opzionali | **APPROVED_POLICY** | Confronto scena per scena; default e opzioni di animazione |
-| D5 | Mouse/touch Android per scene in worktree separato, senza bloccare desktop o ROMDATA | **APPROVED_POLICY** | Prima scena e piattaforma di prova |
-| D6 | Steam Deck Y solo contestuale/configurabile | **APPROVED_POLICY** | Priorità dei binding e contesti effettivi |
-| D7 | 150% Fast Forward non prioritario; possibile preset speciale, preservando 100–800% | **APPROVED_POLICY** | Comportamento di ±20 partendo da 150%, soltanto se implementato |
+| ID  | Decisione di indirizzo                                                                                                                       | Stato                                | Dettagli ancora aperti                                                                     |
+| --- | -------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------ |
+| D1  | Porting selettivo; `decomp` base autorevole; nessun merge massivo                                                                            | **APPROVED_POLICY**                  | Scelta e ordine delle prime unità dopo audit                                               |
+| D2  | Non importare l'esclusione USA; preservare le compatibilità dimostrate                                                                       | **APPROVED_POLICY**                  | Matrice di regressione per regione e piattaforma                                           |
+| D3  | Progettare un autosave macchina **separato, configurabile e recuperabile**; mantenere manuali, Undo, backup, 9/99 snapshot e cartridge saves | **APPROVED_POLICY + PENDING_DESIGN** | Default on/off, intervallo, recovery prompt, formato, retention, condizioni di sospensione |
+| D4  | Mantenere Atlante; adattare soltanto miglioramenti visivi utili e, dove possibile, opzionali                                                 | **APPROVED_POLICY**                  | Confronto scena per scena; default e opzioni di animazione                                 |
+| D5  | Mouse/touch Android per scene in worktree separato, senza bloccare desktop o ROMDATA                                                         | **APPROVED_POLICY**                  | Prima scena e piattaforma di prova                                                         |
+| D6  | Steam Deck Y solo contestuale/configurabile                                                                                                  | **APPROVED_POLICY**                  | Priorità dei binding e contesti effettivi                                                  |
+| D7  | 150% Fast Forward non prioritario; possibile preset speciale, preservando 100–800%                                                           | **APPROVED_POLICY**                  | Comportamento di ±20 partendo da 150%, soltanto se implementato                            |
 
 **Decisioni rimaste volutamente non prese:** nessuna attivazione automatica di autosave ogni 5 secondi, nessun ripristino automatico che sovrascriva una sessione senza conferma, nessuna rinuncia agli slot esistenti e nessuna modifica dell'architettura degli strumenti di debug o di ROMDATA. Questi aspetti richiedono una specifica verificata e, quando incidono sul comportamento utente, ulteriore approvazione.
 
@@ -190,6 +187,7 @@ Per qualunque task successivo all'audit, produrre prima una scheda proposta con 
 
 ```md
 ### U31-XX — Nome della modifica
+
 - Upstream source SHA: ...
 - Fork baseline SHA: ...
 - Fonte e file: ...
@@ -222,9 +220,9 @@ Per qualunque task successivo all'audit, produrre prima una scheda proposta con 
 
 ## 9. Registro revisioni
 
-| Versione | Data | Modifica |
-|---|---|---|
-| 0.1 | 2026-11-02 | Audit iniziale upstream v3.1 vs fork `decomp`; raccomandazioni e limiti senza esecuzione |
-| 0.2 | 2026-11-02 | Confermati dal proprietario gli indirizzi strategici; distinto consenso al progetto da autorizzazione a modificare il runtime; dettagli autosave lasciati aperti |
+| Versione | Data       | Modifica                                                                                                                                                         |
+| -------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0.1      | 2026-11-02 | Audit iniziale upstream v3.1 vs fork `decomp`; raccomandazioni e limiti senza esecuzione                                                                         |
+| 0.2      | 2026-11-02 | Confermati dal proprietario gli indirizzi strategici; distinto consenso al progetto da autorizzazione a modificare il runtime; dettagli autosave lasciati aperti |
 
 **Nota di integrità:** le prove e gli SHA delle due repository restano quelli della v0.1; questa revisione registra decisioni del proprietario e non afferma nuovi risultati di test o nuovi commit controllati.

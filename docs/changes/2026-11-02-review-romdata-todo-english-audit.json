@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "review-romdata-todo-english-audit",
+  "title": "Review ROM data plan English migration",
+  "kind": "docs",
+  "platforms": [
+    "Desktop ROM-data planning documentation"
+  ],
+  "changes": [
+    "Record the completed English-language pass over the ROM data plan and move the reviewed document out of the pending Markdown audit."
+  ],
+  "validation": [
+    "Compared task IDs, inline literals, explicit anchors, link targets and numeric runs with the tracked preimage; checked 393 local file links and searched for remaining Italian prose."
+  ],
+  "limitations": [
+    "Compatibility anchors and historical game-label references remain; the broader cross-tree language audit is still open. No ROM access or runtime checks were performed."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST.md"
+  ]
+}

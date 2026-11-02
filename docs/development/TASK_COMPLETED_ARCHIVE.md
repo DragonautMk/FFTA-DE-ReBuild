@@ -18666,3 +18666,177 @@ LOCAL-ARTIFACT-SWEEP-2026-10-31 — CLOSED. Latest request: clean residual proje
 - Outcome: completed bounded translation of unit OBJ normal battle source, model, runtime, CLI and scene evidence; outcomes and limits retained.
 - Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
 - Record: `docs/changes/2026-11-02-translate-romdata-unit-battle-evidence.json`.
+
+### ENGLISH-FIRST-UNIT-ALTERNATE
+
+- Outcome: completed bounded translation of unit OBJ alternate battle static contract, model, runtime and CLI evidence; outcomes and ordinary-use limits retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-unit-alternate-evidence.json`.
+
+### ENGLISH-FIRST-SCRIPT-OBJ
+
+- Outcome: completed bounded translation of script OBJ pairing, observed queries, model, runtime and CLI evidence; outcomes and open criteria retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-script-obj-evidence.json`.
+
+### ENGLISH-FIRST-SCRIPT-ORDINARY
+
+- Outcome: completed bounded translation of script special ordinary-use, alternate and override contracts, runtime, CLI and negative-lead evidence; outcomes and open criteria retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-script-ordinary-override-evidence.json`.
+
+### ENGLISH-FIRST-SCRIPT-REGISTRY
+
+- Outcome: completed bounded translation of special-unit and generic-direct script registry source, model, runtime, CLI and negative-lead evidence; outcomes and open criteria retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-script-registry-evidence.json`.
+
+### ENGLISH-FIRST-REGISTRY-REDIRECT
+
+- Outcome: completed bounded translation of script registry redirect and FFFF reader classifications and actor property-word source, model, runtime, CLI and ordinary-use evidence; outcomes and open criteria retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-registry-redirect-property-evidence.json`.
+
+### ENGLISH-FIRST-PROPERTY-GETTER
+
+- Outcome: completed bounded translation of property getter callers, byte property-word and UI property-selected OBJ list evidence; outcomes and open criteria retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-property-getter-ui-list-evidence.json`.
+
+### ENGLISH-FIRST-FFFF-FIELDS
+
+- Outcome: completed bounded translation of FFFF reader-field and twenty-slot job lookup evidence, including live RAM helper records; outcomes and open criteria retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-ffff-slot-job-evidence.json`.
+
+### ENGLISH-FIRST-NATIVE-RESIDUE
+
+- Outcome: completed bounded translation of native and host ROM residue inventories, source classifications and observed indirect OBJ list evidence; outcomes and open criteria retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-native-residue-obj-evidence.json`.
+
+### ENGLISH-FIRST-TASK-PARAMETERS
+
+- Outcome: completed bounded translation of observed task parameter and lower residue records, constructor animation evidence and conditional phase-zero validation; outcomes and open criteria retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-observed-task-parameters-evidence.json`.
+
+### ENGLISH-FIRST-TASK-CYCLE
+
+- Outcome: completed bounded translation of task-cycle delta, Bank residue and u16 task OBJ bank evidence; outcomes and open criteria retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-task-cycle-u16-evidence.json`.
+
+### ENGLISH-FIRST-CONSTRUCTOR-FLAG
+
+- Outcome: completed bounded translation of constructor flag and slot gates, eligible map and mission selection, and White Flowers navigation evidence; outcomes and open criteria retained.
+- Evidence: task IDs, links and literals match the preimage; numeric values checked after separating a concatenated address label. Surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-constructor-reachability-evidence.json`.
+
+### ENGLISH-FIRST-WORLD-LOCATION
+
+- Outcome: completed bounded translation of world location selection, Giza battle and world-node evidence; outcomes and open criteria retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-world-location-node-evidence.json`.
+
+### ENGLISH-FIRST-WORLD-ROADS
+
+- Outcome: completed bounded translation of world road and encounter header evidence; outcomes and open criteria retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-world-roads-encounter-evidence.json`.
+
+### ENGLISH-FIRST-ENCOUNTER-UNITS
+
+- Outcome: completed bounded translation of encounter unit template and coordinate evidence; outcomes and open criteria retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-encounter-units-coordinates-evidence.json`.
+
+### ENGLISH-FIRST-LINKED-METADATA
+
+- Outcome: completed bounded translation of linked metadata28 and linked records4 evidence; outcomes and open criteria retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-linked-metadata-records-evidence.json`.
+
+### ENGLISH-FIRST-CONDITIONAL-RECORDS
+
+- Outcome: completed bounded translation of conditional records8 and mission records70 source/model evidence; outcomes and open criteria retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-conditional-mission-record-evidence.json`.
+
+### ENGLISH-FIRST-MISSION-RUNTIME
+
+- Outcome: completed bounded translation of mission records70 runtime and selection byte table evidence; outcomes and open criteria retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-mission-runtime-selection-evidence.json`.
+
+### ENGLISH-FIRST-EVENT-RECORDS
+
+- Outcome: completed bounded translation of event records12 and sparse parameter records27 evidence; outcomes and open criteria retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-event-sparse-parameters-evidence.json`.
+
+### ENGLISH-FIRST-WORLD-RECORDS
+
+- Outcome: completed bounded translation of world records38 and indexed graphics evidence; outcomes and open criteria retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-world-records-indexed-graphics-evidence.json`.
+
+### ENGLISH-FIRST-LOCALIZED-TABLES
+
+- Outcome: completed bounded translation of localized table graphics and fixed raw transfer evidence; outcomes and open criteria retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-localized-graphics-transfers-evidence.json`.
+
+### ENGLISH-FIRST-RAW-DYNAMIC
+
+- Outcome: completed bounded translation of dynamic raw transfer, clan alias, historical residue and 6E6DBC lookup evidence; outcomes and open criteria retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-dynamic-clan-lookup-evidence.json`.
+
+### ENGLISH-FIRST-PACKED-LOOKUPS
+
+- Outcome: completed bounded translation of 6E6EE4 packed lookup and 6DF4D4 descriptor bank evidence; outcomes and open criteria retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding sections unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-packed-lookup-descriptor-evidence.json`.
+
+### ENGLISH-FIRST-GAMEPLAY-MASKS
+
+- Outcome: completed bounded translation of gameplay mask, dynamic fragment usage and compact OBJ progress entries through the end of ROM_DATA_TODO; outcomes and open criteria retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; preceding text unchanged. Common Italian-word search found compatibility anchors and accented occurrences are game-label references. Whole-document review remains. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-romdata-gameplay-masks-compact-evidence.json`.
+
+### ENGLISH-FIRST-ROM-TODO-REVIEW
+
+- Outcome: completed language and compatibility review of ROM_DATA_TODO after the bounded translation passes; removed it from pending Markdown and recorded its reviewed hash.
+- Evidence: task IDs, inline literals, explicit anchors and link targets match the tracked preimage; numeric runs differ only by a separated concatenated address and an explicit zero. All 393 local file links resolve. Common Italian-word and accent searches identify retained compatibility anchors and game-label references. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-review-romdata-todo-english-audit.json`.
+
+### ENGLISH-FIRST-FOUNDATION-GUIDES
+
+- Outcome: reviewed existing English architecture, label tooling and Windows runtime performance guides and removed them from pending Markdown.
+- Evidence: all three files read in full, their existing local file link resolves, and exact content hashes are recorded. No guide text changed; technical claims and historical measurements were not revalidated.
+- Record: `docs/changes/2026-11-02-review-foundation-guides-english-audit.json`.
+
+### ENGLISH-FIRST-ROM-INVENTORY-ALTERNATE
+
+- Outcome: completed bounded translation of ROM inventory script-special alternate and override evidence; statuses and remaining criteria retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding text unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-rom-inventory-script-alternate-override.json`.
+
+### ENGLISH-FIRST-INVENTORY-REGISTRY
+
+- Outcome: completed bounded translation of registry selector, redirect, FFFF reader and actor property inventory evidence; statuses and remaining criteria retained.
+- Evidence: numeric values, IDs, links and inline literals match the preimage; surrounding text unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-rom-inventory-registry-property-evidence.json`.
+
+### ENGLISH-FIRST-INVENTORY-GETTERS
+
+- Outcome: completed bounded translation of property getter caller, byte property complement and UI list inventory evidence, reusing four identical plan entries.
+- Evidence: duplicated block matched the plan preimage; numeric values, IDs, links and inline literals match the inventory preimage, surrounding text unchanged. No ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-translate-rom-inventory-property-getter-ui-evidence.json`.
+
+### ENGLISH-FIRST-INVENTORY-FFFF
+
+- Outcome: synchronized 120 inventory evidence entries from FFFF readers through world records with previously translated plan entries; source blocks matched plan preimages exactly.
+- Evidence: 13 exact preimage comparisons; IDs, links and inline literals preserved. Numeric runs differ only by one separated address label and one explicit zero. Surrounding text unchanged; no ROM access or runtime validation performed.
+- Record: `docs/changes/2026-11-02-sync-rom-inventory-validated-plan-translations.json`.

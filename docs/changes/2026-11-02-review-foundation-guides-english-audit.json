@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "review-foundation-guides-english-audit",
+  "title": "Review foundation guides for English-first policy",
+  "kind": "docs",
+  "platforms": [
+    "Desktop development documentation"
+  ],
+  "changes": [
+    "Review architecture, label tooling and Windows runtime performance documentation and record their existing English content in the language audit."
+  ],
+  "validation": [
+    "Read all three guides, checked their local file link and recorded exact content hashes; no guide text was changed."
+  ],
+  "limitations": [
+    "Technical accuracy and historical performance results were not revalidated; the cross-tree English-first audit remains partial."
+  ],
+  "files": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": [
+    "docs/architecture.md",
+    "docs/labels.md",
+    "docs/windows_runtime_performance.md"
+  ]
+}

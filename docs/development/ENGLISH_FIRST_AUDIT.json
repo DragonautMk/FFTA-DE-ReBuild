@@ -606,6 +606,11 @@
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
     },
     {
+      "path": "docs/architecture.md",
+      "sha256": "40391a91a69de608c7bbfc89b377e3420e5259612a7babd2e7e737c0dfd48850",
+      "scope": "English maintained guide; code, commands, technical claims and historical evidence retained"
+    },
+    {
       "path": "docs/audio_controls.md",
       "sha256": "b06b6bccfd5e9dc66ea7df67ff66170962381689382097de785ff0470126a3ff",
       "scope": "English maintained guide reviewed; existing commands, links, headings and validation limits preserved"
@@ -791,8 +796,13 @@
       "scope": "English maintained prose and fixed report text; machine keys, paths, anchors and historical evidence preserved"
     },
     {
+      "path": "docs/development/ROM_DATA_TODO.md",
+      "sha256": "d846e69935d6c0e8d99045480670ba8682018d538db52941fdb01fe12b7222cd",
+      "scope": "maintained plan and evidence in English; compatibility anchors and original game-label references retained"
+    },
+    {
       "path": "docs/development/TASK_HANDOFF.md",
-      "sha256": "0f69fad20305d35f77864f756b16cd7c42d95c12551ba0d74d71e811ec454b82",
+      "sha256": "61fb46f7902a51a4447b240d880e274ea928da6bf5ad53d49d7f24a5cca9f505",
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
     },
     {
@@ -956,6 +966,11 @@
       "scope": "English maintained guide reviewed; existing commands, links, headings and validation limits preserved"
     },
     {
+      "path": "docs/labels.md",
+      "sha256": "390b5bfcbda7a16ad08025a0f6a72f1aac4d7cbc4f547d33e97b285be4de755e",
+      "scope": "English maintained guide; code, commands, technical claims and historical evidence retained"
+    },
+    {
       "path": "docs/launcher.md",
       "sha256": "ca4b8f3f73b5fdd0802b6650210eb74b39d2f9ffc67b7d2d95390740030497b8",
       "scope": "English maintained desktop/storage/build prose reviewed; menu labels matched to English catalog; commands, links, headings and historical validation limits preserved"
@@ -1019,6 +1034,11 @@
       "path": "docs/save_states.md",
       "sha256": "be2a9429a9b814095067d4ae46ee69d7e32eed243a3c3b2a11b9c2474c4ca050",
       "scope": "English maintained desktop/storage/build prose reviewed; menu labels matched to English catalog; commands, links, headings and historical validation limits preserved"
+    },
+    {
+      "path": "docs/windows_runtime_performance.md",
+      "sha256": "918a3751e827a7c590801d473ee5d35eb69b408935a18c1549cc46972c655eb7",
+      "scope": "English maintained guide; code, commands, technical claims and historical evidence retained"
     },
     {
       "path": "scripts/README.md",
@@ -1108,18 +1128,15 @@
     "AndroidPort/Licenses/THIRD_PARTY_NOTICES.md",
     "CHANGELOG.md",
     "Licenses/THIRD_PARTY_NOTICES.md",
-    "docs/architecture.md",
     "docs/development/LOCAL_ARTIFACTS.md",
     "docs/development/PERFORMANCE_WORKFLOW.md",
     "docs/development/PROJECT_STATE.md",
     "docs/development/ROM_DATA_INVENTORY.md",
-    "docs/development/ROM_DATA_TODO.md",
     "docs/development/ROM_DATA_VALIDATION.md",
     "docs/docker.md",
     "docs/fast_forward_audio.md",
     "docs/ffta_estado.md",
     "docs/fps_overlay.md",
-    "docs/labels.md",
     "docs/rom_data.md",
     "docs/rom_data_audio.md",
     "docs/rom_data_color_palettes.md",
@@ -1137,8 +1154,7 @@
     "docs/rom_data_ui_graphics.md",
     "docs/rom_data_ui_palettes.md",
     "docs/rom_data_ui_raw_transfers.md",
-    "docs/rom_data_unit_obj.md",
-    "docs/windows_runtime_performance.md"
+    "docs/rom_data_unit_obj.md"
   ],
   "pending_source_areas": [
     {
@@ -1213,7 +1229,7 @@
     }
   ],
   "next_actions": [
-    "Continue the partial ROM-data plan: introduction, ROMDATA-01, 03/04, 06/07 and initial ROMDATA-02 including background codecs, font/keyboard, OBJ lists, UI graphics and item/metadata16 evidence translated; remaining ROMDATA-02, 05 and detailed evidence pending.",
+    "Continue reviewing the remaining ROM-data inventory and validation guides; the ROM data plan has completed its English-language pass and compatibility checks.",
     "Audit remaining offline exporters, CLI/tool messages and source-generated metadata; campaign, artifact and coverage fixed templates are translated.",
     "Translate remaining technical/debug/development guides in bounded sections, preserving anchors, commands, IDs and validation limits.",
     "Audit remaining dynamic report metadata, console/tooling text, source comments and all other maintained content across both trees.",
@@ -1302,6 +1318,35 @@
     "docs/changes/2026-11-02-translate-romdata-unit-obj-pose-evidence.json",
     "docs/changes/2026-11-02-translate-romdata-unit-color-evidence.json",
     "docs/changes/2026-11-02-translate-romdata-unit-equipment-evidence.json",
-    "docs/changes/2026-11-02-translate-romdata-unit-battle-evidence.json"
+    "docs/changes/2026-11-02-translate-romdata-unit-battle-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-unit-alternate-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-script-obj-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-script-ordinary-override-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-script-registry-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-registry-redirect-property-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-property-getter-ui-list-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-ffff-slot-job-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-native-residue-obj-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-observed-task-parameters-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-task-cycle-u16-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-constructor-reachability-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-world-location-node-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-world-roads-encounter-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-encounter-units-coordinates-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-linked-metadata-records-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-conditional-mission-record-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-mission-runtime-selection-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-event-sparse-parameters-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-world-records-indexed-graphics-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-localized-graphics-transfers-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-dynamic-clan-lookup-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-packed-lookup-descriptor-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-gameplay-masks-compact-evidence.json",
+    "docs/changes/2026-11-02-review-romdata-todo-english-audit.json",
+    "docs/changes/2026-11-02-review-foundation-guides-english-audit.json",
+    "docs/changes/2026-11-02-translate-rom-inventory-script-alternate-override.json",
+    "docs/changes/2026-11-02-translate-rom-inventory-registry-property-evidence.json",
+    "docs/changes/2026-11-02-translate-rom-inventory-property-getter-ui-evidence.json",
+    "docs/changes/2026-11-02-sync-rom-inventory-validated-plan-translations.json"
   ]
 }

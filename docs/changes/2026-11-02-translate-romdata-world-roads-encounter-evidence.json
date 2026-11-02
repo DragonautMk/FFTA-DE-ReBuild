@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-romdata-world-roads-encounter-evidence",
+  "title": "Translate world roads and encounter header evidence",
+  "kind": "docs",
+  "platforms": [
+    "Desktop ROM-data planning documentation"
+  ],
+  "changes": [
+    "Translate world road and encounter header source, model, runtime, CLI and ordinary-use evidence while retaining coverage limits."
+  ],
+  "validation": [
+    "Checked unchanged surrounding text and matching numeric values, task IDs, link targets and inline literals against the preimage."
+  ],
+  "limitations": [
+    "Later evidence and the wider English-first audit remain open; no ROM access or runtime checks were performed."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_TODO.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}
