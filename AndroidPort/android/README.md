@@ -4,7 +4,7 @@ This Android app replaces the initial mock hardware, simulated compilation,
 and fallback checkerboard with the repository's real `gba-core::Machine`, PPU,
 timers, DMA, interrupts, backup media, and C recompiler.
 
-- Import your own exact FFTA USA ROM through Android's document picker.
+- Import your own exact FFTA USA or Europe ROM through Android's document picker.
   Both SHA1 and SHA256 are checked in Kotlin and Rust; oversized arbitrary
   files are rejected. Nothing is uploaded.
 - Compile & play profiles a separate boot, emits C, and invokes the separately
@@ -19,18 +19,22 @@ timers, DMA, interrupts, backup media, and C recompiler.
   uploads completed frames; the Compose UI is not recomposed for every frame.
 - Zoom changes both render dimensions using the desktop's 2^(1/6) steps and
   1536x800 bounds. Existing terrain, movement and sprite fixes remain in gba-core.
-- Pause menu: resume, aspect/zoom, fast-forward, audio, touch size/opacity,
-  credits/licenses and exit. Settings persist between launches. Full screen
+- Pause menu: resume, aspect/zoom, fast-forward, audio, touch/gamepad settings
+  and exit. Settings persist between launches. Full screen
   adapts to the actual viewport; 1:1 and the Note10's 19:9 are also available.
   Zoom and speed changes are applied live without opening another menu.
 - Multitouch supports diagonal movement and simultaneous action buttons.
   Controller defaults: A/B, stick/D-pad, Start/Select, LT/RT for L/R, LB/RB
   for zoom, L3 for temporary speed switching and R3 for toggle fast-forward.
 - Audio is real GBA stereo PCM continuously resampled from 65536 to 48000 Hz.
-  Fast-forward is muted in this preview; desktop's other fast-forward audio
-  modes and full control remapping have not been ported yet.
+  Fast-forward offers Normal, Fast audio and Silent modes; gamepad bindings
+  can be remapped as described below.
 - Saves are stored privately as `files/ffta.sav`, written on pause, exit and
   periodically while playing. Preparing code never advances the user's game.
+
+The Android interface and native status messages currently use English; this
+port has no interface-language selector. They do not change the language of
+the game or imported content.
 
 ## Build on Windows
 
@@ -46,7 +50,7 @@ rustup target add aarch64-linux-android
 python scripts/build_android.py --sdk $env:ANDROID_HOME
 ```
 
-Output: `Installer/Android/FFTARecomp-android-arm64-preview.apk` (debug-signed,
+Output: `APK/FFTARecomp-android-arm64-preview.apk` (debug-signed,
 ARM64 only). The script pins and checksums TinyCC's source download, compiles
 both native libraries, builds the app and runs its local unit tests. No ROM
 is needed to build the distributable APK.

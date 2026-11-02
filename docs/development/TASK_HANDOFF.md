@@ -24,9 +24,9 @@ termination of another owner's process or changing another thread's goal state.
 
 - State: active
 - Outcome: partial
-- Verified: previous runtime/report/guide/export units accepted. Shared portable debug and local-control guides translated; 23 old anchors, 18 command blocks, links/numbers and timeout/platform limits retained. Command and event consoles use English/Italian catalogs; console tests 19 + 4 and menu tests 6 PASS. Audit: 137 reviewed files, 44 Markdown pending; references remain.
-- Missing: remaining documentation, other dynamic report producers/metadata, helper/test modules, tools/build text, source comments and full audit across both trees. Preserve optional locales, imported content and immutable history.
-- Resume: latest English-first request selects ENGLISH-FIRST-OPERATION-REFERENCES. Registry prose is English but readonly cards hardcode Italian labels and expose Italian route segments. Missing: English-first, language-aware card presentation preserving registry/CLI contracts, grouping and readonly behavior. Planned checklist text remains a separate generated source. Next: implement and validate.
+- Verified: previous runtime/report/guide/export units accepted, including shared debug guides. Command/event consoles and operation cards use English/Italian presentation; targeted tests PASS. Audit: 178 reviewed files, 42 Markdown pending.
+- Missing: remaining documentation, other dynamic report producers/metadata, helper/test modules, tools/build text, source comments and full audit across both trees. Planned-task checklist/reference translated and synchronized. Preserve optional locales, imported content and immutable history.
+- Resume: select another pending guide/source area from the audit. Android-specific frontend and tooling text is reviewed; shared Android core, tests and build metadata remain. No ROM exploration or repeated builds solely for context.
 
 ### ROMDATA-03-04-E105-SENARY-COMPACT-OBJ
 
@@ -213,7 +213,7 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Blockers, dependencies and shared resources
 
-- Async work: the collaboration inventory observed on 2026-11-01 showed only `/root`; ps visibility is limited to the sandbox namespace. This session has not started, terminated or signaled a build/Wine/runtime job. Host/other-thread state is unobservable: do not assert global inactivity. Historical results prove their children's closure, not today's host state. Before resuming, check handle/process, output and owner; no response or a lost handle does not establish failure.
+- Async work: the collaboration inventory observed on 2026-11-01 showed only `/root`; ps visibility is limited to the sandbox namespace. Recent isolated Linux test builds completed; no Wine/runtime job was started or signaled. Host/other-thread state is unobservable: do not assert global inactivity. Historical results prove their children's closure, not today's host state. Before resuming, check handle/process, output and owner; no response or a lost handle does not establish failure.
 - Shared resources: checkout, handoff/archive/CHANGELOG, canonical targets, Wine prefixes, display, datasets and fixtures. Do not stop others' processes, restore source/binaries without ownership or clean live/failed tasks. Historical Wine retention audit: deleting a prefix requires coordination/host visibility, not sandbox ps. Disk nearly full in an old sweep; current availability not measured here.
 - Memory writes: one coordinated writer; proposals with both preimage hashes and common lock through scripts/task_handoff.py update. If changed, reread and merge before publication. No background writer; no lock authorizes interference with other jobs. Details in MEMORY_WORKFLOW.
 - Complete history: [TASK_COMPLETED_ARCHIVE](TASK_COMPLETED_ARCHIVE.md#legacy-handoff-snapshot), a provenance snapshot, not an operational queue. Old partial descriptions remain to prevent information loss: open tasks remain here, not promoted to closed. `TASK_HANDOFF_MIGRATION.json` records sections, hashes and terminal-outcome index. Search an ID and read only the necessary range.
@@ -221,9 +221,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: ENGLISH-FIRST-PROJECT partial; ENGLISH-FIRST-OPERATION-REFERENCES selected.
-- Last verified result: event console localization accepted; operation cards contain Italian presentation.
-- Remaining work: translate operation cards without changing route identities or grouping; then full cross-tree audit.
-- Errors or blockers: none; prior work and concurrent todo2 addition preserved.
-- Next action: localize displayed labels and route segments, preserving registry and CLI data.
-- References: `crates/recomp/src/debug_operations.rs`, `crates/menu/src/clan_atlas/references.rs`.
+- Task: ENGLISH-FIRST-PROJECT partial; ENGLISH-FIRST-ANDROID-FRONTEND-AUDIT completed.
+- Last verified result: 33 Android frontend/tooling files reviewed, Python/XML parse PASS; Android guide corrected. Audit: 178 reviewed, 42 Markdown pending.
+- Remaining work: Android shared core/tests/build metadata and other guides, runtime/tool text and full cross-tree audit.
+- Errors or blockers: no Android build/device validation; concurrent todo2 edits preserved.
+- Next action: select another pending source or guide; no ROM exploration solely for translation.
+- References: `docs/development/ENGLISH_FIRST_AUDIT.json`, `docs/changes/2026-11-02-review-android-frontend-and-tooling-english.json`.

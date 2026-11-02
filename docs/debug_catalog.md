@@ -25,8 +25,9 @@ To use the project's collection directly:
 
 Open **Debug → Debug catalog**. Without the flag, the menu looks for
 `debug-catalog/catalog.json` in the configuration directory; in portable mode
-this is `Data/config/debug-catalog/catalog.json`. If absent, it opens the JSON
-picker. Use **Choose / reload catalog** to change or recheck the file.
+this is `Data/config/debug-catalog/catalog.json`. If absent, the integrated
+content selector explains what to select. Use **Choose / reload catalog** to
+select a catalog; external file and folder dialogs require an explicit action.
 Copying a collection requires including the files referenced by the JSON.
 
 Up/Down selects a row. Left/Right or Confirm changes the filter or entry:
@@ -34,7 +35,9 @@ Up/Down selects a row. Left/Right or Confirm changes the filter or entry:
 - **Region** starts with the active ROM; All includes other regions. Cases
   without checkpoints remain visible even under the EUR or USA filter.
 - **Recorded status**, **Kind** and **DS case** filter entries without changing
-  test status. The DS filter does not interpret IN-20 as DS-20.
+  test status. Status labels follow the menu language; stored values such as
+  `validata` and `non_coperta` remain unchanged. The DS filter does not interpret
+  IN-20 as DS-20.
 - **Entry** cycles through results. The panel shows a preview when available,
   provenance, source slot and test scope. A legacy raw file without a preview
   shows No preview; no capture is fabricated.

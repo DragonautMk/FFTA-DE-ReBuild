@@ -939,7 +939,7 @@ impl Menu {
     }
     pub fn open_cheats(&mut self,entries:Vec<ContentEntry>,message:String){
         if !self.cheat_active(){self.open(Page::CheatCatalog);}
-        self.cheats.set("Cheat · sola lettura".into(),entries,message,0);
+        self.cheats.set("Cheat · read only".into(),entries,message,0);
     }
     pub fn cheat_active(&self)->bool{self.page==Page::CheatCatalog}
     pub fn set_tool_inputs(&mut self, inputs:Vec<(ContentSlot,String)>){

@@ -217,6 +217,29 @@ Type: docs. Platforms: project-wide.
 
 [Change record](docs/changes/2026-11-02-translate-debug-session-guides.json)
 
+## 2026-11-02 — Translate the integrated debug checklist and synchronize its reference
+
+Type: changed. Platforms: Desktop menu: Linux unit tests; Windows GUI not rechecked.
+
+**Changes**
+
+- Translate the maintained DBG2 checklist and its audit notes to English, retaining the original request quotation, all 28 task IDs and states, evidence, links, code, numeric identifiers and 11 legacy heading anchors.
+- Regenerate the readonly task reference from the current checklist, correcting the pre-existing stale DBG2-10 through DBG2-23 entries. Localize the status and read-only notice using the menu catalogs; keep task details in English.
+- Exclude compatibility-anchor markup from generated task bodies and retain the existing task IDs, groups and dispatch-free behavior.
+
+**Validation**
+
+- scripts/menu_atlas_tasks.py --check passes for all 28 entries; source comparison preserves task states, per-task links, code spans, dates and identifiers; no original numeric tokens or heading anchors lost.
+- Offline Linux clan_atlas menu tests: 12 passed, 1 native-image export ignored. scripts/menu_language.py check passed with 468 entries per language; git diff --check passed. Tests linked existing Wayland runtime libraries via isolated temporary pkg-config metadata.
+
+**Limitations**
+
+- No live GUI or native Windows validation; task statuses describe recorded evidence and do not reopen or complete runtime criteria. Italian translations of task titles and long checklist details are not provided.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-translate-debug-checklist-and-reference.json)
+
 ## 2026-11-02 — Translate debug catalog, replay and capture guides
 
 Type: docs. Platforms: project-wide.
@@ -329,6 +352,27 @@ Documentation: [en.json](crates/input-config/languages/en.json).
 
 [Change record](docs/changes/2026-11-02-review-desktop-storage-build-guides-english.json)
 
+## 2026-11-02 — Review Android frontend and tooling in English
+
+Type: docs. Platforms: Android source review; no device or APK validation.
+
+**Changes**
+
+- Review maintained natural-language strings, comments, default resources and authored tooling output in 13 Android Kotlin files, 10 Android-specific Rust files, 6 Python scripts and 4 XML files. The inspected default frontend text is English; imported game content and machine identifiers remain unchanged.
+- Correct the Android guide to reflect USA/Europe selection, current fast-forward audio and gamepad configuration, the actual port APK output path and English-only interface language.
+
+**Validation**
+
+- Read project-authored strings and comments for the selected source files; parse all 6 Python scripts as AST and all 4 XML files. Verify source files have no worktree diff and git diff --check passes.
+
+**Limitations**
+
+- No Android build, APK, emulator, device, ROM, game save or performance test was run. Android shared core, tests, Gradle/build metadata and other sources remain for separate review; no Italian UI locale or language selector is implemented.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-review-android-frontend-and-tooling-english.json)
+
 ## 2026-11-02 — Record the partial senary compact OBJ runtime integration
 
 Type: docs. Platforms: EUR; Windows GNU test compilation recorded; runtime acceptance pending.
@@ -351,6 +395,49 @@ Type: docs. Platforms: EUR; Windows GNU test compilation recorded; runtime accep
 Documentation: [2026-11-01-model-european-compact-obj-sixth-root.json](docs/changes/2026-11-01-model-european-compact-obj-sixth-root.json), [TASK_HANDOFF.md](docs/development/TASK_HANDOFF.md).
 
 [Change record](docs/changes/2026-11-02-record-partial-senary-compact-obj-integration.json)
+
+## 2026-11-02 — Localize readonly operation reference cards
+
+Type: changed. Platforms: Desktop: Linux unit tests; Windows GUI not rechecked.
+
+**Changes**
+
+- Present operation-card headings and known route segments in the selected menu language, defaulting to English. Leave registry paths, operation IDs, CLI/JSON descriptors, parameters and section grouping unchanged.
+- Keep descriptor prose in English and preserve unknown card text and parameter values; changing language updates presentation without rebuilding the registry.
+
+**Validation**
+
+- Offline Linux tests: 4 debug-operation tests passed for all 110 cards and unchanged contract/grouping; 1 menu localization test passed for English, Italian, stable tokens and literal braces. Catalog check passed for 465 entries per language; no candidate Italian segments in displayed routes; git diff --check passed.
+- Linux tests linked existing ALSA and Wayland runtime libraries via isolated temporary pkg-config metadata.
+
+**Limitations**
+
+- No live GUI, native Windows or physical-controller validation. The pre-existing generated planned-task asset is stale versus its checklist for DBG2-10 through DBG2-23: scripts/menu_atlas_tasks.py --check fails. The Italian checklist and generated task reference require separate translation and synchronization.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-localize-operation-reference-cards.json)
+
+## 2026-11-02 — Localize the debug save catalog
+
+Type: changed. Platforms: Desktop menu: Linux unit tests; native Windows GUI not rechecked.
+
+**Changes**
+
+- Localize debug-save catalog headings, status and kind labels, empty state and detail headings using the selected menu language. Preserve original status and kind tokens, filters, selected IDs, source text and CLI/JSON data.
+- Keep the All-cases selector label distinct from an imported case ID of the same spelling, and preserve imported entry names. Correct the guide to describe the current internal selector and explicit external dialog.
+
+**Validation**
+
+- Offline Linux menu tests: 4 debug-catalog, 6 interaction and 6 localization tests passed; after final catalog additions the 4 catalog tests passed again and Cargo rebuilt input-config automatically. Catalog checker passed 500/500 entries per language; git diff --check passed.
+
+**Limitations**
+
+- No live GUI, native Windows, physical controller, real-catalog import, save or ROM validation was performed. Existing imported descriptions and historical evidence remain in their original language.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-localize-debug-save-catalog.json)
 
 ## 2026-11-02 — Localize the desktop event console
 
@@ -395,6 +482,28 @@ Type: changed. Platforms: Desktop: Linux tests; Windows GUI not rechecked.
 Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
 
 [Change record](docs/changes/2026-11-02-localize-debug-command-console.json)
+
+## 2026-11-02 — Localize cheat catalog presentation and refresh embedded languages
+
+Type: fixed. Platforms: Desktop: Linux unit tests and synthetic incremental build; Windows GUI not rechecked.
+
+**Changes**
+
+- Use the selected language for read-only cheat catalog rows, selector notices and information labels while preserving imported entries, IDs, ROM hashes and catalog/CLI JSON. Document the existing limited one-shot separately from the original read-only catalog validation.
+- Watch each embedded language JSON as well as its directory, so incremental Cargo builds regenerate translations after edits and continue discovering additions or removals.
+
+**Validation**
+
+- Offline tests: 11 debug-cheats tests passed, 1 private-catalog test ignored; 14 content-selector tests and 2 information tests passed; 4 language-catalog tests passed. Synthetic rows preserve imported JSON and stable IDs in English and Italian.
+- An isolated copy of the actual build script regenerated its registry after editing a catalog and after adding and removing a synthetic locale. Catalog checker passed 487/487 entries per language; git diff --check passed.
+
+**Limitations**
+
+- No live GUI, native Windows, physical-controller, real-catalog, cheat-application or ROM validation was performed. Cheat row text is localized when the catalog is opened or reloaded; catalog capability metadata and the existing manual one-shot limits remain unchanged.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-02-localize-cheat-catalog-and-refresh-language-build.json)
 
 ## 2026-11-02 — Document the English-first foundation and restore CI change coverage
 

@@ -179,11 +179,19 @@ pub(super) struct Selector {
     detail_scroll: Cell<usize>,
 }
 impl Selector {
-    fn cheat_details(&self)->String{
+    fn cheat_details(&self,locale:&crate::i18n::Locale)->String{
         self.selected().map(|i|{let e=&self.entries[i];format!("{} · {} · {}\n{}\n{}\n{}",e.name,e.status,e.compatibility,e.reason,e.identity,e.description)})
-            .unwrap_or_else(||"Nessuna voce selezionata".into())
+            .unwrap_or_else(||locale.tr("No entry selected").into())
     }
-    pub(super) fn description(&self)->String{format!("{}\nRicerca: {}\nTipo: {}\nDisponibilità: {}\nOrdine: {}\nRaccolta: {}",self.title,self.query,self.kinds().get(self.kind).cloned().unwrap_or_default(),FILTERS[self.filter],SORTS[self.sort],COLLECTIONS[self.collection])}
+    pub(super) fn description(&self,language:input_config::Language)->String {
+        let kinds=self.kinds();let kind=kinds.get(self.kind).map(String::as_str).unwrap_or_default();
+        crate::i18n::format(language,"{title}\nSearch: {query}\nType: {kind}\nAvailability: {filter}\nSort: {sort}\nCollection: {collection}",&[
+            ("title",language.text(&self.title).into()),("query",self.query.clone()),
+            ("kind",if self.kind==0{language.text(kind)}else{kind}.into()),
+            ("filter",language.text(FILTERS[self.filter]).into()),("sort",language.text(SORTS[self.sort]).into()),
+            ("collection",language.text(COLLECTIONS[self.collection]).into()),
+        ])
+    }
 
     pub(super) fn selection_state(&self)->Vec<(String,String)>{
         let page=if self.editor_only{"ToolEditor"}else if self.cheat_mode{"CheatCatalog"}else{"ContentSelector"};
@@ -469,7 +477,7 @@ impl Selector {
             }
             5 => self.focus = 6,
             6 => {
-                if self.cheat_mode {if self.selected().is_some(){self.detail_mode=true;}else{self.message="Nessun catalogo: scegli Importa catalogo.".into();}return None;}
+                if self.cheat_mode {if self.selected().is_some(){self.detail_mode=true;}else{self.message="No catalog: choose Import catalog.".into();}return None;}
                 if self.busy {
                     self.message = "Wait for the current catalog operation, or cancel.".into();
                 } else if let Some(index) = self.selected() {
@@ -870,7 +878,7 @@ pub(super) fn draw(s: &Selector, px: &mut [[u8; 4]], w: usize, h: usize, languag
     );
     if s.cheat_mode && s.detail_mode {
         c.text((x+10) as f32,(y+5) as f32,locale.tr("DETTAGLI CHEAT · SOLA LETTURA"),ink,size*1.1,true,pw.saturating_sub(20) as f32);
-        let lines=Canvas::wrap_text(&s.cheat_details(),size,pw.saturating_sub(24) as f32);
+        let lines=Canvas::wrap_text(&s.cheat_details(&locale),size,pw.saturating_sub(24) as f32);
         let pitch=(size*1.5).ceil() as usize;let top=y+g.row+4;let bottom=(y+ph).saturating_sub(g.row);
         let rows=bottom.saturating_sub(top)/pitch.max(1);let offset=s.detail_scroll.get().min(lines.len().saturating_sub(rows));s.detail_scroll.set(offset);
         for (n,line) in lines.iter().skip(offset).take(rows).enumerate(){c.text((x+10) as f32,(top+n*pitch) as f32,line,ink,size,false,pw.saturating_sub(20) as f32);}
@@ -984,7 +992,7 @@ pub(super) fn draw(s: &Selector, px: &mut [[u8; 4]], w: usize, h: usize, languag
         if let Some(i) = s.selected() {
             let e = &s.entries[i];
             let text = if s.cheat_mode {
-                s.cheat_details()
+                s.cheat_details(&locale)
             } else {
                 format!("{}\n{}\n{}\n{} / {}\n{}\n{}\n{}\n{}\nStatus: {}\nSelected ID: {}",
                     e.name,e.id,e.location,e.status,e.compatibility,e.description,e.identity,e.reason,s.preview_message,s.message,s.confirmed.as_deref().unwrap_or("none"))
@@ -1053,7 +1061,7 @@ pub(super) fn draw(s: &Selector, px: &mut [[u8; 4]], w: usize, h: usize, languag
             "{} items{} | {}{}",
             s.visible.len(),
             if s.busy { locale.tr(" / working") } else { "" },
-            s.message,
+            locale.tr(&s.message),
             confirmed
         );
         c.text(

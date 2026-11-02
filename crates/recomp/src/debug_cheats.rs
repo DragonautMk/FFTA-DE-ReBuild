@@ -102,17 +102,17 @@ impl Catalog {
         json!({"links":links,"scope":"Source metadata only; no dependency selection, encryption detection, verification or activation"})
     }
     /// A separate bounded host view; original entry data remains in the catalog.
-    pub fn menu_entries(&self,rom:Option<&str>)->Vec<menu::ContentEntry>{
+    pub fn menu_entries(&self,rom:Option<&str>,language:input_config::Language)->Vec<menu::ContentEntry>{
         let target=Target::new(rom);
         self.entries.iter().map(|entry|{
             let full=serde_json::to_string_pretty(entry).unwrap_or_default();
             let truncated=full.chars().count()>8192;let mut details:String=full.chars().take(8192).collect();
-            if truncated{details.push_str("\n[Dettagli abbreviati; usare debug-cheats show per il record completo]");}
-            let region=entry["region"].as_str().unwrap();let relation=match target.declaration(region){"declared-match"=>"regione sorgente dichiarata corrispondente","declared-mismatch"=>"regione sorgente dichiarata diversa",_=>"corrispondenza regione sconosciuta"};
+            if truncated{details.push_str(&format!("\n[{}]",language.text("Details abbreviated; use debug-cheats show for the complete record")));}
+            let region=entry["region"].as_str().unwrap();let relation=language.text(match target.declaration(region){"declared-match"=>"Declared source region matches","declared-mismatch"=>"Declared source region differs",_=>"Source region match unknown"});
             menu::ContentEntry{id:entry["id"].as_str().unwrap().into(),name:format!("{} · {}",entry["id"].as_str().unwrap(),entry["title"].as_str().unwrap()),
                 kind:format!("{} / {}",entry["format"].as_str().unwrap(),entry["region"].as_str().unwrap()),description:details,
-                location:"Catalogo locale · sola lettura".into(),identity:format!("Catalogo SHA256 {}\nROM SHA256 {} · regione riconosciuta {}",self.source_sha256,target.sha256.unwrap_or("sconosciuto"),target.region.unwrap_or("sconosciuta")),status:"Disattivato".into(),compatibility:"Non verificato".into(),
-                reason:format!("{relation}; solo dichiarazione della fonte, non verifica dei codici. Versione dispositivo sconosciuta; decoder non supportato; comportamento non verificato. Nessun codice eseguibile."),available:true}
+                location:language.text("Local catalog · read only").into(),identity:menu::i18n::format(language,"Catalog SHA256 {catalog}\nROM SHA256 {rom} · recognized region {region}",&[("catalog",self.source_sha256.clone()),("rom",target.sha256.unwrap_or_else(||language.text("Unknown ROM hash")).into()),("region",target.region.unwrap_or_else(||language.text("Unknown recognized region")).into())]),status:language.text("Cheat disabled").into(),compatibility:language.text("Cheat unverified").into(),
+                reason:menu::i18n::format(language,"{relation}; source declaration only, not code verification. Device version unknown; decoder unsupported; behavior unverified. No executable code.",&[("relation",relation.into())]),available:true}
         }).collect()
     }
 }
@@ -345,9 +345,26 @@ mod tests {
         for (sha,state,region) in [(gba_core::ffta_rom::EUROPE_SHA256,"declared-match",Some("EUR")),(gba_core::ffta_rom::SHA256,"declared-mismatch",Some("USA")),("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","unknown",None)]{
             let summary=Catalog::summary(entry,Some(sha));assert_eq!(summary["compatibility"]["rom"]["state"],state);assert_eq!(summary["compatibility"]["rom"]["recognized_region"],json!(region));
             assert_eq!(summary["enabled"],false);assert_eq!(summary["executable"],false);assert_eq!(summary["compatibility"]["verification"]["state"],"unverified");assert_eq!(summary["compatibility"]["device_version"]["state"],"unknown");
-            let view=catalog.menu_entries(Some(sha));assert!(view[0].identity.contains(sha));assert!(view[0].reason.contains("non verifica"));assert!(view[0].reason.contains("decoder non supportato"));
+            let view=catalog.menu_entries(Some(sha),input_config::Language::default());assert!(view[0].identity.contains(sha));assert!(view[0].reason.contains("not code verification"));assert!(view[0].reason.contains("decoder unsupported"));
         }
         let unknown=Catalog::summary(&catalog.entries[1],Some(gba_core::ffta_rom::EUROPE_SHA256));assert_eq!(unknown["compatibility"]["rom"]["state"],"unknown");
+    }
+    #[test]
+    fn localized_cheat_rows_keep_imported_records_and_identity() {
+        let input=fixture();let catalog=Catalog::parse(&serde_json::to_vec(&input).unwrap()).unwrap();
+        let before=Catalog::summary(&catalog.entries[0],Some(gba_core::ffta_rom::EUROPE_SHA256));
+        let en=catalog.menu_entries(Some(gba_core::ffta_rom::EUROPE_SHA256),input_config::Language::default());
+        let it=catalog.menu_entries(Some(gba_core::ffta_rom::EUROPE_SHA256),input_config::Language::parse("it"));
+        for (index,(english,italian)) in en.iter().zip(&it).enumerate() {
+            assert_eq!(english.id,italian.id);assert_eq!(english.name,italian.name);assert_eq!(english.kind,italian.kind);
+            assert_eq!(english.description,serde_json::to_string_pretty(&input["entries"][index]).unwrap());
+            assert_eq!(english.description,italian.description);assert_eq!(english.available,italian.available);
+            assert!(english.identity.contains(gba_core::ffta_rom::EUROPE_SHA256));
+            assert!(italian.identity.contains(gba_core::ffta_rom::EUROPE_SHA256));
+            assert!(english.reason.contains("decoder unsupported"));assert!(italian.reason.contains("decoder non supportato"));
+        }
+        assert_eq!(en[0].status,"Disabled");assert_eq!(it[0].status,"Disattivato");
+        assert_eq!(Catalog::summary(&catalog.entries[0],Some(gba_core::ffta_rom::EUROPE_SHA256)),before);
     }
     #[test]
     fn bounded_snapshot_pages_and_utf8_details_preserve_identity(){
@@ -384,8 +401,8 @@ mod tests {
     #[ignore = "explicit readonly check against the user's local reference catalog; no payload is printed"]
     fn local_catalog_menu_mapping_keeps_every_original_entry(){
         let path=PathBuf::from(std::env::var_os("FFTA_CHEAT_REFERENCE").unwrap());let before=std::fs::read(&path).unwrap();let catalog=Catalog::load(&path).unwrap();
-        let rows=catalog.menu_entries(None);assert_eq!(rows.len(),catalog.entries.len());assert_eq!(rows.len(),341);
-        for (row,entry) in rows.iter().zip(&catalog.entries){assert_eq!(row.id,entry["id"].as_str().unwrap());assert_eq!(row.description,serde_json::to_string_pretty(entry).unwrap());assert!(row.reason.contains("decoder non supportato"));}
+        let rows=catalog.menu_entries(None,input_config::Language::default());assert_eq!(rows.len(),catalog.entries.len());assert_eq!(rows.len(),341);
+        for (row,entry) in rows.iter().zip(&catalog.entries){assert_eq!(row.id,entry["id"].as_str().unwrap());assert_eq!(row.description,serde_json::to_string_pretty(entry).unwrap());assert!(row.reason.contains("decoder unsupported"));}
         assert_eq!(std::fs::read(path).unwrap(),before);
     }
 }

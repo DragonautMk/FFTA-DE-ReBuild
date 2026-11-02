@@ -35,6 +35,28 @@ const STATES: [&str; 6] = [
     "origine",
 ];
 const KINDS: [&str; 6] = ["All", "case", "variant", "IN", "GEN", "NEW"];
+
+/// Translate presentation only; catalog values and filters keep their tokens.
+pub(super) fn display_value<'a>(row:Row,value:&'a str,language:input_config::Language)->&'a str {
+    let key=match (row,value) {
+        (Row::CatalogRegion|Row::CatalogStatus|Row::CatalogKind,"All")=>"Catalog all values",
+        (Row::CatalogStatus,"validata")=>"Catalog status validated",
+        (Row::CatalogStatus,"parziale")=>"Catalog status partial",
+        (Row::CatalogStatus,"non_coperta")=>"Catalog status uncovered",
+        (Row::CatalogStatus,"variante")=>"Catalog status variant",
+        (Row::CatalogStatus,"origine")=>"Catalog status source",
+        (Row::CatalogKind,"case")=>"Catalog kind case",
+        (Row::CatalogKind,"variant")=>"Catalog kind variant",
+        _=>return value,
+    };
+    language.text(key)
+}
+
+pub(super) fn display_option<'a>(row:Row,value:&'a str,index:usize,language:input_config::Language)->&'a str {
+    if row==Row::CatalogCase && index==0 { language.text("Catalog all values") }
+    else { display_value(row,value,language) }
+}
+
 impl CatalogState {
     pub(super) fn choices(&self,row:Row)->Vec<String> {
         match row {
@@ -49,16 +71,17 @@ impl CatalogState {
     pub(super) fn choice_index(&self,row:Row)->usize {
         match row {Row::CatalogRegion=>self.region,Row::CatalogStatus=>self.status,Row::CatalogKind=>self.kind,Row::CatalogCase=>self.case,Row::CatalogEntry=>self.index,_=>0}
     }
-    pub(super) fn details(&self) -> String {
+    pub(super) fn details(&self,language:input_config::Language) -> String {
         self.selected()
             .map(|i| {
                 let e = &self.entries[i];
-                format!(
-                    "{}\n{} · {} · {} · {}\nSorgente: {}\nProva: {}\n{}",
-                    e.name, e.kind, e.case, e.region, e.status, e.source, e.evidence, e.error
-                )
+                crate::i18n::format(language,"{name}\n{kind} · {case} · {region} · {status}\nSource: {source}\nEvidence: {evidence}\n{error}",&[
+                    ("name",e.name.clone()),("kind",display_value(Row::CatalogKind,&e.kind,language).into()),("case",e.case.clone()),
+                    ("region",e.region.clone()),("status",display_value(Row::CatalogStatus,&e.status,language).into()),
+                    ("source",e.source.clone()),("evidence",e.evidence.clone()),("error",e.error.clone()),
+                ])
             })
-            .unwrap_or_else(|| "Nessuna voce selezionata".into())
+            .unwrap_or_else(|| language.text("No entry selected").into())
     }
 
     pub(super) fn selection_state(&self) -> Vec<(String, String)> {
@@ -249,7 +272,7 @@ pub(super) fn draw(menu: &Menu, px: &mut [[u8; 4]], w: usize, h: usize) {
     c.text(
         8.,
         7.,
-        "DEBUG SAVE CATALOG",
+        menu.tr("DEBUG SAVE CATALOG"),
         ink,
         fs,
         true,
@@ -269,7 +292,7 @@ pub(super) fn draw(menu: &Menu, px: &mut [[u8; 4]], w: usize, h: usize) {
         c.text(
             dx as f32,
             (top + 18) as f32,
-            &format!("{} / {} / {}", e.region, e.status, e.kind),
+            &format!("{} / {} / {}", e.region, display_value(Row::CatalogStatus,&e.status,menu.language()), display_value(Row::CatalogKind,&e.kind,menu.language())),
             ink,
             (fs * 0.8).max(9.),
             false,
@@ -323,6 +346,11 @@ pub(super) fn draw(menu: &Menu, px: &mut [[u8; 4]], w: usize, h: usize) {
             super::atlas_theme::text(&mut c, r, row.localized_label(menu.language()), size, false, ink);
         } else {
             let label_width = r.w * 43 / 100;
+            let presented=if *row==Row::CatalogCase && menu.catalog.choice_index(*row)==0 {
+                menu.tr("Catalog all values")
+            } else if *row==Row::CatalogEntry && menu.catalog.selected().is_none() {
+                menu.tr("No matching catalog entries")
+            } else { display_value(*row,&value,menu.language()) };
             c.text(
                 (r.x + 6) as f32,
                 (r.y + 5) as f32,
@@ -335,7 +363,7 @@ pub(super) fn draw(menu: &Menu, px: &mut [[u8; 4]], w: usize, h: usize) {
             c.text(
                 (r.x + label_width) as f32,
                 (r.y + 5) as f32,
-                &value,
+                presented,
                 ink,
                 size,
                 false,
@@ -406,6 +434,30 @@ mod tests {
                 ..Default::default()
             },
         ]
+    }
+    #[test]
+    fn localized_labels_preserve_catalog_filter_tokens_and_details() {
+        let mut state=CatalogState::new(entries(),"EUR");
+        let before=state.selection_state();
+        let en=input_config::Language::default();let it=input_config::Language::parse("it");
+        assert_eq!(state.choices(Row::CatalogStatus)[3],"non_coperta");
+        assert_eq!(display_value(Row::CatalogStatus,"non_coperta",en),"Uncovered");
+        assert_eq!(display_value(Row::CatalogStatus,"non_coperta",it),"Non coperta");
+        assert_eq!(display_value(Row::CatalogStatus,"external-status",en),"external-status");
+        assert_eq!(display_value(Row::CatalogKind,"case",en),"Case");
+        assert_eq!(display_value(Row::CatalogKind,"case",it),"Caso");
+        assert_eq!(display_value(Row::CatalogKind,"IN",it),"IN");
+        assert_eq!(display_value(Row::CatalogCase,"All",it),"All"); // Imported case IDs stay verbatim.
+        assert_eq!(display_value(Row::CatalogEntry,"No matches",it),"No matches"); // Likewise for entry names.
+        assert_eq!(display_option(Row::CatalogCase,"All",0,it),"Tutti");
+        assert_eq!(display_option(Row::CatalogCase,"All",1,it),"All");
+        assert_eq!(state.selection_state(),before);
+        let details_en=state.details(en);let details_it=state.details(it);
+        assert!(details_en.contains("EUR · Validated")&&details_en.contains("Source: USER-DS-20-EUR"));
+        assert!(details_it.contains("EUR · Validata")&&details_it.contains("Sorgente: USER-DS-20-EUR"));
+        state.status=3;assert_eq!(state.matches(),vec![1]);
+        assert_eq!(state.choices(Row::CatalogStatus)[3],"non_coperta");
+        assert_eq!(state.selection_state().iter().find(|(k,_)|k=="catalog.CatalogStatus").unwrap().1,"non_coperta");
     }
     #[test]
     fn filters_keep_uncovered_cases_and_in_identifiers_distinct() {

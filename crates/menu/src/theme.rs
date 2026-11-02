@@ -562,7 +562,8 @@ pub(super) fn draw_dropdown(menu: &Menu, dd: &Dropdown, c: &mut Canvas, w: usize
         c.text(
             x as f32 + 14.,
             yy + 4.,
-            if matches!(dd.row, Row::CatalogRegion | Row::CatalogStatus | Row::CatalogKind | Row::CatalogCase | Row::CatalogEntry) { s } else { menu.tr(s) },
+            if matches!(dd.row, Row::CatalogRegion | Row::CatalogStatus | Row::CatalogKind | Row::CatalogCase | Row::CatalogEntry) { crate::debug_catalog::display_option(dd.row,s,first+i,menu.language()) }
+            else { menu.tr(s) },
             if sel { GOLD } else { [232, 216, 176] },
             pitch as f32 * 0.6,
             false,

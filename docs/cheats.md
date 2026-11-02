@@ -8,9 +8,10 @@ permissions have not been established. This documentation contains no cheat
 payloads and does not assign a license to the source material.
 
 The [integrated-debug follow-up checklist](development/DEBUG_TOOLS_V2_TODO.md)
-plans a local cheat menu using these stable CH identifiers, with EUR candidates,
-format validation, isolated application and replay provenance. These are future
-steps; the reference catalog still provides no runtime cheat execution.
+tracks a local cheat menu using these stable CH identifiers, with EUR candidates,
+format validation, isolated application and replay provenance. Read-only
+browsing and a limited manual one-shot are implemented as described below;
+maintained activation and replay provenance remain open.
 
 ## Organization
 
@@ -82,15 +83,15 @@ The Debug / Cheat page computes the exact hash from the currently loaded ROM
 and shows it alongside the catalog hash and the same declared-region comparison.
 It opens a separate readonly view with search, filters and
 scrollable details. A catalog next to the executable is loaded when present;
-otherwise the page explains the empty state. **Importa catalogo** opens the
+otherwise the page explains the empty state. **Import catalog...** opens the
 internal content selector: refresh its declared roots, select `catalogo.json`,
-return and choose **Ricarica**. External file/folder dialogs remain explicit
+return and choose **Reload**. External file/folder dialogs remain explicit
 buttons in that selector. The selected file is checked against its pinned hash
 before loading. Selecting a CH only opens its details; it cannot enable or run
 it. Details occupy a separate scrollable panel with the compatibility reasons
-before the original record. Long individual records are marked as abbreviated in the view and remain
-available in full through `debug-cheats show`. Decoder and controlled
-application remain unfinished.
+before the original record. Long individual records are marked as abbreviated
+in the view and remain available in full through `debug-cheats show`. Decoding
+and controlled application remain partial, with the one-shot scope below.
 
 ### Assumed plaintext CodeBreaker inspection — DBG2-18 in progress
 
@@ -253,9 +254,10 @@ been checked.
 
 ## Review and limitations
 
-Validation checks preservation and organization; none of these codes has been
-applied to the runtime, a ROM or a save. USA/Japan labels follow the supplied
-sources. English text alone does not establish a ROM region. Device versions,
+The original catalog validation checked preservation and organization without
+applying codes to a runtime, ROM or save. The later isolated CH-0334 one-shot
+established only the bounded RAM effect documented above. USA/Japan labels
+follow the supplied sources. English text alone does not establish a ROM region. Device versions,
 encrypted-code semantics and compatibility with FFTARecomp remain unverified.
 
 The local quality page flags two different Codebreaker master codes, apparently

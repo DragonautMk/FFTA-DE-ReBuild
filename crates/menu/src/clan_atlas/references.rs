@@ -40,6 +40,30 @@ pub fn reference_group(route:&str)->usize {
     DEBUG_SECTIONS.iter().position(|name|route.starts_with(&format!("Debug / {name} /"))).unwrap_or(0)
 }
 
+/// Localize the card's presentation, leaving the registry and route grouping
+/// untouched. Unknown text and individual parameter values remain verbatim.
+fn operation_details(language:input_config::Language, details:&str)->String {
+    details.lines().map(|line| {
+        if let Some(route)=line.strip_prefix("Route: ") {
+            let route=route.split(" / ").map(|part|language.text(part)).collect::<Vec<_>>().join(" / ");
+            return format!("{}: {route}",language.text("Route"));
+        }
+        if line=="CLI: No CLI command" {
+            return format!("CLI: {}",language.text("No CLI command"));
+        }
+        for label in ["Prerequisites","Parameters","Effects","Result","Limits","Handler"] {
+            if let Some(value)=line.strip_prefix(label).and_then(|tail|tail.strip_prefix(": ")) {
+                return format!("{}: {value}",language.text(label));
+            }
+        }
+        match line {
+            "Menu available · existing handler" | "CLI only · no execution from this card" |
+            "This card is read-only. Use the menu action or the explicit CLI." => language.text(line).to_owned(),
+            _ => line.to_owned(),
+        }
+    }).collect::<Vec<_>>().join("\n")
+}
+
 impl Menu {
     pub fn atlas_reference_active(&self) -> bool {
         self.page == Page::CliReference || (self.page == Page::Debug && self.atlas.planned)
@@ -49,14 +73,14 @@ impl Menu {
         if self.atlas.planned {
             planned().iter().filter(|t|section==0||t.section==section).map(|t|(
                 format!("{} · {}",t.id,t.title),
-                format!("{}\n{}\n{}\nRiferimento alla checklist; questa vista non esegue operazioni.",t.id,if t.done {"Completata nella checklist corrente"}else{"Pianificata · non disponibile"},t.details)
+                format!("{}\n{}\n{}\n{}",t.id,self.tr(if t.done {"Completed in the current checklist"}else{"Planned · unavailable"}),t.details,self.tr("Checklist reference; this view does not execute operations."))
             )).collect()
         } else {
             self.atlas
                 .operations
                 .iter()
                 .filter(|o| section == 0 || o.section == section)
-                .map(|o| (format!("{} · {}", o.id, o.title), o.details.clone()))
+                .map(|o| (format!("{} · {}", o.id, o.title), operation_details(self.language(),&o.details)))
                 .collect()
         }
     }
@@ -163,5 +187,25 @@ impl Menu {
             self.atlas.detail_scroll = 0;
             self.atlas.reference_scroll.set(0);
         }
+    }
+}
+
+#[cfg(test)]
+mod localization_tests {
+    use super::*;
+    use input_config::Language;
+
+    #[test]
+    fn readonly_operation_labels_and_routes_follow_the_language() {
+        let original="control.step · Step\nMenu available · existing handler\nCLI: No CLI command\nRoute: Debug / Sessioni e casi / Console comandi\nParameters: --keys (mask): {Route} / value\nThis card is read-only. Use the menu action or the explicit CLI.";
+        let en=operation_details(Language::default(),original);
+        let it=operation_details(Language::parse("it"),original);
+        assert!(en.contains("Route: Debug / Sessions and cases / Command console"));
+        assert!(it.contains("Percorso: Debug / Sessioni e casi / Console comandi"));
+        assert!(it.contains("Menu disponibile · handler esistente")&&it.contains("CLI: Nessun comando CLI"));
+        assert!(en.contains("Parameters: --keys (mask): {Route} / value"));
+        assert!(it.contains("Parametri: --keys (mask): {Route} / value"));
+        assert_eq!(reference_group("Debug / Sessioni e casi / Console comandi"),1);
+        assert!(original.contains("Route: Debug / Sessioni e casi"));
     }
 }

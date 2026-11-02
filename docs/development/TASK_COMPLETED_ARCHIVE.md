@@ -18264,3 +18264,39 @@ LOCAL-ARTIFACT-SWEEP-2026-10-31 — CLOSED. Latest request: clean residual proje
 - Verified criteria: event window title, controls, status and notices use English default or Italian catalog; filter tokens, event payload, export schema and collection/export limits retained. Four Linux offline debug_console tests PASS, including bilingual text and unchanged JSON; both catalogs 454/454 and whitespace PASS.
 - Evidence: `docs/changes/2026-11-02-localize-debug-event-console.json`; reviewed hashes in `ENGLISH_FIRST_AUDIT.json` (137 reviewed files, 44 pending Markdown).
 - Limits: no live GUI, native Windows, physical controller or real IME check. Existing notices are not retroactively translated. Operation/reference metadata and parent migration remain pending; concurrent todo2 addition preserved.
+
+### ENGLISH-FIRST-OPERATION-REFERENCES
+
+- Outcome: completed
+- Verified criteria: readonly cards localize field labels and known route segments with English default and optional Italian; all 110 IDs, parameters, route identity, CLI/JSON contract and grouping retained. Four operation tests and one bilingual menu test PASS; catalogs 465/465, whitespace and route-language candidate checks PASS.
+- Evidence: `docs/changes/2026-11-02-localize-operation-reference-cards.json`; reviewed hashes in `ENGLISH_FIRST_AUDIT.json` (138 reviewed files, 44 pending Markdown).
+- Limits: no live GUI or native Windows validation. Pre-existing generated planned-task reference is stale for DBG2-10..23 (`menu_atlas_tasks.py --check` failed); its Italian source and translation remain pending. Concurrent todo2 addition preserved.
+
+### ENGLISH-FIRST-DEBUG-CHECKLIST
+
+- Outcome: completed
+- Verified criteria: maintained DBG2 checklist and 28 readonly references translated; task IDs/statuses, evidence links, code, numeric identifiers and 11 old anchors retained. Regeneration corrects stale DBG2-10..23; status labels 12 complete/16 open match source. Generator/catalog checks PASS; Linux menu tests 12 PASS, 1 ignored native image export.
+- Evidence: `docs/changes/2026-11-02-translate-debug-checklist-and-reference.json`; reviewed hashes in `ENGLISH_FIRST_AUDIT.json` (142 reviewed files, 43 Markdown pending).
+- Limits: no live GUI, native Windows or runtime validation; the actual task criteria and accepted evidence are unchanged. Italian status/notice retained, long task descriptions use English. Parent migration remains partial.
+
+### ENGLISH-FIRST-CHEAT-CATALOG-UI
+
+- Outcome: completed
+- Verified criteria: catalog rows, empty/import/error notices and selector information use English default/optional Italian; imported JSON, IDs, ROM hashes, filters and non-execution behavior retained. Guide distinguishes initial catalog validation from later isolated one-shot. 11 cheat tests PASS/1 private-catalog ignored; 14 selector, 2 information and 4 language-catalog tests PASS. Catalog 487/487 and whitespace PASS.
+- Incremental-build diagnosis: a new information test initially failed because existing locale JSON edits left generated languages.rs stale; build.rs watched the directory only. The fix watches every JSON as well; isolated Cargo proof PASS for edit, addition and removal. Debugging primary model/effort could not be independently confirmed; cause and next check were clear, so no consultant was required.
+- Evidence: `docs/changes/2026-11-02-localize-cheat-catalog-and-refresh-language-build.json`; reviewed hashes in `ENGLISH_FIRST_AUDIT.json` (144 reviewed, 42 Markdown pending).
+- Limits: no live GUI, native Windows, physical controller, real catalog, cheat execution or ROM validation in this unit. Existing one-shot and capability gaps remain; translated rows refresh on opening/reload. Parent migration partial.
+
+### ENGLISH-FIRST-DEBUG-SAVE-CATALOG
+
+- Outcome: completed
+- Verified criteria: debug-save catalog status, kind, empty and detail labels use English default/Italian while original filter tokens, IDs, imported names and evidence remain unchanged. Four catalog, six interaction and six localization tests PASS; final catalog tests rerun after new keys PASS and incremental build reloaded them. Catalog check 500/500; whitespace PASS. Guide now describes the internal selector and explicit external dialog.
+- Evidence: `docs/changes/2026-11-02-localize-debug-save-catalog.json`; reviewed hashes in `ENGLISH_FIRST_AUDIT.json` (145 reviewed, 42 Markdown pending).
+- Limits: no live GUI, native Windows, physical controller, real catalog import, save or ROM validation; imported descriptive data remains verbatim. Parent migration partial.
+
+### ENGLISH-FIRST-ANDROID-FRONTEND-AUDIT
+
+- Outcome: completed
+- Verified criteria: reviewed natural-language production text/comments in 13 Kotlin, 10 Android-specific Rust, 6 Python and 4 XML files; inspected frontend defaults and authored tool output are English. All six Python sources parse and four XML files parse; selected source files have no worktree changes. Android guide corrected for USA/Europe selection, audio modes, gamepad remapping, English interface and actual port APK path.
+- Evidence: `docs/changes/2026-11-02-review-android-frontend-and-tooling-english.json`; exact hashes in `ENGLISH_FIRST_AUDIT.json` (178 reviewed, 42 Markdown pending).
+- Limits: no Android build, APK, device/emulator, ROM, save or performance test. No Android UI locale selector; shared core, tests and build metadata remain to review. Parent migration partial; concurrent todo2 edits preserved.

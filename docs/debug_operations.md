@@ -93,7 +93,11 @@ See [the selector and library](debug_selector.md) for prerequisites and limits.
 
 The [Clan Atlas menu](menu_clan_atlas.md) groups paths into eight Debug sections
 and offers the readonly Menu / CLI reference page. The registry retains IDs,
-parameters, handlers and protections; only menu paths change.
+parameters, handlers and protections; only menu paths change. Reference cards
+use the selected menu language for their field labels and route presentation;
+registry paths and the CLI/JSON descriptors remain unchanged. Descriptor prose
+itself is English. The separate planned-task reference is generated from the
+English checklist and reflects its recorded completion states and audit notes.
 
 `cheats.open`, `cheats.choose`, `cheats.refresh`, `cheats.list`, `cheats.show`
 and `cheats.info` describe local catalog browsing. `cheats.inspect-plaintext`

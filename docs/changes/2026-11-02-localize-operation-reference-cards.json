@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "localize-operation-reference-cards",
+  "title": "Localize readonly operation reference cards",
+  "kind": "changed",
+  "platforms": [
+    "Desktop: Linux unit tests; Windows GUI not rechecked"
+  ],
+  "changes": [
+    "Present operation-card headings and known route segments in the selected menu language, defaulting to English. Leave registry paths, operation IDs, CLI/JSON descriptors, parameters and section grouping unchanged.",
+    "Keep descriptor prose in English and preserve unknown card text and parameter values; changing language updates presentation without rebuilding the registry."
+  ],
+  "validation": [
+    "Offline Linux tests: 4 debug-operation tests passed for all 110 cards and unchanged contract/grouping; 1 menu localization test passed for English, Italian, stable tokens and literal braces. Catalog check passed for 465 entries per language; no candidate Italian segments in displayed routes; git diff --check passed.",
+    "Linux tests linked existing ALSA and Wayland runtime libraries via isolated temporary pkg-config metadata."
+  ],
+  "limitations": [
+    "No live GUI, native Windows or physical-controller validation. The pre-existing generated planned-task asset is stale versus its checklist for DBG2-10 through DBG2-23: scripts/menu_atlas_tasks.py --check fails. The Italian checklist and generated task reference require separate translation and synchronization."
+  ],
+  "files": [
+    "crates/input-config/languages/en.json",
+    "crates/input-config/languages/it.json",
+    "crates/menu/src/clan_atlas/references.rs",
+    "crates/recomp/src/debug_operations.rs",
+    "docs/debug_operations.md",
+    "docs/menu_localization.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

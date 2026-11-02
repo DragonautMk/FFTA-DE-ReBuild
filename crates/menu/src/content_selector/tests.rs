@@ -5,11 +5,13 @@ fn cheat_view_keeps_all_rows_and_never_dispatches_selection(){
     let mut s=Selector::default();s.cheat_mode=true;
     s.set("Cheat".into(),(0..600).map(|i|ContentEntry{id:format!("CH-{i:04}"),name:format!("CH-{i:04}"),available:true,..Default::default()}).collect(),String::new(),0);
     assert_eq!(s.entries.len(),600);s.cursor=599;s.focus=6;assert!(s.handle(MenuInput::Confirm).is_none());assert!(s.detail_mode);assert!(s.confirmed.is_none());
-    s.entries[s.visible[599]].reason="ROM sconosciuta; decoder non supportato".into();s.entries[s.visible[599]].description="SYNTHETIC CODE".into();let detail=s.cheat_details();assert!(detail.find("decoder non supportato").unwrap()<detail.find("SYNTHETIC CODE").unwrap());
+    s.entries[s.visible[599]].reason="Unknown ROM; decoder unsupported".into();s.entries[s.visible[599]].description="SYNTHETIC CODE".into();let detail=s.cheat_details(&crate::i18n::Locale(input_config::Language::default()));assert!(detail.find("decoder unsupported").unwrap()<detail.find("SYNTHETIC CODE").unwrap());
     let g=geometry(627,218);let hidden=g.actions[4];assert!(s.click(hidden[0]+2,hidden[1]+2,627,218,true).is_none());assert!(s.detail_mode);
     assert_eq!(s.focus(627,218).selected_bounds,Some(g.panel));
     s.handle(MenuInput::Cancel);s.focus=10;assert_eq!(s.handle(MenuInput::Confirm),Some(MenuAction::CheatChoose));s.focus=9;assert_eq!(s.handle(MenuInput::Confirm),Some(MenuAction::CheatReload));
-    s.set("Cheat".into(),Vec::new(),String::new(),0);s.focus=6;assert!(s.handle(MenuInput::Confirm).is_none());assert!(s.message.contains("Importa"));
+    s.set("Cheat".into(),Vec::new(),String::new(),0);s.focus=6;assert!(s.handle(MenuInput::Confirm).is_none());
+    assert!(s.message.contains("Import catalog"));
+    assert!(crate::i18n::Locale(input_config::Language::parse("it")).tr(&s.message).contains("Importa catalogo"));
 }
 
 #[test]
@@ -20,6 +22,15 @@ fn semantic_observation_never_adjusts_geometry_scroll_or_confirms_content(){
     let before=(selector.first.get(),selector.detail_scroll.get(),selector.cursor,selector.confirmed.clone());
     for _ in 0..20{let _=selector.selection_state();}
     assert_eq!(before,(selector.first.get(),selector.detail_scroll.get(),selector.cursor,selector.confirmed.clone()));
+}
+#[test]
+fn selector_information_localizes_labels_without_reinterpreting_values() {
+    let mut s=Selector::default();s.set("Cheat · read only".into(),vec![ContentEntry{id:"CH-0001".into(),kind:"{query}".into(),..Default::default()}],String::new(),0);
+    s.query="{kind}".into();s.kind=1;
+    let en=s.description(input_config::Language::default());let it=s.description(input_config::Language::parse("it"));
+    assert!(en.contains("Search: {kind}\nType: {query}"));
+    assert!(it.contains("Ricerca: {kind}\nTipo: {query}"));
+    assert!(it.starts_with("Cheat · sola lettura"));
 }
 fn entries() -> Vec<ContentEntry> {
     (0..30)

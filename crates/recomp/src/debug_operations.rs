@@ -234,6 +234,19 @@ mod tests {
     }
 
     #[test]
+    fn atlas_cards_keep_registry_identity_routes_and_parameters() {
+        let cards=atlas_references();
+        assert_eq!(cards.len(),registry().operations.len());
+        for (card,op) in cards.iter().zip(&registry().operations) {
+            assert_eq!(card.id,op.id);
+            assert_eq!(card.section,menu::clan_atlas::reference_group(&op.menu.destination));
+            assert!(card.details.contains(&format!("Route: {}",op.menu.current.as_deref().unwrap_or(&op.menu.destination))));
+            assert!(card.details.contains("This card is read-only."));
+            for parameter in &op.parameters { assert!(card.details.contains(&parameter.name)); }
+        }
+    }
+
+    #[test]
     fn contract_ids_routes_parameters_and_source_files_are_consistent() {
         let r = registry();
         assert_eq!((r.schema, r.version), (1, VERSION));
@@ -340,6 +353,6 @@ mod tests {
 pub(crate) fn atlas_references()->Vec<menu::clan_atlas::OperationReference>{
     registry().operations.iter().map(|op|{
         let parameters=op.parameters.iter().map(|p|format!("{} ({}): {} · default {}",p.name,p.value_type,p.constraint,p.default)).collect::<Vec<_>>().join("; ");
-        menu::clan_atlas::OperationReference{id:op.id.clone(),title:op.title.clone(),section:menu::clan_atlas::reference_group(&op.menu.destination),details:format!("{} · {}\n{}\nCLI: {}\nPercorso: {}\nPrerequisiti: {}\nParametri: {}\nEffetti: {}\nRisultato: {}\nLimiti: {}\nHandler: {}\nQuesta scheda è di sola lettura. Usa l'azione del menu o la CLI esplicita.",op.id,op.title,if op.menu.implemented {"Menu disponibile · handler esistente"}else{"Solo CLI · nessuna esecuzione da questa scheda"},op.cli.as_deref().unwrap_or("Nessun comando CLI"),op.menu.current.as_deref().unwrap_or(&op.menu.destination),op.allowed_state,parameters,op.effects,op.result,op.limits,op.handler)}
+        menu::clan_atlas::OperationReference{id:op.id.clone(),title:op.title.clone(),section:menu::clan_atlas::reference_group(&op.menu.destination),details:format!("{} · {}\n{}\nCLI: {}\nRoute: {}\nPrerequisites: {}\nParameters: {}\nEffects: {}\nResult: {}\nLimits: {}\nHandler: {}\nThis card is read-only. Use the menu action or the explicit CLI.",op.id,op.title,if op.menu.implemented {"Menu available · existing handler"}else{"CLI only · no execution from this card"},op.cli.as_deref().unwrap_or("No CLI command"),op.menu.current.as_deref().unwrap_or(&op.menu.destination),op.allowed_state,parameters,op.effects,op.result,op.limits,op.handler)}
     }).collect()
 }

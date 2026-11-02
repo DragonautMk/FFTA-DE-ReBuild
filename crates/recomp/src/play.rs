@@ -2599,9 +2599,9 @@ impl PlayApp {
             Ok(Some(catalog))
         })();
         match result {
-            Ok(Some(catalog))=>{let entries=catalog.menu_entries(Some(&rom));let message=format!("{} voci · tutte disattivate · compatibilità non verificata",entries.len());self.menu.open_cheats(entries,message);},
-            Ok(None)=>self.menu.open_cheats(Vec::new(),"Catalogo assente. Scegli Importa catalogo; nessuna voce è attiva.".into()),
-            Err(error)=>self.menu.open_cheats(Vec::new(),format!("Catalogo non disponibile: {error}. Importa una sorgente valida.")),
+            Ok(Some(catalog))=>{let entries=catalog.menu_entries(Some(&rom),self.av.menu_language);let message=self.menu_text("{count} entries · all disabled · compatibility unverified",&[("count",entries.len().to_string())]);self.menu.open_cheats(entries,message);},
+            Ok(None)=>{let message=self.menu_text("No catalog. Choose Import catalog; no entries are active.",&[]);self.menu.open_cheats(Vec::new(),message);},
+            Err(error)=>{let message=self.menu_text("Catalog unavailable: {error}. Import a valid source.",&[("error",error)]);self.menu.open_cheats(Vec::new(),message);},
         }
         self.menu_dirty=true;
     }
@@ -4059,7 +4059,7 @@ impl PlayApp {
                     menu::MenuAction::UndoState => self.undo_state_operation(),
                     menu::MenuAction::OpenDebugCatalog => self.open_debug_catalog(false),
                     menu::MenuAction::OpenCheatCatalog | menu::MenuAction::CheatReload => self.open_cheat_catalog(),
-                    menu::MenuAction::CheatChoose => self.choose_tool_input(menu::ContentSlot::CheatCatalog,"Seleziona il catalogo, torna indietro e premi Ricarica. Nessun codice viene eseguito.".into()),
+                    menu::MenuAction::CheatChoose => self.choose_tool_input(menu::ContentSlot::CheatCatalog,self.menu_text("Select the catalog, return and press Reload. No code is executed.",&[])),
                     menu::MenuAction::ChooseDebugCatalog => self.open_debug_catalog(true),
                     menu::MenuAction::CatalogSelection(index) => self.catalog_preview(index),
                     menu::MenuAction::CatalogImport(index) => self.catalog_import(index),

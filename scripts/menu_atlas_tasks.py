@@ -18,6 +18,8 @@ def render():
         group = 1 if n <= 7 else 4 if n <= 12 else 5 if n <= 16 else 6 if n <= 23 else 3 if n <= 25 else 7
         body = text[m.end():matches[i+1].start() if i+1 < len(matches) else len(text)]
         body = re.split(r'^## ', body, maxsplit=1, flags=re.M)[0]
+        # Compatibility anchors belong to the following section, not the task.
+        body = re.sub(r'^<a id="[^"]+"></a>\s*$', '', body, flags=re.M)
         body = ' '.join(body.replace('**', '').replace('`', '').split())
         lines.append('\t'.join([m[2], str(group), str(m[1] == 'x').lower(), m[4], body]))
     return '\n'.join(lines) + '\n'

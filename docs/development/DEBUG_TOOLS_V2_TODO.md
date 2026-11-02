@@ -1,595 +1,587 @@
-# TODO — Debug integrato: selettori, console e cheat
+<a id="todo--debug-integrato-selettori-console-e-cheat"></a>
 
-Creato il **29 ottobre 2026**. **Implementazione avviata** dalla richiesta
-«esegui il todo debugtools v2»; le spunte sotto indicano le sole unità concluse.
-Il [primo piano DBG-01…DBG-22](DEBUG_TOOLS_TODO.md) rimane completato nel suo
-ambito; qui si definiscono estensioni con nuove prove, senza riaprire le vecchie.
+# TODO — Integrated debug: selectors, consoles and cheats
 
-Obiettivo: usare gli strumenti di debug interamente dal menu integrato,
-scegliendo contenuti e parametri senza dover digitare percorsi o aprire finestre
-di selezione file. Aggiungere un menu cheat per preparare casi di debug, una
-console eventi visibile su richiesta e una console di comandi testuali, utile
-anche all'assistente. Windows resta il primo riferimento; Wine, Windows nativo
-e Linux hanno risultati distinti. Il frontend attuale è sufficiente: Godot e
-Android non sono dipendenze.
+Created **29 October 2026**. **Implementation started** from the request
+“esegui il todo debugtools v2”; the checkmarks below indicate completed units only.
+The [first DBG-01…DBG-22 plan](DEBUG_TOOLS_TODO.md) remains complete within its
+scope; this document defines extensions with new evidence without reopening it.
 
-**DBG2 identifica uno sviluppo, CH una voce del catalogo cheat, DS una scena.**
-Una prova ottenuta con cheat resta una variante modificata con provenienza;
-non promuove automaticamente una scena DS o la parità del runtime.
+The goal is to use debug tools entirely from the integrated menu, selecting
+content and parameters without typing paths or opening file pickers. Add a cheat
+menu for preparing debug cases, an on-demand event console and a text command
+console useful to the assistant. Windows remains the primary reference; Wine,
+native Windows and Linux results are distinct. The current frontend is
+sufficient: Godot and Android are not dependencies.
 
-## Basi e lacune osservate
+**DBG2 identifies a development task, CH a cheat-catalog entry, DS a scene.**
+Evidence obtained with cheats remains a modified variant with provenance; it
+does not automatically promote a DS scene or establish runtime parity.
 
-- I [22 strumenti esistenti](../debug_tools.md) offrono copie isolate, catalogo
-  DS, registrazioni, replay, audit, confronto, ispettori, report e conservazione.
-  Il catalogo del [menu](../../crates/menu/src/debug_catalog.rs) è già navigabile:
-  riutilizzarne selezione, anteprima, filtri e gestione degli errori.
-- In [play.rs](../../crates/recomp/src/play.rs), start_replay apre un FileDialog
-  quando manca il profilo; open_debug_catalog fa altrettanto senza catalogo
-  predefinito; CreateIssueReport può richiedere un file automaticamente.
-  Choose replay profile e Choose catalog aprono ancora il selettore esterno.
-- Diverse azioni menu delle catture usano Settings::default o parametri fissi.
-  La CLI espone filtri e limiti che devono diventare configurabili nel menu.
-- Il [canale locale DBG-20](../debug_control.md) fornisce identità della sessione,
-  query, cancellazione per ID e scadenze. La [traccia UI](../debug_ui.md) osserva
-  input/focus/dispatch; il [registro recente](../debug_recent.md) ha già cap,
-  contatori di scarto e freeze su errore. Sono basi per le console, non console
-  interattive già presenti. Gli hook UI attuali non coprono tutti gli input raw.
-- Il [catalogo cheat locale](../cheats.md), in cheats/catalogo.json schema 1,
-  contiene 341 blocchi: 23 EUR Codebreaker, 112 Codebreaker con regione ignota,
-  20 GameShark USA, 111 GameShark JPN e 75 Action Replay con regione ignota.
-  Tutte le voci sono not-runtime-tested. La presenza in elenco non prova che
-  formato, versione dispositivo o indirizzi funzionino nel runtime.
+<a id="basi-e-lacune-osservate"></a>
 
-Questi riferimenti descrivono il punto di partenza letto il 29 ottobre.
-Verificare il codice e il criterio selezionato quando si inizierà lo sviluppo.
+## Foundations and observed gaps
 
-## Comportamento richiesto
+- The [22 existing tools](../debug_tools.md) provide isolated copies, a DS
+  catalog, recordings, replay, audit, comparison, inspectors, reports and
+  retention. The [menu](../../crates/menu/src/debug_catalog.rs) catalog is
+  already navigable: reuse its selection, preview, filters and error handling.
+- In [play.rs](../../crates/recomp/src/play.rs), start_replay opens a FileDialog
+  when the profile is missing; open_debug_catalog does the same without a
+  default catalog; CreateIssueReport may request a file automatically. Choose
+  replay profile and Choose catalog still open the external picker.
+- Several capture menu actions use Settings::default or fixed parameters. The
+  CLI exposes filters and limits that need to become configurable in the menu.
+- The [DBG-20 local channel](../debug_control.md) supplies session identity,
+  queries, cancellation by ID and deadlines. The [UI trace](../debug_ui.md)
+  observes input/focus/dispatch; the [recent log](../debug_recent.md) already
+  has caps, drop counters and freeze on error. These are foundations for the
+  consoles, not existing interactive consoles. Current UI hooks do not cover
+  every raw input.
+- The [local cheat catalog](../cheats.md), at cheats/catalogo.json schema 1,
+  contains 341 blocks: 23 EUR Codebreaker, 112 Codebreaker with unknown region,
+  20 GameShark USA, 111 GameShark JPN and 75 Action Replay with unknown region.
+  All entries are not-runtime-tested. Listing an entry does not prove that its
+  format, device version or addresses work in the runtime.
 
-- **Selezione interna per default.** Replay, script, cataloghi, registrazioni,
-  snapshot, dataset, runtime, librerie, label, piani noti, campagne e report
-  disponibili si scelgono in liste del menu, con filtri e dettagli.
-  Aprire una schermata, incontrare una lista vuota o un file mancante non apre
-  mai automaticamente un dialogo del sistema né richiede un percorso testuale.
-- **Accesso esterno esplicito.** Soltanto un pulsante chiaramente nominato
-  «Sfoglia file esterno…», «Importa…» o «Scegli cartella…» può aprire il dialogo.
-  Annullarlo conserva selezione e stato. Selezionare non equivale a eseguire:
-  usare azioni distinte «Seleziona», «Avvia», «Applica» e «Mostra report».
-- **Tre significati di script.** Distinguere ricette di comandi debug, strumenti
-  host Python/PowerShell/Bash e script del gioco ricavati da modelli verificati.
-  I primi due hanno avvio esplicito e requisiti; i terzi si selezionano per
-  ispezione/provenienza, senza trattare dati ROM come programmi host.
-- **Menu, console e assistente condividono le operazioni.** Stessa validazione,
-  stessi parametri, stesso controllo della sessione, stessi esiti e limiti.
-  Catalogare prima i comandi realmente disponibili; gli esempi di sintassi
-  sotto sono proposte, non comandi già utilizzabili.
-- **Due console distinte, entrambe opzionali.** Console eventi: sola lettura,
-  ogni evento delle categorie attivate e ogni cambio effettivo della selezione
-  host, con causa ed esito. Console comandi: editor e risposte testuali/JSON.
-  Mostrare esplicitamente hook mancanti, filtri, aggregazione e scarti; «Tutti»
-  non può dichiarare osservati eventi CPU/guest non strumentati.
-- Operazioni osservative preservano stato/clock. Cheat e comandi che cambiano
-  il gioco dichiarano le modifiche e lavorano nella copia di debug. Identità,
-  input, salvataggi e log seguono le regole portable e di conservazione esistenti.
-  Disabilitare un cheat interrompe le applicazioni future: non promette di
-  annullare gli effetti già prodotti. Il ripristino usa un checkpoint esplicito.
+These references describe the starting point read on 29 October. Check the
+code and selected criterion when starting development.
 
-## P0 — Selezione e configurazione dal menu
+<a id="comportamento-richiesto"></a>
 
-- [x] **DBG2-01 — Inventario delle azioni e contratto comune.**
-  Censire ogni azione DBG esistente e ogni parametro CLI, indicando selezione
-  richiesta, prerequisiti, effetti, stato consentito e risultato. Individuare
-  tutti i percorsi che aprono dialoghi e quelli con impostazioni fisse.
-  Definire descrittori riusabili da menu/help/console sopra gli handler attuali,
-  senza creare un secondo esecutore del guest.
-  **Chiusura:** ogni azione ha una destinazione nel nuovo menu e un esito
-  leggibile/strutturato; gli eventuali parametri ancora non esposti sono elencati
-  come lavoro aperto, non occultati. **Dipende da:** basi DBG-01/20.
-  Contratto e uso: [operazioni debug](../debug_operations.md), inclusi i tre
-  siti di dialogo e i parametri ancora fissi/non esposti. Chiuso con build Windows,
-  test Wine sintetici, query positive/negative e controllo dei payload pubblici;
-  [record](../changes/2026-10-29-add-shared-debug-operation-contract.json).
+## Required behavior
 
-- [x] **DBG2-02 — Catalogo comune dei contenuti selezionabili.**
-  Indicizzare radici portable dichiarate e cartelle aggiunte esplicitamente:
-  sessioni, registrazioni, profili, script/ricette, campagne, snapshot, runtime,
-  dataset, librerie native, label, manifest noti e report. Conservare ID stabile,
-  tipo, nome, descrizione, ROM/regione, hash, compatibilità e disponibilità.
-  Scansioni limitate e aggiornamento esplicito; distinguere elenco da verifica
-  completa e da esecuzione. Non scandire indiscriminatamente il disco.
-  **Chiusura:** catalogo vuoto, duplicati, collegamenti non ordinari, file
-  cambiati/mancanti e tipi incompatibili hanno esiti espliciti; nessun elemento
-  viene eseguito per indicizzarlo. **Dipende da:** DBG2-01.
-  Implementato: [catalogo contenuti](../debug_content.md), `debug-content scan/check`;
-  fixture sintetiche Wine, rifiuto di link reali, limiti, omonimi e cartella
-  spostata verificati; [record](../changes/2026-10-29-add-bounded-debug-content-catalog.json).
+- **Internal selection by default.** Available replay, scripts, catalogs,
+  recordings, snapshots, datasets, runtimes, libraries, labels, known plans,
+  campaigns and reports are selected in menu lists with filters and details.
+  Opening a screen or encountering an empty list or missing file never opens a
+  system dialog automatically or requires a typed path.
+- **Explicit external access.** Only a clearly named “Browse external file…”,
+  “Import…” or “Choose folder…” button may open a dialog. Cancel preserves the
+  selection and state. Selection is not execution: use separate “Select”,
+  “Start”, “Apply” and “Show report” actions.
+- **Three meanings of script.** Distinguish debug-command recipes, host
+  Python/PowerShell/Bash tools and game scripts derived from verified models.
+  The first two require explicit launch and prerequisites; the third is selected
+  for inspection/provenance, without treating ROM data as host programs.
+- **Menu, console and assistant share operations.** Use the same validation,
+  parameters, session control, outcomes and limits. Catalog commands actually
+  available first; syntax examples below are proposals, not usable commands yet.
+- **Two distinct, optional consoles.** The event console is read-only, with each
+  event from enabled categories and every effective host selection change, its
+  cause and outcome. The command console provides an editor and text/JSON
+  responses. Explicitly show missing hooks, filters, aggregation and drops;
+  “All” cannot claim to observe uninstrumented CPU/guest events.
+- Observational operations preserve state/clock. Cheats and commands that change
+  the game declare their changes and run in the debug copy. Identity, inputs,
+  saves and logs follow existing portable and retention rules. Disabling a cheat
+  stops future applications; it does not promise to undo effects already made.
+  Restoration uses an explicit checkpoint.
 
-- [x] **DBG2-03 — Selettore riutilizzabile dentro il menu.**
-  Lista con ricerca, categorie, filtri, ordinamento, preferiti/recenti e pannello
-  di dettagli; anteprima dove già disponibile. Navigazione completa con
-  tastiera, mouse e controller; scroll, focus, testo lungo e ritorno coerenti.
-  Pulsanti separati per scelta interna, aggiornamento e importazione esterna.
-  **Chiusura:** scegliere due elementi omonimi con identità diverse, cambiare
-  filtro, annullare e gestire lista vuota senza dialoghi OS automatici né
-  azioni involontarie. **Dipende da:** DBG2-02.
-  Implementato e verificato: [selettore interno](../debug_selector.md),
-  tastiera/mouse/XInput simulato, omonimi, ricerca/filtri, lista vuota,
-  preferiti/recenti e anteprima. Corretta la propagazione di Escape dopo Cancel
-  dei dialoghi; prova successiva con stato completo/frame0/clock0 invariati.
+<a id="p0--selezione-e-configurazione-dal-menu"></a>
+
+## P0 — Selection and configuration from the menu
+
+- [x] **DBG2-01 — Action inventory and shared contract.**
+  Inventory every existing DBG action and CLI parameter, identifying required
+  selection, prerequisites, effects, allowed state and result. Identify all
+  paths opening dialogs and those with fixed settings. Define reusable menu/
+  help/console descriptors over existing handlers without creating a second
+  guest executor. **Completion:** every action has a destination in the new
+  menu and a readable/structured outcome; parameters not yet exposed are listed
+  as open work, not hidden. **Depends on:** DBG-01/20 foundations.
+  Contract and usage: [debug operations](../debug_operations.md), including the
+  three dialog sites and still fixed/unexposed parameters. Closed with a Windows
+  build, synthetic Wine tests, positive/negative queries and public-payload
+  checks; [record](../changes/2026-10-29-add-shared-debug-operation-contract.json).
+
+- [x] **DBG2-02 — Shared selectable-content catalog.**
+  Index declared portable roots and explicitly added folders: sessions,
+  recordings, profiles, scripts/recipes, campaigns, snapshots, runtimes,
+  datasets, native libraries, labels, known manifests and reports. Retain stable
+  ID, type, name, description, ROM/region, hash, compatibility and availability.
+  Bound scans and make refresh explicit; distinguish listing from complete
+  verification and execution. Do not scan the disk indiscriminately.
+  **Completion:** empty catalog, duplicates, non-ordinary links, changed/missing
+  files and incompatible types have explicit outcomes; indexing executes no
+  entry. **Depends on:** DBG2-01.
+  Implemented: [content catalog](../debug_content.md), `debug-content scan/check`;
+  synthetic Wine fixtures, refusal of real links, limits, duplicate names and a
+  moved folder verified; [record](../changes/2026-10-29-add-bounded-debug-content-catalog.json).
+
+- [x] **DBG2-03 — Reusable in-menu selector.**
+  Provide a list with search, categories, filters, sorting, favorites/recents and
+  a details pane; preview where already available. Support keyboard, mouse and
+  controller navigation, scrolling, focus, long text and consistent return.
+  Separate internal selection, refresh and external import buttons.
+  **Completion:** choose two same-name items with different identities, change
+  filters, cancel and handle an empty list without automatic OS dialogs or
+  accidental actions. **Depends on:** DBG2-02.
+  Implemented and verified: [internal selector](../debug_selector.md),
+  keyboard/mouse/simulated XInput, same-name entries, search/filters, empty list,
+  favorites/recents and preview. Escape propagation after dialog Cancel was
+  corrected; a later test preserved complete state/frame0/clock0.
   [Record](../changes/2026-10-29-add-integrated-debug-content-selector.json).
 
-- [x] **DBG2-04 — Migrare tutte le scelte degli strumenti esistenti.**
-  Portare al selettore interno Choose catalog/profile e i fallback di
-  Replay/Audit/Capture/Compare/Create issue. Estendere la scelta a sessioni,
-  snapshot/input, dataset, runtime A/B, librerie, label e piano noto usati dai
-  rispettivi flussi. Conservare la scelta corrente visibile e compatibile.
-  Se manca un input, aprire la pagina interna che spiega cosa selezionare.
-  **Chiusura:** esercitare ogni ingresso censito in DBG2-01 con input presente,
-  assente, alterato e incompatibile; zero dialoghi automatici. Solo il pulsante
-  esterno apre un picker, una volta, e Cancel non avvia nulla.
-  **Dipende da:** DBG2-03.
-  Implementato: [scelte tipizzate](../debug_selector.md), dodici ruoli,
-  zero dialoghi automatici e avvio distinto dalla conferma. Verificati ingressi
-  mancanti/presenti, file alterati/assenti, ROM e schema incompatibili, dialoghi
-  espliciti singoli e Cancel; [record](../changes/2026-10-29-migrate-debug-tool-input-selection.json).
+- [x] **DBG2-04 — Migrate all existing tool selections.**
+  Move Choose catalog/profile and Replay/Audit/Capture/Compare/Create issue
+  fallbacks to the internal selector. Extend selection to sessions,
+  snapshots/input, datasets, A/B runtimes, libraries, labels and known plans
+  used by the respective flows. Keep the current selection visible and
+  compatible. If input is missing, open an internal page explaining what to
+  select. **Completion:** exercise each DBG2-01 entry with present, absent,
+  changed and incompatible input; zero automatic dialogs. Only the external
+  button opens a picker, once, and Cancel starts nothing. **Depends on:** DBG2-03.
+  Implemented: [typed selections](../debug_selector.md), twelve roles, zero
+  automatic dialogs and launch separate from confirmation. Missing/present
+  inputs, changed/absent files, incompatible ROM and schema, single explicit
+  dialogs and Cancel verified; [record](../changes/2026-10-29-migrate-debug-tool-input-selection.json).
 
-- [x] **DBG2-05 — Parametri, preset e preparazione dei profili nel menu.**
-  Esporre frame/timeout, maschere input, range, filtri, stream audio, trigger,
-  confronto precedente, sintomo issue e opzioni delle tracce. Creare e salvare
-  profili/preset con riepilogo degli input selezionati; distinguere modifica
-  della bozza da avvio e non sovrascrivere un profilo autenticato.
-  Mostrare feature mancanti e combinazioni non supportate prima di avviare.
-  **Chiusura:** preparare registrazione → replay → audit/confronto/report senza
-  editor esterno o percorso digitato; parametri ed esiti coincidono con CLI.
-  **Dipende da:** DBG2-01/04.
-  Implementato il [workbench parametri](../debug_selector.md): bozze/preset,
-  input tipizzati, verifica/preparazione/avvio distinti e profili nuovi. Catena
-  GUI e quattro profili equivalenti CLI verificati con esiti/stato/clock uguali;
+- [x] **DBG2-05 — Parameters, presets and profile preparation in the menu.**
+  Expose frame/timeout, input masks, ranges, filters, audio streams, triggers,
+  previous comparison, issue symptom and trace options. Create and save
+  profiles/presets with selected-input summaries; distinguish editing a draft
+  from starting and do not overwrite an authenticated profile. Show missing
+  features and unsupported combinations before starting.
+  **Completion:** prepare recording → replay → audit/comparison/report without
+  an external editor or typed path; parameters and outcomes match CLI.
+  **Depends on:** DBG2-01/04.
+  Implemented [parameter workbench](../debug_selector.md): drafts/presets,
+  typed inputs, distinct check/prepare/start and new profiles. GUI chain and
+  four CLI-equivalent profiles verified with equal outcomes/state/clock;
   [record](../changes/2026-10-29-add-debug-parameter-workbench.json).
 
-- [x] **DBG2-06 — Libreria di script e strumenti avviabili.**
-  Menu «Script e strumenti» con ricette di debug e adattatori dichiarati per
-  gli script host utili, inclusi homepage, campagne e artefatti. Ogni voce ha
-  versione/hash, argomenti tipizzati, prerequisiti Python/PowerShell/Bash/Docker,
-  output previsto e pulsanti Dettagli/Avvia/Annulla. Passare gli argomenti come
-  array, senza costruire comandi shell da nomi o percorsi.
-  Inserire anche una vista separata degli script guest noti con collegamento
-  all'ispettore gameplay; l'ispezione non li esegue.
-  **Chiusura:** selezione e configurazione interne, script modificato o runtime
-  host assente segnalati, processo esplicito annullabile e log rintracciabile;
-  nessun avvio al solo import/hover/selezione. **Dipende da:** DBG2-04/05.
-  Implementato: cinque schede,17ruoli tipizzati, adattatori readonly dichiarati,
-  ricette status/inspect e vista guest separata. Wine GUI/frame0, cancel XInput
-  con discendente fermato, timeout/rifiuti e correzione UTF8 verificati;
+- [x] **DBG2-06 — Runnable scripts and tools library.**
+  Provide a “Scripts and tools” menu with debug recipes and declared adapters
+  for useful host scripts, including homepage, campaigns and artifacts. Each
+  entry has version/hash, typed arguments, Python/PowerShell/Bash/Docker
+  prerequisites, expected output and Details/Start/Cancel buttons. Pass arguments
+  as an array without building shell commands from names or paths. Add a
+  separate known-guest-script view linked to the gameplay inspector; inspection
+  does not execute those scripts. **Completion:** internal selection and setup,
+  changed script or missing host runtime reported, explicitly started process
+  cancellable and log traceable; no start on import/hover/selection alone.
+  **Depends on:** DBG2-04/05.
+  Implemented: five tabs, 17 typed roles, declared read-only adapters,
+  status/inspect recipes and separate guest view. Wine GUI/frame0, XInput cancel
+  with descendant stopped, timeout/refusals and UTF8 fix verified;
   [record](../changes/2026-10-30-add-declared-debug-script-library.json).
 
-- [x] **DBG2-07 — Scelte persistenti e cartella portable spostata.**
-  Salvare preferenze UI e riferimenti relativi alla radice corretta; mantenere
-  distinti elementi interni e riferimenti esterni aggiunti dall'utente.
-  Dopo cambio ROM/sessione invalidare soltanto le scelte incompatibili.
-  Recenti e preferiti non avviano automaticamente replay, script o cheat.
-  **Chiusura:** riaprire una copia spostata con spazi/Unicode da un'altra cwd,
-  ritrovare le scelte valide e spiegare quelle mancanti senza dialoghi automatici.
-  **Dipende da:** DBG2-04/06.
-  Implementato: stato limitato con radici relative, provenienza esterna, pin
-  e viste/storia; restore readonly senza avvio. Wine GUI riapre la stessa copia
-  spostata da `/tmp`, conserva preferiti e spiega mancanti/modificati a frame0;
-  [record](../changes/2026-10-30-persist-debug-content-choices.json).
+- [x] **DBG2-07 — Persistent selections and moved portable folder.**
+  Save UI preferences and references relative to the correct root; distinguish
+  internal entries and externally added references. After a ROM/session change,
+  invalidate only incompatible selections. Recents and favorites never start
+  replay, scripts or cheats automatically. **Completion:** reopen a moved copy
+  with spaces/Unicode from another cwd, find valid selections and explain missing
+  ones without automatic dialogs. **Depends on:** DBG2-04/06.
+  Implemented: bounded state with relative roots, external provenance, pins and
+  views/history; read-only restore without launch. Wine GUI reopens the same
+  moved copy from `/tmp`, retains favorites and explains missing/changed entries
+  at frame0; [record](../changes/2026-10-30-persist-debug-content-choices.json).
 
-## P1 — Console degli eventi opzionale
+<a id="p1--console-degli-eventi-opzionale"></a>
 
-- [x] **DBG2-08 — Schema eventi e mappa della copertura.**
-  Unificare gli eventi host già osservati con ID di sequenza, tempo host,
-  frame/clock guest, sessione, categoria, severità, origine e ID richiesta/job.
-  Elencare produttori supportati e mancanti; collegare UI/recent agli stessi
-  eventi evitando doppi dispatch o registrazioni ricorsive della console.
-  **Chiusura:** ricostruire l'ordine di richiesta, cambi selezione, esecuzione ed
-  esito da una sequenza correlata; distinguere ordine host da eventi guest
-  aggregati e hook non disponibili. **Dipende da:** DBG2-01, DBG-13/19.
+## P1 — Optional event console
 
-- [x] **DBG2-09 — Traccia completa delle selezioni e delle azioni host.**
-  Osservare pagina, voce con ID e label, vecchia/nuova selezione, dropdown,
-  valore cambiato, apertura/chiusura, conferma, annullamento, binding catturato
-  e comando effettivamente eseguito/rifiutato. Coprire tastiera, mouse e backend
-  controller disponibili, mantenendo distinti input raw, rimappato e consumato.
-  L'hover entra nel registro quando cambia davvero la selezione.
-  **Chiusura:** ogni cambio effettivo del menu ha un evento; pressione tenuta,
-  autorepeat, click e conferma controller non producono doppi comandi. Le lacune
-  di un backend sono dichiarate. **Dipende da:** DBG2-03/08.
-  Implementato: [cambi semantici e input](../debug_events.md), ID/valori/cause,
-  editor e binding; hover invariato senza duplicati. Sei catture Wine con
-  XInput simulato, comandi singoli/esiti correlati e stato/frame0 invariati;
-  [record](../changes/2026-10-30-observe-effective-host-menu-changes.json).
+- [x] **DBG2-08 — Event schema and coverage map.**
+  Unify already observed host events with sequence ID, host time, guest
+  frame/clock, session, category, severity, origin and request/job ID. List
+  supported and missing producers; connect UI/recent to the same events without
+  double dispatch or recursive console logging. **Completion:** reconstruct
+  request, selection changes, execution and outcome order from a correlated
+  sequence; distinguish host order from aggregated guest events and unavailable
+  hooks. **Depends on:** DBG2-01, DBG-13/19.
 
-- [x] **DBG2-10 — Eventi del runtime e degli strumenti.**
-  Collegare sessione/ROM, pause/passi, Load/Undo/reset, registrazioni/replay,
-  catture/report, script, preparazione dataset/cache, errori e progressione job.
-  Aggiungere transizioni guest riconosciute, osservazioni codice/letture/audio
-  soltanto nello scope realmente strumentato. I futuri cheat pubblicano
-  attivazione, applicazione, rifiuto e disattivazione sul medesimo canale.
-  **Chiusura:** ciascuna famiglia dichiara origine, frequenza, prerequisiti e
-  copertura; errore e richiesta correlata sono rintracciabili, senza I/O nuovo
-  nei callback audio o dump continui della macchina. **Dipende da:** DBG2-08.
-  Implementato: [eventi runtime](../debug_events.md), origine/frequenza/requisiti/
-  scope espliciti e correlazione job/errore. Build Windows GNU e test Wine,
-  prove GUI delle famiglie e verifica mirata con il menu corrente; copertura
-  dataset/cache non selezionati e cheat futuro dichiarati.
+- [x] **DBG2-09 — Complete host selection and action trace.**
+  Observe page, item ID and label, old/new selection, dropdown, changed value,
+  opening/closing, confirm, cancel, captured binding and actually executed or
+  refused command. Cover keyboard, mouse and available controller backends,
+  distinguishing raw, remapped and consumed input. Log hover when it actually
+  changes selection. **Completion:** each effective menu change has an event;
+  held press, autorepeat, click and controller confirmation produce no duplicate
+  commands. Backend gaps are declared. **Depends on:** DBG2-03/08.
+  Implemented: [semantic changes and input](../debug_events.md), IDs/values/
+  causes, editor and bindings; unchanged hover without duplicates. Six Wine
+  captures with simulated XInput, single commands/correlated outcomes and
+  unchanged state/frame0; [record](../changes/2026-10-30-observe-effective-host-menu-changes.json).
+
+- [x] **DBG2-10 — Runtime and tool events.**
+  Connect session/ROM, pause/step, Load/Undo/reset, recordings/replay,
+  captures/reports, scripts, dataset/cache preparation, errors and job progress.
+  Add recognized guest transitions and code/read/audio observations only within
+  the actually instrumented scope. Future cheats publish activation, application,
+  refusal and deactivation on the same channel. **Completion:** each family
+  declares origin, frequency, prerequisites and coverage; errors and related
+  requests are traceable, without new I/O in audio callbacks or continuous
+  machine dumps. **Depends on:** DBG2-08.
+  Implemented: [runtime events](../debug_events.md), explicit origin/frequency/
+  requirements/scope and job/error correlation. Windows GNU build and Wine
+  tests, GUI family tests and targeted verification with the current menu;
+  unselected dataset/cache coverage and future cheat coverage declared.
   [Record](../changes/2026-10-30-connect-debug-runtime-lifecycles.json).
 
-- [x] **DBG2-11 — Pannello live della console eventi.**
-  Toggle «Console eventi» dal menu e shortcut configurabile, inizialmente
-  spento. Vista sovrapposta o affiancata con scroll, ricerca, categorie/livelli,
-  pausa della sola vista, autoscroll, copia e salvataggio locale esplicito.
-  «Tutti gli eventi disponibili» include tutte le categorie supportate attivate;
-  campionamento/aggregazione eventuali sono visibili e disattivabili entro i cap.
-  Mostrare finestra conservata, eventi persi e stato del collector anche quando
-  la vista è congelata. La vista non modifica il log originale tramite un filtro.
-  **Chiusura:** leggere una sequenza menu/comando/errore mentre il gioco è aperto,
-  nascondere/riaprire il pannello e esportare la finestra con identità coerenti.
-  **Dipende da:** DBG2-09/10.
-  Implementato: [console eventi](../debug_events.md#finestra-eventi-live--dbg2-11),
-  finestra limitata separata, filtri/pausa vista, copia/esportazione e poll
-  regolabili. Test Windows/Wine e GUI con identità coerenti e stato invariato;
-  [record](../changes/2026-10-31-begin-live-debug-event-window.json).
+- [x] **DBG2-11 — Live event-console panel.**
+  Toggle “Event console” from the menu or a configurable shortcut, initially
+  off. Provide an overlay or adjacent view with scrolling, search, categories/
+  levels, view-only pause, autoscroll, copy and explicit local save. “All
+  available events” includes all enabled supported categories; sampling/
+  aggregation is visible and can be disabled within caps. Show retained window,
+  lost events and collector status even when the view is frozen. A filter does
+  not change the original log. **Completion:** read a menu/command/error
+  sequence while the game is open, hide/reopen the panel and export the window
+  with consistent identities. **Depends on:** DBG2-09/10.
+  Implemented: [event console](../debug_events.md#finestra-eventi-live--dbg2-11),
+  separate bounded window, filters/view pause, copy/export and configurable
+  polls. Windows/Wine and GUI tests with consistent identities and unchanged
+  state; [record](../changes/2026-10-31-begin-live-debug-event-window.json).
 
-- [x] **DBG2-12 — Limiti, prestazioni osservabili e assenza di effetti guest.**
-  Fissare cap di memoria/righe/byte, budget per aggiornamento e contatori di
-  overflow. Limitare serializzazione/formattazione sul thread che esegue il gioco;
-  console spenta senza raccolte pesanti, console aperta senza audio accumulato.
-  Tenere distinti pausa del gioco, freeze della raccolta e pausa della vista.
-  **Chiusura:** carico sintetico prolungato rispetta i cap e conta le perdite;
-  una nuova breve sequenza selezionata conserva stato/clock con console off/on.
-  Registrare il costo osservato senza riaprire campagne di benchmark storiche.
-  **Dipende da:** DBG2-11.
-  Implementati budget e contatori distinti, limiti sulla finestra e snapshot
-  condiviso; carico sintetico, confronto off/on e breve osservazione audio Wine
-  verificati. Il fallback audio per snapshot senza tap preserva lo stato.
-  [Dettagli e limiti](../debug_events.md#limiti-e-costo--dbg2-12),
+- [x] **DBG2-12 — Limits, observable costs and absence of guest effects.**
+  Set memory/row/byte caps, an update budget and overflow counters. Limit
+  serialization/formatting on the game thread; no heavy collection with the
+  console off and no accumulated audio with it open. Distinguish game pause,
+  collector freeze and view pause. **Completion:** sustained synthetic load
+  respects caps and counts losses; a new short selected sequence preserves
+  state/clock with console off/on. Record observed cost without reopening
+  historical benchmark campaigns. **Depends on:** DBG2-11.
+  Implemented distinct budgets and counters, window bounds and shared snapshot;
+  synthetic load, off/on comparison and brief Wine audio observation verified.
+  The snapshot audio fallback without tap preserves state.
+  [Details and limits](../debug_events.md#limiti-e-costo--dbg2-12),
   [record](../changes/2026-10-31-bound-event-console-update-work.json).
 
-## Audit documentale del 1 novembre 2026
+<a id="audit-documentale-del-1-novembre-2026"></a>
 
-Confrontati criteri, sorgenti attuali e record/prove già esistenti, senza build,
-ROM extraction, gioco o nuovi test runtime. Nessuno dei padri DBG2-13..23 ha
-prove sufficienti per una chiusura completa: 7 parziali (13/15/17/18/19/20/21),
-14 integrato ma con verifica input incompleta, 3 non iniziati nel contratto
-richiesto (16/22/23), pur con basi riusabili. Nessuna spunta è stata promossa.
-Le note sotto distinguono sottopassi accettati e criteri mancanti. Le vecchie
-limitazioni dei record valgono alla loro data, non annullano risultati successivi.
+## Documentation audit of 1 November 2026
 
-Discrepanze risolte: la checklist non descriveva gli incrementi console/cheat;
-la vecchia coda chiedeva ancora selezione profilo, clipboard, cancel/deadline e
-retry già verificati dopo quei checkpoint. L'import readonly delle 341 voci è
-integrato e provato, ma non chiude l'indice runtime/verifica; decoder e one-shot
-esistono, ma non equivalgono a mantenimento/toggle/provenienza.
-Inoltre Catalog::summary/menu_entries conservano la motivazione fissa «nessun
-decoder/handler implementato», ormai incoerente con source-bound inspection e
-manual one-shot: integrazione delle capacità per CH da completare, non corretta
-nel codice durante questo audit. Il solo guard
-che rifiuta recording/save dopo un one-shot non implementa DBG2-23.
-Nessun altro sviluppo selezionato. Per ripresa leggere solo il singolo ID in
-[TASK_HANDOFF.md](TASK_HANDOFF.md); storico solo per un dubbio specifico.
+Criteria, current sources and existing records/evidence were compared without a
+build, ROM extraction, gameplay or new runtime tests. None of the DBG2-13..23
+parents has sufficient evidence for full closure: 7 partial (13/15/17/18/19/20/21),
+14 integrated with incomplete input verification, 3 not started under the
+requested contract (16/22/23), despite reusable foundations. No checkmark was
+promoted. Notes below distinguish accepted substeps from missing criteria. Older
+record limitations apply at their date and do not negate later results.
 
-## P2 — Console di comandi e ricette per l'assistente
+Resolved discrepancies: the checklist did not describe the console/cheat
+increments; the old queue still requested profile selection, clipboard,
+cancel/deadline and retry already verified after those checkpoints. Read-only
+import of the 341 entries is integrated and tested, but does not complete the
+runtime/verification index; decoder and one-shot exist but do not equal
+maintenance/toggle/provenance. Catalog::summary/menu_entries also retain the
+fixed reason “no decoder/handler implemented”, now inconsistent with
+source-bound inspection and manual one-shot: per-CH capability integration
+remains to be completed and was not fixed in this audit. The guard that refuses
+recording/save after a one-shot alone does not implement DBG2-23.
+No other development was selected. On resumption read only the individual ID in
+[TASK_HANDOFF.md](TASK_HANDOFF.md); consult history only for a specific doubt.
 
-- [ ] **DBG2-13 — Linguaggio di comandi sopra gli handler condivisi.**
-  Definire sintassi stabile, tokenizzazione/virgolette, numeri/indirizzi e schema
-  degli argomenti. Collegare help, status, pausa/passi, inspect, break/watch,
-  catture/report, selezione di profili/cataloghi e job ai contratti DBG2-01.
-  Prevedere comandi dichiarati di selezione, per esempio profile select ID,
-  senza richiedere percorsi. La console è del debugger, non una shell OS.
-  **Chiusura:** un comando menu/CLI/console con gli stessi argomenti produce
-  identica validazione/azione/esito; testo malformato, numeri ambigui e comandi
-  sconosciuti non mutano la sessione. **Dipende da:** DBG2-01/05/08.
+<a id="p2--console-di-comandi-e-ricette-per-lassistente"></a>
 
-  **Audit 2026-11-01 — parziale.** [Parser/dispatch](../../crates/recomp/src/debug_command.rs)
-  riusa Action e il canale locale; ID selection, targeted cancel/deadline,
-  discovery, retry e replay condiviso sono presenti e verificati nei sottopassi.
-  [Selezione profili](../changes/2026-10-31-prepare-debug-content-id-selection.json)
-  include la successiva prova CLI/panel positiva; [replay condiviso](../changes/2026-10-31-connect-shared-replay-commands.json)
-  include la copia JSON dalla console. Manca la parità completa del contratto
-  menu/CLI/console, non la reimplementazione di questi percorsi.
+## P2 — Command console and recipes for the assistant
 
+- [ ] **DBG2-13 — Command language over shared handlers.**
+  Define stable syntax, tokenization/quoting, numbers/addresses and argument
+  schema. Connect help, status, pause/step, inspect, break/watch, captures/
+  reports, profile/catalog selection and jobs to DBG2-01 contracts. Provide
+  declared selection commands, for example profile select ID, without requiring
+  paths. This is a debugger console, not an OS shell. **Completion:** a menu/
+  CLI/console command with the same arguments yields identical validation,
+  action and outcome; malformed text, ambiguous numbers and unknown commands
+  do not mutate the session. **Depends on:** DBG2-01/05/08.
 
-- [ ] **DBG2-14 — Editor integrato, completamento e aiuto contestuale.**
-  Pannello «Console comandi» con invio esplicito, cronologia, cursore/selezione,
-  copia/incolla, completamento di nomi/argomenti/ID e help contestuale. Supportare
-  testo Unicode, layout tastiera e composizione input; navigazione controller
-  verso comandi recenti/preset, tastiera a schermo dove necessaria.
-  L'incolla multilinea resta una bozza da esaminare, senza invii impliciti.
-  **Chiusura:** digitare, correggere, richiamare e annullare un comando; mentre
-  l'editor ha focus i tasti non raggiungono il guest né attivano shortcut globali.
-  **Dipende da:** DBG2-13.
+  **Audit 2026-11-01 — partial.** [Parser/dispatch](../../crates/recomp/src/debug_command.rs)
+  reuses Action and the local channel; ID selection, targeted cancel/deadline,
+  discovery, retry and shared replay are present and verified in substeps.
+  [Profile selection](../changes/2026-10-31-prepare-debug-content-id-selection.json)
+  includes the later positive CLI/panel test; [shared replay](../changes/2026-10-31-connect-shared-replay-commands.json)
+  includes JSON copied from the console. Full menu/CLI/console contract parity
+  remains missing; these paths do not need reimplementation.
 
-  **Audit 2026-11-01 — integrato, verifica incompleta.** [Panel/editor](../../crates/recomp/src/debug_command_panel.rs),
-  [completamento](../../crates/recomp/src/debug_command/completion.rs) e tastiera
-  controller sono integrati. [Editor/clipboard](../changes/2026-10-31-begin-debug-command-console.json),
-  [controller](../changes/2026-10-31-add-debug-command-controller-keyboard.json) e
+- [ ] **DBG2-14 — Integrated editor, completion and contextual help.**
+  Provide a “Command console” panel with explicit submission, history,
+  cursor/selection, copy/paste, completion of names/arguments/IDs and contextual
+  help. Support Unicode text, keyboard layouts and input composition; controller
+  navigation to recent/preset commands, with an on-screen keyboard when needed.
+  Multiline paste remains a draft to review, with no implicit submission.
+  **Completion:** type, correct, recall and cancel a command; while the editor
+  has focus, keys do not reach the guest or activate global shortcuts.
+  **Depends on:** DBG2-13.
+
+  **Audit 2026-11-01 — integrated, verification incomplete.** [Panel/editor](../../crates/recomp/src/debug_command_panel.rs),
+  [completion](../../crates/recomp/src/debug_command/completion.rs) and the
+  controller keyboard are integrated. [Editor/clipboard](../changes/2026-10-31-begin-debug-command-console.json),
+  [controller](../changes/2026-10-31-add-debug-command-controller-keyboard.json) and
   [completion](../changes/2026-10-31-add-debug-command-context-completion.json)
-  hanno prove Wine/Xvfb; multilinea non pubblica, focus protegge il guest/menu.
-  Restano composizione IME reale/layout e guard composizione/capacità in GUI;
-  fisico/Windows nativo/Linux non provati. Non ripetere la clipboard già accettata.
+  have Wine/Xvfb evidence; multiline input does not submit, and focus protects
+  guest/menu. Real IME composition/layout and composition/capability guards in
+  the GUI remain; physical hardware/native Windows/Linux are untested. Do not
+  repeat the accepted clipboard check.
 
+- [ ] **DBG2-15 — Structured responses, jobs and assistant access.**
+  Show ROM/session target and resolved parameters, request ID, progress, short
+  result and copyable JSON. Reuse DBG-20 local channel for command/capability
+  listing, selection by ID, execution, status and cancellation of the same
+  command, without automating coordinates or adding a network server. Separate
+  parse error, incompatibility, refusal, unconfirmed timeout, cancellation and
+  completion; status/cancel remain available during jobs. **Completion:** the
+  assistant selects content and repeats a procedure through the console's API;
+  wrong identity and cancellation of another ID are refused. Retrying a lost
+  response does not duplicate execution. **Depends on:** DBG2-02/13/14, DBG-20.
 
-- [ ] **DBG2-15 — Risposte strutturate, job e accesso dell'assistente.**
-  Mostrare target ROM/sessione e parametri risolti, request ID, progressione,
-  risultato breve e JSON copiabile. Riutilizzare il canale locale DBG-20 per
-  elenco comandi/capacità, selezione per ID, esecuzione, status e cancel del
-  medesimo comando, senza automatizzare coordinate o introdurre un server rete.
-  Separare errore di parsing, incompatibilità, rifiuto, timeout non confermato,
-  annullamento e completamento; status/cancel restano disponibili durante i job.
-  **Chiusura:** l'assistente seleziona un contenuto e ripete una procedura dalla
-  stessa API della console; identità errata e cancellazione di un altro ID sono
-  rifiutate. Nessuna esecuzione duplicata ritentando una risposta persa.
-  **Dipende da:** DBG2-02/13/14, DBG-20.
-
-  **Audit 2026-11-01 — parziale.** [Controllo locale](../../crates/recomp/src/debug_control.rs)
-  e [osservazione panel](../../crates/recomp/src/debug_command/observation.rs)
-  espongono request/run/target, parametri/progresso ed esiti. Record:
+  **Audit 2026-11-01 — partial.** [Local control](../../crates/recomp/src/debug_control.rs)
+  and [panel observation](../../crates/recomp/src/debug_command/observation.rs)
+  expose request/run/target, parameters/progress and outcomes. Records:
   [job context](../changes/2026-10-31-show-debug-command-job-context.json),
-  [errori](../changes/2026-10-31-classify-debug-command-local-errors.json),
+  [errors](../changes/2026-10-31-classify-debug-command-local-errors.json),
   [retry](../changes/2026-10-31-add-debug-command-retry.json),
-  [discovery](../changes/2026-10-31-add-debug-content-discovery-commands.json) e
+  [discovery](../changes/2026-10-31-add-debug-content-discovery-commands.json) and
   [replay](../changes/2026-10-31-connect-shared-replay-commands.json).
-  pending null dopo cancel è provato; cancel/deadline replay sono su slow child
-  sintetico, non interruzione di frame guest. Restano procedura assistente e
-  parità complete, live slow-refresh e limiti di presentazione stretta.
+  pending null after cancel is proven; replay cancel/deadline used a synthetic
+  slow child, not interruption of guest frames. Complete assistant procedure and
+  parity, live slow-refresh and narrow-window presentation remain.
 
+- [ ] **DBG2-16 — Repeatable recipes and bounded batches.**
+  Save a sequence of typed commands from the console, selectable in Scripts and
+  tools: parameters, versions/pins, outcome waits, assertions and stop on first
+  error. Set explicit step/frame/duration/output limits; preview before start
+  and permit cancellation between commands. No unbounded loops. Recipes reusing
+  concluded evidence require a reopening reason. **Completion:** one short and
+  one interrupted recipe retain consistent order, identity, log and checkpoint;
+  resumption does not automatically repeat successful operations.
+  **Depends on:** DBG2-06/15, DBG-21.
 
-- [ ] **DBG2-16 — Ricette ripetibili e batch delimitati.**
-  Salvare dalla console una sequenza di comandi tipizzati, selezionabile in
-  Script e strumenti: parametri, versioni/pin, attese per esito, assert e stop
-  al primo errore. Limiti espliciti di passi, frame, durata e output; anteprima
-  prima dell'avvio e cancellazione anche tra comandi. Nessun loop illimitato.
-  Le ricette che riusano prove concluse richiedono un motivo di riapertura.
-  **Chiusura:** una ricetta breve e una interrotta mantengono ordine, identità,
-  log e checkpoint coerenti; riprendere non ripete automaticamente operazioni
-  già riuscite. **Dipende da:** DBG2-06/15, DBG-21.
+  **Audit 2026-11-01 — not started under the console contract.** [Workbench](../../crates/recomp/src/debug_workbench.rs)
+  and [declared library](../changes/2026-10-30-add-declared-debug-script-library.json)
+  already have bounded read-only status/inspect recipes (DBG2-06 foundation).
+  The [console parser](../../crates/recomp/src/debug_command.rs) does not save/
+  execute typed batches with assertions, waits and checkpoints; the editor keeps
+  multiline input as a draft. Console serialization, resume without reexecution
+  and the requested short/interrupted tests are missing. Do not duplicate the
+  existing host runner.
 
-  **Audit 2026-11-01 — non iniziato nel contratto console.** [Workbench](../../crates/recomp/src/debug_workbench.rs)
-  e [libreria dichiarata](../changes/2026-10-30-add-declared-debug-script-library.json)
-  hanno già ricette readonly status/inspect delimitate (base DBG2-06).
-  Il [parser console](../../crates/recomp/src/debug_command.rs) non salva/esegue
-  batch tipizzati con assert, attese e checkpoint; l'editor conserva multilinea
-  come bozza. Mancano serializzazione console, ripresa senza riesecuzione e
-  prove breve/interrotta richieste qui. Non duplicare il runner host esistente.
+<a id="p3--menu-cheat-utile-alla-preparazione-del-debug"></a>
 
+## P3 — Cheat menu for preparing debug cases
 
-## P3 — Menu cheat utile alla preparazione del debug
+- [ ] **DBG2-17 — Local catalog import and compatibility states.**
+  Read the existing catalog preserving CH, complete block order, declared
+  format/region, aliases, notes, provenance and source master. Build a separate
+  runtime index for exact ROM/device version, decoder and verification; the
+  original remains browsable without rewriting. Everything is disabled by
+  default: unknown, unsupported and unverified have distinct states with visible
+  reasons. **Completion:** all 341 entries are browsable where the local catalog
+  exists; a copy without cheats shows an empty list and explicit Import. No
+  third-party payload enters public packages. **Depends on:** DBG2-02/03.
 
-- [ ] **DBG2-17 — Import locale del catalogo e stati di compatibilità.**
-  Leggere il catalogo esistente preservando CH, ordine completo dei blocchi,
-  formato/regione dichiarati, alias, note, provenienza e master della fonte.
-  Costruire un indice runtime separato per ROM esatta/versione dispositivo,
-  decoder e verifica; l'originale resta consultabile senza riscriverlo.
-  Per default tutto disattivato: sconosciuto, non supportato e non verificato
-  hanno stati distinti, con motivazione visibile.
-  **Chiusura:** le 341 voci sono consultabili dove il catalogo locale è presente;
-  una copia senza cheats mostra elenco vuoto e Importa esplicito. Nessun
-  payload di terzi entra nei pacchetti pubblici. **Dipende da:** DBG2-02/03.
-
-  **Audit 2026-11-01 — parziale, import integrato e verificato.** [Catalogo](../../crates/recomp/src/debug_cheats.rs)
-  preserva ordine/provenienza/master; [indice CLI](../changes/2026-10-31-index-local-cheat-catalog-readonly.json),
+  **Audit 2026-11-01 — partial, import integrated and verified.** [Catalog](../../crates/recomp/src/debug_cheats.rs)
+  preserves order/provenance/master; [CLI index](../changes/2026-10-31-index-local-cheat-catalog-readonly.json),
   [menu](../changes/2026-10-31-browse-local-cheat-catalog-in-menu.json),
-  [target/guida/esclusione pacchetti](../changes/2026-10-31-describe-cheat-target-and-public-guide.json)
-  e [canale locale](../changes/2026-10-31-expose-cheat-snapshot-local-control.json)
-  hanno prove 341 voci/empty/import/query/stato invariato. Hash EUR/USA significa
-  confronto regione dichiarata, non compatibilità. Manca l'indice runtime di
-  decoder/verifica per dispositivo/ROM: Catalog::summary/menu_entries dichiarano
-  ancora in modo fisso decoder unsupported e nessun handler implementato,
-  malgrado inspect_source e prepare_once/apply_once esistano e abbiano prove.
-  Versione dispositivo ignota; distinguere capacità e verifica del comportamento. I sette
-  source/master statici non verificano tutte le voci o il loro comportamento.
+  [target/guide/package exclusion](../changes/2026-10-31-describe-cheat-target-and-public-guide.json)
+  and [local channel](../changes/2026-10-31-expose-cheat-snapshot-local-control.json)
+  have 341-entry/empty/import/query/unchanged-state evidence. EUR/USA hashes
+  mean comparison with the declared region, not compatibility. A runtime index
+  of decoder/verification by device/ROM is missing: Catalog::summary/menu_entries
+  still report decoder unsupported and no implemented handler unconditionally,
+  although inspect_source and prepare_once/apply_once exist and have evidence.
+  Device version is unknown; distinguish capability from behavioral verification.
+  The seven static source/master checks do not verify all entries or behavior.
 
+- [ ] **DBG2-18 — Format decoder and actual operations.**
+  Start with the documentable EUR Codebreaker subset; define typed operations
+  for supported writes, conditions, repetitions and continuations. Check widths,
+  alignment, endianness, master/enable and ordering. Unknown GameShark/Action
+  Replay versions/encryption remain non-executable until decoded and tested;
+  do not treat strings as RAM writes. Placeholders require validated parameters,
+  never guessed substitutions. **Completion:** public synthetic fixtures test
+  every supported opcode and atomic refusal of incomplete/unknown blocks; each
+  candidate CH reports exactly what it can execute. **Depends on:** DBG2-17.
 
-- [ ] **DBG2-18 — Decoder dei formati e operazioni effettive.**
-  Partire dal sottoinsieme EUR Codebreaker documentabile; definire operazioni
-  tipizzate per scritture, condizioni, ripetizioni e continuazioni supportate.
-  Verificare larghezze, allineamento, endianness, master/enable e ordine.
-  Versioni/cifrature GameShark/Action Replay ignote restano non eseguibili fino
-  a decodifica e prove dedicate; non trattare le stringhe come scritture RAM.
-  Placeholder richiedono parametri validati, mai sostituzioni indovinate.
-  **Chiusura:** fixture pubbliche sintetiche verificano ogni opcode supportato
-  e rifiuto atomico dei blocchi incompleti/sconosciuti; ciascun CH candidato
-  riporta esattamente ciò che può eseguire. **Dipende da:** DBG2-17.
-
-  **Audit 2026-11-01 — sottoinsieme verificato, padre parziale.** [Decoder](../../crates/recomp/src/debug_cheat_decoder.rs)
-  implementa write/modify/condition/slide delimitati con rifiuto atomico;
+  **Audit 2026-11-01 — subset verified, parent partial.** [Decoder](../../crates/recomp/src/debug_cheat_decoder.rs)
+  implements bounded write/modify/condition/slide with atomic refusal;
   [plaintext](../changes/2026-10-31-inspect-assumed-plaintext-codebreaker.json),
-  [seed esplicito](../changes/2026-10-31-inspect-explicit-seeded-codebreaker.json) e
+  [explicit seed](../changes/2026-10-31-inspect-explicit-seeded-codebreaker.json) and
   [source/master](../changes/2026-10-31-inspect-source-bound-codebreaker-masters.json)
-  registrano fixture sintetiche e confronto mGBA/CRC per sette priorità EUR.
-  Manca il raccordo per CH tra capacità realmente eseguibili e indice che
-  dichiara ancora tutti i decoder unsupported (criterio «ciascun CH candidato
-  riporta esattamente ciò che può eseguire»). Opcode/formati ignoti e placeholder
-  possono restare rifiutati come previsto dal piano; il sottoinsieme già
-  verificato non va ampliato soltanto per dichiarare chiusura. Il manual one-shot successivo è distinto
-  dall'ispezione non eseguibile. Non implementare un secondo decoder.
+  record synthetic fixtures and mGBA/CRC comparison for seven EUR priorities.
+  The per-CH connection between executable capabilities and the index that
+  still declares every decoder unsupported is missing (criterion: “each
+  candidate CH reports exactly what it can execute”). Unknown opcodes/formats and
+  placeholders may remain refused as planned; the verified subset must not be
+  expanded merely to claim closure. Later manual one-shot is distinct from
+  non-executable inspection. Do not implement a second decoder.
 
+- [ ] **DBG2-19 — Controlled application in the debug copy.**
+  Reuse the isolated session: arm, apply once, maintain and disarm are distinct
+  operations with deterministic timing. Show affected operations/areas before
+  activation and detect cheat overlaps. Writes follow the correct memory path,
+  including any I/O effects; do not bypass it with raw access. Block unsupported
+  native ROM/cache or explicitly handle invalidation and backend; no implicit
+  compatibility claim. **Completion:** enabling/disabling and applying during
+  pause/step have defined effects, errors leave no partially applied block, and
+  the original game is not written. **Depends on:** DBG2-18, DBG-02/10.
 
-- [ ] **DBG2-19 — Applicazione controllata nella copia di debug.**
-  Riutilizzare la sessione isolata: armare, applicare una volta, mantenere
-  attivo e disarmare sono operazioni diverse, con timing deterministico.
-  Mostrare operazioni/aree interessate prima dell'attivazione e rilevare
-  sovrapposizioni tra cheat. Le scritture seguono il percorso memoria corretto,
-  inclusi eventuali effetti I/O; non usare accessi grezzi per aggirarlo.
-  Bloccare ROM/cache native non supportate o gestirne esplicitamente
-  invalidazione e backend; nessuna dichiarazione di compatibilità implicita.
-  **Chiusura:** abilitare/disabilitare e applicare durante pausa/passi ha effetto
-  definito, errore senza blocco parzialmente applicato e nessuna scrittura sulla
-  partita originale. **Dipende da:** DBG2-18, DBG-02/10.
+  **Audit 2026-11-01 — partial.** [One-shot](../changes/2026-10-31-apply-guarded-cheat-once.json)
+  and CheatPrepare/CheatApply handlers in [play.rs](../../crates/recomp/src/play.rs)
+  verify source/state/ROM and preflight before bus writes; synthetic Wine tests
+  and bounded CH-0334. Arm/disarm maintenance, periodic timing and conflicts are
+  missing; native backend, I/O write, ROM and mirrors are refused. Deactivation
+  and checkpoint restoration remain distinct operations.
 
-  **Audit 2026-11-01 — parziale.** [One-shot](../changes/2026-10-31-apply-guarded-cheat-once.json)
-  e handler CheatPrepare/CheatApply in [play.rs](../../crates/recomp/src/play.rs)
-  verificano source/stato/ROM e preflight prima delle scritture bus; prove
-  sintetiche Wine e CH-0334 delimitato. Mancano mantenimento arm/disarm,
-  timing periodico e conflitti; backend nativo, I/O write, ROM e mirror sono
-  rifiutati. Disattivazione e ripristino checkpoint restano operazioni distinte.
+- [ ] **DBG2-20 — Cheats page with values, groups and profiles.**
+  Search by CH/name/category, filter ROM/format/state, describe debug use, actual
+  target and notes; select values from allowed list/range. Provide toggles for
+  verified codes, Apply once, Disable all, named presets and a consistently
+  visible active-cheat indicator. Masters are dependencies of the relevant
+  decoder, not arbitrary codes selected automatically. Each non-executable
+  entry explains what is missing. **Completion:** perform the full flow via
+  menu/controller or an equivalent text command, without an implicit picker;
+  conflicts and changed codes prevent silent activation. **Depends on:** DBG2-04/15/19.
 
+  **Audit 2026-11-01 — partial.** The [catalog view](../changes/2026-10-31-browse-local-cheat-catalog-in-menu.json)
+  provides read-only search/details/filters; prepare/apply-once commands are not
+  page toggles. Values/groups/profiles, active/disable all, conflicts and a full
+  controller flow are missing; wait for DBG2-19/15 and retain the integrated view
+  instead of rebuilding it.
 
-- [ ] **DBG2-20 — Pagina Cheats con valori, gruppi e profili.**
-  Ricerca per CH/nome/categoria, filtri ROM/formato/stato, descrizione dell'uso
-  debug, target effettivo e note; selezione dei valori da elenco/range ammesso.
-  Toggle per codice verificato, Applica una volta, Disattiva tutti, preset
-  nominati e indicatore sempre visibile dei cheat attivi.
-  I master sono dipendenze del relativo decoder, non codici arbitrari scelti
-  automaticamente. Ogni voce non eseguibile spiega cosa manca.
-  **Chiusura:** svolgere il flusso interamente da menu/controller o comando
-  testuale equivalente, senza picker implicito; conflitti e codici modificati
-  impediscono un'attivazione silenziosa. **Dipende da:** DBG2-04/15/19.
+- [ ] **DBG2-21 — First EUR selection useful for debugging.**
+  Priorities, subject to decoding/verification: access to Card Shop/Item Shop/
+  Monster Bank (CH-0323/0324/0325) to reach UI and transitions; funds/resources
+  (CH-0331/0334/0336) to repeat actions; HP/MP/stats (CH-0321) to keep the case
+  alive. CH-0321 is a combined block: do not present it as simple HP without
+  testing a distinct variant. Identify the observed target without equating
+  “first character” with a global identity. **Completion:** at least one UI
+  access and one resource modifier have isolated activation, effect,
+  deactivation and restoration evidence; report each other CH individually,
+  without marking a whole group verified. **Depends on:** DBG2-19/20.
+  Progress: CH-0334 applied once in an isolated Wine EUR copy; both RAM writes
+  match the plan and restart from the seed restores state. Visible effect,
+  toggle/deactivation and UI evidence remain open; [details](../cheats.md#manual-one-shot-in-an-isolated-session--dbg2-19-in-progress).
 
-  **Audit 2026-11-01 — parziale.** La [vista catalogo](../changes/2026-10-31-browse-local-cheat-catalog-in-menu.json)
-  offre ricerca/dettagli/filtri readonly; comandi prepare/apply-once non sono
-  toggle nella pagina. Mancano valori/gruppi/profili, attivi/disattiva tutti,
-  conflitti e flusso controller completo; attendere DBG2-19/15, conservando la
-  vista integrata invece di rifarla.
+  **Audit 2026-11-01 — partial.** [Static source/master](../changes/2026-10-31-inspect-source-bound-codebreaker-masters.json)
+  covers seven priorities; [application](../changes/2026-10-31-apply-guarded-cheat-once.json)
+  includes CH-0334: two RAM values and exact restore from seed. The local result
+  target/debug-tools-v2-cheat-eur-resource/result.json was reread: no evidence
+  of visible/gameplay effect, toggle/deactivation or UI access. All these criteria
+  remain, dependent on 19/20; do not promote the group.
 
+- [ ] **DBG2-22 — Advanced cheats for abilities, rules and transitions.**
+  Plan small groups for abilities/AP/level (CH-0320/0330/0340), battle rules/
+  cards (CH-0338/0339) and mission end/victory (CH-0329/0341). Only afterward
+  evaluate global unlocks, completed missions, inventory/monsters, clan stats
+  and speed in other EUR CH entries. The Clear Mission note is missing in the
+  source: preserve uncertainty. Record persistent effects and shortcuts that
+  skip the scene being diagnosed. **Completion:** check before/after state and
+  side effects for each selected CH; others remain explicitly unverified. A
+  forced victory is not evidence of the ordinary sequence. **Depends on:** DBG2-21.
 
-- [ ] **DBG2-21 — Prima selezione EUR utile al debug.**
-  Priorità, subordinata alla decodifica/verifica: accesso a Card Shop/Item Shop/
-  Monster Bank (CH-0323/0324/0325) per raggiungere UI e transizioni; fondi/risorse
-  (CH-0331/0334/0336) per ripetere azioni; HP/MP/statistiche (CH-0321) per
-  mantenere vivo il caso. CH-0321 è un blocco combinato: non presentarlo come
-  semplice HP senza provare una variante distinta. Riconoscere il target
-  osservato, senza equiparare «primo personaggio» a un'identità globale.
-  **Chiusura:** almeno un accesso UI e un modificatore di risorse hanno prova
-  isolata di attivazione, effetto, disattivazione e ripristino; copertura di ogni
-  altro CH indicata singolarmente, nessun intero gruppo marcato verificato.
-  **Dipende da:** DBG2-19/20.
-  Avanzamento: CH-0334 applicato una sola volta in una copia EUR isolata Wine;
-  entrambe le scritture RAM corrispondono al piano e il riavvio dal seed
-  ripristina lo stato. Effetto visibile, toggle/disattivazione e prova UI
-  restano aperti; [dettagli](../cheats.md#manual-one-shot-in-an-isolated-session--dbg2-19-in-progress).
+  **Audit 2026-11-01 — not started.** Catalog entries and the generic decoder
+  are not evidence of abilities/AP/rules/transitions. No acceptance record for
+  before/after/side effects of the requested groups; DBG2-21 remains open. The
+  original uncertainty around the Clear Mission note is retained.
 
-  **Audit 2026-11-01 — parziale.** [Source/master statico](../changes/2026-10-31-inspect-source-bound-codebreaker-masters.json)
-  copre sette priorità, [applicazione](../changes/2026-10-31-apply-guarded-cheat-once.json)
-  include CH-0334: due valori RAM e ripristino esatto dal seed. Il risultato
-  locale target/debug-tools-v2-cheat-eur-resource/result.json è stato riletto:
-  nessuna prova di effetto visibile/gameplay, toggle/disattivazione o accesso UI.
-  Restano tutti questi criteri, subordinati a 19/20; non promuovere il gruppo.
+- [ ] **DBG2-23 — Cheats, checkpoints, replay and provenance.**
+  Record cheat set/hash/parameters, decoder, order and frame of each application
+  in compatible snapshots/profiles/recordings/reports. Define Load/Undo/reset/
+  ROM change and replay with a different set: explicit restore or reasoned
+  refusal, never a persistent toggle applied unexpectedly. “Restore checkpoint”
+  remains distinct from “Disable all”. Handle state versioning while retaining
+  expected compatibility; do not save host pointers in the guest.
+  **Completion:** a new short cheat recording reproduces exact state/clock; an
+  incompatible set is refused. The report identifies the variant, originals
+  remain unchanged and no ordinary DS case is promoted. **Depends on:** DBG2-19/21, DBG-04/05/16.
 
+  **Audit 2026-11-01 — not started under the provenance contract.** The
+  [one-shot](../changes/2026-10-31-apply-guarded-cheat-once.json) refuses new
+  recordings/saves after application (last_cheat_once guard in play.rs).
+  [Recording](../../crates/recomp/src/debug_recording.rs) and [replay](../../crates/recomp/src/debug_replay.rs)
+  do not record set/decoder/order/frame or prove state-clock cheat replay,
+  Load/Undo/reset/ROM behavior and incompatible-set refusal. The preventive
+  refusal does not equal the feature; no new recording was created in the audit.
 
-- [ ] **DBG2-22 — Cheat avanzati per abilità, regole e transizioni.**
-  Pianificare a gruppi piccoli abilità/AP/livello (CH-0320/0330/0340), regole
-  battaglia/carte (CH-0338/0339) e fine missione/vittoria (CH-0329/0341).
-  Solo dopo valutare sblocchi globali, missioni completate, inventario/mostri,
-  statistiche clan e velocità presenti negli altri CH EUR.
-  La nota di Clear Mission manca nella fonte: conservare l'incertezza.
-  Annotare effetti persistenti e shortcut che saltano la scena da diagnosticare.
-  **Chiusura:** per ciascun CH scelto, stato prima/dopo ed effetto collaterale
-  controllati; gli altri restano apertamente non verificati. Una vittoria
-  forzata non è prova della sequenza ordinaria. **Dipende da:** DBG2-21.
+<a id="p4--ulteriori-potenziamenti-e-chiusura"></a>
 
-  **Audit 2026-11-01 — non iniziato.** Le voci nel catalogo e il decoder
-  generico non sono prove di abilità/AP/regole/transizioni. Nessun record di
-  accettazione prima/dopo/effetti collaterali dei gruppi richiesti; DBG2-21 è
-  ancora aperto. Conservata l'incertezza originale della nota Clear Mission.
+## P4 — Further improvements and completion
 
+- [ ] **DBG2-24 — Named trigger and breakpoint editor.**
+  Manage multiple saved break/watch/capture definitions from menu/console:
+  name, enabled, PC/mode, range/value, hit count, frame window and supported
+  action (pause, capture, event freeze). Allow declared simple combinations;
+  show interpreter/native granularity and observer conflicts. **Completion:**
+  one reached and one unreached trigger respect limits, identity and safe
+  boundary, with an evaluated condition explainable in the report.
+  **Depends on:** DBG2-05/15, DBG-08/11.
 
-- [ ] **DBG2-23 — Cheat, checkpoint, replay e provenienza.**
-  Registrare set/hash/parametri dei cheat, decoder, ordine e frame di ogni
-  applicazione in snapshot/profili/registrazioni/report compatibili.
-  Definire Load/Undo/reset/cambio ROM e replay con set differente: ripristino
-  esplicito o rifiuto motivato, mai toggle persistente applicato per sorpresa.
-  «Ripristina checkpoint» resta distinto da «Disattiva tutti».
-  Gestire eventuale versionamento dello stato mantenendo la compatibilità
-  prevista; non salvare puntatori host nel guest.
-  **Chiusura:** una nuova breve registrazione con cheat riproduce stato/clock
-  esatti; un set incompatibile viene rifiutato. Il report segnala la variante,
-  gli originali restano invariati e nessun caso DS ordinario viene promosso.
-  **Dipende da:** DBG2-19/21, DBG-04/05/16.
+- [ ] **DBG2-25 — Pinned observations and differences.**
+  Permit pins for registers, read-only memory windows and already decoded
+  task/script/unit fields, with label/owner and previous value. Refresh at a
+  bounded cadence or on step; invalidate addresses/context after Load/reset/
+  ROM change. Colors and filters highlight changes without inventing persistent
+  identities or reading registers with I/O effects. **Completion:** explain a
+  known change between two points with a source for each field, complete state
+  unchanged by inspection and recognizable stale context.
+  **Depends on:** DBG2-03/15, DBG-11/17.
 
-  **Audit 2026-11-01 — non iniziato nel contratto di provenienza.** Il
-  [one-shot](../changes/2026-10-31-apply-guarded-cheat-once.json) rifiuta nuove
-  registrazioni/save dopo applicazione (guard last_cheat_once in play.rs).
-  [Recording](../../crates/recomp/src/debug_recording.rs) e [replay](../../crates/recomp/src/debug_replay.rs)
-  non registrano set/decoder/ordine/frame né provano replay cheat stato-clock,
-  Load/Undo/reset/ROM e rifiuto set incompatibile. Il rifiuto preventivo non
-  equivale alla funzionalità; nessuna nuova registrazione creata nell'audit.
+- [ ] **DBG2-26 — Issue timeline and exportable recipe.**
+  Connect menu selection → command/script → observed guest event → capture/
+  difference/error, with bookmarks and access to the corresponding report. Add
+  recipe, selected IDs and any active cheats to the issue report; copy the
+  repeatable command and distinguish available context from actually proven
+  causation. **Completion:** user and assistant reconstruct the same case
+  without manually searching for paths; gaps/drops and private attachments are
+  explicit. **Depends on:** DBG2-11/16/23, DBG-09/16.
 
+- [ ] **DBG2-27 — Targeted integration and regression checks.**
+  Exercise new selection, console off/on, macros and cheats with public synthetic
+  fixtures and a few declared real cases. Test keyboard/mouse/controller,
+  button-only dialogs, caps, cancel, close, errors and moved folder; compare the
+  same commands via menu/console/local channel. Reuse completed DBG evidence,
+  selecting new checks only for changed behavior. Active cheats and read-only
+  diagnostics have different equivalence expectations, declared before testing.
+  **Completion:** Wine/native Windows/Linux and simulated/physical controller
+  matrix with actual outcomes, protected originals, no error mistaken for
+  success and no automatic repetition of all cases. **Depends on:** selected
+  DBG2-04…26 increments; begin checks with each increment.
 
-## P4 — Ulteriori potenziamenti e chiusura
+- [ ] **DBG2-28 — Guide, distribution and version compatibility.**
+  Update help and guide with complete menu/console paths, actually supported
+  commands, host-tool prerequisites and local index migration. Distribute only
+  public adapters/schemas/fixtures; third-party cheat catalog, personal macros,
+  history and game data remain excluded. Update the packager whitelist and
+  Docker contexts only for necessary new files; declare build and local-channel
+  capabilities. **Completion:** clean bundle, understandable empty states,
+  commands from a moved folder and accessible logs; an old version receives a
+  clear incompatibility. Checklist/record/state/handoff describe only what was
+  proven. **Depends on:** DBG2-27 for distributed features.
 
-- [ ] **DBG2-24 — Editor di trigger e punti di arresto nominati.**
-  Gestire dal menu/console più definizioni salvate di break/watch/capture:
-  nome, enabled, PC/modo, range/valore, numero di hit, finestra di frame e azione
-  supportata (pausa, cattura, freeze eventi). Consentire combinazioni semplici
-  dichiarate; mostrare granularità interprete/native e conflitti tra observer.
-  **Chiusura:** un trigger raggiunto e uno non raggiunto rispettano limiti,
-  identità e confine sicuro, con condizione valutata spiegabile nel report.
-  **Dipende da:** DBG2-05/15, DBG-08/11.
+<a id="riferimenti-e-anomalie-dei-cheat-da-conservare"></a>
 
-- [ ] **DBG2-25 — Valori osservati e differenze fissati a schermo.**
-  Consentire pin di registri, finestre di memoria readonly e campi di
-  task/script/unità già decodificati, con label/owner e valore precedente.
-  Rinfrescare a cadenza limitata o al passo; invalidare indirizzi/contesto dopo
-  Load/reset/cambio ROM. Colori e filtri evidenziano i cambi senza inventare
-  identità persistenti o leggere registri con effetti I/O.
-  **Chiusura:** spiegare un cambiamento noto tra due punti con fonte per campo,
-  stato completo invariato dall'ispezione e contesto obsoleto riconoscibile.
-  **Dipende da:** DBG2-03/15, DBG-11/17.
+## Cheat references and anomalies to preserve
 
-- [ ] **DBG2-26 — Timeline del problema e ricetta esportabile.**
-  Collegare selezione menu → comando/script → evento guest osservato →
-  cattura/differenza/errore, con bookmark e accesso al report corrispondente.
-  Aggiungere al report issue ricetta, ID selezionati e cheat eventualmente
-  attivi; copia del comando ripetibile e distinzione tra contesto disponibile
-  e collegamento causale effettivamente provato.
-  **Chiusura:** utente e assistente ricostruiscono lo stesso caso senza cercare
-  manualmente percorsi; eventuali buchi/scarti e allegati privati sono espliciti.
-  **Dipende da:** DBG2-11/16/23, DBG-09/16.
+For content use locally cheats/README.md, cheats/catalogo.json,
+cheats/controllo-qualita.md and cheats/tabelle-modificatori.md. Versioned
+documentation lists useful IDs and categories without copying code blocks.
 
-- [ ] **DBG2-27 — Verifiche mirate di integrazione e regressione.**
-  Esercitare nuova selezione, console off/on, macro e cheat con fixture
-  sintetiche pubbliche e pochi casi reali dichiarati. Testare tastiera/mouse/
-  controller, dialogo solo da pulsante, cap, cancel, chiusura, errori e cartella
-  spostata; confrontare gli stessi comandi da menu/console/canale locale.
-  Riusare le prove DBG già concluse scegliendo nuovi controlli solo per il
-  comportamento modificato. Cheat attivi e diagnostica readonly hanno attese
-  di equivalenza diverse, dichiarate prima del test.
-  **Chiusura:** matrice Wine/Windows nativo/Linux e controller simulato/fisico
-  con esiti effettivi, originali protetti, nessun errore scambiato per successo
-  o ripetizione automatica di tutti i casi. **Dipende da:** incrementi selezionati
-  DBG2-04…26; iniziare i controlli insieme a ciascun incremento.
+Remaining issues for their respective entries: differing CB/XP source masters,
+CH-0048/0049 P3/P4 labels, possible CH-0236 typo, placeholders and unknown
+hardware versions. The 25 empty EUR sections on the saved page are missing
+content, not imported cheats; do not invent or automatically download them.
+Unlock instructions without a device code remain guides, not executable
+switches. JPN and unknown regions may be browsed even when unsupported by the
+selected ROM.
 
-- [ ] **DBG2-28 — Guida, distribuzione e compatibilità delle versioni.**
-  Aggiornare help e guida con percorsi completi da menu e console, comandi
-  realmente supportati, prerequisiti degli strumenti host e migrazione degli
-  indici locali. Distribuire soli adattatori/schemi/fixture pubbliche; catalogo
-  cheat di terzi, macro personali, cronologia e dati di gioco restano esclusi.
-  Aggiornare la whitelist del packager e i contesti Docker solo per i nuovi
-  file necessari; dichiarare le capacità della build e del canale locale.
-  **Chiusura:** bundle pulito, empty state comprensibili, comandi dalla cartella
-  spostata e log accessibili; una versione vecchia riceve incompatibilità chiara.
-  Checklist/record/stato/handoff descrivono solo ciò che è stato provato.
-  **Dipende da:** DBG2-27 per le funzioni distribuite.
+<a id="ordine-di-lavoro-e-regola-della-spunta"></a>
 
-## Riferimenti e anomalie dei cheat da conservare
+## Work order and checkmark rule
 
-Per i contenuti usare localmente cheats/README.md, cheats/catalogo.json,
-cheats/controllo-qualita.md e cheats/tabelle-modificatori.md. La documentazione
-versionata riporta ID e categorie utili, senza copiare blocchi di codici.
+First group: **DBG2-01 → 02 → 03 → 04 → 05**, so existing tools become usable
+without mandatory pickers. Then library/persistence **06/07**, event console
+**08…12**, command console **13…16** and cheats **17…23**. Read-only import
+**17** may start after the selector; activation waits for decoder and isolation.
+Further improvements **24…26** reuse these contracts. **27/28** accompany each
+distributable increment.
 
-Restano da risolvere per le rispettive voci: master diversi delle fonti CB/XP,
-etichette P3/P4 di CH-0048/0049, possibile refuso di CH-0236, placeholder e
-versioni dispositivo ignote. Le 25 sezioni EUR vuote nella pagina salvata sono
-contenuti mancanti, non cheat importati; non inventarli né scaricarli
-automaticamente. Le istruzioni di sblocco senza codice dispositivo restano
-guide, non toggle eseguibili. JPN e regioni ignote possono essere consultate
-anche quando non sono supportate dalla ROM selezionata.
-
-## Ordine di lavoro e regola della spunta
-
-Primo gruppo: **DBG2-01 → 02 → 03 → 04 → 05**, così gli strumenti esistenti
-diventano utilizzabili senza picker obbligatori. Poi libreria/persistenza
-**06/07**, console eventi **08…12**, console comandi **13…16** e cheat **17…23**.
-L'import readonly **17** può iniziare dopo il selettore; l'attivazione aspetta
-decoder e isolamento. Gli ulteriori potenziamenti **24…26** riusano questi
-contratti. **27/28** accompagnano ogni incremento distribuibile.
-
-Ogni spunta richiede implementazione, flusso utente, prova positiva e negativa,
-limiti/cap dichiarati, conservazione degli input e record di memoria. Se una
-voce comprende più CH o backend, registrare i sottoesiti: un parent incompleto
-non riapre i figli conclusi. Eseguire i controlli nuovi necessari, non vecchie
-campagne per ricostruire il contesto. Registrare la selezione effettiva nel
-[TASK_HANDOFF.md](TASK_HANDOFF.md) secondo il [workflow](MEMORY_WORKFLOW.md).
-La creazione di questa checklist non avvia automaticamente nessuna voce.
+Each checkmark requires implementation, user flow, positive and negative
+checks, declared limits/caps, input preservation and a memory record. If an
+entry includes multiple CH or backends, record sub-outcomes: an incomplete parent
+does not reopen completed children. Run necessary new checks, not old campaigns
+merely to reconstruct context. Record the actual selection in
+[TASK_HANDOFF.md](TASK_HANDOFF.md) according to the [workflow](MEMORY_WORKFLOW.md).
+Creating this checklist does not automatically start any entry.

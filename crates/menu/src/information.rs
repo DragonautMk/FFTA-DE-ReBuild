@@ -46,7 +46,7 @@ impl Menu {
             }
         }
         if self.content_active() {
-            parts.push(self.content.description());
+            parts.push(self.content.description(self.language()));
             parts.push(self.content.message.clone());
             parts.push(self.content.preview_message.clone());
             if let Some(entry) = self
@@ -69,8 +69,8 @@ impl Menu {
             }
         }
         if self.cheat_active() {
-            parts.push(self.cheats.description());
-            parts.push(self.cheats.message.clone());
+            parts.push(self.cheats.description(self.language()));
+            parts.push(self.tr(&self.cheats.message).into());
             if let Some(entry) = self
                 .cheats
                 .highlighted_id()
@@ -83,8 +83,8 @@ impl Menu {
             }
         }
         if self.page == Page::DebugCatalog {
-            parts.push(self.catalog.details());
-            parts.push(self.catalog.message.clone());
+            parts.push(self.catalog.details(self.language()));
+            parts.push(self.tr(&self.catalog.message).into());
         }
         parts.push(self.tr_format("Menu tastiera: {}", &[("0", (cfg.menu_key).to_string())]));
         parts.push(self.tr_format("Menu gamepad: {}", &[("0", (cfg.menu_pad).to_string())]));

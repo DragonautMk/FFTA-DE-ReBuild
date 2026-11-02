@@ -36,6 +36,16 @@ The event console follows the same preference for its title, controls,
 collector status and export notices. It applies a changed language when
 reopened; an existing notice remains as originally produced. Filter tokens,
 event rows and exported JSON retain their canonical values.
+Readonly Menu / CLI operation cards localize field labels and known route
+segments as the menu language changes. Their descriptor prose remains English;
+the underlying registry paths, identifiers and CLI data do not change.
+The planned-task reference uses the English checklist for titles and details,
+with localized status and read-only notice; its task IDs and states are shared.
+The read-only cheat catalog localizes its labels, status and notices using the
+language selected when opened or reloaded. Original imported descriptions,
+code lines, source identifiers and catalog JSON remain unchanged.
+The debug save catalog localizes its status labels and detail headings while
+retaining its original filter tokens and imported case data.
 
 File names and paths, bindings, configuration tokens, command syntax, entered
 values, imported descriptions, technical references and diagnostic payloads
@@ -81,8 +91,10 @@ For example, to add French:
 **No Rust edits, language lists or manual registration are needed.**
 The build automatically discovers every `languages/*.json`, validates the
 files and embeds the registry in the program. The new language appears in
-settings after rebuilding. Distributed executables already contain their
-translations: Python and external JSON files are not needed at runtime.
+settings after rebuilding. Changes to an existing catalog also trigger registry
+regeneration on an incremental Cargo build. Distributed executables already
+contain their translations: Python and external JSON files are not needed at
+runtime.
 
 You can also add JSON files manually by copying `en.json` and changing
 `code`, `name` and the text. `create` is a convenience command and refuses
