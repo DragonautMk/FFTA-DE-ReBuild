@@ -19260,3 +19260,17 @@ LOCAL-ARTIFACT-SWEEP-2026-10-31 — CLOSED. Latest request: clean residual proje
 - Verified criteria: User authorized updating the fork main from decomp; GitHub PR #1 merged all 135 commits into DragonautMk/FFTARecomp main. Remote main is 8d276a06 and the GitHub home shows FFTA DE-ReBuild and the emblem. Upstream was not targeted.
 - Evidence: https://github.com/DragonautMk/FFTARecomp/pull/1 and GitHub home; project-memory PR check passed.
 - Limits: Earlier decomp push check failed due to missing completion.rs change record; local main still tracks upstream/main and was not changed. No software builds or runtime validation performed.
+
+### FIRST-DE-REBUILD-RELEASE
+
+- Outcome: completed
+- Verified criteria: FFTA DE-Rebuild v1.0.0 published from main commit 8d276a0, with Linux x86_64, Windows x86_64, Android ARM64 preview and SHA256SUMS; GitHub displays matching local digests.
+- Evidence: https://github.com/DragonautMk/FFTARecomp/releases/tag/v1.0.0; Linux and Windows package manifests (82 hashes each), Windows Wine suite 778 passed and 356 ignored with UTF-8 locale and external symlink fixture, Android 24 unit tests passed. Record: docs/changes/2026-11-03-prepare-first-release-linux.json.
+- Limits: native Windows, Steam Deck and Android device execution not validated; Android APK debug-signed.
+
+### RELEASE-LOCAL-CLEANUP
+
+- Outcome: completed
+- Verified criteria: removed six exact Docker build cache IDs from the completed v1.0.0 release; Docker reported 4.3207 GB. All three preserved local packages passed SHA-256 checks after cleanup.
+- Evidence: dist/first-release-v1.0.0-preparation/cleanup-receipt.json and build-cache-preview.txt; published release at https://github.com/DragonautMk/FFTARecomp/releases/tag/v1.0.0.
+- Limits: exact SDK parent-layer request reclaimed zero bytes; Wine prefixes, active and unverified test artifacts, private data and other projects were retained. Future builds will recreate deleted caches.

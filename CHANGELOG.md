@@ -144,6 +144,29 @@ Documentation: [README.md](README.md).
 
 [Change record](docs/changes/2026-11-03-rebrand-ffta-de-rebuild.json)
 
+## 2026-11-03 — Prepare the first DE-Rebuild release
+
+Type: changed. Platforms: Linux x86_64, Windows x86_64, Android ARM64.
+
+**Changes**
+
+- Published FFTA DE-Rebuild v1.0.0 from main commit 8d276a0 on GitHub, with Linux and Windows portable packages, an Android preview APK and a SHA-256 checksum file.
+
+**Validation**
+
+- Linux Docker export reused a matching cached build and test stage; verified 82 manifest hashes and sizes, executable modes, branding and private-data exclusions. SHA256 ff20137489f37f3d1e341954931fa62699557797587b6b636d8c4764c04afec4.
+- Windows Docker cross-build and Wine suite passed 778 tests (356 ignored) after configuring UTF-8 and the external host symlink fixture; verified ZIP integrity, 82 manifest hashes and sizes, x86-64 PE headers and private-data exclusions. SHA256 41933c11c7efe8bb751807fc36e12b1ac7792c18db073b86b055695c1a545c72.
+- Android Docker build passed 24 Kotlin tests; inspected APK integrity, current branding and private-data exclusions. SHA256 2ccd220ea350c2042f8d678c19248b3e6c742df297cf1fd2181d636127301a38.
+- GitHub release page displayed the three uploaded assets and matching SHA-256 digests, plus SHA256SUMS.txt.
+
+**Limitations**
+
+- Android APK is debug-signed preview software; compatibility and uninterrupted audio remain under development. Native Windows, Steam Deck, Android device and live game validation were not performed. A legally obtained supported ROM is required and excluded from packages.
+
+Documentation: [portable.md](docs/portable.md).
+
+[Change record](docs/changes/2026-11-03-prepare-first-release-linux.json)
+
 ## 2026-11-03 — Arm bounded cheat plans at interpreter frame boundaries
 
 Type: added. Platforms: Windows GNU / Wine.

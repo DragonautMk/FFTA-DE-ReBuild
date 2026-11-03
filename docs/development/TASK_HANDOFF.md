@@ -226,9 +226,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: DBG2-19 load/Undo-disarm check complete; parent partial. ENGLISH-FIRST-INVENTORY-REVIEW partial.
-- Last verified result: isolated Wine/Xvfb save-state load and Undo each disarmed a synthetic set and restored exact expected state; inputs and session pins unchanged. Restart previously passed.
-- Remaining work: gameplay/device equivalence, broader memory/backend and other DBG2 criteria; English inventory review remains open.
-- Errors or blockers: save overwrite confirmation was cancelled. Cleanup helper refused non-ROM-data unit paths; no cleanup applied. Rebrand installer/Wayland checks blocked as recorded.
-- Next action: select and checkpoint the next unfinished DBG2 criterion; preserve concurrent work.
-- References: `docs/changes/2026-11-03-maintain-bounded-interpreter-cheats.json`, `target/debug-tools-v2-maintained-load/gui-result.json`.
+- Task: RELEASE-LOCAL-CLEANUP completed.
+- Last verified result: six selected release build cache records retired; Docker reported 4.32 GB reclaimed, and all three local release package hashes still match.
+- Remaining work: no further release cleanup selected; larger historical Wine, test and active-work artifacts were retained.
+- Errors or blockers: the exact SDK parent-layer cleanup returned zero bytes; no global cache prune attempted.
+- Next action: no further action for this selection.
+- References: dist/first-release-v1.0.0-preparation/cleanup-receipt.json and build-cache-preview.txt.
