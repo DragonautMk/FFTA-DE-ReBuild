@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "review-map-guide-english",
+  "title": "Complete English review of map and terrain guide",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Record complete English-language review of the terrain and map guide, incorporating earlier section-by-section spacing and clarity corrections, and fingerprint the reviewed version."
+  ],
+  "validation": [
+    "Compared the current guide with HEAD: aside from previously recorded spacing, 32-bit-zero wording and singular agreement, non-whitespace content is unchanged; headings, Markdown destinations and inline code match. Reviewed all guide sections and searched for residual fused prose candidates."
+  ],
+  "limitations": [
+    "Language and textual preservation review only; runtime, gameplay, builds and platform claims were not revalidated. The broader English-first audit remains open."
+  ],
+  "files": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": [
+    "docs/changes/2026-11-03-restore-terrain-raster-guide-spacing.json",
+    "docs/changes/2026-11-03-restore-coordinate-runtime-guide-spacing.json"
+  ]
+}

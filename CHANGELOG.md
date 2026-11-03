@@ -607,6 +607,26 @@ Documentation: [save_backups.rs](crates/menu/src/save_backups.rs), [fps.rs](crat
 
 [Change record](docs/changes/2026-11-03-review-menu-input-core-english.json)
 
+## 2026-11-03 — Complete English review of map and terrain guide
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Record complete English-language review of the terrain and map guide, incorporating earlier section-by-section spacing and clarity corrections, and fingerprint the reviewed version.
+
+**Validation**
+
+- Compared the current guide with HEAD: aside from previously recorded spacing, 32-bit-zero wording and singular agreement, non-whitespace content is unchanged; headings, Markdown destinations and inline code match. Reviewed all guide sections and searched for residual fused prose candidates.
+
+**Limitations**
+
+- Language and textual preservation review only; runtime, gameplay, builds and platform claims were not revalidated. The broader English-first audit remains open.
+
+Documentation: [2026-11-03-restore-terrain-raster-guide-spacing.json](docs/changes/2026-11-03-restore-terrain-raster-guide-spacing.json), [2026-11-03-restore-coordinate-runtime-guide-spacing.json](docs/changes/2026-11-03-restore-coordinate-runtime-guide-spacing.json).
+
+[Change record](docs/changes/2026-11-03-review-map-guide-english.json)
+
 ## 2026-11-03 — Review maintenance helper text
 
 Type: docs. Platforms: project-wide.
@@ -626,6 +646,42 @@ Type: docs. Platforms: project-wide.
 Documentation: [generate_cursor.py](scripts/generate_cursor.py), [package_source.py](scripts/package_source.py), [rom_coverage_ranges.py](scripts/rom_coverage_ranges.py), [artifact_coordinator.py](scripts/artifact_coordinator.py), [generate_notices.py](scripts/generate_notices.py), [fetch_missing_notices.py](scripts/fetch_missing_notices.py), [build_desktop.py](scripts/build_desktop.py), [menu_atlas_inventory.py](scripts/menu_atlas_inventory.py).
 
 [Change record](docs/changes/2026-11-03-review-maintenance-helper-english.json)
+
+## 2026-11-03 — Review launcher screens for English
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Record English-language review and SHA-256 hashes for the launcher play, input and audio/video screen source files; no source changes were needed.
+
+**Validation**
+
+- Inspected authored UI strings, multiline text and comments; git diff --check passed.
+
+**Limitations**
+
+- Language review only; dynamically supplied messages and imported values need separate classification. Runtime behavior, builds and platform integration were not validated; the broader English-first audit remains open.
+
+[Change record](docs/changes/2026-11-03-review-launcher-screens-english.json)
+
+## 2026-11-03 — Review launcher foundation for English
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Record English-language review and SHA-256 hashes for ten launcher manifest, entry-point, platform, app-shell and asset files; no source changes were needed.
+
+**Validation**
+
+- Inspected maintained comments and authored default strings; git diff --check passed.
+
+**Limitations**
+
+- Language review only; launcher screens, runtime behavior, builds and platform integration were not validated. The broader English-first audit remains open.
+
+[Change record](docs/changes/2026-11-03-review-launcher-foundation-english.json)
 
 ## 2026-11-03 — Review installer and launcher entry points in English
 
@@ -807,6 +863,204 @@ Documentation: [ffta_character_metric.py](scripts/ffta_character_metric.py), [ff
 
 [Change record](docs/changes/2026-11-03-review-analysis-utilities-english.json)
 
+## 2026-11-03 — Restore spacing in world node travel sections
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Restore missing spaces in the managed world-node, production CLI and ordinary travel evidence sections for readable English documentation.
+
+**Validation**
+
+- Compared the guide to its immediate preimage: non-whitespace content, headings, Markdown link destinations and inline code are identical; reviewed the changes and git diff --check passed.
+
+**Limitations**
+
+- Documentation-only change; no build, gameplay or platform validation. Other guide sections and the broader English-first audit remain open.
+
+[Change record](docs/changes/2026-11-03-restore-world-travel-guide-spacing.json)
+
+## 2026-11-03 — Restore spacing in world road guide sections
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Restore missing spaces in the world road source, managed runtime and production CLI sections and clarify the 32-bit zero wording.
+
+**Validation**
+
+- Compared the guide to its immediate preimage: aside from the reviewed 32-bit-zero wording, non-whitespace content is identical; headings, Markdown link destinations and inline code match. Reviewed the diff and git diff --check passed.
+
+**Limitations**
+
+- Documentation-only change; no build, gameplay or platform validation. Other guide sections and the broader English-first audit remain open.
+
+[Change record](docs/changes/2026-11-03-restore-world-road-guide-spacing.json)
+
+## 2026-11-03 — Restore spacing in world node guide sections
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Restore missing spaces in world-selector, battle-entry, node-record and typed-node evidence sections to make the English guide readable.
+
+**Validation**
+
+- Compared the guide to its immediate preimage: all non-whitespace content, headings, Markdown link destinations and inline code match; reviewed the changes and git diff --check passed.
+
+**Limitations**
+
+- Documentation-only change; no build, gameplay or platform validation. Other guide sections and the broader English-first audit remain open.
+
+[Change record](docs/changes/2026-11-03-restore-world-node-guide-spacing.json)
+
+## 2026-11-03 — Restore spacing in terrain and raster guides
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Restore missing spaces around prose values in the introductory terrain and raster-palette sections for readable English documentation.
+
+**Validation**
+
+- Compared the guide to its immediate preimage: non-whitespace content, headings, Markdown link destinations and inline code are identical; reviewed the changes and git diff --check passed.
+
+**Limitations**
+
+- Documentation-only change; no build, gameplay or platform validation. Full guide review and the broader English-first audit remain open.
+
+[Change record](docs/changes/2026-11-03-restore-terrain-raster-guide-spacing.json)
+
+## 2026-11-03 — Restore spacing in extracted resource and validation guidance
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Restore missing spaces in the extracted-files and validation-limit sections of the ROM data guide and add a missing list comma.
+
+**Validation**
+
+- Compared the guide to its immediate preimage: aside from the reviewed comma, non-whitespace content is identical; headings, Markdown destinations, inline code and fenced blocks match. Reviewed the diff and git diff --check passed.
+
+**Limitations**
+
+- Documentation-only change; no build, extraction, gameplay or platform validation. The rest of the guide and the broader English-first audit remain open.
+
+[Change record](docs/changes/2026-11-03-restore-rom-guide-limits-spacing.json)
+
+## 2026-11-03 — Restore spacing in map and quest guide sections
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Restore missing spaces in four map selection, event record, pub menu and mission acceptance sections, improving the readability of English source contracts and evidence.
+
+**Validation**
+
+- Compared the guide with its immediate preimage: non-whitespace content, headings, Markdown link destinations and inline code are identical; reviewed the changed prose and git diff --check passed.
+
+**Limitations**
+
+- Documentation-only edit; no build, gameplay or platform validation. Other guide sections and the broader English-first audit remain open.
+
+[Change record](docs/changes/2026-11-03-restore-map-quest-guide-spacing.json)
+
+## 2026-11-03 — Restore spacing in road and encounter source guides
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Restore missing spaces in the ordinary road equivalence, encounter source contract and typed encounter model sections for readable English documentation.
+
+**Validation**
+
+- Compared the guide to its immediate preimage: non-whitespace content, headings, Markdown link destinations and inline code are identical; reviewed the changes and git diff --check passed.
+
+**Limitations**
+
+- Documentation-only change; no build, gameplay or platform validation. Other guide sections and the broader English-first audit remain open.
+
+[Change record](docs/changes/2026-11-03-restore-encounter-source-guide-spacing.json)
+
+## 2026-11-03 — Restore spacing in encounter runtime guide sections
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Restore missing spaces in managed encounter-header, CLI and battle-entry sections and correct singular agreement for one touched header.
+
+**Validation**
+
+- Compared the guide to its immediate preimage: apart from the reviewed singular agreement, non-whitespace content, headings, Markdown link destinations and inline code match; reviewed the diff and git diff --check passed.
+
+**Limitations**
+
+- Documentation-only change; no build, gameplay or platform validation. Other guide sections and the broader English-first audit remain open.
+
+[Change record](docs/changes/2026-11-03-restore-encounter-runtime-guide-spacing.json)
+
+## 2026-11-03 — Restore spacing in encounter coordinate source guides
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Restore missing spaces in encounter-coordinate source-contract and typed-model sections for readable English documentation.
+
+**Validation**
+
+- Compared the guide to its immediate preimage: non-whitespace content, headings, Markdown link destinations and inline code are identical; reviewed the changes and git diff --check passed.
+
+**Limitations**
+
+- Documentation-only change; no build, gameplay or platform validation. Other guide sections and the broader English-first audit remain open.
+
+[Change record](docs/changes/2026-11-03-restore-coordinate-source-guide-spacing.json)
+
+## 2026-11-03 — Restore spacing in encounter coordinate runtime guides
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Restore missing spaces in managed encounter-coordinate, production CLI and ordinary battle-entry sections for readable English documentation.
+
+**Validation**
+
+- Compared the guide to its immediate preimage: non-whitespace content, headings, Markdown link destinations and inline code are identical; reviewed the changes and git diff --check passed.
+
+**Limitations**
+
+- Documentation-only change; no build, gameplay or platform validation. Other guide sections and the broader English-first audit remain open.
+
+[Change record](docs/changes/2026-11-03-restore-coordinate-runtime-guide-spacing.json)
+
+## 2026-11-03 — Restore spacing in constructor animation guides
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Restore spaces between fused words, numbers and addresses in the constructor slot gate, retained-map inventory and cell-flag seed sections so their English evidence and limits are readable.
+
+**Validation**
+
+- Compared both documents with their immediate preimages: all non-whitespace content, Markdown headings and link destinations are identical; git diff --check passed.
+
+**Limitations**
+
+- Documentation-only edit; no builds, gameplay or platform tests were run. Other sections of both guides and the broader English-first audit remain pending.
+
+[Change record](docs/changes/2026-11-03-restore-constructor-guide-spacing.json)
+
 ## 2026-11-03 — Repeat an authenticated EUR replay procedure
 
 Type: changed. Platforms: Windows GNU / Wine.
@@ -910,6 +1164,24 @@ Type: changed. Platforms: Linux x86_64, Windows x86_64, Android ARM64.
 Documentation: [portable.md](docs/portable.md).
 
 [Change record](docs/changes/2026-11-03-prepare-first-release-linux.json)
+
+## 2026-11-03 — Normalize ROM inventory tail counts
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Use English thousands separators in five count references in the final inventory summaries, retaining the counts and historical evidence.
+
+**Validation**
+
+- Checked counts against linked evidence; exact comparison confirmed only the five separator changes and a scan found no dotted thousands in the reviewed tail; git diff --check passed.
+
+**Limitations**
+
+- Documentation review only; no ROM exploration, build, runtime or platform validation was performed. Other inventory sections and the broader English-first audit remain open.
+
+[Change record](docs/changes/2026-11-03-normalize-rom-inventory-tail-counts.json)
 
 ## 2026-11-03 — Manage source-bound cheats from the catalog page
 
@@ -1546,6 +1818,24 @@ Type: docs. Platforms: project-wide.
 
 [Change record](docs/changes/2026-11-03-clarify-rom-world-road-inventory.json)
 
+## 2026-11-03 — Clarify ROM world-record inventory
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Rewrite the partial parameter reachability summary and five world-record source, model, runtime, CLI and ordinary-use summaries while preserving negative observations and evidence limits.
+
+**Validation**
+
+- Compared numeric tokens, links and task IDs with prior summaries, confirmed outside text matches the preimage and checked details against linked analysis; git diff --check passed.
+
+**Limitations**
+
+- Documentation review only; no ROM exploration, build, runtime or platform validation was performed. The broader English-first audit remains open.
+
+[Change record](docs/changes/2026-11-03-clarify-rom-world-records38-inventory.json)
+
 ## 2026-11-03 — Clarify ROM world-node inventory
 
 Type: docs. Platforms: project-wide.
@@ -1600,6 +1890,42 @@ Type: docs. Platforms: project-wide.
 
 [Change record](docs/changes/2026-11-03-clarify-rom-task-cycle-inventory.json)
 
+## 2026-11-03 — Clarify ROM selection-table inventory
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Rewrite five selection-byte-table source, model, runtime, CLI and ordinary-use summaries in readable English while retaining selection behavior and evidence limits.
+
+**Validation**
+
+- Compared numeric tokens, links and task IDs with prior summaries, confirmed outside text matches the preimage and checked selection semantics against linked analysis; git diff --check passed.
+
+**Limitations**
+
+- Documentation review only; no ROM exploration, build, runtime or platform validation was performed. The broader English-first audit remains open.
+
+[Change record](docs/changes/2026-11-03-clarify-rom-selection-tables-inventory.json)
+
+## 2026-11-03 — Clarify ROM raw-transfer inventory
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Rewrite four localized raw-transfer source, model, runtime and CLI summaries in readable English and standardize selected thousands separators without widening dynamic-domain claims.
+
+**Validation**
+
+- Compared numeric tokens, links and task IDs with prior summaries, confirmed outside text matches the preimage and checked details against linked analysis; git diff --check passed.
+
+**Limitations**
+
+- Documentation review only; no ROM exploration, build, runtime or platform validation was performed. The broader English-first audit remains open.
+
+[Change record](docs/changes/2026-11-03-clarify-rom-raw-transfer-inventory.json)
+
 ## 2026-11-03 — Clarify ROM quest and navigation inventory
 
 Type: docs. Platforms: project-wide.
@@ -1617,6 +1943,24 @@ Type: docs. Platforms: project-wide.
 - Documentation review only; no ROM exploration, build, runtime or platform validation was performed. The broader English-first audit remains open.
 
 [Change record](docs/changes/2026-11-03-clarify-rom-quest-navigation-inventory.json)
+
+## 2026-11-03 — Clarify ROM sparse parameter inventory
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Rewrite four sparse parameter source, model, runtime and CLI summaries in readable English while preserving the unknown catalog extent and ordinary-use limits.
+
+**Validation**
+
+- Compared numeric tokens, links and task IDs with prior summaries, confirmed outside text matches the preimage and checked details against linked analysis; git diff --check passed.
+
+**Limitations**
+
+- Documentation review only; no ROM exploration, build, runtime or platform validation was performed. The broader English-first audit remains open.
+
+[Change record](docs/changes/2026-11-03-clarify-rom-parameter-records27-inventory.json)
 
 ## 2026-11-03 — Clarify observed parameter inventory summaries
 
@@ -1672,6 +2016,24 @@ Type: docs. Platforms: project-wide.
 
 [Change record](docs/changes/2026-11-03-clarify-rom-native-residue-summaries.json)
 
+## 2026-11-03 — Clarify ROM mission-record inventory
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Rewrite five mission-record source, model, runtime, CLI and ordinary-use summaries in readable English while retaining selector behavior and evidence limits.
+
+**Validation**
+
+- Compared numeric tokens, links and task IDs with prior summaries, confirmed outside text matches the preimage and checked details against linked analysis; git diff --check passed.
+
+**Limitations**
+
+- Documentation review only; no ROM exploration, build, runtime or platform validation was performed. The broader English-first audit remains open.
+
+[Change record](docs/changes/2026-11-03-clarify-rom-mission-records70-inventory.json)
+
 ## 2026-11-03 — Clarify ROM metadata28 inventory
 
 Type: docs. Platforms: project-wide.
@@ -1707,6 +2069,96 @@ Type: docs. Platforms: project-wide.
 - Documentation review only; no ROM exploration, build, runtime or platform validation was performed. The wider English-first audit remains open.
 
 [Change record](docs/changes/2026-11-03-clarify-rom-map-record-selection.json)
+
+## 2026-11-03 — Clarify ROM table-selected graphics inventory
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Rewrite five table-selected graphics source, model, runtime, CLI and partial ordinary-use summaries in readable English while preserving negative observations and validation limits.
+
+**Validation**
+
+- Compared numeric tokens, links and task IDs with prior summaries, confirmed outside text matches the preimage and checked details against linked analysis; git diff --check passed.
+
+**Limitations**
+
+- Documentation review only; no ROM exploration, build, runtime or platform validation was performed. The broader English-first audit remains open.
+
+[Change record](docs/changes/2026-11-03-clarify-rom-localized-table-inventory.json)
+
+## 2026-11-03 — Clarify ROM linked-record inventory
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Rewrite five linked four-byte record source, model, runtime, CLI and ordinary-use summaries in readable English while preserving their evidence limits.
+
+**Validation**
+
+- Compared numeric tokens, links and task IDs with prior summaries, confirmed outside text matches the preimage and checked details against linked analysis; git diff --check passed.
+
+**Limitations**
+
+- Documentation review only; no ROM exploration, build, runtime or platform validation was performed. The broader English-first audit remains open.
+
+[Change record](docs/changes/2026-11-03-clarify-rom-linked-records4-inventory.json)
+
+## 2026-11-03 — Clarify ROM indexed-graphics inventory
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Rewrite five indexed-graphics source, model, runtime, CLI and ordinary-use summaries in readable English while preserving format and verification limits.
+
+**Validation**
+
+- Compared numeric tokens, links and task IDs with prior summaries, confirmed outside text matches the preimage and checked format details against linked analysis; git diff --check passed.
+
+**Limitations**
+
+- Documentation review only; no ROM exploration, build, runtime or platform validation was performed. The broader English-first audit remains open.
+
+[Change record](docs/changes/2026-11-03-clarify-rom-indexed-graphics-inventory.json)
+
+## 2026-11-03 — Clarify ROM guide metadata and packet summaries
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Clarify the e26, e27, e31 and e32 metadata summaries and restore spacing in the managed packet-program introduction.
+
+**Validation**
+
+- Compared the immediate preimage: numeric sequences, headings, link destinations, inline and fenced code, and text outside selected passages are unchanged; reviewed the prose and git diff --check passed.
+
+**Limitations**
+
+- Documentation-only change; no build, extraction, gameplay or platform validation. Other guide sections and the broader English-first audit remain open.
+
+[Change record](docs/changes/2026-11-03-clarify-rom-guide-metadata-and-packets.json)
+
+## 2026-11-03 — Clarify ROM event-record inventory
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Rewrite five event-record source, model, runtime, CLI and ordinary-use summaries in readable English while preserving shared-view semantics and evidence limits.
+
+**Validation**
+
+- Compared numeric tokens, links and task IDs with prior summaries, confirmed outside text matches the preimage and checked shared-view behavior against linked analysis; git diff --check passed.
+
+**Limitations**
+
+- Documentation review only; no ROM exploration, build, runtime or platform validation was performed. The broader English-first audit remains open.
+
+[Change record](docs/changes/2026-11-03-clarify-rom-event-records12-inventory.json)
 
 ## 2026-11-03 — Clarify ROM encounter-unit inventory
 
@@ -1959,6 +2411,24 @@ Type: docs. Platforms: project-wide.
 - Documentation only; no ROM, build, runtime, benchmark or platform validation was performed. The rest of the inventory remains under review.
 
 [Change record](docs/changes/2026-11-03-clarify-rom-constructor-obj-inventory.json)
+
+## 2026-11-03 — Clarify ROM conditional-record inventory
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Rewrite five conditional eight-byte record source, model, runtime, CLI and ordinary-use summaries in readable English while retaining predicate semantics and evidence limits.
+
+**Validation**
+
+- Compared numeric tokens, links and task IDs with prior summaries, confirmed outside text matches the preimage and checked predicate and evidence details against linked analysis; git diff --check passed.
+
+**Limitations**
+
+- Documentation review only; no ROM exploration, build, runtime or platform validation was performed. The broader English-first audit remains open.
+
+[Change record](docs/changes/2026-11-03-clarify-rom-conditional-records8-inventory.json)
 
 ## 2026-11-03 — Record bounded EUR JP cheat display observation
 

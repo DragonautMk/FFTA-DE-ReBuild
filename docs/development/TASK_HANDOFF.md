@@ -29,9 +29,10 @@ termination of another owner's process or changing another thread's goal state.
 
 - State: active
 - Outcome: partial
-- Verified: previous runtime/report/guide/export units accepted, including shared debug guides. Command/event consoles and operation cards use English/Italian presentation; targeted tests PASS. Audit: 342 reviewed files, 10 Markdown pending; upstream decision plan translated with legacy anchors.
+- Verified: previous runtime/report/guide/export units accepted, including shared debug guides. Command/event consoles and operation cards use English/Italian presentation; targeted tests PASS. Audit: 356 reviewed files, 9 Markdown pending; upstream decision plan translated with legacy anchors.
 - Missing: remaining documentation (ROM guide e11–e25, e28–e30, e33–e34, e37–e41, e44–e61 and e66–e76 clarified; rest pending), other dynamic report producers/metadata, helper/test modules, tools/build text, source comments and full audit across both trees. Planned-task checklist/reference translated and synchronized. Preserve optional locales, imported content and immutable history. Focus choice diagnostics follow English/Italian; preserve active DBG2 work. DBG2 checklist and TSV matched at last review; reconcile future concurrent changes. The handoff audit hash is volatile; saved ROM coverage JSON/HTML reconciled. Do not repeat the lost character diff.
-- Resume: ENGLISH-FIRST-INVENTORY-REVIEW partial: linked metadata28 summaries clarified; continue at linked records4. Full review open. Evidence: `docs/changes/2026-11-03-clarify-rom-metadata28-inventory.json`.
+- Launcher: foundation and play/input/audio/video authored text reviewed in English; dynamic values and runtime/platform behavior remain unverified. Evidence: `docs/changes/2026-11-03-review-launcher-screens-english.json`.
+- Resume: ENGLISH-FIRST-INVENTORY-REVIEW partial: map guide reviewed; ROM guide e26/e27/e31/e32, packet intro and extracted-files/validation text clarified. Earlier inventory and remaining ROM guide sections need review. Evidence: `docs/changes/2026-11-03-clarify-rom-guide-metadata-and-packets.json`.
 
 ### ROMDATA-03-04-E105-SENARY-COMPACT-OBJ
 

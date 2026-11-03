@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "restore-constructor-guide-spacing",
+  "title": "Restore spacing in constructor animation guides",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Restore spaces between fused words, numbers and addresses in the constructor slot gate, retained-map inventory and cell-flag seed sections so their English evidence and limits are readable."
+  ],
+  "validation": [
+    "Compared both documents with their immediate preimages: all non-whitespace content, Markdown headings and link destinations are identical; git diff --check passed."
+  ],
+  "limitations": [
+    "Documentation-only edit; no builds, gameplay or platform tests were run. Other sections of both guides and the broader English-first audit remain pending."
+  ],
+  "files": [
+    "docs/rom_data_obj.md",
+    "docs/rom_data_maps.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": []
+}

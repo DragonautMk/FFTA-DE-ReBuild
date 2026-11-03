@@ -318,22 +318,22 @@ ordinary Clan Mission Item scene/actual CLI acceptance passes with 6 new display
 bytes. Field semantics beyond the proved readers retain structural names. See [metadata16 contract](rom_data_gameplay.md#managed-and-direct-metadata16-consumption).
 EUR `v1/e26-d25` adds `linked-metadata52.json`, resource
 `gameplay.linked-metadata52`: 116 records / 6032 source bytes with original
-packed-property and redirect behavior. All 21 files / 20 resources authenticate
-together; all 19 earlier decoded files and e25 generations stay unchanged.
-Parsed normal item-link selectors validate against the actual new row owner,
-with FF kept separate. Two focused Wine managed/native/lifecycle checks pass,
-including all 48 properties, four FF rows with alternate inputs and both raw
-tails. One positive 540-frame Change Jobs full-state/image/audio/actual CLI pair
-passes with 664 new bytes (74 header / 335 routing / 255 packed). See the
+packed-property and redirect behavior. All 21 files and 20 resources authenticate
+together; all 19 earlier decoded files and the e25 generations stay unchanged. Parsed normal item-link selectors
+validate against the actual new row owner, with FF kept separate. Two focused
+Wine managed/native/lifecycle checks pass, covering all 48 properties, four FF
+rows with alternate inputs and both raw tails. One positive 540-frame Change Jobs
+full-state/image/audio/actual CLI pair passes with 664 new bytes: 74 header,
+335 routing and 255 packed. See the
 [metadata52 contract](rom_data_gameplay.md#managed-and-direct-metadata52-consumption).
 EUR `v1/e27-d26` adds `linked-metadata4.json`, resource
-`gameplay.linked-metadata4`: 20 two-pair records / 80 source bytes. All 22 files /
-21 resources authenticate together and all 20 prior decoded files/e26 remain
-unchanged. Actual parsed metadata52 indices/selector owners validate together;
-original count/contiguous walk/qualification/clock/save/native ABI remains.
-Two focused Wine managed/native/lifecycle checks and one positive 540-frame
-Change Jobs full-state/image/audio/actual CLI pair pass with 32 selector /
-6 value bytes. See the [pair contract](rom_data_gameplay.md#managed-and-direct-metadata4-consumption).
+`gameplay.linked-metadata4`: 20 two-pair records / 80 source bytes. All 22 files and
+21 resources authenticate together; all 20 prior decoded files and e26 remain
+unchanged. Parsed metadata52 indices and their selector owners validate together.
+The original count, contiguous walk, qualification, clock and save/native ABI
+remain. Two focused Wine managed/native/lifecycle checks and one positive
+540-frame Change Jobs full-state/image/audio/actual CLI pair pass, with 32 selector
+bytes and 6 value bytes. See the [pair contract](rom_data_gameplay.md#managed-and-direct-metadata4-consumption).
 EUR `v1/e28-d27` adds `linked-metadata2.json`, resource
 `gameplay.linked-metadata2`: 44 stored key/value pairs/88 source bytes. All 23
 files/22 resources authenticate together; all 21 prior decoded files and e27 remain
@@ -366,12 +366,12 @@ coverage is targeted only.
 [Alternate contract](rom_data_gameplay.md#managed-and-direct-constructor-alternates).
 EUR `v1/e31-d30` adds `linked-metadata14.json` /
 `gameplay.linked-metadata14`: 93 special-unit records / 1,302 bytes with the
-parsed metadata52 byte02 owner. All 26 files / 25 resources authenticate together;
+parsed metadata52 byte 02 owner. All 26 files / 25 resources authenticate together;
 all 24 prior decoded files and e30 generations remain unchanged. Typed CPU,
 native, SWI and DMA reads preserve original getters, live palette books/copies,
 descriptor overrides, clock and save/native ABI. Two focused Wine managed/native/
 lifecycle checks pass 37 paths with raw source bytes altered and complete state/
-clock equality; normal IDs0/1 consume no new bytes. One positive 397-frame Pub
+clock equality; normal IDs 0/1 consume no new bytes. One positive 397-frame Pub
 full-state/image/audio/actual CLI pair reads 27 bytes from two records across
 all field categories. New Linux/USA/native Windows checks remain pending.
 [Contract](rom_data_gameplay.md#managed-and-direct-fourteen-byte-special-unit-metadata).
@@ -384,7 +384,8 @@ full32 row, signed/wrapping slot, u8 mode, clock and save/native ABI. Two focuse
 Wine managed/native/lifecycle checks pass 49 paths with all raw bytes altered
 and complete state/clock equality; both banks are positive and three unowned
 paths read zero new bytes.
-One positive 2200-frame Echo Grass confirmation full-state/image/audio/actualCLI pair passes.
+One positive 2200-frame Echo Grass confirmation full-state/image/audio/actual CLI
+pair passes.
 New Linux/USA/native Windows checks remain pending.
 [Contract](rom_data_gameplay.md#managed-and-direct-twelve-byte-packed-pair-banks).
 EUR `v1/e33-d32` adds `global-pair-flags.json` /
@@ -662,16 +663,16 @@ OBJ dimensions store twelve indexed width/height records;
 BG metadata stores 162 typed 88-byte descriptors with relative source links,
 transfer triples, selectors and retained unclassified bytes. Other linked graphics
 remain in the ROM; alternate palette banks/links/keys now have their own
-verified decoded file. Packet programs preserve352unique programs/486descriptor
+verified decoded file. Packet programs preserve 352 unique programs/486 descriptor
 links, parent initialization, ordered typed writes and exact source/body metadata.
 The manifest records
 schema/extractor/decoder revisions, exact source ROM identity, regional profile,
 decoded coverage, file hash, dependency IDs and the original ranges/hashes.
 Both regional direct tables and copied aliases are verified independently.
-Extractor21/decoder20(EUR) and8/7(USA) store all162base palettes as readable JSON banks of16full
-u16words, plus the exact consumed source representation for compatibility
-reads. Source aliases and bit15are preserved. Earlier e7/e6/e5/e4/e3/e2/e1datasets
-remain in separate namespaces. Manifest schema stays1; current formats are
+Extractor 21/decoder 20 (EUR) and 8/7 (USA) store all 162 base palettes as
+readable JSON banks of 16 full u16 words, plus the exact consumed source representation for compatibility
+reads. Source aliases and bit 15 are preserved. Earlier e7/e6/e5/e4/e3/e2/e1 datasets
+remain in separate namespaces. Manifest schema stays 1; current formats are
 OBJv1, `bg-descriptors-json-v2`, `bg-base-palettes-v2-json`,
 `bg-alternate-palettes-v1-json`, `bg-packet-programs-v1-json` and EUR
 `bg-main-graphics-v1-json`, `bg-transfer-programs-v1-json`, `short-texts-v1-json`,
@@ -679,10 +680,11 @@ OBJv1, `bg-descriptors-json-v2`, `bg-base-palettes-v2-json`,
 `obj-static-lists-v1-json`, `obj-animation-banks-v1-json` and
 `obj-custom-banks-v1-json`, `ui-raw-palettes-v1-json` and
 `ui-custom-banks-v1-json`, `item-records-v1-json` and `item-links-v1-json`.
-Transfer programs preserve42frame-control programs/34shared tile banks and97links;
-all162variant pointers are absent in this declared catalog.
-Short texts preserve five107-entry language selector tables, exact compact/
-extended codes and control bytes, and only the65referenced glyph slots/metrics.
+Transfer programs preserve 42 frame-control programs/34 shared tile banks and
+97 links;
+all 162 variant pointers are absent in this declared catalog.
+Short texts preserve five 107-entry language selector tables, exact compact/
+extended codes and control bytes, and only the 65 referenced glyph slots/metrics.
 Resource identity is independent of regional file offsets.
 There is no ROM code, image, save, absolute installation path or timestamp in
 the manifest. The generated decoded values remain private game data: keep
@@ -777,17 +779,17 @@ are recorded separately; preparation alone does not close BG consumption or
 its startup/runtime performance gates.
 
 The earlier three-file integration passed the affected extraction/runtime/file/
-preparation tests (25Linux/23Wine including private regional/lifecycle cases),
-warning-free production builds and18actual CLI checks per target. These cover
+preparation tests (25 Linux/23 Wine including private regional/lifecycle cases),
+warning-free production builds and 18 actual CLI checks per target. These cover
 source authentication, exact output/reuse, BG corruption/missing repair,
-transactional activation, whole-set identity, old e2-d1retention and resource-root
-relocation. Three files total107861logical bytes for the supported data. Synthetic
+transactional activation, whole-set identity, old e2-d1 retention and resource-root
+relocation. Three files total 107861 logical bytes for the supported data. Synthetic
 tar/zip marker scenarios exclude both old and new private resource names.
 Canonical executables/old fixture bytes remain unchanged. The subsequent
 [direct BG runtime unit](rom_data_graphics.md#direct-descriptor-consumption)
 passes all-width/mirror/DMA, real-file regional interpreter/native provenance,
-Load/Undo/backup and1200-frame native boot parity on Linux/Wine. Combined-data
-GUI and native Windows remain open; the frozen e3scene/cost outcomes are
+Load/Undo/backup and 1200-frame native boot parity on Linux/Wine. Combined-data
+GUI and native Windows remain open; the frozen e3 scene/cost outcomes are
 recorded in the [validation protocol](development/ROM_DATA_VALIDATION.md).
 
 Release-mode targeted tests pass on Linux (3 core, 6 CLI) and Windows GNU/Wine
@@ -843,20 +845,21 @@ archives and AndroidPort are unchanged.
 BG descriptors and base palettes use readable JSON with standard indentation.
 The user explicitly prioritizes functionality and readability over reducing the
 space used by extracted data. File/dataset size checks bound malformed input;
-they are not compression targets. The historical e3cost observations remain
+they are not compression targets. The historical e3 cost observations remain
 recorded, without further formatting or packing work to meet their former disk
 budget. [Current JSON revision and checks](rom_data_graphics.md#readable-json-datasets).
 
-Current input guards are16MiB manifest,16KiB OBJ,256KiB descriptors,
-1MiB base palettes,4MiB alternate palettes,64MiB packet programs,32MiB each for
-EUR main graphics and transfer programs,8MiB short texts,512MiB broad text catalogs
-16MiB complete font,1MiB name keyboard,4MiB each for static OBJ lists and indexed animation banks, and512MiBtotal. The manifest guard accommodates the33581additional broad
-text/font provenance ranges;
+Current input guards are 16 MiB manifest, 16 KiB OBJ, 256 KiB descriptors,
+1 MiB base palettes, 4 MiB alternate palettes, 64 MiB packet programs, 32 MiB each for
+EUR main graphics and transfer programs, 8 MiB short texts, 512 MiB broad text catalogs,
+16 MiB complete font, 1 MiB name keyboard, 4 MiB each for static OBJ lists and
+indexed animation banks, and 512 MiB total. The manifest guard accommodates
+the 33581 additional broad text/font provenance ranges;
 these are malformed-input guards, not storage optimization targets.
-The manifest includes162base-palette,316alternate and352packet provenance
+The manifest includes 162 base-palette, 316 alternate and 352 packet provenance
 ranges, plus metadata/OBJ sources. These are malformed-input guards, not storage
-targets. Standard readable packet JSON is20217427bytes; the verified EUR set
-is22405770bytes. The existing four decoded files remain byte-identical to e7;
+targets. Standard readable packet JSON is 20217427 bytes; the verified EUR set
+is 22405770 bytes. The existing four decoded files remain byte-identical to e7;
 old generations are retained. No compression/space tuning is performed.
 [Alternate codec](rom_data_graphics.md#typed-alternate-palette-codec) and
 [managed checks](rom_data_graphics.md#managed-alternate-palette-datasets).
@@ -870,22 +873,22 @@ source provenance and save/native compatibility checks remain required.
 ## Managed packet programs: EUR/Wine
 
 The [typed packet model](rom_data_graphics.md#typed-descriptor-packet-programs)
-is now the sixth fixed managed file in `v1/e8-d7`. Manifest coverage, all352
+is now the sixth fixed managed file in `v1/e8-d7`. Manifest coverage, all 352
 source ranges, BG dependency and complete file identity are authenticated before
 publication and activation. Four focused Wine checks and seven actual Windows
 CLI operations pass: extract/verify/prepare, no-write reuse, corruption repair,
 root move and a single native activation frame with the prior TinyCC cache.
-The e7generation and protected ROM/canonical/cache/loader/typed02files remain
+The e7 generation and protected ROM/canonical/cache/loader/typed 02 files remain
 unchanged. This cold frame proves activation/cache compatibility, not packet
 consumption. At that managed boundary the runtime reported `verified-only`.
 
 [Managed contract/results](rom_data_graphics.md#managed-packet-program-datasets).
-Actual EUR packet source/body use is now connected in04with source-equal e8
+Actual EUR packet source/body use is now connected in 04 with source-equal e8
 files, preserving guest timing, dynamic fill and native/save compatibility.
 Three focused Wine checks pass, including nine original/native calls with all
-old packet spans poisoned and Load/Undo/backup/restart. One actual397frame
-pub transition matches every state/image/audio stream and consumes2640typed
-packet bytes. [Consumer contract/results](rom_data_graphics.md#direct-european-packet-consumption).
+old packet spans poisoned and Load/Undo/backup/restart. One actual 397-frame pub
+transition matches every state/image/audio stream and consumes 2640 typed packet
+bytes. [Consumer contract/results](rom_data_graphics.md#direct-european-packet-consumption).
 New Linux/USA checks are pending; no broad suite, old complete producer/scene
 matrix or performance campaign was selected. Full ROM_DATA_TODO, other content
 families and mod phases remain open.

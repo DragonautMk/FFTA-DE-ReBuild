@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "review-launcher-foundation-english",
+  "title": "Review launcher foundation for English",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Record English-language review and SHA-256 hashes for ten launcher manifest, entry-point, platform, app-shell and asset files; no source changes were needed."
+  ],
+  "validation": [
+    "Inspected maintained comments and authored default strings; git diff --check passed."
+  ],
+  "limitations": [
+    "Language review only; launcher screens, runtime behavior, builds and platform integration were not validated. The broader English-first audit remains open."
+  ],
+  "files": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": []
+}

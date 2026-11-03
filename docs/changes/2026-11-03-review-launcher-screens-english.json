@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "review-launcher-screens-english",
+  "title": "Review launcher screens for English",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Record English-language review and SHA-256 hashes for the launcher play, input and audio/video screen source files; no source changes were needed."
+  ],
+  "validation": [
+    "Inspected authored UI strings, multiline text and comments; git diff --check passed."
+  ],
+  "limitations": [
+    "Language review only; dynamically supplied messages and imported values need separate classification. Runtime behavior, builds and platform integration were not validated; the broader English-first audit remains open."
+  ],
+  "files": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": []
+}

@@ -19754,3 +19754,107 @@ Clarified five indexed metadata inventory summaries; numeric tokens, links and t
 - Verified criteria: menu, direct CLI and integrated console each started a trace, refused a second start and saved a report. CLI/console refusal text matched; menu displayed it. Guest state/frame/clock, pins and protected originals unchanged; all three sessions/displays closed.
 - Evidence: `target/debug-tools-v2-ui-trace-parity-console/comparison-result.json`, `docs/changes/2026-11-03-verify-ui-trace-channel-parity.json`; memory, handoff and atlas checks passed.
 - Limits: trace events differ by interaction; no byte-identical reports, other operation parity, native Windows or physical input claim. First helper used the wrong report field after successful CLI; second completed menu then missed console navigation; third completed console only. Cleanup helper refused non-ROM-data paths, deleting nothing.
+
+### ENGLISH-FIRST-INVENTORY-RECORDS4 — completed (2026-11-03)
+
+Clarified five linked-record inventory summaries; numeric tokens, links and task IDs match the prior text, and all text outside the selection matches the preimage. Project-memory check and git diff --check passed. Documentation only, no ROM/build/runtime/platform validation. Evidence: `docs/changes/2026-11-03-clarify-rom-linked-records4-inventory.json`. The wider audit remains open.
+
+### ENGLISH-FIRST-INVENTORY-RECORDS8 — completed (2026-11-03)
+
+Clarified five conditional-record inventory summaries; numeric tokens, links and task IDs match the prior text, and all text outside the selection matches the preimage. Project-memory check and git diff --check passed. Documentation only, no ROM/build/runtime/platform validation. Evidence: `docs/changes/2026-11-03-clarify-rom-conditional-records8-inventory.json`. The wider audit remains open.
+
+### ENGLISH-FIRST-INVENTORY-MISSION70 — completed (2026-11-03)
+
+Clarified five mission-record inventory summaries; numeric tokens, links and task IDs match the prior text, and all text outside the selection matches the preimage. Project-memory check and git diff --check passed. Documentation only, no ROM/build/runtime/platform validation. Evidence: `docs/changes/2026-11-03-clarify-rom-mission-records70-inventory.json`. The wider audit remains open.
+
+### ENGLISH-FIRST-INVENTORY-SELECTION-TABLES — completed (2026-11-03)
+
+Clarified five selection-table inventory summaries; numeric tokens, links and task IDs match the prior text, and all text outside the selection matches the preimage. Project-memory check and git diff --check passed. Documentation only, no ROM/build/runtime/platform validation. Evidence: `docs/changes/2026-11-03-clarify-rom-selection-tables-inventory.json`. The wider audit remains open.
+
+### ENGLISH-FIRST-INVENTORY-EVENT12 — completed (2026-11-03)
+
+Clarified five event-record inventory summaries; numeric tokens, links and task IDs match the prior text, and all text outside the selection matches the preimage. Project-memory check and git diff --check passed. Documentation only, no ROM/build/runtime/platform validation. Evidence: `docs/changes/2026-11-03-clarify-rom-event-records12-inventory.json`. The wider audit remains open.
+
+### ENGLISH-FIRST-INVENTORY-PARAMETER27 — completed (2026-11-03)
+
+Clarified four sparse parameter inventory summaries; numeric tokens, links and task IDs match the prior text, and all text outside the selection matches the preimage. Project-memory check and git diff --check passed. Documentation only, no ROM/build/runtime/platform validation. Evidence: `docs/changes/2026-11-03-clarify-rom-parameter-records27-inventory.json`. The wider audit remains open.
+
+### ENGLISH-FIRST-INVENTORY-WORLD38 — completed (2026-11-03)
+
+Clarified six partial-parameter and world-record inventory summaries; numeric tokens, links and task IDs match the prior text, and all text outside the selection matches the preimage. Project-memory check and git diff --check passed. Documentation only, no ROM/build/runtime/platform validation. Evidence: `docs/changes/2026-11-03-clarify-rom-world-records38-inventory.json`. The wider audit remains open.
+
+### ENGLISH-FIRST-INVENTORY-INDEXED-GRAPHICS — completed (2026-11-03)
+
+Clarified five indexed-graphics inventory summaries; numeric tokens, links and task IDs match the prior text, and all text outside the selection matches the preimage. Project-memory check and git diff --check passed. Documentation only, no ROM/build/runtime/platform validation. Evidence: `docs/changes/2026-11-03-clarify-rom-indexed-graphics-inventory.json`. The wider audit remains open.
+
+### ENGLISH-FIRST-INVENTORY-LOCALIZED-GRAPHICS — completed (2026-11-03)
+
+Clarified five table-selected graphics inventory summaries; numeric tokens, links and task IDs match the prior text, and all text outside the selection matches the preimage. Project-memory check and git diff --check passed. Documentation only, no ROM/build/runtime/platform validation. Evidence: `docs/changes/2026-11-03-clarify-rom-localized-table-inventory.json`. The wider audit remains open.
+
+### ENGLISH-FIRST-INVENTORY-RAW-TRANSFERS — completed (2026-11-03)
+
+Clarified four raw-transfer summaries and standardized selected thousands separators; numeric tokens, links and task IDs match the prior text, and all text outside the selection matches the preimage. Project-memory check and git diff --check passed. Documentation only, no ROM/build/runtime/platform validation. Evidence: `docs/changes/2026-11-03-clarify-rom-raw-transfer-inventory.json`. The wider audit remains open.
+
+### ENGLISH-FIRST-INVENTORY-TAIL-NUMBERS — completed (2026-11-03)
+
+Normalized five thousands separators in the final inventory summaries against linked evidence; exact comparison confirmed only those changes and the selected tail has no dotted thousands. Project-memory check and git diff --check passed. Documentation only, no ROM/build/runtime/platform validation. Evidence: `docs/changes/2026-11-03-normalize-rom-inventory-tail-counts.json`. Earlier inventory sections and the wider audit remain open.
+
+### ENGLISH-FIRST-LAUNCHER-FOUNDATION — completed (2026-11-03)
+
+Reviewed ten launcher foundation files for English comments and authored default text; no source changes needed. All ten ledger hashes match current files; project-memory check and git diff --check passed. Screen implementations and runtime/build/platform validation remain outside this review. Evidence: `docs/changes/2026-11-03-review-launcher-foundation-english.json`. The wider audit remains open.
+
+### ENGLISH-FIRST-LAUNCHER-SCREENS — completed (2026-11-03)
+
+Reviewed three launcher play, input and audio/video screen sources for English authored text and comments; no source changes needed. Three ledger hashes match, project-memory check and git diff --check passed. Dynamic content and runtime/build/platform validation remain outside this review. Evidence: `docs/changes/2026-11-03-review-launcher-screens-english.json`. The wider audit remains open.
+
+### ENGLISH-FIRST-CONSTRUCTOR-GUIDES — completed (2026-11-03)
+
+Restored word, number and address spacing in three constructor slot, retained-map and cell-seed guide sections. Both documents match their immediate preimages apart from whitespace, with headings and links unchanged; project-memory check and git diff --check passed. No build, game or platform validation. Other guide sections and the broader audit remain open. Evidence: `docs/changes/2026-11-03-restore-constructor-guide-spacing.json`.
+
+### ENGLISH-FIRST-MAP-QUEST-SPACING — completed (2026-11-03)
+
+Restored word, number and address spacing in four map-selection, event-link, pub-menu and mission-acceptance guide sections. Non-whitespace content, headings, links and inline code match the immediate preimage; project-memory check and git diff --check passed. No build, game or platform validation. Other guide sections and the broader audit remain open. Evidence: `docs/changes/2026-11-03-restore-map-quest-guide-spacing.json`.
+
+### ENGLISH-FIRST-WORLD-NODE-SPACING — completed (2026-11-03)
+
+Restored word, number and address spacing in four world-selector, battle-entry, node-source and typed-node guide sections. Non-whitespace content, headings, links and inline code match the immediate preimage; project-memory check and git diff --check passed. No build, game or platform validation. Other guide sections and the broader audit remain open. Evidence: `docs/changes/2026-11-03-restore-world-node-guide-spacing.json`.
+
+### ENGLISH-FIRST-WORLD-TRAVEL-SPACING — completed (2026-11-03)
+
+Restored word, number and address spacing in managed world-node, production CLI and ordinary travel guide sections. Non-whitespace content, headings, links and inline code match the immediate preimage; project-memory check and git diff --check passed. No build, game or platform validation. Other guide sections and the broader audit remain open. Evidence: `docs/changes/2026-11-03-restore-world-travel-guide-spacing.json`.
+
+### ENGLISH-FIRST-WORLD-ROAD-SPACING — completed (2026-11-03)
+
+Restored spacing in world-road source, managed runtime and production CLI guide sections and clarified 32-bit zero wording. Aside from that reviewed wording, non-whitespace content, headings, links and inline code match the immediate preimage; project-memory check and git diff --check passed. No build, game or platform validation. Other guide sections and the broader audit remain open. Evidence: `docs/changes/2026-11-03-restore-world-road-guide-spacing.json`.
+
+### ENGLISH-FIRST-ENCOUNTER-SOURCE-SPACING — completed (2026-11-03)
+
+Restored word, number and address spacing in ordinary road equivalence, encounter source and typed encounter model guide sections. Non-whitespace content, headings, links and inline code match the immediate preimage; project-memory check and git diff --check passed. No build, game or platform validation. Other guide sections and the broader audit remain open. Evidence: `docs/changes/2026-11-03-restore-encounter-source-guide-spacing.json`.
+
+### ENGLISH-FIRST-ENCOUNTER-RUNTIME-SPACING — completed (2026-11-03)
+
+Restored spacing in managed encounter-header, CLI and battle-entry guide sections, correcting singular agreement for one header. Aside from that grammar correction, non-whitespace content, headings, links and inline code match the immediate preimage; project-memory check and git diff --check passed. No build, game or platform validation. Other guide sections and the broader audit remain open. Evidence: `docs/changes/2026-11-03-restore-encounter-runtime-guide-spacing.json`.
+
+### ENGLISH-FIRST-COORDINATE-SOURCE-SPACING — completed (2026-11-03)
+
+Restored word, number and address spacing in encounter-coordinate source-contract and typed-model guide sections. Non-whitespace content, headings, links and inline code match the immediate preimage; project-memory check and git diff --check passed. No build, game or platform validation. Other guide sections and the broader audit remain open. Evidence: `docs/changes/2026-11-03-restore-coordinate-source-guide-spacing.json`.
+
+### ENGLISH-FIRST-COORDINATE-RUNTIME-SPACING — completed (2026-11-03)
+
+Restored word, number and address spacing in managed encounter-coordinate, production CLI and ordinary battle-entry guide sections. Non-whitespace content, headings, links and inline code match the immediate preimage; project-memory check and git diff --check passed. No build, game or platform validation. Other guide sections and the broader audit remain open. Evidence: `docs/changes/2026-11-03-restore-coordinate-runtime-guide-spacing.json`.
+
+### ENGLISH-FIRST-MAP-RASTER-SPACING — completed (2026-11-03)
+
+Restored spacing around prose values in introductory terrain and raster-palette guide sections. Non-whitespace content, headings, links and inline code match the immediate preimage; project-memory check and git diff --check passed. No build, game or platform validation. Full guide review and the broader audit remain open. Evidence: `docs/changes/2026-11-03-restore-terrain-raster-guide-spacing.json`.
+
+### ENGLISH-FIRST-MAP-GUIDE-REVIEW — completed (2026-11-03)
+
+Completed the section-by-section English-language review of the map/terrain guide and recorded the current file hash. Against HEAD, only documented spacing, 32-bit-zero wording and singular agreement changed; headings, link targets and inline code match. Project-memory check and git diff --check passed. No runtime, game, build or platform claims were revalidated. Remaining ROM guides and the broader audit stay open. Evidence: `docs/changes/2026-11-03-review-map-guide-english.json`.
+
+### ENGLISH-FIRST-ROM-GUIDE-LIMITS — completed (2026-11-03)
+
+Restored spacing in extracted-files and validation-limit ROM guide sections and added a missing list comma. Aside from that comma, non-whitespace content, headings, links, inline code and fenced blocks match the immediate preimage; project-memory check and git diff --check passed. No build, extraction, game or platform validation. The remaining guide and broader audit stay open. Evidence: `docs/changes/2026-11-03-restore-rom-guide-limits-spacing.json`.
+
+### ENGLISH-FIRST-ROM-GUIDE-METADATA — completed (2026-11-03)
+
+Clarified e26/e27/e31/e32 metadata and managed packet introductory text. Numeric sequences, headings, links, inline/fenced code and text outside selected passages match the immediate preimage; project-memory check and git diff --check passed. No build, extraction, game or platform validation. The remaining guide and broader audit stay open. Evidence: `docs/changes/2026-11-03-clarify-rom-guide-metadata-and-packets.json`.

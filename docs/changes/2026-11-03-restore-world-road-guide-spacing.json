@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "restore-world-road-guide-spacing",
+  "title": "Restore spacing in world road guide sections",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Restore missing spaces in the world road source, managed runtime and production CLI sections and clarify the 32-bit zero wording."
+  ],
+  "validation": [
+    "Compared the guide to its immediate preimage: aside from the reviewed 32-bit-zero wording, non-whitespace content is identical; headings, Markdown link destinations and inline code match. Reviewed the diff and git diff --check passed."
+  ],
+  "limitations": [
+    "Documentation-only change; no build, gameplay or platform validation. Other guide sections and the broader English-first audit remain open."
+  ],
+  "files": [
+    "docs/rom_data_maps.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": []
+}

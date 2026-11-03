@@ -1719,6 +1719,76 @@
       "path": "crates/wasm-poc/tests/fase4b_tests.rs",
       "sha256": "2143899bdeb81abbac43df61f6811dbf125a83e39fe745f7f9c2bf65d75b8549",
       "scope": "Experimental Wasm test source language review; remaining printed descriptions translated, hard-coded claims and test behavior not validated."
+    },
+    {
+      "path": "crates/launcher/Cargo.toml",
+      "sha256": "f64a0d0538651065c78843283730853f9bb2681273a96827f0d240de1a594a93",
+      "scope": "English language review of launcher foundation: maintained comments and authored default text; preserve paths and imported values. Screen implementations are reviewed separately."
+    },
+    {
+      "path": "crates/launcher/src/main.rs",
+      "sha256": "0ac2c9eac98957cf236acd2f88a7818f96a48e4b7f4e976319e1f8ebf84b6477",
+      "scope": "English language review of launcher foundation: maintained comments and authored default text; preserve paths and imported values. Screen implementations are reviewed separately."
+    },
+    {
+      "path": "crates/launcher/src/lib.rs",
+      "sha256": "6c89df4904b6f7b4feea2ecbfbba586b2c27c1f712e5ff09e765611d8239786d",
+      "scope": "English language review of launcher foundation: maintained comments and authored default text; preserve paths and imported values. Screen implementations are reviewed separately."
+    },
+    {
+      "path": "crates/launcher/src/platform.rs",
+      "sha256": "93198e4c64233cdc0c5e41719c0308d9c5e268ea9d311c8925ddb85707a4718e",
+      "scope": "English language review of launcher foundation: maintained comments and authored default text; preserve paths and imported values. Screen implementations are reviewed separately."
+    },
+    {
+      "path": "crates/launcher/src/bin/gba-icon.rs",
+      "sha256": "315f1f9a3e23aa209ffe81f36aa85658181769f35fc67567530dfd029774691e",
+      "scope": "English language review of launcher foundation: maintained comments and authored default text; preserve paths and imported values. Screen implementations are reviewed separately."
+    },
+    {
+      "path": "crates/launcher/src/bin/gba-dmg-bg.rs",
+      "sha256": "138e77070b56b572c37bc4171e3ce44e43da152a64020fe4771309a9821d89bb",
+      "scope": "English language review of launcher foundation: maintained comments and authored default text; preserve paths and imported values. Screen implementations are reviewed separately."
+    },
+    {
+      "path": "crates/launcher/src/assets.rs",
+      "sha256": "c61e0162590c4ba5ab954435a7aa1911e318c30258cee78396db51ae0d0739d0",
+      "scope": "English language review of launcher foundation: maintained comments and authored default text; preserve paths and imported values. Screen implementations are reviewed separately."
+    },
+    {
+      "path": "crates/launcher/src/theme.rs",
+      "sha256": "860b8b2364f3183c33a4e3c9ceee79a608c53b1b04aff765c1050e515f8bb0c8",
+      "scope": "English language review of launcher foundation: maintained comments and authored default text; preserve paths and imported values. Screen implementations are reviewed separately."
+    },
+    {
+      "path": "crates/launcher/src/app.rs",
+      "sha256": "95c14ec406a36704ea979db59576819cb198932dd3742157ab1df75f499338f7",
+      "scope": "English language review of launcher foundation: maintained comments and authored default text; preserve paths and imported values. Screen implementations are reviewed separately."
+    },
+    {
+      "path": "crates/launcher/src/screens/mod.rs",
+      "sha256": "5f71f106fc92ffc11d0b22c381a91900039e3a8523b360407a3559b7e2037c9e",
+      "scope": "English language review of launcher foundation: maintained comments and authored default text; preserve paths and imported values. Screen implementations are reviewed separately."
+    },
+    {
+      "path": "crates/launcher/src/screens/play.rs",
+      "sha256": "ba950624a6a56d9770afb9b57b72f18ca65f6f97ed89ecec6d88b05be37f96e9",
+      "scope": "English language review of authored launcher screen UI text and comments; dynamic messages and imported values require separate classification."
+    },
+    {
+      "path": "crates/launcher/src/screens/input.rs",
+      "sha256": "1a2cf65949e3439fbcefcfd723bbbdb52e73bb07dac20c13bacb89c51385d1a8",
+      "scope": "English language review of authored launcher screen UI text and comments; dynamic messages and imported values require separate classification."
+    },
+    {
+      "path": "crates/launcher/src/screens/av.rs",
+      "sha256": "83d967aad43974bffcabf8e5da50c7f8aa202e973df082a86e2654d3cfac6ac3",
+      "scope": "English language review of authored launcher screen UI text and comments; dynamic messages and imported values require separate classification."
+    },
+    {
+      "path": "docs/rom_data_maps.md",
+      "sha256": "a935bd796e98a9b58ef82b575a578f9b3f4f755532cdd02dd5b13e75cd45ec7d",
+      "scope": "English language review of the complete maintained terrain, map, raster-palette, world-path and encounter guide; source evidence and machine-readable content preserved. Runtime and platform claims not revalidated."
     }
   ],
   "preserved_history": [
@@ -1748,7 +1818,6 @@
     "docs/rom_data.md",
     "docs/rom_data_gameplay.md",
     "docs/rom_data_graphics.md",
-    "docs/rom_data_maps.md",
     "docs/rom_data_obj.md",
     "docs/rom_data_runtime.md",
     "docs/rom_data_unit_obj.md"
@@ -1788,7 +1857,7 @@
         "AndroidPort/android/",
         "android/"
       ],
-      "status": "Desktop consoles and selected catalog/reference presentations localized. Android-specific frontend, decoder/recompiler and Kotlin tests reviewed in English; shared Android gba-core, other desktop selectors and runtime strings remain pending. Cheat selector actions and standard-save statuses now use English source keys, with legacy keys retained; other menu source keys remain pending. Selector detail/filter instructions and footer now follow the current locale. Save form keys migrated to English; legacy translations remain available. Atlas, information and tool prompt source keys migrated; legacy translations retained. Sidebar presentation, selected rows and control hints migrated; legacy debug routes preserved. Input-tab and information diagnostic labels follow the menu language; semantic IDs are retained."
+      "status": "Desktop consoles and selected catalog/reference presentations localized. Android-specific frontend, decoder/recompiler and Kotlin tests reviewed in English; shared Android gba-core, other desktop selectors and runtime strings remain pending. Cheat selector actions and standard-save statuses now use English source keys, with legacy keys retained; other menu source keys remain pending. Selector detail/filter instructions and footer now follow the current locale. Save form keys migrated to English; legacy translations remain available. Atlas, information and tool prompt source keys migrated; legacy translations retained. Sidebar presentation, selected rows and control hints migrated; legacy debug routes preserved. Input-tab and information diagnostic labels follow the menu language; semantic IDs are retained. Launcher foundation and play/input/audio/video authored screen text reviewed in English; dynamic values and platform behavior remain outside this language review."
     },
     {
       "area": "Generated references and generators",
@@ -2040,6 +2109,32 @@
     "docs/changes/2026-11-03-clarify-rom-encounter-header-inventory.json",
     "docs/changes/2026-11-03-clarify-rom-encounter-unit-inventory.json",
     "docs/changes/2026-11-03-clarify-rom-encounter-coordinate-inventory.json",
-    "docs/changes/2026-11-03-clarify-rom-metadata28-inventory.json"
+    "docs/changes/2026-11-03-clarify-rom-metadata28-inventory.json",
+    "docs/changes/2026-11-03-clarify-rom-linked-records4-inventory.json",
+    "docs/changes/2026-11-03-clarify-rom-conditional-records8-inventory.json",
+    "docs/changes/2026-11-03-clarify-rom-mission-records70-inventory.json",
+    "docs/changes/2026-11-03-clarify-rom-selection-tables-inventory.json",
+    "docs/changes/2026-11-03-clarify-rom-event-records12-inventory.json",
+    "docs/changes/2026-11-03-clarify-rom-parameter-records27-inventory.json",
+    "docs/changes/2026-11-03-clarify-rom-world-records38-inventory.json",
+    "docs/changes/2026-11-03-clarify-rom-indexed-graphics-inventory.json",
+    "docs/changes/2026-11-03-clarify-rom-localized-table-inventory.json",
+    "docs/changes/2026-11-03-clarify-rom-raw-transfer-inventory.json",
+    "docs/changes/2026-11-03-normalize-rom-inventory-tail-counts.json",
+    "docs/changes/2026-11-03-review-launcher-foundation-english.json",
+    "docs/changes/2026-11-03-review-launcher-screens-english.json",
+    "docs/changes/2026-11-03-restore-constructor-guide-spacing.json",
+    "docs/changes/2026-11-03-restore-map-quest-guide-spacing.json",
+    "docs/changes/2026-11-03-restore-world-node-guide-spacing.json",
+    "docs/changes/2026-11-03-restore-world-travel-guide-spacing.json",
+    "docs/changes/2026-11-03-restore-world-road-guide-spacing.json",
+    "docs/changes/2026-11-03-restore-encounter-source-guide-spacing.json",
+    "docs/changes/2026-11-03-restore-encounter-runtime-guide-spacing.json",
+    "docs/changes/2026-11-03-restore-coordinate-source-guide-spacing.json",
+    "docs/changes/2026-11-03-restore-coordinate-runtime-guide-spacing.json",
+    "docs/changes/2026-11-03-restore-terrain-raster-guide-spacing.json",
+    "docs/changes/2026-11-03-review-map-guide-english.json",
+    "docs/changes/2026-11-03-restore-rom-guide-limits-spacing.json",
+    "docs/changes/2026-11-03-clarify-rom-guide-metadata-and-packets.json"
   ]
 }

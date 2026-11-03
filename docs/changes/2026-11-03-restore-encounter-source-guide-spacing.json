@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "restore-encounter-source-guide-spacing",
+  "title": "Restore spacing in road and encounter source guides",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Restore missing spaces in the ordinary road equivalence, encounter source contract and typed encounter model sections for readable English documentation."
+  ],
+  "validation": [
+    "Compared the guide to its immediate preimage: non-whitespace content, headings, Markdown link destinations and inline code are identical; reviewed the changes and git diff --check passed."
+  ],
+  "limitations": [
+    "Documentation-only change; no build, gameplay or platform validation. Other guide sections and the broader English-first audit remain open."
+  ],
+  "files": [
+    "docs/rom_data_maps.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": []
+}

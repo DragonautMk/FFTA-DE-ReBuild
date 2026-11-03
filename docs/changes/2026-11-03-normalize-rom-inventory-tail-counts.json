@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "normalize-rom-inventory-tail-counts",
+  "title": "Normalize ROM inventory tail counts",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Use English thousands separators in five count references in the final inventory summaries, retaining the counts and historical evidence."
+  ],
+  "validation": [
+    "Checked counts against linked evidence; exact comparison confirmed only the five separator changes and a scan found no dotted thousands in the reviewed tail; git diff --check passed."
+  ],
+  "limitations": [
+    "Documentation review only; no ROM exploration, build, runtime or platform validation was performed. Other inventory sections and the broader English-first audit remain open."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": []
+}

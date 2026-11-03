@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "restore-map-quest-guide-spacing",
+  "title": "Restore spacing in map and quest guide sections",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Restore missing spaces in four map selection, event record, pub menu and mission acceptance sections, improving the readability of English source contracts and evidence."
+  ],
+  "validation": [
+    "Compared the guide with its immediate preimage: non-whitespace content, headings, Markdown link destinations and inline code are identical; reviewed the changed prose and git diff --check passed."
+  ],
+  "limitations": [
+    "Documentation-only edit; no build, gameplay or platform validation. Other guide sections and the broader English-first audit remain open."
+  ],
+  "files": [
+    "docs/rom_data_maps.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": []
+}

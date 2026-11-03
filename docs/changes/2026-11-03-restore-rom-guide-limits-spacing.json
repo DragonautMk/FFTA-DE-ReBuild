@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "restore-rom-guide-limits-spacing",
+  "title": "Restore spacing in extracted resource and validation guidance",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Restore missing spaces in the extracted-files and validation-limit sections of the ROM data guide and add a missing list comma."
+  ],
+  "validation": [
+    "Compared the guide to its immediate preimage: aside from the reviewed comma, non-whitespace content is identical; headings, Markdown destinations, inline code and fenced blocks match. Reviewed the diff and git diff --check passed."
+  ],
+  "limitations": [
+    "Documentation-only change; no build, extraction, gameplay or platform validation. The rest of the guide and the broader English-first audit remain open."
+  ],
+  "files": [
+    "docs/rom_data.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": []
+}

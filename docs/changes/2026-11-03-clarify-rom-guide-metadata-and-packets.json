@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "clarify-rom-guide-metadata-and-packets",
+  "title": "Clarify ROM guide metadata and packet summaries",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Clarify the e26, e27, e31 and e32 metadata summaries and restore spacing in the managed packet-program introduction."
+  ],
+  "validation": [
+    "Compared the immediate preimage: numeric sequences, headings, link destinations, inline and fenced code, and text outside selected passages are unchanged; reviewed the prose and git diff --check passed."
+  ],
+  "limitations": [
+    "Documentation-only change; no build, extraction, gameplay or platform validation. Other guide sections and the broader English-first audit remain open."
+  ],
+  "files": [
+    "docs/rom_data.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": []
+}

@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "restore-encounter-runtime-guide-spacing",
+  "title": "Restore spacing in encounter runtime guide sections",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Restore missing spaces in managed encounter-header, CLI and battle-entry sections and correct singular agreement for one touched header."
+  ],
+  "validation": [
+    "Compared the guide to its immediate preimage: apart from the reviewed singular agreement, non-whitespace content, headings, Markdown link destinations and inline code match; reviewed the diff and git diff --check passed."
+  ],
+  "limitations": [
+    "Documentation-only change; no build, gameplay or platform validation. Other guide sections and the broader English-first audit remain open."
+  ],
+  "files": [
+    "docs/rom_data_maps.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": []
+}

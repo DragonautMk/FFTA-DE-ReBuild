@@ -1532,43 +1532,43 @@ commit or push.
 
 The slot-creation gate is now source-authenticated. No further gameplay run,
 capture, build or Wine/Linux test is needed for this source child: it reuses
-the64RAM snapshots from the flag investigation.
+the 64 RAM snapshots from the flag investigation.
 
-The9DB0Ccounter handler passes `[owner,9B11D]` through its owner+10collection.
-The9E300trampoline forwards the actor and owner to9B11C through145C10. That
-handler keeps actor in r6 and owner in r9; its394/3A4slots therefore match those
-updated by9DB0C and read by the9DBA4constructor handler. The preceding9DAD4
+The 9DB0C counter handler passes `[owner,9B11D]` through its owner+10 collection.
+The 9E300 trampoline forwards the actor and owner to 9B11C through 145C10. That
+handler keeps actor in r6 and owner in r9; its 394/3A4 slots therefore match those
+updated by 9DB0C and read by the 9DBA4 constructor handler. The preceding 9DAD4
 readiness helper is a separate function, not the counter's entry.
 
 Creation requires additional actor and cell conditions. A changed integer
-position must pass the actor30mask10000gate. When actor30mask8000is clear, the
-normal branch at9B460 requires unit byteFD equal to2, signed cell coordinates
-inside0–15, a valid cell, cell flags containing02and a signed cell height greater
-than the actor's signed height. Animation36must differ from40. The handler then
-sets8000, updates animation state and checks owner24mask20and a free slot before
-9B550sets its active bit, counter0and phase0. The8000-set branch creates on the
+position must pass the actor 30 mask 10000 gate. When actor 30 mask 8000 is clear, the
+normal branch at 9B460 requires unit byte FD equal to 2, signed cell coordinates
+inside 0–15, a valid cell, cell flags containing 02 and a signed cell height greater
+than the actor's signed height. Animation 36 must differ from 40. The handler then
+sets 8000, updates animation state and checks owner 24 mask 20 and a free slot before
+9B550 sets its active bit, counter 0 and phase 0. The 8000-set branch creates on the
 opposite transition, when that cell predicate becomes false. Ordinary movement
-and owner20alone are insufficient to activate this animation.
+and owner 20 alone are insufficient to activate this animation.
 
-The original cell helpers1DDEC/1DE78/1DD88read the live RAM map rooted at02007F10:
-width at+8, record pointer at+4, two-byte records containing height and flags.
-The creator explicitly converts height to signed8-bit before comparison. These
+The original cell helpers 1DDEC/1DE78/1DD88 read the live RAM map rooted at 02007F10:
+width at +8, record pointer at +4, two-byte records containing height and flags.
+The creator explicitly converts height to signed 8-bit before comparison. These
 are live derived cells, not a new immutable ROM catalog or an inferred global
 map format.
 
-Read-only evaluation of the existing64post-frame snapshots finds unitFD2,
-actor flags30equal0and animation36equal0. All three walked cells have height2
-and flags0; no sampled owner20frame satisfies the cell02or height predicate.
-More strongly, all256records in the creator's conditional16×16domain lack bit02.
-Their512bytes retain hash
+Read-only evaluation of the existing 64 post-frame snapshots finds unit FD 2,
+actor flags 30 equal 0 and animation 36 equal 0. All three walked cells have height 2
+and flags 0; no sampled owner 20 frame satisfies the cell 02 or height predicate.
+More strongly, all 256 records in the creator's conditional 16×16 domain lack bit 02.
+Their 512 bytes retain hash
 3d9fd03ffe3735ec0bcb38c537033e39280e17de7bccbb2f2cfd80db91ee7d58
 throughout the capture. This unchanged retained map state has no eligible cell,
 so trying another Move destination there cannot establish the required positive
 animation use. Future map/script changes and other maps are separate cases;
 post-frame data does not identify every intra-frame guest PC.
 
-Eight bounded source windows, the owner/callback bindings, all64retained RAM
-inputs and87actual input/output guards pass. Required artifact completion finds
+Eight bounded source windows, the owner/callback bindings, all 64 retained RAM
+inputs and 87 actual input/output guards pass. Required artifact completion finds
 zero eligible paths and retains all evidence. Original ROM and captures are
 unchanged; static disassembly is not Linux gameplay validation. No schema,
 runtime, cache, save or ABI change is made. Evidence:
@@ -1577,28 +1577,28 @@ captured-gate-values.json,final-summary.json,preservation-result.json,
 artifact-cleanup.json}`.
 
 The [retained-map inventory below](#retained-normal-maps-have-no-eligible-constructor-animation-cells)
-now closes that candidate search:81normal snapshots contain only two map
-configurations, both without cell02. Synthetic runtime fixtures and
+now closes that candidate search: 81 normal snapshots contain only two map
+configurations, both without cell 02. Synthetic runtime fixtures and
 retired historical copies must not be treated as ordinary states. New gameplay
-needs a source-backed candidate; the ordinary fullpair still requires all four
+needs a source-backed candidate; the ordinary full pair still requires all four
 phases and all four lists through guest and host readers first. The five closed
 negative Move bounds and completed flag capture stay closed. Linux/USA/native
-Windows/new32:9 and the full ROM TODO remain pending; no measurements,
+Windows/new 32:9 and the full ROM TODO remain pending; no measurements,
 Android/package, assistant commit or push.
 
 
 ## Retained normal maps have no eligible constructor-animation cells
 
-A new read-only criterion checks the81existing normal EUR snapshots listed by
+A new read-only criterion checks the 81 existing normal EUR snapshots listed by
 the retained scene-provenance reports. Their older alternate-sequence search
-stays closed: only the constructor's cell02predicate and structural actor
-candidates are inspected. All81snapshot hashes, payload checksums and ROM
-identities pass, and every snapshot contains a valid conditional16×16cell domain.
-They represent two512-byte map projections: one F09configuration and80snapshots
-of the river configuration. Neither projection contains a cell with bit02.
+stays closed: only the constructor's cell 02 predicate and structural actor
+candidates are inspected. All 81 snapshot hashes, payload checksums and ROM
+identities pass, and every snapshot contains a valid conditional 16×16 cell domain.
+They represent two 512-byte map projections: one F09 configuration and 80 snapshots
+of the river configuration. Neither projection contains a cell with bit 02.
 There is no eligible candidate among these retained map states.
 
-All88actual snapshot/report/parser/contract/output guards pass. No build,
+All 88 actual snapshot/report/parser/contract/output guards pass. No build,
 gameplay, Wine/Linux test, capture, new checkpoint or guest-memory edit occurs.
 This terminal negative bound covers these two retained configurations only;
 it does not classify every EUR map or future script mutation. It must not be
@@ -1607,26 +1607,26 @@ Evidence is under `target/rom-data-constructor-eligible-map-inventory/`:
 `existing-map-candidates.json`, final summary and preservation receipt.
 
 Positive animation use remains open. A [source follow-up](rom_data_maps.md#constructor-animation-cell-flag-seeds)
-reuses the already migrated auxiliary BG packets:25programs/44descriptor IDs
-initialize cell02. A [script-map follow-up](rom_data_maps.md#script-map-selection-and-remaining-battle-reachability)
-now binds opcode12to the loader and identifies19eligible literal instructions.
-The live default also depends on an active index and40-byte records; their
-normal quest/event provenance still needs proof before navigation or a fullpair. No synthetic fixture or
-retired historical copy is used as an ordinary scene. Linux/USA/native Windows/
-new32:9 and the full ROM TODO remain pending; no measurements or deployment.
+reuses the already migrated auxiliary BG packets: 25 programs/44 descriptor IDs
+initialize cell 02. A [script-map follow-up](rom_data_maps.md#script-map-selection-and-remaining-battle-reachability)
+now binds opcode 12 to the loader and identifies 19 eligible literal instructions.
+The live default also depends on an active index and 40-byte records; their
+normal quest/event provenance still needs proof before navigation or a full pair.
+No synthetic fixture or retired historical copy is used as an ordinary scene. Linux/USA/native Windows/
+new 32:9 and the full ROM TODO remain pending; no measurements or deployment.
 
 
 The [active-index source join](rom_data_maps.md#active-index-producer-and-event-record-links)
 now links the live primary/alternate indices to event rows and conditional
-normal/script selection paths. Its44 direct-primary/default-script/cell02 rows
+normal/script selection paths. Its 44 direct-primary/default-script/cell 02 rows
 are conditional source links. The [normal pub selector](rom_data_maps.md#normal-pub-menu-identifies-an-eligible-quest)
-now confirms mission58/White Flowers is available and links it to eligible
-map69/descriptor68. [Normal acceptance](rom_data_maps.md#normal-white-flowers-acceptance-and-open-battle-entry)
+now confirms mission 58/White Flowers is available and links it to eligible
+map 69/descriptor 68. [Normal acceptance](rom_data_maps.md#normal-white-flowers-acceptance-and-open-battle-entry)
 is now proved by payment and Fee:Paid. The [normal Giza battle follow-up](rom_data_maps.md#normal-giza-battle-entry-and-positive-constructor-animation)
-closes entry, the live20flag02cell grid, eligible Marsh and normal Move from
-(6,5)to(5,7). The passive observer sees all four phases/lists through guest and
-host readers:22reads/88aggregate table bytes. An11-frame checkpoint/suffix is
-retained before use. The [ordinary11-frame fullpair](#ordinary-constructor-animation-positive-giza-scene)
+closes entry, the live 20 flag 02 cell grid, eligible Marsh and normal Move from
+(6,5) to (5,7). The passive observer sees all four phases/lists through guest and
+host readers: 22 reads/88 aggregate table bytes. An 11-frame checkpoint/suffix is
+retained before use. The [ordinary 11-frame full pair](#ordinary-constructor-animation-positive-giza-scene)
 now passes; the earlier negative bounds remain closed.
 
 

@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "restore-world-node-guide-spacing",
+  "title": "Restore spacing in world node guide sections",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Restore missing spaces in world-selector, battle-entry, node-record and typed-node evidence sections to make the English guide readable."
+  ],
+  "validation": [
+    "Compared the guide to its immediate preimage: all non-whitespace content, headings, Markdown link destinations and inline code match; reviewed the changes and git diff --check passed."
+  ],
+  "limitations": [
+    "Documentation-only change; no build, gameplay or platform validation. Other guide sections and the broader English-first audit remain open."
+  ],
+  "files": [
+    "docs/rom_data_maps.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": []
+}
