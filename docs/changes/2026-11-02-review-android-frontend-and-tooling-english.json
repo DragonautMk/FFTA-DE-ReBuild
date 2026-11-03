@@ -1,0 +1,59 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "review-android-frontend-and-tooling-english",
+  "title": "Review Android frontend and tooling in English",
+  "kind": "docs",
+  "platforms": [
+    "Android source review; no device or APK validation"
+  ],
+  "changes": [
+    "Review maintained natural-language strings, comments, default resources and authored tooling output in 13 Android Kotlin files, 10 Android-specific Rust files, 6 Python scripts and 4 XML files. The inspected default frontend text is English; imported game content and machine identifiers remain unchanged.",
+    "Correct the Android guide to reflect USA/Europe selection, current fast-forward audio and gamepad configuration, the actual port APK output path and English-only interface language."
+  ],
+  "validation": [
+    "Read project-authored strings and comments for the selected source files; parse all 6 Python scripts as AST and all 4 XML files. Verify source files have no worktree diff and git diff --check passes."
+  ],
+  "limitations": [
+    "No Android build, APK, emulator, device, ROM, game save or performance test was run. Android shared core, tests, Gradle/build metadata and other sources remain for separate review; no Italian UI locale or language selector is implemented."
+  ],
+  "files": [
+    "AndroidPort/android/app/src/main/AndroidManifest.xml",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/FrameMailbox.kt",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/GameBenchmark.kt",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/GameSurface.kt",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/Gamepad.kt",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/GamepadSettings.kt",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/MainActivity.kt",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/NativeBridge.kt",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/NormalAudioOutput.kt",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/StartupPolicy.kt",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/StartupState.kt",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/TouchControls.kt",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/TouchLayout.kt",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/TouchSelection.kt",
+    "AndroidPort/android/app/src/main/res/values/strings.xml",
+    "AndroidPort/android/app/src/main/res/xml/backup_rules.xml",
+    "AndroidPort/android/app/src/main/res/xml/data_extraction_rules.xml",
+    "AndroidPort/crates/gba-android/build.rs",
+    "AndroidPort/crates/gba-android/src/audio.rs",
+    "AndroidPort/crates/gba-android/src/compiler.rs",
+    "AndroidPort/crates/gba-android/src/engine.rs",
+    "AndroidPort/crates/gba-android/src/jni.rs",
+    "AndroidPort/crates/gba-android/src/lib.rs",
+    "AndroidPort/crates/gba-android/src/normal_audio.rs",
+    "AndroidPort/crates/gba-android/src/scheduling.rs",
+    "AndroidPort/crates/gba-android/src/touch.rs",
+    "AndroidPort/crates/gba-android/src/ui_layout.rs",
+    "AndroidPort/scripts/benchmark_dialogue.py",
+    "AndroidPort/scripts/build_android.py",
+    "AndroidPort/scripts/build_android_docker.py",
+    "AndroidPort/scripts/export_android.py",
+    "AndroidPort/scripts/ffta_android_bench_summary.py",
+    "AndroidPort/scripts/ffta_android_camera_bench.py",
+    "AndroidPort/android/README.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

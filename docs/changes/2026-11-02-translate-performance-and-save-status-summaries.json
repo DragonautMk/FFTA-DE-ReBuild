@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-performance-and-save-status-summaries",
+  "title": "Translate performance and debug-save status summaries",
+  "kind": "docs",
+  "platforms": [
+    "Desktop development documentation"
+  ],
+  "changes": [
+    "Translate the introductory execution status of the performance plan and the debug-save inventory summary into English while retaining their historical dates, results, open criteria and limits."
+  ],
+  "validation": [
+    "Compare identifiers, inline literals, links and legacy heading anchors against both original summaries; verify local link targets and unchanged remaining sections."
+  ],
+  "limitations": [
+    "Both documents remain only partially translated; no fixtures, builds, benchmarks, runtime checks or save exploration were performed."
+  ],
+  "files": [
+    "docs/development/PERFORMANCE_TODO.md",
+    "docs/development/debug saves.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

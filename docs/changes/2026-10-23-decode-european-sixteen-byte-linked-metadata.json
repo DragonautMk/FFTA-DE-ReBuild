@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "decode-european-sixteen-byte-linked-metadata",
+  "title": "Decode European sixteen-byte linked metadata with original live-pair and RNG proofs",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Bound EUR6e4c64..6e5464as128records/16bytes/2048source bytes using23checked LDRreferences, original stride/field readers and independently rooted following52byte table. Add standalone strict Metadata16/Record catalog with raw u16alias+14u8fields, lossless reconstruction and exact source authentication; unknown semantic family and opaque bytes remain explicit.",
+    "Prove bounded display-index/nonzero-alias readers and original live-list pair consumers:10bitidentity, two live indices, unsigned byte0dsum, byte0echoice with original LCGstate, u8sums of09..0cfor selectors10..13and original register-ASR bit tests of07. Preserve inactive/null/missing differences and alias0precondition rather than invent fallback behavior.",
+    "Add one focused ignored private-input Windows/Wine oracle plus isolated synthetic fixtures for absent byte0e==1priority, u8sum wrap and shift boundaries. Current managed dataset remains e24-d23/19files/18resources; no new file/resource or runtime projection is claimed by this source-only change."
+  ],
+  "validation": [
+    "Independent exact-EUR inventory passes23LDRroots/next-root/stride/field code and2048byte reconstruction without e24resource overlap. Rows1..127alias375+row; record0retained. Private records/disassembly stay ignored under target/rom-data-metadata16.",
+    "Initial Windows test build18576fails only from missing Bus trait import in the new fixture; all19diagnostics retained in windows-initial-failed-tests-build files. Corrected build16512is warning-free. Wine16242runs only the new metadata16oracle and passes2581original cases+19isolated synthetic cases,156038instructions/319PCs as coverage counts, live-list/callee/outer-RAM/stack/LCGstate and strict JSON/count/array/extent/coherent-source guards.",
+    "All27protected ROM/e24decoded-file/cache/loader/canonical/candidate/source-fixture hashes unchanged. Closed e24source/managed/native/scene acceptance was read, not repeated. Project-memory and whitespace checks recorded at closure; all source jobs terminal. No agent commit/push."
+  ],
+  "limitations": [
+    "Source model/original-reader proof only; current EUR managed e24-d23and USAe8-d7unchanged. Managed publication/direct CPU-DMA-native/lifecycle/positive ordinary scene/CLI for metadata16remain next.",
+    "Semantic family and alias0caller preconditions unproved. Missing-record behavior is claimed only for D5E20/D5EA0; D6704/D67D4require a valid live record when active IDnonzero. Unknown preceding D5DC0r7base and whole surrounding caller semantics excluded.",
+    "Wider gameplay/maps/audio/GUI/archive/mod work and new Linux/USA/native Windows verification remain pending. No performance/startup/RSS/space measurement or AndroidPort change; private game data/generated code/fixtures remain ignored."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/metadata16.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/metadata16_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "begin-approved-shop-category-replay-repair",
+  "title": "Begin approved shop category replay repair",
+  "kind": "changed",
+  "platforms": [
+    "Linux interpreter and desktop test build; Windows/Wine pending"
+  ],
+  "changes": [
+    "Prepare an isolated desktop parser and dispatcher candidate for recorded shop category events 1024 through 1029, without changing or merging the main checkout runtime."
+  ],
+  "validation": [
+    "Six targeted desktop replay tests and five serial shop-core tests passed on Linux. A separate harness compiled the actual candidate parser and dispatcher and matched the authenticated 529-frame USA recorded endpoint and clock; all six available slots and three invalid contexts were exercised. A new executable rejected an old recording identity as required. Protected inputs remained unchanged."
+  ],
+  "limitations": [
+    "Candidate remains isolated and unintegrated. A pending shop semantic event was observed after replay and requires ownership validation. Fresh actual recording/verification, EUR, native/cache, input contention and Windows/Wine GUI checks remain. Initial ALSA metadata, harness literal and executable-size failures were resolved with retained diagnostics; no native Windows result."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-02-shop-category-replay-proposal.md"
+  ],
+  "references": [
+    "docs/development/upstream-audit/U31-approved-decisions.md"
+  ]
+}

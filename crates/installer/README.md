@@ -1,23 +1,32 @@
-# FFTARecomp - instalador
+<a id="fftarecomp---instalador"></a>
 
-Instalador de escritorio (Rust + egui) que toma **tu propia ROM** de Final Fantasy Tactics Advance
-y la instala junto al reproductor y tus ajustes. Este repositorio **no contiene ninguna ROM, asset ni
-archivo derivado del juego**,.
+# FFTA DE-ReBuild installer
 
+Desktop installer (Rust + egui) that takes **your own ROM** of Final Fantasy
+Tactics Advance and installs it with the player and your settings.
+This repository **contains no ROM, game asset or game-derived file**.
 
+<a id="compilar-windows"></a>
 
-## Compilar (Windows)
-Requisitos: Rust (rustup) y el toolchain MSVC.
-Coloca tus propios `assets/logo.png` y `assets/icon.ico`, luego:
+## Building on Windows
+
+Requirements: Rust (rustup) and the MSVC toolchain.
+The bundled `assets/de-rebuild-logo.png` and `assets/icon.ico` provide the
+installer branding. Build and run with:
 
     cargo run --release
 
-El instalador busca una carpeta `payload/` junto al `.exe` con `FFTARecomp.exe` y los ajustes
-(widescreen, etc.); se copia entera a `%LOCALAPPDATA%\FFTARecomp`, junto con la ROM como `ffta.gba`.
+The installer looks for a `payload/` directory beside the `.exe`, containing
+`FFTARecomp.exe` and settings (widescreen, etc.). It copies that directory to
+`%LOCALAPPDATA%\FFTARecomp`, together with the ROM as `ffta.gba`.
 
-## Aviso
-Proyecto de hobby, sin afiliacion con Square Enix ni Nintendo. Final Fantasy Tactics Advance es
-marca y propiedad de sus titulares. Usa solo una ROM de un cartucho que poseas.
+<a id="aviso"></a>
+
+## Notice
+
+Hobby project, unaffiliated with Square Enix or Nintendo. Final Fantasy Tactics
+Advance is a trademark and property of its respective owners. Use only a ROM
+from a cartridge you own.
 
 ## Linux
 
@@ -26,7 +35,7 @@ Wayland and GTK development libraries. On Ubuntu:
 
 ```sh
 sudo apt-get install clang pkg-config libasound2-dev libudev-dev libx11-dev libxkbcommon-dev libwayland-dev libgtk-3-dev
-bash scripts/package_ffta_linux.sh
+bash scripts/linux/package_ffta_linux.sh
 ```
 
 Run this from the repository root. The archive is
@@ -66,8 +75,8 @@ the built-in fallback remain available. After installation, add the installed
 FFTARecomp game executable to Steam. This variant is a fullscreen installer,
 not a persistent single-file launcher.
 
-`build-all.ps1` and `scripts/package_ffta_linux.sh` produce both Linux packages.
-On Windows, `scripts/build-linux-windows.ps1 -InstallerOnly` refreshes just the
+`build-all.ps1` and `scripts/linux/package_ffta_linux.sh` produce both Linux packages.
+On Windows, `scripts/windows/build-linux-windows.ps1 -InstallerOnly` refreshes just the
 installer binaries and archives, retaining an already prepared Linux payload.
 Without that flag it rebuilds the game and TinyCC as before.
 

@@ -13,8 +13,8 @@ story text planes retain A/B ownership instead of moving a suspended map cursor.
 The measured Wait prompt's four OBJ pieces (tiles135/139, mirrored pairs) identify
 facing selection. Hover sends the corresponding original direction; click queues
 direction then A, without changing unit memory. No facing commit is injected.
-MEDIDO: pulse sequencing, free-field BG masks, direction-before-confirm, no hover
-repeat and physical cancellation pass unit tests. NO MEDIDO: manual acceptance of
+MEASURED: pulse sequencing, free-field BG masks, direction-before-confirm, no hover
+repeat and physical cancellation pass unit tests. NOT MEASURED: manual acceptance of
 this follow-up in USA/EUR; the user will test it. No installer or save changes.
 
 ## Measured original structures
@@ -83,29 +83,29 @@ hook; recorded wake-up keys are not interpreted as manual cancellation.
 
 ## Evidence
 
-MEDIDO: isolated calls to original USA queries over256 storage cells find196
+MEASURED: isolated calls to original USA queries over256 storage cells find196
 existing cells and20 range-style1 cells. Host range query matches all256 values;
 host projection matches the original projection for all196 selectable cells.
 Private evidence target/mouse-battle-grid-usa.log.
 
-MEDIDO: complete USA replay from frame0 using the private save copy, requests at
+MEASURED: complete USA replay from frame0 using the private save copy, requests at
 12560,12600,12640 select(6,1),(9,3),(1,12). Interpreter commits on12561,12601,
 12641, and snapshots12580,12620,12680 retain those exact targets. Native32:9
 zoom6 also reaches and retains all three destinations, including elevated(9,3).
 Evidence target/mouse-battle-hover-one-frame.* and mouse-battle-hover-final.log.
 
-MEDIDO:221 tests pass,5 ignored. USA/EUR extra=0 framebuffer AND OAM identical
+MEASURED:221 tests pass,5 ignored. USA/EUR extra=0 framebuffer AND OAM identical
 for600 frames against previous reference. USA1201-frame tutorial metric retains
 exactly8 body IDs, valid roster, no duplicate groups. Evidence
  target/mouse-battle-characters.csv and mouse-battle-tests.log.
 
-MEDIDO: EUR original routines recognize196 cells in a real saved RAM snapshot.
+MEASURED: EUR original routines recognize196 cells in a real saved RAM snapshot.
 An isolated EUR cursor-function test on copied RAM reaches(9,3) exactly. Its
 original mode4 was explicitly changed to1 only inside the diagnostic copy;
 this is NOT proof of interactive gameplay. Evidence
  target/mouse-battle-eur-controlled.log.
 
-NO MEDIDO: full EUR gameplay hover acceptance, every stage/slope/occlusion,
+NOT MEASURED: full EUR gameplay hover acceptance, every stage/slope/occlusion,
 physical mouse latency and real movement-confirmation UI in all battle modes.
 Battle action menus, inventory, scrolling the camera with mouse edges and other
 submenus remain separate work. No claim of universal battle-menu support.

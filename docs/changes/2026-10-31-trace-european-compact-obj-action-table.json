@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "trace-european-compact-obj-action-table",
+  "title": "Trace European compact OBJ action callback",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Document the original selector 33 callback-table route to the compact OBJ actor flag setter."
+  ],
+  "validation": [
+    "Original EUR Wine disassembly and independent authenticated table entry and literal checks passed with guarded inputs unchanged."
+  ],
+  "limitations": [
+    "Selector eligibility, an appropriate EUR target and ordinary resource use remain unproved; identified relevant USA fixtures were not used. Linux, USA and native Windows remain pending; no performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_obj.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

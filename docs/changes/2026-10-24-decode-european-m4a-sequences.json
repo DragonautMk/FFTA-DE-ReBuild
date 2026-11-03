@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "decode-european-m4a-sequences",
+  "title": "Decode European sequence instructions, canonical branches and producer-proved driver tables",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Extend shared bounded producer observations without changing its1610tracks/147424states/805consumedranges177047B:105253physical instructions have unique interpretations/no overlap. Strict typed wait/note/parameter/pattern/end/return/jump/endtie/extended model links canonical instruction IDs and actual directory roots; explicit/inherited opcode and optional operands preserve original guest running status.",
+    "Own49clockB/36originalcommandwords144B/only producedCD8-9dispatch8B, adding3spans201B to808sources177248B, disjoint from all36prior owners. Canonical source verification rejects coherent byte edits and inherited-duration metadata edits with identical encoded bytes. Model only: managed extraction remains e42-d41/USAe8-d7."
+  ],
+  "validation": [
+    "Windows95625initial-no-run/44635final-no-run/76630retry1builds warning-free. Wine4313one focused new model/source check passes all105253independent instruction fields-hashes/1610roots/805bytecoderanges/201tableB/source-JSONroundtrip/27shape-JSONguards/coherent byte and samebytes metadata edits/actual-directory owner guards.",
+    "404neworiginal-reader calls/checkpoints pass:161dispatchprefixes/158noteoperandprefixes/16jump-pattern returns with stackdepth0..2/12genericparameter reads/4CD8-9returns/49waitprefixes/3optional-keyCEreturns/1complete36word commandcopy. CompleteEWRAM/cursor/key/length/SP/outside-stack/callee checks match declared scope.7020instructions/142PCs are coverage only, not fullsequencer/mixer/state-clock/native/ordinary acceptance.",
+    "FirstWine29418failed before model/oracle execution at two source-contract assertion PCs transcribed+2; rawROM confirms1c08at1485ca/38cfat1485cc. Corrected checks pass; failed/no-run logs/sources/executables retained. Pre-run inspection also corrected parameter-kind test count12 and strengthened stack/CE/implicit-value guards. Only this new focused check rerun; closed tone/directory/e42acceptance untouched.",
+    "598protected input/evidence files unchanged. Private target/rom-data-audio-sequences/{sequence-instructions-independent.json,sequence-source-plan.json,inventory-instructions.py,windows-model-retry1-tests.*,windows-model-retry1-{result.json,log},recomp-tests-model-retry1.exe,windows-model-europe/{audio-sequences,result}.json,source-protected.json} retains terminal results and source-plan/no-overlap metadata.",
+    "Final project-memory including --base7597b92and CRLF-aware whitespace checks pass; 627protected hashes match, model-final-summary/model-final-protected retained, no live unit process. Full TODOgoal remains active for managed sequence consumption and remaining families/mod criteria."
+  ],
+  "limitations": [
+    "New sequence model is not registered in managed extraction or consumed by runtime yet. Actual directory/bank dependency binding, typed CPU-DMA-native reads, lifecycle and new ordinary fullstate-clock-image-audio acceptance remain next. Other extended slots and wider driver LUTs are unowned; source-only graph metadata never replaces mutable guest sequencing.",
+    "Unselected assets, other families/GUI/archive/modTODO and newLinux/USA/nativeWindows remain open. No performance/space/AndroidPort work, game data publication or agentcommit-push; existing work/concurrent Debug-save documentation preserved."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/audio_producers.rs",
+    "crates/gba-core/src/rom_data/audio_sequences.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/audio_sequence_model_tests.rs",
+    "docs/rom_data_audio.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_audio.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

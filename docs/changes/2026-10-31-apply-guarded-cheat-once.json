@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "apply-guarded-cheat-once",
+  "title": "Preview and apply a cheat once in an isolated paused interpreter",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Add a source-bound, state-bound preview and explicit one-shot command shared by the debugger console and local control; recheck selected catalog, master checksum and exact ROM before applying.",
+    "Preflight all potential effects and apply ordered byte/halfword writes through the guest bus only to canonical EWRAM/IWRAM, with bounded RAM or KEYINPUT reads; reject unsupported native, IO-write, ROM and oversized paths.",
+    "Consume previews after success, preserve idempotent retries and refuse new recordings or state saves after an application until provenance support exists.",
+    "Report the one-shot lifecycle as partial coverage, including preparation, application and refusal boundaries."
+  ],
+  "validation": [
+    "Frozen Windows GNU test/runtime builds passed; Wine passed cheat18 with one private test ignored, control30, command9, completion3 and registry3.",
+    "Wine/Xvfb isolated EUR interpreter proof used a synthetic block and verified three exact bus writes, unchanged frame/clock/registers during application, stale state/source/selection and wrong-token refusals, non-duplicating retry and unchanged protected originals; session and display closed.",
+    "A final frozen Windows build with event-coverage metadata passed; its targeted Wine coverage test passed without repeating the accepted GUI proof.",
+    "A separate Wine/Xvfb EUR isolated-copy observation applied CH-0334 once: both RAM values changed to the decoded plan, one frame advanced, and reopening the original seed restored complete state and both original values; guarded original inputs remained exact.",
+    "Operation inventory, Atlas inventory and whitespace checks passed."
+  ],
+  "limitations": [
+    "This is a manual one-shot, not a hardware hook or maintained cheat; overlap management, provenance-aware replay, original-code game effects, disable/restore, native backend, broader memory and native Windows/Linux remain unverified."
+  ],
+  "files": [
+    "crates/recomp/src/debug_cheat_decoder.rs",
+    "crates/recomp/src/debug_cheats.rs",
+    "crates/recomp/src/debug_control.rs",
+    "crates/recomp/src/debug_command.rs",
+    "crates/recomp/src/debug_command/completion.rs",
+    "crates/recomp/src/debug_events.rs",
+    "crates/recomp/src/debug_lifecycle.rs",
+    "crates/recomp/src/debug_operations.rs",
+    "crates/recomp/src/debug_operations.json",
+    "crates/recomp/src/play.rs"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/debug_control.md",
+    "docs/debug_events.md",
+    "docs/debug_operations.md"
+  ]
+}

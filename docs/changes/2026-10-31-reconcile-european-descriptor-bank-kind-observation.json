@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "reconcile-european-descriptor-bank-kind-observation",
+  "title": "Reconcile European descriptor bank kind observation",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Document already observed typed descriptor-bank kind use in the retained battle Item-menu run."
+  ],
+  "validation": [
+    "Rechecked the retained e99 Wine log and the resource hash in the accepted manifest; no replay or new test."
+  ],
+  "limitations": [
+    "Aggregate counters do not identify records or executed PCs, and the corresponding scene pair did not assert this secondary resource; field 4 and byte 7, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md"
+  ]
+}

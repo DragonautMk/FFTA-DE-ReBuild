@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "begin-debug-command-language",
+  "title": "Begin a typed debugger command language",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU / Wine validation pending"
+  ],
+  "changes": [
+    "Add a bounded single-line tokenizer and pure typed debugger command parser that reuses existing local-control parsing and validation, requires explicit 0x hexadecimal values and accepts profile/catalog identifiers without paths.",
+    "Begin a CLI adapter that sends typed control actions over the existing identity-checked and locked local-control mailbox; help and status are readonly. ID selection remains explicitly unsupported until frontend routing is connected."
+  ],
+  "validation": [
+    "Windows GNU locked/offline test build passes without compiler messages. Wine2new parser tests pass, including quoted text, malformed input and equality with existing local-control Action parsing.",
+    "Initial transport build failed because the help entry missed its fourth field; corrected and retained failure. Corrected Windows GNU test and production builds pass without compiler messages; Wine parser2, mailbox1 and publication-retry1 cases pass.",
+    "Actual Wine/Xvfb isolated session: text help and status pass, malformed decimal and unsupported ID selection refuse without changing full state/frame/clock; text step1 produces exactly the previously verified CLI full state/clock. Runtime afdac49170090c1e4da5dbab49d9d4d3e994a360d1dd98926627d8560d17a0bc; GUI/display closed, 1507 frozen source files/15 owned overlays and pins exact."
+  ],
+  "limitations": [
+    "DBG2-13 remains open: frontend command editor, content ID selection and complete menu/CLI/console equivalence are not connected or verified. Native Windows/Linux and physical input are unverified.",
+    "The CLI currently rejects ID selection explicitly; no shell execution, package, commit, push or private game data."
+  ],
+  "files": [
+    "crates/recomp/src/debug_command.rs",
+    "crates/recomp/src/main.rs",
+    "crates/recomp/src/debug_control.rs"
+  ],
+  "references": [
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/debug_operations.md"
+  ]
+}

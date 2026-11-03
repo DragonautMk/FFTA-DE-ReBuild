@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "slug": "consume-european-mission-records70",
+  "title": "Consume European mission records through authenticated runtime data",
+  "kind": "changed",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Register e86-d85 resource index77/mission-records70.json with one35840-byte source span, immutable typed reads, ten physical classes/thirteen counters and512-slot identity masks; preserve all77 prior resources.",
+    "Remove historical shared/OBJ1KiB and BG64KiB attach allocation caps and three legacy allocation assertions per the requested deferral of space limits; retain parsing bounds, full source authentication and transactional attachment."
+  ],
+  "validation": [
+    "Two warning-free573-source/243-core-input Windows host-test builds. Initial73326ad9 passes publication79/prior77/interruption, then first attach fails the old shared-structure allocation cap before later tests start.",
+    "Accepted455bdb1cd8aef0ccd72df16ceafbb0f483d6b4cebb36891c492251efaccf7276 runs one remaining-only Wine filter on the same generation:14 attach guards/two full-set cases,41 native complete-state/clock cases, all35840 typed bytes/ten classes/512 records/512 boundaries, failed owner/Load/Undo and three full-state/clock transfers pass; publication is not repeated.",
+    "Native16load+25getter cases alter all35840 raw bytes after Load/setup. Three stop-safe families account52 new served bytes/five prior bytes, including real interp_one callback observation with zero fallback-source deltas;168 entries/69 dispatches are coverage only.",
+    "DMA/CpuSet17922halfwords and CpuFastSet8968words compare complete states/clocks. All860 guards/573 accepted+573 diagnostic frozen hashes/571 model preimages/eight current hashes/78 old and79 new files pass; artifact helper retires only the successful publication interrupted copy.",
+    "No source/model/old ordinary proof, normal checkpoint/game/navigation, performance/RSS/storage campaign or Machine/save/native/C API ABI change. Initial failed logs/executable/snapshot and allocation-fix preimages remain retained.",
+    "Generated changelog, metadata, default/base999d0a6 project-memory coverage and CRLF-aware whitespace checks all pass; parallel records resolved their earlier seven-path gap without attributing their tests to this unit."
+  ],
+  "limitations": [
+    "Actual production CLI registration/reuse and one ordinary positive suffix/full pair remain pending; acceptance combines two distinct Wine scopes, not a passing initial whole filter.",
+    "Native52 served bytes are not a distinct-byte union or full-catalog native coverage. Full caller ABI, indirect references, successor-array/event-catalog contracts, Linux, USA, native Windows, new32:9 and the full ROM TODO remain pending.",
+    "Parallel menu/content/debug/package edits are preserved and excluded from the matched frozen source snapshots; their validation is not attributed to this unit."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/mission_records70.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/mission_records70_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/bg_runtime_tests.rs",
+    "scripts/extract_rom_data.py",
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

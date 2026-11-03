@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "slug": "verify-european-selection-threshold-travel",
+  "title": "Verify ordinary European selection-threshold travel equivalence",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add a test-only passive six-counter normal-input observer and optional positive-use guard; preserve core/runtime and verify inverse integration edits against accepted preimages.",
+    "Close one new ordinary e87 threshold-use case from an authorized copy of the retained Giza map checkpoint, with discovery stopped at the first positive capture."
+  ],
+  "validation": [
+    "Eight new bounded caller windows/354 opcode pins authenticate directD3724 toD3228 and low8 nonzero caller gating. Four readonly checksum-authenticated EUR seeds locate guard6/count1-2; cached Giza map image inspected.",
+    "One warning-free579-source Windows test build8f3bee9797a1bb3666697ba487ae67b83584537646d9ef05ba9d2c7642b0d7de uses578 accepted CLI files plus one leaf; core/runtime unchanged and inverse hub/optional five-line validator guard exact.",
+    "One normal A12 capture executes129frames19049 to19178, first source relative97/guest19147; rolling96 yields33-frame suffix19145 to19178. One bus read/one served threshold byte/one threshold position, weight counters zero.",
+    "Same22af4132 production CLI/e87ZloxMx runs the positive33 suffix; same8f3bee97 test executable passes every33 complete states/clocks/central-wide pixels/OAM/five audio streams. All six counts exact across capture/CLI/pair,79ID hashes/82 managed path hashes-mtimes/28859 native cache retained.",
+    "Fullwide284x160 PPM authenticated against complete FFSTATE, readonly classic PNG inspected as world-map/calendar near Giza.140 guards/579frozen/578CLI/three current hashes/original seeds/ROM/canonical/native cache/TinyCC exact; artifact helper retires zero paths.203258/519441dispatch and audio counts are coverage only.",
+    "Final changelog/default/base999d0a6/metadata project-memory checks and CRLF-aware whitespace all pass."
+  ],
+  "limitations": [
+    "Ordinary proof covers one threshold position only, no weight position or event/mission outcome; wider ordinary use remains pending. Both arms use the same old native cache, no whole interpreter/native parity claim.",
+    "Full routine ABI, numeric-helper internals/distribution, indirect references, opaque gap/event-catalog extent, Linux, USA, native Windows, new32:9 and full ROM TODO remain pending.",
+    "No manual guest RAM/register/task/ID/ROM/cartridge edit, numeric/RNG forcing, source/model/native/registration proof replay or performance/storage campaign. Parallel frontend edits remain outside the frozen snapshot."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "crates/recomp/src/rom_data/selection_byte_tables_scene_tests.rs",
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

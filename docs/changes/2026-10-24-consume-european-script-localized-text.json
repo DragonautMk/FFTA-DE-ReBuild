@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "consume-european-script-localized-text",
+  "title": "Publish the European localized script text and serve typed program fields through original guest readers",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "EUR e52-d51 adds script-text.json/text.script-archives as generation file47/resource46, retaining all45prior decoded files/e51 and USAe8-d7. Declare actual engine.script-archive/font.complete-bank dependencies and validate loaded key/glyph links before activation.",
+    "Bind all five source ranges/1803744bytes to typed top/variant/bank indices, program headers, encoded controls, decoded glyph/command/operand/terminator/tail fields and exact alignment bytes. Share the existing text program/literal mapper with old catalogs, preserving their byte/category behavior without ROM shadows or host text expansion.",
+    "Merge previous owners on shared BB0/D68pages and raw outside data per byte. Keep original key/message/variant control, live RAM, clocks and save/native ABIs. External field and language/bank/program/variant/gap counters support positive ordinary source-use checks."
+  ],
+  "validation": [
+    "Previous model-final-summary terminal complete/no livejob and265source/doc baseline hashes match; source inventory/model/e51/e50/old text source/native/lifecycle/CLI/ordinary proofs remain closed. New shared mapper code specifically requires one existing focused Wine encoded-literal-poison core check, plus two new frontend managed/native filters; no Linux tests.",
+    "Independent new runtime field classification gives [1260top,520variant,82790bank-index,82020header,617389control,733676glyph,216619command,2477operand,32226terminator,0decoded-tail-source-literal,34767alignment]=1803744bytes. The initial all-classes-positive assumption is rejected: preserved decoded tails are produced by LZ controls/backreferences, not direct source literals. Keep the exact zero counter and require positive native reads only for ten present source classes.",
+    "Windows23146 core tests compile warning-free and are frozen. Frontend test compilation finds two array-shape errors in the new test counter (5vs11) and one unused import; correct only that test code, retain failed logs/jsonl under before-counter-shape and rebuild frontend only. Passed core build is reused. The private wiring helper stopped at only the older BG test signature; its one missing zero was added before building, without rerunning applied wiring.",
+    "Corrected Windows39830 frontend build is warning-free; passed core23146 build reused. Wine95863 runs one affected shared-mapper encoded-literal-poison check and two new exact frontend filters sequentially; all pass on first execution. Managed13guards/failure-atomic publication/reuse/repair/move/e51retention/transactional missing file/unavailable files/Load-Undo-backup-Restart/all1803744bytes/5languages385banks41010programs130variants34314gaps and163affected prior-text source bytes across formats0/1/2 pass. Native35original/interpreter/compiled full-state-clock prefixes read [21,17,17,13,6,4,5,1,3,0,3]aggregate source bytes; raw selectors/wrap/sentinel, shared BB0-D68previous-new edges/raw after old key owner/widths-mirrors-realBIOS-CpuSet-FastSet-DMA pass.379instructions/65PCs/71dispatches are coverage only. All4088prior artifacts/new frozen inputs/371hash-mtime guards protected; no Wine failures.",
+    "Windows51427 production CLI compiles warning-free and restores canonical exactly; candidate6126ce932fda4847579ad8dfb2f28d1a7f4a7a4c640e0fba06402d45440d137e. Wine71122 actual CLI creates/reuses49managed files with no writes from unrelated cwd, loads old native cache and matches all47generation files to accepted e52dataset2379f2425ddfe664425502b7f4dcc0f4d0b11c0ebdec617ba5a94c1b2c73fa88;468hash-mtime guards pass. Retained genuine EUR suspendboot-to-battle8476/classic0 new-text locator is terminal0 but all new text counters are zero: closed negative/no fullpair. Do not recount the same context for e49.",
+    "New text-field metadata audit of74unique authenticated EUR states supplies no positive manager cue; it does not prove unreachability. Four USA school/name headers excluded before payload/replay. Retained genuine EUR courtyard dialog/input selects one distinct coldboot school3000/classic0 locator. Wine24902 actual e52CLI is positive:289aggregateB=8top4bank-index8header93encoded-control136glyph39command1terminator; decoded-program176B, one language/bank/two programs, zero variants/operands/tails/slack.468hash-mtime guards pass. No build/prepare/old e49context reopening/recount/new fixture/navigation/checkpoint-save-input edit.",
+    "One Wine43805 genuine EUR school3000/classic0 fullpair from the actual CLI-published e52generation passes every full state/clock/central-wide image/OAM/dispatch and mixed/PSG/FIFO/bitwise-HLE audio samples [6582846,6582846,791212,791212,6561508]. Existing test executable/native cache/retained intro input reused, no save/state override. Actual text use matches289B/one language/bank/two programs;468hash-mtime guards pass. No test rebuild/prepare/old proof repeat/new gameplay fixture/navigation/retained checkpoint-save-input edit. Terminal windows-scene-result.json/windows-school-text-full-state-audio.log.",
+    "Final runtime preservation passes all4088prior artifact hashes and468hash-mtime guards. Against265source/doc baseline files, only eight selected implementation/test files and nine intended memory files change; every source-model/e51/Debug-save file and concurrent Docker paragraph remains unchanged. Three new runtime/test modules plus this consume record expand the source/doc snapshot to269files. Full memory/default-base7597b92/CRLF-aware whitespace outcomes and preserved compiler/locator evidence are retained under target/rom-data-script-text/runtime-final-*.json."
+  ],
+  "limitations": [
+    "Declared EUR/Wine source-model/shared-core/managed/native/production CLI/positive ordinary text acceptance is complete. Other4languages/384banks/41008programs/130variants/34314gaps remain targeted-only; ordinary operand/tail/slack reads are zero. No whole text/callback ABI, all argument semantics or new32:9scene claim.",
+    "New Linux/USA/native Windows checks remain pending. e49positive ordinary event/selector and other asset/GUI/archive/mod criteria remain open. No performance/space measurements, gameplay navigation/new fixtures/retained checkpoint-save-input edits, Android changes, agent commit or push. Preserve prior artifacts, user Debug-save and concurrent Docker work."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/script_text.rs",
+    "crates/gba-core/src/rom_data/runtime/text_program.rs",
+    "crates/gba-core/src/rom_data/runtime/text_catalogs.rs",
+    "crates/gba-core/src/rom_data/runtime/text_catalog_tests.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/script_text_runtime_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "scripts/extract_rom_data.py",
+    "docs/rom_data_text.md",
+    "docs/rom_data_scripts.md",
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_text.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

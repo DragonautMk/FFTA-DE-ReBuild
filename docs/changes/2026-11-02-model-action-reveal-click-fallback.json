@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "model-action-reveal-click-fallback",
+  "title": "Model action reveal click fallback against control",
+  "kind": "docs",
+  "platforms": [
+    "Linux interpreter and modeled desktop input path"
+  ],
+  "changes": [
+    "Record one partial-reveal visible-panel click modeled through the current core fallback and compared with a no-click control."
+  ],
+  "validation": [
+    "At frame 37 menu and shop recognition were absent; the unhandled point queued A. At frame 40 the control menu was recognized while the modeled-click menu was not, continuing through sampled frame 71. ROM and snapshot hashes were unchanged."
+  ],
+  "limitations": [
+    "No actual GUI event or physical input; one point, timing and panel scale only. Two harness compile attempts failed before correction; final isolated build has three unused-code warnings.",
+    "The managed artifact cleanup helper accepts only target/rom-data-* units and rejected this U31 unit; its files were retained."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-03-panel-visual-fixes.md"
+  ],
+  "references": [
+    "docs/ffta_action_frame_width.md"
+  ]
+}

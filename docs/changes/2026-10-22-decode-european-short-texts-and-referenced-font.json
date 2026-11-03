@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "date": "2026-10-22",
+  "slug": "decode-european-short-texts-and-referenced-font",
+  "title": "Decode one European five-selector short-text catalog and its referenced font slots",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Add bounded source-authenticated EUR short-text catalog selected by original 08016648: five 107-entry pointer tables, 535 strings, source encodings, exact game glyph IDs and uninterpreted command/operand bytes.",
+    "Retain 65 referenced packed 4bpp glyph slots and metrics with all 670 source ranges; reconstruct original compact/extended bytes and expanded strings without guessing Unicode, language labels or complete font extent.",
+    "Keep managed e10 publication, startup/runtime and guest/save/native identity unchanged; this unit is offline inventory/decoding only."
+  ],
+  "validation": [
+    "Warning-free Windows release test build; two reduced Wine checks pass for codec/truncation/length/marker/pointer-overflow guards and exact-EUR source/JSON/strict-field/coherent-edit validation.",
+    "All 535 original language lookups and string copies match pointers, complete expanded output and guards; all 65 original glyph slots/width-only reads match variable/fixed-width modes, plus unknown-language fallback. Total 1331 calls/89446 guest instructions, not timing measurements.",
+    "Independent retained static classifier agrees on every source/table/glyph; 478 compact and 57 extended strings total 5468 source bytes, glyphs 8320 and widths 65 bytes. Protected original ROM/slot/cache/loader/canonical executable hashes remain unchanged.",
+    "Project-memory coverage and CRLF-aware whitespace checks pass."
+  ],
+  "limitations": [
+    "New Linux and USA checks are pending by user instruction; Wine is not native Windows verification. No AndroidPort change.",
+    "Managed file/startup/runtime consumption, lifecycle and gameplay scene acceptance remain open. Other short-text categories, relative dialogue archives, name keyboard/full font, Unicode and complete command semantics remain unverified.",
+    "No performance/startup/RSS/space measurement, optimization, broad suite, new recording, old scene replay or repeated closed BG acceptance."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/text_short.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/text_short_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_text.md",
+    "docs/rom_data.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

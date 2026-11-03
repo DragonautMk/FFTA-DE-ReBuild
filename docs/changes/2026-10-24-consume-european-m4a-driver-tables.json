@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "consume-european-m4a-driver-tables",
+  "title": "Publish European M4A driver tables and preserve adjacent guest aliases",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Advance EUR to e44-d43 with audio-driver-tables.json/audio.m4a-driver-tables:39 files/38 resources, all37 prior decoded files/e43 retained; USAe8-d7. Bind seven typed source spans/484 bytes and require the actual parsed sequence owner at both boundaries.",
+    "CPU/DMA/BIOS/native and generic audio host reads reconstruct packed keys, unsigned PCM bases, signed CGB bases, sample counts and raw noise/volume codes from typed fields. Nonserialized byte/table/424-entry coverage counters preserve live guest arithmetic, clocks, RAM and save/native ABI. Sample selector0/13..15 retains adjacent physical owners; volume16/31/64 delegates to prior clocks and255 to raw ROM, without guest index clamps.",
+    "Correct the extraction helper's duplicated audio-tones description key to audio-sequences while adding the new driver file description."
+  ],
+  "validation": [
+    "Windows70748managed test build warning-free; Wine51847two reduced authentication/lifecycle and mixed Thumb/ARM original-interpreter-native checks terminal/pass. All39 files/38resources/all37prior decoded/e43retention and actual sequence dependency pass. Publication failure/create-reuse-repair-move/19coherent fields-source-binding-dependency-path-hash-owner guards and missingfile transactional activation/unavailable-copy Load-Undo-backup-Restart pass.",
+    "All484typed bytes and424physical entry bits read correctly with raw source altered:180PCMkey/48PCMbase/24samplecount/132CGBkey/24CGBbase/60noise/16volume. Generic host reads after unavailable-directory lifecycle return28typed bytes in7reads without changing guest counters.",
+    "28representative original/interpreter/native paths with484raw bytes altered match complete states/clocks. Compiled table categories[10,42,6,18,24,4,2]allpositive; mixed Thumb/ARM unsigned UMULL executed. Sample selector0/13/14/15 adjacent owner aliases, volume16/31/64 priorclock owner and255raw native/bus/host fallback pass. All7span boundaries/widths/mirrors/realBIOS/SWI-DMA/two-sequence-two-driver guest+generic-host crossings pass.844instructions/150PCs/70native dispatches coverage only; pitch full returns and rate/volume internal checkpoints, not whole initialization/mixer ABI.",
+    "No Windowsbuild/Wine failure. Private wiring preview first stopped at a missing description key, exposing an existing duplicate audio-tones key; corrected before repository wiring.917old protected files plus frozen current test executable unchanged. Closed1138source/model,8gain and earlier tone/sequence proofs not repeated. Evidence under target/rom-data-audio-driver/{windows-managed-tests.*,windows-managed-results.json,windows-{managed,native}.log,recomp-tests-managed.exe,windows-managed-europe/{managed-result,native-result}.json}.",
+    "ProductionWindows85643warning-free candidate376f98f15e1504c97d17e515e04ad9c13a8c9ade25c1fab9ce521a3a012afbd8; canonicalf3e277dbrestored. Wine30529actualCLIcreate/reuse-no-write41managedfiles/oldcache/unrelatedcwd400retained EURbankPlay pass.756newfamily source-byte reads(132PCMkeys/528PCMbase/32CGBkeys/64CGBbase),67distinct physical entries[31,12,0,16,8,0,0]; zero samplecount/noise/volume/generic-host ordinaryuse. Counts are aggregate repeated byte reads, not distinct bytes.",
+    "OneWine21679new e44ordinary400pair passes everycomplete state/clock/central-wideimage/OAM/dispatch/mixedPSGFIFOHLEsample with same756source-byte reads/67entries. First3753/400fullstates, mixed1379881native/2741618fallbackdispatches coverage only. Audio samples[877800,877800,105600,105600,877726]. Existing EUR bank state/input reused without GUI/navigation/fixture/RAM-statepayload/personal-save edits; no old source1138/gain8/native28/earlier ordinary acceptance repeated.",
+    "Final568x160CLIbackground inspected; known separateUIomits panels, nofoodcount/confirmation claim. Private windows-{build,cli-processes,cli-no-write,cli-summary,scene-result}.json/windows-bank-play-audio-driver-tables-full-state-audio.log/bank-play.png retain terminal evidence. No new productionbuild/Winefailure/live unit job.",
+    "Final project-memory including --base7597b92and CRLF-aware whitespace checks pass; 1191protected artifacts retained, all1128prior hashes and41CLIhash-mtime guards unchanged. ordinary-final-summary/ordinary-final-protected retained, no live unit process; fullTODOgoal remains active."
+  ],
+  "limitations": [
+    "Ordinary scope is one retained EUR400frame bankPlay scene,756aggregate source-byte reads and67physical entries across PCM/CGB key-base tables. Samplecount/noise/volume and generic-host ordinary reads are zero; targeted checks cover their declared interface. No full initializer/CGB mixer ABI claim or ordinary reachability of balanced high-volume producer inputs. Generic host bytes do not replace host driver arithmetic.",
+    "Other audio roots/LUTs/unselected assets/other families/GUI/archive/mod criteria and new Linux/USA/native Windows remain open. No performance or space campaign, AndroidPort work, game data publication, commit or push; concurrent Debug-save and prior work preserved."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/audio_driver.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/audio_driver_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "scripts/extract_rom_data.py",
+    "docs/rom_data_audio.md",
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_audio.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

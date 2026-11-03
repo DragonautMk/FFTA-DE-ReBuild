@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "consume-european-aggregate-flag-keys",
+  "title": "Consume European aggregate keys through original global and context counters",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "EUR e38-d37 adds aggregate-flag-keys.json/gameplay.aggregate-flag-keys,33files/32resources retaining all31prior decodedfiles/e37generation; USAe8-d7 unchanged. Authenticate exact602Bsource/model/terminal and strict fixed physical slot order without semanticFK or uniqueness restrictions.",
+    "Direct typed CPU/native/SWI/DMA source projection and nonserialized key/terminator counters plus300slot five-u64mask preserve original key+2ffu16wrap/global-context flag and linked predicates/OR/count/earlysentinel/instructions/clock/save-nativeABI. Terminal source2B stays distinct from an in-slotffffkey.",
+    "Add two focused Wine publication/transactional/lifecycle and complete original/interpreter/native checks; add optional ordinary-scene positive-use gate. Source32+26proof remains closed/not repeated."
+  ],
+  "validation": [
+    "Static integration diff and Python extraction-wrapper syntax checks pass. Windows76657testbuild warning-free; Wine87184two focused checks terminal/pass, no old e37native/scene/source32+26oracle repeated.",
+    "Publication interruption/create-reuse-repair-move/e37retention/coherent key-duplicate-earlyffff-terminal-ID-order-binding-source-dependency-path-role-hash-coverage guards/transactionalowner/unavailable-copy Load-Undo-backup-restart/all602B-all300entrymask pass.",
+    "16fullD22FCglobal+13FB1Ccontext original/interpreter/native paths with all602rawB altered match fullstates/clocks; compiled key9540/terminal30B. Allbytes/entryedges/widths/mirrors/realBIOS/preceding8-following4raw/terminalword2typed2raw/SWI32typed each+terminal2typed2raw/DMA2typed2raw pass.168888instructions/10357dispatchcoverageonly.",
+    "Evidence target/rom-data-aggregate-flag-keys/{windows-managed-results.json,recomp-tests-managed.exe,windows-managed-europe/{managed-result,native-result}.json,managed-protected.json,managed-run-protected.json}; 145protected files unchanged, no build/Wine failure.",
+    "Production59636warning-free/canonicalf3e277dbrestored/candidate2dfdd6096c948234e34b33cf3e3af3757771b882868e7001af436e1b63428f25. ActualCLI44401create/reuse-no-write/oldcache/unrelatedcwd pass,35managed files retain hashes/mtimes. First1000existingday18dispatch positive1204sourceB(1200key/4terminal)/all300slotfivewordmask, last44bits; countsinclude rereads, no distinct1204B or bothordinaryentrypoints inference.",
+    "One Wine11196fullpair matches every complete state/clock/central-wide image/OAM/dispatch/mixed-PSG-FIFO-HLEaudio sample with same counters/mask. FinalSigmund/MadAlchemistsuccess/skills08-02-11-04-02-08-42-02 image inspected. No newGUI/fixture/ROM-RAM-statepayloadedit/personalsavewrite or oldsource32+26/native16/e37same-input proof repeated.",
+    "Frozen76657test4369f09cfb2ba859cc0d1513e50d9fd0d1916aba3ec2920b261f4d5ce77e5af4; scene evidence target/rom-data-aggregate-flag-keys/{windows-build.json,windows-cli-{processes,no-write,summary}.json,windows-scene-result.json,windows-dispatch-aggregate-keys-full-state-audio.log,scene-executable.json,dispatch-completion.png}.",
+    "Final215protected-file hashes/canonical/candidates and35CLImanagedhash-mtime guards pass, project-memory/whitespace checks pass, all unit processes terminal. Final-summary/final-source-hashes/final-protected retained."
+  ],
+  "limitations": [
+    "Managed/runtime/productionCLI/ordinary-source dispatch scope complete; newLinux/USA/nativeWindows/whole other UI readers/bothordinarycounterentrypoints/adjacentroot6e9cb6and6e84e0/fullTODO remain pending.",
+    "No performance/space/AndroidPort work, private ROM/save/input publication or agent commit/push. Externalb5f8ccdprevioussource commit preserved."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/aggregate_flag_keys.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/aggregate_flag_key_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "scripts/extract_rom_data.py"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md",
+    "docs/changes/2026-10-23-decode-european-aggregate-flag-keys.json",
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md"
+  ]
+}

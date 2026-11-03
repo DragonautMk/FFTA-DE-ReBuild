@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "complete-shared-debug-tools-translation",
+  "title": "Complete English translation of shared debug tools plan",
+  "kind": "docs",
+  "platforms": [
+    "Shared desktop debug documentation"
+  ],
+  "changes": [
+    "Translate P1, P2 and maintenance sections of the shared debug tools plan, retaining historical outcomes, accepted scopes, validation limits, task identifiers and legacy anchors."
+  ],
+  "validation": [
+    "Compare all 14 ordered checklist states, identifiers, inline literals, links and three legacy anchors against the original; verify local targets and confirm the translated P0 prefix is unchanged."
+  ],
+  "limitations": [
+    "Documentation translation only; no diagnostic, runtime, Wine, ROM or hardware validation was rerun."
+  ],
+  "files": [
+    "docs/development/DEBUG_TOOLS_TODO.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

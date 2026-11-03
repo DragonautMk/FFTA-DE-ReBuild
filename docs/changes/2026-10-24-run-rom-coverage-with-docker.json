@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "run-rom-coverage-with-docker",
+  "title": "Run ROM coverage generation in Docker from Windows and Linux",
+  "kind": "added",
+  "platforms": [
+    "Linux/Docker",
+    "Windows/Docker tooling"
+  ],
+  "changes": [
+    "Add Bash and PowerShell ROM coverage launchers using a dedicated coverage target in Dockerfile.linux. Python3.11, Cargo, nm and the rom_code_ranges metadata exporter run inside Docker, so neither host needs Python, Rust or binutils.",
+    "Reuse the pinned native Linux source stage and Cargo caches, compile only the metadata example, and copy the generator/template/public evidence records into the image. Preserve existing extraction, portable build and test/export targets.",
+    "Mount the existing ROM, authenticated dataset, retained ELF translation and selected evidence JSON read-only at run time, with network disabled; only report output is writable. Linux forwards UID/GID. Keep private-data exclusions while allowing the selected public coverage inputs and JSON change records in Docker context.",
+    "Provide root-relative defaults for the frozen EUR e37-d36 inputs, named overrides including evidence/output, paths with spaces, validation for missing inputs and CSV-unsafe paths, and build/run failure propagation. Document Docker as the primary regeneration route while retaining direct Python for developers."
+  ],
+  "validation": [
+    "Actual Bash launcher builds the coverage image and generates authenticated EUR e37-d36 JSON/HTML under ignored target/rom-coverage-docker/report. The release metadata-helper build completes without warnings. No game execution, runtime build, translation rebuild or broad packaging test campaign is performed.",
+    "Report comparison matches every field except code.analyzer_executable_sha256, which identifies the container-compiled helper. All38 protected ROM/dataset/translation/database/published-report files retain their hashes; generated files belong to the host UID/GID. The frozen versioned atlas is unchanged.",
+    "Five ROM-free Bash/mock-Docker checks pass for default/spaced paths from unrelated cwd, named overrides, read-only input mounts and isolated output, missing inputs, build/run failures and invalid options/CSV paths. Child PATH deliberately contains no Python, Cargo or nm. Bash syntax and containerized ShellCheck pass.",
+    "Seven PowerShell7.4.6/mock-Docker cases pass in the existing Linux image without a Docker socket or game inputs: default/spaced paths, relative overrides/absolute output, build/run failures, missing manifest, CSV/empty path rejection and missing Docker. Initial harness image invocation failed before script execution because its entrypoint was omitted; corrected invocation is retained separately and passes.",
+    "Unmounted coverage-image inspection finds no ROM, save, input recording, retained DLL/EXE, host dataset or personal runtime directory under the workspace, and confirms the metadata helper is available. Logs/results and source hashes are retained locally under ignored target/rom-coverage-docker.",
+    "Project-memory coverage, relative documentation links and git diff --check pass. Concurrent source-inventory record/document changes are preserved; no previous gameplay or packaging acceptance is repeated."
+  ],
+  "limitations": [
+    "Native Windows PowerShell5.1/Docker Desktop and non-amd64 hosts remain unverified; the PowerShell checks run on Linux with a simulated Docker CLI. Windows requires Docker Desktop Linux containers and host-path access.",
+    "The wrapper requires the existing local inputs matching the evidence baseline. It does not extract current data, update frozen EUR e37-d36 evidence, infer later coverage, or perform runtime/gameplay/performance/AndroidPort validation.",
+    "Only orchestration and documentation are changed; concurrent script-archive inventory work is preserved and retains its own record. No commit or push is performed."
+  ],
+  "files": [
+    "Dockerfile.linux",
+    ".dockerignore",
+    "scripts/linux/rom_coverage_docker.sh",
+    "scripts/windows/rom_coverage_docker.ps1",
+    "scripts/tests/test_rom_coverage_docker.py",
+    "docs/development/ROM_COVERAGE.md",
+    "docs/docker.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/development/ROM_COVERAGE.md",
+    "docs/docker.md",
+    "docs/changes/2026-10-23-map-overall-european-rom-coverage.json"
+  ]
+}

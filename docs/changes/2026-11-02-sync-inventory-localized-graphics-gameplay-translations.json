@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "sync-inventory-localized-graphics-gameplay-translations",
+  "title": "Synchronize localized graphics and gameplay inventory translations",
+  "kind": "docs",
+  "platforms": [
+    "Desktop ROM-data inventory"
+  ],
+  "changes": [
+    "Synchronize 31 localized graphics and gameplay lookup entries with existing English plan translations after checking their original text matches the inventory exactly."
+  ],
+  "validation": [
+    "Compared both source blocks byte for byte with plan preimages and checked that task IDs, links, inline literals and numeric runs match their translations."
+  ],
+  "limitations": [
+    "Other inventory sections and the wider cross-tree English-first audit remain open; no ROM access or runtime checks were performed."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_INVENTORY.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "decode-european-script-command-directory",
+  "title": "Decode the European script command directory with independent source boundaries",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Bound the European script command directory to 115 six-byte records/690 bytes at3acebc..3ad16e using two independent successor lookup roots. Reject the initial 116-record candidate before creating the plan/model because its final row included the distinct lookup; retain original guest opcode arithmetic without a new cap.",
+    "Add a strict lossless model of canonical opcode, u16 advance and Thumb BX callback, exact European identity and 106 halfword/six word source-contract guards. Reconstruct and hash every source byte without a ROM shadow. The source range is disjoint from all 43 e49 owners and has no asset dependency; signed cursor, relative targets, u16 wrap and callback-controlled sequencing stay original."
+  ],
+  "validation": [
+    "Previous e49runtime/CLI sourcechildren terminalclosed inruntime-final-summary; ordinarypositiveexplicitlypending aftertwo closednegative EURlocators. No oldoracle/native/lifecycle/CLI/ordinaryproofrepeated forcontext.",
+    "Independent Python reconstruction passes all 690 bytes/115 rows/source SHA, 106 halfword and six word fingerprints, the independent 3ad16e end and disjointness from 43 e49 owners. Only two existing hubs receive isolated module declarations.",
+    "Initial Windows build 89555 is warning-free. First Wine attempt 49512 fails an expected-register assertion: original ADDS 12660a updates r0, not r1. Correct only those two expected register values, retain failed executable/log/result and rerun the affected new scope. No production/model correction or old accepted proof repeat.",
+    "Corrected Windows build 12070 is warning-free. Single corrected Wine filter 67188 passes 117 callback-load/117 advance/115 BX/four signed-cursor/ten relative-target/five return-loop prefixes. All 690 distinct owned source bytes are observed; seven shape/four source-edit/six JSON/two ROM-identity guards pass. 2905 instructions/67 PCs are coverage only. Protected3329 prior artifact hashes unchanged in both Wine attempts.",
+    "Final preservation passes 3328 prior artifact hashes/265 hash-mtime guards. Against the 246 prior source/doc hashes, only two module declarations and five memory files changed; every other implementation and concurrent user file is unchanged. Project-memory checks pass for the current workspace and base7597b92, with CRLF-aware whitespace validation."
+  ],
+  "limitations": [
+    "Publication, direct guest consumption, native complete-state/clock integration, production CLI and positive ordinary use remain pending for this directory. Current EUR e49-d48/USAe8-d7 stay unchanged. This is not the whole script interpreter/callback ABI, a complete script archive or proof of the adjacent lookup domain.",
+    "New Linux, USA and native Windows checks remain pending. No performance or space measurements, ROM/save/input/fixture payload changes, AndroidPort changes, commit or push. Preserve concurrent Debug-save work and all prior accepted resources and evidence."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/script_commands.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/script_command_model_tests.rs",
+    "docs/rom_data_scripts.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_scripts.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

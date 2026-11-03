@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "decode-european-auxiliary-script-archive",
+  "title": "Decode separate European auxiliary scripts with interior instruction entries",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add strict lossless auxiliary command-directory and u16relative archive models for4200B, preserving8banks442slots/133physical programs913instructions/raw parameters/five exact internal gaps. Slots reference program+instruction ordinals so30interior entries share their physical storage without copies.",
+    "Reconstruct both index levels, u16advances, Thumbcallbacks, opcodes/parameters and exact source spans. Validate same-bank entries/order/terminators/source coverage, actual auxiliary callback+advance dependencies, branch instruction boundaries, nested JSON and exact EUR identity. Coherent edits are distinguished from authenticated source; malformed relative operands return errors. Add only two module registrations in existing implementation files.",
+    "Add one ignored private EUR original-reader oracle using controlled scratch arguments, with canonical/raw lookup/dispatch/advance/relative/wrap/wrapper checks. Keep guest low-byte domains, signed cursor and aligned32-bit LDRH rotation live; no host interpreter, ROMshadow, new guest guard, runtime activation or ABI change."
+  ],
+  "validation": [
+    "Closed inventory-final-summary277source/doc files4984protected artifacts reused without source replay. Prebuild formatter delimiter and private preimage filename collision corrected before compilation; distinct module preimages reconstruct the exact closed baseline. Only two module declarations/selected handoff differ before memory work.",
+    "Windows66583first build warning-free/frozen c2a3ad04eace3e2d2e98113b14d697cd88d11f2b63d7a447bb9c2ccfe0712393. Wine20886first newfilter passes source/shape/canonical probes, then fails test expectation for odd raw8:0bankD69E97 (actual08D69E98 vs expected08D6AA98). Preserve first sources/executable/build/log/result in before-unaligned-oracle-fix; fix only observer alignment/expected rotation, model/core unchanged.",
+    "Frontend-only Windows54240warning-free/frozen533724e52d2bbc4185d86c4a749a4d559f81aff1e220df3f034b24cf3007e33e and Wine3148retry pass. Direct exec.rs565read then identifies promoted-u32rotation instead of narrower u16formula; current8:0lowbyte0does not distinguish them. Add concrete8:1/alignedword000C/high-target14D69E97 and correct only expected-u32formula. Preserve narrower passed retry sources/executable/results in before-full-width-oracle-fix.",
+    "Final frontend-only Windows52724warning-free/frozen d1b8c33f1a1e3c1d7370d954123207a670444f35cc59429abb9ca6b1f9f6e5c2. Wine77162same affected new filter PASS:40guards/allindependentfields-hashes/723halfword4word; original442lookups/913dispatch prefixes plus oneRAMopcode3/80advance/489relative suffixes/10wrap/15raw/11wrapper probes.2887distinct canonicalBobserved=900index913opcode978relative-param96directory;1313Bpreserved-unread=1297otherparam10gap6zero-row.31839instructions177PCcoverageonly, no performance measurement.",
+    "All4984prior artifact hashes preserved; model source hash unchanged across all Wine runs. Final hash/mtime guards from frozen build/execution pass583protected paths. Final source/doc snapshot280files and memory/default-base7597b92/CRLF-whitespace outcomes retained under target/rom-data-auxiliary-scripts/model-final-*.json. No old source/native/lifecycle/CLI/scene test repeated."
+  ],
+  "limitations": [
+    "Model/source oracle only: no whole predicate/interpreter/callback ABI, native/fullstate-clock or ordinary reachability claim. Canonicalopcode0directory row and1297nonrelative parameterB/10alignmentB preserved/reconstructed/hashchecked rather than observed by this original-prefix scope. Independent archive finalFF2B/directory zero2gapB remain outside projection.",
+    "EUR dataset stays e53-d52/USAe8-d7. Managed publication/direct runtime/production CLI/positiveordinary and new Linux/USA/native Windows checks remain pending. No performance/space measurements, new fixture/navigation, personal save-input mutation, Android/package/agent commit/push. Full TODO goal active; prior completed and negative proofs stay closed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data/auxiliary_scripts.rs",
+    "crates/recomp/src/rom_data/auxiliary_scripts_model_tests.rs",
+    "crates/gba-core/src/rom_data.rs",
+    "crates/recomp/src/rom_data.rs",
+    "docs/rom_data_scripts.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_scripts.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

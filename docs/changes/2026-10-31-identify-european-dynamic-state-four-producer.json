@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "identify-european-dynamic-state-four-producer",
+  "title": "Identify European dynamic state four producer",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Document the conditional menu-result and queued-state path that enables the dynamic-transfer gate."
+  ],
+  "validation": [
+    "Reviewed focused read-only diagnosis and independently authenticated eight original source windows with the Windows disassembler under Wine; no gameplay replay."
+  ],
+  "limitations": [
+    "No retained ordinary scene is yet connected to the eligible menu and task state; Linux, USA and native Windows remain unverified. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_ui_raw_transfers.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_raw_transfers.md"
+  ]
+}

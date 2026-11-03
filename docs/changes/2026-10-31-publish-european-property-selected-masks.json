@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "publish-european-property-selected-masks",
+  "title": "Publish European property-selected masks",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Publish authenticated e100 mask data and serve its bytes through the runtime while preserving original guest selector arithmetic and adjacent owners.",
+    "Update generation assertions and result counts in prior focused tests for the new resource."
+  ],
+  "validation": [
+    "After correcting a missing test trait import, one isolated Windows build and focused Wine test passed: 89 previous files unchanged, full byte and mixed-edge checks, transactional tamper refusal, and six original native-prefix cases matching raw state and clock."
+  ],
+  "limitations": [
+    "Updated prior focused tests were not individually rerun; their result-count-only corrections followed the focused test build. Production CLI, ordinary use, Linux, USA and native Windows remain unverified. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/conditional_property_masks.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/conditional_property_masks_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/clan_table_alias_runtime_tests.rs",
+    "crates/recomp/src/rom_data/dynamic_raw_fragments_runtime_tests.rs",
+    "crates/recomp/src/rom_data/table_graphics_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_four_byte_lookup_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_packed_lookup_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_descriptor_banks_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_descriptor_bank_zero_runtime_tests.rs",
+    "scripts/extract_rom_data.py",
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md"
+  ]
+}

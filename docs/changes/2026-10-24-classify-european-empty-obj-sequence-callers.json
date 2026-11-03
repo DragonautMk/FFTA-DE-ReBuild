@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "classify-european-empty-obj-sequence-callers",
+  "title": "Classify direct European empty OBJ sequence callers and reject unproved hold extension",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Classify the three older empty sequence headers B4BD20/B4BD34/B4FA10 under their declared direct-root constructors: twelve calls select sequence0; eighteen widget initializer callers produce full-word modes0..3 yielding sequences0..3, while two updates select2/3. No rooted empty selection proves a hold extension.",
+    "Retain frames=[] without zero_count_hold, resource/model/range/revision changes or guest caps. Six possible selector bytes remain unowned raw ROM; possible durations8/16/4 alias existing typed sequence indices. Correct stale unknown caller descriptions and distinguish the resolved e17/e18 families.",
+    "Bound the classification to literal roots/direct Thumb calls and original compiler callee-preserved r4..r11 convention. Rawmode7/65539 can select6/7 with repeat1; computed/indirect entry and later live RAM mutation remain unverified. Reopen only on a concrete new producer or ordinary trace with established scheduling semantics."
+  ],
+  "validation": [
+    "Exact EUR ROM and authenticated e55 animation file audited against all50source owners. All30literal occurrences of six bank roots match the15declared constructor calls; all-byte census finds no absolute pointer to the three empty headers/bodies.",
+    "Independent static setup decoding checks twelve constant selectors, all eighteen direct widget mode producers, no argument replacement, eight canonical mode/flag combinations and raw counterexamples. Forty-seven original instruction fingerprints pass. No build, guest execution or old oracle replay. Evidence target/rom-data-obj-empty-callers/source-contract.json and static caller/pointer/disassembly files.",
+    "All5812prior protected artifact hashes unchanged. The292source/doc baseline differs only in five selected memory files; the existing OBJ feature doc was outside that baseline and is now included with the new record (294guarded files). The private final accounting initially expected the feature doc within the old baseline; corrected after inspecting that map, without repeating the artifact audit. No implementation or user work changed. Project-memory/default-base7597b92 and CRLF-aware whitespace checks pass."
+  ],
+  "limitations": [
+    "Bounded static classification only; no global liveness/dead-code, indirect-call, live-mutation or repeat1zero-divisor scheduling proof. The unproved hold extension is rejected rather than exporting inferred frames.",
+    "EUR remains v1/e55-d54 and USA e8-d7. New Linux/USA/native Windows checks pending. No performance/space measurements, fixture/navigation, Android change, package, agent commit or push. Full ROM data TODO remains active."
+  ],
+  "files": [
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

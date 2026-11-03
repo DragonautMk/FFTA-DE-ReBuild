@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-10-21",
+  "slug": "classify-alternate-palette-color-modes",
+  "title": "Identify original Color Mode values and alternate palette callers",
+  "kind": "docs",
+  "platforms": [
+    "Linux"
+  ],
+  "changes": [
+    "Inventory four direct Thumb palette-producer callers and the original low-two-bit setter/confirmation for each exact regional ROM. Document the absence of a local descriptor-byte56 FF guard without claiming a global exclusion rule.",
+    "Identify original EUR Options LCD A=0, LCD B=1 selecting the second catalog and TV=2 selecting the first. Candidate cycling retains the old setting until Save changes Yes. Update the contract, inventory, TODO and handoff."
+  ],
+  "validation": [
+    "Whole-image static BL and literal scans plus original disassembly. Isolated native EUR GUI with existing e7 binary/data/TinyCC cache applies both modes through normal guest input; zero-frame snapshot reads confirm internal values. Captures inspected, close0 and original ROM/state/cache/loader/canonical hashes unchanged.",
+    "The official Nintendo manual confirms the three display hardware settings. GUI worldmap/Party and retained deployment evidence report no alternate reads; this is mode identification, not source-use equivalence. No decoder/build/old oracle/performance rerun."
+  ],
+  "limitations": [
+    "Global preconditions for five FF records, exhaustive indirect reachability, an actual alternate-consuming scene, other languages and native Windows remain open. No runtime behavior, schema, public archive, AndroidPort, agent commit or push changed."
+  ],
+  "files": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

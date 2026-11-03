@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-10-26",
+  "slug": "authenticate-european-observed-obj-lists-and-parameters",
+  "title": "Authenticate European observed indirect OBJ lists and parameter readers",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Establish scoped source contracts for90new high-offset bus/host ROM bytes: two ordinary indirect OBJ lists64B, timing/signed correction parameters10B and IWRAM control pointers16B. Preserve original ROM dependencies and pending model/runtime work."
+  ],
+  "validation": [
+    "Static exact EUR295window halfwords/53semantic pins/7literals/copy arithmetic/original branch targets and two reused original-reader ABI hashes pass. Original0924E8 CpuSet maps3648B D968E8..D97728to03005F28..03006D68, establishing constructor03006B6D sourceD9752C rather than guessed adjacency. Empty ROM-only RAM-address disassembly explicitly rejected.",
+    "One new Wine producer-argument frame from existing F09 state/input with retained e71 CLI/cache/dataset positively records394F4C at030065A8/LR08092469 and40D89E at08001500/LR08001DBD, with ten object rows. The first constructor stores source at instance+158; the second caller forwards live task+24 through02E36C/01D28. No old observer/resource-equivalence or ABI oracle replay.",
+    "After original reader/argument proof, count4/6 and26/38Bextents match prior host requests; both lists are disjoint from all65owners. Four new signed correction words index4..7 from a byte>>1originaldomain0..127; timing phases1/2 witness raw thresholds compared to OLDcounter, without inventing durations or a prelookup3cap.",
+    "All actual selected input hash/mtime guards pass. No source implementation/build/new checkpoint/navigation/performance/storage campaign; e71-d70/66files65resources/USA8-7 unchanged."
+  ],
+  "limitations": [
+    "Two lists64B and parameter bytes10B remain to be modeled/published/consumed from managed files. Control16B remain original ROM/code support; lower452new bytes from the audit are separate.",
+    "The40D89Eordinary live pointer is not an immutable direct literal or a reconstructed command initializer. No complete indirect archive, whole physical tables, all-use/caller graph, fullallocator/tree/scheduler/callback ABI or global input caps inferred.",
+    "Linux/USA/nativeWindows/new32:9 pending; full ROM_DATA_TODO remains active."
+  ],
+  "files": [
+    "docs/rom_data_obj.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

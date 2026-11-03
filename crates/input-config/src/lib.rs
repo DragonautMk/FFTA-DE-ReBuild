@@ -2,9 +2,17 @@
 //! runtime (which honors them). Plain `key = value` text under the user
 //! config dir. Native Windows controller support is isolated in directinput.
 
+pub mod fast_forward;
+mod language;
+pub use language::Language;
+
+pub mod storage;
+
 use std::collections::HashSet;
 use std::path::PathBuf;
 pub mod directinput;
+mod combo;
+pub use combo::*;
 
 /// The ten pad inputs, in KEYINPUT bit order.
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
@@ -417,6 +425,10 @@ impl StickToken {
 /// which is all the tests and config diffing need.
 #[derive(Clone, PartialEq, Debug)]
 pub struct InputConfig {
+    /// Function key used to show or hide the optional debug event console.
+    pub event_console_key: String,
+    pub menu_key: String,
+    pub menu_pad: String,
     pub device: Device,
     /// Preferred pad by name; empty = first connected.
     pub gamepad_name: String,
@@ -460,6 +472,9 @@ impl Default for InputConfig {
     fn default() -> Self {
         let s = |v: &str| v.to_string();
         Self {
+            event_console_key: "F9".into(),
+            menu_key: "Escape".into(),
+            menu_pad: "Select+Start".into(),
             device: Device::Keyboard,
             mouse_keyboard: false,
             mouse_keys: ["Z", "X", "RightShift", "Enter", "D", "A", "W", "S", "E", "Q"].map(str::to_owned),
@@ -553,6 +568,9 @@ impl InputConfig {
                     }
                 }
                 "key.ff" => cfg.ff_key = v.to_string(),
+                "key.event_console" => { if ["F2","F3","F4","F5","F9","F10","F12"].contains(&v) { cfg.event_console_key = v.to_owned(); } }
+                "key.menu" => { if let Some(combo) = normalize_combo(v) { cfg.menu_key = combo; } }
+                "pad.menu" => { if let Some(combo) = normalize_combo(v) { cfg.menu_pad = combo; } }
                 "key.ff_toggle" => {
                     cfg.ff_toggle_key = v.to_string();
                     toggle_explicit = true;
@@ -636,6 +654,9 @@ impl InputConfig {
             out.push_str(&format!("key.{} = {}\n", b.name(), self.keys[b.index()]));
         }
         out.push_str(&format!("key.ff = {}\n", self.ff_key));
+        out.push_str(&format!("key.menu = {}\n", self.menu_key));
+        out.push_str(&format!("key.event_console = {}\n", self.event_console_key));
+        out.push_str(&format!("pad.menu = {}\n", self.menu_pad));
         out.push_str(&format!("key.ff_toggle = {}\n", self.ff_toggle_key));
         out.push_str(&format!("pad.ff = {}\n", self.ff_pad));
         out.push_str(&format!("pad.ff_toggle = {}\n", self.ff_toggle_pad));
@@ -699,6 +720,16 @@ pub fn pad_binding(name: &str) -> PadBinding<'_> {
 /// frontends parse through it. "auto" means "the screen model's default".
 #[derive(Clone, PartialEq, Debug)]
 pub struct AvConfig {
+    /// Desktop menu language; independent of ROM and OS locale.
+    pub menu_language: Language,
+        /// Native menu background transparency,0..1; text/borders remain readable.
+    pub menu_transparency: f32,
+    /// Persistently reveal desktop debug menus after the directional sequence.
+    pub debug: bool,
+    /// Debug tools: expose 99 snapshot and numbered cartridge-save slots.
+    pub debug_extended_saves: bool,
+    /// Selected portable cartridge slot; numeric so moving the bundle is safe.
+    pub debug_game_save_slot: u8,
     /// The premium audio path (final name TBD): band-limited sinc
     /// resampling, DC blocking, and buffer rate control instead of the
     /// hardware-faithful nearest-neighbor output. Off until the feature
@@ -706,7 +737,9 @@ pub struct AvConfig {
     pub audio_enhanced: bool,
     /// Master output volume, 0..1 (1 = full).
     pub audio_volume: f32,
-    /// Persistent fast-forward multiplier: 2, 4 or 8. Activation is session-only.
+    /// Persistent user mute; retains volume and does not stop consumption.
+    pub audio_mute: bool,
+    /// Legacy multiplier2/4/8 or exact percentage100..800 in20-point steps. Activation is session-only.
     pub ff_speed: u32,
     /// silent, fast (accelerated audio), or normal (buffered 1x audio).
     pub ff_audio: String,
@@ -730,6 +763,10 @@ pub struct AvConfig {
     /// (AutoNoVsync); on trades possible tearing for compositor pacing.
     /// Emulation speed is owned by the audio clock either way.
     pub video_vsync: bool,
+    /// Borderless fullscreen at startup; shares the live menu/F11 state.
+    pub video_fullscreen: bool,
+    /// FPS overlay: off | internal | external | both.
+    pub video_fps: String,
     /// Output aspect ratio: auto | 3:2 (original) | 16:10 | 16:9 | 20:9 | 21:9 | 32:9.
     /// Sets how many extra columns the PPU renders; applied at launch.
     pub video_aspect: String,
@@ -740,8 +777,14 @@ pub struct AvConfig {
 impl Default for AvConfig {
     fn default() -> Self {
         Self {
+            menu_language: Language::default(),
+            menu_transparency: 0.1,
+            debug: false,
+            debug_extended_saves: false,
+            debug_game_save_slot: 1,
             audio_enhanced: false,
             audio_volume: 1.0,
+            audio_mute: false,
             ff_speed: 4,
             ff_audio: "silent".into(),
             video_brightness: 1.0,
@@ -753,6 +796,8 @@ impl Default for AvConfig {
             scaling: "nearest".into(),
             display_gamut: "auto".into(),
             video_vsync: false,
+            video_fullscreen: false,
+            video_fps: "off".into(),
             video_aspect: "16:9".into(),
             bubble_size: 1.,
             bubble_length: 1.,
@@ -770,12 +815,25 @@ impl AvConfig {
             };
             let v = v.trim();
             match k.trim() {
+                "menu.language" => cfg.menu_language = Language::parse(v),
+                "menu.transparency" => {
+                    if let Ok(value) = v.parse::<f32>() {
+                        if value.is_finite() { cfg.menu_transparency = value.clamp(0.0, 1.0); }
+                    }
+                }
+                "debug" => cfg.debug = v.eq_ignore_ascii_case("true"),
+                "debug.extended_saves" => cfg.debug_extended_saves = v.eq_ignore_ascii_case("true"),
+                "debug.game_save_slot" => {
+                    if let Ok(slot @ 1..=99) = v.parse::<u8>() { cfg.debug_game_save_slot = slot; }
+                }
                 "audio.enhanced" => cfg.audio_enhanced = v.eq_ignore_ascii_case("true"),
+                "audio.mute" => cfg.audio_mute = v.eq_ignore_ascii_case("true"),
                 "ff.speed" => {
                     if let Ok(speed @ (2 | 4 | 8)) = v.parse::<u32>() {
                         cfg.ff_speed = speed;
                     }
                 }
+                "ff.percent" => {if let Ok(speed @ 100..=800)=v.parse::<u32>() {if speed%20==0 {cfg.ff_speed=speed;}}}
                 "ff.audio" if matches!(v, "silent" | "fast" | "normal") => {
                     cfg.ff_audio = v.to_string()
                 }
@@ -801,6 +859,13 @@ impl AvConfig {
                 "video.scaling" => cfg.scaling = v.to_ascii_lowercase(),
                 "video.gamut" => cfg.display_gamut = v.to_ascii_lowercase(),
                 "video.vsync" => cfg.video_vsync = v.eq_ignore_ascii_case("true"),
+                "video.fullscreen" => cfg.video_fullscreen = v.eq_ignore_ascii_case("true"),
+                "video.fps" => {
+                    let mode = v.to_ascii_lowercase();
+                    if matches!(mode.as_str(), "off" | "internal" | "external" | "both") {
+                        cfg.video_fps = mode;
+                    }
+                }
                 "bubble.size" | "bubble.length" => {
                     if let Ok(x) = v.parse::<f32>() { if x.is_finite() {
                         if k.trim() == "bubble.size" { cfg.bubble_size=x.clamp(0.5,2.); }
@@ -817,9 +882,15 @@ impl AvConfig {
     pub fn serialize(&self) -> String {
         format!(
             "# gba-recomp a/v settings\n\
+             menu.language = {}\n\
+             menu.transparency = {}\n\
+             debug = {}\n\
+             debug.extended_saves = {}\n\
+             debug.game_save_slot = {}\n\
              audio.enhanced = {}\n\
              audio.volume = {}\n\
-             ff.speed = {}\n\
+             audio.mute = {}\n\
+             {}\n\
              ff.audio = {}\n\
              video.brightness = {}\n\
              video.screen = {}\n\
@@ -830,12 +901,20 @@ impl AvConfig {
              video.scaling = {}\n\
              video.gamut = {}\n\
              video.vsync = {}\n\
+             video.fullscreen = {}\n\
+             video.fps = {}\n\
              video.aspect = {}\n\
              bubble.size = {}\n\
              bubble.length = {}\n",
+            self.menu_language.token(),
+            self.menu_transparency,
+            self.debug,
+            self.debug_extended_saves,
+            self.debug_game_save_slot,
             self.audio_enhanced,
             self.audio_volume,
-            self.ff_speed,
+            self.audio_mute,
+            if matches!(self.ff_speed,2|4|8) {format!("ff.speed = {}",self.ff_speed)} else {format!("ff.percent = {}",fast_forward::selected_percent(self.ff_speed))},
             self.ff_audio,
             self.video_brightness,
             self.screen,
@@ -846,6 +925,8 @@ impl AvConfig {
             self.scaling,
             self.display_gamut,
             self.video_vsync,
+            self.video_fullscreen,
+            self.video_fps,
             self.video_aspect,
             self.bubble_size,
             self.bubble_length,
@@ -889,6 +970,9 @@ pub fn default_path() -> Option<PathBuf> {
 /// `<config dir>/gba-recomp`, the per-user config/state directory,
 /// resolved per-platform without pulling in a dependency.
 pub fn config_root() -> Option<PathBuf> {
+    if let Some(root) = storage::portable_root() {
+        return Some(root.join("Data").join("config"));
+    }
     let base = if cfg!(target_os = "macos") {
         PathBuf::from(std::env::var_os("HOME")?).join("Library/Application Support")
     } else if cfg!(windows) {
@@ -1001,6 +1085,37 @@ pub fn install_bios(src: &std::path::Path) -> Result<PathBuf, String> {
 
 #[cfg(test)]
 mod tests {
+
+    #[test]
+    fn event_console_key_has_bounded_configurable_function_keys() {
+        let old=super::InputConfig::parse("device = keyboard\n");assert_eq!(old.event_console_key,"F9");
+        let cfg=super::InputConfig::parse("key.event_console = F4\n");assert_eq!(cfg.event_console_key,"F4");
+        assert_eq!(super::InputConfig::parse(&cfg.serialize()).event_console_key,"F4");
+        assert_eq!(super::InputConfig::parse("key.event_console = Escape\n").event_console_key,"F9");
+    }
+    #[test]
+    fn debug_visibility_defaults_hidden_and_roundtrips_manual_override() {
+        assert!(!super::AvConfig::default().debug);
+        assert!(!super::AvConfig::parse("debug.extended_saves = true\n").debug);
+        assert!(!super::AvConfig::parse("debug = invalid\n").debug);
+        let cfg=super::AvConfig::parse("debug = TRUE # manual unlock\nmenu.transparency = 0.6\n");
+        assert!(cfg.debug);assert_eq!(cfg.menu_transparency,0.6);
+        assert_eq!(super::AvConfig::parse(&cfg.serialize()),cfg);
+        assert!(!super::AvConfig::parse("debug = false\n").debug);
+    }
+
+    #[test]
+    fn menu_transparency_defaults_roundtrips_and_rejects_nonfinite_values() {
+        assert_eq!(super::AvConfig::default().menu_transparency, 0.1);
+        assert_eq!(super::AvConfig::parse("audio.volume = 0.6\n").menu_transparency,0.1);
+        assert_eq!(super::AvConfig::parse("menu.transparency = 0\n").menu_transparency,0.0);
+        let cfg=super::AvConfig::parse("menu.transparency = 0.6\n");
+        assert_eq!(cfg.menu_transparency, 0.6);
+        assert_eq!(super::AvConfig::parse(&cfg.serialize()),cfg);
+        for (value,expected) in [("-1",0.0),("2",1.0),("NaN",0.1),("inf",0.1),("bad",0.1)] {
+            assert_eq!(super::AvConfig::parse(&format!("menu.transparency = {value}\n")).menu_transparency,expected);
+        }
+    }
     use super::*;
 
     #[test]
@@ -1217,6 +1332,33 @@ mod tests {
     }
 
     #[test]
+    fn extended_saves_default_off_and_numeric_selection_roundtrips() {
+        let legacy = AvConfig::parse("audio.volume = 0.6\n");
+        assert!(!legacy.debug_extended_saves);
+        assert_eq!(legacy.debug_game_save_slot, 1);
+        let cfg = AvConfig::parse("debug.extended_saves = TRUE\ndebug.game_save_slot = 99\naudio.volume = 0.6\n");
+        assert!(cfg.debug_extended_saves);
+        assert_eq!(cfg.debug_game_save_slot,99);
+        assert_eq!(cfg.audio_volume,0.6);
+        assert_eq!(AvConfig::parse(&cfg.serialize()),cfg);
+        for invalid in ["0","100","256","-1","invalid"] {
+            assert_eq!(AvConfig::parse(&format!("debug.game_save_slot = {invalid}\n")).debug_game_save_slot,1);
+        }
+    }
+
+    #[test]
+    fn user_mute_is_default_off_and_roundtrips_without_losing_volume() {
+        let old = AvConfig::parse("audio.volume = 0.6\naudio.enhanced = true\n");
+        assert!(!old.audio_mute);
+        let muted = AvConfig::parse("audio.mute = TRUE # user choice\naudio.volume = 0.6\n");
+        assert!(muted.audio_mute);
+        assert_eq!(muted.audio_volume, 0.6);
+        assert_eq!(AvConfig::parse(&muted.serialize()), muted);
+        assert!(!AvConfig::parse("audio.mute = invalid\n").audio_mute);
+        assert!(!AvConfig::parse("audio.mute = false\naudio.volume = 0\n").audio_mute);
+    }
+
+    #[test]
     fn av_volume_brightness_and_ff_multiplier_roundtrip() {
         let d = AvConfig::default();
         assert_eq!(
@@ -1251,6 +1393,15 @@ mod tests {
     }
 
     #[test]
+    fn fullscreen_preference_roundtrips_and_old_configs_remain_windowed() {
+        assert!(!AvConfig::parse("video.vsync = true\n").video_fullscreen);
+        let cfg = AvConfig::parse("video.fullscreen = TRUE # borderless\n");
+        assert!(cfg.video_fullscreen);
+        assert_eq!(AvConfig::parse(&cfg.serialize()), cfg);
+        assert!(!AvConfig::parse("video.fullscreen = invalid\n").video_fullscreen);
+    }
+
+    #[test]
     fn av_video_roundtrip() {
         let cfg = AvConfig {
             screen: "backlit".into(),
@@ -1271,6 +1422,17 @@ mod tests {
         assert_eq!(AvConfig::knob("auto"), None);
         assert_eq!(AvConfig::knob("0.5"), Some(0.5));
         assert_eq!(AvConfig::knob("nan"), None);
+    }
+
+    #[test]
+    fn fps_modes_persist_and_old_configs_keep_the_overlay_off() {
+        assert_eq!(AvConfig::parse("video.vsync = true\n").video_fps, "off");
+        assert_eq!(AvConfig::parse("video.fps = invalid\n").video_fps, "off");
+        for mode in ["off", "internal", "external", "both"] {
+            let cfg = AvConfig::parse(&format!("video.fps = {}\n", mode.to_uppercase()));
+            assert_eq!(cfg.video_fps, mode);
+            assert_eq!(AvConfig::parse(&cfg.serialize()), cfg);
+        }
     }
 }
 

@@ -15,8 +15,8 @@ bindings, so A/B letters do not also trigger their mapped GBA buttons. Numeric
 page selection uses the original L/R keys (EUR3 pages, USA2 pages). Unsupported
 printable characters are consumed without triggering gameplay shortcuts.
 USA checks: page commit0812AC2E, row-width literal0812AAB4 ->083A8320.
-MEDIDO: simulated uppercase/lowercase/digit selection and one original confirm per
-character, Backspace/Enter sequencing in both profiles. NO MEDIDO: real typing on
+MEASURED: simulated uppercase/lowercase/digit selection and one original confirm per
+character, Backspace/Enter sequencing in both profiles. NOT MEASURED: real typing on
 device, including the USA name-screen RAM signature; user acceptance pending.
 
 ## Measured selectors
@@ -44,7 +44,7 @@ OAM tiles0125..0127: all three animation frames must be accepted.
 
 ## Validation and limits
 
-MEDIDO: complete boot, actual click on Press Start, Color Mode, TV, Saved Game,
+MEASURED: complete boot, actual click on Press Start, Color Mode, TV, Saved Game,
 Resume/Load selection. Another complete boot clicks New Game, then a private
 synthetic A sequence advances story to the name keyboard. Mouse clicks exercise
 letters, Delete, all three categories, OK and Yes/No. The story A sequence is a
@@ -56,7 +56,7 @@ confirmed the original language reload. Back from the language submenu was
 also tested without reload. All investigations use blank/private save state;
 no original save is written.
 
-NO MEDIDO: loading/resuming a valid saved slot. Available save files contain
+NOT MEASURED: loading/resuming a valid saved slot. Available save files contain
 only FF bytes; the original game rejects empty Resume/Load. Actual populated
 file-slot submenus are not adapted or claimed tested. Battle mouse controls,
 USA front-end and physical mouse acceptance of this build remain pending.

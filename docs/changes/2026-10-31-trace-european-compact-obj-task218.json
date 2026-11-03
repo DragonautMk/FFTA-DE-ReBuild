@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "trace-european-compact-obj-task218",
+  "title": "Trace European compact OBJ task 218 route",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Document a conditional metadata-to-task route and child callbacks for the second compact OBJ bank."
+  ],
+  "validation": [
+    "Original EUR Wine disassembly and independent metadata record, descriptor, callback and branch target reconciliation passed with source inputs unchanged."
+  ],
+  "limitations": [
+    "The record producer, actor/action identity, actual task execution and ordinary resource use remain unproved. Linux, USA and native Windows remain pending; no performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_obj.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

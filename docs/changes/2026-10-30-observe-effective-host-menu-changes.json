@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "date": "2026-10-30",
+  "slug": "observe-effective-host-menu-changes",
+  "title": "Observe effective host menu selection and value changes at existing input boundaries",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU build",
+    "Wine"
+  ],
+  "changes": [
+    "Add a readonly semantic menu state API with page/item IDs/labels, actual values, dropdown choice, content selection/filter/history/editor state, typed tool fields, binding capture and feedback. Keep observation independent of canvas geometry and drawing caches.",
+    "Publish per-property host-menu baselines and effective changes through the shared event clock, with previous/current values, item identities and cause. Bound96properties and256character prefixes with full hashes on truncation; unchanged repeated hover/state emits nothing.",
+    "Wrap existing frontend input/tick boundaries so early editor returns remain observed; preserve queued mouse request context and existing handler call counts. Add button/wheel/IME tokens, consumed-input/capture results and actual synchronous refusal feedback while retaining explicit raw Gilrs/DirectInput gaps.",
+    "Include the linked common-event guide in explicit public package and Docker source/ignore inventories; keep private Data exclusions. Synthetic package tests validate the closure without publishing a release."
+  ],
+  "validation": [
+    "Initial Windows GNU609source/50overlay test/runtime compilation passes warning-free; final current-root guard correctly refuses a catalog key/name addition made after freezing. Preserve initial candidate92c62adbe23f4d1708b43e604f548e61acdd2487808570bcdb47ba61f933fd66 and preimages; no GUI acceptance.",
+    "Wine8distinct cases pass:4newmenu/1newreadonlyscroll/1newboundedsemanticdiff/affectedhover/affectededitor. The attempted play::tests XInput filter matches zero tests and is not counted; correct module is gamepad_capture_simulation, pending actual execution.",
+    "Catalog-only candidateff49a969d7fcd53e3fa2eb1b7fb5724a1be03e70cb718bd80127b243061933e5 builds warning-free with609frozen/50overlays and all source/runtime preservation guards pass. Its added catalog key/name regression remains pending.",
+    "Static coverage audit identifies per-page state/save/backup/catalog/preview feedback and selected slot availability missing from the semantic snapshot; add those fields and a new readonly feedback case, plus explicit mapped backend/device and captured pad token. Focused five-overlay coverage build is in progress; no unchanged old tests or GUI repeated.",
+    "Final coverage-complete Windows GNU build passes warning-free609frozen source files/50host overlays, runtime7c2ef3e3008a880de4426d2ea768ed72b670089ac52779bd3f3e4a50788e1d8a. Three remaining cases pass on this build; union with eight unaffected scoped earlier cases is11distinct Rust cases, excluding the zero-match attempt.",
+    "One GUI variant copies the same accepted closed public seed/ROM/marker, updates only its own runtime pin/label and adds the declared simulated XInput DLL. No factory rerun. Six accepted scoped captures contain580UI/739recent events, all580shared canonical events identical with zero eviction/oversize. Full machine state/frame0/clock0 exact in every observation.",
+    "Actual GUI verifies held Confirm with raw autorepeat gives one dispatch, dropdown preselection/cancel plus ON/OFF commits, one effective hover change and no repeated-hover changes; draft cancel leaves the address unchanged, explicit commit changes it once. South held850ms causes one shared readonly inspection, while length0 gives one correlated synchronous refusal/feedback.",
+    "Actual GUI verifies South held800ms assigns one pad binding without confirmation, mouse cancellation, supported G keyboard assignment and Escape cancellation. Preserve existing key_name vocabulary: attempted F4 is unsupported and stays pending. This was a harness assumption, not an expanded binding feature or guest regression.",
+    "Preserve partial editor/controller/pad prefixes and resume only unmet criteria after three harness assumptions: old Extended saves label, Start / apply label, and field click opens editor immediately. No completed interaction is repeated; full capture duration of resumed prefixes is unknown, report-publication time is labeled separately. Native IME/physical controller acceptance is not inferred.",
+    "Initial public-doc inventory test fails because Docker COPY/ignore closure lacks the newly linked guide; add explicit entries. All10synthetic package tests then pass, including complete public closure and private sentinel exclusion. No actual release package or Docker runtime build.",
+    "GUI closes and Xvfb134044 retires; authoritative host/proc finds0owned runtime/helpers. Final preservation passes609frozen/50current host overlays plus5public-doc overlays, normal runtimes hash+mtime, source/variant immutable pins, same seed/no factory,54accepted files and no tool process. Evidence target/debug-tools-v2-host-events/{initial-build-result,catalog-only-build-result,build-result,test-results,remaining-test-results,gui-stage1-result,gui-editor-result,gui-controller-result,gui-refusal-result,gui-pad-binding-result,gui-keyboard-binding-result,gui-close,final-preservation,process-closure}.json.",
+    "Project memory render/check and diff checks pass. Retire six verified superseded standalone initial/catalog-only executables after final preservation and process closure; retain all current/pinned runtimes, source preimages, accepted outputs and negative harness evidence. Receipt target/debug-tools-v2-host-events/retired-executables.json."
+  ],
+  "limitations": [
+    "Broader runtime/tool/job lifecycle coverage and live console remain DBG2-10/11; performance acceptance12. Native Windows/Linux, physical controllers and physical IME unverified.",
+    "Concurrent ROM changes remain outside the selected host source. No private game inputs, DS acceptance, package, commit or push.",
+    "This metadata/UI unit has no managed disposable ROM datasets; the rom-data-only retention helper remains inapplicable. Keep accepted reports, preimages, current executables and negative harness/source-guard evidence; retire only verified superseded standalone executables."
+  ],
+  "files": [
+    "crates/menu/src/lib.rs",
+    "crates/menu/src/selection.rs",
+    "crates/menu/src/selection/tests.rs",
+    "crates/menu/src/content_selector.rs",
+    "crates/menu/src/content_selector/tests.rs",
+    "crates/menu/src/debug_tool.rs",
+    "crates/menu/src/debug_catalog.rs",
+    "crates/recomp/src/play.rs",
+    "crates/recomp/src/debug_events.rs",
+    "crates/recomp/src/debug_events/selections.rs",
+    "scripts/package_ffta_portable.py",
+    "scripts/tests/test_package_ffta_portable.py",
+    "Dockerfile.linux",
+    "Dockerfile.windows",
+    ".dockerignore"
+  ],
+  "references": [
+    "docs/debug_events.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "decode-european-unit-obj-initial-pose",
+  "title": "Decode European unit initial-pose frames and indexed OBJ tiles",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add source-only unit_obj_initial_pose model/shared source plan rooted in existing metadata52/14producers:121bindings/121sequences477frames,6reused typed OBJ lists31objects and333physical pixel blocks. Decode135168raw4bppB into4224tiles of8x8palette indices while reconstructing every source nibble/opaque header/tail/attribute.",
+    "Validate strict JSON unknown fields, fixed projection shape, ordering, source links, bit widths, alignment, overflow and physical ownership. Preserve original u16 tile-count storage/LSLS19-LSRS16word count and reserved shape3transfer semantics. Authenticate coherent edited models against exact EUR source; no guest caps or publication/runtime revision bump.",
+    "Add one targeted ignored Wine source-model/original-reset/scheduler/DMA oracle. Keep prior resource/model tests closed; no new scene fixture or navigation. Managed publication, typed runtime/native state-clock equality, actual CLI and positive ordinary use are selected separately."
+  ],
+  "validation": [
+    "One Windows frontend test build20506passes warning-free; frozen executable1d759b0dd687a94364142f67422d8c4423122771b7ae741057559e08d32f37de. One exact Wine19197filter passes on first execution:415spans146358B/independent fields and hashes/JSON roundtrip/11shape-unknown-field-coherent-edit guards.",
+    "121complete original22E20reset paths and one22788actual-constructor prefix pass predicted task bytes, untouched RAM, SP and callee preservation at declared endpoints.477original22400scheduler\u219222254\u219200B14queue\u219200800realDMA3uploads match all VRAM/all135168distinct pixel source B;16shape-size probes include reserved shape3. No host codec or direct fabricated upload consumer replaces original instructions.",
+    "Original loadsites observe9393distinct nonpixel B; DMA observes135168pixel B.1797B are losslessly preserved but unread in these probes:242opaque header/1431frame-tail/124OAM B.245830instructions499PC are coverage only.703prior hash-mtime guards and all four compiled source inputs remain unchanged during validation. Evidence windows-model-build.json/windows-model-result.json/windows-model-europe/result.json/windows-model.log under target/rom-data-obj-remaining-sources/.",
+    "Final preservation audit passes all6279prior protected artifact hashes,703prior hash-mtime guards and four compiled source inputs; user Debug-save/concurrent Docker/old proof artifacts remain unchanged. Project-memory default/base7597b92 and CRLF-aware whitespace checks pass. Only the selected source-model modules, registration lines and coherent memory documentation are changed in this unit."
+  ],
+  "limitations": [
+    "Source-model scope only: no managed extraction/publication, native/interpreter full-state-clock, whole-unit/allocator ABI or ordinary-use acceptance yet. Other animation/part/sprite IDs and palettes remain outside this projection; unresolved job0/1value65535is not interpreted as a live sentinel fallback.",
+    "EUR stays e56-d55 and USAe8-d7. New Linux/USA/native Windows checks pending; no production build, old test/scene replay, performance/space measurement, new gameplay fixture/navigation or save/ROM payload edits, Android change, package, agent commit or push."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/unit_obj_initial_pose.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/unit_obj_initial_pose_model_tests.rs",
+    "docs/rom_data_unit_obj.md",
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_unit_obj.md",
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

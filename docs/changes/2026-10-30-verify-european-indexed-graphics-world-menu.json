@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "date": "2026-10-30",
+  "slug": "verify-european-indexed-graphics-world-menu",
+  "title": "Verify ordinary European indexed graphics world-map menu equivalence",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add passive12stat normal-input observer and optional positive indexed-graphics scene guard, preserving core/runtime behavior and current parameter/world observers; freeze accepted597CLI+oneleaf=598sources.",
+    "Authenticate source context453E2\u21921967Ccontext3\u2192program2MENU and select onlynormalStart12 from a guarded4519worldmap copy, stopping firstnewsource+31 without replaying oldDown-A/320Clan/world38daily45 routes."
+  ],
+  "validation": [
+    "One warningfree Windows hosttest build6d40a6a52f53d4ae74a2a371812c939f80e3de482e9e4f1185cffd320eb48289; one41frame normalcapture4519\u21924560/firstsource9guest4529/rolling41suffix/discoverySTOP. Privateprepare variable collision recoveredOFFLINEsamecopiedseed/snapshot beforefirstbuild, no proofreplay.",
+    "Sameproductiond876CLI onepositive41/same598test onefullpair41: everycomplete state/clock/classic-wide/OAM/fiveaudio exact, all12counts matchcapture-CLI-pair:274reads277servedB(selector4/header6/index4/token67/literal17/dictionaryheader4/dictionary175),onearchive-program-group/allsevenclassespositive.",
+    "83IDhash86managedpaths nowrite/oldnativecache28859 exact.144guards598frozen597CLI/threecurrent/inversehub-validator/ROM-originalcheckpoint-input-cache-TinyCC-canonical exact; fullwide284x160framebuffer authenticates readonlyclassicMENU Party-Clan-AreaList-System/MoonDay9.",
+    "205083native283493fallback dispatch/audio[89974,89974,10824,10824,89898] coverageonly. Botharms sameoldnativecache, no globalinterpreter-nativeparityclaim. Nonfatal WineD-Bus warning/child0; no retry.",
+    "Normalinputcopiessoleguestinputs; no manualRAM-register-task-ID-RNG-ROM-cartchanges/closedsource-model-runtime-CLIregistration-oldordinaryproof replay/performance measurements."
+  ],
+  "limitations": [
+    "Oneordinarycase coversonearchive-program-group/allsevenbyteclasses, notall20archives649programsfourgroups/languages.",
+    "Mode3/widerwidth/fullroutineABI/liveeffects/globalextent/indirectaliases/opaquecontexts/tails/modphases/fullROMTODO remain pending; sparse27ordinary remains partial.",
+    "Linux/USA/nativeWindows/new32:9 remain unverified percurrent scope."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "crates/recomp/src/rom_data/indexed_graphics_scene_tests.rs",
+    "docs/rom_data_indexed_graphics.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_indexed_graphics.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-10-22",
+  "slug": "model-european-complete-font-and-name-keyboard",
+  "title": "Add partial offline European complete-font and name-keyboard models",
+  "kind": "added",
+  "platforms": ["Windows", "Wine"],
+  "changes": [
+    "Inventory direct original text-decoder callers and the separate EUR name-entry archive, its cell producer/selector and navigation row widths.",
+    "Add exact-EUR source-authenticated offline models for 3175 packed font slots/metrics and three name-keyboard programs with relative indices, row widths and derived selectable cells.",
+    "Prepare focused synthetic and optional private original-reader coverage without changing managed e12 publication or direct runtime consumers. This unit remains partial while the goal is paused."
+  ],
+  "validation": [
+    "Bounded static caller/producer evidence retained under target/rom-data-text-auxiliary; keyboard glyph3174 ends at the original width root.",
+    "Windows release test binaries compiled successfully with the existing warning gate; compilation session71615 is terminal. Artifact locators are retained in target/rom-data-font-keyboard/windows-tests.json.",
+    "No Wine test for this new unit has run. The prepared runner and independent static inventory are retained for explicit resumption."
+  ],
+  "limitations": [
+    "Offline source/original equivalence is pending; compiled test code does not establish a passing oracle.",
+    "Managed publication, direct consumption, lifecycle and ordinary name-entry scene coverage remain open. No Unicode mapping or complete script semantics are claimed.",
+    "New Linux and USA checks remain pending by user instruction, as does native Windows verification. No performance/space measurements, new recording, AndroidPort change, commit or push."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/fonts.rs",
+    "crates/gba-core/src/rom_data/name_keyboard.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/font_keyboard_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_text.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

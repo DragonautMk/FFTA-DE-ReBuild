@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "consume-european-script-archive",
+  "title": "Publish the European script archive and serve original guest reads from typed storage",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "EUR e51-d50 adds script-archive.json/engine.script-archive:46generation files/45resources, retaining all44previous decoded files and the e50generation. USAe8-d7 remains unchanged. Declare actual command-directory/effect-directory dependencies and validate their lengths/selector links before activation.",
+    "Bind both source ranges/115464bytes directly to typed index words, instruction opcodes/raw parameters, event keys and fill fields, preserving Program/Header/Fill target views without a ROM shadow. Merge previous owners and raw ROM at mixed boundaries; counters for categories/banks/programs/keys/fills remain outside serialized state.",
+    "Connect frontend extraction/preparation/activation/usage and an ordinary assertion requiring script opcodes and parameters. Preserve original low16/raw IDs, key0unaligned rotation, q0, cursor/branch/callback control, palette-effect owner on the same page and adjacent raw text/coordinate roots; save/native ABIs remain unchanged."
+  ],
+  "validation": [
+    "Previous goal turn made progress: whole archive source/model and oneWineoracle closed, model-final-summary terminal/no livejob and257source/doc hashes match before selection. Do not repeat source/static/model or old native/lifecycle/CLI/ordinary proofs for context.",
+    "Affected Windows release tests22414 compile without warnings. Wine76182 runs the two new reduced managed/native filters sequentially; both pass on the first run.13coherent/dependency/source-set guards, failure-atomic create/reuse/repair/move, all44prior decoded files/e50retention, transactional missing-file activation, resident ownership through unavailable files/Load/Undo/backups/Restart and all115464typed bytes/62banks/207programs/234keys/45fills pass with isolated raw sources altered.",
+    "Native checks pass28original/interpreter/native complete-state/clock prefixes, with compiled API reads37index/4opcode/7parameter/12key/1fill aggregate bytes. Raw0/234/239/65535/low16/unaligned rotation/header-fill-target/q0/relative-target/return-loop behavior agrees. Previous palette-effect callback4B on pageB94, mixed start2raw+2new/both ends2new+2raw, all widths/mirrors/realBIOS/CpuSet/FastSet/DMA agree.169instructions/66PCs/28native dispatches are coverage only. Reuse STOP_PC guard; production emitter/source model unchanged. All3718prior artifacts plus the new test executable protected; no failed checks.",
+    "Windows48522 production CLI compiles warning-free; canonical executable restored exactly. Wine66454 actual CLI creates/reuses48managed files without writes from an unrelated cwd, loads the old cache and matches all46generation files to accepted e51dataset2a1f9aa937b20aadc24801adf4326dffc71bb7cba8329865c15440be6b4994dd. Candidate2a2ea73929aa9e8c097a2379ce1b025fa05396f44dd5fe9e49a425815b6b4d80. Retained genuine EUR suspendboot-to-battle8476/classic0 locator is positive:27aggregateB=8index7opcode10parameter2key,1bank/1program/1keyrecord/0fill.365hash-mtime guards pass.",
+    "One Wine44039 fullpair from the actual CLI-published e51generation passes all8476full states/clocks/central-wide images/OAM/dispatch and mixed/PSG/FIFO/bitwise-HLE audio samples [18599928,18599928,2236876,2236876,18578590], using retained genuine EUR suspendboot-to-battle inputs/save/classic0 and the already built test executable/native cache. Actual archive use matches CLI27B=8index7opcode10parameter2key/1bank1program1key/0fill;366hash-mtime guards pass. The private helper protected-map lookup was corrected before its first execution; no guest check failed or was repeated. Terminal evidence windows-scene-result.json/windows-battle-entry-archive-full-state-audio.log."
+  ],
+  "limitations": [
+    "Declared EUR/Wine managed publication/direct guest/native field/production CLI/positive ordinary acceptance is complete. Other61banks/206programs/233keys/all45fills remain targeted-only; no whole script interpreter/callback ABI, complete argument semantics or new32:9 scene claim.",
+    "Five linked localized text archives, the preceding e49positive ordinary criterion and other asset/GUI/archive/mod work remain open. New Linux/USA/native Windows checks remain pending. No performance/space measurements, new fixture/navigation/save-RAM-payload edits, Android changes, agent commit or push. Preserve concurrent Docker work and all prior artifacts."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/script_archive.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/script_archive_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "scripts/extract_rom_data.py",
+    "docs/rom_data_scripts.md",
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_scripts.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

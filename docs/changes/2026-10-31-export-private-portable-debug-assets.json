@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "export-private-portable-debug-assets",
+  "title": "Export a private portable Windows debug asset collection",
+  "kind": "added",
+  "platforms": [
+    "Windows portable archive; built locally with Python and validated through Wine"
+  ],
+  "changes": [
+    "Add a private ZIP exporter and Windows/Bash entry points using the existing Windows debug-tools base and selected current executables; set up portable EUR working saves and the complete debug catalog with Debug and Extended saves enabled.",
+    "Collect local debug_saves and legacy cases, verified source-manifest files, selected complete recordings and F-09 replay; retain USA as existing unverified content. Reject ROM/BIOS, symlinks and unsafe paths, verify catalog and recording hashes, portable manifest, ZIP CRC and SHA-256; publish a new output without overwriting.",
+    "Provide local instructions, explicit input overrides, an archive inventory and per-file hashes. Keep ordinary release packaging and Git free of private data.",
+    "Ignore the extracted FFTARecomp-debug-EUR folder in the checkout and place a restrictive .gitignore inside the private portable folder to protect assets from accidental Git additions."
+  ],
+  "validation": [
+    "Created ignored private ZIP with313 files,104 verified catalog assets,10 verified original sources,2 completed recordings and F-09 replay. Final archive CRC verified and runtime/config/catalog/saves hashes match the previously extracted GUI-tested archive; only extra verified sources, the Git ignore and instructions/manifests differ.",
+    "Wine: extracted Windows runtime successfully listed the EUR catalog with19 available entries and created an isolated DS-20 case. Its pinned runtime opened the catalog GUI while paused; full guest state/clock and original private inputs remained unchanged.",
+    "Verified no-overwrite refusal, Python syntax and Bash wrapper syntax; the final archive excludes ROM and BIOS. Project memory, Atlas inventories and diff checks are recorded separately.",
+    "Confirmed the extracted-folder path is ignored by Git and the archive contains a restrictive .gitignore; checked final ZIP against the previously Wine-tested payload.",
+    "Metadata-only memory/render and Atlas inventory checks pass; full and base memory checks flag only seven unrelated concurrent ROM implementation paths whose work was not modified or attributed to this export."
+  ],
+  "limitations": [
+    "Requires the selected Windows portable base and compatible current Windows binaries; extraction of the ZIP alone does not provide a ROM or BIOS. Native Windows, Linux execution, physical controllers and USA gameplay remain unverified.",
+    "The export includes explicitly selected collections and completed recordings, not every transient experiment or all target directories. Local evidence and private ZIP remain ignored; no publication, benchmark, guest stepping or release package.",
+    "The full working-tree memory check is currently nonzero because concurrent ROM changes need their own change record; the export record covers its own implementation files."
+  ],
+  "files": [
+    "scripts/export_debug_assets.py",
+    "scripts/linux/export_debug_assets.sh",
+    "scripts/windows/export_debug_assets.ps1",
+    "scripts/README.md",
+    "README.md",
+    ".gitignore"
+  ],
+  "references": [
+    "docs/private_debug_assets.md",
+    "docs/debug_tools.md",
+    "docs/debug_catalog.md"
+  ]
+}

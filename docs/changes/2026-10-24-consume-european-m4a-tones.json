@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "consume-european-m4a-tones",
+  "title": "Publish typed European tones and PCM/CGB samples for guest and MP2K shadow reads",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Advance EUR to e42-d41 with audio-tones.json/audio.m4a-tones:37files/36resources, all35prior decoded files/e41retained, USAe8-d7. Bind736new source spans/1941759B and the actual parsed audio-directory dependency; the shared first4waveheader bytes keep one owner.",
+    "Reconstruct typed tone/keymap/header/signedPCM/endpoint/CGB values for original CPU-DMA-BIOS-native bus reads and MP2K MemView. Both frame-hook/header and tick/sample callsites borrow the immutable owner; RAM remains live, raw gaps retain behavior, original mixer/sequencer/HLEinterpolation/clock/save-nativeABI remain. Guest/host category counters and separate wave masks are nonserialized metadata."
+  ],
+  "validation": [
+    "Windows10352/87016/49176test builds warning-free. Wine84702managed test passes publication failure/create-reuse-repair-move/e41retention/26coherent source-model-dependency-path-hash guards/missing-file transactional owner/unavailable-copy Load-Undo-backup-Restart. All1941759typed bytes and429tone/347map/277wave/2CGB masks pass with raw owned spans altered; host header/sample access after restore passes.",
+    "All736new manifest source bindings are disjoint from all35prior resources. First Wine23661managed attempt failed because guard10read the deliberately invalid tone file left by guard9; corrected test uses original directory bytes. Second check stopped after native/edge proofs because test real_bios flag remained true before restoring falseBIOSbaseline. Failed logs/source/roots/objects retained; production/model unchanged by both test corrections. Only failed focused checks rebuilt/rerun; managedpass retained, no production/model correction.",
+    "Wine3937second focused check terminal/pass25representative original/interpreter/native checkpoints with raw1941759B+4directoryalias altered and equalcomplete states/clocks. Compiled categories[115tone,7map,14header,3PCM,2endpoint,32CGB]positive. All736span edges/widths/mirrors/realBIOS/SWI-DMA/two-owneralias and fixed8rawtail behavior pass.903instructions/135PCs/55dispatches describe coverage only.",
+    "Both actual MemMap MP2Kcall-sites pass all277waves:4428typed headerB/35458typed PCM B, nonzero bit-exactshadow samples, all277hostwavemasks and completehoststate/clock equality.276directhost endpoint probes are separate from current HLEboundaryclamp; liveRAM and unownedROM hostfallback pass. Not every PCM byte is read by the shadow, and internal note/header/ARM/CGBcheckpoints are not fulloriginalmixerABI.",
+    "All499previous protected files plus each frozen test executable remain unchanged. Private target/rom-data-audio-tones/{windows-managed-retry{1,2}-tests.*,windows-managed-results.json,windows-{managed,native}.log,recomp-tests-managed-retry{1,2}.exe,windows-managed-europe/{managed-result,native-result}.json,managed-prior-overlap.json} retain terminal results. Olddecoder/390BD-348map-277endpoint/e41proofs not rerun.",
+    "Project-memory including --base7597b92and CRLF-aware whitespace check pass; existing CRLF retained in mem/mp2k/gax/rdrv. managed-final-summary/managed-final-protected retain closure; no live unit process.",
+    "ProductionWindows16173build warning-free; private candidate719db176a0d2672de5bc8e0712b6dcdefb6c3b91bec62157e3116e91dd7047d2, canonicalf3e277dbrestored. Wine79505actualCLIcreate/reuse-no-write39managedfiles/oldcache/unrelatedcwd400bankPlay pass516956newguestB(247tone/5map/11362header/504912PCM/430endpoint/0CGB). Default headless snapshot has shadow off(host0), not a CLIhost-useclaim; no locator repeat.",
+    "OneWine36911new e42ordinary400pair passes everycomplete state/clock/central-wideimage/OAM/dispatch/mixedPSGFIFOHLEsample with same516956guestB and actualhost3093208B(1056header/3092152PCM). Existing helper arms shadow after snapshot load; both guest and hostPCMuse required. Mixed1379881native/2741618fallbackdispatches are coverage only. Existing IN13bankPlay checkpoint/input reused without fixture recreation/RAM-statepayload/personal-save edits; oldsource/model/native-host/e41ordinary proofs not rerun.",
+    "Final568x160CLIbankbackground inspected; known serializedseparateUIomits panels, no newfoodcount/confirmationclaim. Private windows-{build,cli-processes,cli-no-write,cli-summary,scene-result}.json/scene-executable.json/windows-bank-play-audio-tones-full-state-audio.log/bank-play.png retain new terminal evidence. No new build/Wine failure in production/ordinaryunit.",
+    "Final project-memory including --base7597b92and CRLF-aware whitespace checks pass; 597protected hashes/39CLIhash-mtime guards unchanged, ordinary-final-summary/ordinary-final-protected retained. All unit processes terminal; goal remains active for broader TODO."
+  ],
+  "limitations": [
+    "Ordinary acceptance covers one retained EUR GoblinPlay400frame scene with positive tone/keymap/header/PCM/endpoint and MP2Khost reads; CGBordinary reads are zero. ActualCLIdefault headless shadow is off; positive host acceptance comes from the differential helper that arms it after load. Targeted note/header/ARM/CGBcheckpoints are partial original routines; wider scenes/allpayload shadow-read/wholemixerABI remain unclaimed.",
+    "Unselected assets, complete sequence export, driverLUTs, otherfamilies/GUI/archive/modTODO and newLinux/USA/nativeWindows remain open. No performance/space/AndroidPort work, asset publication or agent commit/push; concurrent Debug-save and prior e39-e41work preserved."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/audio_directory.rs",
+    "crates/gba-core/src/rom_data/runtime/audio_tones.rs",
+    "crates/gba-core/src/mp2k.rs",
+    "crates/gba-core/src/mem.rs",
+    "crates/gba-core/src/gax.rs",
+    "crates/gba-core/src/rdrv.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/audio_tone_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "scripts/extract_rom_data.py",
+    "docs/rom_data_audio.md",
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_audio.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

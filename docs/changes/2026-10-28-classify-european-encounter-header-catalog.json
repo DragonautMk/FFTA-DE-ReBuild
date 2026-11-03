@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "slug": "classify-european-encounter-header-catalog",
+  "title": "Authenticate European encounter header boundaries and preserve shared source ownership",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Establish declared442header40Bphysical partition1..442 at70C8F4..710E04 using independent first-header/next28B-family roots and442contiguous unit-template backlinks(2850records). Keep low16unchecked guest indices distinct from physical ownership; index0prefix aliases coordinate payloads and is not a valid typedheader.",
+    "Classify17reader fields/33semantic7opaqueB perheader without inferred byte/enum/boolean/null policies. Preserve existing constructor-alternate ownership of header29pointer4B and192nestedtemplateB; define dependent two-fragment plan17676newB with shared-pointer coherence and prior-owner/stat retention. Nested payload schema/ownership remains separate."
+  ],
+  "validation": [
+    "Readonly source follow-up uses27cachedrootliterals/27new PCrelative loader candidates,40bounded windows(39new1reused),54instructionpins and68actualguards PASS. All442headers reconstruct exactly; newfragments disjoint from49793spans71priorowners after excluding the one shared4Bpointer.2850template chain contiguous; no maximum-reference-only count inference or globalindirectabsence claim.",
+    "Artifact completion zero paths; originalROM/executables/prior source contracts preserved. No build, game, Wine/Linux test, checkpoint, guest/cart edit, performance measurement or closed road/node/constructor/navigation acceptance replay."
+  ],
+  "limitations": [
+    "Typed header model/shared-plan/original Wine reader proof/extraction/runtime/CLI/ordinary pending. Unit-template fullschema and coordinate-pool coverage are separate source leads; no globalarchive/allcaller/fullABI completion claim.",
+    "Linux/USA/nativeWindows/new32:9 and fullROM_DATA_TODO pending. No performance/storage campaign, Android/package, assistantcommit/push; parallelDebug/existinguser work preserved."
+  ],
+  "files": [
+    "docs/rom_data_maps.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_maps.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

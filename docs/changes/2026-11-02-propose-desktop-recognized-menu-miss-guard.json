@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "propose-desktop-recognized-menu-miss-guard",
+  "title": "Propose bounded desktop recognized-menu miss guard",
+  "kind": "docs",
+  "platforms": [
+    "Desktop proposal; GUI and implementation pending"
+  ],
+  "changes": [
+    "Specify a reviewable desktop input unit for recognized battle-menu misses, with baseline, replay and platform acceptance gates."
+  ],
+  "validation": [
+    "Inspected the existing event handler, mouse queue, recording frame latch, relevant upstream TODO and previous EUR modeled evidence; no new runtime or ROM access."
+  ],
+  "limitations": [
+    "The proposal requires specific-unit approval and real GUI baseline; it does not establish a fix for unrecognized partial reveals or change runtime behavior."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-03-recognized-menu-miss-proposal.md",
+    "docs/development/upstream-audit/U31-03-panel-visual-fixes.md"
+  ],
+  "references": []
+}

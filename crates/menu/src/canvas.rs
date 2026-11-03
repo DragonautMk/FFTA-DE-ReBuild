@@ -2,6 +2,18 @@
 use ab_glyph::{Font, FontRef, ScaleFont, VariableFont};
 use std::sync::OnceLock;
 use tiny_skia::{Paint, PathBuilder, Pixmap, Stroke, Transform};
+thread_local! {
+    static PANEL_ALPHA: std::cell::Cell<u8> = const { std::cell::Cell::new(255) };
+}
+pub(super) fn panel_alpha() -> u8 { PANEL_ALPHA.with(|value| value.get()) }
+pub(super) fn with_panel_alpha(alpha: u8, draw: impl FnOnce()) {
+    struct Restore(u8);
+    impl Drop for Restore {
+        fn drop(&mut self) { PANEL_ALPHA.with(|value| value.set(self.0)); }
+    }
+    let _restore = Restore(PANEL_ALPHA.with(|value| value.replace(alpha)));
+    draw();
+}
 pub(super) struct Canvas {
     pub pix: Pixmap,
 }
@@ -21,7 +33,7 @@ impl Canvas {
     }
     pub fn path(&mut self, p: tiny_skia::Path, c: [u8; 3], stroke: f32) {
         let mut paint = Paint::default();
-        paint.set_color_rgba8(c[0], c[1], c[2], 255);
+        paint.set_color_rgba8(c[0], c[1], c[2], if stroke > 0. { 255 } else { panel_alpha() });
         if stroke > 0. {
             self.pix.stroke_path(
                 &p,
@@ -79,11 +91,11 @@ impl Canvas {
             vec![
                 tiny_skia::GradientStop::new(
                     0.,
-                    tiny_skia::Color::from_rgba8(top[0], top[1], top[2], 255),
+                    tiny_skia::Color::from_rgba8(top[0], top[1], top[2], panel_alpha()),
                 ),
                 tiny_skia::GradientStop::new(
                     1.,
-                    tiny_skia::Color::from_rgba8(bottom[0], bottom[1], bottom[2], 255),
+                    tiny_skia::Color::from_rgba8(bottom[0], bottom[1], bottom[2], panel_alpha()),
                 ),
             ],
             tiny_skia::SpreadMode::Pad,
@@ -110,10 +122,10 @@ impl Canvas {
         p.line_to(xx, yy);
         self.path(p.finish().unwrap(), c, width);
     }
-    pub fn text(&mut self, x: f32, y: f32, s: &str, c: [u8; 3], size: f32, title: bool, max: f32) {
+    fn typeface(title: bool) -> &'static FontRef<'static> {
         static BODY: OnceLock<FontRef<'static>> = OnceLock::new();
         static TITLE: OnceLock<FontRef<'static>> = OnceLock::new();
-        let font = if title {
+        if title {
             TITLE.get_or_init(|| {
                 let mut f =
                     FontRef::try_from_slice(include_bytes!("../assets/fonts/Cinzel.ttf")).unwrap();
@@ -127,7 +139,40 @@ impl Canvas {
                 f.set_variation(b"wght", 600.);
                 f
             })
-        };
+        }
+    }
+    /// Wrap with the same face, variation, kerning and advances as text().
+    pub fn wrap_text(text: &str, size: f32, max: f32) -> Vec<String> {
+        let font = Self::typeface(false);
+        let scaled = font.as_scaled(size);
+        let mut lines = Vec::new();
+        let mut line = String::new();
+        let mut width = 0.;
+        let mut last = None;
+        for ch in text.chars().take(16384) {
+            if ch == '\n' {
+                lines.push(std::mem::take(&mut line));
+                width = 0.;
+                last = None;
+                continue;
+            }
+            let id = font.glyph_id(ch);
+            let kern = last.map_or(0., |prev| scaled.kern(prev, id));
+            let advance = scaled.h_advance(id);
+            if !line.is_empty() && width + kern + advance > max {
+                lines.push(std::mem::take(&mut line));
+                width = 0.;
+                last = None;
+            }
+            width += last.map_or(0., |prev| scaled.kern(prev, id)) + advance;
+            line.push(ch);
+            last = Some(id);
+        }
+        lines.push(line);
+        lines
+    }
+    pub fn text(&mut self, x: f32, y: f32, s: &str, c: [u8; 3], size: f32, title: bool, max: f32) {
+        let font = Self::typeface(title);
         let scaled = font.as_scaled(size);
         let mut pen = x;
         let mut last = None;
@@ -161,5 +206,16 @@ impl Canvas {
             pen += adv;
             last = Some(id);
         }
+        super::diagnostics::observe(
+            font,
+            x,
+            y,
+            s,
+            size,
+            title,
+            max,
+            self.pix.width(),
+            self.pix.height(),
+        );
     }
 }

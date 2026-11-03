@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-10-21",
+  "slug": "validate-alternate-palette-scenes",
+  "title": "Verify actual LCD B and TV palette use in the Cyril pub",
+  "kind": "added",
+  "platforms": [
+    "Linux",
+    "Windows GNU/Wine"
+  ],
+  "changes": [
+    "Extend the ignored complete-state/audio scene checker with FFTA_STATE_TEST_ALTERNATE_MODE: require original mode1 or2 initially and every frame, positive typed alternate link/literal consumption, and report the first consuming frame and BGID. Keep production runtime/schema/cache behavior unchanged.",
+    "Close declared EUR alternate scene and native GUI criteria; replace stale next actions with an unfinished graphics-contract selection. Preserve completed children and explicitly retain global FF exclusions, broader regions/scenes/languages/catalogs, archive/native Windows and other resource/mod phases."
+  ],
+  "validation": [
+    "Warning-free native and Windows GNU test builds. Four397-frame native legacy/decoded pairs from naturally Options-confirmed LCD B/TV snapshot copies match every full state, central/wide pixel, OAM, per-frame dispatch and mixed/PSG/both FIFO/HLE-bit sample, with all streams nonempty.",
+    "First alternate consumption is relative102, BG62. Each target records LCD B179bus reads/200sourceB/2tableB/165decoded-literalB and TV172/197/2/153; each also reads87BGmetadata bytes. Original mode checked at every frame. Existing production CLI independently confirms positive TV source use.",
+    "Actual e7 native GUIs on Linux and Wine load both mode copies, enter the pub with normal A input, and close0. Pub backdrop, greeting/portrait, menu and funds inspected for both captures per target. Each GUI records351alternate reads/4typed linkB/318decoded literalB. Asynchronous screenshots are visual inspection; per-frame pairs establish exact equivalence.",
+    "Original ROM/states/cache/loader/dataset/canonical hashes preserved. Existing candidate binaries, caches and e7 files reused; only the ignored checker rebuilt. Evidence and source hashes retained under ignored target/rom-data-bg-alternate-scenes, all processes terminal/pass."
+  ],
+  "limitations": [
+    "Declared EUR pub transitions only; global preconditions for five FF descriptors, other scenes/regions/languages/catalogs, actual archives, native Windows/default enablement and full ROM_DATA_TODO remain open.",
+    "No production rebuild, old base/producer matrix rerun, benchmark/profile/startup/RSS/space campaign, AndroidPort change, agent commit or push."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/validation_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

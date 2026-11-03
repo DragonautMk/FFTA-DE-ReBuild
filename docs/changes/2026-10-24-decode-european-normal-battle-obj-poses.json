@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "decode-european-normal-battle-obj-poses",
+  "title": "Decode normal European actor battle poses with shared-source and original DMA checks",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add a strict lossless normal-mode battle OBJ source model over121normal metadata52/14 producer IDs plus explicit42, with29body and8extra-part bases,10980logical keys,8374physical cells/5293nulls and2581sequences17894frames. This finite source projection does not cap live inputs or claim every actor/action pairing is reachable.",
+    "Decode150OBJlists676objects and3216raw4bpp requests into palette indices; preserve command-dependent words and all headers/tails for operations0/1/2/3/6/7/8. Original scheduling, RAM tasks, palette selection and DMA remain guest work.",
+    "Verify byte-identical shared views against initial-pose/equipment models before excluding146358/6984B from new ownership. Reconstruct6021new spans1455474B with strict JSON, graph, extent, ordering, source and dependency checks.",
+    "Reject the unrestricted alternate-sprite cross-product: sprite247/job68 animation104 reaches the independently rooted directory394834 rather than an animation-index cell. Preserve unresolved alternate/script49/live-stream pairing without invented count limits or bank extents."
+  ],
+  "validation": [
+    "Independent static source audit authenticates EUR and all54e59resource hashes/provenances, exact selectors/queries/headers and full operation1 object/pixel requests. Fullgraph6022spans1608816B/newowned6021spans1455474B have no internal role conflict or varying pixel extents; only initial/equipment sources overlap. New source SHA-25632b6b2408694e026fcc7858ab618d835aff43562273e46f360a039d6ec1eb8dc.",
+    "One affected Windows frontend test build passes without warnings; frozen executable SHA-256ce3fe0a0091e167541d4c049b0c3b526f22ead57d686bae265ca11c0d8479827. Ten compiled source inputs/preimages and893inherited hash-mtime guards pass.",
+    "One exact new Wine source filter passes on its first execution:12JSON/source/shared-dependency guards,16474original constructor-prefix aliases over8237newphysical cells/allthreeparts,5293null resets and2451newsequence resets with independently predicted task state and RAM guards.",
+    "100original command cases cover every operation2halfword pair, every event argument and other commands.2858original scheduler/queue/realDMA3 uploads match entire VRAM and all1063200newpixel-source bytes.89016observed nonpixel loadB/514PC/2389335instructions describe coverage only. Accepted initial/equipment original-reader proofs were not replayed.",
+    "All7711prior protected artifact hashes pass; selected shared hubs differ from preimages only by the two module registrations. Build/Wine logs, independent source plan and results remain under target/rom-data-battle-poses/.",
+    "Final new-model preservation passes895Wine hash-mtime guards/tencompiled source inputs and preimages, all7711prior hashes and 671local feature-document links. Project-memory default/base7597b92, new-module rustfmt and CRLF-aware whitespace checks pass; no runtime/ordinary acceptance is claimed."
+  ],
+  "limitations": [
+    "Offline source model only: managed publication/runtime attachment/actual CLI/ordinary-use equivalence remain pending. EUR e59-d58/55files54resources and USAe8-d7 unchanged.",
+    "No whole actor/allocator ABI or every preserved nonpixel-byte load claim. Other alternate/script/live-stream producer pairings and the broader ROM data TODO remain incomplete. Prior rejected gameplay/checkpoint derivation was not executed; its separate approval request is still pending.",
+    "New Linux/USA/native Windows/new32:9 checks remain pending. No new gameplay fixture/checkpoint/private payload edit, performance or storage measurement, Android change, package, agent commit or push."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data/unit_obj_normal_battle.rs",
+    "crates/recomp/src/rom_data/unit_obj_normal_battle_model_tests.rs",
+    "crates/gba-core/src/rom_data.rs",
+    "crates/recomp/src/rom_data.rs"
+  ],
+  "references": [
+    "docs/rom_data_unit_obj.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

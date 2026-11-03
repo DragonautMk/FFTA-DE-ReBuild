@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "consume-european-trade-parameters",
+  "title": "Publish and consume European trade parameter records through original code",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "EUR e39-d38 adds trade-parameters.json/gameplay.trade-parameters/trade-parameters-v1-json,34files/33resources, retains32prior decoded files/e38generations and USAe8-d7. All480bytes/five physical IDs2..6 authenticate transactionally with no invented semantic dependency on other gameplay resources.",
+    "Typed page6e8 projections preserve byte41 single ownership and merge prior typed owners/raw gaps for CPU/native/BIOS/SWI/DMA. Nonserialized opaque/markup-low/shared41/discount-tail counters and five-record mask observe usage. Original selector/separate70B D1F30getter/zero skip/live flags-count/arithmetic/division/guestclock/save-native ABI remain.",
+    "Factor original source helper to skip raw-source assertion only with typed owner attached, without extra observer reads or source-only behavior changes. Register parser/encoder/publication/bounded input guards/report/ordinary scene gate; extend existing budget fixture with new resource argument."
+  ],
+  "validation": [
+    "Windows21694testbuild warning-free; Wine20164two focused checks pass publication interruption/create-reuse-repair-move/e38retention/20coherent opaque-markup-shared41-discount-ID-order-source-dependency-path-role-hash-coverage guards/missingfile-transactionalowner/unavailable-copy Load-Undo-backup-restart/all480B/mask31.",
+    "28full original/interpreter/native paths/raw480Baltered match complete states/clocks; compiled opaque-markup-low-shared41-discount bytes0-5-10-10. No original opaque price-read claim.3377instructions/109dispatchcoverageonly. Source-only499+160+15oracle remains closed/not repeated; shared helper source-only behavior unchanged.",
+    "Allbytes/record-fieldedges/widths/mirrors/realBIOS/222precedingrawgap-following4raw/tailword2typed2raw/SWI32typed each+tail2typed2raw+earlierselection2/rawgap222/newtrade2coexistence/DMA2typed2raw pass. No build or Wine failure. Private evidence target/rom-data-trade-parameters/{windows-managed-tests-build.*,windows-managed-results.json,recomp-tests-managed.exe,windows-managed-europe/{managed-result,native-result}.json,managed-run-protected.json}.",
+    "Final183protected-file hashes/project-memory including --base7597b92/whitespace pass; managed-final-summary retained. All processes terminal, no remaining managed/native/lifecycle action.",
+    "Production46740warning-free/canonicalf3e277dbrestored/candidate59892c74d251ff35c5144e5773d4110c69a12bd8a441fbf67da167581e3defbe. ActualCLI17191create/reuse-no-write/oldcache/unrelatedcwd passes36managedfilehash-mtime guards. First400existingpre-Yes feeacceptance locator positive14newsourceB(7markup-low/7shared41),mask1physicalID2, rereads included.",
+    "One Wine89539full400pair matches every complete state/clock/central-wide image/OAM/dispatch/mixed-PSG-FIFO-HLEaudio sample with same counters/mask. FinalPubmissionlist/7109funds image inspected. Newpair proves e39only; previous e34threshold400/e38/source499+160+15/native28/managed proofs stayclosed/notrepeated. No newGUI/fixtures/payloadedits/personal savewrites.",
+    "Frozen21694test4070866db2c4fb6825f3f0df8e9d17dd2bf76157397ef4b677761531f8a9bc0c/validatorded241a5520283cb3b658244afd3e306f61c598e49feeda8485cbe0518cc7ed5 unchanged. Evidence target/rom-data-trade-parameters/{windows-build.json,windows-cli-{processes,no-write,summary}.json,windows-scene-result.json,windows-fee-accept-trade-parameters-full-state-audio.log,scene-executable.json,threshold-accept.png}.",
+    "Final254protected hashes/36CLIfilehash-mtime guards/project-memory including --base7597b92/whitespace pass; final-summary/final-source-hashes/final-protected retained, all processes terminal. Concurrent external Debug-save documentation changes observed and preserved without attribution or edits."
+  ],
+  "limitations": [
+    "NewLinux/USA/nativeWindows, other ordinary callers/discount-tail/opaque/all5records and wider ROM_DATA_TODO remain pending. Opaque semantics and separate70B source ownership remain unverified.",
+    "No performance/space/AndroidPort work, private ROM/save/input publication or agent commit/push. Existing e38/concurrent Debug-save/coverage work preserved."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/trade_parameters.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/trade_parameter_tests.rs",
+    "crates/recomp/src/rom_data/trade_parameter_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "scripts/extract_rom_data.py"
+  ],
+  "references": [
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_gameplay.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

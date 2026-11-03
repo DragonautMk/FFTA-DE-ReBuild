@@ -33,8 +33,13 @@ pub mod machine;
 pub mod mem;
 pub mod mp2k;
 pub mod ppu;
+pub mod ppu_profile;
 pub mod rdrv;
+pub mod rom_data;
 pub mod rtc;
+pub mod save_state;
+pub mod state_diagnostics;
+pub mod debug_memory;
 pub mod shadow;
 
 pub use bus::Bus;

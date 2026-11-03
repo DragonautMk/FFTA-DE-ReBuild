@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "date": "2026-10-26",
+  "slug": "model-european-observed-task-parameters",
+  "title": "Model the European observed task parameter fragments",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add an isolated observed_task_parameters API with independent unsigned phase-threshold and signed vertical-correction fragments, explicit source identities/indices and lossless10byte/two-span projection. Authenticate existing reader windows/literals and source hashes; strict JSON/source verification rejects malformed or coherently edited models.",
+    "Keep phase0/other phase bytes, previous correction indices0..3 and queries8..127 outside the observed model, preserving earlier-owner/raw contracts. Infer no global guest cap, physical table extent, duration units or new task/allocator ABI. Production pipeline/revisions remain unchanged; existing hubs only declare new modules."
+  ],
+  "validation": [
+    "First Windows frontend build succeeds without diagnostics; frozen8ce94211f4b4469de4e5a0471eb09969ede481ddf6de998d6cb157985aba8122. One first exact Winefilter passes independent fields/all10source bytes/two spans/boundaries/strict JSON/negative-signed roundtrip and27structural/coherent/unknown-field/range/source/truncation guards.",
+    "Eighteen original prefix cases pass: phase1/2 with oldcounter0/7/8/9/65535 verify store-increment then OLD-u16compare/phasewrap/counterreset; task bytes8..15 verify low-bit alias/source address/signed16 load/subtraction into projectedr2. Expected fullEWRAM effects, allotherRAM, OAM/VRAM/palette and preserved registers/control bits agree.",
+    "Canonical private model4b52c5f12f7633de0b1f790c5182ec5a727150a9460eb358eac3f41374788618.79selected input/frozen hash-mtime guards and compiled implementations exact. Two existing hubs differ only by declarations; accepted current66files/65resources/76OBJlists/e72-d71 andUSA8-7 unchanged, tennew bytes disjoint allcurrent owners.",
+    "Required artifact completion retires zero paths. No source-disassembly/295pin/oldABI/two-list/model/runtime/CLI/scene acceptance replay, new checkpoint/navigation or performance/storage campaign."
+  ],
+  "limitations": [
+    "Isolated model only; new managed publication, typed runtime, actual production CLI and ordinary new-owner equivalence remain pending. Phase0 and all unobserved indices remain outside the bounded fragments; no complete physical-table/whole-game/task ABI claim.",
+    "Lower452audit bytes remain separate;16control bytes retain ROM/code dependency. Linux/USA/nativeWindows/new32:9 pending. No Android/package/assistantcommit/push; full ROM_DATA_TODO active."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/observed_task_parameters.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/observed_task_parameters_model_tests.rs",
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

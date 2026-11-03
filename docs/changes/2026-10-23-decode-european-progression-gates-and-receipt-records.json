@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "decode-european-progression-gates-and-receipt-records",
+  "title": "Decode European progression gates with original live minima and zero-valued success proof",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Add strict lossless ProgressionGates/Record for64rows/768B6e7dce..6e80ce, physical IDs/sourceoffsets/unusedbyte00/structuralu16halfword01/outputbyte03/eightu8minima. Do not impose observed byte00-ID equality/minima<=50/receipt-as-item constraints. Finite diagnostic Outcome keeps matched physical ID separate from returned0/output/mask; original0487c8and u64helper own all guest work.",
+    "Source-only boundary leaves EUR e35-d34/30files/29resources and USAe8-d7 unchanged. Preserve12Bpreceding gap and next-table ownership; no foreign-key dependency or downstream receipt UI inferred."
+  ],
+  "validation": [
+    "Windows75099warning-free and Wine11775single new full0487c8oracle terminal/pass:80actual-source cases cover all64rows at exacteight minima, each below-bound field/firstmultiple eligible/physical order/bits31-32-63/fullmask/live0-255/zero-valued row63success marksbit63.25isolated highunused00/u16receipt/output128-255/unsigned128threshold equal-below-above copies pass, unauthenticated/unpublished.",
+    "All704used source bytes observed,64unusedbyte00not read, all768Broundtrip. StrictJSON/fixedarray/count/ID/order/sourceoffset/coherent edit/authentication/completeEWRAM-onlymask-output/SP/callee/stack guards pass.121113instructions/132PCs coverageonly; no performance metric.",
+    "All38protected ROM/e35dataset/canonical/candidate/cache/loader/sourcefixture hashes unchanged; oldsource/native/scene proof not repeated. External4423b91committed prior e35and this partial implementation during compilation, inspected/preserved without agentcommit. Structured memory and final checks recorded."
+  ],
+  "limitations": [
+    "Managed publication/direct CPU-DMA-native reads/lifecycle/positive ordinary use remain pending. Whole downstream receipt UI/foreign-key/semantic skill names unclaimed; structural16bit values preserve larger encoded-value branch.",
+    "NewLinux/USA/nativeWindows/widerTODO pending; no performance/startup/RSS/space measurements or AndroidPort changes. Private ROM/data/saves/inputs/generated fixtures remain ignored, no agent commit/push."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/progression_gates.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/progression_gate_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

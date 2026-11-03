@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "slug": "verify-european-mission-records70-cli",
+  "title": "Verify production CLI registration and startup for European mission records",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Record actual e86-d85 production CLI create/reuse/startup against the accepted79-file/78-resource runtime generation, preserving closed source/model/native/lifecycle proofs."
+  ],
+  "validation": [
+    "One warning-free Windows production build738b7f204da2fb45b0615c3673114ec604fb72a654810edbb3567be3d996f382 uses573 byte-identical runtime sources without overlays; affected core-library/production/menu fingerprints isolated, canonical executable hash/mtime restored.",
+    "Three Wine CLI children exit0: prepare created/reused and runc neutral startup1. All79 files equal the accepted runtime, all78 logged ID/hash pairs match,81 managed paths retain hashes/mtimes and the old28859-block native library is loaded unchanged.",
+    "Private helper generation initially asserts on the wrong dictionary-index token before any Wine child. Only generator-section correction follows; no repeated source copying, build or actual CLI preparation.",
+    "One neutral frame on an exact normal seed copy24755to24756 reports all13 mission-record counters0. All195guards/573CLI and573runtime hashes/79accepted files/originals/canonical/cache/loader remain exact; artifact helper retires zero paths.",
+    "Generated changelog, metadata, default/base999d0a6 project-memory coverage and CRLF-aware whitespace checks all pass."
+  ],
+  "limitations": [
+    "Positive ordinary consumption and complete state/clock/image/OAM/audio equivalence for this family remain pending. One neutral frame proves registration/startup and is not a new locator acceptance.",
+    "Linux, USA, native Windows, new32:9, full caller ABI, indirect references, successor-array/event-catalog contracts and full ROM TODO remain pending. No performance/storage campaign, Android/package/assistant commit/push.",
+    "Parallel menu/content/debug/package work is preserved and excluded from the frozen CLI sources; its tests are not attributed to this unit."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

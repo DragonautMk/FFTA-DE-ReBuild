@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "fix-debug-control-terminal-job-status",
+  "title": "Correct terminal debugger job status",
+  "kind": "fixed",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Clear the completed job from pending_control in its terminal response and retain the original request/job correlation across response-publication retries."
+  ],
+  "validation": [
+    "Wine/Xvfb bounded synthetic search verified live status, refusal of a different ID, console completion of the actual request ID and targeted cancellation; a separate 500ms request timed out at the client and then stopped at the server. Both original terminal replies exposed stale pending status, motivating this fix.",
+    "Corrected isolated Windows GNU test and production builds pass; all 18 Wine protocol tests pass, including cancellation, deadline and publication retry with original job correlation. Frozen 1512 sources and 22 overlays match.",
+    "A new bounded Wine/Xvfb search was cancelled by its observed request ID: terminal outcome was cancelled, pending_control was null and full terminal state matched a later status. The synthetic session and display closed with protected pins exact."
+  ],
+  "limitations": [
+    "DBG2-13/15 remain open: duplicate-request retry semantics, live replay-profile selection and complete menu/CLI/console equivalence require further work.",
+    "Native Windows/Linux and physical input were not tested; a client timeout without acknowledgement is not proof that the server has stopped."
+  ],
+  "files": [
+    "crates/recomp/src/debug_control.rs"
+  ],
+  "references": [
+    "docs/debug_control.md",
+    "docs/debug_operations.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "slug": "add-shared-debug-operation-contract",
+  "title": "Inventory debug operations and share stable action identities",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU build",
+    "Wine",
+    "Linux host tooling"
+  ],
+  "changes": [
+    "DBG2-01 adds a version-1 embedded readonly registry of 65 operations and 242 parameters, 43 current menu routes, 46 fixed/live bindings, source handlers, prerequisites, effects, result formats, caps and explicit open menu work.",
+    "Expose debug-operations list/show with text or JSON and strict malformed/unknown-query rejection; queries do not read selected content, execute commands or touch the guest.",
+    "Exhaustive menu/control mappings share stable operation IDs in existing observed UI events, pending status and acknowledged local replies while preserving existing handlers and schema-1 compatibility.",
+    "Inventory all debug CLI flags and three implicit FileDialog sites; existing catalog filters remain available and selector/parameter/console execution work stays explicitly pending.",
+    "Include the new public guide in the portable whitelist, both Docker COPY closures and dockerignore; retain synthetic private-content exclusion and source-preservation tests."
+  ],
+  "validation": [
+    "Three Python source-census tests pass, including CLI parameter coverage, exhaustive menu mappings and the exact three dialog sites.",
+    "Windows GNU locked/offline release test and runtime builds pass without compiler warnings from 577 frozen source files. Two descriptor-only clarification builds also pass; final candidate SHA256 99564c44bad32be2f9d14983eb21c7ce8fd8acafa883b039c96f997b743753b5.",
+    "Wine passes 21 distinct synthetic tests: 3 contract, 16 local-control and 2 UI trace tests. Only the 3 affected contract tests repeat against the final descriptor text.",
+    "Wine CLI smoke passes 9 positive and 8 negative calls, including help, exact JSON registry equality, unknown IDs, malformed arguments and a moved spaced Unicode folder with unrelated cwd; no guest files or frames.",
+    "Ten portable packaging tests pass after fixing an initially missing dockerignore entry; synthetic Windows/Linux payloads include the new public guide and continue excluding unlisted personal data.",
+    "All 577 frozen source hashes, five affected current implementation hashes and canonical Windows/Linux executable hash-and-mtime guards remain exact.",
+    "Required project-memory coverage check passes after including the changed scripts README in this record; generated changelog and diff whitespace checks pass."
+  ],
+  "limitations": [
+    "DBG2-02 through DBG2-28 remain open. Internal selectors, editable tool preparation, consoles, scripts and cheat execution are not implemented by this metadata contract.",
+    "Execution outputs retain their current per-handler formats; shared execution envelopes and assistant capabilities remain DBG2-13/15. Three existing automatic file-dialog sites remain pending DBG2-04.",
+    "Native Windows, Linux runtime and physical-controller checks are unverified for this increment; no GUI rendering changed. No game/replay/benchmark, real release archive refresh or commit/push was performed.",
+    "The retention helper refuses this debug-tools-v2-contract directory because complete accepts only target/rom-data-* units. This metadata unit created no managed interrupted/moved dataset copies; evidence, source preimages, candidates and isolated Wine prefix are retained."
+  ],
+  "files": [
+    "crates/recomp/src/debug_operations.rs",
+    "crates/recomp/src/debug_operations.json",
+    "crates/recomp/src/main.rs",
+    "crates/recomp/src/play.rs",
+    "crates/recomp/src/debug_control.rs",
+    "scripts/tests/test_debug_operations.py",
+    "scripts/package_ffta_portable.py",
+    "scripts/tests/test_package_ffta_portable.py",
+    "Dockerfile.windows",
+    "Dockerfile.linux",
+    ".dockerignore",
+    "scripts/README.md"
+  ],
+  "references": [
+    "docs/debug_operations.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

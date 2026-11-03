@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "date": "2026-10-22",
+  "slug": "consume-european-obj-animation-banks",
+  "title": "Prepare and consume European indexed OBJ animation banks",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Inventory ten independently rooted EUR object/animation bank pairs from 30 constructor literal pairs: 167 lists, 284 objects, 95 sequences, 184 frames and 282 disjoint consumed source ranges. Other direct/indirect/switch roots remain explicit unfinished work.",
+    "Decode strict typed relative indices, exact OBJ fields, sequence headers, frame-list links and u16 duration words, preserving zero-duration and empty records, source ordering and provenance; reject malformed links, bounds, overlaps and coherent base edits.",
+    "Publish fixed obj-animation-banks.json/graphics.obj-animation-banks under EUR schema1/extractor15/decoder14 with fourteen files/thirteen resources and complete-set authentication/identity. Retain e14 and every previous decoded file; USA stays e8-d7.",
+    "Consume immutable typed indices, counts, attributes, frame IDs and durations through existing CPU/DMA/native and shared host sprite readers. Preserve live RAM task indices/ticks, original constructors/scheduler instructions and clock, OAM/matrices and save/native ABI.",
+    "Extend extraction descriptions and usage diagnostics; add a positive ordinary-animation scene gate. Select a new bounded synthetic Start-menu input from the retained worldmap snapshot after the retained battle sample proves zero family coverage."
+  ],
+  "validation": [
+    "Two reduced EUR Wine offline checks pass: source/strict deterministic JSON/coherent-edit and malformed-input guards, independent catalog inventory, 115 original constructors and 2292 original per-object scheduler ticks with matching task fields, loop/final hold, complete OAM/matrix/guard results. 1123717 instructions are coverage only. Three empty sequences get source/constructor proof only.",
+    "Three focused EUR Wine integration checks pass fourteen-file publication/injected interruption/reuse/repair/move/e14 retention, source/path/coverage/dependency/revision/truncation/input guards, coherent-edit rejection, whole-set identity and transactional attachment; 49 original/interpreter/native constructor/body calls with all 282 raw ranges altered and equal complete states/clocks. Compiled source bytes by kind: 192 index, 93 list count, 618 attributes, 4 sequence count, 92 frame-list, 94 duration.",
+    "All source edges/widths/mirrors/real-BIOS bus, CpuSet/DMA, ten-bank host publication and unavailable-copy Load/Undo/backup/restart checks pass on Wine. Windows GNU test/production builds are warning-free and the canonical executable is restored.",
+    "The retained 240-frame battle sample matches every complete state/clock/image/OAM/dispatch/audio but consumes zero animation bytes, so its positive-use gate correctly fails; negative evidence retained and this unaffected scene is not repeated.",
+    "Three actual Windows CLI processes through Wine from unrelated cwd prepare/reuse/run the bounded 160-frame worldmap+Start menu input with old native cache, no dataset writes on reuse and positive use of all six source kinds plus 3200 host reads/36513 source bytes. Original ROM/snapshots/cache/loader/prior datasets/canonical remain unchanged.",
+    "One affected 160-frame EUR Wine worldmap+Start menu pair matches every complete state/clock/central-wide image/OAM/dispatch/audio stream with all six source kinds and 3200 host reads/36513 source bytes. The final Party-highlighted menu image is visually inspected; native/offline/zero-use battle checks are not repeated.",
+    "Final project-memory coverage/whitespace and protected input/source hash checks pass; all unit processes are terminal. No commit or push."
+  ],
+  "limitations": [
+    "The ordinary scene is one bounded menu transition. Whole scene-specific scheduler tails outside that scope, broader gameplay/GUI/archives and three empty-sequence scheduling preconditions remain separate gates.",
+    "Full ROM_DATA_TODO remains open for other OBJ direct/indexed/indirect roots and sprite graphics/palettes, other text/dynamic roots, maps/gameplay/audio and mod phases. Conservative CFG discovery found seven additional direct lists not yet migrated.",
+    "New Linux/USA/native Windows verification remains pending by user instruction. No performance/startup/RSS/space campaign, AndroidPort change, commit or push. New menu input is a local synthetic fixture; original personal inputs remain unchanged."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/obj_animations.rs",
+    "crates/gba-core/src/rom_data/obj_animations/roots.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/obj_animations.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/obj_animation_tests.rs",
+    "crates/recomp/src/rom_data/obj_animation_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "scripts/extract_rom_data.py"
+  ],
+  "references": [
+    "docs/rom_data_obj.md",
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

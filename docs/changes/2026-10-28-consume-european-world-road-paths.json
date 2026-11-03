@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "slug": "consume-european-world-road-paths",
+  "title": "Publish and consume European sampled world roads through typed guest reads",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Publish world-roads.json/gameplay.world-roads at e79-d78/index70:72files71resources, all70prior resource records/files exact, USAe8-d7/schema1 unchanged. Wire shared46span4736B model/source binding through extraction, coherent strict parsing/authentication, startup attachment and direct typed guest reads with seven usage fields.",
+    "Compose count/pointer/signed-sample/opaque bytes with prior world-node ownership and raw outside bytes, retaining original movement/facing/pathfinding and unchecked header indices45..255. No Machine/CAPI/cache/save ABI change; parallel Debug audit/frontend excluded via stable506-file source copy."
+  ],
+  "validation": [
+    "Two warning-free Windows builds, accepted 52be2981..; first Wine filter passes publication/interrupted-file refusal,12attach/two fullset guards and failed-owner/fullstate retention, then fails nativecase3 due omitted global396page. Fixpagegate and second remaining filter (no republish/attach repeat) pass12original/interpreter/native prefixes match complete state/clock with4736rawsourceBpoisoned afterLoad, 67compiled instructions/44explicit source bytes, including forward/reverse/shortendpoint/exhaustion/u8aliases/rawoutside/orderhelpers.",
+    "All4736typedbus bytes/four field classes45paths pass widths/mirrors/mixedoldleftrawright/priorowner, unavailabledatasetLoad-slotUndo owner retention and three DMA/CpuSet/CpuFastSet fullstate-clock cases. All221actualguards/506integration-source hashes/504closedmodelpreimages exact. Artifact completion retires only disposable interrupted copy; accepted offline data/executables/source/diagnostics retained.",
+    "Only the affected97d2core/f928test fingerprints isolated before the build to avoid earlier-copy dep-info reuse; no failed build/global clean/old-source change. First native failure and corrected remaining-only filter retain diagnostics. No new gameplay/fixture/checkpoint/performance measurement or closed source/model/world-node/constructor acceptance replay."
+  ],
+  "limitations": [
+    "Actual production CLI create/reuse/startup and positive ordinary fullpair remain pending. Selected native prefixes are not full facing/pathfinder ABI/gameplay or global archive/index coverage; full ROM_DATA_TODO active.",
+    "Linux/USA/nativeWindows/new32:9 pending. No performance/storage campaign, Android/package, assistantcommit/push; existing user and parallel Debug work preserved."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/world_roads.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/world_road_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "scripts/extract_rom_data.py",
+    "scripts/README.md",
+    "docs/rom_data_maps.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_maps.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

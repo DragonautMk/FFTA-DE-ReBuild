@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "slug": "add-recent-event-ring",
+  "title": "Keep bounded recent event context and freeze useful evidence on observed errors",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU cross builds, Wine/Xvfb; Python Linux and offline Chrome"
+  ],
+  "changes": [
+    "Add opt-in host-only recent rolling VecDeque shared by Start recent events / Freeze / save recent events and recent-start/freeze/report local control commands. No duration prefix cap: continue until explicit freeze, restore or observed-error trigger. Bound1024events/256KiB serialized events/8KiB event, origin128KiB/UI2KiB; oversize drops before eviction, lifetime counters and first/last sequence/host/frame/clock remain explicit.",
+    "Observe actual input latch, partial existing readonly UI/signature transitions and sticky last context,16unique instrumented ROM-read keys per frame with actual Typed/Raw/Unclassified service, actual native dispatch categories and shared command/frontend errors. Sorted read aggregates have no within-frame chronology; unavailable/disabled/collision differ from zero. Compose existing pre-dispatch observer without changing interpreter/native loops, core, save/native ABI, DSP or timing.",
+    "Freeze observed errors without evicting the message at capacity1; save from frontend thread, no callback/core I/O or continuous whole-machine dump. Explicit Start/Save hash state/runtime/build/ROM/BIOS/session/input/AV/dataset identities. Eight private2MiBJSON folders, no overwrite/prune; failed Save retains context, published Save returns same path. Add offline searchable/filterable report, homepage category/guide and artifact-limit summary."
+  ],
+  "validation": [
+    "Frozen publice8bd939+19selected overlays excludes concurrent ROM models. Warning-free locked/offline release feature d9b0266893a4a8fd4b01f47f4e3afd8ec34d0ee1817eed9bf32b49659c61d45c and default6ca740ad3e91dd2cd761e07bf85ffc8b0cb3586bb7f0010477c61585c564bcc9; normal runtimes unchanged. Feature production sources match final; only cfg(test) event-position correction followed its pin, no redundant production rebuild.",
+    "81distinct Wine tests pass:79feature (four recent synthetic incl million-event stream/byte and count eviction/oversize/freeze/errors/collision/service/native,12control,49menu,14frontend with1existing ignored),1new retained-seed interpreter observer,1default feature-unavailable. Initial compile missing Bus import and two initial test event-position failures preserved and corrected in cfg(test) only.11affected Python manager tests pass after limit summary update.",
+    "New observer uses retained DS20 seed, no new snapshot or old scene acceptance: same two interpreter A/release frames off/on have exact per-frame full state; frame22221clock6241706243 final SHA5dc38f52e57eb12140bbbe2b1f4cbf8b07f429e351dc6108e01053f5d75775af.10events/8933bytes, two16key batches and56897dropped requests recorded; actual old test-binary identity retained.",
+    "Actual feature GUI25CLI calls: A/release endpointdd841ef6dba845974625e7e5ae5839f86069000066f876a32d0a86bf6fcb0b81;26frame rolling max8evicts60. Controlled code-report unarmed error auto-freezes/saves previous frame/read/input/partial Actions UI context, no guest-state change. Repeated report hash/mtime exact; menu28/29 arm/save remains collecting after31s (saved33237ms), running-freeze/disabled reads/capacity/refusal preserve prior evidence; close0/inactive.",
+    "Default GUI5CLI calls observes one frame feature-unavailable without selected payload, unavailable count1/build flagfalse; controlled error save preserves guest state. Old smoke close helper raises NameError only AFTER application wait()==0. Preserve attempt, fix helper and independently verify ready inactive/last-result/lease/report/pins without replaying GUI.",
+    "Offline Chrome five views (1400desktop/620narrow/error/menu/default/off/home) pass event/read/error filters, search/empty/reset/details, dropped/window/lifetime scope and no overflow. Screenshots inspected; homepage67indices/5recent at capture only, no acceptance of other catalog entries.",
+    "Final verifier authenticates19live/frozen Rust overlays,10public source snapshots, both candidates, five exact HTML/JSON pairs and serialized event/count/byte/window accounting. All6actual original input/normal runtime hash-mtimes unchanged, both GUI leases released and dispatch helpers/interpreter branch unchanged. Retire only5exited browser profiles with receipt, retain all inputs/reports/attempts/source/preimages/logs/candidates/shared caches; no managed/native disposable trees so ROM completion helper inapplicable.",
+    "Feature/control/home/README/checklist/state/handoff/record/changelog,22ordered IDs(only01-19checked), local links, metadata-only memory and diff whitespace checks pass. Workspace/basee8bd939 memory checks exit1 ONLY for separate concurrent conditional_records8.rs and conditional_records8/tests.rs lacking their own updated model record; DBG19 source coverage complete. Preserve/unattribute them. Exact results retained under target/debug-tools-recent/memory-results.json; no old ROM/native/performance acceptances rerun."
+  ],
+  "limitations": [
+    "Windows GNU/Wine and Linux-host Python/Chrome only; native Windows/Linux GUI, physical controllers and actual native execution of this observer unverified. Synthetic dispatch counters do not establish native loaded-image or parity acceptance.",
+    "UI recognizers are partial signatures including selection changes, not global scene IDs. Reads are selected sorted aggregates, not temporal trace or global resource non-use; native interiors/unsupported readers and unconnected error channels/crashes remain unknown.",
+    "Kill without frontend callback loses memory; normal close without Save loses window. Full-state hash only at explicit boundaries; eight retained folders can refuse new captures. Metadata/paths private, no send; no normal-runtime replacement, Android/Godot, package release, commit or push."
+  ],
+  "files": [
+    "crates/recomp/src/debug_recent.rs",
+    "crates/recomp/src/debug_recent/report.html",
+    "crates/recomp/src/debug_recent/tests.rs",
+    "crates/recomp/src/main.rs",
+    "crates/recomp/src/play.rs",
+    "crates/recomp/src/debug_control.rs",
+    "crates/menu/src/lib.rs",
+    "scripts/debug_artifacts.py",
+    "scripts/report_home.py",
+    "scripts/report_home.html",
+    "docs/debug_recent.md",
+    "docs/debug_control.md",
+    "docs/report_home.md",
+    "scripts/README.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/debug_recent.md",
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_TODO.md"
+  ]
+}

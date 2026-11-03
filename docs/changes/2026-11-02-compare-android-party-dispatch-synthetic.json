@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "compare-android-party-dispatch-synthetic",
+  "title": "Compare Android Party dispatch with shared synthetic state",
+  "kind": "docs",
+  "platforms": [
+    "Android core on host Linux; actual Android untested"
+  ],
+  "changes": [
+    "Record paired fork and pinned upstream Party gallery dispatcher and direct hook tests using matching synthetic state and isolated source copies."
+  ],
+  "validation": [
+    "Two synthetic tests pass in each isolated offline host build: upstream handles modeled member and updates the modeled hook fields; fork does not."
+  ],
+  "limitations": [
+    "Profiles and ROM signature were fabricated; no full guest execution, authenticated ROM, JNI tap, real scene, native dispatch, cache, emulator or device test. Upstream emitted two unused-function warnings."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-06-android-party-gallery.md"
+  ],
+  "references": [
+    "docs/development/upstream-audit/U31-06-android-touch.md"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "review-indexed-graphics-ui-guides-english",
+  "title": "Review indexed graphics and UI choice guides",
+  "kind": "docs",
+  "platforms": [
+    "Desktop ROM-data documentation"
+  ],
+  "changes": [
+    "Review the indexed graphics archives and UI choice list guides for English-first policy and record exact file hashes."
+  ],
+  "validation": [
+    "Manually read both guides in full; maintained prose is English, with original game names, technical evidence and limitations preserved."
+  ],
+  "limitations": [
+    "The inventory and remaining Markdown and source areas still require review; no ROM access or runtime checks were performed."
+  ],
+  "files": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": [
+    "docs/rom_data_indexed_graphics.md",
+    "docs/rom_data_ui.md"
+  ]
+}

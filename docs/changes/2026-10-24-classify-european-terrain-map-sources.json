@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "classify-european-terrain-map-sources",
+  "title": "Classify normal European terrain seeds under the existing BG resources",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Trace original EUR setter1B270 and staged loader1B688/state6 through1AE88 and215F4/215E8/215DC to existing auxiliary/halfword/paired loaders. All162descriptors/486field04-08-10links resolve already owned352packet programs; no duplicate terrain resource, decoder or revision.",
+    "Identify the normal16x16/512Bheight-and-live-flags grid02007CB0, assigned to context02007F10+4/+8/+9, with height reads/bit1adjustment and flag writes. Preserve original mutable cells, paired live fill, scene transformations and calculated EWRAM/VRAM/movement planes.",
+    "Correct inventory unknowns only for the declared normal path. Keep ten-byte-stride accessor1DFB4/alternate contexts/fullflag semantics unclassified. Isolate separate palette-related4872B0root with no overlap against all49existing owners; its source contract remains pending."
+  ],
+  "validation": [
+    "Static audit of the exact EUR image and authenticated e54descriptor/packet files passes14256descriptorB reconstruction,486links,352exclusive source ranges/398227B,523794bodyB,134aliaslinks and all parent chains. Forty halfword/11literal/nine BL fingerprints pin new original dataflow without guest execution.",
+    "Parent sharing distinguished explicitly:9/6/5physical parented programs versus9/6/9descriptor links; longest chain two nodes. All162field50variant sources zero. Independent49owner comparison excludes duplicates; existing codec/output/native/lifecycle/ordinary results reused without replay.",
+    "Initial private static check fails only at hand-transcribed STRB base-register expectation1DEB0/7042; original disassembly704A corrects the private fingerprint and full check passes. Product sources and existing models/oracles unchanged. Private script/contract/link evidence under target/rom-data-terrain-maps/.",
+    "All5387prior protected artifact hashes unchanged. The283source/doc baseline differs only in six selected memory files; new map documentation and coherent record expand it to285. Project-memory/default-base7597b92 and CRLF-aware whitespace checks pass. No implementation, old evidence, user Debug-save or concurrent Docker work altered."
+  ],
+  "limitations": [
+    "Static semantic reclassification only, no new end-to-end map-loader execution or whole-map/flag/caller ABI claim. Directory/header/actual extent and palette semantics of4872B0remain to establish; adjacent489BB0does not authorize exporting the whole interval.",
+    "EUR remains v1/e54-d53/USAe8-d7. New Linux/USA/native Windows checks pending. No build, new Wine execution, performance/space measurement, fixture/navigation, Android change, package, agent commit or push. FullTODO remains active."
+  ],
+  "files": [
+    "docs/rom_data_maps.md",
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_maps.md",
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

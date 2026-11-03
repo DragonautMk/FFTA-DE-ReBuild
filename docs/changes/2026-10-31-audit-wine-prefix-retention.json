@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "audit-wine-prefix-retention",
+  "title": "Document safe retention of Wine test prefixes",
+  "kind": "docs",
+  "platforms": [
+    "Local development"
+  ],
+  "changes": [
+    "Define prefix-specific checks for completion, consumers, personal data, host links and host-visible activity before cleanup; preserve shared active prefixes."
+  ],
+  "validation": [
+    "Inventoried 21 Wine prefixes without following links and reviewed completed workbench evidence and current ROM script references; a sandbox-only process list could not establish host idleness."
+  ],
+  "limitations": [
+    "No Wine prefix was removed; inventory estimates allocated blocks and may double-count hard links, and extension checks alone cannot establish absence of private data."
+  ],
+  "files": [
+    ".cursor/rules/local-artifact-retention.mdc",
+    "docs/development/LOCAL_ARTIFACTS.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ]
+}

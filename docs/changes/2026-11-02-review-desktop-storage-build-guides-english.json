@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "review-desktop-storage-build-guides-english",
+  "title": "Review desktop storage and build guides for English-first wording",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Review 12 desktop, controller, storage and packaging guides; translate Italian menu paths in extended saves and Spanish measurement labels in the maintained release audit."
+  ],
+  "validation": [
+    "Manual review of all 12 guides; Game, Saves, Sessions and cases and Game saves match the English catalog. Structural comparison against HEAD preserves headings, inline code, link destinations and fenced blocks in all 12."
+  ],
+  "limitations": [
+    "Documentation-only language review; historical validation scope remains unchanged. No build, runtime, physical controller, ROM or release audit was repeated; remaining guides and source areas stay pending."
+  ],
+  "files": [
+    "docs/desktop_android_eur.md",
+    "docs/desktop_live_video.md",
+    "docs/desktop_tinycc.md",
+    "docs/directinput.md",
+    "docs/linux_gamepad_snapshots.md",
+    "docs/launcher.md",
+    "docs/release_audit.md",
+    "docs/save_backups.md",
+    "docs/extended_saves.md",
+    "docs/save_states.md",
+    "docs/packaging.md",
+    "docs/portable.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "crates/input-config/languages/en.json"
+  ]
+}

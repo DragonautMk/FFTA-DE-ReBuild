@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-debug-checklist-and-reference",
+  "title": "Translate the integrated debug checklist and synchronize its reference",
+  "kind": "changed",
+  "platforms": [
+    "Desktop menu: Linux unit tests; Windows GUI not rechecked"
+  ],
+  "changes": [
+    "Translate the maintained DBG2 checklist and its audit notes to English, retaining the original request quotation, all 28 task IDs and states, evidence, links, code, numeric identifiers and 11 legacy heading anchors.",
+    "Regenerate the readonly task reference from the current checklist, correcting the pre-existing stale DBG2-10 through DBG2-23 entries. Localize the status and read-only notice using the menu catalogs; keep task details in English.",
+    "Exclude compatibility-anchor markup from generated task bodies and retain the existing task IDs, groups and dispatch-free behavior."
+  ],
+  "validation": [
+    "scripts/menu_atlas_tasks.py --check passes for all 28 entries; source comparison preserves task states, per-task links, code spans, dates and identifiers; no original numeric tokens or heading anchors lost.",
+    "Offline Linux clan_atlas menu tests: 12 passed, 1 native-image export ignored. scripts/menu_language.py check passed with 468 entries per language; git diff --check passed. Tests linked existing Wayland runtime libraries via isolated temporary pkg-config metadata."
+  ],
+  "limitations": [
+    "No live GUI or native Windows validation; task statuses describe recorded evidence and do not reopen or complete runtime criteria. Italian translations of task titles and long checklist details are not provided."
+  ],
+  "files": [
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "crates/menu/assets/debug_v2.tsv",
+    "scripts/menu_atlas_tasks.py",
+    "crates/menu/src/clan_atlas/references.rs",
+    "crates/menu/src/clan_atlas/tests.rs",
+    "crates/input-config/languages/en.json",
+    "crates/input-config/languages/it.json",
+    "docs/debug_operations.md",
+    "docs/menu_localization.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

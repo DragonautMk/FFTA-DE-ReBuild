@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-romdata-ui-list-evidence",
+  "title": "Translate ROM data UI list evidence",
+  "kind": "docs",
+  "platforms": [
+    "Desktop ROM-data planning documentation"
+  ],
+  "changes": [
+    "Translated OBJ empty caller and UI choice-list source, model, runtime, CLI and scene evidence into English while retaining outcomes and limits."
+  ],
+  "validation": [
+    "Compared numeric tokens, task identifiers, links and inline literals with the preimage; confirmed all text outside the selected entries is unchanged."
+  ],
+  "limitations": [
+    "Unit OBJ initial pose and later untranslated evidence remain; no ROM access or runtime checks performed."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_TODO.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

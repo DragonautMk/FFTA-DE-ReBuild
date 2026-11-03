@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "inventory-european-script-archive",
+  "title": "Identify the European relative script archive and event-key source contract",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Bound114528archive bytes atB946EC..BB064C and234four-byte event keys/936B atD68C2C..D68FD4 using independent localized-text and coordinate-index reader roots. Key domains and first relative offsets agree on62topbanks/233slots; all115464B are disjoint from44published e50owners.",
+    "Classify213distinct target addresses/20repeated links, including five header-target links and two FFfill-target links. Preserve207nonempty physical command segments/35048stored instructions, raw parameter bytes and45alignment spans; do not infer linear control flow, whole argument semantics or unreachable data.",
+    "Identify493command5a references to49existing effect selectors and actual command/effect dependencies. Name the third event-key byte as the original text-bank selector; keep byte3raw and five unmigrated localized text archives/live textbank61variant explicit."
+  ],
+  "validation": [
+    "Previous goal turn completed e50ordinary acceptance; ordinary-final-summary terminal/no livejob and253source/doc hashes match. No old source/native/lifecycle/CLI/ordinary evidence repeated for context.",
+    "Independent static verification reconstructs/hashchecks all115464B exactly once,234key records/233non-null original two-level target formulas,128instruction halfwords/five root words, all493selector links, actual dependency file hashes and disjointness from44owners. No guest execution, build or new Wine test.",
+    "First private plan builder rejects an assumption that every nonheader target contains instructions. Slots46:1/49:1 point only to FFfill; classify them explicitly before plan publication. The initial BB0000search range is too short; lastheadBB048B and independent nextrootBB064C establish the real end. Exclude unaligned08BC02xxopcode patterns as literal-root evidence. No implementation/model/test is produced from rejected assumptions.",
+    "Inventory preservation passes3693prior artifact hashes/316hash-mtimeguards. Against253prior source/doc hashes, only six intended memory files change; every prior implementation/source-model file and concurrent Debug-save file in that snapshot is unchanged. No implementation is changed by this inventory unit."
+  ],
+  "limitations": [
+    "This closes the bounded static inventory only. Strict model/reduced Wine original-reader oracle/publication/direct runtime/CLI/positive ordinary remain pending. Current EUR e50-d49/USAe8-d7 stay unchanged; no whole script interpreter/callback ABI, global guest bounds or all-argument semantic claim.",
+    "All known original truncation/raw key0/234/239/65535/q0 behavior remains authoritative. Five localized text archives and textbank61dynamic variant are unmigrated; other asset/GUI/archive/mod criteria and new Linux/USA/native Windows checks remain open. No performance or space measurements, fixture/navigation/payload edits, Android changes, commit or push.",
+    "Concurrent work advanced HEAD toaff8a9b and introduced separate coverage-Docker wrappers/tests. Do not attribute or modify that work in this inventory record. Full project-memory checks now report missing coverage for those concurrent files; this unit uses the metadata-only check for its records/generated changelog and retains the global failure explicitly until their own record is provided."
+  ],
+  "files": [
+    "docs/rom_data_scripts.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_scripts.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "decode-european-m4a-directory",
+  "title": "Decode European M4A player configuration, song directory and shared headers",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Add strict source-authenticated AudioDirectory with3player configurations,640directory records and455unique shared headers/457ranges/15236B. Header IDs use the first referencing song ID; full unused fields, padding, source pointers and zero-track WaveData alias roundtrip exactly.",
+    "Expose diagnostic low16 selection without inventing a guest bounds check. Preserve mutable player/track state, mixer/sequencer and current managed EUR e40-d39/USA e8-d7; source-only model is not activated by extraction/runtime yet."
+  ],
+  "validation": [
+    "Final Windows release test build20851 is warning-free. One focused Wine78051original08148b84/08149270oracle passes all640real directory entries plus9targeted live/index inputs, one explicit raw index640probe stopped before null-header dereference, and6unauthenticated/unpublished synthetic source cases. Complete EWRAM/IWRAM outside stack scratch, track destinations/SP/callee guards match independent expectations.",
+    "All15236Broundtrip/17JSON-shape-link-source guards pass. Original reads13477distinct B(3840directory/12player/9625header-track);1759unusedBpreserved-only. All1610track pointers/186empty aliases, low16, live min-capacity, lock, priority and reverb covered.187739instructions/181PCs are coverage only.",
+    "364protected source/evidence/canonical files unchanged. Private target/rom-data-audio-m4a/{audio-directory-independent.json,windows-retry2-tests.*,windows-original-retry1-{result.json,log},windows-original-retry1-europe/{audio-directory,result}.json,source-protected.json} retains inputs and terminal proof. First compile E0283 and first Wine expectation failure are retained: explicit slice fixes the former; original1492e4zero capture/backedge1492e6fixes track word20test expectation, with asset model unchanged.",
+    "Final project-memory check including --base7597b92 and whitespace pass;376protected hashes and179current implementation/document hashes retained in final-summary/final-protected/final-source-hashes.json. Private JSON/executables are Git-ignored; no live unit process."
+  ],
+  "limitations": [
+    "Targeted original-reader proof only: managed publication/typed CPU-DMA-native consumption/Load-Undo-backup-restart/ordinary full-state-clock-image-audio differential remain pending. No host mixer or sequencing replacement, full bank/keymap/sample/bytecode extents or language-variant proof.",
+    "New Linux/USA/native Windows pending. No benchmark/performance/space campaign, AndroidPort changes, game-data publication or agent commit/push. Existing e39/e40and concurrent Debug-save work preserved; no old acceptance repeat."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/audio_directory.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/audio_directory_tests.rs",
+    "docs/rom_data_audio.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_audio.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-10-30",
+  "slug": "classify-european-observed-parameter-records27",
+  "title": "Classify observed European records with 27-byte stride",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Authenticate59 event-selected physical records at root71D360, indices0..50 and115..122, as two1593-byte source fragments; preserve packed fields, signed loads, raw operands and opaque bytes.",
+    "Reject128-record catalog extent inferred only from next-root distance; leave holes/highindices raw and unowned, retaining original uncappedu8 address computation."
+  ],
+  "validation": [
+    "All1593 bytes roundtrip, SHA25640d4e406d08f42caaa9c87da76a143166a185656d7e8bf987828c562bd3edf75; all256 event links resolve, no overlap80 e88-d87 owners/50495 source spans.",
+    "27 authenticated static windows(23 new/four cached),70 instruction/literal pins,125 hash/mtime guards and all25 cached census root literals pass. Private opcode transcription corrections occurred before classification outputs; no disassembly or old-proof replay.",
+    "Static analysis only; no build, Wine, game input, checkpoint creation or performance/storage measurement."
+  ],
+  "limitations": [
+    "Strict model/original-prefix Wine, managed publication/runtime, actual CLI and ordinary use remain pending; schema1/e88-d87/81 accepted payloads unchanged.",
+    "Whole catalog extent, unowned indices, indirect/unaligned references, external helpers/full routine ABI/live effects, Linux, USA, native Windows,new32:9 and full ROM TODO remain pending.",
+    "Parallel DBG/menu/script/input work preserved and excluded; completed event12 chain remains closed."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

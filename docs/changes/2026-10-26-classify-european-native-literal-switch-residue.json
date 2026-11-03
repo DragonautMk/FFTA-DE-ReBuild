@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-10-26",
+  "slug": "classify-european-native-literal-switch-residue",
+  "title": "Classify European native literal and switch-table source witnesses",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Record bounded original-code reader witnesses for the656lower bytes outside current manifest source plans in the existing EUR Bank12 native API inventory. Preserve explicit original ROM/code dependencies without inventing asset families."
+  ],
+  "validation": [
+    "158literal words/632B have184matching original Thumb straightline context paths within96B of exported PCs,507distinct instruction halfwords. Exact ROM halfwords and PC-relative address calculation pass, with no branch/call/return/PCwrite/trap before each load.",
+    "Six other observed words/24B are switch-control entries in five bounded projections8/35/69/48/5entries.82original prefix halfwords prove bounds, index scale, table base, load and MOVpc. Only0/0/27/4-6/1entries respectively were observed; unused table values and target bodies are not decoded into assets.",
+    "Together with high hardware/branch words, all676observed unowned bytes have scoped static code-support witnesses; all remain outside65managed plans with e71-d70/USA8-7 unchanged.",
+    "Exact ROM/static-tool/saved-report and summary hash-mtime guards pass; implementation unchanged. No new build/game/test/fixture/navigation/performance measurement or previous acceptance replay."
+  ],
+  "limitations": [
+    "Static original Thumb witnesses consistent with saved contexts are not an exact dynamic instruction/mode trace, all-use/caller proof, whole physical table extent or ordinary coverage of all165switch entries.",
+    "No new asset format, resource owner, complete migration or whole-ROM/game completeness inferred. Native API observer blind spots and other scenes remain separate. Linux/USA/nativeWindows/new32:9 pending."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

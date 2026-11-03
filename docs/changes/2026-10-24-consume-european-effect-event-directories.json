@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "consume-european-effect-event-directories",
+  "title": "Publish European effect/event directories and serve original dispatch reads from typed fields",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "EUR e49-d48adds effect-event-directories.json/resource engine.effect-event-directories:44files43resources, all42prior decoded files/e48generation retained; USAe8-d7 unchanged. Declare the actual engine.task-descriptors dependency and verify complete-set/source/preceding-owner coherence before activation.",
+    "Bind four authenticated source ranges/1516B onpages124/128/3ac/3ad directly to75typed events/51selectors/28evenThumbsame-state dispatch words. Reconstruct bytes without a ROM shadow; merge prior owners/raw ROM across accesses and keep aggregate category/event/selector/table counters outside serialized machine state.",
+    "Preserve original field widths, ID/index wrapping, raw out-of-projection reads, evenMOV-PC/default branches, live waits/actors/allocation/messages/sequencing and save/native ABIs. Wire frontend extraction/preparation/activation/usage and an ordinary assertion requiring event-or-selector consumption rather than dispatch-only evidence."
+  ],
+  "validation": [
+    "Previous goal turn made progress: bounded1516Bsource/model and oneWineoracle closed, model-final-summary terminal/no livejob and243source-doc hashes match before selection. Preserve3013prior artifacts/217hash-mtime guards; no closed source/static/oracle/e48/oldnative-lifecycle-ordinary proofs rerun for context.",
+    "Affected Windows release testbuild93869warning-free. OneWine91663run executes two targeted filters sequentially, bothPASSfirst run.13coherent/dependency/source-set guards, interrupted publication/create/reuse/repair/move, all42prior decoded/e48retention, transactional missingfile activation and resident ownership through unavailable files/Load/Undo/backups/Restart pass. Raw1516Baltered in isolated managed arm; all1516typedB/75events51selectors2tables match.",
+    "Native check passes29original-interpreter-native fullstate-clock prefixes with all1516newsourceBaltered in decoded arms. GeneratedAPI byte reads[24event6selector24dispatch], raw event75/selector51-65535/q0/wrap/default/evenThumb agree. Event index65535aliases previous font owner,11typedB evenwithrawaltered; a same-page4Bpalette owner survives the new wrapper. Fourspan edges/widths/mirrors/realBIOS/CpuSet-FastSet/DMA/new2raw2 pass.186instructions70PC29dispatch coverageonly, not performance.",
+    "Reuse correctedSTOP_PCprefix harness; production emitter/source model unchanged. After compilation correct only a cfg(test) missing-resource diagnostic label, with no changed executed success path or repeated test/build. Evidence target/rom-data-event-directories/{runtime-before,windows-managed-tests.json,windows-managed-results.json,windows-managed-europe/managed-result.json,windows-managed-europe/native-result.json}.",
+    "Windows48886production CLI build warning-free; canonical executable restored byte-for-byte. Private candidate119a71d75a916945d1700f611d4802e193ba20a7cfaa3e37e24f094ad8d24307. Wine76313 actualCLIcreate/reuse-no-write46managedfiles, unrelatedcwd andoldnativecache pass. All44generationfiles equalaccepted e49dataset544ec3669f5dd12cffd9a86dde524d279f0e9ab14daff54dc2c8a2175100c32c.",
+    "Genuine retained EURPecorelle1000/classic0 andEURschool cleanboot3000/classic0 CLI locators bothterminate successfully withzero newevent/selector/dispatch reads. Closebothnegativewithout fullpairs. Opcode59/5a producertrace andread-only checksum/ROM-authenticated Pecorelle/F09snapshot inspection locateanidle queuedscript root; a USAcandidateisexcludedbeforeinspection/replay. No newinput/navigation/fixture/save-RAM-payload modification. Evidence windows-cli-summary.json, windows-cli-school-courtyard3000.json andqueued-script-first-snapshots.json.",
+    "Final preservation check passes all3013prior artifact hashes/265hash-mtimeguards. Against243prior source/doc files onlysix intendedimplementation hubs/eightmemory files changed; source model/allotherimplementation/concurrentDebug-save work preserved. Project-memory default/base7597b92 andCRLF-aware whitespace checks pass; runtime-final snapshots retain thisscope.",
+    "A later shared-producer audit and one e50script-command CLI locator from retained genuine EUR suspendboot-to-battle8476/classic0 reads0event/selector/dispatch bytes. Close this third ordinary locator negative for the event owner without an event-required fullpair; source/model/native/lifecycle/CLI acceptance stays closed. Existing e50dataset and executable reused; no new fixture/input/navigation/save-RAM-payload modification."
+  ],
+  "limitations": [
+    "Controlled field/dispatch/index integration, not a whole event interpreter/allocator/scheduler ABI, all live domains, evententry124e1creachability or ordinary scene acceptance. Prior font/palette aliases remain distinct from genuinely raw out-of-projection bytes.",
+    "Positive ordinary event-or-selector source use/fullstate-clock-image-audio acceptance remains pending afterthree closednegative EURlocators: Pecorelle1000,schoolcoldboot3000,suspendboot-to-battle8476. Do not repeat negative scenes or closed source/native/lifecycle/CLI proofs for context; none receives an event-required fullpair.",
+    "NewLinux/USA/nativeWindows and other graphics/text/maps/gameplay/audio/GUI/archive/modTODO remain open. No performance/space measurements, AndroidPort changes, commit or push; preserve prior resources/executable/cache/saves/input and concurrent Debug-save work."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/effect_event_directories.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/effect_event_directory_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "scripts/extract_rom_data.py",
+    "docs/rom_data_events.md",
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_events.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

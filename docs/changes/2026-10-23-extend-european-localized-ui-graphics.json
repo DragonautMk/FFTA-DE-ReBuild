@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "extend-european-localized-ui-graphics",
+  "title": "Consume European localized UI graphics and shared OBJ split uploads",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Extend EUR custom UI graphics from nine to sixteen raw word banks, two five-entry language selector groups and two explicit links to existing OBJ graphics owners. Seven new banks add14396encoded bytes/35008decoded bytes; ten asset-pointer literals add40bytes,17new disjoint ranges/14436bytes. Total26ranges/71474source bytes/119168decoded bytes; code jump tables remain code.",
+    "Authenticate both original language switches and their pointer literals, preserving live language byte02001f6e, English fallback for Clan and skipped upload outside0..4for the second group. Keep partial544byte Clan copies and exact5056OBJ/2688BG split copies, decoder/count/scratch/clock work and full raw words; shared b7f874/b80140banks remain in unchanged obj-graphics.json.",
+    "Publish EUR schema1/extractor22/decoder21 with the same seventeen files/sixteen resources. Preserve every nine previous UI bank record, all fifteen other decoded files and e21/older generations; USA remains e8-d7. Add explicit OBJ-graphics dependency and parsed shared-owner checks, strict selector/ordering/overlap/source validation, typed CPU/DMA/native pointer projections and distinct selector/localized-source/localized-literal counters. Save/native identity and ABI stay unchanged."
+  ],
+  "validation": [
+    "One reduced EUR Wine original-source oracle passes independent hashes/strict JSON/source/fallback/reorder/shared-owner guards,14original selector paths(two switches with0..4/5/255), seven new decoder/upload paths and isolated BG tails for two already proved shared OBJ banks. Exact consumed cursor, decoded return size, upload controls, scratch guards and whole VRAM match; nine prior records unchanged.363055instructions record coverage only. No old decoder campaign repeated.",
+    "Two focused EUR Wine integration checks pass publication interruption/create/reuse/repair/move/e21retention, other-file equality, coherent payload/selector/fallback/shared alias/source/dependency/path transactional rejection and unavailable-copy Load/Undo/backup/restart. Native execution with17new spans altered matches complete states/clocks on14selector paths/seven producers/two isolated tails;48compiled selector bytes/14310localized-source bytes/6449localized literal bytes, all seven new banks positive. Full bytes/edges/widths/mirrors/real-BIOS bus/CpuSet/FastSet and4typed-selector DMA bytes pass.",
+    "Initial new test compile failed on duplicate module declaration, corrected before execution along with prior-file fixture length. First native and diagnostic attempts overshot selector-only fixture stops due shared chained producer blocks; separate selector-only table excludes those three stop PCs. Failed evidence preserved; only the failed native criterion repeated, with no runtime/source-oracle change. Final Windows test and production builds warning-free; canonical executable restored.",
+    "Actual Wine CLI creates/reuses e22without writes from unrelated cwd using existing native cache. Initial320-frame Clan replay reads only prior English payload and0new selector/localized bytes; retained as negative with no full differential. A bounded1200-frame cold boot reuses existing demo input and positively reads4selector bytes/2347new b7d9e4source bytes/1124new literal bytes. One1200-frame ordinary Wine pair matches every complete state/clock/central-wide image/OAM/dispatch and mixed/PSG/FIFO/HLE audio sample with identical new-use counters. Final intro-transition image inspected.",
+    "Protected original ROM/states/inputs/e21dataset/shared OBJ fixture/cache/loader/canonical remain intact. Evidence under ignored target/rom-data-ui-localized; project-memory/whitespace/protected-input/source/candidate checks recorded at closure. No agent commit or push; existing e21implementation and unrelated user UI work preserved."
+  ],
+  "limitations": [
+    "The two selectors/seven new banks are complete for this declared scope, not the entire graphics/palette/ROM catalog. Prepared original subpaths prove bounded contracts; other indirect sources, three earlier empty-sequence contracts, maps/gameplay/audio and wider GUI/archive/mod phases remain open.",
+    "Ordinary positive coverage is the English intro; other ordinary language scenes remain pending, although all seven payloads and both selector fallbacks have source/native proof. New Linux/USA/native Windows verification remains pending. No performance/startup/RSS/space campaign or AndroidPort work; private assets/generated code/fixtures/previews stay ignored."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/ui_graphics.rs",
+    "crates/gba-core/src/rom_data/ui_graphics/roots.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/ui_custom_graphics.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/ui_localized_graphics_tests.rs",
+    "crates/recomp/src/rom_data/ui_localized_graphics_runtime_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_ui_graphics.md",
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_obj.md",
+    "docs/rom_data_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

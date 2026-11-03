@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-romdata-introduction-and-inventory",
+  "title": "Translate ROM-data objectives and inventory status",
+  "kind": "docs",
+  "platforms": [
+    "Desktop ROM-data planning documentation"
+  ],
+  "changes": [
+    "Translate the ROM-data objective, constraints and ROMDATA-01 inventory/contract section into English, preserving task states, recorded evidence, regional limits and technical identifiers."
+  ],
+  "validation": [
+    "Compare ordered checklist states, task identifiers, inline literals, links, numeric values and four legacy anchors with the original; verify local link targets and unchanged later sections."
+  ],
+  "limitations": [
+    "ROMDATA-02 onward remains untranslated; no ROM access, dataset creation, performance measurement or runtime checks were performed."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_TODO.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

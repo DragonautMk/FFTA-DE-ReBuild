@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "date": "2026-10-30",
+  "slug": "add-declared-debug-script-library",
+  "title": "Add declared host tool adapters and a separate readonly guest script library",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU build",
+    "Wine"
+  ],
+  "changes": [
+    "Add Scripts and tools with homepage, campaign report, artifact preview, readonly status/inspect recipes and a separate guest catalog linked to the gameplay inspector form.",
+    "Reuse typed internal references and scalar drafts; explicit Details/Start/Cancel; embedded versioned source/helper/template hashes, optional exact-byte external source override, selected Python3.11+ runtime and literal argv.",
+    "Supervise host processes with a deadline, capped stream collectors, Windows kill-on-close job/Unix process group, retained request/result logs, no overwrite and eight-run cap. No campaign replay or artifact deletion/apply."
+  ],
+  "validation": [
+    "Three Python operation inventory tests pass after adding descriptors. First frozen Windows test compilation succeeds with a clashing CloseHandle signature warning; fix signature consistently before acceptance. New HTML dependency closure and stronger descendant fixture are pending changed-scope build/tests.",
+    "Catalog-fixed Windows GNU build passes warning-free with601frozen files/39host overlays, candidate4c7b4ab5e2b418dde5cc4b650b1c3cc83caed4b54d3dd9f500c8642e6531fa2f. Canonical runtimes hash+mtime unchanged. Wine5runner cases,4workbench,3input and63menu pass.",
+    "Two negative scopes retained: internally tagged serde unit Status ignored unknown keys despite enum deny_unknown_fields; use an empty struct variant. Five new descriptor open_work fields were mistakenly strings rather than arrays; correct their schema. Those scopes require focused retesting.",
+    "Containment review identifies a Windows spawn-before-job race for an immediately spawning runtime. Change launch to suspended, assign the job and only then resume the sole process thread via documented ToolHelp/ResumeThread APIs. Strengthen the child fixture to inherit pipes and require quick cancellation/EOF. This new changed scope requires another runner build/test; no GUI acceptance claimed.",
+    "Focused Wine strict recipe1 and contract3 tests pass after the two fixes. Their terminal results are retained in strict-test-results.json; menu/input/workbench accepted scopes are not rerun for the subsequent Windows launch correction.",
+    "Contained Windows build passes warning-free, candidatef7185c7bda8f87776b7a7c626c93665f8fe54716e1be058534ae672f0fe1b673,601frozen files/39overlays; strengthened Wine runner test passes in0.81s with inherited descendant pipes. Across terminal scopes79distinct Rust cases pass plus3Python inventory tests.",
+    "Actual Wine GUI explicitly completes homepage/campaign/artifact/readonly recipe. Details/selection/import create no run; empty campaign case refuses. Existing root index exact, closed artifact scope completed with21files/28289892bytes preserved;115entry raw typed guest catalog and gameplay inspector form link work without execution.",
+    "Actual GUI refuses changed script/dependency and missing Python; simulated XInput confirms Cancel process while busy, cancelled result retained, descendant744confirmed stopped by Windows process query. Separate350ms deadline yields timeout. Sixruns/fourcompleted+cancelled+timeout, full main state/frame0/clock0 exact; three actual client sizes inspected.",
+    "GUI closed and dedicated Xvfb retired; preservation passes all601frozen/39current overlays, canonical runtime hashes+mtime, main/closed session pins, restored external sources and original root index. Windows-side inventory hash exactly equals artifact preview;55outputfiles pinned. Initial resize-helper title mismatch was corrected in the same window/seed, with no fixture recreation.",
+    "Final encoding check rejects artifact HTML: Windows Python defaults to locale text encoding and writes byteE8 into an UTF8 page for dynamic Unicode paths. Add explicit -X utf8 to the adapter; final changed-scope build and focused retained Unicode report proof remain pending. The earlier functional pipeline stays accepted; its malformed HTML remains negative encoding evidence.",
+    "Final UTF8 Windows GNU build passes warning-free with601frozenfiles/39overlays, candidate8e0ecfd101cf77e11f155558ea40d7bac01a8cb28d1b8a5cdf78b6019c6e8fc8. Focused explicit Wine adapter proof passes against the same closed public source and selected Python with a NEW output only: artifact HTML is valid UTF8 and retains the exact Unicode source path. No GUI pipeline or accepted behavioral scope repeated.",
+    "Final preservation verifies all601frozenfiles/39current overlays and canonical runtime hash+mtime. Original55outputfiles remain hash+mtime exact, including malformed earlier HTML retained as negative evidence. Original and new Windows inventory digests each remain exact under their respective extended/drive path spelling; normalized relative inventories have identical file identity/size/timestamps for all21preserved files. Total80distinct accepted Rust behavioral cases plus3Python census tests; no guest frames executed by the runtime acceptance."
+  ],
+  "limitations": [
+    "Native Windows/Linux runtime, physical controllers and wrapper/Docker execution remain unverified. No game/private data, DS acceptance, actual package refresh, commit or push.",
+    "The initial recipe subset permits only readonly status/inspect (16steps). The broader engine remains DBG2-17; persisted references remain DBG2-07. Runtime identity is the selected executable hash/version, not all installed Python modules/DLLs.",
+    "Separate concurrent ROM implementation is preserved and excluded from this selected build. This metadata/UI unit has no managed disposable ROM-data copies; the rom-data-only retention helper is inapplicable. All negative diagnostic evidence and current executable remain retained."
+  ],
+  "files": [
+    "crates/menu/src/debug_tool.rs",
+    "crates/menu/src/debug_tool/tests.rs",
+    "crates/menu/src/lib.rs",
+    "crates/menu/src/theme.rs",
+    "crates/menu/src/tool_inputs.rs",
+    "crates/recomp/src/debug_content.rs",
+    "crates/recomp/src/debug_inputs.rs",
+    "crates/recomp/src/debug_operations.rs",
+    "crates/recomp/src/debug_operations.json",
+    "crates/recomp/src/debug_tools.rs",
+    "crates/recomp/src/debug_tools/tests.rs",
+    "crates/recomp/src/debug_workbench.rs",
+    "crates/recomp/src/main.rs",
+    "crates/recomp/src/play.rs",
+    "scripts/README.md"
+  ],
+  "references": [
+    "docs/debug_selector.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

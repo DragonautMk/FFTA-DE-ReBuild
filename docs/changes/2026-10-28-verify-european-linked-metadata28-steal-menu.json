@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "slug": "verify-european-linked-metadata28-steal-menu",
+  "title": "Verify European metadata28 in a normal Steal command menu",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add a test-only normal-input checkpoint observer and optional five-line positive metadata28 scene guard. Removing the guard restores the prior validator exactly; normal captures never manually edit guest state, ROM or cartridge data.",
+    "Close metadata28 positive ordinary CLI/equivalence with the retained42-frame Giza Steal menu suffix; preserve four prior zero locators and distinguish menu entry from executed ability effects."
+  ],
+  "validation": [
+    "One warning-free Windows test build 5a6c81be.. from523acceptedcopy sources, only affectedtest fingerprint/coreunchanged. Seven normalWinecapture steps1182frames plus oneCLIwideobservation1frame; drypre-move checkpoint and actualmenu inputs yield42frame22669\u219222711 positive fixture.",
+    "Existing productionCLI0acb352e.. positive42 and onefullWinepair match everycomplete state/guestclock/classic-central-wide image/OAM/fiveaudio streams; all8counts={\"bus_reads\": 15, \"byte_bytes\": 10, \"flag_bytes\": 0, \"halfword_bytes\": 10, \"inline_bytes\": 0, \"opaque_bytes\": 0, \"records_used\": 5, \"source_bytes\": 20} exactcapture-CLI-pair. Dispatch=[205895, 591653], audio=[92168, 92168, 11088, 11088, 92082] coverageonly. All75loggedIDhashes/78managedpaths no-write.",
+    "All177actualguards/523sourcehashes and220closedCLIguards/522production hashes exact; optionalguard removal byteexact/helper0paths. No source/model/runtime/registration/fournegative or oldfamily acceptance replay; no newprod/core build or metrics."
+  ],
+  "limitations": [
+    "One menu entry uses five records and halfword/byte fields; inline/flag/opaque ordinary classes stay0 with separate targetedproofs. Not all347records, executed effects, all caller gates/fullABI/globalarchive or completeROMTODO.",
+    "Followingfourbytefamily/Linux/USA/nativeWindows/new32:9 pending; no manualguestRAM-register-task-ROM-cartridge edit/originalsavewriter/spacecampaign/Android/package/assistantcommit/push. Parallelwork preserved."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "crates/recomp/src/rom_data/metadata28_scene_tests.rs",
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

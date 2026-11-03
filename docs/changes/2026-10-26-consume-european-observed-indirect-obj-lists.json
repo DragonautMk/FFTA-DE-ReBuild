@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "date": "2026-10-26",
+  "slug": "consume-european-observed-indirect-obj-lists",
+  "title": "Publish and consume two European observed indirect OBJ lists",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Merge the two authenticated observed roots into graphics.obj-static-lists in EUR e72-d71:76lists/185objects/1262source bytes, retaining126direct references, all74prior lists, all64other files/records,66generation files/65resources, the dimension dependency and e71. Preserve indirect provenance and USA8-7.",
+    "Extend existing typed OBJ candidate-page routing with40D. Reuse source-authenticated typed fields, guest/host handlers and old-owner/raw composition without changing guest ABI, mutable state or save format.",
+    "Verify actual e72production CLI create/no-write reuse and one authentic F09frame with the existing native cache; both newly owned source identities are positive through guest and host. Preserve canonical executable hash/mtime and implementation content.",
+    "Add five optional positive-guard/report lines to the generic scene validator, requiring both new OBJ source identities through guest and host. Close the bounded ordinary child with one firstF09frame, using existing original checkpoint/input/cache and current actualCLI dataset."
+  ],
+  "validation": [
+    "First affected Windows frontend build succeeds without diagnostics; frozen executable de7fc57cb2e8488d35cc5879caea3db09ea7c9e02d94b1d999991b7780fdcd55. Two first exact Wine filters pass; no old source/model/copier/74-list/scene acceptance replay.",
+    "Managed publication interruption/create/reuse/repair/move and12transactional attach guards pass. Coherent edits/omissions of either new list, bad source plans/hashes/revisions/dependencies preserve the active owner and complete guest state. Directory-unavailable Load/Undo/backup/restart retains owner and positive use of both sources.",
+    "All64new raw bytes altered: six original/interpreter/native paths (ROM1500/170C and copiedIWRAM030065A8 per asset) pass complete-state/clock equality. Native API serves265typed bytes;5571original instructions/2418native dispatches are coverage only. Both edges/all widths/three mirrors/real-BIOS bus and six DMA/CpuSet/FastSet transfers pass. Mixed API2old+2new and2editedraw+2new pass; six host decode/publication checks match.",
+    "Independent identity/file/source checks pass: dataset8181591e6b23b7285bc42ecd05b7b356016564840b2fdf918ebe0e1d8e55d9cb, manifesta353c63941e5a02797873613d41f67df99631e2f4baac93e2167d2943b3df668, OBJ9e7d8a492f09164cd2605782528ad038a4d6c0ca25fecdcefb00f6e0621d430f. Accepted isolated model exact, all76source hashes/64other resource files-records exact;77selected input/frozen guards and compiled implementations preserved.",
+    "Required local artifact completion retires only interrupted/moved copies, preserving accepted offline dataset, current executable, source preimages and logs/results. No new checkpoint/navigation/performance/storage-budget campaign.",
+    "First affected Windows production build passes without warnings, frozen c6d674d76f5ae96cb62882580f8cd43a5f2245810709992e30c0990404ef2caf. Canonical f3e277dba89945d8884e83106bef90bd6d2bf31df51dd25145c791f2a4d80720/mtime1792570130397888519 restored exactly; main content unchanged with mtime-only Cargo invalidation.",
+    "Three first actual WineCLI commands from unrelated cwd pass create/reuse/oldcache-oneframe:66generation/68managed files/65resources/76OBJspans/dimension dependency, all66files match accepted runtime dataset. Reuse preserves every managed hash/mtime. ExistingF09state/input/16:9 yield guest=true host=true for both00394f4c and0040d89e. Aggregate147OBJbus reads/147sourceB/14countB/133attributeB/12host reads; positive use only, ordinary full-state equivalence remains pending.",
+    "All143actual CLI input/output/frozen guards and implementation content stay exact. Completion helper retires zero paths. No old source/model/runtime/producerargument/scene oracle, fixture/navigation or performance/storage campaign replay.",
+    "First affected Windows frontend test build passes without diagnostics, frozen810e19a324313356200715f32bbe35a63ed58af4d4c5b41fd287b2b24a9a22f9. One first exact Winefilter passes F09frame8476to8477: complete state/guest clock, central/wide captured buffers, OAM, native/fallback dispatch and mixed/PSG/FIFO/HLE-bitwise audio agree. Bothnew sources guest=true/host=true are required. Allfive audio streams contain samples[2196,2196,264,264,2120].6803native/22849fallback dispatches describe coverage only.",
+    "New pair aggregateOBJ147reads/147sourceB/14countB/133attributeB/12hostreads exactly matches the positive CLI frame. All75selected input/frozen guards and original state/input/cache/currentCLI66dataset/canonical remain exact. Exact five-line validator delta verified against retained preimage; all other implementation unchanged. Artifact completion helper retires zero paths. No old scene/model/runtime/CLI/source proof, fixture/navigation or performance campaign replay."
+  ],
+  "limitations": [
+    "Source/model/managed/runtime/actualproductionCLI and the declared ordinary firstF09frame child closed. Coverage is bounded to that frame; broader scenes/indirect sources remain open. No complete archive, immutable command initializer, allocator/constructor ABI, final composed GUI or whole-game coverage claim.",
+    "Ten parameter bytes and452lower audit bytes remain separate. Linux/USA/nativeWindows/new32:9 remain pending; no Android/package/assistant commit/push. Full ROM_DATA_TODO remains active."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/obj_lists.rs",
+    "crates/gba-core/src/rom_data/runtime/obj_lists.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/observed_obj_lists_runtime_tests.rs",
+    "docs/rom_data.md",
+    "docs/rom_data_obj.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "crates/recomp/src/rom_data/validation_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_obj.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

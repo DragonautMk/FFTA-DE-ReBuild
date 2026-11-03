@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "date": "2026-10-26",
+  "slug": "inventory-european-unit-obj-property-words",
+  "title": "Decode European actor property words with original-reader validation",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Authenticate a separate original221C4actor-property source domain before word inspection:110normal/100alternate concrete metadata52fields,93metadata14fields per mode and original42/230overrides retain398producer witnesses/182spriteIDs. Known concrete redirects quotient to the same effective fields; no equipment/body pairing or global identity inferred.",
+    "Define four disjoint unowned source ranges/364B for182unsigned words at394C14+2*sprite. Preserve139words16/43words24 and raw gaps without an adjacent248catalog extent or live ID cap. Source contract and strict lossless model close; managed/runtime/CLI/ordinary remain pending.",
+    "Add a strict public lossless actor-property model retaining398producer witnesses/182word identities and all u16bits, with actual metadata52/14producer coherence. Add one focused original-reader Wine oracle that distinguishes new allocation arguments from existing-task word reuse."
+  ],
+  "validation": [
+    "First producer and source-plan scripts pass98halfword/fifteenBL/onepropertyliteral/fourexactoriginalcodeblock fingerprints before targets.221C4u16return flows through9AD0E/r8to22788argumentr3/r7,22E00allocation and22DF4task+16. Narrow new2254Cstatic disassembly confirms range-request use; no flagbitfield or VRAM-unit claim.",
+    "All61current resource file/source hashes authenticate before word inspection; no ownership overlap or omitted declared query. Four ranges364B/sourceSHA256ad328c8ebccfc43091dc878c06dab33b22521d7b617d4b11232e4a532ffc2208. No guest/build/previous acceptance replay in the source phase.",
+    "Source preservation: all373baseline source hashes confirm implementation unchanged;66active input hashes/mtimes and542decoded local feature links pass. Reuse earlier closed private-asset proof plus fresh all61owner authentication; no whole11217legacyartifact campaign. Concurrent coverage work preserved/outside scope.",
+    "First affected Windows frontend test build passes warning-free, frozen63f029a71393f1cbd2789eacdb14a5303f5c40b990b361151a45d8d85b4001b8. First exact Wine filter passes20guards/allindependentfields-hashes/182originalgetters/all364readB/3rawfullwordgetter cases/four actor-newtask prefixes/two existingtask prefixes/four isolated u16setters. Synthetic highbits preserved, fullRAMoutside declaredscratch/destinations and VRAM/OAM/palette guards pass.82build/83Wine activehash-mtimeguards/11compiled input preimages remain exact; no oldoracle replay or failedbuild-test retry.",
+    "Accepted modelJSONSHA256be429aaf9073f5dc811a0272d8d76da35badbc8d6b40ff08f727c2f276ca7bb7. The allocation prefixes and isolated setter prove partial argument/destination behavior, not a complete allocator/constructor/native/fullstate-clock/ordinary contract. Existing tasks reload their stored+16word instead of consuming the new getter value as a replacement.",
+    "Model closure source review confirms374baseline hashes with only two exact hub insertions against retained preimages plus the two new modules; all other implementation unchanged and11compiled inputs/83Wineguards exact. All545decoded local feature links exist; earlier closed private/source proofs reused without a whole11227artifact campaign. Concurrent user commit87fc705 preserves earlier e66/coverage work; no assistant commit or source replay."
+  ],
+  "limitations": [
+    "Source model/original Wine oracle closed; managed/runtime/actualCLI/ordinary consumption still pending. Source domain is conditional known assignments, not whole-actor/allocation ABI or reachability. KnownFFFFraw6B, unknown/stale/currentactor/globalregistry conditions remain separate.",
+    "EUR e66-d65/USAe8-d7 unchanged. NewLinux/USA/nativeWindows/new32:9 validation pending; no performance/storage measurement, gameplayfixture/navigation/privatepayload edit, Android change, packaging, commit or push."
+  ],
+  "files": [
+    "docs/rom_data_unit_obj.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "crates/gba-core/src/rom_data/unit_obj_property_words.rs",
+    "crates/recomp/src/rom_data/unit_obj_property_words_model_tests.rs",
+    "crates/gba-core/src/rom_data.rs",
+    "crates/recomp/src/rom_data.rs"
+  ],
+  "references": [
+    "docs/rom_data_unit_obj.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

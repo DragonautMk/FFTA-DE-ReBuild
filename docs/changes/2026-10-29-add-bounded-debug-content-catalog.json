@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "slug": "add-bounded-debug-content-catalog",
+  "title": "Index debug content with bounded readonly discovery and stale selection checks",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU build",
+    "Wine",
+    "Linux host tooling"
+  ],
+  "changes": [
+    "DBG2-02 adds common Index::scan/recheck and debug-content scan/check over declared portable/app subtrees or explicitly added folders; no background refresh, script launch, guest execution, repair or input mutation.",
+    "Index 16 content families with stable root/type/relative-path IDs, selection refs, names/descriptions, content hashes where budget permits, declared ROM/region, availability, compatibility and verification scope. Preserve distinct same-name and duplicate-byte entries.",
+    "Bound roots, entries, visited nodes, depth, hashing, metadata, issue reports and duplicate links; explain truncation and unknown verification instead of claiming complete authentication.",
+    "Reject changed/missing/nonordinary files and wrong content types on explicit recheck. Reuse existing unshared-file guards and add canonical parent/component checks to reject filesystem aliases even when Wine hides their Windows symlink attributes.",
+    "Add scan/check descriptors to the shared operation contract, now 67 operations and 250 parameters. Include the new guide in public package and Docker source/ignore closures."
+  ],
+  "validation": [
+    "Final locked/offline Windows GNU release test/runtime builds pass without compiler warnings from 579 frozen files; candidate SHA256 319d5fdf9f58d9d1a519478fd2f07d6a2273f07cf1cf304b958603a5f88733d7.",
+    "Wine passes all 9 content tests plus 3 operation-contract tests: empty/duplicate names and roots, all 16 types, portability, changed/missing/wrong-type refs, invalid/future metadata, caps, actual links/hardlinks and malformed commands.",
+    "Separate real host-created file/directory aliases and hardlink scan refuses all with zero hashed bytes, exactly 3 visited nodes and no directory enumeration; the file alias target is unshared to exercise the canonical guard independently of hardlink rejection.",
+    "Wine CLI smoke passes 8 positive, 3 refused and 5 malformed calls, including saved-index checks, duplicate roots, explicit-only scope, declared ROM mismatch and stable IDs after a spaced Unicode portable folder move from an unrelated cwd. No script sentinel or guest frames.",
+    "Three Python source-census tests and ten synthetic packaging tests pass; public guide is included while unlisted personal files remain excluded.",
+    "All 579 frozen source hashes, five affected current implementation hashes and normal Windows/Linux executable hash-and-mtime guards remain exact.",
+    "Initial sha2 Array LowerHex compile error was corrected with explicit bytehex conversion. Initial Wine link test failed; readonly host-link/path probes proved hidden attributes and traversal, leading to the canonical guard and actual filesystem fixture. Failed logs/probes/source preimages are retained.",
+    "Project-memory metadata and whitespace checks pass. The workspace coverage check reports only three separate concurrent ROM-work paths, inspected and preserved; all DBG2 implementation paths are covered by their new records."
+  ],
+  "limitations": [
+    "Indexing hashes and declared-match metadata are not full profile, dataset, snapshot, executable, feature or native ABI authentication; existing operation preflight remains mandatory before execution.",
+    "The integrated selector, migration of existing actions and persistence remain DBG2-03/04/07. No automatic OS dialog was added; existing three dialog sites remain DBG2-04.",
+    "Native Windows, Linux runtime, native Windows symlink-creation API and physical controllers remain unverified. Wine tests use actual host-created link fixtures because its Windows API fixture was not reliable.",
+    "No real release archive refresh, private game input, old acceptance replay, benchmark, commit or push. This metadata unit has no managed disposable dataset copies; the ROM-only complete retention helper remains inapplicable without renaming or recreating fixtures.",
+    "Workspace-wide memory coverage currently remains pending for concurrent crates/recomp/src/rom_data.rs, crates/recomp/src/rom_data/conditional_records8_scene_tests.rs and crates/recomp/src/rom_data/validation_tests.rs. These changes belong to separate ROM work and were not attributed, modified, tested or covered by this DBG2 record."
+  ],
+  "files": [
+    "crates/recomp/src/debug_content.rs",
+    "crates/recomp/src/debug_content/tests.rs",
+    "crates/recomp/src/debug_session.rs",
+    "crates/recomp/src/main.rs",
+    "crates/recomp/src/debug_operations.json",
+    "scripts/package_ffta_portable.py",
+    "scripts/tests/test_package_ffta_portable.py",
+    "scripts/README.md",
+    "Dockerfile.windows",
+    "Dockerfile.linux",
+    ".dockerignore"
+  ],
+  "references": [
+    "docs/debug_content.md",
+    "docs/debug_operations.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

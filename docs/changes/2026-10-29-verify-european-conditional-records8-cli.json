@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "slug": "verify-european-conditional-records8-cli",
+  "title": "Verify production CLI registration and startup for European conditional records",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Register the actual e85-d84 production CLI create/reuse/startup outcome against the accepted78-file/77-resource runtime dataset, preserving earlier source/model/native/lifecycle outcomes."
+  ],
+  "validation": [
+    "One warning-free Windows production build72d44985a5e6531605990cb7769378195c5eb65cf1894de099b8764ad4d22c9f from568 byte-identical runtime sources/no overlays; exact corelib/production fingerprints isolated, unchanged selected menu source, canonical executable hash/mtime restored.",
+    "Three actual Wine CLI children exit0: prepare created/reused and runc startup. All78 files equal the accepted runtime dataset, all77 logged resource ID/hashes match,80 managed paths retain hashes/mtimes and the old28859-block native library is loaded unchanged.",
+    "Successful prepare precedes a stale private helper index75 assertion; correcting it to76 resumes only reuse/startup without repeating creation or compilation. Initial helper/log/child receipt is retained; no resource or runtime code changes.",
+    "One neutral frame on an exact normal seed copy24755to24756 reports all9new-family counters0. All189guards/568CLI and568runtime hashes/78accepted files/originals/canonical/cache/loader remain exact; artifact helper retires zero paths. No game action/navigation/new checkpoint/source-model-native proof replay or performance/storage campaign.",
+    "Initial memory checks identified six concurrent debug-operation paths; the later ordinary-unit default/base999d0a6 checks now pass after their separate records were supplied. CLI scope and its actual build/process results are unchanged."
+  ],
+  "limitations": [
+    "Actual CLI registration/startup is complete; positive ordinary use and full state/clock/image/OAM/audio equivalence for this family remain pending. The one-frame startup does not establish new-family consumption.",
+    "Linux, USA, native Windows, new32:9, full caller ABI, indirect references, successor70-byte extent and full ROM TODO remain pending. No Android/package/assistant commit/push; concurrent debug-operation changes are preserved and not included in this frozen CLI validation.",
+    "Concurrent debug-operation changes and their separate records remain outside the frozen CLI validation scope; their tests are not attributed to this unit."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "consume-european-four-byte-linked-pairs",
+  "title": "Consume European four-byte linked pairs through original live qualification logic",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Add EUR schema 1 / extractor 27 / decoder 26 fixed linked-metadata4.json, resource gameplay.linked-metadata4, format linked-metadata4-v1-json. All 22 files / 21 resources authenticate before activation; all 20 previous decoded files and e26 generations remain unchanged, USA stays e8-d7. Preserve 20 records / two selector-value slots each / 80 source bytes, including unused values.",
+    "Validate actual parsed metadata52 raw indices and new pair selectors against each other. Typed selector/value views serve original CPU/DMA/native and guest-BIOS reads, merging prior metadata52 ownership at boundaries. Keep original count-versus-contiguous-walk distinction, unsigned values/signed qualified-count comparison, u8 tally, deeper live ability scans, guest work/clock and save/native ABI.",
+    "Extend managed preparation/loading/reporting/CLI descriptions with transactional source-authenticated activation, immutable-generation retention and nonserialized family counters. A 2 MiB malformed-input guard is not a space optimization target; no host count/qualification shortcut replaces guest code."
+  ],
+  "validation": [
+    "Windows test build42571 warning-free and Wine33626 two focused checks pass publication interruption/create/reuse/repair/move/e26 retention, coherent selector/unused value/reorder/source/dependency/path/role guards, parsed owner bounds and unavailable-copy Load/Undo/backup/restart. A private generator multiline-template mismatch was corrected before builds; no Windows build/runtime check failed.",
+    "Fifty-six sampled original/interpreter/native Count/Select/Gate/Threshold prefixes with all 80 new raw ROM bytes altered match complete states/clocks, including second-slot comparison, signed edge and tally wrap. Compiled reads: 54 selector / 34 value bytes; 1307 instructions / 81 dispatches are coverage only. Every byte/edges/widths/mirrors/real-BIOS bus/CpuSet/FastSet/DMA4 and a narrow crossing word with 2 typed metadata52 + 2 metadata4 bytes pass.",
+    "Windows production59395 warning-free/canonical restored. Actual Wine CLI36972 prepares/reuses with unchanged file hashes/mtimes and uses old native cache from unrelated cwd for 540-frame Change Jobs replay. New family consumes 38 bytes = 32 selector / 6 value; final Marsh/Thief image inspected.",
+    "One 540-frame Wine pair48436 matches every complete state/clock/central-wide framebuffer/OAM/dispatch and mixed/PSG/FIFO/HLE audio stream with the same 38 new bytes. Retained ordinary input is justified by the new 80-byte migration and separate metadata4 use gate; prior e26 metadata52 acceptance stays closed. No direct RAM edit or new recording.",
+    "Closed source320+24 and native/lifecycle proofs are not repeated. Protected ROM/e26/state/input/cache/loader/canonical/candidate/owner/source hashes and CLI file set/hash/mtime integrity, project-memory and whitespace checks recorded at closure; all jobs terminal, no agent commit/push."
+  ],
+  "limitations": [
+    "Targeted native/source proofs cover bounded mid-function prefixes, not whole-function ABI or global caller preconditions. Deeper original live ability scans remain active and are compared during the accepted ordinary scene; no new general host interpretation is claimed.",
+    "New Linux/USA/native Windows verification and broader gameplay/maps/audio/GUI/archive/mod work remain pending. No performance/startup/RSS/space campaign or AndroidPort change. Private game data, saves, recordings, source fixtures and generated code remain ignored."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/metadata4.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/metadata4_runtime_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "scripts/extract_rom_data.py"
+  ],
+  "references": [
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_gameplay.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

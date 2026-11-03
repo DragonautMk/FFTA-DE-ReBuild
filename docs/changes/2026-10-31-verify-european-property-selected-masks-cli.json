@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "verify-european-property-selected-masks-cli",
+  "title": "Verify European property-selected masks CLI",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Document production CLI creation, reuse and startup with the e100 mask resource."
+  ],
+  "validation": [
+    "One isolated production Windows build and Wine create/reuse/one-frame startup matched all 91 accepted generation files and 90 runtime resource identities; managed and protected files remained unchanged."
+  ],
+  "limitations": [
+    "The mask counter stayed zero in the neutral frame; ordinary use, Linux, USA and native Windows remain unverified. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md"
+  ]
+}

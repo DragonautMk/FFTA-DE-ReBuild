@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-debug-save-collection-sources",
+  "title": "Translate debug-save collection and source documentation",
+  "kind": "docs",
+  "platforms": [
+    "Desktop debug-save documentation"
+  ],
+  "changes": [
+    "Translate the local numbered collection, source inventory and generated-save descriptions into English while retaining identifiers, game names, paths, provenance and historical validation limits."
+  ],
+  "validation": [
+    "Compare identifiers, inline literals, links and four legacy anchors with the prior text; confirm the introduction and case sections remain unchanged."
+  ],
+  "limitations": [
+    "The case-by-case and subsequent sections remain untranslated; no private saves, fixtures, gameplay or runtime checks were accessed or run."
+  ],
+  "files": [
+    "docs/development/debug saves.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

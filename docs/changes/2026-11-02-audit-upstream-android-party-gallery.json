@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "audit-upstream-android-party-gallery",
+  "title": "Compare upstream Android Party gallery touch",
+  "kind": "docs",
+  "platforms": [
+    "Android source comparison; host Linux synthetic tests"
+  ],
+  "changes": [
+    "Trace one Party gallery touch candidate, existing fork dispatch, upstream guest hooks and Android native cache boundaries; specify evidence and stop conditions for a future scoped unit."
+  ],
+  "validation": [
+    "Upstream pinned Android gba-core gallery_ synthetic tests: 3 passed offline on host Linux; inspected both source trees and Android callers."
+  ],
+  "limitations": [
+    "Two unused-function compilation warnings; tests model publisher completion and do not exercise guest execution, JNI, Android device or emulator, fork runtime, native hook/cache or real scenes."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-06-android-party-gallery.md",
+    "docs/development/upstream-audit/U31-06-android-touch.md"
+  ],
+  "references": [
+    "AndroidPort/docs/EXPERIMENTAL_TOUCH.md"
+  ]
+}

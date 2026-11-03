@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "slug": "consume-european-task-cycle-deltas",
+  "title": "Publish and consume the European signed task-cycle deltas",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Publish gameplay.task-cycle-deltas/task-cycle-deltas.json in EUR e76-d75:69files68resources,48signed-i8 bytes/one source span/no dependencies, all67previous resource records-files retained. Wire extraction, strict loading/source equality/full-set validation, runtime attachment and use reporting; USA8-7 unchanged.",
+    "Add a private typed48-byte owner that composes prior/raw bytes, preserving original old-u8 indexing, signed add/sub, stored-byte wrap and remainder48 helper. Track48rows outside guest serialization. No Machine/CAPI/save/native-cache ABI or global input cap change. Legacy test construction only gains the new None/zero argument; closed tests are not rerun."
+  ],
+  "validation": [
+    "One first Windows frontend build warning-free/frozen711bd1c969fb1cf45040e03c13501b8f5efc5f053a8fc16ec359e4ae5e2fc0b7. One first exact Wine filter passes69generation files/68resources/all67prior records-files exact, interruption at new file, nine transactional attach guards/two full-set presence guards with original owner and complete guest state retained.",
+    "Eight original/typed-interpreter/compiled-native prefixes match complete serialized state and guest clock with all48raw source bytes altered, five explicit compiled new-byte reads, both signs/helper-byte-wrap/outside48-254-255 preservation.106compiled instructions/37dispatches are coverage only. Same filter covers all48rows/mirrors/raw edges, mixed unaligned CAPIread32at371062 with two bytes from each new/prior owner, three crossing DMA/CpuSet/CpuFastSet fullstate-clock comparisons and unavailable-file/load/slot Load-Undo owner retention.",
+    "All154actual input-output-frozen hash-mtime guards and compiled implementation hashes pass. Required local artifact completion retires only the disposable interrupted dataset, preserving accepted69files/inputs/preimages/logs/results/current frozen executable. Dataset d4f66549ea79aa8c45be7f44484056d2f92daeb754a459f09826473635368254; manifestbd0881e0c16abbf9602a1faefd2243defbd64be3c884b37962b24081060ddf3b; cycleJSON2e5b3fab16b60356084606eba7ed856a7e6c0bae5cde6e1abcbd7a9a333a3f45.",
+    "One first Windows production build warning-free/frozend83ade6ca106d2dfe95945326d48188e79148e3a591e65e368f0dbd3ad30e2bb; canonical hash/mtime exactrestore/main content unchanged with mtime-only Cargo invalidation. Three Wine CLI children all0: prepare/reuse/runc0.69generation71managed/all69accepted/all68runtime ID-hashes exact/new48rows registered/old nativecache loaded. Whole managed pathset/hashmtime unchanged on reuse/startup,226actual guards/compiled source exact; zero frames/native dispatch/fallback/cycle reads deliberately registration-only. Required artifact completion0paths."
+  ],
+  "limitations": [
+    "Bounded publication/direct consumption/lifecycle milestone. Actual production CLI registration is now verified; a positive ordinary cycle scene remains a separate open child. Source/model proof stays closed; no all-use/axis/unit/initializer/task-lifetime or physical archive claim. Constructor-animation ordinary child remains partial.",
+    "Linux/USA/native Windows/new32:9 pending. No ordinary fixture/navigation, performance/storage campaign, Android/package/assistant commit/push; full ROM_DATA_TODO remains active."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/task_cycle_deltas.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/task_cycle_deltas_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "scripts/extract_rom_data.py",
+    "docs/rom_data.md",
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

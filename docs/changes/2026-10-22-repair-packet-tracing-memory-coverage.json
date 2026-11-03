@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "date": "2026-10-22",
+  "slug": "repair-packet-tracing-memory-coverage",
+  "title": "Repair packet source-tracing change coverage and update CI checkout",
+  "kind": "fixed",
+  "platforms": [
+    "Project tooling",
+    "GitHub Actions"
+  ],
+  "changes": [
+    "Supply the missing change coverage for commit 69b06ca: bounded halfword/plane parsers expose typed value and dictionary source positions while preserving marker bits; the shared LZ77 parser exposes literal source/output positions without changing serialized resources.",
+    "Document the associated packet source projection retained in runtime/packets.rs, whose later European consumer integration and Wine validation are recorded separately; this repair changes no Rust code.",
+    "Pin project-memory checkout to actions/checkout v7.0.1 (3d3c42e5aac5ba805825da76410c181273ba90b1), whose action manifest selects Node 24, retaining full history and existing coverage enforcement.",
+    "Explain why a later green push does not prove coverage of an earlier failed push, and require checking the repaired combined range without rerunning the unchanged historical commit."
+  ],
+  "validation": [
+    "Read GitHub Actions run 39737053773/job 119685097064: all five tooling tests passed; documentation coverage failed for bg_packets.rs, lz77.rs and runtime/packets.rs against 91f26ca. The Node 20 annotation was a separate warning.",
+    "Reproduced that exact three-file failure in an isolated checkout of 69b06ca; checking committed HEAD 22ddb72 against 91f26ca reproduced the remaining bg_packets.rs/lz77.rs omissions. The later push run 39743562541 was already successful.",
+    "Verified the checkout release SHA and Node 24 action manifest against the official actions/checkout repository.",
+    "All five project-memory tooling tests pass. An isolated committed-HEAD checkout with only the CI repair passes default coverage, --base 69b06ca and --base 91f26ca, plus git diff --check and bash -n on the unchanged workflow shell block.",
+    "Working-tree metadata validation passes. The initial full working-tree check reported the concurrent graphics/custom-codec implementation as uncovered; the final full check passes after that unit supplied its own separate record. Those files were not added to this repair's coverage."
+  ],
+  "limitations": [
+    "Local changes are not committed or pushed; no new hosted workflow run has executed the updated checkout pin, and the historical failed run remains unchanged.",
+    "Concurrent field00 graphics/custom-codec implementation is preserved and excluded from isolated CI-repair validation; its runtime evidence and change coverage belong to its separate graphics record.",
+    "No runtime build, game replay, Linux/USA runtime verification, performance measurement, packaging or AndroidPort change was performed."
+  ],
+  "files": [
+    ".github/workflows/project-memory.yml",
+    "crates/gba-core/src/rom_data/bg_packets.rs",
+    "crates/gba-core/src/rom_data/lz77.rs",
+    "crates/gba-core/src/rom_data/runtime/packets.rs"
+  ],
+  "references": [
+    "docs/development/MEMORY_WORKFLOW.md",
+    "docs/development/TASK_HANDOFF.md",
+    "docs/rom_data_graphics.md",
+    "docs/changes/2026-10-22-consume-european-background-packet-programs.json"
+  ]
+}

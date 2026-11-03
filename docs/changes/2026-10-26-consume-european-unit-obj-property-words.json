@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "date": "2026-10-26",
+  "slug": "consume-european-unit-obj-property-words",
+  "title": "Consume European actor property words from managed decoded files",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Publish graphics.unit-obj-property-words/unit-obj-property-words.json in EUR e67-d66 with actual metadata52andmetadata14producer dependencies:63files62resources, all61previous decoded files/resource records and e66retained, USAe8-d7unchanged.",
+    "Add one immutable typed runtime owner for exactly four ranges/364B/182u16records and398producer witnesses. Three u64masks index records; original getter/allocation/task reuse remain guest work. Preserve earlier owners, omitted112/117words, rawFFFF6B and fullword inputs without a live cap, pointer correction or raw overlay.",
+    "Add one optional positive actor-propertyword guard/report to the shared ordinary scene validator. Preserve existing guards/defaults and production runtime code; assert actual newfile consumption during the newly selected e67scene criterion."
+  ],
+  "validation": [
+    "First affected Windows core/frontend test build passes warning-free. Frozen frontend130752e50e10aaa608e0a5fb03517b4a0a6e2f2990e5c3f98759c33e8404f04d; core compile-onlyd2848fadf413a13141f18030dad49f55c5158a0467959ec1506673e79914c097. No previous source/model/family test replay or failedbuild/test retry.",
+    "First two exact Wine filters pass17attach and4full-set/dependency guards; publication failure/create-reuse-repair-move, all61priorfiles-records/e66retained, failed-attach state/owner isolation, unavailable-directory load/Undo/backup/restart and all364typedB/182usage-mask records. Oldalternate-directory4B retain that owner and6BFFFFreads remain mutable raw ROM.",
+    "Sixteen original/interpreter/compiled paths preserve complete states/clocks with all364raw source bytes altered, including getter, two partial actor prefixes, rawfullword/holes/liveRAM and21aggregatecompiled propertywordB. Allfourrange boundaries/widths/mirrors/realBIOS bus pass; mixedAPI2new2old and2new2editedraw, CpuSet4new2old, FastSet28new4old andDMA4new2old exact. No full allocator/actor ABI or ordinary claim.",
+    "DatasetSHA256dfd7f3e3e4cbf7d3cc9f7b5c3b0d74bb95e0179de01c8936878329b364000d57; manifest5203bc861fe0c24047aa42bab40cac0d91170e5828fd9facd48e2e290b955442; accepted modelbe429aaf9073f5dc811a0272d8d76da35badbc8d6b40ff08f727c2f276ca7bb7.84build/86Wine activehash-mtimeguards and20compiled input preimages remain exact. Functional source-page union394and oldalternate/raw/new mixed windows authenticated before tests.",
+    "Final376baseline source review limits existing implementation changes to five selected shared files, with five retained preimages and two new modules. All20compiled inputs and84build/86Wineguards remain exact;550decoded local feature links pass. Reuse closed02/newsource/earlier private proof without a whole11256artifact campaign. Concurrent user commitf425fc6of completed model work preserved; no assistant commit or coverage regeneration.",
+    "First Windows production CLI build passes warning-free, frozen2ce56e03d4ad675bbb41315a29e61bbc62f03a20ee825b4531f67a919a80e4ad; canonicalf3e277db.. hash andmtime1792570130397888519 restored exactly, main content unchanged withmtime-onlyCargo invalidation. FirstactualWineprepare/reuse from unrelatedcwd creates63generation/65managedfiles/62resources/twoactualmetadata52-14deps, all63equalaccepted; reuse changes no hash ormtime. AuthenticF09oldcacheoneframe attaches e67withnewbus/source/word usage0, smokeonly/no ordinary equivalence claim.154activeCLIhash-mtimeguards/20compiled runtime inputs exact; no oldsource/model/runtime/scene acceptance replay.",
+    "ActualCLIclosure confirms all379source hashes with implementation unchanged,154activeCLIhash-mtimeguards/20compiled runtime inputs/maincontent exact and551decoded local feature links. Reuse03/02/newsource/private proofs without a whole11363artifact campaign; no livejobs or oldacceptance replay.",
+    "First newordinary productionCLI F09Wait3530on existing authentic checkpoint/input/oldcache reads10times/20aggregateB/twowords. First changedguard Windows frontend test build passes warning-free/frozena3e255e669b370852ab745cdb9678e8463cdff284db4ee6da37f505c18b9cb16. First exact Winefullpair/newpropertyflagonly matches every3530complete-state/clock/central-widebuffer/OAM/dispatch/mixed-PSG-FIFO-HLEaudio frame, allfive audio streams nonzero, andexact10/20/2usage asactual2ce56e03.. CLI/generation-gpXTBA.155activeinputhash-mtimeguards/21compiledinputs exact; no failedbuild/testretry or newfixture/navigation. Oldnormal3530child remainsclosed; sameinputs serve newpropertycriterion, not context recreation or oldfamily/source/model/runtime/costproof replay.",
+    "Ordinaryclosure379source hashes show only one exact five-line optional propertyword guard/report against its preimage; allother implementation unchanged.154CLI/155scenehash-mtimeguards/21compiledinputs exact, all552decoded local feature links valid. Reuse closed04/03/02/newsource-private proofs without a whole11444artifact campaign. Usercommit4196542of completedruntime work preserved; no assistantcommit, fixture/navigation or coverage regeneration."
+  ],
+  "limitations": [
+    "Managed/runtime/actualproductionCLI and declared ordinary F09scene acceptance closed. Other180words retain targeted source-reader coverage; no all-word ordinary/full allocator-actor ABI/new32:9 claim. RawFFFF6Bmigration, unknown/changedactor/globalregistry reachability and broader families remain separate.",
+    "NewLinux/USA/nativeWindows/new32:9 validation pending; USAe8-d7 and canonical production executable unchanged. No performance/storage measurement or optimization, gameplayfixture/navigation/privatepayload edit, Android change, packaging, commit or push."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/unit_obj_property_words.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/unit_obj_property_words_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "scripts/extract_rom_data.py",
+    "crates/recomp/src/rom_data/validation_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_unit_obj.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "publish-european-compact-obj-third-root",
+  "title": "Publish third European compact OBJ source",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Publish the authenticated sparse compact OBJ projection including an empty list in e103 with typed byte composition and usage counters while preserving guest indexing and fallback."
+  ],
+  "validation": [
+    "Isolated Windows build and focused Wine managed/native test passed: 92 previous resources unchanged, all source bytes and mixed boundaries, transactional tamper rejection and original prefix state and clock equivalence for three selectors."
+  ],
+  "limitations": [
+    "Older generation/count assertions were updated but not individually rerun. Production CLI, ordinary use, unwitnessed data, Linux, USA and native Windows remain open; no performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/compact_obj_animations_tertiary.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_tertiary_runtime_tests.rs",
+    "scripts/extract_rom_data.py",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_secondary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_four_byte_lookup_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_packed_lookup_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_descriptor_banks_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_descriptor_bank_zero_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_property_masks_runtime_tests.rs",
+    "crates/recomp/src/rom_data/table_graphics_runtime_tests.rs",
+    "crates/recomp/src/rom_data/dynamic_raw_fragments_runtime_tests.rs",
+    "crates/recomp/src/rom_data/clan_table_alias_runtime_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

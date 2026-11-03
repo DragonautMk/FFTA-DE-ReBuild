@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "consume-european-evaluation-score-and-threshold-parameters",
+  "title": "Consume European evaluation coefficients and thresholds through original live score and RNG paths",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "EUR e34-d33 adds evaluation-parameters.json/gameplay.evaluation-parameters,29files/28resources/all27prior decoded files/e33 retained, USAe8-d7 unchanged. Preserve two source spans/38B/fixed7terms-2bonuses-5thresholds and all opaque bytes without unproved foreign owner/gap ownership.",
+    "Typed CPU/native/SWI/DMA projections and nonserialized field counters/class mask preserve original live producers/unsigned-u8 and signed32 division/wrap/bonus predicates/RNG/clock/save/nativeABI.18gap-class0 bytes remain raw; no diagnostic zero-divisor fallback enters guest code."
+  ],
+  "validation": [
+    "Initial Windows51951compilation succeeds with one unusedimportwarning rejected by wrapper; pre-Wine review replaces overlapping isolated native stops with27complete score/shared-threshold prefixes. Corrected68404test and87827production builds warning-free/canonical restored; candidate SHA 8c88db6de17b77552b1a9c1dd4200c3c94e90f9998ccc3b61148a97351772df7. No Winefailure; source132+52 isolated proof not repeated.",
+    "Wine32104two checks pass publication interruption/create/reuse/repair/move/e33retention/coherent divisor/weight/unusedbonus/opaque-threshold/source/dependency/path/bothroles transactional guards and unavailable-copy Load/Undo/backup/restart.",
+    "27original/interpreter/compiled prefixes with raw38B altered match fullstates/clocks. Compiled divisor82/weight84/bonus12/threshold14/opaque0B, classmask31, class0newsource0. All38B/edges/widths/mirrors/BIOS/fourmixedwords8typed/bothspansCpuSet-FastSet18-20typed/DMA2typed2raw pass; all18gap/row0B remain raw/no new counters.13068instructions/342dispatches coverageonly.",
+    "ActualCLI7961creates/reuses without writes/old cache/unrelatedcwd;31managed files hash/mtime guarded. Concrete063768->D2D44candidate caller justifies first retained1840Pubmission sample, positive15scoreB(divisor7/weight7/bonus1),0threshold/opaque/mask0. One Wine71943pair matches every fullstate/clock/central-wide image/OAM/dispatch/mixed-PSG-FIFO-HLEaudio sample. Final Pubbackground inspected; selectedunit/fullmissionoutcome not independently inferred from separatedpanel image. No new fixture/RAMedit/savewrite/negative locator or olde28/e33acceptance repeat.",
+    "Protected ROM/e33/sourceproof/state/input/cache/loader/canonical/candidate retained; memory/whitespace/source hashes recorded at closure. No agentcommit/push, performance or space campaign.",
+    "HEADadvanced externallyto26409f7after this unit, committing prior e31/e32/e33content. CurrentEvaldiff inspected/preserved; no agent commit, old proofs not reopened."
+  ],
+  "limitations": [
+    "Ordinary scope proves score fields only; all5threshold classes/RNG and opaque storage remain targeted-only. Whole-function tails/ABI, semantic actor/action names/other consumers, zero-divisor helper behavior and unused gaps remain unclaimed.",
+    "Separate11Bglobal positive ordinary condition gate and newLinux/USA/nativeWindows/broader graphics/text/maps/gameplay/audio/GUI/archive/mod phases remain pending. AndroidPort unchanged; private ROM/saves/inputs/sourcefixtures/generated code stay ignored."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/evaluation_parameters.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/evaluation_parameter_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "scripts/extract_rom_data.py"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

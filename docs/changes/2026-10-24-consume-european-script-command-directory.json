@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "consume-european-script-command-directory",
+  "title": "Publish European script commands and serve their original field reads from typed data",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "EUR e50-d49 adds script-command-directory.json/engine.script-command-directory:45 generation files/44 resources, retaining all 43 previous decoded files and the e49 generation. USA e8-d7 stays unchanged. This directory has no asset dependency; complete-set/source authentication also requires the preceding effect/event owner.",
+    "Bind 690 source bytes on pages3ac/3ad to 115 typed commands, reconstructing u16 advance and Thumb callback bytes without a ROM shadow. Merge previous owners and raw ROM at accesses spanning boundaries. Keep aggregate advance/callback/command counters outside serialized machine state.",
+    "Connect frontend extraction, preparation, activation and actual-use reporting. Preserve original u8 opcode arithmetic, signed stream cursor, relative targets, u16 wrap, callback BL/BX/return loops and save/native ABIs. Ordinary scene assertion requires both advance and callback reads."
+  ],
+  "validation": [
+    "Previous goal turn made progress: script source/model complete and model-final-summary terminal,250 source/doc hashes match before runtime selection. Source oracle and old native/lifecycle/CLI/ordinary acceptance are not rerun for context.",
+    "Windows release build93228 is warning-free. Wine6355 runs the two new managed/native filters sequentially; both pass on the first run. Managed checks cover 13 coherent/source-set guards, failure-atomic publication/create/reuse/repair/move, all43previous decoded files/e49 retention, transactional missing-file activation and resident ownership through unavailable files/Load/Undo/backups/Restart. All690typed bytes/115commands agree with source while isolated raw data is altered.",
+    "Native checks pass26 original/interpreter/native complete-state/clock prefixes with all690new source bytes altered in decoded arms. CompiledAPI reads14advance/28callback aggregate bytes. Raw115/255, signed cursor, u16 advance wrap, relative targets, BL/BX call prefixes and return-loop branches agree. Adjacent previous events4B/selectors4B survive altered raw sources; mixed previous2+new2/new2+raw2, edges/all widths/mirrors/realBIOS/CpuSet/FastSet/DMA pass.314instructions/70PCs/32native dispatches are coverage only. Reuse STOP_PC prefix guard; production emitter/source model unchanged. All3356prior artifact hashes protected; no failedbuild/Wine.",
+    "Windows production build18103 is warning-free; canonical executable restored byte-for-byte. Private candidate 9338c67c5449b4f83f9d3feea5cdb1c3572060ffad6de0e601daad7736f94a8c. Wine20133 actual CLI creates/reuses47managed files without writes from unrelated cwd and loads the old native cache. All45generation files match accepted datasetee8cdc1b318aecf0ef23aed4bda6dbc455d85bdab30b663d1bac8014b567f130. One boot frame is activation/cache evidence with zero command reads, not ordinary acceptance. No long replay of previously negative producer contexts.",
+    "Final preservation check passes all3356 prior artifact hashes/313 hash-mtime guards. Against250prior source/doc hashes, only six intended implementation hubs/eight memory files changed; source model/all other implementation/concurrent Debug-save work is unchanged. Project-memory default/base7597b92 and CRLF-aware whitespace checks pass; runtime-final snapshots retain targeted+CLI complete/ordinary-positive pending scope.",
+    "Active-context audit traces1265cc\u2190125b6a/manager125ac8, callback assignment125ed4/125f10 and archive producer125e8c. Read-only checksum/ROM-authenticated inspection of63distinct EUR transitional boot snapshots finds queued root0; no replay or payload edits. One new CLI locator81783 reuses genuine retained ai-turn.input plus suspend save for8476frames/classic240x160 and positively consumes42command bytes=14advance/28callback from7commands. e49event/selector/dispatch reads remain0, a closednegative for that owner. No rebuild/prepare/newfixture/navigation; positive command fullpair follows as separate evidence.",
+    "One Wine93633 ordinary fullpair from the actual CLI-published e50generation passes all8476complete states/clocks/central-wide images/OAM/dispatch and mixed-PSG-FIFO-bitwiseHLE audio samples, with the same42command bytes/7commands. Audio sample counts18599928/18599928/2236876/2236876/18578590. Reuse the already built managed test executable and unchanged genuine input+suspend save; no rebuild/source/native/lifecycle/CLI acceptance repeat or new fixture/navigation/payload edit.316hash-mtimeguards pass. Evidence target/rom-data-script-commands/windows-scene-result.json and windows-battle-entry-script-full-state-audio.log.",
+    "Final ordinary preservation check passes3671prior artifact hashes/316hash-mtimeguards. Against253prior source/doc hashes only11intended memory files change, with every implementation/source-model file and concurrent Debug-save work unchanged. Project-memory default/base7597b92 and CRLF-aware whitespace checks pass. ordinary-final snapshots close the declared source/runtime/CLI/positive ordinary e50unit; the full TODO and ordinary e49event criterion remain open."
+  ],
+  "limitations": [
+    "Controlled command-field/address/call-prefix integration and one positive genuine EUR suspendboot-to-battle8476/classic240x160 ordinary scene are complete. Seven commands consume42aggregate source bytes; the other108commands remain targeted-only. This does not prove a whole script interpreter/callback ABI, new32:9scenes or ordinary effect/event consumption. That preceding family remains pending afterthreeclosednegative locators.",
+    "New Linux, USA, native Windows and the other asset/GUI/archive/mod TODO criteria remain open. No performance or space measurements, fixture/navigation/save-RAM-payload edits, AndroidPort changes, commit or push. Preserve previous resources/executables/cache/saves/input and concurrent Debug-save work."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/script_commands.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/script_command_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "scripts/extract_rom_data.py",
+    "docs/rom_data_scripts.md",
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_scripts.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/rom_data_runtime.md"
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "decode-european-alternate-battle-obj-poses",
+  "title": "Decode European alternate battle targets without treating shared index roots as sequences",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add an offline lossless alternate battle OBJ model with explicit null/counted-sequence/shared-index-root target tags for all5850bindings over65producer IDs. Preserve706proper sequences/2771frames,30OBJlists/108objects and1203decoded4bpp requests without parsing fake frames for the20shared-index-root views.",
+    "Validate the20aliases against independent initial-pose directory/index witnesses, coalesce only the byte-identical witnessed4Bdirectory/index overlap and reject conflicting roles. Validate metadata52/14producer keys, strict JSON, field widths, extents, graph links and authenticated EUR source identity.",
+    "Reconstruct3635full direct-source spans468944B and exclude byte-identical initial/equipment/normal-battle ownership to obtain3321new spans410086B. Add one new private original-reader source oracle; managed schema/runtime e60 and USAe8remain unchanged."
+  ],
+  "validation": [
+    "Reuse the completed static contract without rebuilding it. Full3635canonical direct-source spans468944B reconstruct with SHAe38653c4411d984119245f6e38dd93a91640336d57d6a70913f334c1df7ea6e2; new3321spans410086B match independent source-plan records/SHA bdf15f7d79e3af013fae656e16341d5a01d216be364ed881b877850f116bd002. All5850tagged bindings and20independent directory/index witnesses match.",
+    "One affected Windows frontend test build passes without warnings; frozen executable66abf7cee364967fd3489e87423466ce3535e38a5cf952f444ad65d65e0fabba. Eleven selected compiled inputs/preimages and958build/960Wine hash-mtime guards pass. Shared hub changes are only new model/oracle registrations.",
+    "One exact new Wine source filter passes on first execution:15JSON/shape/source/producer/shared-view guards,10544original constructor prefixes over5252newcells/allthreeparts plus40shared-target aliases,4428null resets and606proper sequence resets with complete RAM guards. No fake frame is parsed or scheduled.",
+    "Five new operation2/3/8command cases and1079original scheduler/queue/realDMA3uploads match all342112newpixel-source bytes and entire VRAM. Shared operation6and previous-owner original-reader acceptance are not replayed.40997observed nonpixel load bytes/506PC/1141155instructions describe coverage only; no whole actor/allocator or every preserved-byte read claim.",
+    "Private build/source-model results, logs, tagged JSON output and compiled preimages remain under target/rom-data-alternate-battle-model/; earlier accepted/rejected evidence is preserved.",
+    "Final preservation passes all8190prior artifact hashes,958build/960Wine guards and11selected compiled inputs/preimages. 683local feature links, project-memory default/base7597b92/new-module rustfmt/CRLF-aware whitespace pass. Only two module registrations and coherent source-model memory change existing files; user Debug-save/Docker/ROM-save-state-input/canonical exe/cache/TCC and all old evidence remain intact."
+  ],
+  "limitations": [
+    "Offline source/model acceptance complete; managed publication/runtime attachment/actual CLI/ordinary equivalence remain separate open criteria. EUR e60-d59/56files55resources and USAe8-d7 unchanged.",
+    "No actor/action reachability or scheduling meaning is claimed for the20shared-root target views. Constructor prefixes can prove their pointers without scheduling bogus frames; script49/live streams and broader ROM data TODO remain incomplete.",
+    "New Linux/USA/native Windows/new32:9 unverified. No new gameplay fixture/checkpoint/private payload edit/performance-storage measurements/Android change/package/commit/push. Separate equipment navigation approval remains pending and the rejected derivation is not executed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data/unit_obj_alternate_battle.rs",
+    "crates/recomp/src/rom_data/unit_obj_alternate_battle_model_tests.rs",
+    "crates/gba-core/src/rom_data.rs",
+    "crates/recomp/src/rom_data.rs"
+  ],
+  "references": [
+    "docs/rom_data_unit_obj.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

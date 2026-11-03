@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-10-26",
+  "slug": "classify-european-native-hardware-branch-residue",
+  "title": "Classify European native hardware directories and branch support",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Classify the five high-offset native ROM residue words as hardware-register directory entries and an indirect Thumb IWRAM branch target, preserving original ROM/code support dependencies rather than inventing game asset roots."
+  ],
+  "validation": [
+    "Static exact EUR six complete blocks/392halfwords/47critical pins/five base literals/four BLtargets pass. Actual loads and conditional0..3caller domains authenticate two16Bdirectories at370E68/78 and one4Bword at370EB0 before values are interpreted.",
+    "The two directories address four DMA register blocks, independently matching the local bus register decoder.11CC loads370EB0into r2 twice before145C10 BXr2: the word is ThumbIWRAM entry03005E79, not a fill value or immutable RAM payload.",
+    "All36conditional source bytes are disjoint from65current owners.20observed bytes/five words are classified;656lower observed bytes remain separate. All676observed unowned bytes remain outside exported plans, with e71-d70/USA8-7 unchanged.",
+    "Exact ROM/static-tool/saved-report hash-mtime guards pass. No build/game/test/new fixture/navigation/performance measurement or previous acceptance replay."
+  ],
+  "limitations": [
+    "No global3A6Cinput cap, physical table extent, all callers or ordinary use of the other four directory entries is established.",
+    "IWRAM callback body/copy origin/full ABI, full DMA/scheduler behavior, lower observed bytes and whole-game completeness remain unverified. Linux/USA/nativeWindows/new32:9 pending."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

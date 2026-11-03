@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "slug": "consume-european-encounter-headers",
+  "title": "Publish and consume European encounter headers with shared source ownership",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Publish encounter-headers.json/gameplay.encounter-headers at e80-d79/index71:73files72resources/all71prior records-files exact, explicit constructor-alternate dependency/coherence. Wire strict parsing/authentication/fullset/startup and immutable typed guest reads through two-fragment17676B plan, preserving the four existing pointer bytes and original guest algorithms/indices/ABI.",
+    "Add global source-page coverage70C..710 and eleven usage fields for eight byte classes/442header IDs. Preserve u16aliases, shared-hole/mirror/rawedge/prior-owner composition; USAe8-d7/schema1 unchanged, nestedpayloads separate."
+  ],
+  "validation": [
+    "One warningfree Windows build1c4135f5.. from510stablefiles and one reducedWine filter pass publication/interruption,14attach/threefullset guards with failedowner-state retention.26original/interpreter/native prefixes match complete state-clock with17680rawheaderBpoisoned afterLoad; 31compiledinstructions/37explicitnewB+fourpriorpointerB, fields/C0034/aliases/rawoutside/mirrors.",
+    "All17676newtypedB+4oldB/eightclasses442headers pass widths/sharedhole/rawedges/olderowner, unavailabledatasetLoad-slotUndo and three DMA/CpuSet/CpuFastSet fullstate-clock cases. All206actualguards/510integrationhashes/508modelpreimages exact. Artifacthelper retiresonlyinterruptedcopy, keepingaccepteddata/source/executable/logs.",
+    "Only affectedcore/test fingerprints isolated before build; no failedbuild/globalclean/oldsource changes. ParallelDebug/coverage/frontend excluded. No newgame/checkpoint/fixture/performance or closed7523model/road-node-constructor acceptance replay."
+  ],
+  "limitations": [
+    "ActualproductionCLI/create-reuse/startup/positiveordinaryfullpair next. Selectednative prefixes are not fullimporter/placement/facingABI/payload/gameplay/globalarchive/allcaller proof; fullROM_DATA_TODO active.",
+    "Linux/USA/nativeWindows/new32:9/nestedtemplate-coordinatepayloads pending. No performance/storage campaign, Android/package, assistantcommit/push; preserveexistinguser/parallelwork."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/encounter_headers.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/encounter_header_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "scripts/extract_rom_data.py",
+    "scripts/README.md",
+    "docs/rom_data_maps.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_maps.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

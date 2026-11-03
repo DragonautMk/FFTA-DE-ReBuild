@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "improve-rom-inventory-trade-effects-readability",
+  "title": "Improve trade and item-effect inventory readability",
+  "kind": "docs",
+  "platforms": [
+    "Desktop development documentation"
+  ],
+  "changes": [
+    "Separate merged words, addresses and counts in trade and item-effect source, runtime and scene summaries; clarify counts for shared byte fields."
+  ],
+  "validation": [
+    "Compared the inventory against its tracked pre-edit version for identical headings, Markdown link targets and inline code spans, and identical digit runs after normalizing three documented numeric-boundary clarifications. Confirmed the remainder from palette-effect sources onward is unchanged and checked shared-byte counts against the linked gameplay guide."
+  ],
+  "limitations": [
+    "Inventory review remains partial from palette-effect sources onward; historical runtime results were not reproduced, and the wider English-first audit remains open."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_INVENTORY.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md"
+  ]
+}

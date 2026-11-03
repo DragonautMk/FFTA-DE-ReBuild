@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "date": "2026-10-26",
+  "slug": "inventory-european-registry-generic-poses",
+  "title": "Decode European registry script poses from direct generic-job fields",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Authenticate the conditional generic unitbyte4=0/1 directjob producer domain before animation targets:16actual highselector49refs/sevenpairs, unitcurrentjob+5/alternate+7/property4-5 and retainedsameunit originalnormal-or-alternate assignment/override20clear/facing0..3. Preserve2940mode-unitkind-selector-job-base witnesses6720refs.",
+    "Classify all116metadata52rows without target-driven pruning:100bothconcrete/10normalonly/2bothFFFF/4routeFF;110normal100alternate concretefields. Correct the rejected initialjoint110count before reading animationtargets, retain2normal12alternateFFFFu16zeroextension and livealternate redirects as separate source cases.",
+    "Define107sprites/3210physicalcells/777propersequences5093frames plus12explicit initialindexroot targetviews; identify659newspans99824B with1386cells1260null/126newseq588op1frames/268pixelrequests82016B, while697168B retain six earlier owners. Productione65-d64/USAe8-d7unchanged.",
+    "Add a strict lossless offline model retaining2940producer witnesses6720refs/107roots3210keys/777sequences5093frames and12explicit sharedinitialroot targets. Independently validate six full previous typed owner views before union subtraction; metadata52/archive remain actual producer dependencies, sentinel/redirect rows remain in existing metadata and the source classification."
+  ],
+  "validation": [
+    "ExactEURROM/metadata52/archive authentication and83halfword/sixliteral-dispatch/11BLpins verify CCC48currentjob/alternatebyte/property branch/directroute0/fieldassembly/u16truncation/currentassignment/registry-unit-context. All116raw52Brows match original sources, no target inspection occurs before the producer contract.",
+    "All60e65resource file/source hashes authenticated before roots/targets. Twelve sprite247animation136/137/140/141parts0/1/2cells equal initialsprite48..59directory fields and their targets match initialindexroot/firstsequence fields; no sequencecount heuristic or nullreplacement.",
+    "Full796992B/sourceSHA25678b1f978d4f97e3b1b842998124703d4488b2992ecf9fa232782d37fdec4d3ab. Shared72476initial436910normal185458alternate16low-scriptalternate40registry-knownspecial2268equipmentB. No internal role overlap, mixedold-newtypeditem or varyingpixel extent.",
+    "New659spans99824B=5544index504header11760frame82016pixel/sourceSHA25644033ff6d5c52eb5ce768cf725db2b1c5bd906fe98a36be7082874304921cdd9.126newseq588frames alloperation1,268entirely newpixelrequests82016B/no newOBJ. During the source-contract child, static source-only work; no code/model/build/guest or oldacceptance campaign executed.",
+    "During the source-contract child, cheap366baseline sourcehash checks confirm allimplementation files unchanged; only six coherent memory/feature files plus this new record change.533decoded local links, project-memory default+base916b4f9 and CRLF-aware whitespace pass. Reuse closed04actualCLI1445hash-mtimeguards/23compiled inputs and03-02private preservation; new audit authenticates all60e65owners independently before targets, without a repeated10698legacyartifact/build/game campaign.",
+    "One affected Windows frontend build passes firstattempt/warning-free; frozenbd8727eecdb46327eab68b067d84d6cfbb80f3fd34c849553b35a57ba4eca2ec. Firstactual exact Winefilter passes34guards/2772newcell facingaliases/1260null+126proper resets/268real scheduler-DMAuploads/all82016newpixelB/wholeVRAM, all12initialroot witnesses and six independently altered priorviews.1462activeWinehash-mtimeguards/15compiled inputs unchanged. No previous command/source/managed/native/scene acceptance replay.",
+    "Final model closure confirms all367baseline source hashes, with implementation changes limited to two shared hubs equal to preimages plus exact declarations; allother implementation unchanged and15compiled inputs exact. ModelJSONSHA2563bd5b90a5796af349f97a178f4ff9004214f3b2d02d5735b1ceabfdf66ac1fd2.1461build/1462Wine hash-mtimeguards verified by runners; reuse newsource60e65owner proof and closed04/03/02private preservation, no whole10712legacyartifact campaign.536decoded local links/new-module rustfmt/project-memory default+basec8c165f/CRLFwhitespace pass. Usercoverage atlas edits preserved and outside selected work; no livejobs."
+  ],
+  "limitations": [
+    "Source contract/lossless model/firstfocused Wineoracle closed. Managed-runtime/actualCLI/ordinarynewpixel-fullscene remain separate. No globalregistryidentity/everyunit reachability, FFFF/redirect/out-of-catalog/changedcurrentactor or nativecomplete-state-clock/wholeactor-allocator ABI claim at this source stage.",
+    "Linux/USA/nativeWindows/new32:9 pending. No performance/storage measurement or optimization, gameplayfixture/navigation/privatepayload edit, Android change, packaging, commit or push."
+  ],
+  "files": [
+    "docs/rom_data_unit_obj.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "crates/gba-core/src/rom_data/unit_obj_script_registry_generic.rs",
+    "crates/recomp/src/rom_data/script_registry_generic_model_tests.rs",
+    "crates/gba-core/src/rom_data.rs",
+    "crates/recomp/src/rom_data.rs"
+  ],
+  "references": [
+    "docs/rom_data_unit_obj.md",
+    "docs/rom_data_scripts.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

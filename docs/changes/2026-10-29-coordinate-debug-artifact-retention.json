@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "slug": "coordinate-debug-artifact-retention",
+  "title": "Coordinate bounded session and cache retention with reviewed plans and durable receipts",
+  "kind": "added",
+  "platforms": [
+    "Python 3.11 Linux and Docker; Windows GNU cross builds and Wine/Xvfb; offline Chrome"
+  ],
+  "changes": [
+    "Add shared directory-v1 leases through atomic mkdir/owner-token checks, spanning isolated session creation/runtime and Python cleanup/coverage operations. Keep existing session file lock; new host manifest attests coordination, while legacy/unattested/failed/incomplete scopes remain protected. Hard-killed owners leave protective markers and no automatic PID-based reclamation. No guest fields, save/native ABI or guest execution changes.",
+    "Add bounded artifact manager preview/apply, explicit session/ROM-unit selection and --keep, private HTML/JSON byte estimates, capture-limit summary and per-operation receipts. Reconstruct the reviewed plan before and under all required leases; verify candidate and retained-session identities before first removal, retain failure/interruption evidence and refuse stale/tampered plans. Preserve original inputs, saves, recordings, proofs, datasets, pinned runtimes, source preimages and unknown files. Only recognized native cache libraries and old explicit completed ROM fixture copies are eligible; no global or full-session deletion.",
+    "Reuse local_artifacts completion/pruning with unit/cache leases. Nested activity or any unexpected candidate contents preserves the entire ROM unit. Automatic coverage preparation/read/pruning and explicit historical-cache reads share coordination; host layout detection and separate --cache-lease Docker mounts protect readonly inputs without enabling pruning. Keep current generation; journal cache-retention receipts with64receipt cap.",
+    "Bound manager to32scopes,8192entries per inspected tree,8192candidate leaf files and16MiB plan/receipt; use logical-byte fallback with an explicit estimate flag when st_blocks is unavailable. Add offline review/filtering, homepage category/guide and logged Python/Bash/PowerShell/Docker entry points. Fix root/staged Docker module closure; new Git-enabled derivative image supports tracked-file guards without rebuilding runtime or copying game data."
+  ],
+  "validation": [
+    "Resume verifies closed DBG01-17 and actual26Oct cleanup receipt (240paths/7138files/50.28GB,3186private hashes/53887stats preserved); do not repeat that sweep, rebuild retired payloads or reopen old scene acceptance. Frozen publice8bd939+16accepted/debug overlays excludes concurrent ROM models.",
+    "Locked/offline warning-free Windows release feature68b06042bab965fb2bd1cae710e80a9b860a5f1488730df2920da965cb205fc3 and defaultfcd1db9b3ee2bdc332dcc8568af9ffaa78a3ae806e2f1eb95e7fe3c8774617b0. 34affected Wine synthetic tests pass:1lease/6session/8catalog/7recording/12replay. Subsequent Python-only reviews do not repeat these or rebuild unchanged Rust.",
+    "33distinct Python synthetic tests pass (11new manager/coordination,9existing cleanup,13coverage), with targeted source-review reruns retained separately. Cover keep/preview/apply/preserved inputs and proofs; stale/tampered/changed-protected inventory; runtime contention before first unlink; controlled partial removal receipt; killed worker protective marker; distinct/incomplete creation; nested activity protecting entire ROM unit; tracked/linked/shared/unknown/source files; total leaf-file/metadata limits; coverage generation/prune/explicit-read lease and64receipt cap. Public fixtures contain placeholders only.",
+    "Actual default Windows runtime/Wine GUI creates an attested copy in a spaced/apostrophe/Unicode path and remains paused at frame22219. Python preview sees its runtime lease and refuses cleanup; normal close exits0/inactive and releases marker. Then reviewed apply removes exactly one70B SYNTHETIC cache (never loaded by interpreter), preserving all16other case files hash/mtime. While cleaner lease held, a distinct real session creates successfully and the old session open refuses before guest execution. Four CLI calls, no new guest frame/scene/native/performance acceptance; six original ROM/seed/save/config/normal-runtime guards exact.",
+    "Root filtered Docker build and both staged coverage module lists include all imports; actual module smoke runs standard-library imports/help without Cargo or ROM. Initial existing-image prerequisite probe finds Git absent; Dockerfile.debug-tools successfully adds Git only in derivative container. Actual Bash/Docker preview/apply on PUBLIC SYNTHETIC sessions with spaces and --keep removes one25Bcache, preserves kept/original/proof files and writes complete receipt. Deliberate stale reapply exits1 with failed receipt/zero removals; host Bash wrapper also succeeds from unrelated cwd and all logs remain discoverable.",
+    "Actual Docker explicit-reader check mounts synthetic dataset readonly plus separate cache-lease root: kernel refuses dataset write, competing prune refuses lease, input hash/mtime unchanged and marker releases. Source/mock checks cover direct historical layout and hidden namespace channel; both launcher mounts/flags verified. No historical coverage generation or extractor acceptance rerun.",
+    "Offline Chrome1400desktop/620narrow validates completed/protected/kept states, filtering/search/empty/reset, capture limits, JSON review and no overflow. Homepage62indices recognizes5artifact previews and guide; screenshots visually inspected. Count is a local catalog snapshot, not new acceptance for other outputs.",
+    "Independent final-verification authenticates19live/frozen public source files,16Rust overlays, both candidates, five exact HTML/plan pairs and three receipts. All6original guards/16case files/21Docker-fixture files retain hashes/mtimes, explicit reader input remains exact, GUI ready is inactive, normal guest runner source is unchanged and no new guest frame ran. Four exited Chrome profiles retired with receipt; all current candidates/source/preimages/actual inputs/proofs/receipts/shared caches retained. No managed disposable dataset copies were created in this unit, so the ROM-only completion helper is inapplicable here.",
+    "Feature/retention/session/Docker/homepage/README/state/checklist/handoff/record/changelog, local links,22ordered IDs with01-18closed, metadata-only memory and diff whitespace checks pass. Workspace/basee8bd939 memory checks identify ONLY separate concurrent conditional_records8.rs and conditional_records8/tests.rs needing their own model record; preserve/unattribute them. DBG18 source coverage is complete, no remaining criterion. Evidence under target/debug-tools-artifacts includes command/documentation/final-verification and retained source/test/build/GUI/Docker/reader/browser/receipt logs."
+  ],
+  "limitations": [
+    "Windows GNU/Wine runtime and Linux-host Python/Docker plus Chrome only; native Windows/PowerShell, native Linux GUI, other browsers and physical controllers remain unverified. Actual cache payloads used for removal are explicit synthetic placeholders; gameplay stays paused, no new ROM/DS/native parity/performance acceptance.",
+    "All processes sharing evictable caches must use updated coordination or the explicit cache-lease channel. Old/external readers are not retroactively protected. Hard-killed/invalid owners intentionally retain leases; manual recovery requires actual process/log verification. No automatic stale-PID guesses or power-loss durability claim.",
+    "Plans bind current absolute paths/file identities and must be regenerated after relocation/tool changes; receipts preserve historical availability and partial removal information, not permission to rerun closed proofs. Selected sessions retain all private payloads; this manager never deletes whole sessions or user originals. Docker initial dependency preparation requires network; tool runs use network none.",
+    "Private paths/metadata remain ignored; no send, normal-runtime replacement, Android/Godot, new generated ROM code, package release, commit or push. Preserve separate concurrent extraction edits."
+  ],
+  "files": [
+    "crates/recomp/src/artifact_lease.rs",
+    "crates/recomp/src/debug_session.rs",
+    "crates/recomp/src/main.rs",
+    "scripts/artifact_coordinator.py",
+    "scripts/debug_artifacts.py",
+    "scripts/debug_artifacts.html",
+    "scripts/local_artifacts.py",
+    "scripts/rom_coverage.py",
+    "scripts/test_rom_coverage.py",
+    "scripts/tests/test_debug_artifacts.py",
+    "scripts/linux/rom_coverage_docker.sh",
+    "scripts/windows/rom_coverage_docker.ps1",
+    "scripts/linux/debug_artifacts.sh",
+    "scripts/windows/debug_artifacts.ps1",
+    ".dockerignore",
+    "Dockerfile.linux",
+    "Dockerfile.debug-tools",
+    "scripts/report_home.py",
+    "scripts/report_home.html",
+    "docs/debug_artifacts.md",
+    "docs/debug_sessions.md",
+    "docs/report_home.md",
+    "scripts/README.md",
+    "docs/development/LOCAL_ARTIFACTS.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md",
+    "docs/docker.md"
+  ],
+  "references": [
+    "docs/debug_artifacts.md",
+    "docs/debug_sessions.md",
+    "docs/development/LOCAL_ARTIFACTS.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/docker.md"
+  ]
+}

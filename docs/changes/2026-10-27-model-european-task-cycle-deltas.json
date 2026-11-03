@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "slug": "model-european-task-cycle-deltas",
+  "title": "Authenticate and model the European signed task-cycle deltas",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Authenticate a conditional48-byte signed-i8 projection at371034 using the complete original mode gate/reader/literals and nonzero-divisor helper1464EC. OLD-u8 lookup precedes normalization; stored-u8 increment is passed to remainder48 so255 wraps to0. Original signed add/sub stores low16 into task halfword+8. No axis/unit/task-lifetime/global input cap is inferred.",
+    "Add strict lossless TaskCycleDeltas JSON with ordered48phase rows, signed fields/source projection and exact-source verification. Outside48\u2013255 queries remain None;48/49/50 preserve the earlier phase-threshold owner. Full48-byte source is disjoint from all67previous owners. Isolated model leaves managed/runtime e75-d74 and USA8-7 unchanged."
+  ],
+  "validation": [
+    "One first Windows frontend test build warning-free/frozenbcd9b660a0e4827a9b7c3f290a8e2e55a52fe2adbd4aef05a0ac7bf02ddc080f; one first exact Wine filter passes23rejection guards/all48signed rows/58original-reader prefixes/8helper boundaries, old-index-before-normalization/store ordering/signed and low16wrapping/remainder-vs-quotient/Thumb-return/full RAM and callee-register guards.",
+    "All77actual input/frozen hash-mtime guards and compiled implementation hashes pass. Existing ROM/native-cache/TinyCC/canonical executable/F09state-input/current68file e75 dataset stay exact; no prior acceptance rebuilt or replayed. Source SHAa586d9892013a2a3c8dce2bd1629b4f6c611fed7b53e6dbb4a6ba542f13db020."
+  ],
+  "limitations": [
+    "Source/model milestone only. Managed publication/direct runtime/actualCLI/positive ordinary cycle coverage remain separate children; no new ordinary fixture or guest RAM mutation used for ordinary validation. Coordinate axis, initializer/task lifetime, all-use and physical archive extent unproved. Constructor-animation ordinary child remains partial.",
+    "Linux/USA/native Windows/new32:9 pending; no performance/storage campaign, Android/package/assistant commit/push. Full ROM_DATA_TODO remains active."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/task_cycle_deltas.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/task_cycle_deltas_model_tests.rs",
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

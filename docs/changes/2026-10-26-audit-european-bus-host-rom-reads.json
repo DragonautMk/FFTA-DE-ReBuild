@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "date": "2026-10-26",
+  "slug": "audit-european-bus-host-rom-reads",
+  "title": "Audit European bus and selected host ROM data reads",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add an opt-in Cargo diagnostic feature with thread-bound address/reader/length capture for successful ROM bus reads and selected audio/sprite/table/keyboard host paths. Exclude interpreter instruction fetch while preserving execution, typed/fallback behavior, guest state, clocks, native ABI and save schemas. Default builds omit collection hooks."
+  ],
+  "validation": [
+    "Locked offline Cargo metadata confirms the feature is absent from defaults. Exact mem/exec/MP2K preimages are recovered after removing cfg hooks; source CRLF and all unrelated work are preserved. No default executable rebuild or performance measurement.",
+    "First feature build compiles the core collector but fails on a frontend test c_void qualification. Correct only that pointer type; incremental Windows frontend build succeeds without diagnostics. One Wine filter passes actual-original-ROM ARM/Thumb fetch exclusion in uncached/cold-cache paths, bus widths/three mirrors/audio tag/capture lifetime, then12existing F09frames8476through8488 with every fullstate-clock/central-wide/OAM/dispatch/five-audio comparison equal.",
+    "23061unique requests/19984physical image bytes include1146unowned bytes.15122Bus/7924AudioValue/1ObjSourceTable/6SpriteList/8SpritePeek requests occur; KeyboardWidths is not exercised.64unowned bytes are also read by SpritePeek.",
+    "Retained native API report comparison proves all13961previous image bytes/604unowned bytes are included, adding542unowned bytes with90new high-offset source bytes in six ranges. These remain leads, not decoded assets or extent/completeness evidence. No old acceptance rerun.",
+    "All76execution input hash/mtime guards, frozen feature executable/compiled sources and one retained comparison-report guard pass. Required artifact completion succeeds zero disposable paths. e71-d70/65resources/USA8-7 and original ROM/cache/state/input/canonical executable/dataset remain unchanged."
+  ],
+  "limitations": [
+    "Selected access points and current thread/scene only. Unselected direct host readers, managed typed HLE fast paths, folded constants, code/signature authentication and other scenes remain outside capture. Reader tags are not exact instruction/actor/format/extent evidence.",
+    "High-offset90Bsource leads and remaining lower source witnesses require authentication before any new decoder/model/owner; no complete ROM migration claim. Keyboard scene activation and new Linux/USA/nativeWindows/new32:9 remain pending."
+  ],
+  "files": [
+    "crates/gba-core/Cargo.toml",
+    "crates/recomp/Cargo.toml",
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/mem.rs",
+    "crates/gba-core/src/exec.rs",
+    "crates/gba-core/src/mp2k.rs",
+    "crates/gba-core/src/ffta_sprites.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/read_audit.rs",
+    "crates/recomp/src/rom_data/host_rom_read_audit_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

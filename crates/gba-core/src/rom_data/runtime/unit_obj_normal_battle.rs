@@ -1,0 +1,251 @@
+//! Immutable typed normal battle sources; animation scheduling, command pools and VRAM stay guest work.
+use super::super::{
+    unit_obj_initial_pose as initial, unit_obj_normal_battle as model, SourceRange,
+};
+use crate::ffta_rom;
+use std::sync::atomic::{AtomicU64, Ordering};
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct UnitObjNormalBattleStats {
+    pub bus_reads: u64,
+    pub source_bytes: u64,
+    pub directory_bytes: u64,
+    pub index_bytes: u64,
+    pub sequence_header_bytes: u64,
+    pub frame_bytes: u64,
+    pub object_bytes: u64,
+    pub pixel_bytes: u64,
+    pub sequences_used: u64,
+}
+#[derive(Clone, Copy)]
+enum Kind {
+    Directory(usize),
+    Index(usize),
+    Sequence(usize),
+    Objects(usize),
+    Pixels(usize),
+}
+struct Segment {
+    start: u32,
+    length: usize,
+    source_start: u32,
+    kind: Kind,
+}
+pub(super) struct UnitObjNormalBattleResources {
+    data: model::UnitObjNormalBattle,
+    segments: Vec<Segment>,
+    counters: [AtomicU64; 8],
+    sequences: [AtomicU64; 41],
+}
+impl UnitObjNormalBattleResources {
+    pub(super) fn source_page(index: usize) -> bool {
+        // Only byte lookup below establishes ownership. Holes in these page
+        // ranges compose with previous owners and mutable raw ROM unchanged.
+        matches!(index >> 12, 0x371..=0x384 | 0x394 | 0x898..=0x89b | 0x89d..=0x8a0 | 0x8a2..=0x8a9 | 0x8ab..=0x8ae | 0x8b0..=0x8b7 | 0x8b9..=0x8bc | 0x8be..=0x8c5 | 0x8c7..=0x8ca | 0x8cc..=0x8ce | 0x8d0..=0x8d3 | 0x8d5..=0x8d7 | 0x8d9..=0x8dc | 0x8de..=0x8e0 | 0x8e2..=0x8e9 | 0x8eb..=0x8ee | 0x8f0..=0x8f2 | 0x8f4..=0x8f7 | 0x8f9..=0x8fc | 0x8fe..=0x901 | 0x903..=0x905 | 0x907..=0x90a | 0x90c..=0x90f | 0x911..=0x918 | 0x91a..=0x91d | 0x91f..=0x926 | 0x928..=0x92b | 0x92d..=0x92f | 0x931..=0x934 | 0x936..=0x938 | 0x93a..=0x93c | 0x93e..=0x945 | 0x947..=0x949 | 0x94b..=0x94d | 0x94f..=0x956 | 0x958..=0x95d | 0x95f..=0x96f | 0x971..=0x97f | 0x981..=0x984 | 0x986..=0x98b | 0x98d..=0x9ad | 0x9af..=0x9b7 | 0x9ba..=0x9c6 | 0x9c9..=0x9ce | 0x9d2..=0x9d6 | 0x9d9..=0x9dd | 0x9e0..=0x9e5 | 0x9e8..=0x9ec | 0x9f0..=0x9f9 | 0x9fc..=0xa01 | 0xa04..=0xa48 | 0xa50..=0xac2)
+    }
+    pub(super) fn new(
+        data: model::UnitObjNormalBattle,
+        sources: &[SourceRange],
+        initial_pose: &initial::UnitObjInitialPose,
+        equipment_pose: &super::super::unit_obj_equipment::UnitObjEquipment,
+    ) -> Result<Self, String> {
+        let spans = data.owned_spans(initial_pose, equipment_pose)?;
+        if spans.len() != sources.len() {
+            return Err("Normal battle OBJ source binding count mismatch".into());
+        }
+        for ((offset, bytes, role), source) in spans.iter().zip(sources) {
+            if source.offset != *offset
+                || source.length as usize != bytes.len()
+                || source.role != *role
+                || source.sha256 != ffta_rom::digest(bytes)
+            {
+                return Err("Normal battle OBJ typed source binding mismatch".into());
+            }
+        }
+        let mut segments = Vec::new();
+        for (i, root) in data.roots.iter().enumerate() {
+            segments.push(Segment {
+                start: initial::DIRECTORY + u32::from(root.sprite_id) * 4,
+                length: 4,
+                source_start: 0,
+                kind: Kind::Directory(i),
+            });
+        }
+        for (i, b) in data.bindings.iter().enumerate() {
+            segments.push(Segment {
+                start: b.index_source,
+                length: 4,
+                source_start: 0,
+                kind: Kind::Index(i),
+            });
+        }
+        for (i, s) in data.sequences.iter().enumerate() {
+            segments.push(Segment {
+                start: s.source_offset,
+                length: 4 + s.frames.len() * 20,
+                source_start: 0,
+                kind: Kind::Sequence(i),
+            });
+        }
+        for (i, s) in data.objects.iter().enumerate() {
+            segments.push(Segment {
+                start: s.source_offset,
+                length: s.source_len(),
+                source_start: 0,
+                kind: Kind::Objects(i),
+            });
+        }
+        for (i, s) in data.pixels.iter().enumerate() {
+            segments.push(Segment {
+                start: s.source_offset,
+                length: s.tiles.len() * 32,
+                source_start: 0,
+                kind: Kind::Pixels(i),
+            });
+        }
+        let mut owned = Vec::new();
+        for segment in segments {
+            let end = segment.start + segment.length as u32;
+            let first = sources.partition_point(|s| s.offset + s.length <= segment.start);
+            for source in sources.iter().skip(first).take_while(|s| s.offset < end) {
+                let start = segment.start.max(source.offset);
+                let stop = end.min(source.offset + source.length);
+                owned.push(Segment {
+                    start,
+                    length: (stop - start) as usize,
+                    source_start: segment.start,
+                    kind: segment.kind,
+                });
+            }
+        }
+        let mut segments = owned;
+        segments.sort_by_key(|s| s.start);
+        // Different logical selectors can name the same physical index cell.
+        // source_spans already verified their exact same-role bytes.
+        segments.dedup_by_key(|s| (s.start, s.length));
+        Ok(Self {
+            data,
+            segments,
+            counters: std::array::from_fn(|_| AtomicU64::new(0)),
+            sequences: std::array::from_fn(|_| AtomicU64::new(0)),
+        })
+    }
+    fn byte(&self, index: usize) -> Option<(u8, usize)> {
+        let at = u32::try_from(index).ok()?;
+        let slot = self
+            .segments
+            .partition_point(|s| s.start <= at)
+            .checked_sub(1)?;
+        let s = &self.segments[slot];
+        if (at - s.start) as usize >= s.length {
+            return None;
+        }
+        let n = (at - s.source_start) as usize;
+        let (value, category) = match s.kind {
+            Kind::Directory(i) => (
+                (0x08000000 + self.data.roots[i].source_offset).to_le_bytes()[n],
+                2,
+            ),
+            Kind::Index(i) => (
+                self.data.bindings[i]
+                    .sequence_source
+                    .map_or(0, |at| 0x08000000 + at)
+                    .to_le_bytes()[n],
+                3,
+            ),
+            Kind::Sequence(i) => {
+                self.sequences[i / 64].fetch_or(1 << (i % 64), Ordering::Relaxed);
+                let seq = &self.data.sequences[i];
+                if n < 2 {
+                    ((seq.frames.len() as u16).to_le_bytes()[n], 4)
+                } else if n < 4 {
+                    (seq.opaque_header.to_le_bytes()[n - 2], 4)
+                } else {
+                    (seq.frames[(n - 4) / 20].bytes()[(n - 4) % 20], 5)
+                }
+            }
+            Kind::Objects(i) => (self.data.objects[i].source_byte(n)?, 6),
+            Kind::Pixels(i) => {
+                let tile = &self.data.pixels[i].tiles[n / 32];
+                let p = n % 32;
+                let y = p / 4;
+                let x = p % 4 * 2;
+                (tile.indices[y][x] | (tile.indices[y][x + 1] << 4), 7)
+            }
+        };
+        Some((value, category))
+    }
+    pub(super) fn guest_read<const N: usize>(
+        &self,
+        index: usize,
+        rom: &[u8],
+        prior: Option<[u8; N]>,
+    ) -> Option<[u8; N]> {
+        let fields: [_; N] = std::array::from_fn(|i| self.byte(index + i));
+        if fields.iter().all(Option::is_none) {
+            return prior;
+        }
+        let mut counts = [1, 0, 0, 0, 0, 0, 0, 0];
+        let bytes = std::array::from_fn(|i| {
+            if let Some((value, category)) = fields[i] {
+                counts[1] += 1;
+                counts[category] += 1;
+                value
+            } else {
+                prior.as_ref().map_or_else(|| rom[index + i], |b| b[i])
+            }
+        });
+        for (counter, count) in self.counters.iter().zip(counts) {
+            counter.fetch_add(count, Ordering::Relaxed);
+        }
+        Some(bytes)
+    }
+    pub(super) fn stats(&self) -> UnitObjNormalBattleStats {
+        let [bus_reads, source_bytes, directory_bytes, index_bytes, sequence_header_bytes, frame_bytes, object_bytes, pixel_bytes] =
+            self.counters.each_ref().map(|v| v.load(Ordering::Relaxed));
+        UnitObjNormalBattleStats {
+            bus_reads,
+            source_bytes,
+            directory_bytes,
+            index_bytes,
+            sequence_header_bytes,
+            frame_bytes,
+            object_bytes,
+            pixel_bytes,
+            sequences_used: self
+                .sequences
+                .iter()
+                .map(|v| u64::from(v.load(Ordering::Relaxed).count_ones()))
+                .sum(),
+        }
+    }
+    pub(super) fn resident_bytes(&self) -> usize {
+        std::mem::size_of::<Self>()
+            + self.segments.capacity() * std::mem::size_of::<Segment>()
+            + self.data.roots.capacity() * std::mem::size_of::<model::Root>()
+            + self.data.bindings.capacity() * std::mem::size_of::<model::Binding>()
+            + self.data.sequences.capacity() * std::mem::size_of::<model::Sequence>()
+            + self.data.objects.capacity() * std::mem::size_of::<super::super::obj_lists::List>()
+            + self.data.pixels.capacity() * std::mem::size_of::<initial::PixelBlock>()
+            + self
+                .data
+                .sequences
+                .iter()
+                .map(|s| s.frames.capacity() * std::mem::size_of::<model::Frame>())
+                .sum::<usize>()
+            + self
+                .data
+                .objects
+                .iter()
+                .map(|s| {
+                    s.objects.capacity() * std::mem::size_of::<super::super::obj_lists::Object>()
+                })
+                .sum::<usize>()
+            + self
+                .data
+                .pixels
+                .iter()
+                .map(|s| s.tiles.capacity() * std::mem::size_of::<initial::Tile>())
+                .sum::<usize>()
+    }
+}

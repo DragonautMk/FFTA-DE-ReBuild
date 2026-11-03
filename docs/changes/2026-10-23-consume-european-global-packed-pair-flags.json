@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "consume-european-global-packed-pair-flags",
+  "title": "Consume European global packed-pair bytes with original live-mask and raw-tail behavior",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "EUR e33-d32 adds global-pair-flags.json/gameplay.global-pair-flags,28files/27resources/all26prior decoded files/e32 retained, USAe8-d7 unchanged. No semantic dependency/padding/rowstride invented.",
+    "Typed11B/source counters/byte-position mask serve CPU/native/SWI/DMA while original ignoredr0/slotwrap/u8mode/liveRAM-mask/earlyexit/clock/save/nativeABI remain. Preserve prior metadata12and rawtail byte ownership."
+  ],
+  "validation": [
+    "Windows61276test and73677production builds warning-free/canonical restored; candidate SHA 19d6f42e5bfd9b25d2e2ef268376cf7a83fba3d3171e39367f65eb3aaed974d5. Wine84782 two managed/native checks pass interruption/create/reuse/repair/move/e32retention/coherent pair/tail/sourceoffset/hash/dependency/path/role transactional guards and unavailable-copy Load/Undo/backup/restart.",
+    "28original/interpreter/compiled paths with11rawB altered match fullstates/clocks,17compiled reads/byte-mask1059positive,8outsidepaths0newB. All11bytes/edges/widths/mirrors/BIOS/prior2metadata12+2global crossing withbothrawsidesaltered/CpuSet-FastSetexact11typed/DMA3typed1raw and1typed3raw pass.3076instructions/231dispatches coverageonly; source102+10+91/e32proofs not repeated.",
+    "ActualCLI13165creates/reuses without writes/oldcache/unrelatedcwd;30managed files hash/mtime guarded. Exactlyone2200EchoGrass new-global locator0globalB/mask0while oldmetadata12reads44B, coverage-negative/no fullpair. Bounded original131db8..131de8requires nonzero descriptorhword4 and liveunit+e8mask before globalfilter reads; further ordinary selection needs those conditions.",
+    "Protected ROM/e32/sourceproof/state/input/cache/loader/canonical/candidate retained; memory/whitespace/source hashes recorded at closure. No compiler/Winefailure/oldproof repeat/agentcommit/push."
+  ],
+  "limitations": [
+    "Positive ordinary global source use/corresponding full-state-image-audio pair remain pending. Current ordinary locator is negative, not acceptance. High-mode ordinary use/semantic labels/other callers/conditions and3adjacentbytes unclaimed.",
+    "NewLinux/USA/nativeWindows and wider graphics/text/maps/gameplay/audio/GUI/archive/mod remain pending. No performance/startup/RSS/space campaign or AndroidPort change; private ROM/sourcefixtures/saves/inputs/generated code remain ignored."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/global_pair_flags.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/global_pair_flags_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "scripts/extract_rom_data.py"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

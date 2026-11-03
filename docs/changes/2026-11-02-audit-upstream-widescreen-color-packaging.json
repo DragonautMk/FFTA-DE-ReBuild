@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "audit-upstream-widescreen-color-packaging",
+  "title": "Audit remaining upstream display and packaging families",
+  "kind": "docs",
+  "platforms": [
+    "Desktop and Android source comparison"
+  ],
+  "changes": [
+    "Compare original-game widescreen backdrop, Android display color pass and release packaging with fork-specific surfaces and protections."
+  ],
+  "validation": [
+    "Inspected pinned upstream and fork rendering, packaging, callers and test source; no new builds, packages or runtime tests."
+  ],
+  "limitations": [
+    "No visual or hardware comparison, actual archive inspection, performance result or implementation acceptance."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-05-widescreen.md",
+    "docs/development/upstream-audit/U31-10-color-pipeline.md",
+    "docs/development/upstream-audit/U31-11-packaging.md"
+  ],
+  "references": [
+    "docs/To_DO/FFTARecomp_Upstream_v3_1_Analisi_Decisioni_v0_2.md"
+  ]
+}

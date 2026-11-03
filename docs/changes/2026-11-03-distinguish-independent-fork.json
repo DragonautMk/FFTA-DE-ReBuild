@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "distinguish-independent-fork",
+  "title": "Distinguish the independently maintained fork",
+  "kind": "docs",
+  "platforms": [
+    "Documentation"
+  ],
+  "changes": [
+    "Present this repository and its release page as an independently maintained fork, clarify desktop and Android scope, and remove upstream-specific release claims.",
+    "Add a copyright notice for this fork’s original contributions while retaining the original MIT notice and upstream credits.",
+    "Describe AI-assisted development, the current decompilation and recompilation focus, and the game’s playable status as reported by the user."
+  ],
+  "validation": [
+    "Checked README local link targets, fork release URL, original MIT notice and terms, and git diff whitespace.",
+    "Reviewed the README wording for the requested AI, project focus and playable status."
+  ],
+  "limitations": [
+    "Release availability and Steam Deck compatibility were not tested; no runtime or build validation was performed."
+  ],
+  "files": [
+    "README.md",
+    "Licenses/LICENSE",
+    "Licenses/CREDITS.md"
+  ],
+  "references": [
+    "Licenses/README.md"
+  ]
+}

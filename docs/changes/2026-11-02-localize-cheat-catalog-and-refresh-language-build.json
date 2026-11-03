@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "localize-cheat-catalog-and-refresh-language-build",
+  "title": "Localize cheat catalog presentation and refresh embedded languages",
+  "kind": "fixed",
+  "platforms": [
+    "Desktop: Linux unit tests and synthetic incremental build; Windows GUI not rechecked"
+  ],
+  "changes": [
+    "Use the selected language for read-only cheat catalog rows, selector notices and information labels while preserving imported entries, IDs, ROM hashes and catalog/CLI JSON. Document the existing limited one-shot separately from the original read-only catalog validation.",
+    "Watch each embedded language JSON as well as its directory, so incremental Cargo builds regenerate translations after edits and continue discovering additions or removals."
+  ],
+  "validation": [
+    "Offline tests: 11 debug-cheats tests passed, 1 private-catalog test ignored; 14 content-selector tests and 2 information tests passed; 4 language-catalog tests passed. Synthetic rows preserve imported JSON and stable IDs in English and Italian.",
+    "An isolated copy of the actual build script regenerated its registry after editing a catalog and after adding and removing a synthetic locale. Catalog checker passed 487/487 entries per language; git diff --check passed."
+  ],
+  "limitations": [
+    "No live GUI, native Windows, physical-controller, real-catalog, cheat-application or ROM validation was performed. Cheat row text is localized when the catalog is opened or reloaded; catalog capability metadata and the existing manual one-shot limits remain unchanged."
+  ],
+  "files": [
+    "crates/input-config/build.rs",
+    "crates/input-config/languages/en.json",
+    "crates/input-config/languages/it.json",
+    "crates/menu/src/content_selector.rs",
+    "crates/menu/src/content_selector/tests.rs",
+    "crates/menu/src/information.rs",
+    "crates/menu/src/lib.rs",
+    "crates/recomp/src/debug_cheats.rs",
+    "crates/recomp/src/play.rs",
+    "docs/cheats.md",
+    "docs/menu_localization.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

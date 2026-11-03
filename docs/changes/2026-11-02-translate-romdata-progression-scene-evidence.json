@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-romdata-progression-scene-evidence",
+  "title": "Translate ROM data progression scene evidence",
+  "kind": "docs",
+  "platforms": [
+    "Desktop ROM-data planning documentation"
+  ],
+  "changes": [
+    "Translated progression rewards, gates and evaluation threshold scene/CLI evidence into English while retaining provenance, outcomes and open criteria."
+  ],
+  "validation": [
+    "Compared numeric tokens, task identifiers, links and inline literals with the preimage, normalizing one concatenated CLI handle and frame count; confirmed all text outside the selected entries is unchanged."
+  ],
+  "limitations": [
+    "ROMDATA-05 from progression selection gates onward and later evidence remain to be translated; no ROM access or runtime checks performed."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_TODO.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

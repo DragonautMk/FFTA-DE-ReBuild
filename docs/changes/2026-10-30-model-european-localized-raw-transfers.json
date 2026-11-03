@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "date": "2026-10-30",
+  "slug": "model-european-localized-raw-transfers",
+  "title": "Model European localized raw UI transfer views",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add strict RawTransfers/BankView catalog with seven physical language tables,35 ordered fixed views and sparse seventh-group ownership. Preserve exact little-endian source words and uncapped raw selector addresses.",
+    "Separate editable shape from exact EUR/reader/source authentication; leave managed runtime registration and all original live helpers/queues unchanged."
+  ],
+  "validation": [
+    "Three Windows core builds: accepted603-source/262-core-input build35bdc5fd15d2c458df63aadecfabfeea766c44ef2924b92d5dafc57c9105f69c warning-free. Two Wine attempts, one final focused PASS:21 guards, all38220 bytes/42 spans,91 raw language prefixes,60 isolated original helper copies including25 original queue-executor DMA copies.",
+    "Complete EWRAM/VRAM/OAM/palette, IWRAM outside actual helper stack scratch (36B for queued executor), SP/callee registers and final ROM exact.6635 instructions are coverage only.",
+    "44 unit guards/130 closed source guards/601 baseline source hashes/603 frozen sources/three current implementation paths and inverse hub exact; all84 accepted e92 files unchanged.",
+    "Test-only corrections:20\u219236B stack guard before Wine; first Wine stopped at incorrect raw edge expectation between adjacent owned tables. Diagnostics/executables/source preimages retained; model/source contract unchanged. No closed acceptance/gameplay/checkpoint/navigation/performance replay."
+  ],
+  "limitations": [
+    "Model and isolated original helper/selector checks pass. Managed runtime/native state-clock/actual CLI/ordinary use remain pending.",
+    "Dynamic6F8 index metadata/domain/lower prefix/tails/full caller ABI and full ROM TODO remain open; new Linux/USA/native Windows/32:9 pending.",
+    "No gameplay/checkpoint derivation/navigation/old acceptance replay/performance or storage campaign."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/ui_raw_transfers.rs",
+    "crates/gba-core/src/rom_data/ui_raw_transfers/tests.rs",
+    "docs/rom_data_ui_raw_transfers.md",
+    "docs/development/TASK_HANDOFF.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_raw_transfers.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

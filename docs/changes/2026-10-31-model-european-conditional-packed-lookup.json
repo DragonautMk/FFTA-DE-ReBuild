@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "model-european-conditional-packed-lookup",
+  "title": "Model European conditional packed lookup",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add a strict, lossless source model for EUR type-5 packed lookup indices 1 through 33, preserving unused bits and original selector arithmetic."
+  ],
+  "validation": [
+    "One isolated Windows build and focused Wine test passed source reconstruction, shape and coherent-edit guards, and original descriptor, packed-reader and type-check prefixes for indices 0, 1, 33 and alias 251."
+  ],
+  "limitations": [
+    "The model is not yet published or used at runtime; ordinary use, Linux, USA and native Windows remain unverified. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/conditional_packed_lookup.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/conditional_packed_lookup_tests.rs",
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md"
+  ]
+}

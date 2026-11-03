@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "date": "2026-10-26",
+  "slug": "extend-european-ui-property-obj-lists",
+  "title": "Extend European property-selected UI OBJ lists through runtime and Dispatch",
+  "kind": "changed",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Authenticate the four conditional property==16/other UI list roots into2AE26/1F6C/1500. The existing AE10/B2 reference is retained; AD6A/A4,AD90/B2 andADFA/A4 add three provenance records. Reuse existing CFG discovery rather than claim or repeat discovery.",
+    "Integrate one14B/two-object A4list using the existing lossless List/Object format and B2shared owner. Three extra references give126references/74lists175objects1198B.",
+    "Couple Catalog root expansion with EUR e69-d68. Reuse existing resource identity/file/format/dimension dependency and runtime owner/handlers, with64files63resources; all73previous lists/62other files and records/e68generation retained. USAe8-d7 unchanged.",
+    "Validate actual EUR e69-d68production CLIcreate/no-write reuse/oldcache attachment, preserving the canonical executable and all64accepted generation files.",
+    "Close the declared ordinary A4 criterion with the retained EUR Dispatch scene and a five-line optional positive source gate in the generic validator; product runtime, existing gates/defaults and dataset version remain unchanged."
+  ],
+  "validation": [
+    "Static producer authentication passes48halfword/fourliteral/fourBLpins for branches, rootloads, wrapper pointer preservation and original header/6Bsource-stride/8Boutput-stride/capacity paths. Closed680pin getterproducer and512originalUIprefix proofs reused without replay. Only one new narrow static draw-tail disassembly; no Linuxgame execution.",
+    "All63current resource files and source hashes authenticate before new target inspection. A4actualheader2 determines14B, SHA2561f9cfc55a363c69dcf8422d47641705427d4291a3801ff1c7646bfb8bc5daa64; zero owner overlap. Existing B2decoded view equals independent fields/bytes/SHA256d828f930fd443fbe842b1f7cdb76d736573c6ac8d08a5a6591d7cf204860b4ab. All coordinate/mode/transform/attribute bits roundtrip. No extent inferred from adjacency.",
+    "Source closure: all385baseline source hashes show implementation unchanged; all74active input hashes/mtimes and576decoded local feature links pass. New private evidence ignored/untracked. Reuse12043closed private proof plus fresh all63owner authentication rather than a wholelegacyartifact campaign.",
+    "Corrected Windows core/frontend test build passes warning-free after a test-only missing-constant qualification; failed first build and its inputs preserved. Frozen frontend b16c92358917ac8ac499f9734ecb64845620521a9a3344a4e1be38e8edab4cd8; no product change for correction. Both new Wine filters pass first execution.",
+    "Managed/model filter passes independent A4fields/source/JSON roundtrip/B2alias, create/reuse/two repairs/move/interruption, eight coherent edit/missing-source/extent/offset/dependency/revision/truncation/omission negatives and transactional attachment. Combined unavailable-dir/slotLoadUndo/backup-restore-restart lifecycle retains owner with positive typed new count/attribute use.",
+    "Native/host filter passes two original-interpreter-compiled draws with only14new raw bytes poisoned, fullstate/clock equality,709originalinstructions/4nativedispatches/36compiledsourceB; two actual host decode/publication checks pass with host-only newsource flag. Both boundaries/widths/three mirrors/realBIOSbus, mixedAPI2new2B2/DMA-CpuSet14new2B2/FastSet4prior14new14B2 pass.",
+    "All77build79Wineguards/29compiledinputs exact; all73oldtypedlists/62otherdecodedfiles+records ande68generation retained. No closed source/73-list/bitfield/512UIprefix/CFG/scene replay, fixture/navigation/private payload edit or performance/storage measurements.",
+    "Dataset SHA256 104bd6d55188ceca65b3c6cc4cebdf843971f614c3519b9896737a0fa9b49cbd; manifest SHA256 e6f64d77d4ff7de25df6ff4c3ac4348b423c59c97628c770998dfc9eaa8be6ed; static-list JSON SHA256 a29eca5e912b00c65ca4bcfbffff9340887724b881f078238d50b62a3807d456.",
+    "Runtime closure: all386source preimages show only three selected existing integration edits/new test plus docs; all79Wineguards/29compiledinputs/583localfeaturelinks exact. All64generation hashes/independent identity pass; private output ignored/untracked. Previous12056privateproof reused withoutwholelegacyrehash.",
+    "First affected Windows productionbuild passes warning-free, frozen17488009de747c30c15d3641fa3bd5b292718c32c14aa6acfd8d4c374b8a89a1; canonicalhash+mtimeexact/maincontentunchanged. First Wineprepare/reuse/oldcacheoneframe allPASS from/tmp;64generation66managed/63resources/dimensiondep/74sources1198B/all64equal03 andno-writehash-mtime reuse pass. All148CLIguards/29compiledinputs exact. NewA4per-source locator: none. Attachment smoke only/noordinaryfullsceneclaim; no source/model/runtime/oldscene replay.",
+    "CLI closure: all387baseline source hashes confirm implementation unchanged; all148activeCLIguards/29compiledinputs/585localfeaturelinks pass. Canonicalhash-mtime/maincontentexact, all64files matchaccepted e69-d68. Private output ignored/untracked; previous12475privateproof reused withoutwholelegacyrehash.",
+    "Ordinary-location work only: authentic F09oneframe and retained Partyunit320 areA4negative; one source-grounded authorized exactcopy EURbank120 ordinaryDown/16:9 isB2guest-hostpositive butA4negative, endpoint inspected. All150Party/151bankguards and29compiledinputs exact. No fullpair/longerrepeat/other-slot campaign. Original EURcheckpoint hash preserved; no cartridge save or sourcepayload edit.",
+    "Four existing bank snapshots parsed readonly withheader/body/source checksums; two original fixedcontext projections and firstseven visible species rows giveproperty24. No banktableextent or globalunreachability claim. First narrow static setter inspection distinguishes02AF5Cstate/02AE70input-animation-tag/02AF14animation; exact two-targetBLcandidate census4updater8setter andeightnarrowprefixes produce0578EEhumanpreviewanimation24 lead. Controlroute/ordinarywitness remain unproved; earlier CFG/getter/oracle/scene children remain closed.",
+    "Locator closure: all387sourcepreimages confirm implementation unchanged; all153unionactiveguards/29compiledinputs/fouroriginalsnapshot hashes/587localfeaturelinks pass, authorizedcopyexact/Downinputonly. Private evidence ignored/untracked;12559priorprivateproof reused withoutlegacyrehash. OrdinaryA4positive/fullscene remains open.",
+    "New static control join passes25halfword/sixswitchword pins:6375C maps original selectedmission/unit D2D44results1/2\u219224,3/4\u21920,0/5\u219212 andabove5\u21920;063230ready/countdown\u219202AF14writes1086\u2192tag1/property16\u2192A4. Four live updaters passanimation0;233A8outparamCF08C ispalette.0578EEfee/counter-clear path isnotassumedChangeJobs or selected forordinaryexecution. Existing CFG/getter/model/UIprefix oracles reused.",
+    "First Dispatch1400locator isA4/evaluationnegative because it misses script1600event. Retained original1840actualCLI proof has15evaluationB, justifying corrected1840scope; first new1840WineCLI isA4guest-hostpositive/15evaluationB. Two private setup assertions correctedbeforeWine/gameexecution (missingunionmapmembership authenticatedagainst originalCLIpreimages, isolated1840resultpath), with previousresults preserved; no guestretry or newrecording.",
+    "First affected Windows frontend testbuild passes warning-free, frozen427845f245f5889bdcb4c93b176799933a37bd0425cb833983350388c3a6edbc. First exact WineDispatch1840fullpair passes everycomplete state/guestclock/central-widebuffer/OAM/native-fallbackdispatch/mixed-PSG-FIFO-bitwiseHLEsample from14349through16189 onactuale69generation-AUj9iY/16:9/originalUI0; decodedarm A4guest-hostgatepasses. All5audiostreams actualsamplecounts [4037880, 4037880, 485760, 485760, 4037804]. All152activeguards/29compiledinputs exact. Selectedworker hasno timing/residencycalls.",
+    "Original pubEURcheckpoint87b28603../mtime1792614156671128900 andretainedinputce24d901.. authenticateagainst originalactualCLI evidence; authorizedexactlocalcopy only, no newlyderivedcheckpoint/forcedstate/cartedit. Source01/model-runtime02/03/actualCLI04/declaredordinary05 nowclosed; earliernegativelocators andoldacceptances notrerun.",
+    "Ordinary closure: all387sourcepreimages show only5lineoptionalA4validatorgate plusdocs; all152activeguards/29compiledpreimages/590localfeaturelinks exact. Originalcheckpoint/input hashes-mtimes andauthorizedexactcopy pass; all64actualgenerationhashes/independentdatasetidentity exact. Private output ignored/untracked,12591priorproof reused withoutlegacyrehash. No livejob or required A4child remains.",
+    "Final memory render/default/basee4c7d48/base5713f22/basec41f969 and CRLF-aware whitespace checks pass. User committed the earlier e69 source/runtime/CLI phase as e4c7d48 during this continuation; that work is preserved. This continuation adds only the optional ordinary A4 gate and its coherent evidence/docs; no assistant commit/push/package. Full ROM_DATA goal remains active."
+  ],
+  "limitations": [
+    "Declared A4 source/model/runtime/actualCLI/positiveordinary criteria closed. BroaderUI/allocator/actorABI/globalindirect/catalogextent/liveguestcaps and ordinary use beyond thisDispatchscene remain unproved; USAe8-d7 unchanged. F09/Party/bank/earlyDispatch1400negatives stayclosed.",
+    "Linux/USA/nativeWindows/new32:9 checks remain pending. FullROMTODO/otherfamilies/unknownchangedactor/globalidentity/computedindirect/raw6Bmigration/mod prerequisites remain open. User commits through e4c7d48 preserved; no Android/package/assistantcommit/push/coverage work."
+  ],
+  "files": [
+    "docs/rom_data_obj.md",
+    "docs/rom_data_unit_obj.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/obj_lists/roots.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/obj_ui_property_tests.rs",
+    "docs/rom_data.md",
+    "docs/rom_data_graphics.md",
+    "docs/rom_data_runtime.md",
+    "crates/recomp/src/rom_data/validation_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_obj.md",
+    "docs/rom_data_unit_obj.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

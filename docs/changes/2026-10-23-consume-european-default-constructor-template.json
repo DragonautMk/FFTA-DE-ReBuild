@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "consume-european-default-constructor-template",
+  "title": "Consume European default constructor template through managed typed bytes",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "EUR e29-d28adds default-constructor-template.json/resource gameplay.default-constructor-template with exact48Bstructural fields and no invented semantic owner dependency. All24files/23resources authenticate transactionally, retaining all22prior decoded files/e28generations; USAe8-d7unchanged.",
+    "Project exact typed header/argument/full-halfword/flag/tail bytes into existing CPU-DMA-native source reads and merge prior metadata2ownership at crossings. Original ROM/IWRAMcopy/live signed-ID/selector/argument/ORflag/mode/alternate/allocation work and clock/save/native ABI remain; counters nonserialized, diagnostic patched helper never shortcuts runtime.",
+    "Add two new focused managed/lifecycle/native tests and separate positive ordinary default48scene gate in shared full-state/image/audio oracle; source271+30acceptance stays closed."
+  ],
+  "validation": [
+    "Initial Windows21352compile caught stale two-element thread-local macro counter alongside five new field counters; corrected, failed logs retained. Corrected55456test and83840production builds warning-free/canonical restored; candidate SHA02c8593019a93002c7e5b87845db66642ed9b974763f2e16399d3a3334efdd3d.",
+    "Wine5227two checks terminal/pass: publication interruption/create/reuse/repair/move/e28retention/all22prior decoded files, coherent header/opaque/flag/tail/source/spurious dependency/path/role transactional rejection and unavailable-copy Load/Undo/backup/restart.",
+    "16sampled original/interpreter/native constructor prefixes with real IWRAMcopy blocks/all48rawB altered match complete states/clocks. Eight alternate/rejected paths0newreads; compiled header/argument/halfword/flag/tail39/21/272/16/32B.2319instructions/1061dispatches are coverage only; allbytes/edges/widths/mirrors/real-BIOS bus/CpuSet/FastSet/DMA4B and crossing2oldmetadata2+2newdefault48B pass.",
+    "ActualCLI33995creates/reuses e29without writes from unrelatedcwd/oldcache and positively replays397Pub frames. One397Wine63615pair matches every complete state/clock/central-wide image/OAM/dispatch/mixed-PSG-FIFO-HLEaudio and96newB=10header/6argument/68halfword/4flag/8tail. FinalPubimage inspected; retained input justified by new48Bfamily/separate gate, no negative locator/new recording/RAMedit/persisted savewrite or old source/native/lifecycle acceptance repeated.",
+    "Protected originals/e28/source fixtures/cache/loader/canonical/candidate and26CLIfile-set/hash/mtime guards pass; final project-memory/whitespace/source hashes recorded at closure. All jobs terminal, no agent commit/push."
+  ],
+  "limitations": [
+    "Targeted proofs stop before allocation/live-unit tail127EB0and are not whole-function ABI proofs; original tail remains. Four alternate192B/ROMpointer and following240Bremain unowned; semantic names outside proven structural patch roles remain unproved.",
+    "New Linux/USA/native Windows and broader gameplay/maps/audio/GUI/archive/mod remain pending. No performance/startup/RSS/space campaign or AndroidPort change; private ROM/saves/inputs/source fixtures/generated code remain ignored."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/default48.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/default48_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "scripts/extract_rom_data.py"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

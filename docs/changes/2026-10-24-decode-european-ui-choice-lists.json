@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "decode-european-ui-choice-lists",
+  "title": "Decode immutable European UI choice lists without changing live widget behavior",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add shared authenticated EUR source plan and strict lossless UiChoiceLists model for13tables/42eight-byte entries/336B. Stable physical-root IDs retain duplicate contents at distinct roots; direct lists and filtered templates stay distinct.",
+    "Preserve identifier, unsigned cursor X/Y, copied opaque byte and all four raw navigation bytes, including high bits and out-of-projection values. Shape checks bind declared source extents without adding guest count/target caps or replacing live RAM copies/navigation.",
+    "Add one isolated ignored EUR/Wine original copy/getter/idle/template-prefix oracle plus two module registrations. Managed resource publication/runtime consumption, production CLI and positive ordinary use remain separate pending work; EUR e55-d54/USAe8-d7 unchanged."
+  ],
+  "validation": [
+    "One needed affected Windows frontend test build passes warning-free; frozen22e9a8ac1ac12eeeea938f80927941105f56e0c086cbf7209314460d31328090. One exact new EUR Wine filter passes first attempt,17shape/JSON/byte-width/source guards/all336bytes at original loadsites/strict independent source plan/hash roundtrip.",
+    "Original18copy prefixes include all13source lists, one all-byte-fields synthetic variant and raw counts0/-1/-65536/257, preserving signed copy loop/low8count/metadata overwrite. Original44getters/43idle cursor calls cover all42entries/synthetic/raw index255;64live producer prefixes cover both32mask filters, including zero-selection down1. Two post-sound move prefixes confirm raw80/86coordinate addressing without masking.",
+    "Every original probe compares complete EWRAM/IWRAM outside stack writes; returning functions retain SP/callee registers. All703hash-mtime guards pass. 12231instructions/212PC are coverage only, not fullstate-clock/native/wholewidget/ordinary proof. Old source inventory/model/runtime/CLI/scenes not replayed. Evidence target/rom-data-ui-choice-model/windows-model-{build,result}.json and windows-model-europe/result.json.",
+    "All5883prior protected artifact hashes unchanged; all four compiled source inputs still match the accepted build. The296source/doc baseline differs only in two module registrations and six selected memory files; new model/test/coherent record expand to299guarded files. Generated CHANGELOG, project-memory/default-base7597b92, CRLF-aware whitespace and new-module formatting checks pass. User Debug-save/concurrent Docker work and old evidence preserved."
+  ],
+  "limitations": [
+    "Component copy/getter/idle/live-filter/raw-move oracle only, no wholewidget ABI, native/fullstate-clock or ordinary coverage. Managed publication/runtime consumption/production CLI/positive ordinary use remain pending. EUR e55-d54/USAe8-d7 unchanged.",
+    "New Linux/USA/native Windows checks pending. No performance/space measurement, new gameplay fixture/navigation, source-inventory repeat, Android change, package, agent commit or push. Full ROM data TODO remains active."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data/ui_choice_lists.rs",
+    "crates/gba-core/src/rom_data.rs",
+    "crates/recomp/src/rom_data/ui_choice_list_model_tests.rs",
+    "crates/recomp/src/rom_data.rs",
+    "docs/rom_data_ui.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_ui.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

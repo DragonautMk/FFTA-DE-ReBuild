@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "compare-shop-item-cancellation-replay",
+  "title": "Compare shop category and item cancellation replay",
+  "kind": "docs",
+  "platforms": [
+    "Windows GNU under Wine/Xvfb; Linux interpreter model"
+  ],
+  "changes": [
+    "Document an isolated USA shop recording that changes to a nonadjacent category, selects an item and cancels, and compare its endpoint with two replay models."
+  ],
+  "validation": [
+    "The 529-frame recording completed; the modeled category event matched its recorded final serialized state and guest clock, while key-only execution diverged. Protected originals and authenticated recording inputs remained unchanged."
+  ],
+  "limitations": [
+    "The actual verifier rejects mouse:1028 before replay; the model bypasses parser and dispatcher. Wine synthetic input is not native Windows or physical input. Managed cleanup rejected the U31 directories and preserved the evidence."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-02-scrollbars.md",
+    "docs/development/upstream-audit/U31-02-shop-category-replay-proposal.md"
+  ],
+  "references": []
+}

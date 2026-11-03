@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "decode-european-script-archive",
+  "title": "Decode the European relative script archive with typed target aliases",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Add a strict lossless model for the full115464-byte source contract:234event keys,62banks/233slots,207physical command segments/35048storage instructions and45alignment records. Reconstruct relative index words from Program/Header/Fill references; preserve all repeated and header/fill target views without a ROM shadow or duplicated aliased payload.",
+    "Validate physical coverage, canonical indices, source offsets and actual command-length/effect-selector dependencies. Preserve raw parameter bytes, text-bank selector, keybyte3 and optional out-of-projection selector references. Original u16 key arithmetic, q0, raw IDs, cursors and callback/branch semantics stay authoritative; source reconstruction requires the exact European ROM and128halfword/fiveword contracts."
+  ],
+  "validation": [
+    "Previous goal turn made progress: bounded static inventory/source-verification terminal, no live job.254source/doc baseline differs only in a concurrent PROJECT_STATE Docker paragraph; model-selection snapshot captures it before changes. Source inventory and old runtime/native/lifecycle/CLI/ordinary acceptance are not repeated for context.",
+    "Affected Windows release test build91283 passes without warnings. Single combined Wine85436 source oracle passes on the first run. Only two existing hubs receive module declarations; source/runtime revisions remain EUR e50-d49/USAe8-d7.",
+    "Wine verifies all115464typed source bytes and independent source hashes/targets,238original key-address prefixes,234two-level target prefixes including raw0unaligned rotation,234text-bank byte loads,35054opcode prefixes including header/fill views,2397relative-target and493selector-parameter prefixes.42333distinct owned bytes are observed at original load sites;72811parameter/234keyraw/86fill bytes remain preserved/hashchecked and unread in this declared scope.16shape/6source-edit/3dependency/13JSON/2identity guards pass, including rawq0/255shape coherence with base source mismatch.224382instructions/62PCs count coverage only; no native/state-clock/ordinary claim. All3703prior artifact hashes plus the new private test executable are protected.",
+    "Final preservation passes3703prior artifact hashes/316hash-mtimeguards. Against254model-selection source/doc hashes only two module declarations/six intended memory files changed; all other prior implementation/source-model/Debug-save files and the concurrent Docker state paragraph are preserved. Project-memory default/base7597b92 and CRLF-aware whitespace checks pass. model-final snapshots retain source/model complete and publication/runtime/ordinary pending scope."
+  ],
+  "limitations": [
+    "Publication/direct guest runtime/native complete-state-clock/CLI/positive ordinary remain pending for this archive. Current EUR e50-d49/USAe8-d7 remain unchanged. Storage layout is not a replacement interpreter, complete argument semantics, callback ABI or reachability claim; five linked localized text archives remain unmigrated.",
+    "New Linux/USA/native Windows checks, other asset/GUI/archive/mod work and the preceding e49positive ordinary criterion remain open. No performance/space measurements, new fixture/navigation/payload edits, Android changes, agent commit or push.",
+    "Concurrent Docker coverage work completed and committed externally atff7a795, also capturing the current core model/module declarations; this agent made no commit. Its own record resolves the earlier unrelated coverage failure. Full project-memory checks pass after rendering this unit's record; preserve concurrent files and user commits."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/script_archive.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/script_archive_model_tests.rs",
+    "docs/rom_data_scripts.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_scripts.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

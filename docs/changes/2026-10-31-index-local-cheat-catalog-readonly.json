@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "index-local-cheat-catalog-readonly",
+  "title": "Index the local cheat reference catalog without execution",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Add a bounded readonly in-memory schema-1 cheat catalog index and debug-cheats CLI with pagination, complete CH details and source metadata. Preserve ordered code lines, aliases, notes, provenance and master links without modifying or packaging the source.",
+    "Classify all entries as disabled and non-executable, with unknown ROM and device compatibility, unsupported decoder and unverified behavior. Accept an explicit ROM hash as context without inferring compatibility; provide an empty state and explicit catalog path."
+  ],
+  "validation": [
+    "Isolated locked/offline Windows GNU test and production builds passed with 1515 frozen source files and exact overlays. Wine passed three focused synthetic importer, bounds, malformed-input, pagination and readonly tests.",
+    "A readonly Wine CLI check compared all 341 local entries and all catalog metadata with the source, verified paginated order and compatibility states, checked absent catalog and unknown ID, and confirmed the original source hash unchanged. Result records no private payload."
+  ],
+  "limitations": [
+    "CLI browsing is a foundation for DBG2-17: menu/controller import and selection are not implemented. No cheat decoder, writes, master activation or ROM compatibility claim exists; DBG2-17 remains open.",
+    "Native Windows, Linux and physical input were not tested. The local third-party catalog and command output are private and excluded from versioned files and public packages."
+  ],
+  "files": [
+    "crates/recomp/src/debug_cheats.rs",
+    "crates/recomp/src/main.rs"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

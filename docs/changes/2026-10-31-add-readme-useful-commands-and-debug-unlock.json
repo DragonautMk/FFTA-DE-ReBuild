@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "add-readme-useful-commands-and-debug-unlock",
+  "title": "Add useful controls, commands and Debug unlock to the README",
+  "kind": "docs",
+  "platforms": [
+    "Desktop documentation: Windows and Linux"
+  ],
+  "changes": [
+    "Add an end-of-README reference for menu controls, persisted Debug unlock, config paths, native build, Docker extraction and coverage, local report homepage and project checks.",
+    "Correct the existing save-state instructions to require confirmation before selecting a slot."
+  ],
+  "validation": [
+    "Checked command options against current Bash and PowerShell launchers, menu bindings and existing guides; ran Bash launcher usage probes, local-link checks, project-memory and Atlas inventory checks."
+  ],
+  "limitations": [
+    "Documentation-only update; no Docker build, report generation, ROM access, GUI, Wine or Linux runtime tests, or performance measurements."
+  ],
+  "files": [
+    "README.md"
+  ],
+  "references": [
+    "docs/menu_clan_atlas.md",
+    "docs/development/ROM_COVERAGE.md",
+    "docs/rom_data.md",
+    "docs/report_home.md"
+  ]
+}

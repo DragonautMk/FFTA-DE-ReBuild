@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "verify-european-dynamic-raw-cli",
+  "title": "Verify European dynamic raw fragments in the production CLI",
+  "kind": "changed",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Report the dynamically selected raw fragment resource identity at runtime and describe it in the extraction catalog."
+  ],
+  "validation": [
+    "An isolated Windows production build and one Wine create/reuse/one-frame startup sequence pass: 85 resource identities match, all 86 generated files match the accepted e94-d93 dataset and all 88 managed files stay unchanged on reuse and startup.",
+    "The frozen source and guarded ROM, seed, native cache, accepted dataset and canonical executable remain unchanged; no performance measurement."
+  ],
+  "limitations": [
+    "This establishes registration and loading, not dynamic fragment use in ordinary gameplay or original dynamic native execution. Global selector domain and Linux, USA and native Windows checks remain open."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data.rs",
+    "scripts/extract_rom_data.py",
+    "docs/rom_data_ui_raw_transfers.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_raw_transfers.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "consume-european-unit-obj-initial-pose",
+  "title": "Publish and directly consume European unit initial-pose graphics",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Advance EUR to e57-d56 and publish unit-obj-initial-pose.json/graphics.unit-obj-initial-pose with actual metadata52/14producer dependencies:53generation files/52resources, all51prior decoded files/resource records/coverage entries identical, e56retained and USAe8-d7 unchanged. Authenticate whole set and producer links before transactional attachment.",
+    "Add immutable runtime owner for415spans146358B. Directory/index/header/frame/OAM source bytes come from typed fields; pixel bytes come from pairs of decoded four-bit palette indices. Discard temporary source buffers after authentication, preserve exact byte ownership/raw holes/prior owners, original RAM frames/scheduler/DMA/VRAM/save-nativeABI and diagnostic counters outside serialized state.",
+    "Wire frontend bounded file parsing/encoding/publication/reuse, validation, runtime usage and a pixel-positive scene requirement. Reduced managed/native Wine checks, actual production CLI and one positive320-frame existing Party-unit full pair now close the declared projection; source-model and old-family proofs remain closed."
+  ],
+  "validation": [
+    "One Windows73480affected core/frontend test build passes warning-free; core tests compiled only. Frozen hashes7a95a9115937bab2ccb9b73cf60dadf6a1db5b3d2634dd785d50f9f34487516c(core) andd0995de8ccfc90d5ddf7b197b4c0b02ea0b251038a524dfec35955983d8470cd(frontend). Wine19825two exact filters pass on first execution; no source/old test/scene replay.",
+    "Managed filter passes17guards/failed-attach owner-state isolation/interrupted publication/create-reuse-repair-move/e56retention/unavailable-copy Load-Undo-backup-Restart/sharedowner. All146358owned bytes are read with raw sources altered:484directory484index484header9540frame198OAM135168pixel,121sequences. Old same-page OBJ serves4B with no new charge. New file exactly matches accepted model f26afe300dd906b06ffeb048f5c1d88d0ed02744f0d91be645e263acd2474bd7.",
+    "Native filter passes30original/interpreter/compiled complete-state/guest-clock paths:3resets, rawID/animation lookups, constructor prefix,6scheduler uploads,6DMA executors, mutable RAM frame and field/raw/old-owner probes.146358new rawB+20oldOBJrawB are altered. Compiled APIs charge[28directory20index8header127frame164OAM1pixel]aggregate B; the pixel load probe is distinct from actual compiled DMA execution, whose full VRAM/state/clock parity is checked.",
+    "All415source edges/widths/three ROM mirrors/real-BIOS bus/CpuSet-FastSet/DMA pass. Mixed transfers contain2new+1276raw+8oldOBJ B and charge exactly2/8to their owners; unaligned API word preserves2new+2deliberately edited raw bytes. Rawsprite65535/animation65537retain uncapped original arithmetic.3542instructions496PC177native dispatches are coverage only.",
+    "706hash-mtime guards and8compiled input hashes pass. Independent post-test comparison confirms all51previous manifest resource records and coverage entries unchanged. Managed manifest fileSHA5168faf8b834d6bfc2b2f2854cb4475517113629bb55dfb4cc5118748b6da038; runtime dataset identityab9286b25a85d46c8b80a967399b948072bdc8d514c5b5902b48cca89996c1ae. Evidence under target/rom-data-unit-obj-initial-pose-runtime/:windows-managed-build.json,windows-managed-results.json,windows-managed-europe/{managed,native}-result.json,prior-manifest-audit.json.",
+    "Final preservation passes all6366prior protected artifact hashes,704build-stage input artifact hash-mtime guards and8compiled source hashes; both runtime filters separately preserve706guards including frozen test executables. The307source/doc baseline changes only the six selected existing implementation hubs and coherent feature/memory docs; source-only model/oracle and user Debug-save/concurrent Docker work remain unchanged. Project-memory default/base7597b92 and CRLF-aware whitespace checks pass.",
+    "One Windows49887production build passes warning-free; frozen CLI d4c782c6d84f155a34406c780c5e9e973935d90c540ac7aca337cf79835b1fc3. Canonical f3e277db..hash/mtime1792570130397888519restored exactly; main content unchanged/mtime-onlyCargo invalidation. Wine57046threeactualCLI processes create/reuse-no-write55managedfiles/all53generationfilesmatchaccepted/from unrelatedcwd with old nativecache. Actuale57generation-ZV0TqS retains datasetidentityab9286b2.. and manifestfileSHA5168faf8... No source/model/managed/native/old-scene proof repeated.",
+    "Existing authentic EURworldmap snapshot7701a360c2836d8ce1bac59288786cd34922046163048aa32dfa1f09fadcac9a and Party-unit inputbf757e6957e596ba823c9063284c51b6e8766408dbb29247d625869aabae1dfc remain unchanged. One320-frame actualCLI locator reads10962aggregate new B=[8directory16index4header252frame7162OAM3520pixel]/8170busreads/2sequences.240x160Party-unit endpoint with animated preview is inspected; no new gameplay fixture/navigation/payload edit.",
+    "Wine12785one exact full pair on the same320frames4519\u21924839/actualCLIdataset/frozen d0995de8testexe/oldcache/width0 passes every initial/frame complete machine state/guestclock/central-wideimage/OAM/dispatch/mixedPSGFIFObitwiseHLEaudio. Sample counts[702240,702240,84480,84480,702164], same10962newB/3520pixelB/2sequences;764hash-mtimeguards pass. Mixed native-fallback, other119sequencesordinary targeted-only. Private runner exit-schema preflight corrected before anyWine execution; actual functional pair ran once. Evidence target/rom-data-unit-obj-initial-pose-cli/windows-cli-summary.json,windows-scene-result.json,windows-party-unit-full-state-audio.log.",
+    "CLI/ordinary-stage final preservation passes all6656prior protected artifact hashes,704build-stage artifact hash-mtime guards and8compiled runtime input hashes; scene764guards pass. All310source/model/doc baseline inputs remain unchanged apart from coherent memory updates; main content unchanged/mtime-onlyCargo invalidation. Canonical binary, source model/oracles, user Debug-save/concurrent Docker and old proofs preserved. Project-memory default/base7597b92 and CRLF-aware whitespace checks pass."
+  ],
+  "limitations": [
+    "Bounded initial animation0/part0projection only. Other119ordinary sequences retain targeted-only coverage; other poses/parts/sprite IDs/palettes, unresolved job0/1field65535, whole-unit/allocator ABI and new32:9scenes remain open. The declared source/model/managed/native/actualCLI/positiveordinary family criteria are closed, while full ROM data migration remains incomplete.",
+    "New Linux/USA/native Windows/new32:9 remain pending. No performance/space measurement, new gameplay fixture/navigation/save-ROM payload edit, Android change, package, agent commit or push. The full ROM_DATA_TODO remains active."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/unit_obj_initial_pose.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/unit_obj_initial_pose_runtime_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "scripts/extract_rom_data.py",
+    "docs/rom_data_unit_obj.md",
+    "docs/rom_data_obj.md",
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_unit_obj.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

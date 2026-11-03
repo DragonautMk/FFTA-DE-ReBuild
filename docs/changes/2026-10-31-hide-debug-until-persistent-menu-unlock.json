@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "hide-debug-until-persistent-menu-unlock",
+  "title": "Hide debug menus until a persistent directional unlock or config override",
+  "kind": "changed",
+  "platforms": [
+    "Shared desktop menu; Windows GNU release validated through Wine"
+  ],
+  "changes": [
+    "Default av.cfg debug=false. Reveal Debug with Up Up Down Down Left Left Right Right on the shared menu input edges, set debug=true and use the existing overlay preference-save action. Support manual debug=true at startup and false to hide it again without deleting stored debug choices.",
+    "Hide and guard the Debug domain, planned Event/CMD controls, references/tools/selectors and debug-only Extended saves/Game saves entries while locked. Keep ordinary game menus/slots/backups and independent CLI/session ownership guards; F6/F7/F8 isolated-session shortcuts additionally require the unlocked flag.",
+    "Observe directions during normal menu navigation; handle overlapping prefixes and mismatches. Reset partial input on menu reset, Confirm/Cancel, focus/details and pointer interactions; capture, dropdown and text editors cannot unlock. Mouse-wheel navigation explicitly clears the sequence.",
+    "Use the actual locked constructor in three new visibility/sequence/exclusion tests, with a default/manual-roundtrip parser test. Adapt pre-existing Debug route and host Picker/Workbench fixtures to explicitly enable their intended unlocked context instead of weakening the production default."
+  ],
+  "validation": [
+    "Locked/offline Windows GNU release production recomp/ffta-play and menu/config test builds passed without diagnostics. Wine parser1PASS and97distinct menu casesPASS with1optional export ignored. First run had96PASS/1legacyGameSaves fixture failure; corrected only its unlock setup and reran that single case successfully.",
+    "Final Windows recomp test build passed without diagnostics; ran only8content_picker cases and1late-preset Workbench case on Wine, allPASS, with the synthetic fixture factory ignored and the rest of the556-case runtime suite unrun.",
+    "Actual paused EUR GUI with simulated native XInput passes hidden initial domain/planned/save controls, keyboard and pad unlock only at the eighth direction, actual debug=true config publication, reopened unlocked Debug page, manual debug=false restart relock, and another pad unlock. Captures visually inspected; no tool execution or guest frame step.",
+    "All3private original input hashes and full guest state/frame/clock/keys/registers preserved across the three GUI openings. Runtime7b3b9f2ef2f4d42e615280950c49498a3c3ca842744ee951af3729858de82114 matches its immutable session pin; leases and owned runtime/display processes closed.",
+    "Preservation verifies293production-source identities with exact cfg(test)-only differences for3final fixture files; all final menu/config assets and host-test source snapshots match. The production-excluded test changes did not require repeating the accepted GUI or production build. Evidence under target/menu-debug-unlock: build/test results, gui/acceptance.json, images/text reports and final-preservation.json.",
+    "Atlas task/inventory checks retain28task references,190legacy row occurrences,54legacy actions and97operation contracts. Earlier menu/contextual-controls/workflow and concurrent ROM documentation changes are preserved, not reattributed or revalidated by this unit."
+  ],
+  "limitations": [
+    "Linux, native Windows, physical controllers, DirectInput/Gilrs, USA and Android remain unverified. No benchmarks, gameplay/checkpoint derivation, original input writes, release packaging, commit or push.",
+    "This is persistent menu visibility, with existing debug action/session preflights unchanged. Manual config edits apply on restart; existing debug preferences and files remain intact while hidden.",
+    "Accepted/current/pinned executables, diagnostic failed-test output and private copied inputs remain under ignored target/menu-debug-unlock. No managed ROM interrupted/moved dataset copies exist; the known ROM-only cleanup-helper refusal is inapplicable and was not repeated or bypassed."
+  ],
+  "files": [
+    "crates/input-config/src/lib.rs",
+    "crates/menu/src/lib.rs",
+    "crates/menu/src/atlas_theme.rs",
+    "crates/menu/src/controls.rs",
+    "crates/menu/src/debug_unlock.rs",
+    "crates/menu/src/debug_unlock/tests.rs",
+    "crates/menu/src/clan_atlas/references.rs",
+    "crates/menu/src/clan_atlas/tests.rs",
+    "crates/menu/src/debug_catalog.rs",
+    "crates/menu/src/game_saves.rs",
+    "crates/menu/src/information.rs",
+    "crates/menu/src/interaction/tests.rs",
+    "crates/menu/src/selection/tests.rs",
+    "crates/recomp/src/play.rs",
+    "crates/recomp/src/content_picker/tests.rs",
+    "crates/recomp/src/debug_workbench/tests.rs"
+  ],
+  "references": [
+    "docs/menu_clan_atlas.md",
+    "docs/debug_tools.md",
+    "docs/extended_saves.md",
+    "docs/debug_selector.md"
+  ]
+}

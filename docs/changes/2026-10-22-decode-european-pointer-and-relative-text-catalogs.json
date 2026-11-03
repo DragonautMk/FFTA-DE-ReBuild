@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "date": "2026-10-22",
+  "slug": "decode-european-pointer-and-relative-text-catalogs",
+  "title": "Decode European pointer strings and relative text programs across five language selectors",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Add bounded source-authenticated models for nine original EUR pointer selectors/45 tables/16100 strings and 29 relative selectors/145 archives/17035 programs from the declared original reader block.",
+    "Preserve exact pointer identities, relative u16 indices/FFFF sentinels, complete headers, glyph IDs, compact/extended commands and operands, custom-LZ streams and decoded trailing bytes. Dynamic substitutions stay commands with runtime context deferred.",
+    "Retain all 33581 disjoint provenance ranges and 128 referenced packed glyph slots/metrics. This broad model is offline only; managed e11 and the existing consumed short-text subset remain unchanged."
+  ],
+  "validation": [
+    "Warning-free Windows release test build; two reduced Wine checks pass: program encoding/operand/inline-string/padding/truncation guards and a single exact-EUR source/JSON/original-reader oracle.",
+    "Independent static classifiers match every pointer/index/program source extent/hash and all three encoding/compression forms. Deterministic strict JSON/source authentication and coherent metric edits/malformed index rejection pass.",
+    "Original readers match 80 newly covered pointer boundaries/copies, all 145 archive roots, 300 script output/guard cases covering every archive/language boundary and all 21 command forms, plus 63 newly referenced font slots/widths. Total 968 calls/867138 guest instructions are coverage counts, not timings.",
+    "Initial archive failure exposed absent active context in the retained pub snapshot: original index0 underflows to FFFF. The final controlled reader fixture uses original nullable-context fallback index1 for both source/rebuilt scripts; output matches and original uncompressed return adjustment is checked. Failed diagnostics retained; no decoder/model/bound relaxation, no repeated closed codec/107-entry oracle.",
+    "Protected ROM/slot/cache/loader/canonical hashes, current source hashes, project-memory coverage and CRLF-aware whitespace checks pass."
+  ],
+  "limitations": [
+    "New Linux and USA checks remain pending by user instruction; no native Windows or AndroidPort claim.",
+    "Broad model managed publication/startup/direct consumption/lifecycle and ordinary gameplay scenes remain open; controlled original-reader output comparison is not full-state/clock gameplay acceptance.",
+    "This covers the declared original reader block and referenced glyphs, not all possible text/font readers, Unicode mappings or complete game-script semantics. No performance/startup/RSS/space measurement, new recording or broad replay."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/text_catalogs.rs",
+    "crates/gba-core/src/rom_data/text_roots.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/text_catalog_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_text.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

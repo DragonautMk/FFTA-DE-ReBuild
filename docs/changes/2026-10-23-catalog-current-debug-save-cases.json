@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "catalog-current-debug-save-cases",
+  "title": "Catalog current debug-save cases with stable scene IDs and scoped validation",
+  "kind": "docs",
+  "platforms": [
+    "Windows/Wine"
+  ],
+  "changes": [
+    "Rewrite the user debug saves TODO as 26 stable DS-01 through DS-26 cases, preserving every original requested scenario and assigning descriptive names, source locators, validation scope and exact remaining criteria. Initial outcome: 3 validated, 10 partial, 13 uncovered.",
+    "Create an ignored local saves/debug-cases collection with 13 numbered snapshot slots from six exact source snapshots and an unchanged cartridge-save copy. Numbers match case IDs, including partial-candidate labels; no original file is renamed or overwritten and no private bytes enter tracked documentation.",
+    "Link the scene checklist from Extended saves and durable validation entry points. Reuse accepted ordinary dispatch/source/scene evidence instead of repeating builds, metrics or full differential proofs."
+  ],
+  "validation": [
+    "Read current handoff, user archive, relevant scene records/results/logs and retained captures. Eight selected ordinary EUR snapshots pass full-file SHA-256, embedded preview checksum, version1, exact EUR ROM identity and payload checksum checks. Cartridge and archived snapshot copies match their ZIP entries.",
+    "Accepted existing evidence supports DS-01 clan-skill increases and DS-02 successful Mad Alchemist return at day19, including the closed 1000-frame full-state/image/audio pair. Existing ordinary GUI captures support DS-19 mission browsing, requirements, member choice and confirmed 600-gil acceptance. No accepted full pair is rerun.",
+    "New isolated Windows/Wine interpreter/HLE keyboard GUI inspection of the user deployment snapshot passes load, placement selection/movement, reload, one-law classification and normal close. A separate brief Party inspection also closes normally. Original snapshot/archive/cartridge hashes remain unchanged.",
+    "An intermediate inventory inspection reaches unit equipment with five visible headgear entries, then its harness ends with SIGTERM143 and no final result. Retain that limited observation only; DS-17 remains partial and no complete-inventory or clean-exit result is inferred.",
+    "All 13 curated slots are byte-identical to their declared sources, names/numbers/status counts match the 26-item catalog, and the collection/manifest/save files are ignored by Git. No new game checkpoint recording, runtime mutation, build or benchmark is performed.",
+    "Final catalog checks pass all 26 IDs/names/status counts, 13 exact ignored copies, source hashes, relative documentation links and two normal GUI terminal results. git diff --check passes. The full project-memory check currently reports uncovered concurrent ROM-data implementation paths; this audit does not claim or cover those unrelated edits."
+  ],
+  "limitations": [
+    "Initial catalog audit only: 10 partial and 13 uncovered scenarios remain explicit. In particular one active law does not validate multiple laws, mission rewards do not validate clan-threshold receipts, an empty bank does not validate a populated bank, and an ordinary enemy turn does not reproduce reported lag.",
+    "New GUI observations use Wine, interpreter execution, BIOS HLE and keyboard input. Native Windows hardware, physical controllers, new Linux/USA/Android tests and package publication are outside scope.",
+    "Private files/captures/catalog remain local and ignored. Tracked documentation carries descriptions and source/evidence locators, not save contents or screenshots.",
+    "The shared working tree contains independent in-progress ROM-data changes without their final memory record (rom_data module declarations and new progression_selection_gates/progression_selection_gate_tests files). Their coverage check remains owned by that work; no unrelated implementation files are attributed to this documentation audit."
+  ],
+  "files": [
+    "docs/development/debug saves.md",
+    "docs/extended_saves.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/development/debug saves.md",
+    "docs/extended_saves.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md",
+    "docs/changes/2026-10-23-consume-european-progression-gates-and-receipt-records.json"
+  ]
+}

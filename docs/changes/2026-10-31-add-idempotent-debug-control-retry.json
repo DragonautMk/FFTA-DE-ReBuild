@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "add-idempotent-debug-control-retry",
+  "title": "Protect debugger request retries from duplicate execution",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Add bounded per-run request identity tracking, fingerprint validation and retained-result replay; evicted results retain identity tombstones and never re-execute.",
+    "Add explicit debug-control retry with original run, request ID, deadline and typed action; preserve status and one reserved active cancellation when identity capacity is reached."
+  ],
+  "validation": [
+    "Two standalone host ledger tests pass; the first direct rustc invocation lacked the parent module and was corrected.",
+    "Isolated Windows GNU test and production builds pass; Wine protocol 21 and ledger 2 tests pass. All 1513 frozen source hashes and 23 overlays remain exact (target/debug-tools-v2-request-idempotency-final).",
+    "Synthetic Wine/Xvfb: an explicit same-ID step retry returned the identical result without a second frame; changed parameters and a different run were refused without changing state.",
+    "A timed-out pending search retained its owner across same-ID retry; targeted cancellation and replay of its identical terminal result succeeded. Full final state and protected session pins remained exact, and the session and display closed."
+  ],
+  "limitations": [
+    "DBG2-15 remains open for console-native recovery and broader menu/CLI/console parity; successful replay-profile selection and clipboard/IME validation are separate open criteria.",
+    "Identity and retained results are bounded and per-run: an evicted result is unavailable without re-execution; a distinct ID is a new action and a restarted run rejects the old identity. The caller must preserve the original run, ID, deadline and action.",
+    "Native Windows and Linux runtimes and physical controllers were not validated by this Wine test."
+  ],
+  "files": [
+    "crates/recomp/src/debug_control.rs",
+    "crates/recomp/src/debug_control/ledger.rs",
+    "crates/recomp/src/main.rs",
+    "crates/recomp/src/play.rs"
+  ],
+  "references": [
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

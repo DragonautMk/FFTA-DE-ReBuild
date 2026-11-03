@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "identify-european-compact-obj-selector-eligibility",
+  "title": "Identify European compact OBJ selector eligibility",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Document original selector 33 target-status eligibility and restoration of its temporary target flags."
+  ],
+  "validation": [
+    "Original EUR Wine disassembly and authenticated selector table and two retained actor snapshot checks passed with source inputs unchanged."
+  ],
+  "limitations": [
+    "Temporary conditional state, actual action target, later zero-halfword transition and ordinary resource use remain unproved. Linux, USA and native Windows remain pending; no performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_obj.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

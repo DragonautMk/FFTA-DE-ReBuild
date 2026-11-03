@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "inventory-european-ui-choice-lists",
+  "title": "Identify European immutable UI choice lists and filtered live templates",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Identify all18declared direct Thumb widget8BBF0callers:16immutable inputs reference12lists/36entries, while two live0200F250inputs derive from one six-entry397A9Ctemplate. Bound13nonoverlapping ranges/42entries/336B without exporting adjacent gaps or duplicate owners.",
+    "Establish eight source bytes as identifier, unsigned cursor X/Y, copied opaque byte and left/right/up/down raw navigation. Original high-bit flag/low7stored selector differs from subsequent unmasked raw coordinate addressing; retain raw values without guest count/target caps or pointer reinterpretation.",
+    "Keep both live five-slot availability filters, conditional compacted copies and identifier/Y/up/down overrides in RAM. Ordered32mask source projections bound six template entries and preserve the zero-selection down1base-copy overwrite. Public decoder/managed/runtime consumption remains separate pending work."
+  ],
+  "validation": [
+    "Static exact EUR ROM and accepted e55manifest authentication passes all13table ranges/336byte reconstruction, all18root pointer occurrences,16direct count/source setups, both template producers and all50prior source owners without overlap. Ninety-three original instruction fingerprints pass. Ordered sourceSHA74323d5436d4fa7dadbb51f571222031410c89fd708276f39b6adf36c7400f7f.",
+    "Private source review corrects the initial zero-selection projection: last-down clear precedes the base copy, so its original down1overwrites zero. Added ordering fingerprints and reconstructed live-buffer projections pass32availability masks. No product implementation or old test/oracle changed. Evidence target/rom-data-ui-list-entries/source-contract.json, roots.json, template-projections.json and annotated disassembly.",
+    "All5869prior protected artifact hashes unchanged. The294source/doc baseline differs only in five selected memory files; new UI feature documentation and coherent record expand coverage to296files. Project-memory/default-base7597b92 and CRLF-aware whitespace checks pass. No implementation, user Debug-save, concurrent Docker work or prior source/model/runtime/CLI/ordinary evidence changed."
+  ],
+  "limitations": [
+    "Bounded direct caller/static source contract only, not complete UI catalog, wholewidget ABI, indirect-call absence or execution proof. Byte3copied/currently zero but semantic read unproved. Navigation raw targets need not fit exported source count.",
+    "Public decoder, focused Wine original-reader check, managed publication/runtime consumption/CLI/positive ordinary use remain pending. EUR v1/e55-d54/USAe8-d7 unchanged. New Linux/USA/native Windows checks pending; no build or guest execution, performance/space measurement, fixture/navigation, Android change, package, agent commit or push. FullTODO remains active."
+  ],
+  "files": [
+    "docs/rom_data_ui.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_ui.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

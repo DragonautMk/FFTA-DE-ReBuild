@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "restore-grid-on-native-game-ui",
+  "title": "Restore the configured pixel grid on native game HUDs and portraits",
+  "kind": "fixed",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "The independent native game UI pass previously bypassed the world pixel grid, leaving extracted portraits and battle HUDs flat. Pass the live Grid parameters explicitly to game layers after native integer mixing and the color LUT.",
+    "Share the existing band-limited aperture/integration/fade/scaling-footprint model between world and UI WGSL; native grid coordinates follow UI layout and Size independently of world zoom.",
+    "Keep application FPS overlays opted out, grid-off center sampling and transparent coverage unchanged, and retain the no-grid software/pause paths. Update diagnostic Frame constructors for the explicit opt-in field."
+  ],
+  "validation": [
+    "Warning-free offline locked release cross-builds of the Windows screen test executable and recomp production CLI pass; the previous canonical executable is restored and a candidate is retained under target/ui-grid-fix/.",
+    "Windows screen suite under Wine: 44 passed, 8 optional checks ignored. The two assembled WGSL shaders parse and validate.",
+    "Explicit Wine/Vulkan GPU regression passes on AMD Radeon 780M: four integer/fractional UI scales, all four scaling modes, off/half/full strengths, cached-setting changes, world-zoom independence, transparent coverage, small-scale fade and EPX disablement.",
+    "Existing native-layer grid-off CPU/GPU parity regression passes explicitly under Wine/Vulkan.",
+    "Two normal Wine/Vulkan GUI sessions pass slot load, resume and window close with Grid off/on. Inspected 852x480 battle captures show grid on the lower-left portrait and HUD panels, stable at maximum zoom, with the FPS overlay flat. ROM, source snapshot/save and copied slot hashes remain unchanged.",
+    "Cheap source comparison confirms shared aperture and integration functions are byte-identical to the prior world implementation; git diff --check passes."
+  ],
+  "limitations": [
+    "Native Windows hardware, new Linux runtime checks and Android are not validated. AndroidPort is unchanged; no release archive or installer was produced.",
+    "The initial bounded GUI replay harness failed by reporting 601/600 frames at exit; its evidence is retained and no replay parity/clean-exit claim is made for that run. Normal-play GUI validation replaces that harness for this fix; the unrelated harness was not modified.",
+    "Software fallback and the pause-menu canvas continue without the grid. No performance analysis was performed."
+  ],
+  "files": [
+    "crates/recomp/examples/dialogue_layout.rs",
+    "crates/recomp/examples/presenter_skip_uploads.rs",
+    "crates/recomp/src/fps.rs",
+    "crates/recomp/src/play.rs",
+    "crates/screen/src/device_loss_tests.rs",
+    "crates/screen/src/grid.wgsl",
+    "crates/screen/src/grid_filter.wgsl",
+    "crates/screen/src/present.rs",
+    "crates/screen/src/ui_layer.rs",
+    "crates/screen/src/ui_layer.wgsl",
+    "crates/screen/src/ui_layer/coords.rs"
+  ],
+  "references": [
+    "docs/dialogue_layout.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "date": "2026-10-30",
+  "slug": "consume-european-event-records12",
+  "title": "Consume European event records through authenticated runtime data",
+  "kind": "changed",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Register e88-d87/index79 event-records12.json with one3072-byte span/no dependency; preserve all79 prior resource records and payloads.",
+    "Add immutable event storage on pages71C-71D, same-owner row225 interior view, eight physical classes/eleven nonserialized counters/four256-record mask words and prior-selection/raw-gap/next-root composition; retain original live guest logic and ABI."
+  ],
+  "validation": [
+    "One warning-free Windows host-test build9225a3bc69ac7ad586592653d203099b18594995b7b4a0f6bd2b64d5f882f698 uses583 frozen files/249 core inputs from581 model sources plus two leaves.",
+    "One reduced Wine filter passes81-file publication/all79 prior records and payloads exact, interrupted new-file publication,14 attach forgeries/two incomplete sets and same-owner/complete-state failed attachment.",
+    "Twenty-two complete-state/clock native cases cover14 controlled load probes/eight pair-scan-u16-view prefixes with all3072 raw andtwo prior bytes changed after Load.296 new served bytes/three prior match allAPI deltas, includingtwo new interp_one fallback bytes. Four stop-safe families/51 entries/30 dispatches are coverage only.",
+    "All3072bus bytes/eight classes/256 physical records/256 boundaries, widths/mirrors/shared alias/prior/raw composition, unavailable-file Load/slotLoad/Undo same Arc and DMA3/CpuSet1538halfwords/CpuFastSet776words complete-state-clock comparisons pass.",
+    "All253 guards/583 frozen/581 model/seven current implementation hashes/80 prior files exact; artifact helper retires only successful interrupted publication copy, preserving accepted81 files and proof inputs/results.",
+    "Final changelog/default/base35920d8/metadata project-memory checks and CRLF-aware whitespace all pass; concurrent debug changes have their separate records and are not attributed."
+  ],
+  "limitations": [
+    "Actual production CLI registration/reuse and one ordinary positive suffix/full pair remain pending; served bytes are not a distinct-byte union or all direct native coverage.",
+    "Full routine ABI/live script-event effects, indirect references, preceding opaque gap, next27-byte catalog extent, Linux, USA, native Windows,new32:9 and full ROM TODO remain pending; USA remains e8-d7.",
+    "No source/model/closed selection proof, ordinary checkpoint/navigation or performance/storage measurement. Concurrent menu/debug changes are preserved outside the frozen snapshot and their tests are not attributed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/event_records12.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/event_records12_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "scripts/extract_rom_data.py",
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

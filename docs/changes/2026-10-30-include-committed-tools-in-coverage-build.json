@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-10-30",
+  "slug": "include-committed-tools-in-coverage-build",
+  "title": "Include committed embedded tools in the ROM coverage build",
+  "kind": "fixed",
+  "platforms": [
+    "Docker coverage image; Bash and PowerShell launchers"
+  ],
+  "changes": [
+    "Archive committed scripts alongside Rust sources before Cargo runs, so recomp include_bytes! assets are present and share the selected runtime commit; retain the separate current coverage tools overlay after compilation.",
+    "Strengthen the existing launcher regression to verify all eight embedded scripts/templates remain committed bytes despite local edits, while current coverage tools stay current and private inputs remain outside the archive."
+  ],
+  "validation": [
+    "All8 launcher tests passed with simulated Docker. Bash syntax and identical Bash/PowerShell archive-root lists passed.",
+    "Captured the actual Bash launcher context with an explicit staging-only stop before Docker/report work; all8 unique embedded assets match Git75fb1cfe, local runtime changes are excluded and current coverage tool copies match the worktree.",
+    "Actual Docker Buildx image compilation passed for recomp and rom_code_ranges using that context; offline coverage --help and the97-operation readonly CLI registry passed. No ROM, dataset or report generation and no performance measurement."
+  ],
+  "limitations": [
+    "The image intentionally compiles committed75fb1cfe, so its two known unused_mut warnings remain until the separate local warning fix is committed; no worktree runtime overlay or assistant commit was performed.",
+    "Native Windows/PowerShell execution and complete ROM coverage generation were not repeated; PowerShell shares the corrected archive roots and Dockerfile, with static parity verified."
+  ],
+  "files": [
+    "Dockerfile.coverage",
+    "scripts/linux/rom_coverage_docker.sh",
+    "scripts/windows/rom_coverage_docker.ps1",
+    "scripts/tests/test_rom_coverage_docker.py"
+  ],
+  "references": [
+    "docs/docker.md",
+    "docs/development/ROM_COVERAGE.md"
+  ]
+}

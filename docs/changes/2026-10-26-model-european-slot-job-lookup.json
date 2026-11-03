@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-10-26",
+  "slug": "model-european-slot-job-lookup",
+  "title": "Model the European twenty-slot job lookup losslessly",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add strict20entry(slot,u8job) source/span/byte lookup and actual directmetadata52 reference validation, with exactEUR/source/threeproducer-reader fingerprint authentication. Keep the extraction projection distinct from guestinputlimits; original slot/property/name code remains live.",
+    "Expose the independent model and one private Wine source-reader test through onlytwo moduledeclarations. Production e70-d69/65files64resources/USA8-7 and allprevious resources remain unchanged until versioned runtimeintegration."
+  ],
+  "validation": [
+    "First affected Windowsfrontend build passes warning-free/frozen110342c94d99d30ef88b3d9263b2e7fb29440d86e2d29ae1d39d0fcc95bcb7a5; first exact new Winefilter passes20independent entries/20B/JSONroundtrip/12structural-JSON-source-dependencyguards/all64ownerdisjoint.",
+    "123originalreader paths pass:21barejoblookups/81complete low8property wrappers/21property0identifierprefixes before165E8, includingthreehighinputaliases. All20B observed atactualsixLDRBsites; callee/fullRAMoutsideoriginal20Bstack/VRAM-OAM-paletteguards pass. All231build/232Wineguards/39compiledpreimages exact.",
+    "ModelJSONSHA2562cea5e7cd140ce7cb19e179ce4997cf627cd514ee5410d5d6b86a9b9d7adfdb6. Closed268pin/source andoldmetadata52/FFFF/A4/managed/native/CLI/scene proofs reused withoutreplay; no fixture/navigation/privatepayload/performance-storage work.",
+    "Closure:394baseline source hashes confirm onlytwoexactmoduledeclarations/twonewmodules plusselectedmemory; allotherimplementation unchanged.231build232Wineguards/39compiledpreimages/399localfeaturelinks exact; canonical model2cea5e7cd140ce7cb19e179ce4997cf627cd514ee5410d5d6b86a9b9d7adfdb6. Project-memory render/default/basec792afd/newmodulesrustfmt/CRLFwhitespace PASS. No livejobs;13250priorprivateproof reused withoutlegacyrehash."
+  ],
+  "limitations": [
+    "Model/source-reader child only. Versionedpublication/typedruntime/native-clock/actualCLI/ordinary remain pending. No global20cap/fullphysicaltable/wholeallocator-nameABI/gameplayreachability claimed.",
+    "Linux/USA/nativeWindows/new32:9 pending. No Android/package/assistantcommit/push; fullROMTODO remains active."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data/slot_job_lookup.rs",
+    "crates/recomp/src/rom_data/slot_job_lookup_model_tests.rs",
+    "crates/gba-core/src/rom_data.rs",
+    "crates/recomp/src/rom_data.rs",
+    "docs/rom_data_gameplay.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

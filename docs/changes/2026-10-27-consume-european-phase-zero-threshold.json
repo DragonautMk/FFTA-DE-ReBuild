@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "slug": "consume-european-phase-zero-threshold",
+  "title": "Include the European phase-zero threshold in typed task parameters",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Extend the authenticated phase fragment to conditional phases0/1/2 at371064 with unsigned thresholds16/8/8, preserving the previous two rows/four signed corrections. Publish e75-d74 in the same parameter file/two spans3B8B/11source bytes, retaining68files67resources/all66other e74 resource records-files. No prelookup guest cap, duration unit or Machine/CAPI/save/native-cache ABI change; USA8-7 unchanged.",
+    "Update the optional phase query to support0–2, keeping3–255 outside. Partition runtime usage into three phase bits and four correction bits, preserving typed/prior/raw byte composition. Reuse original/runtime prefix helpers via visibility-only changes and add a five-line optional new-phase0-positive scene guard; original comparison loop remains byte-exact when removed."
+  ],
+  "validation": [
+    "One first Windows frontend build warning-free/frozen484aa274be11da98bff3377922f46e082e2937929d48930f77076af22deb2cf1. One first exact Wine filter passes four new original phase0 cases with oldcounter0/15/16/65535, seven attach guards, six original/interpreter/native fullstate-clock prefixes (four phase0/two outside3/255), four explicit compiled new-byte reads with raw371064 altered, disjoint3phase4correction coverage/all11typed bytes/raw edges, and three DMA/CpuSet/CpuFastSet fullstate comparisons.",
+    "One first Windows production build warning-free/frozen655d7575912a0335e23184ed674e564d57f68050775bb22b4cdf02e513fd2a72; canonical hash/mtime exactrestore/main content unchanged with mtime-only Cargo invalidation. A single Wine actual CLI auto-prepare/runc28 from originalF09 state/input/cache exits0:68generation70managed/all68accepted/67resources, frames8476→8504,36reads44B/28threshold16correction/all3phases4rows. Private output matcher initially expected explicit prepare-subcommand text; read-only finalization uses actual resources: created auto-prepare log. CLI/build/prepare/reuse not rerun.",
+    "Same frontend executable passes one first NEW28frame ordinary fullpair requiring allseven rows: everyserialized state/clock/central-wide framebuffer/OAM/dispatch/mixed-PSG-FIFO-left-FIFO-right-HLE-bit audio equal. Actual samples[61446,61446,7392,7392,61370];207600native650135fallback are coverage only. Parameter counts exactlymatch actualCLI; old closed12frame/source/model/runtime/constructor acceptance not repeated.",
+    "All215selected input/output/frozen hash-mtime guards, compiled implementations and validator preimage pass. Required artifact completion0paths. Dataset eefc7e329ae9bb6104c63867e5ba6331f2466a41752e1237fce92757694aac86; manifestb43670c8212648ee249874f261b10e4ce5bbaa01bcfeb102e0aa6d8b065dd351; parameterJSON9c9de34b938d53b4a2fba244d615226b52e3f03d71e03ec0928b01db824a8bee."
+  ],
+  "limitations": [
+    "Conditional source/model/runtime/CLI and declared28frame ordinary scope only; no fullphysical archive/all-use/global phase cap/duration or task allocator lifetime claim. The constructor-animation ordinary child remains partial with four closednegative routes; source371034 signed-byte lead remains separate.",
+    "Linux/USA/native Windows/new32:9 pending. No new gameplay fixture/navigation in this phase-zero unit, profiling/performance/storage campaign, Android/package/assistant commit/push. Full ROM_DATA_TODO remains active."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/observed_task_parameters.rs",
+    "crates/gba-core/src/rom_data/runtime/observed_task_parameters.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/phase_zero_threshold_tests.rs",
+    "crates/recomp/src/rom_data/observed_task_parameters_model_tests.rs",
+    "crates/recomp/src/rom_data/observed_task_parameters_runtime_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "scripts/extract_rom_data.py",
+    "docs/rom_data.md",
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

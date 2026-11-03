@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-debug-session-guides",
+  "title": "Translate diagnosis, isolated-session and recording guides",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Translate three maintained debug guides into English: session diagnosis, isolated portable sessions and recording input from snapshots. Preserve all 16 legacy heading anchors and the original acceptance limits."
+  ],
+  "validation": [
+    "Manual review and structural comparison against HEAD preserve inline code, fenced examples, link destinations and numeric/hex tokens in all three guides. Every original heading has a compatibility anchor; English thousands separators preserve numeric values. Whitespace check passes."
+  ],
+  "limitations": [
+    "Documentation-only translation; historical Wine evidence remains within its original scope, no runtime/build/replay/platform checks repeated. Remaining guides, dynamic metadata, tools, source comments and cross-tree audit stay pending."
+  ],
+  "files": [
+    "docs/debug_diagnostics.md",
+    "docs/debug_sessions.md",
+    "docs/debug_recordings.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": []
+}

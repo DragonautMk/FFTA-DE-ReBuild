@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "slug": "verify-european-u16-task-obj-ordinary-scene",
+  "title": "Verify European u16 task OBJ banks in an ordinary Bank scene",
+  "kind": "changed",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Close one ordinary positive-use child for graphics.word-task-obj-animations with the source-backed Bank3660-3672 window. Use exact copies of existingnormalstate/input; acceptedcensus only selects the window, no newnavigation/checkpoint/manualguestmemory edits. Reuse accepted e77productionCLI/dataset.",
+    "Add only a five-line optional FFTA_STATE_TEST_REQUIRE_WORD_TASK_OBJ guard/report to the generic fullpair validator, requiring all6newfield classes andhost reads. Removing the block restores oldvalidator/frame loop byte-for-byte. No production/runtime/ABI/cache/save change."
+  ],
+  "validation": [
+    "One existingproductionCLI Wine observation firstPASS positive292reads/346sourceB=[44index20count240attributes2sequenceheader20framelist20duration]/20host; managed72path/hashmtime unchanged. One warning-free stable496source Windowsfrontendtest build/frozen309ba31c067b19b5bb132c9258602ad2b6648be851a36bbf1d8c0b1b063c1ab7; one Winefullpair firstPASS all12complete serializedstates/guestclock/central-wideimages/OAM/dispatch/all5audio samples. All9newowner counters exactCLI, dispatch[19962,85770], samples[26334,26334,3168,3168,26258], countscoverage only.",
+    "All94actual input-output guards/496snapshot/currentROMimplementation hashes exact, originalstate-input/canonicalexe/ROM/nativecache/TCC/accepted72filedataset preserved. Requiredartifactcompletion0eligiblepaths; copies/preimage/logs/results/currentexe retained. No oldsource/model/runtime/scene/census acceptance replay or productionrebuild.",
+    "Projectmemory render/default/base2fbf9f7/metadata-only allPASS after parallelDBG record appeared; CRLF-aware whitespace/newfeature links/oldvalidator preimage/postcleanup94guards/496snapshot/currentROMsources PASS. No build/test repeated to obtain memory closure."
+  ],
+  "limitations": [
+    "One bounded ordinarypositive family window only, not all4banks/50lists/7unreferencedlists/emptysequence update/arbitraryindirectinputs/lifetime/fullarchive/fullgame. Constructorordinary remains separatepartial; fullROM_DATA_TODO active. Linux/USA/nativeWindows/new32:9 pending.",
+    "No performance/storage campaign, Android/package/assistantcommit/push. ParallelDBGroot work preserved/separate, not validated by this ROM integration unit."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/TASK_HANDOFF.md",
+    "scripts/README.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

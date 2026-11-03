@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "date": "2026-10-22",
+  "slug": "consume-european-main-background-graphics",
+  "title": "Consume European main background graphics words through original guest readers",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Retain the authenticated e9 main-graphics model in immutable RuntimeResources; serve custom-codec literals from little-endian typed words and headers/offsets/tokens from exact file metadata.",
+    "Cover fixed EUR 769..895 source pages and merge crossing graphics reads with prior resource families through existing CPU/DMA/native APIs; report separate main-graphics source and decoded-literal use.",
+    "Preserve every original decoder instruction, scratch write, DMA, guest cycle and e9-d8/save/native/cache identity; retain the owner across Load/Undo/backup/restart without file I/O during gameplay."
+  ],
+  "validation": [
+    "Warning-free Windows release test and production builds; three reduced Wine tests pass: synthetic reads/edges/mirrors/first-last pages/real-BIOS bus mode/SWI/DMA with raw and duplicated encoded literals poisoned, four original/native EUR calls and temporary-copy owner lifecycle.",
+    "Four calls for descriptors 0/19/38/161 with all 50 raw graphic source spans poisoned match complete interpreter/native states and clocks, output/guards/SP. Original tracing covers 788393 instructions and 3414 native dispatches, with 29023 typed literal bytes specifically consumed by compiled loads.",
+    "One retained 397-frame EUR LCD B Cyril-pub transition matches every full state/clock, image/OAM/dispatch and mixed/PSG/FIFO/HLE audio sample; 14815 graphics reads consume 16209 source bytes including 10334 typed literal bytes.",
+    "Two actual Windows CLI processes from unrelated cwd reuse the existing e9 generation without writes and old native cache, matching final image hash and dispatch counts with 10334 typed graphics literal bytes. No old catalog/managed replay or new extraction.",
+    "All original ROM/e8/e9/slot/input/native cache/loader and canonical executable hashes are preserved; final source-hash, project-memory and whitespace checks pass."
+  ],
+  "limitations": [
+    "New Linux and USA verification remain pending by user instruction; USA's existing six-file e8-d7 contract is preserved. No native Windows or AndroidPort claim.",
+    "Only the declared reduced component/lifecycle/scene/CLI scope is verified; actual BIOS execution, broader scenes/languages/catalogs, GUI/archives, transfer/variant programs and text/audio/gameplay/mod phases remain open.",
+    "No performance/profile/startup/RSS measurement, space optimization or broad default test suite. Historical optional current-EUR helpers with e8 copy assumptions need adaptation when selected."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/graphics.rs",
+    "crates/gba-core/src/rom_data/runtime/graphics_tests.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_graphics_runtime_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

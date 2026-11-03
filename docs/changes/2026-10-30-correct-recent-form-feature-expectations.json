@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-10-30",
+  "slug": "correct-recent-form-feature-expectations",
+  "title": "Correct Recent form expectations for optional read-audit support",
+  "kind": "fixed",
+  "platforms": [
+    "Platform-independent test; Windows GNU builds executed via Wine"
+  ],
+  "changes": [
+    "Correct the existing shared-control form test: Recent with reads off must validate in both builds; reads on must preserve the production refusal without rom-data-read-audit and succeed with the feature. Check the returned setting and capability error instead of treating every default form as unconditionally supported.",
+    "Include the actual validation error when other default control-form assertions fail. Production defaults, feature guard, parser and report behavior are unchanged."
+  ],
+  "validation": [
+    "Default and rom-data-read-audit Windows GNU release test builds passed without compiler diagnostics. Ran only every_form_has_bounded_unique_fields_and_shared_control_validation on Wine for each configuration:1 passed in each; all other tests left unrun.",
+    "The first audit build failed against a stale gba-core rlib Cargo incorrectly reported fresh; saved dependency metadata lacked current debug-memory/raw-transfer modules. A scoped Windows release gba-core cache clean and audit-only rebuild resolved it; the accepted default run was not repeated and diagnostics were retained.",
+    "Confirmed no production Rust files changed and the user-generated ROM coverage JSON/HTML hashes remained unchanged."
+  ],
+  "limitations": [
+    "The full Linux Docker suite/package export and native Windows runtime were not rerun. This closes the reported feature-dependent test assertion; existing game/ROM acceptance and performance remain outside the check."
+  ],
+  "files": [
+    "crates/recomp/src/debug_workbench/tests.rs"
+  ],
+  "references": [
+    "docs/debug_recent.md"
+  ]
+}

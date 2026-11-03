@@ -20,7 +20,7 @@ fn exec_path(path:&Path)->String {
 pub fn desktop_entry(dir:&Path)->io::Result<String> {
     let text=dir.to_string_lossy();
     if text.contains(['\n','\r']) {return Err(io::Error::new(io::ErrorKind::InvalidInput,"install path contains a newline"));}
-    Ok(format!("[Desktop Entry]\nType=Application\nName=FFTARecomp\nExec=\"{}\"\nPath={}\nTerminal=false\nCategories=Game;\n",
+    Ok(format!("[Desktop Entry]\nType=Application\nName=FFTA DE-ReBuild\nExec=\"{}\"\nPath={}\nTerminal=false\nCategories=Game;\n",
         exec_path(&dir.join(PLAYER)),text.replace('\\',"\\\\")))
 }
 

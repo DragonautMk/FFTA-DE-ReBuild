@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "audit-upstream-ff-and-deck-input",
+  "title": "Audit upstream fast forward and Steam Deck shortcut",
+  "kind": "docs",
+  "platforms": [
+    "Desktop source comparison"
+  ],
+  "changes": [
+    "Compare fractional fast-forward configuration and pacing with fork percent clock; identify contextual Y shortcut conflicts."
+  ],
+  "validation": [
+    "Inspected pinned upstream and fork input, menu and runtime source and relevant test source; no tests run."
+  ],
+  "limitations": [
+    "150 percent stepping, audio and device behavior not implemented or validated; physical Deck and Steam Input remain unverified."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-01-fast-forward.md",
+    "docs/development/upstream-audit/U31-09-steam-deck-y.md"
+  ],
+  "references": [
+    "docs/To_DO/FFTARecomp_Upstream_v3_1_Analisi_Decisioni_v0_2.md"
+  ]
+}

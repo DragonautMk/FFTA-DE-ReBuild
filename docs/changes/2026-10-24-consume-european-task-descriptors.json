@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "consume-european-task-descriptors",
+  "title": "Publish European task descriptors and serve original guest reads from typed fields",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "EUR e48-d47adds task-descriptors.json/resource engine.task-descriptors:43files42resources, all41previous decoded files/e47generation retained; USAe8-d7unchanged. Fullset authentication includes fixedshape/source equality and immediate preceding blend-owner source-set coherence, without a decoded asset dependency.",
+    "Bind three authenticated catalog spans/3296B to typed callback/context-size/metadata fields,412records341+20+51. Reconstruct bytes directly without a raw ROM shadow; merge prior owners/raw ROM across reads and add source pages399-39a. New aggregate category and record/catalog counters remain outside save-state serialization.",
+    "Preserve original constructor ID arithmetic, low16truncation, raw underflow/outside values, cross-catalog aliases, null callbacks, metadata copy/override, live allocation/messages/scheduling, native/save ABIs. Wire frontend preparation/activation/usage diagnostics and a strict new-family ordinary-use assertion without repeating old source tests."
+  ],
+  "validation": [
+    "Previous goal turn was progress: bounded412record source/model and single Wine oracle terminalcomplete,236source-doc hashes match at selection,2683prior artifacts protected. Source model remains unchanged, no completed source/e47/e46/oldnative/lifecycle/ordinary acceptance repeated merely for context.",
+    "Affected Windows release tests72886compile warning-free. One Wine32369run executes two targeted filters sequentially, bothPASSfirst run. Managed check passes13coherent authentication/source-set guards, interrupted publication/create/reuse/repair/move, old41files/e47retention, transactional missingfile activation, owner residency through unavailable files/Load/Undo/backups/Restart and all3296typedB/412records3catalogs with raw source altered.",
+    "Native check passes29original-interpreter-native complete-state-clock prefixes with all3296newrawBaltered in decoded arms. Generated API byte reads[44callback22context-size9metadata], rawID0/65535/main413/secondary414/crosscatalogaliases/low16/specialmetadata and priorblendowner6Bwithrawaltered agree. Threecatalog boundaries/outside edges/widths/mirrors/realBIOS/CpuSet-FastSet/DMA/new2raw2pass.206instructions41PC29dispatch coverageonly; correctedSTOP_PCprefixharness reused and production emitter unchanged.",
+    "Private wiring helper initially expected3budget-test calls inonefile; actual1there/2frontend calls were updated before the first compilation. No failed Windows build or Wine test. Evidence target/rom-data-task-descriptors/{runtime-before,windows-managed-tests.json,windows-managed-results.json,windows-managed-europe/managed-result.json,windows-managed-europe/native-result.json}.",
+    "Windows87514productionCLIbuildwarning-free; canonicalSHAf3e277dba89945d8884e83106bef90bd6d2bf31df51dd25145c791f2a4d80720restoredexactly, privatecandidateSHA9d10550ea1792fab8d1cfd4543e23361a93410e66bb01d3e6b430bb1fb848c50. Wine38310actualCLIfromunrelatedcwdcreates/reuses45managedfileswithunchangedhashes-mtimes, all43generationfiles matchaccepted e48dataset andoldnativecacheloads. DatasetSHAdcd4bf1075327d18fbc73aef6c9da2f08d81ecd0d0deb2660a77ffbd1893d850.",
+    "Authentic retained EURPecorelle confirmstate/input(A32/release44),1000frames/classic240x160, reports28aggregate source-byte reads=16callback8context4metadata/4records2catalogs inactualCLI. OneWine58452pairwithactualCLIpublishedgeneration/currenttestexe passes every1000complete state/clock/central-wideimage/OAM/dispatch/mixed-PSG-FIFO-bitwiseHLE sample. Audio sample counts[2194500,2194500,264000,264000,2194366]arecoverageonly. Samepositive usage/fullpair first-runPASS, no newbuild/fixture/navigation/payloadedit/oldproofrepeat.",
+    "Final preservation check passes all2683prior artifact hashes and217CLI/state/input/managed hash-mtime guards. Against236prior source-doc hashes, only six intended implementation hubs and eight memory files changed; source model and every other implementation/concurrent Debug-save file are unchanged. Project-memory default/base7597b92 and CRLF-aware whitespace checks pass; runtime-final-summary/protected/source-hashes retain the completed e48CLI/ordinary outcome, fullTODOgoalactive, no live unit job."
+  ],
+  "limitations": [
+    "Bounded catalogs and controlled reader prefixes, not a complete allocator/callback/scheduler ABI or all indirect/dynamic caller domains. Source-model original-reader coverage and managed/native category coverage remain distinct; no new guest bounds are inferred.",
+    "Other408records and the third catalog have targeted-only coverage; no new32:9scene or whole allocator/callback/scheduler ABI claim. All declared bounded source/model/managed/native/CLI/ordinary children are closed. Existing authenticated EURPecorelle state/input and prior resources/executable/cache/saves/concurrentuserwork are preserved.",
+    "NewLinux/USA/nativeWindows and other graphics/text/maps/gameplay/audio/GUI/archive/modTODO remain open. No performance/space measurements, AndroidPort changes, commit or push; preserve concurrent Debug-save and previous implementation work."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/task_descriptors.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/task_descriptor_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "scripts/extract_rom_data.py",
+    "docs/rom_data_tasks.md",
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_tasks.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

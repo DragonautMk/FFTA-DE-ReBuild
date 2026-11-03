@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "compare-upstream-panel-geometry-synthetic",
+  "title": "Compare synthetic panel reveal geometry",
+  "kind": "docs",
+  "platforms": [
+    "Linux standalone Rust source fixture"
+  ],
+  "changes": [
+    "Compare fork and pinned upstream panel translation under changing synthetic backing widths for both anchors."
+  ],
+  "validation": [
+    "rustc 1.94.0 --test on extracted source and minimal UiPixel shim: one test passed; four widths on both anchors compared. Two unused-item compiler warnings."
+  ],
+  "limitations": [
+    "Synthetic owner geometry is assumed; no real scene, application build, Windows, input alignment or runtime fix established."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-03-panel-visual-fixes.md"
+  ],
+  "references": [
+    "docs/To_DO/FFTARecomp_Upstream_v3_1_Analisi_Decisioni_v0_2.md"
+  ]
+}

@@ -8,7 +8,7 @@ fn collect(path:&Path,files:&mut Vec<PathBuf>) {
 }
 fn main() {
     let directory=PathBuf::from(std::env::var_os("CARGO_MANIFEST_DIR").unwrap());
-    let mut files=vec![directory.join("build.rs"),directory.join("../../scripts/build_android.py")];
+    let mut files=vec![directory.join("build.rs"),directory.join("../../scripts/android/build_android.py")];
     for path in [directory.join("src"),directory.join("../gba-core/src"),directory.join("../recomp-core/src"),directory.join("../armv4t/src")] {
         collect(&path,&mut files);
     }

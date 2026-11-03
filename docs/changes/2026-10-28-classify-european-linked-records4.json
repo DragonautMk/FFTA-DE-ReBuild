@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "slug": "classify-european-linked-records4",
+  "title": "Classify European linked four-byte gameplay records",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Establish the declared844-byte EUR partition7133F8..713744 as211 ordered physical four-byte slots using six authenticated roots, original u8 indexing and an independently rooted eight-byte successor family.",
+    "Classify all four fields as unsigned bytes, original encoded live-context pointers and1041 metadata28 inline references to194 slots; preserve zero and duplicate rows without inventing a guest cap, enum, null rule or trailing padding meaning."
+  ],
+  "validation": [
+    "All211 slots reconstruct844 source bytes exactly, SHA25685d556e39da8baaec49308c815125532aa8947a476e2c59131532a5bf0334fa9; no overlap with75 accepted e83-d82 resources/50489 spans. All1041 selected references are in range, including three to index0.",
+    "Thirteen authenticated windows (six new, seven cached),45 instruction/literal pins and112 input guards pass; accepted76 dataset files, ROM, static disassembler and closed receipts remain exact; artifact helper retires zero paths.",
+    "Static source inspection only. One private helper ADD-encoding typo corrected and one missing literal window added before acceptance; no build, Wine/game/test/fixture/navigation/metrics or closed-proof replay.",
+    "Project memory metadata-only and CRLF-aware diff checks pass. Default and base07be4d2 memory checks currently report four uncovered implementation paths from parallel DBG interface work; none belongs to this source-only unit."
+  ],
+  "limitations": [
+    "211 is a physical slot count, not a guest cap or proven active semantic count; trailing zero slots209/210 remain reserved-or-padding undecided. External code-pointer table extents and all indirect callers/full ABI are unproven.",
+    "Strict typed model/original-reader Wine proof, managed publication/runtime, actual CLI and ordinary consumption remain pending for this family. Linux, USA, native Windows, new32:9 and the full ROM TODO remain pending.",
+    "Shared-workspace memory coverage remains pending for parallel crates/menu/src/canvas.rs, crates/menu/src/diagnostics.rs, crates/recomp/src/debug_ui.rs and crates/recomp/src/debug_ui/report.html; their implementation and ownership are preserved."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

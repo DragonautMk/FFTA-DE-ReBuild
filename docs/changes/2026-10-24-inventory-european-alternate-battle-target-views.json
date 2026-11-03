@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "inventory-european-alternate-battle-target-views",
+  "title": "Classify European alternate actor selectors with explicit shared index-root views",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Define a finite static alternate-mode battle selector source projection over65producer IDs/5850logical keys/5682physical cells. Retain genuine nulls,706counted sequences and20explicit shared-index-root target views instead of the rejected blanket sequence interpretation.",
+    "Authenticate each shared target against existing initial-pose directory/index fields. Explain the single4Bdirectory/index self-overlap at sprite247/animation104\u2192sprite0 without a frame-count filter, discarded binding, guest cap or inferred bank extent.",
+    "Trace only operation1OBJ/pixel references, identifying30OBJlists108objects/1203raw4bpp requests and3321new spans410086B after exact shared views with initial-pose/normal-battle/equipment owners. Preserve original branch, command and live actor/action limits."
+  ],
+  "validation": [
+    "Static EUR ROM/actuale60manifest authentication verifies all55resource file/source hashes, actual alternate metadata producers and every one of the20independent initial-pose directory/index witnesses. All5850logical bindings remain present; physical cells comprise4709nulls/953proper-sequence targets/20shared-root targets.",
+    "Independent source/ownership audit passes468944unique direct-request B,706proper sequences2771frames,30OBJlists108objects and1203pixel requests387008B. Shared6232initial/52604normal-battle/22equipment B are byte-identical; no other55owner overlap, unexplained role conflict, varying pixel extent or mixed-ownership typed item.",
+    "New source plan3321spans410086B contains606sequences2210frames/5252cells4428nulls/1079pixel requests342112B. Concatenated-source SHA-256bdf15f7d79e3af013fae656e16341d5a01d216be364ed881b877850f116bd002. Private evidence under target/rom-data-alternate-battle-poses/ retains the executed static helper and target-view witnesses; current helper differs only by a corrected docstring. No build or guest test is run.",
+    "Preservation passes all8182prior artifact hashes and all257baseline implementation hashes; only source-inventory documentation changes. 680local feature links, project-memory default/base7597b92 and CRLF-aware whitespace pass. No accepted/rejected source/model/managed/native/CLI/ordinary proof or build is repeated."
+  ],
+  "limitations": [
+    "Static source contract only. Tagged model, original-reader Wine oracle, managed publication/runtime attachment, actual CLI and ordinary-use equivalence remain pending; current EUR e60-d59/56files55resources and USAe8-d7 unchanged.",
+    "No every-actor/action reachability or valid animation meaning is claimed for the20index-root target views. Their pointers and typed dependency witnesses must remain explicit; original guest behavior remains. Script49/live streams and broader ROM data TODO remain incomplete.",
+    "New Linux/USA/native Windows/new32:9 checks pending. Static file/disassembly reads are not Linux game tests. No gameplay checkpoints/private payload edits/performance-storage measurements/Android changes/packaging/commits/pushes; the separate rejected equipment derivation remains unexecuted."
+  ],
+  "files": [
+    "docs/rom_data_unit_obj.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_unit_obj.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "slug": "consume-european-conditional-records8",
+  "title": "Serve European conditional records through authenticated typed runtime resources",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Publish EUR e85-d84/index76/gameplay.conditional-records8/conditional-records8.json with one1016-byte source span and no invented dependencies; preserve all76 prior resources/payloads exactly in78files77resources.",
+    "Bind an immutable six-field owner with127 physical slots/two-word mask/nine counters into local/global page713 routing, strict parsing/publication/loading/input accounting and logs; compose bytewise with prior records4 and the raw successor. Guest predicates/pointers and Machine/save/native-cache/C API remain unchanged.",
+    "Complete the native test read observer by delegating to the real interp_one callback and accounting its reads separately from direct read8/16/32 calls; keep strict source-count and complete-state/clock assertions."
+  ],
+  "validation": [
+    "Four current matched568-source Windows builds are warning-free; final executable f60055e6d77ae4039bc0fdfa872a3182c47f14d40991c10307ae604576eb1371. First unused after pre-Wine dispatch-bound review; second initial observer failure after16passing cases, third remaining diagnostic/lifecycle, fourth complete callback observer. Only harness edits follow initial runtime implementation; exact affected fingerprints isolated without global clean.",
+    "Three focused Wine scopes combine publication/interruption/14failed-attach/2fullset guards and17 distinct native complete-state/clock cases with all1016 raw source bytes altered after Load/setup. Initial607vs609 count mismatch is retained as a failure; remaining diagnosis proves actual typed/native609 and full-state/clock parity, final strict observer proves607direct+2realinterp fallback=609 with no unattributed reads. Publication/attach/first16 cases and passing lifecycle are not repeated in final checks.",
+    "All1016 typed bus bytes/six field classes/127slots/every127recordend, widths/mirrors/prior/raw edges, unavailable files/failed owner/full state, LoadSlotsLoadUndo sameArc and three full-state/clock DMA3/CpuSet510halfword/FastSet256word transfers pass. Native paths serve631new bytes629direct2fallback plus5prior bytes; these are served counts, not a distinct union or all-compiled claim.",
+    "All261 actual guards/568 accepted hashes/three568 diagnostic snapshots/554model preimages/seven current implementation hashes/77old78accepted files remain exact. Accepted dataset3f13d6e5432b0dbff85284d15013b5c6179d877f3f9c4532f953acb81e5db004; artifact helper retires only the interrupted copy. No game/checkpoint/navigation/closed-proof replay or performance/storage campaign.",
+    "Generated changelog/metadata and CRLF-aware whitespace checks pass. Default/basee8bd939/base07be4d2 coverage checks identify concurrent packaging work without its changed record; the latest default check lists five packaging/report launcher paths, while this ROM unit implementation is fully covered."
+  ],
+  "limitations": [
+    "Acceptance is explicitly combined from initial passing scopes, remaining diagnostic and final strict observer; the initial full-filter receipt remains failed. The full selection native path contains two existing interpreter-fallback reads;118 emitted entry points and392 fullcase dispatches are coverage only.",
+    "Actual production CLI registration and ordinary positive consumption remain pending. Full entry clear helper/return epilogue/caller ABI, all indirect references and successor70-byte extent remain unproven.",
+    "Linux, USA, native Windows, new32:9 and full ROM TODO remain pending; USAe8-d7 is unchanged. No Android/package/assistant commit/push; parallel debug/audio/report/retention source and tests remain separate.",
+    "Workspace-wide memory coverage awaits separate records for concurrent package_ffta_portable.py and Linux/Windows debug_runtime/report_home launchers. Their inspected changes are preserved, outside this ROM unit and not included in its tests."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/conditional_records8.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/conditional_records8_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "scripts/extract_rom_data.py",
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

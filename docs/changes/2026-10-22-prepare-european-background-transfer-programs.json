@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "date": "2026-10-22",
+  "slug": "prepare-european-background-transfer-programs",
+  "title": "Prepare European background transfer controls and shared tile banks",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Publish bg-transfer-programs.json as the eighth fixed EUR file under schema 1/extractor 10/decoder 9, retaining all 76 source ranges, descriptor dependency and complete source/file authentication.",
+    "Extend atomic managed publication, no-write reuse, partial/missing/corrupt repair, relocation and dataset identity to transfer programs; retain old e9 generations and all six previous decoded files. Preserve USA's six-file e8-d7 contract.",
+    "Authenticate the new file before runtime owner replacement and report this family as verified-only until direct typed transfer reads are implemented; no original animation/DMA, save or native cache ABI changes."
+  ],
+  "validation": [
+    "Warning-free Windows release test and production builds; four focused Wine checks pass: core authentication, eighth-file deterministic publication/reuse, partial-write/missing repair and actual EUR full-set authentication/repair/retention/relocation/identity.",
+    "Actual EUR test rejects coherent changed tile words with recomputed manifest hashes, missing coverage/dependency, forged paths/provenance, truncated and oversized files without changing state or the live Arc; semantic-neutral formatting changes contribute to dataset identity.",
+    "Published transfer JSON is byte-identical to the completed offline typed02 output; all six previous decoded files and retained e9 generations remain unchanged.",
+    "Three actual Windows CLI processes from unrelated cwd pass prepare, explicit no-write reuse and no-write startup activation with the existing native cache (290 native blocks). The first frame proves activation only, with zero new transfer use.",
+    "Original ROM/slot/e8/e9/cache/loader and canonical executable hashes remain preserved; full current working-tree project-memory and CRLF-aware whitespace checks pass, with separate concurrent script organization records preserved."
+  ],
+  "limitations": [
+    "Transfer data remain verified-only at runtime. Direct control/tile consumption, original/native poisoned-source provenance, owner lifecycle and actual source-use scene/GUI/archive checks remain open.",
+    "New Linux and USA checks remain pending by user instruction. No native Windows or AndroidPort claim; USA preserves its previous contract without new regional verification.",
+    "Historical optional current-EUR helpers with e8/e9 copy/revision assumptions need adaptation when selected; completed old results and producer/scene campaigns are not reopened.",
+    "No performance/profile/startup/RSS measurement, space optimization, broad suite or prior animation/graphics replay."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_transfer_managed_tests.rs",
+    "crates/recomp/src/rom_data/preparation.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "verify-european-compact-obj-third-cli",
+  "title": "Verify third European compact OBJ production CLI",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Record production create, reuse and startup verification for the e103 tertiary compact OBJ resource."
+  ],
+  "validation": [
+    "Isolated Windows production build and Wine create, reuse and one-frame startup passed with 94 identical generation files, 93 runtime resource identities and guarded inputs unchanged."
+  ],
+  "limitations": [
+    "Tertiary compact OBJ usage was zero in the single neutral frame; ordinary use, unwitnessed data, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

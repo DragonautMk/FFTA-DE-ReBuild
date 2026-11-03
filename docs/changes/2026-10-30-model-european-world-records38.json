@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "date": "2026-10-30",
+  "slug": "model-european-world-records38",
+  "title": "Model European world records and verify original arithmetic under Wine",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add strict lossless31-record/1178-byte model with exact EUR reader/source authentication, full opaque storage and separate mutable shape/source verification.",
+    "Separate physical catalog ownership from original uncapped low8/fullu32/interior-row1 address views. Preserve byte/u16/low10/threshold/post-helper arithmetic without replacing live RNG/helpers or adding stored-value caps."
+  ],
+  "validation": [
+    "One warning-free590-source/254core-input Windows test builded4d65c8df45523e5d5c66362427a2222e7664c50d8797ffdc775a1f6ba42029; one reduced Wine filter passes19guards/41base19synthetic original prefixes.",
+    "All1178bytes roundtrip; original loads observe23distinct baseB and6distinct syntheticB. Byte01 divisor/posthelper-wrap-zero1, unsigned byte/u16, low10 expected destination writes, countclamp/signedbranch and low8/fullu32/interior encoded-address results/loadorder exact.353instructions are coverage only.",
+    "Complete EWRAM/IWRAM/VRAM/OAM/palette, expected isolated destination writes, SP/R8..R12 including intentional prefix R9 assignment, and finalROM exact.26unit107closed-source guards/590frozen/588preimages/threecurrent/inversemodule exact; no old proof/gameplay fixture or performance campaign repeated.",
+    "Final project-memory default/base35920d8/metadata and CRLF-aware whitespace checks pass; successful-unit retention removes no paths."
+  ],
+  "limitations": [
+    "Managed e90-d89 publication/runtime, native fullstate-clock/lifecycle/DMA, actualCLI and ordinary use remain pending; schema1/e89-d88/82managed files unchanged.",
+    "Externalhelpers/RNG/fullroutineABI/liveeffects/opaque-outside-indirect semantics, Linux/USA/nativeWindows/new32:9/fullROMTODO remain pending.",
+    "Sparse27 ordinary use remains partial; no blind Pub/world navigation resumed. Parallel DBG/menu changes preserved/excluded."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/world_records38.rs",
+    "crates/gba-core/src/rom_data/world_records38/tests.rs",
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

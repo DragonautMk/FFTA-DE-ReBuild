@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "compare-party-normal-warm-cache",
+  "title": "Record Party normal native cache discrepancy",
+  "kind": "docs",
+  "platforms": [
+    "Android engine on Linux x86-64 TinyCC; Android ARM64 untested"
+  ],
+  "changes": [
+    "Record cold compilation, warm cache load and Party tap observations for isolated upstream and fork Android engines."
+  ],
+  "validation": [
+    "Fork test passed; both cold preparations and warm loads succeeded with 21298 blocks and verified cache digest before replay. All five protected inputs retained their hashes."
+  ],
+  "limitations": [
+    "Upstream test failed: selection remained 0 at six frames instead of 1; it stopped before 24-frame or hook-counter observations. Cause unverified; host adaptive compilation disabled, no JNI, ARM64 or Android device evidence. Failed unit retained."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-06-android-party-gallery.md",
+    "docs/development/upstream-audit/U31-06-android-touch.md"
+  ],
+  "references": []
+}

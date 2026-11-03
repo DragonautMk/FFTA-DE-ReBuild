@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-10-21",
+  "slug": "classify-background-packet-catalogs",
+  "title": "Verify all descriptor-linked background packet programs",
+  "kind": "added",
+  "platforms": [
+    "Linux",
+    "Windows GNU/Wine"
+  ],
+  "changes": [
+    "Classify every field04/08/10 link in the verified162-record BG block. Each region has122paired/117halfword/113auxiliary unique sources,352disjoint ranges, raw/LZ77wrappers and descriptor inheritance with live paired fill or zero initialization. Preserve ordered writes and distinguish the main graphics/transfer/variant programs still unknown.",
+    "Expose PlanePatches.referenced_extent for the highest packet/dictionary byte actually read, keeping payload.consumed as the stream-only extent. This bounds raw indexed sources without treating padding as content. Extend the existing synthetic core checks and add an ignored catalog-wide original-loader oracle."
+  ],
+  "validation": [
+    "Warning-free native and Windows GNU test builds. Three affected core packet tests pass on Linux/Wine, covering both dictionary widths, implicit/explicit pairs, exact extents, padding and existing malformed/truncated/budget cases.",
+    "Four original-loader component cases, one per region/target, each pass486wrapper invocations/8081987original steps. Every162descriptor across3families matches complete destination buffers,16Bprefix/suffix guards and restored SP. Normal paired wrapper setup sets processing flagbit2 and all these calls complete without remaining continuations; the older direct staged-writer contract is retained.",
+    "Independent private classifier and core decoders agree for every source extent/hash and decoded body/hash. All352body files per case verified. Each regional catalog consumes398227source bytes and yields523794body bytes; content/alias/parent graphs agree across regions, ranges do not overlap, no inheritance cycles and at most2nodes.",
+    "Original ROM/canonical hashes unchanged, all processes terminal/pass. Reused existing generic decoders and bounded regional disassembly; no old boot/scene/oracle or performance campaign repeated. Evidence/source hashes retained under ignored target/rom-data-bg-packet-catalog."
+  ],
+  "limitations": [
+    "Original component invocations use existing BIOS HLE; this does not prove real BIOS, complete CPU/clock/audio/native-cache/scene equivalence. Typed packet resource files, managed preparation and actual runtime reads remain the next02/03/04units; no active dataset revision changed.",
+    "Main graphics field00, transfer/variant programs, other catalogs/languages, global alternate-FF conditions, actual archives/native Windows and other resource/mod phases remain open. No production rebuild, space reduction, AndroidPort change, agent commit or push."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data/bg_packets.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_catalog_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

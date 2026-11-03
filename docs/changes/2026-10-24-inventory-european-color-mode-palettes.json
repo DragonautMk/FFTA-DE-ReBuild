@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "inventory-european-color-mode-palettes",
+  "title": "Identify the European Color-Mode unit and UI palette sources",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Trace five original palette helpers CF49C/CF4E4/CF51C/CF5A0/CF5DC and their70 direct Thumb calls. Live Color-Mode uses low2bits, mode3 takes default and companion mode1 aliases default; indexed arguments narrow to low8 without a local cap.",
+    "Define30 nonoverlapping source spans5750B:2873 full u16 colors plus four slice-selector bytes. Full512B base blocks, supplemental exact constant/slice reads,12B shared-color sources and nine special-unit palettes follow actual copy extents. Preserve supplemental holes and distinct physical variants rather than inferring adjacent books.",
+    "Authenticate all93 existing metadata14 records and51 active palette projections, including live bank destinations and alternate context shadows. Classify370EB4/copied-IWRAM memcpy as executable support; no duplicate palette owner or new source from those helpers."
+  ],
+  "validation": [
+    "Static audit authenticates exact EUR ROM, actual e57manifest and all52 decoded resources/source hashes; all new spans have zero overlap with those owners.86instruction,19literal and11consumer-BL fingerprints,70helper-call census,40constant supplemental callers and four slice callers pass.",
+    "Independent interval union reconstructs5750B with ordered SHA256 2e7a4ae78f6841669ed2f11fddd3635d119c9af6edd6602fb3e34f607314485c. Evidence/disassembly/audit-sources.py/source-contract.json under ignored target/rom-data-unit-palettes/. No guest execution or build is used for this static contract; subsequent source-model checks are recorded separately.",
+    "Final preservation check passes all6731prior protected artifact hashes,764prior hash-mtime guards and four compiled source inputs.310baseline source hashes differ only in the two selected registration hubs and coherent memory documents; earlier modules/oracles/proofs/canonical executable/cache/TCC and user Debug-save/concurrent Docker work are preserved. Default/base7597b92project-memory and CRLF-aware whitespace checks pass; four local feature links exist. No live unit process."
+  ],
+  "limitations": [
+    "Bounded physical projection, not a complete palette catalog or global indirect-call/ordinary-reachability proof. Supplemental rows4/5 retain first4B raw, rows6/7 absent, row23 only bytes24..25 owned; other source reads retain original behavior.",
+    "No managed dataset, runtime or revision change in this inventory; EUR e57-d56 and USAe8-d7 remain unchanged. New Linux/USA/native Windows pending. No performance/space campaign, new gameplay fixture/navigation/payload edit, Android change, package, agent commit or push."
+  ],
+  "files": [
+    "docs/rom_data_color_palettes.md",
+    "docs/rom_data_obj.md",
+    "docs/rom_data_graphics.md",
+    "docs/rom_data.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_color_palettes.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

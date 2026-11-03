@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "slug": "trace-european-active-encounter-records",
+  "title": "Trace European active indices to event record selectors",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Authenticate setter9CF0 for live primary/alternate u16 indices02002170/172 and its two direct caller encodings. Bind9D04 event-row primary/alternate selection, conditional63944 selected70-byte record\u219212-byte event row path, and script127388 descending event-key lookup without equating the selectors.",
+    "Query the source-backed u8 event-row domain:44 rows combine direct primary selection, a default-map script reference and a declared cell02 seed. Keep full40-byte catalog extent and normal eligible-quest availability open; no new decoder/resource or guest bound."
+  ],
+  "validation": [
+    "42 actual source/tool/prior-proof/parser/normal-state/output guards and23 bounded source-window hashes pass. Read-only retained pub selector is0/event row0/raw map11 without cell02. One private parser attempt stopped for missing struct import before output and was corrected; originals remain exact.",
+    "No build, gameplay, Wine/Linux test, capture or checkpoint. No old204-instruction query, two-map read,81-state scan, five Move bounds or completed runtime/CLI/ordinary acceptance replayed. No managed/native validation unit or disposable fixture copies created.",
+    "Memory render/default/base2fbf9f7/metadata checks pass; CRLF-aware whitespace, new feature heading and all42 preservation guards pass. No runtime checks repeated for memory closure."
+  ],
+  "limitations": [
+    "Conditional joins do not prove quest availability, named locations or ordinary animation. Full40-byte catalog extent/schema is unmodeled; observed max index442 and separate constant300 are not catalog bounds. Positive all-four-phase/all-four-list guest/host use remains required before the ordinary fullpair.",
+    "Linux, USA, native Windows, new32:9 and full ROM_DATA_TODO remain pending. No performance/storage campaign, Android/package, assistant commit or push; parallel DBG and existing u16/runtime work preserved."
+  ],
+  "files": [
+    "docs/rom_data_maps.md",
+    "docs/rom_data_obj.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_maps.md",
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

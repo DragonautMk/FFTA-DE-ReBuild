@@ -1,0 +1,64 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "slug": "add-bounded-rom-read-audit-tools",
+  "title": "Expose bounded ROM read audits through isolated replay profiles",
+  "kind": "added",
+  "platforms": [
+    "Windows (Wine validation)"
+  ],
+  "changes": [
+    "Implement DBG-06 with feature-gated debug-rom-audit create/run/cancel and Debug > Audit replay on DBG05 isolated workers. Configure reader presets, relative frame windows, physical address ranges, unique-event limits and optional identity-matched known-source plans; reject plain profiles and missing audit capability rather than report false zero observations.",
+    "Add a thread-bound bounded TraceCapture alongside unchanged Capture/SiteCapture keys. Record reader/address/width, actual Typed/Raw/Unclassified service, interpreter execution scope, first/last guest frames and request/drop counts. Move selected bus/audio hooks to the actual serving branch and tag existing sprite/OBJ-table/keyboard paths without guest-state, clock, save-format or native-API changes.",
+    "Report physical byte unions deduplicating widths and ROM mirrors, bus/host and service unions, shared bytes, known-plan intersections and explicit missing hooks/fetch exclusions. Keep truncation and incomplete windows distinct from endpoint success; menu messages prioritize TRUNCATED/PARTIAL. A scope inherited by HLE/DMA is not a proved direct-load PC.",
+    "Allow an explicit existing authenticated dataset for audited replay while preserving the original recording/session and exact endpoint. Copy known-plan metadata into the profile; use the existing project16MiB manifest limit consistently across audit/recording/replay identity readers. Do not re-extract or publish resources and do not promote outside-plan reads to new owners.",
+    "Keep all outputs private and bounded to the current replay report. Document operation, evidence, metadata semantics and limits; mark DBG-06 complete while leaving ROM coverage integration to DBG-07. Preserve concurrent extraction edits; only four audit hook substitutions in the live runtime hub belong to this tool change."
+  ],
+  "validation": [
+    "Frozen public2fbf9f7 plus selected tool/audit files builds locked offline Windows release tests and feature/default frontends without compiler warnings. The runtime hub is staged from its public preimage plus four audit hooks only, excluding concurrent extraction implementation. Final feature candidate SHA25684f2bdc64e1fa6180d89b357204f6a23a572769436ccd4054b6cc042714a3343; both normal production runtime identities are preserved.",
+    "Wine passes61 targeted tests:6 audit,2 bounded-core collector,8 replay and45 menu. Checks cover exact per-frame full-state/clock equality with observer off/on, interpreter fetch exclusion, raw/service/site metadata, filters/limits/mirrors/drop lifetime, known-plan unions/truncation and unchanged legacy address/site projection. Accepted unaffected checks are retained after manifest-bound and final UI refinements.",
+    "Real DS20 raw and selected e76 typed replay each reach the recorded102-frame full-state endpoint d8c4dfc8281009d6f58cffc46fdf1ce56f8ea7d9234df671cfc86b5a421b708b and clock6269795841. Complete two-frame inventories both cover12416distinct bytes:18755 raw events versus18754 typed events;11495B served typed and997B raw with76B overlap. Identity-matched e76 plan overlap11495B/outside921B is correlation only.",
+    "A full102-frame raw inventory correctly caps50000events,2557121matched requests and1251772dropped requests, retaining31061distinct physical bytes. Endpoint still matches; truncation stays explicit. Harness assumption that the maximum cap covered the full scene is rejected, and that stress proof is not repeated. Separate8-event cap, host/bus presets, physical overlap filter and frame window pass.",
+    "Fifteen final CLI behavior checks plus retained baseline/stress results pass. An independent Python reconstruction validates all six report unions, physical mirror mapping, range/preset/window filters, matched-retained-dropped arithmetic and known-plan intersections. Invalid windows/guest-address ranges, absent/modified known manifests and non-audit profiles are refused.",
+    "Initial known-plan creation correctly rejects an existing7926499Bmanifest under the tools4MiB guard; readers are aligned with the established16MiB project limit. Current feature/default builds pass. Two default-frontend CLI checks confirm missing-feature creation refusal and supervision of an explicitly pinned feature worker. Feature-disabled source paths match their preimages after hook removal/newline normalization; mixed CRLF bodies/LF diagnostic lines are preserved.",
+    "First GUI attempt fails before window creation with Wine invalid-window-handle1400 in the shared headless/graphical prefix. Dedicated graphical prefix passes without a product change: Audit replay matches the CLI endpoint, TRUNCATED/PARTIAL warnings fit, cancel and owner-close teardown pass, parent state/frame/clock/progress stay unchanged. Final screenshots inspected; parent exits0.",
+    "All238 selected original ROM/collection/recording/dataset input hashes and mtimes stay unchanged. Local test/CLI/default/GUI/source-preimage results and failed harness attempts remain under target/debug-tools-audit. No managed publication/native-acceptance disposable fixture trees are created, so the ROM-only artifact completion helper does not apply; retain evidence/current candidates/shared caches.",
+    "Final verification passes22 selected compiled overlays including one public-derived hub/four live audit hook signatures,238 original input hash/mtime guards, both production runtimes,244 local document links and22 ordered IDs with only DBG01-06 checked. Private saves remain entirely untracked/ignored. Workspace/base project-memory and whitespace checks pass; GUI parent exits0 and the final owner-close worker result is interrupted."
+  ],
+  "limitations": [
+    "Native Windows, Linux/Wayland, physical controllers and new native audit/parity runs are unverified. Existing native comparison from DBG05 stays closed with its reported divergence; no old Bank/F09/runtime/extraction/DS acceptance is replayed.",
+    "Only instrumented bus and selected host reads on the current thread are observed. Direct host accesses, typed HLE fast paths, folded native constants, code/signature authentication, other threads, GPIO/EEPROM and failed/out-of-image reads remain outside coverage. Interpreter scope may be inherited by HLE/DMA; unscoped/native reads do not acquire an invented PC.",
+    "Known-plan metadata is matched to ROM identity and bounded source ranges, not re-extracted or promoted to ownership/scene proof. Service unions and resource totals may overlap. Dropped events, missing hooks, filtered frames/addresses and a missing or stale-run report never prove unread bytes.",
+    "The final CLI full dataset proof uses e76 on the frozen tool baseline; concurrent newer extraction changes remain outside this validation. The executable source-export revision is unknown; public base, overlay identities and derived hub patch are retained separately. No performance campaign, package, Android or Godot development is selected."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data/read_audit.rs",
+    "crates/gba-core/src/mem.rs",
+    "crates/gba-core/src/mp2k.rs",
+    "crates/gba-core/src/ffta_sprites.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/recomp/src/debug_rom_audit.rs",
+    "crates/recomp/src/debug_rom_audit/tests.rs",
+    "crates/recomp/src/debug_replay.rs",
+    "crates/recomp/src/debug_replay/tests.rs",
+    "crates/recomp/src/debug_recording.rs",
+    "crates/recomp/src/main.rs",
+    "crates/recomp/src/play.rs",
+    "crates/menu/src/lib.rs",
+    "docs/debug_rom_audit.md",
+    "docs/debug_replays.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md",
+    "scripts/README.md"
+  ],
+  "references": [
+    "docs/debug_rom_audit.md",
+    "docs/debug_replays.md",
+    "docs/debug_recordings.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ]
+}

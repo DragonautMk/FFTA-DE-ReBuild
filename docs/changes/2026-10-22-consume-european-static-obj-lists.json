@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "date": "2026-10-22",
+  "slug": "consume-european-static-obj-lists",
+  "title": "Prepare and consume European static OBJ descriptor lists",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Inventory 107 independently located direct EUR draw literal references to 66 static uncompressed lists, with 160 objects and 1092 source bytes; exclude indirect/table/animation/RAM roots from this declared catalog.",
+    "Decode strict readable typed coordinates, affine/object modes, mosaic, depth, shape/transform/size, tile, priority and palette while preserving every packed bit, original object ordering and exact source extents/hashes.",
+    "Publish fixed obj-static-lists.json/graphics.obj-static-lists under EUR schema1/extractor14/decoder13 with 66 provenance ranges and complete-set identity/authentication; retain e13 and all earlier decoded file bytes. USA stays e8-d7.",
+    "Serve typed counts/attributes through existing CPU/DMA/native source reads and host draw/visibility/battle readers; merge adjacent name-keyboard bytes and preserve live RAM/noncatalog fallbacks, original instructions/clock and save/native ABI.",
+    "Extend CLI/extraction descriptions, per-kind bus/host usage diagnostics and focused ordinary-scene validation; add an isolated test-only constructor for direct host-reader coverage."
+  ],
+  "validation": [
+    "Two reduced offline EUR Wine checks pass: all packed bits/extent guards, strict deterministic JSON/source authentication, and all 66 lists against both original producers in 1056 calls/253953 instructions with clipping, reflection, signed wrap, capacity/early return, complete OAM buffers/matrix halfwords/guards. Counts are coverage only.",
+    "Three focused EUR Wine integration checks pass: 13-file publication/injected interruption/create/reuse/repair/move/e13 retention, coherent edits and source/path/coverage/dependency/revision/truncation/input guards, complete-set identity and transactional failed activation; eight poisoned-source original/interpreter/native calls with all 66 ranges altered, full state/clock equality and 301 compiled source bytes; all edges/widths/mirrors/real-BIOS bus/CpuSet/DMA, eight host publication cases and unavailable-copy Load/Undo/backup/restart.",
+    "One retained 397-frame EUR Wine pub transition matches every complete state/clock/central-wide image/OAM/dispatch/audio sample; consumes 5470 typed OBJ bytes (958 count, 4512 attribute) and 958 host list reads.",
+    "Three actual Windows CLI processes through Wine from unrelated cwd prepare/reuse/replay without writes on reuse, use old native cache and match the valid retained legacy final row with positive typed OBJ usage. Legacy was not repeated.",
+    "One supplemental focused core Wine test passes 792 host draw/visibility/battle cases over all 66 lists/three origins with raw sources altered, plus live RAM/noncatalog ROM coordinate edits and unchanged static-read counters for fallbacks.",
+    "Windows GNU release test/production/core-only builds are warning-free. Original ROM, retained slot/input/cache/loader/e13 data and canonical Windows executable remain unchanged. Initial sandbox startup failure, incorrect test-only EUR early-return expectation and iterator lifetime compilation failure were corrected with negative evidence retained; only affected failed checks were repeated.",
+    "Final project-memory coverage and whitespace checks pass; retained final source hashes and protected original inputs verified. No live unit processes remain."
+  ],
+  "limitations": [
+    "Full ROM_DATA_TODO remains open for indexed/indirect OBJ roots, animation archives/timing, sprite graphics/palettes, other text/dynamic roots, maps/gameplay/audio, broader GUI/archives and mod phases.",
+    "New Linux/USA and native Windows checks remain pending by user instruction. The ordinary scene is one retained pub transition, not complete sprite/gameplay coverage.",
+    "No performance/startup/RSS/space campaign, new recording, AndroidPort changes, commit or push."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data/obj_lists.rs",
+    "crates/gba-core/src/rom_data/obj_lists/roots.rs",
+    "crates/gba-core/src/rom_data/runtime/obj_lists.rs",
+    "crates/recomp/src/rom_data/obj_list_runtime_tests.rs",
+    "crates/recomp/src/rom_data/obj_list_tests.rs",
+    "crates/gba-core/src/ffta_sprites.rs",
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "scripts/extract_rom_data.py"
+  ],
+  "references": [
+    "docs/rom_data_obj.md",
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

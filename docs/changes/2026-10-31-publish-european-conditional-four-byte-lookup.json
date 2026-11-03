@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "publish-european-conditional-four-byte-lookup",
+  "title": "Publish European conditional four-byte lookup",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Publish and strictly authenticate the EUR 74-row conditional lookup in e96-d95; serve original guest reads from its typed fields without adding a selector cap.",
+    "Preserve previous resource records and files, expose per-field read counters and update dataset size guards and revision-aware tests."
+  ],
+  "validation": [
+    "One isolated Windows build and focused Wine test passed 85 prior resource comparisons, source bytes and edges, coherent tamper refusal, and three translated original prefixes over six inside/outside indices with complete state and clock equal to raw interpretation.",
+    "Protected inputs and frozen sources remained unchanged; local artifact completion removed no paths."
+  ],
+  "limitations": [
+    "Ordinary gameplay, production CLI, Linux, USA and native Windows remain unverified; no performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/conditional_four_byte_lookup.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/conditional_four_byte_lookup_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/table_graphics_runtime_tests.rs",
+    "crates/recomp/src/rom_data/clan_table_alias_runtime_tests.rs",
+    "crates/recomp/src/rom_data/dynamic_raw_fragments_runtime_tests.rs",
+    "scripts/extract_rom_data.py",
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/TASK_HANDOFF.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

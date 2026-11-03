@@ -1,12 +1,12 @@
 # FFTA movement grid: measured background edge correction
 
-MEDIDO: ROM SHA256 required by the existing BG gate:
+MEASURED: ROM SHA256 required by the existing BG gate:
 43FC8204C6DCEEE58828AEBC7AF0C72EB807E99F35AD641C8BB0A4FA8B6EDC19.
 No ROM payload is added by this change.
 
 ## Identification
 
-MEDIDO: native runc with FFTA_OAM_LOG=1, FFTA_WIDE_DEBUG=nospr,
+MEASURED: native runc with FFTA_OAM_LOG=1, FFTA_WIDE_DEBUG=nospr,
 FFTA_BG_EDGE=wrap and FFTA_BG_DUMP_PREFIX isolated each active text layer.
 The images, not register similarity alone, identify the blue cells in BG0
 and a small foreground cell fragment in BG1.
@@ -31,8 +31,8 @@ when all four text backgrounds are enabled in mode 0, BG2/BG3 match the
 paired terrain configuration, BG0/BG1 have the measured BGCNT values,
 their masked scroll values match, and HOFS is in 8..15.
 This conservatively avoids static UI at HOFS=0 and other layer layouts.
-NO MEDIDO: exhaustive visual coverage of every menu and cloud scene.
-SUPOSICION: movement grids in other battles retain this signature.
+NOT MEASURED: exhaustive visual coverage of every menu and cloud scene.
+ASSUMPTION: movement grids in other battles retain this signature.
 There is no behavior change with extra=0.
 
 ## Reproduction
@@ -65,20 +65,20 @@ BG_EDGE=transparent as above, then run:
 The pan input extends ffta-batalla-1.input with left held during
 13916..14315 and right held during 14376..14975.
 
-MEDIDO: left traversal minimum HOFS=152, VOFS=36 at frame 14007;
+MEASURED: left traversal minimum HOFS=152, VOFS=36 at frame 14007;
 right traversal maximum HOFS=216, VOFS=64 at frame 14473.
-NO MEDIDO: these being the global horizontal limits of the whole battle map.
+NOT MEASURED: these being the global horizontal limits of the whole battle map.
 The blue grid remains visible in both captures. Transparent removes the
 blue repeat visible at the left in wrap; no blue repeat is visible at the
 right in either capture, so that pair does not prove removal on the right.
 Central 240x160 pixels: 0 changes for both pairs.
 Margins: 2060 changed pixels left, 1018 right, including terrain effects.
-NO MEDIDO: missing logical movement cells outside the hardware tilemap;
+NOT MEASURED: missing logical movement cells outside the hardware tilemap;
 the edge policy cannot create tilemap contents that the game never wrote.
 
 ## Validation
 
-MEDIDO: native extra=0, SPR=0, LOG=0, BG=0 versus BG=1, 600 frames:
+MEASURED: native extra=0, SPR=0, LOG=0, BG=0 versus BG=1, 600 frames:
 
 ```text
 frames: 600 hash: 727e9157e9bcb0a6 native_blocks: 2116712 fallback_steps: 2
@@ -112,7 +112,7 @@ The LOG case loads the diagnostic native DLL built with FFTA_OAM_LOG=1,
 so native instruction observation and writes are included in its cost.
 Logging output is redirected to a local file and included in the timing.
 
-MEDIDO: sequential first-pass results, milliseconds per frame:
+MEASURED: sequential first-pass results, milliseconds per frame:
 
 | Setting | Width | LOG | SPR | ms/frame |
 |---|---|---|---|---|
@@ -140,9 +140,9 @@ FFTA_HOST publications=0 objects=0
 FFTA_PIPELINE decoded=3000 no_input=600 mismatches=0 active=false
 ```
 
-MEDIDO: pending sprite lists existed with 28 objects in each alternating
+MEASURED: pending sprite lists existed with 28 objects in each alternating
 shadow buffer, but no host list reached the PPU in this run. Consequently
-NO MEDIDO: performance with an active, populated host list, and the strong
+NOT MEASURED: performance with an active, populated host list, and the strong
 slowdown reported by the user. This task does not change or repair that
 sprite publication path. Widescreen is the largest measured increment
 among the settings exercised here; that is not a conclusion about the
@@ -171,8 +171,8 @@ For the LOG case use out/diag-source.dll, locally built from an identical
 temporary ROM copy under ignored target/ with FFTA_OAM_LOG=1 and --ram.
 Neither generated DLL nor ROM copy is intended for repository distribution.
 
-NO MEDIDO: isolated cost of each host-list operation.
-MEDIDO by source inspection: render_sprites_extent creates an expanded Vec
+NOT MEASURED: isolated cost of each host-list operation.
+MEASURED by source inspection: render_sprites_extent creates an expanded Vec
 per scanline and searches the host list per OAM slot; publish clones the
 accepted host list and allocates comparison bytes per object; pending lists
 are recreated on frame changes. Proposed follow-up, not implemented:

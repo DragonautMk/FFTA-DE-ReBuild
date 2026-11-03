@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "date": "2026-10-22",
+  "slug": "prepare-european-main-background-graphics",
+  "title": "Prepare authenticated European main background graphics as a seventh resource file",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Publish the verified EUR field00 model as the seventh fixed bg-main-graphics.json file, schema 1/extractor 9/decoder 8, with all 50 source ranges, descriptor dependency and complete file/dataset authentication.",
+    "Integrate strict bounded parsing, atomic preparation/publication, no-write reuse, missing/corrupt repair, relocation and prior e8 generation retention; preserve USA's existing six-file e8-d7 contract.",
+    "Authenticate the new file before runtime owner replacement and include every hash in dataset identity; report the new family as verified-only until direct consumption. Preserve native/save/cache identity and prior decoded file bytes."
+  ],
+  "validation": [
+    "Warning-free Windows release test and production builds; four focused Wine cases pass for core authentication, seventh-file determinism/publication/reuse, partial-write/missing repair and actual EUR managed full-set behavior.",
+    "Actual EUR managed case passes create/reuse/missing+corrupt repair/move/e8 retention, coherent same-extent edit refusal, transactional failed activation, full-set identity, fixed-path/coverage/provenance/file-size guards and exact reuse of the prior typed JSON.",
+    "Seven actual Windows CLI processes from unrelated cwd pass extract, verify, prepare, no-write reuse, repair, moved-root reuse and one-frame activation with the existing native cache (290 native blocks). The cold frame reads zero resources and is activation evidence only.",
+    "The CLI postprocessor expected native= instead of native_blocks:; all seven processes had succeeded. The corrected result uses the retained activation log without rerunning any command.",
+    "Original ROM, e8 dataset, old native cache/loader and canonical executable hashes are preserved; final project-memory and whitespace/source/protected-input checks pass."
+  ],
+  "limitations": [
+    "Main graphics remain verified-only at runtime. Direct decoded word consumption, poisoned-ROM interpreter/native provenance, owner lifecycle and new scene/GUI/archive checks remain open.",
+    "New Linux and USA verification remain pending by user instruction; USA's previous contract is preserved without a new verification claim. No native Windows or AndroidPort claim.",
+    "Historical ignored current-EUR helpers still use e8 copy/revision assumptions and need adaptation when their affected consumer/lifecycle units are selected; completed historical results are retained without reruns.",
+    "No broad suite, repeated 50-source original decoder oracle, performance/profile/startup/RSS measurement or space optimization campaign."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/preparation.rs",
+    "crates/recomp/src/rom_data/bg_graphics_managed_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

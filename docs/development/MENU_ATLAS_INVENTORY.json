@@ -1,0 +1,2433 @@
+{
+  "schema": 1,
+  "baseline_commit": "945966c65f53e0341af312c2fc8099aeff53f219",
+  "legacy_pages": 24,
+  "legacy_rows": 190,
+  "legacy_actions": [
+    "Resume",
+    "RestartRom",
+    "Quit",
+    "SwitchRom",
+    "Changed",
+    "InputDevice",
+    "ResetGamepad",
+    "SaveState",
+    "LoadState",
+    "UndoState",
+    "CaptureGraphics",
+    "CreateIssueReport",
+    "StartCodeTrace",
+    "SaveCodeReport",
+    "StartGameplayTrace",
+    "SaveGameplayReport",
+    "StartRecentEvents",
+    "SaveRecentEvents",
+    "StartAudioCapture",
+    "SaveAudioReport",
+    "StartUiTrace",
+    "SaveUiReport",
+    "InspectPC",
+    "DebugStep",
+    "DebugResume",
+    "CompareReplay",
+    "CaptureReplay",
+    "AuditReplay",
+    "ReplayCase",
+    "ChooseReplayProfile",
+    "CancelReplay",
+    "StartInputRecording",
+    "StopInputRecording",
+    "CopyDiagnosis",
+    "StartDebugSession",
+    "CloseDebugSession",
+    "ContentOpen",
+    "ChooseToolInput",
+    "OpenDebugTool",
+    "ToolRequest",
+    "ContentRefresh",
+    "ContentBrowseFile",
+    "ContentAddFolder",
+    "ContentSelect",
+    "ContentPreview",
+    "ContentCancel",
+    "OpenDebugCatalog",
+    "ChooseDebugCatalog",
+    "CatalogSelection",
+    "CatalogImport",
+    "CatalogOpen",
+    "RestoreBackup",
+    "SwitchGameSave",
+    "CopyGameSave"
+  ],
+  "new_actions": [
+    "CheatChoose",
+    "CheatReload",
+    "OpenCheatCatalog",
+    "OpenCommandConsole",
+    "ToggleEventConsole",
+    "ToggleFastForward"
+  ],
+  "row_routes": [
+    {
+      "old_page": "Debug",
+      "row": "ContentPicker",
+      "destinations": [
+        "Debug / Panoramica",
+        "Debug / Sessioni e casi"
+      ]
+    },
+    {
+      "old_page": "Debug",
+      "row": "ToolInputsMenu",
+      "destinations": [
+        "Debug / Panoramica",
+        "Debug / Sessioni e casi",
+        "Debug / Console e script"
+      ]
+    },
+    {
+      "old_page": "Debug",
+      "row": "DebugToolsMenu",
+      "destinations": [
+        "Debug / Panoramica",
+        "Debug / Console e script"
+      ]
+    },
+    {
+      "old_page": "Debug",
+      "row": "ScriptLibraryMenu",
+      "destinations": [
+        "Debug / Panoramica",
+        "Debug / Console e script"
+      ]
+    },
+    {
+      "old_page": "Debug",
+      "row": "ExtendedSaves",
+      "destinations": [
+        "Debug / Sessioni e casi"
+      ]
+    },
+    {
+      "old_page": "Debug",
+      "row": "GameSavesMenu",
+      "destinations": [
+        "Debug / Sessioni e casi"
+      ]
+    },
+    {
+      "old_page": "Debug",
+      "row": "CopyDiagnosis",
+      "destinations": [
+        "Debug / Panoramica",
+        "Debug / Sessioni e casi",
+        "Debug / Report e archivio"
+      ]
+    },
+    {
+      "old_page": "Debug",
+      "row": "StartDebugSession",
+      "destinations": [
+        "Debug / Panoramica",
+        "Debug / Sessioni e casi"
+      ]
+    },
+    {
+      "old_page": "Debug",
+      "row": "CloseDebugSession",
+      "destinations": [
+        "Debug / Panoramica",
+        "Debug / Sessioni e casi"
+      ]
+    },
+    {
+      "old_page": "Debug",
+      "row": "DebugCatalog",
+      "destinations": [
+        "Debug / Sessioni e casi"
+      ]
+    },
+    {
+      "old_page": "Debug",
+      "row": "StartInputRecording",
+      "destinations": [
+        "Debug / Sessioni e casi"
+      ]
+    },
+    {
+      "old_page": "Debug",
+      "row": "StopInputRecording",
+      "destinations": [
+        "Debug / Sessioni e casi"
+      ]
+    },
+    {
+      "old_page": "Debug",
+      "row": "ReplayCase",
+      "destinations": [
+        "Debug / Replay e confronti"
+      ]
+    },
+    {
+      "old_page": "Debug",
+      "row": "ChooseReplayProfile",
+      "destinations": [
+        "Debug / Replay e confronti"
+      ]
+    },
+    {
+      "old_page": "Debug",
+      "row": "CancelReplay",
+      "destinations": [
+        "Debug / Replay e confronti"
+      ]
+    },
+    {
+      "old_page": "Debug",
+      "row": "AuditReplay",
+      "destinations": [
+        "Debug / Replay e confronti"
+      ]
+    },
+    {
+      "old_page": "Debug",
+      "row": "CaptureReplay",
+      "destinations": [
+        "Debug / Replay e confronti"
+      ]
+    },
+    {
+      "old_page": "Debug",
+      "row": "CompareReplay",
+      "destinations": [
+        "Debug / Replay e confronti"
+      ]
+    },
+    {
+      "old_page": "Debug",
+      "row": "DebugStepOne",
+      "destinations": [
+        "Debug / Esecuzione e memoria"
+      ]
+    },
+    {
+      "old_page": "Debug",
+      "row": "DebugStepTen",
+      "destinations": [
+        "Debug / Esecuzione e memoria"
+      ]
+    },
+    {
+      "old_page": "Debug",
+      "row": "DebugResume",
+      "destinations": [
+        "Debug / Esecuzione e memoria"
+      ]
+    },
+    {
+      "old_page": "Debug",
+      "row": "InspectPC",
+      "destinations": [
+        "Debug / Esecuzione e memoria"
+      ]
+    },
+    {
+      "old_page": "Debug",
+      "row": "CaptureGraphics",
+      "destinations": [
+        "Debug / Tracce e ispettori"
+      ]
+    },
+    {
+      "old_page": "Debug",
+      "row": "StartUiTrace",
+      "destinations": [
+        "Debug / Tracce e ispettori"
+      ]
+    },
+    {
+      "old_page": "Debug",
+      "row": "SaveUiReport",
+      "destinations": [
+        "Debug / Tracce e ispettori",
+        "Debug / Report e archivio"
+      ]
+    },
+    {
+      "old_page": "Debug",
+      "row": "StartAudioCapture",
+      "destinations": [
+        "Debug / Tracce e ispettori"
+      ]
+    },
+    {
+      "old_page": "Debug",
+      "row": "SaveAudioReport",
+      "destinations": [
+        "Debug / Tracce e ispettori",
+        "Debug / Report e archivio"
+      ]
+    },
+    {
+      "old_page": "Debug",
+      "row": "StartCodeTrace",
+      "destinations": [
+        "Debug / Tracce e ispettori"
+      ]
+    },
+    {
+      "old_page": "Debug",
+      "row": "SaveCodeReport",
+      "destinations": [
+        "Debug / Tracce e ispettori",
+        "Debug / Report e archivio"
+      ]
+    },
+    {
+      "old_page": "Debug",
+      "row": "CreateIssueReport",
+      "destinations": [
+        "Debug / Report e archivio"
+      ]
+    },
+    {
+      "old_page": "Debug",
+      "row": "StartGameplayTrace",
+      "destinations": [
+        "Debug / Tracce e ispettori"
+      ]
+    },
+    {
+      "old_page": "Debug",
+      "row": "SaveGameplayReport",
+      "destinations": [
+        "Debug / Tracce e ispettori",
+        "Debug / Report e archivio"
+      ]
+    },
+    {
+      "old_page": "Debug",
+      "row": "StartRecentEvents",
+      "destinations": [
+        "Debug / Tracce e ispettori"
+      ]
+    },
+    {
+      "old_page": "Debug",
+      "row": "SaveRecentEvents",
+      "destinations": [
+        "Debug / Tracce e ispettori",
+        "Debug / Report e archivio"
+      ]
+    },
+    {
+      "old_page": "Debug",
+      "row": "Back",
+      "destinations": [
+        "Debug / Panoramica",
+        "Debug / Sessioni e casi",
+        "Debug / Replay e confronti",
+        "Debug / Esecuzione e memoria",
+        "Debug / Tracce e ispettori",
+        "Debug / Console e script",
+        "Debug / Cheat",
+        "Debug / Report e archivio"
+      ]
+    },
+    {
+      "old_page": "DebugCatalog",
+      "row": "CatalogRegion",
+      "destinations": [
+        "Debug / Sessioni e casi"
+      ]
+    },
+    {
+      "old_page": "DebugCatalog",
+      "row": "CatalogStatus",
+      "destinations": [
+        "Debug / Sessioni e casi"
+      ]
+    },
+    {
+      "old_page": "DebugCatalog",
+      "row": "CatalogKind",
+      "destinations": [
+        "Debug / Sessioni e casi"
+      ]
+    },
+    {
+      "old_page": "DebugCatalog",
+      "row": "CatalogCase",
+      "destinations": [
+        "Debug / Sessioni e casi"
+      ]
+    },
+    {
+      "old_page": "DebugCatalog",
+      "row": "CatalogEntry",
+      "destinations": [
+        "Debug / Sessioni e casi"
+      ]
+    },
+    {
+      "old_page": "DebugCatalog",
+      "row": "CatalogImport",
+      "destinations": [
+        "Debug / Sessioni e casi"
+      ]
+    },
+    {
+      "old_page": "DebugCatalog",
+      "row": "CatalogOpen",
+      "destinations": [
+        "Debug / Sessioni e casi"
+      ]
+    },
+    {
+      "old_page": "DebugCatalog",
+      "row": "CatalogChoose",
+      "destinations": [
+        "Debug / Sessioni e casi"
+      ]
+    },
+    {
+      "old_page": "DebugCatalog",
+      "row": "Back",
+      "destinations": [
+        "Debug / Sessioni e casi"
+      ]
+    },
+    {
+      "old_page": "ContentSelector",
+      "row": "Back",
+      "destinations": [
+        "Debug / Sessioni e casi (selettore condiviso; ritorno al chiamante)"
+      ]
+    },
+    {
+      "old_page": "ToolInputs",
+      "row": "ToolInput(ContentSlot::Replay)",
+      "destinations": [
+        "Debug / Sessioni e casi"
+      ]
+    },
+    {
+      "old_page": "ToolInputs",
+      "row": "ToolInput(ContentSlot::Catalog)",
+      "destinations": [
+        "Debug / Sessioni e casi"
+      ]
+    },
+    {
+      "old_page": "ToolInputs",
+      "row": "ToolInput(ContentSlot::Session)",
+      "destinations": [
+        "Debug / Sessioni e casi"
+      ]
+    },
+    {
+      "old_page": "ToolInputs",
+      "row": "ToolInput(ContentSlot::Recording)",
+      "destinations": [
+        "Debug / Sessioni e casi"
+      ]
+    },
+    {
+      "old_page": "ToolInputs",
+      "row": "ToolInput(ContentSlot::Snapshot)",
+      "destinations": [
+        "Debug / Sessioni e casi"
+      ]
+    },
+    {
+      "old_page": "ToolInputs",
+      "row": "ToolInput(ContentSlot::Input)",
+      "destinations": [
+        "Debug / Sessioni e casi"
+      ]
+    },
+    {
+      "old_page": "ToolInputs",
+      "row": "ToolInput(ContentSlot::Dataset)",
+      "destinations": [
+        "Debug / Sessioni e casi"
+      ]
+    },
+    {
+      "old_page": "ToolInputs",
+      "row": "ToolInput(ContentSlot::RuntimeA)",
+      "destinations": [
+        "Debug / Sessioni e casi"
+      ]
+    },
+    {
+      "old_page": "ToolInputs",
+      "row": "ToolInput(ContentSlot::RuntimeB)",
+      "destinations": [
+        "Debug / Sessioni e casi"
+      ]
+    },
+    {
+      "old_page": "ToolInputs",
+      "row": "ToolInput(ContentSlot::Library)",
+      "destinations": [
+        "Debug / Sessioni e casi"
+      ]
+    },
+    {
+      "old_page": "ToolInputs",
+      "row": "ToolInput(ContentSlot::Labels)",
+      "destinations": [
+        "Debug / Sessioni e casi"
+      ]
+    },
+    {
+      "old_page": "ToolInputs",
+      "row": "ToolInput(ContentSlot::KnownPlan)",
+      "destinations": [
+        "Debug / Sessioni e casi"
+      ]
+    },
+    {
+      "old_page": "ToolInputs",
+      "row": "ToolInput(ContentSlot::HostTool)",
+      "destinations": [
+        "Debug / Sessioni e casi"
+      ]
+    },
+    {
+      "old_page": "ToolInputs",
+      "row": "ToolInput(ContentSlot::HostRuntime)",
+      "destinations": [
+        "Debug / Sessioni e casi"
+      ]
+    },
+    {
+      "old_page": "ToolInputs",
+      "row": "ToolInput(ContentSlot::Campaign)",
+      "destinations": [
+        "Debug / Sessioni e casi"
+      ]
+    },
+    {
+      "old_page": "ToolInputs",
+      "row": "ToolInput(ContentSlot::Recipe)",
+      "destinations": [
+        "Debug / Sessioni e casi"
+      ]
+    },
+    {
+      "old_page": "ToolInputs",
+      "row": "ToolInput(ContentSlot::GuestScripts)",
+      "destinations": [
+        "Debug / Sessioni e casi"
+      ]
+    },
+    {
+      "old_page": "ToolInputs",
+      "row": "Back",
+      "destinations": [
+        "Debug / Sessioni e casi"
+      ]
+    },
+    {
+      "old_page": "DebugTools",
+      "row": "DebugTool(DebugTool::Replay)",
+      "destinations": [
+        "Debug / Console e script (parametri condivisi)"
+      ]
+    },
+    {
+      "old_page": "DebugTools",
+      "row": "DebugTool(DebugTool::Audit)",
+      "destinations": [
+        "Debug / Console e script (parametri condivisi)"
+      ]
+    },
+    {
+      "old_page": "DebugTools",
+      "row": "DebugTool(DebugTool::Capture)",
+      "destinations": [
+        "Debug / Console e script (parametri condivisi)"
+      ]
+    },
+    {
+      "old_page": "DebugTools",
+      "row": "DebugTool(DebugTool::Compare)",
+      "destinations": [
+        "Debug / Console e script (parametri condivisi)"
+      ]
+    },
+    {
+      "old_page": "DebugTools",
+      "row": "DebugTool(DebugTool::Step)",
+      "destinations": [
+        "Debug / Console e script (parametri condivisi)"
+      ]
+    },
+    {
+      "old_page": "DebugTools",
+      "row": "DebugTool(DebugTool::Inspect)",
+      "destinations": [
+        "Debug / Console e script (parametri condivisi)"
+      ]
+    },
+    {
+      "old_page": "DebugTools",
+      "row": "DebugTool(DebugTool::Audio)",
+      "destinations": [
+        "Debug / Console e script (parametri condivisi)"
+      ]
+    },
+    {
+      "old_page": "DebugTools",
+      "row": "DebugTool(DebugTool::Code)",
+      "destinations": [
+        "Debug / Console e script (parametri condivisi)"
+      ]
+    },
+    {
+      "old_page": "DebugTools",
+      "row": "DebugTool(DebugTool::Gameplay)",
+      "destinations": [
+        "Debug / Console e script (parametri condivisi)"
+      ]
+    },
+    {
+      "old_page": "DebugTools",
+      "row": "DebugTool(DebugTool::Recent)",
+      "destinations": [
+        "Debug / Console e script (parametri condivisi)"
+      ]
+    },
+    {
+      "old_page": "DebugTools",
+      "row": "DebugTool(DebugTool::Graphics)",
+      "destinations": [
+        "Debug / Console e script (parametri condivisi)"
+      ]
+    },
+    {
+      "old_page": "DebugTools",
+      "row": "DebugTool(DebugTool::Issue)",
+      "destinations": [
+        "Debug / Console e script (parametri condivisi)"
+      ]
+    },
+    {
+      "old_page": "DebugTools",
+      "row": "Back",
+      "destinations": [
+        "Debug / Console e script (parametri condivisi)"
+      ]
+    },
+    {
+      "old_page": "ScriptLibrary",
+      "row": "DebugTool(DebugTool::Homepage)",
+      "destinations": [
+        "Debug / Console e script"
+      ]
+    },
+    {
+      "old_page": "ScriptLibrary",
+      "row": "DebugTool(DebugTool::CampaignReport)",
+      "destinations": [
+        "Debug / Console e script"
+      ]
+    },
+    {
+      "old_page": "ScriptLibrary",
+      "row": "DebugTool(DebugTool::ArtifactPreview)",
+      "destinations": [
+        "Debug / Console e script"
+      ]
+    },
+    {
+      "old_page": "ScriptLibrary",
+      "row": "DebugTool(DebugTool::Recipe)",
+      "destinations": [
+        "Debug / Console e script"
+      ]
+    },
+    {
+      "old_page": "ScriptLibrary",
+      "row": "DebugTool(DebugTool::GuestScripts)",
+      "destinations": [
+        "Debug / Console e script"
+      ]
+    },
+    {
+      "old_page": "ScriptLibrary",
+      "row": "Back",
+      "destinations": [
+        "Debug / Console e script"
+      ]
+    },
+    {
+      "old_page": "DebugTool",
+      "row": "Back",
+      "destinations": [
+        "Debug (modulo condiviso; ritorno al chiamante)"
+      ]
+    },
+    {
+      "old_page": "GameSaves",
+      "row": "GameSaveSlot",
+      "destinations": [
+        "Gioco / Salvataggi"
+      ]
+    },
+    {
+      "old_page": "GameSaves",
+      "row": "UseGameSave",
+      "destinations": [
+        "Gioco / Salvataggi"
+      ]
+    },
+    {
+      "old_page": "GameSaves",
+      "row": "CopyGameSave",
+      "destinations": [
+        "Gioco / Salvataggi"
+      ]
+    },
+    {
+      "old_page": "GameSaves",
+      "row": "Back",
+      "destinations": [
+        "Gioco / Salvataggi"
+      ]
+    },
+    {
+      "old_page": "SwitchGameSave",
+      "row": "ConfirmSwitchGameSave",
+      "destinations": [
+        "Gioco / Salvataggi / conferma"
+      ]
+    },
+    {
+      "old_page": "SwitchGameSave",
+      "row": "Back",
+      "destinations": [
+        "Gioco / Salvataggi / conferma"
+      ]
+    },
+    {
+      "old_page": "ReplaceGameSave",
+      "row": "ConfirmCopyGameSave",
+      "destinations": [
+        "Gioco / Salvataggi / conferma"
+      ]
+    },
+    {
+      "old_page": "ReplaceGameSave",
+      "row": "Back",
+      "destinations": [
+        "Gioco / Salvataggi / conferma"
+      ]
+    },
+    {
+      "old_page": "SaveStates",
+      "row": "StateSlot",
+      "destinations": [
+        "Gioco / Salvataggi"
+      ]
+    },
+    {
+      "old_page": "SaveStates",
+      "row": "SaveState",
+      "destinations": [
+        "Gioco / Salvataggi"
+      ]
+    },
+    {
+      "old_page": "SaveStates",
+      "row": "LoadState",
+      "destinations": [
+        "Gioco / Salvataggi"
+      ]
+    },
+    {
+      "old_page": "SaveStates",
+      "row": "UndoState",
+      "destinations": [
+        "Gioco / Salvataggi"
+      ]
+    },
+    {
+      "old_page": "SaveStates",
+      "row": "Back",
+      "destinations": [
+        "Gioco / Salvataggi"
+      ]
+    },
+    {
+      "old_page": "ReplaceState",
+      "row": "SaveStateConfirm",
+      "destinations": [
+        "Gioco / Salvataggi / conferma"
+      ]
+    },
+    {
+      "old_page": "ReplaceState",
+      "row": "Back",
+      "destinations": [
+        "Gioco / Salvataggi / conferma"
+      ]
+    },
+    {
+      "old_page": "SaveBackups",
+      "row": "Backup(0)",
+      "destinations": [
+        "Gioco / Salvataggi"
+      ]
+    },
+    {
+      "old_page": "SaveBackups",
+      "row": "Backup(1)",
+      "destinations": [
+        "Gioco / Salvataggi"
+      ]
+    },
+    {
+      "old_page": "SaveBackups",
+      "row": "Back",
+      "destinations": [
+        "Gioco / Salvataggi"
+      ]
+    },
+    {
+      "old_page": "RestoreBackup",
+      "row": "ConfirmRestoreBackup",
+      "destinations": [
+        "Gioco / Salvataggi / conferma"
+      ]
+    },
+    {
+      "old_page": "RestoreBackup",
+      "row": "Back",
+      "destinations": [
+        "Gioco / Salvataggi / conferma"
+      ]
+    },
+    {
+      "old_page": "Main",
+      "row": "Resume",
+      "destinations": [
+        "Gioco / Panoramica / Torna al gioco"
+      ]
+    },
+    {
+      "old_page": "Main",
+      "row": "SaveStatesMenu",
+      "destinations": [
+        "Gioco / Salvataggi / Save states"
+      ]
+    },
+    {
+      "old_page": "Main",
+      "row": "SaveBackupsMenu",
+      "destinations": [
+        "Gioco / Salvataggi / Save backups"
+      ]
+    },
+    {
+      "old_page": "Main",
+      "row": "FastForwardMenu",
+      "destinations": [
+        "Gioco / Fast Forward"
+      ]
+    },
+    {
+      "old_page": "Main",
+      "row": "TextBubblesMenu",
+      "destinations": [
+        "Gioco / Finestre di testo"
+      ]
+    },
+    {
+      "old_page": "Main",
+      "row": "AudioMenu",
+      "destinations": [
+        "Gioco / Audio"
+      ]
+    },
+    {
+      "old_page": "Main",
+      "row": "VideoMenu",
+      "destinations": [
+        "Gioco / Video"
+      ]
+    },
+    {
+      "old_page": "Main",
+      "row": "InputsMenu",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "Main",
+      "row": "RestartRom",
+      "destinations": [
+        "Gioco / Sistema / Restart ROM"
+      ]
+    },
+    {
+      "old_page": "Main",
+      "row": "SwitchRomMenu",
+      "destinations": [
+        "Gioco / Sistema / Switch ROM"
+      ]
+    },
+    {
+      "old_page": "Main",
+      "row": "DebugMenu",
+      "destinations": [
+        "Sidebar / Debug"
+      ]
+    },
+    {
+      "old_page": "Main",
+      "row": "Quit",
+      "destinations": [
+        "Gioco / Sistema / Exit"
+      ]
+    },
+    {
+      "old_page": "Exit",
+      "row": "QuitYes",
+      "destinations": [
+        "Gioco / Sistema / conferma"
+      ]
+    },
+    {
+      "old_page": "Exit",
+      "row": "QuitNo",
+      "destinations": [
+        "Gioco / Sistema / conferma"
+      ]
+    },
+    {
+      "old_page": "SwitchRom",
+      "row": "ReturnToGame",
+      "destinations": [
+        "Gioco / Sistema"
+      ]
+    },
+    {
+      "old_page": "SwitchRom",
+      "row": "ChangeRom",
+      "destinations": [
+        "Gioco / Sistema"
+      ]
+    },
+    {
+      "old_page": "FastForward",
+      "row": "FastForward",
+      "destinations": [
+        "Gioco / Fast Forward"
+      ]
+    },
+    {
+      "old_page": "FastForward",
+      "row": "FastForwardAudio",
+      "destinations": [
+        "Gioco / Fast Forward"
+      ]
+    },
+    {
+      "old_page": "FastForward",
+      "row": "Back",
+      "destinations": [
+        "Gioco / Fast Forward"
+      ]
+    },
+    {
+      "old_page": "Audio",
+      "row": "Volume",
+      "destinations": [
+        "Gioco / Audio"
+      ]
+    },
+    {
+      "old_page": "Audio",
+      "row": "Mute",
+      "destinations": [
+        "Gioco / Audio"
+      ]
+    },
+    {
+      "old_page": "Audio",
+      "row": "Audio",
+      "destinations": [
+        "Gioco / Audio"
+      ]
+    },
+    {
+      "old_page": "Audio",
+      "row": "Back",
+      "destinations": [
+        "Gioco / Audio"
+      ]
+    },
+    {
+      "old_page": "Video",
+      "row": "Aspect",
+      "destinations": [
+        "Gioco / Video"
+      ]
+    },
+    {
+      "old_page": "Video",
+      "row": "Fullscreen",
+      "destinations": [
+        "Gioco / Video"
+      ]
+    },
+    {
+      "old_page": "Video",
+      "row": "Screen",
+      "destinations": [
+        "Gioco / Video"
+      ]
+    },
+    {
+      "old_page": "Video",
+      "row": "Brightness",
+      "destinations": [
+        "Gioco / Video"
+      ]
+    },
+    {
+      "old_page": "Video",
+      "row": "Darken",
+      "destinations": [
+        "Gioco / Video"
+      ]
+    },
+    {
+      "old_page": "Video",
+      "row": "Response",
+      "destinations": [
+        "Gioco / Video"
+      ]
+    },
+    {
+      "old_page": "Video",
+      "row": "Grid",
+      "destinations": [
+        "Gioco / Video"
+      ]
+    },
+    {
+      "old_page": "Video",
+      "row": "Scaling",
+      "destinations": [
+        "Gioco / Video"
+      ]
+    },
+    {
+      "old_page": "Video",
+      "row": "Vsync",
+      "destinations": [
+        "Gioco / Video"
+      ]
+    },
+    {
+      "old_page": "Video",
+      "row": "Fps",
+      "destinations": [
+        "Gioco / Video"
+      ]
+    },
+    {
+      "old_page": "Video",
+      "row": "Back",
+      "destinations": [
+        "Gioco / Video"
+      ]
+    },
+    {
+      "old_page": "TextBubbles",
+      "row": "BubbleSize",
+      "destinations": [
+        "Gioco / Finestre di testo"
+      ]
+    },
+    {
+      "old_page": "TextBubbles",
+      "row": "BubbleLength",
+      "destinations": [
+        "Gioco / Finestre di testo"
+      ]
+    },
+    {
+      "old_page": "TextBubbles",
+      "row": "Back",
+      "destinations": [
+        "Gioco / Finestre di testo"
+      ]
+    },
+    {
+      "old_page": "Inputs",
+      "row": "Menu",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "Inputs",
+      "row": "Key(Button::A)",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "Inputs",
+      "row": "Key(Button::B)",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "Inputs",
+      "row": "Key(Button::L)",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "Inputs",
+      "row": "Key(Button::R)",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "Inputs",
+      "row": "Key(Button::Start)",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "Inputs",
+      "row": "Key(Button::Select)",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "Inputs",
+      "row": "Key(Button::Up)",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "Inputs",
+      "row": "Key(Button::Down)",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "Inputs",
+      "row": "Key(Button::Left)",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "Inputs",
+      "row": "Key(Button::Right)",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "Inputs",
+      "row": "FfKey",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "Inputs",
+      "row": "FfToggleKey",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "Inputs",
+      "row": "ZoomIn",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "Inputs",
+      "row": "ZoomOut",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "Inputs",
+      "row": "Back",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "Gamepad",
+      "row": "Menu",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "Gamepad",
+      "row": "Key(Button::A)",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "Gamepad",
+      "row": "Key(Button::B)",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "Gamepad",
+      "row": "Key(Button::L)",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "Gamepad",
+      "row": "Key(Button::R)",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "Gamepad",
+      "row": "Key(Button::Start)",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "Gamepad",
+      "row": "Key(Button::Select)",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "Gamepad",
+      "row": "Key(Button::Up)",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "Gamepad",
+      "row": "Key(Button::Down)",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "Gamepad",
+      "row": "Key(Button::Left)",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "Gamepad",
+      "row": "Key(Button::Right)",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "Gamepad",
+      "row": "FfKey",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "Gamepad",
+      "row": "FfToggleKey",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "Gamepad",
+      "row": "ZoomIn",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "Gamepad",
+      "row": "ZoomOut",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "Gamepad",
+      "row": "ResetGamepad",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "Gamepad",
+      "row": "Back",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "MouseKeyboard",
+      "row": "MouseMode",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "MouseKeyboard",
+      "row": "Menu",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "MouseKeyboard",
+      "row": "Key(Button::A)",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "MouseKeyboard",
+      "row": "Key(Button::B)",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "MouseKeyboard",
+      "row": "Key(Button::L)",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "MouseKeyboard",
+      "row": "Key(Button::R)",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "MouseKeyboard",
+      "row": "Key(Button::Start)",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "MouseKeyboard",
+      "row": "Key(Button::Select)",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "MouseKeyboard",
+      "row": "Key(Button::Up)",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "MouseKeyboard",
+      "row": "Key(Button::Down)",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "MouseKeyboard",
+      "row": "Key(Button::Left)",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "MouseKeyboard",
+      "row": "Key(Button::Right)",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "MouseKeyboard",
+      "row": "FfKey",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "MouseKeyboard",
+      "row": "FfToggleKey",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "MouseKeyboard",
+      "row": "ZoomIn",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "MouseKeyboard",
+      "row": "ZoomOut",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    },
+    {
+      "old_page": "MouseKeyboard",
+      "row": "Back",
+      "destinations": [
+        "Gioco / Controlli"
+      ]
+    }
+  ],
+  "operations": [
+    {
+      "id": "diagnose",
+      "handler": "collect/cmd",
+      "cli": "recomp diagnose ROM [options]",
+      "current": "Debug / Report e archivio / Copy diagnosis",
+      "destination": "Debug / Report e archivio / Copy diagnosis",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "session.create",
+      "handler": "create/create_cmd",
+      "cli": "recomp debug-session create ROM --dir DIR [options]",
+      "current": "Debug / Sessioni e casi / Start debug session",
+      "destination": "Debug / Sessioni e casi / Start debug session",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "session.open",
+      "handler": "launch_mode",
+      "cli": "recomp debug-session open SESSION [--paused]",
+      "current": null,
+      "destination": "Debug / Sessioni e casi / Open debug session",
+      "menu_implemented": false,
+      "reference": "readonly"
+    },
+    {
+      "id": "session.inspect",
+      "handler": "read_manifest",
+      "cli": "recomp debug-session inspect SESSION",
+      "current": null,
+      "destination": "Debug / Sessioni e casi / Inspect session",
+      "menu_implemented": false,
+      "reference": "readonly"
+    },
+    {
+      "id": "session.close",
+      "handler": "quit/teardown",
+      "cli": null,
+      "current": "Debug / Sessioni e casi / Close debug session",
+      "destination": "Debug / Sessioni e casi / Close debug session",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "catalog.list",
+      "handler": "Catalog::load",
+      "cli": "recomp debug-catalog list CATALOG [options]",
+      "current": "Debug / Sessioni e casi / Debug catalog",
+      "destination": "Debug / Sessioni e casi / Debug catalog",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "catalog.open",
+      "handler": "Catalog::create",
+      "cli": "recomp debug-catalog open CATALOG [options]",
+      "current": "Debug / Sessioni e casi / Debug catalog / Open isolated case",
+      "destination": "Debug / Sessioni e casi / Debug catalog / Open isolated case",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "catalog.import",
+      "handler": "Catalog::import",
+      "cli": "recomp debug-catalog import CATALOG [options]",
+      "current": "Debug / Sessioni e casi / Debug catalog / Import to free snapshot slot",
+      "destination": "Debug / Sessioni e casi / Debug catalog / Import to free snapshot slot",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "catalog.select",
+      "handler": "catalog_preview",
+      "cli": null,
+      "current": "Debug / Sessioni e casi / Debug catalog / Entry",
+      "destination": "Debug / Sessioni e casi / Debug catalog / Entry",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "catalog.choose",
+      "handler": "open_debug_catalog(true)",
+      "cli": null,
+      "current": "Debug / Sessioni e casi / Debug catalog / Choose / reload catalog",
+      "destination": "Debug / Sessioni e casi / Debug catalog / Choose / reload catalog",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "record.start",
+      "handler": "Capture::start/cmd",
+      "cli": "recomp debug-record start SESSION",
+      "current": "Debug / Sessioni e casi / Start input recording",
+      "destination": "Debug / Sessioni e casi / Start input recording",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "record.stop",
+      "handler": "stop_input_recording",
+      "cli": null,
+      "current": "Debug / Sessioni e casi / Stop input recording",
+      "destination": "Debug / Sessioni e casi / Stop input recording",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "record.verify",
+      "handler": "cmd verify",
+      "cli": "recomp debug-record verify RECORDING --session SESSION",
+      "current": null,
+      "destination": "Debug / Sessioni e casi / Verify input recording",
+      "menu_implemented": false,
+      "reference": "readonly"
+    },
+    {
+      "id": "replay.select",
+      "handler": "start_replay(true)",
+      "cli": null,
+      "current": "Debug / Replay e confronti / Choose replay profile",
+      "destination": "Debug / Replay e confronti / Choose replay profile",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "replay.create",
+      "handler": "create_cmd",
+      "cli": "recomp debug-replay create [options]",
+      "current": null,
+      "destination": "Debug / Replay e confronti / Prepare Replay case",
+      "menu_implemented": false,
+      "reference": "readonly"
+    },
+    {
+      "id": "replay.run",
+      "handler": "Job::start",
+      "cli": "recomp debug-replay run PROFILE [--json]",
+      "current": "Debug / Replay e confronti / Replay case",
+      "destination": "Debug / Replay e confronti / Replay case",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "replay.cancel",
+      "handler": "Job::cancel",
+      "cli": "recomp debug-replay cancel PROFILE",
+      "current": "Debug / Replay e confronti / Cancel replay",
+      "destination": "Debug / Replay e confronti / Cancel replay",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "audit.create",
+      "handler": "create_cmd",
+      "cli": "recomp debug-rom-audit create [options]",
+      "current": null,
+      "destination": "Debug / Replay e confronti / Prepare Audit replay",
+      "menu_implemented": false,
+      "reference": "readonly"
+    },
+    {
+      "id": "audit.run",
+      "handler": "Job::start_audit",
+      "cli": "recomp debug-rom-audit run PROFILE [--json]",
+      "current": "Debug / Replay e confronti / Audit replay",
+      "destination": "Debug / Replay e confronti / Audit replay",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "audit.cancel",
+      "handler": "Job::cancel",
+      "cli": "recomp debug-rom-audit cancel PROFILE",
+      "current": "Debug / Replay e confronti / Cancel replay",
+      "destination": "Debug / Replay e confronti / Cancel replay",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "capture.create",
+      "handler": "create_cmd",
+      "cli": "recomp debug-capture create [options]",
+      "current": null,
+      "destination": "Debug / Replay e confronti / Prepare Capture on trigger",
+      "menu_implemented": false,
+      "reference": "readonly"
+    },
+    {
+      "id": "capture.run",
+      "handler": "Job::start_capture",
+      "cli": "recomp debug-capture run PROFILE [--json]",
+      "current": "Debug / Replay e confronti / Capture on trigger",
+      "destination": "Debug / Replay e confronti / Capture on trigger",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "capture.cancel",
+      "handler": "Job::cancel",
+      "cli": "recomp debug-capture cancel PROFILE",
+      "current": "Debug / Replay e confronti / Cancel replay",
+      "destination": "Debug / Replay e confronti / Cancel replay",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "compare.create",
+      "handler": "create_cmd",
+      "cli": "recomp debug-compare create [options]",
+      "current": null,
+      "destination": "Debug / Replay e confronti / Prepare Compare first difference",
+      "menu_implemented": false,
+      "reference": "readonly"
+    },
+    {
+      "id": "compare.run",
+      "handler": "Job::start_comparison",
+      "cli": "recomp debug-compare run PROFILE [--json]",
+      "current": "Debug / Replay e confronti / Compare first difference",
+      "destination": "Debug / Replay e confronti / Compare first difference",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "compare.cancel",
+      "handler": "Job::cancel",
+      "cli": "recomp debug-compare cancel PROFILE",
+      "current": "Debug / Replay e confronti / Cancel replay",
+      "destination": "Debug / Replay e confronti / Cancel replay",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "control.status",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control status SESSION",
+      "current": null,
+      "destination": "Debug / Esecuzione e memoria / Session status",
+      "menu_implemented": false,
+      "reference": "readonly"
+    },
+    {
+      "id": "control.cancel",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control cancel SESSION --request ID",
+      "current": null,
+      "destination": "Debug / Esecuzione e memoria / Cancel request",
+      "menu_implemented": false,
+      "reference": "readonly"
+    },
+    {
+      "id": "control.pause",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control pause SESSION",
+      "current": null,
+      "destination": "Debug / Esecuzione e memoria / Pause",
+      "menu_implemented": false,
+      "reference": "readonly"
+    },
+    {
+      "id": "control.resume",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control resume SESSION",
+      "current": "Debug / Esecuzione e memoria / Resume (F6)",
+      "destination": "Debug / Esecuzione e memoria / Resume (F6)",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "control.step",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control step SESSION N [--keys HEX]",
+      "current": "Debug / Esecuzione e memoria / Step 1 frame / Step 10 frames",
+      "destination": "Debug / Esecuzione e memoria / Step 1 frame / Step 10 frames",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "control.inspect",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control inspect SESSION ADDRESS LENGTH",
+      "current": "Debug / Esecuzione e memoria / Parameters / prepare profiles / inspect",
+      "destination": "Debug / Esecuzione e memoria / Parameters / prepare profiles / inspect",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "control.break",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control break SESSION PC arm|thumb [--steps N]",
+      "current": null,
+      "destination": "Debug / Esecuzione e memoria / Break at PC",
+      "menu_implemented": false,
+      "reference": "readonly"
+    },
+    {
+      "id": "control.watch",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control watch SESSION read|write START END [options]",
+      "current": null,
+      "destination": "Debug / Esecuzione e memoria / Watch memory access",
+      "menu_implemented": false,
+      "reference": "readonly"
+    },
+    {
+      "id": "control.graphics",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control graphics SESSION [--compare-last]",
+      "current": "Debug / Tracce e ispettori / Parameters / prepare profiles / graphics",
+      "destination": "Debug / Tracce e ispettori / Parameters / prepare profiles / graphics",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "control.ui-start",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control ui-start SESSION",
+      "current": "Debug / Tracce e ispettori / Start UI trace",
+      "destination": "Debug / Tracce e ispettori / Start UI trace",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "control.ui-report",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control ui-report SESSION",
+      "current": "Debug / Tracce e ispettori / Save UI report",
+      "destination": "Debug / Tracce e ispettori / Save UI report",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "control.audio-start",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control audio-start SESSION [--frames N --streams LIST]",
+      "current": "Debug / Tracce e ispettori / Parameters / prepare profiles / audio-start",
+      "destination": "Debug / Tracce e ispettori / Parameters / prepare profiles / audio-start",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "control.audio-report",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control audio-report SESSION",
+      "current": "Debug / Tracce e ispettori / Save audio report",
+      "destination": "Debug / Tracce e ispettori / Save audio report",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "control.code-start",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control code-start SESSION [options]",
+      "current": "Debug / Tracce e ispettori / Parameters / prepare profiles / code-start",
+      "destination": "Debug / Tracce e ispettori / Parameters / prepare profiles / code-start",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "control.code-report",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control code-report SESSION",
+      "current": "Debug / Tracce e ispettori / Save code report",
+      "destination": "Debug / Tracce e ispettori / Save code report",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "control.gameplay-start",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control gameplay-start SESSION [options]",
+      "current": "Debug / Tracce e ispettori / Parameters / prepare profiles / gameplay-start",
+      "destination": "Debug / Tracce e ispettori / Parameters / prepare profiles / gameplay-start",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "control.gameplay-report",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control gameplay-report SESSION",
+      "current": "Debug / Tracce e ispettori / Save gameplay report",
+      "destination": "Debug / Tracce e ispettori / Save gameplay report",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "control.recent-start",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control recent-start SESSION [options]",
+      "current": "Debug / Tracce e ispettori / Parameters / prepare profiles / recent-start",
+      "destination": "Debug / Tracce e ispettori / Parameters / prepare profiles / recent-start",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "control.recent-freeze",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control recent-freeze SESSION",
+      "current": null,
+      "destination": "Debug / Tracce e ispettori / Freeze recent window",
+      "menu_implemented": false,
+      "reference": "readonly"
+    },
+    {
+      "id": "control.recent-report",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control recent-report SESSION",
+      "current": "Debug / Tracce e ispettori / Freeze / save recent events",
+      "destination": "Debug / Tracce e ispettori / Freeze / save recent events",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "control.issue-report",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control issue-report SESSION [--profile FILE --symptom TEXT]",
+      "current": "Debug / Report e archivio / Parameters / prepare profiles / issue-report",
+      "destination": "Debug / Report e archivio / Parameters / prepare profiles / issue-report",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "audio.states",
+      "handler": "states",
+      "cli": "recomp debug-audio states [options]",
+      "current": null,
+      "destination": "Debug / Replay e confronti / Compare snapshot audio",
+      "menu_implemented": false,
+      "reference": "readonly"
+    },
+    {
+      "id": "issue.create",
+      "handler": "create/cmd",
+      "cli": "recomp debug-report create PROFILE [--symptom TEXT]",
+      "current": null,
+      "destination": "Debug / Report e archivio / Create offline issue report",
+      "menu_implemented": false,
+      "reference": "readonly"
+    },
+    {
+      "id": "artifacts.preview",
+      "handler": "preview",
+      "cli": "python3 scripts/debug_artifacts.py preview [options]",
+      "current": null,
+      "destination": "Debug / Report e archivio / Preview artifact retention",
+      "menu_implemented": false,
+      "reference": "readonly"
+    },
+    {
+      "id": "artifacts.apply",
+      "handler": "apply",
+      "cli": "python3 scripts/debug_artifacts.py apply PLAN --receipt NEW",
+      "current": null,
+      "destination": "Debug / Report e archivio / Apply reviewed retention",
+      "menu_implemented": false,
+      "reference": "readonly"
+    },
+    {
+      "id": "artifacts.complete",
+      "handler": "complete",
+      "cli": "python3 scripts/local_artifacts.py complete UNITS [options]",
+      "current": null,
+      "destination": "Debug / Report e archivio / Complete validation unit",
+      "menu_implemented": false,
+      "reference": "readonly"
+    },
+    {
+      "id": "campaign.report",
+      "handler": "report",
+      "cli": "python3 scripts/debug_campaign.py report MANIFEST [options]",
+      "current": null,
+      "destination": "Debug / Report e archivio / Inspect campaign",
+      "menu_implemented": false,
+      "reference": "readonly"
+    },
+    {
+      "id": "campaign.run-case",
+      "handler": "run-case",
+      "cli": "python3 scripts/debug_campaign.py run-case MANIFEST CASE [options]",
+      "current": null,
+      "destination": "Debug / Replay e confronti / Run selected campaign case",
+      "menu_implemented": false,
+      "reference": "readonly"
+    },
+    {
+      "id": "reports.home",
+      "handler": "generate/main",
+      "cli": "python3 scripts/report_home.py [--root ROOT --stdout]",
+      "current": null,
+      "destination": "Debug / Report e archivio / Refresh report homepage",
+      "menu_implemented": false,
+      "reference": "readonly"
+    },
+    {
+      "id": "saves.extended",
+      "handler": "AvConfig.debug_extended_saves",
+      "cli": null,
+      "current": "Gioco / Salvataggi / Extended saves",
+      "destination": "Gioco / Salvataggi / Extended saves",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "state.save",
+      "handler": "state_operation(true)",
+      "cli": null,
+      "current": "Gioco / Salvataggi / Save state",
+      "destination": "Gioco / Salvataggi / Save state",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "state.load",
+      "handler": "state_operation(false)",
+      "cli": null,
+      "current": "Gioco / Salvataggi / Load state",
+      "destination": "Gioco / Salvataggi / Load state",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "state.undo",
+      "handler": "undo_state_operation",
+      "cli": null,
+      "current": "Gioco / Salvataggi / Undo save / load",
+      "destination": "Gioco / Salvataggi / Undo save / load",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "save.restore",
+      "handler": "restore_save_backup",
+      "cli": null,
+      "current": "Gioco / Salvataggi / Restore backup",
+      "destination": "Gioco / Salvataggi / Restore backup",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "save.switch",
+      "handler": "switch_game_save",
+      "cli": null,
+      "current": "Gioco / Salvataggi / Game saves / Use selected save",
+      "destination": "Gioco / Salvataggi / Game saves / Use selected save",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "save.copy",
+      "handler": "copy_game_save",
+      "cli": null,
+      "current": "Gioco / Salvataggi / Game saves / Copy current save",
+      "destination": "Gioco / Salvataggi / Game saves / Copy current save",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "runtime.restart",
+      "handler": "restart_rom",
+      "cli": null,
+      "current": "Gioco / Sistema / Restart ROM",
+      "destination": "Gioco / Sistema / Restart ROM",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "runtime.continue",
+      "handler": "set_paused(false)",
+      "cli": null,
+      "current": "Gioco / Panoramica / Resume",
+      "destination": "Gioco / Panoramica / Resume",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "launch.debug-inputs",
+      "handler": "cmd_play",
+      "cli": "recomp play ROM [--debug-catalog FILE --debug-replay FILE]; isolated copy: play --debug-paused OR play --record-input",
+      "current": null,
+      "destination": "Debug / Sessioni e casi / Select initial debug inputs",
+      "menu_implemented": false,
+      "reference": "readonly"
+    },
+    {
+      "id": "content.scan",
+      "handler": "Index::scan",
+      "cli": "recomp debug-content scan [options]",
+      "current": "Debug / Sessioni e casi / Content selector / Refresh",
+      "destination": "Debug / Sessioni e casi / Content selector / Refresh",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "content.list",
+      "handler": "parse / Picker::page",
+      "cli": "recomp debug-control content-list SESSION [--offset N --limit N --generation N]",
+      "current": "Debug / Sessioni e casi / Content selector",
+      "destination": "Debug / Sessioni e casi / Content selector",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "content.check",
+      "handler": "Index::recheck",
+      "cli": "recomp debug-content check INDEX ID [--kind KIND] [--json]",
+      "current": null,
+      "destination": "Debug / Sessioni e casi / Recheck selected content",
+      "menu_implemented": false,
+      "reference": "readonly"
+    },
+    {
+      "id": "content.open",
+      "handler": "Picker::open",
+      "cli": null,
+      "current": "Debug / Sessioni e casi / Content selector / Content selector",
+      "destination": "Debug / Sessioni e casi / Content selector / Content selector",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "content.select",
+      "handler": "Picker::choose",
+      "cli": null,
+      "current": "Debug / Sessioni e casi / Content selector / Select content",
+      "destination": "Debug / Sessioni e casi / Content selector / Select content",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "content.preview",
+      "handler": "Picker::choose preview",
+      "cli": null,
+      "current": "Debug / Sessioni e casi / Content selector / Content details and preview",
+      "destination": "Debug / Sessioni e casi / Content selector / Content details and preview",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "content.browse-file",
+      "handler": "Picker::browse_file",
+      "cli": null,
+      "current": "Debug / Sessioni e casi / Content selector / Browse external file",
+      "destination": "Debug / Sessioni e casi / Content selector / Browse external file",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "content.add-folder",
+      "handler": "Picker::browse_folder",
+      "cli": null,
+      "current": "Debug / Sessioni e casi / Content selector / Add content folder",
+      "destination": "Debug / Sessioni e casi / Content selector / Add content folder",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "content.cancel",
+      "handler": "Picker::cancel",
+      "cli": null,
+      "current": "Debug / Sessioni e casi / Content selector / Cancel content selection",
+      "destination": "Debug / Sessioni e casi / Content selector / Cancel content selection",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "content.choose-input",
+      "handler": "Picker::open_for",
+      "cli": null,
+      "current": "Debug / Sessioni e casi / Tool inputs / current selections",
+      "destination": "Debug / Sessioni e casi / Tool inputs / current selections",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "workbench.replay",
+      "handler": "Workbench::open / fields",
+      "cli": null,
+      "current": "Debug / Replay e confronti / Parametri e profili / replay",
+      "destination": "Debug / Replay e confronti / Parametri e profili / replay",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "workbench.audit",
+      "handler": "Workbench::open / fields",
+      "cli": null,
+      "current": "Debug / Replay e confronti / Parametri e profili / audit",
+      "destination": "Debug / Replay e confronti / Parametri e profili / audit",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "workbench.capture",
+      "handler": "Workbench::open / fields",
+      "cli": null,
+      "current": "Debug / Replay e confronti / Parametri e profili / capture",
+      "destination": "Debug / Replay e confronti / Parametri e profili / capture",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "workbench.compare",
+      "handler": "Workbench::open / fields",
+      "cli": null,
+      "current": "Debug / Replay e confronti / Parametri e profili / compare",
+      "destination": "Debug / Replay e confronti / Parametri e profili / compare",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "workbench.step",
+      "handler": "Workbench::open / fields",
+      "cli": null,
+      "current": "Debug / Esecuzione e memoria / Parametri e profili / step",
+      "destination": "Debug / Esecuzione e memoria / Parametri e profili / step",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "workbench.inspect",
+      "handler": "Workbench::open / fields",
+      "cli": null,
+      "current": "Debug / Esecuzione e memoria / Parametri e profili / inspect",
+      "destination": "Debug / Esecuzione e memoria / Parametri e profili / inspect",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "workbench.audio",
+      "handler": "Workbench::open / fields",
+      "cli": null,
+      "current": "Debug / Tracce e ispettori / Parametri e profili / audio",
+      "destination": "Debug / Tracce e ispettori / Parametri e profili / audio",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "workbench.code",
+      "handler": "Workbench::open / fields",
+      "cli": null,
+      "current": "Debug / Tracce e ispettori / Parametri e profili / code",
+      "destination": "Debug / Tracce e ispettori / Parametri e profili / code",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "workbench.gameplay",
+      "handler": "Workbench::open / fields",
+      "cli": null,
+      "current": "Debug / Tracce e ispettori / Parametri e profili / gameplay",
+      "destination": "Debug / Tracce e ispettori / Parametri e profili / gameplay",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "workbench.recent",
+      "handler": "Workbench::open / fields",
+      "cli": null,
+      "current": "Debug / Tracce e ispettori / Parametri e profili / recent",
+      "destination": "Debug / Tracce e ispettori / Parametri e profili / recent",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "workbench.graphics",
+      "handler": "Workbench::open / fields",
+      "cli": null,
+      "current": "Debug / Tracce e ispettori / Parametri e profili / graphics",
+      "destination": "Debug / Tracce e ispettori / Parametri e profili / graphics",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "workbench.issue",
+      "handler": "Workbench::open / fields",
+      "cli": null,
+      "current": "Debug / Report e archivio / Parametri e profili / issue",
+      "destination": "Debug / Report e archivio / Parametri e profili / issue",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "workbench.validate",
+      "handler": "Workbench::request / play.rs::workbench_request",
+      "cli": null,
+      "current": "Debug / Console e script / Tool draft / validate",
+      "destination": "Debug / Console e script / Tool draft / validate",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "workbench.save-preset",
+      "handler": "Workbench::request / play.rs::workbench_request",
+      "cli": null,
+      "current": "Debug / Console e script / Tool draft / save-preset",
+      "destination": "Debug / Console e script / Tool draft / save-preset",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "workbench.load-preset",
+      "handler": "Workbench::request / play.rs::workbench_request",
+      "cli": null,
+      "current": "Debug / Console e script / Tool draft / load-preset",
+      "destination": "Debug / Console e script / Tool draft / load-preset",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "workbench.prepare",
+      "handler": "Workbench::request / play.rs::workbench_request",
+      "cli": null,
+      "current": "Debug / Console e script / Tool draft / prepare",
+      "destination": "Debug / Console e script / Tool draft / prepare",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "workbench.run",
+      "handler": "Workbench::request / play.rs::workbench_request",
+      "cli": null,
+      "current": "Debug / Console e script / Tool draft / run",
+      "destination": "Debug / Console e script / Tool draft / run",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "workbench.back",
+      "handler": "Workbench::request / play.rs::workbench_request",
+      "cli": null,
+      "current": "Debug / Console e script / Tool draft / back",
+      "destination": "Debug / Console e script / Tool draft / back",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "tools.homepage",
+      "handler": "details/run",
+      "cli": null,
+      "current": "Debug / Console e script / Script e strumenti / homepage",
+      "destination": "Debug / Console e script / Script e strumenti / homepage",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "tools.campaign-report",
+      "handler": "details/run",
+      "cli": null,
+      "current": "Debug / Console e script / Script e strumenti / campaign-report",
+      "destination": "Debug / Console e script / Script e strumenti / campaign-report",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "tools.artifact-preview",
+      "handler": "details/run",
+      "cli": null,
+      "current": "Debug / Console e script / Script e strumenti / artifact-preview",
+      "destination": "Debug / Console e script / Script e strumenti / artifact-preview",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "tools.recipe",
+      "handler": "details/run",
+      "cli": null,
+      "current": "Debug / Console e script / Script e strumenti / recipe",
+      "destination": "Debug / Console e script / Script e strumenti / recipe",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "tools.guest-scripts",
+      "handler": "details/run",
+      "cli": null,
+      "current": "Debug / Console e script / Script e strumenti / guest-scripts",
+      "destination": "Debug / Console e script / Script e strumenti / guest-scripts",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "cheats.list",
+      "handler": "Catalog::summary / execute",
+      "cli": "recomp debug-cheats list [options]; debug-control cheat-list SESSION [--offset N --limit N --generation SHA]",
+      "current": "Debug / Cheat / Catalogo cheat",
+      "destination": "Debug / Cheat / Catalogo cheat",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "cheats.show",
+      "handler": "Catalog::entry / execute",
+      "cli": "recomp debug-cheats show ID [options]; debug-control cheat-show SESSION ID [--offset N --generation SHA]",
+      "current": "Debug / Cheat / Catalogo cheat",
+      "destination": "Debug / Cheat / Catalogo cheat",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "cheats.inspect-plaintext",
+      "handler": "execute / debug_cheat_decoder::inspect",
+      "cli": "recomp debug-cheats inspect ID --assume-plaintext-codebreaker [--catalog FILE --rom-sha256 SHA]",
+      "current": null,
+      "destination": "Debug / Cheat / Catalogo cheat",
+      "menu_implemented": false,
+      "reference": "readonly"
+    },
+    {
+      "id": "cheats.inspect-seeded",
+      "handler": "execute / debug_cheat_decoder::inspect_seeded",
+      "cli": "recomp debug-cheats inspect ID --codebreaker-seed 9XXXXXXX:XXXX [--catalog FILE --rom-sha256 SHA]",
+      "current": null,
+      "destination": "Debug / Cheat / Catalogo cheat",
+      "menu_implemented": false,
+      "reference": "readonly"
+    },
+    {
+      "id": "cheats.inspect-source",
+      "handler": "execute / Catalog::source_bound / debug_cheat_decoder::inspect_source",
+      "cli": "recomp debug-cheats inspect ID --provenance-index N --master-id ID [--rom-file FILE | --rom-sha256 SHA] [--catalog FILE]",
+      "current": null,
+      "destination": "Debug / Cheat / Catalogo cheat",
+      "menu_implemented": false,
+      "reference": "readonly"
+    },
+    {
+      "id": "cheats.prepare-once",
+      "handler": "PlayApp::prepare_cheat_once / Plan::footprint",
+      "cli": "recomp debug-control cheat-prepare SESSION ID PROVENANCE MASTER GENERATION [--timeout-ms N]",
+      "current": null,
+      "destination": "Debug / Cheat",
+      "menu_implemented": false,
+      "reference": "readonly"
+    },
+    {
+      "id": "cheats.apply-once",
+      "handler": "PlayApp::prepare_cheat_once / Plan::apply_once",
+      "cli": "recomp debug-control cheat-apply SESSION ID PROVENANCE MASTER GENERATION PREVIEW [--timeout-ms N]",
+      "current": null,
+      "destination": "Debug / Cheat",
+      "menu_implemented": false,
+      "reference": "readonly"
+    },
+    {
+      "id": "cheats.arm",
+      "handler": "PlayApp::debug_action_inner / ArmedSet::arm",
+      "cli": "recomp debug-control cheat-arm SESSION ID PROVENANCE MASTER GENERATION PREVIEW [--timeout-ms N]",
+      "current": null,
+      "destination": "Debug / Cheat",
+      "menu_implemented": false,
+      "reference": "readonly"
+    },
+    {
+      "id": "cheats.disarm",
+      "handler": "PlayApp::debug_action_inner / ArmedSet::disarm",
+      "cli": "recomp debug-control cheat-disarm SESSION ID|all [--timeout-ms N]",
+      "current": null,
+      "destination": "Debug / Cheat",
+      "menu_implemented": false,
+      "reference": "readonly"
+    },
+    {
+      "id": "cheats.info",
+      "handler": "execute",
+      "cli": "recomp debug-cheats info [--catalog FILE --rom-sha256 SHA]",
+      "current": null,
+      "destination": "Debug / Cheat / Catalogo cheat",
+      "menu_implemented": false,
+      "reference": "readonly"
+    },
+    {
+      "id": "cheats.open",
+      "handler": "PlayApp::open_cheat_catalog",
+      "cli": null,
+      "current": "Debug / Cheat / Catalogo cheat",
+      "destination": "Debug / Cheat / Catalogo cheat",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "cheats.choose",
+      "handler": "Picker::open_for(CheatCatalog)",
+      "cli": null,
+      "current": "Debug / Cheat / Catalogo cheat",
+      "destination": "Debug / Cheat / Catalogo cheat",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "control.retry",
+      "handler": "parse_retry / retry_action_classified",
+      "cli": "recomp debug-control retry SESSION --run RUN --request ID --deadline-unix-ms N [--timeout-ms N] -- ACTION",
+      "current": "Debug / Console e script / Console comandi",
+      "destination": "Debug / Console e script / Console comandi",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "cheats.refresh",
+      "handler": "debug_action / debug_cheats::Refresh",
+      "cli": "recomp debug-control cheat-refresh SESSION",
+      "current": null,
+      "destination": "Debug / Cheat / Catalogo cheat",
+      "menu_implemented": false,
+      "reference": "readonly"
+    }
+  ]
+}

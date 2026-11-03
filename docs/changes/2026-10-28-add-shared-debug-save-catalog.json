@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "slug": "add-shared-debug-save-catalog",
+  "title": "Browse and open the private debug-save catalog from the menu and CLI",
+  "kind": "added",
+  "platforms": [
+    "Windows (Wine validation)"
+  ],
+  "changes": [
+    "Implement DBG-03 with Debug > Debug catalog and debug-catalog list/open/import over the existing private schema-1 collection. Share region, recorded status, kind, DS case and exact-entry filters; expose stable keys, names, source slots, provenance, evidence scope and integrity without rewriting the collection.",
+    "Keep DS cases, variants and IN/GEN/NEW sources distinct. Preserve per-region recorded status and uncovered cases without files; detect missing, changed or invalid snapshot envelopes/core checksums. Bound input sizes, refuse duplicate keys and resolve artifact paths only inside the collection.",
+    "Open a selected checkpoint or standard save in a DBG-02 portable copy with ROM/BIOS validation and optional authenticated dataset. Retain source metadata plus a portable single-entry catalog referencing the existing seed or SRAM, preserving its key after relocation.",
+    "Import exact checkpoint bytes into an empty isolated snapshot slot using transactional compatibility checks and atomic no-clobber publication. Keep the live machine unchanged, expose preview and explicit Load, and reuse one-step Undo. CLI import locks a closed copy and reports when a high slot requires Extended saves; normal-game import and nested copies are refused.",
+    "Document menu and CLI use, privacy, metadata semantics and limitations; mark DBG-03 complete while leaving DS scene coverage unchanged."
+  ],
+  "validation": [
+    "Offline locked Windows release test/runtime builds pass without compiler warnings from frozen public base 2fbf9f7 plus eleven selected tool files in the reusable separate source/Cargo cache. Candidate SHA-256 d55a7e115f9fd1ca924e6f1b2f3e709818df8b24ea4a194bda69eedf2b3dfccd; no normal executable replacement or concurrent extraction build.",
+    "Wine passes eight catalog, 43 menu and ten snapshot-slot tests (61 total), covering regional status, uncovered DS03/15, distinct sources and same-byte scene scopes, bounds/path/schema errors, integrity rechecks, compatible exact import/Undo without guest load, occupied/wrong-ROM/standard refusal and portable selected-entry relocation.",
+    "Fifteen real EUR CLI cases pass: list all 92 projected entries (34 case entries, 26 variants, 28 IN, three GEN, one NEW), exact DS20 and uncovered/source filters, invalid region and ambiguous selection refusal, isolated DS20 creation and portable listing, first-free slot2 and explicit slot99 import, occupied/standard/uncovered refusal and missing/changed-file diagnosis.",
+    "Final Wine/Xvfb GUI passes filtered DS20 selection, normal-game import refusal, exact isolated EUR seed, portable selected key, byte-identical slot2 import with preview and explicit Load, child close and return. Native Win32 activation restores the parent; its execution state/frame/clock and progress-file hashes/mtimes are unchanged. Screenshots inspected.",
+    "Initial GUI harness assumed Back restored main Save states1; it actually restores main Debug10 because the imported picker was opened from the catalog. Failed-attempt script/log/screenshots remain local. Corrected harness passes without a product change, rebuild or replay of the accepted CLI/test checks.",
+    "GUI results authenticate all 140 guarded original collection/ROM inputs with unchanged hashes/mtimes. No managed publication/native acceptance fixture trees were created, so the ROM-only artifact completion helper does not apply. Current candidate, failed harness diagnostics and shared build caches are retained locally.",
+    "Final verification passes eleven compiled overlay identities, all 140 protected original inputs, both production executable hashes/mtimes, 140 local documentation links and 22 ordered checklist IDs with only DBG01-03 checked. Private collection remains entirely untracked and ignored. Project-memory workspace/base and whitespace checks pass; child last-result is ok and parent GUI exits0."
+  ],
+  "limitations": [
+    "Native Windows, Linux/Wayland, physical controllers and native-translated gameplay in the isolated copy remain unverified. No new DS acceptance, performance campaign, extraction replay, package, Android or Godot work was selected.",
+    "Artifact integrity and recorded status do not prove scene reachability or full runtime compatibility. DS03/15 remain uncovered. Snapshot open/import checks ROM/BIOS with the full loader; a modified portable standard-save copy is visibly different from its initial catalog checksum.",
+    "Concurrent ROM extraction changes are preserved and outside this frontend validation. Frozen source-export Git provenance is unknown in the executable; the selected public base and overlay hashes identify the build separately."
+  ],
+  "files": [
+    "crates/recomp/src/main.rs",
+    "crates/recomp/src/play.rs",
+    "crates/recomp/src/save_state.rs",
+    "crates/recomp/src/debug_session.rs",
+    "crates/recomp/src/debug_catalog.rs",
+    "crates/recomp/src/debug_catalog/tests.rs",
+    "crates/menu/src/lib.rs",
+    "crates/menu/src/theme.rs",
+    "crates/menu/src/debug_catalog.rs",
+    "docs/debug_catalog.md",
+    "docs/debug_sessions.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md",
+    "scripts/README.md"
+  ],
+  "references": [
+    "docs/debug_catalog.md",
+    "docs/debug_sessions.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ]
+}

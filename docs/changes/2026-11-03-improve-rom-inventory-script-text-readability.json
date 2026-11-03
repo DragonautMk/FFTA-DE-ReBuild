@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "improve-rom-inventory-script-text-readability",
+  "title": "Improve script archive and text inventory readability",
+  "kind": "docs",
+  "platforms": [
+    "Desktop development documentation"
+  ],
+  "changes": [
+    "Separate merged words, addresses and counts in relative script archive and localized script-text source, runtime and scene summaries, retaining recorded validation limits."
+  ],
+  "validation": [
+    "Compared the inventory against its tracked pre-edit version for identical headings, Markdown link targets and inline code spans, and identical digit runs after normalizing three previously documented numeric-boundary clarifications. Confirmed the remainder from script coordinate paths onward is unchanged."
+  ],
+  "limitations": [
+    "Inventory review remains partial from script coordinate paths onward; historical runtime results were not reproduced, and the wider English-first audit remains open."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_INVENTORY.md"
+  ],
+  "references": [
+    "docs/rom_data_scripts.md",
+    "docs/rom_data_text.md"
+  ]
+}

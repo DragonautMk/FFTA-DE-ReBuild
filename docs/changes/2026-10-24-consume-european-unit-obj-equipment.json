@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "consume-european-unit-obj-equipment",
+  "title": "Publish and consume typed European equipment OBJ poses",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Advance EUR to schema1/extractor59/decoder58 with fixed unit-obj-equipment.json/graphics.unit-obj-equipment and actual gameplay.item-records dependency.55generation files/54resources retain all53earlier decoded files, resource records and coverage entries; e58 and USAe8-d7 are preserved.",
+    "Authenticate and attach immutable typed directory roots, pointer cells including real nulls, sequence headers/command fields, OBJ attributes and decoded palette indices through exact per-byte source ownership. Discard temporary source reconstruction buffers and compose previous owners/raw holes inside mixed reads; retain guest facing, command/task/scheduler/DMA/VRAM/palette behavior and save/native/cache ABI.",
+    "Extend preparation/loading/publication, CLI resource descriptions/usage counters and affected constructor declarations. Counters remain transient diagnostics outside saved machine state. Add only two new targeted Wine lifecycle/native filters; source-model and earlier accepted proof scopes stay closed.",
+    "Complete actual production CLI creation/no-write reuse for55generation files/57managed files; retain terminal equipment-negative Sheep1000/Fight700 locators without fullpairs or unchanged repeats. Keep ordinary positive equipment acceptance open rather than infer it from input names, a guest-only framebuffer or previous palette-program proofs.",
+    "After explicit25October user authorization, derive private EURcheckpoints only with normal game keys from a copied F09snapshot, preserving originals/cartridge saves. Visually confirm Action/Fight, occupied ally Hildegard and the separate Do it prompt; add an equipment-positive gate to the existing every-frame scene test for the newly confirmed ordinary Fight500case. The declared equipment ordinary-scene criterion is now closed on this same confirmed500frame context; other256sequences keep targeted coverage."
+  ],
+  "validation": [
+    "One affected Windows core/frontend test build is warning-free; core tests compiled only. Frozen core0bc529876cd9280b93edb984b54344e6687d66e34ecbdf486d270ca01d0da834/frontendcd03cda904e1926ca8723aff189b1afa8bc298e6e1740904e3148c62439adb60.831build and833runtime hash-mtime guards plus eleven source inputs/preimages pass.",
+    "Two new exact Wine filters pass on their first executions. Managed:17source/hash/path/JSON/dependency guards reject changes transactionally; publication failure/create/reuse/repair/move/e58retention and unavailable Load-Undo/backup/Restart/sharedowner pass. All110666typed bytes read with raw sources altered:248directory2992index1032header68780frame174OAM37440pixels/all258sequences; oldOBJ/initial samepage owners each serve4B without a new-family charge.",
+    "Native:26original/interpreter/compiled paths match complete states/guestclocks for both parts, nulls, fullword raw ID-animation inputs, commands0/6/8, sampled scheduler/queue/DMA, changed live RAM frame and typed/raw/oldowner reads. Compiled API category aggregate[32,24,6,47,32,1]B is distinct from actual compiled DMA execution, whose full state and VRAM match too.1511instructions502PC97dispatch are coverage only.",
+    "All593source edges, byte/halfword/unaligned-word APIs, three mirrors, real-BIOS bus mode, CpuSet/FastSet and DMA pass. Mixed2new+1028raw+8oldOBJ B transfers charge exactly2/8; an unaligned API word retains2deliberately changed raw bytes beside2decoded bytes. All110666new+24oldOBJ-initial rawB are altered in relevant probes.",
+    "Independent prior-manifest audit confirms55files54resources/all53prior decoded-resource records-coverage identical/all54filehashes. Newfile23391d28a69a1bb728353d267a6080e47f6a741846c0c72ad7b631d887fb701c equals accepted model. Runtime dataset identity2c200038c7c0eecc79931bfee44a8f9ef89bc9c1fea87fba07d6dac8d9cd9ae3 differs from manifest-fileSHAaa8bba05cf6c151e4484565898be16183e3f39fd9c9887317c4f9b3d4649b911. Evidence under target/rom-data-equipment-runtime/ includes windows-managed-build.json,windows-managed-results.json,windows-managed-europe/{managed,native}-result.json,bothWine logs and prior-manifest-audit.json.",
+    "Final preservation audit passes all7307prior protected artifact hashes,831build/833runtime hash-mtime guards and eleven source inputs/preimages. Only five selected existing implementation files, two new runtime/oracle modules and coherent memory documentation change against the322-file baseline; accepted source/model files and user Debug-save/concurrent Docker work are preserved.438local feature links, project-memory default/base7597b92, new-module rustfmt and CRLF-aware whitespace checks pass; all jobs terminal.",
+    "Windows85707single production build warning-free/frozen0795d057470ac67658559cd674ff3141232fbeea1516c8600ad8edf6b646118e; canonicalf3e277db.. exacthash/mtime1792570130397888519 restored, maincontent unchanged/mtime-onlyCargo invalidation. Wine87287actualCLIcreate/reuse-no-write55generation/57managed/all55matchaccepted e59dataset from unrelatedcwd/oldcache; generation-nXJuGC retains datasetidentity2c200038../manifestfileSHAaa8bba05.. .",
+    "Retained genuine EUR Montblanc Richiamo-Pecorelle1000 and F09Fight700 new-equipment locators both exit0/0allcategories/0sequences; no fullpair/scene-guard build. First fixture precondition assumed desktop preview instead of supported raw FFTA-ST; corrected version1/EUR/payload checks pass before build/guest invocation. Source F09desktop preview/core/EUR hashes pass. Static211candidate-call read is a selection aid, not a live-execution/reaching-definition proof; CLI PPM omits separate native UI. No new checkpoints/sequences were created after automatic approval review rejected the proposed gameplay derivation.",
+    "Final preservation audit passes7623prior artifact hashes,833runtime/891CLI/893Fight hash-mtime guards and eleven earlier source inputs. User Debug-save/concurrent Docker/source-model-managed-native-CLI-scene/ROM-save-state-input/canonicalexe/cache/TCC evidence remains intact.",
+    "CLI memory closure passes439local feature-document links, project-memory default/base7597b92 and CRLF-aware whitespace checks. All325baseline implementation hashes remain unchanged in this CLI-only increment; only coherent memory docs/record/changelog change. Automatic review rejected the proposed new checkpoint command before process creation; explicit user approval was requested asynchronously, and no indirect retry was attempted.",
+    "New Wine normal-pad derivations/roundtrip checkpoints reach Polly-to-Hildegard forecast at8668from original8476via192frames. Left/right empty-target probes and first A-only500locator remain terminal negatives, with actual Do it prompt retained. Changed normal input adds secondAat48: single actuale61productionCLI Wine500locator passes4477aggregateB=8directory16index4header276frame2765OBJ1408pixel/two equipment sequences, originals/cart/cache/TCC/canonical/dataset guards intact. First navigation wrapper-only artifact count included its script; corrected by cheap file/header/hash inspection without guest repeat. One affected scene-guard build and exact fullpair complete below.",
+    "One Windows frontend scene-guard build warning-free/frozen a13b3aa63ee37beb2c71fe1fea126de1a4003d3e82b797ed0e1725e1d3388764. Single exact new Wine500fullpair from8668to9168passes every complete state/clock/central-wide framebuffer/OAM/native-dispatch and allfiveaudio streams. Equipment3269reads/4477aggregateB/1408pixelB/twosequences exactly equal the actuale61CLI locator; no old source/model/native/scene/negative proof replay or new production build.",
+    "25October final preservation passes8730prior artifact hashes, all nine navigation/locator/build/pair guard sets (1067..1149),17compiled input/preimage pairs,22valid privateEURstate envelopes/payloads (17derived/5copies), no new cartridge file/0tracked private files and338local feature links. Onlyfive added scene-guard lines against the preserved baseline; project-memory default+base7597b92 and CRLF-aware whitespace pass."
+  ],
+  "limitations": [
+    "Declared targeted equipment projection plus actualCLI creation/reuse and one positive ordinary friendlyFight500fullpair are closed. Other256equipment sequences retain targeted coverage; no every-action/whole allocator/scheduler/actor ABI or damage outcome claim. Earlier Sheep1000/Fight700/empty-target/Doit-only negatives stay closed. Authorized copiedEURordinary checkpoints are private, originals/cartridge saves preserved, no rawHP/RAM/PC/payload edits.",
+    "General actor-body/alternate/script pairings, other equipment ordinary sequences and palette sources, newLinux/USA/nativeWindows/new32:9 remain open. No source-model/managed/native/old accepted proof replay, raw private payload edit, performance/space campaign, Android change, package, agent commit or push. New local normal-pad EURcheckpoints are explicitly user-authorized and private."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/unit_obj_equipment.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/unit_obj_equipment_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "scripts/extract_rom_data.py",
+    "crates/recomp/src/rom_data/validation_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_unit_obj.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

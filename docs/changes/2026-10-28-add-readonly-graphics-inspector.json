@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "slug": "add-readonly-graphics-inspector",
+  "title": "Add bounded offline graphics inspection from paused isolated copies",
+  "kind": "added",
+  "platforms": [
+    "Windows cross builds and Wine/Xvfb; offline Chrome desktop/mobile"
+  ],
+  "changes": [
+    "Add menu Capture graphics report and debug-control graphics SESSION [--compare-last] in idle paused isolated copies. Freeze raw VRAM/OAM/palette/IO and saved central/active-wide RGB555 buffers, readonly BG/OBJ/window projections and128OAM descriptors, palette/tile/raw texture selectors. No guest step, register/IO write, Machine/save/native ABI change or new snapshot.",
+    "Reuse the original snapshot preview CPU sampler at actual window dimensions for world and UI composition, recording settings, UI rectangles/clips and exact changed-pixel count/bounds. Bound window to1600x1000, JSON to2MiB and report directories to8including incomplete captures. Preserve previous reports and publish graphics.json last; no automatic pruning.",
+    "Generate a self-contained offline interactive HTML/JSON/PNG bundle with current frozen-register provenance, raw buffer/image SHA256 and complete before/after state identity. Selected BG/tile/palette pixels name demonstrated backing offsets, flips/banks/map entries; final framebuffer winner and VRAM-to-ROM transfer source remain unknown. Separate saved RGB555 white0xffff from transparent isolated-layer sentinel.",
+    "Optional compare-last authenticates the latest complete same-session ROM/schema and exact prior raw/paired image hashes, then reports byte differences with up to16offsets and paired central/wide/frontend images. Changed geometry/settings do not imply pixel alignment. Preserve the original guest renderer and existing include-UI snapshot sampler behavior."
+  ],
+  "validation": [
+    "Frozen public07be4d2 plus15selected overlays reuses accepted DBG10/11 and excludes concurrent extraction implementation. Locked/offline release builds with and without rom-data-read-audit are warning-free. Final feature SHA2560046a8125ea0d7d81366e40e57a528c9a16f744d0b1d8469ef7e6eddc84a753a; default e14dc29052a0979373e1d35058f4c66fba2e66bfc5e2ee32abd4873c297a9f2f.",
+    "58distinct targeted Wine tests pass:3graphics report,2readonly PPU,6control,1preview and46menu.57initial executions passed; pre-GUI review separated saved0xffff white from layer transparency, followed by3affected report executions only. Preserve pre-RGB-output-review source/build selections; earlier unaffected tests not reopened.",
+    "Initial automatic permission review timed out before harness creation or execution and allowed retry; retry found the missing script and exited before tests. Prepared the script in the workspace, then authorized Wine run passed. permission-review-attempt.json records the resolved environmental sequence; no runtime acceptance duplicated.",
+    "21real CLI cases plus Wine/Xvfb GUI pass: paused capture/menu, same-frame zero deltas, comparison after one frame, missing prior, reversibly tampered prior,8directory capacity preserving every existing hash-mtime, running/closed refusals and default-feature capture. Complete state/frame/clock/save/progress are unchanged by capture/refusal. Default and feature copies produce identical selected state/raw hashes; both terminate0with inactive ready markers.",
+    "DS20 frame22220 at852x480 shows wide UI canvas rect[-294,0,1440,480] clipped to[0,0,852,480]; independent PNG comparison counts89856changed pixels inside[114,48,738,192), explaining transparent canvas padding/crop separately from actual panel content. Two same-frame captures have0differences in all6raw components.",
+    "Offline Chrome desktop1400px/mobile620px interactions and inspected screenshots pass paired images, palette/tile/OAM/window selection and no horizontal overflow. Selected BG0pixel(65,10) decodes backing0x06002091; actual generated PNG pixel equals independently decoded map/tile/palette RGBA.128OAM slots and six zero raw delta rows verified.",
+    "Independent final-verification.json validates all15compiled overlays,5reports/raw hashes/arrays/image shapes, every central/wide PNG pixel against RGB555, OAM fields, exact raw deltas and UI pixel bounds. Stripping only the PPU module hook restores the original renderer body; generalized include-UI preview sampler matches the original. All202selected original input hash-mtimes and both normal runtimes remain unchanged; no snapshot timeline and private payloads ignored/untracked.",
+    "Local evidence under target/debug-tools-graphics retains build-selection/fixture-selection/protection maps, tests/builds/CLI/GUI/browser/final verification results, screenshots, source preimages and both closed portable copies. artifact-retention.json records retirement of two exited Chrome profiles; accepted reports/current candidates/cache/diagnostics remain. No managed publication disposable trees created; ROM-only completion helper does not apply.",
+    "Feature guide includes the reproducible DS20 layout explanation and actual limits; checklist checks only DBG01-12, durable-state/handoff close DBG12. Seven changed Markdown guides/shared docs have no missing local file links,22ordered IDs and8owned implementation paths are recorded. Project-memory metadata/changelog and git diff --check pass. Workspace and base07be4d2 coverage checks identify only concurrent extraction file crates/recomp/src/rom_data/metadata28_scene_tests.rs without its own changed record; preserve it outside DBG12. documentation-verification.json records the integration limitation."
+  ],
+  "limitations": [
+    "Wine/Xvfb validation only. Native Windows/Linux/Wayland, physical controllers, graphical capture from a native-runtime copy, other scenes/ROMs and the full graphics-mode matrix remain unverified. Synthetic affine/bitmap tests do not establish ordinary-scene coverage or native parity.",
+    "Frozen register projections are not a reconstruction of scanline history. Text BG uses current scroll/flip/palette; affine BG shows the raw map without invented reference history. Raw OAM texture selectors do not apply object transforms. Backing/host-owner metadata does not prove ROM ownership, typed consumption, final framebuffer winning source or new DS acceptance.",
+    "Frontend output is the diagnostic CPU composition with/without native UI using existing preview sampling; pause menu/FPS/final GPU effects and monitor presentation are excluded. View/settings changes require manual alignment judgement. Report capacity includes incomplete captures, which are retained for diagnosis.",
+    "No normal runtime replacement, old Bank/F09/native-parity acceptance, ROM extraction/performance replay, Android, Godot, commit or push. Concurrent extraction changes and accepted DBG10/11 have their own records.",
+    "Global workspace/base memory coverage remains non-green until the separate concurrent metadata28 scene-navigation harness receives its own accurate change record. DBG12 metadata and owned implementation coverage pass; do not attribute that unrelated source or unverified extraction outcome to this change."
+  ],
+  "files": [
+    "crates/gba-core/src/ppu.rs",
+    "crates/gba-core/src/ppu/inspect.rs",
+    "crates/recomp/src/debug_graphics.rs",
+    "crates/recomp/src/debug_graphics/report.html",
+    "crates/recomp/src/debug_control.rs",
+    "crates/recomp/src/play.rs",
+    "crates/recomp/src/main.rs",
+    "crates/menu/src/lib.rs",
+    "docs/debug_graphics.md",
+    "docs/debug_control.md",
+    "docs/debug_comparisons.md",
+    "scripts/README.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/debug_graphics.md",
+    "docs/debug_control.md",
+    "docs/debug_comparisons.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ]
+}

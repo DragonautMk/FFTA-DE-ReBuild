@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "slug": "verify-european-encounter-unit-template-cli",
+  "title": "Verify European unit-template production CLI and ordinary data use",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Verify e81-d80 production CLI creation, no-write reuse and retained normal Giza battle-entry startup. All74generation files exactruntime/73loggedresourceID-hashes/76managed paths unchanged, five dependencies and192prior-owned bytes retained.",
+    "Close positive selector/argument/equipment/flag use before one ordinary equivalence pair; report all13 usage fields and unobserved classes without claiming all2850records/442headers/fullABI."
+  ],
+  "validation": [
+    "One warning-free Windows production build afeaef25.. from514accepted runtime sources; only exact production fingerprint isolated/core unchanged, canonicalexe hash/mtime restored. Three Wine children exit0 preparecreated/reused/runc700 guest19409\u219220109, old28859nativecacheblocks loaded.",
+    "All184guards/514source hashes exact, artifacthelper0paths; counts={\"ability_bit_bytes\": 41, \"argument_bytes\": 15, \"auxiliary_bytes\": 10, \"bus_reads\": 186, \"control_bytes\": 10, \"equipment_bytes\": 80, \"flag_bytes\": 10, \"headers_used\": 1, \"opaque_bytes\": 0, \"optional_bytes\": 10, \"records_used\": 5, \"selector_bytes\": 35, \"source_bytes\": 211}. Positiveclasses=['selector_bytes', 'argument_bytes', 'equipment_bytes', 'auxiliary_bytes', 'ability_bit_bytes', 'optional_bytes', 'flag_bytes', 'control_bytes']; unobserved=['opaque_bytes']. No newfixture/checkpoint/navigation/metrics or closedsource-model-runtime-header-constructor acceptance replay."
+  ],
+  "limitations": [
+    "One ordinary fullstate-clock/pixel/OAM/dispatch/audio pair next; this single battle-entry usage window is not allrecord/allheader/allbranch/fullABI/globalarchive proof.",
+    "Linux/USA/nativeWindows/new32:9/coordinatepayload/fullROM_DATA_TODO pending. No performance/storage campaign, Android/package, assistantcommit/push; existinguser/parallelwork preserved."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

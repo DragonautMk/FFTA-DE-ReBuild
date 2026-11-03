@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-10-26",
+  "slug": "model-european-ffff-reader-fields",
+  "title": "Model European FFFF numeric OBJ reader fields losslessly",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add a strict u16 property/u32 encoded-directory model for the known full-width FFFF query, two source spans/six bytes and980 conditional metadata52/archive49 producer witnesses with2240 references. Existing valid asset/property models stay unchanged.",
+    "Expose the independent model and one private Wine test; production extraction/publication and e69-d68/64files63resources/USAe8-d7 remain unchanged until versioned runtime integration."
+  ],
+  "validation": [
+    "First Windows frontend build warning-free, frozen83ffcd75ef4644a6aed6e90b84d29645fb6b4153a82584403693706281f0b602. One first exact Wine filter passes independent980producer/2240reference/six-byte comparison, strictJSON/source/dependency13guards andthree full-bitnumeric roundtrips.",
+    "Two complete original numeric readers execute28instructions/readall6B; zeroextension/encodedpointer+12 preserved, callee andfullRAMoutsideoriginal4Bstack/VRAM/OAM/palette guards pass. All156build157Wineguards/35compiledinputs exact; earlier A4guard/accepted evidence preserved. Closed71pin/60query/classification/old model-runtime-scene proofs notreplayed.",
+    "Closure: all387sourcepreimages show only two moduledeclarations/two newmodules plusdocs; all157activeguards/35compiledpreimages/593localfeaturelinks exact. Existing A4validator/oldmodels/runtime/production revisions unchanged. Model JSON SHA256 4985d84c90180c30aeceff37be1e3c2482714238fec87f65b2189d4d6b070d84. Private output ignored/untracked;12670priorprivateproof reused withoutlegacyrehash.",
+    "Project-memory render/default/basee4c7d48, rustfmt for the two new modules and CRLF-aware whitespace checks pass. Model child closed; versioned publication/runtime/native-clock/ordinary criteria remain explicit next work."
+  ],
+  "limitations": [
+    "Model child only: managed publication/typedbus ownership/native-clock/ordinary use remain pending. No unmapped target is decoded and no null/pointerfix/liveinputcap is introduced; globalregistry/changedactor/unknown inputs remain separate.",
+    "Linux/USA/nativeWindows/new32:9 checks remain pending. No fixture/navigation/privategameplaypayload edit, performance/storage measurement, Android/package/assistantcommit/push; full ROM_DATA goal remains active."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data/unit_obj_ffff_reader_fields.rs",
+    "crates/gba-core/src/rom_data.rs",
+    "crates/recomp/src/rom_data/unit_obj_ffff_reader_fields_model_tests.rs",
+    "crates/recomp/src/rom_data.rs",
+    "docs/rom_data_unit_obj.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md"
+  ],
+  "references": [
+    "docs/rom_data_unit_obj.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

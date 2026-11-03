@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "slug": "consume-european-linked-records4",
+  "title": "Consume European linked four-byte records through managed typed ownership",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add EUR e84-d83 resource index75 linked-records4.json:77 files/76 resources, all75 preceding records/payloads exact, one844-byte span and no invented dependencies.",
+    "Attach an immutable four-field typed owner with seven use counters and211-slot mask on local/global page713; compose prior metadata28 and raw successor bytes while retaining original guest indices/pointers/live dispatch and save/native/C API layouts."
+  ],
+  "validation": [
+    "Three Windows builds: first failed on test predicate and stale menu cache, second warning-free unused, third warning-free accepted 33144a8c39e141e46d78ecce60a8128353c7a96aaffb7f3fa3cfe4088beec716;551 current-source snapshot includes committed DBG baseline, both earlier551 snapshots and525 model preimages preserved.",
+    "One new Wine filter passes publication/interruption14attach2fullset/failed-owner complete-state guards and21 original-ROM/typed interpreter/native complete-state guest-clock cases with all844 raw bytes poisoned after Load/setup. Four stop-safe analysis families compile41 instructions and consume21 new/six prior bytes.",
+    "All844 bus bytes/four fields211 slots/all211 record ends, widths/mirrors/prior/raw edges, unavailable files/Load/private slot LoadUndo same owner and DMA3/CpuSet424halfwords/FastSet216words complete-state clocks pass. All237 guards/551 accepted+two551 diagnostic hashes/525 model preimages/seven current implementation hashes exact; helper retires only interrupted copy.",
+    "Initial render/default/basee8bd939/base07be4d2/metadata-only and CRLF-aware diff checks passed. Final default/basee8bd939 checks now identify only newly appeared parallel debug_audio.rs/report.html without a record; metadata-only/diff and all own guards pass. The older DBG coverage gap was resolved by the committed baseline."
+  ],
+  "limitations": [
+    "Actual production CLI create/reuse/startup and positive ordinary file consumption remain pending for this family. Existing source/model/ordinary proofs were not replayed and no new gameplay fixture was derived.",
+    "Linux, USA, native Windows, new32:9, full caller ABI, external dispatch catalogs and the full ROM TODO remain pending. No performance measurement, storage campaign, Android work, package, assistant commit or push.",
+    "General shared-workspace memory coverage now awaits the new parallel debug_audio.rs/report.html record; their files and concurrent ROM-coverage output remain untouched and are not attributed to this integration."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/records4.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/records4_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "scripts/extract_rom_data.py"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

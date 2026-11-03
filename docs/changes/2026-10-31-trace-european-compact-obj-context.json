@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "trace-european-compact-obj-context",
+  "title": "Trace European compact OBJ task context",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Document the fixed context and conditional state-6 path that queues the compact OBJ task-producing state."
+  ],
+  "validation": [
+    "Wine disassembly, authenticated EUR descriptor and branch reconciliation, and read-only checks of four retained snapshot contexts passed without modifying guarded inputs."
+  ],
+  "limitations": [
+    "The snapshots do not establish future transitions or ordinary use; the predicate and eligible scene remain unresolved. Linux, USA and native Windows remain open; no performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_obj.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

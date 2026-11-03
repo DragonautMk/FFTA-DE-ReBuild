@@ -1,6 +1,6 @@
 # Notice modal, live Giza capture, 2026-10-17
 
-MEDIDO: user's EUR runtime, DISPCNT=3F40, BG2=5C08, BG3=4A09,
+MEASURED: user's EUR runtime, DISPCNT=3F40, BG2=5C08, BG3=4A09,
 WIN0H=10E0, WIN0V=1040, WININ=001F, WINOUT=003F.
 The native Notice occupies [16,16,224,64]; BG2 contains the message,
 BG3 contains its complete background, title and frame. The action layout
@@ -23,4 +23,4 @@ Regression uses synthetic own-color tiles and verifies complete separation,
 native framebuffer/OAM identity and exact recombination. The previous Clara
 ear regression remains in the suite. No installer or original save is changed.
 
-NO MEDIDO: manual confirmation after relaunch and all other warning varieties.
+NOT MEASURED: manual confirmation after relaunch and all other warning varieties.

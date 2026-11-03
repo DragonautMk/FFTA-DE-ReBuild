@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "consume-european-script-coordinate-paths",
+  "title": "Publish European script coordinate paths and serve typed fields to original guest consumers",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "EUR e53-d52 adds script-coordinate-paths.json/engine.script-coordinate-paths as generation file48/resource47, retaining all46prior decoded files/e52 and USAe8-d7. Authenticate actual script-archive/script-command-directory dependencies and68producer links before activation.",
+    "Project one3056-byte source span through shared immutable typed index/count/XY/alignment ownership, with path/alignment counters outside guest state. Merge previous text, keys and coordinates per byte on D68; preserve raw data from D69BC4. Keep original guest copying/live RAM height/raw indices/control/clock/save/native ABI, without ROM byte shadows or a host movement routine.",
+    "Wire managed creation/reuse/repair, frontend loading/reporting, readable extraction metadata and a positive ordinary coordinate-use gate. Add two focused managed/native checks and document the actual production CLI and one complete ordinary pair."
+  ],
+  "validation": [
+    "Previous source/model/Wine/memory turn is terminal progress;273source/doc baseline matches except selected handoff. Source/model/e49/e52 and earlier native/lifecycle/CLI/pair/negative proofs remain closed. Private wiring preflight corrects match counts/older BG input-guard signature before any existing-file mutation, then applies once; six existing files are preserved as preimages.",
+    "Initial combined Windows10180build completes the affected core tests but frontend compilation fails only the new test counter array5versus4. Freeze the successful core executable, retain failed logs/jsonl/result/test source under before-counter-shape, correct only the new test and compile frontend27578warning-free. Successful core/source builds are reused, no old tests executed.",
+    "Wine30996new managed filter passes first execution:48generation files47resources/all46prior decoded/e52retained, actual archive/command dependency checks, injected publication failure and create/reuse/repair/move. Fourteen coherent/missing-file guards preserve old owner and complete state on failure; unavailable files/Load-Undo/cartridge backup restore/restart retain the same owner. All3056typed bytes/classes/210paths856points42alignment records match with the raw source span altered.",
+    "The first native filter exits9in its new test observer because a remaining0..5loop indexes four counters. Retain failed log/runner result/test source/ELF under before-native-observer-fix and native-before-observer-fix; production owner code is unchanged. Correct only observer accumulation to zip typed arrays, rebuild frontend75147warning-free, reuse successful core/managed/source proofs and rerun only the native filter.",
+    "Wine31012corrected native filter passes24original/interpreter/compiled complete-state-clock cases including four full coordinate copies and changed live map heights. Compiled API source bytes[28index,85count,76XY,2alignment]cover all four classes. Raw indices/destinations, D68text-key-coordinate owners, D69BC4raw boundary, widths/mirrors/realBIOS/CpuSet/FastSet/DMA pass.1443instructions/87PCs/143dispatches count coverage only; no whole movement-task/allocator or ordinary claim from these targeted cases.",
+    "Windows29223production CLI build is warning-free; candidate5cde5d8dc1ca4a07a167b41db7b78027884522f6538b63a3d4c4d3540137e187. Canonical executable exact hash/mtime restored; main.rs content unchanged by established mtime-only Cargo invalidation. Wine45975actual CLI creates/reuses50managed files without writes from unrelated cwd, loads old native cache and matches all48generation files to accepted dataset0d3cf2cb3f8caa30f658ec2390f481da22f3c635830fc83aa5a77df8918a9841.",
+    "The retained genuine EUR frame21420snow-betti-wait snapshot and normal6000-frame snow-auto-wait input give positive actual CLI coordinate use:25bus accesses/28aggregate sourceB=4index14count10XY, one path,0alignment. This is a new coordinate-family requirement; the old e49negative is neither reopened nor counted as coordinate evidence. No new fixture/navigation/locator repeat.",
+    "Wine76926one matching6000-frame pair from actual CLI generation/frozen successful native-retry testexe/existing cache passes every full machine state/clock/central-wide image/OAM/dispatch and mixed/PSG/FIFO/bitwise-HLE sample. Counts[13167000,13167000,1584000,1584000,13166910]; actual coordinate use equals locator28B/one path. All581hash-mtime guards pass, without build/prepare/source/native/managed repeat.",
+    "Final preservation verifies all4614prior artifact hashes and581hash-mtime guards unchanged. Against273source/doc baseline, before record/render only six selected implementation/test-shape files and seven selected memory files change; every source-model/e49/e52/other implementation/user Debug-save file and concurrent Docker work remains preserved. Both initial new-test failures are retained. Evidence under ignored target/rom-data-script-coordinates/ includes windows-managed-europe results, windows-native-retry-result, windows-cli-summary and windows-scene-result.",
+    "Generated CHANGELOG and full project-memory checks pass both default and --base7597b92; CRLF-aware git diff whitespace check passes after removing one new whitespace-only line. No semantic code change or guest/build repeat for that formatting correction. Final276source/doc hashes, protected artifact map and terminal summaries are retained as runtime-final-*.json. No live unit process, agent commit or push."
+  ],
+  "limitations": [
+    "Declared EUR source/model/shared-core/managed/native/production CLI/positive ordinary coordinate criteria are complete. Ordinary use covers one path with0alignment; other209paths/all42alignment spans retain targeted coverage. No whole movement-task/allocator ABI, global guest index/count/coordinate cap or new32:9scene claim.",
+    "New Linux/USA/native Windows checks and other asset/GUI/archive/mod criteria remain pending. Next distinct source lead is the auxiliary archive D69BC4/readerA1F8; do not repeat closed coordinate/e49/e52 proofs for context. No performance/space measurements, new gameplay fixtures/navigation, Android work, package, agent commit or push."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/script_coordinates.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/script_coordinate_runtime_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "scripts/extract_rom_data.py",
+    "docs/rom_data_scripts.md",
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_scripts.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

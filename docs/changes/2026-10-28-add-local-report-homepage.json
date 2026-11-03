@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "slug": "add-local-report-homepage",
+  "title": "Add an offline root homepage for all existing local HTML reports",
+  "kind": "added",
+  "platforms": [
+    "Offline HTML; Linux Docker and headless Chrome desktop/narrow layout"
+  ],
+  "changes": [
+    "Generate ignored root index.html from existing local index.html/index.htm pages, with category filters, name/title/path search, modification dates, three quick links and local documentation. Include historical reports without inferring validation from existence/mtime. Relative percent-encoded URLs preserve navigation when moving the whole checkout; all links work without JavaScript.",
+    "Version scripts/report_home.py and its standalone HTML template, Windows PowerShell and Linux Bash refresh launchers. Docker wrappers reuse the existing coverage image, mount the checkout readonly and disable network; host publishes only the homepage. No runtime build, extraction, coverage regeneration or game execution. Python3.9+ standard-library mode also available.",
+    "Bound discovery to1Mentries/5Kindices/64KiBtitle reads, skip service directories and symlinks, never open ROM/save/reportJSON payloads. Escape titles/paths as text, preserve literal template tokens, atomically publish after successful scan, remove ordinary temporary output and ignore generated catalog/interrupted temporary files.",
+    "Add homepage generation instructions to README/scripts docs and durable project state. Navigation checks also correct the pre-existing README LICENSE link to the existing Licenses/LICENSE file without changing license text."
+  ],
+  "validation": [
+    "Real Linux launcher reuses Docker image sha256:bb2acbc9c43515d859359828441a66e743956430476501dcf779966ce043c2d9 with readonly mount/networknone and exits0. Initial sandbox wrapper/xtrace attempts could not reach Docker and exited before generation; authorized escalation succeeds without image build/extraction. Retain generation-results.json.",
+    "Independent rg inventory exactly matches23generated report links:8coverage/5graphics/10comparisons. All35local navigation/report/document links exist; all23preexisting report HTML SHA256/mtime pairs are unchanged. Generated root index.html ignored/untracked; no report or game payload copied.",
+    "Chrome headless desktop and narrow/mobile layout checks pass23initial/reset rows, three shortcuts,5/10/8group counts, case-insensitive DS20/title search, no-result/reset state, accessible pressed state/focus/date output and no horizontal overflow. Both screenshots visually inspected; actual innerWidth1400/500 recorded rather than claiming the requested390window equals device viewport.",
+    "Temporary out-of-tree fixture verifies percent-encoded reserved/Unicode names, HTML title escaping, literal template-token preservation, symlink/service exclusion, scan-entry refusal and unchanged prior homepage. Bash syntax passes; no runtime test/build needed for static navigation. Retire two exited owned Chrome profiles with artifact-retention.json, keep results/screenshots/protected maps under ignored target/report-home-validation.",
+    "Feature/README/scripts/durable-state/handoff and one coherent record/changelog updated. Project-memory metadata/changelog and git diff --check pass. Workspace/base07be4d2 checks identify only concurrent extraction crates/recomp/src/rom_data/metadata28_scene_tests.rs without its own changed record; all homepage implementation files are covered accurately by this record."
+  ],
+  "limitations": [
+    "The catalog is a local snapshot: rerun generation after individual report create/move/delete, then reload browser. Browser refresh alone cannot scan disk. Presence/category/filemtime is navigation metadata, not proof of report validity or new ROM/scene acceptance. Known service folders and symlinks excluded; limits/errors preserve previous output.",
+    "PowerShell launcher supplied but not executed because pwsh/native Windows are unavailable on this host. Other browsers/native mobile devices and dark theme remain unverified. Docker launchers require an already-existing compatible coverage image/daemon and do not build/pull one automatically.",
+    "No runtime/source ROM extraction changes, no game/save writes, native-parity/performance acceptance, Android/Godot work, commit or push. Preserve unrelated accepted debugging and concurrent extraction work.",
+    "Global workspace/base memory coverage remains blocked by the separate concurrent metadata28 scene-test record. Do not attribute that source or extraction acceptance to homepage navigation; preserve the work and keep its own integration requirement."
+  ],
+  "files": [
+    ".gitignore",
+    "scripts/report_home.py",
+    "scripts/report_home.html",
+    "scripts/windows/report_home.ps1",
+    "scripts/linux/report_home.sh",
+    "README.md",
+    "scripts/README.md",
+    "docs/report_home.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/report_home.md",
+    "docs/development/ROM_COVERAGE.md",
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ]
+}

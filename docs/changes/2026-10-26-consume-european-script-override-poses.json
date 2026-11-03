@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "date": "2026-10-26",
+  "slug": "consume-european-script-override-poses",
+  "title": "Publish and consume forced42 and230script poses as typed European resources",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add EUR schema1/extractor64/decoder63 unit-obj-script-override.json/resource graphics.unit-obj-script-override with actual scriptarchive/normalbattle/alternatebattle dependencies, preserving the accepted model/e63data/older resource records andUSAe8-d7.",
+    "Serve only40new spans1050Bfrom immutable typed index/null/header/frame/OBJattributes/indexed4bpp fields; previous normal/alternate owners and mutable rawholes compose per byte. Keep original actor selection, flag20assignments, task pools, frame commands, DMA, VRAM, save state and native ABI.",
+    "Add two focused ignored Wine managed/lifecycle and original-interpreter-compiled complete-state-clock checks, including both newoperation2argument-copy cases and newOBJ reads. Previous source/model/96cell/sourceDMA/oldscene proofs remain closed."
+  ],
+  "validation": [
+    "At selection all357accepted source hashes matched; existing uncommittede63/source-model work preserved. Current changes are five selected integration files plus two new runtime/test modules.",
+    "Single affected Windows core/frontend testbuild32555passes warning-free, core compiledonlyf5245f1747c20b69a884405501051f16bf07e6859664ee240aae4d7e1e818856/frozenfrontendd07413a1f75d0263ebf9be25fd5415ca5a299b22c760066fae23c913f8dea9bc; no source-oracle/oldfilter/production build repeat.",
+    "Two exactnewWine21751filters firstPASS. Managed60generationfiles59resources/all58prior data-resource-coverage/e63retained/exactacceptedmodel27d6d0e0..;26attach+5dependency guards/publication failure/create-reuse-repair-move/failedattach owner+fullstate transactional/unavailableLoad-Undo-backup-Restart/sharedowner pass. All1050typedB=[0dir384index24header360frame26OBJ256pixel]/sixseq and priornormal4alternate4B retainowners.",
+    "Native27original-interpreter-compiled complete-state-clock paths pass proper/null/bodyparts/twoorientations/fullwordrawID/liveRAMframe/bothnewoperation2argument copies/newOBJ/two uploads+DMA/all40edges/mirrors/realBIOSbus/SWI-DMA/mixed2new4alternate+2new2editedrawAPI. All11722graphBpoisoned includingolder shares; compiled aggregate newroleB[0,36,6,53,56,1], actualDMA checked separately.1755instructions486PC110dispatch are coverage only; no wholeallocator/actor/ordinary inference or oldproof replay.",
+    "DatasetSHA25640a16bbce4c5f6f78329e389008c00b14ffc28150d349c7df38d3f2faa89659d; manifestfileSHA2568ebf0ef0b6e6204adda36426dece399e7c0d4b2336bce2ea4467ce23228bf014; modelSHA25627d6d0e0683f9cceb17155fbbac8c35fce9db1aceffde8c144ec66f00d1f8698. New40span1050BsourceSHAe47c73e8b278c7894b5f6fa2fb875850ef91474fa0e1a9779bf72ad7a2d5488a unchanged.",
+    "Final preservation passes9777prior artifact hashes/1297build+1299Wine exacthash-mtime guards/all18compiled source-preimages/five selected integration preimages; accepted source model unchanged and no unrelated implementation changes.518local feature links/new-module rustfmt/project-memory default+base1e738db/CRLF-aware whitespace pass. Canonical/ROM/cart/states/input/cache/TCC/datasets preserved; no private tracked artifact or live task process.",
+    "Single changed-implementation Windowsproduction build39752warning-free/frozen8a987e992153db0b7d01ecea8e494f60b593c5944e3ce9fe815f0c3186e3d296. Canonicalf3e277db..exacthash/mtime1792570130397888519restored in finally, main.rs content unchanged/mtime-onlyCargo invalidation. ActualWine28232CLIcreate/reuse60generation62managed/all60byteequalaccepted/no-write from unrelatedcwd/oldcache exits0. Oneframe immutableF09attachesnewowner withzero newusage, compatibilitysmokeonly, no ordinarypositive/fullscene or previous acceptance replay.",
+    "ActualCLI final preservation passes10117prior artifact hashes/1362CLI exacthash-mtime guards/all18runtime compiled source-preimages and allimplementation hashes unchanged.368local feature links/project-memory default+baseac34c8a/CRLF-aware whitespace pass; canonical exacthash+mtime restored, maincontentunchanged. No liveprocess or private tracked artifact.",
+    "New exactsix-sequence read-only81EURsnapshot check finds zero enabled/dormant matching bodytasks for42/(32,33,40,41) and230/(32,33), allpart0. Every header/payload/ROM/before-after inputhash+mtime is authenticated; old606alternate/sevennormal/twoalternate scans are not replayed. No guest/build/navigation/checkpoint/fullpair selected from this negative lead; ordinarynewpixel/equivalence stays open."
+  ],
+  "limitations": [
+    "Managed publication, targeted runtime/lifecycle/native complete-state-clock and actualproductionCLI criteria closed. Ordinarynewpixel/fullscene remains separate and pending; no whole actor/allocator/scheduler ABI or universal low/high selector reachability/current-identity claim.",
+    "NewLinux/USA/nativeWindows/new32:9 and highregistry/changed-currentactor source paths remain pending. No performance/storage measurement or optimization, Android change, packaging, commit or push."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/unit_obj_script_override.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/script_override_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "scripts/extract_rom_data.py",
+    "docs/rom_data_unit_obj.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_graphics.md",
+    "docs/rom_data_obj.md"
+  ],
+  "references": [
+    "docs/rom_data_unit_obj.md",
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

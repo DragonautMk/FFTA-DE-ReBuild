@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "slug": "classify-european-encounter-unit-templates",
+  "title": "Classify European encounter unit-template fields and shared ownership",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Define the header-linked2850-by48-byte encounter unit-template source contract at6EA048..70B6A8. Separate actual byte/halfword/bitset/control readers and opaque tail; retain dynamic bit-index and live importer rules, without observed-value caps or guest algorithm replacement.",
+    "Partition136608new source bytes into two fragments excluding192constructor-owned bytes, records225..228/header29. Require full48shared coherence/header partition; identify item/metadata14/metadata52 reference owners and preserve unowned descriptor1 metadata prefix."
+  ],
+  "validation": [
+    "Static source-only checks pass all2850independent full-record projections/442cachedheader groups,14250equipment references to376items, actual metadata14/job owner references, shared-record coherence and disjointness against49795spans/72owners.",
+    "Five new bounded windows plus three reused windows pass39instruction pins/four directBL targets and41actual preservation guards; artifacthelper0paths. No build/Wine-Linuxruntime/game/fixture/newglobalcensus/closedacceptance/performance. Private preparation path/manifest-role assumptions corrected before final source outputs, no implementation or test failure."
+  ],
+  "limitations": [
+    "Strict lossless model and focused Wine original-reader proof are next; managed extraction/runtime/CLI/ordinary consumption remain open. Static fields are not full importer/all-caller/bitset-execution or global template catalog proof. Schema1/e80-d79 and USA8-7 unchanged.",
+    "Coordinatepool/Linux/USA/nativeWindows/new32:9/fullROM_DATA_TODO pending. No performance/storage campaign, Android/package, assistantcommit/push; existingparallelDebug work preserved."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_maps.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_maps.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

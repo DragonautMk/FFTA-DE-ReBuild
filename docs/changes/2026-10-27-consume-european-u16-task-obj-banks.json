@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "slug": "consume-european-u16-task-obj-banks",
+  "title": "Publish and consume European u16 task OBJ bank fields",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "EUR e77-d76 appends graphics.word-task-obj-animations/word-task-obj-animations.json: fourbanks50lists140objects/7sequences49frames/65source spans1378B,70generationfiles69resources; all68previous resource records/files unchanged, USAe8-d7 retained. Strict source binding/fullset/transactional managed attach and registration/field-host usage reports.",
+    "New immutable runtime owner on pages411/416 projects typed relative indices/counts/attributes/sequence headers/frame selectors/durations through guest/native/DMA/BIOS and host OBJ list lookup. Extract pure old projection helper with original body/pagegate preserved; original u16task timing/indexing/return/rawoutside behavior and Machine/cache/CAPI/save formats unchanged."
+  ],
+  "validation": [
+    "First Windowsfrontend build warning-free/frozen5f03118a23b57d8431f58bc8698b10e657fbb0b7623cfbca126f294338b34da0. Wine sequential managed PASS70files69resources/all68old exact/newfileinterruption/9failedattach/2fullset with owner/fullstate retained; native PASS27original prefixes7ctor20update/202explicitcompiledsourceB/68instructions/complete state-clock with65spans poisoned; bus PASS1378B/6classes/217mixedreads/66rawgapB/oldanimationwrapper/loadslotUndo missingfile owner retention/DMA3 fullstate-clock.",
+    "First Wineprocess ended without terminal result after passing stages; retained log/testpreimage/exe/stagedreceipts, not claimed fullfilterPASS. First remainingbuild compiled cleanly but post-sourceguard rejected two concurrentDBGsource changes, no acceptedexe/Wine run. Stable sourcesnapshot hostbuild failed E0616 in test-only private-field access; preserve failed diagnostics, correcttest assertions/origin and isolate50frames to avoid old pending descriptors. Correct test-only assertion and OAM/register origin, use50distinct syntheticframes to avoid accumulating old descriptors. Final stable-snapshot Windows build warning-free/frozen0df23c7f90f46b7a35de6e04fba0043eccbd39ac55fabd1bae0e0be36488e1fe; one remaining-only Wine filter passes50lists/140OBJ/95typedhostreads, all65rawspans poisoned, OAM publication accepted per list and raw/typed descriptors identical. Earlier closed stages not replayed.",
+    "All165selected input-output-frozen guards/496stable snapshot sources/currentROMimplementation inputs exact; first622input guards passed pre-Wine and after staged receipts before continuation edits, later parallelDBG drift preserved. Requiredartifactcompletion retires only one accepted injected interrupted copy; failed/currentexes/logs/preimages and accepted70filedataset retained. Dataset27463ce4f7ffccc3d0b9c8ab5ee78160a3e1c844ed80f68768f9adea87cb7757, manifestd6061a94f56214478fe6dc9b00eef3aa547691577cfb04df5dc412b93ddc56aa, newJSONd207dfae8a08050e7b59c573d9813b841858ed69955d7c22de0332402fee2706.",
+    "Projectmemory render and task-scoped/new-leaf rustfmt/CRLF-aware whitespace pass. Required default/base2fbf9f7 checks report only seven concurrentDBG-02 implementation files awaiting their separate record, not ROM runtime files; preserve that work without inventing its validation or changelog."
+  ],
+  "limitations": [
+    "Conditional declared source prefixes only; seven unreferenced lists/three emptysequence headers do not prove ordinaryreachability/empty updater hold/fullarchive/indirect inputs/tasklifetime. ActualCLI and positive ordinary use remain open children; prior source/model/Bank census/scene acceptance is not replayed.",
+    "Linux/USA/nativeWindows/new32:9 pending. No performance/storage measurements, normalfixture navigation/edit, Android/package/assistant commit/push. ConcurrentDBGchanges preserved and separate; fullROM_DATA_TODO remains active."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/obj_animations.rs",
+    "crates/gba-core/src/rom_data/runtime/word_task_obj_animations.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/word_task_obj_runtime_tests.rs",
+    "scripts/extract_rom_data.py",
+    "docs/rom_data_obj.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "scripts/README.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

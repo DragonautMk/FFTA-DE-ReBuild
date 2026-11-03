@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "slug": "trace-european-world-location-selector",
+  "title": "Trace European world placement coordinates with one passive source capture",
+  "kind": "changed",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add a feature-gated optional one-neutral-frame source/site and raw-RAM capture for retained normal EUR world checkpoints. It reuses the existing read-audit API without changing runtime/resource/schema/cache/save behavior.",
+    "Correct task-count and literal-address inspection errors; bind actual03002810world context,375F8node/hitbox/centering and385CCplacement projections. Prove Giza region7/node20/source395E24 is placed at112,296 and retain nearby normal21cursor128,287. Newly identified30-node20-byte family has only first2coordinate bytes classified; extraction/runtime remain open."
+  ],
+  "validation": [
+    "One warning-free Windows test build from stable497-source e77 snapshot, frozen0fdfb630b8f5174c549f5f7534a2cd81b6312c054c46b6a337d006e12f3eed85. One Wine neutral frame18829\u219218830 passes2232reads2276sites323scoped; raw EWRAM matches retained parser byteexact. No new navigation, equivalence campaign or old acceptance replay.",
+    "152 actual input/dataset/output guards,497 stable source hashes and32 bounded source-window hashes pass. Exact originals/70 dataset files/current production executable preserved. Artifact helper completes zero disposable paths; source preimages, current audit executable, private logs/raw RAM retained.",
+    "Memory render/default/base2fbf9f7/metadata checks, CRLF-aware whitespace and new heading pass;152 preservation guards and497 source hashes pass after retention."
+  ],
+  "limitations": [
+    "Site scope covers interpreter/HLE reads; native/host can beNone, nested access scope requires opcode validation. This is not all-PC liveness or scene equivalence. Old03001028probe was a wrong-address inspection, not rejection of the actual world layout.",
+    "Actual Giza battle entry, eligible actor and all-four-phase/all-four-list guest/host constructor use remain open before fullpair. Remaining18node bytes/full schema/model/extraction/runtime, full ROM_DATA_TODO, Linux/USA/native Windows/new32:9 remain pending. No performance/storage campaign, Android/package, assistant commit/push; parallel DBG work preserved."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/world_location_read_audit_tests.rs",
+    "docs/rom_data_maps.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_maps.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "trace-european-compact-obj-ui-selection",
+  "title": "Trace European compact OBJ candidate selection",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Document the conditional candidate construction, indirect evaluation and selected-field copy for the compact OBJ task route."
+  ],
+  "validation": [
+    "Original EUR Wine disassembly and authenticated dispatch, constructor and callback pins passed; read-only checks of two fields in three retained snapshots preserved inputs."
+  ],
+  "limitations": [
+    "Evaluator output, candidate-table production, an eligible retained input and ordinary resource use remain unproved. Linux, USA and native Windows remain pending; no performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_obj.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

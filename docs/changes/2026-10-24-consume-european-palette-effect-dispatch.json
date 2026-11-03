@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "consume-european-palette-effect-dispatch",
+  "title": "Publish European palette-effect callback slots for original runtime dispatch",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Advance EUR to e45-d44 with palette-effect-dispatch.json/graphics.palette-effect-dispatch:40files/39resources, all38prior decoded files/e44retained; USAe8-d7. Register the independent17slot/68Bprojection with exact source bindings and whole-set transactional authentication.",
+    "Original CPU/DMA/BIOS/native reads reconstruct guest Thumb words/nulls from typed fields. Nonserialized callback/null byte counters and17slot mask observe use; live object state/u16kind, outside raw data, callback code, clocks, RAM and save/native ABI remain original. No host callback rewrite or executable-helper asset migration."
+  ],
+  "validation": [
+    "Windows67564managed test build warning-free; Wine46138two reduced publication/authentication/lifecycle and original-interpreter-native checks terminal/pass.40files/39resources/all38prior decoded/e44retained. Publication failure/create-reuse-repair-move/12coherent field-source-binding-dependency-path-hash guards/missingfile transactional owner and unavailable-copy Load-Undo-backup-Restart pass.",
+    "All68typed bytes(20callback/48null) and17slot mask read correctly with raw68B altered.10newrepresentative lookup/inactive-state original/interpreter/native paths match complete states/clocks, compiled[24callback,4null]B. Liveu16kind/highwordtruncation/null/inactivegate/raw17-65535nativefallback/allboundaries-widths-mirrors-realBIOS/SWI-DMA/twotyped-tworaw words pass.48instructions/8PCs/10native dispatches coverage only; not fullcallback/allocator ABI.",
+    "1226oldprotected artifacts plus frozen currenttestexe unchanged; no build/Wine failure or old31source/e44/earliergraphics acceptance repeat. Private target/rom-data-palette-effects/{windows-managed-tests.*,windows-managed-results.json,windows-{managed,native}.log,recomp-tests-managed.exe,windows-managed-europe/{managed-result,native-result}.json} retain evidence. ProductionCLI and onepositiveordinary proof selected separately.",
+    "ProductionWindows95401warning-free privatecandidated4f296712164852968b9a59f2184de5869ad6b778e07a853204f3ddf8db37fb3; canonicalf3e277dbrestored. Wine56076actualCLIcreate/reuse-no-write42managedfiles/oldcache/unrelatedcwd/neutralEURboot240 pass; callback/null use0. This locator is closed negative/no fullpair run; onepositiveordinary transition remains missing. Original inputs/data hashes-mtimes unchanged; windows-{build,cli-processes,cli-no-write,cli-summary}.json retain results.",
+    "Wine60304one newnormal English-confirm transition locator1000frames passes1486reads/5944callback-byte reads/null0/slotmask2(kind1only). A240/release252thenneutral input is an intentional new normal transition after visually verifying English highlighted; no RAM/statepayload/save edits or new snapshot. Prior neutralboot240closed0use is not repeated; no fullpair was run for that negative locator.",
+    "OneWine35467new e45positiveordinary1000pair passes everycomplete state/clock/central-wideimage/OAM/native-fallback dispatch behavior/mixedPSGFIFOHLEaudio sample with same5944aggregate source-byte reads/slotmask2. First0/native2803110/fallback1056100 are coverage only. Audio samples[2193846,2193846,263212,263212,2172508]. Onlykind1 observed, fourothercallbacks/nullslots targeted-only; no global callback ABI/domain claim.",
+    "Final568x160language-confirm CLI image inspected: ordinary ProductDevelopment Division-4 Presents intro/snow scene. Closed source31/native10/e44/earlierUIpalette acceptance not repeated; no new build/Wine failure. Private windows-language-transition-result.json/windows-scene-result.json/windows-language-confirm-palette-dispatch-full-state-audio.log/language-confirm.input/language-confirm.png retain results. ProductionCLI criterion complete; ordinary transition criterion complete for declared scope.",
+    "Final project-memory including --base7597b92and CRLF-aware whitespace checks pass; 1515protected artifacts retained, all1444prior hashes and42CLIhash-mtime guards unchanged. ordinary-final-summary/ordinary-final-protected retained; no live unit process, fullTODOgoal active."
+  ],
+  "limitations": [
+    "Ordinary scope is one normal EUR English-confirm1000frame intro transition with5944aggregate byte reads ofkind1(slotmask2), not distinct bytes or general execution coverage. Fourother callback kinds and nullslots remain targeted-only. Internal lookup/state prefixes do not prove whole palette callback/allocator ABI, arbitrary liveRAM validity or full physical table extent. Neutralboot240was closednegative0newuse with no fullpair.",
+    "Ten already protected hash-distinct EUR snapshots inspected statically have no effect list at their saved instant; no replay or new snapshot was used for that selection. Broader palette-effect parameter/program producers and other assets/families/GUI-archives-mod remain open. New Linux/USA/nativeWindows pending; no performance-space campaign/AndroidPort/commit-push or lost concurrent edits."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/palette_effect_dispatch.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/palette_effect_dispatch_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "scripts/extract_rom_data.py",
+    "docs/rom_data_graphics.md",
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

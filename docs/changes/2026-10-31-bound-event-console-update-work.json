@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "bound-event-console-update-work",
+  "title": "Bound event console work and handle unavailable audio taps",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU build",
+    "Wine"
+  ],
+  "changes": [
+    "Bound console serialization to32 accepted events per frontend tick, count budget drops, retain encoded events with bounded indexed text, share immutable entries with the paused snapshot and decode only visible rows during redraw.",
+    "When a restored snapshot disables channel taps, host pacing and callback use available faithful mixed audio instead of waiting forever for absent PSG data; requested enhanced preference and serialized snapshot remain unchanged. Sync availability at frontend seed load and state restoration."
+  ],
+  "validation": [
+    "Windows GNU test and production builds pass without compiler messages. Wine3model tests and1direct-recent identity test pass. A new synthetic128000-event/2000-tick burst counts64000budget drops and63549evictions, remains within serialized/index limits and keeps a32-row frozen snapshot unchanged; observed426ms under Wine for this test only.",
+    "Identical public synthetic seed and runtime: two isolated Wine GUI sessions perform10controlled frames with console off/on. Full state hash, registers, keys, frame and clock match; wall time including control client0.444s/0.471s. Both paused audio queues zero.",
+    "Separate live Wine/Xvfb runs with console on/frozen and off expose the same pre-existing synthetic audio anomaly: PSG queue0, mixed queue about61572\u201364198 samples and DEGRADED drops. It remains under the65536 sample ring capacity but is not accepted as healthy audio. Both sessions closed and inputs preserved; investigating pacing before claiming DBG2-12 completion.",
+    "Console-off discriminator reproduced the same saturated mixed queue as console-on. Read-only Sol/xhigh consultation identified serialized tap availability as the cause; effective model/effort were not independently exposed. A focused callback/state/pacing regression and host-only correction are written but uncompiled.",
+    "Host-only audio correction Windows GNU test+production builds pass without compiler messages, final runtime4a98b7a721c2bb3fb2b6f1e9fe351cb519ca64571b869b98a5e8bfa7efc5fe44. Wine new faithful fallback/pacing/snapshot test and3existing callback/reset regressions pass. A zero-match initial filter is retained but not counted.",
+    "After correction, fresh Wine/Xvfb synthetic live observations show mixed queue1772\u20135792 samples with console open/frozen and7068\u20137808 with console off, PSG0 in both, no DEGRADED ring-drop log in either; prior saturation evidence retained. No claim of audible quality or native hardware.",
+    "Same10controlled-frame sequence after audio correction produces identical full origin/end state, registers and clock with console off/on, and matches the earlier pre-fix state. One observed wall time including client startup was0.440s off and0.484s on; not a general or native performance estimate. All test GUIs/displays closed and source/input pins verified."
+  ],
+  "limitations": [
+    "Serialized/index byte limits and row limits are explicit; allocator and graphical surface overhead are not measured as an exact RSS cap. Long-running native platform overhead, physical audio and audible quality are unverified.",
+    "Concurrent ROM/export work excluded from the selected frozen build and preserved; no package, commit, push, private game input or earlier benchmark replay."
+  ],
+  "files": [
+    "crates/recomp/src/debug_console.rs",
+    "crates/recomp/src/debug_console_panel.rs",
+    "crates/recomp/src/play.rs",
+    "crates/recomp/src/main.rs"
+  ],
+  "references": [
+    "docs/debug_events.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

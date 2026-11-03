@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-10-30",
+  "slug": "verify-european-world-records38-cli",
+  "title": "Verify actual European world-record CLI creation and startup",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Close actual e90-d89 productionCLI registration/create/reuse/startup for world-records38, using SAME accepted592-source runtime snapshot and restoring the canonical executable hash/mtime.",
+    "Keep ordinary positive consumption and full scene equivalence open: copied existing checkpoint advances one neutral frame only, with all eight source counters zero."
+  ],
+  "validation": [
+    "One warning-free592-source production build6d95f7050cbddf6e8143961f81f66928224e44e8c6c0529f9af4538d76374f7c; one Wine orchestration/three commands exit0: create generation, reuse generation, neutral frame24755to24756 from authorized checkpoint copy.",
+    "All83 generation files match accepted runtime; all82resourceIDhashes/index81/nodeps/one1178Bspan exact. All85managedpath hashmtime values unchanged through reuse/startup; old nativecache28859blocks unchanged.",
+    "201preservationguards/592CLI+592runtime source hashes/ROM-originalseed-nativecache-TinyCC-canonical exact. No source/model/runtime/oldCLI/ordinary proof or fixture/navigation replay, no performance campaign.",
+    "Final project-memory default/base35920d8/metadata and CRLF-aware whitespace checks now pass. Earlier independent parallel DBG selection coverage gaps are resolved by their own records, with no ROM proof replay. Successful-unit retention removes no paths; inherited private task label corrected offline."
+  ],
+  "limitations": [
+    "Positive ordinary suffix/use/fullstate-clock-image-OAM-audio equivalence remains pending; zero-count neutral startup proves registration only.",
+    "FullroutineABI/helpers/RNG/liveeffects/opaque-outside-indirect semantics/Linux-USA-nativeWindows/new32:9/fullROMTODO remain pending. Sparse27 ordinary reachability stays partial.",
+    "Parallel DBG/menu work preserved/excluded; its validation is not attributed."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

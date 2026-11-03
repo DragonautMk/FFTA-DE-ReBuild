@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "date": "2026-10-22",
+  "slug": "consume-european-pointer-and-relative-text-catalogs",
+  "title": "Consume European pointer strings, relative text programs and fonts through original CPU and native readers",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Retain the authenticated full tenth-file text model with fixed EUR source pages and typed pointer/string/archive-index/header/program/glyph/metric reads; preserve crossing-read prior bytes and eight separate source-kind counters.",
+    "Map custom-LZ literal bytes to typed decoded program units, terminator and padding while retaining exact original header/token controls. Keep all dynamic substitution, original expansion/copy/render/decode work, instructions and guest clocks.",
+    "Avoid duplicate overlapping read ownership: e12 full catalogs own their ranges while the earlier short-text subset remains authenticated/verified-only. Preserve e12-d11 file formats, snapshot/source/native ABI and cache identity."
+  ],
+  "validation": [
+    "Warning-free Windows release test build; three reduced Wine checks pass: synthetic source widths/mirrors/edges/prior-byte merging, compact/extended/zero-operand/compressed literal paths, glyph486/last font page, BIOS bus mode/SWI/DMA/load; original/interpreter/native provenance; unavailable-copy lifecycle.",
+    "With all 33581 raw source ranges altered after attachment, 15 chains across five language IDs and three encoding/compression forms match complete serialized states and clocks after every 90 calls. Compiled read APIs consume 60 pointer-table, 81 string, 30 archive-index, 30 header, 396 encoded-control, 434 decoded-program, 1892 glyph and 18 metric bytes. Coverage is 30840 original instructions/3093 native dispatches, not timings.",
+    "The synthetic check also alters duplicate retained encoded literal bytes, proving decoded glyph/command/terminator/padding provenance. Fixed-width metrics and explicit valid nullable text context1 preserve the original reader contract. The closed 300-case offline oracle is not repeated.",
+    "Failed activation with only temporary copied files unavailable preserves machine/owner; Load/Undo, backup recovery and Restart retain the same model/counters and typed reads after raw source alteration. Original ROM/slot/e12dataset/cache/loader/canonical hashes remain intact.",
+    "Current source/protected/dataset hashes, project-memory coverage and CRLF-aware whitespace checks pass."
+  ],
+  "limitations": [
+    "New Linux and USA checks remain pending by user instruction; no native Windows or AndroidPort claim. BIOS bus mode does not prove actual BIOS-code execution.",
+    "Ordinary gameplay and actual production-CLI consumption for the broad catalogs, complete reader/font/Unicode coverage, other families and mod phases remain open. Controlled reader chains are not ordinary scene acceptance.",
+    "No new recording, production CLI/scene repetition, broad suite, performance/profile/startup/RSS/space measurement or packing work."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/text_catalogs.rs",
+    "crates/gba-core/src/rom_data/runtime/text_catalog_tests.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/text_catalog_runtime_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_text.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

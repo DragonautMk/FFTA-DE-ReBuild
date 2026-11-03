@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "add-debug-command-context-completion",
+  "title": "Add contextual debugger command completion",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Add bounded, quote-aware command completion for names, supported options, values, selected catalog/profile IDs and the current pending request ID, preserving tokens around the cursor.",
+    "Show contextual command syntax in the panel and reuse the same completion for keyboard and controller without submitting or executing the draft.",
+    "Allow repeated Tab or the controller Complete key to cycle ambiguous suggestions in the draft, invalidating the cycle when the draft or candidate sources change."
+  ],
+  "validation": [
+    "Standalone host completion3/editor2 pass; an initial test used an invalid hard-coded cursor and was corrected.",
+    "Isolated Windows GNU test and production builds pass without compiler messages; Wine completion3/editor2/parser4 pass. The 1512 frozen source files and 22 overlays match.",
+    "Actual Wine/Xvfb console: completing --k at an interior cursor preserves the following value; keyboard Tab and simulated XInput Complete cycle watch read/write in the draft without publishing a command. Full guest state/frame0/clock0, runtime and synthetic helper match; GUI/display closed with session pins exact.",
+    "Win32 SetWindowPos at a 480×360 client showed the contextual watch syntax over two readable lines; keyboard grid remained visible."
+  ],
+  "limitations": [
+    "DBG2-13/14 remain open: live replay profile selection, real pending cancellation/deadline and full menu/CLI/console equivalence are not verified.",
+    "Physical controllers, native Windows/Linux runtime and IME/clipboard interactions remain unverified; dynamic pending-request completion is covered by synthetic model tests, not an active-job GUI proof."
+  ],
+  "files": [
+    "crates/recomp/src/debug_command.rs",
+    "crates/recomp/src/debug_command/editor.rs",
+    "crates/recomp/src/debug_command/completion.rs",
+    "crates/recomp/src/debug_command_panel.rs",
+    "crates/recomp/src/play.rs",
+    "crates/menu/src/command_console.rs"
+  ],
+  "references": [
+    "docs/debug_operations.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

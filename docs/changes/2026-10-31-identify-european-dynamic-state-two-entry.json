@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "identify-european-dynamic-state-two-entry",
+  "title": "Identify European dynamic task state two entry",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Document conditional original task paths into the dynamic-transfer menu state."
+  ],
+  "validation": [
+    "Authenticated dispatcher table and five original Windows disassembly windows under Wine; no gameplay replay."
+  ],
+  "limitations": [
+    "Task registration, a user-facing scene and an eligible menu entry remain unproved; Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_ui_raw_transfers.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_raw_transfers.md"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "model-multiple-eur-shop-category-events",
+  "title": "Model multiple EUR shop category replay events",
+  "kind": "docs",
+  "platforms": [
+    "Linux interpreter and modeled replay dispatch; GUI untested"
+  ],
+  "changes": [
+    "Extend the isolated shop category replay comparison to three spaced changes and a return to the initial category."
+  ],
+  "validation": [
+    "Events 1025, 1026 and 1024 reproduced category sequence 0 to 1 to 2 to 0 with matching serialized-state hashes and clocks for 240 completed frames; protected inputs unchanged."
+  ],
+  "limitations": [
+    "The model bypasses the rejecting parser and missing application dispatcher; it does not cover rapid changes, physical input, item selection, native, USA or GUI. Two unused-code warnings.",
+    "Managed cleanup rejects non-rom-data U31 units; diagnostic evidence remains isolated."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-02-scrollbars.md"
+  ],
+  "references": []
+}

@@ -249,6 +249,14 @@ fn bit_unpack<B: Bus>(cpu: &mut Cpu, bus: &mut B) {
 fn lz77_uncomp<B: Bus>(cpu: &mut Cpu, bus: &mut B) {
     let mut src = cpu.regs[0];
     let dst = cpu.regs[1];
+    if let Some(palette) = bus.decoded_base_palette(src) {
+        write_out(bus, dst, palette.bytes());
+        return;
+    }
+    if let Some(packet) = bus.decoded_packet_body(src) {
+        write_out(bus, dst, packet.bytes());
+        return;
+    }
     let size = (bus.read32(src) >> 8) as usize;
     src += 4;
 

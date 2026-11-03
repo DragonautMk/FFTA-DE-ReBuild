@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "consume-european-two-byte-forward-inverse-map",
+  "title": "Consume European byte-pair map through managed typed runtime ownership",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "EUR e28-d27adds fixed linked-metadata2.json/resource gameplay.linked-metadata2 with parsed metadata52key-owner dependency. All23files/22resources authenticate transactionally; all21prior decoded files/e27generations retained, USAe8-d7unchanged.",
+    "Project exact typed stored-key/value bytes into existing CPU-DMA-native source reads, merging prior metadata4ownership on crossings. Preserve44forward/43inverse extent, duplicates/first storedkey/miss0/u8truncation/live caller instructions and work/clock/save/native ABI. Nonserialized counters gate new-family use; extractor helper lists readable output.",
+    "Add two focused managed/lifecycle/native checks and a separate positive ordinary Pub mission scene gate to the shared full-state/image/audio oracle. Preserve original source348+13acceptance without repeating it."
+  ],
+  "validation": [
+    "Initial Windows95465compile found three existing budget-test calls lacking the new zero argument; corrected without budget behavior change, failed logs retained. Corrected91568test build and98775production build warning-free; canonical restored, candidate SHA08ba02398786d8dca0788bf7b7e043771366a0022218806bf83cf0b2e58cc1dd.",
+    "Wine80052two checks terminal/pass: publication interruption/create/reuse/repair/move/e27retention/all21olddecodedfiles, coherent key/value/lastrow/reorder/source/dependency/path/role transactional rejection/parsed-key-owner bounds and unavailable-copy Load/Undo/backup/restart.",
+    "21sampled original/interpreter/native direct/inverse/live-byte paths with all88new rawB altered match complete states/clocks;1705instructions/28dispatches are coverage only. Compiled7key/235valueB; allbytes/edges/widths/mirrors/real-BIOS bus/CpuSet/FastSet/DMA4B and crossing2oldmetadata4+2newmetadata2typedB pass.",
+    "ActualCLI16539prepares/reuses e28without writes/oldcache/unrelatedcwd. ChangeJobs540and PubRumors560/bounded230,290,365,B-return480/Missions620,1260locators are coverage-negative and preserved, with no full pair on them. Existing Pubmenu contract resolves root order and native separated panels absent from PPM; corrected ordinary mission confirmations in CLI24738read4newvalue/0keyB.",
+    "One1840frame Wine2490Pub mission pair passes every complete state/clock/central-wide image/OAM/dispatch/mixed-PSG-FIFO-HLE audio sample and same4newtypedvalueB. FinalPubbackground image inspected; selected unit and full mission outcome not inferred. Retained Pub snapshot/input justified by new88Bfamily/separate use gate; no RAM edit/new recording/persisted save write or old source/native/lifecycle acceptance repeated.",
+    "Protected originals/e27/source fixtures/cache/loader/canonical/candidate and25CLI managed file-set/hash/mtime guards pass; final memory/whitespace/source hashes recorded at closure. All unit jobs terminal; no agent commit/push."
+  ],
+  "limitations": [
+    "Ordinary replay proves4valueB; inverse stored-key reads remain targeted-only. Direct indices>=44/global caller preconditions/whole surrounding functions/semantic value names remain unproved. No bounds fallback or original-instruction shortcut introduced.",
+    "Native separated Pub panels are absent from the final PPM; background image alone does not prove picker selection or complete mission outcome. Negative locators are not ordinary-use acceptance.",
+    "New Linux/USA/native Windows and broader gameplay/maps/audio/GUI/archive/mod remain pending. No performance/startup/RSS/space campaign or AndroidPort change. Private ROM/saves/inputs/source fixtures/generated native code remain ignored."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/metadata2.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/metadata2_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "scripts/extract_rom_data.py"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

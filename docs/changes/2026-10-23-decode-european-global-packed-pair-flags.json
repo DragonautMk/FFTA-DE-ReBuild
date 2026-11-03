@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "decode-european-global-packed-pair-flags",
+  "title": "Decode the proven European global packed-pair extent and original live-mask filter",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Add strict GlobalPairFlags/Catalog for44two-bit fields/11B6e7994..6e799f, fixed11groups of4values0..3/sourceoffset/allbits. Original single root1377a2->1377b0 and live-mask loop0..43 bound minimum extent; next independently rooted6e79a2leaves3Bunowned, no12Bstride/padding/semantic owner inferred.",
+    "Keep finite diagnostic None separate from original ignoredr0/signed-wrapping slot/u8mode and liveRAM-mask earlyexit. Current managed EUR e32-d31/27files/26resources and USAe8-d7unchanged at source boundary."
+  ],
+  "validation": [
+    "Independent exactEUR original/next roots/reader/call/loop opcodes,11Broundtrip/noe32overlap pass. Windows91155warning-free and Wine35647single new oracle terminal/pass, no build/Winefailure.",
+    "102real/all44bothbits/modes/ignoredargument/liveempty-all-sparse-tail-only-single masks,10raw padding/nextroot/negative/wrap and91isolated synthetic highbit/full44scan/earlyexit cases pass. Exact read-address sequences/answers/callee/stack/liveRAM/strictJSON/fixedgroups/pairrange/sourceoffset/coherentedit/authentication guards pass; synthetic unauthenticated/unpublished.13601instructions/70PCs coverage only.",
+    "All35protected ROM/e32/candidate/cache/loader/canonical/sourcefixtures unchanged; old indexed/native/scene proofs not repeated. Structured memory/feature/state/inventory/TODO/handoff/changelog and final checks/source hashes recorded; no agent commit/push."
+  ],
+  "limitations": [
+    "Source-only proof. Managed publication/direct CPU-DMA-native/lifecycle/positive ordinary use remain pending. High-mode ordinary use, semantic labels, other callers/conditions and three adjacent bytes remain unclaimed.",
+    "NewLinux/USA/nativeWindows/broader graphics/text/maps/gameplay/audio/mod remain pending; no performance/startup/RSS/space campaign or AndroidPort change. Private ROM/sourcefixtures/saves/generated data remain ignored."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/global_pair_flags.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/global_pair_flags_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

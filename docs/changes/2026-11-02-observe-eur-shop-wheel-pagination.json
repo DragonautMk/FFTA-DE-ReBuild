@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "observe-eur-shop-wheel-pagination",
+  "title": "Observe EUR shop wheel pagination against control",
+  "kind": "docs",
+  "platforms": [
+    "Linux interpreter, EUR fork core; GUI untested"
+  ],
+  "changes": [
+    "Identify a catalogued EUR overflowing shop list and compare bounded wheel pagination with a no-input control."
+  ],
+  "validation": [
+    "At 300 frames the validated list had seven items and four visible; six down and six up requests moved first index 0 to 3 and back while the control stayed at 0. ROM, checkpoint and input hashes were unchanged; isolated release build had no warnings."
+  ],
+  "limitations": [
+    "No GUI wheel, scrollbar drag, native dispatch, upstream execution, USA or Android result. A separate frame-600 request was refused after the scene changed; the managed cleanup helper does not accept U31 units."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-02-scrollbars.md"
+  ],
+  "references": [
+    "docs/ffta_shop_bank_mouse.md"
+  ]
+}

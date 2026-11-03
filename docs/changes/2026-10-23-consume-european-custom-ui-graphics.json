@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "consume-european-custom-ui-graphics",
+  "title": "Consume European custom UI graphics with original returned-length uploads",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Independently root nine raw custom UI graphics banks through ten literal decoder/upload paths, eight BG sources and one OBJ source used twice: nine disjoint ranges/57038encoded bytes/84160decoded bytes. Extend the bounded73caller inventory only with independently proved decoder-returned size and both destination classes, preserving the earlier incomplete-scan limits.",
+    "Reuse the existing custom_lz/Graphic exact raw-u32word/encoded-metadata contract in a separate source-authenticated UI catalog. Check original root literals/decoder and transfer BLs, strict JSON/ordering/overlap/extent/coherent-edit guards. Retain mixed decoded subregions without inventing pixel/RGBA semantics.",
+    "Publish EUR schema1/extractor21/decoder20, fixed ui-graphics.json/resource graphics.ui-custom-banks, seventeen files/sixteen resources. Every fifteen previous decoded files remain byte-identical, e20/older generations retained, USA stays e8-d7.",
+    "Serve custom-codec literals from typed decoded words and headers/tokens from exact metadata through shared CPU/DMA/native/guest-BIOS source views. Keep original decoder-returned length, count shifts/masks, live scratch, full uploads and43bc28partial544of2944byte BG copy. PPU reads resulting live VRAM; no added host ROM consumer/HLE shortcut. Nonserialized family/per-bank counters establish ownership; save/native identity and ABI remain source-equal."
+  ],
+  "validation": [
+    "One reduced EUR Wine original-source check passes nine independent source/output hashes, deterministic strict JSON/source/coherent-edit guards and all ten original decode/upload paths: exact r7consumed cursor/r9produced count/r0returned length, original transfer controls/destinations, scratch output/guards and whole VRAM.1368457instructions are coverage only. Initial new-source fixture incorrectly seeds143f0cincoming r5as scratch instead of the original inherited143f6cmask; failed logs retained and only this failed new-source oracle is repeated after correction. Windows source builds warning-free.",
+    "Two focused EUR Wine integration checks pass publication interruption/create/reuse/repair/move/e20retention, all15previous decoded-file equality, coherent words/encoded metadata/missing-bank/source/hash/path guards with transactional attachment, and unavailable-copy Load/Undo/backup/restart. All ten actual interpreter/native paths with nine raw spans altered match full states/clocks;68906compiled source bytes/39861literal bytes and all9banks positive. Full bytes/edges/widths/mirrors, real-BIOS bus/CpuSet/FastSet,32typed DMA bytes and reads crossing adjacent new banks pass.",
+    "Windows integration test/production builds warning-free, canonical restored. Actual CLI through Wine creates/reuses e21without writes from unrelated cwd using old native cache. First320-frame Party→Unit locator consumes0new bytes and remains negative evidence without a differential/repeat. Source43bc28preview contains CLAN MBR/stat labels; one bounded normal Start/Down/A replay opens Clan without direct RAM edits.",
+    "One320-frame EUR Wine Clan pair matches every complete state/clock/central-wide image/OAM/dispatch/audio sample with1579new-family reads/1642source bytes/764decoded literal bytes, all attributed to43bc28. Actual CLI has identical positive usage and final Clan status image visually inspected. Original ROM/snapshots/inputs/e20dataset/cache/loader/canonical unchanged; evidence stays under ignored target/rom-data-return-length-graphics.",
+    "Final project-memory coverage/whitespace/privacy/protected-input/canonical/candidate/source hash checks pass; all unit jobs terminal. No agent commit or push; baseline1e258f5and external prior e20commit9396979plus unrelated UI-grid work preserved."
+  ],
+  "limitations": [
+    "The nine-bank literal-root catalog is complete for this declared scope, not every game BG/OBJ/custom asset. Localized/indirect selector paths near08ed28, other graphics/palette roots, three older empty-sequence contracts, maps/gameplay/audio and broader GUI/archive/mod phases remain open. Prepared incoming registers establish bounded original subpaths, not every surrounding caller.",
+    "One EUR ordinary Clan scene/language is claimed; all declared new-source/upload paths have original/native proof. New Linux/USA/native Windows remain pending. No performance/startup/RSS/space campaign or AndroidPort work. Private game data, generated code, state/input and debug previews remain ignored."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/ui_graphics.rs",
+    "crates/gba-core/src/rom_data/ui_graphics/roots.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/ui_custom_graphics.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/ui_graphics_tests.rs",
+    "crates/recomp/src/rom_data/ui_graphics_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "scripts/extract_rom_data.py"
+  ],
+  "references": [
+    "docs/rom_data_ui_graphics.md",
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_graphics.md",
+    "docs/rom_data_obj.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

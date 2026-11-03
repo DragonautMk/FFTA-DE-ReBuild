@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "date": "2026-10-22",
+  "slug": "consume-european-background-transfer-programs",
+  "title": "Consume European background transfer controls and tile words through original readers",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Retain the authenticated e10 transfer model in immutable RuntimeResources and reconstruct original source reads directly from typed control/frame fields and full little-endian tile words.",
+    "Cover fixed EUR 778..897 source pages, merge crossing reads with prior graphics/palette/packet views and report separate control/tile byte use through existing CPU/DMA/native APIs.",
+    "Preserve original live animation countdowns, loop/reverse flags, transfer limits, partial copy progress, instructions and guest clock; keep schema 1/10/9 and source-equal save/native/cache identity, including owner retention through Load/Undo/backup/restart."
+  ],
+  "validation": [
+    "Warning-free Windows release test and production builds; three reduced Wine checks pass for synthetic width/mirror/edge/last-page/real-BIOS bus mode/SWI/DMA/load behavior, two original/interpreter/native provenance cases and temporary-copy lifecycle.",
+    "Forward/reverse 17-tick cases with live 512/1024-byte transfer limits and all 76 raw source ranges poisoned match complete states/clocks/VRAM after every 60 calls. Original tracing covers 7567 instructions and 234 native dispatches: 66 typed control bytes come from compiled loads and 9984 tile bytes from DMA initiated by native writes.",
+    "One retained 397-frame EUR LCD B Cyril-pub BG62 transition matches every full state/clock, image/OAM/dispatch and mixed/PSG/FIFO/HLE audio sample, with 6579 transfer reads consuming 1203 control and 21504 typed tile bytes.",
+    "One new decoded Windows CLI command from unrelated cwd reuses e10 without writes and the prior native cache, with positive transfer use and the same final image/dispatch row as the retained valid legacy reference. The legacy command is not repeated; protected inputs and legacy guest behavior/ABI are unchanged.",
+    "Original ROM/e8/e9/e10/slot/input/native cache/loader and canonical executable hashes remain preserved; source hashes, full working-tree project-memory and CRLF-aware whitespace checks pass."
+  ],
+  "limitations": [
+    "New Linux and USA validation remain pending by user instruction; USA's existing six-file e8 contract is preserved. No native Windows or AndroidPort claim.",
+    "Only the declared reduced component/lifecycle/scene/CLI scope is verified. Actual BIOS execution is separate from the bus-mode check; broader scenes/languages/catalogs, GUI/archives, text/fonts, OBJ lists/animation, maps/gameplay/audio and mod phases remain open.",
+    "No performance/profile/startup/RSS measurement, space optimization, broad suite, re-extraction or repetition of closed catalog/two-loop/graphics/packet acceptance."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/transfers.rs",
+    "crates/gba-core/src/rom_data/runtime/transfer_tests.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_transfer_runtime_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

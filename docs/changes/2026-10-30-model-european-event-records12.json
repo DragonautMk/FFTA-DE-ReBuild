@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "date": "2026-10-30",
+  "slug": "model-european-event-records12",
+  "title": "Model European event records and verify original reader prefixes",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add a strict lossless256-record/3072-byte model with unsigned fields/raw flags/opaque tails, physical ownership separate from original u16 computed views and uncapped low8 interior-alias addresses.",
+    "Preserve conditional direct/alias primary and supplied alternate pairs, full16 script-key highest-match255..1 order and row0 exclusion without inventing guest caps, enums, null rules or foreign-key bounds."
+  ],
+  "validation": [
+    "One warning-free core Windows builda4b88a69137416bfcfbecc75f1817146b637091ca9709293c2b011e1de2425e2 uses581 frozen files/248 core inputs from579 accepted preimages plus two leaves; inverse core hub exact.",
+    "One Wine filter passes20 guards/51 base/37 isolated synthetic original9D04pair,127388scan, seven unsigned-load and u16-view prefixes. Independent Python/model/results and actual load order exact, including high/outside alias arguments, full16 nonmatching keys and synthetic row0 exclusion.",
+    "All3072bytes reconstruct; prefixes observe302 distinct base and268 synthetic bytes. EWRAM exact except expected script-index store, IWRAM exact including prefix prologue pushes, VRAM/OAM/palette/SP/R8..R12/finalROM checked;9959 instructions are coverage only.",
+    "All133 guards/581 frozen hashes/three current paths/579 accepted preimages/112 source guards pass; artifact completion retires zero paths. No source/closed selection proof, ordinary fixture/navigation or performance/storage measurement.",
+    "Final changelog/default/base35920d8/metadata project-memory checks and CRLF-aware whitespace all pass."
+  ],
+  "limitations": [
+    "Schema1/e87-d86/80 managed files unchanged; managed publication/typed bus/native-clock/lifecycle, actual CLI and ordinary use remain pending.",
+    "Whole-routine entry/return ABI, epilogues/live script-event continuation, indirect references, preceding opaque gap, next27-byte catalog extent, Linux, USA, native Windows,new32:9 and full ROM TODO remain pending.",
+    "Synthetic prefix patches are isolated unit probes, not ordinary checkpoints; physical absence does not impose a guest cap or zero fallback. The accepted frozen frontend is retained without compiling newer unrelated changes."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/event_records12.rs",
+    "crates/gba-core/src/rom_data/event_records12/tests.rs",
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

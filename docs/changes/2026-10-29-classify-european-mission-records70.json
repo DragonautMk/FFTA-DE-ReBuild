@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "slug": "classify-european-mission-records70",
+  "title": "Classify European mission-record source data",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Establish EUR713B3C..71C73C as512 ordered70-byte mission records using two independent1..511 scans, getter-index0 and separately rooted successor arrays.",
+    "Document all65 getter selectors, unsigned packed and little-endian fields, raw scaled/mapped operands, original inline pointer aliases and the previously closed numeric event-row join without inventing guest caps or semantic field names."
+  ],
+  "validation": [
+    "All512 records reconstruct35840 bytes exactly, SHA256bbdbc955b9b3f7ed678123aa6bea8b6098f25f6a13a4ab94de669d1e103253dc; no overlap with77 accepted e85-d84 resources/50491 source spans.",
+    "Nineteen authenticated static windows (nine new/ten cached),157 instruction/literal pins and110 input hash/mtime guards pass. Cached legacy text is authenticated by full opcode/ROM equality and current text hash, not an unavailable historical text guard.",
+    "Seven address selectors preserve six inline offsets, exact19/20 pointer alias and24/32 shared scalar storage;512 numeric event references have173 values/four repeated-value groups. Residual bits, zero values and all physical identities remain intact.",
+    "Static inspection only: no build, Wine/game/test/fixture/navigation, completed-proof replay or performance/storage measurement. Existing78 accepted files remain exact; artifact helper retires zero paths.",
+    "Earlier changelog render and CRLF-aware whitespace checks pass; default/base999d0a6 memory checks report only seven concurrent menu/content-picker paths without their own changed record.",
+    "Final default/base999d0a6 project-memory checks now pass after parallel menu/content-picker records were supplied. Their implementation and tests remain outside this frozen unit."
+  ],
+  "limitations": [
+    "Strict typed model/original-getter Wine proof, managed runtime/publication, actual CLI and ordinary use of this family remain pending. Schema1/e85-d84 and77 resources remain unchanged.",
+    "No guest512 bound is inferred; low16 index/low8 selector behavior remains original. Full caller ABI, all indirect/unaligned references, meanings of unnamed fields and global inline-view element counts remain unverified; two interior data-word candidates are not classified as proven readers.",
+    "Successor byte arrays and the12-byte event catalog require their own source contracts. Numeric event-row zero remains caller-specific.",
+    "Linux, USA, native Windows, new32:9 and the full ROM TODO remain pending. Parallel menu/content/debug/package changes are preserved and are not validated by this source-only unit."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

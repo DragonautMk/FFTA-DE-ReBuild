@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-10-26",
+  "slug": "model-european-observed-indirect-obj-lists",
+  "title": "Model two European observed indirect OBJ lists",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add an isolated observed-list model for two authenticated EUR ROM sources,64B/10objects, reusing existing lossless OBJ fields. Preserve explicit constructor-bound versus ordinary-task-argument evidence and strict source/code/count/format identity without changing the current direct catalog or dataset revisions."
+  ],
+  "validation": [
+    "One Windows frontend build succeeds without diagnostics. One first Wine filter passes independent10object expectations, all64reconstructed source bytes/two spans/boundaries, strict JSON roundtrip and14structural/coherent/source/unknown-field guards.",
+    "Six new original reader paths (ROM1500,ROM170C,copiedRAM030065A8 for each asset) match model-predicted complete output buffers, including matrix/padding words. Stack/callee and fullRAM outside output/cursor/stack, plus OAM/VRAM/palette guards, pass. Reuse authenticated copied-code bytes as in-memory setup, without executing the old copier or replaying old74-list/ABI/scene oracles.",
+    "Canonical private model JSON SHA2564530552b2209f51bed67a0cedf5e5b66fc78f9a83f7abc0ef8c80636551c0a03.75selected input/retained-artifact hash-mtime guards and compiled sources remain exact; hubs differ only by two module declarations.",
+    "Old productionCatalog74lists/175objects1198B, extraction/owner path, e71-d70/66files65resources/USA8-7 and all66accepted dataset files remain unchanged. Required artifact completion helper succeeds with zero disposable paths. No new checkpoint/navigation/performance/storage campaign."
+  ],
+  "limitations": [
+    "Source-model step only; new managed publication, typed runtime consumption, actual production CLI and ordinary new-owner equivalence remain pending. No complete indirect archive, all-selector/caller or immutable command initializer claim.",
+    "The observed40D89Eargument is not modeled as a direct literal.10parameter bytes and452lower source bytes are separate; Linux/USA/nativeWindows/new32:9 remain pending."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data/obj_lists.rs",
+    "crates/gba-core/src/rom_data/obj_lists/observed.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/observed_obj_lists_model_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

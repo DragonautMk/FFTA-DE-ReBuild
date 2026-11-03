@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-10-26",
+  "slug": "classify-european-slot-live-state-helpers",
+  "title": "Classify European live slot and counter helpers",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Classify exactD05E8/D0618/D0650as liveRAM any/count/update helpers with fixed RAMbase/offset code literals; avoid creating immutable resources from mutable slot/counter state. Preserve exactconditionalcounter update and no globalclamp/pointer-liveness/tableextent inference."
+  ],
+  "validation": [
+    "Static exactEURimage/threecompletecodeblocks/68halfwords/30criticalpins/sixliteralwords pass. D05E8any andD0618count inspect20firstwordwindows at02002E78+16*i; D0650increments02001F68onlyforold<=98, leaves99..255unchanged.",
+    "Narrow3/2/1rawThumbBLcandidate census retained, not everysemanticcaller/ordinaryreachability. PartialD0670excluded. No newROMasset/query/decoder/owner/revision: e71-d70/66files65resources/USA8-7 unchanged.",
+    "No build/game/test/fixture/navigation/privatepayload/performance-storage campaign or oldsource/model/runtime/CLI/Bank acceptance replay. Staticdisassembly notLinuxruntimevalidation.",
+    "Closure:401baseline source hashes confirm selectedmemory only/allimplementation unchanged. ThreefreshROM/tool/tracehash-mtimeguards plus308retainedscene guards/41compiledpreimages/411localfeaturelinks exact. Project-memory render/default/basec792afd/CRLFwhitespace pass;14033priorprivateexpectedproof reused withoutlegacyrehash, no livejobs."
+  ],
+  "limitations": [
+    "DeclaredthreeROMentries only; no pointervalidity/actorliveness/globalinputcap/fullphysicaltable/wholecallergraph or nextD0670classification claim.",
+    "Linux/USA/nativeWindows/new32:9 pending; no Android/package/assistantcommit/push. Full ROM_DATA goal remains active."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

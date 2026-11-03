@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-atlas-specification-remainder",
+  "title": "Complete English translation of Clan Atlas specification",
+  "kind": "docs",
+  "platforms": [
+    "Desktop menu documentation"
+  ],
+  "changes": [
+    "Translate sections 4–10 of the Clan Atlas menu specification, covering Game and Debug functions, interaction design, architecture, work plan, acceptance criteria and deliverables; preserve historical baseline and verification limits."
+  ],
+  "validation": [
+    "Compare all 28 ordered checkbox states, inline literals, link destinations and 37 legacy heading anchors with the prior text; check local links and confirm the previously translated introduction is unchanged."
+  ],
+  "limitations": [
+    "Documentation translation only; the acceptance statements describe the recorded historical baseline and do not add runtime, native Windows, physical controller or ROM validation."
+  ],
+  "files": [
+    "docs/To_DO/FFTARecomp_Menu_Atlante_del_Clan_SPEC.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

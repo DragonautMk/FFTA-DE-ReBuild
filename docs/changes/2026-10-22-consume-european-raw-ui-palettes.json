@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "date": "2026-10-22",
+  "slug": "consume-european-raw-ui-palettes",
+  "title": "Consume European raw UI palettes through original shadow copies",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Independently inventory21raw UI palette banks/23direct-derived-Color-Mode references,21disjoint ranges/2656source bytes/1328full-u16colors across both BG/OBJ palette-shadow halves. Extend the initial exact-literal/OBJ-only candidates with derived aliases, BG copies and both actual branch groups without claiming a complete indirect palette inventory.",
+    "Authenticate original initializer027ee..27feand its176-byte ROM-to-IWRAM callback copy, independently checked by a unique64-byte match in a retained read-only snapshot. Original dispatcher145c14branches to03005ee8memcpy; copied code remains ROM/IWRAM code and is not packaged as a data resource.",
+    "Publish EUR schema1/extractor20/decoder19, fixed ui-palettes.json/resource graphics.ui-raw-palettes, sixteen files/fifteen resources. Strict typed u16banks retain bit15, source offsets and shared contained references; exact-source validation rejects coherently rehashed changes. All fourteen prior decoded files/e19and older generations remain; USA stays e8-d7.",
+    "Project exact palette bytes from typed colors through CPU/DMA/native and guest-BIOS bus reads, retaining original selectors/copy instructions/clock, live shadow RAM/fades and palette publication. PPU reads dynamic palette RAM; no host ROM consumer or HLE replacement is introduced. Nonserialized family/per-bank counters prove source ownership without changing save/native identity or ABI."
+  ],
+  "validation": [
+    "One reduced EUR Wine original-source check passes independent source hashes/order/extent/strict deterministic JSON and coherent bit15-edit guards, the original176-byte initializer,27actual copy paths including ten Color-Mode cases across two selectors, full shadow/guards and four unaligned/byte-tail memcpy cases.6196instructions are coverage only. Initial compilation succeeds with an unused future-helper warning; later integration uses it and builds warning-free without repeating the closed source check.",
+    "Two focused EUR Wine integration checks pass publication interruption/create/reuse/repair/move/e19retention, all14prior decoded-file equality, coherent colors/bit15/source/missing-bank/hash/path guards and transactional attachment, and unavailable-copy Load/Undo/backup/restart.27actual interpreter/native paths match full states/clocks with all21raw ranges altered;3528compiled color bytes and every bank positive. All bytes/edges/widths/mirrors, real-BIOS bus/CpuSet/FastSet,160typed DMA bytes and a live shadow edit reaching palette RAM pass.",
+    "A proposed adjacency fixture is corrected before execution after actual source lengths show40fcb0is not an old compressed-source edge. The corrected check crosses the exact new-bank boundary40fd50with both raw spans altered. No source/managed oracle is repeated for this test-only correction.",
+    "Actual Windows CLI through Wine creates e20/reuses without writes/replays240clean-boot frames from unrelated cwd with the old native cache and33new palette reads/130source bytes. One new-family240-frame ordinary pair matches every complete state/clock/central-wide image/OAM/dispatch/audio sample with the same positive palette use. Existing neutral input reused, final language-screen image inspected; no personal-state or input fixture mutation.",
+    "Windows integration test and production builds are warning-free; canonical executable restored, protected original ROM/e19dataset/cache/loader/input unchanged. All jobs terminal; private evidence under target/rom-data-obj-palettes. Final project-memory/whitespace/privacy/protected-file/source hash checks pass. No agent commit or push."
+  ],
+  "limitations": [
+    "This closes the declared21bank direct/derived/branch UI palette catalog, not all game palettes or indirect sources. Original bounded selector/copy sequences have prepared incoming state; whole surrounding callers and other gameplay/ordinary-language scenes, broader GUI/archives and native Windows remain separate gates.",
+    "New Linux/USA verification remains pending. No performance/startup/RSS/space campaign, AndroidPort change, commit or push. Game data, copied original code, private states/inputs and generated native objects remain ignored. The earlier e19change is now in user/external commit07fc432 and was preserved."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/ui_palettes.rs",
+    "crates/gba-core/src/rom_data/ui_palettes/roots.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/ui_raw_palettes.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/ui_palette_tests.rs",
+    "crates/recomp/src/rom_data/ui_palette_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "scripts/extract_rom_data.py"
+  ],
+  "references": [
+    "docs/rom_data_ui_palettes.md",
+    "docs/rom_data.md",
+    "docs/rom_data_obj.md",
+    "docs/rom_data_graphics.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

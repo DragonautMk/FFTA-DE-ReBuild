@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "date": "2026-10-26",
+  "slug": "extract-european-script-override-poses",
+  "title": "Extract European forced42 and230script poses from exact original assignments",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Project all167authentic decimal49instructions/13groups through only original9B734flag20normal42/alternate230current assignments under explicit retained same-unit assignment/facing0..3conditions. Keep26mode-base witnesses/334conditional source references; do not infer low/high selector unit identities, universal reachability or a scripts\u00d7all-sprite product.",
+    "Add a strict offline typed model for156physical cells126nulls/28counted sequences140frames/eight OBJlists27objects/42indexed4bpp requests8000B. Preserve all words and tails, require mirrored script-group references across modes and independently validate both older normal/alternate views before subtracting their union.",
+    "New40spans1050Binclude96cells90nulls/six sequences18frames(16operation1/twooperation2)/one OBJlist4objects/two pixel requests256B. Managed/runtime/revision changes remain a separate unit; EUR e63-d62/USAe8-d7 unchanged."
+  ],
+  "validation": [
+    "New static EUR/archive/manifest/all58owner file-source authentication passes, including known index-root registry from all six current unit OBJmodels.19halfword/twoBL/five producer-code fingerprints pin forced constants/current assignment and original script/body/extra-part behavior; no new target is classified as an index root.",
+    "Full11722Bsource SHA2566d0850006ab9c7225eb5930af6cd5f0d9f8737c84024239ff251c04ca6d8e323; shared6252normal+4420alternateBonly, no internal role conflict/mixed typed item/varying pixel extent or pruned query. New384index24header360frame26OBJ256pixelB/sourceSHAe47c73e8b278c7894b5f6fa2fb875850ef91474fa0e1a9779bf72ad7a2d5488a.",
+    "One affected Windowsfrontendtest build90834passes without warnings, frozen5c3a9ae9dde8d944141d272960be3effb1f2b864b071ba56c246fbe046a79ef4. Single new exactWine86320filter firstPASS19JSON/mode/reference/source/two-old-view guards/all156keys11722fullgraphB/40newspans1050B,192newcell original constructor aliases/90null+6proper resets/bothnewoperation2argument copies/two actualDMA3uploads/all256newpixelB/entireVRAM exact.167scriptrefs/334conditionalreferences/26mode-base witnesses retained, no prior acceptance replay.458observed nonpixelB/482PC/12422instructions are coverage only.",
+    "Accepted offline model-file SHA25627d6d0e0683f9cceb17155fbbac8c35fce9db1aceffde8c144ec66f00d1f8698. EUR e63-d62/USAe8-d7runtime and prior actualproduction executable/cache remain unchanged.",
+    "Final preservation passes9750prior artifact hashes/1295build+1296Wine exacthash-mtime guards/all11compiled source-preimages/two shared-hub preimages with only the selected module declarations.362local feature links, new-module rustfmt, project-memory default+base1e738db and CRLF-aware whitespace pass. No unrelated implementation change, live process, ROM/cart/state/input/cache/TCC/canonical/dataset mutation or private tracked artifact."
+  ],
+  "limitations": [
+    "Source/model and reduced original-reader Wine criteria closed. Managed publication/runtime/actualCLI/ordinary newpixel/fullscene verification remain pending; no whole actor/allocator/scheduler ABI or native complete-state-clock claim.",
+    "Current low/high selector binding, flag20clear metadata/registry paths and changed/stale assignment remain open; this conditional constant branch does not close highregistry identity. Linux/USA/nativeWindows/new32:9 pending; no performance/storage measurement, new gameplay fixture/navigation/payload edit, Android change, packaging, commit or push."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data/unit_obj_script_override.rs",
+    "crates/gba-core/src/rom_data.rs",
+    "crates/recomp/src/rom_data/script_override_model_tests.rs",
+    "crates/recomp/src/rom_data.rs",
+    "docs/rom_data_unit_obj.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_unit_obj.md",
+    "docs/rom_data_scripts.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "slug": "model-european-world-node-records",
+  "title": "Model European world nodes losslessly and verify original readers",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add source-authenticated world_nodes::Catalog/WorldNodes with30ordered20Bnodes, four typed path/neighbor/opaque links and opaque tails. Shared one-span plan reconstructs600B, strict JSON/shape checks remain distinct from source authenticity; no inferred path/neighbor/opaque-zero policy.",
+    "Expose conditional coordinate, neighbor-first path and nonzero-path adjacency semantics without replacing original placement/pathfinding. ReturnNoneoutside declared30records; standalone model only, schema/extractor/decoder1/77/76 and managed/runtime behavior unchanged."
+  ],
+  "validation": [
+    "One warning-free core-only Windows test build/frozen6c2ef15a.. and one focused Winefilter pass23shape/JSON/source guards and566original-interpreter return/load-sequence probes, including16low-byte aliases/24outside-projectioncalls. All300semanticB observed at original loadsites;300opaqueB reconstructed/hash checked, unread. Callee/SP/RAM outside originalstack/VRAM/OAM/palette checked.",
+    "All24actual input/output/executable guards and215frozen core-source hashes pass. Requiredartifactcompletion0paths; originalROM/cache/loader/states/inputs/canonicalexe preserved. No frontendbuild/gameplay/fixture/navigation/performance measurement or previous source/model/runtime/constructor acceptance replay.",
+    "Final project-memory render/default/base2fbf9f7/metadata-only checks and CRLF-aware whitespace pass. Final24model/200runtime/169CLI actual guards and215model/502integration source hashes remain exact; no test/build replay for closure."
+  ],
+  "limitations": [
+    "Managed extraction/runtime/actualCLI/ordinary case and397018road dependency remain open. Source-only oracle is not native/fullstate-clock/BFS/fullABI/ordinary or global archive/index coverage. FullROM_DATA_TODOactive.",
+    "Linux/USA/nativeWindows/new32:9 pending. No performance/storage campaign, Android/package, assistantcommit/push; u16WIP/parallelDBG preserved."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/world_nodes.rs",
+    "crates/gba-core/src/rom_data/world_nodes/tests.rs",
+    "docs/rom_data_maps.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_maps.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

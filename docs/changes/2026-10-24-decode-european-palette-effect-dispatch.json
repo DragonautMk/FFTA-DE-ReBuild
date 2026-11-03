@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "decode-european-palette-effect-dispatch",
+  "title": "Decode the European palette-effect callback projection with live guest indexing",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Add a strict lossless PaletteEffectDispatch model for the producer-bounded17slot/68Bprojection atb94690:canonical u16kinds, five guest Thumb code-offset targets and12null slots. These are guest code references, not serialized host pointers or copied instructions.",
+    "Authenticate exactEURsource, state1/u16index/4Bload reader opcodes andfiveconstant MOV-STRHproducer pairs. Keep the physical model membership separate from live guest validity: index17and higher is outside this projection, without a new runtime clamp. e44-d43/USAe8-d7managed extraction remains unchanged."
+  ],
+  "validation": [
+    "Windows71666test build warning-free; Wine22360one focused source/model check terminal/pass. All17independent words/68Bhash/source-JSONroundtrip/canonicalcode-offset-nullfields and12shape-JSON-coherent-source guards plus wrongROM guard pass.",
+    "31neworiginal prefixes pass:23lookup cases including fourrawoutside indices17/31/255/65535 andhighword inputs,3inactive-state gates and5fixed producerMOV-STRHstores. Original loadsite0814ac70reads all68distinct ownedB; liveu16index/zero slots/truncation/rawoutside behavior matches. EWRAM/IWRAM/SP/callee unchanged except predicted2Bproducerwrites.134instructions/18PCs are coverage only.",
+    "1216protected artifacts including frozen currenttestexe unchanged, no build/Winefailure. Closed e44source1138/gain8/native28/CLIordinary and earlier graphics acceptance not repeated. Evidence target/rom-data-palette-effects/{windows-model-tests.*,windows-model-result.json,windows-model.log,recomp-tests-model.exe,windows-model-europe/{palette-effect-dispatch,result}.json}."
+  ],
+  "limitations": [
+    "Source model only; managed publication/runtime/native/state-clock/ordinary acceptance pending. Lookup/state/constant-store prefixes do not prove whole callback bodies or allocation/lifecycle behavior. Total physical callback table extent and arbitrary liveRAM validity are not inferred.",
+    "New Linux/USA/nativeWindows remain pending. No performance-space campaign, AndroidPort work, game-data publication, commit or push; concurrent Debug-save/prior edits preserved."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/palette_effect_dispatch.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/palette_effect_dispatch_model_tests.rs",
+    "docs/rom_data_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

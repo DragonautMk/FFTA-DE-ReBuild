@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "review-docker-rom-validation-guides-english",
+  "title": "Review Docker and ROM validation guides",
+  "kind": "docs",
+  "platforms": [
+    "Desktop development documentation"
+  ],
+  "changes": [
+    "Review the Docker build guide and decoded resource validation protocol for English-first policy and record exact file hashes."
+  ],
+  "validation": [
+    "Manually read both guides in full; maintained prose is English, with commands, technical evidence and validation limitations preserved."
+  ],
+  "limitations": [
+    "The inventory and remaining Markdown and source areas still require review; historical measurements, builds and ROM checks were not repeated."
+  ],
+  "files": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": [
+    "docs/docker.md",
+    "docs/development/ROM_DATA_VALIDATION.md"
+  ]
+}

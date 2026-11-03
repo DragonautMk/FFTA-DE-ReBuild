@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "decode-european-color-mode-palettes",
+  "title": "Decode European Color-Mode palettes with original reader and copy proofs",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add a strict lossless ColorModePalettes source model for29 physical color fragments and four slice-selector bytes:2873fullu16colors/30spans5750B. Stable physical IDs, book/variant/source metadata, low8/low2 pointer semantics and a shared source plan preserve bit15, raw u8 selector values, original aliases and source holes.",
+    "Add one focused optional EUR/Wine original source oracle covering actual Color-Mode helpers, full base initializers, every rooted supplemental constant consumer, copied-IWRAM memcpy/CpuSet, staged fade reads, metadata14special overrides and four direct slice callers. No managed/resource revision or runtime owner is added in this step."
+  ],
+  "validation": [
+    "Windows frontend test build20992 is warning-free; first Wine80764 fails at the oracle destination guard because30632usesr5destination/r6callback. Original nearby MOV/LDR decoding replaces the erroneous common register assumption. Changed-oracle Windows2538 build is warning-free/frozen deb4ed42418dfe256f6d3951c2ed0bd1cec45b27c392b960f791e5e28933012d; corrected single Wine19399 filter passes. Failed evidence is retained; no model difference was reported.",
+    "Accepted Wine oracle passes all30spans against the independent static contract, exact JSON/model-byte roundtrip and eight shape/authentication guards.165original pointer cases cover low8 fullword truncation,15/16split,255 and modes0/1/2/3/FE.99original copy prefixes,30staged readers,54special copies and12slice prefixes observe all5750owned source bytes, including four selectors. All nine special selectors have representatives through both original destinations; all51producer projections are authenticated statically.",
+    "Original relocated IWRAM copy instructions and actual CpuSet run without host copy substitution; complete declared destination/outside RAM and relevant SP/callee properties match. Staged reads stop before allocation/scheduling, slice calls before subsequent graphics routines.33654instructions770PCs are coverage only.764prior hash-mtime guards and four compiled source inputs remain unchanged after acceptance. Decoded model SHA256 98068136afc44d24640c2c27027ccc34954aa0d92a01a603db767b07cfaab382. Evidence: target/rom-data-unit-palettes/{source-contract.json,windows-model2-build.json,windows-model2-result.json,windows-model2-europe/result.json}.",
+    "Final preservation check passes all6731prior protected artifact hashes,764prior hash-mtime guards and four compiled source inputs.310baseline source hashes differ only in the two selected registration hubs and coherent memory documents; earlier modules/oracles/proofs/canonical executable/cache/TCC and user Debug-save/concurrent Docker work are preserved. Default/base7597b92project-memory and CRLF-aware whitespace checks pass; four local feature links exist. No live unit process."
+  ],
+  "limitations": [
+    "Source-model/original-reader prefixes only; no managed publication, runtime resource consumption, native/fullstate-clock or ordinary-scene acceptance. EUR stays e57-d56/52resources and USAe8-d7. Broader palette producer catalogs, indirect/live selectors and supplemental holes remain raw and pending; physical projection does not cap guest arguments.",
+    "New Linux/USA/native Windows pending. No performance/space measurements, production build, old test/scene repeat, new gameplay fixture/navigation/payload edit, Android change, package, agent commit or push."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data/color_mode_palettes.rs",
+    "crates/recomp/src/rom_data/color_mode_palette_model_tests.rs",
+    "crates/gba-core/src/rom_data.rs",
+    "crates/recomp/src/rom_data.rs",
+    "docs/rom_data_color_palettes.md",
+    "docs/rom_data_obj.md",
+    "docs/rom_data_graphics.md",
+    "docs/rom_data.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_color_palettes.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

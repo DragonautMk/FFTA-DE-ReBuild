@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "slug": "verify-european-encounter-header-cli",
+  "title": "Verify European encounter-header production CLI and ordinary data use",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Verify actual e80-d79 CLI creation, no-write reuse and normal Giza battle-entry startup:73generation files exactruntime/72logged resource IDs-hashes/75managed paths unchanged, mandatory shared constructor dependency retained.",
+    "Close positive ordinary use of six semantic header byte classes from existing normal state/input copies before selecting one full equivalence pair."
+  ],
+  "validation": [
+    "One warning-free Windows production build 9d0a772d.. from510 accepted source files. Only affected production fingerprint isolated, unchanged core reused, canonical executable hash/mtime restored; parallel Debug/frontend excluded.",
+    "Three Wine children exit0 preparecreated/reused/runc700 guest19409\u219220109. Old28859native blocks load; counts={\"bus_reads\": 17, \"control_bytes\": 3, \"headers_used\": 1, \"map_bytes\": 1, \"opaque_bytes\": 0, \"placement_count_bytes\": 1, \"placement_parameter_bytes\": 0, \"position_pointer_bytes\": 20, \"source_bytes\": 41, \"template_pointer_bytes\": 4, \"unit_count_bytes\": 12}. All184guards/510source hashes exact, artifacthelper0paths. No new navigation/checkpoint/performance or closedsource-model-runtime-road-node acceptance replay."
+  ],
+  "limitations": [
+    "Placement-parameter ordinary use is unobserved (zero bytes); targeted source/native/bus proof remains valid. One ordinary fullstate-clock/pixel/OAM/dispatch/audio pair remains next. One battle-entry case does not prove all442headers/opaqueordinary/nestedpayload/fullABI/globalarchive or complete ROM_DATA_TODO.",
+    "Linux/USA/nativeWindows/new32:9 pending. No performance/storage campaign, Android/package, assistantcommit/push; existingparallelwork preserved."
+  ],
+  "files": [
+    "docs/rom_data_maps.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_maps.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

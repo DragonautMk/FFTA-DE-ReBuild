@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "date": "2026-10-22",
+  "slug": "consume-european-zero-count-obj-bank",
+  "title": "Consume European zero-count OBJ holds with shared duration owners",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Independently authenticate one further EUR bank pair b4d8e8/b4f4e8 from constructor calls 080332ca/080332f0. Original nonrepeat calls retain zero header count, select list zero and read durations from the next header/index word; no animation frame is invented.",
+    "Add optional typed zero_count_hold selectors and duration_source_offset references with exact-owner validation. Five records add one list/two objects/eight disjoint ranges/58 source bytes; the final duration reuses the already authenticated next-bank index halfword. Current totals are eleven pairs/32 references, 168 lists/286 objects/100 sequences/184 counted frames/290 ranges/4070 source bytes.",
+    "Prepare EUR schema1/extractor17/decoder16 with the same fourteen files/thirteen resources; retain e16 generations, all ten prior bank records and every other decoded file unchanged. USA retains e8-d7. New nonserialized guest-selector/host diagnostics and scene gates distinguish the added bank.",
+    "Consume held selectors through existing typed CPU/DMA/native and shared host paths with original count, index/tick work, instructions/clock and save/native ABI unchanged."
+  ],
+  "validation": [
+    "One new focused EUR Wine original-code check passes fourteen constructors and 104 ticks in both per-object scheduler bodies, covering two actual caller parameter sets and all five zero-count sequence IDs. Read addresses, held index/elapsed reset, full task/OAM/matrices/guards match; 51974 instructions are coverage only. Old source oracles are not repeated.",
+    "Two reduced EUR Wine integration checks pass new selector/alias/mixed-header/missing-owner/strict JSON/coherent-edit guards and transactional activation, interrupted publication/create/reuse/repair/move/e16 retention, complete prior-record/other-file equality, and unavailable-copy Load/Undo/backup/restart ownership.",
+    "Eight constructor/body original/interpreter/native calls with all eight new ranges and the old aliased duration halfword altered match complete states/clocks. Compiled reads include sixty source bytes/twelve held-selector bytes; durations remain attributed to typed header/index owners. New edges/widths/mirrors/real-BIOS bus/CpuSet/DMA and host decode/publication pass.",
+    "One affected 240-frame EUR Wine worldmap-to-Party pair matches every complete state/clock/central-wide image/OAM/dispatch/audio stream with 288 new-selector bytes and 288 new-bank host reads. The final Party roster image is visually inspected. Three actual Windows CLI processes create/reuse without writes/run this retained input from unrelated cwd with the old native cache.",
+    "Windows test/production builds are warning-free and the canonical executable is restored. Original ROM/snapshots/input/cache/loader/e16 dataset remain unchanged; no closed fourteen-constructor/104-tick or ten-bank/static scene proof is repeated after integration.",
+    "Final project-memory coverage/whitespace and protected-input/canonical/candidate hashes pass; final implementation hashes retained. Every unit process is terminal. No commit or push."
+  ],
+  "limitations": [
+    "The source oracle covers per-object bodies and the declared nonrepeat callers; whole scheduler tails outside the accepted ordinary Party scene and repeat1/other preconditions are unverified. Three previous zero-count records remain without proved hold/caller interpretation.",
+    "Other unresolved constructor-fed OBJ roots at38008/88328, sprite graphics/palettes, other text/map/gameplay/audio, broader GUI/archives and mod phases remain open in ROM_DATA_TODO.",
+    "New Linux/USA/native Windows verification remains pending. No performance/startup/RSS/space campaign, AndroidPort work, commit or push. Private source/data/snapshots/input/evidence remain ignored."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/obj_animations.rs",
+    "crates/gba-core/src/rom_data/obj_animations/roots.rs",
+    "crates/gba-core/src/rom_data/runtime/obj_animations.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/obj_zero_count_tests.rs",
+    "crates/recomp/src/rom_data/obj_zero_count_runtime_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_obj.md",
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

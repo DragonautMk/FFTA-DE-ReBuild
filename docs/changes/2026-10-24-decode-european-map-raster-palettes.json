@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "decode-european-map-raster-palettes",
+  "title": "Add lossless European raster palette models and verify original reads and copies on Wine",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add isolated map_raster_palettes typed source model:32physical records/three-u16headers/5120u16colors/162descriptor link pairs and33reconstructed source ranges10496B. Retain ordered indices, offsets, full color bits and duplicate-content physical identities; exact canonical source authentication and actual BGdescriptor dependency reject changed links/content.",
+    "Preserve unsigned initializer versus signed pointer-getter/FFFFlivefallback formulas as address helpers, without guest domain caps or host raster/DMA code. Byte view excludes the final neighbor489BB0owned by alternate palettes. Only two existing module registrations changed; managed files/runtime/revisions remain untouched.",
+    "Add one private EUR/Wine original-reader/CpuSet component oracle with independent source-plan/hash/field/JSON comparison and15shape/dependency/source guards. Observe all322copied destinationB before original wrap, including last extra013Csourceword; preserve original source read and live RAM behavior."
+  ],
+  "validation": [
+    "Prior source inventory terminal/286source-doc baseline matched/5428protected artifacts; no old source-model-runtime-CLI-scene/negative proof or fixture/build replayed for context. Module preimages reconstruct exactly after removing only the new registration lines.",
+    "Windows30586one affected frontend test build firstPASS warning-free; frozen executable6434366e7fad4ada6ff0bf10bdfba86d5082671606cfd8358dd92aaed67315b0. One new exact Wine39763filter firstPASS all33ranges/10496ownedB/324links/15guards,64initializers32canonicalgetters11rawgetters7unsignedprefixes3disabledcalls,2deferredupdates2explicit-source setter modes1queuedDMAsetup and1synthetic bit15/range variant.",
+    "All36original CpuSet observations compare complete322B immediately afterSWIbeforewrap; last neighboring013C and next-header00A0 reads observed. Complete EWRAM/IWRAM outside declared stack scratch, restoredSP/callee registers and expected live metadata/shadow updates match.4753instructions202PCare coverage only, not performance or fullstate-clock/native/ordinary equivalence.",
+    "All643hash-mtime guards pass. New only Wine execution; existing Linux tools used for formatting/metadata, no Linux runtime test. Evidence target/rom-data-map-raster-palettes/windows-model-{build,result}.json and windows-model-europe/result.json.",
+    "All5428prior artifact hashes unchanged. The286source/doc baseline changes only two module registrations and six selected memory files; new model/test/coherent record expand289. Compiled source hashes and exact module preimages remain intact. Generated CHANGELOG, memory/default-base7597b92, CRLF-aware whitespace and formatting of only the two new modules pass. User Debug-save/concurrent Docker and all prior evidence preserved."
+  ],
+  "limitations": [
+    "Source model/component oracle only. Managed publication, typed bus/native/lifecycle consumption, actual productionCLI and positiveordinary Wine remain pending. No fullcamera/ABI, executed raster DMA campaign, fullstate-clock or native consumption claim.",
+    "EUR remains v1/e54-d53/USAe8-d7. New Linux/USA/native Windows checks pending. No performance/space measurement, fixture/navigation, save/native ABI change, Android work, package, agent commit or push. FullTODO remains active."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data/map_raster_palettes.rs",
+    "crates/recomp/src/rom_data/map_raster_palette_model_tests.rs",
+    "crates/gba-core/src/rom_data.rs",
+    "crates/recomp/src/rom_data.rs",
+    "docs/rom_data_maps.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_maps.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

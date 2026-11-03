@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "observe-european-clan-alias-boot",
+  "title": "Observe European clan alias during ordinary boot",
+  "kind": "changed",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Record the bounded ordinary-boot reachability check for the European clan graphics table alias."
+  ],
+  "validation": [
+    "One isolated Windows audit build and one Wine observation of the existing 1200-frame clean-boot input record no bus requests in the alias range and no dropped events; 92 protected inputs and 688 frozen source hashes remain unchanged."
+  ],
+  "limitations": [
+    "The bus audit excludes folded constants and unselected host readers; this bounded negative does not prove global absence. Positive ordinary use, full scene comparison, Linux, USA and native Windows remain open; no performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_ui_graphics.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_graphics.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

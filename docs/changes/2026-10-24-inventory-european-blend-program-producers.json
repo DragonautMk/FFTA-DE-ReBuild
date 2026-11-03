@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "inventory-european-blend-program-producers",
+  "title": "Trace European blend programs and distinguish immutable sources from live RAM programs",
+  "kind": "docs",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Identify task080d77c4/public constructors080d79ac-080d79d0 as blendcontrol rather than palette programs. Original DMA register flush maps compact PPU shadow+4A/4C/4E to BLDCNT/BLDALPHA/BLDY; original scheduling/interpolation/live state remains authoritative.",
+    "Classify all248retained direct constructor calls:235exact constant expressions verified within reachable current Thumb CFG blocks,2conditional literal calls,6indexed pointer calls,1inline pair,1mutableRAM template and3fully dynamic RAM programs. The bounded producer plan owns160programs/345commands/2340B plus22pointer cells/88B across6projections, totaling2428B/158ranges disjoint from all40e46owners.",
+    "Document lossless6Bheaders (u16control,coefficients,count),4Bcommands (u16duration,u8first/second), reserved fields, fiveffffimmediate commands and live repeat/reset/pause/index semantics without new RAM guards/coefficient caps. Template39a5f0is copied to RAM and its duration is overridden; do not replace mutable guest programs with immutable files.",
+    "Reject initial unchecked root080e2ec8: a literal-pool word had been interpreted as ADD-PC. Preserve that exploratory output; current CFG-block proof and the actual10B RAM template copy replace the inference. Distinguish primary and secondary task-descriptor formulas for inline0/1producer branches."
+  ],
+  "validation": [
+    "Previous goal turn was progress: positive e46ordinaryCLI and1000frame Winepair were closed. scene-final-summary terminal/no live job and225source-doc hashes matched before the new selection; no completed e46/source/native/managed/CLI/ordinary or audio proofs repeated.",
+    "Bounded new static disassemblies and exact producer/descriptor/loadsite fingerprints classify all248call candidates. Reuse four already-proved parent/child selector contracts, while checking the new six table loadsites and22source pointer cells. PrimaryIDs2..4/146..150 and explicit inline initialization branches397..401/404..406 establish declared projections, not global RAM bounds.",
+    "Independent struct reconstruction matches all2428source bytes/158source hashes; all22pointer cells target canonical programs, no repeated logical byte or overlap with40prior resource owners.44consumer instruction fingerprints and original DMA shadow-to-register mapping pass. Sources contain135alpha/20brighten/5darken programs,5instant commands, nozero/othernegative/lastinstant duration. An initial verification fingerprint address was corrected fromD777EtoD7780before terminalpass.",
+    "No new guest execution, Windows build, Wine/Linux/USA/nativeWindows runtime test, fixture creation, performance or space measurement. EUR e46-d45/USAe8-d7 publication/runtime unchanged. New evidence target/rom-data-blend-programs/{producer-arguments.json,verified-producer-arguments.json,source-contract.json,static-source-verification.json,*.py,*.txt}.",
+    "Final inventory guards pass project-memory default/base7597b92 and CRLF-aware whitespace. All2284prior artifact hashes and124CLI/navigation/input hash-mtime guards are unchanged. Against225prior source-doc hashes, only six expected memory files change plus this new record; every implementation file and concurrent Debug-save edit is preserved. inventory-preservation-check and inventory-final-summary/protected/source-hashes retain terminal bounded-inventory status; no live unit job, fullTODOgoalactive."
+  ],
+  "limitations": [
+    "This is the bounded direct-call producer/source contract, not a complete effect/task ABI, complete physical table catalog or proof of all live RAM inputs/indirect callers. Original-reader Wine behavior, strict typed model, managed publication, runtime and ordinary scene acceptance remain pending.",
+    "Observed source durations and coefficient values do not justify new guest guards. Preserve wrapping liveu16command indices, ffffimmediate progression, message flags and raw out-of-projection reads; mutable templates remain RAM after copying.",
+    "NewLinux/USA/nativeWindows checks and other graphics/text/maps/gameplay/audio/GUI/archive/modTODO remain open. No production/AndroidPort change, original game-data publication, commit or push; preserve concurrent Debug-save and previous implementation work."
+  ],
+  "files": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

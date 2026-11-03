@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "bound-local-artifact-retention",
+  "title": "Bound local artifact retention and retire superseded datasets",
+  "kind": "changed",
+  "platforms": [
+    "Local development"
+  ],
+  "changes": [
+    "Keep current datasets and active inputs instead of retaining every historical generated dataset; review selected superseded datasets, Wine prefixes and rebuildable caches with identity checks, activity coordination and receipts."
+  ],
+  "validation": [
+    "Reviewed three explicit plans and retired 89 superseded same-ROM EUR datasets from completed or successful managed and CLI scopes; retained the current e94-d93 dataset and the private debug archive."
+  ],
+  "limitations": [
+    "Old revisions are no longer available at retired paths and require regeneration or an existing archive; other artifacts with uncertain dependencies and current work remain untouched."
+  ],
+  "files": [
+    "AGENTS.md",
+    ".cursor/rules/local-artifact-retention.mdc",
+    "docs/development/LOCAL_ARTIFACTS.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ]
+}

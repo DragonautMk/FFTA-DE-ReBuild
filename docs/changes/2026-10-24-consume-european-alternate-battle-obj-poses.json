@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "consume-european-alternate-battle-obj-poses",
+  "title": "Publish and consume typed European alternate battle poses and shared target views",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add EUR e61-d60managed unit-obj-alternate-battle.json/graphics.unit-obj-alternate-battle with actual metadata52/14/initial/equipment/normal dependencies, retaining55prior decoded resources/e60and USAe8-d7.",
+    "Serve only3321new spans410086B from immutable typed directory/target/frame/OBJ/indexed-pixel fields. Preserve older source ownership for all shared views and raw holes; twenty shared index-root targets remain non-sequences. Original guest tasks/commands/DMA/VRAM/palettes/native cache/save ABI are unchanged; source-use counters remain transient.",
+    "Fix strict null JSON handling: the locked serde internally tagged unit visitor ignores extra fields, so use an empty struct variant for Target::Null and compile the matching source-oracle pattern update. Intended valid JSON/pointer semantics are unchanged; the accepted canonical source file and prior physical-data oracle are retained.",
+    "Add two reduced new Wine managed/native integration filters, including coherent shared-root/unknown-target/null-extra-field guards, genuine null extra parts and shared-target prefixes without scheduling fake frames."
+  ],
+  "validation": [
+    "One affected Windows core/frontend test build passes without warnings; core is compiled only. Frozen frontend SHA256 8f9a71e42a953360bde04b76d88ab268813a83b7aa22d2b1e4a99a886952c7e8. Fifteen selected compiled inputs/preimages and961build/963Wine hash-mtime guards remain intact.",
+    "Both exact new Wine filters pass on their first execution. Managed20guards cover create/reuse/repair/move/interrupted publication/unavailable file/Load/Undo/backup/restart/transactional failed attach, all410086typed bytes and606new sequences. All20shared targets remain; five prior-owner probes retain exact responsibility.",
+    "Strict-null extra fields, coherent wrong shared-root witnesses and unknown target kinds are rejected. Valid canonical model stays byte-identical to cad7771dbddf3d92b93c6a9df6a62fa430b775b9e7e2932253207d71dff35580; the previous physical source oracle is not replayed.",
+    "Native34original/interpreter/compiled complete-state-clock paths pass properpart0/realnullparts1-2/shared-root constructor-read prefixes/fullword IDs and animations/liveRAMframe/commands2-3-8/two scheduler uploads and two DMA flushes/all six API categories. All3321boundaries/widths/mirrors/realBIOSbus/twoSWI/oneDMA pass; mixed2new780raw8oldOBJ bytes and unaligned2new+2editedraw preserve exact charges.",
+    "Independent manifest audit passes57files/56resources/all55prior decoded records and coverage/e60retention, actual dependencies and new source plan. Dataset identity5cbe42d14d8b9b7402c50ca7fd14d76b4fba55fe445eca84cd15186da2193105; manifest-file SHA2566bfbbed6fdb12a81438537de07004c6338a814b683c68eadb32d772f4bb95714. All8216prior artifact hashes remain unchanged.",
+    "Project-memory render/default check/base7597b92 check, new-module rustfmt,465local feature links and CRLF-aware whitespace checks pass. All implementation deltas are confined to the selected five hubs, two strict-null syntax fixes and two new runtime/oracle modules.",
+    "One new Windows production build passes without warnings, frozen SHA256d3db6585bb082a95d890b328940e7701e35dfa407b18f2eb72757db59ef6ce1c. Canonical executable hash and mtime are restored exactly; main source content stays unchanged with Cargo invalidation only.",
+    "Actual Wine CLI creates and reuses57generation/59managed files without rewriting, from unrelated cwd; every file matches accepted e61. One frame of old-cache attachment from the unchanged authentic F09snapshot passes. It reports zero new alternate source use and is an attachment smoke only, not an ordinary positive replay.",
+    "Read-only authenticated inspection of81existing EUR snapshots finds no consistent new-alternate sequence task to select a positive-use replay. The first inspection helper had a guest-pointer/file-offset mismatch; invalid helper/output preimages are retained and only this cheap static inspection is corrected. No new recording, navigation, snapshot or scene-test build/fullpair runs.",
+    "All8543prior artifact hashes/1023CLI hash-mtime guards/fifteen runtime source inputs and compiled preimages remain intact; no implementation source changes during the actualCLI unit. Rejected equipment checkpoint script remains absent."
+  ],
+  "limitations": [
+    "Declared source/model/managed/native/actual productionCLI children are closed; positive ordinary alternate use remains open with no suitable existing producer lead. One-frame attachment smoke does not establish ordinary use.",
+    "No every-actor/action reachability, valid animation meaning for shared-index-root views, whole allocator ABI or exhaustive ordinary playthrough claim. Script49/live streams and broader ROM data TODO remain incomplete.",
+    "New Linux/USA/native Windows/new32:9 checks pending. No new gameplay fixture/checkpoint/private payload edit/performance-storage measurement/Android change/package/commit/push; separate equipment navigation review remains unresolved and its rejected sequence is not executed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data/runtime/unit_obj_alternate_battle.rs",
+    "crates/recomp/src/rom_data/unit_obj_alternate_battle_runtime_tests.rs",
+    "crates/gba-core/src/rom_data/unit_obj_alternate_battle.rs",
+    "crates/recomp/src/rom_data/unit_obj_alternate_battle_model_tests.rs",
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "scripts/extract_rom_data.py"
+  ],
+  "references": [
+    "docs/rom_data_unit_obj.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

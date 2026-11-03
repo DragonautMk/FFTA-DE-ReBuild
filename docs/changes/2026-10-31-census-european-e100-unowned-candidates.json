@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "census-european-e100-unowned-candidates",
+  "title": "Census European e100 unowned candidates",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Record a bounded metadata-only census of potential unowned gameplay-region roots against the accepted e100 manifest."
+  ],
+  "validation": [
+    "Scanned the authenticated EUR ROM and historical atlas interval for candidate Thumb PC-relative literal readers, excluding current source owners; all guarded inputs remained unchanged."
+  ],
+  "limitations": [
+    "The 71 results are heuristic candidates, not proved code, extents, asset types or ordinary use; the atlas is historical. Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_INVENTORY.md"
+  ]
+}

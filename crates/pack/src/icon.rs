@@ -23,7 +23,7 @@ use std::io::{Read, Write};
 use std::path::Path;
 
 /// Project logo used when a package supplies no explicit icon.
-const DEFAULT_MASTER: &[u8] = include_bytes!("../../../Image/logo.png");
+const DEFAULT_MASTER: &[u8] = include_bytes!("../../../Image/de-rebuild-logo.png");
 
 /// Straight-alpha 8-bit RGBA image.
 pub struct Rgba {
@@ -80,7 +80,7 @@ pub fn load_master(custom: Option<&Path>) -> Result<Rgba, String> {
         None => DEFAULT_MASTER.to_vec(),
     };
     let mut img = decode_png(&bytes)?;
-    // The project's logo is slightly rectangular. Center the default on a
+    // Center a non-square default logo on a
     // transparent square without adding another image asset to the repo.
     // Custom package icons retain the existing square-image validation.
     if custom.is_none() && img.w != img.h {

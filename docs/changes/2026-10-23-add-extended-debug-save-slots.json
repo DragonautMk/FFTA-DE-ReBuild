@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "add-extended-debug-save-slots",
+  "title": "Add Extended saves with 99 snapshots and numbered cartridge saves",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add a default-off Debug > Extended saves setting, persisted in av.cfg, expanding the existing snapshot picker/storage to 99 slots with unchanged legacy filenames, preview format, overwrite protection and session Undo. Disabling preserves all high-slot files.",
+    "Add Debug > Game saves with 99 numbered standard-save choices: keep the original filename as slot 1 and use -slot-02 through -slot-99 suffixes for the rest. Show file status, filename and active slot; support copying current cartridge progress with explicit replacement confirmation and per-file backups.",
+    "Switch cartridge files transactionally in the current window: validate target size, prepare a clean boot, protect target bytes, flush the old source and then replace the machine/active path. Empty slots use erased memory; recording blocks switching and failures preserve the live session. Reset frontend timelines and snapshot Undo after switching.",
+    "Persist only the portable numeric selection so bundle moves retain the selected file; keep FFTA_SAVE_PATH precedence and installed shared-save remembering. Compact main-menu spacing to keep the new Debug entry visible and document the separate snapshot/cartridge workflows."
+  ],
+  "validation": [
+    "Offline locked release Windows GNU cross-builds of affected tests and the production recomp CLI pass without warnings; the previous canonical executable is restored by hash and target/extended-saves/recomp-extended-saves.exe is retained.",
+    "Wine: 29 input/config and 39 menu tests pass, including persisted default/bounds, 99-slot actions, safe confirmations and picker render/mouse geometry at 240x160 through 3840x2160.",
+    "Wine targeted runtime checks: 3 numbered-save, 10 snapshot, 7 backup and 2 save-path tests pass; 1 pre-existing optional resource-backed backup check is ignored. Covers high-slot Undo across toggles, source-write/boot/invalid-target failure isolation, original/dotted/relocated paths, no-clobber copies and erased empty-slot memory.",
+    "Three isolated normal Wine GUI sessions with keyboard input pass snapshot99 save/load/Undo/overwrite-cancel, disabling without deletion, standard99 copy/switch/cancel, empty slot2 with exact erased bytes, restart and moving a portable folder with unrelated cwd. Captures visually inspected; original ROM/save/snapshot hashes unchanged. Evidence: target/extended-saves/{gui-results.json,windows-build.json,*-tests.log,*.png}."
+  ],
+  "limitations": [
+    "Native Windows hardware, physical controllers, new Linux runtime checks, installed-mode GUI persistence and AndroidPort are not validated; no release archive or installer was produced.",
+    "GUI checks use interpreter execution, BIOS HLE and Wine/Xvfb. The optional resource-backed backup check was not repeated; audio quality and performance were not assessed.",
+    "Standard-save validation checks file readability and size, not internal game checksums. Copies contain progress saved by the game; snapshot loading can subsequently persist its cartridge memory to the currently selected standard file."
+  ],
+  "files": [
+    ".cursor/skills/ffta-development/SKILL.md",
+    "crates/input-config/src/lib.rs",
+    "crates/menu/src/lib.rs",
+    "crates/menu/src/save_states.rs",
+    "crates/menu/src/game_saves.rs",
+    "crates/menu/src/theme.rs",
+    "crates/recomp/src/main.rs",
+    "crates/recomp/src/play.rs",
+    "crates/recomp/src/game_saves.rs",
+    "crates/recomp/src/save_backups.rs",
+    "crates/recomp/src/save_path.rs",
+    "crates/recomp/src/save_state.rs"
+  ],
+  "references": [
+    "docs/extended_saves.md",
+    "docs/save_states.md",
+    "docs/save_backups.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

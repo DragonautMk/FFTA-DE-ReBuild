@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "add-debug-content-discovery-commands",
+  "title": "Allow debugger clients to discover selectable content",
+  "kind": "added",
+  "platforms": ["Windows GNU / Wine"],
+  "changes": [
+    "Expose an explicit asynchronous content refresh through the authenticated local-control channel and shared command language, reusing declared roots and existing bounded indexing. A cancelled or stale scan never replaces the current index.",
+    "Add a read-only paginated content list with exact generation checks, bounded display fields and stable selection IDs; keep listing available through the separate query mailbox during another job and reject unsupported older servers before publication.",
+    "Register content listing in the operation inventory and preserve every legacy Atlas contract while allowing uniquely named new operations."
+  ],
+  "validation": [
+    "Two isolated Windows GNU test and production builds passed without compiler messages; the final build froze 1513 source files with no source or selected-overlay drift.",
+    "Wine passed the focused picker scan/page/cancellation/stale-context test and six command tests on the initial build; after correcting the new operation route metadata, the final build passed three registry and 22 protocol tests including old-server refusal without publication. The initial registry failure is retained in target/debug-tools-v2-content-discovery.",
+    "In a fresh synthetic Wine/Xvfb session, content listing before refresh was refused; explicit refresh and seven single-entry pages discovered a synthetic catalog, selection by the returned ID preserved its hash, and a mismatched generation was refused. No menu navigation, guest execution or state/frame/clock change occurred; session and source pins remained exact. An initial display-start pipe failure was diagnosed and retained; the corrected display launch succeeded."
+  ],
+  "limitations": [
+    "DBG2-13 through DBG2-28 remain open: this covers discovery and selection, not full menu/CLI/console parity, all assistant procedures, clipboard/IME or physical controllers.",
+    "Scans use the existing declared roots and bounded budgets. The listing may be partial when the scanner reports truncation; names and paths can be display-truncated, and selection independently rechecks the full reference. Cancellation discards results after the worker returns rather than forcibly interrupting filesystem operations.",
+    "Native Windows and Linux runtime behavior were not tested. The live check covered successful refresh, pagination and selection; scan cancellation and stale-context rejection were exercised by the focused worker test."
+  ],
+  "files": [
+    "crates/recomp/src/content_picker.rs",
+    "crates/recomp/src/content_picker/tests.rs",
+    "crates/recomp/src/debug_control.rs",
+    "crates/recomp/src/debug_command.rs",
+    "crates/recomp/src/debug_command/completion.rs",
+    "crates/recomp/src/debug_operations.rs",
+    "crates/recomp/src/debug_operations.json",
+    "crates/recomp/src/play.rs",
+    "scripts/menu_atlas_inventory.py"
+  ],
+  "references": ["docs/debug_control.md", "docs/debug_operations.md", "docs/development/DEBUG_TOOLS_V2_TODO.md"]
+}

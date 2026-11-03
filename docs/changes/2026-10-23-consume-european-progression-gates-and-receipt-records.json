@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "consume-european-progression-gates-and-receipt-records",
+  "title": "Consume European progression gates through authenticated typed source fields",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Advance EUR to e36-d35/31files/30resources with progression-gates.json/gameplay.progression-gates,768B/64records/one authenticated source range. Preserve all29prior decoded files/e35generation and USAe8-d7. Two-page fixed routing serves typed requirements/return/output/unused bytes with physical64record mask; original livelevel/mask/selection/u64shift/receiptcaller/instructions/clock/save-nativeABI unchanged.",
+    "Keep12Bpreceding gap/nextroot6e80ceraw; no receipt/item foreign-key or observed byte00-ID equality constraints. Runtime owns parsed source-authenticated records across unavailable files and state/backup/restart operations."
+  ],
+  "validation": [
+    "Windows68535warning-free/Wine97635two focused checks terminal/pass: publication interruption/create/reuse/repair/move/e35retention/coherent requirement-return-output-unused-lastrow-reorder-source-dependency-path-role/transactional owner-state/all768B-all64bits/unavailable-copy Load-Undo-backup-restart.",
+    "19original/interpreter/native complete0487c8paths with768rawB altered match fullstates/clocks; compiled369requirement/18return/9output/0unused B,2zero-value successes still mark bit,2fullmask paths0newreads. Allbytes/recordedges/widths/mirrors/real-BIOS/two pages/pagecrossing/12Brawgap/oldreward2-newgate4typed coexistence/CpuSet-FastSet32typed across page/DMA2typed2raw pass.28874instructions/158native dispatches coverageonly; source80+25/earlier e35proof not repeated.",
+    "Protected originals/e35dataset/sourcefixtures/cache/loader/canonical/candidate unchanged; structured memory/final hashes/checks recorded, no build-Winefailure/live runtime process/agentcommit-push.",
+    "Windows65421production warning-free/canonical restored; actualCLI70968create/reuse/no-write/oldcache/unrelatedcwd/one-frame existingbattle startup passes,33managed file hashes-mtimes unchanged,0newuse compatibility-only. Read-only174EURheaders/49checksum-verified representative locator (includes old targeted/rejected states) has0needed progression flags and establishes no ordinary acceptance.",
+    "One isolated Wine92614normal GUI follows MadAlchemist10dispatch days/Sigmund/fee600 from day9to19. New private normalUI slots2/3/4 capture accepted/pre-return/MissionCleared states because retained fixtures lacked this criterion; no ROM/RAM/snapshot edits or personal-save writes. Cleared/rewards3400gil-80AP-MythrilPick-TerreRod/two skill levelups inspected. GUIreads209requirements/8deltas/1threshold at signing; new return/output0, no receipt inferred.",
+    "New1000CLI29523positive209requirements/8deltas; one Wine57387full pair matches1000complete states/clocks/central-wide images/OAM/dispatch/mixed-PSG-FIFO-HLEaudio with same counts. E35all8row0delta ordinary gap closed, old600Shop/source362+68/native27/e36source80+25/native19/lifecycle proof not repeated. No fullpair on coverage-negative locators.",
+    "Parallel Debug-save work overwrote shared test executable: e36scene validator/source checked unchanged; current compiled artifact pinned9e5e6f0cfa4db6c9c4af846911e7012a6fef2fe29db859454709a4c351623e17includes that parallel code. Normal loader/state format used here unchanged, no false reuse of old19native binary proof. External3ea9b61and all other user source/docs/skill changes preserved; no agentcommit-push. Final memory/whitespace/protected/sourcehash guards recorded."
+  ],
+  "limitations": [
+    "Ordinary scope covers209requirement bytes and8row0delta bytes; gate return/output/all64successes remain targeted-only. GUIthreshold1use is at signing before slot3; a paired acceptance prefix remains pending. Whole downstream receiptUI/FK/semantic names and other consumers not claimed. NormalGUIvolume0does not validate audible quality; nonfatal host diagnostics retained without performance interpretation.",
+    "NewLinux/USA/nativeWindows and widerTODO pending; no performance/startup/RSS/space measurements or AndroidPort changes. Private ROM/data/saves/inputs/generated fixtures remain ignored."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/progression_gates.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/progression_gate_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "scripts/extract_rom_data.py"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

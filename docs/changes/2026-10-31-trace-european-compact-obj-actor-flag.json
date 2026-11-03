@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "trace-european-compact-obj-actor-flag",
+  "title": "Trace European compact OBJ actor flag producer",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Document the original actor bit setter and its conditional, clear and dynamic caller cases."
+  ],
+  "validation": [
+    "Original EUR Wine disassembly and bounded static candidate-call reconciliation passed with source inputs unchanged."
+  ],
+  "limitations": [
+    "The scan is not exhaustive for aliases or indirect calls; no retained ordinary action or resource use is established. Linux, USA and native Windows remain open; no performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_obj.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

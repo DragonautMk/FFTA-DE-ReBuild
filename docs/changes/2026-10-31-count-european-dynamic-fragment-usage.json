@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "count-european-dynamic-fragment-usage",
+  "title": "Count European dynamic fragment usage",
+  "kind": "changed",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Expose separate request, selector-byte and payload-byte counters for dynamic raw fragments in runtime and production diagnostics."
+  ],
+  "validation": [
+    "One isolated Windows build and focused Wine test on the accepted e100 dataset verified exact counters for typed selector and payload reads, a mixed edge and an outside read; guarded inputs and frozen sources were unchanged."
+  ],
+  "limitations": [
+    "The actual production log and positive ordinary use remain unverified; counts include repeated reads. Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/ui_raw_transfers.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/dynamic_raw_fragments_runtime_tests.rs",
+    "docs/rom_data_ui_raw_transfers.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_raw_transfers.md"
+  ]
+}

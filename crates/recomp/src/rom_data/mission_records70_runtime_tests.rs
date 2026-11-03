@@ -1,0 +1,800 @@
+//! Focused Wine integration for indexed mission_records70 and its typed/raw borders.
+use super::*;
+use gba_core::{
+    capi::RT_API,
+    rom_data::mission_records70::{SOURCE, SOURCE_BYTES, SOURCE_END},
+    Bus, Machine,
+};
+use recomp_core::analyze::{Analysis, Block, View};
+use std::{cell::Cell, collections::BTreeSet, sync::Arc};
+fn root() -> PathBuf {
+    PathBuf::from(std::env::var_os("FFTA_MISSION_RECORDS70_RUNTIME_ROOT").unwrap())
+}
+fn dataset() -> PathBuf {
+    root().join("offline dataset")
+}
+thread_local! {static FALLBACK:Cell<[u64;2]>=const{Cell::new([0;2])};static COMPILED:Cell<[u64;2]>=const{Cell::new([0;2])};}
+fn counts(m: *mut std::ffi::c_void) -> [u64; 2] {
+    unsafe {
+        let r = (&*(m as *const Machine)).bus.rom_resources().unwrap();
+        [
+            r.mission_records70_stats().unwrap().source_bytes,
+            r.conditional_records8_stats().unwrap().source_bytes,
+        ]
+    }
+}
+fn account(before: [u64; 2], after: [u64; 2]) {
+    COMPILED.with(|c| {
+        let old = c.get();
+        c.set(std::array::from_fn(|i| old[i] + after[i] - before[i]));
+    });
+}
+extern "C" fn read8(m: *mut std::ffi::c_void, at: u32) -> u32 {
+    let before = counts(m);
+    let v = (RT_API.read8)(m, at);
+    account(before, counts(m));
+    v
+}
+extern "C" fn read16(m: *mut std::ffi::c_void, at: u32) -> u32 {
+    let before = counts(m);
+    let v = (RT_API.read16)(m, at);
+    account(before, counts(m));
+    v
+}
+extern "C" fn read32(m: *mut std::ffi::c_void, at: u32) -> u32 {
+    let before = counts(m);
+    let v = (RT_API.read32)(m, at);
+    account(before, counts(m));
+    v
+}
+// A generated fallback shell executes memory reads through the real interpreter.
+// Account that callback too; direct read8/16/32 wrappers alone miss those bytes.
+extern "C" fn interp_one(m: *mut std::ffi::c_void) -> u32 {
+    let before = counts(m);
+    let value = (RT_API.interp_one)(m);
+    let after = counts(m);
+    FALLBACK.with(|cell| {
+        let old = cell.get();
+        cell.set(std::array::from_fn(|j| old[j] + after[j] - before[j]));
+    });
+    account(before, after);
+    value
+}
+
+#[derive(Clone, Copy)]
+struct Call {
+    entry: u32,
+    address: u32,
+    mirror: u32,
+    kind: u8,
+    index: u32,
+    selector: u32,
+}
+fn family(c: Call) -> usize {
+    if c.kind == 0 {
+        ((c.entry >> 1) & 1) as usize
+    } else {
+        2
+    }
+}
+fn stop(c: Call) -> u32 {
+    if c.kind == 0 {
+        0x08000000 + c.entry + 2
+    } else {
+        0x03007f00
+    }
+}
+fn setup(m: &mut Machine, c: Call) {
+    m.bus.ffta_sprites.enabled = false;
+    m.cpu.regs = std::array::from_fn(|i| 0x11000000 + i as u32);
+    if c.kind == 0 {
+        let op = u16::from_le_bytes(
+            m.bus.rom[c.entry as usize..c.entry as usize + 2]
+                .try_into()
+                .unwrap(),
+        );
+        let width = match op & 0xf800 {
+            0x8800 => 2,
+            0x6800 => 4,
+            _ => {
+                assert_eq!(op & 0xf800, 0x7800);
+                1
+            }
+        };
+        m.cpu.regs[usize::from((op >> 3) & 7)] =
+            c.mirror + c.address - u32::from((op >> 6) & 31) * width;
+    } else {
+        m.cpu.regs[0] = c.index;
+        m.cpu.regs[1] = c.selector;
+    }
+    m.cpu.regs[13] = 0x03007c00;
+    m.cpu.regs[14] = 0x03007f01;
+    m.cpu.regs[15] = 0x08000000 + c.entry;
+    m.cpu.cpsr = 0xbf;
+}
+fn interpreted(m: &mut Machine, c: Call, visited: &mut BTreeSet<(u32, bool)>) -> [u64; 2] {
+    let mut n = 0;
+    let mut observed = [0; 2];
+    while m.cpu.regs[15] != stop(c) {
+        assert!(n < 200);
+        let pc = m.cpu.regs[15];
+        assert!(m.cpu.thumb());
+        let at = (pc - 0x08000000) as usize;
+        let op = u16::from_le_bytes([m.bus.rom[at], m.bus.rom[at + 1]]);
+        let width = match op & 0xf800 {
+            0x7800 => 1,
+            0x8800 => 2,
+            0x6800 => 4,
+            _ => 0,
+        };
+        if width != 0 {
+            let address =
+                m.cpu.regs[usize::from((op >> 3) & 7)] + u32::from((op >> 6) & 31) * width;
+            if (8..=13).contains(&(address >> 24)) {
+                let physical = (address & 0x1ffffff) & !(width - 1);
+                for offset in physical..physical + width {
+                    if (SOURCE..SOURCE_END).contains(&offset) {
+                        observed[0] += 1;
+                    }
+                    if (SOURCE - 4..SOURCE).contains(&offset) {
+                        observed[1] += 1;
+                    }
+                }
+            }
+        }
+        visited.insert((pc, true));
+        m.bus.frame_ready = false;
+        m.step();
+        n += 1;
+    }
+    observed
+}
+fn check_state(m: &Machine, expected: &[u8], label: &str) {
+    let actual = m.save_state().unwrap();
+    if actual != expected {
+        fs::write(root().join(format!("{label}-actual.ffstate")), &actual).unwrap();
+        fs::write(root().join(format!("{label}-expected.ffstate")), expected).unwrap();
+        let differences: Vec<_> = actual
+            .iter()
+            .zip(expected)
+            .enumerate()
+            .filter(|(_, (a, b))| a != b)
+            .map(|(i, _)| i)
+            .take(20)
+            .collect();
+        panic!(
+            "fullstate-clock mismatch {label}, firstoffsets{differences:?}, lengths{}/{}",
+            actual.len(),
+            expected.len()
+        );
+    }
+}
+
+fn native_prefixes(rom: &[u8]) -> serde_json::Value {
+    let mut calls = Vec::new();
+    // One original byte-load prefix per disjoint storage class, with mirrors.
+    for (i, field) in [0, 2, 7, 18, 42, 51, 52, 54, 65, 69]
+        .into_iter()
+        .enumerate()
+    {
+        calls.push(Call {
+            entry: if field == 18 { 0x31c32 } else { 0xd2060 },
+            address: SOURCE + 511 * 70 + field,
+            mirror: [0x08000000, 0x0a000000, 0x0c000000][i % 3],
+            kind: 0,
+            index: 0,
+            selector: 0,
+        });
+    }
+    for (entry, address) in [
+        (0xd0878, SOURCE + 2),
+        (0xd08a2, SOURCE + 4),
+        (0xd2060, SOURCE - 1),
+        (0xd2060, SOURCE_END),
+        (0xd08a2, SOURCE - 2),
+        (0xd08a2, SOURCE_END - 2),
+    ] {
+        calls.push(Call {
+            entry,
+            address,
+            mirror: 0x0c000000,
+            kind: 0,
+            index: 0,
+            selector: 0,
+        });
+    }
+    for (i, selector) in [
+        0, 3, 7, 15, 18, 19, 25, 30, 32, 33, 42, 44, 47, 48, 50, 51, 53, 54, 59, 60, 64,
+    ]
+    .into_iter()
+    .enumerate()
+    {
+        calls.push(Call {
+            entry: 0xd1f30,
+            address: 0,
+            mirror: 0x08000000,
+            kind: 1,
+            index: [0, 511, 58, 300][i % 4],
+            selector,
+        });
+    }
+    for (index, selector) in [(0x101ff, 0x12a), (512, 0), (65535, 19), (0xffffffff, 0x141)] {
+        calls.push(Call {
+            entry: 0xd1f30,
+            address: 0,
+            mirror: 0x08000000,
+            kind: 1,
+            index,
+            selector,
+        });
+    }
+    assert_eq!(calls.len(), 41);
+    let mut raw = crate::make_machine(rom.to_vec(), None);
+    let initial = raw.save_state().unwrap();
+    let mut visited: [_; 3] = std::array::from_fn(|_| BTreeSet::new());
+    let mut expected = Vec::new();
+    let mut expected_counts = Vec::new();
+    for &c in &calls {
+        raw.load_state(&initial).unwrap();
+        setup(&mut raw, c);
+        expected_counts.push(interpreted(&mut raw, c, &mut visited[family(c)]));
+        expected.push(raw.save_state().unwrap());
+    }
+    let view = View {
+        rom,
+        ewram: None,
+        iwram: None,
+        bios: None,
+    };
+    let compiled_instructions: usize = visited.iter().map(BTreeSet::len).sum();
+    let mut libraries = Vec::new();
+    let mut tables = Vec::new();
+    for (group, visited) in visited.iter().enumerate() {
+        assert!(!visited.is_empty());
+        assert!(calls
+            .iter()
+            .filter(|c| family(**c) == group)
+            .all(|&c| !visited.iter().any(|&(pc, _)| pc == stop(c))));
+        let blocks = visited
+            .iter()
+            .map(|&(addr, thumb)| {
+                let mut instrs = vec![if thumb {
+                    armv4t::decode_thumb(view.read16(addr), addr)
+                } else {
+                    armv4t::decode_arm(view.read32(addr), addr)
+                }];
+                if thumb {
+                    let next = armv4t::decode_thumb(view.read16(addr + 2), addr + 2);
+                    if armv4t::fuse_thumb_bl(&instrs[0], &next).is_some() {
+                        instrs.push(next);
+                    }
+                }
+                Block {
+                    addr,
+                    thumb,
+                    instrs,
+                }
+            })
+            .collect();
+        let object = root().join(format!("mission_records70-family{group}.o"));
+        recomp_core::tcc_memory::build(
+            &Analysis { blocks },
+            &view,
+            &recomp_core::tcc_memory::library_path().unwrap(),
+            &object,
+            &mut |_| {},
+        )
+        .unwrap();
+        let (library, table) = crate::load_native(&object).unwrap();
+        libraries.push(library);
+        tables.push(table);
+    }
+    let mut typed = crate::make_machine(rom.to_vec(), None);
+    let mut native = crate::make_machine(rom.to_vec(), None);
+    for m in [&mut typed, &mut native] {
+        attach_from_directory(m, &dataset()).unwrap();
+    }
+    let api = gba_core::capi::RtApi {
+        interp_one,
+        read8,
+        read16,
+        read32,
+        ..RT_API
+    };
+    COMPILED.with(|c| c.set([0; 2]));
+    FALLBACK.with(|c| c.set([0; 2]));
+    let mut dispatch = 0;
+    let mut observations = Vec::new();
+    for (i, &c) in calls.iter().enumerate() {
+        for m in [&mut typed, &mut native] {
+            m.load_state(&initial).unwrap();
+            setup(m, c);
+            m.bus.rom[SOURCE as usize..SOURCE_END as usize].fill(0xcd);
+            m.bus.rom[SOURCE as usize - 4..SOURCE as usize].fill(0xab);
+        }
+        let typed_before = counts(&mut typed as *mut Machine as *mut std::ffi::c_void);
+        assert_eq!(
+            interpreted(&mut typed, c, &mut BTreeSet::new()),
+            expected_counts[i]
+        );
+        let typed_after = counts(&mut typed as *mut Machine as *mut std::ffi::c_void);
+        let typed_delta = std::array::from_fn::<_, 2, _>(|j| typed_after[j] - typed_before[j]);
+        let native_before = counts(&mut native as *mut Machine as *mut std::ffi::c_void);
+        let before = COMPILED.with(Cell::get);
+        while native.cpu.regs[15] != stop(c) {
+            assert!(dispatch < 20000);
+            native.bus.frame_ready = false;
+            let actual_before = counts(&mut native as *mut Machine as *mut std::ffi::c_void);
+            let api_before = COMPILED.with(Cell::get);
+            tables[family(c)]
+                .get(native.cpu.regs[15] | u32::from(native.cpu.thumb()))
+                .unwrap_or_else(|| panic!("uncompiled case{i} PC{:08x}", native.cpu.regs[15]))(
+                &api,
+                &mut native as *mut Machine as *mut std::ffi::c_void,
+            );
+            let actual_after = counts(&mut native as *mut Machine as *mut std::ffi::c_void);
+            let api_after = COMPILED.with(Cell::get);
+            assert_eq!(
+                std::array::from_fn::<_, 2, _>(|j| actual_after[j] - actual_before[j]),
+                std::array::from_fn::<_, 2, _>(|j| api_after[j] - api_before[j]),
+                "all callbacks case{i}"
+            );
+            dispatch += 1;
+        }
+        let after = COMPILED.with(Cell::get);
+        let native_after = counts(&mut native as *mut Machine as *mut std::ffi::c_void);
+        let native_delta = std::array::from_fn::<_, 2, _>(|j| native_after[j] - native_before[j]);
+        let api_delta = std::array::from_fn::<_, 2, _>(|j| after[j] - before[j]);
+        observations.push(serde_json::json!({"case":i,"entry":c.entry,"index":c.index,"selector":c.selector,"expected":expected_counts[i],"typed":typed_delta,"native":native_delta,"callbacks":api_delta}));
+        fs::write(
+            root().join("native-observations.json"),
+            serde_json::to_vec_pretty(&observations).unwrap(),
+        )
+        .unwrap();
+        assert_eq!(typed_delta, expected_counts[i], "typed case{i}");
+        assert_eq!(native_delta, expected_counts[i], "native case{i}");
+        assert_eq!(api_delta, expected_counts[i], "callbacks case{i}");
+        for (kind, m) in [("typed", &mut typed), ("native", &mut native)] {
+            m.bus.rom.copy_from_slice(rom);
+            check_state(m, &expected[i], &format!("{kind}-case{i}"));
+        }
+    }
+    let observed = COMPILED.with(Cell::get);
+    assert_eq!(
+        observed,
+        expected_counts
+            .iter()
+            .fold([0; 2], |a, b| [a[0] + b[0], a[1] + b[1]])
+    );
+    assert_eq!(observed[1], 5);
+    assert_eq!(libraries.len(), 3);
+    serde_json::json!({"full_state_clock_cases":calls.len(),"single_load_cases":16,"original_getter_calls":25,
+        "compiled_new_source_bytes":observed[0],"compiled_prior_conditional_records8_bytes":observed[1],"fallback_source_bytes":FALLBACK.with(Cell::get),
+        "compiled_instructions":compiled_instructions,"native_case_families":3,"each_family_excludes_stop_boundaries":true,
+        "dispatch_coverage_only":dispatch,"all35840_raw_source_bytes_poisoned_after_Load_setup":true,"observations":observations})
+}
+fn bus_lifecycle(rom: &[u8]) -> serde_json::Value {
+    let mut m = crate::make_machine(rom.to_vec(), None);
+    attach_from_directory(&mut m, &dataset()).unwrap();
+    let owner = m.bus.rom_resources().unwrap().clone();
+    let initial = m.save_state().unwrap();
+    m.bus.rom[SOURCE as usize..SOURCE as usize + SOURCE_BYTES].fill(0xcd);
+    for i in 0..SOURCE_BYTES {
+        assert_eq!(
+            m.bus.read8(0x0c000000 + SOURCE + i as u32),
+            rom[SOURCE as usize + i]
+        );
+    }
+    let s = owner.mission_records70_stats().unwrap();
+    assert_eq!(
+        [
+            s.bus_reads,
+            s.source_bytes,
+            s.word_bytes,
+            s.packed_bytes,
+            s.operand_bytes,
+            s.inline_bytes,
+            s.byte_list_bytes,
+            s.scaled_bytes,
+            s.scalar_bytes,
+            s.mapped_bytes,
+            s.flag_bytes,
+            s.event_bytes,
+            s.records_used
+        ],
+        [
+            35840,
+            35840,
+            18 * 512,
+            12 * 512,
+            3 * 512,
+            16 * 512,
+            9 * 512,
+            2 * 512,
+            4 * 512,
+            3 * 512,
+            2 * 512,
+            512,
+            512
+        ]
+    );
+    let pointer = &mut m as *mut Machine as *mut std::ffi::c_void;
+    for delta in [
+        -2,
+        -1,
+        1,
+        3,
+        SOURCE_BYTES as i32 - 2,
+        SOURCE_BYTES as i32 - 1,
+    ] {
+        let at = (SOURCE as i32 + delta) as usize;
+        assert_eq!(
+            (RT_API.read16)(pointer, 0x0a000000 + at as u32),
+            u32::from(u16::from_le_bytes(rom[at..at + 2].try_into().unwrap()))
+        );
+        assert_eq!(
+            (RT_API.read32)(pointer, 0x08000000 + at as u32),
+            u32::from_le_bytes(rom[at..at + 4].try_into().unwrap())
+        );
+    }
+    let end = SOURCE as usize + SOURCE_BYTES;
+    // ConditionalRecords8 bytes to the left retain the prior owner; the successor on the right is raw.
+    m.bus.rom[SOURCE as usize - 4..SOURCE as usize].fill(0xab);
+    m.bus.rom[end..end + 4].fill(0xef);
+    assert_eq!(
+        (RT_API.read32)(pointer, 0x08000000 + SOURCE - 1),
+        u32::from_le_bytes(
+            rom[SOURCE as usize - 1..SOURCE as usize + 3]
+                .try_into()
+                .unwrap()
+        )
+    );
+    assert_eq!(
+        (RT_API.read32)(pointer, 0x08000000 + SOURCE_END - 1),
+        u32::from_le_bytes([rom[end - 1], 0xef, 0xef, 0xef])
+    );
+    assert!(owner.conditional_records8_stats().unwrap().source_bytes > 0);
+    let before = owner.mission_records70_stats().unwrap();
+    assert_eq!(m.bus.read8(0x08000000 + SOURCE_END), 0xef);
+    assert_eq!(owner.mission_records70_stats().unwrap(), before);
+    m.bus.rom[end..end + 4].copy_from_slice(&rom[end..end + 4]);
+    for index in 0..512 {
+        let at = SOURCE + (index + 1) * 70 - 1;
+        assert_eq!(
+            (RT_API.read32)(pointer, 0x0a000000 + at),
+            u32::from_le_bytes(rom[at as usize..at as usize + 4].try_into().unwrap())
+        );
+    }
+    let before = owner.mission_records70_stats().unwrap();
+    let old = gba_core::rom_data::task_cycle_deltas::SOURCE as usize;
+    m.bus.rom[old] = 0xab;
+    assert_eq!(m.bus.read8(0x08000000 + old as u32), rom[old]);
+    assert_eq!(owner.mission_records70_stats().unwrap(), before);
+    m.bus.rom.copy_from_slice(rom);
+    let unavailable = root().join("unavailable dataset");
+    fs::rename(dataset(), &unavailable).unwrap();
+    assert!(attach_from_directory(&mut m, &dataset()).is_err());
+    assert!(Arc::ptr_eq(m.bus.rom_resources().unwrap(), &owner));
+    m.load_state(&initial).unwrap();
+    let mut slots = crate::save_state::Slots::new(&root().join("private.sav"), rom);
+    slots.save(&m, 1, &vec![[0; 4]; 240 * 160], false).unwrap();
+    m.cpu.regs[4] = 123;
+    let changed = m.save_state().unwrap();
+    slots.load(&mut m, 1).unwrap();
+    assert_eq!(m.save_state().unwrap(), initial);
+    slots.undo(&mut m).unwrap();
+    assert_eq!(m.save_state().unwrap(), changed);
+    assert!(Arc::ptr_eq(m.bus.rom_resources().unwrap(), &owner));
+    m.bus.rom[SOURCE as usize..end].fill(0xcd);
+    assert_eq!(m.bus.read8(0x08000000 + SOURCE), rom[SOURCE as usize]);
+    m.bus.rom.copy_from_slice(rom);
+    fs::rename(&unavailable, dataset()).unwrap();
+    for kind in 0..3 {
+        let mut a = crate::make_machine(rom.to_vec(), None);
+        let mut b = crate::make_machine(rom.to_vec(), None);
+        attach_from_directory(&mut b, &dataset()).unwrap();
+        for m in [&mut a, &mut b] {
+            if kind == 0 {
+                m.bus.write32(0x040000d4, 0x08000000 + SOURCE);
+                m.bus.write32(0x040000d8, 0x02010000);
+                m.bus.write16(0x040000dc, 17922);
+            } else {
+                m.cpu.regs[..3].copy_from_slice(&[
+                    0x0a000000 + SOURCE,
+                    0x02010000,
+                    if kind == 2 { 8968 } else { 17922 },
+                ]);
+                m.cpu.regs[15] = 0x02000000;
+                m.cpu.cpsr = 0xbf;
+                m.bus
+                    .write16(0x02000000, if kind == 2 { 0xdf0c } else { 0xdf0b });
+            }
+        }
+        b.bus.rom[SOURCE as usize..end].fill(0xcd);
+        for m in [&mut a, &mut b] {
+            if kind == 0 {
+                m.bus.write16(0x040000de, 0x8000);
+            } else {
+                m.step();
+            }
+        }
+        b.bus.rom.copy_from_slice(rom);
+        assert_eq!(
+            b.save_state().unwrap(),
+            a.save_state().unwrap(),
+            "full state/clock mission_records70 transfer{kind}"
+        );
+        assert!(
+            b.bus
+                .rom_resources()
+                .unwrap()
+                .mission_records70_stats()
+                .unwrap()
+                .source_bytes
+                >= 35840
+        );
+    }
+    serde_json::json!({"all35840_new_typed_bytes":true,"all10fields512records":true,
+        "widths_mirrors_all512recordboundaries_prior8B_rawsuccessor":true,
+        "unavailable_files_Load_slot_Undo_owner_retained":true,"DMA_CpuSet_CpuFastSet_fullstate_clock":3,
+        "DMA_CpuSet_halfwords":17922,"CpuFastSet_words":8968})
+}
+#[test]
+#[ignore = "private EUR mission_records70 managed/native integration; Wine only, Linux/USA pending"]
+fn european_mission_records70_managed_native_and_lifecycle() {
+    let root = root();
+    assert!(!root.exists());
+    fs::create_dir_all(&root).unwrap();
+    let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    let old = PathBuf::from(std::env::var_os("FFTA_STATE_TEST_DATASET").unwrap());
+    let prior: Manifest =
+        toml::from_str(&fs::read_to_string(old.join(MANIFEST_FILE)).unwrap()).unwrap();
+    assert_eq!(
+        (
+            prior.extractor_revision,
+            prior.decoder_revision,
+            prior.resources.len()
+        ),
+        (85, 84, 77)
+    );
+    let mut source = Extraction::from_rom(&rom).unwrap();
+    assert_eq!(
+        (
+            source.manifest.extractor_revision,
+            source.manifest.decoder_revision,
+            source.manifest.resources.len()
+        ),
+        (86, 85, 78)
+    );
+    extract(&dataset(), &mut source).unwrap();
+    assert_eq!(fs::read_dir(dataset()).unwrap().count(), 79);
+    assert_eq!(&source.manifest.resources[..77], prior.resources.as_slice());
+    assert_eq!(&source.manifest.coverage[..77], prior.coverage.as_slice());
+    for entry in &prior.resources {
+        assert_eq!(
+            fs::read(dataset().join(&entry.path)).unwrap(),
+            fs::read(old.join(&entry.path)).unwrap()
+        );
+    }
+    let entry = &source.manifest.resources[77];
+    assert_eq!(entry.id, MISSION_RECORDS70_ID);
+    assert!(entry.dependencies.is_empty());
+    assert_eq!(entry.sources.len(), 1);
+    assert_eq!(entry.sources[0].offset, SOURCE);
+    assert_eq!(entry.sources[0].length, 35840);
+    let bytes = fs::read(dataset().join(MISSION_RECORDS70_FILE)).unwrap();
+    let manifest = fs::read(dataset().join(MANIFEST_FILE)).unwrap();
+    assert_eq!(
+        parse_mission_records70(&bytes).unwrap(),
+        source.mission_records70.as_ref().unwrap().decoded
+    );
+    let interrupted = root.join("interrupted");
+    fs::create_dir(&interrupted).unwrap();
+    let mut reached = false;
+    assert!(write_dataset(&interrupted, &mut source, &mut |p, b| {
+        if p.file_name().unwrap() == MISSION_RECORDS70_FILE {
+            reached = true;
+            Err("injected mission_records70 file failure".into())
+        } else {
+            write_synced(p, b)
+        }
+    })
+    .is_err());
+    assert!(reached);
+    assert!(!interrupted.join(MANIFEST_FILE).exists());
+    assert!(verify(&interrupted, &source).is_err());
+    eprintln!("ROM_DATA_MISSION_RECORDS70_STAGE publication79/prior77exact/interruption PASS");
+    let mut m = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut m, &dataset()).unwrap();
+    let owner = m.bus.rom_resources().unwrap().clone();
+    let state = m.save_state().unwrap();
+    for case in 0..14 {
+        let mut bad = source.manifest.clone();
+        let mut data = bytes.clone();
+        match case {
+            0..=4 => {
+                let mut v = parse_mission_records70(&data).unwrap();
+                match case {
+                    0 => v.records[0].word00 ^= 1,
+                    1 => v.records[0].index ^= 1,
+                    2 => v.records[0].packed02[2] ^= 0x80,
+                    3 => {
+                        v.records.pop();
+                    }
+                    _ => v.source_offset += 1,
+                };
+                data = encode_mission_records70(&v).unwrap();
+            }
+            5 => bad.resources[77].sources[0].offset += 1,
+            6 => bad.resources[77].sources[0].length -= 1,
+            7 => bad.resources[77].sources[0].sha256 = "00".repeat(32),
+            8 => bad.resources[77].sources[0].role = "other".into(),
+            9 => {
+                let mut v: serde_json::Value = serde_json::from_slice(&data).unwrap();
+                v["unexpected"] = true.into();
+                data = serde_json::to_vec(&v).unwrap();
+            }
+            10 => bad.resources[77]
+                .dependencies
+                .push(ENCOUNTER_HEADERS_ID.into()),
+            11 => bad.resources[77]
+                .sources
+                .push(gba_core::rom_data::SourceRange {
+                    offset: SOURCE_END,
+                    length: 2,
+                    sha256: gba_core::ffta_rom::digest(
+                        &rom[SOURCE_END as usize..SOURCE_END as usize + 2],
+                    ),
+                    role: "counterfeit-shared".into(),
+                }),
+            12 => bad.resources[77].format = "counterfeit".into(),
+            _ => {
+                bad.coverage.pop();
+            }
+        }
+        bad.resources[77].sha256 = gba_core::ffta_rom::digest(&data);
+        fs::write(dataset().join(MISSION_RECORDS70_FILE), data).unwrap();
+        fs::write(
+            dataset().join(MANIFEST_FILE),
+            toml::to_string_pretty(&bad).unwrap(),
+        )
+        .unwrap();
+        assert!(
+            attach_from_directory(&mut m, &dataset()).is_err(),
+            "mission_records70 attach guard{case}"
+        );
+        assert!(Arc::ptr_eq(m.bus.rom_resources().unwrap(), &owner));
+        assert_eq!(m.save_state().unwrap(), state);
+    }
+    fs::write(dataset().join(MISSION_RECORDS70_FILE), &bytes).unwrap();
+    fs::write(dataset().join(MANIFEST_FILE), &manifest).unwrap();
+    let files = read_dataset(&dataset()).unwrap();
+    let saved = source.mission_records70.take();
+    assert!(source.validate_files(files.files()).is_err());
+    source.mission_records70 = saved;
+    let mut missing = files.files();
+    missing.mission_records70 = None;
+    assert!(source.validate_files(missing).is_err());
+    eprintln!("ROM_DATA_MISSION_RECORDS70_STAGE attach14/fullset2/failedownerfullstate PASS");
+    let native = native_prefixes(&rom);
+    eprintln!("ROM_DATA_MISSION_RECORDS70_STAGE native41/fullstate-clock/source35840poisoned PASS");
+    let bus = bus_lifecycle(&rom);
+    let result = serde_json::json!({"status":"PASS","revision":[1,86,85],"files":79,"resources":78,"prior77_records_files_exact":true,"source_bytes":35840,"attach_guards":14,"fullset_guards":2,"newfile_interruption":true,"native":native,"bus_lifecycle":bus,"dataset_sha256":owner.dataset_sha256(),"manifest_sha256":gba_core::ffta_rom::digest(&manifest),"mission_records70_JSON_sha256":gba_core::ffta_rom::digest(&bytes),"actualCLI":"pending","ordinary_positive":"pending","Linux":"pending","USA":"pending","nativeWindows":"pending","new32_9":"pending","performance_measurements":false});
+    fs::write(
+        root.join("result.json"),
+        serde_json::to_vec_pretty(&result).unwrap(),
+    )
+    .unwrap();
+    eprintln!("ROM_DATA_MISSION_RECORDS70_RUNTIME e86-d85/files79/resources78/attach14/fullset2/native41/DMA3 PASS");
+}
+
+#[test]
+#[ignore = "private EUR mission-records70 continuation after closed publication; Wine only"]
+fn european_mission_records70_remaining_attach_native_and_lifecycle() {
+    assert!(std::env::var_os("FFTA_MISSION_RECORDS70_REMAINING").is_some());
+    let root = root();
+    assert!(root.is_dir());
+    let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    let mut source = Extraction::from_rom(&rom).unwrap();
+    let manifest = fs::read(dataset().join(MANIFEST_FILE)).unwrap();
+    let accepted: Manifest = toml::from_str(std::str::from_utf8(&manifest).unwrap()).unwrap();
+    assert_eq!(accepted.resources.len(), 78);
+    assert_eq!(source.manifest.resources.len(), accepted.resources.len());
+    // Hydrate only file identities from the already-published generation.
+    // All source/format/dependency/order metadata still comes from the ROM.
+    for (expected, actual) in source
+        .manifest
+        .resources
+        .iter_mut()
+        .zip(&accepted.resources)
+    {
+        expected.sha256 = actual.sha256.clone();
+        assert_eq!(expected, actual);
+    }
+    assert_eq!(source.manifest, accepted);
+    let files = read_dataset(&dataset()).unwrap();
+    source.validate_files(files.files()).unwrap();
+    let bytes = fs::read(dataset().join(MISSION_RECORDS70_FILE)).unwrap();
+    let mut m = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut m, &dataset()).unwrap();
+    let owner = m.bus.rom_resources().unwrap().clone();
+    let state = m.save_state().unwrap();
+    for case in 0..14 {
+        let mut bad = source.manifest.clone();
+        let mut data = bytes.clone();
+        match case {
+            0..=4 => {
+                let mut v = parse_mission_records70(&data).unwrap();
+                match case {
+                    0 => v.records[0].word00 ^= 1,
+                    1 => v.records[0].index ^= 1,
+                    2 => v.records[0].packed02[2] ^= 0x80,
+                    3 => {
+                        v.records.pop();
+                    }
+                    _ => v.source_offset += 1,
+                };
+                data = encode_mission_records70(&v).unwrap();
+            }
+            5 => bad.resources[77].sources[0].offset += 1,
+            6 => bad.resources[77].sources[0].length -= 1,
+            7 => bad.resources[77].sources[0].sha256 = "00".repeat(32),
+            8 => bad.resources[77].sources[0].role = "other".into(),
+            9 => {
+                let mut v: serde_json::Value = serde_json::from_slice(&data).unwrap();
+                v["unexpected"] = true.into();
+                data = serde_json::to_vec(&v).unwrap();
+            }
+            10 => bad.resources[77]
+                .dependencies
+                .push(ENCOUNTER_HEADERS_ID.into()),
+            11 => bad.resources[77]
+                .sources
+                .push(gba_core::rom_data::SourceRange {
+                    offset: SOURCE_END,
+                    length: 2,
+                    sha256: gba_core::ffta_rom::digest(
+                        &rom[SOURCE_END as usize..SOURCE_END as usize + 2],
+                    ),
+                    role: "counterfeit-shared".into(),
+                }),
+            12 => bad.resources[77].format = "counterfeit".into(),
+            _ => {
+                bad.coverage.pop();
+            }
+        }
+        bad.resources[77].sha256 = gba_core::ffta_rom::digest(&data);
+        fs::write(dataset().join(MISSION_RECORDS70_FILE), data).unwrap();
+        fs::write(
+            dataset().join(MANIFEST_FILE),
+            toml::to_string_pretty(&bad).unwrap(),
+        )
+        .unwrap();
+        assert!(
+            attach_from_directory(&mut m, &dataset()).is_err(),
+            "mission_records70 attach guard{case}"
+        );
+        assert!(Arc::ptr_eq(m.bus.rom_resources().unwrap(), &owner));
+        assert_eq!(m.save_state().unwrap(), state);
+    }
+    fs::write(dataset().join(MISSION_RECORDS70_FILE), &bytes).unwrap();
+    fs::write(dataset().join(MANIFEST_FILE), &manifest).unwrap();
+    let files = read_dataset(&dataset()).unwrap();
+    let saved = source.mission_records70.take();
+    assert!(source.validate_files(files.files()).is_err());
+    source.mission_records70 = saved;
+    let mut missing = files.files();
+    missing.mission_records70 = None;
+    assert!(source.validate_files(missing).is_err());
+    eprintln!("ROM_DATA_MISSION_RECORDS70_STAGE attach14/fullset2/failedownerfullstate PASS");
+    let native = native_prefixes(&rom);
+    eprintln!("ROM_DATA_MISSION_RECORDS70_STAGE native41/fullstate-clock/source35840poisoned PASS");
+    let bus = bus_lifecycle(&rom);
+    let result = serde_json::json!({"status":"PASS","revision":[1,86,85],"files":79,"resources":78,"prior77_records_files_exact":true,"source_bytes":35840,"attach_guards":14,"fullset_guards":2,"newfile_interruption":true,"native":native,"bus_lifecycle":bus,"dataset_sha256":owner.dataset_sha256(),"manifest_sha256":gba_core::ffta_rom::digest(&manifest),"mission_records70_JSON_sha256":gba_core::ffta_rom::digest(&bytes),"actualCLI":"pending","ordinary_positive":"pending","Linux":"pending","USA":"pending","nativeWindows":"pending","new32_9":"pending","performance_measurements":false});
+    fs::write(
+        root.join("remaining-result.json"),
+        serde_json::to_vec_pretty(&result).unwrap(),
+    )
+    .unwrap();
+    eprintln!("ROM_DATA_MISSION_RECORDS70_REMAINING e86-d85/files79/resources78/attach14/fullset2/native41/DMA3 PASS");
+}

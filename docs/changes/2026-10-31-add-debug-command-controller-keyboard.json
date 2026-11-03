@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "add-debug-command-controller-keyboard",
+  "title": "Add controller editing to the debugger command console",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Add an edge-triggered on-screen controller keyboard with punctuation pages, recent commands, presets, explicit submission and neutral arming.",
+    "Route selected controller navigation to the focused command panel while blocking guest and menu input; require neutral controller polls after the panel loses focus."
+  ],
+  "validation": [
+    "Two new controller model tests pass under Wine and on the Linux host; isolated Windows GNU test and production builds pass without compiler messages.",
+    "Wine/Xvfb with simulated XInput selects and submits the status preset, recalls and cancels a draft, and closes with confirm held for 700ms while full guest state/frame0/clock0 and the underlying menu stay unchanged. Synthetic helpers and session pins remain exact.",
+    "The first small-window screenshot was cropped by a direct X11 resize, which was not valid Windows resize evidence. After replacing unsupported arrow glyphs, a rebuilt Windows runtime and SetWindowPos test at a 480×360 client area showed all 49 labels; guest state and session pins remained exact. The changed labels passed the two host controller tests and 1511 frozen sources/21 overlays matched."
+  ],
+  "limitations": [
+    "DBG2-14 remains open: physical controllers, IME and clipboard interaction, complete contextual help/completion and full menu/CLI/console equivalence are unverified or incomplete."
+  ],
+  "files": [
+    "crates/recomp/src/debug_command.rs",
+    "crates/recomp/src/debug_command/controller.rs",
+    "crates/recomp/src/debug_command_panel.rs",
+    "crates/recomp/src/play.rs",
+    "crates/menu/src/command_console.rs"
+  ],
+  "references": [
+    "docs/debug_operations.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

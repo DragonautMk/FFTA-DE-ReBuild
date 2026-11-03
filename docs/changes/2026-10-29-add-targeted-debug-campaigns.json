@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "slug": "add-targeted-debug-campaigns",
+  "title": "Select targeted debug campaigns and reuse pinned results without automatic sweeps",
+  "kind": "added",
+  "platforms": [
+    "Python3.11 Linux, existing offline Docker image, offline Chrome; public synthetic POSIX dispatch"
+  ],
+  "changes": [
+    "Add bounded campaign manifest and explicit case/DS/family/transition selection (OR within filter, AND between filters), no default all. Read only selected pinned profile/result/audit JSON and show positive/negative/incompatible/not-executed, exact original outcome/window/identities and reused evidence. Unselected cases open no evidence; labels never assert reachability, status promotion or global feature non-use.",
+    "Match result reported identities, selected/completed frames and passed endpoint/clock; authenticate audit run/case/identities/filter/window/truncation. Distinguish complete selected-window zero, partial zero and unavailable. Metadata authentication never revalidates payload availability/current compatibility or reconstructs historical full-profile provenance from mtime. Attested readers share directory-v1 lease; legacy metadata snapshots retain exclusion unknown.",
+    "Optional explicit run-case authenticates selected profile/runtime, requires selection reason and explicit reopening reason for any declared proof or existing result, writes intent then execs existing supervised replay. Reuse its locks/preflight/timeout/cancel; add no guest runner/supervisor, batch replay, Cargo/core/save/native ABI change or ROM copies.",
+    "Bound32cases/256KiBmanifest/128KiBprofile-result/16MiBaudit/64KiBaudit summary/2MiBreport/eightstore entries; reject duplicate/nonfinite/invalid JSON, nonordinary/shared files and overwrite. Private new report/intent folders retain failed attempts, no pruning. Add searchable offline HTML, logged PS/Bash entry points, existing network-none Docker report/help only, homepage category/guide and artifact-limit summary."
+  ],
+  "validation": [
+    "12distinct campaign Python tests pass (11refined suite plus1strict-JSON/type/undeclared-result addition), with11affected artifact-manager tests =23distinct. Cover explicit selection and no unselected reads/default sweep, four statuses, hash/identity/endpoint/frame/audit mismatch, zero/partial/unavailable, lease contention/legacy scope, symlink/shared files, limits, moved path, repeat reason/intent and public fake executor. Source review reruns only affected checks; retained initial/refined logs identify repetitions, not additional distinct tests.",
+    "Actual metadata-only private campaign reads retained DS20 filtered audit passed102/102 with4selected requests plus historical native divergence102/102; both pinned proofs reused, never replayed. Add public synthetic complete-zero/incompatible metadata and unprepared DS03. Final selected statuses positive/negative/positive/incompatible/not-executed. All11selected original metadata/input/normal-runtime guards retain hash/mtime; zero new guest frames/snapshots/extraction/native/performance acceptance.",
+    "Actual run-case subprocess test execs one PUBLIC SYNTHETIC POSIX fake runtime, no game data. Existing-proof repeat and changed runtime refuse before dispatch/output. No real profile dispatched or new Windows/runtime build; existing accepted replay supervisor evidence reused.",
+    "Bash wrapper runs from unrelated cwd with one-case report/log; actual existing Docker image networknone/readonly container writes two-case report, no image/build/guest execution. Relative evidence links work across host/container. PowerShell source provided but not executed on this host.",
+    "Four offline Chrome views1400desktop/620narrow/empty-selection/home pass outcomes/reuse/zero-global-unknown separation, filtering/search/empty/reset/details/relative links/no overflow. Screenshots inspected; homepage72indices/4campaign reports is a catalog snapshot, not acceptance of other outputs.",
+    "Independent final-verification authenticates8live public source snapshots, four exact HTML/JSON pairs and evidence pins/relative links,23distinct tests and11guards. Retire only4exited Chrome profiles with receipt, retain actual inputs/proofs/runtime/source/preimages/metadata fixtures/manifests/reports/logs/results/screenshots/shared caches. No managed/native disposable trees, ROM-only completion helper inapplicable.",
+    "Usage/README/homepage/limits/checklist/state/record/changelog/handoff, local links/22ordered IDs(01-21closed), metadata-only memory and whitespace pass. Workspace/basee8bd939 checks exit1 ONLY separate concurrent gba-core/rom_data/runtime/conditional_records8.rs and recomp/rom_data/conditional_records8_runtime_tests.rs requiring updated runtime memory, preserve/unattribute them. DBG21 source coverage complete. Exact integration logs under target/debug-tools-campaign/memory-results.json; closed01-20 unchanged."
+  ],
+  "limitations": [
+    "Linux-host Python/Docker/Chrome and public fake POSIX executable only; Windows/PowerShell, real Wine/native Linux profile dispatch and physical controllers unverified in this unit. Dispatch delegates established supervisor instead of replaying old cases to reconstruct context.",
+    "Pinned metadata authenticates retained bytes and reported identities, not all historical producer settings or current payload availability/compatibility. Declared tags do not establish reader-family reachability. Missing/truncated/filtered/uninstrumented coverage never proves global absence; no DS/ROM/native acceptance promotion.",
+    "Local private paths and failure/intent receipts remain ignored; intent is never reported as a completed replay. User explicitly updates result pins for a new report; no automatic overwrite/prune/send or default sweep. Existing plans requiring tool identity must be regenerated after updated limits. No normal runtime replacement, Android/Godot, release, commit or push."
+  ],
+  "files": [
+    "scripts/debug_campaign.py",
+    "scripts/debug_campaign.html",
+    "scripts/tests/test_debug_campaign.py",
+    "scripts/linux/debug_campaign.sh",
+    "scripts/windows/debug_campaign.ps1",
+    "scripts/report_home.py",
+    "scripts/report_home.html",
+    "scripts/debug_artifacts.py",
+    "docs/debug_campaigns.md",
+    "docs/report_home.md",
+    "scripts/README.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/debug_campaigns.md",
+    "docs/debug_replays.md",
+    "docs/debug_artifacts.md",
+    "docs/development/DEBUG_TOOLS_TODO.md"
+  ]
+}

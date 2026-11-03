@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "observe-european-script-animation-source-queries",
+  "title": "Observe source-linked European script animation queries on retained recordings",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add one test-only native dispatch entry observer for decimal49, original body selection and constructor22788. Read CPU/ROM/RAM immutably, then forward the retained native function where present or execute the same original Machine::step used for a missing cache entry. No product cache/save ABI change or forced guest PC/RAM.",
+    "Link authenticated script source/selector/group to live actor-context sprite using original SP/LR/call-site checks, then record actual fullword animation/part/index/target queries. Preserve raw addressing and avoid a blanket script-by-sprite projection.",
+    "Use one retained authentic EUR snowball snapshot and unchanged6000frame input for a functional source census only; a zero-query result remains a closed negative lead, with no new navigation/recording/checkpoint or old equivalence acceptance repeat."
+  ],
+  "validation": [
+    "First affected Windows frontend test build passes without warnings, frozenae741cf138b09850086f82edafce446698696f23cdea8ae9fdaba54e673afe7b. Six selected input/preimages and existing guards remain intact; registration diff is exactly two cfg(test) lines.",
+    "First Wine invocation exits101at a missing-retained-entry precondition before snapshot load or any scene frame. Existing runtime already interprets missing entries; no source census or negative-use claim is made. First log/result/executable/preimages remain preserved.",
+    "Corrected observer Windows frontend build passes without warnings, frozen4342f2daa457c3882591b4c035cb3645bce9349257e1f5466bca6a8cb57c1e7c. Six selected corrected source inputs/preimages and1024build guards remain intact; first executable/preimages are retained.",
+    "Single actual Wine6000frame functional census passes from original guestframe21420to27420: six authenticated decimal49handler invocations, six SP/LR-linked live bodies and18actual constructor queries. All three distinct keys are sprite46/animation8/parts0-1-2; source selector16/group2 at six script instructions. Existing native-entry availability is false/false/true; original missing-entry steps serve49/body and original native constructor is forwarded.",
+    "Independent read-only source/ownership audit checks all18recorded query addresses and original script words against all56e61owners. Body is already owned by normal-battle; two new4Bnull index cells at37c760/37c764are unowned, eight source bytes with SHA256af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc. No new sequence/pixel/model/runtime family is inferred.",
+    "All1025Wine hash-mtime guards and six corrected source inputs remain intact after the actual census; no old source/model/lifecycle/equivalence acceptance or unchanged81snapshot scan is repeated.",
+    "Existing authenticated metadata14logical record16has normal/alternate sprite fields46/188. Together with the accepted low-selector unit-byte4 search and CBAD4special-route predicate, this is a concrete next conditional producer lead; no universal current-sprite claim or new model is made.",
+    "Preservation passes all8649prior hashes,1023/1024build guards,1025Wine guards and both sets of six compiled source/preimages; only the selected two-line registration/new observer and coherent memory docs change.330local feature links, new-module rustfmt, project-memory default/base7597b92 and CRLF-aware whitespace pass."
+  ],
+  "limitations": [
+    "Observed six script sources/three resolved keys only; remaining161instructions and other actor/group/state pairings remain open. Eight demonstrated null-index bytes need a separately justified stable source contract/model/ownership decision; no new decoded family or ordinary equivalence claim. EUR e61-d60/USAe8-d7 unchanged.",
+    "New Linux/USA/native Windows/new32:9 pending; no performance/storage measurements, private payload edits, new fixture/navigation/checkpoint, Android/package/commit/push. Pending rejected equipment derivation is not executed."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/script_obj_query_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_unit_obj.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

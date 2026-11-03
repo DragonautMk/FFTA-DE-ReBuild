@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "review-offline-report-generators-english",
+  "title": "Review offline report generators for English-first wording",
+  "kind": "changed",
+  "platforms": [],
+  "changes": [
+    "Review full authored source, comments, metadata and CLI text of artifact/campaign/coverage generators. Correct nine English message-spacing defects in artifact/campaign tools; imported labels and machine values remain verbatim.",
+    "Correct missed Italian folder/name/hash placeholders in two already-reviewed guides and document the distinction between English authored text and imported metadata. This targeted reopening is justified by newly observed untranslated placeholders."
+  ],
+  "validation": [
+    "Python AST comparison against HEAD proves only the nine expected string literals changed; coverage generator remains byte-identical. All three CLI --help commands exit 0. Guide headings, links, code/examples and schemas are preserved apart from translated placeholders and new explanatory prose. Whitespace check passes."
+  ],
+  "limitations": [
+    "Language-only change/review; no cleanup, campaign run, ROM input, dataset/report regeneration, build or previous runtime acceptance test repeated. Auxiliary modules and remaining project source/docs still pending."
+  ],
+  "files": [
+    "scripts/debug_artifacts.py",
+    "scripts/debug_campaign.py",
+    "scripts/rom_coverage.py",
+    "docs/debug_artifacts.md",
+    "docs/debug_campaigns.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": []
+}

@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "date": "2026-10-30",
+  "slug": "persist-debug-content-choices",
+  "title": "Persist debug choices and selector views across portable folder moves",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU build",
+    "Wine"
+  ],
+  "changes": [
+    "Persist bounded versioned debug choices under the selected config root: app/config-relative internal locations, explicit external file/folder provenance,17typed input SHA/kind pins, scoped selector views and global favorite/recent/highlight bookmarks.",
+    "Restore saved primary files asynchronously with a64MiB primary-file budget plus existing type-specific preflight limits; preserve unavailable pins and show missing/changed/incompatible reasons. Neutral runtime references survive ROM changes while incompatible labeled inputs refuse; each action rechecks actual content.",
+    "Add committed-query preference export, location-based bookmark ID remapping for moved explicit internal roots, per-slot original-pin and ROM/storage guards against late results, paused debounce/exit atomic saves and detected external edit refusal. Preference loading never starts content, opens a picker or scans directory trees.",
+    "Handle canonical/verbatim Windows roots by checking the rooted directory after the drive prefix is assembled; do not stat a bare volume designator. Keep existing full-chain alias/ordinary-file guards."
+  ],
+  "validation": [
+    "Windows GNU test-only compilation passes with603frozen source files/41selected host overlays. The unused Anchors::current warning is expected while lifecycle integration remains pending; no warning suppression or runtime acceptance claimed.",
+    "Wine4core behavioral cases pass: moved Unicode/spaced roots and neutral-versus-foreign-ROM pinned choices, external/missing/changed paths, schema/traversal/limits and atomic publication/external edit refusal. Pure selector restore case passes without confirmation/busy/start.",
+    "Core preservation confirms603frozen files,41current overlays and canonical Windows/Linux runtime hashes+mtime. Reuse the closed DBG2-06 Wine testbed; no GUI, old fixture recreation or guest steps. Evidence target/debug-tools-v2-choices/{core-build-result,core-test-results,core-preservation}.json.",
+    "Integration inspection found first-launch config may not exist: defer config canonicalization when classifying an app file, and add a new absent-config case. This concrete new input reopens only that classifier scope. Add a focused editor preference case so incomplete/cancelled search drafts are never persisted. Neither new scope has run yet.",
+    "Written integration regressions cover explicit internal-root/bookmark rebasing, preserved missing pins/external edits, restoration after view cancellation, late-result protection for a newer explicit pin and visible missing-role text. They are pending compilation/execution; no integration acceptance claimed.",
+    "Integrated Windows GNU build passes warning-free604frozenfiles/42host overlays, candidate7b2b85de06512fe0602260cad2e1b1febb3cee721b9d02248ddb6e20c09de7c0. Wine newclassifier1/Memory2/affectedPicker8/preferences2 pass; unionwith prior core4 is17distinct cases.",
+    "Initial GUI selects four refs/three roots and favorite but persistence refuses with AccessDenied5 and stays volatile: ordinary_existing_tree stats the bare extended Windows drive prefix as a volume. Preserve negative original fixture/pins/state0; fix that guard and add a canonical/verbatim root regression. Test harness also reverses Sort/Collection controls; correct it without attributing that harness mismatch to runtime.",
+    "Prefix-fixed Windows GNU build passes warning-free604/42, final runtime286064292587f44521a7f6a8d606edf99845c5da5e298d623dd6aa10b738a6d2. New verbatim-root and affected atomic-write cases pass;18distinct Rust cases total. Three Python inventory checks and diff checks pass. No unchanged scope repeated for context.",
+    "Corrected GUI uses a NEW runtime variant copied from the same frozen public seed/ROM/marker, updating only its own runtime pin; original negative fixture immutable pins stay intact and factory is not recreated. Four typed refs, explicit internal/external file roots and committed query/favorite/recent/sort are saved as4642bytes with no absolute internal app path.",
+    "Close then move the same corrected folder with Unicode/spaces; every file hash+mtime is exact immediately after the move. Retain preimages, remove selected labels and alter the selected external script, then reopen from/tmp. Two valid refs and two explained refusals return while all four saved pins remain; zero initial catalog entries/global selection prove no automatic directory scan or confirmation.",
+    "Actual moved GUI restores favorite/recent/query/collection/sort and maps the explicit internal file to its new ID after an explicit refresh; missing/changed chooser messages are visually inspected. No host tool/replay/script marker appears; full main state/frame0/clock0 stays exact. A readonly UI report captures rendered controls.",
+    "All three GUI cases close and dedicated Xvfb retires; input negatives are restored only after the final close. Preservation verifies604frozen/42current overlays, canonical runtimes hash+mtime, negative and accepted immutable pins, restored label/external hash+mtime, all four saved source hashes, unchanged saved pins, relative internal settings and30final accepted files. Authoritative host/proc shows no owned runtime/helper jobs."
+  ],
+  "limitations": [
+    "Native Windows/Linux runtime and physical controller/IME coverage remain unverified. Unicode OS picker paths used a test-only Windows SendInput helper; no native IME claim. No private game inputs, DS acceptance, release/package refresh, commit or push.",
+    "The actual GUI move uses the same ROM/seed; neutral-versus-incompatible ROM handling is validated through the shared typed restoration cases. Each isolated storage root owns its own settings. Runtime/library binary ABI still requires the existing action/worker preflight.",
+    "Concurrent ROM development is preserved and excluded from the frozen source. This metadata/UI unit has no managed disposable ROM datasets; the rom-data-only retention helper is inapplicable. Negative fixture/preimages/logs remain; only superseded standalone executables are eligible for retirement."
+  ],
+  "files": [
+    "crates/recomp/src/main.rs",
+    "crates/recomp/src/debug_inputs.rs",
+    "crates/recomp/src/debug_choices.rs",
+    "crates/recomp/src/debug_choices/tests.rs",
+    "crates/menu/src/content_selector.rs",
+    "crates/menu/src/content_selector/tests.rs",
+    "crates/menu/src/lib.rs",
+    "crates/recomp/src/debug_choices/memory.rs",
+    "crates/recomp/src/content_picker.rs",
+    "crates/recomp/src/play.rs",
+    "crates/recomp/src/content_picker/tests.rs"
+  ],
+  "references": [
+    "docs/debug_selector.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

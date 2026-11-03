@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "decode-european-task-descriptors",
+  "title": "Decode bounded European task descriptor catalogs without changing guest ID selection",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Establish three bounded EUR descriptor catalogs:341primary/20auxiliary/51script records at3997b0/39a258/39a2f8,412records8B/3296B/3adjacent spans. Independent graphics source39a490and kind0/ID413directory reference at3aca2c bound the final descriptor39a488; the prior456record extent remains rejected.",
+    "Add a strict lossless typed source model with canonical row ordinals, nullable ROM Thumb offsets, u16context sizes and raw u16metadata. Preserve268distinct nonzero callback words/3null records, all aliases, reserved bits and source provenance. Shared Thumb-offset representation is code reuse, not a managed palette resource dependency.",
+    "Preserve original constructor address formulas: main341branch/primaryID362alias secondaryID363, last main412/secondary413, low16truncation and wrapping ID0/raw outside indices. The independent byte6reader and special mainID345metadata-copy contract remain guest operations; no global live selector bound, scheduler or callback rewrite.",
+    "Authenticate exact16MB EUR ROM,59original halfwords/12words plus final directory-row reference, fixed shape/count/ordinals and source byte roundtrip. EUR publication/runtime stays e47-d46/42files41resources and USAe8-d7 until the separate managed integration unit."
+  ],
+  "validation": [
+    "At selection, previous e47 CLI/ordinary final result was terminalPASS with no live job and232source-doc hashes matched. Preserve all2645prior artifact hashes; no completed blend/e46/source/native/lifecycle/ordinary or old audio checks repeated for context.",
+    "New bounded static disassembly/literal references establish source contracts and independent next graphics path080d9b56\u219208011434\u219208010a28. Independent Python struct reconstruction/source SHA/59halfword12word checks pass all3296B and disjointness against all41prior managed owners.53direct BLcandidates retained; incomplete CFGs remain unknown rather than inferred absent.",
+    "Affected Windows release tests compiled without warnings, terminal shell24937. One reduced Wine82576source oracle passed first run:415main-load/59secondary-load/346metadata halfword-copy/346metadata byte/18low16/9branch prefixes. All original callback/context/metadata fields and physical aliases agree; raw0/65535/main413/secondary414 reads remain outside-or-owned according to physical provenance.",
+    "Independent fields/three source hashes/strictJSON/exact roundtrip and10shape/4source-edit/7JSON/2ROMidentity guards pass. Original loadsites observe3156distinct ownedB;140suffixmetadataB remain reconstructed/hashchecked but unread in these probes.7191instructions/39PCs are coverage only; no performance measurement.",
+    "Field/metadata prefixes check full EWRAM/IWRAM and non-scratch registers except the declared2B message output; no full save-state/clock/native/allocator/callback/scheduler or ordinary-scene acceptance is claimed. Evidence target/rom-data-task-descriptors/{source-contract.json,static-source-verification.json,windows-model-tests.json,windows-model-result.json,windows-model-europe/result.json,windows-model.log}.",
+    "Final preservation check passes all2645prior artifact hashes and170CLI/navigation hash-mtime guards. Against232prior source-doc hashes, only the two implementation hubs and six expected memory files changed; removing the new module declarations restores both hubs byte-for-byte. Every other prior implementation/concurrent Debug-save file is unchanged. Project-memory default/base7597b92 and CRLF-aware whitespace checks pass; source/runtime/native/oldproofs remain closed, no live unit job."
+  ],
+  "limitations": [
+    "Bounded source projection, not a complete task catalog, all indirect/dynamic caller domains or a global guest ID maximum. Arbitrary live metadata selectors can alias suffix/earlier data;140unread bytes describe this oracle scope, not global unreachability.",
+    "Managed publication/authentication/lifecycle/typed guest and native consumption/productionCLI/positive ordinary scene remain pending. Prior EUR e47resources/executable/cache/saves/recordings and concurrent Debug-save changes are preserved; no new fixture/navigation/game data payload edits.",
+    "NewLinux/USA/nativeWindows and other graphics/text/maps/gameplay/audio/GUI/archive/modTODO remain open. No performance/space campaign, AndroidPort update, commit or push."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/task_descriptors.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/task_descriptor_model_tests.rs",
+    "docs/rom_data_tasks.md",
+    "docs/rom_data.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_tasks.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

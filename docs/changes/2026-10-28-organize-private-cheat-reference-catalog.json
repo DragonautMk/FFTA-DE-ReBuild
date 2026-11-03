@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "slug": "organize-private-cheat-reference-catalog",
+  "title": "Organize the private cheat reference catalog and exclude source collections from Git",
+  "kind": "docs",
+  "platforms": [
+    "All (reference documentation only)"
+  ],
+  "changes": [
+    "Replace five local cheat source documents and 37 saved-browser support files with ten linked Markdown pages and a provenance-preserving JSON catalog in ignored root cheats/.",
+    "Merge 228 duplicate occurrences into 341 ordered code blocks; retain source-specific master links, aliases, source hashes, regional/device distinctions, guide text and modifier lists.",
+    "Add /cheats/ to Git exclusions because supplied third-party compilations include an explicit copyright notice and redistribution permissions are unverified; retain a verified reversible archive of all 42 originals under ignored target/.",
+    "Document suspected source errors, unconfirmed ROM regions and incomplete European lazy-loaded groups without altering cheat values or adding runtime execution."
+  ],
+  "validation": [
+    "Independent static preservation check passed: all 796 input code-line occurrences, all 341 rendered blocks/master relationships, all 1544 local Markdown links, guide/modifier text and all 42 original archive hashes.",
+    "git check-ignore confirms the Markdown index, JSON catalog and original archive remain excluded; no files under cheats/ are already tracked.",
+    "python3 scripts/project_memory.py check and scoped git diff --check passed; runtime/build work was not selected."
+  ],
+  "limitations": [
+    "No cheat was applied to ROM, saves or runtime; code correctness, exact device generations and FFTARecomp compatibility remain unverified.",
+    "The supplied European HTML contains only 23 code blocks, 25 unloaded groups and one missing popup note; unknown-region lists remain unconfirmed.",
+    "The private catalog, original archive and one-time scripts are local ignored artifacts, absent from a fresh clone; redistribution permissions were not established."
+  ],
+  "files": [
+    ".gitignore",
+    "docs/cheats.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/cheats.md"
+  ]
+}

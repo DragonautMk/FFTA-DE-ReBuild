@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "add-terra-sol-debugging-workflow",
+  "title": "Add Extra High Terra-led debugging with focused Sol diagnosis and return",
+  "kind": "added",
+  "platforms": [
+    "Codex agent workflow"
+  ],
+  "changes": [
+    "Add the discoverable ffta-debugging project skill: GPT-6.1 Terra leads debugging and consults GPT-6.1 Sol when diagnosis or a useful next check is unclear, two targeted attempts stall, or evidence contradicts a proposed fix. Both require Extra High (xhigh) thinking; Sol delegation explicitly sets xhigh and only matching consultants can be reused.",
+    "Define a bounded self-contained diagnostic packet, independent Sol context, read-only consultant contract, explicit model request and telemetry limits; Terra resumes implementation and focused validation with new evidence required before another consultation.",
+    "Route debugging through AGENTS and an Italian operating guide, preserving user changes and paused/completed tasks; document app startup, per-run CLI model and xhigh overrides, existing Windows/Linux game startup, unavailable-tool/model/effort fallback and CLI compatibility without changing global configuration.",
+    "Update project memory entry points and selected-task handoff conventions for consultation evidence and return actions."
+  ],
+  "validation": [
+    "Final bundled skill quick validation passes; AGENTS routing is reviewed and all 18 local links in AGENTS, the new skill and operating guide resolve.",
+    "The original synthetic smoke requested a Terra primary with medium reasoning and exactly one Sol consultant with high reasoning; the menu fixture first failed with P dispatching replay, Sol diagnosed late-bound action closures, and the primary applied the minimal binding fix and passed all three distinct menu actions. Receipt: target/agent-workflow-terra-sol/smoke-result.json. This accepted smoke was not repeated for the later xhigh policy requirement.",
+    "Initial git diff inspection identifies only the user-owned menu_transparency documentation indentation in crates/input-config/src/lib.rs; this workflow leaves it untouched and does not claim coverage for it.",
+    "Project-memory metadata-only validation and git diff --check pass. At the latest full check, user/concurrent coverage gaps are crates/input-config/src/lib.rs, crates/menu/src/atlas_theme.rs, crates/menu/src/controls.rs, crates/menu/src/controls/tests.rs, crates/menu/src/interaction/tests.rs, crates/menu/src/lib.rs and crates/recomp/src/play.rs. All workflow implementation paths are covered; the unrelated files are not attributed to this unit.",
+    "Final inspection retains the original menu_transparency comment indentation and observes additional concurrent menu/runtime changes, including transparency defaults and native control work; all are preserved and excluded from this workflow record. This workflow does not resume DBG2-10.",
+    "Parse the updated startup command with shell tokenization and TOML: Terra model and xhigh effort, Sol default model and xhigh default effort are correct. Parse the actual skill JSON payload: Sol model, independent context and explicit xhigh effort are correct. No model session is launched for this static validation.",
+    "Read current play command dispatch/help, launcher implementation, README and portable guide; verify that target/release/recomp and dist/docker-windows/FFTARecomp-windows-portable.zip exist. Startup instructions are source/artifact inspection, not a game launch or rebuilt executable claim."
+  ],
+  "limitations": [
+    "The collaboration API returns agent handles without effective-model/effort metadata; exact model requests and the original delegation/return sequence are observed, while actual resolved settings are not independently confirmed. The later xhigh requirement is validated as workflow/launch configuration, not by rerunning that smoke.",
+    "Synthetic routing validation does not establish diagnostic quality on real game bugs, native Windows/Linux behavior, or deterministic stall detection. No game build, replay, GUI session, package, commit or push is part of this workflow unit.",
+    "The inspected local codex-cli is 0.110.0; official documentation requires 0.159.0 or later for Terra CLI use. Initial primary-model selection and model/tool availability remain client/account prerequisites; no global upgrade is performed.",
+    "The full working-tree memory check remains nonzero because unrelated user/concurrent input-config, menu and runtime changes lack their own changed records at the observed checkpoint. This workflow neither attributes those changes to itself nor changes checker policy to hide them."
+  ],
+  "files": [
+    "AGENTS.md",
+    ".cursor/skills/ffta-debugging/SKILL.md",
+    "docs/development/DEBUGGING_WORKFLOW.md",
+    "docs/development/MEMORY_WORKFLOW.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "AGENTS.md",
+    ".cursor/skills/ffta-debugging/SKILL.md",
+    "docs/development/DEBUGGING_WORKFLOW.md",
+    "docs/development/MEMORY_WORKFLOW.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

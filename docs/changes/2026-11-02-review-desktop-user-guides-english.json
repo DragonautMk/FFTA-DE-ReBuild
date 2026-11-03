@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "review-desktop-user-guides-english",
+  "title": "Review desktop user guides for English-first wording",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Review audio, fullscreen, menu shortcut and ROM restart guides; align remaining shortcut menu labels with the English catalog."
+  ],
+  "validation": [
+    "Confirmed Game, Controls and Details against the English catalog; shortcut guide headings, commands and links remain unchanged."
+  ],
+  "limitations": [
+    "Documentation-only review; no runtime, platform or controller test was repeated. Other documentation and source areas remain under review."
+  ],
+  "files": [
+    "docs/audio_controls.md",
+    "docs/fullscreen.md",
+    "docs/menu_shortcuts.md",
+    "docs/restart_rom.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": []
+}

@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "slug": "reach-european-giza-battle-and-constructor-animation",
+  "title": "Reach normal European Giza battle and observe all constructor animation phases",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Close source-backed normal Giza Plains/White Flowers battle entry, live primary315/map69/descriptor68 and the exact20flag02cell terrain seed. Deploy Marsh through facing confirmation and normal START/Yes/dialogue.",
+    "Obtain ordinary positive constructor animation through normal Move(6,5)to(5,7), FD2 actor. Retain normal22713checkpoint and11-frame suffix before use for the pending fullpair; no implementation, schema or runtime change."
+  ],
+  "validation": [
+    "16 normal-input Wine captures/3875executed frames reuse frozen309ba31c observer/e77dataset, no build. Positive last route executes75frames and observes22reads/88table bytes,44threshold44pointer, all4phases/all4lists guest-host. These are discovery checkpoints, not16equivalence acceptances.",
+    "All221actual input/dataset/output guards and496frozen source hashes pass. Live512Bgrid SHAe8427b5e.. matches existing packet56seed. Original ROM/cache/loader/states/inputs/executables/dataset unchanged; all new checkpoints derive from normal game keys on authorized copies, no manual guest RAM/task/ROM or cartridge-save writes. Artifact helper0paths. Early START attempts before facing confirmation and Bback transition retained, not replayed.",
+    "Project-memory render/default/base2fbf9f7 checks and CRLF-aware whitespace pass; final actual preservation guards remain exact, with no game/build rerun for memory closure."
+  ],
+  "limitations": [
+    "Single actualCLI positive11 and complete-state/clock/image/OAM/dispatch/audio pair remain pending. No all-maps/fullgame/archive/catalog coverage claim; worldnode remaining18B and40Bcatalog remain open, full ROM_DATA_TODOactive.",
+    "Linux/USA/nativeWindows/new32:9 pending. No performance/storage campaign, Android/package, assistant commit/push; parallel DBG and u16WIP preserved."
+  ],
+  "files": [
+    "docs/rom_data_maps.md",
+    "docs/rom_data_obj.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_maps.md",
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "decode-european-m4a-tones",
+  "title": "Decode European producer-bounded tones, keymaps and lossless PCM/CGB waves",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Add shared bounded source producer traversal and strict typed model:4banks/390programs/429canonical tones/347map bytes-348links/277PCMwaves/2CGBwaves/1directoryalias. Graph reproduces1610tracks/147424states/2065program-keypairs/805consumedranges177047B; default RAM tones remain unowned and unsupported extended producers fail explicitly.",
+    "Retain signedi8PCM samples and276separate interpolation endpoints, exact headers, CGB32amplitudes0..15, canonical shared references and actual parsed directory validation for the excluded4Balias.736newranges/1941759Breconstruct exactly. Model is not registered with managed extraction/runtime yet: e41-d40/USAe8-d7unchanged."
+  ],
+  "validation": [
+    "Windows61632test build warning-free; one focused Wine19316decoder check terminal/pass allretained independent program/keydomains/429tonefields/277header-payload hashes/736source hashes, source+JSONlossless roundtrip/28shape-link-sample-JSONguards/coherent sample edit rejection. Alias-only flag edit keeps allnewsource spans unchanged but fails the real directory owner dependency; badbankowner rejected.",
+    "Two previously static CGBwave sources now execute original081497b0..081497ccfour-word copies with exact32waveRAMbytes/EWRAMwrites/SP;28instructions are coverage only and these remain partialinternal checkpoints, not fullCGBmixer/state-clock acceptance. Old390BD/348maps/277endpoints/e41source-native-sceneproofs were not rerun.492protected inputs/evidence unchanged; no build/Wine failure.",
+    "Private target/rom-data-audio-tones/{windows-model-tests.*,windows-model-result.json,windows-model.log,recomp-tests-model.exe,windows-model-europe/{audio-tones,result}.json,model-protected.json} retains new results, using existing sequence-producers/tone-wave-independent/producer-source-plan JSON directly without fixture recreation.",
+    "Final project-memory including --base7597b92/whitespace and499protected hashes pass; model-final-summary/model-final-protected/model-final-source-hashes retain current decoder closure. Decoded asset JSON/test executables stay Git-ignored; no live unit job."
+  ],
+  "limitations": [
+    "Managed publication/source binding/retention/lifecycle/typed CPU-DMA-native and MP2Kshadow-sampler reads plus ordinaryfull-state-clock-image-audio acceptance remain pending. MemViewstill reads rawROM; guest-only interception cannot close the sample-family runtime gate.",
+    "Unselected records, complete sequence asset export, driverLUTs and other families/GUI/archive/modTODO remain open. NewLinux/USA/nativeWindows pending; no benchmark/space campaign/AndroidPort work/game data publication/agentcommit-push. Concurrent Debug-save work and existing e39/e40/e41changes preserved."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/audio_producers.rs",
+    "crates/gba-core/src/rom_data/audio_tones.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/audio_tone_model_tests.rs",
+    "docs/rom_data_audio.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_audio.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

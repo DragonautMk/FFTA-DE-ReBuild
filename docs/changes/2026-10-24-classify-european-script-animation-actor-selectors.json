@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "classify-european-script-animation-actor-selectors",
+  "title": "Classify European script animation actor selectors as live lookups",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Classify all167decimal49(0x31) script animation instructions as live actor selectors:151low unit-identity lookups and16high registry/fallback lookups over18selector values, with no immediate sprite operands. Preserve the existing command/archive owners and projection.",
+    "Trace current actor-context sprite+34, low16group-times-four animation, signed facing, bodyflag0and samebase extra parts. Explain why textual nearby creation cannot bind a current sprite:31can reuse unchanged units and32only repositions.",
+    "Keep script sprite/animation pairing open for a source/actor-linked functional query observation; reject a blanket script-group by all-sprite product and avoid inventing new asset ownership or guest bounds."
+  ],
+  "validation": [
+    "Static exactEUR authentication plus decoded script-command-directory/script-archive file/source hashes passes all167five-byte instructions, unchanged previous projection,67halfword/nine literal/eighteen BL fingerprints. No build or guest execution.",
+    "Initial decimal-versus-hex handler notation is corrected before contract acceptance; the unrelated opcode73trace stays unused. One private BL fingerprint is corrected from its second to first halfword. Existing source/model/runtime/CLI/ordinary acceptance is not rerun.",
+    "All8630prior artifact hashes and baseline implementation/source inputs remain unchanged; only coherent selector documentation/memory changes.327local feature links, project-memory default/base7597b92 and CRLF-aware whitespace checks pass. Private static evidence remains under target/rom-data-script-obj-poses/."
+  ],
+  "limitations": [
+    "Selector classification only: actual resolved sprite/animation pairing, script control-flow dominance, unchanged actor state and reachability remain unproved. No new source query/model/runtime resource or end-to-end animation claim.",
+    "EUR e61-d60/USAe8-d7unchanged; new Linux/USA/native Windows/new32:9 pending. No performance/storage measurement, gameplay fixture/navigation/checkpoint/private payload edit, Android change, package, commit or push. Pending rejected equipment derivation is not executed."
+  ],
+  "files": [
+    "docs/rom_data_unit_obj.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_unit_obj.md",
+    "docs/rom_data_scripts.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "slug": "classify-european-event-records12",
+  "title": "Classify European event records and their shared interior view",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Establish a source-only contract for256 ordered12-byte European event records/3072bytes with structural unsigned fields, raw flag bits and opaque two-byte tails.",
+    "Keep71D1EC as physical row225 of the same owner, preserve uncapped low8 conditional alias arguments and original highest-match255..1 script-key scan; separate the independent next27-byte catalog."
+  ],
+  "validation": [
+    "Physical extent71C760..71D360 combines explicit backward255..1 stride12 scan, liveu8 index including0 and independent next root used with stride27; all3072bytes roundtrip/no overlap79 prior owners50494spans.",
+    "Fifteen authenticated static windows/ten new-five cached,67 instruction/literal pins and112 hash-mtime guards pass. Cached windows authenticated by declared ROM hashes/every opcode; older absent text-map key corrected before outputs without redoing disassembly or any acceptance.",
+    "Reused full-ROM aligned encoded-word census finds36base/two interior/25next literals. Eight duplicate-key groups/one identical-record group preserve physical order; helper applies full16-bit script key and excludesrow0.",
+    "All80 accepted e87-d86 files, source preimages/cached windows/ROM/static tool preserved; artifact completion retires zero paths. No build/Wine/game/fixture/navigation/old-proof replay or performance/storage measurement.",
+    "Final changelog/default/base999d0a6/metadata project-memory checks and CRLF-aware whitespace all pass."
+  ],
+  "limitations": [
+    "Strict typed model/original-prefix Wine proof, managed runtime/native lifecycle, actual CLI and ordinary use remain pending; schema1/e87-d86 unchanged.",
+    "Physical256/31-view lengths do not impose guest caps; u16 index views and high alias arguments can read outside the owner. No unconditional primary/alternate/next-catalog foreign-key cap, zero-null rule, enum or opaque-tail padding claim.",
+    "Full routine ABI/live script-event effects, indirect/unaligned references, preceding opaque two-byte gap, next27-byte catalog extent, Linux, USA, native Windows, new32:9 and full ROM TODO remain pending."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

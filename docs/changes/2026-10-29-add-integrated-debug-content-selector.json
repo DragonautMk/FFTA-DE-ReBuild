@@ -1,0 +1,67 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "slug": "add-integrated-debug-content-selector",
+  "title": "Add an internal debug content selector with guarded host selection",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU build",
+    "Wine"
+  ],
+  "changes": [
+    "DBG2-03 implementation adds Debug > Content selector with list/search/type/status/sort/favorite/recent/detail areas, exact shared-font wrapping, controller search keyboard and distinct select/refresh/external/back actions.",
+    "Add an asynchronous host-only bridge with catalog generation and view identity; selection and snapshot preview reuse readonly recheck and never execute tools or load a Machine. Late results are discarded after cancellation.",
+    "Add explicit single-file catalog roots and CLI --add-file without sibling enumeration; preserve existing schema-1 roots through an optional field. Stable IDs identify all new host operations; registry now 73 operations and 255 parameters.",
+    "Route focused search text and IME into the host editor before guest bindings or debugger shortcuts; expose bounded picker status on the existing local-control status query.",
+    "Include the new selector guide in the public package and Docker source/ignore closures without refreshing a real release archive.",
+    "Drain native modal closing and focus-synthetic events before returning to menu dispatch; require a 400 ms quiet boundary and two neutral controller polls, drop the old action batch and expose host_modal_input status. Completed previews display terminal feedback even if the highlight changed."
+  ],
+  "validation": [
+    "First menu-only Windows build is warning-free and six Wine widget tests pass: exact same-name identities, Unicode search/cancel, filters/sorts/favorites/recent, explicit empty/busy refusals, controller keyboard, mouse/scroll and measured text wrapping.",
+    "Selected 583-file Windows GNU test/runtime build passes locked/offline without warnings, using accepted DBG2-02 base plus 13 host/UI overlays while excluding live unrelated ROM discovery work. Candidate SHA256 b19f4b5748a8eaf64f7fbeb2c2e1cc6cccf3bc1db74aa93d1093bebb5953992e.",
+    "Initial full menu suite passes 54 of 55 cases; the sole failing test assumed Extended saves was Debug row0. Its test-only repair selects Row::ExtendedSaves explicitly, rebuilds warning-free and passes the targeted case; all55 distinct menu cases are now covered across the terminal runs.",
+    "Wine passes 3 picker bridge tests, 10 affected content catalog tests, 3 operation-contract tests and 2 UI collector tests; the explicit synthetic GUI-fixture factory remains ignored until invoked deliberately.",
+    "Three Python source-census tests pass, retaining distinction between the three old implicit dialog sites and two new explicit picker sites.",
+    "Ten synthetic portable packaging tests pass with the new selector guide in the explicit whitelist and Docker COPY/ignore closure.",
+    "Actual isolated Wine GUI stage1 passes empty/explicit refresh, focused text shortcut consumption, held confirm exactly once and two same-name/same-hash profile selections with distinct IDs and paths. Full guest state/frame0/clock0 remain exact.",
+    "Actual isolated Wine GUI stage2 passes favorites/recent order, simulated XInput1_4 search keyboard/draft cancel/back/reopen, embedded snapshot preview and detail scrolling with full state/frame0/clock0 exact.",
+    "Initial file-dialog Cancel exposed Escape leaking through selector/back into menu resume: first observed84frames, explicitly paused at63484/clock17832317892, then closed with all immutable input pins exact. Negative trace and diagnostics are retained; this run is not a no-guest-frame proof.",
+    "Changed modal/preview scope builds warning-free from584 frozen source files; final candidate SHA2567ddad3f6b0a0bf36372c2840c7f98ca185d23f3db1ec000522fd3d506ecd13d9. Wine2modal+4picker tests pass, including terminal feedback after highlight changes; unchanged earlier menu/content/contract scopes are retained.",
+    "Fresh public synthetic Wine GUI passes exactly one explicit file dialog and one folder dialog Cancel with roots/generation/selection/full state/frame0/clock0 preserved. The harness initially waited for the configured folder title; Wine displays Select Folder instead, so the already-open dialog was resumed and cancelled without restarting the case.",
+    "Actual explicit external HTML import adds one file without selection/execution; shared CLI confirms1entry/1visitednode and excludes a sibling host script. No script sentinel is produced.",
+    "Fixed GUI snapshot preview and terminal text are confirmed by the real UI text report and visual inspection at940x620,620x480 and1180x760 Win32 client sizes; full state/frame0/clock0 remains exact. Passing synthetic copy closed, immutable pins exact and private Xvfb terminated.",
+    "Final preservation verifies all584 frozen source files, all14 current host/UI overlays, both synthetic cases immutable pins and canonical Windows/Linux runtime hash+mtime exact; original failed runtime retained. No old acceptance fixtures reconstructed."
+  ],
+  "limitations": [
+    "Native Windows/Linux runtime, physical controllers and native keyboard layout/IME coverage remain unverified. Persistence and migration of existing debug tools remain DBG2-07/04.",
+    "No game or DS acceptance, private gameplay input, benchmark, real release refresh, commit or push. One pre-fix public synthetic case advanced after a modal-cancel regression; negative evidence is preserved separately from the corrected frame0 validation. Separate concurrent ROM source changes are preserved outside the selected build.",
+    "DBG2 metadata/UI directories have no managed interrupted/moved-resource datasets; local_artifacts complete only accepts rom-data units, so no retention rename/bypass or diagnostic fixture deletion was performed."
+  ],
+  "files": [
+    "crates/menu/src/lib.rs",
+    "crates/menu/src/canvas.rs",
+    "crates/menu/src/theme.rs",
+    "crates/menu/src/content_selector.rs",
+    "crates/menu/src/content_selector/tests.rs",
+    "crates/recomp/src/content_picker.rs",
+    "crates/recomp/src/content_picker/tests.rs",
+    "crates/recomp/src/debug_content.rs",
+    "crates/recomp/src/debug_content/tests.rs",
+    "crates/recomp/src/debug_operations.rs",
+    "crates/recomp/src/debug_operations.json",
+    "crates/recomp/src/main.rs",
+    "crates/recomp/src/play.rs",
+    "scripts/tests/test_debug_operations.py",
+    "scripts/package_ffta_portable.py",
+    "scripts/tests/test_package_ffta_portable.py",
+    "scripts/README.md",
+    "Dockerfile.windows",
+    "Dockerfile.linux",
+    ".dockerignore",
+    "crates/recomp/src/modal_input.rs"
+  ],
+  "references": [
+    "docs/debug_selector.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "review-android-support-english",
+  "title": "Review Android decoder and build support in English",
+  "kind": "docs",
+  "platforms": [
+    "Android source review; no device or build validation"
+  ],
+  "changes": [
+    "Review maintained comments, diagnostics and other authored natural-language text in 10 decoder/recompiler Rust sources, 9 Kotlin tests and 12 Cargo/Gradle configuration files. The reviewed text is English; code, machine identifiers and test fixtures remain unchanged."
+  ],
+  "validation": [
+    "Manually inspect selected comments, messages and configuration; parse selected TOML files with Python tomllib and confirm selected source files have no worktree diff."
+  ],
+  "limitations": [
+    "No Android build, tests, device, ROM or save was used. The shared Android gba-core and other cross-tree files remain unreviewed; language review does not validate technical accuracy."
+  ],
+  "files": [
+    "AndroidPort/Cargo.toml",
+    "AndroidPort/android/app/build.gradle.kts",
+    "AndroidPort/android/app/src/androidTest/java/com/fftarecomp/port/ExampleInstrumentedTest.kt",
+    "AndroidPort/android/app/src/androidTest/java/com/fftarecomp/port/GamepadDetectionTest.kt",
+    "AndroidPort/android/app/src/androidTest/java/com/fftarecomp/port/TouchSelectionDeviceTest.kt",
+    "AndroidPort/android/app/src/test/java/com/fftarecomp/port/FrameMailboxTest.kt",
+    "AndroidPort/android/app/src/test/java/com/fftarecomp/port/GamepadTest.kt",
+    "AndroidPort/android/app/src/test/java/com/fftarecomp/port/StartupPolicyTest.kt",
+    "AndroidPort/android/app/src/test/java/com/fftarecomp/port/TouchLayoutTest.kt",
+    "AndroidPort/android/app/src/test/java/com/fftarecomp/port/TouchSelectionTest.kt",
+    "AndroidPort/android/app/src/test/java/com/fftarecomp/port/ViewAndInputTest.kt",
+    "AndroidPort/android/build.gradle.kts",
+    "AndroidPort/android/gradle.properties",
+    "AndroidPort/android/gradle/gradle-daemon-jvm.properties",
+    "AndroidPort/android/gradle/libs.versions.toml",
+    "AndroidPort/android/gradle/wrapper/gradle-wrapper.properties",
+    "AndroidPort/android/settings.gradle.kts",
+    "AndroidPort/crates/armv4t/Cargo.toml",
+    "AndroidPort/crates/armv4t/src/arm.rs",
+    "AndroidPort/crates/armv4t/src/disasm.rs",
+    "AndroidPort/crates/armv4t/src/lib.rs",
+    "AndroidPort/crates/armv4t/src/thumb.rs",
+    "AndroidPort/crates/gba-android/Cargo.toml",
+    "AndroidPort/crates/gba-core/Cargo.toml",
+    "AndroidPort/crates/recomp-core/Cargo.toml",
+    "AndroidPort/crates/recomp-core/src/analyze.rs",
+    "AndroidPort/crates/recomp-core/src/build.rs",
+    "AndroidPort/crates/recomp-core/src/emit.rs",
+    "AndroidPort/crates/recomp-core/src/labels.rs",
+    "AndroidPort/crates/recomp-core/src/lib.rs",
+    "AndroidPort/crates/recomp-core/src/tcc.rs"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

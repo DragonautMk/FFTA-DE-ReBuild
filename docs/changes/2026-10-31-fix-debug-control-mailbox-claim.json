@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "fix-debug-control-mailbox-claim",
+  "title": "Claim debugger requests before consuming mailbox files",
+  "kind": "fixed",
+  "platforms": ["Windows GNU / Wine"],
+  "changes": [
+    "Atomically move each published request into a server-owned per-channel claim before reading and removing it, so a later publication cannot be deleted while an earlier request is being consumed.",
+    "Retain claims across transient read or removal failures, reject stale run identities before dispatch, consume oversized input and identify the channel and stage in errors. Existing publication outboxes and request identity ledger remain in use."
+  ],
+  "validation": [
+    "Isolated Windows GNU test and production builds passed without compiler messages; 1513 frozen source files and the changed overlay matched exactly.",
+    "Wine passed all 25 protocol tests. New deterministic cases verify interleaved requests on both channels, a stale claim from a previous run, oversized claim recovery and a Windows file locked against sharing followed by successful retry without deleting the next request.",
+    "A read-only Sol consultation independently confirmed the read/remove replacement race and reviewed the bounded fixed-claim design under the existing exclusive session lock; effective model and effort were not independently visible."
+  ],
+  "limitations": [
+    "The earlier clipboard session's isolated access-denied warning had no logged stage and cannot be attributed to this race. All retained queries in that session completed; no claim is made that this change eliminates that warning.",
+    "The mailbox remains a single pending publication per channel: an unacknowledged request not yet claimed can be replaced. Crash-durable delivery across runs is not promised; non-ordinary claim files may require intervention.",
+    "Native Windows and Linux runtimes were not tested; Wine protocol tests use synthetic sessions and do not establish physical-input or full GUI coverage. DBG2-13 through DBG2-28 remain open."
+  ],
+  "files": ["crates/recomp/src/debug_control.rs"],
+  "references": ["docs/debug_control.md", "docs/development/DEBUG_TOOLS_V2_TODO.md"]
+}

@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "slug": "add-controlled-debug-frame-stepping",
+  "title": "Control paused debug sessions with exact frame steps and acknowledged local commands",
+  "kind": "added",
+  "platforms": [
+    "Windows cross builds and Wine/Xvfb GUI; synthetic audio callback"
+  ],
+  "changes": [
+    "Add isolated-session debug-control status/pause/step/resume with per-process/request identities, atomic bounded mailbox, OS single-client lock, deferred completion acknowledgement and constant-size retained result. Readonly status reports frame/clock/PC/key latch/full-state hash and guest/host audio queue sizes. Normal game exposes no control channel.",
+    "Add debug-session open DIR --paused plus menu Step 1/10 and Resume, F6 pause/resume and F7/F8 one/ten frames. Consume reserved debugger presses before text/bindings/Fast/capture and ignore repeats. Menu/keyboard steps use neutral guest input; CLI accepts an explicit000..3ff active-low mask. Require pause and1..600frames, stop only on exact completed-frame increments and surface partial/closed/interrupted outcomes.",
+    "Expose frame/clock/reason/remaining beside the paused-copy menu without changing guest/save/native layouts. Preserve the guest input latch during idle pause. Reuse the normal guarded frame runner, discard stepped guest audio instead of queuing it, invalidate host queues/DSP and reset priming/pacing at pause/resume so host wait time creates no backlog.",
+    "Refuse replay profile selection/spawn during an active frame budget; keep pause/step/resume refused while an existing replay owns supervision. Load/Undo/Restart explicitly stop budgets. Keep current and diagnostic private sessions under ignored target, reuse build cache, preserve concurrent extraction and ordinary executables."
+  ],
+  "validation": [
+    "Frozen public07be4d2 plus five selected source overlays compiles locked/offline Windows feature and default release frontends without warnings. Final feature target/debug-tools-step/recomp.exe SHA2563d2b8ab63037530f15a682ca68e4937a7db9808ff940891792d0d0d686850e41; default50b9ddc88f8fc6a618c290a0384bde7f321cc05442d762be86d61b048f629107. Production Windows/Linux executables keep original hashes/mtimes.",
+    "69 Wine targeted tests pass:4 controller/mailbox/parser,6 isolated sessions,12 play frontend,1 actual callback discarded-history test and46menu. Cover bounded exact accounting, incomplete/multiple frame rejection, transactional invalid/busy commands, per-run single-consumption mailbox, shutdown marker and isolated action availability. Initial sandbox refused Wine socket before any test; identical executables pass with sandbox exception, environment-attempt.json retained.",
+    "24 real CLI/GUI cases plus a pending-step owner-close runner pass on new DS20 copies. Idle pause preserves full-state hash/frame/clock; zero/601frame/bad-mask and closed/duplicate clients refused. F7 held beyond autorepeat while also mapped to guest A produces one neutral frame; F8 and menu1/10 steps produce exact22total. A single CLI22step has identical complete-state SHA337467c73c2c386bd6456fe20002c1ddc2c592f2a4afadae1d106e0f659611e5. Explicit A/release masks pass.",
+    "GUI CLI/F6 pause/resume preserves frozen state after stop, with empty guest and host audio queues. Recording22stepped frames and80frames with pause/resume both pass complete-state/clock verification against continuous interpreter execution. All screenshots inspected; parent processes exit0 and pending600step client receives explicit failure on owner-close.",
+    "Initial GUI harness assumed Main selection0 despite startup hover; it entered input bindings and did not start the intended recording/menu checks. Preserve failed copies/logs/screenshot in gui-navigation-attempt; use an explicit Debug hit and park pointer in the corrected harness. No product source or executable change for that harness repair.",
+    "After those checks, final review finds replay start could overlap an existing multi-frame budget. Add one refusal before chooser/spawn plus a comment; preserve pre-overlap-guard source/build/test evidence, rebuild both candidates, and validate only the new/default scope. Independent source comparison proves no other post-test implementation change; earlier unaffected tests/recording acceptance are reused.",
+    "Nine final-default CLI/GUI cases plus controlled600step interruption runner pass without audit feature: seed start before any frame, exact2frame requests, visible replay refusal during active budget, Escape interruption acknowledged as partial, step-while-running refusal, menu Resume, empty paused audio and inactive clean close. Final screenshot shows the refusal and live remaining budget; no chooser/worker starts.",
+    "Independent final verification authenticates all five live/frozen source overlays, final candidates,69test results,33CLI results, three accepted session runtime pins/clean terminal states, exact recording endpoint hashes and private-output ignore status. All202selected original input hash-mtimes remain unchanged. Current runtimes/source/logs/screenshots/accepted and failed fixtures stay local; unused superseded default unit executable replaced, older feature runtime retained in accepted recording sessions. No managed publication disposable trees or Chrome profiles created; ROM-only cleanup helper does not apply.",
+    "Final409local Markdown file links and22ordered DBG IDs pass with only DBG01-10 checked; project-memory workspace/base07be4d2 coverage and git diff --check pass. Feature docs, checklist, durable state and handoff close DBG10; DBG11 remains unstarted. Concurrent extraction stays covered by its own records."
+  ],
+  "limitations": [
+    "Validation uses Wine/Xvfb and interpreter guest execution. Native Windows/Linux/Wayland, physical controllers, native translation stepping, other scenes/ROMs/datasets, listening and physical-device latency remain unverified. Callback/queue checks do not establish hardware playback behavior or new performance/ROM/DS/native-parity acceptance.",
+    "A step aligns completed PPU frames, not individual instructions. Neutral menu/keyboard input and explicit fixed CLI mask differ from variable recorded replay. Free execution continues after a resume/status acknowledgement; reported state is the observed boundary. Client120s timeout is not cancellation and was not wall-clock-tested; a force-killed server may leave stale ready metadata until reopen. One client can await a step; keyboard/menu can interrupt it.",
+    "No snapshot version/native ABI change, normal executable replacement, old Bank/F09/native parity repair/replay, extraction acceptance, Android, Godot, commit or push. Failed diagnostic fixtures stay private and retained; absence of historical local artifacts does not reopen this accepted unit."
+  ],
+  "files": [
+    "crates/recomp/src/debug_control.rs",
+    "crates/recomp/src/debug_session.rs",
+    "crates/recomp/src/play.rs",
+    "crates/recomp/src/main.rs",
+    "crates/menu/src/lib.rs",
+    "docs/debug_control.md",
+    "docs/debug_sessions.md",
+    "scripts/README.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/debug_control.md",
+    "docs/debug_sessions.md",
+    "docs/debug_recordings.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "observe-eur-shop-category-event-parser",
+  "title": "Observe real EUR shop category event rejected by parser",
+  "kind": "docs",
+  "platforms": [
+    "Linux interpreter and extracted desktop parser; GUI untested"
+  ],
+  "changes": [
+    "Connect a semantic category event from a real EUR shop state to the current recording input parser."
+  ],
+  "validation": [
+    "Category 0 to 1 emitted event 1025 and changed the guest category while control stayed at 0; the exact extracted parser refused that event. ROM, checkpoint and input sequence hashes unchanged."
+  ],
+  "limitations": [
+    "No full application recording, export, replay, native or GUI execution; single EUR category. Isolated harness emitted one unused-field warning.",
+    "Managed cleanup rejects U31 units; isolated diagnostic evidence is retained."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-02-scrollbars.md"
+  ],
+  "references": []
+}

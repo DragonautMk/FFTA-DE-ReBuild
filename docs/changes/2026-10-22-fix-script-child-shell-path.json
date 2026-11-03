@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-10-22",
+  "slug": "fix-script-child-shell-path",
+  "title": "Resolve the current PowerShell executable when launching child build scripts",
+  "kind": "fixed",
+  "platforms": [
+    "Project tooling",
+    "Windows/PowerShell"
+  ],
+  "changes": [
+    "Make build-all.ps1 launch the relocated scripts/windows/build-linux-windows.ps1 helper with the executable of the current PowerShell process instead of assuming $PSHOME/powershell.exe.",
+    "Retain the already-correct relocated script paths, repository-root resolution and source/ROM/output mount behavior; document the PowerShell child-shell selection in the script directory guide."
+  ],
+  "validation": [
+    "Reproduce the old build-all.ps1 failure under PowerShell 7.4: the hardcoded powershell.exe path is missing and the child helper is never reached. The same full script fixture with mocked compiler/Python commands succeeds after the fix and reaches the relocated child from unrelated cwd.",
+    "Run the real relocated Bash Docker extraction script from /tmp using EUR and a fresh ignored output: image build and extraction succeed, listing all eight current e10 dataset files under target/rom-data/path-check-europe.",
+    "Inspect prior completed active-reference/root/import and PowerShell/Docker path-check evidence rather than repeating those unchanged mock suites; current active script references use the platform folders.",
+    "Full working-tree project-memory coverage and CRLF-aware scoped whitespace checks pass."
+  ],
+  "limitations": [
+    "PowerShell validation runs in its Linux container with build dependencies and the Linux child helper mocked; native Windows PowerShell 5.1/7 and a full Windows release build remain unverified.",
+    "This is a targeted path audit and shell-launch correction, not a new runtime/catalog, scene, USA, performance, AndroidPort or packaging campaign; no commit or push was performed."
+  ],
+  "files": [
+    "build-all.ps1",
+    "scripts/README.md"
+  ],
+  "references": [
+    "scripts/README.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

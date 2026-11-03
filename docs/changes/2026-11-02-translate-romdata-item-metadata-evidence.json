@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-romdata-item-metadata-evidence",
+  "title": "Translate item and linked metadata evidence",
+  "kind": "docs",
+  "platforms": [
+    "Desktop ROM-data planning documentation"
+  ],
+  "changes": [
+    "Translate five ROM-data item, item-link and sixteen-byte metadata evidence entries into English while preserving numeric results, negative coverage and verification limits."
+  ],
+  "validation": [
+    "Compare task identifiers, inline literals, links and numeric values with the original; verify local targets and unchanged surrounding sections."
+  ],
+  "limitations": [
+    "Further ROMDATA-02, ROMDATA-05 and detailed evidence remain untranslated; no ROM access, dataset creation or runtime checks were performed."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_TODO.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "classify-european-clan-table-alias",
+  "title": "Classify European clan bank table alias",
+  "kind": "changed",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Identify the unowned European 20-byte table that aliases five existing managed clan banks and document its six original selector sequences."
+  ],
+  "validation": [
+    "Five authenticated original source windows and an aligned literal census identify five direct references and six raw-language selection and decoder sequences; eight source and dataset inputs remain unchanged.",
+    "Two source windows were disassembled with the existing Windows executable under Wine; no gameplay or previous acceptance was repeated."
+  ],
+  "limitations": [
+    "Indirect references, ordinary use, model and runtime ownership, Linux, USA and native Windows remain open; no performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_ui_graphics.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_graphics.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

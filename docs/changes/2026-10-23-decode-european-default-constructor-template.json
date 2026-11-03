@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "decode-european-default-constructor-template",
+  "title": "Decode European default constructor template with original copy and live patch proof",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Add strict lossless default48Template catalog for exact EUR6e6c9c..6e6ccc/48B, rooted by checked original literal/copylength. Preserve structural byte/argument/full-halfword/flags fields without speculative semantic names or ownership of following240B.",
+    "Model diagnostic original patches: signed nonnegativeIDbyte00, selector>1byte01, three truncated argument bytes, ORflags8000/2000/1000forflag1/2/3. Preserve mode1/2copy gate and four alternate IDs20..23from ROM70cd58\u21926eca78 as separate unowned sources.",
+    "Add bounded original constructor127DC4\u2192127EB0oracle, retaining valid caller frame and proving rejected-mode return0/callee/SPrestore. Existing original ROM helper initializer supplies real IWRAM copy code; no snapshot/newfixture or runtime shortcut. Managed EUR e28-d27/23files/22resources and USAe8-d7unchanged."
+  ],
+  "validation": [
+    "Independent exact-EUR root/stride/length/patch/mode/trampoline/alternate pointer checks,48byte field reconstruction and noe28resource overlap pass. Following240Bnot inferred as additional records without rooted consumers.",
+    "Warning-free Windows54305build and one new Wine source oracle terminal/pass:271real cases cover all256IDs/default-vs-four-alternates, mode1/2/reject/truncation/signedID/selector0,1,2,255/flags0,1,2,3,255;30isolated synthetic nonzero/highbit records prove untouched fields and flagORpreservation.",
+    "Original initialization10instructions installs exactd96838..d968e8helper;48812constructor instructions/155PCs are coverage only. Exact scratch/frame/incoming arguments/callee-invalid-return/outerRAM/strictJSON/fixedarray/source/coherent-edit guards pass; synthetic records unauthenticated and never published.",
+    "All32protected original/e28/candidate/cache/loader/canonical/source fixture hashes unchanged; no build/test failure or closed source/native/lifecycle/scene acceptance repeat. Source memory/whitespace/current hashes checked at closure; all jobs terminal, no agent commit/push."
+  ],
+  "limitations": [
+    "Standalone source/original-prefix proof only; managed publication/typed CPU-DMA-native ownership/lifecycle/positive ordinary scene/actualCLI remain pending. Allocation/live-unit lookup after127EB0and whole-function ABI remain unclaimed.",
+    "Four alternate48Brecords/192B and their ROM pointer remain unowned; following240Bhave no independently found root/consumer. Semantic names outside proven patch roles remain unproved; live arguments are not frozen.",
+    "New Linux/USA/native Windows and broader gameplay/maps/audio/GUI/archive/mod remain pending. No performance/startup/RSS/space campaign or AndroidPort change; private game data/saves/inputs/generated code remain ignored."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/default48.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/default48_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "reproduce-usa-shop-recording-rejection",
+  "title": "Reproduce USA shop recording verification rejection",
+  "kind": "docs",
+  "platforms": [
+    "Windows GNU under Wine, Xvfb and Vulkan llvmpipe"
+  ],
+  "changes": [
+    "Record a real USA shop category change in an isolated application session and run the existing recording verifier."
+  ],
+  "validation": [
+    "The GUI changed from headgear to armor; the complete 407-frame recording contains mouse:1025 and the actual debug-record verify exited 1 with mouse target out of range. ROM, source save, snapshot and executable hashes unchanged."
+  ],
+  "limitations": [
+    "Synthetic XTest movement and click were combined; hover versus click was not isolated. No native Windows, Android or successful replay. First GUI script encountered EOF and its incomplete session was retained.",
+    "Managed cleanup rejects U31 units; both successful and incomplete session evidence remains isolated."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-02-scrollbars.md"
+  ],
+  "references": []
+}

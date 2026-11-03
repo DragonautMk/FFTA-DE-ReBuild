@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "date": "2026-10-26",
+  "slug": "consume-european-script-special-alternate-poses",
+  "title": "Publish and consume conditional European alternate script poses as typed resources",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add EUR schema1/extractor63/decoder62 unit-obj-script-special-alternate.json, resource graphics.unit-obj-script-special-alternate, with actual metadata14/scriptarchive/initialpose/normalbattle/alternatebattle dependencies. Preserve the accepted source model and all earlier resource/data records; USA stays e8-d7.",
+    "Read only the20new spans816B from immutable typed roots/index cells/sequence headers/frame fields/indexed4bpp tiles. Existing initial/normal/alternate owners and mutable raw holes compose per byte; guest selection, scheduling, commands, DMA, VRAM, save state and native ABI remain original.",
+    "Add two focused ignored Wine managed/lifecycle and original-interpreter/compiled complete-state-clock filters for the changed owner. The previous source/model and54cell/source-DMA oracle remain closed, with no unchanged repeats."
+  ],
+  "validation": [
+    "Implementation selected from clean HEAD1e738db; all351previous source hashes matched the accepted final map before mutation. Only five selected integration files plus two new runtime/test modules change.",
+    "Single affected Windows core/frontend test build77460passes without warnings. Core compiled only SHA42a6a5cb05b68eb1e2dcf72c6051c8020d8041689be181aecf4073b48d13bb18; frozenfrontend38d207c59262a94b883cc42b6f5bc909a262c02fd8af7ec80df985ff5f85598f. No unchanged rebuild or source/oldfilter replay.",
+    "Two new exactWine62612filters pass on first executions with required localserver access. Managed59files58resources preserve all57prior data files/resource records/coverage/e62; accepted model96ce4c28..unchanged.24attachment+7dependency guards, interruptedpublication/create-reuse-repair-move/failedattach fullstate-owner transactional/unavailable Load-Undo-backup-Restart lifecycle pass; all816typedB=[0dir216index8header80frame0OBJ512pixel]/two sequences and priorinitial4normal4alternate4Bexact.",
+    "Native24original-interpreter-compiled complete-state-clock paths pass part0proper/parts1-2null/twoorientations/fullwordrawID/liveRAMframe/two uploads+DMA/all20edges/mirrors/realBIOSbus/SWI-DMA/mixed2new4alternate and2new2editedrawAPI. All9048fullgraphBpoisoned includingoldshares; compiled aggregate newroles[0,36,6,43,0,1], actualDMA checked separately.1842instructions/496PC/105dispatch coverage only. No oldcommand2/8/source-model oracle or ordinary/wholeABI inference.",
+    "DatasetSHA2564ff51b24688cf1badef741c6b48619a7e20a0b781e8f62f2781453f2375cd3ec; manifestfileSHA256cab6ea47dcf77ed81275f693bc921825458afc9fe0c772f98d3e61d55bf6401c; acceptedmodelSHA25696ce4c28cb19366fbb8804e3784782a1a4682551926b12315ae88fafed5ad035. Newowned20spans816B retain sourceSHA256029ff8a0282346c25be4b436f7b5ea3e219e167d5639d497f7d495b0127a5e2c.",
+    "Final preservation passes9324prior artifact hashes/1223build+1225Wine exacthash-mtime guards/all18compiled source-preimages/five selected integration preimages; accepted source model unchanged, only selected implementation changes.506local feature links, new-module rustfmt, project-memory default+base1e738db and CRLF-aware whitespace pass. Canonical executable/ROMs/cart/states/inputs/datasets/cache/TCC remain intact; no private artifacts tracked or live task process.",
+    "Single changed-implementation Windows production build13863passes warning-free, frozen36cba67d8e4094f2620a99aa97a055d3b004927f5167ee6e9f66653c35060ee9. Canonicalf3e277db..exacthash/mtime1792570130397888519restored in finally; main.rs content unchanged/mtime-onlyCargo invalidation. ActualWine76684productionCLIcreate/reuse59generation61managed/all59matchaccepted from unrelatedcwd/oldcache exits0 with no protected file hash/mtime rewrites. Oneframe immutableF09attachment haszero newsource usage, compatibilitysmokeonly; no ordinarypositive/scene proof or old acceptance replay.",
+    "ActualCLI final preservation passes9660prior artifact hashes/1287CLI exacthash-mtime guards/all18runtime compiled source-preimages and allimplementation hashes unchanged.356local feature links/project-memory default+base1e738db/CRLF-aware whitespace pass; canonical exacthash+mtime restored. No live process; private artifacts remain ignored.",
+    "New read-only81authenticated EURsnapshot check for exactly the two new proper AD4950/AD4980sequences (188/32-33/part0) finds zero enabled or dormant matching bodytasks. Every snapshot hash/mtime remains unchanged before/after; old606alternate/sevennormal scans are not rerun. No guest/build/navigation/checkpoint/fullpair selected from this negative lead, and ordinary newpixel/equivalence remains open."
+  ],
+  "limitations": [
+    "Managed publication/targeted runtime-lifecycle-native state-clock and actual productionCLI criteria closed. Ordinary newpixel/fullscene equivalence remains separate and pending; no wholeallocator/task/actor ABI or universal reachability/current-sprite claim.",
+    "High16registry/42-230override/changed-currentactor source cases and newLinux/USA/nativeWindows/new32:9 remain pending; no performance or storage measurement, optimization, gameplay checkpoint/navigation/private payload edit, Android change, packaging, commit or push."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/unit_obj_script_special_alternate.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/script_special_alternate_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "scripts/extract_rom_data.py",
+    "docs/rom_data_unit_obj.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_graphics.md",
+    "docs/rom_data_obj.md"
+  ],
+  "references": [
+    "docs/rom_data_unit_obj.md",
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

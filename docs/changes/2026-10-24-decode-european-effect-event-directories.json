@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "decode-european-effect-event-directories",
+  "title": "Decode European event and effect selector directories with same-state dispatch words",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Establish75event16Brecords at3aca0c/1200B from original increment/compare74and independent next6Bcatalog3acebc;51selector4Brows at3ad174/204B endat independently readu3lookup3ad240. Two original dispatch tables add22+6evenThumbsame-state words112B. Total1516B/four source spans disjoint42prior e48owners; no extent inferred from51taskdescriptors or pointer shape.",
+    "Add strict lossless typed events/selectors/dispatch source model: canonical indices, raw reserved/argument/ID fields, post-event delay,70logical links to engine.task-descriptors and even MOV-PC ROM offsets. Preserve original q0\u2192rawindex65535\u2192secondaryID362, u16truncation/wrapping event progression/relative jumps and unknown opcode/kind default behavior, with no host sequencer or guest caps.",
+    "Authenticate exact16MB EUR ROM plus92original halfwords/eight root-boundary words, four reconstructed source hashes and existing task-catalog references. Publication/runtime remains e48-d47/43files42resources and USAe8-d7 until separate managed integration; source-model linkage changes only two module declarations.",
+    "Reject initial read-only selector tablecandidate128b4c because it is an LDR literal pointing toactual128b50; preserve that note. Correct a new static target-range guard from125394to valid common exit125398before writing source plan. Retain unknown reachability of evententry124e1c; no directBL/even-odd literal hit is not a deadcode proof."
+  ],
+  "validation": [
+    "Previous goal turn made progress: e48source/runtime/managed/native/CLI/ordinary children terminalcomplete, runtime-final-summary/no livejob and239source-doc hashes match before newselection. Completed e48/blend/e46/oldsource-native-lifecycle-ordinary proofs are not rerun for context.",
+    "Independent Python struct reconstruction matches all1516source bytes/four hashes, all70taskdescriptor references and42owner disjointness; all92halfword/eight word fingerprints pass. Both existing hubs return byte-for-byte to their239snapshot hashes when only new module declarations are removed.",
+    "Affected Windows release testbuild78776warning-free. OneWine43580source oraclePASSfirst run:77event-header/77delay/53selector-address-kind/43kind-specificparameter-load/32dispatch-default/19frontdoor-low16-taskID-increment prefixes. Complete fields/hash/roundtrip/descriptor references and12shape/4coherent source-edit/9JSON/2ROMidentity guards pass.",
+    "Original loadsites observe1106distinct ownedB;300eventrawfields/110selectorparameterBremain reconstructed/hashchecked but unread in these prefixes. Raw event75/65535, selector51/65535/q0, low16and u16wrap, evenMOV-PC Thumbstate and unknown defaults agree. EWRAM/IWRAM/non-scratch registers checked in field prefixes except declared output stores;2582instructions/70PCs are coverage only, no performance measurement.",
+    "Private evidence target/rom-data-event-directories/{source-contract.json,static-source-verification.json,rejected-selector-literal-as-table.json,initial-static-dispatch-range-correction.json,windows-model-tests.json,windows-model-result.json,windows-model-europe/result.json}. Wine guard preserves all2983prior artifacts plus copied newtestexe. No failed Windows build/Wine check or new fixture/navigation/game-data payload mutation.",
+    "Final preservation check passes all2983prior artifact hashes and217CLI/state/input/managed hash-mtime guards. Against239prior source-doc hashes only two module declarations and five expected memory files changed; every other prior implementation/concurrent Debug-save file is unchanged. Project-memory default/base7597b92 and CRLF-aware whitespace checks pass; model-final-summary/protected/source-hashes retain the closed source/model outcome, no live unit job, fullTODOgoalactive."
+  ],
+  "limitations": [
+    "Controlled source/field/dispatch/index prefixes, not a whole event interpreter/allocator/scheduler/native/fullsave-state-clock/ordinary ABI or all live index domains. Evententry124e1c has unknown ordinary reachability; negative directBL/literal searches do not prove it unreachable.",
+    "Four hundred ten bytes unread in these probes remain losslessly reconstructed and authenticated; this does not prove global unreachability. ID/rawparameter meanings stay with original handlers, including nullable descriptor entries. Managed publication/authentication/lifecycle/typed guest-native/productionCLI/positiveordinary checks remain pending.",
+    "NewLinux/USA/nativeWindows and other graphics/text/maps/gameplay/audio/GUI/archive/modTODO remain open. No performance/space measurement, AndroidPort change, commit or push; preserve prior resources/executable/cache/saves/input and concurrent Debug-save work."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/effect_event_directories.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/effect_event_directory_model_tests.rs",
+    "docs/rom_data_events.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_events.md",
+    "docs/rom_data_tasks.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-catalog-replay-capture-guides",
+  "title": "Translate debug catalog, replay and capture guides",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Translate the debug case catalog, replay profiles and trigger-capture guides into English, preserving 17 legacy heading anchors, command examples and historical validation scope."
+  ],
+  "validation": [
+    "Manual review and structural comparison against HEAD preserve inline code, fenced examples, link destinations and numeric/hex tokens in all three guides; every old heading retains its anchor. Whitespace check passes."
+  ],
+  "limitations": [
+    "Documentation-only translation; failed native endpoint comparison remains failed and capture/DS limits remain explicit. No build, runtime, ROM, replay or platform acceptance checks repeated; wider migration remains partial."
+  ],
+  "files": [
+    "docs/debug_catalog.md",
+    "docs/debug_replays.md",
+    "docs/debug_captures.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": []
+}

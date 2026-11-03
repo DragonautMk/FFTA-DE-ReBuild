@@ -33,7 +33,7 @@ carry_licenses() { cp Licenses/LICENSE-MIT Licenses/LICENSE-APACHE "$1"/; cp Lic
 
 # Stage the bundled TinyCC fallback compiler beside the binaries, so a local
 # "build to play" works on a machine with no system C compiler. $TCC_DIR is a
-# prebuilt `tcc/` (scripts/build-tcc.sh on Unix, the win32 build on Windows).
+# prebuilt `tcc/` (scripts/unix/build-tcc.sh on Unix, the win32 build on Windows).
 # Without it the bundle still works wherever a system compiler exists; warn so
 # a missing fallback is never silent.
 stage_tcc() {

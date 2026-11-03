@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "publish-european-conditional-packed-lookup",
+  "title": "Publish European conditional packed lookup",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Publish and strictly authenticate EUR packed lookup indices 1 through 33 in e97-d96, serving typed fields without bounding guest selectors or replacing existing aliases."
+  ],
+  "validation": [
+    "One isolated Windows build and focused Wine test passed 86 prior resource comparisons, all source bytes and mixed boundaries, coherent edit refusal and two original translated reader prefixes with full state and clock equality.",
+    "Poisoned metadata14 boundary and index251 alias remained served by the existing owner; guarded inputs and frozen sources unchanged."
+  ],
+  "limitations": [
+    "Production CLI, ordinary gameplay, Linux, USA and native Windows remain unverified; no performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/conditional_packed_lookup.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/conditional_packed_lookup_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_four_byte_lookup_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/table_graphics_runtime_tests.rs",
+    "crates/recomp/src/rom_data/clan_table_alias_runtime_tests.rs",
+    "crates/recomp/src/rom_data/dynamic_raw_fragments_runtime_tests.rs",
+    "scripts/extract_rom_data.py",
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md"
+  ]
+}

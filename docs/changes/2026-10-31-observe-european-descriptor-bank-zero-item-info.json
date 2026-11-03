@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "observe-european-descriptor-bank-zero-item-info",
+  "title": "Observe European descriptor bank zero in Item information",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Identify the original Item information path to bank zero and document its ordinary typed reads."
+  ],
+  "validation": [
+    "One bounded 800-frame Wine observation served pointer, field 0, field 2, kind and byte 7; 219 protected files and 703 frozen sources remained unchanged."
+  ],
+  "limitations": [
+    "Field 4 and a full raw versus managed comparison remain unverified; Linux, USA and native Windows are pending. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md"
+  ]
+}

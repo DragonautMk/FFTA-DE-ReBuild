@@ -1,0 +1,59 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "slug": "add-reproducible-local-issue-reports",
+  "title": "Create portable local issue reports with pinned replay commands and private evidence links",
+  "kind": "added",
+  "platforms": [
+    "Windows cross builds and Wine/Xvfb; POSIX launcher under Wine; offline Chrome desktop/mobile"
+  ],
+  "changes": [
+    "Add debug-report create PROFILE/replay.json with symptom plus isolated menu Create issue report and acknowledged debug-control issue-report. Readonly profile/pin/input preflight joins symptom/case/frame/input identities, retained result and authenticated-origin comparison metadata, next suggested check and private attachment links in HTML/JSON; creation executes no replay, loads no native code and sends/copies no game payload.",
+    "Write at most8profile-local Data/config/issues folders,2MiBJSON, metadata-only candidate summary and fixed relative PowerShell/POSIX launchers; OS writer lock coordinates concurrent creation. No overwrite/pruning. Incompatible preflight still publishes an error report and standalone exit3; valid preflight exits0 without certifying endpoint or symptom. Invalid destination, busy writer, malformed request, capacity or write failure return explicit errors.",
+    "Browser buttons open local report/profile folders and copy a correctly quoted launcher command computed from current file location. Moving the whole profile preserves relative launchers and evidence links. Selected runtime/recording runtime/report-builder identities remain distinct; summary excludes source paths/game bytes but symptom/case still require review. Old result freshness/settings and loaded native-memory identity remain unknown.",
+    "Summary explicitly separates recorded_frames, selected_frames, completed and first_difference/different_components. Bound symptom2048bytes, control profile path1024bytes and serialized issue request3500bytes to protect existing4096B mailbox. Homepage recognizes issue.json and links the guide; normal guest/native/replay execution remains unchanged."
+  ],
+  "validation": [
+    "Frozen public e8bd939 plus12selected overlays preserves closed audio/code tools and excludes concurrent ROM extraction. Final locked/offline feature/default Windows release builds warning-free; feature SHA256 f0df93af18575c913587c3191045dd7f71b12547934310619680c1ad14250e9f, default8d3200e0f3ccdbca2892da6c6e34b24c65e576923fbfd450cfc72581a8a8cb18. Initial compile had no test execution; live review corrected misplaced menu test assertion and bounded escaped mailbox bytes, retained pre-mailbox-review sources/results before final test build.",
+    "72distinct Wine tests pass:1issue error/escaping/relative command/writer-lock/capacity,10controller,49menu,12frontend. One affected issue test reruns after summary-window correction;73executions are not73distinct tests. First source/test acceptance and late review source/results retained without repeating unaffected tests.",
+    "Create a fresh replay profile from accepted DBG15 two-frame recording. First issue report has no replay result and executes no guest work. Rename the whole profile to a path containing spaces/apostrophe/Unicode; actual SH/Wine relative launcher from unrelated cwd exits0 and reaches exact complete endpoint dd841ef6dba845974625e7e5ae5839f86069000066f876a32d0a86bf6fcb0b81. Second report imports passed result. Old selected runtime9ed5.. remains pinned inside moved profile; no normal executable replacement.",
+    "Readonly issue import from retained native-diagnosis profile links its existing first-frame CPU/full-state/clock difference and original identities without executing old replay/native acceptance. Small malformed-profile fixture publishes HTML/issue/summary and exits3 without game payload copies. Seven standalone CLI calls total include two later metadata-only reports; one moved launcher is separate from these calls. Source fixtures and old comparison results are preserved.",
+    "Default-runtime GUI copy passes37CLI invocations including navigation. Explicit issue-report selects moved profile, menu row25 reuses selection; both preserve exact guest state/frame/clock. Missing-selection/capacity preserving all report hash-mtimes/running/closed refusals pass; selected profile runtime differs from GUI builder as declared. Parent exits0/inactive. Actual-input guard extends26to28 before borrowing source SRAM/input.cfg; all28original hash-mtimes and normal Windows/Linux runtimes remain exact.",
+    "Chrome1400desktop/620mobile verifies actual clipboard text equals argv of already-tested moved SH recipe, local folder button opens a real directory target, PowerShell apostrophe escaping, retained comparison/error views and no overflow. Initial homepage47indices/6issues passes. Visual review finds ambiguous102recorded versus2selected frames; preserve pre-window-summary-review, rebuild only changed helper and regenerate2readonly reports. Updated views expose recorded102/selected2/firstdifference1/cpu-full_state-clock and positive2/2; final homepage49indices/8issues passes without new replay, GUI or clipboard retest. Screenshots inspected.",
+    "Independent final-verification authenticates12live/frozen overlays, final candidates plus old builders retained in pinned profile/closed parent,8exact JSON/HTML reports/metadata summaries/private attachment hashes/fixed launchers, moved endpoint and inactive parent. Exact guest frame runner/native dispatcher unchanged; removing only readonly issue_metadata helper and introduced blank line restores previous replay source. Initial cheap verifier blank-line mismatch corrected without changing code or repeating acceptance. Private payloads untracked/ignored.",
+    "Feature/checklist/durable state/handoff/record/changelog, local links,22ordered DBG IDs with01-16checked, metadata/own implementation coverage and whitespace checks complete. Global workspace/base checks currently identify only separate parallel conditional_records8.rs and conditional_records8/tests.rs without their own changed ROM-model record; preserve those files and never attribute them to this report tool. Evidence under target/debug-tools-issue includes selections/protected/build/tests/affected tests/CLI/GUI/window-summary/browser/final-verification/docs/command results, source preimages/logs/screenshots. Retention receipt retires exited Chrome profiles while preserving current candidates, pinned old builders, moved profile, error fixture, closed GUI,8reports and shared caches. No managed publication disposable trees exist; ROM-only cleanup helper is inapplicable."
+  ],
+  "limitations": [
+    "Windows cross builds and Wine/Xvfb, offline Chrome and POSIX launcher under Wine only. Native Windows/PowerShell execution, Linux-native runtime, other browsers/controllers remain unverified. The new moved-folder two-frame replay is an explicit recipe acceptance, not a rerun of old native/ROM/audio correctness or performance acceptance.",
+    "Preflight validates declared profile bounds, session pins, payload hashes/BIOS and input parser without guest execution; worker still validates decoded states/runtime compatibility and endpoint. Retained results match available identity fields only; old settings/freshness cannot be authenticated by their presence. Comparison origin is checked separately. Matching endpoint or report creation does not exclude a UI/audio symptom.",
+    "Issue JSON and referenced files are private; metadata summary excludes source paths/game bytes but user symptom/case can be personal and require review. No automatic send/upload or payload copy. Moving only an HTML file does not move the profile. Error publishing can be impossible for invalid/busy/full/unwritable destinations.",
+    "No guest/save/native ABI, Android/Godot, normal runtime replacement, package, commit or push. Preserve concurrent extraction and earlier accepted debugger work; no unrelated source is attributed to this record.",
+    "Global memory integration at closure awaits the separate parallel conditional-records8 model record for its two new leaves. Own issue/audio/code implementation coverage is accurate; the ROM work is preserved, not repaired or relabeled by this tool."
+  ],
+  "files": [
+    "crates/menu/src/lib.rs",
+    "crates/recomp/src/main.rs",
+    "crates/recomp/src/play.rs",
+    "crates/recomp/src/debug_control.rs",
+    "crates/recomp/src/debug_replay.rs",
+    "crates/recomp/src/debug_issue.rs",
+    "crates/recomp/src/debug_issue/report.html",
+    "scripts/report_home.py",
+    "scripts/report_home.html",
+    "docs/debug_issues.md",
+    "docs/debug_control.md",
+    "docs/report_home.md",
+    "scripts/README.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/debug_issues.md",
+    "docs/debug_replays.md",
+    "docs/debug_comparisons.md",
+    "docs/report_home.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ]
+}

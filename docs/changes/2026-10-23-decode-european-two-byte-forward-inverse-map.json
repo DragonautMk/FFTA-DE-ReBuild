@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "decode-european-two-byte-forward-inverse-map",
+  "title": "Decode European byte-pair map with distinct forward and inverse extents",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Add strict lossless Metadata2 catalog for44key/value records/88bytes at EUR6e6c44..6e6c9c, checked direct/inverse LDRroots and independent next48byte source. Preserve last row43 as real and validate stored keys against parsed metadata52owners.",
+    "Preserve original u8forward indexing and43rowinverse first-stored-key/miss0 contract, explicit duplicates and unequal extents. None outside the owned forward source is diagnostic only, not an emulated fallback. Add bounded live-record byte7caller prefix without claiming whole surrounding functions.",
+    "Source-only step leaves managed EUR e27-d26/22files/21resources and USAe8-d7 unchanged; managed publication/runtime consumption remain next."
+  ],
+  "validation": [
+    "Independent exact-EUR inventory passes literal/opcode/next-root/nonoverlap/owner checks and full88byte reconstruction, rejecting presumed last2byte padding.",
+    "Warning-free Windows99948build and Wine56417single oracle terminal/pass:348real direct/inverse/live cases across all44indices/all256queries/u8truncation,13isolated synthetic highbyte/duplicate storedkey/tail-only-match cases;75352instructions/27PCs are coverage only.",
+    "Exact results/inverse cursor/callee registers/stack/live-record/outer-RAM, strictJSON/extent/coherent-source/parsed-key-owner guards pass. Synthetic fixtures fail authentication and are never published. All31protected original/e27/cache/loader/canonical/candidate/owner/source files unchanged.",
+    "No build/test failure or old source/native/lifecycle/scene acceptance repeated. Source terminal evidence and current hashes retained under ignored target/rom-data-metadata2; project-memory/whitespace checks performed at closure, no agent commit/push."
+  ],
+  "limitations": [
+    "Managed publication/typed CPU-DMA-native projection/lifecycle/positive ordinary scene/actualCLI remain pending for this new source. Direct indices>=44 and global caller preconditions unproved; live wrapper proof stops after getter with caller frame retained.",
+    "Semantic names for map values remain unproved; stored keys are explicit rather than inferred from current indices. No whole-function claim or guest code/clock shortcut.",
+    "New Linux/USA/native Windows and broader gameplay/maps/audio/GUI/archive/mod remain pending. No performance/startup/RSS/space campaign or AndroidPort change; private game data/saves/recordings/generated code remain ignored."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/metadata2.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/metadata2_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

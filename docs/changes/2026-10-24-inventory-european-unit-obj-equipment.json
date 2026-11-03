@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "platforms": [
+    "Windows"
+  ],
+  "references": [
+    "docs/rom_data_unit_obj.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ],
+  "slug": "inventory-european-unit-obj-equipment",
+  "title": "Identify European equipment OBJ poses and command-aware sources",
+  "kind": "docs",
+  "changes": [
+    "Trace original9BA84→CE1EC item properties3/9 and9C07A→22788:252eligible item records project61sprites124..184, normal bases0/4/8 andparts0/1. Explicit action12/13 sprite185/bases0-4 andaction16/17 sprite126/base16 exceptitem45→124 are included without introducing live bounds.",
+    "Distinguish748physical cells/86real nulls/258sequences3439frames. Only1911operation1frames dereference pixel/OAM offsets;609op6/888op8/31op0 retain their command words/tails.12OBJlists25objects determine280raw4bpp requests37440B/1170indexed tiles.",
+    "Define593nonoverlapping spans110666B:248directory2992index69812sequence174OAM37440pixels, disjoint from all53authenticated e58resource sources. Retain the wider actor normal/alternate/script49 producer census as partial; no sprite/action table extent from adjacency or blind script-animation cross product."
+  ],
+  "validation": [
+    "Private audit-equipment.py/equipment-source-contract.json authenticate exact EUR ROM, e58manifest and all53managed resource files/source hashes.73instruction/4BL/4literal/twodispatch fingerprints pass. Ordered source SHA-256 isfeb6a277c8696b3c5e189c928cbb2cb6936cb2dbdb1a82b3300b1407557c54ae.",
+    "Static source analysis performs no guest execution, new gameplay fixture, navigation or old acceptance replay. Subsequent reduced Wine model/original-reader checks are recorded separately.",
+    "Final preservation audit passes all7209prior protected artifact hashes,828inherited hash-mtime guards and seven compiled source preimages. Two shared modules differ from the318-file baseline only by the new module registrations.373local feature-document links, project-memory default/base7597b92, new-module rustfmt and CRLF-aware whitespace checks pass. User Debug-save/concurrent Docker/source/model/managed/native/CLI/ordinary evidence is preserved."
+  ],
+  "limitations": [
+    "Bounded source query projection only; no complete actor-body/alternate/script catalog, ordinary reachability or whole allocator/scheduler ABI claim. Metadata52 job0/1sentinels and general alternate/script sprite pairing remain unresolved.",
+    "No managed/runtime/revision change from inventory; EUR stays e58-d57, USAe8-d7. New Linux/USA/native Windows/new32:9 pending. No performance/space campaign, private payload edit, Android change, package, agent commit or push."
+  ],
+  "files": [
+    "docs/rom_data_unit_obj.md",
+    "docs/rom_data_obj.md",
+    "docs/rom_data_graphics.md",
+    "docs/rom_data.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

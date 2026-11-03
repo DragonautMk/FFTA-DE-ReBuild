@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "date": "2026-10-26",
+  "slug": "consume-european-registry-generic-poses",
+  "title": "Publish and consume European registry poses from direct generic-job fields",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add EUR e66-d65 managed publication/strict authenticated loading of the registry-generic typed model with actual metadata52/archive and six shared typed owner dependencies. Keep2940conditional witnesses6720refs/3210keys/777sequences and12initial-root target views; retain prior60resources/e65/USAe8-d7.",
+    "Serve exactly659newspans99824B via immutable typed index/header/frame/pixel fields, with13sequencebit words and exact sourcepage lookup. Original facing/tasks/commands/scheduler/DMA/VRAM remain guest work; holes compose earlier typed owners or raw ROM. Functional counters retain category and sequence coverage."
+  ],
+  "validation": [
+    "Source/model and first sourceWineoracle remain closed without replay. One affected Windowscore/frontend build passes firstattempt/warning-free; frozen corecompile-onlycfafc96e349dbb1a99714245fa1339475a75525f6d10e92d882e0aac86992a2c and frontend6a853cba672f0e14266e661dee24e968a14c07edea0efcbb7b207935909f7f31.",
+    "Both firstactual exact Winefilters pass. Managed publication retains all60prior resources/60prior decoded resource files/e65, with36attach+10dependencyguards/create-reuse-repair-move/failed-attach owner-state isolation/unavailable-directory load-Undo-backup-restart/all99824typedB126seq. Four sharedbytes read through each of six previous owners do not increment the new owner.",
+    "25original-interpreter-compiled complete-state-clock paths pass with all796992directgraphB altered; new index/header/frame/pixel fields, nullparts1/2/two orientations/raw fullwordIDs/liveRAM frames,659boundaries/widths/mirrors/realBIOS-bus/CpuSet/FastSet/DMA and mixed2new4alternate plus2new2editedraw. Compiled category bytes[0,36,6,43,0,1], DMA separately checked; no oldcommand/source/previous-family acceptance replay.",
+    "Datasete31fcad69734c355161e78984e1ef7377408e9b2a72541851ccc3af5580c9df3; manifest6d039fda52185403b61c5e2b3fcd32c519889b94dd9fd0027e77a2cfa2a016a0; model file3bd5b90a5796af349f97a178f4ff9004214f3b2d02d5735b1ceabfdf66ac1fd2, owned-source44033ff6d5c52eb5ce768cf725db2b1c5bd906fe98a36be7082874304921cdd9.1463build/1465Wine activehash-mtimeguards and26compiled inputs unchanged; reuse closed02/newsource/private proofs without another10746legacyartifact campaign.",
+    "Final integration preservation passes369baseline sourcechecks with implementationdelta confined to five selected files, five preimages and26compiled inputs.537decoded links/new-module rustfmt/project-memory default+basec8c165f/CRLFwhitespace pass. Concurrent coverage report/evidence/generator/Docker/handoff selection preserved and excluded; no livejobs, source/model unchanged.",
+    "One Windows production CLIbuild firstPASS/warning-free/frozend5092be662f5a16c6fe22e2b0ec82913511a770a982336bf850435c0046ee40b; canonical exacthash+mtime restored/maincontentunchanged-mtime-onlyCargo invalidation. FirstactualWineprepare/reuse/oneframeoldcache from unrelatedcwd pass62generation/64managed files/all62equalaccepted/eightactualdependencies/reusehash-mtime unchanged. AuthenticF09oneframe attaches e66 with allnewusage0, smokeonly; no ordinarypositive claim.",
+    "ActualCLIclosure confirms all372baseline sourcehashes/every implementation unchanged,26runtime compiled inputs unchanged, canonical exacthash-mtime restored and1530active CLIhash-mtimeguards verified after commands.538decodedlinks/project-memory default+baseb06ac66/CRLFwhitespace pass. Reuse03/02/newsource/private preservation; no whole11107legacyartifact campaign. Concurrent coverage changes remain outside the selected work.",
+    "A new read-only81existing-snapshot locator for exactly126newgeneric propersequences (allnewbindingspart0) finds0enabled or dormant matching bodytasks. Currentpointer inside/atend/outside/misaligned cases are retained without filtering; source/model/bodylink code and each81input header-payload-ROM/hash-mtime beforeafter authenticate. Originals unchanged, old21knownspecial/sixoverride/sevennormal/twoalternate/606alternate locators not repeated; no guest/build/fixture/navigation/fullpair selected. Locatorclosed, ordinarynewpixel/equivalence remainsopen.",
+    "Read-only126target lead closure confirms all372source hashes/every implementation unchanged,539decoded links/project-memory default+baseb06ac66/CRLFwhitespace. Fresh81input model-source-bodylink/header-payload-ROM/hash-mtime checks supplement closed04/03/02private proofs, without a11189legacyartifact campaign; no livejobs/fullTODOactive."
+  ],
+  "limitations": [
+    "Managed publication/typedguest and compiled consumption are closed for the selected conditional directjob source graph. Actual productionCLI closed; ordinarynewpixel-fullscene and FFFF/redirect/outofcatalog/changedactor/globalregistryidentity remain separate; no wholeactor/allocator ABI claim.",
+    "Linux/USA/nativeWindows/new32:9 pending. No performance/storage measurement or optimization, gameplayfixture/navigation/privatepayload edit, Android change, packaging, commit or push. Concurrent usercoverage generation work preserved/outside this change."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "scripts/extract_rom_data.py",
+    "crates/gba-core/src/rom_data/runtime/unit_obj_script_registry_generic.rs",
+    "crates/recomp/src/rom_data/script_registry_generic_runtime_tests.rs",
+    "docs/rom_data_unit_obj.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_obj.md",
+    "docs/rom_data_graphics.md"
+  ],
+  "references": [
+    "docs/rom_data_unit_obj.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

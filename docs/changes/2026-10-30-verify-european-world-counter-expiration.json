@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "date": "2026-10-30",
+  "slug": "verify-european-world-counter-expiration",
+  "title": "Verify ordinary European world-counter expiration against managed data",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add passive8-counter ordinary observer and optional five-line positive-use guard; preserve current sparse27 observer/guard while excluding them only from the593-source overlay, leaving core/runtime identical to592-source CLI.",
+    "Close one source-positive ordinary world-record scene using normal input on authenticated copies after source-backed counter expiration; retain the earlier negative travel bound and corrected movement assumptions without RNG/ID/RAM forcing."
+  ],
+  "validation": [
+    "One warning-free593-source Windows host-test buildee93928887dcac3a02a7682678c4e0753c7d4492519a2bdce93a04cedb51103e; module/validator inverses exact and runtime unchanged.",
+    "Initial normal IN13travel360frames3448to3808 is closednegative/all8stats0. Authenticated four oldbank gates, seven source-supported pathslots and CCF00 counter projection select IN08counter1; one normal Down48 cursor capture96frames endsactualnode18. Normal A12positive189frames3116to3305 firstread157/3274 yields frozen45suffix3260to3305; discovery stopped.",
+    "SAME6d95CLI one45suffix andSAME593test onefullpair pass every complete state-clock/classic-wide/OAM/fiveaudio. All8counts exact2bus2SERVEDbytes(1threshold1byte01)/onephysicalrecord/other3classes0. All82IDhashes/85managedpaths/cache28859 unchanged.",
+    "Full saved widePPM284x160/RGB555bitrep projection authenticated, classic worldtravel/MadmoonDay4 inspected, no mission-arrival outcome claimed.165guards/593observer592CLI sourcehashes/3current/inverses/originals exact; successful-unit retention removes no paths.",
+    "Final project-memory default/base35920d8/metadata and CRLF-aware whitespace checks pass; earlier independent parallel DBG coverage gaps are resolved by their own records. No accepted build/Wine/source proof is repeated."
+  ],
+  "limitations": [
+    "Only one ordinary record and two physical classes observed; other records/classes, fullroutineABI/helpers/RNG/liveeffects/opaque-outside-indirect semantics/Linux-USA-nativeWindows/new32:9/fullROMTODO remain pending.",
+    "Both pair arms use the same old native cache; no global interpreter/native parity or mission/arrival outcome claim. Sparse27 ordinary reachability remains partial.",
+    "Parallel DBG/menu work is preserved/excluded; its implementation and checks are not attributed. No performance/space campaign or closed acceptance/route recreation."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "crates/recomp/src/rom_data/world_records38_scene_tests.rs",
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

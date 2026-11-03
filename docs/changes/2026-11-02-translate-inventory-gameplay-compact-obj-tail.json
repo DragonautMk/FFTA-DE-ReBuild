@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-inventory-gameplay-compact-obj-tail",
+  "title": "Translate gameplay and compact OBJ inventory evidence",
+  "kind": "docs",
+  "platforms": [
+    "Desktop ROM-data inventory"
+  ],
+  "changes": [
+    "Synchronize six gameplay mask and dynamic usage summaries with matching English plan translations, and translate thirteen compact OBJ inventory summaries."
+  ],
+  "validation": [
+    "Compared the six synchronized entries with their plan preimage and checked all nineteen entries preserve task IDs, link destinations, inline literals and numeric runs."
+  ],
+  "limitations": [
+    "The inventory and wider cross-tree English-first audit still require full review; no ROM access or runtime checks were performed."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_INVENTORY.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

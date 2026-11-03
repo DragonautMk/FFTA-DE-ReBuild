@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "date": "2026-10-22",
+  "slug": "extract-rom-data-with-docker",
+  "title": "Extract ROM data from Linux and Windows with dependencies inside Docker",
+  "kind": "added",
+  "platforms": [
+    "Linux/Docker",
+    "Windows/Docker tooling"
+  ],
+  "changes": [
+    "Add Bash and PowerShell extraction entry points that build/load the shared linux/amd64 extract image and invoke the existing source-authenticated CLI; only Docker with Buildx is needed on either host, with Linux containers selected in Docker Desktop on Windows.",
+    "Factor Dockerfile.linux into a shared source/dependency stage, a targeted CLI extract stage and the existing tested portable build/export stages; reuse the pinned Rust/Bookworm base and native Cargo caches without running packaging during extraction.",
+    "Allow the Python extraction wrapper in the Docker context while retaining private-data exclusions; mount the chosen ROM read-only only at run time and the output parent writable for atomic dataset publication, with network disabled during extraction.",
+    "Resolve caller-relative ROM/output paths, preserve paths with spaces, reject CSV-unsafe mount paths, forward failures and report the host output location; Linux forwards its user/group IDs so generated files stay user-owned.",
+    "Document both Docker entry points as the primary extraction flow while retaining the optional Python/Cargo/prebuilt-executable workflow."
+  ],
+  "validation": [
+    "The Bash entry point completes an actual Docker image build and EUR extraction, producing seven readable files under ignored target/rom-data/docker-europe; the release CLI build is warning-free.",
+    "A second extraction in the same image reports verified reuse with identical file hashes/mtimes and host UID/GID; all seven files match the retained Windows/Wine extraction byte-for-byte and the source ROM hash is unchanged.",
+    "The unmounted extraction image contains no source ROM, workspace ROM directory or personal Data directory; no game file was supplied as a Docker build input.",
+    "Five focused Bash mock-Docker tests pass for paths/spaces/default output, atomic parent mounting, build/run failures and malformed paths; bash -n and containerized ShellCheck pass.",
+    "Six PowerShell 7.4 mock-Docker cases pass inside its existing Linux container: explicit spaced paths, default output, build failure, run failure, missing ROM and comma rejection. The container does not receive a Docker socket.",
+    "Final full working-tree project-memory coverage and scoped whitespace checks pass; concurrent Rust work retains its own separate records."
+  ],
+  "limitations": [
+    "Native Windows PowerShell 5.1/Docker Desktop execution remains unverified; PowerShell tests run on Linux with a simulated Docker command. ARM hosts require Docker's amd64 emulation.",
+    "The latest user request explicitly selects Linux container CLI extraction; no new Linux gameplay/scene, USA, native Windows runtime, performance, package or AndroidPort campaign is included.",
+    "The existing release packaging test gates are preserved by the Dockerfile refactor and were not rerun; validation applies to the targeted extraction image and source snapshot recorded under ignored target/.",
+    "Concurrent transfer/variant Rust implementation remains separate work and is not covered by this Docker-tooling record; no commit or push was performed."
+  ],
+  "files": [
+    "Dockerfile.linux",
+    ".dockerignore",
+    "scripts/extract_rom_data_docker.sh",
+    "scripts/extract_rom_data_docker.ps1",
+    "scripts/tests/test_extract_rom_data_docker.py"
+  ],
+  "references": [
+    "README.md",
+    "docs/docker.md",
+    "docs/rom_data.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

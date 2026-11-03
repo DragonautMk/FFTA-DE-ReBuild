@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "slug": "plan-shared-debugging-tools",
+  "title": "Plan shared user and assistant debugging tools",
+  "kind": "docs",
+  "platforms": [
+    "Desktop tooling planning"
+  ],
+  "changes": [
+    "Add an Italian DEBUG_TOOLS_TODO checklist with 22 stable DBG IDs, priorities, dependencies and concrete acceptance criteria. Separate tool work from the existing DS scene checklist and inventory seven existing capability groups before proposing improvements.",
+    "Prioritize session diagnostics and identities, isolated save handling, DS catalog access, snapshot-based input recording and reproducible replay. Follow with bounded ROM read auditing, actual-consumption coverage linkage, scene triggers and first-divergence state/clock/image/audio reports.",
+    "Plan graphics/text/input/audio/code inspectors, bounded trace/event capture, shared local command access, targeted regression campaigns, artifact retention and distribution. Keep menu workflows and structured CLI/JSON outputs aligned for both user and assistant.",
+    "Link the plan from ROM extraction, debug-save documentation, project state and script index. Keep EUR extraction first, Godot deferred and performance campaigns separate; mark uncommitted Bank audit extensions as in progress rather than available completed tools.",
+    "Reconcile the interrupted cleanup handoff from its existing terminal receipts without repeating cleanup, builds or tests; remaining cleanup validation/memory closure stays explicit and is not selected by this planning request."
+  ],
+  "validation": [
+    "Inspected current menu/CLI options, recorder/replay workflow, existing scoped audit documentation/source, DS catalog status, coverage tooling and artifact-retention documentation. No runtime, build, gameplay or benchmark was run.",
+    "Document checks pass: 22 unique ordered DBG-01..DBG-22 items, 22 acceptance criteria, seven existing capability groups and 374 local file links across the new checklist and its entry points.",
+    "Project memory metadata-only and git diff --check pass. The full project-memory check reports only the three concurrent read_audit/rom_data/Bank-test implementation files awaiting their separate change record; this documentation task does not claim their validation or closure."
+  ],
+  "limitations": [
+    "This is a planning deliverable only. The 22 new checklist items are unchecked; no debugger, UI, runtime hook or command interface was implemented.",
+    "Concurrent read_audit and Bank audit test modifications are preserved. Historical evidence availability and interrupted cleanup closure remain distinct from completed feature validation."
+  ],
+  "files": [
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/debug saves.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md",
+    "scripts/README.md"
+  ],
+  "references": [
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/debug saves.md",
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ]
+}

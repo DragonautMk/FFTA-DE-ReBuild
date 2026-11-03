@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "improve-rom-inventory-obj-readability",
+  "title": "Improve OBJ inventory readability",
+  "kind": "docs",
+  "platforms": [
+    "Desktop development documentation"
+  ],
+  "changes": [
+    "Separate merged words, values and addresses in the OBJ graphics, normal and alternate battle pose, script binding and special-unit pose summaries; preserve recorded evidence and open limits."
+  ],
+  "validation": [
+    "Compared the entire inventory against its tracked pre-edit version for identical digit runs, Markdown link targets and inline code spans; confirmed all text from the equipment-pose entry onward is unchanged. Checked frame counts against the linked unit OBJ guide."
+  ],
+  "limitations": [
+    "The inventory is only partially reviewed: the equipment-pose entry onward and the wider English-first audit remain pending. No historical runtime result was reproduced."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_INVENTORY.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md",
+    "docs/rom_data_unit_obj.md"
+  ]
+}

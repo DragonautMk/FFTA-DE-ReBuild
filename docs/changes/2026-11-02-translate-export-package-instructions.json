@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-export-package-instructions",
+  "title": "Generate English portable and private-export instructions",
+  "kind": "changed",
+  "platforms": [
+    "Windows",
+    "Linux"
+  ],
+  "changes": [
+    "Translate portable startup instructions, repository-reference labels and private debug export instructions/status/errors into English. Retain legacy LEGGIMI filenames and archive paths; accept both English and old Italian base README markers.",
+    "Document English generated instructions and compatibility; align the existing package test expectation and audit the two exporters plus their test source."
+  ],
+  "validation": [
+    "All 11 existing portable packaging tests pass. Synthetic private exports pass with English and legacy Italian base markers, validate CRC and every manifest hash, preserve sources and refuse existing destinations. Unknown marker is rejected without output; no temporary export files remain. Whitespace check passes."
+  ],
+  "limitations": [
+    "Synthetic payload validation on Linux only; no runtime, native Windows, physical controller, real private collection export or release rebuild performed. Existing legacy-base prose and imported data stay verbatim; remaining source/docs migration remains partial."
+  ],
+  "files": [
+    "scripts/package_ffta_portable.py",
+    "scripts/export_debug_assets.py",
+    "scripts/tests/test_package_ffta_portable.py",
+    "docs/portable.md",
+    "docs/private_debug_assets.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": []
+}

@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-romdata-obj-list-evidence",
+  "title": "Translate OBJ list and localized bank evidence",
+  "kind": "docs",
+  "platforms": [
+    "Desktop ROM-data planning documentation"
+  ],
+  "changes": [
+    "Translate three ROM-data evidence entries for additional direct lists, zero-count selectors and localized OBJ banks while preserving positive and negative coverage and original game text."
+  ],
+  "validation": [
+    "Compare task identifiers, inline literals, links, numeric values and the quoted game text with the original; verify local targets and unchanged surrounding sections."
+  ],
+  "limitations": [
+    "Further ROMDATA-02, ROMDATA-05 and detailed evidence remain untranslated; no ROM access, dataset creation or runtime checks were performed."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_TODO.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

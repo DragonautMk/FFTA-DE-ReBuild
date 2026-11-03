@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "slug": "model-european-encounter-headers",
+  "title": "Model European encounter headers and preserve shared constructor ownership",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add source-authenticated EncounterHeaders/442ordered typed headers with17reader fields/seven opaque bytes, full17680B reconstruction and two-span17676B ownership plan excluding the existing constructor pointer. StrictJSON/shape/source/dependency checks remain distinct; changedsharedptr withunchanged newspans is rejected by coherence/authentication.",
+    "Preserve fullbyte/halfword/encoded-pointer values, low16aliases and Noneoutside1..442/priorraw. Nonzero field33remains u8, and guest import/placement/facing plus nestedpayloads remain separate. Standalone model only, schema/extractor/decoder1/79/78 unchanged."
+  ],
+  "validation": [
+    "One warningfree core-onlyWindows build5855af92.. and one focusedWine filter pass29guards/7523originalprobes:7072one-load prefixes atactualsites across16fields plus451fullC0034returns(442headers/sixaliases/threeoutside). All14586semanticB incl4shared observed,14582new;3094opaqueB reconstructed/unread. Prefixeffectiveaddresses/widths/values/registers/flags/PC, fullgatecallee/SP/LR andRAMoutside4Bstack/VRAM/OAM/palette checked.",
+    "All33actual input/output/executable guards and508frozenbuild hashes(221coreinputs) pass; artifactcompletion0paths. Onlyaffectedoldcoretest fingerprint isolated, no failedbuild/globalclean/oldsource changes. ParallelDebug/coverage/frontend excluded; originalROM/cache/states/inputs/canonicalexe preserved. No newgame/fixture/metrics/oldsource-model-runtime acceptance replay."
+  ],
+  "limitations": [
+    "Managed extraction/runtime/actualCLI/ordinary andnestedunit-coordinatepayloads pending. Originalprefixes are notfullimporter/callerABI/native-clock/payload/gameplay or globalarchive/allcaller proof; fullROM_DATA_TODOactive.",
+    "Linux/USA/nativeWindows/new32:9 pending. No performance/storage campaign, Android/package, assistantcommit/push; existinguser/parallelwork preserved."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/encounter_headers.rs",
+    "crates/gba-core/src/rom_data/encounter_headers/tests.rs",
+    "docs/rom_data_maps.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_maps.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

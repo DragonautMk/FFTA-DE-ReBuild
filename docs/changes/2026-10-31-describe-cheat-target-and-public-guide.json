@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "describe-cheat-target-and-public-guide",
+  "title": "Describe cheat target context and readonly operations",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Use the project-known exact EUR and USA SHA-256 identities to compare the source-declared region against an explicit target. Keep unknown identities unknown and report declared-match or declared-mismatch as metadata only; device version remains unknown, decoder unsupported, every entry disabled and behavior unverified.",
+    "Show the loaded ROM and catalog hashes in the readonly menu; document five cheat operations and the existing local-control retry in the shared registry, with accurate handler sources and previously omitted content-list/retry options.",
+    "Include the public cheat guide in portable and Docker allowlists, retain the explicit no-payload whitelist and ignore imported cheats folders in extracted bundles."
+  ],
+  "validation": [
+    "Offline isolated Windows GNU test and production builds passed with 1515 frozen inputs and matching overlays. Wine passed the focused target-context test and three registry tests; a final production-only rebuild corrected two registry source fields without changing runtime behavior.",
+    "A final Wine CLI test used a synthetic catalog and public hash constants to check EUR declared-match, USA declared-mismatch, unknown identity, disabled/unverified states and registry sources. A separate synthetic Wine/Xvfb view showed the loaded unknown-ROM and catalog hashes while preserving guest state, frame and clock.",
+    "Three Python registry checks and eleven synthetic portable packaging tests passed for Windows/Linux archive layouts, public guide inclusion, private catalog exclusion and Docker allowlists. No actual distribution package or third-party payload was created."
+  ],
+  "limitations": [
+    "Region comparisons describe source declarations only; the CLI does not authenticate a caller-supplied hash against ROM bytes. Device versions, cheat decoding, application and actual compatibility remain unverified; DBG2-17 and subsequent work remain open.",
+    "Native Windows, Linux runtime, physical controllers and actual public deployment were not tested; existing closed catalog import/341-entry tests were not repeated."
+  ],
+  "files": [
+    "crates/recomp/src/debug_cheats.rs",
+    "crates/recomp/src/debug_operations.rs",
+    "crates/recomp/src/debug_operations.json",
+    "crates/recomp/src/play.rs",
+    "scripts/package_ffta_portable.py",
+    "scripts/tests/test_package_ffta_portable.py",
+    "Dockerfile.linux",
+    "Dockerfile.windows",
+    ".dockerignore"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/debug_operations.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

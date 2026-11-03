@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "inspect-european-packed-combo-dispatch",
+  "title": "Inspect European packed lookup Combo dispatch",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Record the bounded inspection of the Combo menu callback and its unresolved connection to packed lookup readers."
+  ],
+  "validation": [
+    "Authenticated four original-code windows with the Windows disassembler under Wine; no gameplay replay or build."
+  ],
+  "limitations": [
+    "No downstream packed-reader invocation or participant identity was established; this is not global absence. Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md"
+  ]
+}

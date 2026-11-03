@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "default-menu-transparency-and-contextual-controls",
+  "title": "Default menu transparency to10% and clarify sidebar focus with input-specific controls",
+  "kind": "changed",
+  "platforms": [
+    "Shared desktop menu; Windows GNU release validated through Wine"
+  ],
+  "changes": [
+    "Default menu.transparency to0.1 for missing/invalid settings while preserving explicit saved values, including0. Update the existing parser and pixel tests without altering user configuration files.",
+    "Distinguish the sidebar cursor from the active section with an opaque brass background, dark text and a leading marker. The cue also covers the domain/back controls and remains visible at full background transparency.",
+    "Follow the last intentional keyboard/mouse or existing XInput/Gilrs/DirectInput activity for menu hints, with the configured device only as initial fallback. Neutral connection/unchanged held states do not override a subsequent keyboard action; no new binding or profile persistence is introduced.",
+    "Show real keyboard navigation equivalents (arrows/Enter/Escape/Tab/F1/Shift+Tab) or the existing Xbox gamepad labels (D-pad/A/B/X/RS CLICK/Y/LB/RB/LT/RT), including the opening-menu binding, Back, Details, Debug tabs and reference hints. Keyboard volume/speed guidance uses the existing confirmed option editor, not nonexistent media hotkeys."
+  ],
+  "validation": [
+    "Locked/offline Windows GNU release test and production recomp/ffta-play builds passed without diagnostics. Four focused Wine cases passed: existing transparency parser1, new contextual hints/focus2, existing explicit opaque/transparent pixel1. No full menu/recomp/Linux suite or older acceptance was repeated.",
+    "An initial synthetic test referenced a PlayStation enum removed by the current Xbox-only label policy. Corrected that test assumption without changing controller-layout support; compiler diagnostics/source hashes retained under target/menu-context-controls.",
+    "Actual paused EUR GUI with simulated native XInput passed: keyboard Left highlights the sidebar distinctly, pad Down moves the marker, labels/opening bindings switch by last input while profiles stay byte-identical, and keyboard hints survive a static held pad. Actual text metrics verify unclipped hint lines at854x480 and640x480; captures visually inspected.",
+    "GUI with no menu.transparency key displays10% in the picker. Cancel leaves av.cfg unchanged; full guest state/frame/clock/keys/registers and all3private original inputs retain identity. Current runtime matches its immutable session pin.",
+    "Final preservation verifies291frozen Rust source hashes, the pre-existing user comment indentation, private inputs and process/lease closure. Four unrelated workflow files received concurrent Extra High/xhigh wording updates; observed and retained, never written/reverted or attributed to this task."
+  ],
+  "limitations": [
+    "Linux/Gilrs and DirectInput runtime paths, native Windows, physical controllers, USA and Android remain unverified. No performance measurements, guest stepping, game-data changes, release package, commit or push.",
+    "GUI evidence and current/diagnostic executables are local ignored files under target/menu-context-controls. No managed ROM interrupted/moved dataset copies exist; the known ROM-only cleanup-helper refusal is not repeated or bypassed.",
+    "Existing explicit transparency preferences are preserved; changing the default does not force previously saved0% or other values to10%. Controller labels retain the current project-wide Xbox policy."
+  ],
+  "files": [
+    "crates/input-config/src/lib.rs",
+    "crates/menu/src/atlas_theme.rs",
+    "crates/menu/src/controls.rs",
+    "crates/menu/src/controls/tests.rs",
+    "crates/menu/src/interaction/tests.rs",
+    "crates/menu/src/lib.rs",
+    "crates/recomp/src/play.rs"
+  ],
+  "references": [
+    "docs/menu_clan_atlas.md"
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "begin-live-debug-event-window",
+  "title": "Add a bounded live debug event console",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU and Wine (validation pending)"
+  ],
+  "changes": [
+    "Add a default-off separate host event console fed by the shared canonical event fanout and direct recent-event producers. The rolling collector is bounded to1024events,256KiB serialized payload and8KiB per event, with explicit eviction/oversize counters and retained identity range.",
+    "Expose a Clan Atlas menu toggle and configurable F2/F3/F4/F5/F9/F10/F12 shortcut. Ignore synthetic focus key presses so opening a window cannot retrigger the shortcut. Hiding stops collection while retaining its window; reopening resumes.",
+    "Provide independent frozen-view pause, category/level/search filters, scroll/autoscroll, actual clipboard copy and explicit bounded local JSON export. Filters and view pause do not change the rolling collector.",
+    "Expose a toggle for coalescing identical mapped/XInput polls, with default coalescing and bounded full-poll mode. Declare that guest read batches remain frame aggregates and recent-only producers require the recent collector."
+  ],
+  "validation": [
+    "Windows GNU locked/offline builds from frozen tracked HEAD918d5bd plus13explicit host overlays pass; final static-coverage production runtime e6c624b4dc004ea588fa0e29ca8b7724da9083732e2b2889c8db6563ff093495. Source and working overlays verified exact; concurrent ROM/export work excluded.",
+    "Wine focused tests pass: window model2, recent direct identity1, existing fanout1, menu toggle1, shortcut configuration1, and later coalescing1 plus changed model2. Tests were rerun only when affected source changed.",
+    "Wine/Xvfb GUI: initial synthetic F9 focus press reproduced unintended toggle; guard fixed and scoped variant confirms one F9 opens and remains collecting. Frozen view export stays identical while collector advances; a menu navigation and actual refused command retain their IDs; hide/reopen preserves window. Category, level and search filter a real error; copied Windows clipboard JSON equals the explicit local export. Full guest state/frame0/clock0 unchanged.",
+    "Separate current menu GUI opens console via Clan Atlas, switches poll coalescing off/on (64further observations within cap), scrolls and restores autoscroll; full guest state/frame0/clock0 unchanged. GUI/display sessions closed, pinned input/runtime variants and source evidence retained. Final production rebuild changes static coverage text only; previous GUI interactions not repeated.",
+    "A read-only Sol/xhigh consultation identified Windows focus-synthesized key events and then distinguished X focus from Windows activation in the test harness; effective model/effort metadata was not returned by the collaboration API."
+  ],
+  "limitations": [
+    "Native Windows, native Linux, physical controller and IME behavior are not established by Wine/Xvfb keyboard simulation. Guest read chronology, pre-capture events, raw uninstrumented inputs and future cheat events remain outside supported coverage.",
+    "The event window has bounded serialized payload and explicit loss counters; comprehensive memory, producer overhead and sustained workload measurement remain DBG2-12. No package, commit, push or private game data included."
+  ],
+  "files": [
+    "crates/recomp/src/debug_console.rs",
+    "crates/recomp/src/main.rs",
+    "crates/recomp/src/play.rs",
+    "crates/input-config/src/lib.rs",
+    "crates/menu/src/lib.rs",
+    "crates/menu/src/clan_atlas.rs",
+    "crates/menu/src/event_console.rs",
+    "crates/recomp/src/debug_console_panel.rs",
+    "crates/recomp/src/debug_recent.rs",
+    "crates/recomp/src/debug_recent/tests.rs",
+    "crates/recomp/src/debug_operations.rs",
+    "crates/recomp/src/debug_events.rs",
+    "crates/recomp/src/debug_events/tests.rs"
+  ],
+  "references": [
+    "docs/debug_events.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

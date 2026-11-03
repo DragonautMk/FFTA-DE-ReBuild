@@ -1,0 +1,323 @@
+#!/usr/bin/env python3
+"""Create an explicitly private, standalone Windows debug-asset export.
+
+The ordinary release packager remains private-data-free. This command only reads
+its selected sources and publishes a new ZIP; it never edits a source collection.
+"""
+import argparse
+import hashlib
+import json
+import os
+from pathlib import Path, PurePosixPath
+import re
+import stat
+import tempfile
+import zipfile
+from datetime import datetime
+
+ROOT = Path(__file__).resolve().parents[1]
+PREFIX = 'FFTARecomp-debug-EUR'
+BASE_PREFIX = 'FFTARecomp-portable/'
+EXCLUDED = {'.gba', '.agb', '.bin', '.ffstate', '.sav', '.input'}
+
+
+def regular(path):
+    path = Path(path)
+    if path.is_symlink() or not path.is_file():
+        raise ValueError(f'Expected a regular non-symlink file: {path}')
+    return path
+
+
+def tree(path):
+    path = Path(path)
+    if path.is_symlink() or not path.is_dir():
+        raise ValueError(f'Expected a non-symlink directory: {path}')
+    for directory, subdirs, files in os.walk(path, followlinks=False):
+        here = Path(directory)
+        subdirs.sort(); files.sort()
+        for name in subdirs:
+            if (here / name).is_symlink():
+                raise ValueError(f'Symlink in source collection: {here / name}')
+        for name in files:
+            file = regular(here / name)
+            yield file, file.relative_to(path).as_posix()
+
+
+def safe_relative(value):
+    if not value or '\\' in value or re.match(r'^[A-Za-z]:', value):
+        raise ValueError(f'Unsafe path: {value!r}')
+    path = PurePosixPath(value)
+    if path.is_absolute() or any(part in ('', '.', '..') for part in value.split('/')):
+        raise ValueError(f'Unsafe path: {value!r}')
+    return path.as_posix()
+
+
+def digest(path):
+    h = hashlib.sha256()
+    with regular(path).open('rb') as f:
+        for block in iter(lambda: f.read(1024 * 1024), b''):
+            h.update(block)
+    return h.hexdigest()
+
+
+def check_catalog(ready):
+    catalog = json.loads(regular(ready / 'catalog.json').read_text(encoding='utf-8'))
+    if catalog.get('schema') != 1 or not isinstance(catalog.get('cases'), list):
+        raise ValueError('Expected the schema-1 local debug-save catalog')
+    entries = [cp for case in catalog['cases'] for cp in case.get('checkpoints', [])]
+    for name in ('variant_slots', 'variants', 'generated_standard_saves', 'factory_standard_saves'):
+        entries.extend(catalog.get(name, []))
+    entries.extend(x['ready'] for x in catalog.get('inputs', []) if isinstance(x.get('ready'), dict))
+    checked = {}
+    for item in entries:
+        name = item.get('file')
+        if not name:
+            continue
+        name = safe_relative(name)
+        source = ready.joinpath(*PurePosixPath(name).parts)
+        current = ready
+        for part in PurePosixPath(name).parts:
+            current = current / part
+            if current.is_symlink():
+                raise ValueError(f'Catalog symlink: {name}')
+        if name not in checked: checked[name] = digest(source)
+        actual = checked[name]
+        if not isinstance(item.get('sha256'), str) or actual != item['sha256']:
+            raise ValueError(f'Catalog checksum mismatch: {name}')
+    return checked
+
+
+def reject_rom(path):
+    suffix=path.suffix.lower()
+    if suffix in ('.gba','.agb') or path.name.lower() in ('gba_bios.bin','bios.bin'):
+        raise ValueError(f'ROM/BIOS is not a debug asset: {path}')
+    with regular(path).open('rb') as f:
+        header=f.read(192)
+    if len(header)>=192 and header[0xB2]==0x96 and header[0xAC:0xB0] in (b'AFXE',b'AFXP'):
+        raise ValueError(f'Game ROM found in debug assets: {path}')
+    if suffix=='.zip':
+        with zipfile.ZipFile(path) as nested:
+            for info in nested.infolist():
+                name=info.filename.lower()
+                if name.endswith(('.gba','.agb','gba_bios.bin','bios.bin')):
+                    raise ValueError(f'ROM/BIOS inside source ZIP: {path.name}/{info.filename}')
+
+
+def pe64(path):
+    with regular(path).open('rb') as f:
+        header = f.read(64)
+        if len(header) < 64 or header[:2] != b'MZ':
+            raise ValueError(f'Expected x86-64 Windows executable: {path}')
+        f.seek(int.from_bytes(header[60:64], 'little'))
+        if f.read(6) != b'PE\0\0\x64\x86':
+            raise ValueError(f'Expected x86-64 Windows executable: {path}')
+
+
+def export(args):
+    base = regular(args.base)
+    launcher = regular(args.launcher); runtime = regular(args.runtime)
+    pe64(launcher); pe64(runtime)
+    assets = args.assets
+    ready = assets / 'ready'
+    legacy = args.legacy
+    original_files = list(tree(assets)); legacy_files = list(tree(legacy))
+    for path, _ in original_files + legacy_files: reject_rom(path)
+    catalog = check_catalog(ready)
+    if not (ready / 'EUR' / 'ffta.sav').is_file():
+        raise ValueError('EUR collection needs ffta.sav')
+    eur_hashes = list((ready / 'EUR' / 'SaveStates').iterdir())
+    if len(eur_hashes) != 1 or not re.fullmatch(r'[0-9a-f]{64}', eur_hashes[0].name):
+        raise ValueError('EUR snapshot directory must contain one ROM SHA-256')
+    recordings = []
+    if args.recordings.exists():
+        if args.recordings.is_symlink() or not args.recordings.is_dir():
+            raise ValueError('Recordings source must be a non-symlink directory')
+        for directory in sorted(args.recordings.iterdir()):
+            if directory.is_symlink() or not directory.is_dir():
+                raise ValueError(f'Invalid recording directory: {directory}')
+            data=json.loads(regular(directory/'recording.json').read_text(encoding='utf-8'))
+            if data.get('kind')!='ffta-input-recording' or data.get('status')!='complete':
+                continue
+            for filename,key in [('start.ffstate','start_sha256'),('end.ffstate','end_sha256'),('input.input','input_sha256')]:
+                if digest(directory/filename)!=data.get(key):raise ValueError(f'Recording checksum mismatch: {directory.name}/{filename}')
+            recordings.append(directory)
+    pair=[args.replay/'start.ffstate',args.replay/'input.input']
+    if any(p.exists() for p in pair) and not all(p.is_file() and not p.is_symlink() for p in pair):
+        raise ValueError('F-09 snapshot and input must both be regular files')
+    original_sources=[]
+    if args.source_manifest.exists():
+        sources=json.loads(regular(args.source_manifest).read_text(encoding='utf-8'))
+        for label,item in sorted(sources.items()):
+            if not re.fullmatch(r'[a-zA-Z0-9_-]+',label) or not isinstance(item,dict):
+                raise ValueError('Invalid original source manifest entry')
+            name=safe_relative(item.get('path',''))
+            path=ROOT.joinpath(*PurePosixPath(name).parts)
+            current=ROOT
+            for part in PurePosixPath(name).parts:
+                current=current/part
+                if current.is_symlink():raise ValueError(f'Original source symlink: {name}')
+            reject_rom(path)
+            if digest(path)!=item.get('sha256'):raise ValueError(f'Original source checksum mismatch: {label}')
+            original_sources.append((label,path,name,item['sha256']))
+    out = args.output
+    if out.exists() or out.is_symlink():
+        raise ValueError(f'Output already exists: {out}')
+    out.parent.mkdir(parents=True, exist_ok=True)
+    entries = {}; names_casefold = set()
+    def reserve(name):
+        name = safe_relative(name)
+        folded = name.casefold()
+        if folded in names_casefold:
+            raise ValueError(f'Duplicate archive path: {name}')
+        names_casefold.add(folded)
+        return name
+    def add_stream(z, name, reader, provenance):
+        name = reserve(name); h = hashlib.sha256(); count = 0
+        with z.open(PREFIX + '/' + name, 'w', force_zip64=True) as target:
+            while True:
+                block = reader.read(1024 * 1024)
+                if not block: break
+                target.write(block); h.update(block); count += len(block)
+        entries[name] = {'sha256': h.hexdigest(), 'bytes': count, 'source': provenance}
+    def add_file(z, name, path, provenance):
+        with regular(path).open('rb') as f: add_stream(z, name, f, provenance)
+    def add_bytes(z, name, data, provenance):
+        import io
+        add_stream(z, name, io.BytesIO(data), provenance)
+    fd, tmpname = tempfile.mkstemp(prefix='.debug-assets-', suffix='.tmp', dir=out.parent)
+    os.close(fd); temp = Path(tmpname)
+    try:
+        with zipfile.ZipFile(base) as source, zipfile.ZipFile(temp, 'w', zipfile.ZIP_DEFLATED, compresslevel=6, allowZip64=True) as z:
+            manifest_name = BASE_PREFIX + 'PACKAGE-MANIFEST.json'
+            manifest = json.loads(source.read(manifest_name))
+            if manifest.get('kind') != 'ffta-portable-package' or manifest.get('platform') != 'windows':
+                raise ValueError('Base ZIP must be a Windows portable package')
+            expected = manifest.get('files')
+            if not isinstance(expected, dict): raise ValueError('Invalid base package manifest')
+            found = set()
+            for info in source.infolist():
+                if not info.filename.startswith(BASE_PREFIX):
+                    raise ValueError(f'Unexpected base archive path: {info.filename}')
+                if info.is_dir(): continue
+                name = safe_relative(info.filename[len(BASE_PREFIX):])
+                if name == 'PACKAGE-MANIFEST.json': continue
+                if (name.startswith('Data/') or name.lower().endswith(tuple(EXCLUDED)) or
+                    stat.S_ISLNK(info.external_attr >> 16)):
+                    raise ValueError(f'Private or linked payload in base package: {name}')
+                if name not in expected: raise ValueError(f'Undeclared base package payload: {name}')
+                if name in found: raise ValueError(f'Duplicate base payload: {name}')
+                if name in ('FFTARecomp.exe', 'recomp.exe', 'LEGGIMI.txt', '.gitignore'):
+                    with source.open(info) as f:
+                        h=hashlib.sha256()
+                        for block in iter(lambda: f.read(1024*1024),b''):h.update(block)
+                    actual=h.hexdigest()
+                else:
+                    with source.open(info) as f: add_stream(z, name, f, 'base portable ZIP')
+                    actual=entries[name]['sha256']
+                if actual != expected[name].get('sha256'):
+                    raise ValueError(f'Base package checksum mismatch: {name}')
+                found.add(name)
+            if found != set(expected): raise ValueError('Base package manifest does not match ZIP')
+            base_readme=source.read(BASE_PREFIX+'LEGGIMI.txt')
+            # Accept the legacy Italian marker in previously generated base ZIPs.
+            markers=(b'No personal cases or results are included.',b'Nessun caso personale o risultato e incluso.')
+            old=next((marker for marker in markers if marker in base_readme),None)
+            if old is None:raise ValueError('Unexpected portable base instructions')
+            add_bytes(z,'LEGGIMI.txt',base_readme.replace(old,b'This private copy includes debug cases: read LEGGIMI-DEBUG.txt.'),'updated base instructions')
+            add_bytes(z,'.gitignore',b'*\n','private extracted-folder ignore')
+            add_file(z,'FFTARecomp.exe',launcher,'selected Windows launcher')
+            add_file(z,'recomp.exe',runtime,'selected Windows runtime')
+            # Keep the normal manifest accurate for the portable base only.
+            for name in ('FFTARecomp.exe','recomp.exe','LEGGIMI.txt','.gitignore'):
+                expected[name]={'sha256':entries[name]['sha256'],'source_sha256':entries[name]['sha256'],'bytes':entries[name]['bytes']}
+            manifest['scope']='Portable base payload identities only; this private debug export also contains game saves, snapshots and recordings. See DEBUG-ASSETS-MANIFEST.json.'
+            add_bytes(z,'PACKAGE-MANIFEST.json',(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n').encode(),'updated portable manifest')
+            # The shared catalog resolves its file paths relative to this directory.
+            for path, rel in original_files:
+                if rel.startswith('ready/'):
+                    dest='Data/config/debug-catalog/'+rel[len('ready/'):]
+                else:
+                    dest='DebugAssets/originali/'+rel
+                add_file(z,dest,path,'debug_saves/'+rel)
+            for name, expected_hash in catalog.items():
+                if entries['Data/config/debug-catalog/'+name]['sha256'] != expected_hash:
+                    raise ValueError(f'Catalog source changed during export: {name}')
+            for path, rel in legacy_files:
+                add_file(z,'DebugAssets/casi-precedenti/'+rel,path,'saves/debug-cases/'+rel)
+            # A separate working copy of the existing EUR slots. Catalog masters remain intact.
+            for path, rel in tree(ready/'EUR'):
+                if '/' not in rel and rel.endswith('.sav') or rel.startswith('SaveStates/'):
+                    add_file(z,'Data/saves/'+rel,path,'debug_saves/ready/EUR/'+rel)
+            for label,path,name,expected_hash in original_sources:
+                dest='DebugAssets/fonti-verificate/'+label+path.suffix.lower()
+                add_file(z,dest,path,name)
+                if entries[dest]['sha256']!=expected_hash:raise ValueError(f'Original source changed during export: {label}')
+            if original_sources:
+                add_file(z,'DebugAssets/fonti-verificate/source-manifest.json',args.source_manifest,'verified source manifest')
+            for directory in recordings:
+                for path,rel in tree(directory):
+                    reject_rom(path)
+                    add_file(z,'Data/config/recordings/'+directory.name+'/'+rel,path,'accepted recording/'+directory.name+'/'+rel)
+            if all(p.is_file() for p in pair):
+                for path in pair:add_file(z,'DebugAssets/replay-F-09/'+path.name,path,'F-09 replay/'+path.name)
+            add_bytes(z,'Data/config/av.cfg',b'debug = true\ndebug.extended_saves = true\n','debug portable defaults')
+            instructions = ("""FFTARecomp - private debug assets (Windows x86-64)
+
+1. Extract FFTARecomp-debug-EUR to the project root or another location of your choice.
+2. Launch FFTARecomp.exe and select your own European ROM. No ROM is included.
+3. Debug and Extended saves are enabled in the portable copy. Game > Saves contains
+   the EUR working copies (slots and SaveStates). The complete catalog is under
+   Debug > Sessions and cases > Debug catalog. Use Open isolated case to open a case;
+   use Import to free snapshot slot to import a snapshot in an isolated copy.
+4. Catalog masters are in Data/config/debug-catalog; other originals and previous
+   cases are in DebugAssets. The entire existing USA collection is included in
+   the catalog, but this export has not verified USA compatibility.
+5. Snapshots require compatible ROM/hash and BIOS identities (normally HLE/no BIOS).
+   Do NOT overwrite personal data; this is a separate folder with private copies.
+
+Private ZIP: contains saves and generated data. Do not publish or commit it.
+The base package and binaries come from the inputs selected for the script.
+Includes verified original sources, selected complete recordings and the
+F-09 replay when available.
+Contains no ROM, BIOS, cache or target datasets. Recordings are bound to their
+original identities: check recording.json before using them.
+""").encode('utf-8')
+            add_bytes(z,'LEGGIMI-DEBUG.txt',instructions,'generated instructions')
+            output_manifest={'schema':1,'kind':'ffta-private-debug-assets','region_default':'EUR',
+                'usa':'existing collection; not validated by this export','rom_included':False,
+                'catalog_verified_files':len(catalog),'verified_original_sources':len(original_sources),'complete_recordings':len(recordings),'f09_replay_included':all(p.is_file() for p in pair),'eur_rom_sha256':eur_hashes[0].name,
+                'source_base_sha256':digest(base),'files':entries}
+            add_bytes(z,'DEBUG-ASSETS-MANIFEST.json',(json.dumps(output_manifest,ensure_ascii=False,indent=2)+'\n').encode(),'generated export manifest')
+        # Verify CRC and every copied byte before publishing; refuse an existing destination.
+        with zipfile.ZipFile(temp) as archive:
+            if archive.testzip() is not None: raise ValueError('ZIP CRC validation failed')
+            for name, metadata in entries.items():
+                h=hashlib.sha256();count=0
+                with archive.open(PREFIX+'/'+name) as f:
+                    for block in iter(lambda:f.read(1024*1024),b''):
+                        h.update(block);count+=len(block)
+                if h.hexdigest()!=metadata['sha256'] or count!=metadata['bytes']:
+                    raise ValueError(f'ZIP validation failed: {name}')
+        os.link(temp,out)  # atomic no-overwrite publish, same filesystem
+        print(f'Created {out} ({out.stat().st_size:,} bytes); {len(entries)} files; catalog: {len(catalog)} verified files.')
+    finally:
+        temp.unlink(missing_ok=True)
+
+
+def main():
+    p=argparse.ArgumentParser(description=__doc__)
+    p.add_argument('--base',type=Path,default=ROOT/'dist/debug-tools/FFTARecomp-windows-debug-tools.zip',help='existing Windows portable debug-tools ZIP')
+    p.add_argument('--runtime',type=Path,default=ROOT/'target/x86_64-pc-windows-gnu/release/recomp.exe')
+    p.add_argument('--launcher',type=Path,default=ROOT/'target/x86_64-pc-windows-gnu/release/ffta-play.exe')
+    p.add_argument('--assets',type=Path,default=ROOT/'debug_saves')
+    p.add_argument('--legacy',type=Path,default=ROOT/'saves/debug-cases')
+    p.add_argument('--source-manifest',type=Path,default=ROOT/'target/debug-saves-audit/source-manifest.json')
+    p.add_argument('--recordings',type=Path,default=ROOT/'target/debug-tools-recording/final recording case/Data/config/recordings')
+    p.add_argument('--replay',type=Path,default=ROOT/'target/desktop-perf/ai-turn-replay')
+    p.add_argument('--output',type=Path,default=ROOT/'dist/debug-assets'/('FFTARecomp-debug-assets-EUR-'+datetime.now().strftime('%Y%m%d-%H%M%S')+'.zip'))
+    args=p.parse_args()
+    try: export(args)
+    except (OSError,ValueError,KeyError,zipfile.BadZipFile,json.JSONDecodeError) as exc:
+        p.exit(1,f'Export failed: {exc}\n')
+
+if __name__ == '__main__': main()

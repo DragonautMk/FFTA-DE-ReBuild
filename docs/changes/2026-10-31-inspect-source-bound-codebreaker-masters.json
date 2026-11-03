@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "inspect-source-bound-codebreaker-masters",
+  "title": "Inspect CodeBreaker entries through an explicitly selected source master",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Add readonly inspection tied to an explicitly selected entry provenance and its exact same-source master, with bounded source-line identity and atomic refusal of missing, mismatched or ambiguous links.",
+    "Decode supported seed/game-ID/hook master metadata and optionally compute the ROM byte SHA-256 and first-64-KiB checksum; the plan remains non-executable and does not install the hook."
+  ],
+  "validation": [
+    "Isolated Windows GNU test/runtime builds passed with 1516 frozen source inputs; Wine passed 17 cheat tests with one private test ignored and three operation registry tests.",
+    "Readonly Wine CLI checks for CH-0321, 0323, 0324, 0325, 0331, 0334 and 0336 matched each full plan and the master checksum, hook offset and handler slot against mGBA decoding, matched the selected EUR ROM checksum, and preserved original catalog and ROM hashes; the recorded result contains no private code payload.",
+    "Python operation inventory, Atlas inventory, rustfmt and git diff whitespace checks passed."
+  ],
+  "limitations": [
+    "The source device and actual game effects remain unverified; hook handling, controlled application, disable/restore, native Windows and Linux runtime remain open. No guest execution occurred."
+  ],
+  "files": [
+    "crates/recomp/src/debug_cheat_decoder.rs",
+    "crates/recomp/src/debug_cheats.rs",
+    "crates/recomp/src/debug_operations.json",
+    "crates/recomp/src/main.rs"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/debug_operations.md"
+  ]
+}

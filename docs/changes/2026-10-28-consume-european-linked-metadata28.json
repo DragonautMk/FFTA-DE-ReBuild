@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "slug": "consume-european-linked-metadata28",
+  "title": "Publish European indexed metadata28 and consume typed guest bytes",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add e83-d82/index74 managed linked-metadata28.json resource, immutable typed byte owner and CPU/DMA/native guest read composition with five classes/347record mask/eight usage counters. Preserve all74prior resources/files and typed-header/raw successor edges; no invented dependency or guest/save/native/CAPI ABI change.",
+    "Authenticate model bytes and one9716Bsource span before transactional attach; connect preparation, bounded parsing, hashing and runtime usage diagnostics while keeping original selectors, flags and live algorithms."
+  ],
+  "validation": [
+    "One warning-free Windows build 040133f5.. from522acceptedcopy sources, affected corelib/test fingerprints only; one focusedWine publication76/prior74/interruption/14attach2fullset proof preserves failed-attach owner/fullstate. No oldsource/model/coordinate/header/template acceptance replay.",
+    "Twenty-three rawROM/typed-interpreter/native complete-state-clock cases with9716rawBpoisoned AFTERLoad:17loads+6fullD07A4getters,31compilednewB/1priorheaderB; 56compiledinstructions/28dispatchcoverageonly. Full9716B5classes347records/all347boundaries/widths/mirrors/typedrawedges/LoadUndo/threeDMA-CpuSet-FastSet fullstates-clock pass.",
+    "All216actualguards/522integration sourcehashes/520closedmodel preimages exact; helperretiresonlyinterruptedcopy. Dataset=66bc5dbd8fe08af1b949de272215870a7f74fe929eb6e2041b498e8f16becb0f; manifest=16015edba717322a7839e517b9ba0edfb4ac5e78557f2a8b2a6efc34dace2920; newJSON=590ba29559b1f5a44212f3ac9e09eab723c14dcc32c5a8e4642097ec64b60966."
+  ],
+  "limitations": [
+    "Actual production CLI create/reuse/no-write/startup with positive ordinary use and one full ordinary equivalence pair remain next. Selected native prefixes do not prove full caller ABI/globalarchive or all ordinary rows/fields.",
+    "Linux/USA/nativeWindows/new32:9/followingfourbytefamily/fullROMTODO pending. No metrics/spacecampaign/newgame-navigation-checkpoint-fixture/Android/package/assistantcommit/push; parallel Debug work preserved."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/metadata28.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/metadata28_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "scripts/extract_rom_data.py",
+    "docs/rom_data_gameplay.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

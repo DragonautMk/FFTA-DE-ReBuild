@@ -64,6 +64,7 @@ pub fn detect(rom: &[u8]) -> Option<RdrvSig> {
 /// usually ROM) plus the 23-bit fraction; `step` is the guest's own
 /// effective step for this chunk (from the +0x08 cache).
 #[derive(Clone, Copy)]
+#[derive(serde::Serialize, serde::Deserialize)]
 struct Voice {
     on: bool,
     /// Struct address, for the step pickup at the advance hook.
@@ -113,6 +114,7 @@ impl Default for Voice {
 
 /// Globals harvested from the blob's literals at engage time.
 #[derive(Default, Clone, Copy)]
+#[derive(serde::Serialize, serde::Deserialize)]
 struct Layout {
     /// Hook PCs (ARM, IWRAM): mix entry, advance_music, advance_fx.
     mix_all: u32,
@@ -135,6 +137,7 @@ struct Layout {
     chanvol2: u32,
 }
 
+#[derive(serde::Serialize, serde::Deserialize)]
 pub struct RdrvHle {
     pub active: bool,
     pub engaged: bool,
@@ -144,7 +147,9 @@ pub struct RdrvHle {
     pub bad_waves: u64,
     lay: Layout,
     /// Snapshot taken at the mix hook; activated by the step pickup.
+    #[serde(with = "crate::save_state::array")]
     pending: [Voice; MAX_VOICES],
+    #[serde(with = "crate::save_state::array")]
     voices: [Voice; MAX_VOICES],
     count: usize,
     /// Grid samples per guest output sample (65536 / mix rate).
@@ -183,6 +188,7 @@ pub struct RdrvHle {
     /// stream's most recent 2×chunk guest-rate samples and loop them
     /// whenever hooks stop; output, check copy, and verifier all see
     /// the replay, so outages stay proven and level-matched.
+    #[serde(with = "crate::save_state::array")]
     replay: [f32; 1024],
     replay_cap: usize,
     replay_w: usize,
@@ -1136,6 +1142,7 @@ mod tests {
             *b = (i as u8) & 0x3F;
         }
         let mem = MemView {
+            resources: None,
             rom: &rom,
             ewram: &ewram,
             iwram: &iwram,
@@ -1181,6 +1188,7 @@ mod tests {
         let rom = vec![0u8; 4];
         let ewram = vec![0u8; 4];
         let mem = MemView {
+            resources: None,
             rom: &rom,
             ewram: &ewram,
             iwram: &iwram,

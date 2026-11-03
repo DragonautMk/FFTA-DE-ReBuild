@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "slug": "model-european-u16-task-obj-banks",
+  "title": "Authenticate European OBJ banks using u16 task counters",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Authenticate four direct producer literal/BL pairs for original2C5E0/2C60Cu16task banks:50lists140objects/7sequences49frames/65disjoint spans1378bytes, no overlap with68current owners. Relative-prefix shape/targets/payloads/links/padding checked; seven unreferenced lists/three zero headers retained without reachability/hold/globalcap/fullarchive claims.",
+    "Add strict lossless WordTaskObjAnimations using shared pure bank fields with its own fixed declared roots/shapes and u16queries, source verification and exact byte projection. Original selector/tick/phase useu16, repeatlowu8, update returns OLDphase list before increment and advances only newtick>duration; repeat/clamp/latched done retained. Add coredev-onlyserde_json/Cargo.lock entry, preserving parallel frontend/arboard edits without compiling frontend. Source/model milestone leaves e76-d75/USA8-7 unchanged."
+  ],
+  "validation": [
+    "First isolated Windows core build warning-free/frozen256634141f8c4b191bfcbebdf9b168decfe06b2cf1352ec5c7dbf8913bdf8dcd. First Wine filter passes all1378byte/source queries/JSON roundtrip/23guards, then fails a test-only expectation that constructor returns TASK inr0; original02C608POP r0/BX r0 returns callerLR scratch value. Failedfilter/preimage/log/executable retained, not claimed fullPASS; productmodel unchanged.",
+    "Correct that expectation only, extract shared oracle helper, then second warning-free Windows core build/frozene05244ed07ec32c2cc5974e37489accdc48d4c2861c26fdf11cea66f3e162f6f. One remaining-only Wine filter passes23original constructors/93updates/6producer branch-alias cases, all49nonempty frames/u16tick255\u2192256and65535wrap/duration boundaries/OLDlist return/repeat-clamp-latched done/input aliases/fullRAM-callee guards. Completedmodel23guard stage not replayed.",
+    "All88selected input-output-frozen guards and199compiled core source hashes exact;65spans1378B disjoint/current69filedataset/originalROM/canonical unchanged. CanonicalJSONd207dfae8a08050e7b59c573d9813b841858ed69955d7c22de0332402fee2706. Requiredartifactcompletion0paths, failed diagnostics retained."
+  ],
+  "limitations": [
+    "Conditional declared relative-bank prefixes only. Emptysequence updating/indirectcallers/task lifetime/fullarchive/all-use and ordinary coverage of unreferenced lists remain unproved. Managed extraction/publication/direct runtime/native-host/actualCLI/positive ordinary bank use remain separate open children; existing census/ordinary acceptance not rerun.",
+    "Linux/USA/native Windows/new32:9 pending. No ordinaryfixture/navigation/frontend-production build/performance-storage campaign/Android/package/assistant commit/push. ParallelDBG frontend changes are preserved and not validated by this core-only unit; fullROM_DATA_TODO remains active."
+  ],
+  "files": [
+    "Cargo.lock",
+    "crates/gba-core/Cargo.toml",
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/word_task_obj_animations.rs",
+    "crates/gba-core/src/rom_data/word_task_obj_animations/tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

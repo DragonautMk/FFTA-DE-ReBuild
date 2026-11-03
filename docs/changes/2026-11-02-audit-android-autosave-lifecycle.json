@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "audit-android-autosave-lifecycle",
+  "title": "Audit Android autosave lifecycle and cartridge storage",
+  "kind": "docs",
+  "platforms": [
+    "Android source comparison; device untested"
+  ],
+  "changes": [
+    "Trace current fork cartridge saving and pinned upstream machine-state autosave across JNI, lifecycle, storage and restore boundaries."
+  ],
+  "validation": [
+    "Inspected current Android frontend, JNI and engine, and pinned upstream engine, worker, card and lifecycle source; no ROM or runtime session used."
+  ],
+  "limitations": [
+    "Static analysis does not establish device lifecycle timing, process-death recovery, storage durability or Android state compatibility. Autosave policy and implementation remain unapproved."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-07-machine-autosave.md",
+    "docs/development/upstream-audit/U31-07-autosave-proposal.md"
+  ],
+  "references": []
+}

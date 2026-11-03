@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "inventory-european-palette-program-producers",
+  "title": "Trace European palette programs through bounded literal and indexed producers",
+  "kind": "docs",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Trace actual palette-script task080d7fac/publicconstructors080d8214-080d8234 through308bounded direct BLcandidates.285exact straight-line argument expressions root179distinct ROMprograms; threefixed-count list constructors addfiveprograms/eight8Bproducer rows, andtwoexplicit3wordstack copies addone further distinctprogram. A specific saved-R4bridge reuses an already rooted program. Combined185programs/1000commands are a bounded source catalog, not total producer completeness.",
+    "Document six-byte headers (u8first/flags/colorwidth/commandcount,u16initialdelay), six-byte command records (u8opcode/mode,u16duration/relativeparameter), direct versus queued color reads and counted color-sequence minimum1. Parameter lengths remain static contract candidates pending an original-reader Wine check; no runtime owner is introduced.",
+    "Resolve all20indexed producer calls as bounded projections from original task-ID transforms, parent/child messages, constant stores, seven exact public constructor selectors and counted loops.97pointer cells/388B add45programs: total230programs/1135commands. Mixed39bcc4projects only2pointers; its null/scalar tail stays unowned. No global RAM guard or fullphysical table claim. Neighbor080d79ac-080d79d0taskclass/248candidates remains excluded."
+  ],
+  "validation": [
+    "218current source-doc hashes and terminal e45ordinary summary checked before mutations; previous goal turn was progress. New bounded static disassemblies/dataflow and source-field/hash checks find185programs/1000commands/16135candidateprogram bytes in124ranges plus64list/24stack metadata bytes; all16223declared candidate bytes are disjoint from39current resource owners. No repeated logical program bytes in this declared field plan.",
+    "Exact source expressions stop at branch/call/unknown-memory boundaries.23initially unresolved direct calls reduce to20indexed cases aftertwofixed-stack-copy cases andonealready-rootedR4bridge; publiclist constructor080d8380has3resolved callers with counts3/3/2. Header opcodes/modes/counts and everydeclared interval are recorded in ignored JSON; no pointer-shape-only promotion of dynamic candidates.",
+    "No new guest execution, build, Wine/Linux runtime test, fixture creation, performance or space measurement. Closed e45source31/native10/CLI/ordinary1000/negativeboot240 and earlier audio/graphics tests are not repeated. Evidence target/rom-data-palette-programs/{all-proved-program-discovery.json,producer-data-source-plan.json,actual-palette-producer-arguments.json,resolve-producer-arguments.py,resolved-list-programs.json,resolved-stack-program-tables.json,dynamic-table-boundary-candidates.json,pending-callers/,*.txt}.",
+    "Final project-memory including --base7597b92and CRLF-aware whitespace checks pass; 1592protected artifacts retained, all1515prior artifact hashes and42CLIhash-mtime guards unchanged. All earlier implementation-file hashes unchanged. inventory-final-summary/inventory-final-protected retain partialstatus, no liveunitjob; fullgoalactive.",
+    "New static producer fingerprints/descriptor callback checks pass20projections, preserving all185earlier program records. Expanded18221program bytes/146ranges plus476producer bytes yield18697candidate source bytes/165combined ranges, disjoint39e45owners/no repeatedlogicalprogram bytes. indexed-producer-proofs.json and indexed-program-discovery.json are current; source parameters remain candidates pending Wine.",
+    "Indexed child final guards pass project-memory/default+base7597b92 and CRLF-aware whitespace. 1645protected artifacts retained; all1592prior hashes/42CLIhash-mtime guards and allprior implementation hashes unchanged. Only7expected memory files changed; no live unit process. indexed-final-summary/indexed-final-protected retained."
+  ],
+  "limitations": [
+    "ROMDATA-01-PALETTE-EFFECT-PROGRAM-PRODUCERS remains partial: bounded20indexedprojection child is complete; source-parameter Wine oracle and typed model/publication/runtime/ordinary consumption remain missing.230known programs do not establish all game palette assets, all valid RAM inputs or full physical pointer-table extents.",
+    "Mode0color copy uses headerwidth directly; mode1original wrapper uses wrapping start+width-1thenclamp511. No new guest clamp or inferred zero-width behavior is installed. Stack selectors remain live/unmasked despite known3wordcopies; messages supply repeat/pause flags separately from preserved headerflags.",
+    "Managed EUR e45-d44/USAe8-d7 unchanged. NewLinux/USA/nativeWindows remain pending; other families/GUI-archives-modTODO remain open. No AndroidPort change, game-data publication, commit or push; concurrent Debug-save and earlier implementation edits preserved."
+  ],
+  "files": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

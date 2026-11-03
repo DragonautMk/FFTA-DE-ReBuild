@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-performance-priority-p2",
+  "title": "Translate performance priority P2",
+  "kind": "docs",
+  "platforms": [
+    "Desktop performance planning documentation"
+  ],
+  "changes": [
+    "Translate performance priority P2 into English, preserving task states, recorded measurements, accepted and rejected experiments and platform coverage limits."
+  ],
+  "validation": [
+    "Compare four ordered checkbox states, task identifiers, inline literals, links, numeric values and the legacy heading anchor with the original; confirm surrounding sections are unchanged."
+  ],
+  "limitations": [
+    "Performance history and P3–P4 remain untranslated; no benchmarks, builds, fixtures or runtime checks were run."
+  ],
+  "files": [
+    "docs/development/PERFORMANCE_TODO.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

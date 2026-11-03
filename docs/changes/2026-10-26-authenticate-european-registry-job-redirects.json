@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "date": "2026-10-26",
+  "slug": "authenticate-european-registry-job-redirects",
+  "title": "Classify European registry job redirects and sentinel reads",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Authenticate the additional conditional high-registry producer path for current metadata52 jobs80/81/82/85 with routeFF and a known concrete alternate job. Preserve primary routing-source and effective job-field provenance; the primary stored sprite field does not supply the result.",
+    "Retain11760producer witnesses26880reference witnesses over16high decimal49refs/seven pairs/unit kinds0-1 and mode-specific110normal/100alternate effective jobs. All116metadata rows and928effective classifications remain explicit:840concrete/56FFFF/32nonreturning routeFF self-loops.",
+    "Close this source alias using existing typed metadata52 and generic graphics resources. Each of2940direct witnesses has four primary-job preimages; the complete796992Bgraph retains seven owners and zero newly owned bytes. EUR e66-d65/62files61resources and USAe8-d7 remain unchanged.",
+    "Classify known FFFFsprite-result readers separately:196direct+784redirected conditional witnesses2240refs preserve u16zeroextension and unmasked directory lookup. Actor-property083B4C12returnsDC86 and directory083D4830returns14AE3F1E; no false null/counted-sequence or pointer-fix interpretation."
+  ],
+  "validation": [
+    "First new static producer authentication and target comparison pass.98halfword/sixliteral-dispatch/elevenBLfingerprints verify CCC48unit+5/+7, CBEC8cached alternate r4/property r5, property4/5FFbranch to CC35A and return to the same dispatch, followed by original u16zeroextension. Domain authenticated before targets.",
+    "All61current resource file/source hashes authenticate before target types. Same107sprites/535sprite-base pairs/6420facing queries/3210canonicalcells/2420null/778sequence bindings777unique sequences5093frames/12initialrootviews/45OBJlists/1895pixel requests. Full source SHA25678b1f978d4f97e3b1b842998124703d4488b2992ecf9fa232782d37fdec4d3ab; existing generic owner retains99824B.",
+    "Reuse closed metadata52 Wine6369original and294synthetic returning cases/six nonreturning probes/75native paths, and e66source/model/runtime/actualCLI acceptance. No unchanged build, guest, fixture, navigation or previous-family acceptance replay.",
+    "Closure checks pass: all372baseline source hashes show implementation unchanged, all70active input hashes/mtimes remain exact,536decoded feature links exist, project-memory default and baseb06ac66 pass, and CRLF-aware whitespace passes. Reuse closed05/04/03-02private proofs without a whole11195artifact campaign; concurrent coverage-generator/report work remains outside the selection.",
+    "First new FFFFproducer/reader scripts pass71readerhalfwords/threeexactcodeblocks/twoliterals before targets. All60facingqueries/30distinctword addresses remain in unmapped region14withlowbits2; currentCPUalign/rotate16 and MemMap livebios_open semantics are inspected in unchanged source. These two ROMreads total6Bhave0typedowner; rawfallback retained and6Bownership migration explicitly pending. No new guest/build/fixture/navigation or previous acceptance replay.",
+    "FFFFreader closure:373baseline source hashes confirm implementation unchanged, all12active input hashes/mtimes stay exact and539decoded local feature links exist. Reuse the immediately preceding all61owner authentication plus closed05/04/03-02private proofs; no11206legacyartifact/build/game campaign. Concurrent coverage work remains preserved/outside scope."
+  ],
+  "limitations": [
+    "Conditional source provenance does not establish ordinary gameplay use, global registry identity or every actor reachability. FFFF/nonreturning redirects/out-of-catalog/changed-current-actor cases remain open.",
+    "Linux/USA/nativeWindows/new32:9 validation remains pending. No source-model-runtime change, duplicate asset or revision, performance/storage measurement, private payload edit, Android change, packaging, commit or push.",
+    "KnownFFFFreader classification is closed, while ordinary reachability and typed ownership of its6rawROMreaderB remain open. Unmapped read values depend on live Machine state; neither unconditional null nor universal nonreturning behavior is claimed."
+  ],
+  "files": [
+    "docs/rom_data_unit_obj.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_unit_obj.md",
+    "docs/rom_data.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

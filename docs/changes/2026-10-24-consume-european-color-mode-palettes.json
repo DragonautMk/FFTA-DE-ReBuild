@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "consume-european-color-mode-palettes",
+  "title": "Consume European Color-Mode palette colors and selectors from managed files",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Advance EUR to e58-d57 and publish color-mode-palettes.json/graphics.color-mode-palettes with actual metadata14dependency and source-set coherence.54generation files/53resources preserve all52prior decoded files/resource records/coverage and retained e57; USA remains e8-d7. CLI extraction descriptions and runtime usage diagnostics include the new family.",
+    "Add immutable typed u16color/u8selector ownership for30spans5750B. Temporary reconstructed authentication bytes are discarded; exact per-byte candidate-page routing composes with old owners and raw gaps. Live Color-Mode/low8 pointer arithmetic, copies, fades, allocation, RAM and save/native ABI remain original.",
+    "Add two optional focused EUR/Wine managed/native tests for publication/authentication/lifecycle, original source-copy/staged-reader paths, complete machine state/guest clock, modified live RAM, raw indices, mixed API/BIOS/DMA and previous UI owner boundaries. Update absent-resource arguments in three old input-guard test constructors without rerunning those tests.",
+    "Complete actual production CLI creation/no-write reuse for54generation files and add a positive-color ordinary-scene assertion in validation_tests.rs. Preserve terminal Party320/neutralboot240 coverage negatives and select the existing genuine Lutia map-entry recording for the new-family fullpair; no product/runtime redesign or old accepted proof replay."
+  ],
+  "validation": [
+    "First Windows16832 affectedcore/frontend build stops at3E0061missing test arguments before anyWine. Corrected Windows13589 build is warning-free; frozen core6157d699af81a464403643cbc7c8ac3e79e8ec35dc33d7e5d7d55e3a955af5f5 is compiled only, frontend6725b65c2850d67822e5a257c72c75e5b1c45035d44f17c05c98d2758e47738a runs two new exactWine12913filters, both firstPASS.",
+    "Managed Wine acceptance passes17source/hash/path/dependency/JSON guards, failedattach owner/state transactionality, failed publication, create/reuse/repair/move/e57retention and unavailable-files Load/Undo/backup/Restart sharedowner. All5750typedB are read with rawsource altered:1536unit1024companion2286supplemental36shared864special4selector, all30fragments. All52olddecoded/resource records/coverage match; newfileSHA98068136afc44d24640c2c27027ccc34954aa0d92a01a603db767b07cfaab382 matches accepted source model.",
+    "Native Wine acceptance passes28original-interpreter-compiled complete-state-clock paths with raw5750new+4oldUIB altered. Compiled API aggregates [1532,1536,158,44,192,7]B across six color/selector categories. Original relocated IWRAM copies, CpuSet, staged readers, both metadata14branches/destinations, index65535/mode3 and a modified live RAM palette pass. All30edges/widths/mirrors/realBIOSbus/2SWI/1DMA pass; mixed transfer2new+20raw+4oldUIB gives exact2/4owner charges, unalignedAPI2new+2editedraw and samepage oldUI4B charge only their owners.6805instructions451PC5177dispatch counts are coverage only.",
+    "767prior build-stage hash-mtimeguards,769runtimeguards and nine compiled source inputs stay unchanged. Evidence under target/rom-data-color-mode-runtime/: windows-managed2-build.json/windows-managed2-results.json/windows-managed-europe/{managed,native}-result.json. Source/model and previous-family proofs were not rerun.",
+    "Final preservation audit passes all6820prior protected artifact hashes,767build-stage and769runtime hash-mtime guards and nine compiled inputs.315baseline source hashes differ only in five selected existing code/test/script files and coherent memory docs; prior source model/oracles/proofs/canonical/cache/TCC/user Debug-save/concurrent Docker work remain unchanged. Independent final manifest audit confirms54files53resources, all52prior records/coverage identical and all53file hashes; six feature links/default-base7597b92memory/CRLF-whitespace checks pass. No live unit process.",
+    "Windows28568single production build is warning-free/frozen a052914b4dfbb7b8253d0faf494ac205dd4606fd4cc6753afead1eda68da9e8c; canonicalf3e277db.. exacthash/mtime1792570130397888519 restored, maincontent unchanged/mtime-onlyCargo invalidation. Wine22334actualCLIcreate/reuse-no-write56managed/all54generationfiles match accepted e58dataset from unrelatedcwd/oldcache. Party320locator is0newcolors; separate Wine46838neutralboot240locator also0newcolors. Both negative criteria remain terminal, no fullpairs or unchanged repeats.",
+    "Existing constructor record proves actual Lutia lawsNOTICE map entry using authenticworldmap7701a360.. and unchanged worldmap-engage-battle.input. Wine22903single1700locator positive1102aggregate colorB=[512unit512companion78supplemental0shared0special0selector]/277busreads/4fragments. ActualCLI e58generation-XbOkZs identitye7abf8bb028a77209412f90d8db0eddd91825190f3af23e86a1bcf06889afa97/manifestfileSHA8cb3410f37d67fc8f4e2de0b3752d649e00a3a62b3409de55c75b78619f6823b. No new gameplay fixture/navigation/private payload edit.",
+    "Windows46600single affectedfrontend scene-guard tests build is warning-free/frozen449a1d2c31eb0adaf78fc6708aba2cbbeac8ddf2494e0b23a9826a1c4a3e85f1. Wine16883single same1700fullpair firstPASS: everyinitial/frame4519to6219complete-state/guestclock/central-wideimage/OAM/dispatch/mixedPSGFIFObitwiseHLEaudio matches, audio[3730650,3730650,448800,448800,3730574]. Family guard records exactly the locator1102B/277busreads/4fragments.828hash-mtimeguards/tencompiledsceneinputs/nineolderruntimeinputs preserved; final240x160LutiaNOTICE image inspected through losslessPPM-to-PNGview conversion. Mixednative-fallback, no allnative/new32:9/wholeallocator-scheduler claim; source/model/managed/native/oldproofs notrerun.",
+    "CLI/ordinary final preservation audit passes all7118prior protected artifact hashes,767older build-stage/827scene-build/828scene-runtime hash-mtime guards, nine original runtime and ten scene compiled inputs.318baseline source hashes differ only in the new family-positive validation guard and coherent memory docs/consume record; source/model/runtime/native proofs, user Debug-save/concurrent Docker, canonical executable/cache/TCC and fixtures remain preserved. Default/base7597b92project-memory, CRLF-aware whitespace and seven local feature links pass. No live task process."
+  ],
+  "limitations": [
+    "Declared targeted source-copy/staged-reader and four-fragment ordinary Lutia scope only, not whole allocator/scheduler or all-native acceptance. Remaining26physical fragments, shared colors/special overrides/slice selectors and otherColorModes are ordinary-unverified; their targeted source/model/managed/native proofs remain accepted. Other unit poses/parts/IDs and broader palette producers remain open.",
+    "New Linux/USA/native Windows/new32:9 pending. No performance/space measurements, source/model/managed/native/oldtest/scene acceptance repeat, new gameplay fixture/navigation/private payload edit, Android change, package, agent commit or push."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data/runtime/color_mode_palettes.rs",
+    "crates/recomp/src/rom_data/color_mode_palette_runtime_tests.rs",
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "scripts/extract_rom_data.py",
+    "docs/rom_data_color_palettes.md",
+    "docs/rom_data_unit_obj.md",
+    "docs/rom_data_obj.md",
+    "docs/rom_data_graphics.md",
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md",
+    "crates/recomp/src/rom_data/validation_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_color_palettes.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

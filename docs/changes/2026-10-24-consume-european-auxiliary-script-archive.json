@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "consume-european-auxiliary-script-archive",
+  "title": "Consume European auxiliary script directory and archive from authenticated files",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Publish EUR e54-d53two new files/resources for the auxiliary command directory and u16relative archive:50generation files49resources/all47prior decoded files/e53retained/USAe8-d7 unchanged. The archive depends on its own actual directory; the directory has no asset dependency. Authenticate file hashes/source bindings/typed shapes/advance-callback relationship before activation.",
+    "Add one immutable typed owner for34advance68callback900index913opcode2275parameter10alignment bytes, retaining interior instruction references without ROMshadow/host interpreter/new guest domain cap. Preserve shared370audio/D69coordinate owners, raw370FFA+/D6ABC6+, original predicates/livecursor/u32LDRH/control and save/native ABI. Add separate functional source counters and scene-use guard, with startup/load/encode/write wiring and extraction guide entries.",
+    "Add two isolated Wine-only managed/native filters for coherent authentication failures, transactional owner/lifecycle retention, all typed bytes and original-interpreter-compiled complete-state-clock prefixes. Compile-only shape updates add both optional file fields/core initializers/budget-call arguments; all previous source models/oracles remain unchanged.",
+    "Verify actual e54production CLI publication/reuse and new-family positive ordinary use from retained genuine EURstate/input; complete the corresponding full-state-clock-image-audio criterion without product-code changes or repeating closed source/targeted/previous-scene proofs."
+  ],
+  "validation": [
+    "Previous model-final-summary terminal280source/doc hashes5036protected artifacts; prior source/model/e49/e52/e53/negative proofs remain closed. Private wiring count preflight15\u2192actual14corrected before any existing-file mutation, then applied once; new BG argument whitespace removed before compilation. Selected six existing implementation/test-shape files plus handoff are the only baseline changes before memory updates.",
+    "Windows44279single affected core/frontend test build firstPASS warning-free. Frozen coref992eb9b979bd3e75d708b590b8780dbc1f6a0f06047f1c051564e25d97fd9fc/frontend851a89b5ecd565afb40a780bff900664e5f40053e800ddba57943d765d474f2b; core tests compiled only, no old guest/source test execution.",
+    "Wine61473both new exact filters firstPASS. Managed26coherent/missingfile guards, actual-directory/complete-source-set checks, publication failure/create/reuse/repair/folder move, all47prior decoded/e53generation retention, failed-attach state/owner isolation, unavailable-files/Load-Undo/backup recovery/Restart sameowner and all4200typed bytes/17commands8banks133programs5alignment spans.",
+    "Native44original/interpreter/compiled prefixes pass complete serialized machine state and guest clock with raw4200B altered. Compiled source classes[6advance65callback18index19opcode15parameter2alignment]B, interior entries/signedcursor/rawopcodes/indices/8:1u32LDRHhighbits/fullaction2vs102 and earlier370audio/D69coordinates/raw tails/widths-mirrors-realBIOS-CpuSet-FastSet-DMA pass.624instructions92PC52native dispatches count coverage only, not host timing or whole interpreter ABI.",
+    "Accepted datasetc3eb7042e1b5d98d2b553db5019eb3fd7d40e01ccde5362fdd7b263a6aa85f10; directory fileb8ba30cd6f52a97da7cde1b464b8184c2cb54157843c348cd09ceffab8080544/archivebd410f3fde23fb68bec936da0ac5bed89dde2897a640c2e008d6b920351907b3. All587hash-mtime guards pass; exact terminal build/execution and managed/native results under target/rom-data-auxiliary-scripts/. Final preservation/source/memory outcomes retained under runtime-final-*.json.",
+    "Final preservation passes all5036prior artifact hashes/587hash-mtime guards. The280-file source/doc baseline changes only six selected implementation/test-shape files and eight memory files, preserving all prior source models/oracles/user Debug-save/concurrent Docker work. New runtime owner/test/consume record expand283source/doc files. Generated CHANGELOG, memory/default-base7597b92and CRLF-aware whitespace checks pass; no live unit job or agent commit/push.",
+    "CLI continuation starts from terminal runtime-final-summary283source/doc files5313protected artifacts/587guards. Source/models/managed/native and e49-e53/negative criteria remain closed. Read-only new directBLcaller cues615B4/63914\u2192A6D8andD52FA/D5558\u2192A6C0select retained genuine21420snow-betti-wait state/snow-auto-wait6000input, without fixture/navigation or payload edit.",
+    "Windows10336single required production build firstPASS warning-free/frozen c0cc57a578e015b50f5df0a075dd3f71ef81e8891c872c2cf5941d84ad47afdf. Canonical exacthash/mtime restored; established main.rsmtime-only Cargo invalidation preserves content. Wine23153actual CLIcreate/reuse-no-write52managedfiles from unrelatedcwd/oldcache; all50generation files match accepted e54dataset. Single locator firstPASSboth-positive:96directoryB=32advance64callback/6commands and82archiveB=16index20opcode46parameter/2banks2programs,0alignment.",
+    "Wine93545one same6000-frame fullpair firstPASS, absolute21420..27420/classic0, from actualCLIpublished generation and existing frozen e54testexe/cache/state/input. Every complete gueststate/clock/image/OAM/dispatch/mixed-PSG-FIFO-bitwise-HLE sample agrees; audio[13167000,13167000,1584000,1584000,13166910], same178aggregate newsourceB.640hash-mtime guards pass. No source/targeted/build/prepare/reuse/locator/oldscene criterion repeated for context.",
+    "Final CLI preservation passes5313prior artifact hashes; before memory changes283source/doc baseline differs only in selected handoff. Product code/source models/test oracles/user Debug-save/concurrent Docker work remain unchanged, main content unchanged. Final memory/default-base7597b92/CRLF-whitespace outcomes and source/protected snapshots under target/rom-data-auxiliary-scripts/cli-final-*.json; no live unit process/agent commit/push."
+  ],
+  "limitations": [
+    "Other11directory commands,6banks,131physical programs and all5alignment spans retain targeted coverage. This ordinary scene does not prove whole predicate/interpreter/callback ABI, all argument semantics or universal reachability. Previous source-model/targeted/ordinary/negative proofs stay closed; other terrain/map/GUI/assets/archives/mod TODO remains active.",
+    "New Linux/USA/native Windows/32:9checks remain pending. No performance/space measurements, new gameplay fixture/navigation, personal save-input-RAM changes, Android changes, package, agent commit or push. Root/Android trees remain separate; full TODO goal remains active."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data/runtime/auxiliary_scripts.rs",
+    "crates/recomp/src/rom_data/auxiliary_scripts_runtime_tests.rs",
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "scripts/extract_rom_data.py",
+    "docs/rom_data_scripts.md",
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_scripts.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

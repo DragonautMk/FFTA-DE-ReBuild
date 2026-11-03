@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "decode-european-twelve-byte-packed-pair-banks",
+  "title": "Decode European indexed packed pair banks with original bit-reader proof",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Add strict metadata12 two-bank model for92+16rows/1296bytes/5184two-bit fields, fixed12groups of4values0..3 per row with IDs/offsets/order/extents. Roots6e7484/6e78d4 and independent following6e7994 preserve exact original boundaries; no owner/semantic label inferred.",
+    "Keep diagnostic finite row/slot helpers distinct from original full32row/signed-wrapping slot/u8mode code. Original loop0..43 and stored48pair shape stay separate; no guest bounds/fallback introduced. Managed EUR e31-d30 and USAe8-d7 unchanged at this source boundary."
+  ],
+  "validation": [
+    "Independent exactEUR roots/stride/reader/call/loop opcodes,1296B roundtrip/next-source/noe31overlap pass. Initial Windows99149compile fails only test setup IRQ field/type/unusedimport; corrected22815test build warning-free, initial evidence retained.",
+    "Wine88437 one reduced new oracle passes1640real/all108rows/boundaryslots/selectedfirst-last all48pairs,10raw outside/wrapping calls (full32row256,large wrap,nextbank/globalroot,negative slot,slot48) and384isolated synthetic high-bit/mode calls. Exact one LDRB/address/value, callee/stack/outerRAM and strictJSON/fixedshape/order/count/ID/source/pairrange/coherent-edit guards pass.75515instructions/54PCs coverage only; synthetic unauthenticated/unpublished.",
+    "All34protected ROM/e31/candidate/cache/loader/canonical/sourcefixtures unchanged; no Wine failure or old source/native/scene proof repeat. Structured record/feature/inventory/TODO/state/handoff/changelog and memory/whitespace/source hashes recorded at closure; no agent commit/push."
+  ],
+  "limitations": [
+    "Source-only proof; managed publication/direct CPU-DMA-native/lifecycle/positive ordinary scene remain pending. Global row/slot caller bounds, pair semantics/foreign owners and next separately rooted global source remain unclaimed.",
+    "NewLinux/USA/nativeWindows and wider graphics/text/maps/gameplay/audio/mod phases remain pending; no performance/startup/RSS/space campaign or AndroidPort change, private source fixtures/ROM/generated data stay ignored."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/metadata12.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/metadata12_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

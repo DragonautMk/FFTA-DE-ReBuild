@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "date": "2026-10-30",
+  "slug": "correct-desktop-build-methods",
+  "title": "Correct native artifact routing and desktop build packaging",
+  "kind": "fixed",
+  "platforms": [
+    "Native Windows/Linux build routing; Docker/BuildKit and Linux CI definitions"
+  ],
+  "changes": [
+    "Share native desktop build/package orchestration using actual Cargo JSON executable paths, with Windows/Linux x86_64 header checks, colocated TinyCC output and explicit runtime directory; respect custom Cargo target directories and stop before packaging on compiler or artifact failures.",
+    "Add -SkipLinux alongside -SkipAndroid for Windows-only builds and clarify native/all-platform prerequisites. Preserve separate Windows-to-Linux and Android routes; lock the cross-Linux Cargo build.",
+    "Refresh copied Rust crate files before shared-cache Cargo steps in Linux/Windows Docker builds; retain coverage committed-source isolation. Reject double quotes and CR as well as comma/newline in Docker CSV output paths.",
+    "Include the Atlas/extended-save guides in portable allowlists and both Docker contexts. Align Linux CI upload with the produced portable archive, fail on missing artifacts and select Python3.11 with locked serial tests."
+  ],
+  "validation": [
+    "Passed21 distinct targeted tooling tests:5 synthetic native Cargo/TinyCC cases,11 portable-package cases and5 Docker-wrapper cases, including custom target subdirectories, spaces/Unicode, architecture and failure checks, privacy/manifest/modes and actual default Linux package versus CI upload path.",
+    "An actual tiny standalone Rust/Cargo fixture in a cached Docker image reproduced stale output after backdating changed source and produced the new value after the recipes' crate refresh. Actual Buildx stage parsing passed Linux/Windows/coverage Dockerfiles; no downloads or FFTA runtime compilation for this probe.",
+    "Bash syntax, Linux CI YAML and artifact/Python settings, helper --help, existing user coverage/test-fix hash preservation and diff whitespace checks passed. Existing Recent default/audit Wine test and full coverage-image compilation proofs were reused without replay."
+  ],
+  "limitations": [
+    "Native Windows/PowerShell execution, the full native/Docker package matrix, hosted GitHub workflow, Windows-to-Linux installer and Android SDK/NDK execution remain unverified in this audit; PowerShell and legacy generic release routing were inspected statically. No AndroidPort implementation changes, game/ROM execution or performance measurements.",
+    "Native builds still require their Rust target linker, Python and C compiler; Docker needs network for uncached dependencies. Compiler path-remapping/private-prefix controls remain explicit developer choices. Generic upstream toolkit/launcher packaging is separate from current FFTA portable builds."
+  ],
+  "files": [
+    ".dockerignore",
+    ".github/workflows/installer-linux.yml",
+    "Dockerfile.linux",
+    "Dockerfile.windows",
+    "build-all.ps1",
+    "scripts/build_desktop.py",
+    "scripts/linux/package_ffta_linux.sh",
+    "scripts/windows/build-linux-windows.ps1",
+    "scripts/package_ffta_portable.py",
+    "scripts/linux/build_linux_docker.sh",
+    "scripts/linux/build_windows_docker.sh",
+    "scripts/windows/build_docker.ps1",
+    "scripts/tests/test_build_desktop.py",
+    "scripts/tests/test_build_linux_docker.py",
+    "scripts/tests/test_package_ffta_portable.py",
+    "scripts/README.md"
+  ],
+  "references": [
+    "README.md",
+    "docs/portable.md",
+    "docs/docker.md",
+    "scripts/README.md"
+  ]
+}

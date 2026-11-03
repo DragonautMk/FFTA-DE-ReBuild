@@ -1,0 +1,4471 @@
+{
+  "schema": 1,
+  "baseline_commit": "945966c65f53e0341af312c2fc8099aeff53f219",
+  "page_rows": {
+    "Debug": [
+      "ContentPicker",
+      "ToolInputsMenu",
+      "DebugToolsMenu",
+      "ScriptLibraryMenu",
+      "ExtendedSaves",
+      "GameSavesMenu",
+      "CopyDiagnosis",
+      "StartDebugSession",
+      "CloseDebugSession",
+      "DebugCatalog",
+      "StartInputRecording",
+      "StopInputRecording",
+      "ReplayCase",
+      "ChooseReplayProfile",
+      "CancelReplay",
+      "AuditReplay",
+      "CaptureReplay",
+      "CompareReplay",
+      "DebugStepOne",
+      "DebugStepTen",
+      "DebugResume",
+      "InspectPC",
+      "CaptureGraphics",
+      "StartUiTrace",
+      "SaveUiReport",
+      "StartAudioCapture",
+      "SaveAudioReport",
+      "StartCodeTrace",
+      "SaveCodeReport",
+      "CreateIssueReport",
+      "StartGameplayTrace",
+      "SaveGameplayReport",
+      "StartRecentEvents",
+      "SaveRecentEvents",
+      "Back"
+    ],
+    "DebugCatalog": [
+      "CatalogRegion",
+      "CatalogStatus",
+      "CatalogKind",
+      "CatalogCase",
+      "CatalogEntry",
+      "CatalogImport",
+      "CatalogOpen",
+      "CatalogChoose",
+      "Back"
+    ],
+    "ContentSelector": [
+      "Back"
+    ],
+    "ToolInputs": [
+      "ToolInput(ContentSlot::Replay)",
+      "ToolInput(ContentSlot::Catalog)",
+      "ToolInput(ContentSlot::Session)",
+      "ToolInput(ContentSlot::Recording)",
+      "ToolInput(ContentSlot::Snapshot)",
+      "ToolInput(ContentSlot::Input)",
+      "ToolInput(ContentSlot::Dataset)",
+      "ToolInput(ContentSlot::RuntimeA)",
+      "ToolInput(ContentSlot::RuntimeB)",
+      "ToolInput(ContentSlot::Library)",
+      "ToolInput(ContentSlot::Labels)",
+      "ToolInput(ContentSlot::KnownPlan)",
+      "ToolInput(ContentSlot::HostTool)",
+      "ToolInput(ContentSlot::HostRuntime)",
+      "ToolInput(ContentSlot::Campaign)",
+      "ToolInput(ContentSlot::Recipe)",
+      "ToolInput(ContentSlot::GuestScripts)",
+      "Back"
+    ],
+    "DebugTools": [
+      "DebugTool(DebugTool::Replay)",
+      "DebugTool(DebugTool::Audit)",
+      "DebugTool(DebugTool::Capture)",
+      "DebugTool(DebugTool::Compare)",
+      "DebugTool(DebugTool::Step)",
+      "DebugTool(DebugTool::Inspect)",
+      "DebugTool(DebugTool::Audio)",
+      "DebugTool(DebugTool::Code)",
+      "DebugTool(DebugTool::Gameplay)",
+      "DebugTool(DebugTool::Recent)",
+      "DebugTool(DebugTool::Graphics)",
+      "DebugTool(DebugTool::Issue)",
+      "Back"
+    ],
+    "ScriptLibrary": [
+      "DebugTool(DebugTool::Homepage)",
+      "DebugTool(DebugTool::CampaignReport)",
+      "DebugTool(DebugTool::ArtifactPreview)",
+      "DebugTool(DebugTool::Recipe)",
+      "DebugTool(DebugTool::GuestScripts)",
+      "Back"
+    ],
+    "DebugTool": [
+      "Back"
+    ],
+    "GameSaves": [
+      "GameSaveSlot",
+      "UseGameSave",
+      "CopyGameSave",
+      "Back"
+    ],
+    "SwitchGameSave": [
+      "ConfirmSwitchGameSave",
+      "Back"
+    ],
+    "ReplaceGameSave": [
+      "ConfirmCopyGameSave",
+      "Back"
+    ],
+    "SaveStates": [
+      "StateSlot",
+      "SaveState",
+      "LoadState",
+      "UndoState",
+      "Back"
+    ],
+    "ReplaceState": [
+      "SaveStateConfirm",
+      "Back"
+    ],
+    "SaveBackups": [
+      "Backup(0)",
+      "Backup(1)",
+      "Back"
+    ],
+    "RestoreBackup": [
+      "ConfirmRestoreBackup",
+      "Back"
+    ],
+    "Main": [
+      "Resume",
+      "SaveStatesMenu",
+      "SaveBackupsMenu",
+      "FastForwardMenu",
+      "TextBubblesMenu",
+      "AudioMenu",
+      "VideoMenu",
+      "InputsMenu",
+      "RestartRom",
+      "SwitchRomMenu",
+      "DebugMenu",
+      "Quit"
+    ],
+    "Exit": [
+      "QuitYes",
+      "QuitNo"
+    ],
+    "SwitchRom": [
+      "ReturnToGame",
+      "ChangeRom"
+    ],
+    "FastForward": [
+      "FastForward",
+      "FastForwardAudio",
+      "Back"
+    ],
+    "Audio": [
+      "Volume",
+      "Mute",
+      "Audio",
+      "Back"
+    ],
+    "Video": [
+      "Aspect",
+      "Fullscreen",
+      "Screen",
+      "Brightness",
+      "Darken",
+      "Response",
+      "Grid",
+      "Scaling",
+      "Vsync",
+      "Fps",
+      "Back"
+    ],
+    "TextBubbles": [
+      "BubbleSize",
+      "BubbleLength",
+      "Back"
+    ],
+    "Inputs": [
+      "Menu",
+      "Key(Button::A)",
+      "Key(Button::B)",
+      "Key(Button::L)",
+      "Key(Button::R)",
+      "Key(Button::Start)",
+      "Key(Button::Select)",
+      "Key(Button::Up)",
+      "Key(Button::Down)",
+      "Key(Button::Left)",
+      "Key(Button::Right)",
+      "FfKey",
+      "FfToggleKey",
+      "ZoomIn",
+      "ZoomOut",
+      "Back"
+    ],
+    "Gamepad": [
+      "Menu",
+      "Key(Button::A)",
+      "Key(Button::B)",
+      "Key(Button::L)",
+      "Key(Button::R)",
+      "Key(Button::Start)",
+      "Key(Button::Select)",
+      "Key(Button::Up)",
+      "Key(Button::Down)",
+      "Key(Button::Left)",
+      "Key(Button::Right)",
+      "FfKey",
+      "FfToggleKey",
+      "ZoomIn",
+      "ZoomOut",
+      "ResetGamepad",
+      "Back"
+    ],
+    "MouseKeyboard": [
+      "MouseMode",
+      "Menu",
+      "Key(Button::A)",
+      "Key(Button::B)",
+      "Key(Button::L)",
+      "Key(Button::R)",
+      "Key(Button::Start)",
+      "Key(Button::Select)",
+      "Key(Button::Up)",
+      "Key(Button::Down)",
+      "Key(Button::Left)",
+      "Key(Button::Right)",
+      "FfKey",
+      "FfToggleKey",
+      "ZoomIn",
+      "ZoomOut",
+      "Back"
+    ]
+  },
+  "row_labels": {
+    "DebugMenu": "Debug",
+    "ToolInputsMenu": "Tool inputs / current selections",
+    "DebugToolsMenu": "Parameters / prepare profiles",
+    "ScriptLibraryMenu": "Scripts and tools",
+    "ExtendedSaves": "Extended saves",
+    "CaptureGraphics": "Capture graphics report",
+    "CreateIssueReport": "Create issue report",
+    "StartCodeTrace": "Start code trace",
+    "SaveCodeReport": "Save code report",
+    "StartGameplayTrace": "Start task / script trace",
+    "SaveGameplayReport": "Save gameplay report",
+    "StartRecentEvents": "Start recent events",
+    "SaveRecentEvents": "Freeze / save recent events",
+    "StartAudioCapture": "Start audio capture",
+    "SaveAudioReport": "Save audio report",
+    "StartUiTrace": "Start UI / input trace",
+    "SaveUiReport": "Save UI / input report",
+    "InspectPC": "Inspect PC / registers",
+    "DebugStepOne": "Step 1 frame (F7)",
+    "DebugStepTen": "Step 10 frames (F8)",
+    "DebugResume": "Resume (F6)",
+    "CompareReplay": "Compare first difference",
+    "CaptureReplay": "Capture on trigger",
+    "AuditReplay": "Audit replay",
+    "ReplayCase": "Replay case",
+    "ChooseReplayProfile": "Choose replay profile",
+    "CancelReplay": "Cancel replay",
+    "StartInputRecording": "Start input recording",
+    "StopInputRecording": "Stop input recording",
+    "CopyDiagnosis": "Copy diagnosis",
+    "StartDebugSession": "Start debug session",
+    "CloseDebugSession": "Close debug session",
+    "ContentPicker": "Content selector",
+    "DebugCatalog": "Debug catalog",
+    "CatalogRegion": "Region",
+    "CatalogStatus": "Recorded status",
+    "CatalogKind": "Kind",
+    "CatalogCase": "DS case",
+    "CatalogEntry": "Entry",
+    "CatalogImport": "Import to free snapshot slot",
+    "CatalogOpen": "Open isolated case",
+    "CatalogChoose": "Choose / reload catalog",
+    "GameSavesMenu": "Game saves",
+    "GameSaveSlot": "Slot",
+    "ConfirmSwitchGameSave": "Use and restart",
+    "CopyGameSave": "Copy current save",
+    "ConfirmCopyGameSave": "Replace game save",
+    "Menu": "Open menu",
+    "MouseMode": "Mouse & Keyboard",
+    "Resume": "Resume",
+    "RestartRom": "Restart ROM",
+    "SaveStatesMenu": "Save states",
+    "SaveBackupsMenu": "Save backups",
+    "ConfirmRestoreBackup": "Restore and restart",
+    "StateSlot": "Slot",
+    "SaveStateConfirm": "Replace state",
+    "SaveState": "Save state",
+    "LoadState": "Load state",
+    "UndoState": "Undo last operation",
+    "FastForwardMenu": "Fast forward",
+    "FastForward": "Multiplier",
+    "FastForwardAudio": "Audio mode",
+    "AudioMenu": "Audio",
+    "VideoMenu": "Video",
+    "TextBubblesMenu": "Text Bubbles",
+    "BubbleSize": "Size",
+    "BubbleLength": "Length",
+    "InputsMenu": "Input",
+    "SwitchRomMenu": "Switch ROM",
+    "ResetGamepad": "Default layout",
+    "Quit": "Exit",
+    "QuitYes": "Yes, exit",
+    "QuitNo": "No, go back",
+    "ReturnToGame": "Return to game",
+    "ChangeRom": "Choose ROM...",
+    "Volume": "Volume",
+    "Fullscreen": "Fullscreen (F11)",
+    "Mute": "Mute",
+    "Audio": "Enhanced Audio",
+    "Screen": "Screen",
+    "Brightness": "Brightness",
+    "Darken": "Darken",
+    "Response": "Response",
+    "Grid": "Grid",
+    "Scaling": "Scaling",
+    "Aspect": "Aspect",
+    "Vsync": "Vsync",
+    "Fps": "FPS counter",
+    "FfKey": "Fast Fwd",
+    "FfToggleKey": "Toggle Fast Fwd",
+    "ZoomIn": "Zoom In",
+    "ZoomOut": "Zoom Out",
+    "Back": "Back"
+  },
+  "menu_actions": [
+    "Resume",
+    "RestartRom",
+    "Quit",
+    "SwitchRom",
+    "Changed",
+    "InputDevice",
+    "ResetGamepad",
+    "SaveState",
+    "LoadState",
+    "UndoState",
+    "CaptureGraphics",
+    "CreateIssueReport",
+    "StartCodeTrace",
+    "SaveCodeReport",
+    "StartGameplayTrace",
+    "SaveGameplayReport",
+    "StartRecentEvents",
+    "SaveRecentEvents",
+    "StartAudioCapture",
+    "SaveAudioReport",
+    "StartUiTrace",
+    "SaveUiReport",
+    "InspectPC",
+    "DebugStep",
+    "DebugResume",
+    "CompareReplay",
+    "CaptureReplay",
+    "AuditReplay",
+    "ReplayCase",
+    "ChooseReplayProfile",
+    "CancelReplay",
+    "StartInputRecording",
+    "StopInputRecording",
+    "CopyDiagnosis",
+    "StartDebugSession",
+    "CloseDebugSession",
+    "ContentOpen",
+    "ChooseToolInput",
+    "OpenDebugTool",
+    "ToolRequest",
+    "ContentRefresh",
+    "ContentBrowseFile",
+    "ContentAddFolder",
+    "ContentSelect",
+    "ContentPreview",
+    "ContentCancel",
+    "OpenDebugCatalog",
+    "ChooseDebugCatalog",
+    "CatalogSelection",
+    "CatalogImport",
+    "CatalogOpen",
+    "RestoreBackup",
+    "SwitchGameSave",
+    "CopyGameSave"
+  ],
+  "main_rows": [
+    "Resume",
+    "SaveStatesMenu",
+    "SaveBackupsMenu",
+    "FastForwardMenu",
+    "TextBubblesMenu",
+    "AudioMenu",
+    "VideoMenu",
+    "InputsMenu",
+    "RestartRom",
+    "SwitchRomMenu",
+    "DebugMenu",
+    "Quit"
+  ],
+  "config_fields": [
+    "menu_key",
+    "menu_pad",
+    "device",
+    "gamepad_name",
+    "gamepad_layout",
+    "keys",
+    "mouse_keys",
+    "mouse_keyboard",
+    "ff_key",
+    "ff_toggle_key",
+    "ff_pad",
+    "ff_toggle_pad",
+    "zoom_in_key",
+    "zoom_out_key",
+    "zoom_in_pad",
+    "zoom_out_pad",
+    "pads",
+    "dpad_source",
+    "stick_deadzone",
+    "debug_extended_saves",
+    "debug_game_save_slot",
+    "audio_enhanced",
+    "audio_volume",
+    "audio_mute",
+    "ff_speed",
+    "ff_audio",
+    "video_brightness",
+    "screen",
+    "screen_darken",
+    "response",
+    "response_keep",
+    "grid",
+    "scaling",
+    "display_gamut",
+    "video_vsync",
+    "video_fullscreen",
+    "video_fps",
+    "video_aspect",
+    "bubble_size",
+    "bubble_length"
+  ],
+  "cli_commands": [
+    "export",
+    "fifo",
+    "hle",
+    "import",
+    "mixed",
+    "normal",
+    "psg",
+    "python3 scripts/debug_artifacts.py apply PLAN --receipt NEW",
+    "python3 scripts/debug_artifacts.py preview [options]",
+    "python3 scripts/debug_campaign.py report MANIFEST [options]",
+    "python3 scripts/debug_campaign.py run-case MANIFEST CASE [options]",
+    "python3 scripts/local_artifacts.py complete UNITS [options]",
+    "python3 scripts/report_home.py [--root ROOT --stdout]",
+    "recomp debug-audio states [options]",
+    "recomp debug-capture cancel PROFILE",
+    "recomp debug-capture create [options]",
+    "recomp debug-capture run PROFILE [--json]",
+    "recomp debug-catalog import CATALOG [options]",
+    "recomp debug-catalog list CATALOG [options]",
+    "recomp debug-catalog open CATALOG [options]",
+    "recomp debug-compare cancel PROFILE",
+    "recomp debug-compare create [options]",
+    "recomp debug-compare run PROFILE [--json]",
+    "recomp debug-content check INDEX ID [--kind KIND] [--json]",
+    "recomp debug-content scan [options]",
+    "recomp debug-control audio-report SESSION",
+    "recomp debug-control audio-start SESSION [--frames N --streams LIST]",
+    "recomp debug-control break SESSION PC arm|thumb [--steps N]",
+    "recomp debug-control cancel SESSION --request ID",
+    "recomp debug-control code-report SESSION",
+    "recomp debug-control code-start SESSION [options]",
+    "recomp debug-control gameplay-report SESSION",
+    "recomp debug-control gameplay-start SESSION [options]",
+    "recomp debug-control graphics SESSION [--compare-last]",
+    "recomp debug-control inspect SESSION ADDRESS LENGTH",
+    "recomp debug-control issue-report SESSION [--profile FILE --symptom TEXT]",
+    "recomp debug-control pause SESSION",
+    "recomp debug-control recent-freeze SESSION",
+    "recomp debug-control recent-report SESSION",
+    "recomp debug-control recent-start SESSION [options]",
+    "recomp debug-control resume SESSION",
+    "recomp debug-control status SESSION",
+    "recomp debug-control step SESSION N [--keys HEX]",
+    "recomp debug-control ui-report SESSION",
+    "recomp debug-control ui-start SESSION",
+    "recomp debug-control watch SESSION read|write START END [options]",
+    "recomp debug-record start SESSION",
+    "recomp debug-record verify RECORDING --session SESSION",
+    "recomp debug-replay cancel PROFILE",
+    "recomp debug-replay create [options]",
+    "recomp debug-replay run PROFILE [--json]",
+    "recomp debug-report create PROFILE [--symptom TEXT]",
+    "recomp debug-rom-audit cancel PROFILE",
+    "recomp debug-rom-audit create [options]",
+    "recomp debug-rom-audit run PROFILE [--json]",
+    "recomp debug-session create ROM --dir DIR [options]",
+    "recomp debug-session inspect SESSION",
+    "recomp debug-session open SESSION [--paused]",
+    "recomp diagnose ROM [options]",
+    "recomp play ROM [--debug-catalog FILE --debug-replay FILE]; isolated copy: play --debug-paused OR play --record-input",
+    "show"
+  ],
+  "operation_contracts": [
+    {
+      "id": "diagnose",
+      "handler": "collect/cmd",
+      "cli": "recomp diagnose ROM [options]",
+      "parameters": [
+        {
+          "name": "ROM",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--json",
+          "value_type": "flag",
+          "constraint": "Explicit boolean option.",
+          "current_menu": "not-applicable",
+          "default": true
+        },
+        {
+          "name": "--out",
+          "value_type": "path",
+          "constraint": "Output destination; existing handler validates parent, overwrite policy and atomic publication. No guest input is selected by this option.",
+          "current_menu": "fixed",
+          "default": "default_report_path"
+        },
+        {
+          "name": "--bios",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--no-bios",
+          "value_type": "flag",
+          "constraint": "Explicit boolean option.",
+          "current_menu": "unavailable",
+          "default": false
+        },
+        {
+          "name": "--sav",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "fixed",
+          "default": "current cartridge save"
+        },
+        {
+          "name": "--state",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--slot",
+          "value_type": "decimal",
+          "constraint": "1..99; exclusive with --state.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--input",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "fixed",
+          "default": "active recording if present"
+        },
+        {
+          "name": "--interp",
+          "value_type": "flag",
+          "constraint": "Explicit boolean option.",
+          "current_menu": "fixed",
+          "default": "current backend"
+        },
+        {
+          "name": "--rom-data",
+          "value_type": "flag",
+          "constraint": "Explicit boolean option.",
+          "current_menu": "unavailable",
+          "default": false
+        },
+        {
+          "name": "--dataset",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--require-rom-audit",
+          "value_type": "flag",
+          "constraint": "Explicit boolean option.",
+          "current_menu": "unavailable",
+          "default": false
+        }
+      ],
+      "selection": [
+        "ROM",
+        "BIOS",
+        "cartridge save",
+        "snapshot",
+        "input",
+        "dataset"
+      ],
+      "allowed_state": "No live session required; existing handler preflight applies.",
+      "effects": "Readonly inputs; no guest execution.",
+      "result": "Versioned diagnosis JSON with ok/issues; stdout/atomic --out; clipboard in menu; CLI exit 1 on invalid preflight.",
+      "limits": "Existing handler limits apply.",
+      "open_work": [
+        "DBG2-04: input selection",
+        "DBG2-05: explicit diagnosis parameters"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "session.create",
+      "handler": "create/create_cmd",
+      "cli": "recomp debug-session create ROM --dir DIR [options]",
+      "parameters": [
+        {
+          "name": "ROM",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--dir",
+          "value_type": "path",
+          "constraint": "New destination; refuse overwrite.",
+          "current_menu": "fixed",
+          "default": "default_destination"
+        },
+        {
+          "name": "--sav",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "fixed",
+          "default": "current cartridge bytes"
+        },
+        {
+          "name": "--state",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "fixed",
+          "default": "current live snapshot"
+        },
+        {
+          "name": "--bios",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "fixed",
+          "default": "current BIOS mode/bytes"
+        },
+        {
+          "name": "--no-bios",
+          "value_type": "flag",
+          "constraint": "Explicit boolean option.",
+          "current_menu": "fixed",
+          "default": "current HLE mode"
+        },
+        {
+          "name": "--interp",
+          "value_type": "flag",
+          "constraint": "Explicit boolean option.",
+          "current_menu": "fixed",
+          "default": "current backend"
+        },
+        {
+          "name": "--rom-data",
+          "value_type": "flag",
+          "constraint": "Explicit boolean option.",
+          "current_menu": "unavailable",
+          "default": false
+        },
+        {
+          "name": "--dataset",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "fixed",
+          "default": "current effective dataset"
+        },
+        {
+          "name": "--open",
+          "value_type": "flag",
+          "constraint": "Explicit boolean option.",
+          "current_menu": "fixed",
+          "default": true
+        }
+      ],
+      "selection": [
+        "Current live state or selected snapshot",
+        "runtime",
+        "dataset"
+      ],
+      "allowed_state": "Normal window paused; no recording; menu refuses nested debug copies.",
+      "effects": "Copy runtime/ROM/BIOS/save/seed/config/dataset; explicit launch creates another process, original remains paused.",
+      "result": "CLI selected new root path/error; menu feedback.",
+      "limits": "Default menu retention: 8 sessions; existing leases and input pins.",
+      "open_work": [
+        "DBG2-04: select inputs/session target",
+        "DBG2-05: prepare session options"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "session.open",
+      "handler": "launch_mode",
+      "cli": "recomp debug-session open SESSION [--paused]",
+      "parameters": [
+        {
+          "name": "SESSION",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--paused",
+          "value_type": "flag",
+          "constraint": "Explicit boolean option.",
+          "current_menu": "unavailable",
+          "default": false
+        }
+      ],
+      "selection": [],
+      "allowed_state": "No live session required; existing handler preflight applies.",
+      "effects": "Explicit process launch from authenticated isolated copy.",
+      "result": "Existing handler output/error; menu feedback where available.",
+      "limits": "Existing handler limits apply.",
+      "open_work": [
+        "DBG2-04: session selector"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "session.inspect",
+      "handler": "read_manifest",
+      "cli": "recomp debug-session inspect SESSION",
+      "parameters": [
+        {
+          "name": "SESSION",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        }
+      ],
+      "selection": [],
+      "allowed_state": "No live session required; existing handler preflight applies.",
+      "effects": "Readonly inputs; no guest execution.",
+      "result": "schema-1 ffta-debug-session-inspection JSON/root/session.",
+      "limits": "Existing handler limits apply.",
+      "open_work": [
+        "DBG2-04: session details"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "session.close",
+      "handler": "quit/teardown",
+      "cli": null,
+      "parameters": [],
+      "selection": [],
+      "allowed_state": "Isolated copy only.",
+      "effects": "Close copy, finish recording if clean, flush copy save; normal parent stays paused.",
+      "result": "Menu status text; legacy handler Result error or completion. Structured wrapper for menu-only operations remains DBG2-13/15.",
+      "limits": "Existing handler limits apply.",
+      "open_work": [],
+      "external_dialog": null
+    },
+    {
+      "id": "catalog.list",
+      "handler": "Catalog::load",
+      "cli": "recomp debug-catalog list CATALOG [options]",
+      "parameters": [
+        {
+          "name": "CATALOG",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--case",
+          "value_type": "text",
+          "constraint": "Exact DS-NN, distinct from IN/GEN.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--region",
+          "value_type": "text",
+          "constraint": "Recorded region.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--status",
+          "value_type": "text",
+          "constraint": "Recorded status, no promotion.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--kind",
+          "value_type": "text",
+          "constraint": "case/variant/IN/GEN/NEW.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--entry",
+          "value_type": "text",
+          "constraint": "Exact stable entry key.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--json",
+          "value_type": "flag",
+          "constraint": "Explicit boolean option.",
+          "current_menu": "not-applicable",
+          "default": true
+        }
+      ],
+      "selection": [
+        "catalog",
+        "entry",
+        "session/ROM as applicable"
+      ],
+      "allowed_state": "No live session required; existing handler preflight applies.",
+      "effects": "Readonly index/checksums/previews.",
+      "result": "list --json returns schema-1 catalog with availability/checksums; open/import feedback/path/error.",
+      "limits": "Existing handler limits apply.",
+      "open_work": [
+        "DBG2-05: expose CLI options"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "catalog.open",
+      "handler": "Catalog::create",
+      "cli": "recomp debug-catalog open CATALOG [options]",
+      "parameters": [
+        {
+          "name": "CATALOG",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--case",
+          "value_type": "text",
+          "constraint": "Exact DS-NN, distinct from IN/GEN.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--region",
+          "value_type": "text",
+          "constraint": "Recorded region.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--status",
+          "value_type": "text",
+          "constraint": "Recorded status, no promotion.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--kind",
+          "value_type": "text",
+          "constraint": "case/variant/IN/GEN/NEW.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--entry",
+          "value_type": "text",
+          "constraint": "Exact stable entry key.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--rom",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "fixed",
+          "default": "current ROM"
+        },
+        {
+          "name": "--dir",
+          "value_type": "path",
+          "constraint": "New destination; refuse overwrite.",
+          "current_menu": "fixed",
+          "default": "default_destination"
+        },
+        {
+          "name": "--bios",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "fixed",
+          "default": "current BIOS bytes"
+        },
+        {
+          "name": "--no-bios",
+          "value_type": "flag",
+          "constraint": "Explicit boolean option.",
+          "current_menu": "fixed",
+          "default": "current HLE mode"
+        },
+        {
+          "name": "--interp",
+          "value_type": "flag",
+          "constraint": "Explicit boolean option.",
+          "current_menu": "fixed",
+          "default": "current backend"
+        },
+        {
+          "name": "--dataset",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "fixed",
+          "default": "current effective dataset"
+        },
+        {
+          "name": "--launch",
+          "value_type": "flag",
+          "constraint": "Explicit boolean option.",
+          "current_menu": "fixed",
+          "default": true
+        }
+      ],
+      "selection": [
+        "catalog",
+        "entry",
+        "session/ROM as applicable"
+      ],
+      "allowed_state": "No live session required; existing handler preflight applies.",
+      "effects": "Create and optionally launch isolated selected checkpoint copy.",
+      "result": "list --json returns schema-1 catalog with availability/checksums; open/import feedback/path/error.",
+      "limits": "Existing handler limits apply.",
+      "open_work": [
+        "DBG2-04: all related selections",
+        "DBG2-05: expose CLI options"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "catalog.import",
+      "handler": "Catalog::import",
+      "cli": "recomp debug-catalog import CATALOG [options]",
+      "parameters": [
+        {
+          "name": "CATALOG",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--case",
+          "value_type": "text",
+          "constraint": "Exact DS-NN, distinct from IN/GEN.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--region",
+          "value_type": "text",
+          "constraint": "Recorded region.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--status",
+          "value_type": "text",
+          "constraint": "Recorded status, no promotion.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--kind",
+          "value_type": "text",
+          "constraint": "case/variant/IN/GEN/NEW.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--entry",
+          "value_type": "text",
+          "constraint": "Exact stable entry key.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--session",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "fixed",
+          "default": "active isolated copy"
+        },
+        {
+          "name": "--slot",
+          "value_type": "decimal",
+          "constraint": "1..99, free slot; menu selects free slot automatically.",
+          "current_menu": "fixed",
+          "default": "first free slot"
+        }
+      ],
+      "selection": [
+        "catalog",
+        "entry",
+        "session/ROM as applicable"
+      ],
+      "allowed_state": "Menu: active isolated copy, free slot, no automatic Load. CLI: closed isolated copy protected by lease. Existing ROM/checkpoint preflight and transactional slot checks apply.",
+      "effects": "Write exact checkpoint/preview into free copy slot; preserve Undo; explicit Load required.",
+      "result": "list --json returns schema-1 catalog with availability/checksums; open/import feedback/path/error.",
+      "limits": "Existing handler limits apply.",
+      "open_work": [
+        "DBG2-04: all related selections",
+        "DBG2-05: expose CLI options"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "catalog.select",
+      "handler": "catalog_preview",
+      "cli": null,
+      "parameters": [
+        {
+          "name": "index",
+          "value_type": "decimal",
+          "constraint": "Current filtered catalog entry.",
+          "current_menu": "selected",
+          "default": null
+        }
+      ],
+      "selection": [
+        "catalog entry"
+      ],
+      "allowed_state": "No live session required; existing handler preflight applies.",
+      "effects": "Readonly inputs; no guest execution.",
+      "result": "Existing snapshot preview/error; selection does not load or run.",
+      "limits": "Existing handler limits apply.",
+      "open_work": [],
+      "external_dialog": null
+    },
+    {
+      "id": "catalog.choose",
+      "handler": "open_debug_catalog(true)",
+      "cli": null,
+      "parameters": [],
+      "selection": [],
+      "allowed_state": "No live session required; existing handler preflight applies.",
+      "effects": "Readonly inputs; no guest execution.",
+      "result": "Menu status text; legacy handler Result error or completion. Structured wrapper for menu-only operations remains DBG2-13/15.",
+      "limits": "Existing handler limits apply.",
+      "open_work": [
+        "DBG2-04: internal selector"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "record.start",
+      "handler": "Capture::start/cmd",
+      "cli": "recomp debug-record start SESSION",
+      "parameters": [
+        {
+          "name": "SESSION",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        }
+      ],
+      "selection": [],
+      "allowed_state": "Active isolated debug session; frontend rejects incompatible busy/recording/observer states. Snapshot seed required; no other recording/replay/search.",
+      "effects": "Write snapshot-relative recording in copy; subsequent ordinary guest frames are observed.",
+      "result": "Recording directory/complete manifest or error; menu REC indicator.",
+      "limits": "Existing capture endpoint, frame/input caps and retained directories.",
+      "open_work": [
+        "DBG2-05: recording preparation"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "record.stop",
+      "handler": "stop_input_recording",
+      "cli": null,
+      "parameters": [],
+      "selection": [],
+      "allowed_state": "Active isolated debug session; frontend rejects incompatible busy/recording/observer states.",
+      "effects": "Finalize recording endpoint/current keys; no new guest frame.",
+      "result": "Menu status text; legacy handler Result error or completion. Structured wrapper for menu-only operations remains DBG2-13/15.",
+      "limits": "Existing handler limits apply.",
+      "open_work": [],
+      "external_dialog": null
+    },
+    {
+      "id": "record.verify",
+      "handler": "cmd verify",
+      "cli": "recomp debug-record verify RECORDING --session SESSION",
+      "parameters": [
+        {
+          "name": "RECORDING",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--session",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "unavailable",
+          "default": null
+        }
+      ],
+      "selection": [],
+      "allowed_state": "No live session required; existing handler preflight applies.",
+      "effects": "Bounded isolated interpreter replay, no cartridge writer.",
+      "result": "Exact endpoint verification JSON/error; incomplete or changed input refuses.",
+      "limits": "Existing handler limits apply.",
+      "open_work": [
+        "DBG2-04: recording/session selector",
+        "DBG2-05: verify page"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "replay.select",
+      "handler": "start_replay(true)",
+      "cli": null,
+      "parameters": [],
+      "selection": [
+        "replay profile"
+      ],
+      "allowed_state": "No busy replay/recording/unsaved observer/search budget.",
+      "effects": "Open the internal profile selector. Selection pins/rechecks identity and does not run a replay.",
+      "result": "Menu status text; legacy handler Result error or completion. Structured wrapper for menu-only operations remains DBG2-13/15.",
+      "limits": "Explicit Refresh and Browse/Add folder only; external dialogs are never automatic.",
+      "open_work": [],
+      "external_dialog": null
+    },
+    {
+      "id": "replay.create",
+      "handler": "create_cmd",
+      "cli": "recomp debug-replay create [options]",
+      "parameters": [
+        {
+          "name": "--recording",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--session",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--dir",
+          "value_type": "path",
+          "constraint": "New destination; refuse overwrite.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--case",
+          "value_type": "text",
+          "constraint": "Nonempty case label.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--runtime",
+          "value_type": "path",
+          "constraint": "Explicit selected runtime; defaults to current executable.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--library",
+          "value_type": "path",
+          "constraint": "Existing compatible native translation; no compilation.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--timeout-ms",
+          "value_type": "decimal",
+          "constraint": "1..120000 host milliseconds.",
+          "current_menu": "unavailable",
+          "default": 120000
+        }
+      ],
+      "selection": [
+        "recording",
+        "session",
+        "runtime",
+        "library",
+        "dataset",
+        "manifest as applicable"
+      ],
+      "allowed_state": "Authenticated recording/session/profile pins. ",
+      "effects": "Write NEW pinned profile and immutable inputs; no replay.",
+      "result": "Created profile path JSON or incompatible result.",
+      "limits": "No overwrite; capture exactly one resource/PC/frame condition; existing pin/size limits.",
+      "open_work": [
+        "DBG2-04: select inputs",
+        "DBG2-05: prepare and save profile"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "replay.run",
+      "handler": "Job::start",
+      "cli": "recomp debug-replay run PROFILE [--json]",
+      "parameters": [
+        {
+          "name": "PROFILE",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--json",
+          "value_type": "flag",
+          "constraint": "Explicit boolean option.",
+          "current_menu": "not-applicable",
+          "default": false
+        }
+      ],
+      "selection": [
+        "profile"
+      ],
+      "allowed_state": "No concurrent job/recording/step/search or unsaved observers; Authenticated recording/session/profile pins. ",
+      "effects": "Supervised isolated worker executes guest from pinned input; no normal-game save writer.",
+      "result": "Schema-1 replay progress/result with outcome/exit: 0 pass/matched/captured, 2 divergence, 3 incompatible, 4 timeout, 5 interrupted, 6 worker error; capture adds 7 not-reached.",
+      "limits": "Profile timeout; 8 reports for capture/comparison; no automatic compilation.",
+      "open_work": [],
+      "external_dialog": null
+    },
+    {
+      "id": "replay.cancel",
+      "handler": "Job::cancel",
+      "cli": "recomp debug-replay cancel PROFILE",
+      "parameters": [
+        {
+          "name": "PROFILE",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        }
+      ],
+      "selection": [],
+      "allowed_state": "Existing selected job/profile only.",
+      "effects": "Request cancellation; status/terminal result confirms actual interruption.",
+      "result": "Schema-1 replay progress/result with outcome/exit: 0 pass/matched/captured, 2 divergence, 3 incompatible, 4 timeout, 5 interrupted, 6 worker error; capture adds 7 not-reached.",
+      "limits": "Existing handler limits apply.",
+      "open_work": [],
+      "external_dialog": null
+    },
+    {
+      "id": "audit.create",
+      "handler": "create_cmd",
+      "cli": "recomp debug-rom-audit create [options]",
+      "parameters": [
+        {
+          "name": "--recording",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--session",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--dir",
+          "value_type": "path",
+          "constraint": "New destination; refuse overwrite.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--case",
+          "value_type": "text",
+          "constraint": "Nonempty case label.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--runtime",
+          "value_type": "path",
+          "constraint": "Explicit selected runtime; defaults to current executable.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--library",
+          "value_type": "path",
+          "constraint": "Existing compatible native translation; no compilation.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--timeout-ms",
+          "value_type": "decimal",
+          "constraint": "1..120000 host milliseconds.",
+          "current_menu": "unavailable",
+          "default": 120000
+        },
+        {
+          "name": "--preset",
+          "value_type": "text",
+          "constraint": "all|bus|host",
+          "current_menu": "unavailable",
+          "default": "all"
+        },
+        {
+          "name": "--from",
+          "value_type": "decimal",
+          "constraint": "Relative start frame inclusive.",
+          "current_menu": "unavailable",
+          "default": 0
+        },
+        {
+          "name": "--to",
+          "value_type": "decimal",
+          "constraint": "Relative end frame exclusive; within recording.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--range",
+          "value_type": "range",
+          "constraint": "Repeatable decimal or 0x physical START:END; <=32 ranges.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--limit",
+          "value_type": "decimal",
+          "constraint": "1..50000 unique events.",
+          "current_menu": "unavailable",
+          "default": 20000
+        },
+        {
+          "name": "--known-manifest",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--dataset",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "unavailable",
+          "default": null
+        }
+      ],
+      "selection": [
+        "recording",
+        "session",
+        "runtime",
+        "library",
+        "dataset",
+        "manifest as applicable"
+      ],
+      "allowed_state": "Authenticated recording/session/profile pins. Selected worker needs rom-data-read-audit; capture interpreter-only.",
+      "effects": "Write NEW pinned profile and immutable inputs; no replay.",
+      "result": "Created profile path JSON or incompatible result.",
+      "limits": "No overwrite; capture exactly one resource/PC/frame condition; existing pin/size limits.",
+      "open_work": [
+        "DBG2-04: select inputs",
+        "DBG2-05: prepare and save profile"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "audit.run",
+      "handler": "Job::start_audit",
+      "cli": "recomp debug-rom-audit run PROFILE [--json]",
+      "parameters": [
+        {
+          "name": "PROFILE",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--json",
+          "value_type": "flag",
+          "constraint": "Explicit boolean option.",
+          "current_menu": "not-applicable",
+          "default": false
+        }
+      ],
+      "selection": [
+        "profile"
+      ],
+      "allowed_state": "No concurrent job/recording/step/search or unsaved observers; Authenticated recording/session/profile pins. Selected worker needs rom-data-read-audit; capture interpreter-only.",
+      "effects": "Supervised isolated worker executes guest from pinned input; no normal-game save writer.",
+      "result": "Schema-1 replay progress/result with outcome/exit: 0 pass/matched/captured, 2 divergence, 3 incompatible, 4 timeout, 5 interrupted, 6 worker error; capture adds 7 not-reached.",
+      "limits": "Profile timeout; 8 reports for capture/comparison; no automatic compilation.",
+      "open_work": [],
+      "external_dialog": null
+    },
+    {
+      "id": "audit.cancel",
+      "handler": "Job::cancel",
+      "cli": "recomp debug-rom-audit cancel PROFILE",
+      "parameters": [
+        {
+          "name": "PROFILE",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        }
+      ],
+      "selection": [],
+      "allowed_state": "Existing selected job/profile only.",
+      "effects": "Request cancellation; status/terminal result confirms actual interruption.",
+      "result": "Schema-1 replay progress/result with outcome/exit: 0 pass/matched/captured, 2 divergence, 3 incompatible, 4 timeout, 5 interrupted, 6 worker error; capture adds 7 not-reached.",
+      "limits": "Existing handler limits apply.",
+      "open_work": [],
+      "external_dialog": null
+    },
+    {
+      "id": "capture.create",
+      "handler": "create_cmd",
+      "cli": "recomp debug-capture create [options]",
+      "parameters": [
+        {
+          "name": "--recording",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--session",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--dir",
+          "value_type": "path",
+          "constraint": "New destination; refuse overwrite.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--case",
+          "value_type": "text",
+          "constraint": "Nonempty case label.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--runtime",
+          "value_type": "path",
+          "constraint": "Explicit selected runtime; defaults to current executable.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--library",
+          "value_type": "path",
+          "constraint": "Existing compatible native translation; no compilation.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--timeout-ms",
+          "value_type": "decimal",
+          "constraint": "1..120000 host milliseconds.",
+          "current_menu": "unavailable",
+          "default": 120000
+        },
+        {
+          "name": "--resource",
+          "value_type": "text",
+          "constraint": "Exact authenticated resource ID.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--manifest",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--dataset",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--pc",
+          "value_type": "hex",
+          "constraint": "ROM instruction PC.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--mode",
+          "value_type": "text",
+          "constraint": "arm|thumb",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--opcode",
+          "value_type": "hex",
+          "constraint": "Expected ROM opcode.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--frame",
+          "value_type": "decimal",
+          "constraint": "Completed relative frame event.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--limit-frames",
+          "value_type": "decimal",
+          "constraint": "Bounded within recorded input.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--preset",
+          "value_type": "text",
+          "constraint": "all|bus|host",
+          "current_menu": "unavailable",
+          "default": "all"
+        }
+      ],
+      "selection": [
+        "recording",
+        "session",
+        "runtime",
+        "library",
+        "dataset",
+        "manifest as applicable"
+      ],
+      "allowed_state": "Authenticated recording/session/profile pins. Selected worker needs rom-data-read-audit; capture interpreter-only.",
+      "effects": "Write NEW pinned profile and immutable inputs; no replay.",
+      "result": "Created profile path JSON or incompatible result.",
+      "limits": "No overwrite; capture exactly one resource/PC/frame condition; existing pin/size limits.",
+      "open_work": [
+        "DBG2-04: select inputs",
+        "DBG2-05: prepare and save profile"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "capture.run",
+      "handler": "Job::start_capture",
+      "cli": "recomp debug-capture run PROFILE [--json]",
+      "parameters": [
+        {
+          "name": "PROFILE",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--json",
+          "value_type": "flag",
+          "constraint": "Explicit boolean option.",
+          "current_menu": "not-applicable",
+          "default": false
+        }
+      ],
+      "selection": [
+        "profile"
+      ],
+      "allowed_state": "No concurrent job/recording/step/search or unsaved observers; Authenticated recording/session/profile pins. Selected worker needs rom-data-read-audit; capture interpreter-only.",
+      "effects": "Supervised isolated worker executes guest from pinned input; no normal-game save writer.",
+      "result": "Schema-1 replay progress/result with outcome/exit: 0 pass/matched/captured, 2 divergence, 3 incompatible, 4 timeout, 5 interrupted, 6 worker error; capture adds 7 not-reached.",
+      "limits": "Profile timeout; 8 reports for capture/comparison; no automatic compilation.",
+      "open_work": [],
+      "external_dialog": null
+    },
+    {
+      "id": "capture.cancel",
+      "handler": "Job::cancel",
+      "cli": "recomp debug-capture cancel PROFILE",
+      "parameters": [
+        {
+          "name": "PROFILE",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        }
+      ],
+      "selection": [],
+      "allowed_state": "Existing selected job/profile only.",
+      "effects": "Request cancellation; status/terminal result confirms actual interruption.",
+      "result": "Schema-1 replay progress/result with outcome/exit: 0 pass/matched/captured, 2 divergence, 3 incompatible, 4 timeout, 5 interrupted, 6 worker error; capture adds 7 not-reached.",
+      "limits": "Existing handler limits apply.",
+      "open_work": [],
+      "external_dialog": null
+    },
+    {
+      "id": "compare.create",
+      "handler": "create_cmd",
+      "cli": "recomp debug-compare create [options]",
+      "parameters": [
+        {
+          "name": "--recording",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--session",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--dir",
+          "value_type": "path",
+          "constraint": "New destination; refuse overwrite.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--case",
+          "value_type": "text",
+          "constraint": "Nonempty case label.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--runtime",
+          "value_type": "path",
+          "constraint": "Explicit selected runtime; defaults to current executable.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--library",
+          "value_type": "path",
+          "constraint": "Existing compatible native translation; no compilation.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--timeout-ms",
+          "value_type": "decimal",
+          "constraint": "1..120000 host milliseconds.",
+          "current_menu": "unavailable",
+          "default": 120000
+        },
+        {
+          "name": "--frames",
+          "value_type": "decimal",
+          "constraint": "1..3600 and within recorded input.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--backend",
+          "value_type": "text",
+          "constraint": "interp|native; default depends on --library.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--dataset",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--audio",
+          "value_type": "text",
+          "constraint": "preserve|arm-hle",
+          "current_menu": "unavailable",
+          "default": "preserve"
+        }
+      ],
+      "selection": [
+        "recording",
+        "session",
+        "runtime",
+        "library",
+        "dataset",
+        "manifest as applicable"
+      ],
+      "allowed_state": "Authenticated recording/session/profile pins. ",
+      "effects": "Write NEW pinned profile and immutable inputs; no replay.",
+      "result": "Created profile path JSON or incompatible result.",
+      "limits": "No overwrite; capture exactly one resource/PC/frame condition; existing pin/size limits.",
+      "open_work": [
+        "DBG2-04: select inputs",
+        "DBG2-05: prepare and save profile"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "compare.run",
+      "handler": "Job::start_comparison",
+      "cli": "recomp debug-compare run PROFILE [--json]",
+      "parameters": [
+        {
+          "name": "PROFILE",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--json",
+          "value_type": "flag",
+          "constraint": "Explicit boolean option.",
+          "current_menu": "not-applicable",
+          "default": false
+        }
+      ],
+      "selection": [
+        "profile"
+      ],
+      "allowed_state": "No concurrent job/recording/step/search or unsaved observers; Authenticated recording/session/profile pins. ",
+      "effects": "Supervised isolated worker executes guest from pinned input; no normal-game save writer.",
+      "result": "Schema-1 replay progress/result with outcome/exit: 0 pass/matched/captured, 2 divergence, 3 incompatible, 4 timeout, 5 interrupted, 6 worker error; capture adds 7 not-reached.",
+      "limits": "Profile timeout; 8 reports for capture/comparison; no automatic compilation.",
+      "open_work": [],
+      "external_dialog": null
+    },
+    {
+      "id": "compare.cancel",
+      "handler": "Job::cancel",
+      "cli": "recomp debug-compare cancel PROFILE",
+      "parameters": [
+        {
+          "name": "PROFILE",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        }
+      ],
+      "selection": [],
+      "allowed_state": "Existing selected job/profile only.",
+      "effects": "Request cancellation; status/terminal result confirms actual interruption.",
+      "result": "Schema-1 replay progress/result with outcome/exit: 0 pass/matched/captured, 2 divergence, 3 incompatible, 4 timeout, 5 interrupted, 6 worker error; capture adds 7 not-reached.",
+      "limits": "Existing handler limits apply.",
+      "open_work": [],
+      "external_dialog": null
+    },
+    {
+      "id": "control.status",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control status SESSION",
+      "parameters": [
+        {
+          "name": "SESSION",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--timeout-ms",
+          "value_type": "decimal",
+          "constraint": "20..120000 host milliseconds; one option; deadline is not proof of cancellation.",
+          "current_menu": "not-applicable",
+          "default": 120000
+        }
+      ],
+      "selection": [],
+      "allowed_state": "Active isolated debug session; frontend rejects incompatible busy/recording/observer states. Query remains available while busy.",
+      "effects": "Readonly live full-state hash and host status; no guest frame.",
+      "result": "Acknowledged schema-1 ffta-debug-control-result: request/run/session, ok/error/outcome/status; client refusal JSON. Timeout requires status before retry.",
+      "limits": "Local protocol limits and existing observer caps apply.",
+      "open_work": [],
+      "external_dialog": null
+    },
+    {
+      "id": "control.cancel",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control cancel SESSION --request ID",
+      "parameters": [
+        {
+          "name": "SESSION",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--timeout-ms",
+          "value_type": "decimal",
+          "constraint": "20..120000 host milliseconds; one option; deadline is not proof of cancellation.",
+          "current_menu": "not-applicable",
+          "default": 120000
+        },
+        {
+          "name": "--request",
+          "value_type": "text",
+          "constraint": "Exact pending request ID; another ID refuses.",
+          "current_menu": "unavailable",
+          "default": null
+        }
+      ],
+      "selection": [],
+      "allowed_state": "Active isolated debug session; frontend rejects incompatible busy/recording/observer states. Separate query channel.",
+      "effects": "Stop targeted step/search at frontend poll.",
+      "result": "Acknowledged schema-1 ffta-debug-control-result: request/run/session, ok/error/outcome/status; client refusal JSON. Timeout requires status before retry.",
+      "limits": "Local protocol limits and existing observer caps apply.",
+      "open_work": [
+        "DBG2-15: expose targeted job cancellation"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "control.pause",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control pause SESSION",
+      "parameters": [
+        {
+          "name": "SESSION",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--timeout-ms",
+          "value_type": "decimal",
+          "constraint": "20..120000 host milliseconds; one option; deadline is not proof of cancellation.",
+          "current_menu": "not-applicable",
+          "default": 120000
+        }
+      ],
+      "selection": [],
+      "allowed_state": "Active isolated debug session; frontend rejects incompatible busy/recording/observer states.",
+      "effects": "Pause/clear frame budget and reset host audio/pacing.",
+      "result": "Acknowledged schema-1 ffta-debug-control-result: request/run/session, ok/error/outcome/status; client refusal JSON. Timeout requires status before retry.",
+      "limits": "Local protocol limits and existing observer caps apply.",
+      "open_work": [
+        "DBG2-05: explicit pause action; F6 already toggles"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "control.resume",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control resume SESSION",
+      "parameters": [
+        {
+          "name": "SESSION",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--timeout-ms",
+          "value_type": "decimal",
+          "constraint": "20..120000 host milliseconds; one option; deadline is not proof of cancellation.",
+          "current_menu": "not-applicable",
+          "default": 120000
+        }
+      ],
+      "selection": [],
+      "allowed_state": "Active isolated debug session; frontend rejects incompatible busy/recording/observer states.",
+      "effects": "Resume ordinary guest execution; reset audio/pacing.",
+      "result": "Acknowledged schema-1 ffta-debug-control-result: request/run/session, ok/error/outcome/status; client refusal JSON. Timeout requires status before retry.",
+      "limits": "Local protocol limits and existing observer caps apply.",
+      "open_work": [],
+      "external_dialog": null
+    },
+    {
+      "id": "control.step",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control step SESSION N [--keys HEX]",
+      "parameters": [
+        {
+          "name": "SESSION",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--timeout-ms",
+          "value_type": "decimal",
+          "constraint": "20..120000 host milliseconds; one option; deadline is not proof of cancellation.",
+          "current_menu": "not-applicable",
+          "default": 120000
+        },
+        {
+          "name": "N",
+          "value_type": "decimal",
+          "constraint": "1..600 completed frames.",
+          "current_menu": "fixed",
+          "default": "1 or 10"
+        },
+        {
+          "name": "--keys",
+          "value_type": "hex",
+          "constraint": "Active-low 000..3ff.",
+          "current_menu": "fixed",
+          "default": "3ff"
+        }
+      ],
+      "selection": [],
+      "allowed_state": "Active isolated debug session; frontend rejects incompatible busy/recording/observer states. Idle and paused, no step/search/replay budget.",
+      "effects": "Execute exact guest-frame budget, then pause. No snapshot; discard stepped frontend audio.",
+      "result": "Acknowledged schema-1 ffta-debug-control-result: request/run/session, ok/error/outcome/status; client refusal JSON. Timeout requires status before retry.",
+      "limits": "Local protocol limits and existing observer caps apply.",
+      "open_work": [
+        "DBG2-05: editable frame/key budget"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "control.inspect",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control inspect SESSION ADDRESS LENGTH",
+      "parameters": [
+        {
+          "name": "SESSION",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--timeout-ms",
+          "value_type": "decimal",
+          "constraint": "20..120000 host milliseconds; one option; deadline is not proof of cancellation.",
+          "current_menu": "not-applicable",
+          "default": 120000
+        },
+        {
+          "name": "ADDRESS",
+          "value_type": "hex",
+          "constraint": "Readonly supported backing; refuse IO/backup.",
+          "current_menu": "selected",
+          "default": "current PC"
+        },
+        {
+          "name": "LENGTH",
+          "value_type": "decimal",
+          "constraint": "1..256 without address wrap.",
+          "current_menu": "selected",
+          "default": 16
+        }
+      ],
+      "selection": [],
+      "allowed_state": "Active isolated debug session; frontend rejects incompatible busy/recording/observer states. Idle and paused, no step/search/replay budget.",
+      "effects": "Readonly guest; host observer/output may change.",
+      "result": "Acknowledged schema-1 ffta-debug-control-result: request/run/session, ok/error/outcome/status; client refusal JSON. Timeout requires status before retry.",
+      "limits": "Local protocol limits and existing observer caps apply.",
+      "open_work": [],
+      "external_dialog": null
+    },
+    {
+      "id": "control.break",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control break SESSION PC arm|thumb [--steps N]",
+      "parameters": [
+        {
+          "name": "SESSION",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--timeout-ms",
+          "value_type": "decimal",
+          "constraint": "20..120000 host milliseconds; one option; deadline is not proof of cancellation.",
+          "current_menu": "not-applicable",
+          "default": 120000
+        },
+        {
+          "name": "PC",
+          "value_type": "hex",
+          "constraint": "Before eligible interpreter step.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "MODE",
+          "value_type": "text",
+          "constraint": "arm|thumb",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--steps",
+          "value_type": "decimal",
+          "constraint": "1..5000000 steps; <=600 completed frames.",
+          "current_menu": "unavailable",
+          "default": 100000
+        }
+      ],
+      "selection": [],
+      "allowed_state": "Active isolated debug session; frontend rejects incompatible busy/recording/observer states. Idle and paused, no step/search/replay budget.",
+      "effects": "Bounded interpreter search advances guest, then pauses.",
+      "result": "Acknowledged schema-1 ffta-debug-control-result: request/run/session, ok/error/outcome/status; client refusal JSON. Timeout requires status before retry.",
+      "limits": "Interpreter only; neutral input; not recording/replaying.",
+      "open_work": [
+        "DBG2-24: named triggers/editor"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "control.watch",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control watch SESSION read|write START END [options]",
+      "parameters": [
+        {
+          "name": "SESSION",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--timeout-ms",
+          "value_type": "decimal",
+          "constraint": "20..120000 host milliseconds; one option; deadline is not proof of cancellation.",
+          "current_menu": "not-applicable",
+          "default": 120000
+        },
+        {
+          "name": "ACCESS",
+          "value_type": "text",
+          "constraint": "read|write",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "START",
+          "value_type": "hex",
+          "constraint": "Start inclusive.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "END",
+          "value_type": "hex",
+          "constraint": "End exclusive.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--steps",
+          "value_type": "decimal",
+          "constraint": "1..5000000; <=600 frames.",
+          "current_menu": "unavailable",
+          "default": 100000
+        },
+        {
+          "name": "--width",
+          "value_type": "decimal",
+          "constraint": "1|2|4 or any.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--value",
+          "value_type": "hex",
+          "constraint": "Optional observed value.",
+          "current_menu": "unavailable",
+          "default": null
+        }
+      ],
+      "selection": [],
+      "allowed_state": "Active isolated debug session; frontend rejects incompatible busy/recording/observer states. Idle and paused, no step/search/replay budget.",
+      "effects": "Bounded interpreter search advances guest; stops after whole step including HLE/DMA/tick.",
+      "result": "Acknowledged schema-1 ffta-debug-control-result: request/run/session, ok/error/outcome/status; client refusal JSON. Timeout requires status before retry.",
+      "limits": "Interpreter and rom-data-read-audit; instruction fetches excluded; neutral input.",
+      "open_work": [
+        "DBG2-24: named triggers/editor"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "control.graphics",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control graphics SESSION [--compare-last]",
+      "parameters": [
+        {
+          "name": "SESSION",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--timeout-ms",
+          "value_type": "decimal",
+          "constraint": "20..120000 host milliseconds; one option; deadline is not proof of cancellation.",
+          "current_menu": "not-applicable",
+          "default": 120000
+        },
+        {
+          "name": "--compare-last",
+          "value_type": "flag",
+          "constraint": "Explicit boolean option.",
+          "current_menu": "selected",
+          "default": false
+        }
+      ],
+      "selection": [],
+      "allowed_state": "Active isolated debug session; frontend rejects incompatible busy/recording/observer states. Idle and paused, no step/search/replay budget.",
+      "effects": "Readonly guest; host observer/output may change.",
+      "result": "Acknowledged schema-1 ffta-debug-control-result: request/run/session, ok/error/outcome/status; client refusal JSON. Timeout requires status before retry.",
+      "limits": "8 private reports; frozen PPU/frontend projections, unknown final pixel winner.",
+      "open_work": [],
+      "external_dialog": null
+    },
+    {
+      "id": "control.ui-start",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control ui-start SESSION",
+      "parameters": [
+        {
+          "name": "SESSION",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--timeout-ms",
+          "value_type": "decimal",
+          "constraint": "20..120000 host milliseconds; one option; deadline is not proof of cancellation.",
+          "current_menu": "not-applicable",
+          "default": 120000
+        }
+      ],
+      "selection": [],
+      "allowed_state": "Active isolated debug session; frontend rejects incompatible busy/recording/observer states. Idle and paused, no step/search/replay budget.",
+      "effects": "Readonly guest; host observer/output may change.",
+      "result": "Acknowledged schema-1 ffta-debug-control-result: request/run/session, ok/error/outcome/status; client refusal JSON. Timeout requires status before retry.",
+      "limits": "Fixed 30s /1024 events /600 frames; incomplete raw backend coverage explicit.",
+      "open_work": [
+        "DBG2-05: configurable observer limits (no CLI option yet)"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "control.ui-report",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control ui-report SESSION",
+      "parameters": [
+        {
+          "name": "SESSION",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--timeout-ms",
+          "value_type": "decimal",
+          "constraint": "20..120000 host milliseconds; one option; deadline is not proof of cancellation.",
+          "current_menu": "not-applicable",
+          "default": 120000
+        }
+      ],
+      "selection": [],
+      "allowed_state": "Active isolated debug session; frontend rejects incompatible busy/recording/observer states. Idle and paused, no step/search/replay budget.",
+      "effects": "Readonly guest; host observer/output may change.",
+      "result": "Acknowledged schema-1 ffta-debug-control-result: request/run/session, ok/error/outcome/status; client refusal JSON. Timeout requires status before retry.",
+      "limits": "8 private reports; report canvas <=1600x1000.",
+      "open_work": [],
+      "external_dialog": null
+    },
+    {
+      "id": "control.audio-start",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control audio-start SESSION [--frames N --streams LIST]",
+      "parameters": [
+        {
+          "name": "SESSION",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--timeout-ms",
+          "value_type": "decimal",
+          "constraint": "20..120000 host milliseconds; one option; deadline is not proof of cancellation.",
+          "current_menu": "not-applicable",
+          "default": 120000
+        },
+        {
+          "name": "--frames",
+          "value_type": "decimal",
+          "constraint": "1..180.",
+          "current_menu": "selected",
+          "default": 60
+        },
+        {
+          "name": "--streams",
+          "value_type": "text",
+          "constraint": "Distinct mixed,psg,hle,fifo0,fifo1.",
+          "current_menu": "selected",
+          "default": "mixed,psg,hle,fifo0,fifo1"
+        }
+      ],
+      "selection": [],
+      "allowed_state": "Active isolated debug session; frontend rejects incompatible busy/recording/observer states. Idle and paused, no step/search/replay budget.",
+      "effects": "Readonly guest; host observer/output may change.",
+      "result": "Acknowledged schema-1 ffta-debug-control-result: request/run/session, ok/error/outcome/status; client refusal JSON. Timeout requires status before retry.",
+      "limits": "30s/180 guest frames/2MiB per source; callback3s/524288values/512blocks/64resets; no callback IO.",
+      "open_work": [],
+      "external_dialog": null
+    },
+    {
+      "id": "control.audio-report",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control audio-report SESSION",
+      "parameters": [
+        {
+          "name": "SESSION",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--timeout-ms",
+          "value_type": "decimal",
+          "constraint": "20..120000 host milliseconds; one option; deadline is not proof of cancellation.",
+          "current_menu": "not-applicable",
+          "default": 120000
+        }
+      ],
+      "selection": [],
+      "allowed_state": "Active isolated debug session; frontend rejects incompatible busy/recording/observer states. Idle and paused, no step/search/replay budget.",
+      "effects": "Readonly guest; host observer/output may change.",
+      "result": "Acknowledged schema-1 ffta-debug-control-result: request/run/session, ok/error/outcome/status; client refusal JSON. Timeout requires status before retry.",
+      "limits": "8 private WAV/raw/HTML/JSON folders; physical listening unknown.",
+      "open_work": [],
+      "external_dialog": null
+    },
+    {
+      "id": "control.code-start",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control code-start SESSION [options]",
+      "parameters": [
+        {
+          "name": "SESSION",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--timeout-ms",
+          "value_type": "decimal",
+          "constraint": "20..120000 host milliseconds; one option; deadline is not proof of cancellation.",
+          "current_menu": "not-applicable",
+          "default": 120000
+        },
+        {
+          "name": "--frames",
+          "value_type": "decimal",
+          "constraint": "1..60.",
+          "current_menu": "selected",
+          "default": 1
+        },
+        {
+          "name": "--events",
+          "value_type": "decimal",
+          "constraint": "1..512.",
+          "current_menu": "selected",
+          "default": 512
+        },
+        {
+          "name": "--start",
+          "value_type": "hex",
+          "constraint": "Inclusive address.",
+          "current_menu": "selected",
+          "default": "0"
+        },
+        {
+          "name": "--end",
+          "value_type": "hex",
+          "constraint": "Exclusive address.",
+          "current_menu": "selected",
+          "default": "ffffffff"
+        },
+        {
+          "name": "--mode",
+          "value_type": "text",
+          "constraint": "arm|thumb|all",
+          "current_menu": "selected",
+          "default": "all"
+        },
+        {
+          "name": "--kind",
+          "value_type": "text",
+          "constraint": "all|native|missing|system|hook|interpreter",
+          "current_menu": "selected",
+          "default": "all"
+        }
+      ],
+      "selection": [
+        "Optional selected code-label file; rechecked and parsed for current ROM before trace"
+      ],
+      "allowed_state": "Active isolated debug session; frontend rejects incompatible busy/recording/observer states. Idle and paused, no step/search/replay budget.",
+      "effects": "Readonly guest; host observer/output may change.",
+      "result": "Acknowledged schema-1 ffta-debug-control-result: request/run/session, ok/error/outcome/status; client refusal JSON. Timeout requires status before retry.",
+      "limits": "30s/60frames/512events; entry observations, no native-interior coverage.",
+      "open_work": [],
+      "external_dialog": null
+    },
+    {
+      "id": "control.code-report",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control code-report SESSION",
+      "parameters": [
+        {
+          "name": "SESSION",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--timeout-ms",
+          "value_type": "decimal",
+          "constraint": "20..120000 host milliseconds; one option; deadline is not proof of cancellation.",
+          "current_menu": "not-applicable",
+          "default": 120000
+        }
+      ],
+      "selection": [],
+      "allowed_state": "Active isolated debug session; frontend rejects incompatible busy/recording/observer states. Idle and paused, no step/search/replay budget.",
+      "effects": "Readonly guest; host observer/output may change.",
+      "result": "Acknowledged schema-1 ffta-debug-control-result: request/run/session, ok/error/outcome/status; client refusal JSON. Timeout requires status before retry.",
+      "limits": "8 reports/2MiB JSON; no new snapshot.",
+      "open_work": [],
+      "external_dialog": null
+    },
+    {
+      "id": "control.gameplay-start",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control gameplay-start SESSION [options]",
+      "parameters": [
+        {
+          "name": "SESSION",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--timeout-ms",
+          "value_type": "decimal",
+          "constraint": "20..120000 host milliseconds; one option; deadline is not proof of cancellation.",
+          "current_menu": "not-applicable",
+          "default": 120000
+        },
+        {
+          "name": "--frames",
+          "value_type": "decimal",
+          "constraint": "1..60.",
+          "current_menu": "selected",
+          "default": 1
+        },
+        {
+          "name": "--events",
+          "value_type": "decimal",
+          "constraint": "1..512.",
+          "current_menu": "selected",
+          "default": 512
+        },
+        {
+          "name": "--family",
+          "value_type": "text",
+          "constraint": "all|task|script|unit",
+          "current_menu": "selected",
+          "default": "all"
+        },
+        {
+          "name": "--context",
+          "value_type": "hex",
+          "constraint": "Optional exact observed context.",
+          "current_menu": "selected",
+          "default": null
+        }
+      ],
+      "selection": [],
+      "allowed_state": "Active isolated debug session; frontend rejects incompatible busy/recording/observer states. Idle and paused, no step/search/replay budget.",
+      "effects": "Readonly guest; host observer/output may change.",
+      "result": "Acknowledged schema-1 ffta-debug-control-result: request/run/session, ok/error/outcome/status; client refusal JSON. Timeout requires status before retry.",
+      "limits": "Exact verified EUR catalogs;30s/60frames/512events/1MiB; native interiors unknown.",
+      "open_work": [],
+      "external_dialog": null
+    },
+    {
+      "id": "control.gameplay-report",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control gameplay-report SESSION",
+      "parameters": [
+        {
+          "name": "SESSION",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--timeout-ms",
+          "value_type": "decimal",
+          "constraint": "20..120000 host milliseconds; one option; deadline is not proof of cancellation.",
+          "current_menu": "not-applicable",
+          "default": 120000
+        }
+      ],
+      "selection": [],
+      "allowed_state": "Active isolated debug session; frontend rejects incompatible busy/recording/observer states. Idle and paused, no step/search/replay budget.",
+      "effects": "Readonly guest; host observer/output may change.",
+      "result": "Acknowledged schema-1 ffta-debug-control-result: request/run/session, ok/error/outcome/status; client refusal JSON. Timeout requires status before retry.",
+      "limits": "8 reports/2MiB JSON; addresses are observations, not persistent unit IDs.",
+      "open_work": [],
+      "external_dialog": null
+    },
+    {
+      "id": "control.recent-start",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control recent-start SESSION [options]",
+      "parameters": [
+        {
+          "name": "SESSION",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--timeout-ms",
+          "value_type": "decimal",
+          "constraint": "20..120000 host milliseconds; one option; deadline is not proof of cancellation.",
+          "current_menu": "not-applicable",
+          "default": 120000
+        },
+        {
+          "name": "--events",
+          "value_type": "decimal",
+          "constraint": "1..1024.",
+          "current_menu": "selected",
+          "default": 1024
+        },
+        {
+          "name": "--reads",
+          "value_type": "text",
+          "constraint": "on|off",
+          "current_menu": "selected",
+          "default": "on"
+        },
+        {
+          "name": "--start",
+          "value_type": "hex",
+          "constraint": "Physical ROM inclusive.",
+          "current_menu": "selected",
+          "default": "0"
+        },
+        {
+          "name": "--end",
+          "value_type": "hex",
+          "constraint": "Physical ROM exclusive <=02000000.",
+          "current_menu": "selected",
+          "default": "02000000"
+        },
+        {
+          "name": "--on-error",
+          "value_type": "text",
+          "constraint": "on|off",
+          "current_menu": "selected",
+          "default": "on"
+        }
+      ],
+      "selection": [],
+      "allowed_state": "Active isolated debug session; frontend rejects incompatible busy/recording/observer states. Idle and paused, no step/search/replay budget.",
+      "effects": "Readonly guest; host observer/output may change.",
+      "result": "Acknowledged schema-1 ffta-debug-control-result: request/run/session, ok/error/outcome/status; client refusal JSON. Timeout requires status before retry.",
+      "limits": "256KiB ring; per-event8KiB;16read keys; drop counters.",
+      "open_work": [],
+      "external_dialog": null
+    },
+    {
+      "id": "control.recent-freeze",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control recent-freeze SESSION",
+      "parameters": [
+        {
+          "name": "SESSION",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--timeout-ms",
+          "value_type": "decimal",
+          "constraint": "20..120000 host milliseconds; one option; deadline is not proof of cancellation.",
+          "current_menu": "not-applicable",
+          "default": 120000
+        }
+      ],
+      "selection": [],
+      "allowed_state": "Active isolated debug session; frontend rejects incompatible busy/recording/observer states. Idle and paused, no step/search/replay budget.",
+      "effects": "Freeze host collector; no pause/resume or guest mutation.",
+      "result": "Acknowledged schema-1 ffta-debug-control-result: request/run/session, ok/error/outcome/status; client refusal JSON. Timeout requires status before retry.",
+      "limits": "Local protocol limits and existing observer caps apply.",
+      "open_work": [
+        "DBG2-05: separate freeze menu action"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "control.recent-report",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control recent-report SESSION",
+      "parameters": [
+        {
+          "name": "SESSION",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--timeout-ms",
+          "value_type": "decimal",
+          "constraint": "20..120000 host milliseconds; one option; deadline is not proof of cancellation.",
+          "current_menu": "not-applicable",
+          "default": 120000
+        }
+      ],
+      "selection": [],
+      "allowed_state": "Active isolated debug session; frontend rejects incompatible busy/recording/observer states. Idle and paused, no step/search/replay budget.",
+      "effects": "Readonly guest; host observer/output may change.",
+      "result": "Acknowledged schema-1 ffta-debug-control-result: request/run/session, ok/error/outcome/status; client refusal JSON. Timeout requires status before retry.",
+      "limits": "8 private reports; no replay/snapshot.",
+      "open_work": [],
+      "external_dialog": null
+    },
+    {
+      "id": "control.issue-report",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control issue-report SESSION [--profile FILE --symptom TEXT]",
+      "parameters": [
+        {
+          "name": "SESSION",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--timeout-ms",
+          "value_type": "decimal",
+          "constraint": "20..120000 host milliseconds; one option; deadline is not proof of cancellation.",
+          "current_menu": "not-applicable",
+          "default": 120000
+        },
+        {
+          "name": "--profile",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--symptom",
+          "value_type": "text",
+          "constraint": "At most2048 UTF-8 bytes; no control characters except tab/newline; mailbox total <=3500bytes. Menu uses replay_message.",
+          "current_menu": "selected",
+          "default": "current replay message"
+        }
+      ],
+      "selection": [],
+      "allowed_state": "Active isolated debug session; frontend rejects incompatible busy/recording/observer states. Idle and paused, no step/search/replay budget.",
+      "effects": "Readonly guest; host observer/output may change.",
+      "result": "Acknowledged schema-1 ffta-debug-control-result: request/run/session, ok/error/outcome/status; client refusal JSON. Timeout requires status before retry.",
+      "limits": "8 reports /2MiB JSON; no automatic sending.",
+      "open_work": [],
+      "external_dialog": null
+    },
+    {
+      "id": "audio.states",
+      "handler": "states",
+      "cli": "recomp debug-audio states [options]",
+      "parameters": [
+        {
+          "name": "--rom",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--left",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--right",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--dir",
+          "value_type": "path",
+          "constraint": "New destination; refuse overwrite.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--streams",
+          "value_type": "text",
+          "constraint": "Distinct mixed,psg,hle,fifo0,fifo1.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--start",
+          "value_type": "decimal",
+          "constraint": "Even value/event index.",
+          "current_menu": "unavailable",
+          "default": 0
+        },
+        {
+          "name": "--count",
+          "value_type": "decimal",
+          "constraint": "Even 2..262144.",
+          "current_menu": "unavailable",
+          "default": 262144
+        },
+        {
+          "name": "--bios",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "unavailable",
+          "default": null
+        }
+      ],
+      "selection": [
+        "ROM",
+        "two snapshots"
+      ],
+      "allowed_state": "No live session required; existing handler preflight applies.",
+      "effects": "Readonly inputs; no guest execution.",
+      "result": "ffta-audio-result JSON: exit0 equal/2 diverged/3 incompatible, private raw/WAV/HTML.",
+      "limits": "Existing handler limits apply.",
+      "open_work": [
+        "DBG2-04: snapshot selection",
+        "DBG2-05: audio comparison options"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "issue.create",
+      "handler": "create/cmd",
+      "cli": "recomp debug-report create PROFILE [--symptom TEXT]",
+      "parameters": [
+        {
+          "name": "PROFILE",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--symptom",
+          "value_type": "text",
+          "constraint": "At most2048 UTF-8 bytes; no control characters except tab/newline; no automatic send.",
+          "current_menu": "unavailable",
+          "default": null
+        }
+      ],
+      "selection": [],
+      "allowed_state": "No live session required; existing handler preflight applies.",
+      "effects": "Readonly pinned evidence; writes private issue folder, no replay/send.",
+      "result": "Local HTML/JSON/summary/relative launchers; exit3 incompatible preflight still publishes report.",
+      "limits": "8 reports/2MiB JSON.",
+      "open_work": [
+        "DBG2-04: profile selection",
+        "DBG2-05: issue editor"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "artifacts.preview",
+      "handler": "preview",
+      "cli": "python3 scripts/debug_artifacts.py preview [options]",
+      "parameters": [
+        {
+          "name": "--session",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--sessions-root",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--keep",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--unit",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--out",
+          "value_type": "path",
+          "constraint": "Output destination; existing handler validates parent, overwrite policy and atomic publication. No guest input is selected by this option.",
+          "current_menu": "unavailable",
+          "default": null
+        }
+      ],
+      "selection": [],
+      "allowed_state": "No live session required; existing handler preflight applies.",
+      "effects": "Readonly byte plan, writes new private report; no removal.",
+      "result": "Bounded HTML/JSON plan with protected reasons.",
+      "limits": "Explicit scope, leases, keep-selection; no automatic stale reclamation.",
+      "open_work": [
+        "DBG2-06: declared host adapter"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "artifacts.apply",
+      "handler": "apply",
+      "cli": "python3 scripts/debug_artifacts.py apply PLAN --receipt NEW",
+      "parameters": [
+        {
+          "name": "PLAN",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--receipt",
+          "value_type": "path",
+          "constraint": "New durable receipt file; refuse overwrite.",
+          "current_menu": "unavailable",
+          "default": null
+        }
+      ],
+      "selection": [],
+      "allowed_state": "No live session required; existing handler preflight applies.",
+      "effects": "Delete only selected validated disposable artifacts after exact recheck and lease; preserve inputs/proofs.",
+      "result": "Durable receipt/error; changed/stale/active plan refuses.",
+      "limits": "Existing handler limits apply.",
+      "open_work": [
+        "DBG2-06: declared host adapter"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "artifacts.complete",
+      "handler": "complete",
+      "cli": "python3 scripts/local_artifacts.py complete UNITS [options]",
+      "parameters": [
+        {
+          "name": "UNITS",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--apply",
+          "value_type": "flag",
+          "constraint": "Explicit boolean option.",
+          "current_menu": "unavailable",
+          "default": false
+        },
+        {
+          "name": "--retire-executables",
+          "value_type": "flag",
+          "constraint": "Explicit boolean option.",
+          "current_menu": "unavailable",
+          "default": false
+        },
+        {
+          "name": "--report",
+          "value_type": "path",
+          "constraint": "Optional cleanup manifest destination under target.",
+          "current_menu": "unavailable",
+          "default": null
+        }
+      ],
+      "selection": [],
+      "allowed_state": "No live session required; existing handler preflight applies.",
+      "effects": "Preview by default; explicit apply retires only declared disposable copies/superseded executables.",
+      "result": "Cleanup JSON/receipt/refusal; retained accepted inputs.",
+      "limits": "Existing handler limits apply.",
+      "open_work": [
+        "DBG2-06: declared host adapter"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "campaign.report",
+      "handler": "report",
+      "cli": "python3 scripts/debug_campaign.py report MANIFEST [options]",
+      "parameters": [
+        {
+          "name": "MANIFEST",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--case",
+          "value_type": "text",
+          "constraint": "Repeatable exact case.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--ds",
+          "value_type": "text",
+          "constraint": "Repeatable DS.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--family",
+          "value_type": "text",
+          "constraint": "Repeatable family.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--transition",
+          "value_type": "text",
+          "constraint": "Repeatable transition.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--out",
+          "value_type": "path",
+          "constraint": "Output destination; existing handler validates parent, overwrite policy and atomic publication. No guest input is selected by this option.",
+          "current_menu": "unavailable",
+          "default": null
+        }
+      ],
+      "selection": [],
+      "allowed_state": "No live session required; existing handler preflight applies.",
+      "effects": "Readonly inputs; no guest execution.",
+      "result": "HTML/JSON evidence report; never replays selected cases.",
+      "limits": "Existing handler limits apply.",
+      "open_work": [
+        "DBG2-06: declared host adapter"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "campaign.run-case",
+      "handler": "run-case",
+      "cli": "python3 scripts/debug_campaign.py run-case MANIFEST CASE [options]",
+      "parameters": [
+        {
+          "name": "MANIFEST",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "CASE",
+          "value_type": "text",
+          "constraint": "Exactly one pinned profile.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--reason",
+          "value_type": "text",
+          "constraint": "Required execution reason.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--reopen-reason",
+          "value_type": "text",
+          "constraint": "Required to reopen completed proof.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--wine",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--out",
+          "value_type": "path",
+          "constraint": "Output destination; existing handler validates parent, overwrite policy and atomic publication. No guest input is selected by this option.",
+          "current_menu": "unavailable",
+          "default": null
+        }
+      ],
+      "selection": [],
+      "allowed_state": "No live session required; existing handler preflight applies.",
+      "effects": "Explicit bounded dispatch through existing supervisor, original evidence immutable.",
+      "result": "Selected job result/log; completed work not automatically rerun.",
+      "limits": "Existing handler limits apply.",
+      "open_work": [
+        "DBG2-06: declared host adapter"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "reports.home",
+      "handler": "generate/main",
+      "cli": "python3 scripts/report_home.py [--root ROOT --stdout]",
+      "parameters": [
+        {
+          "name": "--root",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--stdout",
+          "value_type": "flag",
+          "constraint": "Explicit boolean option.",
+          "current_menu": "unavailable",
+          "default": false
+        }
+      ],
+      "selection": [],
+      "allowed_state": "No live session required; existing handler preflight applies.",
+      "effects": "Bounded readonly discovery of known HTML indexes; atomic ignored index.html, or stdout.",
+      "result": "Generated local report homepage; presence/mtime is not acceptance.",
+      "limits": "Existing handler limits apply.",
+      "open_work": [
+        "DBG2-06: declared host adapter"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "saves.extended",
+      "handler": "AvConfig.debug_extended_saves",
+      "cli": null,
+      "parameters": [
+        {
+          "name": "enabled",
+          "value_type": "flag",
+          "constraint": "Explicit boolean option.",
+          "current_menu": "selected",
+          "default": false
+        }
+      ],
+      "selection": [],
+      "allowed_state": "Current window; selected slot/input must pass existing transactional checks.",
+      "effects": "Persist host preference9/99 slots; preserve hidden high slots.",
+      "result": "Menu status text; legacy handler Result error or completion. Structured wrapper for menu-only operations remains DBG2-13/15.",
+      "limits": "Existing handler limits apply.",
+      "open_work": [
+        "DBG2-13/15: shared structured operation wrapper where absent"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "state.save",
+      "handler": "state_operation(true)",
+      "cli": null,
+      "parameters": [
+        {
+          "name": "slot",
+          "value_type": "decimal",
+          "constraint": "1..9 or1..99.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "overwrite",
+          "value_type": "flag",
+          "constraint": "Explicit boolean option.",
+          "current_menu": "selected",
+          "default": false
+        }
+      ],
+      "selection": [],
+      "allowed_state": "Current window; selected slot/input must pass existing transactional checks.",
+      "effects": "Serialize exact guest checkpoint/preview; undo file replacement.",
+      "result": "Menu status text; legacy handler Result error or completion. Structured wrapper for menu-only operations remains DBG2-13/15.",
+      "limits": "Existing handler limits apply.",
+      "open_work": [
+        "DBG2-13/15: shared structured operation wrapper where absent"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "state.load",
+      "handler": "state_operation(false)",
+      "cli": null,
+      "parameters": [
+        {
+          "name": "slot",
+          "value_type": "decimal",
+          "constraint": "Existing compatible slot.",
+          "current_menu": "selected",
+          "default": null
+        }
+      ],
+      "selection": [],
+      "allowed_state": "Current window; selected slot/input must pass existing transactional checks.",
+      "effects": "Transactional guest state restore; reset frontend; capture rewind refusal.",
+      "result": "Menu status text; legacy handler Result error or completion. Structured wrapper for menu-only operations remains DBG2-13/15.",
+      "limits": "Existing handler limits apply.",
+      "open_work": [
+        "DBG2-13/15: shared structured operation wrapper where absent"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "state.undo",
+      "handler": "undo_state_operation",
+      "cli": null,
+      "parameters": [],
+      "selection": [],
+      "allowed_state": "Current window; selected slot/input must pass existing transactional checks.",
+      "effects": "Restore last save files or pre-load machine; only consume successful undo.",
+      "result": "Menu status text; legacy handler Result error or completion. Structured wrapper for menu-only operations remains DBG2-13/15.",
+      "limits": "Existing handler limits apply.",
+      "open_work": [
+        "DBG2-13/15: shared structured operation wrapper where absent"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "save.restore",
+      "handler": "restore_save_backup",
+      "cli": null,
+      "parameters": [
+        {
+          "name": "id",
+          "value_type": "decimal",
+          "constraint": "Authenticated backup ID.",
+          "current_menu": "selected",
+          "default": null
+        }
+      ],
+      "selection": [],
+      "allowed_state": "Current window; selected slot/input must pass existing transactional checks.",
+      "effects": "Atomic save replacement and clean reboot; confirmation required.",
+      "result": "Menu status text; legacy handler Result error or completion. Structured wrapper for menu-only operations remains DBG2-13/15.",
+      "limits": "Existing handler limits apply.",
+      "open_work": [
+        "DBG2-13/15: shared structured operation wrapper where absent"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "save.switch",
+      "handler": "switch_game_save",
+      "cli": null,
+      "parameters": [
+        {
+          "name": "slot",
+          "value_type": "decimal",
+          "constraint": "Selected numeric slot.",
+          "current_menu": "selected",
+          "default": null
+        }
+      ],
+      "selection": [],
+      "allowed_state": "Current window; selected slot/input must pass existing transactional checks.",
+      "effects": "Switch cartridge progress transactionally and reboot; backup rules apply.",
+      "result": "Menu status text; legacy handler Result error or completion. Structured wrapper for menu-only operations remains DBG2-13/15.",
+      "limits": "Existing handler limits apply.",
+      "open_work": [
+        "DBG2-13/15: shared structured operation wrapper where absent"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "save.copy",
+      "handler": "copy_game_save",
+      "cli": null,
+      "parameters": [
+        {
+          "name": "slot",
+          "value_type": "decimal",
+          "constraint": "Selected numeric slot.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "overwrite",
+          "value_type": "flag",
+          "constraint": "Explicit boolean option.",
+          "current_menu": "selected",
+          "default": false
+        }
+      ],
+      "selection": [],
+      "allowed_state": "Current window; selected slot/input must pass existing transactional checks.",
+      "effects": "Copy live cartridge save with explicit overwrite confirmation.",
+      "result": "Menu status text; legacy handler Result error or completion. Structured wrapper for menu-only operations remains DBG2-13/15.",
+      "limits": "Existing handler limits apply.",
+      "open_work": [
+        "DBG2-13/15: shared structured operation wrapper where absent"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "runtime.restart",
+      "handler": "restart_rom",
+      "cli": null,
+      "parameters": [],
+      "selection": [],
+      "allowed_state": "Current window; selected slot/input must pass existing transactional checks.",
+      "effects": "Clean guest reboot, finish/refuse recording per existing rules; host resets.",
+      "result": "Menu status text; legacy handler Result error or completion. Structured wrapper for menu-only operations remains DBG2-13/15.",
+      "limits": "Existing handler limits apply.",
+      "open_work": [
+        "DBG2-13/15: shared structured operation wrapper where absent"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "runtime.continue",
+      "handler": "set_paused(false)",
+      "cli": null,
+      "parameters": [],
+      "selection": [],
+      "allowed_state": "Current window; selected slot/input must pass existing transactional checks.",
+      "effects": "Close menu and resume current ordinary guest execution.",
+      "result": "Menu status text; legacy handler Result error or completion. Structured wrapper for menu-only operations remains DBG2-13/15.",
+      "limits": "Existing handler limits apply.",
+      "open_work": [
+        "DBG2-13/15: shared structured operation wrapper where absent"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "launch.debug-inputs",
+      "handler": "cmd_play",
+      "cli": "recomp play ROM [--debug-catalog FILE --debug-replay FILE]; isolated copy: play --debug-paused OR play --record-input",
+      "parameters": [
+        {
+          "name": "ROM",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--debug-catalog",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--debug-replay",
+          "value_type": "path",
+          "constraint": "Existing selected ordinary file/directory; handler authenticates identity.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--debug-paused",
+          "value_type": "flag",
+          "constraint": "Explicit boolean option.",
+          "current_menu": "unavailable",
+          "default": false
+        },
+        {
+          "name": "--record-input",
+          "value_type": "flag",
+          "constraint": "Explicit boolean option.",
+          "current_menu": "unavailable",
+          "default": false
+        }
+      ],
+      "selection": [],
+      "allowed_state": "--debug-paused / --record-input are mutually exclusive isolated-only exact argument forms; normal play accepts catalog/replay selection options.",
+      "effects": "Launch current play handler with explicit debug selections; --record-input explicitly starts capture.",
+      "result": "Existing play lifecycle/status/error; --debug-paused requires isolated copy.",
+      "limits": "Existing handler limits apply.",
+      "open_work": [
+        "DBG2-04: internal launch selections"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "content.scan",
+      "handler": "Index::scan",
+      "cli": "recomp debug-content scan [options]",
+      "parameters": [
+        {
+          "name": "--root",
+          "value_type": "path",
+          "constraint": "Declared portable/app root, once; scans only app subtrees.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--add-root",
+          "value_type": "path",
+          "constraint": "Explicit extra folder, repeatable; <=8 total roots.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--rom-sha256",
+          "value_type": "sha256",
+          "constraint": "Optional exact 64hex expected ROM; metadata match only.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--json",
+          "value_type": "flag",
+          "constraint": "Emit versioned JSON.",
+          "current_menu": "not-applicable",
+          "default": false
+        },
+        {
+          "name": "--add-file",
+          "value_type": "path",
+          "constraint": "Explicit single-file root; siblings are never enumerated; <=8 roots total.",
+          "current_menu": "selected",
+          "default": null
+        }
+      ],
+      "selection": [
+        "Declared content roots"
+      ],
+      "allowed_state": "No guest/session required. Explicit refresh/check only; indexes do not authorize execution.",
+      "effects": "Bounded readonly indexing and hashing; no writes, automatic refresh or execution.",
+      "result": "Version-1 content index with stable IDs, relative refs, hashes, duplicate counts, root issues, compatibility and scan budgets.",
+      "limits": "8roots/512entries/8192nodes/depth12/64MiB hashing/1MiB metadata each/8MiB metadata total/64issues/8duplicate links per entry.",
+      "open_work": [
+        "DBG2-03: integrated selector",
+        "DBG2-04: migrate existing choices",
+        "DBG2-07: persistent choices"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "content.check",
+      "handler": "Index::recheck",
+      "cli": "recomp debug-content check INDEX ID [--kind KIND] [--json]",
+      "parameters": [
+        {
+          "name": "INDEX",
+          "value_type": "path",
+          "constraint": "Explicit saved schema-1 index; <=8MiB.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "ID",
+          "value_type": "content-id",
+          "constraint": "Exact stable entry ID.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--kind",
+          "value_type": "enum",
+          "constraint": "Expected content kind; mismatch refuses.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--json",
+          "value_type": "flag",
+          "constraint": "Emit versioned JSON.",
+          "current_menu": "not-applicable",
+          "default": false
+        }
+      ],
+      "selection": [
+        "Content ID"
+      ],
+      "allowed_state": "No guest/session required. Explicit refresh/check only; indexes do not authorize execution.",
+      "effects": "Readonly selected-entry recheck; missing/changed/nonordinary/type/ROM mismatch remain explicit.",
+      "result": "Version-1 check result; exit0 listed only,3 refused,1 malformed; never action execution or full preflight.",
+      "limits": "8roots/512entries/8192nodes/depth12/64MiB hashing/1MiB metadata each/8MiB metadata total/64issues/8duplicate links per entry.",
+      "open_work": [
+        "DBG2-03: integrated selector",
+        "DBG2-04: migrate existing choices",
+        "DBG2-07: persistent choices"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "content.open",
+      "handler": "Picker::open",
+      "cli": null,
+      "parameters": [],
+      "selection": [
+        "Content index/ID as applicable"
+      ],
+      "allowed_state": "Paused host menu; at most one bounded content worker; no guest input/step.",
+      "effects": "Open internal cached content list; no scan or OS dialog until an explicit action.",
+      "result": "Readable internal status; debug-control status includes host-only content_picker state. No execution is implied.",
+      "limits": "Existing content caps; search128Unicode chars/favorites512/recent32/details16384chars; one worker with generation and view identity.",
+      "open_work": [
+        "DBG2-04: use selections for existing tools",
+        "DBG2-07: persist choices",
+        "DBG2-13/15: shared command execution"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "content.select",
+      "handler": "Picker::choose",
+      "cli": null,
+      "parameters": [
+        {
+          "name": "ID",
+          "value_type": "content-id",
+          "constraint": "Exact selected stable content ID; omonimi remain distinct.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "generation",
+          "value_type": "integer",
+          "constraint": "Internal current catalog revision; stale revisions refuse.",
+          "current_menu": "not-applicable",
+          "default": null
+        }
+      ],
+      "selection": [
+        "Content index/ID as applicable"
+      ],
+      "allowed_state": "Paused host menu; at most one bounded content worker; no guest input/step.",
+      "effects": "Recheck exact generation/ID/hash/type and retain host selection only; never execute.",
+      "result": "Readable internal status; debug-control status includes host-only content_picker state. No execution is implied.",
+      "limits": "Existing content caps; search128Unicode chars/favorites512/recent32/details16384chars; one worker with generation and view identity.",
+      "open_work": [
+        "DBG2-04: use selections for existing tools",
+        "DBG2-07: persist choices",
+        "DBG2-13/15: shared command execution"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "content.preview",
+      "handler": "Picker::choose preview",
+      "cli": null,
+      "parameters": [
+        {
+          "name": "ID",
+          "value_type": "content-id",
+          "constraint": "Exact selected stable content ID; omonimi remain distinct.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "generation",
+          "value_type": "integer",
+          "constraint": "Internal current catalog revision; stale revisions refuse.",
+          "current_menu": "not-applicable",
+          "default": null
+        }
+      ],
+      "selection": [
+        "Content index/ID as applicable"
+      ],
+      "allowed_state": "Paused host menu; at most one bounded content worker; no guest input/step.",
+      "effects": "Readonly full details and authenticated embedded snapshot image; no Machine load.",
+      "result": "Readable internal status; debug-control status includes host-only content_picker state. No execution is implied.",
+      "limits": "Existing content caps; search128Unicode chars/favorites512/recent32/details16384chars; one worker with generation and view identity.",
+      "open_work": [
+        "DBG2-04: use selections for existing tools",
+        "DBG2-07: persist choices",
+        "DBG2-13/15: shared command execution"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "content.browse-file",
+      "handler": "Picker::browse_file",
+      "cli": null,
+      "parameters": [],
+      "selection": [
+        "Content index/ID as applicable"
+      ],
+      "allowed_state": "Paused host menu; at most one bounded content worker; no guest input/step.",
+      "effects": "Explicit OS file picker adds only the chosen file; Cancel preserves selection and roots.",
+      "result": "Readable internal status; debug-control status includes host-only content_picker state. No execution is implied.",
+      "limits": "Existing content caps; search128Unicode chars/favorites512/recent32/details16384chars; one worker with generation and view identity.",
+      "open_work": [
+        "DBG2-04: use selections for existing tools",
+        "DBG2-07: persist choices",
+        "DBG2-13/15: shared command execution"
+      ],
+      "external_dialog": {
+        "site": "content_picker.rs::Picker::browse_file",
+        "when": "Only explicit Browse external file button.",
+        "automatic": false,
+        "follow_up": "DBG2-03"
+      }
+    },
+    {
+      "id": "content.add-folder",
+      "handler": "Picker::browse_folder",
+      "cli": null,
+      "parameters": [],
+      "selection": [
+        "Content index/ID as applicable"
+      ],
+      "allowed_state": "Paused host menu; at most one bounded content worker; no guest input/step.",
+      "effects": "Explicit OS folder picker adds a bounded declared root; Cancel preserves selection and roots.",
+      "result": "Readable internal status; debug-control status includes host-only content_picker state. No execution is implied.",
+      "limits": "Existing content caps; search128Unicode chars/favorites512/recent32/details16384chars; one worker with generation and view identity.",
+      "open_work": [
+        "DBG2-04: use selections for existing tools",
+        "DBG2-07: persist choices",
+        "DBG2-13/15: shared command execution"
+      ],
+      "external_dialog": {
+        "site": "content_picker.rs::Picker::browse_folder",
+        "when": "Only explicit Add folder button.",
+        "automatic": false,
+        "follow_up": "DBG2-03"
+      }
+    },
+    {
+      "id": "content.cancel",
+      "handler": "Picker::cancel",
+      "cli": null,
+      "parameters": [],
+      "selection": [
+        "Content index/ID as applicable"
+      ],
+      "allowed_state": "Paused host menu; at most one bounded content worker; no guest input/step.",
+      "effects": "Return to the caller, preserve committed host selection and discard late worker results.",
+      "result": "Readable internal status; debug-control status includes host-only content_picker state. No execution is implied.",
+      "limits": "Existing content caps; search128Unicode chars/favorites512/recent32/details16384chars; one worker with generation and view identity.",
+      "open_work": [
+        "DBG2-04: use selections for existing tools",
+        "DBG2-07: persist choices",
+        "DBG2-13/15: shared command execution"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "content.choose-input",
+      "handler": "Picker::open_for",
+      "cli": null,
+      "parameters": [],
+      "selection": [
+        "profile/catalog/session/recording/snapshot/input/dataset/runtime A/runtime B/native library/labels/known plan"
+      ],
+      "allowed_state": "Paused host menu; at most one bounded content worker; no guest input/step.",
+      "effects": "Open a role-constrained internal selector and retain a hashed host reference. Never run a tool, load a library or apply a snapshot. Explicit buttons are the only OS dialogs.",
+      "result": "Readable internal status; debug-control status includes host-only content_picker state. No execution is implied.",
+      "limits": "Existing content caps; search128Unicode chars/favorites512/recent32/details16384chars; one worker with generation and view identity.",
+      "open_work": [
+        "DBG2-05: prepare profiles from selected references",
+        "DBG2-07: persist choices"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "workbench.replay",
+      "handler": "Workbench::open / fields",
+      "cli": null,
+      "parameters": [
+        {
+          "name": "--native",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--case",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--timeout-ms",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        }
+      ],
+      "selection": [
+        "Typed current input roles as shown by the tool; changing a draft never runs it."
+      ],
+      "allowed_state": "Paused host menu; at most one bounded content worker; no guest input/step.",
+      "effects": "Open host draft and existing cached choices. No scan, OS dialog, guest mutation or tool execution.",
+      "result": "Readable draft feedback plus workbench status; distinct Verify, Save/Load preset, Prepare NEW profile and Start actions.",
+      "limits": "32fields;2048UTF8bytes each;8KiB values;16KiB presets;8presets pertool;8preparedprofiles;one bounded host job.",
+      "open_work": [
+        "DBG2-07: persist input preferences",
+        "DBG2-13/15: command console entry"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "workbench.audit",
+      "handler": "Workbench::open / fields",
+      "cli": null,
+      "parameters": [
+        {
+          "name": "--native",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--case",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--timeout-ms",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--use-dataset",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--use-known",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--preset",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--from",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--to",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--ranges",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--limit",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--recording",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--session",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--dir",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--runtime",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--library",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--dataset",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--known-manifest",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--range",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        }
+      ],
+      "selection": [
+        "Typed current input roles as shown by the tool; changing a draft never runs it."
+      ],
+      "allowed_state": "Paused host menu; at most one bounded content worker; no guest input/step.",
+      "effects": "Open host draft and existing cached choices. No scan, OS dialog, guest mutation or tool execution.",
+      "result": "Readable draft feedback plus workbench status; distinct Verify, Save/Load preset, Prepare NEW profile and Start actions.",
+      "limits": "32fields;2048UTF8bytes each;8KiB values;16KiB presets;8presets pertool;8preparedprofiles;one bounded host job.",
+      "open_work": [
+        "DBG2-07: persist input preferences",
+        "DBG2-13/15: command console entry"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "workbench.capture",
+      "handler": "Workbench::open / fields",
+      "cli": null,
+      "parameters": [
+        {
+          "name": "--native",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--case",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--timeout-ms",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--use-dataset",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--trigger",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--frame",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--limit-frames",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--pc",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--mode",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--opcode",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--resource",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--preset",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--manifest",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        }
+      ],
+      "selection": [
+        "Typed current input roles as shown by the tool; changing a draft never runs it."
+      ],
+      "allowed_state": "Paused host menu; at most one bounded content worker; no guest input/step.",
+      "effects": "Open host draft and existing cached choices. No scan, OS dialog, guest mutation or tool execution.",
+      "result": "Readable draft feedback plus workbench status; distinct Verify, Save/Load preset, Prepare NEW profile and Start actions.",
+      "limits": "32fields;2048UTF8bytes each;8KiB values;16KiB presets;8presets pertool;8preparedprofiles;one bounded host job.",
+      "open_work": [
+        "DBG2-07: persist input preferences",
+        "DBG2-13/15: command console entry"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "workbench.compare",
+      "handler": "Workbench::open / fields",
+      "cli": null,
+      "parameters": [
+        {
+          "name": "--native",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--case",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--timeout-ms",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--use-dataset",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--frames",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--backend",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--audio",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        }
+      ],
+      "selection": [
+        "Typed current input roles as shown by the tool; changing a draft never runs it."
+      ],
+      "allowed_state": "Paused host menu; at most one bounded content worker; no guest input/step.",
+      "effects": "Open host draft and existing cached choices. No scan, OS dialog, guest mutation or tool execution.",
+      "result": "Readable draft feedback plus workbench status; distinct Verify, Save/Load preset, Prepare NEW profile and Start actions.",
+      "limits": "32fields;2048UTF8bytes each;8KiB values;16KiB presets;8presets pertool;8preparedprofiles;one bounded host job.",
+      "open_work": [
+        "DBG2-07: persist input preferences",
+        "DBG2-13/15: command console entry"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "workbench.step",
+      "handler": "Workbench::open / fields",
+      "cli": null,
+      "parameters": [
+        {
+          "name": "frames",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--keys",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        }
+      ],
+      "selection": [
+        "Typed current input roles as shown by the tool; changing a draft never runs it."
+      ],
+      "allowed_state": "Paused host menu; at most one bounded content worker; no guest input/step.",
+      "effects": "Open host draft and existing cached choices. No scan, OS dialog, guest mutation or tool execution.",
+      "result": "Readable draft feedback plus workbench status; distinct Verify, Save/Load preset, Prepare NEW profile and Start actions.",
+      "limits": "32fields;2048UTF8bytes each;8KiB values;16KiB presets;8presets pertool;8preparedprofiles;one bounded host job.",
+      "open_work": [
+        "DBG2-07: persist input preferences",
+        "DBG2-13/15: command console entry"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "workbench.inspect",
+      "handler": "Workbench::open / fields",
+      "cli": null,
+      "parameters": [
+        {
+          "name": "address",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "length",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        }
+      ],
+      "selection": [
+        "Typed current input roles as shown by the tool; changing a draft never runs it."
+      ],
+      "allowed_state": "Paused host menu; at most one bounded content worker; no guest input/step.",
+      "effects": "Open host draft and existing cached choices. No scan, OS dialog, guest mutation or tool execution.",
+      "result": "Readable draft feedback plus workbench status; distinct Verify, Save/Load preset, Prepare NEW profile and Start actions.",
+      "limits": "32fields;2048UTF8bytes each;8KiB values;16KiB presets;8presets pertool;8preparedprofiles;one bounded host job.",
+      "open_work": [
+        "DBG2-07: persist input preferences",
+        "DBG2-13/15: command console entry"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "workbench.audio",
+      "handler": "Workbench::open / fields",
+      "cli": null,
+      "parameters": [
+        {
+          "name": "--frames",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--streams",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        }
+      ],
+      "selection": [
+        "Typed current input roles as shown by the tool; changing a draft never runs it."
+      ],
+      "allowed_state": "Paused host menu; at most one bounded content worker; no guest input/step.",
+      "effects": "Open host draft and existing cached choices. No scan, OS dialog, guest mutation or tool execution.",
+      "result": "Readable draft feedback plus workbench status; distinct Verify, Save/Load preset, Prepare NEW profile and Start actions.",
+      "limits": "32fields;2048UTF8bytes each;8KiB values;16KiB presets;8presets pertool;8preparedprofiles;one bounded host job.",
+      "open_work": [
+        "DBG2-07: persist input preferences",
+        "DBG2-13/15: command console entry"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "workbench.code",
+      "handler": "Workbench::open / fields",
+      "cli": null,
+      "parameters": [
+        {
+          "name": "--frames",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--events",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--start",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--end",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--kind",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--mode",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        }
+      ],
+      "selection": [
+        "Typed current input roles as shown by the tool; changing a draft never runs it."
+      ],
+      "allowed_state": "Paused host menu; at most one bounded content worker; no guest input/step.",
+      "effects": "Open host draft and existing cached choices. No scan, OS dialog, guest mutation or tool execution.",
+      "result": "Readable draft feedback plus workbench status; distinct Verify, Save/Load preset, Prepare NEW profile and Start actions.",
+      "limits": "32fields;2048UTF8bytes each;8KiB values;16KiB presets;8presets pertool;8preparedprofiles;one bounded host job.",
+      "open_work": [
+        "DBG2-07: persist input preferences",
+        "DBG2-13/15: command console entry"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "workbench.gameplay",
+      "handler": "Workbench::open / fields",
+      "cli": null,
+      "parameters": [
+        {
+          "name": "--frames",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--events",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--family",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--context",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        }
+      ],
+      "selection": [
+        "Typed current input roles as shown by the tool; changing a draft never runs it."
+      ],
+      "allowed_state": "Paused host menu; at most one bounded content worker; no guest input/step.",
+      "effects": "Open host draft and existing cached choices. No scan, OS dialog, guest mutation or tool execution.",
+      "result": "Readable draft feedback plus workbench status; distinct Verify, Save/Load preset, Prepare NEW profile and Start actions.",
+      "limits": "32fields;2048UTF8bytes each;8KiB values;16KiB presets;8presets pertool;8preparedprofiles;one bounded host job.",
+      "open_work": [
+        "DBG2-07: persist input preferences",
+        "DBG2-13/15: command console entry"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "workbench.recent",
+      "handler": "Workbench::open / fields",
+      "cli": null,
+      "parameters": [
+        {
+          "name": "--events",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--reads",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--start",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--end",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--on-error",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        }
+      ],
+      "selection": [
+        "Typed current input roles as shown by the tool; changing a draft never runs it."
+      ],
+      "allowed_state": "Paused host menu; at most one bounded content worker; no guest input/step.",
+      "effects": "Open host draft and existing cached choices. No scan, OS dialog, guest mutation or tool execution.",
+      "result": "Readable draft feedback plus workbench status; distinct Verify, Save/Load preset, Prepare NEW profile and Start actions.",
+      "limits": "32fields;2048UTF8bytes each;8KiB values;16KiB presets;8presets pertool;8preparedprofiles;one bounded host job.",
+      "open_work": [
+        "DBG2-07: persist input preferences",
+        "DBG2-13/15: command console entry"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "workbench.graphics",
+      "handler": "Workbench::open / fields",
+      "cli": null,
+      "parameters": [
+        {
+          "name": "--compare-last",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        }
+      ],
+      "selection": [
+        "Typed current input roles as shown by the tool; changing a draft never runs it."
+      ],
+      "allowed_state": "Paused host menu; at most one bounded content worker; no guest input/step.",
+      "effects": "Open host draft and existing cached choices. No scan, OS dialog, guest mutation or tool execution.",
+      "result": "Readable draft feedback plus workbench status; distinct Verify, Save/Load preset, Prepare NEW profile and Start actions.",
+      "limits": "32fields;2048UTF8bytes each;8KiB values;16KiB presets;8presets pertool;8preparedprofiles;one bounded host job.",
+      "open_work": [
+        "DBG2-07: persist input preferences",
+        "DBG2-13/15: command console entry"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "workbench.issue",
+      "handler": "Workbench::open / fields",
+      "cli": null,
+      "parameters": [
+        {
+          "name": "--symptom",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--profile",
+          "value_type": "text",
+          "constraint": "Typed form or generated selected reference; shared CLI parser validates actual values.",
+          "current_menu": "selected",
+          "default": null
+        }
+      ],
+      "selection": [
+        "Typed current input roles as shown by the tool; changing a draft never runs it."
+      ],
+      "allowed_state": "Paused host menu; at most one bounded content worker; no guest input/step.",
+      "effects": "Open host draft and existing cached choices. No scan, OS dialog, guest mutation or tool execution.",
+      "result": "Readable draft feedback plus workbench status; distinct Verify, Save/Load preset, Prepare NEW profile and Start actions.",
+      "limits": "32fields;2048UTF8bytes each;8KiB values;16KiB presets;8presets pertool;8preparedprofiles;one bounded host job.",
+      "open_work": [
+        "DBG2-07: persist input preferences",
+        "DBG2-13/15: command console entry"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "workbench.validate",
+      "handler": "Workbench::request / play.rs::workbench_request",
+      "cli": null,
+      "parameters": [],
+      "selection": [
+        "Current tool draft and typed references"
+      ],
+      "allowed_state": "Paused host menu; at most one bounded content worker; no guest input/step.",
+      "effects": "Explicit validate request; only Start dispatches a guest-capable handler. Preparation creates a new pinned profile; presets contain scalar draft values only.",
+      "result": "Shared parser/handler refusal or readable completion/workbench status with retained outputs.",
+      "limits": "Existing session/caps/preflight; no overwrite, automatic start, arbitrary shell or implicit OS dialog.",
+      "open_work": [
+        "DBG2-13/15: common command request wrapper"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "workbench.save-preset",
+      "handler": "Workbench::request / play.rs::workbench_request",
+      "cli": null,
+      "parameters": [],
+      "selection": [
+        "Current tool draft and typed references"
+      ],
+      "allowed_state": "Paused host menu; at most one bounded content worker; no guest input/step.",
+      "effects": "Explicit save-preset request; only Start dispatches a guest-capable handler. Preparation creates a new pinned profile; presets contain scalar draft values only.",
+      "result": "Shared parser/handler refusal or readable completion/workbench status with retained outputs.",
+      "limits": "Existing session/caps/preflight; no overwrite, automatic start, arbitrary shell or implicit OS dialog.",
+      "open_work": [
+        "DBG2-13/15: common command request wrapper"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "workbench.load-preset",
+      "handler": "Workbench::request / play.rs::workbench_request",
+      "cli": null,
+      "parameters": [],
+      "selection": [
+        "Current tool draft and typed references"
+      ],
+      "allowed_state": "Paused host menu; at most one bounded content worker; no guest input/step.",
+      "effects": "Explicit load-preset request; only Start dispatches a guest-capable handler. Preparation creates a new pinned profile; presets contain scalar draft values only.",
+      "result": "Shared parser/handler refusal or readable completion/workbench status with retained outputs.",
+      "limits": "Existing session/caps/preflight; no overwrite, automatic start, arbitrary shell or implicit OS dialog.",
+      "open_work": [
+        "DBG2-13/15: common command request wrapper"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "workbench.prepare",
+      "handler": "Workbench::request / play.rs::workbench_request",
+      "cli": null,
+      "parameters": [],
+      "selection": [
+        "Current tool draft and typed references"
+      ],
+      "allowed_state": "Paused host menu; at most one bounded content worker; no guest input/step.",
+      "effects": "Explicit prepare request; only Start dispatches a guest-capable handler. Preparation creates a new pinned profile; presets contain scalar draft values only.",
+      "result": "Shared parser/handler refusal or readable completion/workbench status with retained outputs.",
+      "limits": "Existing session/caps/preflight; no overwrite, automatic start, arbitrary shell or implicit OS dialog.",
+      "open_work": [
+        "DBG2-13/15: common command request wrapper"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "workbench.run",
+      "handler": "Workbench::request / play.rs::workbench_request",
+      "cli": null,
+      "parameters": [
+        {
+          "name": "--source",
+          "value_type": "choice",
+          "constraint": "embedded or external; external requires exact declared source/dependencies",
+          "current_menu": "selected",
+          "default": "embedded"
+        }
+      ],
+      "selection": [
+        "Current tool draft and typed references"
+      ],
+      "allowed_state": "Paused host menu; at most one bounded content worker; no guest input/step.",
+      "effects": "Explicit run request; only Start dispatches a guest-capable handler. Preparation creates a new pinned profile; presets contain scalar draft values only.",
+      "result": "Shared parser/handler refusal or readable completion/workbench status with retained outputs.",
+      "limits": "Existing session/caps/preflight; no overwrite, automatic start, arbitrary shell or implicit OS dialog.",
+      "open_work": [
+        "DBG2-13/15: common command request wrapper"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "workbench.back",
+      "handler": "Workbench::request / play.rs::workbench_request",
+      "cli": null,
+      "parameters": [],
+      "selection": [
+        "Current tool draft and typed references"
+      ],
+      "allowed_state": "Paused host menu; at most one bounded content worker; no guest input/step.",
+      "effects": "Explicit back request; only Start dispatches a guest-capable handler. Preparation creates a new pinned profile; presets contain scalar draft values only.",
+      "result": "Shared parser/handler refusal or readable completion/workbench status with retained outputs.",
+      "limits": "Existing session/caps/preflight; no overwrite, automatic start, arbitrary shell or implicit OS dialog.",
+      "open_work": [
+        "DBG2-13/15: common command request wrapper"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "tools.homepage",
+      "handler": "details/run",
+      "cli": null,
+      "parameters": [
+        {
+          "name": "--timeout-ms",
+          "value_type": "decimal",
+          "constraint": "20..120000ms total host deadline",
+          "current_menu": "selected",
+          "default": "120000"
+        },
+        {
+          "name": "--root",
+          "value_type": "argv",
+          "constraint": "Delegated declared adapter argument; paths are pinned typed references, output is a unique run directory",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--stdout",
+          "value_type": "argv",
+          "constraint": "Delegated declared adapter argument; paths are pinned typed references, output is a unique run directory",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--out",
+          "value_type": "argv",
+          "constraint": "Delegated declared adapter argument; paths are pinned typed references, output is a unique run directory",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--session",
+          "value_type": "argv",
+          "constraint": "Delegated declared adapter argument; paths are pinned typed references, output is a unique run directory",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--version",
+          "value_type": "argv",
+          "constraint": "Delegated declared adapter argument; paths are pinned typed references, output is a unique run directory",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--source",
+          "value_type": "choice",
+          "constraint": "embedded or external; external requires exact declared source/dependencies",
+          "current_menu": "selected",
+          "default": "embedded"
+        }
+      ],
+      "selection": [
+        "Typed current input roles as shown by the tool; changing a draft never runs it."
+      ],
+      "allowed_state": "Idle paused debug copy; one bounded workbench process; selection/Details are readonly.",
+      "effects": "Open typed draft only; explicit Start executes the declared readonly adapter/recipe or reads guest catalog; explicit Cancel stops supervised host process.",
+      "result": "Details with version/hash/prerequisites/output; retained request/result/logs for host execution or readonly guest summary.",
+      "limits": "8retained runs,20..120000ms,8MiB per process stream,16readonly recipe steps,1MiB guest catalog; scalar preset limits remain shared.",
+      "open_work": [],
+      "external_dialog": null
+    },
+    {
+      "id": "tools.campaign-report",
+      "handler": "details/run",
+      "cli": null,
+      "parameters": [
+        {
+          "name": "--case",
+          "value_type": "text",
+          "constraint": "Optional portable1..64byte campaign case ID",
+          "current_menu": "selected",
+          "default": ""
+        }
+      ],
+      "selection": [
+        "Typed current input roles as shown by the tool; changing a draft never runs it."
+      ],
+      "allowed_state": "Idle paused debug copy; one bounded workbench process; selection/Details are readonly.",
+      "effects": "Open typed draft only; explicit Start executes the declared readonly adapter/recipe or reads guest catalog; explicit Cancel stops supervised host process.",
+      "result": "Details with version/hash/prerequisites/output; retained request/result/logs for host execution or readonly guest summary.",
+      "limits": "8retained runs,20..120000ms,8MiB per process stream,16readonly recipe steps,1MiB guest catalog; scalar preset limits remain shared.",
+      "open_work": [],
+      "external_dialog": null
+    },
+    {
+      "id": "tools.artifact-preview",
+      "handler": "details/run",
+      "cli": null,
+      "parameters": [],
+      "selection": [
+        "Typed current input roles as shown by the tool; changing a draft never runs it."
+      ],
+      "allowed_state": "Idle paused debug copy; one bounded workbench process; selection/Details are readonly.",
+      "effects": "Open typed draft only; explicit Start executes the declared readonly adapter/recipe or reads guest catalog; explicit Cancel stops supervised host process.",
+      "result": "Details with version/hash/prerequisites/output; retained request/result/logs for host execution or readonly guest summary.",
+      "limits": "8retained runs,20..120000ms,8MiB per process stream,16readonly recipe steps,1MiB guest catalog; scalar preset limits remain shared.",
+      "open_work": [],
+      "external_dialog": null
+    },
+    {
+      "id": "tools.recipe",
+      "handler": "details/run",
+      "cli": null,
+      "parameters": [],
+      "selection": [
+        "Typed current input roles as shown by the tool; changing a draft never runs it."
+      ],
+      "allowed_state": "Idle paused debug copy; one bounded workbench process; selection/Details are readonly.",
+      "effects": "Open typed draft only; explicit Start executes the declared readonly adapter/recipe or reads guest catalog; explicit Cancel stops supervised host process.",
+      "result": "Details with version/hash/prerequisites/output; retained request/result/logs for host execution or readonly guest summary.",
+      "limits": "8retained runs,20..120000ms,8MiB per process stream,16readonly recipe steps,1MiB guest catalog; scalar preset limits remain shared.",
+      "open_work": [],
+      "external_dialog": null
+    },
+    {
+      "id": "tools.guest-scripts",
+      "handler": "details/run",
+      "cli": null,
+      "parameters": [],
+      "selection": [
+        "Typed current input roles as shown by the tool; changing a draft never runs it."
+      ],
+      "allowed_state": "Idle paused debug copy; one bounded workbench process; selection/Details are readonly.",
+      "effects": "Open typed draft only; explicit Start executes the declared readonly adapter/recipe or reads guest catalog; explicit Cancel stops supervised host process.",
+      "result": "Details with version/hash/prerequisites/output; retained request/result/logs for host execution or readonly guest summary.",
+      "limits": "8retained runs,20..120000ms,8MiB per process stream,16readonly recipe steps,1MiB guest catalog; scalar preset limits remain shared.",
+      "open_work": [],
+      "external_dialog": null
+    }
+  ]
+}

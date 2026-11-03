@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-10-30",
+  "slug": "classify-european-world-records38",
+  "title": "Classify the European observed world records with 38-byte stride",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Authenticate31 physical records at71E0E0..71E57A from all512 mission sixbit projections and the independent bounded updater; retain the interiorrow1 alias within one owner and the following two-byte gap unowned.",
+    "Preserve rawu8 and fullu32 encoded-view domains separately from the declared catalog; document byte/u16/low10/threshold projections and opaque storage without invented caps or enums."
+  ],
+  "validation": [
+    "All1178 bytes roundtrip SHA256cd2b33e95a5b46a53703f8a32f89a6f1c0eea4d1b562dfd86ee7c4836084d483;512links select exactly0..30, no overlap81accepted e89-d88 owners/50497 source spans.",
+    "12authenticated staticwindows(10new/twocached),58instruction-literal pins107hashmtime guards pass; all exactroot/interior literals in cached aligned census covered, accepted82files unchanged.",
+    "Static only: no build/Wine/game/input/checkpoint/performance campaign or closed proof replay."
+  ],
+  "limitations": [
+    "Strict model/original-prefix Wine, managed runtime/publication, actualCLI and ordinary use remain pending; schema1/e89-d88 unchanged.",
+    "Outside/indirect/unaligned readers, opaque fields, externalhelpers/RNG/fullroutineABI/liveeffects, Linux/USA/nativeWindows/new32:9/fullTODO remain pending.",
+    "Sparse27 ordinary use stays partial; no blind navigation is resumed. Parallel DBG/menu work preserved and excluded."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "reclassify-european-palette-effect-sources",
+  "title": "Reclassify apparent audio roots as memory helpers and palette-effect dispatch",
+  "kind": "docs",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Correct two queued audio roots using their actual original readers:370eb0 stores three copied-IWRAM executable helper entries (zero-clear/copy/byte-fill); b94690 supplies palette-effect callbacks. Adjacency after the audio driver is not an audio classification. No new audio owner is inferred.",
+    "Prove five constructors store object.u16(4) selectors1/2/4/8/16 and updater0814ac68reads an unmasked live u16 through a4Bword lookup only for object.state1. Retain a17word/68Bprojection through maximum produced selector16 including12interior null slots; this does not prove a global16cap or the full physical extent. Original outside indexes remain raw."
+  ],
+  "validation": [
+    "Bounded static disassemblies authenticate all7retained literal references/5MOV-STRHproducer pairs/original state-width-index opcodes and5Thumb callback entries. Three32Bcopied-helper prefixes in an existing hash-authenticated EUR snapshot uniquely match ROMcode at d96838/d968a8/d9686c; no guest execution or fixture creation.",
+    "Independent17word source/hash/roundtrip and nonoverlap with all38current e44owners pass.210prior source-doc hashes checked before mutations; prior e44source1138/gain8/native28/CLI/ordinary acceptance remains closed and is not repeated. Evidence:target/rom-data-audio-wrappers/{inventory-reclassification.py,wrapper-reclassification-independent.json,*.txt}."
+  ],
+  "limitations": [
+    "This is static classification/source inventory, not model/publication/native/ordinary palette-effect acceptance. e44-d43/USAe8-d7 remain unchanged. New Linux/USA/nativeWindows checks pending; no performance-space campaign/AndroidPort/commit-push.",
+    "Executable-helper code and copied RAM instructions stay outside asset decoding. Wider callback extent, palette programs/other graphics-text-map-gameplay/audio assets/GUI-archive-mod criteria remain open."
+  ],
+  "files": [
+    "docs/rom_data_audio.md",
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

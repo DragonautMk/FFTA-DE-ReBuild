@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "date": "2026-10-30",
+  "slug": "consume-european-world-records38",
+  "title": "Consume European world records through managed typed storage",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Publish e90-d89 world-records38.json at index81 as83files82resources, retaining all81 prior records and payloads. Add immutable31-record page71E ownership composed with sparse27 and raw gaps/nextroot, five physical classes/eight counters and no guest ABI/cap change.",
+    "Wire strict source-authenticated transactional attachment, extraction/loading and use logging; keep the current sparse27 observer while excluding it only from the accepted frozen host overlay."
+  ],
+  "validation": [
+    "One warning-free592-source/255core-input Windows host-test build271dcebaea48bd973d492534e9623b4f9a2efc8f02b1d64335c3ab560766a995; compiler childexit0, wrapper stale private label guard corrected offline and SAMEexecutable adopted, no rebuild.",
+    "One reduced Wine filter passes publication83/prior81exact/newfileinterruption/14attach2fullset/27native fullstate-clock cases(17load10prefix/10stop-safe families). All actual callbacks account23SERVEDnewB/5priorB/fallback[0, 0], not distinct unions or all-direct-native.",
+    "All1178B/five classes31records/31boundaries/mirrors-widths/prior-owner/rawgap-nextroot/LoadslotUndo/unavailable-file owner preservation pass. DMA/CpuSet704halfwords/FastSet352words complete-state-clock exact. 269guards592frozen/255core590model/sevencurrent82prior exact.",
+    "Final project-memory default/base35920d8/metadata and CRLF-aware whitespace checks pass; retention retires only successful disposable interrupted copy, accepted dataset/nativeobjects/sourcepreimages/logs retained."
+  ],
+  "limitations": [
+    "Actual productionCLI creation/reuse/startup and positive ordinary equivalence remain pending. Sparse27 ordinary reachability stays partial; no blind navigation resumed.",
+    "FullroutineABI/helpers/RNG/liveeffects/opaque-outside-indirect semantics/Linux-USA-nativeWindows/new32:9/fullROMTODO remain pending; no performance/space campaign, oldproof or ordinary fixture replay.",
+    "Parallel DBG/menu work is preserved and excluded; its validation is not attributed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/world_records38.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/world_records38_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "scripts/extract_rom_data.py",
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

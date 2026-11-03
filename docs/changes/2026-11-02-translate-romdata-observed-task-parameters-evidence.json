@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-romdata-observed-task-parameters-evidence",
+  "title": "Translate observed task parameter evidence",
+  "kind": "docs",
+  "platforms": [
+    "Desktop ROM-data planning documentation"
+  ],
+  "changes": [
+    "Translate observed task parameter and lower residue records, constructor animation evidence and conditional phase-zero validation while retaining open criteria."
+  ],
+  "validation": [
+    "Checked unchanged surrounding text and matching numeric values, task IDs, link targets and inline literals against the preimage."
+  ],
+  "limitations": [
+    "Later evidence and the wider English-first audit remain open; no ROM access or runtime checks were performed."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_TODO.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

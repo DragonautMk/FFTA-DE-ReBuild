@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "observe-european-property-masks-headgear",
+  "title": "Observe European property masks in headgear inventory",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Document a source-backed ordinary headgear scene that reads the e100 property masks."
+  ],
+  "validation": [
+    "Authenticated original Wine source windows and ran one retained 560-frame Wine observation: 91 typed reads and 364 source bytes, with 224 guarded files and 707 frozen sources unchanged."
+  ],
+  "limitations": [
+    "Aggregate counters do not identify distinct source bytes or exact PCs; a same-scene comparison, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md"
+  ]
+}

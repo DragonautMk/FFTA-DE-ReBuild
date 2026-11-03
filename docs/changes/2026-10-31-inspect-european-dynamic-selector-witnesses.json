@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "inspect-european-dynamic-selector-witnesses",
+  "title": "Inspect European dynamic selector witnesses",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Document the bounded direct-call and task-byte producer evidence for dynamic fragment selectors."
+  ],
+  "validation": [
+    "Rechecked all 24 known direct setter callsites and authenticated seven original Windows disassembly windows under Wine; inspected producers yield only 3, 7 or 8."
+  ],
+  "limitations": [
+    "The local inspection does not exclude alias, indexed or external writers and does not establish a global selector bound or positive ordinary use; Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_ui_raw_transfers.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_raw_transfers.md"
+  ]
+}

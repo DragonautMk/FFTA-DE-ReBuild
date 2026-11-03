@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-10-25",
+  "slug": "inventory-european-script-special-normal-poses",
+  "title": "Bound European normal script poses with exact special-unit selector witnesses",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Join all151low-selector decimal49instructions to their actual logical metadata14normal sprite fields under explicit current same-unit normal assignment, clear override20and facing0..3conditions. Preserve20producer witnesses over14logicalIDs and18distinct sprite/base pairs, without an arbitrary all-sprite product or pruned binding.",
+    "Define108physical queries/76genuine nulls/32proper sequences241frames/11OBJlists64objects/95indexed4bpp requests35968B. Keep alternate/42-230override/high16registry/current-state cases separate before inspecting targets.",
+    "Authenticate exact initial/normal shared ownership and a33span6436Bnew source plan, including two previously observed null cells. No new model/runtime/revision or private-state-based extraction input."
+  ],
+  "validation": [
+    "Static exactEUR/archive/metadata14/manifest authentication verifies all151instruction references,20logical producer pairs,108cells and all56previous resource file/source hashes.27halfword/one literal/three BL fingerprints pin unit-byte4match/special predicate/normal getter/current actor assignment.",
+    "Full41802Bsource SHA256f64755ef3d0cfc13cb8286965b42e87fa2f7b8d450ecd86a4a97674241c0f4fa; shared4780initial+30586normalBonly. No internal-role conflict, known-index-root target, mixed typed item or varying pixel extent.",
+    "New33spans6436B=240index28header920frame5248pixel;60cells53nulls/sevensequences46newframes(alloperation1)/17newpixel requests. New source SHA2566c3ef9c987b02ad1c06492ac245484b1574a45666cba90bff097c7e1e5cf5027. No build/guest execution or old acceptance/census replay.",
+    "All8689prior artifact hashes and baseline implementation inputs remain unchanged; only six coherent memory/feature docs plus the new inventory record change.333local feature links, project-memory default/base7597b92 and CRLF-aware whitespace checks pass; no live task job."
+  ],
+  "limitations": [
+    "Conditional source contract only; lossless model, original-reader Wine proof, managed/runtime/actualCLI/ordinary pipeline remain pending. Current EUR e61-d60/USAe8-d7 unchanged.",
+    "No universal current selector-to-sprite binding or every-actor/action reachability. Alternate/override/high-selector registry and changed/stale actor contexts remain explicit open cases, not ignored invalid rows.",
+    "New Linux/USA/native Windows/new32:9 pending; no performance/storage measurements, new fixture/navigation/checkpoint/private payload edit, Android change, packaging, commit or push. Pending rejected equipment derivation is not executed."
+  ],
+  "files": [
+    "docs/rom_data_unit_obj.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_unit_obj.md",
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

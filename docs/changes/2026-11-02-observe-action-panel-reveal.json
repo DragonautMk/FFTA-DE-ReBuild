@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "observe-action-panel-reveal",
+  "title": "Observe real EUR action-panel reveal geometry",
+  "kind": "docs",
+  "platforms": [
+    "Desktop core interpreter on Linux; GUI and native Windows untested"
+  ],
+  "changes": [
+    "Record a bounded action-menu close and reopen, observed changing backing and owner bounds, and diagnostic 100/150 percent packed layers."
+  ],
+  "validation": [
+    "Two corrected 72-frame interpreter captures produced identical frame metadata; selected packed layers were inspected. Existing EUR ROM and snapshot hashes remained unchanged."
+  ],
+  "limitations": [
+    "Initial zero-extension setup disabled capture and is invalid; corrected run used 22-pixel side extension. Diagnostic layers do not prove a visible GUI defect, mouse alignment, stable owner, native execution, USA, Android or native Windows behavior."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-03-panel-visual-fixes.md"
+  ],
+  "references": [
+    "docs/ffta_action_frame_width.md"
+  ]
+}

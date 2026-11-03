@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "inventory-european-script-localized-text",
+  "title": "Bound the European script-selected localized text archives and live variants",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Identify five localized text roots with independent next-language/script-key boundaries:1803744bytes/five ranges, disjoint all45published e51owners. Key domains/minimum root offsetFC agree with63top entries per language; the first word is a shared late bank0, not a length.",
+    "Preserve eleven repeated normal links per language and26bank61variants selected by unsigned live-byte division; the separate remainder helper remaps the live message by24. Retain distinct full-u16/low-byte special-message branches, fallback language/key, raw key IDs and original guest work without new caps.",
+    "Classify385physical banks/41395u16index entries including385sentinels/41010programs using existing text Program/customLZ grammar. Preserve9813compressed extended/5709raw extended/25488raw compact programs, allheader bits/commands/operands/decoded tails and34314exact one-to-three-byte alignment gaps.147glyph IDs1..3112 are already in the complete font asset; script-key/font assets are actual dependencies."
+  ],
+  "validation": [
+    "Previous unit e51managed/runtime/native/CLI/ordinary/memory is terminal complete in runtime-final-summary:260source/doc hashes,4039protected artifacts and366hash-mtime guards. No old text/source/native/lifecycle/CLI/ordinary evidence repeated for context.",
+    "Independent static verification reconstructs/hashes all1803744bytes exactly once,15195key/variant target formulas,349instruction halfwords/13literal words, actual dependency hashes/all147glyph references and disjoint45owners. Source partition1260top+520variant+82790bank-index+1684407program+34767alignment bytes. No guest execution, build or Wine test for inventory.",
+    "The initial private classifier rejects a uniform-fill assertion: four three-byte gaps contain mixed values. Preserve exact bounded gap bytes; only the failed assertion is corrected before plan/model/runtime/Wine. No source grammar or consumer guard is relaxed. Retain candidate/rejected evidence and bounded original consumer chain11906/1916c/9b08/9b7c/11920/11e28/11e80/13f8c.",
+    "The final bookkeeping guard caught that docs/rom_data_text.md was outside the260-file e51baseline. Its original HEAD content is preserved verbatim before the new section; expand the final source/doc snapshot to262files. This corrects the snapshot-scope assumption only, with no implementation/model/build/game test repeated. The private finalizer also accepts the already-written closure marker when resuming its interrupted bookkeeping.",
+    "Final preservation passes all4039prior artifact hashes/366hash-mtime guards. Against260prior source/doc hashes, only six intended memory files change. The existing text feature doc was outside that baseline; its full HEAD content is preserved verbatim before the new section and it is now included in the expanded snapshot. Every prior implementation/source-model/e51record/Debug-save file and concurrent Docker state paragraph is unchanged. Inventory changes no implementation. Final snapshot and memory/default-base7597b92/whitespace outcomes are retained under target/rom-data-script-text/inventory-final-*.json."
+  ],
+  "limitations": [
+    "Only static source inventory is complete. Strict model/one reduced Wine original-reader oracle/publication/direct runtime/production CLI/positive ordinary remain pending children. EUR stays e51-d50/USAe8-d7. Source formulas and storage layout do not prove whole text/callback ABI, all argument semantics or ordinary reachability.",
+    "e49positive ordinary event/selector criterion and other asset/GUI/archive/mod work remain open. New Linux/USA/native Windows checks remain pending. No performance/space measurements, fixtures/navigation/save-RAM-payload edits, Android changes, agent commit or push. Preserve user Debug-save work and concurrent Docker work/commits."
+  ],
+  "files": [
+    "docs/rom_data_text.md",
+    "docs/rom_data_scripts.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_text.md",
+    "docs/rom_data_scripts.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

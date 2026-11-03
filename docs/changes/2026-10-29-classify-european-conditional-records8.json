@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "slug": "classify-european-conditional-records8",
+  "title": "Classify European conditional eight-byte records",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Establish the EUR713744..713B3C source contract as127 ordered eight-byte slots using the original bounded scan and independent70-byte successor readers.",
+    "Preserve unsigned gates, little-endian live keys, numeric operands and original output-pointer identity; distinguish first/second flag polarity, counter bounds, second-key-zero bypass and full32-bit capacity/filter behavior."
+  ],
+  "validation": [
+    "All127 slots reconstruct1016 bytes exactly, SHA256d52e829c2ae2e3f8a519fc1fe28797a1005fcdc0e2afc81201e872024608b18b; no overlap with76 accepted e84-d83 resources/50490 source spans.",
+    "Eight authenticated static windows (six new/two cached),93 instruction/literal pins and96 input hash/mtime guards pass; accepted77-file dataset and all previous completed proofs remain preserved; artifact helper retires zero paths.",
+    "76 nonzero-gate/51 zero slots,105 live references104flag1counter/63 distinct keys/24 alias groups and47 second-key-zero bypasses classified. Two inspected direct callers pass64/low8 context; counter operand2 remains numeric.",
+    "Static inspection only: no build, Wine/game/test/fixture/navigation or completed helper/proof replay; no performance or storage measurement.",
+    "Generated changelog/metadata and CRLF-aware whitespace checks pass. Default/basee8bd939/base07be4d2 coverage checks identify three concurrent debug-code/residue paths without a changed record; none belongs to this source-only unit."
+  ],
+  "limitations": [
+    "Strict typed model/original-reader Wine proof, managed runtime/publication, actual CLI and ordinary use of this family remain pending. Schema1/e84-d83 and76 resources remain unchanged.",
+    "No semantic mission/job/rumor names, full caller ABI, all indirect/unaligned references, mutable IWRAM helper body or successor70-byte extent established. Capacity0 has no original entry guard; no empty-list semantics invented.",
+    "Linux, USA, native Windows, new32:9 and the full ROM TODO remain pending. Parallel audio/debug/report/coverage changes are preserved and not validated by this unit.",
+    "Workspace-wide memory coverage awaits the parallel records for crates/recomp/src/debug_code.rs, crates/recomp/src/debug_code/report.html and crates/recomp/src/rom_data/native_rom_data_residue_tests.rs. Their code and validation remain outside this unit."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

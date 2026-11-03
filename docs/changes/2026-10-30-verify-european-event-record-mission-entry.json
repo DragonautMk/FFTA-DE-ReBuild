@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "date": "2026-10-30",
+  "slug": "verify-european-event-record-mission-entry",
+  "title": "Verify ordinary European event-record mission-entry equivalence",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add a test-only passive eleven-counter normal-input observer and optional five-line positive-use guard; preserve core/runtime and verify inverse hub/validator edits against accepted preimages.",
+    "Close one new ordinary event-record case from an authorized copy of the retained Giza White Flowers menu checkpoint, stopping discovery after one positive capture."
+  ],
+  "validation": [
+    "One warning-free584-source Windows test build0b6581cbf4f09f3da2b10accd63e9c81d7332830865b3172c5abb139c08d8042 uses583 accepted CLI sources plus one leaf; core/runtime unchanged/inverse integration exact.",
+    "One A12 capture executes34frames19409 to19443, first readrelative2/guest19412, rolling0 yields same34suffix.4bus reads/6servedbytes/key2-primary2-alternate2/one physical record; five other classes zero.",
+    "Sameb9a60501 CLI/e88generation3iczRx actual childexit0/34frames. Collector then selected old resource ID and failed; new offline helper registers existing log/eventID/all11counts with no command/frame replay.80ID hashes/83 managed paths/28859-block native cache exact.",
+    "Same0b6581cb one Wine fullpair passes every34 complete states/clocks/central-wide pixels/OAM/five audio streams with all11counts exact.128240/218562dispatch and audio[74612,74612,8976,8976,74488] are coverage only.",
+    "Fullwide284x160 PPM authenticated against complete FFSTATE, readonly classic image inspected as Giza map during early mission entry.126guards/584frozen/583CLI/three current hashes/original seeds/ROM/canonical/cache/TinyCC exact; artifact helper retires zero paths.",
+    "Final changelog/default/base35920d8/metadata project-memory checks and CRLF-aware whitespace all pass."
+  ],
+  "limitations": [
+    "Ordinary scope covers three classes in one record, not all eight/all256 or an alias branch/event outcome; both arms use the same old native cache, no whole interpreter/native parity claim.",
+    "Full routine ABI/live script-event effects, indirect references, preceding opaque gap, next27-byte catalog extent, Linux, USA, native Windows,new32:9 and full ROM TODO remain pending.",
+    "No manual guest RAM/register/task/ID/ROM/cartridge edit, RNG forcing, source/model/native/registration/old700-frame route proof replay or performance/storage campaign. Concurrent debug work remains outside frozen sources."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "crates/recomp/src/rom_data/event_records12_scene_tests.rs",
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "consume-european-item-linked-pairs",
+  "title": "Consume European counted item links with original live unit publication",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Publish EUR schema1/extractor24/decoder23, fixed item-links.json/resource gameplay.item-links/format item-links-v1-json with explicit gameplay.item-records dependency and actual parsed-owner validation. Nineteen files/eighteen resources authenticate before transactional attachment; all seventeen earlier decoded files/e23and older generations remain unchanged, USA stays e8-d7.",
+    "Serve all4500source bytes from225typed count/opaque/nine-pair records through original CPU/DMA/native/guest-BIOS source views. Separate count/selector/value/opaque counters preserve every storage byte, including unused slots; original query/normal bit7/FFunit+3dpublication, later job/ability/caller work, guest clock and save/native ABI remain active. Merge crossing reads with the adjacent older item owner instead of reading either altered raw span.",
+    "Reuse the closed item-link source model/original oracle without repeating its2244+8cases. Add focused managed authentication/lifecycle/native ownership and ordinary-scene gates that distinguish new count/selector/value use from prior item-field use. Keep unsupported broader gameplay semantics and other ROM-backed tables explicit."
+  ],
+  "validation": [
+    "Windows integration58563and production46465builds warning-free; canonical executable restored. Wine53464two focused checks pass publication interruption/create/reuse/repair/move/e23retention, equality of every17old decoded file, coherent count/opaque/unused/reorder/source/dependency/path/role transactional guards and unavailable-copy Load/Undo/backup/restart.",
+    "Sixty-two sampled actual selector/query/publication interpreter/native paths with4500new raw bytes altered match complete states/clocks; compiled36count/114selector/56value bytes cover all eight observed count shapes and actual FFcontext-mismatch gates. A separate selector-only table excludes theD0CC2stop shared with query entries, avoiding fixture chaining past its boundary. Opaque byte1is not read by those guest paths and is independently byte-bus-proved. All bytes/edges/widths/mirrors/real-BIOS bus/CpuSet/FastSet and4typed DMA bytes pass. A narrow crossing word with both adjacent raw owners altered proves2typed old+2typed new bytes.",
+    "Actual CLI46716through Wine creates/reuses without dataset writes from unrelated cwd using the old native cache. Initial400-frame ordinary Equipment slots reads0new link bytes; retained negative without a full pair/repeat. A justified normal Down/Aextension opens an inventory whose inspected final image shows headgear(Wizard Hat/Cross Helm/Diamond Helm/Green Beret/Feather Cap). CLI61475at560frames consumes574new bytes(287count/205selector/82value,0opaque). Private weapon-list artifact names are locators, not a weapon-scene claim.",
+    "One560-frame ordinary Wine pair75575matches every complete state/clock/central-wide image/OAM/dispatch and mixed/PSG/FIFO/HLE audio sample with identical positive three-field use. Final headgear image inspected. No source/managed/native proof repeated, no direct RAM fixture edit. Original ROM/states/inputs/e23dataset/cache/loader/canonical remain protected; source-only final evidence retained under source-final-* in ignored target/rom-data-item-links.",
+    "Structured memory/feature docs/PROJECT_STATE/TODO/changelog and project-memory/whitespace/protected-input/candidate/canonical/source checks recorded at closure. All unit jobs terminal; existing uncommitted e23/source work and unrelated user work preserved. No agent commit or push."
+  ],
+  "limitations": [
+    "This225-record item-linked catalog is complete for the declared EUR scope, not all gameplay data. Standalone source proofs cover bounded query/publication prefixes and the actual FFentry gate; other16/52byte tables, full surrounding job/ability semantics, maps/audio/other gameplay and broader GUI/archive/mod phases remain open. Original subsequent calls and live unit state are unchanged.",
+    "Ordinary positive coverage is one headgear inventory, with opaque storage covered separately by bus checks. New Linux/USA/native Windows verification remains pending. No performance/startup/RSS/space campaign or AndroidPort work; private assets/fixtures/generated code/previews remain ignored."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/item_links.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/item_link_runtime_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "scripts/extract_rom_data.py"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "consume-european-item-effect-parameters",
+  "title": "Publish and consume packed European item effect parameters through original code",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "EUR e40-d39 adds item-effect-parameters.json/gameplay.item-effect-parameters/item-effect-parameters-v1-json,35files/34resources, all33prior decoded files/e39generations retained/USAe8-d7. Actual item-ID dependency validates against parsed376item owner; fixed98B/packed bits/source bindings authenticate transactionally.",
+    "Typed page6e8projects packed records and merges adjacent e39trade ownership/raw neighbors. Exclusive nonserialized coefficient00..04/shared05(coeff+cap)/shared06(cap+opaque) counters and14recordmask preserve one byte owner. Original CFE28/CFDA8/getterlow8 versus fullu16cap index/raw external cap/live current-quantity/capclamp/instructions/clocks/save-nativeABI stay active.",
+    "Wire parser/encoder/preparation/publication/bounded input/report/scene gate and existing budget fixture argument. Original source helpers are reused without changes; no source oracle is repeated."
+  ],
+  "validation": [
+    "Windows93110testbuild warning-free; Wine21177two focused checks pass publication interruption/create-reuse-repair-move/e39retention/22coherent coefficients-cap-opaque-bitwidth-ID-item-order-source-dependency-path-role-hash-coverage guards/missingfile-transactionalowner/unavailable-copy Load-Undo-backup-restart/all98B/mask16383.",
+    "50full original/interpreter/native paths with98rawB altered match complete states/clocks, including explicit raw-cap aliases. Compiled coefficient/shared05/shared06bytes36-37-23;2406instructions/134dispatchcoverageonly. Allbytes/7Brecord-fieldedges/widths/mirrors/realBIOS/following4raw/tailword2typed2raw/SWI32typed each+tail2typed2raw+adjacenttrade2-itemeffect2typedcrossing/DMA2typed2raw pass.",
+    "Source540+4+166oracle remains closed/notrepeated; no build/Wine failure, all processes terminal. Private evidence target/rom-data-item-effect-parameters/{windows-managed-tests-build.*,windows-managed-results.json,recomp-tests-managed.exe,windows-managed-europe/{managed-result,native-result}.json,managed-run-protected.json}.",
+    "Final261protected hashes/project-memory including --base7597b92/whitespace pass; managed-final-summary retained. All unit processes terminal, no remaining managed/native/lifecycle action.",
+    "Production4620warning-free/canonicalf3e277dbrestored/candidate9f1093246640762e89383f566a55b2748ce6c219e91c227d14b45f0209b64927. ActualCLI59404create-reuse-no-write37managedfilehash-mtimeguards and50707oldcache/unrelatedcwd400GoblinPlay locator pass3newsourceB(coefficient1/shared051/shared061),mask1physicalrecord0.",
+    "Reused EUR IN13ordinary boot/load state and frozen existing Windows replay/export helper, normal game buttons reach CyrilBank/List/actualGoblinLv4/Play-Release(defaultPlay); raw exports supply pre-Play snapshot and four spaced A presses. No guestRAM/statepayload/ROM/personal-save edits or USA/newLinux execution. Earlier Baguba-Sprohm-only/guessedconstant-speed64,184navigation probes are terminal; acceptedCyrilslot2provides120,216/place18 and short pulses reach it without boot recreation.",
+    "One Wine5779full400pair matches every complete state/clock/central-wide image/OAM/dispatch/mixed-PSG-FIFO-HLEaudio sample with same3B/mask. Ordinary replay mixes1379881native/2741618fallback dispatches (coverageonly, no all-native/performanceclaim). Source540+4+166/native50/e39/earlier scene proofs closed/notrepeated. Finalbankbackground inspected; known serializedseparateUI omits CLIpanels, no finalfood-count/confirmationclaim.",
+    "Frozen93110testa6e7037b4c6aa567945a303f9a659e1fa47114c1a9a74a920e0894154e0c11d3/validator7a1356a3218159919a4b0137737c5c11267c71caa89099c49cd359caa34ef93c unchanged. Evidence target/rom-data-item-effect-parameters/{windows-build.json,windows-cli-{processes,no-write,summary}.json,windows-scene-result.json,windows-bank-play-item-effect-parameters-full-state-audio.log,scene-executable.json,bank-play.png,bank-locator-protected.json,bank-eur-IN13/{known-cyril-*,enter-bank-*,open-monster-*,open-feed-*}}.",
+    "Final348protected hashes/37managed CLIfilehash-mtime guards/project-memory including --base7597b92/whitespace pass; final-summary/final-source-hashes/final-protected retained. All unit processes terminal; concurrent Debug-save documentation changes preserved without attribution or edits."
+  ],
+  "limitations": [
+    "Other14item/20monster/cap>99UI ordinary paths/newLinux/USA/nativeWindows/fullremaining ROM_DATA_TODO remain pending. Final CLI separateUI panels absent as previously known, no food-count/confirmation inferred; source/native targeted proofs retain their broader declared scope.",
+    "No performance/space/AndroidPort work, private game data publication/personal save writes or agent commit/push. Existing uncommitted e39/concurrent Debug-save work preserved."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/item_effect_parameters.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/item_effect_parameter_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "scripts/extract_rom_data.py"
+  ],
+  "references": [
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_gameplay.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

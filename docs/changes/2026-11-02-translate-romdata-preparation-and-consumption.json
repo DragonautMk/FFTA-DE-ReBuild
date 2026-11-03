@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-romdata-preparation-and-consumption",
+  "title": "Translate ROM-data preparation and consumption sections",
+  "kind": "docs",
+  "platforms": [
+    "Desktop ROM-data planning documentation"
+  ],
+  "changes": [
+    "Translate ROMDATA-03 and ROMDATA-04 into English while preserving checklist states, recorded evidence, family and platform limits, identifiers and compatibility anchors."
+  ],
+  "validation": [
+    "Compare twelve ordered checkbox states, task identifiers, inline literals, links, numeric values and two legacy anchors with the original; verify local targets and unchanged surrounding sections."
+  ],
+  "limitations": [
+    "ROMDATA-02 and ROMDATA-05 onward remain untranslated; no ROM access, dataset creation, performance measurement or runtime checks were performed."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_TODO.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

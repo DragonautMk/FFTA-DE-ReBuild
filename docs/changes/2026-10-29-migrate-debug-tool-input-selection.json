@@ -1,0 +1,71 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "slug": "migrate-debug-tool-input-selection",
+  "title": "Migrate existing debug input choices to typed internal selectors",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU build",
+    "Wine"
+  ],
+  "changes": [
+    "DBG2-04 implementation removes all three implicit frontend FileDialog sites. Choose profile/catalog and missing replay/audit/capture/compare/issue/catalog inputs open the internal selector and never auto-run after a choice.",
+    "Add Tool inputs / current selections with12 constrained roles, pinned content references, hash/context/type rechecks and existing readonly preflight for profiles, catalogs, sessions, recordings, snapshots, sequences, labels and resource manifests. Refused choices preserve previous references.",
+    "Expose raw input sequences, native.bin and debug-labels.toml in the common index; authenticate selected snapshot ROM identity without loading a Machine. Runtime/library references are hashed without executing/loading code; actual ABI remains worker preflight.",
+    "Route selected label references into code tracing while retaining the existing default label path. Keep profile payloads immutable and input choices separate from future DBG2-05 profile preparation.",
+    "Update operation descriptors/census for zero implicit dialogs and one new typed input operation. Classify output-only --json as not-applicable to menu controls."
+  ],
+  "validation": [
+    "First selected587-source Windows GNU test/runtime compilation is warning-free. Its final harness rejects source/current mismatch after a registry classification correction and formatting changed root overlays; no stale snapshot runtime acceptance is claimed.",
+    "Three Python source-census tests pass after the --json metadata correction; source has zero FileDialog sites in play.rs and only the two explicit picker buttons.",
+    "Matching587-source Windows GNU test/runtime build passes warning-free, with19 current host/UI overlays and canonical runtime hash+mtime exact. Initial accepted candidate fa08da6f67d3bbb1e86a9852e65a21d1b53c516d902ea1f7aa5967cefde32bb0.",
+    "Wine menu56/57 passes; the new Tool inputs Cancel case exposes generic return-to-Main behavior. Restore only the new page parent return; changed Windows test/runtime build passes warning-free, candidate10713e7fcc62c79c1ce04290f07607bce9b51a3713202584e3bb433248277f46.",
+    "Wine3reference+5picker+10content and2contract cases pass. The third old contract test still expects an automatic replay dialog; its test-only assertion is updated to zero automatic dialog descriptors.",
+    "Test-only rebuild is warning-free and preserves the production candidate. The explicit public fixture factory now supplies a zero-frame replay and a controlled one-frame synthetic recording for audit/capture/compare positive ingress cases; no private game data.",
+    "Targeted repaired menu parent and contract assertion pass; combined terminal scopes cover all57 menu and3contract cases. Two synthetic code-observer tests pass; the ignored private one-frame observer is not invoked.",
+    "GUI fixture preparation initially fails before recording because the recordings parent is absent. A warning-free test-only helper repair validates and resumes the existing public seed; no GUI or guest frame was started by that failed attempt. Production runtime remains10713e7fcc62c79c1ce04290f07607bce9b51a3713202584e3bb433248277f46.",
+    "Corrected factory finish helper passes on the existing partial public seed, creating zero-frame plain and one-frame audit/capture/compare profiles; preparation executes one controlled public self-loop frame in a test Machine.",
+    "Actual Wine GUI passes seven missing/choose routes with empty cached internal lists, no replay worker or automatic OS dialog and complete frame0/clock0 state preserved. Present default catalog opens; Choose catalog is internal and Cancel preserves its catalog parent.",
+    "The subsequent harness incorrectly sends ordinary Escape in the legacy catalog, resuming the synthetic main. Follow-up detects drift and emergency-pauses at24824/clock6972878532, then closes with input pins exact. This is a harness pause-toggle mistake, not a native-dialog regression; negative evidence remains separate. The same immutable seed is restarted in pause with exact original state/frame0/clock0, without fixture recreation. Remaining checks use Back outside the selector and automatic origin validation on every status query.",
+    "Remaining GUI Tool inputs navigation passes internal profile page/cancel and keyboard scroll to Back with the Debug parent restored; same full origin/frame0/clock0 state. Every status query now checks this origin automatically.",
+    "Actual Wine GUI selects compatible pinned profiles, returns without starting workers, then separately invokes Replay/Audit/Capture/Compare. Plain zero-frame replay passes; audit completes1frame and retains an explicit endpoint divergence with complete audit inventory; capture triggers at1frame; interpreter comparison matches through1frame. These are input-routing/result proofs, not new runtime/DS acceptance.",
+    "The audit harness initially expected passed; retained result is diverged at the same declared clock. The fixture endpoint includes undrained audio_buf while replay clears frontend audio buffers; this explains a concrete endpoint difference in the synthetic producer. No rerun or endpoint rewrite is used to convert it to a pass. Remaining capture/comparison cases continue once.",
+    "Explicit issue creation consumes the same selected plain profile, creates one compatible issue bundle and starts no replay. All these actual GUI queries preserve complete main guest state/frame0/clock0. Controlled public preparation executes1frame, audit/capture1each and comparison two independent1frame copies (5guest-machine frames total), separately from the earlier failed pause-toggle harness run.",
+    "The negative-profile output guard initially includes debug-control/result.json, so an intentional UI report changes that mailbox and triggers a false-positive guard. Actual replay outputs retain their original run IDs/outcomes; the finally block restores profile bytes. Correct the harness to include only ffta-debug-replay-result and resume the remaining cases without repeating the first two refusals.",
+    "Actual GUI completes10 changed/missing profile entrances across Replay/Audit/Capture/Compare/Issue plus foreign-ROM refusal; prior selection survives, profile bytes are restored exactly, all four replay result files retain hash+mtime and complete main state/frame0/clock0 remains exact. Changed/missing reasons are captured in real UI text reports and screenshots.",
+    "Actual GUI exercises Choose and Open catalog with changed, missing and unsupported future-schema files. All6 cases refuse, preserve the current reference and replay outputs, restore original catalog bytes and retain full main state/frame0/clock0.",
+    "Actual GUI selects all12 constrained input roles; current choices are visible, runtimeA/B keep distinct IDs with equal bytes and no library/runtime is loaded by selection. Selected Data/config/debug-labels.toml is consumed by code trace and appears with matching hash in its report while the default root label path is absent. All queries retain complete main state/frame0/clock0.",
+    "Role-scoped explicit Browse file and Add folder each open exactly once, verified by the real UI action trace. Cancel retains all12 references, roots, generation and complete main origin state without starting any tool.",
+    "Passing GUI main is closed at exact origin; all5 public session manifests immutable pins, restored profile/catalog bytes and four replay outputs hash+mtime are exact; private Xvfb is terminated. Final preservation verifies all587 frozen files/19current overlays, with only2documented test-only source deltas from production, and canonical Windows/Linux runtime hash+mtime exact."
+  ],
+  "limitations": [
+    "Parameter editors, profile/preset preparation and consuming preparatory input roles are DBG2-05; persistence remains DBG2-07. This change adds the typed selection boundary without rewriting authenticated profile payloads. Runtime/native-library ABI and full dataset compatibility stay action preflight.",
+    "Wine/synthetic-controller results are distinct from native Windows/Linux runtime and physical controllers. No release refresh, benchmark, private game or DS acceptance, commit or push.",
+    "The earlier harness pause-toggle mistake advanced a public synthetic main24824frames; negative evidence remains separate from the exact-origin passing run. Concurrent ROM work remains preserved/excluded. Metadata/UI units contain no managed disposable interrupted/moved datasets, so the rom-data-only retention helper is inapplicable."
+  ],
+  "files": [
+    "crates/menu/src/lib.rs",
+    "crates/menu/src/theme.rs",
+    "crates/menu/src/content_selector.rs",
+    "crates/menu/src/content_selector/tests.rs",
+    "crates/menu/src/tool_inputs.rs",
+    "crates/recomp/src/main.rs",
+    "crates/recomp/src/play.rs",
+    "crates/recomp/src/content_picker.rs",
+    "crates/recomp/src/content_picker/tests.rs",
+    "crates/recomp/src/debug_inputs.rs",
+    "crates/recomp/src/debug_inputs/tests.rs",
+    "crates/recomp/src/debug_content.rs",
+    "crates/recomp/src/debug_operations.rs",
+    "crates/recomp/src/debug_operations.json",
+    "crates/recomp/src/debug_code.rs",
+    "crates/recomp/src/save_state.rs",
+    "scripts/tests/test_debug_operations.py"
+  ],
+  "references": [
+    "docs/debug_selector.md",
+    "docs/debug_content.md",
+    "docs/debug_operations.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "consume-european-constructor-alternate-templates",
+  "title": "Consume European constructor alternate records and typed base pointer",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "EUR e30-d29adds constructor-alternate-templates.json/resource gameplay.constructor-alternate-templates with actual parsed Items dependency. All25files/24resources authenticate transactionally; all23prior decoded files/e29generations retained, USAe8-d7unchanged.",
+    "Project exact typed4Bpointer/192Brecord bytes across source pages6ec/70c while retaining structural fields/IDs/order/offsets. Nonserialized pointer/field counters/per-record masks gate new-family use. Preserve original ROM/IWRAMcopy/index/mode/livepatch/allocation/clock/save/nativeABI, without replacing guest routines or fallbacks.",
+    "Add two reduced new-family managed/lifecycle/native checks and separate positive pointer+record ordinary-scene gate in existing full-state/image/audio oracle; source24+8/default271+30/native16/397acceptance not repeated."
+  ],
+  "validation": [
+    "Windows89684initial compile warning-free; pre-Wine review corrected inherited zero-use guard direction and added narrow old-default coexistence proof. Corrected61725test and92748production builds warning-free/canonical restored; candidate SHAeab75eea70f9756b9e2aafab6aded8333fcc4f3aa4c03d7e78ca4acb6a4678c6. No compiler/runtimefailure.",
+    "Wine39423two checks terminal/pass: publication interruption/create/reuse/repair/move/e29retention/all23olddecodedfiles, coherent header/opaque/flag/tail/byte01swap/pointer/source/dependency/path/bothroles transactional rejection/parseditembounds and unavailable-copy Load/Undo/backup/restart.",
+    "14sampled original/interpreter/native ROM/IWRAMpaths with both raw source spans (196Btotal) altered during guest execution match complete states/clocks. All4recordsmask15/pointer positive; compiled pointer/header/argument/halfword/flag/tail36/45/27/306/18/36B. Five default/rejected paths0newB/olddefaultpositive.2151instructions/979dispatches are coverage only; all196bytes/recordedges/widths/mirrors/real-BIOS/bothspansCpuSet/FastSet/DMA4B each and two mixed2typed+2raw crossings pass.",
+    "ActualCLI52141creates/reuses e30without writes/oldcache/unrelatedcwd. Cleanboot3000schoolcourtyard and Lutia1700lawsNOTICE are coverage-negative preserved locators, no full pair/timing on them. Local English metadata52row104/105Judge and106Judgemaster label lookup guides ordinary battle entry; structural field names unchanged.",
+    "Additional normal deployment confirmations/Start give actualCLI26234and one3600Wine68173pair passing every complete state/clock/central-wide image/OAM/dispatch/mixed-PSG-FIFO-HLEaudio with45newB(pointer4/header6/argument3/halfword28/flag2/tail2), mask1/ID20only. FinalLutiaimage inspected. Ordinary scope is observed pointer/field reads, not all48B/wholeconstructor/all4records; full-copy/all4 targeted-only. No directRAMedit/new recording/persisted savewrite or old source/native/lifecycle proof repeated.",
+    "Protected originals/e29/itemowner/candidates/cache/loader/canonical and27CLIfile-set/hash/mtime guards pass; memory/whitespace/source hashes recorded at closure. External HEADe180772prior-work commit and unrelated usertodo2.mdadditions preserved; no agent commit/push, all jobs terminal."
+  ],
+  "limitations": [
+    "Targeted proofs stop before allocation/live-unit tail127EB0, not whole-function ABI. Ordinary scene proves only record20/mask1/41recordBplus4pointerB; other records/full-copy remain targeted-only.",
+    "Byte01semantic modeling, neighboring header/following240Bownership and broader consumer/language/gameplay/maps/audio/GUI/archive/mod coverage remain pending. Original dynamic arguments/branches retained, no fallback invented for IDs outside four owned records.",
+    "New Linux/USA/native Windows remain pending; no performance/startup/RSS/space campaign or AndroidPort change. Private ROM/saves/inputs/source fixtures/generated native code remain ignored."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/constructor_alternates.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/constructor_alternate_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "scripts/extract_rom_data.py"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

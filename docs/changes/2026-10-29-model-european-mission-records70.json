@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "slug": "model-european-mission-records70",
+  "title": "Model European mission records and verify the original getter",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add a strict lossless512-record/35840-byte core model with raw packed/inline storage, original unsigned selector projections and separate shape/source authentication.",
+    "Preserve low16-index/low8-selector behavior, invalid-selector zero, original encoded inline views/aliases outside physical ownership and diagnostic absence for unowned scalar reads."
+  ],
+  "validation": [
+    "One warning-free core-only Windows build663e8b87330b587bae353fb103acdf0bf39f3ef55c153cd218c31de6500ae72a uses571 frozen files/242 core inputs;569 accepted preimages and inverse core hub remain exact.",
+    "One Wine filter passes21 format/authentication guards,438 base and260 isolated synthetic calls through the original D1F30 getter and real CEEEC helper; independent Python/model/results and actual unsigned-byte read order match.",
+    "All35840 bytes roundtrip exactly; original getter observes324 distinct base bytes and54 synthetic bytes. EWRAM/VRAM/OAM/palette unchanged, IWRAM exact including return links, SP/R4..R12/Thumb/final ROM checked;17213 instructions are coverage only.",
+    "All139 preservation guards/571 frozen hashes/three current hashes/569 accepted preimages/110 source guards pass; artifact helper retires zero paths. No ordinary checkpoint/game/navigation or performance/storage measurements.",
+    "Earlier changelog render, metadata and CRLF-aware whitespace checks pass. Default/base999d0a6 memory coverage reports only seven concurrent menu/content-picker paths; the three new model implementation paths are covered.",
+    "Final default/base999d0a6 project-memory checks now pass after parallel menu/content-picker records were supplied. Their implementation and tests remain outside this frozen unit."
+  ],
+  "limitations": [
+    "Schema1/e85-d84/77 managed resources/78 accepted files remain unchanged; managed runtime/native-clock/lifecycle checks, actual CLI and ordinary use remain pending.",
+    "Full caller ABI, unnamed field meanings, indirect references, successor-array/event-catalog contracts, Linux, USA, native Windows, new32:9 and the full ROM TODO remain pending.",
+    "Parallel menu/content/debug/package changes are preserved and not compiled or validated by this frozen core-only unit."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/mission_records70.rs",
+    "crates/gba-core/src/rom_data/mission_records70/tests.rs",
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

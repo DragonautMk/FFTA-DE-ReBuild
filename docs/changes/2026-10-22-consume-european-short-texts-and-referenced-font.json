@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "date": "2026-10-22",
+  "slug": "consume-european-short-texts-and-referenced-font",
+  "title": "Consume European short-text indices, codes, glyph words and metrics through original readers",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Retain the authenticated ninth-file typed short-text/font model in the immutable runtime owner and serve exact table/string/glyph/metric source bytes through fixed EUR CPU/DMA/native source pages.",
+    "Reconstruct bytes from stable string IDs, compact/extended codes, control bytes, full packed glyph words and metrics with small unit-position maps; retain separate use counters and crossing-read prior-family bytes.",
+    "Preserve original selection, expansion, font copying and rendering work, instructions, cycles and guest/native/save identity. e11-d10 managed formats remain unchanged."
+  ],
+  "validation": [
+    "Warning-free Windows release test builds; three reduced Wine checks pass: synthetic widths/mirrors/edge/prior-byte/BIOS-bus-mode/SWI/DMA/load behavior, five original/interpreter/native reader chains and unavailable-copy lifecycle.",
+    "With all 670 raw source spans altered after activation, 20 reader calls across five selectors and compact/extended/fixed/variable modes match complete serialized states and clocks after every call. Native read APIs consume 20 table, 124 string, 636 glyph and 6 variable-metric bytes; fixed mode correctly skips metric reads. Coverage is 1984 original instructions and 920 native dispatches, not performance data.",
+    "Temporary copied files become unavailable: failed activation preserves state/owner; Load/Undo, backup recovery and Restart retain owner/counters and all four typed source kinds. Protected original ROM/slot/cache/loader/canonical executables remain unchanged.",
+    "Initial native test incorrectly required metric use in fixed-width mode despite matching states; corrected only that expectation, retained evidence, repeated only the affected native test and ran the previously unrun lifecycle check. Closed synthetic/offline catalog/managed oracles were not repeated.",
+    "Current source/protected hashes, project-memory coverage and CRLF-aware whitespace checks pass."
+  ],
+  "limitations": [
+    "New Linux and USA checks remain pending by user instruction; Wine is not native Windows validation and BIOS bus mode does not prove actual BIOS execution. No AndroidPort change.",
+    "Ordinary gameplay text scenes, actual production CLI consumption, broader localized catalogs/full font/control semantics/Unicode and mod phases remain open.",
+    "No new recording, production CLI/scene rerun, benchmark/profile/startup/RSS measurement, space optimization or broad suite."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/texts.rs",
+    "crates/gba-core/src/rom_data/runtime/text_tests.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/text_short_runtime_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_text.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

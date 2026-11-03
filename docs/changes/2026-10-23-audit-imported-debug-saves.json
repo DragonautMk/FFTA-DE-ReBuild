@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "audit-imported-debug-saves",
+  "title": "Audit imported debug saves and derive regional scene checkpoints",
+  "kind": "changed",
+  "platforms": [
+    "Windows/Wine"
+  ],
+  "changes": [
+    "Protect the entire root debug_saves tree with /debug_saves/ in .gitignore, including original containers, extracted SRAM, screenshots, checkpoints and private catalogs. No save file is tracked, committed or pushed by this audit.",
+    "Inventory 28 supplied files with stable IN-01 through IN-28 source IDs. Extract 27 exact 64-KiB SRAM copies from five ZIP and 22 supported SPS containers; preserve all original bytes and record format, region hints, hashes, aliases and wrapper-checksum results locally.",
+    "Prepare ignored debug_saves/ready with USA/EUR families, 31 DS-numbered checkpoints (13 unchanged EUR and 18 USA), 31 loaded checkpoints, 25 named variants and 14 direct menu variants in slots51–64. Three new USA standards GEN-30/31/33 come from ordinary in-game Save or Save Now, frozen-frontend normal exit and fresh-boot load. NEW-32 is explicitly factory-empty memory for naming scenes, not saved progress. Four masters stay separately under ignored debug_saves/generated. IN, GEN, NEW and DS numbering is explicit; preview envelopes leave core payloads unchanged.",
+    "Update the stable26-case TODO to17validated/6partial/3uncovered. Resumed ordinary inputs validate04formation,05multiplelaws,06infraction/prison,09Firaga/Mateus,10visible status icons and Auto-Life cast,11KO/PhoenixDown,13PrisonBreak victory/rewards,14GameOver,23name keyboard,24two advanced battle events and25long narrative. DS26 remains partial at the actual Decision Time postgame battle; its victory/finale is not claimed."
+  ],
+  "validation": [
+    "Initial 25 distinct SRAM payloads complete Windows/Wine interpreter/HLE boot and File No.1 load. On explicit resumption, IN-19 also boots/loads on EUR, IN-03 and IN-05 File No.2 load, and GEN-30 boots/loads File No.1 at Sprohm with active Decision Time. IN-06/11 are duplicate USA payloads; IN-01/19 identical SRAM is now directly verified on USA and EUR. IN-03 File No.2 shows 300 missions, not a verified 299-mission precursor.",
+    "Initial expansion keyboard GUI observations show advanced jobs, Soldier-to-Thief change, statistics and multiple ability sets; general inventory categories, actual scrolling and Select Help; 62/64 mission items and Gold Vessel selection/equip followed by 850-gil Swimming Meet acceptance; 29 Area List destinations and entry into that battle. Those initial observations alone did not prove all mastered abilities, long descriptions, mandatory item consumption, multiple formation members or a boss.",
+    "Observed Shop Potion purchase deducts 42 gil, explicit cancellation leaves funds unchanged, and Bronze Helm sale adds 250 gil. Completed ordinary bank replay shows owned Red Cap Lv23, Jelly Lv24 and Ice Flan Lv25 plus Ice Flan statistics. Completed Swimming Meet replay reaches brief dialogue, enemy movement and the first player turn; helper exports reload successfully in a fresh Machine.",
+    "Final publication verifies all28 original hashes,27 extracted payloads,31 source-guard checks across6 sessions,133 artifact hashes including101 snapshot envelopes/core payloads and32 cartridge files,13 unchanged original EUR snapshots,4 generated masters, all26 catalog/TODO statuses, all167 debug files ignored and zero tracked debug files. Replaced prior case checkpoints remain unchanged in variants. The101 snapshot files include deliberate duplicate menu shortcuts, not101 distinct scenes.",
+    "Inspect curated previews and publish the actual long Decision Time scene as DS-25, keeping the short Swimming Meet example separately. Private Windows replay exports reload in a fresh Machine. No application rebuild or accepted differential/benchmark repeat is performed. A proposed SRAM-export helper variant is not compiled because the old prebuilt core rlib hash has been replaced concurrently; the existing frozen frontend save writer is reused instead.",
+    "The first expansion passed project-memory, whitespace, link, original-source, 51-state-envelope/core and 109-ignored-file checks. These are retained as initial scope, not attributed to the larger resumed collection.",
+    "Completed resumed replays show Law Cards and Target All forbidden concurrently with two-page Target All Help; Mateus triggers red card, Marche prison and Game Over. Separate Firaga area effect and damage are observed. Two-member formation is repositioned and confirmed into battle.",
+    "Ordinary Firaga/Return Magic brings Marche to HP0. After moving Montblanc adjacent, Phoenix Down preview explicitly shows Marche HP0, Revive KO, 100 percent and +221 HP; confirmation succeeds and Marche stands again. Before-KO, before-revival and post-revival points are retained, without HP or status byte edits.",
+    "IN-05 File No.2 has Decision Time already active. Sprohm entry shows a long Cid/Marche/judges dialogue with fade, room background, portrait and camera changes, then a three-member formation and battle. Initial invalid-target/range trials, zero-percent Bind on Marche, and Prison Break Win battle/no-required-item preview remain nonacceptance for missing status/alternative-objective/mandatory-object scenes.",
+    "New isolated Windows/Wine frontend session loads the ordinary post-Save checkpoint, closes normally exit0, writes only its working SRAM and preserves original ROM, executable, imported source and source checkpoint hashes. GEN-30 differs from IN-05 exactly through ordinary in-game saving; fresh File No.1 load reaches Sprohm and the active Decision Time menu.",
+    "Resumed publication checks pass 99 artifact hashes including 70 preview/core envelopes with version1/regional ROM identity, 28 original source hashes, all 26 catalog/TODO statuses, all 129 ignored files and zero tracked saves. Project-memory and git diff --check pass for the 13 validated/7 partial/6 uncovered increment.",
+    "Ordinary White Magic Auto-Life selection offers100percent, then animation and MP85to69 are observed. Alternating overhead status icons are visible on the field and in Status, including before that cast. No one-to-one icon attribution, KO-triggered auto-revival or movement/turn-order behavior is inferred. Zero-percent Bind previews remain rejected attempts.",
+    "Prison Break accepts a500Gil fee and has DEFEAT ALL ENEMIES/no required mission item. Mateus defeats the remaining guards; Julian dialogue, Mission Cleared and RESULTS7000Gil/40AP/HeljeKey/PerseusBow/Chivalry plus20clan points are observed. The following Too many items/discard menu is retained without claiming resolution, level-up or new learned ability.",
+    "Factory-empty SRAM starts ordinary New Game and reaches the name keyboard. Type, delete, cancel confirmation and accept the name are observed in replay and frozen Windows/Wine frontend. Real frontend snapshot23, native captures and subsequent dialogue using MarcheA are retained; clean exit0 preserves all source hashes.",
+    "GEN31 is saved normally into File1 with White Magic secondary and both Decision Time and Prison Break active at Sprohm. Frozen frontend closes normally exit0; fresh File1 boot/load plus ability and mission-menu persistence pass. Both different battle entries from this source are observed. The29-destination census remains scoped to IN04.",
+    "Resume-mode audit reuses26 retained menu states (25distinct sources plus IN19EUR); all complete exit0 without loading a suspended battle. New GEN33 is a positive control produced by System Save Now before acting in Prison Break and exported with frontend clean exit0. Fresh boot, Resume Battle summary, consumption warning and final Yes lead to actual first Marche turn at resume-GEN33-final-load/step4. Earlier summary/warning-only checkpoints are not treated as battle-load proof.",
+    "Nearby leads remain explicit negatives: IN06 shows a clan skill28 despite author metadata30, and Girl In Love requires absent White Thread, so acceptance is denied without dispatch or prize. IN04 has no active missions; visiting Ambervale only advances day and opens Save. No clan-threshold reward, failed dispatch, item consumption or finale is inferred.",
+    "Final project-memory check, git diff --check and244 relative local-document links pass. All unit GUI/game processes are terminal. Detailed local integrity report records133artifact hashes,101state files,32cartridges,28source containers/27payloads unchanged,31guard checks,13oldEURstates,4masters,167ignored files/zero tracked and26matching case statuses. No build or closed differential/performance acceptance is rerun."
+  ],
+  "limitations": [
+    "Scene coverage remains partial: six partial cases07crowd/08originalslowturn/12terrainpath/17longinventorytext/21requireditemconsumption/26finale, and three uncovered03clanthresholdprize/15alternativeobjective/20faileddispatch. Detailed missing criteria and rejected leads remain in the stable TODO; completed cases are not reopened by the unchecked parent.",
+    "Only IN-03 and IN-05 internal File No.2 entries are played; the others remain untested. Decision Time is reached as an advanced postgame battle but its victory/ending is not observed. IN-18 BGBA remains unsupported. Four original SPS wrapper checksums mismatch while their unchanged SRAM loads successfully; no repair is performed.",
+    "The first main GUI remains interrupted with X connection broken/no final.json. Three later standard-export sessions and the naming GUI close normally exit0. These observations and headless replay completion do not establish full-state equivalence, audio quality or performance. No original file or RAM/HP/status/progression payload is patched. Snapshot loads restore SRAM, so naming fixtures use dedicated factory slot32 and working copies.",
+    "New native Windows hardware, physical controllers, Linux, Android and packaging are unverified. All game/save bytes and captures remain local and ignored. Concurrent ROM-data implementation and documentation changes are preserved and are not attributed to this audit."
+  ],
+  "files": [
+    ".gitignore",
+    "docs/development/debug saves.md",
+    "docs/extended_saves.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/development/debug saves.md",
+    "docs/extended_saves.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md",
+    "docs/changes/2026-10-23-catalog-current-debug-save-cases.json"
+  ]
+}

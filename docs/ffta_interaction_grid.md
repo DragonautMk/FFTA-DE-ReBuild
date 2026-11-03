@@ -42,7 +42,7 @@ and recorded events match the preceding direct-selector prototype byte for byte.
 Native replay equals interpreter; final370-frame hash d17fc597c1fb9325.
 USA/EUR extra=0 framebuffer and OAM identical for600 frames each.
 
-NO MEDIDO: physical mouse with the grid build, next game menus and performance
+NOT MEASURED: physical mouse with the grid build, next game menus and performance
 benefit over five rectangles. This change supplies reusable routing, not a claim
 of faster rendering or automatic event discovery.
 

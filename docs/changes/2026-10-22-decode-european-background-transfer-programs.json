@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "date": "2026-10-22",
+  "slug": "decode-european-background-transfer-programs",
+  "title": "Decode European background transfer animations and shared tile banks",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Classify all 97 active transfer triples in the verified EUR descriptor block as 42 control programs and 34 shared raw tile banks, with independent stable IDs and exact provenance for 76 disjoint ranges.",
+    "Add bounded offline typed controls with ordered u16 durations/source-tile offsets, retained header byte3, transfer sizes, full u32 tile words, aliases and VRAM destinations; reconstruct/authenticate exact sources without flattening live animation state.",
+    "Verify that all 162 variant pointers in this declared catalog are absent and reject unsupported nonzero variants instead of inventing their semantics. No active dataset revision or runtime consumer changes."
+  ],
+  "validation": [
+    "Warning-free Windows release test build; five reduced Wine checks pass: three transfer core, one strict JSON/roundtrip and one private EUR catalog/original animation contract case.",
+    "All 76 source reconstructions/hashes and 97 links match the exact EUR ROM and independent retained static classifier; 968 control and 199296 raw tile bytes have no internal or current e9-family overlap. Coherent changed tile words fail source authentication.",
+    "Four original animation cases for descriptor/slot 19/0, 4/1, 58/0 and 63/1 cover 4/8/12-frame programs and a 2432-byte copy split at the original 1024-byte limit. Two loops plus a boundary match countdowns/frame order and complete VRAM/guards after every DMA chunk: 634 calls, 80766 instructions and 34 partial chunks.",
+    "The retained slot5 snapshot supplies initialized original IWRAM helper code; no new recording, boot, prior catalog/graphics/scene replay or production build is run. Original ROM/slot/e8/e9/cache/loader/canonical hashes remain unchanged.",
+    "Final implementation/source-protection, project-memory and whitespace checks pass."
+  ],
+  "limitations": [
+    "Offline catalog/model only: managed publication, file-backed control/tile consumption, original/native poisoned-source provenance, owner lifecycle and actual scene/GUI/archive checks remain open.",
+    "New Linux and USA validation remain pending by user instruction. No native Windows or AndroidPort claim; absent variants are proven only in the declared 162-record EUR block.",
+    "Original animation proof covers four representative programs and default forward looping/live transfer limit, not all 42 original animations or every reverse/nonloop flag combination.",
+    "No performance/profile/startup/RSS measurements, space optimization or broad suite."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/bg_transfers.rs",
+    "crates/recomp/src/rom_data/bg_transfer_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

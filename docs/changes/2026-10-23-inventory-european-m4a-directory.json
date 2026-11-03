@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "inventory-european-m4a-directory",
+  "title": "Prove the European M4A player, song directory and header roots",
+  "kind": "docs",
+  "platforms": [
+    "EUR source inspection"
+  ],
+  "changes": [
+    "Identify original EUR M4A SoundMain147ed4 via its unique primary literal pool147f40 and initialized retained ordinary SoundInfo; distinguish detector pool offset from function entry.",
+    "Prove3player configurations/36B,640directory entries/5120B and455unique headers/10080B with1610track roots/four bank roots. Preserve186dummy-header aliases and the overlap with WaveData four bytes later; no local640index or128tone bound inferred."
+  ],
+  "validation": [
+    "Exact EUR hash, original driver/initialization/directory/header/voice reader contracts and checked literal roots pass. Independent complete player/directory/header roundtrip passes; unique header ranges do not overlap each other. Retained ordinary-state parser authenticates ROM/payload and live headers20/114/101 without new guest execution.",
+    "Private evidence target/rom-data-audio-m4a/{engine-eur-identification.json,inventory-summary.json,directory-independent.json,*-thumb-*.txt,soundmain-neighborhood-147ea0.txt,mixer-arm-147fcc.txt,driver-pointer-literals.json,driver-direct-bl-candidates.json}. Pointer/BL scans are discovery candidates; accepted claims use bounded original flow. No builds/replays/benchmarks/old proofs repeated."
+  ],
+  "limitations": [
+    "Audio source model/Wine original-reader oracle/managed/runtime/ordinary acceptance remain pending. Bank extents, reachable selectors, nested tone/keymap/wave payloads, sequence commands/extents and language variants remain unproved. Generic HLE compression support is not source evidence.",
+    "Current EUR e40-d39 and USA e8-d7 unchanged. New Linux/USA/native Windows pending; no performance/space/AndroidPort work or agent commit/push. Concurrent user work preserved."
+  ],
+  "files": [
+    "docs/rom_data_audio.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_audio.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

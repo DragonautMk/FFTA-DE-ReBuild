@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "slug": "add-snapshot-input-recording",
+  "title": "Record snapshot-relative input from isolated debug sessions",
+  "kind": "added",
+  "platforms": [
+    "Windows (Wine validation)"
+  ],
+  "changes": [
+    "Implement DBG-04 with Debug > Start/Stop input recording and debug-record start SESSION. Capture the current complete machine snapshot, explicit initial held keys, relative frame-zero input events and a complete final endpoint inside a private debug copy. The CLI starts before the first played frame from the pinned snapshot session.",
+    "Retain ROM/BIOS/executable/dataset-manifest hashes, source/end frames and clocks, view dimensions, initial configuration and payload hashes in a versioned recording.json. Use relative payload names, atomic manifest/endpoint publication and no-clobber new folders. Cap retained folders at eight without eviction and each capture at 360000 frames, 200000 events and 8 MiB of input.",
+    "Finish a snapshot capture before Load or Undo load and refuse that first rewind request with a retry message. Preserve legacy recording guards, reject overlapping recordings and leave runtime/write/view/timeline failures incomplete. Clean session close finishes an active capture and propagates publication failure into the process/session result.",
+    "Add debug-record verify RECORDING --session SESSION for bounded interpreter-only functional replay on a disposable machine. Authenticate inputs and build, preserve guest frame origin, validate ordered events, replay using existing key/mouse semantics and compare the full serialized endpoint and clock without a cartridge-save writer or benchmark.",
+    "Keep the historical absolute-frame RECOMP_RECORD_INPUT path separate and stoppable. Show active recording in the window title, keep metadata and recordings within portable storage, document operation and limitations, and mark DBG-04 complete without changing DS scene statuses."
+  ],
+  "validation": [
+    "Offline locked release Windows test and frontend builds pass using frozen public base 2fbf9f7 plus thirteen selected tool files in the reusable separate cache. Initial compile caught the language-mouse u8 target being chained with u16 battle targets; widening fixes it. Successful builds are warning-free and preserve production executables/concurrent extraction work.",
+    "Wine passes seven recording, 44 menu and six debug-session tests (57 total). They cover nonzero frame origin with A initially held, exact full-state/clock replay, initial/event ordering and same-frame points, bounded capture, rewind/incomplete-frame/write failure, no-clobber, changed payload/ROM/build/native refusal, explicit divergence and movable payload folders.",
+    "Initial GUI/CLI checks pass on candidate31d4e8b: CLI start before gameplay, duplicate-recording refusal, explicit menu stop/start, Undo-load/Load stop before rewind and three real EUR DS20 captures replayed to identical full states and clocks (86,104,57 frames). Moved capture verifies; modified/incomplete recordings and a session without a snapshot seed are refused. Four pinned inputs and all140 original collection/ROM files retain hashes/mtimes.",
+    "Final refinement changes only startup feedback, saved-before-rewind messages and propagation of a close-time recording write error. Final warning-free candidate SHA-256 fcd271732ca1a898392ef3a589133a1a45268a8fc9fd98048f109d060c641db4 passes a focused Wine/Xvfb check with two more exact full-state/clock replays: Load-stop and active clean close. Active session start is refused. Final screenshots inspected; the start header and saved/retry message fit.",
+    "Actual end-file publication failure is simulated only inside a new private test copy: clean close returns exit1 with unsuccessful last-result, retains a non-complete recording and verification refuses it. Successful copy exits0; eight final pinned input hashes/mtimes and all140 original inputs remain unchanged.",
+    "Fifteen actual CLI cases across the initial/final GUI harnesses pass, plus their recording-session processes. Five distinct DS20 captures and one extra moved-folder replay pass. Local test-results/cli-results/gui-results/final-cli-results/final-gui-results and original attempt logs are retained under target/debug-tools-recording; no closed DBG01-03 or ROM acceptance is replayed.",
+    "This frontend unit creates no managed publication/native acceptance interrupted or moved-resource fixture trees, so the ROM-only artifact completion helper does not apply. Retain current candidate, accepted/failed recording fixtures, logs/results and shared Cargo/Wine caches; no global cleanup is selected.",
+    "Final verification passes thirteen compiled source-overlay identities, all140 protected original hash/mtime guards, both production runtime identities, 153 local document links and22 ordered IDs with only DBG01-04 checked. Private collection remains entirely untracked and ignored. Project-memory workspace/base and whitespace checks pass; no unit GUI job remains active."
+  ],
+  "limitations": [
+    "Native Windows, Linux/Wayland, physical controllers, new in-game mouse navigation paths and native-translated recording/replay remain unverified. The new focused verification command intentionally requires an interpreter recording; runtime-selected profiles and one-click replay remain DBG-05 work.",
+    "RTC/host-dependent behavior or unrecorded runtime differences can diverge and are reported as endpoint mismatch. View-dimension changes terminate captures rather than inventing missing history. Same-frame mouse/key behavior follows the existing replay model; input integrity alone is not scene acceptance.",
+    "The legacy environment recorder retains absolute frame numbers and its original SRAM companion, without a snapshot-relative manifest. Interrupted processes or failed publication can leave recording/incomplete folders; they never qualify as complete captures.",
+    "No new DS acceptance, performance campaign, extraction replay, package, production runtime replacement, Android or Godot work was selected. Concurrent ROM extraction changes remain outside this frontend validation. Frozen export build revision is unknown in the executable; selected public base and overlay hashes identify it separately."
+  ],
+  "files": [
+    "crates/recomp/src/main.rs",
+    "crates/recomp/src/play.rs",
+    "crates/recomp/src/debug_session.rs",
+    "crates/recomp/src/debug_recording.rs",
+    "crates/recomp/src/debug_recording/tests.rs",
+    "crates/menu/src/lib.rs",
+    "docs/debug_recordings.md",
+    "docs/debug_sessions.md",
+    "docs/debug_catalog.md",
+    "docs/save_states.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md",
+    "scripts/README.md"
+  ],
+  "references": [
+    "docs/debug_recordings.md",
+    "docs/debug_sessions.md",
+    "docs/debug_catalog.md",
+    "docs/save_states.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ]
+}

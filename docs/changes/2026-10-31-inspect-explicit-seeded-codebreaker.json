@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "inspect-explicit-seeded-codebreaker",
+  "title": "Inspect CodeBreaker blocks using an explicit seed",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Add explicit caller-supplied seeded CodeBreaker decryption before readonly typed inspection, including encrypted continuation lines; reject invalid seeds, unsupported operations and conflicting plaintext/seeded modes atomically.",
+    "Keep device, ROM, master and key provenance unverified; never infer a seed, execute a plan or write guest memory, and expose a separate operation descriptor."
+  ],
+  "validation": [
+    "An independent GBATEK-formula prototype matched 257 synthetic decryptions against unmodified mGBA cipher functions, including a public synthetic leading-nine collision.",
+    "Isolated Windows GNU test/runtime builds passed; Wine passed 15 decoder/catalog tests with one private test ignored and three operation registry tests. The Wine CLI matched 256 synthetic halfword writes across four seeds against mGBA, refused conflicting modes and unsupported blocks, and preserved the synthetic catalog.",
+    "Python operation inventory, Atlas inventory, rustfmt and git diff whitespace checks passed."
+  ],
+  "limitations": [
+    "The source device, seed choice, master, exact ROM behavior and runtime effects are not verified; other opcodes, automatic reseeding and guest application remain open. No real cheat payload, ROM, guest execution, native Windows or Linux runtime was tested."
+  ],
+  "files": [
+    "crates/recomp/src/debug_cheat_decoder.rs",
+    "crates/recomp/src/debug_cheats.rs",
+    "crates/recomp/src/debug_operations.json",
+    "crates/recomp/src/main.rs"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/debug_operations.md"
+  ]
+}

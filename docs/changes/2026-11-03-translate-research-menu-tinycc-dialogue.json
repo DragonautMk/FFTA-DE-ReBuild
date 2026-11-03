@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "translate-research-menu-tinycc-dialogue",
+  "title": "Translate menu, TinyCC and dialogue research notes",
+  "kind": "docs",
+  "platforms": [
+    "Desktop development documentation"
+  ],
+  "changes": [
+    "Translate the native pause menu, TinyCC and initial dialogue-layout research notes into English while retaining legacy heading anchors."
+  ],
+  "validation": [
+    "Compared the translated passage to its preimage: numeric runs excluding new anchor IDs, paths, flags, source hash and technical identifiers match."
+  ],
+  "limitations": [
+    "The remaining research report and broader Markdown/source audit are unfinished; no ROM access, replay or runtime checks were performed."
+  ],
+  "files": [
+    "docs/ffta_estado.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "inspect-action-composition-hit-mapping",
+  "title": "Inspect action-panel software composition and hit mapping",
+  "kind": "docs",
+  "platforms": [
+    "Desktop source routines on Linux interpreter; actual GUI untested"
+  ],
+  "changes": [
+    "Record bounded diagnostic software composition and first-row coordinate round trips across the EUR action-menu reveal at two lengths."
+  ],
+  "validation": [
+    "For each length, 33 visible recognized-menu samples mapped back to row zero; 39 frames including partial reveal had no recognized menu. Six protected ROM, snapshot and source hashes remained unchanged."
+  ],
+  "limitations": [
+    "The first point was transparent and invalid; the corrected test derives its screen point from the menu hit geometry. It did not inject a mouse event or prove glyph alignment, GUI/GPU output, native Windows, Android or absence of underlying actions. Isolated build emitted three unused-code warnings."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-03-panel-visual-fixes.md"
+  ],
+  "references": [
+    "docs/ffta_action_frame_width.md"
+  ]
+}

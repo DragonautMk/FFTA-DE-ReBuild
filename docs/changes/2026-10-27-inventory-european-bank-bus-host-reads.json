@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "slug": "inventory-european-bank-bus-host-reads",
+  "title": "Trace European Bank ROM reads through the bus and selected host paths",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add explicit feature-only SiteCapture::start_all to collect interpreter/HLE execution scope before data addresses are known. Preserve empty/single word filters and address-only Capture keys/schema; diagnostic remains absent from default builds. No Machine/MemMap/CAPI/save/native-cache ABI, extractor revision or production executable change.",
+    "Add one focused Bank12source inventory filter reusing existing normal state/input/currente76dataset/originalnativecache. Compare independent address/site projections and retained old dispatch/audio counts in one decoded arm; old Bank48/F09/fullpair/source/model/CLI acceptance remains closed."
+  ],
+  "validation": [
+    "One first Windows feature build warning-free/frozenff74819f4a8645fb1869b034f8c1714d386f9154f46447bd3b9e2921c34da30c. One first Wine filter passes empty/single/all mode, originalARM-fetch exclusion, projection/drop probes and Bank12guest3660\u21923672.7430read keys/7532site keys/497instruction-scoped7035outside; dispatch19962/85770 and all5sample counts[26334,26334,3168,3168,26258] exactlymatch retained old Bank12report.",
+    "7083image bytes/1434outside current68owners; all3683oldnative-image bytes included. Reuse992previously source-classified bytes, authenticate80actualThumb-PC-literal words320B and8newdispatch cells32B with original opcode/address/width/prefix/hash pins:1344code-support bytes total. Reuse priorA1146prefix; observed96110direct<=126path does not prove global127cap because larger values call helper with unproved return.90data bytes remain source leads around4114FC/4165A0 and reader2C5E0/2C60C; no new resource/extent inferred.",
+    "Pin twelve already typed cycle source phases21\u201332 to original interpreterLDRB18E2A, explaining oldNative-only gap without guest-task attribution. All95actual input-output-frozen/source-contract guards, compiled implementations and defaultfrontend preimage after2cfg lines removed pass. Original snapshots/input/native-cache/canonical/currentdataset/userAtlas exact; requiredartifactcompletion0paths."
+  ],
+  "limitations": [
+    "Bounded address/source inventory only, not new fullpair/all-use proof.90observed data bytes require complete producer/root-cardinality/ownership/extent authentication and typed integration; u16task animation reader differs from existingu8producer assumptions. Native/host outside interpreter scope staysNone; inheritedHLE/DMA scope requires opcode/operand validation.",
+    "Other scenes/threads, unselecteddirecthost/typedHLE bypasses/foldednativeconstants/code-signature reads and KeyboardWidths coverage remain separate. Linux/USA/native Windows/new32:9 pending. No newfixtures/navigation/performance-storage campaign/Android/package/assistantcommit/push; full ROM_DATA_TODO active."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data/read_audit.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bank_rom_read_audit_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

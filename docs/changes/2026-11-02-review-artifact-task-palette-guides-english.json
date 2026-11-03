@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "review-artifact-task-palette-guides-english",
+  "title": "Review artifact, task descriptor and palette guides",
+  "kind": "docs",
+  "platforms": [
+    "Desktop development documentation"
+  ],
+  "changes": [
+    "Review three existing guides for the English-first audit and record their exact file hashes; preserve original game labels and technical evidence."
+  ],
+  "validation": [
+    "Manually read the local artifact retention, European task descriptor and raw UI palette guides; all maintained prose is English."
+  ],
+  "limitations": [
+    "The inventory and remaining Markdown and source areas still require review; no runtime or ROM checks were performed."
+  ],
+  "files": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": [
+    "docs/development/LOCAL_ARTIFACTS.md",
+    "docs/rom_data_tasks.md",
+    "docs/rom_data_ui_palettes.md"
+  ]
+}

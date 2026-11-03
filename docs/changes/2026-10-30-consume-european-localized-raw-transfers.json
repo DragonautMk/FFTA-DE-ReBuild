@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "date": "2026-10-30",
+  "slug": "consume-european-localized-raw-transfers",
+  "title": "Consume European localized raw UI transfer data",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Register independent graphics.ui-raw-transfers at EUR e93-d92/index83 with85 files84 resource IDs, retaining the prior83 records and payloads.",
+    "Project authenticated raw bank words and language pointers through the existing immutable ROM bus with six separate usage counters; preserve sparse seventh-group ownership and all original CPU/queue/DMA work."
+  ],
+  "validation": [
+    "Two605-source/263-core-input Windows builds; accepted4b219adc54111f10b01657afe08092fb88f366dd4fecda609055b3413dbd966f warning-free. One focused Wine filter passes85-file publication/interruption, prior83 record/payload equality,14 attach and two full-set guards.",
+    "23 original/interpreter/native complete-state/guest-clock paths:12 loads, one CpuSet, one original queue executor, nine raw selectors/four stop-safe families. All38220 new source bytes and four prior indexed bytes altered after Load/setup; read8/16/32, fallback and DMA-causing write32 callbacks accounted.939 served new bytes/three prior, fallback768/0;115 instructions25 dispatches coverage only.",
+    "All38220 bytes/35 views/seven groups/42 edges, widths/mirrors/adjacent typed and prior owners/sparse prefix raw holes/Load-slot Undo/four64B mixed DMA16-DMA32-CpuSet-FastSet full states-clock pass.309 preservation guards cover605 frozen/603 model/seven current paths84 old accepted files and inverse hub.",
+    "Before Wine, only the new test leaf changed to recognize that prior indexed archive441608 starts at the sparse view end. Product code identical between builds; first warning-free950bea97 executable/log/source preimages retained. Inherited private console e92/DMA3 labels are stale metadata; accepted JSON proves e93-d92/four transfer cases, no repeat."
+  ],
+  "limitations": [
+    "Runtime acceptance passes; actual production CLI and positive ordinary use remain pending.",
+    "Dynamic6F8 metadata/domain/lower prefix/tails/full caller ABI and global catalog remain open. New Linux/USA/native Windows/32:9 pending; full ROM TODO incomplete.",
+    "No performance/storage campaign, gameplay/checkpoint/navigation, AndroidPort, package, commit or push."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "scripts/extract_rom_data.py",
+    "crates/gba-core/src/rom_data/runtime/ui_raw_transfers.rs",
+    "crates/recomp/src/rom_data/ui_raw_transfers_runtime_tests.rs",
+    "docs/rom_data_ui_raw_transfers.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_raw_transfers.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

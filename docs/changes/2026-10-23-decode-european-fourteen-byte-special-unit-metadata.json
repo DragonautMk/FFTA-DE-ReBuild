@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "decode-european-fourteen-byte-special-unit-metadata",
+  "title": "Decode European fourteen-byte special-unit records with original getters and live palette proof",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Add strict Metadata14/Record/Catalog for93records/1302Bphysical6e6f6c..6e7482/logicalIDs2..94, separate original addressbias6e6f50, fixed IDs/offsets/order/count and full byte/halfword/packed fields. Retain unowned0/1/95plus/2Btrailinggap with no guest fallback.",
+    "Validate byte02against actual parsed116metadata52job owners; leave byte01semantically unconstrained despite its observed range. Diagnostic palette selector/bank helpers preserve u8mode, zero/no-copy and packed bits; original live book lookup/copy/initializer/normal job branches remain guest code.",
+    "Add one reduced source-only Wine oracle; managed EUR e30-d29/25files/24resources and USAe8-d7unchanged until separate publication/direct ownership integration."
+  ],
+  "validation": [
+    "Independent exact-EUR elevenbiased-root literals/stride/predicate/next12Bsource/full1302Breconstruction/noe30overlap pass. Earlier6e6dbc14Bhypothesis and alleged14Baliases7484/78d4rejected by actual4B/12Bstrides; no old proof reopened.",
+    "Warning-free Windows18151build and Wine66692single new oracle terminal/pass:504real cases=471all93getters/u8argumenttruncation,22packed-palette livebooks0,1,2/default3/original32Bcopy/destination/512Bguards,11CCF9C\u2192CD0B6initializer prefixes proving byte02fallback/descriptor override/live auxiliary/flags/264Bunit/frame before allocation.",
+    "13isolated synthetic highu16/u8/bank15/unused/unprovedbyte01/valid-highjob cases pass. StrictJSON/fixedarray/bias/ID/order/count/source/coherent-edit/byte02owner/callee/scratch/descriptor/unit/palette/outerRAM guards pass; synthetic records unauthenticated/unpublished.23627instructions/380PCs/10original-helper-init instructions are coverage only.",
+    "All33protected original/e30/metadata52owner/candidate/cache/loader/canonical/sourcefixture hashes unchanged; no compiler/runtimefailure or closed e30source24+8/native14/3600scene/defaultproof repeat. External HEAD2d66955prior-work/cleanup/user-doc commit preserved; no agent commit/push. Source memory/whitespace/current hashes checked at closure, all jobs terminal."
+  ],
+  "limitations": [
+    "Standalone source/original getter/palette/initializer-prefix proof only; managed publication/typed CPU-DMA-native ownership/lifecycle/positive ordinary scene/actualCLI remain pending. Allocation/live-unit tails, global caller upper bounds and constructorID0remain unclaimed.",
+    "Byte01semantic owner and palette payload ownership unproved; live book/descriptor overrides remain. IDs0/1/95plus/trailing2B and neighboring families are not part of this owned source; no guest bounds/fallback introduced.",
+    "NewLinux/USA/nativeWindows and broader gameplay/maps/audio/GUI/archive/mod remain pending. No performance/startup/RSS/space campaign or AndroidPort change; private ROM/saves/inputs/sourcefixtures/generated code remain ignored."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/metadata14.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/metadata14_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

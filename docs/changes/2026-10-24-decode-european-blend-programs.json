@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "decode-european-blend-programs",
+  "title": "Decode European blend programs with lossless packed fields and original-reader source proof",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Add source-only rom_data::blend_programs with160canonical program offset/count layouts,6producer tables and110original reader/producer fingerprints. Decode packed blend controls/initial coefficients with explicit reserved fields, rawu16durations/u8targets andcanonicalu16program references; reconstruct158source spans/2428bytes without a ROM shadow.",
+    "Validate exact EUR source identity, strict nestedJSON, program/table order/count/bitwidth/reference/source extents/overlaps and authenticated original values. Public typed byte accessors prepare runtime binding while preserving original live indices/RAM templates/message flags; no coefficient cap16/guest guard or new sequencing/save/native ABI.",
+    "Add one reduced source/model Wine oracle for the new blend family only. Source catalog publication/runtime revisions remain EUR e46-d45/USAe8-d7; no new managed file/runtime owner in this unit."
+  ],
+  "validation": [
+    "Previous goal turn was progress: bounded248call/160program/345command/6table22cell inventory closed. inventory-final-summary terminal/no live job and226source-doc hashes checked before mutation,2318protected artifacts/concurrent edits retained; no closed inventory/e46/source/native/managed/CLI/ordinary/audio acceptance rerun.",
+    "Affected Windows12341test compile warning-free. One focused Wine94935check passes independent fields/158range hashes/all2428B reconstruction and160original header/345command initializers/22indexed pointer loads.2376declared B observed;52timed nonalpha second-target fields are preserved/hashchecked but unread under these original-initial-mode probes, with no global live-mode reachability claim.",
+    "The same single Winecheck passes5realffffimmediate chains, original copied-IWRAM memcpy plus realRAMdurationoverride,2maximum-packed/mode0header cases,6raw/signed duration initializers,3delay+1/wrap/decrement cases and unmasked liveindex65535lookup outside the declared projection.17shape/3edited-source/2strictJSON/2ROMidentity guards pass.52943original instructions/264PCs are coverage, not performance measurements.",
+    "Evidence target/rom-data-blend-programs/{windows-model-tests-build.jsonl,windows-model-tests-build.log,windows-model-result.json,windows-model-europe/{blend-programs.json,result.json}}. No new Linux/USA/nativeWindows runtime tests, production CLI build, ordinary scene replay or fixture creation.",
+    "Final project-memory default/base7597b92 and CRLF-aware whitespace pass. All2318prior artifact hashes/124CLI-navigation hash-mtime guards are unchanged. Against226source-doc hashes, only two implementation hubs and six expected memory files change, plus the new model/test/record; all other implementation and concurrent Debug-save work is preserved. model-preservation-check and model-final-summary/protected/source-hashes retain terminal source-model status; no live unit job, fullTODOgoalactive."
+  ],
+  "limitations": [
+    "This is source/model and original-reader prefix proof. Managed preparation/parsing/lifecycle, typed runtime, native/fullstate-clock/task ABI, actual CLI and positive ordinary consumption remain pending; source-only methods are not an active runtime migration.",
+    "52source fields are retained without an observed read under these initial modes; later live mode overrides are not excluded. Header counts and known selector projections are file/source contracts, not new guest RAM bounds or whole physical catalog claims. Mutable copied/synthesized RAM programs stay original.",
+    "NewLinux/USA/nativeWindows checks and other asset/GUI/archive/modTODO remain open. No performance/space campaign, AndroidPort change, original game/save data publication, commit or push; preserve concurrent Debug-save and earlier implementation work."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data/blend_programs.rs",
+    "crates/gba-core/src/rom_data.rs",
+    "crates/recomp/src/rom_data/blend_program_model_tests.rs",
+    "crates/recomp/src/rom_data.rs"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

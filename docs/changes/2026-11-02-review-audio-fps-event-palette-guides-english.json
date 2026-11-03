@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "review-audio-fps-event-palette-guides-english",
+  "title": "Review audio, FPS, event and palette guides",
+  "kind": "docs",
+  "platforms": [
+    "Desktop documentation"
+  ],
+  "changes": [
+    "Review four existing guides for the English-first audit and record their exact file hashes while preserving original labels and technical evidence."
+  ],
+  "validation": [
+    "Manually read the fast-forward audio, FPS overlay, event directory and color-mode palette guides; their maintained prose is English."
+  ],
+  "limitations": [
+    "The inventory and remaining Markdown and source areas still require review; no ROM access or runtime checks were performed."
+  ],
+  "files": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": [
+    "docs/fast_forward_audio.md",
+    "docs/fps_overlay.md",
+    "docs/rom_data_events.md",
+    "docs/rom_data_color_palettes.md"
+  ]
+}

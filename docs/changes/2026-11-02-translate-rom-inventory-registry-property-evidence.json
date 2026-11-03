@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-rom-inventory-registry-property-evidence",
+  "title": "Translate ROM inventory registry and property evidence",
+  "kind": "docs",
+  "platforms": [
+    "Desktop ROM-data inventory"
+  ],
+  "changes": [
+    "Translate registry selector, redirect, FFFF reader and actor property evidence in the ROM inventory while retaining scopes and open criteria."
+  ],
+  "validation": [
+    "Checked unchanged surrounding text and matching numeric values, task IDs, link targets and inline literals against the preimage."
+  ],
+  "limitations": [
+    "The remaining inventory and wider cross-tree English-first audit are open; no ROM access or runtime checks were performed."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_INVENTORY.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

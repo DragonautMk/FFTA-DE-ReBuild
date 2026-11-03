@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "trace-european-compact-obj-task-producer",
+  "title": "Trace a conditional European compact OBJ task producer",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Document a conditional original task-6 producer leading to compact OBJ selectors 2 and 3."
+  ],
+  "validation": [
+    "Original EUR Wine disassembly and independent descriptor and branch target reconciliation passed; protected ROM and manifest remained unchanged."
+  ],
+  "limitations": [
+    "Context state 3, a retained ordinary scene and actual resource use remain unproved. Linux, USA and native Windows remain pending; no performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_obj.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

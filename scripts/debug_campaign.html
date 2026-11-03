@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FFTA · Targeted campaign</title>
+<style>
+:root{color-scheme:dark;font:16px/1.5 system-ui;background:#101826;color:#e3edf7}*{box-sizing:border-box}body{max-width:1200px;margin:auto;padding:clamp(16px,4vw,48px)}h1{font-size:clamp(26px,5vw,40px);line-height:1.2}h2{margin-top:0}p{overflow-wrap:anywhere}small,.muted{color:#a8bdd0}.scope{border-left:4px solid #e7b461;padding:15px;background:#1b293a}.stats,.filters{display:flex;flex-wrap:wrap;gap:10px;margin:20px 0}.stat,button,input,select{font:inherit;border:1px solid #536c85;background:#20334a;color:inherit;border-radius:7px;padding:8px 12px}input{max-width:100%;min-width:0}button{cursor:pointer}label{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.case{border:1px solid #3b536d;background:#19283a;border-radius:10px;padding:22px;margin:15px 0}.case h2{font-size:21px}.badge{display:inline-block;padding:3px 10px;background:#2a3f56;border-radius:5px;margin-right:8px}.positive{color:#a2dfbd}.negative{color:#ffb4ae}.incompatible{color:#f1cc85}a{color:#97d6ff;overflow-wrap:anywhere}details{margin-top:14px}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#101826;padding:12px;border-radius:5px}.tags{color:#a8bdd0}
+</style>
+<body><small>FFTA · local evidence and explicit selection</small><h1 id="title"></h1>
+<p class="scope">This report executes zero frames. Previous evidence is reused, not rerun. Zero reads in the selected window do not prove that a feature is unused in the game. Global use: <strong>UNKNOWN</strong>.</p>
+<div id="stats" class="stats"></div><p id="selection"></p>
+<div class="filters"><label>Outcome <select id="outcome"><option value="">All</option><option>positive</option><option>negative</option><option>incompatible</option><option>not-executed</option></select></label><label>Search <input id="search" type="search" placeholder="Case, DS, family, transition"></label><button id="reset">Reset</button></div>
+<p id="count" role="status"></p><p id="empty" hidden>No matching cases.</p><div id="cases"></div>
+<details><summary>Manifest, limits and scope</summary><pre id="meta"></pre></details><p><a href="campaign.json">Campaign JSON</a></p>
+<script>
+const R=/*CAMPAIGN*/;
+const el=(tag,text,cls)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n},by=id=>document.getElementById(id);
+by('title').textContent=R.label;
+for(const [key,label]of [['positive','Positive'],['negative','Negative'],['incompatible','Incompatible'],['not-executed','Not executed']]){
+ const count=R.cases.filter(c=>c.selected&&c.outcome===key).length;by('stats').append(el('span',label+': '+count,'stat '+key));
+}
+by('selection').textContent=R.selected+' of '+R.cases.length+' cases selected. The others remain unexecuted without opening their evidence.';
+by('meta').textContent=JSON.stringify({selection:R.selection,manifest:R.manifest,manifest_sha256:R.manifest_sha256,scope:R.scope,limits:R.limits},null,2);
+const link=(href,label)=>{const a=el('a',label);a.href=href.split('/').map(encodeURIComponent).join('/');return a};
+function render(){
+ const q=by('search').value.toLowerCase(),kind=by('outcome').value,rows=R.cases.filter(c=>(!kind||c.outcome===kind)&&JSON.stringify(c).toLowerCase().includes(q));
+ by('cases').replaceChildren();by('count').textContent=rows.length+' of '+R.cases.length+' cases';by('empty').hidden=rows.length!==0;
+ for(const c of rows){
+  const card=el('article',undefined,'case');card.append(el('h2',c.id+' · '+(c.profile_case||'Profile unavailable')),el('span',c.outcome,'badge '+c.outcome),el('span',c.evidence==='reused-pinned'?'Previous evidence reused':'Not executed by the report','badge'),el('p',[...(c.ds||[]),...(c.families||[]),...(c.transitions||[])].join(' · '),'tags'),el('p',c.reason));
+  if(c.detail_outcome)card.append(el('p','Recorded outcome: '+c.detail_outcome+' · '+c.completed+'/'+c.frames+' selected frames.'));
+  const read=el('p','Reads: '+c.reads.state+'. '+c.reads.meaning);card.append(read);
+  if(c.reads.matched_requests!==undefined)card.append(el('p','Requests '+c.reads.matched_requests+', dropped '+c.reads.dropped_requests+'. '+(c.reads.truncated?'Collection truncated.':'Cap not reached.')));
+  const nav=el('p');for(const [key,label]of [['profile','Profile'],['result','Retained result']])if(c[key]){nav.append(link(c[key],label),document.createTextNode(' · '));}if(c.reads.path)nav.append(link(c.reads.path,'Retained audit'));card.append(nav);
+  const d=el('details');d.append(el('summary','Identity, provenance and window'),el('pre',JSON.stringify(c,null,2)));card.append(d);by('cases').append(card);
+ }
+}
+by('outcome').addEventListener('input',render);by('search').addEventListener('input',render);by('reset').addEventListener('click',()=>{by('outcome').value='';by('search').value='';render()});render();
+</script></body></html>

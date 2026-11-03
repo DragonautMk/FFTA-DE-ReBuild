@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "date": "2026-10-26",
+  "slug": "extract-european-script-special-alternate-poses",
+  "title": "Extract conditional European alternate script poses with exact selector witnesses",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Join all151low-selector decimal49references to their logical metadata14halfword06under the original current same-unit alternate assignment, clear override20and facing0..3conditions. Preserve20producer witnesses/14logical IDs/14sprite-base pairs without all-sprite crossproducts or pruned bindings.",
+    "Add a strict offline source model for84keys/68nulls/14counted sequences64frames/four OBJlists20objects/26indexed4bpp requests7232B. Preserve every original command word and tail, and validate overlapping initial/normal/alternate dependency views independently before subtracting their union.",
+    "Identify20new spans816B, including54cells52nulls/two new sequences/four operation1frames/two pixel requests512B. Managed publication and runtime consumption remain a separate next unit; e62-d61andUSAe8-d7 are unchanged."
+  ],
+  "validation": [
+    "New static exactEUR/archive/metadata14/manifest checks authenticate all57prior owner file/source hashes.31halfword/one literal/sixBLfingerprints pin the conditional alternate getter and assignment; all151script references match the already accepted exact selector evidence.",
+    "Full9048Bsource SHA25652ba9bc267436719dda66f7cc1628bf72a4f98310a276845b6bc1ecd994cab7a; shared8142alternate+38initial+52normalBonly. No internal-role conflict, shared-index-root target, mixed typed item or varying pixel extent.",
+    "New source216index8header80frame512pixelB has SHA256029ff8a0282346c25be4b436f7b5ea3e219e167d5639d497f7d495b0127a5e2c. The new original-reader oracle is validated on Wine below.",
+    "Single affected Windows frontend test build passes without warnings, frozen3af29161ee386cf5a5e18ec3260032a14dbbca048151684af38c8db772fe38d2. Initial Wine startup exits before invoking the filter because the sandbox blocks the local server lock; failure log retained and same-executable retry selected, with no rebuild or old acceptance replay.",
+    "Same frozen binary retry passes its first actual exact Winefilter:19JSON/source/producer/three-overlapping-dependency guards,84keys/all9048full sourceB/20new spans816B,108newcell original constructor aliases,52null+two proper resets/two original scheduler/queue/actualDMA3uploads/entireVRAM/all512newpixelB. Initial environment-only startup attempt invokes no test; no old acceptances or shared command2/8cases replayed.284observed nonpixelB/492PC/7422instructions describe coverage only.",
+    "Final preservation passes9294prior artifact hashes/1221build+1222initial-startup+1222successful-Wine exacthash-mtime guards/all11compiled source-preimages/two shared-hub preimages with only selected declarations.350local feature links, project-memory default+baseea17e92, new-module rustfmt and CRLF-aware whitespace pass; ROMs/cart/states/input/datasets/cache/TCC/canonical remain intact, no live task process. Accepted model-file SHA25696ce4c28cb19366fbb8804e3784782a1a4682551926b12315ae88fafed5ad035."
+  ],
+  "limitations": [
+    "Conditional source/model work only; managed/runtime/actualCLI/ordinary source use and fullscene equivalence pending. No universal current actor assignment or everyactor/action reachability, terrain-name semantics, high16registry/42-230override or changed/stale actor contexts inferred.",
+    "Existing command2/8shared sequences keep previous original acceptance; new sequences contain operation1only. New Linux/USA/nativeWindows/new32:9 remain pending. No performance/storage measurements, gameplay checkpoint/navigation/private payload edit, packaging, Android change, commit or push."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data/unit_obj_script_special_alternate.rs",
+    "crates/gba-core/src/rom_data.rs",
+    "crates/recomp/src/rom_data/script_special_alternate_model_tests.rs",
+    "crates/recomp/src/rom_data.rs",
+    "docs/rom_data_unit_obj.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_unit_obj.md",
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

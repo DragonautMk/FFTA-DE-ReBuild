@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "localize-debug-save-catalog",
+  "title": "Localize the debug save catalog",
+  "kind": "changed",
+  "platforms": [
+    "Desktop menu: Linux unit tests; native Windows GUI not rechecked"
+  ],
+  "changes": [
+    "Localize debug-save catalog headings, status and kind labels, empty state and detail headings using the selected menu language. Preserve original status and kind tokens, filters, selected IDs, source text and CLI/JSON data.",
+    "Keep the All-cases selector label distinct from an imported case ID of the same spelling, and preserve imported entry names. Correct the guide to describe the current internal selector and explicit external dialog."
+  ],
+  "validation": [
+    "Offline Linux menu tests: 4 debug-catalog, 6 interaction and 6 localization tests passed; after final catalog additions the 4 catalog tests passed again and Cargo rebuilt input-config automatically. Catalog checker passed 500/500 entries per language; git diff --check passed."
+  ],
+  "limitations": [
+    "No live GUI, native Windows, physical controller, real-catalog import, save or ROM validation was performed. Existing imported descriptions and historical evidence remain in their original language."
+  ],
+  "files": [
+    "crates/input-config/languages/en.json",
+    "crates/input-config/languages/it.json",
+    "crates/menu/src/debug_catalog.rs",
+    "crates/menu/src/theme.rs",
+    "crates/menu/src/information.rs",
+    "docs/debug_catalog.md",
+    "docs/menu_localization.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

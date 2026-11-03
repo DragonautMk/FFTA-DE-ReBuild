@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "date": "2026-10-22",
+  "slug": "decode-european-background-packet-programs",
+  "title": "Represent European background packet programs as authenticated typed data",
+  "kind": "added",
+  "platforms": [
+    "Linux",
+    "Windows GNU/Wine"
+  ],
+  "changes": [
+    "Add the bounded offline bg_packet_data model for paired/halfword/auxiliary programs: unique program IDs by first descriptor occurrence, all descriptor aliases, parent graph, exact wrapper/encoded source and body/control metadata, and ordered full-width typed writes. Keep live paired initialization separate from static data.",
+    "Validate counts, canonical links, dangling IDs, cycles, source overlaps/overflow, budgets and every source/body/parent/write relationship. Reject unsupported wrappers and unverified literal paired destinations. Add strict Serde packet types and whole-source verification so coherent edited data cannot pass as base content."
+  ],
+  "validation": [
+    "Before the latest Wine-only steering, warning-free native and Windows GNU test builds and8affected core packet checks,1default JSON guard and1retained EUR capture test pass on each target. No new USA validation or old486-call original loader/boot/scene oracle was executed.",
+    "All352unique source extents/hashes/body files/parents and486descriptor links match retained EUR original-loader evidence. The model contains185272decoded values,398227encoded source bytes and523794body bytes. Standard readable JSON20217427B is identical across targets, SHA25679e557b3e02b0f61a6684eb2cddf7d946928f6aeb4da5225fbdc24595947a5dc.",
+    "Raw/compressed bodies, declared padding, both dictionary widths, full words, overlap order, aliases/parent ordering and separate live fill are covered. Unknown fields/kinds, malformed models and inconsistent values are refused. A coherent literal edit passes structural validation but fails exact base authentication; an edited ROM is also rejected. Protected ROM/canonical hashes remain unchanged; all processes terminal/pass."
+  ],
+  "limitations": [
+    "Current active schema/extractor/decoder remain1/7/6. No sixth managed file, extract/verify/prepare integration, activation or actual packet runtime consumer yet. These are the next03/04units; offline serialization does not complete migration.",
+    "Updated user policy is EUR-only and reduced Wine-only testing. New USA and subsequent Linux checks remain pending; already completed Linux/USA evidence is retained. Native Windows, other formats/catalogs/languages and full ROM_DATA_TODO remain open.",
+    "No production rebuild, performance/space campaign, archive, AndroidPort change, agent commit or push. HEAD5375e8f containing prior work was observed committed/pushed externally and preserved."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/bg_packets.rs",
+    "crates/gba-core/src/rom_data/bg_packet_data.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_data_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md",
+    "docs/rom_data.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "date": "2026-10-26",
+  "slug": "inventory-european-registry-special-poses",
+  "title": "Decode European registry script poses with exact special-unit witnesses",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Authenticate the conditional producer domain before inspecting targets:16actual high-selector decimal49references/seven selector-base pairs, resolved unitbyte4in the93known metadata14rows2..94, retained same-unit original normalCF144/alternateCF180assignment, override20clear/facing0..3. Preserve1302mode/registryselector/unitlogical/base witnesses2976conditional references without fixed registry identity or an allscript-all-sprite product.",
+    "Define2220logicalqueries/1908physical cells/1537physical nulls/353proper counted sequences2081frames/60OBJlists279objects/841indexed4bpp requests321088B. Audit known indexroots from all seven current unitOBJmodels, preserving every selected key with count/shape-derived extents.",
+    "Identify272new spans15276B=2392index84header1920frame10880pixel,598cells567nulls/21sequences96operation1frames/37pixelrequests; retain358566Bunder six earlier owners. EUR e64-d63/USAe8-d7managed-runtime unchanged.",
+    "Add a strict lossless typed model retaining all1302conditional witnesses/2976references/2220logical keys and exact1908physical cells. Independently validate initial/equipment/normal/alternate/low-scriptnormal/low-scriptalternate views before union subtraction, reject conflicting alias values, retain original frame words/tails/OBJattributes/indexed4bpp pixels."
+  ],
+  "validation": [
+    "ExactEUR/archive/metadata14authentication and41halfword/fourliteral/eightBLfingerprints verify the source domain before target reads, including CBAD4unit+4predicate/getter table indexing/current assignment/registry-unit-context path. All16references match accepted original projection; all93metadata rows retain their exact logical IDs and source fields.",
+    "All59e64resource file/source hashes pass. Full373842BsourceSHA2561151b354c92613f2020980b5825090d205d99b0646dc4da6ac3fe81d1a0ceef9; shared74006initial254186normal3792scriptnormal25650alternate80scriptalternate852equipmentBonly. No target classified as indexroot, internal role overlap, mixed old/new typed item or varying pixel extent.",
+    "New272spans15276B/sourceSHA256eef259d8b369d5c9e1e8dccf82f6d125a8bb405580e2abd750242fd9fca85169. All21new sequences contain96operation1frames, 37entirely newpixel requests cover10880B. During the source-contract child no guest/build/model or oldacceptance campaign was executed.",
+    "During the read-only source-contract child, cheap360source hash checks confirm allimplementation files unchanged; only six coherent memory/feature files plus this new record change.372local feature links, project-memory default+baseac34c8a and CRLF-aware whitespace pass. Reuse the already closed04privateasset preservation10117hashes/1362CLI hash-mtime guards/18compiled inputs; no repeated10200artifact/build/game campaign for this read-onlysource unit.",
+    "The initial Windows frontend build failed with E0308 in the oracle-only initialpose::Sequence position helper. A narrow typed lookup correction preserves the model/source plan; separate retry build passes without warnings. Frozen frontend SHA256e55e7b3f60e69e22f8d7496c3bdd1fc99a9eed86293c14631292cedf30b168ce; first actual exact Wine source filter passes26guards/1196newcell facing-alias prefixes/567null+21proper resets/37real scheduler-DMA uploads covering all10880newpixelB/entireVRAM. No previous command/source/managed/native/scene acceptance is replayed.",
+    "Final meaningful-code preservation passes10212prior private hashes/1378Wine hash-mtime guards/13finalcompiled inputs; both shared hubs equal preimages plus exact declarations only. 369decoded local feature links, new-module rustfmt, project-memory default+base7718663 and CRLF-aware whitespace pass. No unrelated implementation change, private0tracked; productione64-d63/USAe8-d7unchanged."
+  ],
+  "limitations": [
+    "Source contract/lossless model/new focused Wine oracle are closed. Managed-runtime/actualCLI/ordinary newpixel/fullscene criteria remain separate; no native complete-state-clock or wholeactor/allocator ABI claim.",
+    "No static registry unit/class identity or every-actor/action reachability. Generic0/1/out-of-catalog/redirect/forcedoverride/changed-currentactor paths stay separate; no pruning within the predeclared93row domain or local liveIDcap.",
+    "Linux/USA/nativeWindows/new32:9 remain pending; no performance/storage measurement or optimization, gameplay fixture/navigation/private payload edit, Android change, packaging, commit or push."
+  ],
+  "files": [
+    "docs/rom_data_unit_obj.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "crates/gba-core/src/rom_data/unit_obj_script_registry_special.rs",
+    "crates/recomp/src/rom_data/script_registry_special_model_tests.rs",
+    "crates/gba-core/src/rom_data.rs",
+    "crates/recomp/src/rom_data.rs"
+  ],
+  "references": [
+    "docs/rom_data_unit_obj.md",
+    "docs/rom_data_scripts.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "consume-european-m4a-directory",
+  "title": "Publish and consume the European typed M4A directory and shared headers",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Advance EUR to e41-d40with audio-directory.json/audio.m4a-directory:36files/35resources, all34prior decoded files/e40generations retained, USAe8-d7unchanged. Authenticate all457audio source bindings and internal header links before transactional activation.",
+    "Route original CPU/DMA/BIOS/native reads through typed player/directory/header fields, preserving raw gaps and the dummy-header/WaveData alias. Nonserialized category counters and3player/640song/455header bitsets observe use without changing guest mixer/sequencer/RAM/clock/save-nativeABI."
+  ],
+  "validation": [
+    "Warning-free Windows test build5021and two focused Wine51686checks pass publication failure/create-reuse-repair-move/e40retention/25coherent decoded-link-source-dependency-path-role-hash-coverage guards/missing-file transactional owner and unavailable-copy Load-Undo-backup-Restart. All15236B/allrecord masks pass with rawsource altered.",
+    "44fulloriginal/interpreter/native start paths with raw15236B altered have equal complete states/clocks. Compiled category reads[176player,264directory,539header,884track-pointer]allpositive. All457spans/allbytes/boundary widths/mirrors/realBIOS/SWI-DMA pass, explicit dummy-wave2typed2raw and CPUSet2directory+8header+2raw included.14926instructions/181PCs/608dispatches are coverage only.",
+    "All457audio spans are disjoint from all34prior resource sources. No build/Wine failures in this integration unit, source649+1+6and old acceptance not repeated; shared source helpers changed visibility only. Private target/rom-data-audio-m4a/{windows-managed-tests.*,windows-managed-results.json,managed-prior-overlap.json,managed-run-protected.json,recomp-tests-managed.exe,windows-managed-europe/{managed-result,native-result}.json} retains terminal evidence.",
+    "Final project-memory including --base7597b92/whitespace and416protected hashes pass; managed-final-summary/managed-final-protected retained, no live unit process.",
+    "Production78108Windows build warning-free/private CLI700009cc615f516bd31d98fdf982e4970a3dc64b6f470db0ee0045c7ddb060ec/canonicalf3e277dbrestored. ActualWineCLI14580create/reuse-no-write38managedfiles and27876oldcache/unrelatedcwd400ordinary GoblinPlay pass179newsourceB(36directory/79header/64track-pointer),3songs/3headers/0player reads.",
+    "One Wine91327new-family400frame pair passes everycomplete state/clock/central-wide image/OAM/dispatch/mixedPSGFIFOHLEsample with same179B. Mixed1379881native/2741618fallback dispatches are coverage only. Existing EUR bank checkpoint/input reused; no navigation/fixture/source-statepayload/personal-save edits. Final568x160bankbackground inspected; serializedseparateUIomits panels, no newfoodcount/confirmation claim. Private windows-{build,cli-processes,cli-no-write,cli-summary,scene-result}.json/windows-bank-play-audio-directory-full-state-audio.log/scene-executable.json/bank-play.png retained.",
+    "Final464protected hashes and38CLIhash-mtime guards pass; ordinary-final-protected retained. All unit jobs terminal; source649+1+6/native44/e40and older scene proofs not rerun for context.",
+    "Final project-memory including --base7597b92 and whitespace checks pass after ordinary closure; ordinary-final-summary/ordinary-final-source-hashes retain the current implementation/document checkpoint."
+  ],
+  "limitations": [
+    "Ordinary acceptance covers one retained EUR GoblinPlay400frame scene, three songs/headers and no player configuration reads. Full bank/keymap/sample/sequence extents, otherordinary audio scenes, typed shadow-audio sample consumers and broader GUI/archive gates remain pending.",
+    "New Linux/USA/native Windows pending; no performance/space/AndroidPort work, game data publication or agent commit/push. Existing e39/e40and concurrent Debug-save work preserved."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/audio_directory.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/audio_directory.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/audio_directory_tests.rs",
+    "crates/recomp/src/rom_data/audio_directory_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "scripts/extract_rom_data.py",
+    "docs/rom_data_audio.md",
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_audio.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

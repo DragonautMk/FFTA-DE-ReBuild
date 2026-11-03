@@ -1,0 +1,1440 @@
+{
+  "schema": 1,
+  "task": "ENGLISH-FIRST-PROJECT",
+  "updated": "2026-11-02",
+  "status": "partial",
+  "objective": "English-first maintained documentation, comments, default UI, CLI, reports and tools across the root workspace and AndroidPort.",
+  "review_method": [
+    "Manual review/translation of the exact file versions below; hashes identify the reviewed bytes, not an automated proof of English.",
+    "Pending Markdown is a complete tracked Markdown inventory minus reviewed files and the immutable archive. Pending source areas still require full per-file review.",
+    "Search hits are heuristic candidates only. Zero hits or passing tooling checks cannot close the whole-project goal. New/changed files require renewed language review."
+  ],
+  "reviewed_files": [
+    {
+      "path": ".cursor/rules/english-first.mdc",
+      "sha256": "d532781c15857526d591f545fccc19038a59c845c6698994596599f249b42483",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": ".cursor/skills/ffta-debugging/SKILL.md",
+      "sha256": "fadee169159e9b621de34bde05c276111d06d12e8cf47746d13351f7ad6afdaa",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": ".cursor/skills/ffta-development/SKILL.md",
+      "sha256": "c0dfe5a3e74ec9722b17b73237cf81c7cd2362cfcc3d0d297c13eb737e12983c",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": ".cursor/skills/ffta-project-memory/SKILL.md",
+      "sha256": "055229ae7647d7577ee3b91465d5ed0ed9933ac1255538617bcf9e3397687db5",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": ".cursor/skills/ffta-windows-validation/SKILL.md",
+      "sha256": "9e1f5ee86015d6ac9cc95dbc0d782071d49060e34fde74ce4047440a61af2827",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "282f3367c9deb30cf707f6ba61daa877f58859259a8cebd90f3f842ed2ee544e",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "AndroidPort/Cargo.toml",
+      "sha256": "6703eb303aa87c916af1468e34b5c1392417119e794aa99e88a4e2ddee874108",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/Licenses/ANDROID.md",
+      "sha256": "d7b148093c8839d68c90a441cbbb1283e2dcd7295755e0271138745b274e7079",
+      "scope": "English maintained entry/build/Android/license-guide prose reviewed in each tree; two Android TODOs translated with legacy anchors; legal text/commands/recorded limits otherwise unchanged; no legal or platform recertification"
+    },
+    {
+      "path": "AndroidPort/Licenses/CREDITS.md",
+      "sha256": "34c9cecc5bd074b5176ca015c1acc75b381efa7727726deb739a4dbd3c642c42",
+      "scope": "English maintained entry/build/Android/license-guide prose reviewed in each tree; two Android TODOs translated with legacy anchors; legal text/commands/recorded limits otherwise unchanged; no legal or platform recertification"
+    },
+    {
+      "path": "AndroidPort/Licenses/README.md",
+      "sha256": "b834b63c2908a1706c584c383891a5477cbf6d2b07430c136b635bab863cf1b8",
+      "scope": "English maintained entry/build/Android/license-guide prose reviewed in each tree; two Android TODOs translated with legacy anchors; legal text/commands/recorded limits otherwise unchanged; no legal or platform recertification"
+    },
+    {
+      "path": "AndroidPort/README.md",
+      "sha256": "2d519050cc53bc43fc994230225781f99ed30657e83f782688c5a8c1a35ace94",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "AndroidPort/android/README.md",
+      "sha256": "2d36b5e15aefacd023be92a81a1212e756f4ef1f36b93af52fb35936f200b29a",
+      "scope": "English maintained entry/build/Android/license-guide prose reviewed in each tree; two Android TODOs translated with legacy anchors; legal text/commands/recorded limits otherwise unchanged; no legal or platform recertification"
+    },
+    {
+      "path": "AndroidPort/android/TODO.md",
+      "sha256": "ec15bd8039a66551a11d9f00174ca9fc180c57595a6e3ea9d70d6e7e93d6f86f",
+      "scope": "English maintained entry/build/Android/license-guide prose reviewed in each tree; two Android TODOs translated with legacy anchors; legal text/commands/recorded limits otherwise unchanged; no legal or platform recertification"
+    },
+    {
+      "path": "AndroidPort/android/app/build.gradle.kts",
+      "sha256": "325d61483341c4824fc603c35a718326c7c9d30d861eecd674d6e73808264bfa",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/android/app/src/androidTest/java/com/fftarecomp/port/ExampleInstrumentedTest.kt",
+      "sha256": "e51de3173f2389300d61779c9d157c9e0be351943bdeed98ee630b6b96fc3064",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/android/app/src/androidTest/java/com/fftarecomp/port/GamepadDetectionTest.kt",
+      "sha256": "444d529cdefe693b91ded704baaf4e963046546a5182b0a7f999a6ae89c20469",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/android/app/src/androidTest/java/com/fftarecomp/port/TouchSelectionDeviceTest.kt",
+      "sha256": "95cbed7826683fd39fac88d7dadff69cb9162b5c210e14a1c9ddad07a36d07b5",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/android/app/src/main/AndroidManifest.xml",
+      "sha256": "8d14c05a899de8443698fdd8d9bebe5abb5f8af942e941eb1ad4361bb6ecd179",
+      "scope": "Android-specific production source, default resources or authored build/benchmark tooling: natural-language strings and comments reviewed as English; game data, external text and machine tokens retained."
+    },
+    {
+      "path": "AndroidPort/android/app/src/main/java/com/fftarecomp/port/FrameMailbox.kt",
+      "sha256": "46d22a771c5104929c6e551f1605e72021858f95002caaf5d9fc5fd18406fa56",
+      "scope": "Android-specific production source, default resources or authored build/benchmark tooling: natural-language strings and comments reviewed as English; game data, external text and machine tokens retained."
+    },
+    {
+      "path": "AndroidPort/android/app/src/main/java/com/fftarecomp/port/GameBenchmark.kt",
+      "sha256": "b6f5acd54b9b27d0918b2b46092950caf176dd1a96c9691f16a39ecb305e861a",
+      "scope": "Android-specific production source, default resources or authored build/benchmark tooling: natural-language strings and comments reviewed as English; game data, external text and machine tokens retained."
+    },
+    {
+      "path": "AndroidPort/android/app/src/main/java/com/fftarecomp/port/GameSurface.kt",
+      "sha256": "d966e54778d1a546ef22ffce40e496cf573fb318b447c334620b9b0852e09a3e",
+      "scope": "Android-specific production source, default resources or authored build/benchmark tooling: natural-language strings and comments reviewed as English; game data, external text and machine tokens retained."
+    },
+    {
+      "path": "AndroidPort/android/app/src/main/java/com/fftarecomp/port/Gamepad.kt",
+      "sha256": "03a1edcca39e77a35d8cd08315a335e9901d4ced0827a4cd317c0dfe3f232b31",
+      "scope": "Android-specific production source, default resources or authored build/benchmark tooling: natural-language strings and comments reviewed as English; game data, external text and machine tokens retained."
+    },
+    {
+      "path": "AndroidPort/android/app/src/main/java/com/fftarecomp/port/GamepadSettings.kt",
+      "sha256": "657827406ddd0decca0b70ea26fb4fff2f474df1b2d73ecd6196362649ce5eef",
+      "scope": "Android-specific production source, default resources or authored build/benchmark tooling: natural-language strings and comments reviewed as English; game data, external text and machine tokens retained."
+    },
+    {
+      "path": "AndroidPort/android/app/src/main/java/com/fftarecomp/port/MainActivity.kt",
+      "sha256": "cae93ceff499ecb7cad4f540990ec2338dc0f19a3375fbb2a409ea224aa75a98",
+      "scope": "Android-specific production source, default resources or authored build/benchmark tooling: natural-language strings and comments reviewed as English; game data, external text and machine tokens retained."
+    },
+    {
+      "path": "AndroidPort/android/app/src/main/java/com/fftarecomp/port/NativeBridge.kt",
+      "sha256": "ec74a60debdea610a425329d19d83cb1dcef4150e43285d569402074bfaef945",
+      "scope": "Android-specific production source, default resources or authored build/benchmark tooling: natural-language strings and comments reviewed as English; game data, external text and machine tokens retained."
+    },
+    {
+      "path": "AndroidPort/android/app/src/main/java/com/fftarecomp/port/NormalAudioOutput.kt",
+      "sha256": "61a18ebe0409b88b73e348736361d65d1472bfb4f6f753716617ea2f306f1d96",
+      "scope": "Android-specific production source, default resources or authored build/benchmark tooling: natural-language strings and comments reviewed as English; game data, external text and machine tokens retained."
+    },
+    {
+      "path": "AndroidPort/android/app/src/main/java/com/fftarecomp/port/StartupPolicy.kt",
+      "sha256": "8830c6458796afc57e2f2a9fcc1f249fc98a7022edefa88a678533ee259fed0a",
+      "scope": "Android-specific production source, default resources or authored build/benchmark tooling: natural-language strings and comments reviewed as English; game data, external text and machine tokens retained."
+    },
+    {
+      "path": "AndroidPort/android/app/src/main/java/com/fftarecomp/port/StartupState.kt",
+      "sha256": "a31bf3a00e6f0969e36748f467f9a8b3fb4e0ff5675571670a06a1296f2c5c48",
+      "scope": "Android-specific production source, default resources or authored build/benchmark tooling: natural-language strings and comments reviewed as English; game data, external text and machine tokens retained."
+    },
+    {
+      "path": "AndroidPort/android/app/src/main/java/com/fftarecomp/port/TouchControls.kt",
+      "sha256": "23ec9daef4ecd40321452c5c6d4fe3fc7fd5eeb0974fb48a7f07597ba771edfa",
+      "scope": "Android-specific production source, default resources or authored build/benchmark tooling: natural-language strings and comments reviewed as English; game data, external text and machine tokens retained."
+    },
+    {
+      "path": "AndroidPort/android/app/src/main/java/com/fftarecomp/port/TouchLayout.kt",
+      "sha256": "5ed51c3ddd52225067332b52330d67683fd0de68fde26e8e8cb0dedcd248ca9f",
+      "scope": "Android-specific production source, default resources or authored build/benchmark tooling: natural-language strings and comments reviewed as English; game data, external text and machine tokens retained."
+    },
+    {
+      "path": "AndroidPort/android/app/src/main/java/com/fftarecomp/port/TouchSelection.kt",
+      "sha256": "0c10d7bba27aa4d042c761626162d49759013e5b3464b3383f80516f02c7e823",
+      "scope": "Android-specific production source, default resources or authored build/benchmark tooling: natural-language strings and comments reviewed as English; game data, external text and machine tokens retained."
+    },
+    {
+      "path": "AndroidPort/android/app/src/main/res/values/strings.xml",
+      "sha256": "11ce8743cda590e4fdb74f5f9231591e5c564c874724cbf01f595e22ff34aee1",
+      "scope": "Android-specific production source, default resources or authored build/benchmark tooling: natural-language strings and comments reviewed as English; game data, external text and machine tokens retained."
+    },
+    {
+      "path": "AndroidPort/android/app/src/main/res/xml/backup_rules.xml",
+      "sha256": "6cf1a27e6807b1d24e41d3fbe7ddc1bfe1f42226027964f6eaf477d71b43b283",
+      "scope": "Android-specific production source, default resources or authored build/benchmark tooling: natural-language strings and comments reviewed as English; game data, external text and machine tokens retained."
+    },
+    {
+      "path": "AndroidPort/android/app/src/main/res/xml/data_extraction_rules.xml",
+      "sha256": "cb1fc47ab4a984530ed60e0e6ee638929c3038290e7e7e0b4b03a3a30fbe7381",
+      "scope": "Android-specific production source, default resources or authored build/benchmark tooling: natural-language strings and comments reviewed as English; game data, external text and machine tokens retained."
+    },
+    {
+      "path": "AndroidPort/android/app/src/test/java/com/fftarecomp/port/FrameMailboxTest.kt",
+      "sha256": "41e58fc0d26c3ecb86f6c2105da6e03bd55cdf9d1c375d5761c8dc490bfa1830",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/android/app/src/test/java/com/fftarecomp/port/GamepadTest.kt",
+      "sha256": "e05609a4dea3140b53592620f16ed8405f739cf57832ec5b057057f55028129d",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/android/app/src/test/java/com/fftarecomp/port/StartupPolicyTest.kt",
+      "sha256": "a3a136d112c0759fa3b3b7cadc4cdff69e5b1b3e4f029f99ecb306bf10f7fff2",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/android/app/src/test/java/com/fftarecomp/port/TouchLayoutTest.kt",
+      "sha256": "1158d3cdb87a91484530ae9db3f450812babec79be8cbd6fd383fe774b65de3b",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/android/app/src/test/java/com/fftarecomp/port/TouchSelectionTest.kt",
+      "sha256": "c9866e194c51769a61d6210cf69d33e9afb837570cd8c049ba369deebbdb3f52",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/android/app/src/test/java/com/fftarecomp/port/ViewAndInputTest.kt",
+      "sha256": "0ba008bd91d7095f48e25a4eaf390b0e0f0712d3d7d36c0738a26b29b051f4a1",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/android/build.gradle.kts",
+      "sha256": "3d131b51e2782442500c7d9375498b7561c4201b4de8a87a1145e1f76c27117c",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/android/gradle.properties",
+      "sha256": "369335745863cd079a7e79009f89bddabf039237d3a66d7af96ec9a5767e6f38",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/android/gradle/gradle-daemon-jvm.properties",
+      "sha256": "6c13aa5ba36690ccfbbb25a8807d01d98c15833e446d7ae82ddc726472cb8ef7",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/android/gradle/libs.versions.toml",
+      "sha256": "e4e295fdb2d8645a782f7e013cedb0d3cd7c917dba427b5e03d3f217e2bc914a",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/android/gradle/wrapper/gradle-wrapper.properties",
+      "sha256": "c2fb5f3000ca1b3d0a2708109cc2f53891a96f84f2d8a37f74d267b7ee7be49a",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/android/settings.gradle.kts",
+      "sha256": "30bac7fd1993b3def2f1777827cbf409cd19f5265dec4c0ebb1a5e4df864cc19",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/crates/armv4t/Cargo.toml",
+      "sha256": "65470772806f9b5672b5a3112a94619987098b2bc7a7588bca809bea740ed122",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/crates/armv4t/src/arm.rs",
+      "sha256": "701c0dbb1f5f9307f210d139ced592ffe7e95eabdfb144f3793f18a60fb82172",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/crates/armv4t/src/disasm.rs",
+      "sha256": "a93e42bf022214012f54393d43222b8bc0f6ea572480198ce93335054156a791",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/crates/armv4t/src/lib.rs",
+      "sha256": "978d2b764e25bc14b77d3d0069279cc8a06712532d6c759e923ebf847591853f",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/crates/armv4t/src/thumb.rs",
+      "sha256": "0b2ba93cee9144ee65b869a6fb33c8c5d85c6a3042e6f704899b488c9ae2cf1f",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/crates/gba-android/Cargo.toml",
+      "sha256": "b2554e2cf1c622ce6e3f3fe489060b4a64bbe970dd96907a28aab503dbe0e334",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/crates/gba-android/build.rs",
+      "sha256": "fe238f23eb42dad626c69b960b5c9d0c721266f94119d7d59f8c2b40d749a97e",
+      "scope": "Android-specific production source, default resources or authored build/benchmark tooling: natural-language strings and comments reviewed as English; game data, external text and machine tokens retained."
+    },
+    {
+      "path": "AndroidPort/crates/gba-android/src/audio.rs",
+      "sha256": "fb88f3cbe32ced282c02c92218be305731a2772d5a464326b20061f3143ae0da",
+      "scope": "Android-specific production source, default resources or authored build/benchmark tooling: natural-language strings and comments reviewed as English; game data, external text and machine tokens retained."
+    },
+    {
+      "path": "AndroidPort/crates/gba-android/src/compiler.rs",
+      "sha256": "053be33ab3ec070c81d134e2a29a105ed1fb32284659383c5b76d7c71a2d73fb",
+      "scope": "Android-specific production source, default resources or authored build/benchmark tooling: natural-language strings and comments reviewed as English; game data, external text and machine tokens retained."
+    },
+    {
+      "path": "AndroidPort/crates/gba-android/src/engine.rs",
+      "sha256": "7545b31ded2ee5fb7880f9e8fa39224a721d3baaf6b8a2a0977f60958506db69",
+      "scope": "Android-specific production source, default resources or authored build/benchmark tooling: natural-language strings and comments reviewed as English; game data, external text and machine tokens retained."
+    },
+    {
+      "path": "AndroidPort/crates/gba-android/src/jni.rs",
+      "sha256": "a9b6fd91659899d292adee496021bf14d8726d07fccca7caea9fa7b888f0672c",
+      "scope": "Android-specific production source, default resources or authored build/benchmark tooling: natural-language strings and comments reviewed as English; game data, external text and machine tokens retained."
+    },
+    {
+      "path": "AndroidPort/crates/gba-android/src/lib.rs",
+      "sha256": "bbcda8b9b521bb6f2e97fb2f4019e84671193c55f60c3e302abdf479b6447c4b",
+      "scope": "Android-specific production source, default resources or authored build/benchmark tooling: natural-language strings and comments reviewed as English; game data, external text and machine tokens retained."
+    },
+    {
+      "path": "AndroidPort/crates/gba-android/src/normal_audio.rs",
+      "sha256": "3fb25053064df77a9b893e320d88f6940982a95ff2601aaca2706fd06f1b07c5",
+      "scope": "Android-specific production source, default resources or authored build/benchmark tooling: natural-language strings and comments reviewed as English; game data, external text and machine tokens retained."
+    },
+    {
+      "path": "AndroidPort/crates/gba-android/src/scheduling.rs",
+      "sha256": "7ff220ccbf5e188fb3e37ea539f2522ec2ca3fd8ca056ae5248d48232eeb7841",
+      "scope": "Android-specific production source, default resources or authored build/benchmark tooling: natural-language strings and comments reviewed as English; game data, external text and machine tokens retained."
+    },
+    {
+      "path": "AndroidPort/crates/gba-android/src/touch.rs",
+      "sha256": "6f780101f9ba7765367acfc79cc9502464d80314dc04c94a345fcaf823357b85",
+      "scope": "Android-specific production source, default resources or authored build/benchmark tooling: natural-language strings and comments reviewed as English; game data, external text and machine tokens retained."
+    },
+    {
+      "path": "AndroidPort/crates/gba-android/src/ui_layout.rs",
+      "sha256": "af57bbd4ab878b63ee5a5ee4b2764e57b8685d6bcbd9051c133a502747b5910e",
+      "scope": "Android-specific production source, default resources or authored build/benchmark tooling: natural-language strings and comments reviewed as English; game data, external text and machine tokens retained."
+    },
+    {
+      "path": "AndroidPort/crates/gba-core/Cargo.toml",
+      "sha256": "fd72339f667d61ef28ef4d2e589454fd643b7885fba3d74ce1a87d99069e0c0a",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/crates/recomp-core/Cargo.toml",
+      "sha256": "fda337ae33c12ba1d8c2c07f6648a76b1e0a4122a0dbaa27f0ade39675e93243",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/crates/recomp-core/src/analyze.rs",
+      "sha256": "e726d56bbcd7d14a5d25c71f90447ec5bdfe8fe8005be44ea33a5981fd519978",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/crates/recomp-core/src/build.rs",
+      "sha256": "e5508f4df39be1186e8345c142169efedca1354c9ddb713d9329333231f8d2e2",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/crates/recomp-core/src/emit.rs",
+      "sha256": "23f181cf0b77b48cc5ca9f28bab23a7a2461bd2d4e2dfc73a8f2beab33aca86e",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/crates/recomp-core/src/labels.rs",
+      "sha256": "ea477d39e95fa9d04116812732242d41cb63759f16de8682acdc52ac88011a54",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/crates/recomp-core/src/lib.rs",
+      "sha256": "b3de4f851f8078281e9b286455e359aa77e06f489d0b98162c17bde7c18b410f",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/crates/recomp-core/src/tcc.rs",
+      "sha256": "86e7d33105734d21489fe11694ec79c959b077c22a02f6e8101dc2e28d6c2fb5",
+      "scope": "Android decoder/recompiler, Kotlin test or build configuration: authored comments and default messages reviewed in English; machine tokens and fixtures preserved"
+    },
+    {
+      "path": "AndroidPort/docs/DIALOGUE_PERFORMANCE.md",
+      "sha256": "1698a30899c16e252fb7942f4623482d8471c10ab07a8d4ed8e664b465c563a4",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "AndroidPort/docs/DIALOGUE_ROWS.md",
+      "sha256": "599ee71574c965dbfe95cfd3a8ff12f6a2e63c99fa9ff4c98ea030053db1a834",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "AndroidPort/docs/EXPERIMENTAL_TOUCH.md",
+      "sha256": "761b4d1a54d0d60640cdec0ab4937a2cf4dce92cd3b70812688fdd5124422dee",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "AndroidPort/docs/FRAME_OPTIMIZATION.md",
+      "sha256": "cf6d315a921bc2e1259bb38a52aa897f2a33164409d0235a7a6061b241996d0c",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "AndroidPort/docs/FRAME_SPIKES.md",
+      "sha256": "8f0a37e9491fd22aec0d73cf11c375671c76c786e65c3575fc97b84e3959a7d5",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "AndroidPort/docs/PERFORMANCE.md",
+      "sha256": "0bf9def65d505dbb91137dc4177139e38ecfd4cf44ee6999b73633c5967a50bf",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "AndroidPort/docs/URGENT_FIXES.md",
+      "sha256": "021370bc8261f99ef671018210cd339b63e63c36160e5678fd752ecc3bd69f12",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "AndroidPort/scripts/benchmark_dialogue.py",
+      "sha256": "5b7fd7c916aba8dfd2f194cfb9debebb0bcada28f73ea57ca77e2b737c40b923",
+      "scope": "Android-specific production source, default resources or authored build/benchmark tooling: natural-language strings and comments reviewed as English; game data, external text and machine tokens retained."
+    },
+    {
+      "path": "AndroidPort/scripts/build_android.py",
+      "sha256": "8abe2f2d95bcdb2801479bd49188faf27e388b9bd1126b06b548f3afd51add22",
+      "scope": "Android-specific production source, default resources or authored build/benchmark tooling: natural-language strings and comments reviewed as English; game data, external text and machine tokens retained."
+    },
+    {
+      "path": "AndroidPort/scripts/build_android_docker.py",
+      "sha256": "c9384d52e7b776100a713dd5459228efc4b5cd951b33ee1611147ac4d44d87ea",
+      "scope": "Android-specific production source, default resources or authored build/benchmark tooling: natural-language strings and comments reviewed as English; game data, external text and machine tokens retained."
+    },
+    {
+      "path": "AndroidPort/scripts/export_android.py",
+      "sha256": "8fa17f4ac471d8bcb9bee0ca76bd79d401084c716aef32cd4878148a73589034",
+      "scope": "Android-specific production source, default resources or authored build/benchmark tooling: natural-language strings and comments reviewed as English; game data, external text and machine tokens retained."
+    },
+    {
+      "path": "AndroidPort/scripts/ffta_android_bench_summary.py",
+      "sha256": "6f16c1f9ed3e8431f6a550904e161439b417b7af631cec532d6c21a9db45be05",
+      "scope": "Android-specific production source, default resources or authored build/benchmark tooling: natural-language strings and comments reviewed as English; game data, external text and machine tokens retained."
+    },
+    {
+      "path": "AndroidPort/scripts/ffta_android_camera_bench.py",
+      "sha256": "32c65dbf9d391fa6e5b20f1b4ed82fdde65395187fd3cf9c20a097531f628cde",
+      "scope": "Android-specific production source, default resources or authored build/benchmark tooling: natural-language strings and comments reviewed as English; game data, external text and machine tokens retained."
+    },
+    {
+      "path": "BUILDING.md",
+      "sha256": "dace98af48905d42b8ab06e0e14e3d656164cdcdc289f9a47917903f7336f25f",
+      "scope": "English maintained entry/build/Android/license-guide prose reviewed in each tree; two Android TODOs translated with legacy anchors; legal text/commands/recorded limits otherwise unchanged; no legal or platform recertification"
+    },
+    {
+      "path": "Licenses/ANDROID.md",
+      "sha256": "d7b148093c8839d68c90a441cbbb1283e2dcd7295755e0271138745b274e7079",
+      "scope": "English maintained entry/build/Android/license-guide prose reviewed in each tree; two Android TODOs translated with legacy anchors; legal text/commands/recorded limits otherwise unchanged; no legal or platform recertification"
+    },
+    {
+      "path": "Licenses/CREDITS.md",
+      "sha256": "b66bbe5c32f5d50f0ee3db624b913842e4d43d754173ca06b0ae97fe0aa82767",
+      "scope": "English maintained entry/build/Android/license-guide prose reviewed in each tree; two Android TODOs translated with legacy anchors; legal text/commands/recorded limits otherwise unchanged; no legal or platform recertification"
+    },
+    {
+      "path": "Licenses/README.md",
+      "sha256": "43a36417a58c9252c7475e9884c4a8e33714a12b3bbbe1c475e05ccf4512d382",
+      "scope": "English maintained entry/build/Android/license-guide prose reviewed in each tree; two Android TODOs translated with legacy anchors; legal text/commands/recorded limits otherwise unchanged; no legal or platform recertification"
+    },
+    {
+      "path": "README.md",
+      "sha256": "7624df6335e1b9ac87ad4732aa5de8aab62c1f528677afcda9ea5c869d9530ce",
+      "scope": "English maintained entry/build/Android/license-guide prose reviewed in each tree; two Android TODOs translated with legacy anchors; legal text/commands/recorded limits otherwise unchanged; no legal or platform recertification"
+    },
+    {
+      "path": "TinyCC/README.md",
+      "sha256": "e6c2f2a9729fb3c2c000ca951b9901812d5e6a207b9625ae791a7b06b22577c6",
+      "scope": "English maintained entry/build/Android/license-guide prose reviewed in each tree; two Android TODOs translated with legacy anchors; legal text/commands/recorded limits otherwise unchanged; no legal or platform recertification"
+    },
+    {
+      "path": "android/README.md",
+      "sha256": "cf3390f8fee510fdc90b7ab5ff4175c82a956e394f5a23fbdd17cd563b65fd30",
+      "scope": "English maintained entry/build/Android/license-guide prose reviewed in each tree; two Android TODOs translated with legacy anchors; legal text/commands/recorded limits otherwise unchanged; no legal or platform recertification"
+    },
+    {
+      "path": "android/TODO.md",
+      "sha256": "ec15bd8039a66551a11d9f00174ca9fc180c57595a6e3ea9d70d6e7e93d6f86f",
+      "scope": "English maintained entry/build/Android/license-guide prose reviewed in each tree; two Android TODOs translated with legacy anchors; legal text/commands/recorded limits otherwise unchanged; no legal or platform recertification"
+    },
+    {
+      "path": "crates/input-config/build.rs",
+      "sha256": "5b918fa5cd87104f4325d25203b3a031120461e40f3f6efda6979882393fd036",
+      "scope": "English build script reviewed; watches each locale JSON and the directory so incremental edits and language discovery regenerate the embedded registry."
+    },
+    {
+      "path": "crates/installer/README.md",
+      "sha256": "0826ba9331183685cb147758165da9e2fe59bd84ef00adba7d4fc8e8c6100d29",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "crates/menu/assets/debug_v2.tsv",
+      "sha256": "876f0a68d9daa4edd83a0e4d42111ee639f21642becb4d235a304067a0d0ecbb",
+      "scope": "English readonly reference regenerated from current DBG2 checklist; 28 IDs, group and states retained and stale entries synchronized."
+    },
+    {
+      "path": "crates/menu/src/clan_atlas/references.rs",
+      "sha256": "52b6654441b93088cd8efb09c53accb1bb7dd6bacbde8702406968911d9de411",
+      "scope": "Operation and planned-task presentations reviewed; English default with Italian status/labels, preserving canonical route grouping and data."
+    },
+    {
+      "path": "crates/menu/src/command_console.rs",
+      "sha256": "b6e12e18c251113049348b3ffd0e5ce6a2714cf99efb900dde31f51eca23b4fc",
+      "scope": "Command-console presentation reviewed; English default and optional Italian catalog, preserving command syntax, IDs and remote diagnostic payloads. Other debug surfaces are separate."
+    },
+    {
+      "path": "crates/menu/src/debug_catalog.rs",
+      "sha256": "9bcb7aa18ca2f6d18672f303991ff5b5d5a7a6d00142c87d7956f3d3dedfa1d9",
+      "scope": "Debug-save catalog presentation reviewed: status/kind labels and detail headings localized while legacy filter tokens, imported metadata and selection remain unchanged."
+    },
+    {
+      "path": "crates/menu/src/event_console.rs",
+      "sha256": "885284fbb2f7697a93e98e4ceb0bf74ecbb03b20e03bd8612e6579a7f68bacc2",
+      "scope": "Event-console presentation reviewed; English default and optional Italian catalog, preserving filter tokens, event data and exported JSON."
+    },
+    {
+      "path": "crates/recomp/src/debug_audio/report.html",
+      "sha256": "26b55d93bb5bc6862a7682dccf9bc54afbaa98713fa1f90b6992e7c15cd2f5be",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "crates/recomp/src/debug_code/report.html",
+      "sha256": "c87470b71b2f52f717a71ee111f4080c86ef5454af05c3bbbbd631f9b504fc00",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "crates/recomp/src/debug_command/completion.rs",
+      "sha256": "2930d23dc2f204593582a1d8729f1bdf5348faffc8c59a187ff6cef8c6523e33",
+      "scope": "Command-console presentation reviewed; English default and optional Italian catalog, preserving command syntax, IDs and remote diagnostic payloads. Other debug surfaces are separate."
+    },
+    {
+      "path": "crates/recomp/src/debug_command/controller.rs",
+      "sha256": "1c4e0339e74620279627e6d0c6905bb36bb930f90fc300008fcdbe0cb39d0f77",
+      "scope": "Command-console presentation reviewed; English default and optional Italian catalog, preserving command syntax, IDs and remote diagnostic payloads. Other debug surfaces are separate."
+    },
+    {
+      "path": "crates/recomp/src/debug_command/observation.rs",
+      "sha256": "ea86046514f4e489e0f1bf6ec141646491ea946937eadf6f7c5d0b8dfa1c385e",
+      "scope": "Command-console presentation reviewed; English default and optional Italian catalog, preserving command syntax, IDs and remote diagnostic payloads. Other debug surfaces are separate."
+    },
+    {
+      "path": "crates/recomp/src/debug_command_panel.rs",
+      "sha256": "f6344a9f847dc31246b6c0e7c2bd175271c7e320e4311a12c7da7035cb714861",
+      "scope": "Command-console presentation reviewed; English default and optional Italian catalog, preserving command syntax, IDs and remote diagnostic payloads. Other debug surfaces are separate."
+    },
+    {
+      "path": "crates/recomp/src/debug_compare.rs",
+      "sha256": "83a60144aa1cd5a37d870617cfff4215e294619a64b7e9922510d37ffa460b81",
+      "scope": "Reviewed authored prose, diagnostics and report metadata in this producer; English text and human-readable spacing corrected where needed. Stable tokens and imported/user content preserved; external producers and comparison test module remain separately pending."
+    },
+    {
+      "path": "crates/recomp/src/debug_compare/report.html",
+      "sha256": "9a00f461770c0c2bd8f99bccd736a6c373ac0bbed779779b0c62a5b5f16c04d1",
+      "scope": "English maintained prose or fixed default report text; original game/imported text and legacy anchors preserved"
+    },
+    {
+      "path": "crates/recomp/src/debug_console_panel.rs",
+      "sha256": "397d9975b4b7c00de1e52b4bbf40fdfc45234f4b7dbe5f7a2646289e1d9e3256",
+      "scope": "Event-console presentation reviewed; English default and optional Italian catalog, preserving filter tokens, event data and exported JSON."
+    },
+    {
+      "path": "crates/recomp/src/debug_gameplay.rs",
+      "sha256": "041162323146cfaf856c5f2797ed8a228345ffc4e6f8c13b96adf85f4e8e6f36",
+      "scope": "Reviewed authored prose, diagnostics and report metadata in this producer; English text and human-readable spacing corrected where needed. Stable tokens and imported/user content preserved; external producers and comparison test module remain separately pending."
+    },
+    {
+      "path": "crates/recomp/src/debug_gameplay/report.html",
+      "sha256": "69c0f606a24a449b9aae4bc2207beb251b817a20ced020bc37921c2010e10acc",
+      "scope": "English maintained prose or fixed default report text; original game/imported text and legacy anchors preserved"
+    },
+    {
+      "path": "crates/recomp/src/debug_graphics.rs",
+      "sha256": "24752ebd42bc5a8619b883e7cc73d43f97821ff51835f47e325d10334a32bbea",
+      "scope": "Reviewed authored prose, diagnostics and report metadata in this producer; English text and human-readable spacing corrected where needed. Stable tokens and imported/user content preserved; external producers and comparison test module remain separately pending."
+    },
+    {
+      "path": "crates/recomp/src/debug_graphics/report.html",
+      "sha256": "e403c3f23f601743133028a3a8ece565e78fea2928314ab533dcfd9e8fe9222f",
+      "scope": "English maintained prose or fixed default report text; original game/imported text and legacy anchors preserved"
+    },
+    {
+      "path": "crates/recomp/src/debug_issue.rs",
+      "sha256": "cd4e324ada4d4c8790567c3bdafae4f629841931bf457fd96ca3f0a5439b2845",
+      "scope": "Reviewed authored prose, diagnostics and report metadata in this producer; English text and human-readable spacing corrected where needed. Stable tokens and imported/user content preserved; external producers and comparison test module remain separately pending."
+    },
+    {
+      "path": "crates/recomp/src/debug_issue/report.html",
+      "sha256": "343380d589a929472681cf0244e54f436ee0114d56632cbab11706c44c9a4b22",
+      "scope": "English maintained prose or fixed default report text; original game/imported text and legacy anchors preserved"
+    },
+    {
+      "path": "crates/recomp/src/debug_operations.rs",
+      "sha256": "b7d9f73ebcf62757bcbd19160076df1154fb0a05638f4f09240aa33380123d02",
+      "scope": "Operation card producer and CLI metadata query reviewed; card labels use English keys while registry IDs, payloads, paths and grouping remain unchanged."
+    },
+    {
+      "path": "crates/recomp/src/debug_recent/report.html",
+      "sha256": "c9d25fc458a46dd82c78cbbf5c2443abf9245381d52d1efa883fcabb0cd20862",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "crates/recomp/src/debug_ui/report.html",
+      "sha256": "6ccc555bc9881ab6638af87afc3d03a88294a699ade04d34dc7933c2984943c6",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "docs/To_DO/CODEX_WEB_TODO.md",
+      "sha256": "a6f2d254221f9a834e14934ef91ef8deb3c5f900526682c85b383e0202c7e3a3",
+      "scope": "Planning guide translated in English; task status, IDs, literal tokens, links and legacy heading anchors preserved; no development work authorized."
+    },
+    {
+      "path": "docs/To_DO/FFTARecomp_Menu_Atlante_del_Clan_SPEC.md",
+      "sha256": "48d57d58a45007817ae89aef04629ed82af0fa603e3363281b1192176806ab4d",
+      "scope": "Clan Atlas implementation specification translated to English; historical baseline, acceptance states, technical literals, links and legacy anchors preserved."
+    },
+    {
+      "path": "docs/android_docker.md",
+      "sha256": "032936e853ff50d16580d3b7cbdfb31b1dbd5c7caef98c1e5ba931b0ca484b08",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "docs/architecture.md",
+      "sha256": "40391a91a69de608c7bbfc89b377e3420e5259612a7babd2e7e737c0dfd48850",
+      "scope": "English maintained guide; code, commands, technical claims and historical evidence retained"
+    },
+    {
+      "path": "docs/audio_controls.md",
+      "sha256": "b06b6bccfd5e9dc66ea7df67ff66170962381689382097de785ff0470126a3ff",
+      "scope": "English maintained guide reviewed; existing commands, links, headings and validation limits preserved"
+    },
+    {
+      "path": "docs/cheats.md",
+      "sha256": "6d14a5e1bcbef2776e9a0161b4b634d308b9c92b6c8d1175bbb37f6e7bf42d1a",
+      "scope": "English public guide reviewed; corrected current menu labels and distinguished original readonly catalog validation from the later bounded one-shot; original local catalog paths and provenance retained."
+    },
+    {
+      "path": "docs/debug_artifacts.md",
+      "sha256": "f902605ca04487a726d8746c1ef7efc6ca87afe44645dad330233c653477ce03",
+      "scope": "English guide reviewed; corrected missed Italian folder/name/hash placeholders; headings, example schemas and real references preserved; imported labels/provenance remain verbatim"
+    },
+    {
+      "path": "docs/debug_audio.md",
+      "sha256": "367f49f1efeb5fff76d7311f9e157ad98703a97ba079713e12ecae461eb99045",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "docs/debug_campaigns.md",
+      "sha256": "0d88d372070031d3a33c131e4cbdb613268abd7db9f00c12dd8316d178fb3aa1",
+      "scope": "English guide reviewed; corrected missed Italian folder/name/hash placeholders; headings, example schemas and real references preserved; imported labels/provenance remain verbatim"
+    },
+    {
+      "path": "docs/debug_captures.md",
+      "sha256": "187ef3738d5141eb2b31e15c03e76708b412b53c8383dbc246951045bf37322b",
+      "scope": "English catalog/replay/capture prose translated; all legacy heading anchors, inline code, fenced examples, links, numeric evidence and original failure/acceptance limits retained"
+    },
+    {
+      "path": "docs/debug_catalog.md",
+      "sha256": "534a6e8ea2ddf7f4ad576ded7e3ad2ed0b1094cbbb8322c12259a5f28153772e",
+      "scope": "English catalog/replay/capture prose translated; all legacy heading anchors, inline code, fenced examples, links, numeric evidence and original failure/acceptance limits retained"
+    },
+    {
+      "path": "docs/debug_code.md",
+      "sha256": "e581c6be6d437ddf687d1147a306a07d6dfe325348171bfafc02c67c4b6aa3b9",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "docs/debug_comparisons.md",
+      "sha256": "bf4f82f0e648238e7263f5d81f22694877b86e299eb00034ea79e4d3794d147b",
+      "scope": "English maintained prose or fixed default report text; original game/imported text and legacy anchors preserved"
+    },
+    {
+      "path": "docs/debug_content.md",
+      "sha256": "99d8653faaa3ad2792116f0ddeadb935b31ec0e6398d78dfe88061159fa25de6",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "docs/debug_control.md",
+      "sha256": "120269900769f570047c998a66de98542b42f4d99d2c46f13e53ede2ee1b4d66",
+      "scope": "Translated local-control guide into English, preserving 13 legacy anchors, command/JSON tokens, links, ordered numeric evidence and timeout/delivery/validation limits; translated example placeholders/comment only"
+    },
+    {
+      "path": "docs/debug_diagnostics.md",
+      "sha256": "87acb1576ffe30de22cb712454186340654abea8e1ac901efc0eec49e9746afc",
+      "scope": "English session diagnosis/isolation/snapshot-recording guide translated; all legacy heading anchors, inline code, fenced examples, links, numeric evidence and recorded acceptance limits retained"
+    },
+    {
+      "path": "docs/debug_events.md",
+      "sha256": "223f6fb9c95bfbc25e556ed2d9c5aa4734322c0987a6c6aa75e9a852869c46d4",
+      "scope": "English ROM-read-audit/shared-event prose translated; all old heading anchors, code/examples, links, numeric evidence and original observation/validation limits retained; Event console wording checked against English catalog"
+    },
+    {
+      "path": "docs/debug_gameplay.md",
+      "sha256": "f36f6bc28e36581f03acb5c0c3c025cf448aca0503e84b429577cae112d38e6e",
+      "scope": "English maintained prose or fixed default report text; original game/imported text and legacy anchors preserved"
+    },
+    {
+      "path": "docs/debug_graphics.md",
+      "sha256": "1d059e717749784f2242b953f610dfdda558cb2e263f73463a3efff9e732ddfb",
+      "scope": "English maintained prose or fixed default report text; original game/imported text and legacy anchors preserved"
+    },
+    {
+      "path": "docs/debug_issues.md",
+      "sha256": "ab13f3fd371f8645892959af7319cabacdef850111575177bd4f0c0a87825ecb",
+      "scope": "English maintained prose or fixed default report text; original game/imported text and legacy anchors preserved"
+    },
+    {
+      "path": "docs/debug_operations.md",
+      "sha256": "8b4c3d5939e78a6e4f5e3ca392b59340fd23f2f8500b1f6b65c16b3b38eb2790",
+      "scope": "English operation-contract/probe/selector prose translated and existing English sections reviewed; code/examples/links/numeric evidence preserved except English retry placeholders; old headings remain reachable and partial-feature limits retained"
+    },
+    {
+      "path": "docs/debug_probes.md",
+      "sha256": "61507feca436c5c9272e8812b350aa90f749a15726bb9bf0df0ac26b9769741b",
+      "scope": "English operation-contract/probe/selector prose translated and existing English sections reviewed; code/examples/links/numeric evidence preserved except English retry placeholders; old headings remain reachable and partial-feature limits retained"
+    },
+    {
+      "path": "docs/debug_recent.md",
+      "sha256": "afc0fd849d09d7a5213ac244609aa05e533f9034203245483be530855fa573a2",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "docs/debug_recordings.md",
+      "sha256": "35073a0115817f9a25fa8de4bf535a78cfd96ee54362236c30cd7bd8ed2a243f",
+      "scope": "English session diagnosis/isolation/snapshot-recording guide translated; all legacy heading anchors, inline code, fenced examples, links, numeric evidence and recorded acceptance limits retained"
+    },
+    {
+      "path": "docs/debug_replays.md",
+      "sha256": "c91100e3f65334f3a741612c8dcdae6668a1099eeeac52e3bf682665973c722c",
+      "scope": "English catalog/replay/capture prose translated; all legacy heading anchors, inline code, fenced examples, links, numeric evidence and original failure/acceptance limits retained"
+    },
+    {
+      "path": "docs/debug_rom_audit.md",
+      "sha256": "f8d6023ac79d2a303a98024067588d59590126bca85216d115864fd566f48a9f",
+      "scope": "English ROM-read-audit/shared-event prose translated; all old heading anchors, code/examples, links, numeric evidence and original observation/validation limits retained; Event console wording checked against English catalog"
+    },
+    {
+      "path": "docs/debug_selector.md",
+      "sha256": "f4cf6df16c9fe2c2cc7f41a265a49e18c3a635e15ce83fccafb0375316e8e62b",
+      "scope": "English operation-contract/probe/selector prose translated and existing English sections reviewed; code/examples/links/numeric evidence preserved except English retry placeholders; old headings remain reachable and partial-feature limits retained"
+    },
+    {
+      "path": "docs/debug_sessions.md",
+      "sha256": "356c8fd90e3ff04feaa715d017f27684cabfd977419d9a8e1033d23b105ceb3d",
+      "scope": "English session diagnosis/isolation/snapshot-recording guide translated; all legacy heading anchors, inline code, fenced examples, links, numeric evidence and recorded acceptance limits retained"
+    },
+    {
+      "path": "docs/debug_tools.md",
+      "sha256": "e16e7c879e9ada27c7b515acdc5b78086ffcf805bbcd792cdcb5c9dc26a44acc",
+      "scope": "Translated shared portable debug guide into English, preserving 10 old heading anchors, command paths, numeric evidence and platform limits; example placeholder, symptom and comments translated; menu labels checked against English catalog"
+    },
+    {
+      "path": "docs/debug_ui.md",
+      "sha256": "0809c2977193a96efb439bd974e4dde87557635df4c5cec29b03564b5cc2d50f",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "docs/desktop_android_eur.md",
+      "sha256": "2bd3e0f69dbbdcb6e47cb729af15bcadee057715f54a06a4763bff24ed3ff112",
+      "scope": "English maintained desktop/storage/build prose reviewed; menu labels matched to English catalog; commands, links, headings and historical validation limits preserved"
+    },
+    {
+      "path": "docs/desktop_live_video.md",
+      "sha256": "2d02b4127ede78c4bebbc5a4fa393f5d236bfd50fd6ccb5fc12eaea55103190a",
+      "scope": "English maintained desktop/storage/build prose reviewed; menu labels matched to English catalog; commands, links, headings and historical validation limits preserved"
+    },
+    {
+      "path": "docs/desktop_tinycc.md",
+      "sha256": "512d1de200d32f4e6d08bb812593a6dec87f3aedc490c98e65754b777a5b6ebc",
+      "scope": "English maintained desktop/storage/build prose reviewed; menu labels matched to English catalog; commands, links, headings and historical validation limits preserved"
+    },
+    {
+      "path": "docs/development/DEBUGGING_WORKFLOW.md",
+      "sha256": "27825228c7df6c511d374a077e7351c20312a3a642de320fdef7def4735a8abf",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "docs/development/DEBUG_TOOLS_TODO.md",
+      "sha256": "1c66d39aa17954cbd188c2b64babb519db5d8463e58f00362000eb336145c1ec",
+      "scope": "Shared debug tools plan translated to English; historical task states, acceptance limits, technical literals, links and legacy anchors preserved."
+    },
+    {
+      "path": "docs/development/DEBUG_TOOLS_V2_TODO.md",
+      "sha256": "2b2875e9ab3e975f39ef2923c30255bc1b5886f7191dd7c76973fd173310ed5e",
+      "scope": "English checklist and audit notes translated; 28 task IDs, states, evidence and links retained, plus 11 original heading anchors and original user-request quotation."
+    },
+    {
+      "path": "docs/development/ENGLISH_FIRST.md",
+      "sha256": "af6048eba8cac59490bede3b07f21e6b60bac3d09239dd765b3eade17eb0921c",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "docs/development/GODOT_FRONTEND_TODO.md",
+      "sha256": "31de65fee9234de4e6ffa2c4b32e5fdeeb435095ee788684fae4b4484a246c46",
+      "scope": "Planning guide translated in English; task status, IDs, literal tokens, links and legacy heading anchors preserved; no development work authorized."
+    },
+    {
+      "path": "docs/development/LOCAL_ARTIFACTS.md",
+      "sha256": "1afcb4f1f5d208cc62bd7a195f5fbc59414ffa2f1e42a2b56fd92776908acacb",
+      "scope": "Manually reviewed maintained prose; original game labels, evidence identifiers, paths and historical data retained."
+    },
+    {
+      "path": "docs/development/MEMORY_WORKFLOW.md",
+      "sha256": "8907f8e9383adb6d661bb820b83465c3cdf5ca05c74a7574b2edb80bb33fa583",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "docs/development/PERFORMANCE_TODO.md",
+      "sha256": "eb137087f44108701fcfa01373109fbe0bc0d0c1170774ce5d96286f108f30b9",
+      "scope": "Performance plan translated to English; historical measurements, task states, acceptance limits, technical literals and legacy anchors preserved."
+    },
+    {
+      "path": "docs/development/ROM_COVERAGE.md",
+      "sha256": "9fb29c212e6a89abf8f5893e0e968b975ce024d1c4cbd5ed338ab1bba42d2655",
+      "scope": "English maintained prose and fixed report text; machine keys, paths, anchors and historical evidence preserved"
+    },
+    {
+      "path": "docs/development/ROM_DATA_TODO.md",
+      "sha256": "d846e69935d6c0e8d99045480670ba8682018d538db52941fdb01fe12b7222cd",
+      "scope": "maintained plan and evidence in English; compatibility anchors and original game-label references retained"
+    },
+    {
+      "path": "docs/development/ROM_DATA_VALIDATION.md",
+      "sha256": "779df09f5685492911cb25f3e210080edaba8d8bbd562240ea515b3e1a860999",
+      "scope": "Manually reviewed maintained prose; historical evidence, commands, paths and technical identifiers retained."
+    },
+    {
+      "path": "docs/development/TASK_HANDOFF.md",
+      "sha256": "e00a77edca81db6d676c9abb4343f910370eea6584d4ee7cfeeeb37b55974ec6",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "docs/development/debug saves.md",
+      "sha256": "9b43360f4f55fa5e4e59ca9d82fcb823d935fc3d44c3f36f977ad0aa666926a3",
+      "scope": "Debug-save inventory and case evidence translated into English; case statuses, original game/author quotations, paths, IDs and legacy anchors retained."
+    },
+    {
+      "path": "docs/development/rom-coverage/coverage.json",
+      "sha256": "d619cdfac5cd3d4dfb6219f292e8379e6a02807f1c80d6a29db8de8157cdb3dd",
+      "scope": "Translated saved presentation text with provenance; all other snapshot data preserved by structural comparison; source analysis not revalidated"
+    },
+    {
+      "path": "docs/development/rom-coverage/evidence.json",
+      "sha256": "aa4a7e2206d4f38dd352706c284b31ce8f6e42f13ddda2bf15fd8b5fe4ad8201",
+      "scope": "English maintained prose and fixed report text; machine keys, paths, anchors and historical evidence preserved"
+    },
+    {
+      "path": "docs/development/rom-coverage/index.html",
+      "sha256": "bcdc496581c0d5f8ae4a647ff605c86ae82518132dfa2af9352e174b4804ec4f",
+      "scope": "Translated saved presentation text with provenance; all other snapshot data preserved by structural comparison; source analysis not revalidated"
+    },
+    {
+      "path": "docs/development/todo2.md",
+      "sha256": "ea33a45397632e93e3aae7a8f939bac6e261f8f1a65be54c86b4c6bdf573d8ff",
+      "scope": "Existing English proposals retained; Italian audio-separation proposal translated. Proposals are not validated implementations."
+    },
+    {
+      "path": "docs/development/todo_bug_fix.md",
+      "sha256": "75203aba54360f0ca9195dbdbffb20a8a32d5cffee9d93595b38e95b465c4683",
+      "scope": "Desktop bug and feature checklist translated into English; historical evidence limits, checklist status, technical literals, IDs, links and legacy anchors preserved."
+    },
+    {
+      "path": "docs/dialogue_layout.md",
+      "sha256": "825e6eea8590b87730a951a3486e5dc1ff4b3716eb1039b03e4b9e5978656bf9",
+      "scope": "English mouse/OBJ/movement/dialogue prose reviewed; Spanish OBJ ABI/hook prose and measurement labels translated; technical evidence, commands, anchors and acceptance limits retained"
+    },
+    {
+      "path": "docs/directinput.md",
+      "sha256": "a9c965b8eb7ac6d0d31028b991f04fa2f3b1c00442ca14da291191fee8ca227b",
+      "scope": "English maintained desktop/storage/build prose reviewed; menu labels matched to English catalog; commands, links, headings and historical validation limits preserved"
+    },
+    {
+      "path": "docs/docker.md",
+      "sha256": "a7a7b354bfe41424f8a3ec36a5dfc251a3a851f551f35ff911530b3e97ef8dd3",
+      "scope": "Manually reviewed maintained prose; historical evidence, commands, paths and technical identifiers retained."
+    },
+    {
+      "path": "docs/extended_saves.md",
+      "sha256": "3baf2292d5930e0698132fc929c5ed798444797d879800ddaf0924b9612c940b",
+      "scope": "English maintained desktop/storage/build prose reviewed; menu labels matched to English catalog; commands, links, headings and historical validation limits preserved"
+    },
+    {
+      "path": "docs/fast_forward_audio.md",
+      "sha256": "e2342c411d20e1931c6c12bfece7fb0ab2d66457ccea9024970c934c79b87459",
+      "scope": "Manually reviewed maintained prose; original game labels, evidence identifiers, paths and historical data retained."
+    },
+    {
+      "path": "docs/ffta_action_frame_width.md",
+      "sha256": "ed0ed7928ef5eaf72ca5d4d0ea8fafc885ecc355a8a87cf9d67d655d471fc0cb",
+      "scope": "English rendering/interaction prose reviewed; Spanish text and measurement labels translated; technical tokens, commands, legacy anchors and recorded acceptance limits preserved"
+    },
+    {
+      "path": "docs/ffta_bg_patch.md",
+      "sha256": "47e1859b3c98ec33dcb037ca638a3ac131b0b66cab9a14468ac4222d89005731",
+      "scope": "English rendering/interaction prose reviewed; Spanish text and measurement labels translated; technical tokens, commands, legacy anchors and recorded acceptance limits preserved"
+    },
+    {
+      "path": "docs/ffta_character_metric.md",
+      "sha256": "44b5ce72611e6eb88cffe7c81148f02b1db44fc8d07e4848929b9fcba4949cb2",
+      "scope": "English rendering/interaction prose reviewed; Spanish text and measurement labels translated; technical tokens, commands, legacy anchors and recorded acceptance limits preserved"
+    },
+    {
+      "path": "docs/ffta_estado.md",
+      "sha256": "48fc3a863cec5e90c3292476ce4a50f4e20620fb11241fb428e93488a9ab3007",
+      "scope": "Full English review of historical research prose; original game labels, legacy anchors, commands, evidence and technical identifiers retained. Results retain their recorded scope."
+    },
+    {
+      "path": "docs/ffta_interaction_grid.md",
+      "sha256": "1fab4c973683f2e01ed2075b59d3c3b7d7be2a28e07832a8641da75cebfe7556",
+      "scope": "English rendering/interaction prose reviewed; Spanish text and measurement labels translated; technical tokens, commands, legacy anchors and recorded acceptance limits preserved"
+    },
+    {
+      "path": "docs/ffta_laws_layout.md",
+      "sha256": "096f10fe02c1ffff192ae1cbde004fb4aabfa5a965f37e2766bbfb951ba73e13",
+      "scope": "English rendering/interaction prose reviewed; Spanish text and measurement labels translated; technical tokens, commands, legacy anchors and recorded acceptance limits preserved"
+    },
+    {
+      "path": "docs/ffta_mouse_battle.md",
+      "sha256": "af0692bd92f6177b8e8792ef297beb51107ede24b395fcbb114fa09ca27f8fc3",
+      "scope": "English mouse/OBJ/movement/dialogue prose reviewed; Spanish OBJ ABI/hook prose and measurement labels translated; technical evidence, commands, anchors and acceptance limits retained"
+    },
+    {
+      "path": "docs/ffta_mouse_frontend.md",
+      "sha256": "4d9addd0a379df0b6ea3131c6c50b7cc5f0e7e2a33ac2a9b8ce7fb35ab1cc9ae",
+      "scope": "English mouse/OBJ/movement/dialogue prose reviewed; Spanish OBJ ABI/hook prose and measurement labels translated; technical evidence, commands, anchors and acceptance limits retained"
+    },
+    {
+      "path": "docs/ffta_mouse_language.md",
+      "sha256": "d765dd51e65a07db0d3493ca8a59f6290f09be4b9ce85ba06a3023db167bbb70",
+      "scope": "English mouse/OBJ/movement/dialogue prose reviewed; Spanish OBJ ABI/hook prose and measurement labels translated; technical evidence, commands, anchors and acceptance limits retained"
+    },
+    {
+      "path": "docs/ffta_mouse_pending_2026-10-17.md",
+      "sha256": "d842027569ccd27a9732a2cc4d2a6b51afb989053ee0c281d70afbe6e22d21d3",
+      "scope": "English translation of maintained historical mouse-session notes; 11 legacy heading anchors, ordered numeric evidence, paths and user reports preserved; conflicting successive observations and recorded limits remain distinct"
+    },
+    {
+      "path": "docs/ffta_mouse_world.md",
+      "sha256": "7448758e8a88f4296b458d24b43511d95e60bab293f82b59df73048f0c3c3619",
+      "scope": "English mouse/OBJ/movement/dialogue prose reviewed; Spanish OBJ ABI/hook prose and measurement labels translated; technical evidence, commands, anchors and acceptance limits retained"
+    },
+    {
+      "path": "docs/ffta_movement_bg.md",
+      "sha256": "c534193924e16f453f257fd0b488576086bebf94b92f804472b448f59c8c0563",
+      "scope": "English mouse/OBJ/movement/dialogue prose reviewed; Spanish OBJ ABI/hook prose and measurement labels translated; technical evidence, commands, anchors and acceptance limits retained"
+    },
+    {
+      "path": "docs/ffta_notice_confirmation.md",
+      "sha256": "a2fcff86ba1373c8e0f654542542bcdb7c57ba771bac42c483f81528aba7cb17",
+      "scope": "English rendering/interaction prose reviewed; Spanish text and measurement labels translated; technical tokens, commands, legacy anchors and recorded acceptance limits preserved"
+    },
+    {
+      "path": "docs/ffta_notice_layout.md",
+      "sha256": "d059486cf33d39678806b76a5e14230bac6b96f3f1bc0879c08e8030ccd040e0",
+      "scope": "English rendering/interaction prose reviewed; Spanish text and measurement labels translated; technical tokens, commands, legacy anchors and recorded acceptance limits preserved"
+    },
+    {
+      "path": "docs/ffta_portrait_ears.md",
+      "sha256": "80f669e742d55db85ddd55a8eb54f7db2db300ae53e8f28c31d4128c9c8632bb",
+      "scope": "English rendering/interaction prose reviewed; Spanish text and measurement labels translated; technical tokens, commands, legacy anchors and recorded acceptance limits preserved"
+    },
+    {
+      "path": "docs/ffta_shared_save.md",
+      "sha256": "e4af44d6b763adc420e537070df0a3b29f927960981dca29520c1be17f502b26",
+      "scope": "English rendering/interaction prose reviewed; Spanish text and measurement labels translated; technical tokens, commands, legacy anchors and recorded acceptance limits preserved"
+    },
+    {
+      "path": "docs/ffta_shop_bank_mouse.md",
+      "sha256": "7815accd4873d006b4556abd922070ffca9f5af9645e8447143d8733f19a99c2",
+      "scope": "English rendering/interaction prose reviewed; Spanish text and measurement labels translated; technical tokens, commands, legacy anchors and recorded acceptance limits preserved"
+    },
+    {
+      "path": "docs/ffta_spell_help_banner.md",
+      "sha256": "b25dae762e715c312c0a21d7863c4f591b6c59b3b8c5990458e546af4b263dc9",
+      "scope": "English rendering/interaction prose reviewed; Spanish text and measurement labels translated; technical tokens, commands, legacy anchors and recorded acceptance limits preserved"
+    },
+    {
+      "path": "docs/ffta_sprite_routines.md",
+      "sha256": "122d53e8787949512b352841505a383768154050b723fa9ebe3e2d849f76fb4f",
+      "scope": "English mouse/OBJ/movement/dialogue prose reviewed; Spanish OBJ ABI/hook prose and measurement labels translated; technical evidence, commands, anchors and acceptance limits retained"
+    },
+    {
+      "path": "docs/ffta_sprite_runtime.md",
+      "sha256": "af4c4552164d762eeafc1c1f2969f8c0d52f9eeeab16259e2a2f4b446f710798",
+      "scope": "English mouse/OBJ/movement/dialogue prose reviewed; Spanish OBJ ABI/hook prose and measurement labels translated; technical evidence, commands, anchors and acceptance limits retained"
+    },
+    {
+      "path": "docs/ffta_switch_rom_picker.md",
+      "sha256": "3cb663a24ed57fdf3c87a5ece98a8afea682c84a76f26c1d02cfe0b49e199f09",
+      "scope": "English rendering/interaction prose reviewed; Spanish text and measurement labels translated; technical tokens, commands, legacy anchors and recorded acceptance limits preserved"
+    },
+    {
+      "path": "docs/ffta_usa_frontend_mouse.md",
+      "sha256": "aa857f4e61ac5ca9543f6f91e14e9d43c4084b6f13aa0baa160f68fdce29b7c5",
+      "scope": "English rendering/interaction prose reviewed; Spanish text and measurement labels translated; technical tokens, commands, legacy anchors and recorded acceptance limits preserved"
+    },
+    {
+      "path": "docs/ffta_usa_town_menus.md",
+      "sha256": "aecf9f7de875596f4533811bfd49db6792b2253d017c4462009c2abf9fdef3bd",
+      "scope": "English rendering/interaction prose reviewed; Spanish text and measurement labels translated; technical tokens, commands, legacy anchors and recorded acceptance limits preserved"
+    },
+    {
+      "path": "docs/fps_overlay.md",
+      "sha256": "7769afbbc22d58499b3cf6c20f114daf86c574e707147bf56b257eb72d657eb8",
+      "scope": "Manually reviewed maintained prose; original game labels, evidence identifiers, paths and historical data retained."
+    },
+    {
+      "path": "docs/fullscreen.md",
+      "sha256": "b13b666ca0d346880fb1d80ba5ce7ac968e0b53cf68c62f62c03f42619bed1ed",
+      "scope": "English maintained guide reviewed; existing commands, links, headings and validation limits preserved"
+    },
+    {
+      "path": "docs/labels.md",
+      "sha256": "390b5bfcbda7a16ad08025a0f6a72f1aac4d7cbc4f547d33e97b285be4de755e",
+      "scope": "English maintained guide; code, commands, technical claims and historical evidence retained"
+    },
+    {
+      "path": "docs/launcher.md",
+      "sha256": "ca4b8f3f73b5fdd0802b6650210eb74b39d2f9ffc67b7d2d95390740030497b8",
+      "scope": "English maintained desktop/storage/build prose reviewed; menu labels matched to English catalog; commands, links, headings and historical validation limits preserved"
+    },
+    {
+      "path": "docs/linux_gamepad_snapshots.md",
+      "sha256": "18428a089cee4ae15d437e6db658d4b7fd24c74661a15c662327de5153454227",
+      "scope": "English maintained desktop/storage/build prose reviewed; menu labels matched to English catalog; commands, links, headings and historical validation limits preserved"
+    },
+    {
+      "path": "docs/menu_clan_atlas.md",
+      "sha256": "6519d3e1a2c6f43774aa7d5977f935bc219f207ba974ff994212372ba1441ef0",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "docs/menu_localization.md",
+      "sha256": "1d7ead398a5f5932b2e5c12d4c911300ae7dca7dc62890c38c4fd7d606e584a5",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "docs/menu_shortcuts.md",
+      "sha256": "3ff7f776ef177d086f0a3645233f844c5ffbedcba0c018e4875125804664867c",
+      "scope": "English maintained guide reviewed; existing commands, links, headings and validation limits preserved"
+    },
+    {
+      "path": "docs/packaging.md",
+      "sha256": "a3939360bb1f0f1d718f0d4b75b8a545ae69d326c39f5b697b52941be8be15da",
+      "scope": "English maintained desktop/storage/build prose reviewed; menu labels matched to English catalog; commands, links, headings and historical validation limits preserved"
+    },
+    {
+      "path": "docs/portable.md",
+      "sha256": "11b617eb13bd13021b55d5bef32e0b2e674c0ce3950c7404d45e45dfe16e2e73",
+      "scope": "English maintained desktop/storage/build prose reviewed; menu labels matched to English catalog; commands, links, headings and historical validation limits preserved"
+    },
+    {
+      "path": "docs/private_debug_assets.md",
+      "sha256": "a93ffd5a55b5101ceea1fe7f330231396d4192b6fc7cf46103dc9d910fe5cb30",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "docs/release_audit.md",
+      "sha256": "76404ae148b5b4f49b714ca3d89f19be77e610143c67c872e09b8c910e89aadd",
+      "scope": "English maintained desktop/storage/build prose reviewed; menu labels matched to English catalog; commands, links, headings and historical validation limits preserved"
+    },
+    {
+      "path": "docs/report_home.md",
+      "sha256": "f407f4f37399c56d10cf88ed32391650886772d4070d8b53a307d325e861c333",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "docs/restart_rom.md",
+      "sha256": "4e54a275c937fcb4f89f948be2e6500ca5852b1ca2b75d83b21d0d37fa2b783c",
+      "scope": "English maintained guide reviewed; existing commands, links, headings and validation limits preserved"
+    },
+    {
+      "path": "docs/rom_data_color_palettes.md",
+      "sha256": "eeea73177f76e1fd70da17b0fbd7c39838e92e437d3de142b1e955a2c590d3d9",
+      "scope": "Manually reviewed maintained prose; original game labels, evidence identifiers, paths and historical data retained."
+    },
+    {
+      "path": "docs/rom_data_events.md",
+      "sha256": "69105c4271a1374e011a5940dbdaa6baa1c1f5ba716941df576de56c5b64a53b",
+      "scope": "Manually reviewed maintained prose; original game labels, evidence identifiers, paths and historical data retained."
+    },
+    {
+      "path": "docs/rom_data_indexed_graphics.md",
+      "sha256": "0a969d3a9e31d922a28bd0f88361870c289c620700a96310b8d3a2718b9f2238",
+      "scope": "Manually reviewed maintained prose; original game labels, evidence identifiers, paths and historical data retained."
+    },
+    {
+      "path": "docs/rom_data_scripts.md",
+      "sha256": "fd88ff0668d14c68b91539b95b9f97aa748231d990ef900c4db0aeb4275cf90e",
+      "scope": "Manually reviewed maintained prose; original game labels, evidence identifiers, paths and historical data retained."
+    },
+    {
+      "path": "docs/rom_data_tasks.md",
+      "sha256": "8503ac6472cbb9ae740a669dbb80752916cb5b8a32436728e37f2fbe7e98f4ac",
+      "scope": "Manually reviewed maintained prose; original game labels, evidence identifiers, paths and historical data retained."
+    },
+    {
+      "path": "docs/rom_data_ui.md",
+      "sha256": "03e302d2e49905218217777618b887a90c4e7cee1b74cac0db021071cf381ce0",
+      "scope": "Manually reviewed maintained prose; original game labels, evidence identifiers, paths and historical data retained."
+    },
+    {
+      "path": "docs/rom_data_ui_palettes.md",
+      "sha256": "239e708a0fa87da22ee8c072e46d98d77148f8624f2dc74c8c4977568b375db3",
+      "scope": "Manually reviewed maintained prose; original game labels, evidence identifiers, paths and historical data retained."
+    },
+    {
+      "path": "docs/rom_data_ui_raw_transfers.md",
+      "sha256": "91feb3485b54c1d513e196ba02c1b614a371a24261d9705cb3b8909ac6e49477",
+      "scope": "Manually reviewed maintained prose; original game labels, evidence identifiers, paths and historical data retained."
+    },
+    {
+      "path": "docs/save_backups.md",
+      "sha256": "195b31069502ce571bf25107a209a871f8ff9150e1b46a634a79426383816fe0",
+      "scope": "English maintained desktop/storage/build prose reviewed; menu labels matched to English catalog; commands, links, headings and historical validation limits preserved"
+    },
+    {
+      "path": "docs/save_states.md",
+      "sha256": "be2a9429a9b814095067d4ae46ee69d7e32eed243a3c3b2a11b9c2474c4ca050",
+      "scope": "English maintained desktop/storage/build prose reviewed; menu labels matched to English catalog; commands, links, headings and historical validation limits preserved"
+    },
+    {
+      "path": "docs/windows_runtime_performance.md",
+      "sha256": "918a3751e827a7c590801d473ee5d35eb69b408935a18c1549cc46972c655eb7",
+      "scope": "English maintained guide; code, commands, technical claims and historical evidence retained"
+    },
+    {
+      "path": "scripts/README.md",
+      "sha256": "6c2b1e117052945cdbfae4a84a09b5e9fb937cc5855c0d19abf6f860b17286e1",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "scripts/debug_artifacts.html",
+      "sha256": "993713275b0ea10744cf67881d7c6c699266c367e73d067a06a78a714118b425",
+      "scope": "English maintained prose and fixed report text; machine keys, paths, anchors and historical evidence preserved"
+    },
+    {
+      "path": "scripts/debug_artifacts.py",
+      "sha256": "8ccbd22a92220cce06718de35257a6ab7ccee40f570da9c76bf34c626006d6e1",
+      "scope": "Full authored source/comment/metadata/CLI language review; English text, nine artifact/campaign message-spacing corrections; imported labels and machine values preserved; dependencies require separate review"
+    },
+    {
+      "path": "scripts/debug_campaign.html",
+      "sha256": "39649d18f3530275c20da587dae069815d13c676f8bfb3ac7163d2946e97d52c",
+      "scope": "English maintained prose and fixed report text; machine keys, paths, anchors and historical evidence preserved"
+    },
+    {
+      "path": "scripts/debug_campaign.py",
+      "sha256": "9b1491bdb299f3e25f9cae8de6c1b2a15dfe73fce38fb6c92129cc8e1fbe835d",
+      "scope": "Full authored source/comment/metadata/CLI language review; English text, nine artifact/campaign message-spacing corrections; imported labels and machine values preserved; dependencies require separate review"
+    },
+    {
+      "path": "scripts/export_debug_assets.py",
+      "sha256": "55c44c8c36fecd94674d5075898bd1349c2aaaf14f51879e03b7e5532a8b1e62",
+      "scope": "English authored source, generated instructions and console messages reviewed; legacy paths/Italian base marker and literal test fixtures preserved; synthetic package/export checks pass"
+    },
+    {
+      "path": "scripts/menu_atlas_tasks.py",
+      "sha256": "c30c0dfa83281152d6d014abfd58e816f7032fb224b291294927d7ebe903d493",
+      "scope": "English generator comments and messages reviewed; strips legacy section anchors from generated task text."
+    },
+    {
+      "path": "scripts/package_ffta_portable.py",
+      "sha256": "b676e7f59d61ba8485d888dcb78ace3eaf7ce2e78baa07d21ff2fa588555a047",
+      "scope": "English authored source, generated instructions and console messages reviewed; legacy paths/Italian base marker and literal test fixtures preserved; synthetic package/export checks pass"
+    },
+    {
+      "path": "scripts/report_home.html",
+      "sha256": "f8af8ac3adb5047026cc983eb698e793b80cfcfcb20b9a319e69df59ce1cbc30",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "scripts/report_home.py",
+      "sha256": "8821c3c4c68a00d66cb56aa1a4a2bb680c30800e78596e43f04470073b0ad845",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "scripts/rom_coverage.html",
+      "sha256": "a410b4809fe6868926a789d47d99b13fdb53a173e345346219041deb7bbe390b",
+      "scope": "English maintained prose and fixed report text; machine keys, paths, anchors and historical evidence preserved"
+    },
+    {
+      "path": "scripts/rom_coverage.py",
+      "sha256": "f190f2d2b5b3211a4c80994fd11839e5f781cf22b3ad53e05e78607d19faccf7",
+      "scope": "Full authored source/comment/metadata/CLI language review; English text, nine artifact/campaign message-spacing corrections; imported labels and machine values preserved; dependencies require separate review"
+    },
+    {
+      "path": "scripts/task_handoff.py",
+      "sha256": "ceae04037e59ec86348db883a4582f98a15b03d492e889462c091e63e5b7f8df",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    },
+    {
+      "path": "scripts/tests/test_package_ffta_portable.py",
+      "sha256": "0fbb8f17ada2392908bc6fc25c25af34f338de5adcb92bb2eddc7d8cbe016d96",
+      "scope": "English authored source, generated instructions and console messages reviewed; legacy paths/Italian base marker and literal test fixtures preserved; synthetic package/export checks pass"
+    },
+    {
+      "path": "scripts/tests/test_task_handoff.py",
+      "sha256": "e501a09ee5d09e6bc85f9626c8056f142bec571cb23e88cc8b788a5d3f57c30b",
+      "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
+    }
+  ],
+  "preserved_history": [
+    {
+      "path": "docs/development/TASK_COMPLETED_ARCHIVE.md",
+      "reason": "Append-only provenance archive; immutable legacy snapshot remains verbatim. Current operational handoff and new records use English.",
+      "snapshot_sha256": "85562ac0e8b146c2e51b819c8ba58054104274f37facc1aca425aea7a5edc57e",
+      "verification": "python3 scripts/task_handoff.py check"
+    }
+  ],
+  "pending_markdown": [
+    "AndroidPort/Licenses/THIRD_PARTY_NOTICES.md",
+    "CHANGELOG.md",
+    "Licenses/THIRD_PARTY_NOTICES.md",
+    "docs/development/PERFORMANCE_WORKFLOW.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/rom_data.md",
+    "docs/rom_data_audio.md",
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_graphics.md",
+    "docs/rom_data_maps.md",
+    "docs/rom_data_obj.md",
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_text.md",
+    "docs/rom_data_ui_graphics.md",
+    "docs/rom_data_unit_obj.md"
+  ],
+  "pending_source_areas": [
+    {
+      "area": "Runtime report source-generated metadata and dynamically supplied messages",
+      "known_paths": [
+        "crates/recomp/src/debug_gameplay.rs",
+        "crates/recomp/src/debug_issue.rs",
+        "crates/recomp/src/debug_compare.rs",
+        "crates/recomp/src/debug_graphics.rs"
+      ],
+      "status": "Four named gameplay/issue/comparison/graphics producer sources reviewed; authored English descriptions and errors corrected for spacing where needed. Fixed templates were previously reviewed. Remaining producers, helper modules, test modules and imported/dynamic messages require separate classification."
+    },
+    {
+      "area": "Offline reports/exporters, CLI/help/errors and authored build messages",
+      "known_paths": [
+        "scripts/rom_coverage.html",
+        "scripts/rom_coverage.py",
+        "scripts/debug_campaign.html",
+        "scripts/debug_campaign.py",
+        "scripts/debug_artifacts.html",
+        "scripts/debug_artifacts.py",
+        "scripts/export_debug_assets.py",
+        "scripts/package_ffta_portable.py"
+      ],
+      "status": "Full language review of artifact/campaign/coverage generators and portable/private exporters complete; fixed templates and authored notes English, legacy paths/base marker preserved. Imported labels/messages stay verbatim. Auxiliary modules, other tools/build messages and cross-tree source still require review. Android-specific six build/export/benchmark Python scripts reviewed in English; other cross-tree tooling remains pending."
+    },
+    {
+      "area": "Menu/console/runtime strings and comments in both source trees",
+      "known_paths": [
+        "crates/menu/",
+        "crates/recomp/",
+        "crates/installer/",
+        "AndroidPort/crates/",
+        "AndroidPort/android/",
+        "android/"
+      ],
+      "status": "Desktop consoles and selected catalog/reference presentations localized. Android-specific frontend, decoder/recompiler and Kotlin tests reviewed in English; shared Android gba-core, other desktop selectors and runtime strings remain pending. Cheat selector actions and standard-save statuses now use English source keys, with legacy keys retained; other menu source keys remain pending. Selector detail/filter instructions and footer now follow the current locale. Save form keys migrated to English; legacy translations remain available. Atlas, information and tool prompt source keys migrated; legacy translations retained. Sidebar presentation, selected rows and control hints migrated; legacy debug routes preserved. Input-tab and information diagnostic labels follow the menu language; semantic IDs are retained."
+    },
+    {
+      "area": "Generated references and generators",
+      "known_paths": [
+        "docs/development/MENU_ATLAS_INVENTORY.json",
+        "scripts/menu_atlas_inventory.py",
+        "crates/recomp/src/debug_operations.json",
+        "crates/menu/assets/debug_v2.tsv",
+        "scripts/menu_atlas_tasks.py",
+        "docs/development/rom-coverage/index.html"
+      ],
+      "status": "Debug operation card labels and route presentation localized without changing registry paths; 28 planned-task references regenerated from the English checklist and generator freshness passes. Remaining references and authoritative generators require review."
+    },
+    {
+      "area": "Structured change records and generated changelog",
+      "known_paths": [
+        "docs/changes/",
+        "CHANGELOG.md"
+      ],
+      "status": "pending language audit; do not rewrite immutable archive bytes"
+    },
+    {
+      "area": "Other tracked text, comments, tests, manifests, notices and build/CI files",
+      "known_paths": [
+        "crates/",
+        "AndroidPort/",
+        "scripts/",
+        "TinyCC/",
+        "Licenses/",
+        "tools/",
+        "Installer/",
+        ".github/"
+      ],
+      "status": "Android Cargo/Gradle configuration reviewed; other tracked text still needs full inventory/classification. Preserve upstream legal text, explicit locale/test/imported data and the tracked legacy labels.rs.bak; review project-authored prose."
+    }
+  ],
+  "next_actions": [
+    "Continue reviewing the remaining ROM-data inventory and validation guides; the ROM data plan has completed its English-language pass and compatibility checks.",
+    "Audit remaining offline exporters, CLI/tool messages and source-generated metadata; campaign, artifact and coverage fixed templates are translated.",
+    "Translate remaining technical/debug/development guides in bounded sections, preserving anchors, commands, IDs and validation limits.",
+    "Audit remaining dynamic report metadata, console/tooling text, source comments and all other maintained content across both trees.",
+    "Audit all remaining tracked natural-language surfaces and preservation exceptions; reconcile changed hashes before deciding completion."
+  ],
+  "evidence_records": [
+    "docs/changes/2026-11-02-document-english-first-foundation-and-repair-ci-coverage.json",
+    "docs/changes/2026-11-02-record-partial-senary-compact-obj-integration.json",
+    "docs/changes/2026-11-02-translate-remaining-debug-reports.json",
+    "docs/changes/2026-11-02-translate-offline-debug-reports.json",
+    "docs/changes/2026-11-02-review-desktop-user-guides-english.json",
+    "docs/changes/2026-11-02-review-desktop-storage-build-guides-english.json",
+    "docs/changes/2026-11-02-translate-scene-rendering-guides.json",
+    "docs/changes/2026-11-02-translate-mouse-obj-guides.json",
+    "docs/changes/2026-11-02-translate-export-package-instructions.json",
+    "docs/changes/2026-11-02-review-entry-android-guides-english.json",
+    "docs/changes/2026-11-02-translate-debug-session-guides.json",
+    "docs/changes/2026-11-02-translate-catalog-replay-capture-guides.json",
+    "docs/changes/2026-11-02-translate-operation-probe-selector-guides.json",
+    "docs/changes/2026-11-02-review-offline-report-generators-english.json",
+    "docs/changes/2026-11-02-translate-rom-audit-event-guides.json",
+    "docs/changes/2026-11-02-review-runtime-report-producers-english.json",
+    "docs/changes/2026-11-02-translate-historical-mouse-session-guide.json",
+    "docs/changes/2026-11-02-translate-shared-debug-tools-guide.json",
+    "docs/changes/2026-11-02-translate-local-debug-control-guide.json",
+    "docs/changes/2026-11-02-localize-debug-command-console.json",
+    "docs/changes/2026-11-02-localize-debug-event-console.json",
+    "docs/changes/2026-11-02-localize-operation-reference-cards.json",
+    "docs/changes/2026-11-02-translate-debug-checklist-and-reference.json",
+    "docs/changes/2026-11-02-localize-cheat-catalog-and-refresh-language-build.json",
+    "docs/changes/2026-11-02-localize-debug-save-catalog.json",
+    "docs/changes/2026-11-02-review-android-frontend-and-tooling-english.json",
+    "docs/changes/2026-11-02-review-android-support-english.json",
+    "docs/changes/2026-11-02-translate-godot-and-cloud-planning-guides.json",
+    "docs/changes/2026-11-02-translate-desktop-bug-feature-checklist.json",
+    "docs/changes/2026-11-02-translate-atlas-spec-introduction.json",
+    "docs/changes/2026-11-02-translate-atlas-specification-remainder.json",
+    "docs/changes/2026-11-02-translate-debug-tools-foundations-and-p0.json",
+    "docs/changes/2026-11-02-complete-shared-debug-tools-translation.json",
+    "docs/changes/2026-11-02-translate-performance-and-save-status-summaries.json",
+    "docs/changes/2026-11-02-translate-debug-save-collection-sources.json",
+    "docs/changes/2026-11-02-translate-debug-save-cases-01-13.json",
+    "docs/changes/2026-11-02-complete-debug-save-document-translation.json",
+    "docs/changes/2026-11-02-translate-performance-priorities-p0-p1.json",
+    "docs/changes/2026-11-02-translate-performance-priority-p2.json",
+    "docs/changes/2026-11-02-translate-performance-priorities-p3-p4.json",
+    "docs/changes/2026-11-02-complete-performance-plan-translation.json",
+    "docs/changes/2026-11-02-translate-romdata-introduction-and-inventory.json",
+    "docs/changes/2026-11-02-translate-romdata-preparation-and-consumption.json",
+    "docs/changes/2026-11-02-translate-romdata-mod-plans.json",
+    "docs/changes/2026-11-02-translate-romdata-extractor-criteria.json",
+    "docs/changes/2026-11-02-translate-romdata-background-codec-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-font-obj-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-obj-list-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-obj-ui-graphics-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-item-metadata-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-metadata52-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-metadata4-metadata2-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-constructor-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-metadata14-metadata12-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-global-evaluation-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-progression-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-equivalence-criteria.json",
+    "docs/changes/2026-11-02-translate-romdata-bg-validation-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-progression-scene-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-selection-gates-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-aggregate-keys-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-trade-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-item-effect-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-audio-directory-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-audio-tone-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-audio-sequence-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-audio-driver-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-palette-dispatch-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-palette-program-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-blend-program-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-task-descriptor-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-event-directory-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-script-directory-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-script-archive-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-script-text-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-script-coordinate-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-auxiliary-script-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-map-raster-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-ui-list-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-unit-obj-pose-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-unit-color-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-unit-equipment-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-unit-battle-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-unit-alternate-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-script-obj-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-script-ordinary-override-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-script-registry-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-registry-redirect-property-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-property-getter-ui-list-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-ffff-slot-job-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-native-residue-obj-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-observed-task-parameters-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-task-cycle-u16-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-constructor-reachability-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-world-location-node-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-world-roads-encounter-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-encounter-units-coordinates-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-linked-metadata-records-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-conditional-mission-record-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-mission-runtime-selection-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-event-sparse-parameters-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-world-records-indexed-graphics-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-localized-graphics-transfers-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-dynamic-clan-lookup-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-packed-lookup-descriptor-evidence.json",
+    "docs/changes/2026-11-02-translate-romdata-gameplay-masks-compact-evidence.json",
+    "docs/changes/2026-11-02-review-romdata-todo-english-audit.json",
+    "docs/changes/2026-11-02-review-foundation-guides-english-audit.json",
+    "docs/changes/2026-11-02-translate-rom-inventory-script-alternate-override.json",
+    "docs/changes/2026-11-02-translate-rom-inventory-registry-property-evidence.json",
+    "docs/changes/2026-11-02-translate-rom-inventory-property-getter-ui-evidence.json",
+    "docs/changes/2026-11-02-sync-rom-inventory-validated-plan-translations.json",
+    "docs/changes/2026-11-02-sync-inventory-localized-graphics-gameplay-translations.json",
+    "docs/changes/2026-11-02-translate-inventory-dynamic-transfers-alias-evidence.json",
+    "docs/changes/2026-11-02-translate-inventory-gameplay-compact-obj-tail.json",
+    "docs/changes/2026-11-02-review-artifact-task-palette-guides-english.json",
+    "docs/changes/2026-11-02-review-audio-fps-event-palette-guides-english.json",
+    "docs/changes/2026-11-02-use-english-cheat-actions-save-status-keys.json",
+    "docs/changes/2026-11-02-localize-selector-instructions-and-footer.json",
+    "docs/changes/2026-11-02-migrate-save-form-english-keys.json",
+    "docs/changes/2026-11-02-migrate-atlas-information-tool-english-keys.json",
+    "docs/changes/2026-11-02-migrate-menu-labels-preserve-debug-routes.json",
+    "docs/changes/2026-11-02-localize-input-focus-diagnostics.json",
+    "docs/changes/2026-11-02-review-indexed-graphics-ui-guides-english.json",
+    "docs/changes/2026-11-02-review-docker-rom-validation-guides-english.json",
+    "docs/changes/2026-11-02-review-script-raw-transfer-guides-english.json",
+    "docs/changes/2026-11-02-translate-research-status-opening.json",
+    "docs/changes/2026-11-02-translate-research-visibility-evidence.json",
+    "docs/changes/2026-11-03-translate-research-zoom-tile-evidence.json",
+    "docs/changes/2026-11-03-translate-research-sky-stage-stats.json",
+    "docs/changes/2026-11-03-translate-research-menu-tinycc-dialogue.json",
+    "docs/changes/2026-11-03-translate-research-evidence-labels.json",
+    "docs/changes/2026-11-03-review-research-status-english.json",
+    "docs/changes/2026-11-03-improve-rom-inventory-opening-readability.json",
+    "docs/changes/2026-11-03-improve-rom-inventory-obj-readability.json",
+    "docs/changes/2026-11-03-improve-rom-inventory-palette-text-readability.json",
+    "docs/changes/2026-11-03-improve-rom-inventory-item-metadata-readability.json",
+    "docs/changes/2026-11-03-improve-rom-inventory-gameplay-tables-readability.json",
+    "docs/changes/2026-11-03-improve-rom-inventory-audio-dataset-readability.json",
+    "docs/changes/2026-11-03-improve-rom-inventory-bg-packet-readability.json",
+    "docs/changes/2026-11-03-improve-rom-inventory-trade-effects-readability.json",
+    "docs/changes/2026-11-03-improve-rom-inventory-palette-blend-readability.json",
+    "docs/changes/2026-11-03-improve-rom-inventory-task-events-readability.json",
+    "docs/changes/2026-11-03-improve-rom-inventory-script-text-readability.json"
+  ]
+}

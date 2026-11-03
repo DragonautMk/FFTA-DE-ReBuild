@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "inventory-european-item-effect-parameters",
+  "title": "Prove the European fourteen-record packed item effect parameter source",
+  "kind": "docs",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Bound the next source6e879c..6e87fe to14seven-byte records/98B using11literal readers, four independent next-root readers, existing original item enumeration362..375/14 and explicit subtraction362. Source starts at e39trade end without overlap; arbitrary other indices remain raw/unclaimed.",
+    "Identify nine5-bit coefficients0..44, cap45..52u8 and opaque53..55three bits. Record exact20property mapping and distinct original low8getter index/full(itemu16-minus362)u16cap index, live current-byte/quantity/clamp behavior. No item names or whole UI-write semantics inferred."
+  ],
+  "validation": [
+    "Exact EURhash,11literal roots/four next-root readers/property20jump targets/old enumeration constants/subtract362 and bounded original reader/caller checks pass. Independent98Bcontiguous-bit roundtrip matches all nine split-byte getter forms and cap; no current e39resource overlap.",
+    "Private evidence target/rom-data-stride7/{item-effect-parameters-{inventory,independent}.json,discovery.json,neighbor-pointer-candidates.json,next-source-literal-readers.json,callers.json,reader-*.txt,consumer-0cfd80.txt,property-reader-0cfe28.txt,ui-producer-05aa40.txt,ui-caller-05da44.txt,next-source-0cf9e0.txt}. No build/Wine/old item oracle or fixture creation repeated.",
+    "Final project-memory including --base7597b92 and whitespace checks pass; no live unit process. Source model/oracle is the next unfinished criterion; static discovery is closed."
+  ],
+  "limitations": [
+    "Source model/original getter-delta oracle/managed/runtime/ordinary/newLinux/USA/nativeWindows remain pending. CFE28has no local14index guard; UI5AAAC/5DA44cap>99and live selection branches are static-only. e39-d38/USAe8-d7 unchanged.",
+    "No performance/space/AndroidPort work, private game data publication or agent commit/push. Concurrent Debug-save documentation work preserved."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

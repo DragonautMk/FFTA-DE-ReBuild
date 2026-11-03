@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "inspect-european-dynamic-fragment-gate",
+  "title": "Inspect European dynamic fragment gate",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Document the original dynamic-transfer selector chain, its state-four gate callback and three additional bounded negative snapshots."
+  ],
+  "validation": [
+    "Reviewed retained original Wine disassembly and independently authenticated three EUR states, all with the gate, selectors, phase and registration flag clear; no replay or build."
+  ],
+  "limitations": [
+    "The producer of task state four and a positive ordinary scene remain unestablished; Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_ui_raw_transfers.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_raw_transfers.md"
+  ]
+}

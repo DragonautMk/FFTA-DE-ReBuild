@@ -197,9 +197,7 @@ impl LanguageScene {
         }
         // The original navigation uses this ROM table: six row widths per page.
         // Character resource pointers are not a rectangular code table.
-        let counts = mem
-            .rom
-            .get(rows + page as usize * 6..rows + (page as usize + 1) * 6)?;
+        let counts = mem.name_keyboard_row_widths(rows, page as usize)?;
         if counts.iter().any(|&n| n == 0 || n > 10) {
             return None;
         }

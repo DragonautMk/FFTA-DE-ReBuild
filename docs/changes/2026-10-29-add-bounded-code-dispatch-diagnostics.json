@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "slug": "add-bounded-code-dispatch-diagnostics",
+  "title": "Join observed PC, disassembly, declared labels and native fallback decisions in bounded reports",
+  "kind": "added",
+  "platforms": [
+    "Windows cross builds and Wine/Xvfb; offline Chrome desktop/mobile"
+  ],
+  "changes": [
+    "Add isolated menu Start code trace / Save code report and acknowledged debug-control code-start/code-report with address, mode and dispatch-kind filters. Join observed pre-dispatch PC/clock/frame/CPSR, current readonly ROM/RAM backing bytes and entry disassembly to strict same-ROM declared labels and actual Native/Missing/System/Hook choices; interpreter-selected mode never implies missing compiled code.",
+    "Wrap the existing native runner with an optional immutable pre-dispatch callback and no-op specialization for normal/cost paths. Opt-in interpreter observation preserves the original step loop. Retain native library path in host BlockTable only; existing synthetic residue-test table gains source=None. No guest fields, save/native ABI or lookup behavior changes.",
+    "Bound collection to30seconds/60frames/512events, selected filters and explicit observed/filtered/stop counts; seal on restore and refuse separate replay while unsaved. At most8private folders including incomplete,2MiBJSON, no new collector snapshots or automatic overwrite/pruning; failed writer retains frozen trace. Offline HTML supports PC/label/kind filtering and per-event detail; homepage recognizes code.json and links the guide.",
+    "Identify runtime/build/ROM/BIOS/session pins/seed/effective dataset/input/AV and current full state. Read debug-labels.toml once up to1MiB, hash the same parsed bytes and reject foreign-ROM identity. Limit static names/matches with explicit omission. Native table keys and source file read at trace start remain separate from loaded code memory, function extents, observed guest instructions and extracted-code percentages."
+  ],
+  "validation": [
+    "Frozen public e8bd939 plus9selected overlays retains accepted audio tool and excludes concurrent records4 extraction. Final locked/offline feature/default Windows release builds warning-free; feature SHA256 a9edeb85898f20380a03408d225b179e04826dceed8980b881638f9f33a7d629, default791f1094fdbef3ecd55cffb52c63aa184ef08c71f8f70334daefcc6c248bb52a. First test compile finds existing synthetic BlockTable literal missing new optional source; add None only, retain table-source-build-attempt. Intermediate compile passes without test execution; final optional native fixture requires final selected test compile.",
+    "74distinct Wine tests pass:2collector,9control,49menu,12frontend,1existing native-cost wrapper and1optional actual retained-native observer. Synthetic ROM transition alternates6native/6missing and preserves exact complete state/counts; interpreter observed loop matches original, readonly filters/mirrors/foreign labels and limits pass. Optional native initially refuses TinyCC discovery before executing either frame; native-loader-attempt retained. Set explicit existing FFTA_TCC_LIBRARY for test only, rerun only this check without rebuilding or repeating73passed tests.",
+    "One affected observer test uses explicit existing EUR snapshot and old ELF ET_REL library (despite .dll suffix), no cartridge writer or new snapshot. Same library/seed with observer off/on produces identical full state/clock and6547native blocks/14991fallback steps at frame22220/clock6241425350. Bounded prefix512contains41native/470missing/1system; events17/18 show native08145c10Thumb -> missing0801bde8Thumb, exact lookup reason retained. This is new observer parity, not reopening old interpreter/native correctness acceptance.",
+    "Actual default-runtime GUI/menu/CLI DS20 copy passes50invocations including navigation: selected IWRAM/ARM/interpreter16event prefix with authenticated IRQ label, menu default512prefix and empty region106554filtered dispatches. Foreign-ROM labels, invalid event limit, unarmed report, duplicate Start,8folder capacity preserving every prior report hash-mtime, running and closed refusals pass. Correct label file hash/mtime stays exact.",
+    "Active snapshot recording captures2A/release frames while tracing. Explicit Stop/close precedes debug-record verify; exact full endpoint dd841ef6dba845974625e7e5ae5839f86069000066f876a32d0a86bf6fcb0b81 passes. GUI copy exits0/inactive server; all6actual selected ROM/seed/save/library/normal-runtime hash-mtime guards pass. No old fixture or benchmark repeated merely for context.",
+    "Chrome1400desktop/620mobile and empty-prefix views verify actual native/missing counts, transition, PC/declared-label filtering, per-event detail, reset and no document overflow. Homepage41indices/4code reports/filter/search/guide pass. Screenshots visually inspected. Code report table scrolls internally on narrow windows; unknown empty-prefix usage is explicit.",
+    "Independent final-verification authenticates9live/frozen overlays, final candidates,4JSON/HTML reports against exact template, event ordering/limits/label-source/library hashes, complete recording identities and inactive GUI. Removing readonly pre-dispatch hooks restores original native dispatch tokens and exact lookup; removing opt-in frontend branches restores exact prior guest runner. No private payload is tracked and no normal runtime replaced.",
+    "Feature/checklist/state/handoff/record/changelog, local links, metadata/workspace/base memory and whitespace checks complete. Concurrent records4 work now supplies its own separate turn record, resolving its earlier integration memory gap without attributing those edits to this tool. Evidence under target/debug-tools-code: selections/protection/build/test/GUI/browser/final-verification/documentation/command results, logs/screenshots and failed attempts. Retention receipt retires exited unit Chrome profiles, retains source/current candidates/native fixture/closed GUI/recording/reports and shared caches; no managed dataset disposable trees exist."
+  ],
+  "limitations": [
+    "Windows cross builds and Wine/Xvfb plus offline Chrome only. Native Windows/Linux, physical controllers, other scenes and live native GUI capture remain unverified. The real native fixture is a single new affected observer check with the same old library in both arms; its interpreter/native parity remains unaccepted. No new ROM/DS/native correctness or performance claim.",
+    "Events observe entry selection before the step/block; native instructions inside a block and function extents are unknown. System steps can sleep/service IRQ without executing the displayed PC; current backing bytes are not simulated bus fetches or native memory images. RAM may self-modify. Label names/ends are static declarations only; no extracted-code percentage is inferred from counts.",
+    "Native file hash is read at trace start from the path retained at load; it does not authenticate loaded code memory retroactively. Code pointers/compiled extents and external file changes between load and capture remain unknown. Filtered/truncated prefixes and events after stop cannot prove absence of code usage. Closing without Save loses in-memory collection.",
+    "Private code bytes/paths remain ignored and require review before sharing. No guest/save/native ABI, Android/Godot, packaging, normal runtime replacement, commit or push change; preserve separate concurrent extraction edits."
+  ],
+  "files": [
+    "crates/menu/src/lib.rs",
+    "crates/recomp/src/main.rs",
+    "crates/recomp/src/play.rs",
+    "crates/recomp/src/debug_control.rs",
+    "crates/recomp/src/debug_code.rs",
+    "crates/recomp/src/debug_code/report.html",
+    "crates/recomp/src/rom_data/native_rom_data_residue_tests.rs",
+    "scripts/report_home.py",
+    "scripts/report_home.html",
+    "docs/debug_code.md",
+    "docs/debug_control.md",
+    "docs/report_home.md",
+    "scripts/README.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/debug_code.md",
+    "docs/debug_control.md",
+    "docs/labels.md",
+    "docs/report_home.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ]
+}

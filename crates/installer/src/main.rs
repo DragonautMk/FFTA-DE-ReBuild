@@ -15,7 +15,9 @@ use std::sync::mpsc::{channel, Receiver};
 use std::time::{Duration, Instant};
 
 // ---- Customize here ---------------------------------------------------
-const APP_NAME: &str = "FFTARecomp";
+const APP_NAME: &str = "FFTA DE-ReBuild";
+// Keep the installed data path compatible with earlier versions.
+const INSTALL_DIR_NAME: &str = "FFTARecomp";
 const AUTHORS: &str = "Jorge Rios";
 const ACCENT:Color32=presentation::SELECTED;
 const ACCENT_HOVER:Color32=Color32::from_rgb(74,51,27);
@@ -34,7 +36,7 @@ const KNOWN_SHA1: &[&str] = &[
 const ROM_FILE: &str = "ffta.gba";
 const PLAYER_EXE: &str = platform::PLAYER;
 
-const LOGO: &[u8] = include_bytes!("../assets/logo.png");
+const LOGO: &[u8] = include_bytes!("../assets/de-rebuild-logo.png");
 // -----------------------------------------------------------------------
 
 enum Screen { Intro, Rom, Done }
@@ -88,7 +90,7 @@ impl App {
         });
         let install_dir = dirs::data_local_dir()
             .unwrap_or_else(|| PathBuf::from("."))
-            .join(APP_NAME);
+            .join(INSTALL_DIR_NAME);
         Self {
             screen: {
                 #[cfg(feature="installer-preview")]
@@ -417,7 +419,7 @@ impl eframe::App for App {
                 match result {
                     native_picker::Result::Selected(path) => match kind {
                         path_picker::Kind::Rom => self.set_rom(path),
-                        path_picker::Kind::Folder => self.install_dir = path.join(APP_NAME),
+                        path_picker::Kind::Folder => self.install_dir = path.join(INSTALL_DIR_NAME),
                     },
                     native_picker::Result::Cancelled => {},
                     native_picker::Result::Unavailable(message) => {
@@ -445,7 +447,7 @@ impl eframe::App for App {
                         .inner_margin(24.0).show(ui,|ui|{
                             ui.set_min_height(ui.available_height());
                             ui.horizontal_wrapped(|ui|{
-                                ui.heading("FFTARecomp");
+                                ui.heading(APP_NAME);
                                 ui.label(RichText::new(presentation::VERSION).color(TEXT_DIM));
                                                     ui.with_layout(egui::Layout::right_to_left(egui::Align::Center),|ui|{
                                     if ui.small_button("Close").clicked(){ctx.send_viewport_cmd(egui::ViewportCommand::Close);}
@@ -465,7 +467,7 @@ impl eframe::App for App {
                 self.path_picker = None;
                 match result {
                     path_picker::Selection::Rom(path) => self.set_rom(path),
-                    path_picker::Selection::Folder(path) => self.install_dir = path.join(APP_NAME),
+                    path_picker::Selection::Folder(path) => self.install_dir = path.join(INSTALL_DIR_NAME),
                     path_picker::Selection::Cancel => {}
                 }
             }

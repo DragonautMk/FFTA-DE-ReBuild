@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "date": "2026-10-22",
+  "slug": "extend-european-static-obj-catalog",
+  "title": "Extend European static OBJ catalog with seven additional lists",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Authenticate sixteen additional original EUR literal/call references, including one earlier root; seven new lists add 13 objects/92 source bytes. Current static totals are 123 references, 73 lists, 173 objects and 1184 source bytes. Other switch/indirect roots remain unclassified.",
+    "Publish expanded static-list JSON under EUR schema1/extractor16/decoder15, retaining e15 generations, all original 66 typed records and every other decoded file byte, including animation banks. The fourteen-file/thirteen-resource contract and USA e8-d7 remain unchanged.",
+    "Reuse immutable typed CPU/DMA/native/host source paths for the new lists. Add nonserialized per-source guest/host coverage and CLI usage reports so an old source cannot satisfy new-list ordinary-scene acceptance. Preserve original guest instructions/clock, live RAM/OAM and save/native ABI."
+  ],
+  "validation": [
+    "Three focused EUR Wine checks pass publication/injected failure/create/no-write reuse/repair/move/e15 retention, exact prior-record/file equality, strict JSON/source/coherent-edit/path/coverage/dependency/revision/truncation/input guards, whole-set identity and transactional attachment.",
+    "Fourteen original/interpreter/native draw calls cover both producers for all seven new lists with only their raw source spans altered; complete states/clocks match with 236 compiled source bytes, 33 native dispatches and 4497 original instructions (coverage only). Fourteen host draw/publication cases, all new edges/widths/mirrors/real-BIOS bus/CpuSet/DMA and unavailable-copy Load/Undo/backup/restart pass.",
+    "The retained 240-frame battle and new 240-frame Party roster/320-frame character-menu locators are coverage-negative for the seven new lists; evidence retained without repeating those scenes. Callsite inspection instead identifies the EUR boot language selection.",
+    "One 240-frame EUR language-screen Wine differential matches every complete state/clock/central-wide image/OAM/dispatch/audio stream, 94105 native dispatches/zero fallback and positive guest/host use of the same three new sources 3adfc4/3adfd2/3adfda. The final actual CLI image is visually inspected.",
+    "Actual Windows CLI processes through Wine create and reuse e16 without writes, then run the positive language scene from unrelated cwd with the old native cache. Original ROM/personal states/inputs/prior datasets/cache/loader and canonical executable remain unchanged. Windows test/production builds are warning-free; old 66-list and ten-bank oracles are retained rather than repeated.",
+    "Final project-memory coverage and whitespace checks pass; protected inputs and canonical/candidate hashes are rechecked, source hashes retained. Every unit process is terminal; no commit or push."
+  ],
+  "limitations": [
+    "This closes the declared seven-list EUR/Wine integration and one ordinary scene. Broader GUI/archive/gameplay coverage, remaining switch/indirect catalogs, empty-sequence scheduling contracts, sprite pixels/palettes, map/gameplay/audio and mod phases remain open in ROM_DATA_TODO. Subsequent bounded static discovery locates one further pair b4d8e8/b4f4e8 with five zero-count sequences; its original scheduled read contract remains pending and it is not migrated.",
+    "New Linux/USA/native Windows verification remains pending by user instruction. No performance/startup/RSS/space campaign, AndroidPort work, commit or push. Private neutral input/images/datasets/evidence remain ignored."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/obj_lists/roots.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/obj_lists.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/obj_extra_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_obj.md",
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

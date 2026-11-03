@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "slug": "consume-european-world-node-records",
+  "title": "Publish and consume European world node records through typed guest reads",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Publish world-nodes.json/gameplay.world-nodes at e78-d77/index69,71files70resources, all69prior records/files retained, USAe8-d7 unchanged. Wire shared600Bmodel/sourcebinding through extraction, coherent parsing/authentication, startup attachment and directtypedguest bus reads with7usage fields.",
+    "Compose all coordinates/pathIDs/neighbors/opaque bytes with prior owners and raw boundaries, preserving unchecked outside/RAM roots and original placement/pathfinding. No Machine/CAPI/cache/save ABI or hostalgorithm replacement. Keep parallelDBG isolated via stable502file source copy."
+  ],
+  "validation": [
+    "One reduced Winefilter passes newpublication/interrupted-file refusal,12attach/2fullset guards with failed-owner/fullstate retention.15original/interpreter/native prefixes match complete state/clock with600rawsourceBpoisoned afterLoad,124compiled instructions/32explicit compiled B, aliases/mirrors/outside30-31/equal255/liveRAMoverride.",
+    "All600typedbusB/fourfieldclasses30nodes pass widths/mirrors/mixedrawedges/priorowner, unavailabledatasetLoad-slotUndo owner retention and DMA/CpuSet/CpuFastSet fullstate-clock3.200actualguards502integration-source hashes and215closedmodelpreimages exact. Artifact helper retiresonlydisposableinterruptedcopy; acceptedoffline dataset/exe/source/diagnostics retained.",
+    "Firsttwo Windowsbuilds fail with15oldAPIerrors from fresh=true stale97d2core artifact/dep-info pointing tooldsourcecopy. Newlibmtime touch fails toinvalidate; moveonlyexactcorefingerprint toprivate diagnostics, thirdbuild warningfree/fresh=false/frozen2cf1d882... No globalCargo clean or oldproof/modeloracle rerun.",
+    "Final project-memory render/default/base2fbf9f7/metadata-only checks and CRLF-aware whitespace pass. Final24model/200runtime/169CLI actual guards and215model/502integration source hashes remain exact; no test/build replay for closure."
+  ],
+  "limitations": [
+    "ActualproductionCLI create/reuse/ordinarypositive/fullpair remain pending; runtime/nativeprefix proof is not fullpathfinder/ordinary or globalarchive/index coverage.397018roadrecords/payloads and fullROM_DATA_TODOremainopen.",
+    "Linux/USA/nativeWindows/new32:9 pending. No newgameplay/fixture/navigation/performance-storage campaign, Android/package, assistantcommit/push. Useru16WIP/parallelDBG preserved."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/world_nodes.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/world_node_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "scripts/extract_rom_data.py",
+    "scripts/README.md",
+    "docs/rom_data_maps.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_maps.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

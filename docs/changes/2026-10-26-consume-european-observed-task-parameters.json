@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "date": "2026-10-26",
+  "slug": "consume-european-observed-task-parameters",
+  "title": "Publish and consume the European observed task parameters",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Publish EUR e73-d72/gameplay.observed-task-parameters with67generation files66resources. Keep the existing independent phase-threshold/correction model over10bytes/two spans, no invented foreign dependencies. Retain all65prior files/records, current76OBJlists, e72 andUSA8-7.",
+    "Serve exactly371065..67/394E14..1C through typed field reconstruction, candidate pages371/394, prior-owner/raw composition and per-kind/row counters. Preserve original old-counter comparison, phase wrap, signed subtraction, outside queries, guest timing, CAPI/native ABI and save format.",
+    "Validate the actual e73production CLI create/no-write reuse and existing F09/cache/input use, preserving the canonical executable exactly. The first frame reaches only a threshold; a new12frame criterion reaches both kinds/all6rows before ordinary equivalence.",
+    "Add only five optional positive-guard/report lines to the generic scene validator, requiring both task-parameter kinds and all six rows. Close declared ordinary12F09frame equivalence using current actualCLI files and existing original state/input/cache."
+  ],
+  "validation": [
+    "First Windows build compiles core but frontend reports two missing arguments in historical budget-test calls. Archive first failure/preimage; fix only two zero arguments. Incremental frontend retry succeeds without diagnostics, frozen1823c1ab2f14e02fc9e016a073c268e5ef71454a8c1b969fd75f46f04276d694. Both first exact Wine filters pass; no Wine retry or old source/model/scene acceptance replay.",
+    "Managed interruption/create/no-write reuse/repair/move,13transactional attach guards and3full-set guards pass. Coherent field edits/omissions, source plans/hashes/dependencies/revisions preserve owner and complete guest state. Directory-unavailable Load/Undo/backup/restart retains owner and all10bytes/6rows with raw altered.",
+    "Twenty-four original/interpreter/native prefixes pass complete-state/clock equality with all10raw bytes altered: threshold boundary/old-u16overflow/phasewrap, all low-bit correction aliases, phase0/3/255 and correction0/16/255 outside cases. Both edges/all widths/three mirrors/real-BIOS bus and6DMA/CpuSet/FastSet transfers pass. MixedAPI2new+2old typed with edited oldraw, and2new+2editedraw pass.26native typed bytes;316original instructions/24native dispatches are coverage only.",
+    "Independent dataset/file/source checks pass: datasetfe0839b7f50a40333d72318a573a05a85c9bb319a1f38c2060949022710ff207, manifestced88a054f0f999c4476605d886e3a2ba9b32b21aac96fc3bb198f87290c6bdd, published model4b52c5f12f7633de0b1f790c5182ec5a727150a9460eb358eac3f41374788618 exactly matches isolated model. All65old files/records and74selected input/frozen guards/compiled implementations exact.",
+    "Required artifact completion retires only interrupted/moved copies, retaining accepted offline dataset, executable and logs/results/source preimages. No new checkpoint/navigation/performance/startup/RSS/storage-budget campaign.",
+    "CLI acceptance completed2026-10-27. One affected Windows production build warning-free/frozen c7f47bd4fdf6263845fdf0cfc3440b3e30fd79fc19a15079231d9417d4112f94. Canonical f3e277dba89945d8884e83106bef90bd6d2bf31df51dd25145c791f2a4d80720/mtime1792570130397888519 restored exactly, maincontent unchanged with mtime-only Cargo invalidation.",
+    "User interruption leaves firstprepare incomplete: missing runnerhandle/process, Checking/Preparing log, generationmanifest but no current pointer or result. Archive failed copy/log and reuse samefrozen build. Retrythree CLIchild commands all exit0:67generation/69managed/66resources/twospans10B/nodeps/all67files equal accepted runtime; create/reuse hash-mtime no-write and oldcache firstframe attach pass.",
+    "Firstframe both-kind presence gate explicitly fails after successful CLIcommands:1thresholdB/1phase,0correctionB/0rows. Preserve this negative bound. One new12frame runc, justified by that negative and retained source-audit lead, exits0 with20reads/28sourceB/12thresholdB/16correctionB/2phases/4correction rows. No prepare/reuse/build/oldsource/model/runtime/scene acceptance replay.",
+    "All145actual CLI input/output/frozen hash-mtime guards and implementation content remain exact. OriginalROM/F09state/input/cache/TinyCC/canonical preserved, both userAtlas edits unchanged and unattributed. Required artifactcompletion0paths; aborted-cli-prepare retained. Ordinary full-state equivalence still pending at the newly positive12frame bound.",
+    "Ordinary acceptance2026-10-27: first affected Windows frontend build warning-free/frozen de380af6bf577eafd28c2b7e3c0a87dacb22bf3dae53b922f8b29a95e3c68ae3. One first exact Winefilter passes every12F09frame8476through8488 complete state/guestclock/central-wide captured buffers/OAM/native-fallback dispatch/mixed-PSG-FIFO-HLE-bitwise audio. All five streams have actual samples[26334,26334,3168,3168,26258];88123native/279744fallback dispatches are coverage only.",
+    "Bothkind/all6row guard passes and exactly matches actualCLI12:20reads/28sourceB/12thresholdB/16correctionB/2phases/4rows. All76selected input/frozen guards, originals/cache/currentCLI67dataset/canonical and both userAtlas edits remain exact. Retained preimage proves exact five-line optionalvalidator delta and allother implementation unchanged. Artifactcompletion0paths. Firstframe correction-negative/interruptedprepare/oldsource-model-runtime-CLI-collector-scene proofs stay closed without replay."
+  ],
+  "limitations": [
+    "Source/model/managed/runtime/actualproductionCLI and declared ordinary12F09frame children closed. Scope is bounded to that scene; broader scenes/indirect sources, physical-table/task-allocator ABI/global caps/duration units/final composed GUI/whole-game coverage remain open. Firstframe correction-negative remains terminal evidence.",
+    "Linux/USA/nativeWindows/new32:9 and452lower audit bytes remain separate or pending. No Android/package/assistantcommit/push; fullROM_DATA_TODO active."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/observed_task_parameters.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/observed_task_parameters_runtime_tests.rs",
+    "scripts/extract_rom_data.py",
+    "docs/rom_data.md",
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "crates/recomp/src/rom_data/validation_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

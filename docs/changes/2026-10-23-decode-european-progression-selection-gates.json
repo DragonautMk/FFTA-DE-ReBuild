@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "decode-european-progression-selection-gates",
+  "title": "Decode European progression selection conditions and preserve ANY and terminal-store semantics",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Prove D2390literal/index1..64/stride16 source6e80de..6e84de/1024B; row0/16B and independent-next-root2Bgap stay unowned, no e36overlap. Add exact EUR source-only strict model with physical IDs/order/offset and lossless fields.",
+    "Preserve hard unsigned minimum01/02/04, ANYactive06..0d, original flag0e predicate/reset/count helpers, physical first match, zero-condition store0 and exhausted64no-store. No inferred rank/title/selector==ID schema or publication/runtime attachment; e36-d35 remains current."
+  ],
+  "validation": [
+    "Static bounded original consumer/helper/sixcallers/nextroot/field opcodes and independent1024Broundtrip/no-overlap pass; target/rom-data-rank-gates/ inventory and disassembly retained.",
+    "Windows21065testbuild warning-free; one Wine82907fullD2390+CCECC-CCE98-D22FC oracle passes138real-source/80unauthenticated-unpublished mutated-source cases,831distinct actual fieldB through row52. All64physical rows selectable synthetic-only; ANY8active thresholds/unsignedu8-u16/selector0-255/low8reset0-1-100-101/300liveflags+36-linked017f/zero-terminal-vs-exhausted-no-store/fullEWRAM-only-flags-output/SP-callee-stack pass.2657243instructions/248PCcoverageonly.",
+    "StrictJSON/fixedcount-ID-order-offset/arrays/unknown/sourceauthentication/coherentedit guards and all1024Broundtrip pass.39protected ROM/e36dataset/candidate/cache/loader/canonical/inventory inputs unchanged, no build/Winefailure or old source-native-scene repeat.",
+    "Evidence target/rom-data-rank-gates/{windows-tests-build.*,windows-tests.json,recomp-tests-original.exe,windows-original-result.json,windows-original.log,windows-original-europe/{progression-selection-gates.json,result.json},source-protected.json,original-protected.json}."
+  ],
+  "limitations": [
+    "Source proof complete for stated scope; managed publication/direct consumption/lifecycle/ordinary scene and newLinux/USA/nativeWindows/semantic consumers remain pending.",
+    "Actual row52zero terminal prevents original53..64ordinary reachability; mutable-source targeted checks remain separate from ordinary use. Raw aggregate-helper source6e9a5c is not migrated here.",
+    "No performance/space/AndroidPort work, private ROM/saves/inputs publication, agent commit or push. Parallel Debug-save audit preserved."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/progression_selection_gates.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/progression_selection_gate_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

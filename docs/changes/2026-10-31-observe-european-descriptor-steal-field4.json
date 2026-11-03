@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "observe-european-descriptor-steal-field4",
+  "title": "Observe European descriptor field four in Steal menu",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Document ordinary field-4 reads from descriptor banks 1 through 23 in the retained Steal menu."
+  ],
+  "validation": [
+    "Authenticated original Wine source windows and ran one existing 280-frame Wine scene; 60 typed field-4 bytes were read with guarded inputs and frozen sources unchanged."
+  ],
+  "limitations": [
+    "Aggregate counts do not identify exact records or PCs; the full scene comparison, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md"
+  ]
+}

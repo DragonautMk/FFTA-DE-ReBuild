@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "slug": "add-bounded-audio-diagnostics",
+  "title": "Add bounded audio source and callback captures with exact offline comparisons",
+  "kind": "added",
+  "platforms": [
+    "Windows cross builds and Wine/Xvfb; offline Chrome desktop/mobile"
+  ],
+  "changes": [
+    "Add isolated menu Start audio capture / Save audio report and acknowledged debug-control audio-start/audio-report with explicit1..180frame and mixed/PSG/HLE/FIFO selection. Observe guest buffers before frontend handoff/discard, producer decisions and actual post-DSP/gain/native-conversion callback values; generated, queue context and backend callback buffers are distinct from physical device delivery.",
+    "Bound live capture to30host seconds/180guest frames/2MiB per selected source, callback to3seconds/524288values/512blocks/64resets and report storage to8folders including incomplete outputs. Preallocate callback storage; no new callback IO/clock/allocation/lock. Main-thread writer runs outside callback mutex, retains failed captures, never overwrites/prunes reports or creates collector snapshots.",
+    "Publish private raw/WAV/HTML/JSON with mute/temporary mute/gain/Fast requested and estimated speed/queue sizes/reset epochs, ROM/runtime/BIOS/build, seed/session pins, effective dataset/input/AV and actual frame keys. Timeline restore seals the prefix and separate replay is refused while an unsaved capture exists. First pending origin buffers and producer watermark are explicitly scoped.",
+    "Add debug-audio states for readonly same-frame snapshot buffer comparison with selected even start/count up to262144values/events, exact i16/IEEE-f32/FIFO bytes and decoded first16differences. Distinct versioned JSON/exit0equal/2diverged/3incompatible; no guest execution, replay or attached dataset. Offline HTML offers bounded wave summaries, local lossy PCM16 audition and seek to first sampled difference. Homepage groups audio.json reports separately and links the guide."
+  ],
+  "validation": [
+    "Frozen public e8bd939 plus6selected audio overlays excludes concurrent records4 extraction. Final locked/offline feature/default Windows release builds warning-free. Feature SHA256 fd6a5ed7326800a6ceaf65280e96bb2cad9152bd5df4ecd73c423a5bf74b056f; default861d2f7f6a82d50d64b710bc11eb1a6613551ebd89bf6c0fec4944ecbd3db95b. Initial BIOS Option<Vec> versus Option<&[u8]> test compile refusal retained under bios-view-build-attempt; corrected as_deref before successful builds.",
+    "66distinct initial Wine tests pass:2audio collector,8control,48menu and8existing callback/audio-transition checks. Test compares callback output/queues/legacy counters bit-for-bit for f32/i16/u16 at44100/48000Hz through user/temporary mute, enhanced/HLE, reset, Fast, normal and empty-queue cases. Two affected collector checks pass after frame-key identity addition; these are reruns, not new distinct tests. Final command outcome contract is checked through real CLI after its later change.",
+    "Readonly retained snapshot import localizes exactly2mixed values at indices81918/81919, -704 versus -576 at guest frame8514/clock2391464782, including selected256value window. Initial overwrite/odd/duplicate refusals pass; no guest/native/benchmark acceptance rerun. Historical initial offline CLI returned0on publication; final contract returns2for divergence,0for equal and3for incompatible, verified using the same snapshot buffers.",
+    "First GUI harness reaches actual Debug row6 then fails its shortened expected Start recording label before recording/capture/guest execution. navigation-label-attempt retains logs/active-ready diagnostic; wrapper/Xvfb termination is not a clean exit. Same unadvanced copy reopened paused with corrected Start input recording / Stop input recording labels. Subsequent49CLI invocations including navigation and all expected refusals pass; not49distinct cases.",
+    "Accepted default-runtime DS20 case creates3reports: selected4frame mixed/HLE capture,2frame all-source menu capture and68frame Fast capture. Source peak0.16015625 versus zero muted callback,68Fast contexts and4resets prove source/output distinction. Complete4frame A/release recording verified after explicit Stop/close; exact endpoint8be18cca83d3bb430e003c793259825bce67a3b5fbdb2705a378d3d38ebcaaee. Duplicate-start/invalid/running/closed/8folder capacity refusals preserve prior report hash-mtimes. Owner exits0/inactive,197protected originals unchanged.",
+    "Identity review retains6old sources/candidates/results in pre-identity-review and adds seed/BIOS/dataset/build/input references, frame keys and explicit offline outcomes. Only missing scope exercised: a fresh feature-runtime2frame copy validates source/actual manifest/runtime/seed/BIOS pins, effective dataset absent, active keys1022/1023 and unchanged complete state across Start/Save; closes0/inactive. Nine CLI invocations include final offline diverged/equal/incompatible; prior menu/Fast/recorded-endpoint acceptance remains closed.",
+    "Chrome real-time CDP checks1400px paired comparison and620px live layout, actual local WAV decoding/play/pause with browser muted, exact first-difference seek, callback labeling/mute and no horizontal overflow. Homepage37indices/8audio filter/search/reset and guide link pass. Initial virtual-time observation did not wait for media decoder, retained browser-virtual-time-attempt; then homepage CDP queried before document creation, corrected optional document readiness and reran only homepage. All screenshots visually inspected; playback establishes no physical listening.",
+    "Independent final-verification authenticates6live/frozen overlays, both final candidates,8reports/raw hashes/exact HTML template/WAV layouts and3second bounds, callback offsets/limits,4frame recording identities, two inactive clean copies and197original hash-mtimes plus normal Windows/Linux runtimes. Removing only observer restores exact original guest frame runner, audio producer and callback/DSP body. Private payloads ignored/untracked; no normal executable replacement.",
+    "Feature/checklist/durable state/handoff/record/changelog updated. Local Markdown and homepage links verified, metadata-only project-memory and git diff --check pass; global workspace/base checks identify only separate concurrent records4_scene_tests.rs and rom_data/validation_tests.rs without their own updated record. All8 audio/home implementation files have this accurate record; do not attribute unrelated extraction tests here. Evidence under target/debug-tools-audio: build/fixture/protection maps, initial/affected tests, states/GUI/identity/browser/final-verification and documentation/command-results, logs/screenshots/source preimages. Cleanup receipt retires exited unit Chrome profiles; no managed/native disposable dataset trees exist, and ROM-only local_artifacts preview explicitly reports this unit type inapplicable."
+  ],
+  "limitations": [
+    "Wine/Xvfb interpreter and offline Chrome only. Native Windows/Linux, hardware controllers/devices/listening, backend buffering/XRUNs/speakers and other scenes remain unverified. Capture records the actual application callback buffer after sample-format conversion, normalized to f32, without claiming physical delivery or per-sample guest provenance. No new ROM/DS/native parity or performance acceptance.",
+    "WAV audition is lossy PCM16 with bounded clipping/nonfinite handling. Exact comparison uses raw bits and index/length only, without inferred resampling/delay/phase alignment. FIFO sample-hold preview excludes initial phase/filter/routing. Equal output describes selected buffers/window only; empty selected buffers do not establish correctness. Historical origin configuration/input unavailable in offline snapshots stays unknown.",
+    "Live collection is bounded; truncated/dropped/reset limits and reasons are explicit. Pending origin buffers may appear in first handoff. Producer watermark is not sample origin; queue sizes are post-consumption observations rather than copied queued values. Timeline restore can separate capture prefix from report current state. Failed publishes remain private incomplete folders; no automatic pruning.",
+    "Preserve earlier accepted debug tools, concurrent ROM records4 work and diagnostic failed attempts. No save/native ABI, Android/Godot, normal runtime replacement, commit, push or packaging change."
+  ],
+  "files": [
+    "crates/menu/src/lib.rs",
+    "crates/recomp/src/debug_control.rs",
+    "crates/recomp/src/main.rs",
+    "crates/recomp/src/play.rs",
+    "crates/recomp/src/debug_audio.rs",
+    "crates/recomp/src/debug_audio/report.html",
+    "scripts/report_home.py",
+    "scripts/report_home.html",
+    "docs/debug_audio.md",
+    "docs/debug_control.md",
+    "docs/report_home.md",
+    "scripts/README.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/debug_audio.md",
+    "docs/debug_control.md",
+    "docs/debug_recordings.md",
+    "docs/report_home.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ]
+}

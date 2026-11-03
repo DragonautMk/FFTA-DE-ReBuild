@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "complete-debug-save-document-translation",
+  "title": "Complete English translation of debug-save cases",
+  "kind": "docs",
+  "platforms": [
+    "Desktop debug-save documentation"
+  ],
+  "changes": [
+    "Translate debug-save cases DS-14 through DS-26 and the final evidence notes into English while retaining coverage status, provenance, original game/author quotations and validation limits."
+  ],
+  "validation": [
+    "Compare all 13 ordered checkbox states, identifiers, inline literals, links and 14 legacy anchors with the original; verify local targets, original quotations and unchanged earlier sections."
+  ],
+  "limitations": [
+    "Documentation translation only; no private saves, gameplay, benchmark or runtime checks were accessed or run."
+  ],
+  "files": [
+    "docs/development/debug saves.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

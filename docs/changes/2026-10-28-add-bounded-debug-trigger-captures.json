@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "slug": "add-bounded-debug-trigger-captures",
+  "title": "Capture reusable debug points when bounded replay triggers are observed",
+  "kind": "added",
+  "platforms": [
+    "Windows cross build validated under Wine/Xvfb"
+  ],
+  "changes": [
+    "Add debug-capture create/run/cancel and Debug > Capture on trigger on the existing isolated replay supervisor. Authenticate resource source ranges or ROM PC/mode/opcode, or select a completed relative-frame event; bound replay by recorded input frames and wall timeout, distinguishing captured0 from not-reached7.",
+    "Add an independent feature-gated thread-bound constant-space first-hit collector for instrumented resource reads or actual condition-passed interpreter instruction entry. Fetches remain excluded, mirrors normalize physical addresses, and inherited HLE/DMA read scope cannot become an invented instruction-entry trigger. No Machine fields, guest clocks, save version or native ABI are changed.",
+    "Stop only after a guarded completed frame. Publish a new private bundle with full snapshot, authenticated executed origin/input buffers, normalized effective profile identity, condition, first observation, actual boundary/clock and a variant-only catalog. Refuse a ninth retained bundle before spawn and never overwrite earlier captures. Keep native and simultaneous-audit capture profiles unsupported explicitly.",
+    "Keep CLI/menu supervisor leases, progress/result identity, timeout/cancel and owner-close teardown. Normal game stays paused and personal game-save writers remain outside the worker. Existing plain replay profiles retain exact-endpoint behavior; default clients can supervise an explicitly selected feature worker."
+  ],
+  "validation": [
+    "Frozen public acd086e plus eight selected task files builds locked offline Windows feature/default frontends and targeted tests without warnings, excluding concurrent extraction changes. Final feature candidate SHA25692a669b75f62e324d3b963d31ebb30a8dc1cf08da51cfc79c0d93a98f8e92b5c; default candidate SHA256ce3bfb984c56acefebe49173d5c28819da59bd9f8cf4b7827f2d44a8e0740dc1. Both normal production executables remain unchanged.",
+    "Wine passes66 targeted tests:5 capture,11 replay,3 core trigger,2 bounded-audit regression and45 menu. Checks cover exact safe-boundary full state/clock, catalog reuse/load and subsequent frame, no-match bounded outcomes, first-hit stability/fetch/mirror/filter/mode behavior, authenticated source/PC rejection, capacity and no overwrite. After publication refinement, only affected capture/replay binaries are rebuilt/rechecked; unchanged accepted core/menu identities are retained.",
+    "Self-review finds that late rereads could mislabel capture origin/input if profile files change during execution. Publication is corrected to use and fingerprint the authenticated in-memory buffers actually executed, and normalized loaded Profile settings replace a late file hash. A synthetic external input edit after execution proves the bundle keeps executed bytes. Preimage source/logs/candidate identity remain under target/debug-tools-capture/publication-preimage; initial pre-refinement build is not treated as final source evidence.",
+    "25 CLI command checks, a controlled cancellation runner and4 feature-boundary cases pass on retained DS20 input. Resource/frame/verified-PC captures all produce full-state hash283c3470414cd0e2e25ad859a401e831a4d2dfb1143db8fe311e1b0f6ec3f6c7 at one completed frame/clock6241425344. Not-reached stops at2frames and matches the frame2 control state/clock, without a snapshot. Catalog lists verified variant and opens an isolated session with identical seed. Invalid opcode/window/ambiguous/native conditions, modified plan, timeout, duplicate, idle cancellation and ninth-bundle capacity are refused.",
+    "Initial harness incorrectly expects ObjSourceTable to be the first host reader of graphics.obj-dimensions. Actual first hit is SpritePeek at the authenticated resource offset, with the same one-frame endpoint. Correct the reader-specific harness expectation to the declared host/filter/source condition and reuse the already successful captures; retain the failed expectation log without a product change or replay.",
+    "Dedicated Wine/Xvfb GUI passes Capture on trigger with the same CLI state/clock, visible CAPTURED/NOT REACHED, cancel and owner-close worker teardown. Parent full-state/frame/clock and save/progress identities remain unchanged while paused; final screenshots inspected and parent exits0. All203 selected original ROM/session/recording/collection/manifest/production input hash-mtimes are unchanged.",
+    "Final independent checks verify all8 live/compiled overlay hashes, both production runtimes,203 original hash-mtimes, six derived bundles with state/origin/input fingerprints and boundary consistency, ignored/untracked personal collection,405 local links and only DBG01-08 checked. Workspace/base acd086e project-memory and whitespace checks pass; final owner-close worker is terminal interrupted. No managed/native disposable fixture trees are created, so ROM-only completion cleanup does not apply."
+  ],
+  "limitations": [
+    "Native Windows, Linux/Wayland, physical controllers and explicit typed-dataset capture are unverified. Real checks use raw serving plus retained e76 source metadata; newer concurrent extraction implementation is outside the frozen tool build. No old native-parity, Bank/F09, DS acceptance, performance, extraction or Godot campaign is resumed.",
+    "Only the six existing instrumented readers/current thread and condition-passed interpreter ROM entries are observed; native/RAM/BIOS execution, missing host/HLE hooks, failed/out-of-image/GPIO/EEPROM paths and filtered cases remain outside scope. Non-observation is not unread proof; the snapshot is at the next completed-frame boundary, not the exact instruction/read.",
+    "Derived points remain local variants, without DS status or ownership promotion. Original input may contain later unapplied events; input_end_exclusive identifies the used prefix. Keep the profile source plan for full resource-selector provenance. Captures retain at most eight bundles and do not delete old or partial diagnostic evidence automatically."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data/read_audit.rs",
+    "crates/recomp/src/debug_capture.rs",
+    "crates/recomp/src/debug_capture/tests.rs",
+    "crates/recomp/src/debug_replay.rs",
+    "crates/recomp/src/debug_replay/tests.rs",
+    "crates/recomp/src/main.rs",
+    "crates/recomp/src/play.rs",
+    "crates/menu/src/lib.rs",
+    "docs/debug_captures.md",
+    "docs/debug_replays.md",
+    "docs/debug_catalog.md",
+    "docs/debug_rom_audit.md",
+    "scripts/README.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/debug_captures.md",
+    "docs/debug_replays.md",
+    "docs/debug_catalog.md",
+    "docs/debug_rom_audit.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ]
+}

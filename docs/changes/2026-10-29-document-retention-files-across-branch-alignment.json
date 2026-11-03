@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "slug": "document-retention-files-across-branch-alignment",
+  "title": "Complete artifact retention change coverage across branch alignment",
+  "kind": "docs",
+  "platforms": [
+    "Development"
+  ],
+  "changes": [
+    "Backfill missing change coverage for the existing AGENTS.md bounded artifact retention instructions and scripts/tests/test_local_artifacts.py synthetic tests introduced in e2a1d37.",
+    "Require branch alignment validation against the destination branch previous remote tip, matching the GitHub push comparison range rather than only HEAD."
+  ],
+  "validation": [
+    "Read the failed GitHub Project memory run95 log: base2193457 to commit08b89d3 reports exactly AGENTS.md and scripts/tests/test_local_artifacts.py; reproduced the same two omissions locally.",
+    "All five existing project memory tests and all nine synthetic artifact retention tests pass using temporary fixtures.",
+    "Project memory checks pass against HEAD and the original failed push base2193457, covering the entire imported range without weakening the checker."
+  ],
+  "limitations": [
+    "Documentation coverage correction only; no runtime implementation, cleanup, CI checker or branch reference changes. No build, commit or push performed.",
+    "The original run95 uses commit08b89d3 and remains historical evidence; rerunning that unchanged commit cannot include this correction."
+  ],
+  "files": [
+    "AGENTS.md",
+    "scripts/tests/test_local_artifacts.py",
+    "docs/development/MEMORY_WORKFLOW.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/development/LOCAL_ARTIFACTS.md",
+    "docs/development/MEMORY_WORKFLOW.md"
+  ]
+}

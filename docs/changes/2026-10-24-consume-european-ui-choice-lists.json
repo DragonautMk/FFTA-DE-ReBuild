@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "consume-european-ui-choice-lists",
+  "title": "Publish European UI choice lists and serve their original reads from typed fields",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Wire ui-choice-lists.json/engine.ui-choice-lists into EUR extraction/publication/parsing/authentication and an immutable13range336Btyped runtime owner. EUR becomes e56-d55 with52generation files/51resources, no asset dependency; USA stays e8-d7.",
+    "Preserve original live signed copy counts, full raw navigation, byte3opaque, filtered RAM lists, input/cursor tasks and save/native ABI. Per-byte composition retains prior typed owners and raw gaps; source usage distinguishes identifier/coordinates/opaque/navigation and13physical lists.",
+    "Add two focused ignored Wine managed/native tests covering new resource coherence, lifecycle, original copies/live filters and source boundaries. Complete actual productionCLI preparation/reuse and one positive existing Party-unit ordinary scene; prior source-model/oracles and older family proofs remain terminal."
+  ],
+  "validation": [
+    "One-shot six-file wiring applied; one synthetic-budget whitespace line corrected before compilation. One needed affected Windows core/frontend test build36248passes first attempt warning-free, frozen coreb3ba850be511a0ba4b8fb7c0a572edaff6d1a53fe5932e65acf7cb88c6c7aefb/frontend0f942581b1aee1b00ce314d526499c4bb9badd9365e916d07cb0caac965187df. Core tests compiled only.",
+    "Wine82471two exact new filters pass first attempt:17guards/full-set coherence/noassetdependency/all336typedB=[42identifier84coordinate42opaque168navigation]/13lists/transactional failed attach/publication failure-create-reuse-repair-move/all50prior decoded unchanged/e55retention/unavailableLoad-Undo-backup-Restart/sharedowner. Four same-page oldOBJtyped bytes compose unchanged.",
+    "Native29original-interpreter-compiled complete-state-clock component paths pass with all336newrawB+14oldOBJrawBpoisoned; compiled category aggregateB=[92ID183coordinate92opaque368navigation]. Raw counts0/-1/257/RAMcopies/getter-idle/four live-filter prefixes preserve original work. Widths/mirrors/realBIOSbus/3actualSWI/1immediateDMA pass; mixed copies contain2new+2old+2rawB with2Bcharged each owner, unalignedAPIword2new+2editedrawB.3010instructions186PC38dispatch are coverage only.",
+    "All706hash-mtime guards pass. New targeted dataset20de59719c526d547cbea3edaf83920b7d2feac0147c4297329263afde547886; fileSHA95f7ccb90cb1d48595f1ace3826d417d3ec2aef5b93f3686ae03444f5fd8abfb. All new processes terminal, no live job. Evidence target/rom-data-ui-choice-runtime/runtime-targeted-outcome.json, windows-managed-{build,results}.json and windows-managed-europe/{managed,native}-result.json.",
+    "All5900prior protected artifact hashes unchanged; all eight compiled source inputs still match the accepted build. The299source/doc baseline differs only in six selected wiring files and eight memory files; new owner/test/coherent record expand to302guarded files. Generated CHANGELOG, project-memory/default-base7597b92, CRLF-aware whitespace and new-module formatting checks pass. Source models/oracles, user Debug-save, concurrent Docker work and old evidence preserved.",
+    "One needed Windows production build60923passes warning-free/candidate444c2db98c8fa675039e440d8d1414ef236d39b1ae78422e099dd4367ba7352f; canonical exacthash/mtime restored, maincontent unchanged/mtime-only Cargo invalidation. Wine36895actualCLIcreate/reuse-no-write54managedfiles/52generationfiles all identical to accepted e56/unrelatedcwd/oldnativecache passes.",
+    "Pecorelle1000andMooglemenu600new-UI locators read0newbytes, retained terminal negative without fullpairs or longer repeat. Read-only110authentic EUR snapshot-prefix inspections find no direct-list copies, not a global liveness proof. Existing Party unit screenshot/input provenance selects the distinct copied-choice component rather than the battle cursor/text-list UI.",
+    "One new-family CLI54355Party-unit320locator passes32aggregateB=[4ID8coordinate4opaque16navigation]/8busreads/1physical list, existing snapshot7701a360c2836d8ce1bac59288786cd34922046163048aa32dfa1f09fadcac9a and inputbf757e6957e596ba823c9063284c51b6e8766408dbb29247d625869aabae1dfc unchanged. No gameplay fixture/navigation/PC-RAM-savepayload edit.",
+    "One Wine95582same320fullpair firstPASSactualCLI e56generationDQ1nbu/frozen0f942581testexe/oldcache/width0. Initial and every frame4519through4839complete state/guestclock/central-wideimage/OAM/dispatch/mixedPSGFIFObitwiseHLEaudio match, nonempty audio[702240,702240,84480,84480,702164]. Same32aggregateUIB/1list,769hash-mtime guards. Native+fallback, no allnative/wholewidget/new32:9 claim. No build/prepare/locator/source-model-managed-native/oldscene repeat for this pair.",
+    "CLI/ordinary closure preserves all6192prior protected artifact hashes and all eight accepted compiled source inputs. The302source/doc baseline changes only nine selected memory files; implementation, source models/oracles, user Debug-save, concurrent Docker work and prior evidence unchanged. Canonical production hash/mtime restored; maincontent unchanged/mtime-only Cargo invalidation. Generated CHANGELOG, project-memory/default-base7597b92 and CRLF-aware whitespace checks pass; no live unit job."
+  ],
+  "limitations": [
+    "Declared EUR component and one ordinary Party-unit scene scope only, not wholewidget/all-context ABI. Other12lists have ordinary use pending; targeted checks remain closed. Two negative battle contexts are not source-use acceptances. All new-family source/model/managed/native/actualCLI/positiveordinary functional children are closed for this scope; full ROM data TODO remains active.",
+    "EUR e56-d55/USAe8-d7 unchanged. New Linux/USA/native Windows/new32:9 remain pending. No performance/space measurements, new gameplay fixture/navigation/payload edit, Android change, package, agent commit or push."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/ui_choice_lists.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/ui_choice_list_runtime_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "scripts/extract_rom_data.py",
+    "docs/rom_data_ui.md",
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_ui.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/rom_data_runtime.md"
+  ]
+}

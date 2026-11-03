@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "date": "2026-10-22",
+  "slug": "prepare-european-short-texts-and-referenced-font",
+  "title": "Publish and authenticate European short texts as a ninth managed resource file",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Add fixed short-texts.json/text.short-strings/short-texts-v1-json with 670 provenance ranges to EUR schema1/extractor11/decoder10, retaining e10 and all seven prior decoded files; keep USA six-file e8-d7 unchanged.",
+    "Authenticate exact typed strings, pointer indices, glyph words and widths as part of the complete manifest and dataset identity before activation. Keep new text/font gameplay verified-only until direct consumption is implemented.",
+    "Extend bounded reading, strict JSON, atomic preparation/publication/reuse/repair/relocation and diagnostics to the ninth file; raise the malformed-manifest input guard to 1 MiB for the added provenance. Add extraction-wrapper file descriptions without space optimization."
+  ],
+  "validation": [
+    "Warning-free Windows release test and production builds, canonical executable restored; three reduced Wine checks pass for deterministic nine-file publication/reuse, interrupted-resource write isolation/missing repair and actual EUR source-authenticated complete-set preparation/activation.",
+    "Actual EUR guard cases reject coherent metric edits, forged paths/coverage/provenance/dependencies, truncated JSON and oversized files while preserving machine state and existing owner. Whitespace-only JSON changes alter whole-set identity; missing/corrupt repairs and folder move reuse pass.",
+    "Managed text JSON SHA a422d06951e78d1ac10ce7be3ece0a84a17a1308d91f6b47ba0ff6fb10b054fa matches closed offline output. Actual Windows CLI prepare, no-write reuse and one-frame old-native-cache activation from unrelated cwd pass with runtime=verified-only.",
+    "Original ROM/slot/cache/loader/canonical and retained e10 files are preserved. Current source hashes, project-memory coverage and CRLF-aware whitespace checks pass."
+  ],
+  "limitations": [
+    "New Linux and USA checks remain pending by user instruction; no native Windows or AndroidPort claim.",
+    "Short-text/font data is authenticated and prepared but not yet consumed at gameplay source reads. Direct CPU/DMA/native provenance, lifecycle/scene acceptance, broader catalogs/full font/control semantics/Unicode remain open.",
+    "No performance/startup/RSS/space measurement, compression, broad suite, new recording or repeat of closed original text/font/BG/scene acceptance."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/preparation.rs",
+    "crates/recomp/src/rom_data/text_short_managed_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "scripts/extract_rom_data.py"
+  ],
+  "references": [
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_text.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

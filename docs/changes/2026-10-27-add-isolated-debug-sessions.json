@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "slug": "add-isolated-debug-sessions",
+  "title": "Add isolated portable debug sessions from the menu and CLI",
+  "kind": "added",
+  "platforms": [
+    "Windows (Wine validation)"
+  ],
+  "changes": [
+    "Implement DBG-02 with Debug > Start debug session and debug-session create/open/inspect. A dedicated portable runtime copies the selected ROM, optional BIOS/dataset, cartridge memory, initial snapshot and configuration into a new ignored folder; the normal game stays paused.",
+    "Pin immutable inputs with relative paths and SHA-256, keep all mutable saves/snapshot slots/Undo/backups/settings/cache/reports inside the copy and allow folder relocation. Retain one last-result report, refuse existing destinations and simultaneous opens, and leave failed partial copies available for diagnosis.",
+    "Scrub inherited FFTA/RECOMP/GBA project overrides on launch and reject direct play overrides, linked/shared files, changed pinned inputs and nested menu sessions. The debug window/menu identifies the copy; explicit Close debug session returns the user to the paused normal window. Cap menu-created folders at eight without silently deleting evidence.",
+    "Reuse the transactional snapshot loader through a bounded load_bytes helper. Copy the native TinyCC helper when selected; preserve normal runtime behavior and keep pinned distribution packages outside this development workflow. Document use, limits and privacy."
+  ],
+  "validation": [
+    "Build a frozen public 2fbf9f7 source plus seven selected tool files in a separate reusable Cargo cache; include its public assets after the initial staging omission. Offline locked Windows release test/frontend builds pass with no compiler warnings. The extraction working tree and current production executables are not used as mutable build outputs.",
+    "Wine passes six new session behavior tests, all 41 menu tests, ten snapshot tests and seven backup tests (one existing resource-fixture backup test remains ignored). They cover original preservation, load/save undo, restart, periodic/final save writer selection, backup paths, relocation, exclusive lease, invalid inputs, hard links and inherited project environment. Final 41 menu tests pass after badge publication/placement corrections.",
+    "Seven real EUR CLI cases pass: creation with authenticated copied dataset and seed, inspect, native-helper copy, refusal of an existing destination, incompatible snapshot BIOS, direct inherited save override and play-argument override. The last error is retained as an unsuccessful session result without changing original progress.",
+    "GUI checks pass for isolated snapshot start/dataset use, stripped inherited write overrides, duplicate-open refusal, save/load/Undo/restart/backup restoration/close and reopening after a folder move with retained snapshots and two backups. Initial X11 discovery/input/file-publication timing issues were corrected only in the local harness; their diagnostics/fixtures are retained.",
+    "Final Wine/Xvfb menu-created copy and explicit return pass on candidate 9c59a077166982418ca5bd4c7a8a572415d713c3b4a81493fb2652bd969a77c1. A Win32 WM_NULL probe confirms the parent is visible, non-iconic and responsive; restoring/activating it via Win32 resolves the X11-only focus harness issue. Parent frame/clock and all progress-file hashes/mtimes match before/after the child; screenshots confirm final badge placement outside panel titles.",
+    "All 73 selected source/library/dataset hashes and mtimes remain unchanged. Both production Windows/Linux executables retain their exact identities and times. No managed publication or native acceptance fixture unit was created, so the ROM-only artifact completion helper does not apply; retained failed harness fixtures/logs remain local.",
+    "Final source/input verification passes: seven overlay files match the frozen build, 73 protected inputs and both production executables retain hashes/mtimes, 33 local documentation links resolve and only DBG-01/02 are checked among 22 ordered items. Project-memory workspace/base checks and whitespace checks pass."
+  ],
+  "limitations": [
+    "Native Windows, Linux/Wayland, physical controllers and actual native-translated gameplay in an isolated copy are unverified; native selection currently has copy/identity coverage. No performance campaign, new DS scene, extraction acceptance replay, package, Android or Godot work was selected.",
+    "Isolation relies on an intact closed-folder layout, not an operating-system sandbox. Do not replace paths or links while a session is running. An initial seed is replayed on process reopening; later snapshots/progress stay private to the copy and require explicit menu loading.",
+    "Concurrent u16 task OBJ consumption/CLI extraction work is preserved and is not validated by this frontend unit. The isolated source export reports unknown Git provenance rather than inferring the live checkout as its build revision; the base and overlay hashes are retained separately."
+  ],
+  "files": [
+    "crates/recomp/src/main.rs",
+    "crates/recomp/src/play.rs",
+    "crates/recomp/src/diagnostics.rs",
+    "crates/recomp/src/save_state.rs",
+    "crates/recomp/src/debug_session.rs",
+    "crates/recomp/src/debug_session/tests.rs",
+    "crates/menu/src/lib.rs",
+    "docs/debug_sessions.md",
+    "docs/debug_diagnostics.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/TASK_HANDOFF.md",
+    "docs/development/PROJECT_STATE.md",
+    "scripts/README.md",
+    "docs/portable.md"
+  ],
+  "references": [
+    "docs/debug_sessions.md",
+    "docs/debug_diagnostics.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ]
+}

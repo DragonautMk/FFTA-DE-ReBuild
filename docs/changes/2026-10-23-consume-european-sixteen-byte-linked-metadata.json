@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "consume-european-sixteen-byte-linked-metadata",
+  "title": "Consume European sixteen-byte metadata through original live-list and RNG readers",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Add EUR schema 1 / extractor 25 / decoder 24 fixed linked-metadata16.json, resource gameplay.linked-metadata16, format linked-metadata16-v1-json. All 20 files / 19 resources authenticate before activation; all 18 previous decoded files and e24 generations remain unchanged. USA stays e8-d7. Preserve raw u16 alias plus fourteen u8 fields and all 128 records / 2048 source bytes.",
+    "Typed alias/display/flag/value/opaque views serve original CPU, DMA, native and guest-BIOS bus reads, merging earlier typed owners at source boundaries. Keep original linked-list identity/index resolution, inactive/missing preconditions, live RNG state and selection, sums, shifts and all guest clock work. Nonserialized counters prove new-family use; save/native ABI and source ROM identity stay intact.",
+    "Extend source-authenticated managed preparation, loading, reporting and CLI descriptions. A 2 MiB malformed-file read guard is not a space optimization budget. Preserve transactional attachment, immutable generations, prior-file retention and unavailable-file Load/Undo/backup/restart ownership. Add two focused Wine integration checks and one positive ordinary-scene pair."
+  ],
+  "validation": [
+    "Warning-free Windows test build23604 and Wine80528 pass two targeted checks: publication interruption/create/reuse/repair/move/e24 retention; coherent alias/opaque/value/reorder/source/dependency/path/role guards; failed attachment isolation and unavailable-copy Load/Undo/backup/restart. Initial private edit helper assertion was resolved by inspecting its partial edits; no integration build/test failed.",
+    "Forty-two sampled original/interpreter/native paths with all 2048 new raw ROM bytes altered match complete states and clocks, including original LCG work: 2133 instructions / 76 dispatches as coverage, 8 compiled alias / 17 display / 22 flag / 24 value bytes. Opaque bytes are not read by sampled original paths and are separately bus-proved. Every byte, edges, widths, mirrors, real-BIOS bus, CpuSet/FastSet, 4 typed DMA bytes and a narrow crossing word with 2 typed old-link + 2 new-metadata bytes pass.",
+    "Windows production77128 is warning-free and restores the canonical executable. Wine CLI15733 prepares/reuses e25 from unrelated cwd with old native cache; initial runc fails before execution on missing input header. Corrected Area List15780, Start-only99771, Party inventory11378 and category-cycle24270 locators pass but read 0 new bytes; retained without full pairs or repeats.",
+    "An existing Clan image identifies the distinct Mission Item row. New CLI42237 runs that ordinary input520 frames, reads 6 typed display bytes and ends at inspected Chocobo Egg1/64. One Wine pair72249 matches every complete state/clock/central-wide image/OAM/dispatch and mixed/PSG/FIFO/HLE audio stream with the same positive 6 bytes. No ordinary alias/flag/value use is inferred.",
+    "Initial CLI harness never reached its no-write assertion after the parse failure; one narrowly justified prepare-reuse-only Wine59534 completes that uncovered criterion with all 22 file hashes/mtimes/file set unchanged. Closed functional prepare/reuse/source2581+19/managed/native/scene proofs were not repeated. Final protected/canonical/candidate/source hashes, project-memory and whitespace checks recorded at closure; no agent commit/push."
+  ],
+  "limitations": [
+    "Catalog retains structural field names; the observed positive ordinary screen is Clan Mission Item. Broader field semantics and alias0 caller preconditions remain unproved. Ordinary use covers display bytes only; targeted source/native/bus proofs cover remaining storage and reader contracts.",
+    "New Linux/USA/native Windows verification and broader gameplay/maps/audio/GUI/archive/mod phases remain pending. No performance/startup/RSS/space campaign or AndroidPort change. Private ROM data, saves, recordings, source records and generated native code remain ignored."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/metadata16.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/metadata16_runtime_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "scripts/extract_rom_data.py"
+  ],
+  "references": [
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_gameplay.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

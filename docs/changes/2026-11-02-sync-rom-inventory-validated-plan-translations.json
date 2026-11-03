@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "sync-rom-inventory-validated-plan-translations",
+  "title": "Synchronize matching ROM inventory translations",
+  "kind": "docs",
+  "platforms": [
+    "Desktop ROM-data inventory"
+  ],
+  "changes": [
+    "Synchronize 120 inventory evidence entries with their existing English plan translations after confirming every source block exactly matched the plan preimage."
+  ],
+  "validation": [
+    "Compared all 13 source blocks byte for byte before replacement; task IDs, link targets and inline literals match, and numeric differences reflect one separated address label and one explicit zero."
+  ],
+  "limitations": [
+    "Later inventory sections and the wider cross-tree English-first audit remain open; no ROM access or runtime checks were performed."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_INVENTORY.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

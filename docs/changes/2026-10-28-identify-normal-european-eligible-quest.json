@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "slug": "identify-normal-european-eligible-quest",
+  "title": "Identify an eligible European quest through the normal pub menu",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Retain the missing normal pub mission-menu checkpoint with existing Wine observer/current e77 and exact original state/input copies. Use four Down presses and A to open the fifth visible quest detail without manual guest edits.",
+    "Authenticate live list pointer/count/low10 mission ID and selected-detail pointer. Join14 live entries to the closed source map proof: IDs58/72 are eligible candidates, while the displayed White Flowers detail and selected pointer confirm58\u2192event58/primary315/map69/descriptor68. Keep acceptance and battle entry open."
+  ],
+  "validation": [
+    "Two Wine normal checkpoint workers pass:620 known-route frames14349\u219214969 and300 new4Down+A frames14969\u219215269. No build, CLI/fullpair or old620 scene acceptance replay. Pub constructor counters0 are expected and not positive animation evidence.",
+    "130 actual input/dataset/output guards,496 frozen source hashes and23 bounded source-window hashes pass. Originals and70 dataset files preserve hashes/mtimes; new normal checkpoint/state/image/log evidence retained. Artifact helper completes with zero disposable paths. Exploratory031C/03D03001028 layout is not linked to this live menu and rejected.",
+    "Memory render/default/base2fbf9f7/metadata and CRLF-aware whitespace checks pass; feature heading, all130 preservation guards and496 source hashes pass after retention."
+  ],
+  "limitations": [
+    "Normal mission-menu availability and selected detail are proved; mission acceptance, actual battle/map load, eligible actor and all-four-phase/all-four-list guest/host use remain open before ordinary fullpair. Full40-byte catalog extent remains unmodeled.",
+    "Linux, USA, native Windows, new32:9 and full ROM_DATA_TODO remain pending. No performance/storage campaign, Android/package, assistant commit/push or original cartridge-save writes. Existing u16/runtime and parallel DBG work preserved."
+  ],
+  "files": [
+    "docs/rom_data_maps.md",
+    "docs/rom_data_obj.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_maps.md",
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

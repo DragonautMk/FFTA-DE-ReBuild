@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "decode-european-script-localized-text",
+  "title": "Model the European script-selected localized text with shared banks and exact source ownership",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Add the complete1803744byte/five-range ScriptText source model:63top targets/26variant references/77physical banks per language,41010existing Program codec records and34314exact alignment records. Alias references share bank payloads; relative top/variant/u16index words reconstruct from typed addresses and explicit sentinels.",
+    "Reuse text_catalogs::Program/customLZ, retaining every header bit, glyph/command/operand, compressed representation and decoded tail. Validate canonical order/reference coverage/complete physical ownership plus actual script-key/font dependencies. Preserve live quotient/remainder and special-message branches as original guest work; no new runtime owner or revision/save/native ABI change.",
+    "Authenticate the exact EUR source with349instruction halfwords grouped into digest windows and13literal words. Source construction proves all fields remain source-equal; source-language/bank helpers expose bounded projection lookup without new guest ID caps."
+  ],
+  "validation": [
+    "Previous turn made progress: e51runtime/CLI/ordinary and localized text static inventory/memory closed, inventory-final-summary terminal/no livejob,262source/doc baseline hashes match. No old source/text/codec/native/lifecycle/CLI/ordinary proof repeated for context.",
+    "Windows42377 affected release test build is warning-free. First Wine95147 passes whole-source roundtrip/independent fields,22shape/6coherent source/3dependency/identity guards, then fails the new strict JSON check: an internally tagged unit variant accepts an unexpected field despite enum deny_unknown_fields. Original guest cases had not started. Preserve build/exe/output/log/result under before-strict-variant-json; correct the variant to an empty struct while keeping the assertion. Only the affected model build and new combined filter are repeated.",
+    "Corrected Windows55123 release build is warning-free; one new combined Wine34745 filter passes all independent fields/hashes/whole1803744B/385banks41010programs/147glyphs11command forms and22shape/6coherent source/3dependency/12JSON-shape/2identity guards. Original cases pass7languages/1170key-bank/1280live quotient/256live remainder/90raw-special message combinations/1170u16indices including sentinel/wrap/837headers/837source-vs-typed rebuilt outputs and guards, including249compressed bodies and decoded tails.2116900instructions/834PCs are coverage only. Retained checkpoint untouched; controlled scratch reader cases only. Prior4060artifacts/first failure files/newexe and368hash-mtime guards protected.",
+    "Final model preservation passes all4060prior artifacts and the retained first-failure files, plus368hash-mtime guards. Against262source/doc baseline files, only two existing module declarations and seven intended memory files change; all other implementation/e51/source-model/Debug-save files and concurrent Docker paragraph are unchanged. Final source/doc snapshot265files; full memory/default-base7597b92/CRLF-aware whitespace outcomes and protected snapshots are retained under target/rom-data-script-text/model-final-*.json."
+  ],
+  "limitations": [
+    "Strict source model and new original-reader Wine acceptance are complete. Publication/direct runtime/production CLI/positive ordinary remain separate pending children. EUR stays e51-d50/USAe8-d7; no native full-state/clock, whole text/callback ABI, all argument semantics or ordinary reachability claim.",
+    "New Linux/USA/native Windows checks remain pending. e49positive ordinary event/selector and other asset/GUI/archive/mod work remain open. No performance/space campaign, new gameplay fixtures/navigation or edits to retained checkpoints/saves/input, Android changes, agent commit or push. Preserve user Debug-save and concurrent Docker work."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data/script_text.rs",
+    "crates/gba-core/src/rom_data.rs",
+    "crates/recomp/src/rom_data/script_text_model_tests.rs",
+    "crates/recomp/src/rom_data.rs",
+    "docs/rom_data_text.md",
+    "docs/rom_data_scripts.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_text.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

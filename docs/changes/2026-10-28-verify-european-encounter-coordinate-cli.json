@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "slug": "verify-european-encounter-coordinate-cli",
+  "title": "Verify European coordinate production CLI and ordinary data use",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Verify actual e82-d81 CLI creation, no-write reuse and retained normal Giza battle-entry startup:75generation files exactruntime/74logged IDs-hashes/77managed paths unchanged,691spans/headerdependency. Close positive placement0/XY use before one ordinary equivalence pair.",
+    "Reconcile stale PROJECT_STATE runtime attempt counts against already closed evidence:threewarningfreebuilds/stagedfilters withtwo testharness failures, no acceptance rerun."
+  ],
+  "validation": [
+    "One warning-free Windows production build b467d4ad.. from518accepted sources; only affectedprod fingerprint isolated/coreunchanged, canonicalexe hash/mtime restored. ThreeWinechildren exit0 preparecreated/reused/runc70019409\u219220109, old28859nativeblocks loaded.",
+    "All186guards/518sourcehashes exact, artifacthelper0paths; all10counts={\"bus_reads\": 20, \"default_bytes\": 0, \"headers_used\": 1, \"lists_used\": 1, \"placement0_bytes\": 20, \"placement2_bytes\": 0, \"random_bytes\": 0, \"source_bytes\": 20, \"x_bytes\": 10, \"y_bytes\": 10}. Positive roles=['placement0_bytes'], unobserved=['random_bytes', 'placement2_bytes', 'default_bytes']. No newfixture/navigation/checkpoint/metrics or closedmodel-runtime-header-template acceptance replay."
+  ],
+  "limitations": [
+    "One ordinary fullstate-clock/pixel/OAM/dispatch/audio pair next; this window is not all691lists/allroles/allheaders/fullplacementABI/globalarchive or complete ROM_DATA_TODO.",
+    "Linux/USA/nativeWindows/new32:9 pending; no metrics/storage campaign, Android/package, assistantcommit/push. ParallelDebug/userwork preserved."
+  ],
+  "files": [
+    "docs/rom_data_maps.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_maps.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

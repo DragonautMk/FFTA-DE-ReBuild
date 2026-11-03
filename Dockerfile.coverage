@@ -1,0 +1,26 @@
+# Use BuildKit's bundled frontend; no Docker Hub syntax-image lookup is needed.
+# Context is staged by the launchers: committed runtime + current public tools.
+FROM rust:1.94.0-slim-bookworm@sha256:a86cada82e36ebd7a9bffed7548792c55a952fdb20718eea9278a936bcb76e62
+RUN apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        build-essential ca-certificates pkg-config python3 libasound2-dev libudev-dev \
+    && rm -rf /var/lib/apt/lists/*
+WORKDIR /workspace
+COPY runtime.tar /tmp/runtime.tar
+# The archive includes committed scripts embedded by Rust's include_bytes!.
+# Fresh mtimes force Cargo to check these sources against a shared warm cache.
+# Git archive preserves older commit times, which could otherwise reuse WIP bins.
+RUN tar -xmf /tmp/runtime.tar && rm /tmp/runtime.tar
+RUN --mount=type=cache,id=ffta-linux-cargo-registry,target=/usr/local/cargo/registry,sharing=locked \
+    --mount=type=cache,id=ffta-linux-cargo-git,target=/usr/local/cargo/git,sharing=locked \
+    --mount=type=cache,id=ffta-linux-target-amd64,target=/workspace/target,sharing=locked \
+    cargo build --locked --release -p recomp --bin recomp \
+    && cargo build --locked --release -p recomp-core --example rom_code_ranges \
+    && mkdir -p /opt/ffta \
+    && cp target/release/recomp /opt/ffta/recomp \
+    && cp target/release/examples/rom_code_ranges /opt/ffta/rom_code_ranges
+COPY scripts/ scripts/
+COPY docs/ docs/
+ARG COVERAGE_SOURCE_REVISION
+RUN printf '%s\n' "$COVERAGE_SOURCE_REVISION" > /workspace/coverage-source.txt
+ENTRYPOINT ["python3", "/workspace/scripts/rom_coverage.py", "--analyzer", "/opt/ffta/rom_code_ranges", "--extractor", "/opt/ffta/recomp"]

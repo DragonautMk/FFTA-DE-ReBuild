@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "slug": "align-main-with-decomp",
+  "title": "Align local main with decomp without changing local files",
+  "kind": "docs",
+  "platforms": [
+    "Development"
+  ],
+  "changes": [
+    "Moved local main from 124de1f to decomp at 08b89d3; main, decomp and optimizations now share the same commit.",
+    "Created refs/backup/main-before-decomp-2026-10-29 and updated main atomically with expected-old-value and target guards, without checkout or cleanup.",
+    "Documented reference-only alignment for branches not checked out in any worktree."
+  ],
+  "validation": [
+    "Verified all three local branch tips are identical and the recovery reference retains the old main commit.",
+    "Verified the active decomp checkout, implementation diff and all origin/upstream tracking refs remained unchanged."
+  ],
+  "limitations": [
+    "Local references only; no remote push, build or runtime validation was performed."
+  ],
+  "files": [
+    "docs/development/LOCAL_ARTIFACTS.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/development/LOCAL_ARTIFACTS.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

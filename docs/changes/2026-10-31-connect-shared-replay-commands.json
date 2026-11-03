@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "connect-shared-replay-commands",
+  "title": "Connect supervised replay jobs to shared debug commands",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Run the selected replay, audit, capture or comparison profile through the same supervised handler used by the menu, without implicitly opening a selector. Expose worker progress and terminal report, exact-request cancellation, deadline handling, safe retry and a versioned capability; add command completion."
+  ],
+  "validation": [
+    "Isolated locked/offline Windows GNU test and production builds passed with 1514 frozen source files and exact overlays. Wine passed 8 command tests, 27 protocol tests and the focused replay completion case.",
+    "A synthetic Wine/Xvfb session selected profiles by ID and exercised replay passed, capture captured, compare matched and audit diverged with its report. The replay retry returned identical JSON and worker run; an incorrect cancellation ID was refused while replay was pending. The zero-frame main guest and session pins were unchanged.",
+    "Separate Wine/Xvfb runs used a pinned sleeping synthetic child, which does not execute guest code, to confirm exact-ID cancellation produces interrupted/cancelled and server deadline produces interrupted/timeout after a client unacknowledged timeout. The copied source profile metadata and main guest state/frame/clock remained unchanged; owned sessions and displays closed.",
+    "A distinct Wine/Xvfb session submitted replay run in the integrated command panel, observed the synthetic zero-frame replay pass, and copied the identical terminal JSON through an isolated clipboard. Main guest state/frame/clock, source profile metadata and session pins stayed exact; the owned session and display closed."
+  ],
+  "limitations": [
+    "The one-frame real worker finished before the exact cancellation request; cancellation and deadline were validated with a deliberately slow synthetic child, not with a replay actively executing guest frames. Audit reported an actual endpoint divergence rather than a successful match.",
+    "Native Windows, Linux, physical controllers and complete menu/CLI/console parity remain unverified. DBG2-13 through DBG2-28 remain open; no personal replay inputs used."
+  ],
+  "files": [
+    "crates/recomp/src/debug_command.rs",
+    "crates/recomp/src/debug_command/completion.rs",
+    "crates/recomp/src/debug_control.rs",
+    "crates/recomp/src/debug_operations.rs",
+    "crates/recomp/src/play.rs"
+  ],
+  "references": [
+    "docs/debug_control.md",
+    "docs/debug_operations.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

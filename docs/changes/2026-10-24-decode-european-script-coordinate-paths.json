@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "decode-european-script-coordinate-paths",
+  "title": "Model the European script coordinate paths and verify original live-map consumers",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Identify the bounded EUR D68FD4..D69BC4 coordinate source from independent original reader/successor literals:3056bytes,840-byte relative directory/210physical paths,420count bytes,856unsigned XYpairs/1712bytes and42explicit FFalignment spans/84bytes. Keep the source projection distinct from a live index/count/coordinate cap.",
+    "Add a strict lossless script_coordinates source model with typed paths/points/alignment and68script links to56paths. Authenticate actual script-archive/script-command-directory dependencies; preserve command44low8/ignored byte3 versus command45u16 semantics. Original height lookup stays in live RAM, and raw index/destination/count/return arithmetic remains guest work.",
+    "Add one combined Wine source-model/original-reader oracle and only two existing module declaration sites. Document the source/model contract, inventory, TODO and lasting state; e52-d51publication/runtime,47generation files46resources, USAe8-d7 and save/native ABIs remain unchanged."
+  ],
+  "validation": [
+    "Automatic continuation classifies the previous e49ordinary turn as progress/terminal;270source/doc baseline matches except selected handoff checkpoint. All completed e49/e52/source/native/lifecycle/CLI/pair and negative contexts remain closed; no game navigation, fixture creation or old acceptance repeat.",
+    "Independent static reconstruction/hash covers every3056source byte exactly once, all68producer links read from original ROM bytes,194halfword/five-word original reader/producer/live-map/successor fingerprints and disjointness from all46e52resource owners. Actual source SHA256ddf0c11dd5f51bd60c5ce320e7af3ae908a6b92ac8821398da50b58d9feef0f2. The initial command44u16inference is rejected before model implementation: original reads only byte2 and its wrapper truncateslow8; all66canonical ignored bytes happen to be0.",
+    "Windows25513test build is warning-free and freezes the new test executable; no production build or canonical replacement. Wine70105runs exactly the new source-model filter, terminalPASS on first execution with no build/test failure. All independently recorded source fields/hashes/fingerprints/typed JSON roundtrip and24shape-JSON-provenance-dependency guards pass, including coherent full-u8coordinate edits and ignored command44byte3 dependency semantics.",
+    "Original212coordinate-copy calls cover all210paths plus two changed-live-map-height cells. Every complete EWRAM output/count/low8return and callee-saved register matches;2972distinct index/count/XYsource bytes observed at original loadsites,84alignment bytes preserved/hash-checked and unread. Controlled scratch map/arguments are isolated source-oracle setup, without gameplay/save/snapshot patches or new ordinary fixtures.",
+    "Thirteen original raw index/destination prefixes cover u16/u8wrap and210/255/65535; thirteen producer prefixes verify command44byte index/ignored byte/nibbles/task arguments, command45u16 and the secondary callback fixed destination15.40116instructions/134PCs are coverage only, not native/full-state-clock/whole allocator/movement-task/ordinary ABI evidence.",
+    "Preservation verifies all4592prior artifact hashes and472hash-mtime guards unchanged. Before final record/generated changelog,270source/doc baseline differs only two declaration files and five selected documentation files; removing just the new declarations reconstructs both exact prior file hashes. All other prior implementation/e49/e52/models/user Debug-save and concurrent Docker work remain unchanged. Evidence under ignored target/rom-data-script-coordinates/ includes source-contract/static-source-verification/windows-model-build/windows-model-result and windows-model-europe/result.json.",
+    "Generated CHANGELOG and project-memory checks pass both default and --base7597b92; CRLF-aware git diff whitespace check passes. No live unit build/test process. Final273source/doc hashes and preserved artifact map/results are retained as model-final-*.json under the ignored evidence directory."
+  ],
+  "limitations": [
+    "Source/model acceptance is complete for the declared EUR/Wine scope. Managed publication/direct typed runtime/production CLI/positive ordinary use remain later children; no e53generation is published yet. Other154paths lack canonical primary-script producer links, despite all210being accepted by the controlled original reader. No global guest guard or whole movement-task/allocator/native/full-state-clock/ordinary ABI is inferred.",
+    "New Linux/USA/native Windows checks remain pending. No performance/space measurements, Android changes, packaging, agent commit or push. Future ordinary acquisition should reuse existing genuine EUR snowball/transition state/input as a cue for path60, require positive new-family counters and avoid reopening old e49negatives or creating fixtures for context."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/script_coordinates.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/script_coordinates_model_tests.rs",
+    "docs/rom_data_scripts.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_scripts.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md"
+  ]
+}

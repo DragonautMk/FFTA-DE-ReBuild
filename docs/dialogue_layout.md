@@ -16,7 +16,38 @@ coordinates. Its layout depends on the base aspect, window, Size and attachment
 edge; world zoom is not an input. There is no intermediate enlarged UI image.
 GPU and software paths use the same native integer mix against the relocated
 world, then the current color LUT. Pause composes this layer before its overlay.
-UI bypasses world temporal response and pixel-grid filtering intentionally.
+UI bypasses world temporal response. Game UI uses the configured pixel grid
+after native mixing and the color LUT, with the same band-limited apertures as
+the world. Its grid follows the native UI layout and Size, independently of
+world zoom. Grid strength, scaling-mode footprint, the small-scale fade and
+EPX's grid disable rule are shared with the world pass. The FPS overlay remains
+flat; the software fallback and pause-menu canvas retain their no-grid behavior.
+
+## Native HUD grid correction (2026-10-23)
+
+The separate native pass originally applied only integer blending and the LUT,
+so extracted character portraits, battle HUDs and panels lost the Grid effect
+that remained visible on the world. Both GPU passes now assemble the shared
+`crates/screen/src/grid_filter.wgsl` model. Game layers explicitly receive the
+current grid settings; application overlays opt out. Grid neighbours resolve
+their backdrop at each relocated native texel centre. The existing CPU-defined
+coordinate maps, exact transparent-pixel predicate and scissors still determine
+the centre pixel and coverage. Turning Grid off preserves the previous output.
+
+Validation on Windows binaries under Wine: the screen suite passes 44 tests
+(8 optional GPU/window checks ignored); two explicit GPU checks pass for the
+new grid behavior and existing grid-off CPU/GPU parity. The grid check covers
+integer/fractional UI scales, settings changes with cached textures, zero/half/
+full strength, world-zoom independence, transparent coverage, small-scale fade
+and EPX disablement. Native Windows and Android are not validated here.
+Two normal Windows/Wine GUI sessions also pass slot load, resume and window
+close with Grid off/on; inspected battle captures show the lower-left portrait
+and both HUD panels filtered, including at maximum world zoom, while FPS stays
+flat. ROM, source snapshot/save and copied slot hashes are unchanged. An initial
+bounded replay harness instead exited at 601/600 frames; that run is retained
+as failed harness evidence and is not claimed as replay parity or a clean exit.
+The successful normal-play checks do not depend on that harness. No performance
+analysis or packaging was performed.
 
 First migrated profile: measured battle dialogue BG2=0B08 / BG3=0A08 with verified
 terrain and exact regional ROM gates. Other menus retain their existing rendering;
@@ -126,7 +157,7 @@ text, portrait and backing together at their shared screen anchor.
 New regression test publishes an OAM-replacing HostSprite and compares every
 rendered pixel against raw OAM at both edges, three sizes and seven zoom levels.
 It also asserts the portrait bounds against the shared dialogue transform.
-MEDIDO: 158 suite tests passed, 4 ignored. Live user appearance remains to confirm.
+MEASURED: 158 suite tests passed, 4 ignored. Live user appearance remains to confirm.
 
 
 ## Continuation marker and root settings entry
@@ -158,7 +189,7 @@ continues to use the existing left/right edge. Both axes use one uniform factor.
 The continuation marker is excluded when choosing attachment, preventing its
 bounce from moving the entire layer, while the full native screen envelope
 reserves room for its tip. GPU, software and paused backdrop share the layout.
-MEDIDO: same captured scene at Size=110 and 200 percent stays inside vertically;
+MEASURED: same captured scene at Size=110 and 200 percent stays inside vertically;
 100-percent PNG SHA256 remains AAC332A69764523F514F797CA545D5678F6C55140FFD8D326549282621299E6B.
 192 tests passed, 5 ignored. EUR/USA extra=0 framebuffer/OAM unchanged for 600 frames.
 Captures: target/bubble-size-window-before.png (actual window),

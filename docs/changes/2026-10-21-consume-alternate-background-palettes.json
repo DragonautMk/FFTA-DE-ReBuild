@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "date": "2026-10-21",
+  "slug": "consume-alternate-background-palettes",
+  "title": "Read alternate palette literals from authenticated decoded banks",
+  "kind": "added",
+  "platforms": [
+    "Linux",
+    "Windows GNU/Wine"
+  ],
+  "changes": [
+    "Retain immutable typed alternate banks, relative links and exact source control metadata in RuntimeResources. Extend the shared verified decoder with literal encoded/output positions; resolve CPU/DMA/native literal source bytes from fullu16banks, links from typed values and controls from authenticated metadata. Map only exact spans inside fixed verified regional pages; preserve unrelated ROM/padding/mirrors and all original guest instructions/copies/writes/cycles.",
+    "Expose separate alternate file identity and functional bus/source/table/decoded-literal counters. Keep the existing e7-d6files and source/dataset/native/save identities: no new on-disk fields, RtApi/cache revision, HLE shortcut or snapshot schema. Existing restore ownership now also retains the alternate family, with no gameplay I/O or source revalidation.",
+    "Add synthetic core bank-versus-metadata provenance and actual regional original/native poisoned-source tests, independently counted native API literal reads and deleted-file Slots Load/Undo/backup/quick-restart lifecycle. Update current feature/TODO/state/handoff facts."
+  ],
+  "validation": [
+    "Final warning-free release builds; native216core/104runtime and Windows GNU/Wine216core/103runtime pass,7core/31runtime optional ignored each. Targeted new core/codec tests also pass. The core fixture poisons raw source spans plus encoded literal metadata after authentication; reads still use typed banks for both regions, all widths/mirrors/boundaries, native API, DMA and Load/owner/counter preservation.",
+    "Four regional/target original-native producer cases each pass1256calls/2655156guest instructions:157valid IDs, environments1/2/FD/FEand direct/current arguments. Descriptor/table/all314stream ROM spans poisoned; interpreter/register/CPSR/clock/RAM boundaries, full outputs/guards/SP and final complete serialized states equal. Each records143980bus reads,2512typed link bytes and116020decoded literal bytes.",
+    "Translated path includes11767existing interpreter shells across14262dispatches; no entirely-native claim. Native API callbacks count143037asset reads. Separate probes reuse the already compiled components and prove104native asset calls include92decoded literal bank bytes per region/target, with correct full outputs. These directly close the native-bank criterion without rerunning successful producer matrices.",
+    "Four separate regional/target lifecycle cases remove copied dataset files, then pass Slots Load/Undo, backup restore and Restart ROM with the same alternate owner/counters and correct current cartridge bytes. Load of legacy snapshot bytes also preserves the loaded owner.",
+    "Both actual production CLI builds warning-free/canonical hashes restored, mainmtime refreshed. Existing e7read-only reuse and prior TinyCC cache load/dispatch work; interpreter/native legacy-versus-decoded first-frame hashes match. That cold frame reports0alternate reads, so it proves activation/cache compatibility only; positive use is the stronger original/native probe. No old scene/boot fixture replay or performance measurement.",
+    "Ignored target/rom-data-bg-alternate-runtime stores source preimages/hashes, initial/final builds, full suites, four producer reports, independent native-bank/lifecycle logs and actual CLI outputs. All original ROM/canonical/e6data hashes protected. Test expectations were aligned with raw bus byte-offset semantics before final checks; later changes only add test callbacks/lifecycle coverage, with no production workaround."
+  ],
+  "limitations": [
+    "Actual in-game alternate scenes, five FFunavailable record caller preconditions, other catalogs/languages, GUI/archive and native Windows remain open; full ROM_DATA_TODO remains active. The original decoder still executes and the translated path retains normal fallback shells.",
+    "No benchmark/profile/startup/RSS campaign, space reduction, public archive rebuild, AndroidPort change, agent commit or push. Decoded-base equivalence does not authorize mods or altered source data."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/bg_alternate_palettes.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/alternate_palettes.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/alternate_palette_runtime_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data.md",
+    "docs/rom_data_graphics.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

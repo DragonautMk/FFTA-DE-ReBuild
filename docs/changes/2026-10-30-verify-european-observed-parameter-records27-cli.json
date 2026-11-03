@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-10-30",
+  "slug": "verify-european-observed-parameter-records27-cli",
+  "title": "Verify actual European sparse parameter-record CLI registration",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Close actual e89-d88 production CLI create/reuse/neutral-startup registration for gameplay.parameter-records27, index80/two source spans/1593bytes/no dependencies; retain ordinary equivalence as a separate pending criterion."
+  ],
+  "validation": [
+    "One warning-free588-source production buildbd99ac5be727adf1153a28888bb1097d41a504c4041132031fd0bcf6b4c663c8 from identical accepted corrected runtime sources, no overlays; canonical executable hash/mtime restored in finally.",
+    "One Wine orchestration, three childrenexit0: creation/reuse/normal checkpoint copy neutral1 frame24755to24756.82 payloads match runtime, all81 logged ID/hash pairs and84 managed path hashes/mtimes exact, native cache28859blocks unchanged.",
+    "All15 new counters zero at startup; registration/compatibility only, not positive ordinary use.197 input guards/588 CLI and588 runtime source hashes/ROM-original seed-native cache-TinyCC-canonical exact, retention helper0.",
+    "No source/model/runtime/older ordinary proof replay, no navigation/new checkpoint or performance/storage campaign.",
+    "Changelog/metadata and CRLF-aware whitespace pass. Earlier default/base35920d8 checks reported concurrent Debug memory/content-picker record gaps; after their own records were updated, final default/base35920d8 checks pass without CLI/runtime proof replay."
+  ],
+  "limitations": [
+    "Positive ordinary suffix/full state-clock/image/OAM/audio equivalence remains pending.",
+    "Whole catalog extent/unowned indices/full routine ABI/live helpers/effects/indirect references/Linux/USA/native Windows/new32:9/fullROM TODO remain pending.",
+    "Parallel DBG/menu/script/input changes preserved and excluded from frozen production source set."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

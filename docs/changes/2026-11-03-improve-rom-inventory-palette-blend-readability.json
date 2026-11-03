@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "improve-rom-inventory-palette-blend-readability",
+  "title": "Improve palette and blend inventory readability",
+  "kind": "docs",
+  "platforms": [
+    "Desktop development documentation"
+  ],
+  "changes": [
+    "Separate merged words, addresses and counts in palette-effect dispatch, palette program and blend program source, runtime and scene summaries while preserving recorded limits."
+  ],
+  "validation": [
+    "Compared the inventory against its tracked pre-edit version for identical headings, Markdown link targets and inline code spans, and identical digit runs after normalizing three previously documented numeric-boundary clarifications. Confirmed the remainder from task descriptor sources onward is unchanged."
+  ],
+  "limitations": [
+    "Inventory review remains partial from task descriptor sources onward; historical runtime results were not reproduced, and the wider English-first audit remains open."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_INVENTORY.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

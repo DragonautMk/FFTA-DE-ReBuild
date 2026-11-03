@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "date": "2026-10-30",
+  "slug": "connect-debug-runtime-lifecycles",
+  "title": "Connect runtime and tool lifecycles to common debug observations",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU build",
+    "Wine"
+  ],
+  "changes": [
+    "Begin a bounded frontend lifecycle metadata registry with18typed families,16active job identities, retained original request/job context, unobserved-start provenance and throttled changed progress. Detail payloads cap4096bytes with explicit prefix/hash summaries. This core is not yet wired into the frontend.",
+    "Begin typed terminal metadata for existing host script and workbench workers: retain cancellation/timeout/refusal outcomes from the already published result, operation/draft identity and stale-view provenance without rereading files. Existing test-facing run message API and displayed messages remain unchanged. Frontend common-event wiring is still pending.",
+    "Wire the initial shared-control/capture lifecycle and bounded frontend samples, retaining frame/search job context across existing execution ticks. UI/recent lifecycle samples exclude their own event counters and clocks to avoid self-generated progress. Session ROM baseline hashes only at explicit capture start. State/recording/replay/workbench/script/dataset/cache boundary wiring is still pending.",
+    "Wire workbench/script begin/cancel/terminal observations using retained owner context and structured outcomes. Add replay start/progress/result and bounded received preparation records for actual worker dataset attach/native binary load; keep worker timing/order distinct from parent publication.",
+    "Add existing state save/load/undo/restart/backup/restore outcomes before collector discontinuity freeze, input recording start/end/writer metadata, session copy/close intent, direct menu pause/resume and runtime family coverage descriptors. Close does not implicitly export buffers.",
+    "Replay preparation observations are best-effort and never block the existing operation on metadata publication failure. Keep at most8records with bounded details; retain them in progress/final and supervisor fallback. Increase bounded progress/result readers to32KiB for legacy report plus new metadata; no audio callback change.",
+    "Preserve validated pending reply context on control-channel publication errors without changing validation, dispatch or retry behavior. Record reply/completion I/O errors while the original request context is still owned; unknown unparsed inputs remain unassociated."
+  ],
+  "validation": [
+    "Four new core regressions are written for asynchronous context retention/live-job refusal, mailbox job identity, bounded throttled/deduplicated progress and metadata capacity. They are uncompiled and unexecuted; no DBG2-10 acceptance claimed.",
+    "Read actual frontend state/replay/recording/capture handlers, workbench worker/result ownership, replay progress and worker dataset/native load boundaries, and bounded code/gameplay/audio status APIs. No runtime build, guest execution, new fixture or audio callback change.",
+    "Extend the existing late-preset regression to inspect the structured completed/old-view outcome, and add its new Job request member. This is written only; no compilation or execution yet.",
+    "A fifth new core test proves collector lifecycle samples remain unchanged while100common metadata events are accepted, with full synthetic machine state preserved. It and all other DBG2-10 tests remain uncompiled/unexecuted. No expensive command or GUI started for10.",
+    "All wiring above is written but uncompiled/unexecuted. Family coverage currently labels producers instrumented-pending-validation. Remaining pre-build review includes replay cancellation result/overflow provenance, new preparation metadata tests and action/record/state lifecycle targeted integration tests.",
+    "First frozen610source/52overlay Windows test compilation fails at the existing large debug_status json macro recursion limit after adding one field. Split the new lifecycle status assignment from the legacy macro instead of raising the crate limit. Pre-build record selection also omitted the two newly written replay metadata tests; add their path to the selected overlay before retry. No DBG2-10 test or GUI acceptance.",
+    "Split-status compilation reaches type checking and finds two new code errors: the synthetic worker test omitted std::process::Command, and the legacy recording sync error is std::io::Error rather than String. Qualify Command and format the IO error before truncation. Preserve split diagnostics; retry only the same two affected files. No tests/GUI run yet.",
+    "Type-fixed Windows GNU locked/offline build passes warning-free610source/53overlays, runtimebc4860234c2f8d5484180dee20beb66e8f26f16451cdda6b524609968e291d39. Wine9distinct selected cases pass:5new registry/sample cases,2new preparation/failure-retention cases, extended old-view outcome case and affected fanout. The two preparation cases construct new public four-frame synthetic fixtures for their new criteria; no historical fixture restoration.",
+    "Coverage-only production rebuild997bc753acf616600e81074bc8eb8aad9d34f0b4b4ec86b009fc20b8f3a5244d labels implementation hook availability rather than transient validation status; scoped Rust behavior is unchanged and not repeated. Family coverage is18including reserved cheat and explicit report family.",
+    "GUI variant reuses the same accepted closed public seed/ROM/marker, updates only its own runtime pin/label and adds declared readonly recipe/test-double inputs. Initial gameplay-start correctly refuses the synthetic ROM because exact European source is required; preserve refusal/start/end prefix and never bypass that guard.",
+    "GUI runtime-controls records one explicit main-machine frame, one input recording, code/audio/report lifecycle and an explicit saved-slot load restoring the exact initial full state.392UI/294recent rows:291shared events identical,121rolling evictions explain100UI rows before the recent window; one legacy UI timeline-restored row follows the recent freeze. Correct the harness window assumption without repeating the interactions.",
+    "Actual controls capture identifies a metadata bug: Capture::finish returns a directory, but the new terminal field calls it manifest. Keep that original pinned runtime/report as negative evidence; add separate directory and actual recording.json fields. Focused play.rs-only production rebuildb06702d69045a160bae329d9d13d18c8dd0e07df068f089ccd2f7244c1a8e2fa passes warning-free610/53. Path-fix runtime case still pending.",
+    "GUI Undo restores the exact previously checkpointed frame1 full state/registers without executing another frame. Recipe worker completes two readonly status/inspect steps; typed terminal metadata matches its published result with original request/job IDs. Fake Python job survives view exit/reopen, explicit cancel keeps original IDs plus distinct cause_request_id/current_draft=false, result says cancelled and descendant1580is confirmed stopped. Main frame1/full state stays exact during these readonly scopes.",
+    "Replay GUI passes isolated1recorded frame and4retained not-selected dataset/cache phases while parent stays exactly frame1. Its log shows transient existing Windows reply-sharing denials. This concrete10error-correlation gap motivates the readonly publication_context getter and three call-site context/error hooks, plus assertions in the existing separate-query publication retry case. Build only affected play/debug_control files next; completed replay/control/recipe/cancel interactions are not repeated.",
+    "Final focused play/debug_control Windows GNU build passes warning-free610source/53overlays, runtime9f4e87397ef248794f1449b93d72587d5e81708a5a0b1b1238f684ac6b986511. Exactly1affected Wine query publication retry/context test passes; the previous9unchanged cases are not repeated. Primary997GUI is closed with frame1/clock197124/full state and source/variant pins exact. Final9f4path-proof variant is open at frame0/clock0 with collection off; its focused recording-path and publication-error GUI checks remain unrun. The goal service reports paused at resumption; no further operational validation started.",
+    "Final9f4 GUI proof on Wine passes: explicit1frame full state/clock matches prior checkpoint; recording directory and recording.json exist, manifest pins9f4 and contains1frame, with original owner and distinct stop cause. Temporary read-only share lock produces30 local-control publication errors correlated to the actual query ID; retry succeeds.235UI/264recent events,235shared equal, zero evictions/oversize. The old variant was interrupted and its protective lease retained; a distinct variant reused exactly its authenticated public inputs. GUI and own display closed,610frozen sources and both runtime variants verified. Four verified superseded standalone PEs retired with receipt; pinned/current runtimes retained.",
+    "After the Clan Atlas/menu/frontend revision, tracked HEAD918d5bd69730531d525049822fb4539a241b1f17 was separately frozen and built for Windows GNU offline/locked without warnings. Wine10 targeted cases pass. Current GUI explicitly starts/stops a recording from Clan Atlas and performs1controlled step:155UI/187recent,155shared events identical with no evictions/oversize; correct owner/job/stop cause and recording.json runtime pin; complete frame1 state/clock matches prior checkpoint. Current GUI/display closed; source snapshot and runtime/input pins verified; isolated test artifacts and logs retained."
+  ],
+  "limitations": [
+    "Native Windows/Linux, physical controllers/IME, positive private European gameplay and selected dataset/native-input coverage are unverified. The replay test observes not-selected dataset/cache phases; before-frontend extraction/cache compilation and raw audio callback streams remain outside collection; cheat is reserved for future handlers.",
+    "Concurrent ROM and private export work excluded from the isolated current HEAD snapshot and preserved. Original interrupted variant and its protective lease retained. No private game inputs, DS acceptance, package, commit or push."
+  ],
+  "files": [
+    "crates/recomp/src/debug_lifecycle.rs",
+    "crates/recomp/src/debug_tools.rs",
+    "crates/recomp/src/debug_workbench.rs",
+    "crates/recomp/src/debug_workbench/tests.rs",
+    "crates/recomp/src/main.rs",
+    "crates/recomp/src/play.rs",
+    "crates/recomp/src/debug_events.rs",
+    "crates/recomp/src/debug_ui.rs",
+    "crates/recomp/src/debug_recent.rs",
+    "crates/recomp/src/debug_replay.rs",
+    "crates/recomp/src/debug_recording.rs",
+    "crates/recomp/src/debug_replay/tests.rs",
+    "crates/recomp/src/debug_control.rs"
+  ],
+  "references": [
+    "docs/debug_events.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

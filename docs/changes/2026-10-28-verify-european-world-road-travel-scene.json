@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "slug": "verify-european-world-road-travel-scene",
+  "title": "Verify ordinary European sampled-road travel against raw ROM execution",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add a five-line optional sampled-road ordinary guard requiring count/pointer/sample consumption and reporting seven usage fields, preserving the old validator byteexactly after removing the block. Keep prior optional guards intact.",
+    "Close one actual e79-d78normal Giza360road case through complete raw/decoded equivalence, with scoped any-field path usage distinct from everypayload/map/entity/opaqueordinary or globalcatalog proof."
+  ],
+  "validation": [
+    "One warningfree Windows test build 4c453f07.. from506accepted sources with only validator overlay; exact affected test fingerprint isolated/coreunchanged. One Wine360fullpair guest19049\u219219409 matches every full state/clock/classic-central-wide pixel/OAM/native-fallback dispatch/allfiveaudio. All seven counts exactproductionCLI:2976reads5067B=885count2788pointer1394sample0opaque/40paths(anyfield). Dispatch[2006894, 3620371], audio[790020, 790020, 95040, 95040, 789942].",
+    "All100actualguards/506pairsource hashes and180closedCLI guards exact. Artifact completion zero paths; originalROM/cache/loader/normalstate-input/accepteddata/canonicalexe preserved. No newgame/fixture/checkpoint/navigation/guestedit/performance or closedsource-model-runtime-CLIregistration/node acceptance replay."
+  ],
+  "limitations": [
+    "One ordinary case, not all45payloads/maps/entities, opaqueordinary use, fullfacing/pathfinderABI or globalarchive/indexextent. FullROM_DATA_TODO remains active.",
+    "Linux/USA/nativeWindows/new32:9 pending. No performance/storage campaign, Android/package, assistantcommit/push; existinguser/parallelDebug work preserved."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_maps.md",
+    "docs/rom_data_runtime.md",
+    "scripts/README.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_maps.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

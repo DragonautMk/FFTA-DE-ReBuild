@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "date": "2026-10-26",
+  "slug": "authenticate-european-obj-property-getter-callers",
+  "title": "Decode European UI byte property words with original caller validation",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Authenticate the four remaining direct221C4caller argument flows alongside the retained9AD0Epath.0A97A2uses132B90/233A8/CF144u16;0AA4B2uses9B734/actor+34u16. Both supply new property through22DF4while retaining allocation, unlike9ACF8existing-task word reuse.",
+    "Authenticate two UI LDRB inputs, builder low-byte writes, actual tag/animation conditions and property==16 descriptor selection. Select all256byte-input halfword queries before targets without claiming a256spritecatalog, general getter cap or ordinary reachability.",
+    "Retain184shared words:182existing actor-property words and two words from the existing four palette slice-offset bytes. Define only the72-word/144B unowned complement in four disjoint ranges, with both existing owners as proposed model dependencies.",
+    "Add a strict lossless72word model of the unowned byte-input complement. Cross-validation with existing propertywords and colorpalettes closes exactly256queries without duplicate sources or copied shared values; original getter and task execution stay guest work."
+  ],
+  "validation": [
+    "Static producer contract passes680halfword/25BL/21literal-controlflow pins, including original function entries, dispatch cells, widths and producer/consumer edges. Reuse completed five-call census SHA256d0adc2c28fdf84b70e981022f950edb0b97de364f9c4ba151b8385cb186dc297. No raw getter ARM/Thumb address occurrences; computed indirect call graph unproved.",
+    "All62current resource files and source hashes authenticate before256target queries. Existing property and palette models independently reconstruct all shared words. New ranges394CF4/2,394CFE/2,394D0C/128,394E08/12 total144B, SHA2569d1239cc29ec40185c1605aed84b4cf74cedbc21cc217c001efb8348407253f9; every rawu16 pattern retained.",
+    "Two private source-audit preconditions required correction: expected role spelling differed from accepted manifest, then the audit stopped for the existing palette owner at inputs248/249. Reviewed and retained both aliases rather than dropping queries or duplicating ownership. The preselected256-input domain did not change or depend on target word values.",
+    "No build, guest execution, fixture/navigation run, old acceptance replay or performance/storage measurement in this source-only unit. Original ROM, current resource generation and closed source/ordinary evidence remain read-only.",
+    "Source closure: all379baseline source hashes show implementation unchanged; all70active input hashes/mtimes and399decoded local feature links pass. Reuse closed ordinary/CLI/runtime/model/private proofs without an11481legacyartifact campaign. Project-memory default/base4196542and CRLF-aware whitespace checks pass.",
+    "First affected Windows frontend test build passes warning-free, frozen627cd7f49daa71e593fa3fc472e750f4f51a0f97df1410fa728c6af7d1b83f5b. First exact new Wine filter passes14shape/source/sharedguards,512originalUIbranchprefixes/all512readB, eightskip-prefixes with no property read, foursyntheticfull-u16comparisons, fourbuilderbytewriterprefixes andsixprefixes of the two additional existing-task setters. WholeRAMoutside declaredstack/context/task destinations plusVRAM/OAM/palette pass.",
+    "All109build/110Wineactive hash-mtime guards and13compiled input preimages remain exact. Accepted modelJSONSHA256ac6a296a97a3d27d77379086db8aecd61fc104d6f2dde6fda31a0e8bd53bf675. Existing182word/source/runtime/ordinary proof acceptances stay closed and are not replayed. No failed build/test retry; private Wine-runner syntax preflight corrected before the first guest launch.",
+    "Model closure: all380baseline source hashes confirm only two new modules and two exact hub insertions; the previous optional ordinary guard and all other implementation remain unchanged. All110active Wine guards/13compiled preimages/559decoded local feature links pass. New private evidence is ignored and untracked; earlier11481private proof is reused without a whole legacy rehash.",
+    "Project-memory default and base4196542, rustfmt on the two new modules only, and CRLF-aware whitespace checks pass. No live unit process, production executable/cache mutation, old acceptance replay or performance measurement."
+  ],
+  "limitations": [
+    "Source contract and model/original Wine oracle closed for the new72words. Managed/runtime/CLI/ordinary consumption remain pending. EUR e67-d66 and USAe8-d7 unchanged. Prefixes do not prove fullUI/allocator/actorABI/native-clock or normal gameplay reachability.",
+    "The width-derived UI address window is not a sprite catalog extent or proof every byte input appears in normal gameplay. D0568producer table extent and selected descriptors remain separate sources. Unknown u16/sentinel/changedactor/globalidentity/computedindirect cases and knownFFFFraw6B remain separate.",
+    "Linux/USA/nativeWindows/new32:9 checks remain pending. No Android, packaging, private payload edit, commit or push. Concurrent user4196542and uncommitted ordinary guard/documentation preserved; coverage task stays closed."
+  ],
+  "files": [
+    "docs/rom_data_unit_obj.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "crates/gba-core/src/rom_data/unit_obj_byte_property_words.rs",
+    "crates/recomp/src/rom_data/unit_obj_byte_property_words_model_tests.rs",
+    "crates/gba-core/src/rom_data.rs",
+    "crates/recomp/src/rom_data.rs",
+    "docs/rom_data.md"
+  ],
+  "references": [
+    "docs/rom_data_unit_obj.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

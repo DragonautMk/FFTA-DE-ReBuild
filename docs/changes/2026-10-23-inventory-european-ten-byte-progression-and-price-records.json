@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "inventory-european-ten-byte-progression-and-price-records",
+  "title": "Identify European ten-byte progression deltas and price discount records",
+  "kind": "docs",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Record exact100normal records/1000B6e79da..6e7dc2 from original literal/indexed/default paths and normal live index0..99producer. Reject candidate101whole rows/adjacency as ownership proof;12zero bytes before independent6e7dce stay unowned,01A5A6isdisplay notsetter evidence.",
+    "Distinguish eightu8deltas feeding original04870c live level/progress/flags from byte08price discount and unusedbyte09. Preserve original u8wrap/carry/cap99/invalid-oldlevel behavior and price u8mode/u16item/flag gate/optional+10wrap/signeddivision/unsignedminimum/zero->1. Parsed Items base confirmed, no storedforeignkeys/skill names inferred."
+  ],
+  "validation": [
+    "Cheap exactEUR original roots/nextroot/stride/index-gates/field-consumer/price opcodes,1000Breconstruction/noe34overlap pass using independent ignored inventory. No new model/build/Wine runtime check, old proof repeat or performance/space measurement for this static unit.",
+    "Currente34-d33/29files/28resources and USAe8-d7unchanged. External HEAD26409f7prior e31/e32/e33work commit inspected; currentEvaldiff preserved without agent commit/push. Structured feature/state/inventory/TODO/handoff/changelog and memory/whitespace checks recorded."
+  ],
+  "limitations": [
+    "Model/original publisher-delta-price oracle/managed-runtime/lifecycle/ordinaryuse remain pending. Specific skill labels/global initialization/invalid indexpreconditions and12Btail meaning unproved; original raw out-of-range access remains unchanged.",
+    "NewLinux/USA/nativeWindows and broader remaining TODO remain pending; no AndroidPort change or private ROM/data/fixture publication."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/MEMORY_WORKFLOW.md"
+  ]
+}

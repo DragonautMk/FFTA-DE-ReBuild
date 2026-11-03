@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "slug": "link-rom-coverage-to-scene-audits",
+  "title": "Link ROM coverage to bounded scene read audits",
+  "kind": "added",
+  "platforms": [
+    "Docker/Linux; offline HTML; PowerShell mocked on Linux"
+  ],
+  "changes": [
+    "Import explicit DBG06 metadata-only audit reports into schema3 ROM coverage. Reconstruct and validate physical unions from retained events, mirror/width/filter/window/service/request/drop invariants and same-ROM identity; correlate resources against the authenticated selected atlas manifest, without promoting ownership or DS acceptance.",
+    "Separate observed bytes, actual Typed/Raw service and cross-case sharing from authenticated runtime availability, historical positive-family extents, static shared references, speculative code and unknown regions. Deduplicate repeated inputs and multiple runs; bound files/events and omit private paths, raw events and unknown payload fields.",
+    "Add per-audit browser selection, region/resource/scene/evidence drilldown, collector and truncation/partial limits. Compare dated same-ROM generations including hashes, commits, changed audit selection and added/removed intervals even with equal byte totals.",
+    "Extend both Docker launchers with explicit readonly audit/comparison mounts, keeping private files outside image/context and preserving host Python-free operation, runtime source isolation and failed-output behavior."
+  ],
+  "validation": [
+    "26 ROM-free generator/import tests and eight Bash launcher tests pass, including independent physical-byte sets, overlapping service domains, repeated requests/mirrors, case sharing, malformed/mismatched metadata, bounded inputs, partial/truncated evidence, metadata whitelist and explicit comparison failure preserving both existing outputs.",
+    "Twelve PowerShell7.4.6 checks pass in a network-disabled Linux container with mocked Docker, including array arguments, spaced readonly mounts, missing inputs, failure propagation and versioned OpenReport URL. Native Windows/PowerShell5.1/Docker Desktop remain unverified.",
+    "Real Docker launcher on committed7691a93 imports three retained DS20 audit reports with the explicit already authenticated e76-d75 dataset. Union31061B with the full report marked truncated; two complete short reports each12416B; typed short11495B Typed/997B Raw overlap76B. No gameplay replay or dataset extraction is performed.",
+    "Chrome headless interaction checks pass at1400/620px: selection unions, service overlap, same-case nonsharing, resource byte counts/evidence links, identity/date comparison, offset bounds and no horizontal overflow. Tall viewport screenshots are visually inspected; blank post-scroll screenshot attempts are a retained harness limitation, not a product failure.",
+    "Final Docker image matches all four current generator/template modules and contains no private ROM/save/recording/library payloads. Missing-audit generation and repeat produce an explicit unavailable inventory, fresh HTML and unchanged feedback; wrong-ROM audit and comparison both fail with existing HTML/JSON hashes and mtimes preserved.",
+    "Independent reconstruction of retained event byte sets and all68resource intersections matches the final canonical HTML/JSON; all prior static/historical layers remain unchanged. All75 selected original input hash-mtimes, including the existing dataset, three reports, ROM and both production runtimes, are unchanged. Final generated timestamp2026-10-28T10:33:24.343936+00:00; browser QA checks the actual published HTML and separate no-audit output.",
+    "A concurrent actor advanced HEAD to7691a93 during development, including partial tool files. This unit issued no commit. Image source identity is fixed to7691a93/e79; explicit e76 inputs stay separate from ongoing encounter-header extraction.",
+    "Final workspace and base2fbf9f7 project-memory checks and git diff --check pass after the concurrent extraction unit supplied its own record. 401 local document links and exactly DBG01-07 checked tools pass; personal debug_saves stays ignored/untracked. Retired 7 disposable exited Chrome profiles (32589660B) with a local cleanup receipt, retaining metadata reports, logs, screenshots and failed harness evidence."
+  ],
+  "limitations": [
+    "Only schema1 DBG06 reports and the six declared current-thread collectors are supported; frame/address/preset filters, missing hooks, fetch exclusions, native folded constants and dropped events remain lower-bound evidence. Report fingerprints and self-reported outcomes do not authenticate new scene acceptance.",
+    "Validation deliberately reuses the e76 snapshot while the committed extractor is e79. The HTML labels the historical dataset; old native-parity and extraction acceptances remain closed. No normal runtime replacement, Android, Godot, game-data publication, commit or push is performed by this unit."
+  ],
+  "files": [
+    "scripts/rom_coverage.py",
+    "scripts/rom_coverage_audit.py",
+    "scripts/rom_coverage_ranges.py",
+    "scripts/rom_coverage.html",
+    "scripts/test_rom_coverage.py",
+    "scripts/test_rom_coverage_audit.py",
+    "scripts/tests/test_rom_coverage_docker.py",
+    "scripts/linux/rom_coverage_docker.sh",
+    "scripts/windows/rom_coverage_docker.ps1",
+    "docs/development/ROM_COVERAGE.md",
+    "docs/debug_rom_audit.md",
+    "docs/docker.md",
+    "scripts/README.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md",
+    "docs/development/rom-coverage/index.html",
+    "docs/development/rom-coverage/coverage.json"
+  ],
+  "references": [
+    "docs/development/ROM_COVERAGE.md",
+    "docs/debug_rom_audit.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ]
+}

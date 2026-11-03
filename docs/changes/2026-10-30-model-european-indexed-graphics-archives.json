@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "date": "2026-10-30",
+  "slug": "model-european-indexed-graphics-archives",
+  "title": "Model European indexed graphics and verify original archive decoding",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add strict typed mode0width5 archive/program/literal-dictionary packet storage with exact BE source layout/raw dictionary prefixes/decoded LEwords, independently validated shape and authenticated EUR source.",
+    "Preserve rawlanguage pointer address queries separately from physical five-slot ownership, and mirror original low16start-count selection/zero-oversize count/remaining clamp/invalid-start behavior."
+  ],
+  "validation": [
+    "One warningfree595frozen-source/257core-input Windows GNU core build d78a74d90bbcbc8b3fa7b6584da118797bbbf7ed64975e6ec07ceed1172023c9 from accepted593ordinary snapshot+twoleaves/onepubmodule; parallel frontend/container/package changes excluded.",
+    "One focused Wine filter PASS37guards/20complete archive calls covering649programs/278336decodedB,9start-count boundary cases,9isolated synthetic streams and28rawlanguage selector suffixes; all74907sourceB/24spans match independent accepted model.",
+    "Actual wrapper output/status/globals/SP-R4..R11/complete EWRAM and IWRAM outside original68B stack scratch/VRAM-OAM-palette/finalROM exact.5993129instructions are coverage only.",
+    "26unit121source hashmtimeguards/593accepted source preimages/threecurrent paths/inversehub exact; no oldsource-model-native-CLI-ordinary acceptance/fixture/navigation/performance replay."
+  ],
+  "limitations": [
+    "Managed publication/runtime/nativeclock/actualCLI/ordinary use remain pending; schema1/e90-d89 unchanged.",
+    "Host model is scoped to declared mode0width5; mode3/widerwidth/fulluniversalABI/liveuploads/other16nearbygroups/globalextent/indirectaliases/tails/opaquecontexts remain unverified.",
+    "Linux/USA/nativeWindows/new32:9/mod phases/fullROMTODO remain pending; sparse27ordinary remains partial."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/indexed_graphics.rs",
+    "crates/gba-core/src/rom_data/indexed_graphics/tests.rs",
+    "docs/rom_data_indexed_graphics.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_indexed_graphics.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

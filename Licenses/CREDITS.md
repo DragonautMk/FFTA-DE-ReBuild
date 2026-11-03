@@ -2,7 +2,8 @@
 
 | Component | Credit / upstream | License / distribution |
 | --- | --- | --- |
-| FFTARecomp changes | Jorge.R and contributors | MIT; see LICENSE |
+| This fork’s original contributions | Michele Savarese and contributors | MIT; see LICENSE |
+| Original FFTARecomp changes | [Jorge.R and contributors](https://github.com/Jorge262007/FFTARecomp) | MIT; original copyright notice retained in LICENSE |
 | gba-recomp foundation | [JRickey](https://github.com/JRickey/gba-recomp) | MIT OR Apache-2.0; original notices retained in LICENSE-MIT and LICENSE-APACHE |
 | gamedb.sqlite | JRickey | CC0-1.0; function addresses, lengths, modes and names only; see gamedb.sqlite.license and LICENSE-CC0 |
 | Gamepad abstraction | [GilRs project](https://gitlab.com/gilrs-project/gilrs) | MIT OR Apache-2.0; see THIRD_PARTY_NOTICES.md |

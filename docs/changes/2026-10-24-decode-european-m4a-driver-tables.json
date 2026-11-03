@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "decode-european-m4a-driver-tables",
+  "title": "Decode European M4A driver pitch, rate, noise and volume tables without changing original aliases",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Inventory seven independently referenced adjacent tables370b20..370d04/484B, disjoint from all37e43owners:180packedPCMkeys/12u32bases/12u16samplecounts/132packedCGBkeys/12i16bases/60noise codes/16wavevolume codes. Preserve exact nibble fields, signedness, opaque bits, source offsets and table/index identities in a strict lossless model.",
+    "Add diagnostic original-integer PCMunsigned-multiply-high/CGBsigned-ASR/noise and directsample lookup helpers, preserving low8truncation/clamps/interpolation and selector0/13..15internal aliases. PubliczeroSoundMode skip stays separate; higher livevolume indices remain adjacent-owner/raw reads, not guest bounds. Validate the actual neighboring sequence command/clock owner. Managed extraction remains e43-d42/USAe8-d7; no hostmixer rewrite."
+  ],
+  "validation": [
+    "Windows87853test build warning-free; onefocused Wine60589model/original-reader check passes allindependent fields/sevenhashes/source-JSONroundtrip/15shape-JSONguards/coherent signedi16base and unsignedunused-volumebit edits/actualsequence boundary owner.1138neworiginal probes pass541PCMfullreturns/300tonalCGBfullreturns/259noisefullreturns/18sample-countprefixes/19volumeprefixes/1publiczero-frequencyfullreturn.",
+    "Predicted EWRAM read-only or prefixwrites/SP/callee/outside-stack guards pass. Observed original load sites read all484distinct ownedB and three outside aliases370d04/370d34/370df3; Thumb-to-ARM unsignedUMULLhelper executes.52869instructions/189PCs are coverage only, not fullSoundModeinit/CGBmixer/state-clock/native/ordinary acceptance.",
+    "No build/Wine failure;879protected input/evidence files unchanged. Closedsource404/native35/e43ordinary400/tone277and older proofs not rerun. Private target/rom-data-audio-driver/{driver-independent.json,inventory-driver.py,new-reader-callers.json,*.txt,windows-model-tests.*,windows-model-{result.json,log},recomp-tests-model.exe,windows-model-europe/{audio-driver-tables,result}.json,source-protected.json} retains new evidence.",
+    "Final static review finds balanced-route149640branch skips cap15at14964c, correcting initial unconditional producer-domain inference. Windows59773warning-free/Wine27372only8new original gainfullreturns pass routing masks/levels16-23-31/sustain/exactEWRAM-SP-callee-outside8Bstack.290instructions/52PCs coverageonly; no newtable bytes, no production/model change or1138repeat. Ordinaryreachability/global16-domain unproved; physical16table and adjacent aliases remain valid. Metadata/docs and gain-contract-correction.json retain corrected contract.",
+    "Final project-memory including --base7597b92and CRLF-aware whitespace checks pass; 917protected hashes unchanged, model-final-summary/model-final-protected retained. Original1138test source unchanged in gain build, no repeat or production/model correction; all unit jobs terminal. Fullgoal remains active."
+  ],
+  "limitations": [
+    "Managed publication with actual sequence boundary dependency, typed CPU-DMA-native/generic-host consumption/lifecycle and newpositive ordinary fullstate-clock-image-audio acceptance remain pending. Direct diagnostics are not runtime replacements or new index guards; physical samplecounts1..12 and volume0..15 do not redefine original behavior outside them. Balanced live gain inputs can produce volume indices above15; only single-sided routing clamps15, and global ordinary16-domain is not established.",
+    "Other FFTAaudio wrapper roots370eb0/b94690/unselectedassets/otherfamilies/GUI-archive-modTODO and newLinux/USA/nativeWindows remain open. No performance/space/AndroidPort work, asset publication or agentcommit-push; prior and concurrent Debug-save work preserved."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/audio_driver.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/audio_driver_model_tests.rs",
+    "docs/rom_data_audio.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_audio.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

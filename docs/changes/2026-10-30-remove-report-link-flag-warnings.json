@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-10-30",
+  "slug": "remove-report-link-flag-warnings",
+  "title": "Remove platform-dependent report directory warnings",
+  "kind": "fixed",
+  "platforms": [
+    "Linux and Windows Rust conditional compilation"
+  ],
+  "changes": [
+    "Replace mutable link flags with immutable bindings and Windows-only shadowing in recent-event and issue-report output checks, removing Linux unused_mut warnings while retaining symlink, reparse-point and non-directory rejection."
+  ],
+  "validation": [
+    "Compiled the exact edited metadata-check blocks with rustc --emit=metadata -Dwarnings for x86_64-unknown-linux-gnu and x86_64-pc-windows-gnu; both passed without diagnostics.",
+    "Compared retained preimages and confirmed all source bytes outside the two binding blocks are unchanged."
+  ],
+  "limitations": [
+    "This was a compiler-only check of the edited blocks, not a full application/Docker build or a new report/runtime test. Existing report behavior acceptance was not rerun."
+  ],
+  "files": [
+    "crates/recomp/src/debug_recent.rs",
+    "crates/recomp/src/debug_issue.rs"
+  ],
+  "references": [
+    "docs/debug_recent.md",
+    "docs/debug_issues.md"
+  ]
+}

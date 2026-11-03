@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "date": "2026-10-30",
+  "slug": "consume-european-indexed-graphics-archives",
+  "title": "Consume typed European indexed graphics archive source bytes",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Register graphics.indexed-archives at e91-d90/index82/indexed-graphics.json with24source spans/74907B,84files83resources and no dependencies; preserve all82 prior resource records/payloads.",
+    "Build immutable source views from typed headers/indexes/literal-dictionary packets and raw dictionary prefixes, compose prior/raw borders, and expose seven source classes/twelve usage counters/20archive649program4group masks while preserving original guest decode/upload work and ABI."
+  ],
+  "validation": [
+    "First597source hosttest compilation fails solelymissingBus trait import; corrected597source/258core-input build0732b3b90cd1fffb4f1cbabac1ef0d21c1c1ca702c143591d7c0de37a9638261 warningfree with onlytestimport changed/production unchanged. Both snapshots/first diagnostics preserved.",
+    "One reduced Wine filter PASS publication/interruption/14attach2fullset guards and35fullstate-clock raw-typed-native cases:28controlledloads/oneoriginal oneprogram0537C wrapper/sixrawlanguage suffixes,three stop-safe nativefamilies;272served newB/four priorworldB/fallback[1,0],notdistinctunion/alldirectnative.232visitedinstructions59dispatch coverageonly.",
+    "All74907sourceB/sevenclasses20archives649programs4groups/all24spanedges-widths-mirrors/priorworld+rawgap/LoadslotUndo and three64B mixed DMA-CpuSet-FastSet complete-state-clock cases PASS.",
+    "282hashmtimeguards/597accepted597diagnostic/595model/sevencurrent83prior preserved, authoritativeaccepted-selection.json; no oldsource-model-native-CLI-ordinary acceptance/fixture/navigation/performance replay.",
+    "Final project-memory default/base35920d8/metadata and CRLF-aware diff checks all PASS. Earlier parallel recording/replay implementation and test coverage gaps are resolved by their own records; no ROM attribution or runtime proof replay. Accepted and diagnostic evidence retained by the artifact helper."
+  ],
+  "limitations": [
+    "Actual productionCLI creation/reuse/startup and positive ordinary gameplay remain pending.",
+    "Other16nearbygroups/globalextent/indirectaliases/tails/opaquecontexts/mode3-widerwidth/fulluniversalABI/liveuploads and mod phases remain unverified.",
+    "Linux/USA/nativeWindows/new32:9/fullROMTODO remain pending; sparse27ordinary remains partial. Parallel DBG/menu/container/package work preserved and excluded."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/indexed_graphics.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/indexed_graphics_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "scripts/extract_rom_data.py",
+    "docs/rom_data_indexed_graphics.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_indexed_graphics.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

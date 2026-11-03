@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "date": "2026-10-21",
+  "slug": "prepare-alternate-background-palettes",
+  "title": "Prepare and authenticate complete alternate background palette datasets",
+  "kind": "added",
+  "platforms": [
+    "Linux",
+    "Windows GNU/Wine"
+  ],
+  "changes": [
+    "Extend deterministic managed extraction/verification/preparation with fixed bg-alternate-palettes.json, two157-key fullu16bank catalogs, original relative links/162descriptor keys and exact custom-codec source metadata. Manifest includes two314Blink tables and314stream provenance ranges, a descriptor dependency and the fourth resource identity.",
+    "Advance schema/extractor/decoder to1/7/6 and immutable v1/e7-d6 generations, retaining e6and prior namespaces. Write/sync/read back/authenticate all five files before atomic publication; no-write valid reuse, corruption/missing-file repair, cancellation/process-death and partial late-file write behavior retain the prior commit. Input guards256KiBmanifest/16KiBOBJ/256KiBBG/1MiBbase/4MiBalternate/5MiBtotal keep standard readable JSON without packing/space tuning.",
+    "Whole-set activation validates alternates and incorporates every file hash/ID into dataset identity before replacing the current owner. Forged banks, equivalent re-encoding, keys/links/paths/hashes and missing data are refused transactionally; whitespace-equivalent JSON changes complete identity while preserving OBJ/BG/base identities and snapshot bytes. Report alternate runtime=verified-only until actual consumer migration.",
+    "Extend existing fixture, input guards, partial-write, copied-file Load/Undo/backup/restart helpers and regional tests for the new complete set; update feature/TODO/state/handoff documentation."
+  ],
+  "validation": [
+    "Warning-free Linux/Windows release tests and production CLI builds. Native2core extraction+10file+11preparation default tests pass; Wine2+9+10pass (Unix-only symlink cases explain differences). Checks include fixed paths/unknown fields, forged source/encoded representation, missing/duplicate keys/resources, individual/total bounds,4concurrent publishers/preparers, cancellation and3forced child deaths.",
+    "Four private checks per target pass: new USA/EURmanaged authentication/identity/create-reuse-corrupt+missing repair/move with actual e6retention; existing regional Load/Undo/backup file lifecycle; USAandEURcurrent resource-owner restart/backup after files disappear. Initial forged probe re-encoded into a longer stream and correctly hit overlap validation; helper changed to a same-extent coherent edit, only that new private criterion repeated. Failed artifacts retained; no production workaround.",
+    "Actual native and Wine CLI pass23checks each from unrelated cwd: regional extract/no-write reuse/verify, prior e6refusal+retention, prepare/cached reuse, alternate corruption/missing recovery, invalid offline verify/extract refusal without overwrite, root move/reuse. All five files match across targets; OBJ/BG/base files equal prior e6. Standard alternate JSON1387839B; complete source sets2128729USA/2128735EURB, manifest77565/77571B. These are logical-file facts, no performance or space-optimization campaign.",
+    "Protected original ROMs/canonical runtimes/e6datasets unchanged. Production executables restored by SHA256 and main source mtime refreshed for Cargo. Final edits after builds only adjust tests/formatting, no functional production change. Ignored target/rom-data-bg-alternate-managed holds source/protected manifests, failed/repaired test logs, private results and actual CLI observations."
+  ],
+  "limitations": [
+    "Actual alternate guest/native decoded-data consumption remains the next04unit; preparation/authentication alone is not source-use proof. Existing OBJ/BG/base consumers retained, snapshot/native ABI unchanged. Five FFcaller preconditions, other catalogs/languages, GUI/archive and native Windows remain separate.",
+    "No benchmark/profile/startup/RSS measurement, space reduction, public archive rebuild, AndroidPort change, agent commit or push. Full ROM_DATA_TODO remains active."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/preparation.rs",
+    "crates/recomp/src/rom_data/alternate_palette_data_tests.rs",
+    "crates/recomp/src/rom_data/managed_tests.rs",
+    "crates/recomp/src/rom_data/palette_data_tests.rs",
+    "crates/recomp/src/rom_data/bg_runtime_tests.rs",
+    "crates/recomp/src/rom_data/palette_runtime_tests.rs",
+    "crates/recomp/src/save_backups.rs"
+  ],
+  "references": [
+    "docs/rom_data.md",
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

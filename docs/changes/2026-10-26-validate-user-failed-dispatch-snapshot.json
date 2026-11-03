@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-10-26",
+  "slug": "validate-user-failed-dispatch-snapshot",
+  "title": "Validate and organize the user EUR failed-dispatch snapshot as DS-20",
+  "kind": "added",
+  "platforms": [
+    "Windows/Wine"
+  ],
+  "changes": [
+    "Rename/move the supplied root slot-4.ffstate to ignored debug_saves/DS-20-spedizione-fallita-EUR.ffstate, preserving every byte and its original SHA-256. Publish an identical copy in the EUR Save states slot20 family and record original name, relocation, ROM/BIOS identity and evidence scope in the local catalog.",
+    "Validate DS-20 through the actual failed dispatched-unit return after fleeing the battle, rather than counting the Defeat banner alone. Update the stable26-case checklist and catalog to18validated/6partial/2uncovered; only DS03clan-threshold prize and DS15alternative objective remain uncovered.",
+    "Add one ordinary nearer precursor after flee/Defeat and before map/Polly return, under EUR/variants and direct EUR slot65. Keep all133previous ready artifacts unchanged, including existing USA variants51\u201364; all game/save data remains ignored and outside packages."
+  ],
+  "validation": [
+    "The new preview envelope, raw-core payload checksum, format1, exact EUR ROM SHA and zero-BIOS/HLE identity pass. Frozen replay helper SHA52e8e5ed... matches retained build evidence; no application/helper build or unrelated accepted scene test is repeated.",
+    "Four selected replay runs complete exit0 and export/reload their ordinary checkpoints. No cancels the flee prompt; Left/A confirms Yes, then Defeat/fade/map lead to Polly reporting failure. Confirming shows the dispatched-unit-return report; a separate unsuccessful Sigmund mission report is observed. The generic completed-mission report heading is not interpreted as success or rewards.",
+    "Isolated frozen Windows/Wine GUI loads the exact user snapshot from numeric slot20, confirms flee through normal keyboard controls, reaches the Polly failure message and returned-unit report, then closes normally exit0. Only its working copied cartridge may be flushed; imported IN07 scratch source, ROM, executable and original snapshot hashes are preserved. Diagnostic temporary GUI slot21 remains local test evidence, not a published fixture.",
+    "Final collection verification passes136artifact hashes including104snapshot envelope/core checks, all133prior artifacts unchanged,28original container hashes, exact moved-source/main-slot20 identity,26catalog/TODO statuses and9local feature links. All171debug_saves files are ignored and zero are tracked. The user source original path is absent exactly through the authorized move; its descriptive master has the same SHA.",
+    "Project-memory coverage and whitespace checks pass. Concurrent script-special-normal runtime implementation and its handoff selection remain separate work; no new ROM-coverage generation, gameplay campaign, performance/audio/equivalence acceptance, commit or push is performed."
+  ],
+  "limitations": [
+    "This validates the observed failed return of Polly, not every dispatch, participant or failure condition. The snapshot starts at a flee confirmation defaulting to No; choose Left/A and wait through Defeat and map transition. Slot65 omits that lead-in.",
+    "Native Windows hardware, physical controllers, Linux/Android gameplay, complete-state/audio equivalence and performance are not established. Snapshot loads restore SRAM, so GUI validation uses a private working cartridge; no new standard save is published."
+  ],
+  "files": [
+    "docs/development/debug saves.md",
+    "docs/extended_saves.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/development/debug saves.md",
+    "docs/extended_saves.md",
+    "docs/changes/2026-10-23-audit-imported-debug-saves.json"
+  ]
+}

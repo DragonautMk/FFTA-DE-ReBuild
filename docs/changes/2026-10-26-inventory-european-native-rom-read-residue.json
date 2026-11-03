@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-10-26",
+  "slug": "inventory-european-native-rom-read-residue",
+  "title": "Inventory European native ROM API reads outside current source plans",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add an opt-in ignored frontend test that wraps a copied native block table and read8/read16/read32 API to record unique ROM address/context reads outside authenticated manifest source intervals. Keep production dispatcher, C API, owners, revisions and save formats unchanged."
+  ],
+  "validation": [
+    "One Windows frontend test build succeeds without warnings; one Wine filter passes twelve existing Bank frames, guest3660 through3672, comparing every complete Machine/clock, central and wide framebuffer, OAM, native/fallback dispatch and all five audio streams including HLE float bits.",
+    "The accepted e71-d70/65-resource dataset yields20756 merged source intervals.3166 unique context reads cover3683 physical ROM bytes;198context reads include676unowned bytes in79observed contiguous ranges. Five high-offset words are leads requiring reader/domain authentication, not exported assets.",
+    "All73selected input hash/mtime guards pass. Exact hub delta is one cfg(test) module declaration; main, C API, old validators, ROM, original/copy checkpoints, input, cache, TinyCC, canonical executable and all66accepted dataset files remain unchanged. No previous acceptance replay or new fixture/navigation/performance measurement.",
+    "Required local artifact completion helper succeeds with zero disposable paths; accepted data, current executable, source preimages and proof logs remain available. Parallel user documentation/artifact-retention edits are preserved and not attributed to this change.",
+    "Second existing EUR F09sample reuses the same frozen executable without build: one Wine filter/12frames8476through8488 passes every fullstate-clock/buffer/OAM/dispatch/audio comparison.13671context reads/13961imageB include604unownedB;584overlap Bank,20newB/five words have static PC-relative Thumb witnesses/20halfwords.76actual input hash-mtime guards and compiled implementation hashes exact; retention helper succeeds zero paths. No old F09resource-equivalence acceptance, new fixture/navigation or performance measurement."
+  ],
+  "limitations": [
+    "Native API requests beginning within the physical ROM image only; interpreter fallback, host/HLE/direct DMA, folded constants, cross-region requests starting outside ROM and other scenes are blind spots. Exported PC can be stale and outer dispatch is not a proven instruction site.",
+    "Unowned observed bytes and adjacent coverage are source leads only: no asset semantics, extent, reachability or whole-ROM migration completeness is inferred. No extractor/decoder revision change.",
+    "Linux, USA, native Windows and new32:9 remain pending. Full ROM_DATA_TODO remains active.",
+    "Two-scene unowned source-address union696B still outside managed source plans. Static source witnesses and reused address classification are not exact dynamic instruction/mode or all-use evidence."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/native_rom_data_residue_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

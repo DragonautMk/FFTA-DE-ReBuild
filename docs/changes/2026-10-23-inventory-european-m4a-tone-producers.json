@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "inventory-european-m4a-tone-producers",
+  "title": "Prove European M4A tone producers, mapped selectors and signed PCM endpoints",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Add a focused private original-reader oracle and document a producer-bounded source plan beyond the e41directory:1610track graphs/177047consumed bytes/390bank-program pairs/429canonical tones/347keymap bytes/277PCM waves plus two CGB sources. The shared production parser/model/publication/runtime remain pending; e41-d40and USAe8-d7stay unchanged.",
+    "Preserve the patched live command table, discrete program/key domains, one shared map byte, the existing4B directory-wave alias and276extra interpolation endpoints. Reject a generic128keymap sweep as ownership proof; fixed8following byte remains unowned."
+  ],
+  "validation": [
+    "Exact EUR source and7literal-reader checks prove36word command copy/initialization patches equal the retained ordinary RAM table, without new guest execution. Independent traversal finishes1610graphs/147424states with zero discovery failures, observed pattern depth1, no B5/B9and only CD8/9at4occurrences.18defaultRAMtone note events remain without invented ROM owners.",
+    "Independent all429tone fields/277wave headers/1931528signedPCM bytes/64CGB nibbles roundtrip. Bytecode is disjoint from all35prior resources and header-tone-wave-CGB sources. New736-range/1941759Bsource plan has no internal overlap and excludes the only4Bprior alias at150944..150948; two keymaps share physical byte14f3b8.",
+    "Windows32264test compilation warning-free; one Wine8457source check terminal/pass390originalBDcopies(4680B, complete EWRAM/SP/callee),348mapped selections(347distinct mapB) and276original signed interpolating last-plus1endpoint probes+one fixed8last-sample probe.38926instructions/109PCs are coverage only;480protected inputs/evidence unchanged. Source/kernel probes use explicit targeted RAM setup/internal stopping points, no ordinary full-mixer-state-clock claim.",
+    "Private target/rom-data-audio-tones/{effective-command-table,sequence-producers,sequence-producer-summary,nested-tone-producer-domains,tone-wave-independent,candidate-overlaps,producer-independent-checks,lossless-independent-checks,producer-source-plan,original-source-cases,windows-original-result}.json plus Windows build/oracle logs and windows-original-europe/result.json retain evidence. Initial static assertion corrected a wrong expected CDhandler at148e2a to checked148e10/148ea8; no ROM/runtime correction or old accepted proof repeat.",
+    "Final project-memory including --base7597b92/whitespace and491protected artifact/input hashes pass; final-summary/final-protected/final-source-hashes retain this checkpoint. Private artifacts remain Git-ignored and no unit process is live."
+  ],
+  "limitations": [
+    "No new asset model/managed publication/typed runtime/ordinary acceptance yet. Full waveform payloads were roundtripped offline, not all read by the original guest probes. Note/kernel probes stop before completing the mixer; CGB32Bexecution, fullNoteOn/frequency contracts, driverLUTs, other records/bank gaps and sequence codec/runtime remain open.",
+    "New Linux/USA/native Windows pending. No performance/space/AndroidPort work, private game data publication or agent commit/push. Closed e41source/native/CLI/ordinary proofs and concurrent Debug-save/e39/e40work preserved."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/audio_tone_source_tests.rs",
+    "docs/rom_data_audio.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_audio.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

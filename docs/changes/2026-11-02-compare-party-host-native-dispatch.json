@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "compare-party-host-native-dispatch",
+  "title": "Check Party touch against targeted host native dispatch",
+  "kind": "docs",
+  "platforms": [
+    "Android engine with Linux x86-64 TinyCC; Android ARM64 untested"
+  ],
+  "changes": [
+    "Document a targeted Party native-block dispatch and interpreter-hook comparison for the existing EUR scene in isolated upstream and fork engines."
+  ],
+  "validation": [
+    "Both host tests pass; upstream observes one interpreter-gated hook and two native Party dispatches, fork one native Party dispatch. ROM, source save, both input scripts and local TinyCC library retain their pre-run hashes."
+  ],
+  "limitations": [
+    "First 3113 frames interpreted; only 92 manually selected Party blocks compiled in memory, no normal compiler/cache or full state equivalence, JNI, Android ARM64, emulator or device. Builds emitted unused-code warnings.",
+    "Local artifact complete --apply refused this unit because the helper only accepts target/rom-data-*; evidence and unit are retained, no cleanup claimed."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-06-android-party-gallery.md",
+    "docs/development/upstream-audit/U31-06-android-touch.md"
+  ],
+  "references": []
+}

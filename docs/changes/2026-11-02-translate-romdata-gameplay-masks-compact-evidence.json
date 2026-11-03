@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-romdata-gameplay-masks-compact-evidence",
+  "title": "Translate gameplay masks and compact OBJ evidence",
+  "kind": "docs",
+  "platforms": [
+    "Desktop ROM-data planning documentation"
+  ],
+  "changes": [
+    "Translate gameplay mask, dynamic fragment counter and compact OBJ progress entries at the end of the ROM-data TODO."
+  ],
+  "validation": [
+    "Checked unchanged preceding text and matching numeric values, task IDs, link targets and inline literals against the preimage; searched for common Italian prose and accented text."
+  ],
+  "limitations": [
+    "A whole-document review and the wider English-first audit remain open; no ROM access or runtime checks were performed."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_TODO.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

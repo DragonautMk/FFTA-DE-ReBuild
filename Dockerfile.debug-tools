@@ -1,0 +1,10 @@
+# Reuse the already built public coverage image; this adds offline-tool prerequisites.
+# No runtime/Cargo build or game input is performed or copied here.
+ARG BASE_IMAGE=ffta-rom-coverage:local
+FROM ${BASE_IMAGE}
+USER root
+RUN apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends git \
+    && rm -rf /var/lib/apt/lists/*
+WORKDIR /project
+ENTRYPOINT ["python3", "/project/scripts/debug_artifacts.py"]

@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "slug": "verify-european-encounter-coordinate-battle-entry",
+  "title": "Verify European encounter coordinates in ordinary battle entry",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add optional five-line positive-use guard for ordinary coordinate source reads, placement0, X/Y and list/header coverage in the existing scene validator, reporting all ten usage fields. Removing the block restores the previous validator exactly.",
+    "Close retained normal Giza-to-White Flowers deployment with the actual e82-d81 production dataset and exact CLI counters; random, placement2 and default ordinary roles remain unobserved in this case."
+  ],
+  "validation": [
+    "One warning-free518-source Windows test build de67e015.., only affected test fingerprint isolated/core unchanged; one Wine700 per-frame pair19409\u219220109. Every complete state/guest clock/classic-central-wide image/OAM/five audio streams matches. Native-fallback dispatch=[3316146, 8054486]; audio=[1536150, 1536150, 184800, 184800, 1536026]; all10counts={\"bus_reads\": 20, \"default_bytes\": 0, \"headers_used\": 1, \"lists_used\": 1, \"placement0_bytes\": 20, \"placement2_bytes\": 0, \"random_bytes\": 0, \"source_bytes\": 20, \"x_bytes\": 10, \"y_bytes\": 10} exactCLI.",
+    "All104ordinary guards/518pairsource hashes plus186closedCLI guards/518production hashes exact; optional guard removal byteexact/artifacthelper0paths. Existing original checkpoint/input unchanged; no new navigation or performance measurements."
+  ],
+  "limitations": [
+    "One list and one header with placement0/X/Y use does not establish all691lists/all323payloadheaders/other ordinary roles/every caller gate/full placement-RNG ABI/global archive or complete ROM_DATA_TODO.",
+    "Linux/USA/nativeWindows/new32:9 pending. No performance/storage campaign, Android/package or assistantcommit/push; parallel Debug/user work preserved."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_maps.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_maps.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

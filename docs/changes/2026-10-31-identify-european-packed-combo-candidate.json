@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "identify-european-packed-combo-candidate",
+  "title": "Identify European packed lookup Combo candidate",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Document a retained battle seed with an assigned and learned type-5 Combo descriptor and the remaining dispatch uncertainty."
+  ],
+  "validation": [
+    "Rechecked the authenticated seed unit and global bytes and reviewed focused read-only original-code diagnosis; no replay or new test."
+  ],
+  "limitations": [
+    "The Combo callback is not yet connected to a packed reader or a justified ordinary input; the prior negative remains closed. Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md"
+  ]
+}

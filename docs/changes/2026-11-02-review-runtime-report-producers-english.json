@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "review-runtime-report-producers-english",
+  "title": "Review runtime report producer text",
+  "kind": "changed",
+  "platforms": [],
+  "changes": [
+    "Review gameplay, issue, comparison and graphics report producers for English-first authored text. Clarify 16 human-readable descriptions and diagnostics while retaining machine identifiers and report schemas.",
+    "Document that longer gameplay event descriptions count against the existing event-byte cap; previously saved reports remain unchanged."
+  ],
+  "validation": [
+    "Rustfmt parsed all four producer files as Rust 2021. Byte-for-byte comparison after exactly 16 expected string substitutions confirms the rest of the three modified sources is unchanged; the comparison producer is byte-identical. Whitespace check passes."
+  ],
+  "limitations": [
+    "Static language and syntax validation only; no builds, report generation, ROM or runtime/platform tests repeated. Event metadata length can change how many records fit under the unchanged byte cap. Other producers, helper/test modules, dynamic inputs and both source trees remain under audit."
+  ],
+  "files": [
+    "crates/recomp/src/debug_gameplay.rs",
+    "crates/recomp/src/debug_issue.rs",
+    "crates/recomp/src/debug_compare.rs",
+    "crates/recomp/src/debug_graphics.rs",
+    "docs/debug_gameplay.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": []
+}

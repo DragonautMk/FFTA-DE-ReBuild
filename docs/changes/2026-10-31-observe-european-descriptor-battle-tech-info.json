@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "observe-european-descriptor-battle-tech-info",
+  "title": "Observe European descriptor Battle Tech information",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Document ordinary descriptor kind and byte-7 use in the retained Battle Tech information scene."
+  ],
+  "validation": [
+    "One e99 Wine observation of the existing 800-frame scene served ten typed kind bytes and ten byte-7 bytes; guarded inputs and frozen sources were unchanged."
+  ],
+  "limitations": [
+    "Field 4 and the same-scene full comparison remain open; aggregate counters do not identify records or PCs. Linux, USA and native Windows remain unverified. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-rom-inventory-property-getter-ui-evidence",
+  "title": "Translate ROM inventory property getter and UI list evidence",
+  "kind": "docs",
+  "platforms": [
+    "Desktop ROM-data inventory"
+  ],
+  "changes": [
+    "Translate additional property getter callers, byte property complement and UI property-selected list inventory evidence, reusing matching plan translations."
+  ],
+  "validation": [
+    "Checked matching plan preimage for four duplicated entries and verified unchanged surrounding text, numeric values, task IDs, link targets and inline literals."
+  ],
+  "limitations": [
+    "The remaining inventory and wider cross-tree English-first audit are open; no ROM access or runtime checks were performed."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_INVENTORY.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

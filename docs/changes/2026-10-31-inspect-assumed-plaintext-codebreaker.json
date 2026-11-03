@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "inspect-assumed-plaintext-codebreaker",
+  "title": "Inspect explicitly assumed plaintext CodeBreaker blocks",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Add a readonly CLI inspection that requires an explicit plaintext assumption and returns a typed, non-executable plan for a bounded CodeBreaker subset; reject unsupported or incomplete blocks atomically.",
+    "Register the CLI operation and update the Atlas inventory without exposing an execution action."
+  ],
+  "validation": [
+    "Isolated Windows GNU test and runtime builds passed; Wine synthetic decoder/catalog tests passed 11 with one private-catalog test ignored; final operation registry tests passed 3.",
+    "A synthetic Wine CLI proof verified the explicit assumption, conditional and slide plan, atomic refusal and unchanged catalog; operation inventory, Atlas inventory, rustfmt and diff checks passed."
+  ],
+  "limitations": [
+    "Device version, encryption, masters and actual ROM behavior are unverified; other opcodes and all guest writes remain unsupported. No real catalog code, ROM, native Windows, Linux runtime or physical controller was tested."
+  ],
+  "files": [
+    "crates/recomp/src/debug_cheat_decoder.rs",
+    "crates/recomp/src/debug_cheats.rs",
+    "crates/recomp/src/debug_operations.json",
+    "crates/recomp/src/main.rs"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/debug_operations.md"
+  ]
+}

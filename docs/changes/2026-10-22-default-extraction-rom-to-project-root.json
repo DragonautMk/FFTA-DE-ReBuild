@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "date": "2026-10-22",
+  "slug": "default-extraction-rom-to-project-root",
+  "title": "Default Docker extraction to the project-relative European ROM",
+  "kind": "changed",
+  "platforms": [
+    "Linux/Bash",
+    "Windows/PowerShell tooling"
+  ],
+  "changes": [
+    "Make the ROM argument optional in both Docker extraction entry points, defaulting to rom/1194 - Final Fantasy Tactics Advance (E)(Surplus).gba beneath the repository root rather than requiring a placeholder path.",
+    "Resolve default and custom relative ROM paths from the repository root independently of the calling directory; preserve absolute overrides, Bash positional ROM arguments and PowerShell -RomPath.",
+    "Retain existing output defaults and caller-relative explicit output paths, read-only input mounting, Docker dependency isolation and extraction validation; missing ROM errors show the resolved location and how to override it.",
+    "Update README and extraction guides with commands requiring no ROM argument and explain custom ROM path semantics."
+  ],
+  "validation": [
+    "All seven focused Bash mock-Docker tests pass, covering no-argument project defaults from unrelated cwd, custom root-relative paths with spaces, absolute overrides, default output, absent default ROM, invalid mounts and build/run errors; bash -n and --help pass.",
+    "Five PowerShell 7.4 path cases pass using synthetic fixtures and mock Docker in its existing Linux container: no arguments, root-relative override, absolute override, missing default and missing custom ROM. Valid cases use the expected read-only source mount and invalid cases invoke no Docker command.",
+    "After resumption, retain the three completed PowerShell success logs instead of repeating them; finish the two missing-ROM checks with assertions tolerant of terminal error wrapping, which had interrupted the original harness before writing its summary.",
+    "Final full working-tree project-memory coverage and CRLF-aware scoped whitespace checks pass."
+  ],
+  "limitations": [
+    "Native Windows PowerShell 5.1/Docker Desktop execution remains unverified; PowerShell path handling is checked under PowerShell 7.4 on Linux with simulated Docker commands.",
+    "No new container compilation or game-data extraction is needed for these host argument changes; earlier real relocated Docker extraction evidence remains separate. No runtime/catalog, AndroidPort, performance, package, commit or push change is included."
+  ],
+  "files": [
+    "scripts/linux/extract_rom_data_docker.sh",
+    "scripts/windows/extract_rom_data_docker.ps1",
+    "scripts/tests/test_extract_rom_data_docker.py"
+  ],
+  "references": [
+    "README.md",
+    "scripts/README.md",
+    "docs/docker.md",
+    "docs/rom_data.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

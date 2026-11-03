@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-10-26",
+  "slug": "assess-and-defer-godot-frontend",
+  "title": "Assess a Godot frontend and defer implementation until ROM extraction is complete",
+  "kind": "docs",
+  "platforms": [
+    "Project planning"
+  ],
+  "changes": [
+    "Honor the latest plan-only request by removing the initial untracked Godot/Rust scaffold from the superseded prototype request. Keep only an assessment and deferred TODO; do not install Godot, build an extension, modify the production workspace or interrupt extraction.",
+    "Document the current architecture: Machine and static recompilation are available through libraries, while mixed native dispatch, dataset loading and application lifecycle remain in private executable modules. Distinguish a possible interpreter transport experiment from native desktop parity and identify the shared runtime boundary needed for the latter.",
+    "Create GD00..GD05 planning checkpoints covering completion of the agreed EUR extraction scope, a reproducible baseline, runtime/API contracts, video/audio/input/save ownership, isolated future tooling and functional parity before an adoption decision. Keep mod support, complete ROM independence, every DS case and other platforms separate from the first EUR experiment.",
+    "Link the deferred assessment from the ROM-data TODO and durable project state. Require an explicit future development selection after the ROM priority; no unchecked Godot item becomes part of the active extraction execution queue."
+  ],
+  "validation": [
+    "Read current Machine, private run_frame_native, desktop run_one_frame, dataset loader and snapshot/slot source boundaries. Consult primary godot-rust compatibility, Godot audio-generator and thread-safety documentation. This is an architectural assessment, not a runtime feasibility or performance test.",
+    "Remove exactly the five newly created experimental scaffold files; no experiments/godot_frontend implementation remains. No Cargo/Godot build, binary download, installation, gameplay test or benchmark was started for this work.",
+    "All seven protected hashes from the initial assessment baseline remain unchanged: root Cargo manifest/lock, extraction script, two existing executables, EUR ROM and user DS20 snapshot. 8 local plan links resolve. Existing concurrent extraction/runtime changes and previous Debug-save work remain preserved.",
+    "Project-memory coverage and git diff --check pass after reconciling the plan-only handoff. No active task process or experimental code remains; implementation stays deferred rather than queued for automatic resumption."
+  ],
+  "limitations": [
+    "Godot integration, native parity, audio latency, rendering/filter equivalence, controller/platform coverage and packaging have not been implemented or tested. No performance benefit is claimed.",
+    "The proposed shared-runtime separation may require a future architectural change and its own verification; it is not authorized by the current plan-only request. Finishing an extraction increment does not automatically resume Godot development."
+  ],
+  "files": [
+    "docs/development/GODOT_FRONTEND_TODO.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/development/GODOT_FRONTEND_TODO.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

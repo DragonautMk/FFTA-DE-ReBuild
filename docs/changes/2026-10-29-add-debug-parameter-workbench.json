@@ -1,0 +1,71 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "slug": "add-debug-parameter-workbench",
+  "title": "Add menu drafts, bounded presets and explicit debug profile preparation",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU build",
+    "Wine"
+  ],
+  "changes": [
+    "DBG2-05 implementation adds Parameters / prepare profiles with12 tool forms, typed input rows, text/IME/controller keyboard, choice controls and an explicit punctuation keyboard page for multi-value streams/ranges, measured detail wrapping and distinct Verify/Save preset/Load preset/Prepare NEW/Start/Back actions.",
+    "Wire scalar drafts into the existing local-control CLI parser for configured steps, memory inspection, audio/code/gameplay/recent/graphics and issue reporting; existing fixed start rows open their form. Editing focused text consumes debugger shortcuts before guest dispatch.",
+    "Profile forms prepare replay/audit/capture/compare from the typed recording/session/runtime/library/dataset/known-plan references, with exact existing create parsers and read-only validation mode. Preparation creates unique pinned output, refuses existing destinations and never starts a worker.",
+    "Permit readonly immutable input preflight from the running UI only when canonical source root, process ID and runtime directory lease match its own session. Other active source sessions retain exclusive-source refusal. No live save-writer lease is granted.",
+    "Presets contain scalar values only, with bounded schema/tool/choice checks,8KiB values/16KiB files/eight new presets per tool and eight new profile outputs. Input paths are not persisted by these presets.",
+    "Add workbench view/revision guards: late preset reads cannot replace a reopened draft; completed prepared output is retained without applying a late selection. A visible summary distinguishes the separately pinned profile from current draft edits."
+  ],
+  "validation": [
+    "Initial591-source Windows build fails on a stale multiline InspectPC arm tail after routing it to the form; remove only that tail. Corrected Windows GNU test/runtime compilation passes warning-free with29 frozen host/UI overlays and canonical runtimes hash+mtime exact. Candidate a68ddacb776c24e5d4144d2828a9bd1fdb9b1b105c90b1e8a3b5bc703404c5da.",
+    "Wine60menu/3workbench/3contract/12replay/16control/5picker/6audit/5capture/8compare tests pass (118total), covering editor cancel/OSK/layout, bounded scalar presets/shared validation and retained active-other-session refusal.",
+    "Three Python operation source-census tests and diff check pass. Correct the initial descriptor draft that listed every field on every form to accurate per-tool sets:92operations/320parameters.",
+    "Subsequent view/revision guard and its deterministic regression test are implemented; changed-scope build/tests and actual GUI pipeline remain in progress. Earlier accepted01..04 scopes are not rerun for context.",
+    "View/revision guard build passes warning-free, candidatec5850336840d993c167d42b3cf0a8565cb1e2a2d55050150de81338db7cd7a23; Wine4workbench+3contract tests pass. First public GUI factory passes; old-title-only resize helper is corrected in place without recreating its seed.",
+    "Actual GUI functional stage1 passes text/shortcut consumption/cancel, invalid step rejection, scalar preset save/load with full main state/frame0/clock0. Visual inspection then rejects its black form: draw omitted Canvas.finish. That scope is negative visual evidence; no recording/guest frame ran in the black-form candidate, closed with pins exact.",
+    "Corrected Canvas.finish and actual pixel assertion build warning-free,591frozenfiles/29overlays, candidate5d79030b7ea085684a77bbcb8fea6f287d7687f54a37f9d3c00618f34a977a08; Wine3form tests pass. New public GUI shows the form, simulated XInput text keyboard/cancel and620x480/940x620/1180x760 clients with full state0. Visual inspection identifies a remaining HUD/title overlap from generic page geometry; only that layout/irrelevant editor footer is being corrected.",
+    "Actual GUI recording→one explicit main frame→Stop→selected recording/session rows→Verify→Prepare NEW replay→Run passes. Verify creates nothing, preparation starts no worker, saved case/timeout/frame values match the fields and explicit worker matches its full endpoint at1frame. Main remains exactly at its authorized frame1 boundary afterward.",
+    "Actual GUI prepares and explicitly runs audit/capture/comparison from that same recording: audit passed with presetbus/from0/to1/range0:512/limit128, frame capture captured at1, and comparison matched through1 with interp/preserve. Native-library capture combination is refused by Verify before output. Issue report retains its configured public symptom; no external editor or typed input path is used. Main complete state remains fixed at its explicit frame1 boundary.",
+    "Custom page layout and editor footer correction builds warning-free, candidatefcc71243fe347f886092861b0d44b5521e93d187275a3a7dc3f262c58595d160, canonical runtimes unchanged. Wine1identity/geometry+7selector+3form tests pass; no unchanged pipeline repeat is requested for the geometry-only fix.",
+    "GUI pipeline closes at its exact authorized boundary: main1frame plus replay/audit/capture1each and comparison two1frame Machines (6public Machine frames total). All5session immutable pins and four replay outputs are preserved.",
+    "Four fresh CLI profiles have JSON values exactly equal to the GUI-prepared profiles; their replay/audit/capture/comparison outcomes, completed frames, full state hash and clock match. Additional5public worker-Machine frames. First CLI replay completes but pipe EOF is delayed until harness timeout; retained completed result is reused and remaining3cases use direct log files, with no first-worker repeat.",
+    "Final layout GUI passes visible inside-panel debug identity, no overlapping generic badge, editor footer removal and three actual client sizes. Audio frames2/mixed,psg is validated by the shared parser. Harness comma-key mapping is fixed in the same open field without recreating the case.",
+    "Static controller review finds comma unavailable on the existing on-screen keyboard; add a bounded fourth punctuation page and regression test so stream/range lists are enterable without a physical keyboard. Only changed input/visual checks remain before closing05.",
+    "CLI equivalence completes all4profiles with exact parameter JSON and paired outcome/completed/state/clock; source GUI results remain hash+mtime exact. Final layout/audio GUI closes with full state0 and immutable pins preserved; only the punctuation-page build/test and controller check remain.",
+    "Final punctuation build is warning-free, candidatec223f4b79101fa20669dfa0353ba618ee5770dee67d605a15b99afffa59565fb; Wine8selector+3form tests pass. Across accepted terminal scopes121distinct Rust behavioral cases are covered (62menu,4workbench,3contract,12replay,16control,5picker,6audit,5capture,8compare), with only changed scopes rerun.",
+    "Actual final GUI uses only simulated XInput for Clear/page/comma/Done, commits a comma to the stream draft and refuses the incomplete list before execution. Full main state/frame0/clock0 remains exact. Final GUI closes and the private Xvfb is terminated.",
+    "Final preservation verifies591frozen source files/29current host/UI overlays, canonical Windows/Linux runtime hash+mtime, all12public source/prepared/CLI session pins, closed GUI statuses and original pipeline output hash+mtime. Negative black-form evidence and its exact-origin input pins remain retained."
+  ],
+  "limitations": [
+    "Native Windows/Linux runtime, physical controllers and native IME/layout coverage remain unverified. No private game data, DS acceptance, real release refresh, commit or push.",
+    "Feature gates known to the selected build are shown before preparation; arbitrary runtime/native-library binary ABI and unadvertised runtime features remain explicit worker preflight. Saving a preset does not persist typed input paths; UI/input persistence is DBG2-07.",
+    "GUI/CLI paired pipeline executes11public Machine frames (one main,10worker copies), separate from synthetic Rust test execution. Rejected black-form and HUD/title overlap are retained as earlier visual findings, corrected in later candidates.",
+    "Separate concurrent ROM development is preserved/excluded from selected builds. Metadata/UI unit has no managed interrupted/moved-resource datasets; rom-data-only retention helper is inapplicable, and failed diagnostic cases remain available."
+  ],
+  "files": [
+    "crates/menu/src/lib.rs",
+    "crates/menu/src/theme.rs",
+    "crates/menu/src/content_selector.rs",
+    "crates/menu/src/debug_tool.rs",
+    "crates/menu/src/debug_tool/tests.rs",
+    "crates/recomp/src/main.rs",
+    "crates/recomp/src/play.rs",
+    "crates/recomp/src/content_picker.rs",
+    "crates/recomp/src/debug_content.rs",
+    "crates/recomp/src/debug_workbench.rs",
+    "crates/recomp/src/debug_workbench/tests.rs",
+    "crates/recomp/src/debug_control.rs",
+    "crates/recomp/src/debug_session.rs",
+    "crates/recomp/src/debug_replay.rs",
+    "crates/recomp/src/debug_rom_audit.rs",
+    "crates/recomp/src/debug_capture.rs",
+    "crates/recomp/src/debug_compare.rs",
+    "crates/recomp/src/debug_operations.rs",
+    "crates/recomp/src/debug_operations.json"
+  ],
+  "references": [
+    "docs/debug_selector.md",
+    "docs/debug_operations.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

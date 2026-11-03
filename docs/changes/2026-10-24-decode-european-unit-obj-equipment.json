@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "platforms": [
+    "Windows"
+  ],
+  "references": [
+    "docs/rom_data_unit_obj.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ],
+  "slug": "decode-european-unit-obj-equipment",
+  "title": "Decode European equipment OBJ poses with original command and DMA checks",
+  "kind": "added",
+  "changes": [
+    "Add public lossless equipment OBJ source model with canonical physical-cell keys, roots, real nulls, counted sequence fields, command-dependent words, complete OBJ attributes and decoded4bpp palette indices. Reuse accepted initial-pose tile/shape logic without reopening its tests.",
+    "Validate actual item/action producer links, strict JSON, source ordering/alignment/extents, graph links and coherent edits against authenticated EUR data. Reconstruct all593spans110666B without owning gaps or inferring adjacent catalogs.",
+    "Add one private exact source-model/original-reader Wine oracle for the new projection; no publication or runtime wiring is introduced."
+  ],
+  "validation": [
+    "One affected Windows frontend test build passes without warnings; frozen executable SHA-25616670f9da4a6617e937cb3ad918e77acab8cbc28885af8748aad3f942c802289. Seven compiled source preimages retained; later action-number comment correction changes no implementation.",
+    "One exact new Wine filter passes on its first execution:593source spans110666B/strict JSON roundtrip/10guards,1496actual constructor prefixes for all directional aliases,86null resets leaving task bytes unchanged and258complete original sequence resets with independently predicted task/RAM guards.",
+    "Six original command cases cover default operation0, operation6 and every distinct operation8event argument.280original scheduler/queue/realDMA3 uploads compare every VRAM byte and cover all37440distinct pixel-source bytes.8600observed nonpixel load bytes/508PCs/187459instructions are coverage only.",
+    "All828inherited hash-mtime guards and seven compiled source hashes pass around build/Wine. Evidence under target/rom-data-unit-poses/:windows-model-build.json,windows-model-result.json,windows-model.log,windows-model-europe/result.json; source/model/managed/native/CLI/ordinary proofs of earlier families were not repeated.",
+    "Final preservation audit passes all7209prior protected artifact hashes,828inherited hash-mtime guards and seven compiled source preimages. Two shared modules differ from the318-file baseline only by the new module registrations.373local feature-document links, project-memory default/base7597b92, new-module rustfmt and CRLF-aware whitespace checks pass. User Debug-save/concurrent Docker/source/model/managed/native/CLI/ordinary evidence is preserved."
+  ],
+  "limitations": [
+    "Offline source model only: managed publication, runtime attachment, actual CLI and positive ordinary equipment consumption remain pending. EUR e58-d57/54files53resources and USAe8-d7 unchanged.",
+    "Original constructor prefixes stop before allocation; no whole allocator/scheduler ABI or full original9BA84producer execution claim. All source bytes reconstruct, but not all nonpixel bytes are read in the reduced source probes. Other poses/parts/alternate IDs/script pairings/palettes remain open.",
+    "New Linux/USA/native Windows/new32:9 unverified. No new gameplay fixture/navigation/private payload edit, performance or storage measurement, Android change, package, agent commit or push."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data/unit_obj_equipment.rs",
+    "crates/recomp/src/rom_data/unit_obj_equipment_model_tests.rs",
+    "crates/gba-core/src/rom_data.rs",
+    "crates/recomp/src/rom_data.rs"
+  ]
+}

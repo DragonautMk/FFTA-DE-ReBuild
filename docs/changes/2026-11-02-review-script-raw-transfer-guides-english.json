@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "review-script-raw-transfer-guides-english",
+  "title": "Review script and raw UI transfer guides",
+  "kind": "docs",
+  "platforms": [
+    "Desktop ROM-data documentation"
+  ],
+  "changes": [
+    "Review the script resource and raw UI transfer guides for English-first policy and record exact file hashes."
+  ],
+  "validation": [
+    "Manually read both guides in full; maintained prose is English, with original game labels, technical evidence and limitations preserved."
+  ],
+  "limitations": [
+    "The inventory and remaining Markdown and source areas still require review; no ROM access or runtime checks were performed."
+  ],
+  "files": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": [
+    "docs/rom_data_scripts.md",
+    "docs/rom_data_ui_raw_transfers.md"
+  ]
+}

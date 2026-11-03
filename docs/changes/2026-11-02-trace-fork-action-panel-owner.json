@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "trace-fork-action-panel-owner",
+  "title": "Trace fork action panel ownership and reveal evidence",
+  "kind": "docs",
+  "platforms": [
+    "Desktop source and retained evidence review"
+  ],
+  "changes": [
+    "Trace per-frame action-panel ownership, fallback, packing and input; distinguish existing static-width and cursor-jitter evidence from reveal coverage."
+  ],
+  "validation": [
+    "Inspected PPU/frontend source, prior action-frame and input-cache records, and availability and driver of retained style captures; no new game or build."
+  ],
+  "limitations": [
+    "Stable real owner and visible foreground throughout reveal, hit alignment and platform runtime remain unverified; older named captures unavailable locally."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-03-panel-visual-fixes.md"
+  ],
+  "references": [
+    "docs/ffta_action_frame_width.md",
+    "docs/changes/2026-10-21-evaluate-ui-packing-input-cache.json"
+  ]
+}

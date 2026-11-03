@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "classify-debug-command-local-errors",
+  "title": "Distinguish local debugger command errors from server outcomes",
+  "kind": "fixed",
+  "platforms": ["Windows GNU / Wine"],
+  "changes": [
+    "Give command and direct local-control clients structured parse, incompatibility and availability outcomes before publication; transport or worker failures report unknown delivery rather than claiming the action was not sent.",
+    "Keep server results including refusal, timeout and cancellation intact. In the panel, invalid drafts and local composition or worker-capacity guards produce a copyable current error without clearing or submitting the draft."
+  ],
+  "validation": [
+    "Initial and final isolated Windows GNU test and production builds passed without compiler messages. Wine passed seven command and 26 protocol tests on the initial candidate, then seven affected command tests on the final guard correction; 1514 frozen source files and selected overlays matched.",
+    "In a synthetic Wine/Xvfb session, command and direct-control invalid syntax returned parse-error/not-sent, a wrong retry run returned incompatible/not-sent without a primary publication, and an actual server refusal retained its refused result. The real panel copied the new parse-error JSON after a prior successful result while retaining the invalid draft. Guest state/frame0/clock0 and session pins stayed exact; the exclusive test prefix and display closed."
+  ],
+  "limitations": [
+    "Server-side content compatibility failures remain server refusals with explanatory text; this does not claim a complete domain-wide incompatibility taxonomy. If transport delivery is unknown, callers must inspect state before retrying.",
+    "The GUI proof covered parser error, preflight incompatibility and a server refusal. Prior separate Wine proofs cover timeout and cancellation; composition-active and four-worker-capacity guards were not exercised in the GUI.",
+    "Native Windows/Linux, physical input, real IME and full menu/CLI/console parity remain unverified; DBG2-13 through DBG2-28 remain open."
+  ],
+  "files": ["crates/recomp/src/debug_control.rs", "crates/recomp/src/debug_command.rs", "crates/recomp/src/debug_command_panel.rs"],
+  "references": ["docs/debug_control.md", "docs/debug_operations.md", "docs/development/DEBUG_TOOLS_V2_TODO.md"]
+}

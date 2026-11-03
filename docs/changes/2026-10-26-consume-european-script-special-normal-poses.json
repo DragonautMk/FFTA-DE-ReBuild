@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "date": "2026-10-26",
+  "slug": "consume-european-script-special-normal-poses",
+  "title": "Publish and consume European conditional normal script poses with authenticated producer witnesses",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Wire EUR schema1/e62-d61 managed publication and typed loading of unit-obj-script-special-normal.json/graphics.unit-obj-script-special-normal with actual metadata14/scriptarchive/initial/normal dependencies. Preserve151script references/20logical metadata producer witnesses and prior initial/normal source ownership; USA stays e8-d7.",
+    "Add an immutable typed runtime owner for only33new spans6436B. Compose new index/header/frame/indexed-pixel bytes with retained prior owners/raw holes; original actor choices, commands, scheduler, DMA and guest tasks remain unchanged. No ROM shadow, live ID cap or save/native ABI change.",
+    "Add two reduced new Wine filters for managed authentication/lifecycle and original-interpreter-compiled complete-state-clock reads of new typed data. Poison complete41802B graph including shared views while measuring only functional coverage. New frames are alloperation1; old command/source/census/scene acceptances stay closed.",
+    "Complete actual e62productionCLI creation/no-write reuse of58generation files/60managed files with all58byte-identical to accepted managed output, plus one-frame old native-cache attachment from unchanged authentic EURF09snapshot. Leave ordinary source/pixel use open because this smoke reads zero new bytes."
+  ],
+  "validation": [
+    "One affected Windows core/frontend no-run build70758passes without warnings. Core compiled only, frozenb47c085a..; frontendb47e885085e927959c388b065301e594f08a1b849c3ce42b291c7852defdaaac.16selectedsource/preimage hashes and1150buildguards unchanged; no old test or production build execution.",
+    "Two exact new EUR Wine filters69270pass first attempt. Managed checks23attachguards+6dependencyguards, failedattach owner/state isolation, interrupted publication/create/reuse/repair/move, retained e61/all56prior decoded files/resource records/coverage, unavailable-file Load/Undo/backup/restart and all6436newtypedB/sevennewsequences. Shared initial/normal owners retain4B each without newowner charges.",
+    "Native checks23original-interpreter-compiled complete-state-clock paths with all41802graph bytes poisoned: part0proper sequences/part1-2realnulls/twoorientations/fullwordrawID/liveRAMframe/two uploads+DMA, all33edges/widths/mirrors/realBIOSbus/SWI-DMA. Compiled new fields[0directory36index6header43frame0OBJ1pixel]B; mixed2new4normal SWI/DMA and2new2deliberately edited rawAPI bytes preserve exact charges. Old commands2/6/8notreplayed, newframesallop1;1841instructions/496PCs/104native dispatches are coverage only.",
+    "Dataset SHA256 f131b439ee62dc55ab0383c985f9c1c936a85088106bc4e16c3fab80ed4e69a2; manifest-file SHA256 2b84c40c03b0c4d81aa80b414f1d2271fd825093bcf94e68275883d89a464499; model-file SHA256 02e7362e2bb2bea7dad84bf769d5cb0c88b3e6efd3cc59fe77eb911da97e37c5. New-owned source33spans6436B keeps SHA6c3ef9c987b02ad1c06492ac245484b1574a45666cba90bff097c7e1e5cf5027.",
+    "Final preservation passes8842prior artifact hashes/1150build+1152Wine hash-mtime guards/all16compiled source-preimages/five integration preimages,340local feature links, new-module rustfmt, project-memory default+baseea17e92 and CRLF-aware whitespace. Prior user commits/documentation remain preserved; private artifacts0tracked.",
+    "Single changed-code Windows production build28835warning-free/frozen6455958ed9616b269d225a7f9da28f726cbb6624021c461baf567571f1c1c5d0; canonicalf3e277db.. exacthash/mtime1792570130397888519 restored, main.rs content unchanged/mtime-onlyCargo invalidation. ActualWine26817CLIcreate/reuse-no-write58generation60managed/all58matchaccepted from unrelatedcwd/oldcache, generation-SHz1vX/datasetf131b439.. . One-frame immutableF09attachment exits0/zero newsource use, compatibility smoke only; no oldscene or ordinary-positive inference.",
+    "ActualCLI final preservation passes9175prior artifact hashes/1213CLI hash-mtime guards/all16runtime compiled source-preimages,341local feature links and allimplementation sources unchanged from accepted runtime. Canonical executable exacthash/mtime restored; project-memory default+baseea17e92 and CRLF-aware whitespace pass.",
+    "New ordinary e62Wine Snow6000locator on immutable recorded input exits0/48newindexB/zeroheaders-frames-OBJ-pixels-sequences, consistent with two already observed realnullcells; no query-census replay/guardbuild/fullpair and no newpixel inference. Read-only81existing EURsnapshots against the sevennewproper sequences find no enabled/dormant matchingtask. A separate retained deployment Start/A618locator exits0/zero newbytes; only oldprogram158is consumed, so it is terminalnegative without unchangedretry.",
+    "Readonly exact script-context/key/bodytask candidate checks preserve snapshots. A user-authorized copiedEURDS20cancel-flee B44probe produces two normal checkpoints/menu observation only; no DS20acceptance reopened, original/user/cart files intact and no rawHP/status/PC/payload edits. Program159contains the newproducer but its trigger is not established; speculative ending/start labels are retained as unproven navigation leads.",
+    "Ordinary increment preservation passes9253prior artifact hashes,1213Snow/1214RIVER/1230navigation exacthash-mtime guards and unchanged implementation sources across348baseline files; default+baseea17e92memory and CRLF-aware whitespace pass. Final ordinary maps retain9286private artifact hashes; no guest/build rerun or pixel/fullscene acceptance is inferred."
+  ],
+  "limitations": [
+    "Managed publication, targeted runtime/reader/lifecycle and actualproductionCLI criteria closed. Ordinary source/newsequence/pixel acceptance remains separate and pending; source/model, previous families and equipmentFight500 stay closed. No wholeallocator/task/actor ABI or ordinary reachability claim.",
+    "Conditional same-unit current normal assignment/override20clear/facing0..3projection only. Alternate/42-230/highregistry/current actor-state reachability remain open.",
+    "New Linux/USA/nativeWindows/new32:9 remain pending. No performance/storage measurements, new gameplay fixture/private payload edit, Android/package/agent commit/push; prior8842protected artifacts retained."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "scripts/extract_rom_data.py",
+    "crates/gba-core/src/rom_data/runtime/unit_obj_script_special_normal.rs",
+    "crates/recomp/src/rom_data/script_special_normal_runtime_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_unit_obj.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

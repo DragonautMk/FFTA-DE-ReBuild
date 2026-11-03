@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "review-research-status-english",
+  "title": "Review translated research status report",
+  "kind": "docs",
+  "platforms": [
+    "Desktop development documentation"
+  ],
+  "changes": [
+    "Complete English-language review of the translated research status report and record its exact hash in the audit."
+  ],
+  "validation": [
+    "Full-file comparison against the pretranslation revision preserved numeric runs excluding explicit legacy anchors, link targets, fenced commands, paths, flags and named artifact filenames; historical limitations retained."
+  ],
+  "limitations": [
+    "This is a language and evidence-preservation review, not independent reproduction of historical results; wider Markdown and source audit remains open."
+  ],
+  "files": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": [
+    "docs/ffta_estado.md"
+  ]
+}

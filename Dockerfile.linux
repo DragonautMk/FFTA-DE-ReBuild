@@ -1,0 +1,73 @@
+# Use BuildKit's bundled frontend; no Docker Hub syntax-image lookup is needed.
+# Build on Bookworm rather than inheriting the developer machine's newer glibc.
+FROM rust:1.94.0-slim-bookworm@sha256:a86cada82e36ebd7a9bffed7548792c55a952fdb20718eea9278a936bcb76e62 AS source
+
+RUN test "$(dpkg --print-architecture)" = amd64 \
+    && apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        build-essential ca-certificates pkg-config python3 libasound2-dev libudev-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /workspace
+COPY Cargo.toml Cargo.lock ./
+COPY crates/ crates/
+COPY assets/ assets/
+COPY TinyCC/ TinyCC/
+COPY Licenses/ Licenses/
+COPY gamedb.sqlite ./
+COPY scripts/linux/package_ffta_linux.sh scripts/linux/
+COPY scripts/package_ffta_portable.py scripts/build_desktop.py scripts/
+COPY docs/portable.md docs/docker.md docs/fps_overlay.md docs/menu_shortcuts.md docs/save_states.md docs/save_backups.md docs/rom_data.md docs/rom_data_runtime.md docs/
+COPY docs/menu_clan_atlas.md docs/extended_saves.md docs/
+COPY scripts/artifact_coordinator.py scripts/local_artifacts.py scripts/debug_artifacts.py scripts/debug_artifacts.html scripts/debug_campaign.py scripts/debug_campaign.html scripts/report_home.py scripts/report_home.html scripts/
+COPY scripts/linux/debug_artifacts.sh scripts/linux/debug_campaign.sh scripts/linux/report_home.sh scripts/linux/debug_runtime.sh scripts/linux/
+COPY scripts/windows/debug_artifacts.ps1 scripts/windows/debug_campaign.ps1 scripts/windows/report_home.ps1 scripts/windows/debug_runtime.ps1 scripts/windows/
+COPY docs/debug_tools.md docs/debug_diagnostics.md docs/debug_sessions.md docs/debug_catalog.md docs/debug_recordings.md docs/debug_replays.md docs/debug_rom_audit.md docs/debug_captures.md docs/debug_comparisons.md docs/debug_control.md docs/debug_probes.md docs/debug_graphics.md docs/debug_ui.md docs/debug_audio.md docs/debug_code.md docs/debug_issues.md docs/debug_gameplay.md docs/debug_artifacts.md docs/debug_recent.md docs/debug_campaigns.md docs/report_home.md docs/debug_operations.md docs/debug_content.md docs/debug_selector.md docs/debug_events.md docs/cheats.md docs/
+COPY docs/development/LOCAL_ARTIFACTS.md docs/development/MEMORY_WORKFLOW.md docs/development/DEBUG_TOOLS_TODO.md docs/development/
+
+# Offline extraction runs on Linux on either host; ROMs are mounted only at run time.
+FROM source AS extract
+RUN --mount=type=cache,id=ffta-linux-cargo-registry,target=/usr/local/cargo/registry,sharing=locked \
+    --mount=type=cache,id=ffta-linux-cargo-git,target=/usr/local/cargo/git,sharing=locked \
+    --mount=type=cache,id=ffta-linux-target-amd64,target=/workspace/target,sharing=locked \
+    find crates -type f -exec touch {} + \
+    && cargo build --locked --release -p recomp --bin recomp \
+    && mkdir -p /opt/ffta \
+    && cp target/release/recomp /opt/ffta/recomp
+COPY scripts/extract_rom_data.py scripts/
+ENTRYPOINT ["python3", "/workspace/scripts/extract_rom_data.py", "--recomp", "/opt/ffta/recomp"]
+
+# Atlas plus automatic offline data preparation; no translation or game execution.
+FROM extract AS coverage
+RUN --mount=type=cache,id=ffta-linux-cargo-registry,target=/usr/local/cargo/registry,sharing=locked \
+    --mount=type=cache,id=ffta-linux-cargo-git,target=/usr/local/cargo/git,sharing=locked \
+    --mount=type=cache,id=ffta-linux-target-amd64,target=/workspace/target,sharing=locked \
+    cargo build --locked --release -p recomp-core --example rom_code_ranges \
+    && mkdir -p /opt/ffta \
+    && cp target/release/examples/rom_code_ranges /opt/ffta/rom_code_ranges
+COPY scripts/rom_coverage.py scripts/rom_coverage.html scripts/local_artifacts.py scripts/artifact_coordinator.py scripts/rom_coverage_audit.py scripts/rom_coverage_ranges.py scripts/
+COPY docs/changes/ docs/changes/
+COPY docs/development/rom-coverage/evidence.json docs/development/rom-coverage/
+COPY docs/development/rom-coverage/code-seeds.json docs/development/rom-coverage/
+ENTRYPOINT ["python3", "/workspace/scripts/rom_coverage.py", "--analyzer", "/opt/ffta/rom_code_ranges", "--extractor", "/opt/ffta/recomp"]
+
+FROM source AS build
+# Source, game data and Docker sockets are never bind-mounted into the build.
+# Export outside the cache mount so a warm build still has real output files.
+RUN --mount=type=cache,id=ffta-linux-cargo-registry,target=/usr/local/cargo/registry,sharing=locked \
+    --mount=type=cache,id=ffta-linux-cargo-git,target=/usr/local/cargo/git,sharing=locked \
+    --mount=type=cache,id=ffta-linux-target-amd64,target=/workspace/target,sharing=locked \
+    find crates -type f -exec touch {} + \
+    && bash scripts/linux/package_ffta_linux.sh \
+    && cargo test --locked --release -p input-config -p menu -p gba-core -p screen -p recomp -- --test-threads=1 \
+    && mkdir /artifacts \
+    && cp dist/FFTARecomp-linux-portable.tar.gz /artifacts/ \
+    && { rustc --version; cargo --version; cat /etc/os-release; \
+         ldd --version | head -n 1; \
+         ldd target/release/recomp; ldd target/release/ffta-play; \
+         sha256sum /artifacts/FFTARecomp-linux-portable.tar.gz; \
+       } > /artifacts/BUILD-INFO.txt
+
+# This stage exports files only; it is not an image for running the GUI.
+FROM scratch AS export
+COPY --from=build /artifacts/ /

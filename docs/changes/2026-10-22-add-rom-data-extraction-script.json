@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-10-22",
+  "slug": "add-rom-data-extraction-script",
+  "title": "Run readable ROM data extraction with one project script",
+  "kind": "added",
+  "platforms": [
+    "Project tooling",
+    "Windows/Wine"
+  ],
+  "changes": [
+    "Add scripts/extract_rom_data.py to run the existing source-authenticated rom-data extract command for an explicit ROM, defaulting to Cargo's locked release build and an ignored target/rom-data/<ROM filename stem> output directory.",
+    "Support an explicit output directory, a prebuilt recomp executable and optional Wine; resolve caller-relative paths before invoking the CLI from the repository root without shell command interpolation.",
+    "Forward extraction progress and failure status, then list the actual readable JSON/TOML files with descriptions and an absolute output location for editor inspection.",
+    "Document Python requirements, Windows/Cargo/prebuilt/Wine usage, verified reuse and refusal to overwrite an invalid dataset; preserve the existing extractor, authentication and regional coverage."
+  ],
+  "validation": [
+    "Five focused Python tests pass for default Cargo routing and output summary, Wine/prebuilt/caller-relative paths containing spaces, failure status propagation, missing inputs/tools and success without a manifest; script --help also passes.",
+    "Two actual script invocations from an unrelated working directory pass with the retained EUR Windows executable under Wine: extraction creates seven readable files including bg-main-graphics.json, then reuse preserves every file hash and mtime.",
+    "The original EUR ROM and retained executable hashes remain unchanged; outputs and execution evidence stay under ignored target/. The first sandboxed Wine attempt could not create its local socket; the authorized unsandboxed retry and reuse both succeeded.",
+    "Final project-memory coverage and whitespace checks pass; this record covers only the new wrapper and its Python tests."
+  ],
+  "limitations": [
+    "Outputs are typed JSON/TOML resources already supported by the selected CLI, not rendered graphic previews or complete ROM extraction.",
+    "No new native Windows, Linux runtime or USA extraction check was run. Default Cargo command construction is tested without rebuilding the runtime; actual extraction uses the existing Windows executable through Wine.",
+    "No guest/runtime integration, AndroidPort, performance measurement, package, commit or push change is part of this script unit; concurrent graphics-consumption changes remain separately recorded."
+  ],
+  "files": [
+    "scripts/extract_rom_data.py",
+    "scripts/tests/test_extract_rom_data.py"
+  ],
+  "references": [
+    "README.md",
+    "docs/rom_data.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "audit-upstream-machine-autosave",
+  "title": "Audit upstream machine autosave compatibility",
+  "kind": "docs",
+  "platforms": [
+    "Desktop source comparison; Android integration identified"
+  ],
+  "changes": [
+    "Compare automatic machine-save control flow, on-disk formats, recovery and fork restore guards; identify a fork-native design boundary."
+  ],
+  "validation": [
+    "Inspected pinned upstream and fork serialization, callers, recovery paths and test source. No builds or tests run."
+  ],
+  "limitations": [
+    "No cross-format adapter, runtime recovery, interrupted-write or Android validation; configuration and retention decisions remain open."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-07-machine-autosave.md"
+  ],
+  "references": [
+    "docs/To_DO/FFTARecomp_Upstream_v3_1_Analisi_Decisioni_v0_2.md"
+  ]
+}

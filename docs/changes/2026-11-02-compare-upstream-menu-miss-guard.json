@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "compare-upstream-menu-miss-guard",
+  "title": "Compare upstream menu miss guard with fork fallback",
+  "kind": "docs",
+  "platforms": [
+    "Linux interpreter and desktop source; GUI untested"
+  ],
+  "changes": [
+    "Compare the upstream desktop background-confirm guard against a recognized action-menu miss modeled through the fork core."
+  ],
+  "validation": [
+    "For an in-view point rejected by the fork Actions layout at frame 40, the modeled fork fallback queued A; the upstream guard expression disallowed A for a recognized menu. Control and click states diverged and ROM/snapshot hashes remained unchanged."
+  ],
+  "limitations": [
+    "No window event or upstream runtime was exercised; the guard does not by itself prove protection during a partial reveal without a recognized menu. Isolated build emitted seven unused-code warnings.",
+    "The managed cleanup helper rejected the U31 unit because it accepts only target/rom-data-*; evidence is retained."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-03-panel-visual-fixes.md"
+  ],
+  "references": [
+    "docs/ffta_action_frame_width.md"
+  ]
+}

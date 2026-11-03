@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "slug": "consume-european-selection-byte-tables",
+  "title": "Consume European selection-byte tables through authenticated runtime data",
+  "kind": "changed",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Register e87-d86/index78 selection-byte-tables.json with two4/30-byte spans and no dependency; preserve all78 prior resource records and payloads.",
+    "Add immutable fixed-array bus ownership, prior70-byte/raw-gap composition and six nonserialized read/byte/physical-position counters; original live eligibility, numeric helpers and choice remain guest instructions."
+  ],
+  "validation": [
+    "One warning-free Windows host-test build e5b4566884e6e4d3c41565c5e0aefef0c808842c3f3bd181e6e04c8826ebd29d uses578 frozen files/246 core inputs from576 accepted model sources plus two leaves.",
+    "One reduced Wine filter passes80-file publication/all78 prior records and payloads exact, new-file interrupted publication,14 attach guards/two incomplete sets, same-owner/complete-state preservation on failed attachment.",
+    "Twenty native complete-state/clock cases cover12 original load prefixes and eight count/sum/choice stages including actual377BC. All34 raw bytes/four prior bytes are altered after Load;76 new and five prior served bytes match all read/interp_one callback deltas, fallback-source deltas zero. Four stop-safe families/91 entries/119 dispatches are coverage only.",
+    "All34 typed bus bytes/two classes/4+30positions, unaligned widths/mirrors/borders/prior/raw composition, unavailable-file Load/slotLoad/Undo same Arc and DMA3/CpuSet20halfwords/CpuFastSet16words complete-state-clock comparisons pass.",
+    "All243 guards/578 frozen hashes/576 model hashes/seven current paths/79 old files exact; artifact helper retires only successful interrupted publication copy, retaining accepted80-file dataset and all proof inputs/results.",
+    "Final changelog render/default/base999d0a6/metadata project-memory checks and CRLF-aware whitespace all pass."
+  ],
+  "limitations": [
+    "Actual production CLI registration/reuse and one ordinary positive suffix/full pair remain pending. Served-byte counts are not a distinct-byte union or full-routine/ABI acceptance.",
+    "Numeric-helper internals/distribution, full routine ABI, indirect references, opaque gap/event-catalog extent, Linux, USA, native Windows, new32:9 and the full ROM TODO remain pending; USA stays e8-d7.",
+    "Source/model/old proofs are not repeated; no ordinary game/checkpoint/navigation, performance/RSS/storage measurement or Machine/save/native/C API ABI change. Parallel frontend work remains excluded from this frozen build."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/selection_byte_tables.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/selection_byte_tables_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "scripts/extract_rom_data.py",
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

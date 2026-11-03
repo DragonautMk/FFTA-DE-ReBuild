@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "decode-european-constructor-alternate-templates",
+  "title": "Decode European constructor alternate templates and typed base pointer",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Add strict Record/Alternates/Catalog for four EURconstructor IDs20..23and full48Bstructural fields each at6eca78..6ecb38, plus parsed base pointer70cd58. Two disjoint source ranges/196Bretain exact ID/order/offset/count and lossless byte/full-halfword representation.",
+    "Validate first5equipment halfwords perrecord against actual parsed376item owners. Reuse authenticated constructor selection/patch fingerprints and original copy runner without rerunning closed default-template acceptance; byte01meaning and neighboring headers remain unclaimed.",
+    "Add one focused new alternate-source oracle; managed EUR e29-d28/24files/23resources and USAe8-d7unchanged until separate publication/direct ownership integration."
+  ],
+  "validation": [
+    "Independent exact-EUR literal/LDR+4/gatedu8ID20..23/48Bindex/copy, full196Breconstruction/noe29overlap and20equipment-owner bounds pass. Earlier private static helper corrected CD034LDRHassertion toCD032before output/build; retained as discovery history.",
+    "Warning-free Windows39935build and Wine61563single new oracle terminal/pass:24real four-IDcopy/live-patch cases cover u8truncation/selector/flag/mode edges,8isolated synthetic highbit/unused/valid-high-item/ORflag preservation cases.5560instructions/137PCs and10original helper-init instructions are coverage only.",
+    "Strict JSON/fixedarray/order/count/ID/extent/source/coherent-edit/parsed-item-owner checks and scratch/callerframe/incomingargs/outerRAM guards pass; synthetic records unauthenticated/unpublished. Allocation/live-unit tail after127EB0unclaimed; default271+30/native16/397scene proofs not repeated.",
+    "All32protected original/e29/itemowner/candidate/cache/loader/canonical/source fixture hashes unchanged; no build/test failure. HEAD advanced externally toe180772committing prior e29content, inspected/preserved without agent commit. Source memory/whitespace/current hashes checked at closure, all jobs terminal."
+  ],
+  "limitations": [
+    "Standalone source/original-prefix proof only; managed publication/typed CPU-DMA-native pointer and record ownership/lifecycle/positive ordinary scene/actualCLI remain pending.",
+    "Allocation/live-unit tails, whole-function ABI, byte01semantic meaning and neighboring header/following240Bownership remain unclaimed. The four owned IDs do not define a fallback for other inputs; original guest branches remain.",
+    "New Linux/USA/native Windows and broader gameplay/maps/audio/GUI/archive/mod remain pending. No performance/startup/RSS/space campaign or AndroidPort change; private ROM/saves/inputs/source fixtures/generated code remain ignored."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/constructor_alternates.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/constructor_alternate_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

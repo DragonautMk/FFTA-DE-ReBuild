@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "audit-upstream-android-touch",
+  "title": "Audit upstream Android dialogue touch selection",
+  "kind": "docs",
+  "platforms": [
+    "Android source comparison"
+  ],
+  "changes": [
+    "Trace touch delivery and compare upstream two-answer handling with existing fork Notice and fallback behavior; propose one bounded scene."
+  ],
+  "validation": [
+    "Inspected pinned Android UI, JNI, engine, guest hook and relevant test sources; historical fork touch documentation reviewed. No tests run."
+  ],
+  "limitations": [
+    "Actual scene, ROM-region coverage, native behavior, device and remaining Android touch families are unverified."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-06-android-touch.md"
+  ],
+  "references": [
+    "docs/To_DO/FFTARecomp_Upstream_v3_1_Analisi_Decisioni_v0_2.md"
+  ]
+}

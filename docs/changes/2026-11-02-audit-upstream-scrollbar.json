@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "audit-upstream-scrollbar",
+  "title": "Audit upstream original-game scrollbars",
+  "kind": "docs",
+  "platforms": [
+    "Desktop source comparison; Android partially inspected"
+  ],
+  "changes": [
+    "Compare upstream list scrollbar implementation and callers with existing fork input paths; propose a bounded adaptation and acceptance criteria."
+  ],
+  "validation": [
+    "Read pinned upstream and fork sources; confirmed common ancestor and remote tag/target distinction. No tests or builds run."
+  ],
+  "limitations": [
+    "Audit is partial: Android call sites, list-specific runtime behavior and integration remain unverified."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-02-scrollbars.md"
+  ],
+  "references": [
+    "docs/To_DO/FFTARecomp_Upstream_v3_1_Analisi_Decisioni_v0_2.md"
+  ]
+}

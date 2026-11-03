@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "decode-european-progression-reward-and-price-records",
+  "title": "Decode European progression deltas and price discounts with original live-state proof",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Add strict lossless ProgressionRewards/Record model for100records/1000B6e79da..6e7dc2, IDs0..99/fixedsourceoffsets/eightu8deltas/discount08/opaque09. Keep12Btailunowned/rejected101candidate; no observed-range constraints or invented item foreign keys. Finite diagnostic arithmetic retains live growth/u8wrap/carry/cap99/oldinvalid/flags and signed price division/unsigned minimum/zero/optional+10u8wrap; original guest routines unchanged.",
+    "Managed EUR e34-d33/29files/28resources and USAe8-d7 unchanged at this source boundary. Read actual source-authenticated parsed Items for the complete original price consumer; outside IDs100/255 preserve original raw access and model None is diagnostic only."
+  ],
+  "validation": [
+    "Windows13783build warning-free; single new Wine62460oracle terminal/pass with362real cases:7default/indexed publisher prefixes,232original delta caller/full04870chelpers and123completeCF674prices; all100rows/all8fields/original mode masks/item getter/live predicate/u8mode-u16item truncation/old99-255 tested.",
+    "68isolated high-delta/opaque/discount/signed quotient/unsigned minimum/zero/u8+10wrap cases pass; copies unauthenticated/unpublished. StrictJSON/fixedarray/IDs/order/sourceoffset/coherentedit/all1000Broundtrip/SP/callee/fullEWRAM/stack guards pass.64148instructions/404PCs coverage only, no performance metric.",
+    "All37protected ROM/e34dataset/cache/loader/canonical/candidate/sourcefixture hashes unchanged; old accepted source/native/scene checks not repeated. Source final summary/hashes and structured memory checks recorded. No agent commit/push; external e634dd8 earlier e34/static commit preserved."
+  ],
+  "limitations": [
+    "Source scope covers publisher prefixes, eight caller-to-full-helper paths and full prices; isolated arithmetic suffix stops before epilogue, no whole-progression-caller/skill-semantic claim. Managed publication/direct CPU-DMA-native consumption/lifecycle/positive ordinary use remain pending.",
+    "NewLinux/USA/nativeWindows and wider TODO pending; no performance/startup/RSS/space measurements or AndroidPort changes. Private ROM/data/saves/inputs/generated code/fixtures remain ignored."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/progression_rewards.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/progression_reward_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "consume-european-fourteen-byte-special-unit-metadata",
+  "title": "Consume European fourteen-byte special-unit metadata through original guest readers",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "EUR e31-d30 adds linked-metadata14.json/gameplay.linked-metadata14, 26 files/25 resources with actual parsed metadata52 byte02 owner. All24 earlier decoded files/e30 generations retained; USAe8-d7 unchanged.",
+    "Project exactly1302 typed bytes across pages6e6/6e7 with field counters and two-word93-record mask. Preserve original getter routing/live palette books and copies/descriptor overrides/allocation/clock/save/native ABI. Byte01 remains semantically unconstrained; no new guest bounds/fallback.",
+    "Two reduced managed/native/lifecycle checks and one separate positive ordinary-scene gate use shared source helpers without repeating the closed504+13 source or earlier-family acceptance."
+  ],
+  "validation": [
+    "Windows managed-test build warning-free and terminal/pass, recovered from logs/map after compaction without rebuild; immutable test copy retained. Wine75387 two checks pass interruption/create/reuse/repair/move/e30 retention/coherent field/payload/source/dependency/path/role rejection/parsed byte02 owner and transactional attachment.",
+    "Unavailable-copy Load/Undo/backup/restart retain in-memory resources.37 original/interpreter/compiled paths with all1302 raw bytes altered match full states/clocks. IDs2/20/28/94 positive; compiled byte/halfword/packed/tail13/12/35/9B; two normal0/1 paths zero new source. All1302bytes/record-mask boundary/widths/mirrors/BIOS/CpuSet/FastSet/DMAcross-record4typedB/padding2typed2raw pass.4793instructions/2502dispatches are coverage only.",
+    "Windows7465 production warning-free/canonical restored; candidate SHA c0f3b5cc6e4f50edbb17a596cd68876e5dbebb551a5ec4b4cea7e51140a4aeeb. ActualCLI9489 creates/reuses without writes/old cache/unrelatedcwd,28 managed files guarded.",
+    "First retained397Pub sample is positive; one Wine24398pair matches every fullstate/clock/central-wide image/OAM/dispatch/mixed-PSG-FIFO-HLEaudio with27newB/two records/byte4-halfword8-packed12-tail3. Final Pub image inspected; no new scene locator/negative/fullpair repeat needed.",
+    "Protected originals/e30/current datasets/source proof/state/input/cache/loader/canonical/candidate retained. Memory/whitespace/source-hash checks recorded at closure; no build/runtime failure, source504+13/e30/default acceptance repeat, agent commit or push."
+  ],
+  "limitations": [
+    "Ordinary scope covers two records and observed field reads; all93 getters/live book/initializer-prefix cases are covered by separate source proof, sampled compiled cases by targeted test. Allocation tails/global caller bounds/byte01 semantics/palette payloads/adjacent families remain unclaimed.",
+    "New Linux/USA/native Windows and broader gameplay/maps/audio/GUI/archive/mod phases remain pending. No performance/startup/RSS/space campaign or AndroidPort change; private ROM/saves/inputs/generated code stay ignored."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/metadata14.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/metadata14_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "scripts/extract_rom_data.py"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

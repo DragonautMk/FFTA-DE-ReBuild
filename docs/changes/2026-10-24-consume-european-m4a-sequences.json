@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "consume-european-m4a-sequences",
+  "title": "Publish European typed sequences and driver tables for original guest consumption",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Advance EUR to e43-d42with audio-sequences.json/audio.m4a-sequences:38files/37resources, all36prior decoded/e42retained, USAe8-d7. Bind808sources177248B with actual parsed audio-directory and audio-tone owners. Typed producer validation derives147424states/390program-key domains against the actual bank model, including inherited-command and same-byte bank metadata guards.",
+    "Reconstruct original sequence opcode/operand/branch/table bytes for CPU-DMA-BIOS-native reads; merge adjacent tone ownership/raw gaps and generic audio host reads. No raw overlay, hostsequencer or serialized pointer. Nonserialized per-category counters/105253instruction bits/49clock-36command-2extended masks observe use without changing guest RAM/clock/save-nativeABI."
+  ],
+  "validation": [
+    "Windows11482managed test build warning-free; Wine49125two focused authentication/lifecycle and original-interpreter-native/bus/live-running/generic-host checks terminal/pass. Publication failure/create-reuse-repair-move/e42retention/25coherent source-field-owner-dependency-path-hash guards/transactional missingfile/unavailable-copy Load-Undo-backup-Restart pass. All177248typed bytes(91663opcode/85384operand/49clock/144command/8extended) and105253instruction/alltable masks read correctly with rawsource altered.",
+    "35representative original/interpreter/native checkpoints with177248raw source bytes altered match complete states/clocks. Compiled categories[15opcode,36operand,10clock,144command,8extended]allpositive.953instructions/142PCs/81dispatches coverageonly. LiveRAM running-status override and unowned rawoperand native behavior remain original; all808edges/widths/mirrors/realBIOS/SWI-DMA/two-tone-two-sequence guest+generic-host and rawpadding boundaries pass.",
+    "Actual parsed directory/tone dependencies reject same-byte bank note-key metadata edits and inherited command metadata mismatch; canonical encoded file/source guards also pass. Generic host reads after unavailable-directory lifecycle pass without recording guest usage. No hostsequencer or whole original sequencer/mixerABI claim; internal dispatch/note/wait and narrow reader returns are explicit.",
+    "No build/Wine failure. Wiring preview/template duplicate None-fields and private test-generator pattern corrected before application/output. No oldsource404/tone-directory/e42native-host-ordinary proof repeated.627oldprotected files plus frozen currenttestexe unchanged; private target/rom-data-audio-sequences/{windows-managed-tests.*,windows-managed-results.json,windows-{managed,native}.log,recomp-tests-managed.exe,windows-managed-europe/{managed-result,native-result}.json} retain results.",
+    "Final project-memory including --base7597b92and CRLF-aware whitespace checks pass; 824protected hashes unchanged, managed-final-summary/managed-final-protected retained, no live unit job.",
+    "ProductionWindows48965build warning-free; privatecandidate355ebc024334d6d0791931692ee0fd8f2eeeb4107f58e8becc91b272668da5e6, canonicalf3e277dbrestored. Wine48325actualCLIcreate/reuse-no-write40managedfiles/oldnativecache/unrelatedcwd400retained IN13bankPlay pass819newsourceB(366opcode/262operand/191clock),185instruction source records observed including lookahead, not an executed-instruction count.0command/extended/generic-host ordinaryreads remain explicit.",
+    "OneWine29123new e43ordinary400pair passes everycomplete state/clock/central-wideimage/OAM/dispatch/mixedPSGFIFOHLEsample with same819B/185records. Opcode/operand/clock use all required positive. Mixed1379881native/2741618fallback dispatches are coverage only. Existing EUR bank checkpoint/input reused without GUI/navigation/fixture/RAM-statepayload/personal-save edits; no oldsource404/native35/e42acceptance repeat.",
+    "Final568x160CLIbankbackground inspected; known serializedseparateUIomits panels, no newfoodcount/confirmationclaim. Private windows-{build,cli-processes,cli-no-write,cli-summary,scene-result}.json/scene-executable.json/windows-bank-play-audio-sequences-full-state-audio.log/bank-play.png retain terminal evidence. No new production/ordinary build/Wine failure; no live unit job.",
+    "Final project-memory including --base7597b92and CRLF-aware whitespace checks pass; 878protected hashes and40CLIhash-mtime guards unchanged, ordinary-final-summary/ordinary-final-protected retained. No live unit job; broader TODOgoal remains active."
+  ],
+  "limitations": [
+    "Ordinary acceptance covers one retained EUR400frame bankPlay scene,185instruction source records observed including lookahead and819opcode/operand/clock bytes; command/extended/generic-host reads are zero. Full declared family105253instructions/177248B remains larger than that ordinary scope. Internal checkpoints/narrow reader returns do not prove whole originalsequencer/mixerABI or wider scenes.",
+    "WiderdriverLUTs/unselectedassets/otherfamilies/GUI-archive-modTODO and newLinux/USA/nativeWindows remain open. Generic host byte access is not a hostsequencer claim. No performance/space/AndroidPort work, game data publication or agentcommit-push; concurrent Debug-save and prior work preserved."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/audio_sequences.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/audio_sequences.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/audio_sequence_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "scripts/extract_rom_data.py",
+    "docs/rom_data_audio.md",
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_audio.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

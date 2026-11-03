@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-10-25",
+  "slug": "decode-european-script-special-normal-poses",
+  "title": "Decode European normal script poses with explicit special-unit producer witnesses",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add a public lossless conditional normal script-special pose model with20logical metadata14producer witnesses/151script source references and108deduplicated queries. Reuse existing root/binding/frame/sequence/OBJ/indexed4bpp formats; retain all shared opaque commands and source fields.",
+    "Validate exact archive/metadata14producer links, physical graph references and byte-identical initial/normal views independently, including overlapping dependency intervals, then subtract their union. Only33new spans6436Bform the new source fingerprint; previous source owners and all live guest behavior remain unchanged.",
+    "Add one reduced new Wine source oracle for60new physical cells/two facing aliases/53null+sevenproper resets/17new pixel scheduler-DMA uploads. No newcommand replay because every new frame is operation1. Source-only module registrations leave e61managed/runtime/USAe8 unchanged."
+  ],
+  "validation": [
+    "Selected source diff contains only one core module line/two frontend cfg(test) registration lines plus two new modules. Both new modules pass rustfmt. One affected Windows frontend test build passes without warnings; frozen executable SHA256 2eaa565389788c0b6ac7b47b777df51884f25620553a39039aaae70f01871c5d.",
+    "One exact new EUR Wine source filter passes first attempt:18JSON/source/dependency/shared-owner guards,151script references/20producers/108keys, full41802B reconstruction/SHAf64755ef..,33new spans6436B/SHA6c3ef9c9.. equal the independent static plan.",
+    "Only new original-source paths execute:120constructor prefixes for60cells/two facing aliases/all threeparts,53null+sevenproper resets,17scheduler/queue/realDMA3 uploads and all5248new pixel bytes/wholeVRAM equality. No oldcommand replay: newframesallop1.15461instructions/494PCs/613observed nonDMA load bytes are coverage only.",
+    "Final preservation passes8701prior artifact hashes/1025build+1027Wine hash-mtime guards/all10compiled source preimages.337local feature links, new-module rustfmt, project-memory default+base7597b92 and CRLF-aware whitespace pass. User dirty work and accepted/rejected evidence remain intact."
+  ],
+  "limitations": [
+    "Source model and reduced original-source Wine oracle closed. Managed publication/runtime/actualCLI/ordinary pipeline remains separate and unimplemented for this family; EUR e61-d60/USAe8-d7 unchanged.",
+    "Conditional same-unit current normal assignment/override20clear/facing0..3projection only. No every-actor/action reachability or universal selector-to-current-sprite promise; alternate/42-230/high16registry/changed-or-stale actor contexts remain open.",
+    "New Linux/USA/native Windows/new32:9 pending. No old source/model/native/CLI/scene/census acceptance replay, gameplay fixture/navigation/checkpoint or private payload edit in this source unit, performance/storage measurement, Android/package/commit/push. User now explicitly authorizes ordinary-pad local EUR checkpoints for the separate equipment ordinary-use criterion; originals/cartridge saves remain unchanged and outputs private."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data/unit_obj_script_special_normal.rs",
+    "crates/recomp/src/rom_data/script_special_normal_model_tests.rs",
+    "crates/gba-core/src/rom_data.rs",
+    "crates/recomp/src/rom_data.rs"
+  ],
+  "references": [
+    "docs/rom_data_unit_obj.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

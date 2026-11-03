@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "slug": "attribute-european-lower-rom-readers",
+  "title": "Attribute the European lower ROM residue to executed readers",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add a separate optional thread-bound SiteCapture filtered by aligned ROM words, retaining the address-only Capture schema/keys. Record interpreter execution PC/Thumb scope or None; nested HLE/DMA scope requires original opcode/address/width validation. Default-off cfg preserves normal exec behavior, native/save ABI and e73-d72 resources.",
+    "Classify all452selected bytes/113words:101PC-relative literal words404B from102executed Thumb LDR sites and12same-state switch words48B. Authenticate normalized-u16 guarded24entry switch prefix and observed indices7–18 without inventing a global input cap or asset extent. Keep pointed394FBC/phase0-371064/371034 payloads as separate unproved leads."
+  ],
+  "validation": [
+    "Initial Windows feature build compiled core but failed on two new-test private-helper references; preserve failure and fix only a local audio-clear helper. Incremental frontend build passes warning-free, frozen c831b960bc0bb28b6a958f1d1b80b0379af663cbde055cb59cd20f550d317bd4.",
+    "One first exact Wine filter passes original cached/uncached LDR context, outside-None, drop/reset and old-key probes, then a single current67file decoded F09 arm8476→8488. All113words appear in114instruction scopes; every selected original opcode/address/width matches. No old collector/fullpair equivalence acceptance replay.",
+    "All85selected input/frozen hash-mtime guards, compiled source hashes and user Atlas exact. Removing only new exec/frontend cfg lines restores exact preimages. Source contract fe4d55dbd1e8e3cd16cdde7bc56ca0237193464432ed8477a99fb2195d99b424; site report28a0c0e0dc5163cf1c2a9228355ecbf1fb236fe1ebab340496ae5d789763d285. Required artifact completion finds zero paths."
+  ],
+  "limitations": [
+    "Bounded source classification only; literal candidate/static exported roots alone rejected as insufficient. No full-ROM/other-scene/thread/all-use/payload-format or extent inference. ROM code remains required, new pointed payload contracts and full ROM_DATA_TODO remain open.",
+    "Linux/USA/native Windows/new32:9 pending. No performance/storage campaign, new checkpoint/navigation, Android/package/assistant commit/push."
+  ],
+  "files": [
+    "crates/gba-core/src/exec.rs",
+    "crates/gba-core/src/rom_data/read_audit.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/lower_rom_read_sites_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

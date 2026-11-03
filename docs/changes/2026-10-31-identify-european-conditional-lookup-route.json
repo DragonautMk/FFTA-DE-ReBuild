@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "identify-european-conditional-lookup-route",
+  "title": "Identify European conditional lookup route candidate",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Document a source-supported candidate for ordinary EUR lookup use using an existing Ability navigation input and original category/list-builder path."
+  ],
+  "validation": [
+    "Checked exact ROM, retained state and input hashes, original category map, original Wine disassembly and the existing Ability screenshot; no new gameplay replay."
+  ],
+  "limitations": [
+    "The selected branch, nonempty list and lookup reads remain to be observed; Linux and USA remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md"
+  ]
+}

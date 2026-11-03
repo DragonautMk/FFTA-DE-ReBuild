@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "show-debug-command-job-context",
+  "title": "Show target and pending job progress in the command console",
+  "kind": "added",
+  "platforms": ["Windows GNU / Wine"],
+  "changes": [
+    "Show the authenticated session label, ROM hash prefix and run alongside the current request ID, resolved parameters and available step or search progress; scans and selections show an indeterminate in-progress state.",
+    "Read the frontend's existing pending owner and budgets at most four times per second while the panel is visible, without issuing control requests or hashing guest state on each update. Verify the manifest against the running server identity before creating the panel."
+  ],
+  "validation": [
+    "Initial and final isolated Windows GNU test and production builds passed without compiler messages. The final source snapshot contains 1514 files with no source or selected-overlay drift; a focused Wine test covers bounded formatting, progress and refusal of a changed manifest.",
+    "Wine/Xvfb opened a synthetic interpreter session and ran a bounded search from the real command panel. Two status observations showed the same pending ID and decreasing instruction budget; after exact-ID cancellation the paused full state and clock remained stable, and session pins matched on close.",
+    "Visually inspected 480×360 screenshots show the session and ROM prefix, run, complete test request ID, search parameters and progress; after cancellation the idle view and simulated XInput on-screen keyboard remained readable. The synthetic guest advanced intentionally during the search."
+  ],
+  "limitations": [
+    "Long labels, IDs and displayed parameters may be abbreviated or clipped in narrow windows; the full pending ID and command remain in the copyable jobs status JSON. Scans and selections do not report fabricated percentage progress.",
+    "The Wine GUI check covered one interpreter search and simulated XInput. Native Windows/Linux, physical controllers, real IME and broad menu/CLI/console parity remain unverified; DBG2-13 through DBG2-28 remain open."
+  ],
+  "files": [
+    "crates/menu/src/command_console.rs",
+    "crates/recomp/src/debug_command.rs",
+    "crates/recomp/src/debug_command/observation.rs",
+    "crates/recomp/src/debug_command_panel.rs",
+    "crates/recomp/src/play.rs"
+  ],
+  "references": ["docs/debug_operations.md", "docs/development/DEBUG_TOOLS_V2_TODO.md"]
+}

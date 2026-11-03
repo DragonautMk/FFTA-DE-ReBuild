@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "add-debug-command-retry",
+  "title": "Allow explicit request retries from the debugger command console",
+  "kind": "added",
+  "platforms": ["Windows GNU / Wine"],
+  "changes": [
+    "Add a bounded textual retry command to the shared CLI and console parser, accepting the original run, request ID, deadline and typed action, including content selection by ID.",
+    "Reuse the authenticated, fingerprinted per-run mailbox and result ledger; reject nested retries, readonly status, help and malformed identity rather than sending them. Add command discovery and contextual syntax help."
+  ],
+  "validation": [
+    "An isolated Windows GNU test and production build passed without compiler messages; 1513 frozen sources and the selected overlays remained exact.",
+    "Wine passed five command-parser tests and three completion tests, including retry selection, typed action equivalence, malformed, readonly and nested-command rejection.",
+    "In one synthetic Wine/Xvfb session a CLI step advanced exactly one frame, the real command panel retried the original identity and received the identical terminal JSON, and changed step parameters were refused as an identity conflict. Full guest state, frame and clock remained exact thereafter; the session closed and protected pins matched."
+  ],
+  "limitations": [
+    "The caller must retain the original run, request ID, deadline and action; retries are explicit and results remain bounded and available only in the current run. A new ID creates a distinct action.",
+    "The Wine GUI proof covers a completed step; selection retry is covered by typed parser tests and the previously validated common ledger, not a separate live selection retry. Native Windows, Linux and physical controllers were not tested.",
+    "DBG2-13 through DBG2-28 remain open; broader command parity, result presentation and assistant procedures still need implementation and verification."
+  ],
+  "files": [
+    "crates/recomp/src/debug_command.rs",
+    "crates/recomp/src/debug_command/completion.rs",
+    "crates/recomp/src/debug_control.rs"
+  ],
+  "references": [
+    "docs/debug_control.md",
+    "docs/debug_operations.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

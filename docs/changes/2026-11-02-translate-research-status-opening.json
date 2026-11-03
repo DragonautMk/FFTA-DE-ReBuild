@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-research-status-opening",
+  "title": "Translate research status report opening",
+  "kind": "docs",
+  "platforms": [
+    "Desktop development documentation"
+  ],
+  "changes": [
+    "Translate the opening research status and first replay evidence from Spanish to English while retaining the legacy heading anchor and original game labels."
+  ],
+  "validation": [
+    "Compared the translated passage to its preimage: link targets, numeric runs, command block, hashes, literal script output and named paths match."
+  ],
+  "limitations": [
+    "The remaining research report and broader Markdown/source audit are unfinished; no ROM access, replay or runtime checks were performed."
+  ],
+  "files": [
+    "docs/ffta_estado.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

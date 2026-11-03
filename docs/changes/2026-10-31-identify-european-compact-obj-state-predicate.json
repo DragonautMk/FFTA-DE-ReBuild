@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "identify-european-compact-obj-state-predicate",
+  "title": "Identify European compact OBJ state predicate",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Document the original actor-bit and halfword conditions for the state-3 task route."
+  ],
+  "validation": [
+    "Original EUR Wine disassembly and read-only checks of two previously identified actors in one retained forecast snapshot passed with source inputs intact."
+  ],
+  "limitations": [
+    "The bounded initial-state negative does not establish later transitions, other actors or ordinary resource use. Linux, USA and native Windows remain open; no performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_obj.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

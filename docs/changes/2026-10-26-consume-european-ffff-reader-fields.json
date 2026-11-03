@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "date": "2026-10-26",
+  "slug": "consume-european-ffff-reader-fields",
+  "title": "Publish and consume European FFFF numeric reader fields",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Publish EUR e70-d69/65files64resources with actual metadata52/script-archive dependencies. Retain all63prior resource records/decoded files/e69 generation and USAe8-d7; canonical980producer/2240ref numeric model unchanged.",
+    "Serve exactly2Bproperty/4Bdirectory from immutable numeric fields with3B4/3D4page gates, field counters and composition with prior owners/raw neighbors. Preserve full encoded address, liveunmapped14 BIOS value, original CPUunalignedrotate16 and guest control path.",
+    "Verify actual e70productionCLIcreate/no-write reuse/oldcacheoneframe with authentic immutableEURF09; canonicalbinaryhash-mtime exactrestored. Ordinary positive reachability/equivalence remains pending."
+  ],
+  "validation": [
+    "First affected Windows core/frontend build passes warning-free, frontend frozen70ad043e701b8372d66f3f133ba5037ad228fbd58a320bca66f89a4a28573653. Core compile-only. First two new exact Wine filters pass; all158build/160Wineguards/37compiledpreimages exact.",
+    "Managed interruptedpublication/create/reuse/repair/move/all63previous records-files/e69retained and20transactional attachguards/fourdependencyguards pass. CoherentchangedJSON/source hashes fail canonicalauthentication; owner+fullstate retained. Directory-unavailable Load/Undo/backup/restart shareowner. AllsixrawB altered/twofieldbits pass; oldproperty retains own counter.",
+    "Original/interpreter/native14fullstate-clock paths/35compiledsourceB pass getter/twodirectoryselectors/zeroearlyreturn/three liveBIOS selected-word prefixes/direct-mixed/liveRAM. Both sourceedges/widths/threemirrors/realBIOSbus/SWI/DMA pass. MixedAPI2new2raw, CpuSet2new6raw/FastSet4new28raw/DMA4new4raw preserve fullstates/clocks.",
+    "Accepted dataset19a996a5a4577baa6baeb0ab740a1f70dfa614fcfa1fe8e1bb2bf202b0812e6b, manifest9ba60adf7e1cb35f444c534b9542c70a6ea744633acb1b98386ccdddc381e311, model4985d84c90180c30aeceff37be1e3c2482714238fec87f65b2189d4d6b070d84. Closedsource/model/A4/otherfamily proofs reused without replay. No fixture/navigation/performance/storage measurement.",
+    "Closure: all390source baseline hashes show only five selected hubs and two new modules plus documentation. Every other implementation, oldmodel/A4validator/oldproofs unchanged. All160activeguards/37compiledpreimages/602localfeaturelinks exact. All65generation files/sourcehashes/independentdatasetidentity match. Privateoutput ignored/untracked;12725priorprivateproof reused withoutlegacyrehash.",
+    "Project-memory render/default/basec792afd, rustfmt for the two new modules and CRLF-aware whitespace checks pass. No live runtime/build job; full goal remains active.",
+    "First new Windowsproduction build warning-free, frozene270d556193d5071c8b55bf657db2faf330caa7a9de184711bd26a506cb6b082. Canonicalf3e277dba89945d8884e83106bef90bd6d2bf31df51dd25145c791f2a4d80720 hash/mtime1792570130397888519 exactlyrestored; maincontent unchanged withmtime-only Cargoinvalidation.",
+    "First actualWineprepare/reuse/oldcache-oneframe all pass:65generation67managed64resources/twoactualdeps/all65equal03accepted/no-writehash-mtime reuse. AuthenticF09/cache/TinyCC unchanged; newowner report ROM_DATA_USE resource=graphics.unit-obj-ffff-reader-fields dataset=19a996a5a4577baa6baeb0ab740a1f70dfa614fcfa1fe8e1bb2bf202b0812e6b bus_reads=0 source_bytes=0 property_bytes=0 directory_bytes=0 fields_used=0. Oneframeattachment only, noordinarypositive/equivalence claim. All228activeguards/37compiledinputs exact; no closedsource-model-runtime-CLI-scene replay.",
+    "CLI closure: all393baseline source hashes confirm implementation unchanged; all228activeguards/37compiledinputs/604localfeaturelinks pass. Canonicalhash-mtime/maincontentexact, all65files matchaccepted e70-d69. Privateoutput ignored/untracked;13111priorprivateproof reused withoutwholelegacyrehash.",
+    "CLI-stage project-memory render/default/basec792afd and CRLF-aware whitespace checks pass. No live unit job; full goal remains active.",
+    "Newread-only existing81snapshot locator uses actor+34FFFF/nonnullgenericunit/currentjob-alternatejob conditions independent of sequence targets.159potential contexts/61snapshots allkind0/job0/alt0/overrideclear;157nullbodyptr andtwo01480168outsideEWRAM/noavailableoriginalbodytask. Bothmodes/override/null-dormant-outside retained; no fixedregistry/sameassignment/actorvalidity/globalunreachability inferred. Inputhash-mtime/slot-header-payload-ROM/model/closedcontract guards pass; no newWine/build/fixture/navigation/gameplay. Locator closed; ordinarypositive/equivalence remains pending.",
+    "Existing-context locator closure:393sourcebaseline/allimplementationunchanged,86freshinputhash-mtime guards plus228retainedCLIguards/37compiledinputs/436localfeaturelinks exact. Project-memory render/default/basec792afd/CRLFwhitespace pass; no livejob or additional build/gameplay/test."
+  ],
+  "limitations": [
+    "Managed/runtime child closed; actual productionCLI closed; ordinary positive reachability/equivalence remain pending. No validFFFFsprite sequence/assettarget/null/pointerfix/indexcap/fullallocator-actorABI/globalregistry/changedactor claim.",
+    "Linux/USA/nativeWindows/new32:9 pending. No privategameplaypayload edit/Android/package/assistantcommit/push; fullROMTODO remains active."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "scripts/extract_rom_data.py",
+    "crates/gba-core/src/rom_data/runtime/unit_obj_ffff_reader_fields.rs",
+    "crates/recomp/src/rom_data/unit_obj_ffff_reader_fields_runtime_tests.rs",
+    "docs/rom_data_unit_obj.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_graphics.md",
+    "docs/rom_data_obj.md"
+  ],
+  "references": [
+    "docs/rom_data_unit_obj.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

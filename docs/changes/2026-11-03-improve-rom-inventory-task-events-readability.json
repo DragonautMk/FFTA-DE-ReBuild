@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "improve-rom-inventory-task-events-readability",
+  "title": "Improve task and event inventory readability",
+  "kind": "docs",
+  "platforms": [
+    "Desktop development documentation"
+  ],
+  "changes": [
+    "Separate merged words, addresses and counts in task descriptor, effect/event directory and script command summaries, preserving recorded validation limits."
+  ],
+  "validation": [
+    "Compared the inventory against its tracked pre-edit version for identical headings, Markdown link targets and inline code spans, and identical digit runs after normalizing three previously documented numeric-boundary clarifications. Confirmed the remainder from the relative script archive onward is unchanged and checked the selector index against the event guide."
+  ],
+  "limitations": [
+    "Inventory review remains partial from the relative script archive onward; historical runtime results were not reproduced, and the wider English-first audit remains open."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_INVENTORY.md"
+  ],
+  "references": [
+    "docs/rom_data_events.md",
+    "docs/rom_data_tasks.md",
+    "docs/rom_data_scripts.md"
+  ]
+}

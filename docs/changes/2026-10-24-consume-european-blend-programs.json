@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "consume-european-blend-programs",
+  "title": "Publish European blend programs and feed original guest reads from typed fields",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Publish blend-programs.json/graphics.blend-programs in EUR e47-d46:42files/41resources,158authenticated source bindings/2428bytes. Retain all40prior decoded files/e46generation and USAe8-d7. Wire extraction, parsing, manifest/source binding, preparation, public descriptions and usage reporting; canonical references are internal, with no external asset dependency.",
+    "Typed header-command-producer bindings serve original CPU/DMA/BIOS/native reads on13source pages, merging previous-owner/raw bytes in mixed reads. Preserve live RAM program copying/overrides, indices, interpolation, sequencing and save/native ABI; counters remain outside saved machine state. No ROM shadow or new coefficient/index cap.",
+    "Add reduced Wine managed/native checks plus a focused extraction-set negative guard. Correct source-set coherence to require the immediately preceding palette owner before indexed manifest checks; full valid-dataset/runtime paths unchanged. Extend three existing input-guard test calls for the new file argument, without rerunning those old test scopes.",
+    "Complete actual CLI and ordinary EUR blend acceptance without new implementation changes or navigation fixtures. Reuse genuine Montblanc Richiamo/Pecorelle confirmation state/input and the current test executable; run the full differential replay against the dataset generation actually published by the production CLI."
+  ],
+  "validation": [
+    "Previous goal turn was progress: source-model160/345/6andoneWineoracle closed; terminalmodel-final-summary/no live job and229source-doc hashes matched before selection.2334protected artifacts/concurrent work retained; no closed source160/248inventory/e46/old audio or scene proof repeated.",
+    "Initial Windows89302compile exits101 before guest checks: three test calls missing the new file argument and an unused newtest wildcard import. Preserve original logs. Correct only calls/import; Windows86317affectedtest compile then passes warning-free.",
+    "Wine43962managed filter passes12coherent shape/source/hash/path/dependency/coverage guards, failure-before-manifest publication, create/reuse/repair/move/e46retention, transactional missing-file rejection and unavailable-file Load/Undo/backup/Restart. All2428poisoned raw bytes read from typed fields:960header/1380command/88producer,160programs/6tables. All40earlier decoded files and retained e46generation are byte-identical.",
+    "Wine43962native filter passes20original/interpreter/native complete-state-and-clock prefixes. Generated APIs read[34header70command16producer]B across source modes, wait/instant/count/delay/template copying and live mode2to1override. Rawcommand65535/tableindex3 remain outside every owner; tableindex5 uses the previous palette file even when its raw bytes are poisoned. Selected edges/widths/threeROMmirrors/realBIOS/CpuSet/FastSet/DMA new2raw2 and new2oldpalette2 crossing pass.1034instructions/295PCs/93dispatches are coverage only.",
+    "Diff review corrects the extraction-set gate from older dispatch presence to immediately preceding palette presence. Windows76187guardtest compile is warning-free; only the new focused Wine5627negative filter runs against the existing dataset and verifies early missing-owner rejection. No guest execution/fixture creation for that guard; closed lifecycle12/native20checks are not repeated because their full-dataset paths and field bindings are unchanged.",
+    "Evidence target/rom-data-blend-programs/{windows-managed-tests-build.*,windows-managed-fixed-tests-build.*,windows-managed-results.json,windows-guard-tests-build.*,windows-source-set-results.json,windows-managed-europe/{managed-result.json,native-result.json,source-set-result.json}}. No production CLI build or ordinary replay yet; canonical executable/ROM/cache/loader/input/saves preserved.",
+    "Final project-memory default/base7597b92 and CRLF-aware whitespace pass. All2334prior artifact hashes and124CLI/navigation/input hash-mtime guards are unchanged. Against229source-doc hashes, only six implementation files/eight memory files change plus new runtime/test/record; model/source and all other implementation/concurrent Debug-save work are preserved. runtime-preservation-check and runtime-final-summary/protected/source-hashes retain integration/targeted closure, CLI/ordinary pending and no live unit job.",
+    "Previous runtime turn was progress; terminalruntime-final-summary/no live job and232source-doc hashes matched. Retained Pecorelle state/input hashes match protected evidence; EUR state envelope and payload digest verified cheaply. No source/native/lifecycle/old-family proof rerun.",
+    "Windows81247production build warning-free; private candidateSHA7ff18437e21c9678a866ab410f0e6b36764bb43852b7a3150746e08f4275afd8; canonicalSHAf3e277dba89945d8884e83106bef90bd6d2bf31df51dd25145c791f2a4d80720restored exactly. Wine46190actual CLI preparecreated/reused passes44managed-file hash/mtime no-write guards, all42generation files matching accepted e47dataset, unrelated cwd and old native cache execution.",
+    "ActualPecorelle1000CLI locator is positive18aggregate source-byte reads:10header/8command,1program,0producer. Same existing EUR state/input/classic240x160, no guest RAM/state payload/save edit or new fixture. Native cache/ROM/loader/state/input and old/new managed files remain unchanged.",
+    "One1000-frame Wine91145fullpair from the same state/input and actual CLI-published generation passes every complete state/clock/central image/widebuffer/OAM/dispatch/mixed-PSG-FIFO-bitwiseHLE sample and positive18B/1program requirement. Audio counts[2194500,2194500,264000,264000,2194366]. Existing recomp-tests-source-set.exe reused, no test build or closed acceptance repeat.",
+    "CLI/ordinary evidence target/rom-data-blend-programs/{windows-build.json,windows-cli-processes.json,windows-cli-no-write.json,windows-cli-summary.json,windows-scene-result.json,windows-pecorelle-blend-full-state-audio.log}. No implementation content change in this closure; no performance or space measurements.",
+    "CLI/ordinary closure guards pass project-memory default/base7597b92 and CRLF-aware whitespace. All2580prior artifact hashes and170combined old/new CLI-generation/state/input/test-executable hash-mtime guards are unchanged. Against232source-doc hashes, only nine expected memory files change; every implementation and concurrent Debug-save file is preserved. Handoff consolidates closed blend children and retains a rejected read-only next-catalog extent hypothesis without promoting it. ordinary-preservation-check and ordinary-final-summary/protected/source-hashes retain fullTODO active/CLI-ordinary closure/no live job."
+  ],
+  "limitations": [
+    "Ordinary coverage is1of160programs in one classic240x160 EUR ability scene; producer reads are0and all6tables/other159programs retain targeted-only coverage. New32:9 scenes remain pending. ActualCLI/ordinary declared criteria are closed; do not rerun source/native/lifecycle/old-family proofs or recreate the scene merely for context.",
+    "The20controlled native prefixes do not establish a wholeallocator/callback/scheduler ABI or all valid RAM inputs/full physical table extents. Source52initial-mode-unread fields remain preserved, with a targeted live mode override now reading a representative second field.",
+    "NewLinux/USA/nativeWindows and other asset/GUI/archive/modTODO remain open. No performance/space campaign, AndroidPort change, original game/save data publication, commit or push; preserve concurrent Debug-save and previous work."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data/runtime/blend_programs.rs",
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/blend_program_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "scripts/extract_rom_data.py"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

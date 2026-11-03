@@ -153,7 +153,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             )
         };
         let frame = screen::ui_layer::Frame {
+            grid: None,
             pixels: &packed,
+            pixels_revision: None,
             raw_world: if index==1 && state.extra.kind==gba_core::ffta_dialogue::PanelKind::Stats {&state.extra.background}else{&m.wide_framebuffer},
             world_dims: (rw as u32, rh as u32),
             lut: lut.table.as_slice(),

@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "propose-upstream-150-percent-fast-forward",
+  "title": "Propose desktop 150 percent fast forward",
+  "kind": "docs",
+  "platforms": [
+    "Desktop source audit"
+  ],
+  "changes": [
+    "Define an unapproved 10-point percentage choice grid, 20-point shortcuts, legacy configuration behavior and specific validation gates for 150 percent fast forward."
+  ],
+  "validation": [
+    "Inspected the fork percentage normalizer, parser, menu choices and navigation, shortcut dispatch and desktop pacing/audio paths; checked candidate grid closure and 150 percent frame arithmetic in an isolated Python calculation."
+  ],
+  "limitations": [
+    "Proposal only: no runtime code, product tests, pacing or audio measurements, native Windows, physical controller or Android validation. Old releases ignore newly valid percentage values."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-01-fast-forward.md",
+    "docs/development/upstream-audit/U31-01-150-percent-proposal.md"
+  ],
+  "references": []
+}

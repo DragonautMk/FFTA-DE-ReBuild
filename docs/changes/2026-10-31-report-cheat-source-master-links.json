@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "report-cheat-source-master-links",
+  "title": "Report source-specific cheat master references",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Report bounded provenance-specific master links in readonly cheat show and assumed-plaintext inspection, distinguishing missing, invalid, self, unknown, mismatched-source and same-source references without selecting a dependency.",
+    "Include format and region metadata equality and the number of matching source records; preserve the original catalog and entry."
+  ],
+  "validation": [
+    "Isolated Windows GNU test and runtime builds passed; a focused synthetic Wine test covered all reference states, and final Wine CLI checks confirmed show/inspect agreement, the operation description and unchanged source.",
+    "Operation inventory and Atlas inventory checks passed; no real catalog payload or guest execution was tested."
+  ],
+  "limitations": [
+    "A source match does not verify device, encryption, master semantics or ROM behavior; recursive dependencies, decryption and guest application remain unimplemented. Native Windows and Linux runtime were not tested."
+  ],
+  "files": [
+    "crates/recomp/src/debug_cheats.rs",
+    "crates/recomp/src/debug_operations.json"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/debug_operations.md"
+  ]
+}

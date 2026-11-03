@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-10-30",
+  "slug": "model-european-observed-parameter-records27",
+  "title": "Model observed European parameter records and verify original prefixes",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add strict sparse ParameterRecords27 model for59 event-selected records/two1593-byte spans, preserving packed fields, signed0C/15, separate marked operands and opaque bytes.",
+    "Separate physical ownership from original low8 computed addresses: holes/highindices returnNone to the typed owner while guest/raw reads retain uncapped address semantics; edited shape validation is separate from exact EUR source authentication."
+  ],
+  "validation": [
+    "One warning-free586-source Windows core build49c72f02f144924f84e952a318e7c4121b5d1aefda608c825a8fc96295156dcd; one Wine filter passes25guards/73base+48synthetic original prefixes across12classes, independent model/results/load order exact.",
+    "All1593 bytes roundtrip;95 base/20 synthetic distinct source bytes observed. Signed127/-128, signed scaling/low16encoding, shared nibbles, marked operands and unowned/wrapping address views agree. AllEWRAM/IWRAM/VRAM/OAM/palette/SP-R8..R12/finalROM exact;739instructions coverage only.",
+    "143hash/mtime guards,586frozen hashes/251core inputs/584accepted preimages/125source guards and inverse module edit preserved. No old proof, ordinary fixture or performance/storage campaign replayed; retention helper removes zero files."
+  ],
+  "limitations": [
+    "Managed publication/runtime, actual CLI and positive ordinary use remain pending; schema1/e88-d87/81 accepted payloads unchanged.",
+    "Whole catalog extent and unowned indices remain unknown; external helpers/prologues/epilogues/whole routine ABI/live effects/nativeclock/indirect references/Linux/USA/native Windows/new32:9/full ROM TODO remain pending.",
+    "Parallel DBG/menu/script/input work preserved and excluded."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/parameter_records27.rs",
+    "crates/gba-core/src/rom_data/parameter_records27/tests.rs",
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

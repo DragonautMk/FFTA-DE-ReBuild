@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "slug": "complete-local-session-control",
+  "title": "Complete local session control with independent queries, targeted cancellation and deadlines",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU locked/offline cross builds and Wine/Xvfb"
+  ],
+  "changes": [
+    "Audit and reuse accepted DBG10/11/12/16 local structured control, menu sharing, stepping/probes/capture and relocation. Fill concrete gaps only: waiting client previously owned sole mailbox lock, status/cancel could not operate concurrently and120sclient wait left the budget running.",
+    "Extend existing schema1 file protocol with separate query lock/request/result for status and targeted cancel, independent response retry/outbox. Match exact pending request ID, reuse existing frontend Pause/audio/suppression boundary and interrupt_probe, preserve partial state without rollback. No guest/core/frame-dispatch/save/native ABI changes or networking/listener/service.",
+    "Ready/result expose bounded session label and authenticated manifest SHA alongside run/request IDs/capabilities. Current client refuses mismatched/old sessions before publishing; raw stale/cross-channel requests consumed without execution. Optional legacy fields remain decodable; current requests always include identity/deadline.",
+    "Add20..120000msclient wait/deadline (default120000), reject expired work before execution and stop pending budget at next frontend poll. JSON for local errors/unacknowledged timeout/ok/refused/cancelled/closed; query does not overwrite primary result. Synchronous late completion reports timeout and observed state; closed final state can be null, never fabricated. Bound existing mailboxes/results and retain last per channel."
+  ],
+  "validation": [
+    "Frozen publice8bd939 plus19accepted/source overlays excludes separate concurrent ROM work. Warning-free locked/offline Windows feature/default builds kept as local candidates; normal runtimes unchanged. Final candidate hashes and selected source retained in build-runtime.json/build-default.json/build-selection.json.",
+    "30distinct Wine tests pass:16controller/protocol and14frontend (1existing ignored), covering separate client/query locks and responses, request/run/session/schema/cross-channel rejection, targeted cancel ID, client timeout/expired pending/late ack and independent query retry. New closure assertion reruns only the affected protocol test:31executions,30distinct tests. Final candidates featureaf3890937f40b9851ab3707576f552f7db45507e8aaefe754087b92bd29d7ccf and defaultdf4a78a864c0552b6bf9a12c2a986f2831748871e99101836438bbe7a10b84bd.",
+    "Actual default Wine/Xvfb GUI19CLI calls from unrelated cwd/spaced apostrophe Unicode session: status works while step600client holds primary lock, wrong request ID refuses and leaves pending command, exact cancel stops after10partialframes; remaining0/paused/stable full state and guest/host audio muted/empty observed. Readonly graphics capture returns structured path with identical guest state.",
+    "Actual250msclient wait returns structured timeout/server_acknowledgedfalse; next query proves remaining0/control-timeout/pendingnull and same-ID server timeout response. Wrong copied-ready manifest refuses before publishing, real session state unchanged. Close with pending work exits0, ready inactive/lease released and subsequent query refuses.",
+    "GUI review finds server close error/statusnull correct but outcome incorrectly classified refused after work began. Preserve pre-closed-outcome-review source/selections/build/test/GUI results; final production delta only closed classification and help spacing plus cfg(test) assertion. Rebuild candidates/tests, pass only affected synthetic Wine protocol test, reuse unchanged GUI/30tests without new guest replay. GUI retains actual old authenticated runtime identity.",
+    "Independent final verification checks19live/frozen overlays, source delta restricted to classification/help, current candidates vs build receipts, actual GUI pinned old runtime,30test results+1rerun,19CLI outcomes and all6original input/normalruntime hash-mtimes. Whole guest frame method and native dispatch helpers unchanged. Screenshot inspected. Keep all inputs/reports/source/preimages/review/logs/results/candidates/shared caches; only superseded canonical unit executables replaced by final builds. No managed disposable trees/browser profiles, ROM completion helper inapplicable.",
+    "Documentation/checklist/state/README/handoff/record/changelog, local links/22ordered IDs(01-20closed), metadata-only memory and whitespace pass. Workspace/basee8bd939 checks exit1 ONLY separate concurrent ROM runtime/conditional_records8.rs and recomp/rom_data/conditional_records8_runtime_tests.rs needing their own updated record. Earlier model leaves were independently documented during this unit; do not misattribute the new runtime work or overwrite it. DBG20 source coverage complete. Exact results under target/debug-tools-control/memory-results.json; no old ROM/DS/native/parity/performance acceptance rerun."
+  ],
+  "limitations": [
+    "Windows GNU/Wine only; native Windows/Linux GUI, physical controllers, native budget cancellation and actual wall-clock changes unverified. New actual GUI exercise targets steps; probe uses same pending/deadline routing plus existing interrupt_probe.120sdefault not wall-clock-waited again; new actual timeout250ms and synthetic20ms.",
+    "Deadline checked at frontend boundary using civil time; client wait monotonic. No mid-frame or blocked callback interruption, hard deadline or rollback guarantee. Timeout without acknowledgement requires status/ID inspection before retry. Last-result retention is bounded, not durable request history; malformed/stale raw requests diagnosed in log without forged acknowledgement.",
+    "Local folder write access is authority, not cross-user authentication. Legacy requests may omit deadline/manifest; current client requires capability-aware runtime and new isolated copy. Separate replay workers retain their existing cancel path; menu budgets use F6/Escape. Closed state may be unknown/null.",
+    "No network/send, normal runtime replacement, Android/Godot, fixture rebuild for context, package release, commit or push; preserve concurrent ROM models."
+  ],
+  "files": [
+    "crates/recomp/src/debug_control.rs",
+    "crates/recomp/src/play.rs",
+    "crates/recomp/src/main.rs",
+    "docs/debug_control.md",
+    "scripts/README.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/debug_control.md",
+    "docs/debug_probes.md",
+    "docs/debug_sessions.md",
+    "docs/development/DEBUG_TOOLS_TODO.md"
+  ]
+}

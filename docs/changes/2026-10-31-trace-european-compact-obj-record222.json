@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "trace-european-compact-obj-record222",
+  "title": "Trace European compact OBJ record producer",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Document the conditional original UI-to-context path for metadata record 222 and its declared descriptor witness."
+  ],
+  "validation": [
+    "Original EUR Wine disassembly, authenticated descriptor reconciliation and read-only checks of three retained snapshots passed with inputs unchanged."
+  ],
+  "limitations": [
+    "The UI selection producer, actual task execution and ordinary resource use remain unproved; static snapshots do not establish later availability. Linux, USA and native Windows remain pending; no performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_obj.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

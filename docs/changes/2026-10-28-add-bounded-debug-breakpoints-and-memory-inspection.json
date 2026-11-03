@@ -1,0 +1,59 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "slug": "add-bounded-debug-breakpoints-and-memory-inspection",
+  "title": "Add bounded interpreter breakpoints, bus watchpoints and readonly memory inspection",
+  "kind": "added",
+  "platforms": [
+    "Windows cross builds and Wine/Xvfb; synthetic core/frontend validation"
+  ],
+  "changes": [
+    "Extend the isolated debug-control channel with inspect/break/watch and menu Inspect PC / registers. Report full registers/CPSR/mode, frame/clock,1..256 immutable backing bytes, region/mirror/physical ROM offsets, exact-buffer authenticated optional debug-labels.toml and source-plan owner overlaps. Refuse IO/open-bus/backup protocol inspection; label/manifest provenance does not claim observed execution or typed consumption.",
+    "Add bounded interpreter search with neutral guest input,1..5000000steps/600completed frames and at most2000steps per UI tick. PC/mode stops before an eligible interpreter step; read/write/range/width/value watch stops after the complete step including HLE/DMA/tick, excludes fetches and distinguishes non-instruction service sites. Native search is explicitly refused; watch requires rom-data-read-audit. Retain partial-frame guest state/audio and last completed display until resume/frame completion.",
+    "Add feature-gated thread-local first-hit bus observer and readonly core backing mapper without Machine/memory-layout/save/native ABI fields or timing mutations. Read wrappers preserve original bus expressions and return values; write observation records requested value before the original operation. Bound request/result/labels/owner metadata; retain only last inspection/search response rather than a snapshot timeline.",
+    "Refuse recording/replay/frame-step overlap with an active search and reuse F6/Escape/owner-close interruption. Pure Labels::parse accepts the same authenticated buffer whose hash is reported; load delegates without changing existing file semantics. Add a server last-response outbox and flush-before-next-request so transient Windows replacement refusal retries publication without replaying the guest command; terminal flush is bounded, persistent IO still surfaces via logs/client timeout."
+  ],
+  "validation": [
+    "Frozen public07be4d2 plus11selected overlays includes accepted DBG10 and excludes concurrent extraction implementation. Locked/offline Windows feature/default release builds are warning-free. Final feature SHA25644a96674d5ff840716169dbf3df911af3ba8d75c61281af33cd4868442c78573, default1d52e1ea0e2de071ad6a54a27603cd2913568226bb5dd6408f166ab591d2c36b; normal Windows/Linux executables retain original hash-mtimes.",
+    "88 distinct targeted Wine tests pass:5probe/inspection,3core mapper-observer,25bus regressions,6controller/channel,46menu,3label parser. Executions are84initial plus8affected label/probe and6updated mailbox tests; do not double-count reruns as distinct tests. Checks cover exact before-PC/after-write state against unobserved execution, zero-step PC identity/mode, fetch exclusion, value/width/range/bounds, immutable mirrors/VRAM mapping, IO refusal, same-ROM owner/label authentication and altered source rejection.",
+    "21 first-stage real CLI/GUI checks pass on new DS20 copy.256BROM bytes equal backing source; RAM mirror/registers/labels and IO/backup/wrap/length/foreign-label refusals preserve complete-state hash/frame/clock. Thumb080003d6 hits before step66720 at clock6241285276/frame22219; a repeated current-PC search executes0steps and preserves all state. Word read03007ffc=value03000f10 stops after IRQ service with eligible_instruction=false; word write03007f78=request6000003f stops after the whole step. One-step not-reached, partial-state idle freeze and subsequent completed-frame step pass.",
+    "Initial overlap harness presses Return0.3s after Wine-client spawn, before the search arrives. Recording legitimately starts and search refuses it. Reject only this startup ordering, preserve guard-startup-race fixtures/logs/screenshots and accepted first-stage results; do not replay the21unchanged checks. Corrected remaining guard harness waits for the pending client before actions.",
+    "Inspection provenance review replaces separate file reread by pure exact-buffer Labels::parse; rerun only5affected probe/3label tests. Narrow source/preimages and selections retained. Search loop is independently identical to the accepted first-stage loop; formatting restoration removes one unrelated CRLF change without expression changes.",
+    "First final-default inspection finds a real Windows sharing race: inspection.json publishes, but replacing result.json is temporarily denied while the client reads the prior result. Client actually times out120s, no automatic command retry. Preserve mailbox-sharing-attempt. Updated outbox test blocks atomic publication with a directory, verifies pending response survives and request is not reexecuted, then releases destination and verifies exact acknowledgement. All6updated control tests pass. One inherited --lib-only-binary build command refused before compile; corrected harness and logs retained in mailbox-command-attempt.",
+    "Nine final-default CLI/GUI checks plus2pending search runners pass: readonly256B exact-buffer label SHA/menu registers and PC without audit; watch feature refusal preserves state; recording/replay actions refused during a live search; F6 interruption and owner-close acknowledge partial/closed failures. Final screenshots visually inspected. A transient Access denied in final log recovers with the same response and no client timeout. Accepted final session closes cleanly with inactive ready marker.",
+    "Independent final verification authenticates11live/frozen overlays, final candidates, all202selected original input hash-mtimes, test/result identities and private-output ignore status. Stripping only the new observation wrappers/hooks reconstructs every original bus expression; search loop remains exact.21first-stage plus9final CLI exits match, actual3hit metadata validated, no final recording/replay spawned. Evidence and artifact-retention.json under target/debug-tools-probes retain current runtimes, source/preimages, accepted reports and failed diagnostics; no managed disposable trees/browser profiles were created and ROM-only completion helper does not apply.",
+    "Final415local Markdown file links,22ordered DBG IDs and only DBG01-11checked pass. Project-memory workspace/base07be4d2 coverage and git diff --check pass. Checklist, feature documentation, durable state and handoff close DBG11; DBG12 remains unstarted, with concurrent extraction described only in its own records."
+  ],
+  "limitations": [
+    "Wine/Xvfb interpreter validation only. Native Windows/Linux/Wayland, physical controllers, other scenes/ROMs/datasets and full-duration5Mstep/600frame searches remain unverified. Native instruction search is unsupported and refused; readonly inspection may observe a paused native copy. No native-parity correctness or instruction cause is inferred.",
+    "Bus watch scope covers actual MemMap bus methods, excluding interpreter fetches. It records requested writes even for transformed/ignored destinations and may observe nested widths; direct host-vector reads are outside scope. Stop is after the complete interpreter/service step, including inherited HLE/DMA/tick, not inside an individual memory operation. PC stop is before eligible Machine step, without testing opcode condition success.",
+    "Images represent last completed frame; partial guest audio/state are retained until normal frame completion while host audio stays silent. Owner/label overlap is declared/source-authenticated correlation, not typed consumption, ownership discovery or new ROM/DS acceptance. Late inspection/search sections remain timestamped prior observations in status.",
+    "Client120s wait is not cancellation; transient response replacement is recovered while the process remains alive and terminal flush is bounded500ms. Persistent IO failure, force-killed process or shared-filesystem adversarial edits are not certified; old diagnostic fixtures remain retained and private. No normal runtime replacement, old Bank/F09/native parity/extraction/performance replay, Android, Godot, commit or push."
+  ],
+  "files": [
+    "crates/gba-core/src/lib.rs",
+    "crates/gba-core/src/mem.rs",
+    "crates/gba-core/src/debug_memory.rs",
+    "crates/gba-core/src/rom_data/read_audit.rs",
+    "crates/recomp-core/src/labels.rs",
+    "crates/recomp/src/debug_probe.rs",
+    "crates/recomp/src/debug_control.rs",
+    "crates/recomp/src/play.rs",
+    "crates/recomp/src/main.rs",
+    "crates/menu/src/lib.rs",
+    "docs/debug_probes.md",
+    "docs/debug_control.md",
+    "scripts/README.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/debug_probes.md",
+    "docs/debug_control.md",
+    "docs/labels.md",
+    "docs/debug_rom_audit.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "slug": "trace-european-constructor-slot-cell-gates",
+  "title": "Authenticate constructor slot cell gates and exclude the retained map",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Authenticate eight bounded source windows tying9DB0C owner/collection callback pair through9E300/145C10to9B11C(actor,owner), matching394/3A4slots and9DBA4constructor. Distinguish the preceding9DAD4readiness helper from the actual9DB0Centry.",
+    "Document the additional conditional slot gate: changed integerposition, actorflags10000/8000 transitions, unitFD2, valid signed0..15cell, cellflags02and signed surfaceheight>actorheight, animation36!=40, ownerflag20and free slot. Source helpers read live derived RAM cell records; no new immutable asset/globalmap bounds/runtime/schema/ABI/cache/save change.",
+    "Complete the new provenance-aware constructorcellflags02 candidate criterion over81existingnormalEUR snapshots: retain the oldalternate-sequence census asclosed and reuse its authenticated fixture list; no globalfilesystem fixture guessing or gameplay."
+  ],
+  "validation": [
+    "Reuse only the64alreadycaptured post-frame EWRAM snapshots: FD2/actorflags30=0/animation36=0, walkedcellsheight2/flags0and45owner20frames without cell02/height predicates. All256conditional16x16cell records lack02, their512Bhash3d9fd03ffe3735ec0bcb38c537033e39280e17de7bccbb2f2cfd80db91ee7d58stable over64snapshots. Thisexcludes slotcreation on the unchanged retainedmapstate, not futuremap/script changes/othermaps/intraframe-PC claims.",
+    "All87actualsource-tool-capturedRAM-output guards and8window hashes pass. Requiredartifactcompletion0eligiblepaths, alloriginalevidence retained. No newbuild/gameplay/capture/WineorLinuxtest; existingdisassembler only performsstatic sourceinspection. No oldsource/model/runtime/CLI/ordinary/census acceptance replay.",
+    "Memoryrender/metadata-only/CRLF-aware whitespace/newlinks/postcleanup87guards/8window hashes PASS. Requireddefault/base2fbf9f7 checks report only four concurrentDBGcatalog implementation files awaiting separate record; no ROMunit gap. Preserve those files rather than invent their validation.",
+    "Readonly81snapshot newcellflag inventory passes allsnapshot hashes/payload/ROMidentity andvalidconditional16x16domains: two distinct512Bprojections (oneF09/80river), zero02cells/candidate states. All88actual snapshot-report-parser-contract-outputguards pass. No newbuild/test/gameplay/capture, fixturemutation or oldsequence acceptance replay. TerminalNEGATIVE bound, notallEURmapcoverage.",
+    "Eligible-map unit requiredartifactcompletion0paths;88postcleanupguards/newfeaturelinks/metadata/CRLF-awarewhitespace pass. Requireddefault/base2fbf9f7 memorychecks remain limited to four concurrentDBGcatalog files lacking their ownnewrecord; ownROMsource/docs coverage iscomplete."
+  ],
+  "limitations": [
+    "Positive allfour animationphases/allfourlistsguest-host/fullordinarypair remainsopen. Existing81normalstates supplyonlytwo02-free mapconfigurations, so thatcandidateboundisclosed; do not retryunchangedmaps oradoptsynthetic/retiredcopies. Next sourcelead: produceroflivecellflags02/root02007F10andROM-backed terrain/materiallinks beforechoosinggenuineeligiblemap. Gatesdonotprovefullallocator/scheduler/globalmap/archive/gamecoverage.",
+    "Linux/USA/nativeWindows/new32:9 andfullROM_DATA_TODOactive/pending. No performance/storage campaign, Android/package/assistantcommit/push. Useru16andparallelDBGwork preserved."
+  ],
+  "files": [
+    "docs/rom_data_obj.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

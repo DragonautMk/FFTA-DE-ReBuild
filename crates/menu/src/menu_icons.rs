@@ -22,6 +22,22 @@ pub(super) fn draw(c: &mut Canvas, row: Row, x: f32, y: f32, scale: f32, ink: [u
             p.close();
             paint(p, true);
         }
+        Row::SaveStatesMenu | Row::SaveBackupsMenu => {
+            p.move_to(4., 3.); p.line_to(18., 3.); p.line_to(21., 6.);
+            p.line_to(21., 21.); p.line_to(3., 21.); p.line_to(3., 3.); p.close();
+            p.move_to(7., 3.); p.line_to(7., 10.); p.line_to(17., 10.); p.line_to(17., 3.);
+            p.move_to(7., 21.); p.line_to(7., 14.); p.line_to(17., 14.); p.line_to(17., 21.);
+            paint(p, false);
+        }
+        Row::RestartRom => {
+            p.move_to(19., 8.);
+            p.cubic_to(16., 2., 6., 3., 4., 10.);
+            p.cubic_to(1., 19., 14., 24., 20., 16.);
+            p.move_to(19., 3.);
+            p.line_to(19., 8.);
+            p.line_to(14., 8.);
+            paint(p, false);
+        }
         Row::FastForwardMenu => {
             for left in [2., 12.] {
                 let mut triangle = PathBuilder::new();

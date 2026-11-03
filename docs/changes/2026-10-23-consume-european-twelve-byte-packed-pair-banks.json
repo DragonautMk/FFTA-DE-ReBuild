@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "consume-european-twelve-byte-packed-pair-banks",
+  "title": "Consume European indexed packed pair banks through original guest readers",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "EUR e32-d31 adds linked-metadata12.json/gameplay.linked-metadata12,27files/26resources, all25prior decoded files/e31 retained, USAe8-d7 unchanged. No unproved semantic owner/dependency is added.",
+    "Typed1296B/two source roles/bank counters/108record masks preserve original full32row/signed-wrapping slot/u8mode/clock/save/nativeABI across CPU/native/SWI/DMA; raw/cross-bank reads keep existing semantics."
+  ],
+  "validation": [
+    "Windows36670 managed test and94316 production builds warning-free/canonical restored; candidate SHA 9c7f52d0e8fcb046962ebd8ef727a5cc1b72f81e41b47f7e9659ad8401dd4028. Wine22271 two checks pass publication interruption/create/reuse/repair/move/e31retention/coherent pair/unusedtail/source/dependency/path/bothroles transactional guards and unavailable-copy Load/Undo/backup/restart.",
+    "49original/interpreter/compiled paths with1296rawB altered match full states/clocks. Four records/both banks positive, compiled primary23/secondary22B; three unowned paths0newreads. Full32/wrapping/otherbank behavior/all1296bytes/edges/maskboundary/widths/mirrors/BIOS/bothbanksCpuSet/FastSet/DMAcrossbank4typed/trailingglobal2typed2raw pass.1828instructions/153dispatches coverageonly. Source1640+10+384/e31 gates not repeated; comment/injected-error wording cleaned aftertestcompile without assertion/production change.",
+    "ActualCLI2659creates/reuses without writes/old cache/unrelatedcwd;29managed files hash/mtime guarded. Pub397/Lutia3600/enemy-movement3530 coverage-negative/no fullpairs. Existing baseline frame12006/BG diagnostics guide Steal/Item menus; EchoGrass1200 still awaits Do it, physical A1300 yields actualCLI82174positive. No RAM/snapshot edit/new fixture or rejected experiment reopen. One ordinary positive 2200-frame Echo Grass confirmation: ROM_DATA_METADATA12_SCENE frames=2200 bus_reads=44 source_bytes=44 records_used=1 primary_bytes=44 secondary_bytes=0. Every fullstate/clock/central-wide image/OAM/dispatch/mixed-PSG-FIFO-HLEaudio sample matches; final image inspected.",
+    "Protected ROM/e31/currentdata/sourceproof/state/input/cache/loader/canonical/candidate unchanged; memory/whitespace/source hashes checked at closure. No runtime/build failure for integration, agent commit/push, performance or space measurements."
+  ],
+  "limitations": [
+    "Ordinary scope is44primary-byte reads from one record,0secondary; secondary-bank ordinary use remains targeted-only. Other pairs/banks may be targeted-only. Global caller bounds/flag semantics/next separately rooted global source/other gameplay consumers remain unclaimed.",
+    "NewLinux/USA/nativeWindows and broader graphics/text/maps/gameplay/audio/GUI/archive/mod phases remain pending; AndroidPort unchanged, private ROM/saves/inputs/generated data remain ignored."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/metadata12.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/metadata12_tests.rs",
+    "crates/recomp/src/rom_data/metadata12_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "scripts/extract_rom_data.py"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "classify-european-compact-obj-fourth-root",
+  "title": "Classify European compact OBJ fourth root",
+  "kind": "docs",
+  "platforms": [
+    "EUR; Wine"
+  ],
+  "changes": [
+    "Classify the source-backed 202-byte compact OBJ bank at 6c87dc and its four conditional selectors."
+  ],
+  "validation": [
+    "Original Wine disassembly and independent authenticated ROM call, table, extent and accepted e103 ownership checks passed."
+  ],
+  "limitations": [
+    "Reachability, ordinary use, model and runtime publication remain unverified; Linux, USA and native Windows pending; no performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_obj.md"
+  ],
+  "references": []
+}

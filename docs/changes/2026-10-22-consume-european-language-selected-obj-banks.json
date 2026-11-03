@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "date": "2026-10-22",
+  "slug": "consume-european-language-selected-obj-banks",
+  "title": "Consume European language-selected OBJ banks and pointer tables",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Independently resolve three original EUR selector-to-constructor paths in08038008 through two five-entry language pointer tables at3955c4/3955b0, using language byte02001f6e. Resolve08088760to an already migrated pair without inventing a new payload.",
+    "Add five source-authenticated bank pairs with149lists/574objects/five nonempty sequences/144frames plus two typed selector tables:166new ranges/4984sourceB. Current indexed totals are16pairs/33direct references/three indexed paths,317lists/860objects/105sequences/328frames/456ranges/9054sourceB.",
+    "Publish EUR schema1/extractor18/decoder17 with the existing fourteen-file/thirteen-resource contract, retaining e17, all eleven prior bank records and every other decoded file. USA stays e8-d7. Reject malformed selector cardinality/alignment/bank links/overlaps and coherently rehashed language reordering or payload changes.",
+    "Project typed pointer tables and selected indices/list fields/frame selectors/u16durations through original CPU/DMA/native and host paths. Preserve final duration256 against the wrapping u8task counter, live language/task state, original work/clock and save/native ABI. Add nonserialized localized selector/bank/host consumption counters and scene gate."
+  ],
+  "validation": [
+    "One reduced EUR Wine original-source check passes fifteen actual selector chains, ten constructors and1589scheduler ticks: independent inventory/strict JSON/source/shape/link guards, all new frame transitions/task fields/full OAM/matrices/clipping/final hold and counter wrap match.1657211instructions are coverage only. Initial closure-index integer inference build error is fixed before execution; failed evidence retained.",
+    "Two focused EUR Wine integration checks pass publication interruption/create/reuse/repair/move/e17retention, all prior-record/other-file equality, coherent selector/list/missing-table rejection and transactional attachment, and unavailable-copy Load/Undo/backup/restart. The closed original1589tick and old bank/static oracles are retained without repetition.",
+    "Thirty original selector/constructor/body interpreter/native calls across five language IDs and all three paths match complete states/clocks with all166new ranges altered. Compiled reads include120selector B/210bank B. New edges/widths/mirrors/real-BIOS bus/CpuSet/DMA and five bank-specific host decode/publication cases pass.",
+    "Actual Windows CLI through Wine creates/reuses e18without writes and runs from unrelated cwd with old native cache. The retained3530-frame battle and initial directional/hover worldmap locators use zero new-family bytes; their evidence is preserved without full differentials or repeats. Linked graphics preview identifies Engage, and existing semantic mouse movement to Lutia Pass plus physical A selects the affected ordinary scene without direct RAM fixture edits.",
+    "One400-frame EUR Wine Engage pair matches every complete state/clock/central-wide image/OAM/dispatch/audio stream with8table B/5906bank B/228host reads. Final Engage image inspected. Windows test/production builds are warning-free, canonical restored and original ROM/snapshots/input/e17dataset/cache/loader unchanged.",
+    "Final project-memory coverage/whitespace and protected-input/canonical/candidate hash checks pass; implementation hashes retained. All unit processes are terminal. No commit or push."
+  ],
+  "limitations": [
+    "The ordinary proof is one EUR language/scene; the five language variants have original-producer/native proof, not five ordinary-scene campaigns. Broader GUI/archive/gameplay, native Windows and three older empty-record scheduling contracts remain open.",
+    "The linked compressed OBJ graphics table395588and3072-byte transfer still require typed payload/producer migration; other OBJ graphics/palettes, other text/map/gameplay/audio and mod phases remain open in ROM_DATA_TODO. The broad CFG inventory is still incomplete.",
+    "New Linux/USA verification remains pending. No performance/startup/RSS/space campaign, AndroidPort work, commit or push. Synthetic input/data/graphics preview and all private fixtures/evidence remain ignored."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/obj_animations.rs",
+    "crates/gba-core/src/rom_data/obj_animations/roots.rs",
+    "crates/gba-core/src/rom_data/obj_animations/selectors.rs",
+    "crates/gba-core/src/rom_data/runtime/obj_animations.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/obj_animation_tests.rs",
+    "crates/recomp/src/rom_data/obj_localized_tests.rs",
+    "crates/recomp/src/rom_data/obj_localized_runtime_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_obj.md",
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

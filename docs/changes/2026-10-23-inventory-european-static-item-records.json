@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "inventory-european-static-item-records",
+  "title": "Identify European static item record boundaries and live property modifiers",
+  "kind": "docs",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Document a bounded static EUR item catalog at6e0bd0..6e3ad0:376records/32bytes/12032B, independently rooted through shop/category/property readers,1..361/362..375enumeration bounds and the following20byte table. Distinguish live EWRAM inventory from original ROM records.",
+    "Record nineteen original halfword/byte/signed property selectors, preserve all32bytes without inventing semantic names, and identify live02002030modifier branches/special-item bonuses/original unsigned255clamp. Set a source-oracle checkpoint while retaining all closed graphics acceptance."
+  ],
+  "validation": [
+    "Read-only exact-EUR static checks pass selected original LDR literals/stride instructions/property code targets, independent item/enumeration/next-root extents, complete typed-field12032byte roundtrip and no overlap with e22resources. Private disassemblies/inventory under ignored target/rom-data-gameplay-items.70raw pointer-word matches remain discovery candidates. No build or new runtime test performed."
+  ],
+  "limitations": [
+    "Static inventory only: no original execution, typed model/extractor/managed/native/ordinary gameplay migration yet. Following20byte table and item semantics/job/ability/law/AI/regional catalogs remain open. New Linux/USA/native Windows checks pending; no performance/space work or AndroidPort change."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "map-overall-european-rom-coverage",
+  "title": "Map European ROM code candidates, authenticated data, consumption evidence and sharing",
+  "kind": "added",
+  "platforms": ["Linux"],
+  "changes": [
+    "Add a reproducible metadata-only JSON/offline interactive HTML atlas over the complete 16 MiB EUR ROM, frozen on e37-d36. Advance the initial e36 baseline after concurrent managed and ordinary selection-gate evidence becomes available; preserve the earlier snapshot locally without rerunning its closed tests.",
+    "Separate exact interval unions for static code candidates, identified data, typed runtime availability, ordinary positive resource extents, shared references, multiple resource ownership and unclassified regions. Report 260472 candidate code B, 3972680 identified/runtime B, 610710 shared-reference B and 12597392 unclassified B, with 53516 code/data overlap B explicitly unresolved.",
+    "Authenticate every source span and all31 decoded files against the pinned ROM/manifest; bind native entry discovery to the retained cache hash. Export instruction extents without disassembly or payloads, excluding404RAM entries and deduplicating ARM/Thumb/alias overlaps. Curated records distinguish28ordinary-positive families from3targeted-only families and keep ordinary distinct-read-byte coverage unavailable.",
+    "Link the atlas, interpretation and regeneration instructions from the inventory and project state. Keep private ROM/assets/saves/inputs/native translations and browser diagnostics outside tracked outputs. Preserve unrelated concurrent ROM-data implementation and Debug-save work."
+  ],
+  "validation": [
+    "Warning-free offline release build of the rom_code_ranges helper succeeds on Linux. Actual retained native cache yields28455ROM entries/28455discovered blocks; all source and decoded-file SHA-256 checks pass for EUR e37-d36, manifest51b89fe76fcdca0c08535b131623f76f8695e0ff6634d81a8fe293ebb408a80e.",
+    "Four ROM-free accounting checks pass, including250randomized interval sets checked against independent byte-set unions/intersections/complements, distinct ownership, adjacent exclusive endpoints and invalid-range rejection. Regeneration produces byte-identical JSON/HTML; evidence links, metadata-only payload-field guard and whitespace checks pass.",
+    "Chrome headless desktop1400/mobile620/dark inspections and interaction assertions pass:31resource rows, current31runtime/28ordinary baseline, family jump, address lookup, invalid-address feedback, map selection, resolved colors and no page overflow. Browser artifacts remain under target/rom-coverage; no runtime/translation rebuild, gameplay replay, recording or benchmark was performed by this map task.",
+    "Reuse the terminal e37ordinary1000frame full-state/image/audio result:277source B, all six fields positive, first26physical rows. It remains distinct from the831source-oracle field B and18targeted native paths. Other ordinary proofs remain scoped historical records, not a new all-resources replay."
+  ],
+  "limitations": [
+    "Static code includes speculative data-as-instruction candidates and incomplete entry coverage; it is neither executed-byte coverage nor semantic/decompilation progress. Unknown is a conservative report classification, not unused space. Code/data conflicts remain unresolved.",
+    "Aggregate read counters include repeats; exact distinct ordinary source-byte coverage is unavailable. Short texts, name keyboard and global pair flags lack accepted ordinary positive scenes. Shared-reference census is a lower bound limited to declared BG links and manifest aliases; other reference graphs remain uncensused.",
+    "The atlas freezes exact EUR e37-d36. It does not automatically describe later generations, USA, AndroidPort, native Windows or all languages/scenes. Existing Wine evidence is reused rather than rerun. No ROM bytes, decoded payloads or generated native code are published, and no commit/push/package is performed."
+  ],
+  "files": [
+    "crates/recomp-core/examples/rom_code_ranges.rs",
+    "scripts/rom_coverage.py",
+    "scripts/rom_coverage.html",
+    "scripts/test_rom_coverage.py",
+    "docs/development/ROM_COVERAGE.md",
+    "docs/development/rom-coverage/evidence.json",
+    "docs/development/rom-coverage/coverage.json",
+    "docs/development/rom-coverage/index.html",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/development/ROM_COVERAGE.md",
+    "docs/development/rom-coverage/evidence.json",
+    "docs/changes/2026-10-23-consume-european-progression-selection-gates.json"
+  ]
+}

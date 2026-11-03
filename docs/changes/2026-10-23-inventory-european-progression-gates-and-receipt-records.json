@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "inventory-european-progression-gates-and-receipt-records",
+  "title": "Bound European progression gates by original live minima and receipt-mask consumers",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Inventory64records/12B/768B6e7dce..6e80ce from0487F6literal/0487c8offset+=12,index0..63and independent next D23E6literal at exact end. Preserve prior12Bunowned gap/noe35overlap; no adjacent next payload ownership.",
+    "Distinguish unusedbyte00/structuralunalignedhalfword01return/byte03output/eightunsigned live minima020021b6+2*k, original u64received mask02002c08/physical lowest eligible index/145bd0shift. Zero-valued row63still marks bit63; scalar0not equivalent to miss. Downstream047670contains <=375/larger encoded-value branches; actual376Items range compatibility is not complete receipt/FK proof."
+  ],
+  "validation": [
+    "ExactEUR literal/stride/count/all8field/live-mask/store/return/callerBL/independent next root opcodes and768Broundtrip/noe35overlap pass statically. Private inventory BL offset-vs-guest-address assertion corrected before successful output; initial047678tail locator superseded by true047670entry.",
+    "No new model/build/Wine test/fixture; previous e35source362+68/native27/600Shop/CLI proof remains closed. Current e35-d34/30files/29resources and USAe8-d7 unchanged; structured memory checks recorded."
+  ],
+  "limitations": [
+    "Source model/original-code oracle/managed publication/direct runtime/lifecycle/ordinaryuse and complete downstream receipt semantics/FK/skill names remain pending; byte00observed ID equality is not a schema semantic constraint.",
+    "NewLinux/USA/nativeWindows and wider TODO pending; no performance/startup/RSS/space measurement, AndroidPort change, agent commit or push. Private ROM/decoded records/disassembly/artifacts stay ignored."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

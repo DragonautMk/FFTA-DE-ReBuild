@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "expose-cheat-snapshot-local-control",
+  "title": "Expose readonly cheat snapshots through local debug control",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Add typed cheat catalog selection by content ID, asynchronous source-pinned snapshot refresh and bounded list/detail queries to the isolated local channel and command console. Older servers refuse these actions before publication through an explicit capability check.",
+    "Keep source and ROM hashes plus a snapshot generation; invalidate the snapshot when selected content or ROM context changes. Reconstruct complete original entry JSON from bounded UTF-8 chunks with a digest and explicit offsets; list rows carry truncation indicators.",
+    "Keep readonly queries on the query mailbox during other jobs, use exact request IDs for refresh cancellation, preserve deadline and retry semantics, and add typed completion for cheat catalog IDs. The worker discards cancelled or context-stale results."
+  ],
+  "validation": [
+    "Isolated locked/offline Windows GNU test and production builds passed with 1515 frozen inputs and exact overlays. Wine passed six cheat-index tests, 29 protocol tests, nine command tests, three completion tests and three registry tests; one explicitly private catalog test remained ignored.",
+    "A Wine/Xvfb session with two synthetic catalogs selected by ID, rejected a wrong type and stale generation, refreshed and retried identically, reconstructed a long Unicode entry from three chunks and refused a changed selection or changed source. A readonly query succeeded while a separate slow synthetic non-guest replay job was pending; that worker was then cancelled for cleanup.",
+    "The actual command panel submitted the same list query and copied JSON identical to the local channel response. Guest state, frame0, clock0, synthetic source files and session pins remained exact; owned session, worker and display closed. Python operation-registry and Atlas checks passed."
+  ],
+  "limitations": [
+    "A refresh cancellation was verified in the worker/unit protocol, not during a live long-running refresh; a blocked filesystem read must return before its cancellation can be confirmed. Snapshots certify the source at refresh and do not continuously monitor later changes.",
+    "The menu catalog refresh currently uses a separate readonly path from the assistant snapshot worker. There is no cheat decoder, enablement or application; native Windows, Linux, physical controllers and actual private catalog use through this new channel remain unverified. DBG2-13..28 remain open."
+  ],
+  "files": [
+    "crates/recomp/src/debug_cheats.rs",
+    "crates/recomp/src/content_picker.rs",
+    "crates/recomp/src/debug_control.rs",
+    "crates/recomp/src/debug_command.rs",
+    "crates/recomp/src/debug_command/completion.rs",
+    "crates/recomp/src/debug_command/observation.rs",
+    "crates/recomp/src/debug_command_panel.rs",
+    "crates/recomp/src/debug_operations.rs",
+    "crates/recomp/src/debug_operations.json",
+    "crates/recomp/src/play.rs"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/debug_control.md",
+    "docs/debug_operations.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

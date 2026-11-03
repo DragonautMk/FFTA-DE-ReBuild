@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "slug": "model-european-constructor-obj-animation",
+  "title": "Model the European conditional constructor OBJ animation",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Authenticate the two original threshold/list-pointer readers behind394FBC. Model four conditional8B pairs with unsigned32bit thresholds and four independently bounded14B/two-object lists,88source bytes/eight objects, disjoint current owners. Preserve unchecked old-phase semantics; increment/store/reloadu8counter precedes compare,255wraps0 and newphase>3 clears active bit.",
+    "Add isolated obj_lists::constructor_animation Catalog/Animation/Frame, strict JSON, lossless pointer/source projection, optional phase/byte queries and referenced-list validation. Existing hubs only declare modules; expose the existing copied-reader oracle to a sibling test with one visibility change. Production extraction/catalog/runtime/e73-d72/USA8-7 remain unchanged."
+  ],
+  "validation": [
+    "First Windows frontend build succeeds warning-free, frozen f2b4c88a699bebc0512727af2afde29116670dfc53421e5696210c77754a3497. One first exact Wine filter passes independent animation/list models, all88source bytes/five spans, boundaries and13structural/unknown-field/dependency/coherent-edit/source guards.",
+    "Fifteen original counter prefixes pass threshold edges and255wrap/fullRAM guards; four original pointer→copied-constructor prefixes prove r1 list selection and exact pending+158 write/prior+154 return; existing copied-reader oracle passes full output/matrix/RAM/callee/OAM/VRAM/palette checks for four NEW lists only.",
+    "All94selected input/frozen hash-mtime guards and435compiled sources exact; hub declaration-only and old oracle visibility-only preimages verified. Canonical animation5d5e7720b3626234354650abbf3b22f78f93f192a39fe479e1fc697fb2bca156. Required artifact completion removes zero paths. No old copier/list/model/runtime/CLI/scene acceptance replay or new fixture/navigation/measurements."
+  ],
+  "limitations": [
+    "Isolated model only: managed extraction, existing OBJ catalog extension, typed table ownership and actual CLI/ordinary positive use remain pending. Retained F09 report has zero reads of these data ranges; no ordinary-use claim. Other raw phases, all-use/whole physical archive/initializers/lifetimes/full task allocator/scheduler ABI remain outside.",
+    "Linux/USA/native Windows/new32:9 pending. Phase0 at371064 and signed-byte lead371034 need separate contracts. No performance/storage campaign, Android/package/assistant commit/push; full ROM_DATA_TODO active."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data/obj_lists.rs",
+    "crates/gba-core/src/rom_data/obj_lists/constructor_animation.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/constructor_obj_animation_model_tests.rs",
+    "crates/recomp/src/rom_data/observed_obj_lists_model_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

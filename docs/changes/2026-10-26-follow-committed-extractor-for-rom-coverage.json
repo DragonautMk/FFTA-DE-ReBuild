@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "date": "2026-10-26",
+  "slug": "follow-committed-extractor-for-rom-coverage",
+  "title": "Make ROM coverage follow committed extraction and show report freshness",
+  "kind": "fixed",
+  "platforms": [
+    "Linux/Docker",
+    "Windows/PowerShell tooling"
+  ],
+  "changes": [
+    "Fix successful atlas runs silently reusing e61-d60 because the automatic cache version came from the historical evidence registry. Read the revision from the frozen extractor source compiled into the image; use a generation-keyed cache independent of ordinary-proof review.",
+    "Build default coverage tools with Dockerfile.coverage from a fixed Git HEAD archive plus current public tools/evidence. Exclude uncommitted extraction work and private data, keep the normal executable/host Cargo output untouched, and refresh archive mtimes before Cargo uses its warm container cache.",
+    "Inherit ordinary-use proofs only when both decoded content and canonical source-map hashes match the reviewed resource. Include new/changed authenticated families as review pending, permit explicitly selected historical snapshots with a visible warning, and remove migrated source-only extents from the separate layer.",
+    "Always regenerate HTML/JSON with a real UTC timestamp, source commit, dataset and separate evidence revisions. Print byte/family deltas or unchanged-coverage feedback independent of analyzer binary rebuilds. Preserve reports on validation failure; PowerShell opens a timestamped escaped file URL.",
+    "Publish EUR e65-d64:60runtime families/52historically ordinary-positive/4new proof reviews pending,10224490identified/runtime B,6353546unclassified B. Compared with e61:17142new identified B and23578new runtime B, including6436Bformerly source-only. Code260472B, shared1359934B, conflicts61480B and ordinary extents unchanged."
+  ],
+  "validation": [
+    "Actual staged-source Docker builds and EUR extraction pass. The first c8c165f run prepares61files, byte-identical to the accepted e65CLI dataset; fresh-mtime rebuild performs real compilation and keeps coverage identical. Canonical publication from fixed b06ac66 succeeds with expected e61-to-e65 deltas and new HTML timestamp.",
+    "Two actual read-only-cache runs succeed, produce different HTML/timestamps and explicit unchanged-coverage feedback. Explicit e61 remains labeled historical with6436source-only B. Wrong-generation cache fails before publication and preserves previous output hashes. All118e61/e65cache hash-mtime guards remain unchanged; unmounted image has no game/save/input/retained DLL files or host target directory.",
+    "Twelve ROM-free generator checks and six Bash launcher checks pass, including cache-version selection independent of evidence, matching source-map evidence, new/changed proof handling, partial/full source-only migration, tampered payload rejection, historical labeling, timestamp refresh, interval accounting and failure preservation. Bash tests inspect a real Git archive to confirm committed rather than dirty runtime content and current public tools, with no Python/Cargo/nm in child PATH. Bash syntax passes.",
+    "Ten PowerShell7.4.6/mock-Docker checks pass in Linux, covering paths/spaces, fixed source revision/staged context cleanup, readonly mounts/offline run, failures/logs/missing inputs, Git resolution failure and versioned file URL. First URL test exposed relative URI inference on Unix; explicit UriKind.Absolute fixes it and the full affected suite passes.",
+    "Independent full-ROM byte maps verify all nine layers, unknown complement and code/data intersection. Code candidates and ordinary extents match the previous report;59evidence references and167local documentation links resolve, all61dataset files match accepted output, and metadata privacy checks pass. Root Cargo.toml/lock, normal Windows recomp executable and ROM hashes remain unchanged. Concurrent extraction-script description addition is inspected and preserved rather than misreported as this task modification.",
+    "Chrome headless1400/620screenshots inspected; both pass generation/freshness,60rows/60runtime/52ordinary/4pending, new total, offset boundary/family lookup, colors and no page overflow. No gameplay, fixture, Wine oracle or benchmark is rerun.",
+    "Final metadata-only project-memory and whitespace checks pass. Full workspace/base checks run and report only the parallel e66generic-runtime implementation still awaiting its own memory record; coverage files have no missing-record diagnostic. Preserve those concurrent files instead of documenting unfinished runtime work as completed.",
+    "Final cached Docker publication includes the same-ID partial-source-only guard: semantic e65coverage unchanged, timestamp refreshed, all118cache guards unchanged; no additional Cargo compilation or gameplay."
+  ],
+  "limitations": [
+    "Automatic refresh follows committed extraction. Uncommitted e66generic-runtime work is deliberately excluded. Four new e62-e65resources remain pending ordinary-proof review; four earlier reviewed families are targeted-only. Distinct ordinary read-byte coverage stays unavailable; candidate code and bounded sharing remain scoped as before.",
+    "PowerShell is checked on Linux with simulated Git/Docker; native Windows/PowerShell5.1/Docker Desktop and physical browser launching are unverified. New GUI/runtime/native dispatch, USA/Android, Godot implementation and performance remain outside this change.",
+    "An external session committed in-progress coverage edits in b06ac66 during validation; that commit and subsequent concurrent extraction edits are preserved. This task performs no commit or push.",
+    "Full project-memory Git coverage is not clean while parallel e66generic-runtime files await their separate change record; metadata validation passes. This does not affect coverage generation."
+  ],
+  "files": [
+    "Dockerfile.coverage",
+    "scripts/rom_coverage.py",
+    "scripts/rom_coverage.html",
+    "scripts/test_rom_coverage.py",
+    "scripts/tests/test_rom_coverage_docker.py",
+    "scripts/linux/rom_coverage_docker.sh",
+    "scripts/windows/rom_coverage_docker.ps1",
+    "docs/development/ROM_COVERAGE.md",
+    "docs/development/rom-coverage/evidence.json",
+    "docs/development/rom-coverage/coverage.json",
+    "docs/development/rom-coverage/index.html",
+    "docs/docker.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/development/ROM_COVERAGE.md",
+    "docs/changes/2026-10-25-refresh-rom-coverage-and-prepare-inputs.json"
+  ]
+}

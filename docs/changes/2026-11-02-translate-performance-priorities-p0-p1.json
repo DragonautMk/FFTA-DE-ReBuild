@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-performance-priorities-p0-p1",
+  "title": "Translate performance priorities P0 and P1",
+  "kind": "docs",
+  "platforms": [
+    "Desktop performance planning documentation"
+  ],
+  "changes": [
+    "Translate performance priorities P0 and P1 into English while retaining task states, results, measurements, rejected experiments and platform coverage limits."
+  ],
+  "validation": [
+    "Compare all six ordered checkbox states, task identifiers, inline literals, links and two legacy heading anchors with the prior text; confirm surrounding sections remain unchanged."
+  ],
+  "limitations": [
+    "Performance history and P2–P4 remain untranslated; no benchmarks, builds, fixtures or runtime checks were run."
+  ],
+  "files": [
+    "docs/development/PERFORMANCE_TODO.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

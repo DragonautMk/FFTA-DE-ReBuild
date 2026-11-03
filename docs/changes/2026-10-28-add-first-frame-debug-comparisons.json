@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "slug": "add-first-frame-debug-comparisons",
+  "title": "Localize the first differing replay frame with exact state fields and paired evidence",
+  "kind": "added",
+  "platforms": [
+    "Windows cross build under Wine/Xvfb; offline HTML in Chrome/Linux"
+  ],
+  "changes": [
+    "Add debug-compare create/run/cancel and Debug > Compare first difference using the existing isolated replay worker/supervisor. Reference is interpreter/raw; candidate is interpreter/native with an optional authenticated copied typed dataset. Same origin/input/view, bounded1..min(recorded frames,3600), cancellation/timeout, strict profile mode and explicit matched0/diverged2 results preserve ordinary exact-endpoint replay behavior.",
+    "Compare every aligned completed-frame boundary including origin, before symmetric frontend queue drain: full serialized CPU/Bus state, clock/frame/ready, CPU, central and entire allocated wide RGB555, OAM, exact mixed/PSG/HLE/FIFO stream bits/events. Preserve source audio setup or explicitly arm symmetric tap/shadow observation; counts and inactive paths remain visible. Reuse the established sequential independent-Machine paired-validation contract; no snapshot/native ABI or guest fields are changed.",
+    "Add a readonly current-schema named-field serializer in gba-core using the actual CPU/Bus Serialize members and postcard values, preserving private members and IEEE float bits. Report field hashes/encoded deltas, explicit registers and memory/pixel/audio indices without guessing offsets in a varint snapshot.",
+    "At the first different boundary, publish unique private HTML/JSON, side-by-side active central/wide PNGs, both snapshots plus the last matching point and nonempty audio streams. Matching/partial runs publish metadata only. Keep a constant-size previous-point buffer and refuse a ninth report before spawn, without overwriting earlier evidence. Renderer escapes embedded JSON and supports desktop/mobile views."
+  ],
+  "validation": [
+    "Frozen public7bb07bf/e80-d79 plus10 selected task files compiles Windows feature/default frontends and targeted release tests locked/offline without warnings, excluding concurrent extraction edits. Feature candidate ccadd202e7a651e7bad3d4b11b76ffb7dce5a1d1a4740565ff6f642b27fc37f4; default4ba2e10034a2a40247a4e5fe48ea9c547eb3381e0fa20bc1db7f847e8e057a18. Both normal production runtimes remain unchanged.",
+    "Wine passes67 targeted tests:8 comparison,2 named-field diagnostics,12 replay and45 menu. A synthetic second-frame difference localizes CPU register/memory/OAM/pixel fields with the prior matching snapshot and paired artifacts. Checks cover readonly full-state preservation, NaN payload bits, audio counted once, prefix matching, origin/frame0 detection, incomplete frame errors, cancellation/timeouts, bounds/capacity/no overwrite and plain profile compatibility.",
+    "Initial synthetic script omitted the existing gba-input v1 header; the validator correctly refuses six tests at input setup, while two independent observer/bounds tests pass. Fix only the test fixture literal and rebuild affected tests; production comparison code and candidate identity stay unchanged. Preserve fixture-header-attempt logs/selection/reason rather than changing the validator or replaying old acceptances.",
+    "20 CLI cases plus a controlled cancellation runner pass on retained DS20 source: raw/raw, raw/typed e80 and explicitly armed audio prefixes match through2frames. Native diagnosis stops at first completed frame1/guest22220 from origin22219, with6549native dispatches/14869fallbacks; clocks6241425344/6241425348 differ4cycles and r15 differs0800045c/0800044c. Named fields are bus.clock and cpu.regs (61equal fields); central/wide/OAM and all observed streams match, with2194mixed/PSG/HLE values and264events per FIFO per side. No old102frame endpoint/parity acceptance is rerun or repaired.",
+    "Invalid mode/library/frame/audio configuration, changed private library, plain profile, timeout, duplicate/idle cancellation and ninth-report refusal pass; accepted report hashes/mtimes survive refusals. Three default checks show no audit feature required: create/run matched prefix has identical hashes to feature worker; default client supervises the explicitly pinned feature/native worker and finds the same first difference.",
+    "Dedicated Wine/Xvfb GUI passes identical CLI first-difference components/observations, matched prefix, cancel and owner-close, preserving parent full-state/frame/clock and save/progress hashes while paused; parent exits0. Final screenshots inspected. Chrome1400/620 interaction/visual checks pass: first-frame identity, named fields/register, exact clock delta, paired wide images, field expansion, no horizontal overflow and metadata-only matching view.",
+    "Independent Python verification validates snapshot headers/payload SHA256s, decodes serialized u32 register varints to confirm only r15 changed, recomputes postcard register/clock field hashes, checks previous point equals origin and verifies exact audio-file hashes/lengths and PNG shapes. Ten retained reports verified, three with heavy divergence payloads; every matched/interrupted report contains only HTML/JSON. All276 selected original input hash-mtimes and both production runtimes remain unchanged;10 live/staged overlays match. All outputs remain ignored/private.",
+    "After successful validation, the required artifact completion helper is attempted and refuses the debug-tools directory because it accepts only target/rom-data-* units. No managed interrupted/moved-resource trees were created and no payload is removed; retain the guard without renaming/bypassing or widening helper scope. Retire only the three exited unit Chrome profiles with artifact-retention.json; keep current candidates, source export, reports and failed fixture evidence.",
+    "Final documentation checks pass:410 local Markdown file links,22 ordered DBG IDs with only DBG01-09 checked, project-memory workspace and base7bb07bf coverage, and git diff --check. Checklist, durable project state and handoff close DBG09; DBG10 stays unstarted. Concurrent extraction changes retain their own records."
+  ],
+  "limitations": [
+    "Comparisons use one selected runtime and two independent guest Machines; different executable versions are not compared directly. Source settings or declared symmetric audio setup define the scope; empty/disabled streams do not establish audio coverage. Candidate dataset attachment is not per-resource byte-consumption evidence or a new ROM/DS acceptance.",
+    "Frame counts align, but observed return clocks/PC may differ at interpreter-instruction versus native-block granularity. First boundary is not an instruction-level cause or correctness verdict. The known cache remains without parity acceptance; no native repair, old Bank/F09/extraction/performance campaign, Android, Godot, commit/push or normal executable replacement is selected.",
+    "Native Windows, Linux/Wayland, physical controllers, other ROMs/datasets/scenes and the full comparison mode matrix remain unverified. Images represent active PPU buffers; full wide allocation is compared separately, frontend overlays/composition remain outside scope. Artifacts include private snapshots/images/raw byte deltas/audio and must stay outside commits/packages."
+  ],
+  "files": [
+    "crates/gba-core/src/lib.rs",
+    "crates/gba-core/src/state_diagnostics.rs",
+    "crates/recomp/src/debug_compare.rs",
+    "crates/recomp/src/debug_compare/tests.rs",
+    "crates/recomp/src/debug_compare/report.html",
+    "crates/recomp/src/debug_replay.rs",
+    "crates/recomp/src/debug_replay/tests.rs",
+    "crates/recomp/src/main.rs",
+    "crates/recomp/src/play.rs",
+    "crates/menu/src/lib.rs",
+    "docs/debug_comparisons.md",
+    "docs/debug_replays.md",
+    "docs/debug_captures.md",
+    "scripts/README.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/debug_comparisons.md",
+    "docs/debug_replays.md",
+    "docs/debug_captures.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ]
+}

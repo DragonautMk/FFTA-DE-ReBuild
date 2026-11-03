@@ -1,0 +1,67 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "slug": "distribute-shared-debug-tools",
+  "title": "Distribute the shared portable debug tools with a complete guide and private-data guards",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU release via Wine/Xvfb; Linux Python/Bash/Docker/Chrome; public PowerShell7.4.6 Linux mocks"
+  ],
+  "changes": [
+    "Complete DBG22 with five end-to-end guide paths: record scene, reproducible bug, compare two selected runtime endpoints, bounded reads outside a known plan and reviewed artifact cleanup. Explain per-frame same-runtime comparison separately; declare prerequisites, exact scopes, relocation and Wine/native Windows/Linux matrix.",
+    "Package only explicit public binaries/database/TinyCC source/notices/32docs/16tools. No recursive checkout/Data/runtime scan; reject nonordinary inputs and game headers, preserve licenses byte-exact, normalize repository-only document links into labelled text, create empty Data and generated ignore rules. Verify staged/archive hashes, ZIP CRC or tar bytes/modes and publish only after validation. Manifest records75payload identities in76files, original input hashes distinct from Rust source provenance.",
+    "Add runtime PS/Bash launchers with persistent logs and bundle-root resolution from unrelated cwd. Home launchers gain Python mode, persistent failure logs and atomic prior-page preservation. Fix actual PS File.Replace null binding/hidden temp deletion and common-parameter interception; artifact/campaign consume only leading -Docker, forward all tool arguments literally including --out.",
+    "Align existing control help/synopsis only; guest runtime behavior unchanged. Add homepage common guide and filter absent bundle guide links; include public module/template/docs closure in both desktop Docker sources/allowlist.",
+    "Actual scan found embedded builder-home paths in baseline binaries. Rebuild identical frozen Rust selection with compiler path remapping and TinyCC with -ffile-prefix-map source/adapter roots; preserve old pinned proofs and normal runtimes. Add repeatable --private-prefix UTF8/UTF16LE refusal before archive replacement, storing only check count, never prefix text or rewriting binaries."
+  ],
+  "validation": [
+    "Ten distinct public Python packager tests pass: nine original suite plus one private-prefix addition. ZIP/tar whitelist, hash manifest, links/licenses, executable modes, adjacent private inputs, symlink/ROM refusal, atomic old-archive preservation and moved logged wrapper behavior. New test covers both UTF8/UTF16LE rejection and generic remapped input acceptance.",
+    "Thirteen standalone PowerShell7.4.6 public mock checks pass in network-none readonly Linux container with executable tmpfs/XDG paths. Test literal flags/spaced Unicode paths/cwd, stderr/nonzero/missing runtime logs, Python/Docker homepage preservation and artifact/campaign forwarding/refused dispatch. Preserve failed bootstrap/parameter fixtures and preimages; no game executed by mocks.",
+    "Warning-free Windows release locked/offline build uses base e8bd939 plus19frozen overlays, separate from concurrent ROM edits. Final runtime4d4f9b2a6d3b25ef777d27607da9f505e36eb902cc3ff6404e32db1223cfa1f4, launcher dc5bec7505d853d3bfb942e61b5d2e33ee64c00e9409488ddf03225533f8dc4a, TinyCC76249d257e76dd7fcc2a7ca28b7c8c6fd42e81bdda79bfd6d172b200969aa43b. All reject scanned builder prefix, system-only PE imports/resources/export ABI checked. Two public synthetic TinyCC tests under Wine pass context/lock recovery and cached callback/large-stack ABI, zero guest frames.",
+    "Actual preliminary bundle extracted then moved to spaced/apostrophe/Unicode path, commands from unrelated cwd:19WineCLI invocations, menu Start/Stop recording1frame, two distinct runtimes replay1frame each with identical full-state endpoint/clock, issue/recent context and bounded1frame audit27403requests/885outside distinct bytes. Controlled final remapped build replay of same new recording passes once; totalDBG22five new guest frames, no old scene/native/performance acceptance repeated.",
+    "Ten moved offline host/Docker calls pass, reuse3new profiles with no extra frames, refuse missing reopening reason and stale apply with zero removal. Remove ONLY66B synthetic never-loaded cache;28actual case files and11source/input/normal-runtime guards preserve hashes/mtimes. Real Chrome1400/620six-report homepage/filter/search/reset/guide/link/no-overflow checks pass; GUI/browser screenshots inspected.",
+    "Existing offline-tools Docker image, networknone/readonly checkout+container/separate output, builds final ZIP without Cargo/game execution. Final archive SHA256 49f8fa0eb9b54485e7e876e18572cc8d3910d51b6c0cbea43590bcb90373c237,10802749bytes,76files/75payloads; CRC/source/staged hashes, empty Data, document/module closure, prefix rejection, PE resources/imports and11guards verified. Documentation-only refresh changes exactly guide/checklist/manifest, all binaries/tools identical to the one-frame proof.",
+    "Full01-22completion audit reads retained terminal evidence, linked records and source entry points, preserves rejected UI attempts/native divergence and finds0remaining criteria. Retire only2exited Chrome profiles,2superseded ZIPs and3unremapped duplicate binaries after exact extracted copies authenticated:51159065bytes, all actual inputs/current/pinned runtimes/source/preimages/logs/results/screenshots kept. No managed ROM unit; completion helper inapplicable. Workspace/basee8bd939/metadata-only project-memory checks and git diff --check all pass; concurrent ROM edits remain unmodified and separately attributed."
+  ],
+  "limitations": [
+    "Wine/Xvfb is not native Windows. PowerShell7.4.6 Linux applications are public mocks, not Windows/PS5.1 execution. Recent native Linux runtime, physical controllers and hardware audio listening remain unverified; Android/Godot excluded. Packaging tests cover Linux tar, not a new Linux runtime build.",
+    "Preliminary unremapped binaries were used for the four-frame guide proof; final path-remapped candidate is authenticated separately by one-frame exact replay and synthetic TinyCC ABI tests. Later document changes require only repackaging. Source_hash manifest means original file bytes, not build tree provenance.",
+    "Private game inputs, sessions, reports, logs and pinned historical candidates stay ignored. Native divergence and unknown/uncovered observations remain explicit, no DS/ROM/native parity promotion, auto-replay sweep, sends, normal-runtime replacement, release, commit or push.",
+    "No commit, push or release is created. All workspace/base/metadata-only memory checks pass at closure; historical earlier units retain their actual earlier check results. Concurrent ROM changes remain user-owned and are not part of this distribution build."
+  ],
+  "files": [
+    "scripts/package_ffta_portable.py",
+    "scripts/tests/test_package_ffta_portable.py",
+    "scripts/tests/test_debug_windows_launchers.ps1",
+    "TinyCC/build.py",
+    "crates/recomp/src/main.rs",
+    "scripts/linux/debug_runtime.sh",
+    "scripts/windows/debug_runtime.ps1",
+    "scripts/linux/report_home.sh",
+    "scripts/windows/report_home.ps1",
+    "scripts/windows/debug_artifacts.ps1",
+    "scripts/windows/debug_campaign.ps1",
+    "scripts/report_home.py",
+    "scripts/report_home.html",
+    "Dockerfile.linux",
+    "Dockerfile.windows",
+    ".dockerignore",
+    "docs/debug_tools.md",
+    "docs/portable.md",
+    "docs/docker.md",
+    "docs/report_home.md",
+    "docs/debug_artifacts.md",
+    "docs/debug_campaigns.md",
+    "scripts/README.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/debug_tools.md",
+    "docs/portable.md",
+    "docs/debug_artifacts.md",
+    "docs/debug_campaigns.md",
+    "docs/development/DEBUG_TOOLS_TODO.md"
+  ]
+}

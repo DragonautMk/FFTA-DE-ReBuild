@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "browse-local-cheat-catalog-in-menu",
+  "title": "Browse an inactive cheat catalog in the debug menu",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Add a separate readonly Debug / Cheat catalog view using the existing searchable selector. An absent catalog has an explicit import flow; a selected catalog is type-checked, pinned and rechecked before loading. Entries only open scrollable details and cannot enable or execute codes.",
+    "Present disabled and unverified states and compatibility reasons before the original entry; preserve original ordering and metadata. The dedicated details panel suppresses hidden selector hitboxes and reports its visible focus rectangle."
+  ],
+  "validation": [
+    "Isolated offline Windows GNU test and production builds passed with 1515 frozen source files and matching overlays. Wine passed focused typed-reference and menu-model tests including 600 rows, detail ordering, hidden clicks and focus geometry.",
+    "A synthetic Wine/Xvfb GUI scenario verified empty state, explicit selection and reload, 341 searchable entries and simulated XInput navigation; main guest state/frame/clock and source catalog remained unchanged. A separate readonly Wine test compared the menu conversion of every local catalog entry with its source without printing private payload.",
+    "A focused follow-up Wine/Xvfb screenshot verified the enlarged readable details view and scrolling without repeating the accepted import/controller scenario; guest state and session pins remained exact. The owned runtime, controller helper and display were closed."
+  ],
+  "limitations": [
+    "All entries remain disabled and non-executable: exact ROM/device compatibility is unknown, decoder unsupported and runtime behavior unverified. Long individual records are visibly abbreviated in the menu and remain complete via the readonly CLI. DBG2-17 and later cheat tasks remain open.",
+    "Native Windows, Linux and physical controllers were not tested. Third-party cheat material remains local and excluded from tracked sources and public packages."
+  ],
+  "files": [
+    "crates/menu/src/lib.rs",
+    "crates/menu/src/tool_inputs.rs",
+    "crates/menu/src/clan_atlas.rs",
+    "crates/menu/src/atlas_theme.rs",
+    "crates/menu/src/debug_unlock.rs",
+    "crates/menu/src/selection.rs",
+    "crates/menu/src/information.rs",
+    "crates/menu/src/content_selector.rs",
+    "crates/menu/src/content_selector/tests.rs",
+    "crates/recomp/src/debug_cheats.rs",
+    "crates/recomp/src/debug_inputs.rs",
+    "crates/recomp/src/debug_inputs/tests.rs",
+    "crates/recomp/src/debug_operations.rs",
+    "crates/recomp/src/play.rs"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

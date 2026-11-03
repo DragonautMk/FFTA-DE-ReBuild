@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "trace-european-compact-obj-candidate-table",
+  "title": "Trace European compact OBJ candidate table",
+  "kind": "docs",
+  "platforms": [
+    "EUR; Wine"
+  ],
+  "changes": [
+    "Document the conditional upstream action producer, candidate table and captured gates for record 222."
+  ],
+  "validation": [
+    "Authenticated original Wine disassembly, ROM metadata and call-target reconciliation passed; hash-guarded inspection covered counted groups in three EUR snapshots and two fixed-unit gate snapshots."
+  ],
+  "limitations": [
+    "The alternate availability branch, UI acceptance, ordinary runtime use, future availability, Linux, USA and native Windows remain unverified; no performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_obj.md"
+  ],
+  "references": []
+}

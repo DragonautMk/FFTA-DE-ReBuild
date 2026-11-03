@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "align-descriptor-test-with-bank-zero-owner",
+  "title": "Align descriptor test with bank-zero owner",
+  "kind": "fixed",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Update the earlier descriptor integration test for e99: pointer0 is now typed while bank0 row0 and the bank22 gap remain raw."
+  ],
+  "validation": [
+    "The existing e99 focused Wine integration already proved poisoned pointer0 and adjacent owner composition as well as raw row0; the earlier acceptance was not replayed."
+  ],
+  "limitations": [
+    "This is a test-only expectation update; the earlier test itself was not rerun. Linux, USA and native Windows remain open; no performance measurements."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/conditional_descriptor_banks_runtime_tests.rs",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md"
+  ]
+}

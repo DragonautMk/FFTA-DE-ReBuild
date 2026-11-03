@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FFTA EUR — ROM coverage</title>
+<style>
+:root{color-scheme:light dark;--bg:light-dark(#fafaf8,#171918);--fg:light-dark(#202724,#e1e7e3);--muted:light-dark(#59645e,#a4afa7);--line:light-dark(#d6dcd7,#3d4841);--panel:light-dark(#f0f3ef,#242b26);--code:light-dark(#8257a2,#ba98d6);--data:light-dark(#267c72,#70bdb1);--runtime:light-dark(#407b41,#91bc82);--observed:light-dark(#a44460,#ea98b0);--ordinary:light-dark(#316c9b,#8ab7da);--shared:light-dark(#b07322,#d9ac69);--conflict:light-dark(#b34b45,#e19890);--unknown:light-dark(#7f8982,#a9b0aa)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.55 system-ui,sans-serif}main{max-width:1200px;margin:auto;padding:32px 26px}h1{font-size:24px;font-weight:600;margin:0 0 8px}h2{font-size:18px;margin:30px 0 10px}h3{font-size:16px}p{max-width:100ch}.muted,small{color:var(--muted)}a{color:inherit;text-underline-offset:3px}code{font:13px ui-monospace,monospace;overflow-wrap:anywhere}.stats{display:flex;gap:30px;flex-wrap:wrap;margin:22px 0}.stat strong{display:block;font-size:22px;font-weight:500}.stat span{color:var(--muted);font-size:13px}.notice{padding:12px 16px;background:var(--panel);border-left:3px solid var(--line)}.legend{display:flex;flex-wrap:wrap;gap:6px 20px;font-size:13px}.dot{display:inline-block;width:10px;height:10px;margin-right:6px}canvas{display:block;width:100%;height:310px;cursor:crosshair;margin-top:12px}button,input,select{font:inherit;background:var(--panel);color:var(--fg);border:1px solid var(--line);padding:6px 10px;border-radius:3px}button{cursor:pointer}input{max-width:180px}.controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:14px 0}.scroll{overflow:auto}table{border-collapse:collapse;width:100%;font-size:13px}th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}th{font-weight:500;color:var(--muted)}td.number{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}.tag{font-size:12px;white-space:nowrap}.detail{background:var(--panel);padding:15px 18px;min-height:160px}details{margin:14px 0}summary{cursor:pointer}li{margin:6px 0}.twocol{display:grid;grid-template-columns:1fr 1fr;gap:25px}@media(max-width:700px){main{padding:20px 12px}.twocol{grid-template-columns:1fr}.stats{gap:16px}h1{font-size:21px}}
+</style>
+<main>
+<h1>ROM coverage · FFTA EUR</h1>
+<p id="baseline" class="muted"></p>
+<p id="freshness" class="notice"></p>
+<div class="notice">Categories overlap. <strong>Available at runtime</strong> identifies ranges served by typed resources. <strong>Positive ordinary use</strong> identifies observed families; it does not mean all bytes in their ranges were read. Code is a static discovery with speculative candidates. The “Typed service in scenes” layer counts only reads marked Typed by collectors.</div>
+<div class="stats" id="stats"></div>
+<h2>Observed scenes · DBG-06 audits</h2>
+<p class="muted">Select audits to overlay. Bytes are physically distinct, without multiplying rereads or mirrors. A complete window covers only declared collectors and filters. Outcomes are those reported by the audit; they are not a new validation of the DS case.</p>
+<div class="controls"><button id="audits-all">Select all</button><button id="audits-none">Deselect all</button></div>
+<div id="audits"></div><p id="scene-summary" class="notice" aria-live="polite"></p>
+<h2>Map by offset</h2>
+<p class="muted">Horizontal axis: ROM file offset in MiB. Each cell covers 64 KiB; intensity is proportional to category bytes in the cell. Select a cell to inspect ranges. Rows are independent layers.</p>
+<div class="legend" id="legend"></div>
+<canvas id="map" aria-label="Coverage layer map, selectable by offset" role="img"></canvas>
+<form class="controls" id="address-form"><label for="address">Offset ROM (hex)</label><input id="address" value="0x000000" pattern="(?:0x)?[0-9a-fA-F]+" aria-label="Hexadecimal ROM offset"><button>Inspect</button><span id="address-error" role="status"></span></form>
+<section class="detail" id="detail" aria-live="polite"></section>
+<h2>Comparison with the previous snapshot</h2>
+<div id="comparison"></div>
+<h2>Identified families and consumption evidence</h2>
+<p class="muted">Bytes = union of family ranges before overlaps with other families. “Positive” is bounded evidence of ordinary use; details identify fields and scenes still open. Historical counters are not distinct bytes.</p>
+<div class="controls"><label for="family">Highlight a family</label><select id="family"><option value="">All</option></select></div>
+<div class="scroll"><table><thead><tr><th>Family</th><th>Identified bytes</th><th>Runtime</th><th>Ordinary use</th><th>Read in selected audits</th><th>Evidence and limit</th></tr></thead><tbody id="families"></tbody></table></div>
+<div class="twocol">
+<section><h2>Largest unclassified regions</h2><p class="muted">Complement of identified data, header metadata and code candidates. “Unclassified” does not mean empty or unused; it may include more code, audio, maps, tables and compressed data.</p><div id="holes"></div></section>
+<section><h2>Verified sharing</h2><p id="sharing-summary"></p><p class="muted">The same address has multiple declared references, not merely equal contents. This inventory is a minimum: BG descriptors, packet/transfer indexes, manifest aliases and audio song/header and tone/wave references. Bytes with multiple manifest owners are a separate layer.</p><div id="sharing"></div></section>
+</div>
+<h2>Method and limits</h2><ul id="limits"></ul>
+<details><summary>Input identity and code analysis</summary><div id="provenance"></div></details>
+<p class="muted">Generated by <code>scripts/rom_coverage.py</code>. Private inputs are read locally; this report contains only ranges, counters and references. <a href="coverage.json">JSON data</a> · <a href="../ROM_COVERAGE.md">Method and regeneration</a></p>
+</main>
+<script type="application/json" id="report-data">__ROM_COVERAGE_DATA__</script>
+<script>
+const R=JSON.parse(document.getElementById('report-data').textContent),T=R.totals;
+const $=id=>document.getElementById(id), n=x=>x.toLocaleString('en-GB'),hex=x=>'0x'+x.toString(16).padStart(6,'0'),pct=x=>(100*x/T.rom).toFixed(2)+'%';
+const rows=[['code_candidates','Candidate code','code'],['identified_data','Identified data','data'],['runtime_available','Available at runtime','runtime'],['ordinary_resource_extents','Families with ordinary use','ordinary'],['shared_references','Shared references','shared'],['multiple_resource_owners','Multiple data owners','conflict'],['unclassified','Unclassified','unknown'],['scene_observed','Read in selected scenes','observed'],['scene_typed','Typed service in scenes','runtime'],['scene_shared','Read by multiple DS cases','shared']];
+function text(tag,value,cls){const el=document.createElement(tag);el.textContent=value;if(cls)el.className=cls;return el}
+function bytesIn(spans,a,b){let total=0;for(const [s,e] of spans){if(s>=b)break;if(e>a)total+=Math.max(0,Math.min(e,b)-Math.max(s,a))}return total}
+function refs(cell,resource){for(const path of resource.references){const a=text('a',path.split('/').pop().replace(/\.json$/,''));a.href='../../'+path.replace(/^docs\//,'');cell.append(document.createElement('br'),a)}}
+$('baseline').textContent=`Dataset ${R.generation} · ROM EUR ${n(T.rom)} bytes · half-open offsets [start, end)`;
+$('freshness').textContent=`Coverage data generated: ${new Date(R.generated_at).toLocaleString('en-GB',{timeZoneName:'short'})}. Extractor ${R.extractor_generation}, commit ${R.source_revision.slice(0,12)}. Reviewed ordinary evidence: ${R.reviewed_generation} dated ${R.evidence_date}. ${R.pending_review.length} families with evidence pending review.`;
+if(R.historical_dataset)$('freshness').append(text('strong',' Explicit historical dataset: rerun without --dataset / -DatasetDir to use the current generation.'));
+for(const [value,label] of [[n(T.code_candidates)+' B · '+pct(T.code_candidates),'Candidate code, static union'],[n(T.identified_data)+' B · '+pct(T.identified_data),'Identified data, union'],[n(T.runtime_available)+' B · '+pct(T.runtime_available),'Available at runtime'],[`${T.ordinary_positive_families}/${T.runtime_families}`,'Runtime families with positive ordinary use'],[T.scene_audits?n(T.scene_observed)+' B':'N/A','Distinct bytes in imported audits'],[n(T.shared_references)+' B · '+pct(T.shared_references),'Shared references, minimum inventory'],[n(T.unclassified)+' B · '+pct(T.unclassified),'Unclassified after code candidates']]){const d=text('div','','stat');d.append(text('strong',value),text('span',label));$('stats').append(d)}
+$('stats').after(text('p',`Overlap to examine: ${n(T.code_data_overlap)} B belong to both code candidates and identified data. Separate header: ${n(T.header_metadata)} B. Source/model only: ${n(T.source_only_data)} B, excluded from runtime. Percentages must not be added.`,'muted'));
+for(const [key,label,color] of rows){const d=text('span',label);const dot=text('i','','dot');dot.style.background=`var(--${color})`;d.prepend(dot);$('legend').append(d)}
+let selected=0,filter='';const canvas=$('map');
+const audits=R.audits||[], selectedAudits=new Set(audits.map(a=>a.id));
+let viewLayers={...R.layers};
+function merged(spans){const out=[];for(const [a,b] of spans.slice().sort((x,y)=>x[0]-y[0]||x[1]-y[1])){const last=out.at(-1);if(last&&a<=last[1])last[1]=Math.max(last[1],b);else out.push([a,b])}return out}
+function overlap(left,right){const out=[];let i=0,j=0;while(i<left.length&&j<right.length){const a=Math.max(left[i][0],right[j][0]),b=Math.min(left[i][1],right[j][1]);if(a<b)out.push([a,b]);if(left[i][1]<right[j][1])i++;else j++}return out}
+function spanBytes(spans){return spans.reduce((s,[a,b])=>s+b-a,0)}
+function activeAudits(){return audits.filter(a=>selectedAudits.has(a.id))}
+function flags(a){return [a.truncated?'TRUNCATED':'',a.partial?'PARTIAL':'',!a.truncated&&!a.partial?'Complete window':''].filter(Boolean).join(' · ')}
+function auditLink(a){const link=text('a',`${a.case} · ${a.run} · ${flags(a)}`);link.href='#audit-'+a.id;return link}
+function refreshScenes(){
+ const active=activeAudits(),all=merged(active.flatMap(a=>a.ranges)),cases=[...new Set(active.map(a=>a.case))];
+ viewLayers={...R.layers,scene_observed:all};
+ for(const service of ['Typed','Raw','Unclassified'])viewLayers['scene_'+service.toLowerCase()]=merged(active.flatMap(a=>a.serving[service]));
+ const byCase=cases.map(c=>merged(active.filter(a=>a.case===c).flatMap(a=>a.ranges)));
+ viewLayers.scene_shared=merged(byCase.flatMap((a,i)=>byCase.slice(i+1).flatMap(b=>overlap(a,b))));
+ const typedRaw=spanBytes(overlap(viewLayers.scene_typed,viewLayers.scene_raw));
+ $('scene-summary').textContent=audits.length?`${active.length}/${audits.length} audits · ${cases.length} DS cases · ${n(spanBytes(all))} distinct B observed · Typed ${n(spanBytes(viewLayers.scene_typed))} B · Raw ${n(spanBytes(viewLayers.scene_raw))} B · Unclassified ${n(spanBytes(viewLayers.scene_unclassified))} B. Typed/Raw overlap by ${n(typedRaw)} B. ${active.filter(a=>a.truncated).length} truncated, ${active.filter(a=>a.partial).length} partial. ${n(spanBytes(all)-spanBytes(overlap(all,R.layers.identified_data)))} B outside identified data. Absence, filters and drops do not prove bytes were never read.`:'No audits imported: observed coverage unavailable. Add --audit / -AuditPath to the Docker launcher.';
+ for(const r of R.resources){const cell=document.getElementById('scene-resource-'+r.id);if(cell)cell.textContent=audits.length?n(spanBytes(overlap(all,r.ranges)))+' B':'N/A'}
+ select(selected);
+}
+for(const a of audits){
+ const item=text('details','');item.id='audit-'+a.id;
+ const summary=text('summary',''),check=document.createElement('input');check.type='checkbox';check.checked=true;check.id='select-'+a.id;
+ check.setAttribute('aria-label',`Select audit ${a.case} ${a.run}`);
+ check.onclick=e=>e.stopPropagation();check.onchange=()=>{if(check.checked)selectedAudits.add(a.id);else selectedAudits.delete(a.id);refreshScenes()};
+ summary.append(check,text('span',` ${a.case} · ${flags(a)} · ${n(a.distinct_bytes)} B · frame [${a.window.relative_from}, ${a.window.relative_to_exclusive}) · ${a.filter.preset} · dataset runtime ${a.dataset_manifest_sha256?'typed':'absent'}`));item.append(summary);
+ item.append(text('p',`Run ${a.run}. Declared replay: ${a.window.replay_outcome}; ${a.window.frames_entered} frames observed. ${n(a.matched_requests)} requests, ${n(a.dropped_requests)} dropped, ${n(a.fetch_bus_requests_excluded)} fetches excluded. Limit ${n(a.filter.unique_event_limit)} events.`));
+ for(const [k,v] of Object.entries({report_sha256:a.report_sha256,runtime_sha256:a.runtime_sha256,input_sha256:a.input_sha256,dataset_manifest_sha256:a.dataset_manifest_sha256,known_manifest_sha256:a.known_manifest_sha256})){const line=text('p',k+': ');line.append(text('code',v||'none'));item.append(line)}
+ item.append(text('p',`Correlation recalculated against the map manifest. Audit known plan ${a.known_matches_atlas?'matches':'differs or is absent; its attributions are not imported'}. Physical filters: ${a.filter.physical_ranges.map(([x,y])=>hex(x)+'–'+hex(y)).join(', ')||'entire ROM'}.`));
+ item.append(text('p','Declared collectors: '+a.collector.readers.join(', ')));
+ const list=text('ul','');for(const v of [a.collector.fetches,a.collector.instruction_scope,...a.collector.not_observed,a.collector.absence])list.append(text('li',v));item.append(list);$('audits').append(item);
+}
+function toggleAudits(enabled){for(const a of audits){document.getElementById('select-'+a.id).checked=enabled;if(enabled)selectedAudits.add(a.id);else selectedAudits.delete(a.id)}refreshScenes()}
+$('audits-all').onclick=()=>toggleAudits(true);$('audits-none').onclick=()=>toggleAudits(false);
+
+function palette(){const probe=document.createElement('span');probe.hidden=true;document.body.append(probe);const result={};for(const name of ['fg','muted','line',...rows.map(r=>r[2])]){probe.style.color=`var(--${name})`;result[name]=getComputedStyle(probe).color}probe.remove();return result}
+function draw(){const width=canvas.clientWidth,height=rows.length*36+40,scale=devicePixelRatio||1;canvas.style.height=height+'px';canvas.width=width*scale;canvas.height=height*scale;const c=canvas.getContext('2d');c.scale(scale,scale);const colors=palette(),left=width<700?115:205,right=12,top=27,w=width-left-right,rh=36;
+c.font='12px system-ui';c.fillStyle=colors.muted;for(let i=0;i<=4;i++){const x=left+w*i/4;c.fillText(`${i*4} MiB`,Math.min(x,width-46),16)}
+rows.forEach(([key,label,color],j)=>{const y=top+j*rh; c.fillStyle=colors.fg;c.fillText(width<700?label.split(' ').slice(0,2).join(' '):label,0,y+18);let spans=viewLayers[key]||[];if(filter&&key.startsWith('scene_'))spans=overlap(spans,R.resources.find(r=>r.id===filter).ranges);if(filter&&['identified_data','runtime_available','ordinary_resource_extents'].includes(key)){const r=R.resources.find(r=>r.id===filter);spans=(key==='identified_data'||key==='runtime_available'&&r.runtime_available||key==='ordinary_resource_extents'&&r.ordinary_positive)?r.ranges:[]}
+for(let i=0;i<T.rom/R.bin_bytes;i++){const amount=bytesIn(spans,i*R.bin_bytes,(i+1)*R.bin_bytes),x=left+i*w/(T.rom/R.bin_bytes),cw=w/(T.rom/R.bin_bytes);c.globalAlpha=.3;c.fillStyle=colors.line;c.fillRect(x,y,cw,25);if(amount){c.globalAlpha=.2+.8*amount/R.bin_bytes;c.fillStyle=colors[color];c.fillRect(x,y,Math.max(1,cw-.3),25)}}c.globalAlpha=1});
+const x=left+selected/T.rom*w;c.strokeStyle=colors.fg;c.lineWidth=1;c.strokeRect(x,top-3,Math.max(2,R.bin_bytes/T.rom*w),rows.length*rh-6);canvas._bounds={left,w,top,rh}}
+function select(offset){$('address-error').textContent='';selected=Math.floor(offset/R.bin_bytes)*R.bin_bytes;const end=Math.min(T.rom,selected+R.bin_bytes);$('address').value=hex(offset);$('detail').replaceChildren(text('h3',`${hex(selected)} – ${hex(end)} · ${n(end-selected)} B`));const counts=rows.map(([key,label])=>`${label}: ${n(bytesIn(viewLayers[key]||[],selected,end))} B`);$('detail').append(text('p',counts.join(' · ')));const owners=R.resources.filter(r=>bytesIn(r.ranges,selected,end)>0);
+if(!owners.length)$('detail').append(text('p','No data family identified in this cell.'));
+for(const r of owners){const box=text('details',''),heading=text('summary',`${r.id} · ${n(bytesIn(r.ranges,selected,end))} B identified · ${n(bytesIn(overlap(viewLayers.scene_observed||[],r.ranges),selected,end))} B observed`);box.append(heading,text('p',r.note));refs(box,r);const intervals=text('p','Ranges in cell: '+overlap(r.ranges,[[selected,end]]).map(([a,b])=>hex(a)+'–'+hex(b)).join(', '));box.append(intervals);for(const a of activeAudits().filter(a=>bytesIn(overlap(a.ranges,r.ranges),selected,end))){const line=text('p',`${n(bytesIn(overlap(a.ranges,r.ranges),selected,end))} B · `);line.append(auditLink(a));box.append(line)}$('detail').append(box)}
+for(const a of activeAudits().filter(a=>bytesIn(a.ranges,selected,end))){const line=text('p',`${n(bytesIn(a.ranges,selected,end))} B observed in cell · `);line.append(auditLink(a));$('detail').append(line)}
+const overlaps=bytesIn(R.layers.code_data_overlap,selected,end);if(overlaps)$('detail').append(text('p',`Classification caution: ${n(overlaps)} B are both identified data and code candidates. Do not resolve the conflict by counting bytes twice.`));draw()}
+canvas.onclick=e=>{const {left,w}=canvas._bounds,x=e.clientX-canvas.getBoundingClientRect().left;if(x>=left&&x<left+w)select(Math.min(T.rom-1,Math.floor((x-left)/w*T.rom)))};
+$('address-form').onsubmit=e=>{e.preventDefault();const value=parseInt($('address').value.replace(/^0x/i,''),16);if(!Number.isFinite(value)||value<0||value>=T.rom){$('address-error').textContent='Offset outside ROM';return}$('address-error').textContent='';select(value)};
+for(const r of R.resources){const option=text('option',r.id);option.value=r.id;$('family').append(option);const tr=document.createElement('tr');const id=document.createElement('td'),button=text('button',r.id);button.onclick=()=>{filter=r.id;$('family').value=filter;select(r.ranges[0][0]);$('map').scrollIntoView({behavior:'smooth',block:'center'})};id.append(button);const detail=text('td',r.note);refs(detail,r);tr.append(id,text('td',n(r.source_bytes),'number'),text('td',r.runtime_available?'Typed':'Source only'),text('td',r.ordinary_positive?'Positive':'Not validated'),Object.assign(text('td','','number'),{id:'scene-resource-'+r.id}),detail);$('families').append(tr)}
+$('family').onchange=e=>{filter=e.target.value;if(filter)select(R.resources.find(r=>r.id===filter).ranges[0][0]);else draw()};
+function rangeButton(span,label){const b=text('button',`${hex(span[0])}–${hex(span[1])} · ${n(span[1]-span[0])} B${label?' · '+label:''}`);b.onclick=()=>{select(span[0]);$('map').scrollIntoView({behavior:'smooth',block:'center'})};return b}
+const holes=document.createElement('ol');for(const span of R.largest_unclassified.slice(0,10)){const li=document.createElement('li');li.append(rangeButton(span));holes.append(li)}$('holes').append(holes);
+$('sharing-summary').textContent=`${n(T.shared_references)} B in ${n(T.shared_records)} ranges with shared references. ${n(T.multiple_resource_owners)} B belong to multiple manifest resources. These measures can overlap.`;
+const shared=document.createElement('ol');for(const r of [...R.sharing].sort((a,b)=>b.references-a.references).slice(0,8)){const li=document.createElement('li');li.append(rangeButton(r.range,`${r.references} references`),text('div',r.resource,'muted'));shared.append(li)}$('sharing').append(shared);
+if(R.comparison){
+ const c=R.comparison,el=$('comparison');
+ el.append(text('p',`Previous: ${c.generation} · ${c.generated_at} · commit ${c.source_revision.slice(0,12)}. Current: ${R.generation} · ${R.generated_at} · commit ${R.source_revision.slice(0,12)}.`));
+ for(const [label,value] of [['Common ROM',R.rom_sha256],['Previous report',c.report_sha256],['Previous manifest',c.manifest_sha256],['Current manifest',R.manifest_sha256]]){const line=text('p',label+': ');line.append(text('code',value));el.append(line)}
+ el.append(text('p',c.scene_selection_same?'Same audit selection. Observed deltas do not automatically indicate new extraction or acceptance.':'Different audit selection. Observed deltas can depend on different scenes, runtimes, windows and filters; they do not measure extraction progress.','notice'));
+ const scroll=text('div','','scroll'),table=text('table',''),head=text('tr','');for(const label of ['Layer','Before B','Now B','Delta B','Added B','Removed B'])head.append(text('th',label));table.append(head);
+ for(const [key,change] of Object.entries(c.layers)){const tr=text('tr','');tr.append(text('td',rows.find(r=>r[0]===key)?.[1]||key));for(const v of [change.before,change.after,change.delta,spanBytes(change.added),spanBytes(change.removed)])tr.append(text('td',n(v),'number'));table.append(tr)}scroll.append(table);el.append(scroll);
+}else $('comparison').textContent=R.comparison_note||'First available snapshot. Use --compare / -ComparePath to compare a coverage.json for the same ROM.';
+for(const limit of R.limits)$('limits').append(text('li',limit));
+for(const [key,value] of Object.entries({generated_at:R.generated_at,source_revision:R.source_revision,extractor_generation:R.extractor_generation,reviewed_generation:R.reviewed_generation,evidence_date:R.evidence_date,pending_review:R.pending_review.join(', '),rom_sha256:R.rom_sha256,manifest_sha256:R.manifest_sha256,evidence_sha256:R.evidence_sha256,presentation_translation:R.presentation_translation?JSON.stringify(R.presentation_translation):'none',...R.code})){const p=document.createElement('p');p.append(text('strong',key+': '),text('code',String(value)));$('provenance').append(p)}
+addEventListener('resize',draw);matchMedia('(prefers-color-scheme: dark)').addEventListener('change',draw);refreshScenes();
+</script>
+</html>

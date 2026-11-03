@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "prepare-debug-content-id-selection",
+  "title": "Add asynchronous debugger content selection by ID",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Add an internal asynchronous ID selection worker that reuses the existing catalog reference preflight, holds picker ownership until completion, and discards cancelled or stale context and catalog results.",
+    "Route profile and catalog ID requests through a typed local-control action, with pending ownership, targeted cancellation and deadline handling; completion follows worker result."
+  ],
+  "validation": [
+    "The initial and final isolated offline Windows GNU test builds passed without compiler messages; the final build includes the follow-up menu busy correction.",
+    "Wine ran two focused synthetic tests: valid catalog selection, wrong type, changed file, cancellation, busy ownership, and changed context/catalog rejection pass. The 1507 frozen source files and both selected working overlays match.",
+    "The artifact cleanup helper refused this debug-tools unit because its current scope accepts target/rom-data-* units only; no files were deleted.",
+    "Final isolated Windows GNU test and production builds pass without compiler messages; five focused Wine tests pass for selection and the control protocol. The 1507 frozen source hashes and selected overlays match.",
+    "Actual Wine/Xvfb GUI and CLI: after menu refresh, synthetic catalog ID selection succeeds with the expected hash; wrong type and unknown ID are refused, the prior pin stays selected, and full state/frame/clock are unchanged. The GUI/display close with session pins exact.",
+    "A later Wine/Xvfb session selected two different IDs for complete public synthetic replay profiles through CLI and the actual command panel. The selected hashes and full guest state/frame/clock matched; session pins and all 23 copied source payloads matched on close. No replay was requested. The initial selector-only metadata was correctly refused as an invalid replay profile; the separate menu navigation fixture needed debug=true."
+  ],
+  "limitations": [
+    "DBG2-13 remains open: complete menu/CLI/console operation parity and broader command discovery and handling are not proven. Replay selection checks profile/session payloads and input parsing but does not execute the replay or prove decoded snapshot, runtime ABI or endpoint compatibility. Native Windows/Linux and physical input are unverified."
+  ],
+  "files": [
+    "crates/recomp/src/content_picker.rs",
+    "crates/recomp/src/content_picker/tests.rs",
+    "crates/recomp/src/debug_control.rs",
+    "crates/recomp/src/debug_command.rs",
+    "crates/recomp/src/debug_operations.rs",
+    "crates/recomp/src/play.rs"
+  ],
+  "references": [
+    "docs/debug_operations.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

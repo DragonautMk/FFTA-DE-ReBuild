@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-romdata-ffff-slot-job-evidence",
+  "title": "Translate FFFF reader and slot job lookup evidence",
+  "kind": "docs",
+  "platforms": [
+    "Desktop ROM-data planning documentation"
+  ],
+  "changes": [
+    "Translate FFFF reader-field model, runtime, CLI and locator evidence and twenty-slot job lookup and live RAM helper records, retaining results and open criteria."
+  ],
+  "validation": [
+    "Checked unchanged surrounding text and matching numeric values, task IDs, link targets and inline literals against the preimage."
+  ],
+  "limitations": [
+    "Later evidence and the wider English-first audit remain open; no ROM access or runtime checks were performed."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_TODO.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

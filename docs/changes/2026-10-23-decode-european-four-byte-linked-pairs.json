@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "decode-european-four-byte-linked-pairs",
+  "title": "Decode European four-byte linked pairs with original count and threshold prefix proofs",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Bound EUR6e6bf4..6e6c44 as20records/4bytes/80source bytes using two checked LDRroots and independently rooted following map. Add strict lossless Metadata4/Record/Pair catalog with two fixed selector/value slots;26active pairs and count shapes0/1/2, preserve zero selectors and unused values.",
+    "Validate actual parsed metadata52cross-owner indices in both directions:116rawfield30indices cover0..19 and all40new selectors name existing rows. Preserve original distinction between counting both nonzero slots and walking only the contiguous leading pairs; retain unsigned values, signed qualified-count comparison, u8success tally and deeper original live ability scans.",
+    "Add one focused original-code prefix oracle covering both Count/Select/Gate/Threshold implementations. The standalone source step leaves managed EUR e26-d25/21files/20resources and USAe8-d7unchanged; no new managed file/resource/runtime projection yet."
+  ],
+  "validation": [
+    "Exact-EUR independent inventory passes root/next-root/stride/count/gate/threshold instruction checks,116owner indices/all20rows, selector ownership, complete80byte reconstruction and no e26overlap. Private evidence stays ignored under target/rom-data-metadata4.",
+    "Windows build21229 warning-free and Wine74773 single new oracle terminal/pass:320real prefix cases cover both versions/all20rows, actual caller jobIDs2..43 and below/equal/above thresholds;24isolated synthetic cases cover holes, nonzero unused payload, value255, signed comparison edge and tallyu8wrap.9560instructions/136PCs are coverage only.",
+    "Strict JSON/fixed arrays/count/extent/coherent source and parsed-owner guards, exact next-pair/exit decisions, shared stack/preserved prefix registers and outer RAM pass. Synthetic records fail authentication and are never published. Prefix scope does not claim whole-function ABI or deeper live unit/ability scans.",
+    "All30protected ROM/e26dataset/cache/loader/canonical/candidate/owner/source fixture hashes unchanged. No source build/test failure or closed source/native/lifecycle/scene acceptance repeated. Final project-memory/whitespace/protected/source hashes recorded at closure; all unit jobs terminal, no agent commit/push."
+  ],
+  "limitations": [
+    "Standalone source/original-prefix proof only. Managed publication/direct CPU-DMA-native ownership/lifecycle/positive ordinary scene/CLI for this table remain next; EUR e26-d25and USAe8-d7unchanged.",
+    "Caller selection proof covers actual jobIDs2..43 and same alternate argument, excluding metadata52FFrows. Deeper live ability scans, whole surrounding functions and global caller preconditions remain unclaimed; qualified-count inputs are seeded only at bounded comparison prefixes.",
+    "New Linux/USA/native Windows verification and broader gameplay/maps/audio/GUI/archive/mod remain pending. No performance/startup/RSS/space campaign or AndroidPort change. Private game data, saves, recordings, source fixtures and generated code remain ignored."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/metadata4.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/metadata4_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

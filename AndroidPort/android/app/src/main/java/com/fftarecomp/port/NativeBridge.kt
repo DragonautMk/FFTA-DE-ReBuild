@@ -115,7 +115,7 @@ object NativeBridge {
     }
 
     fun report(performance: String = ""): String = buildString {
-        append("FFTARecomp Android preview\n")
+        append("FFTA DE-ReBuild Android preview\n")
         append("Android ${Build.VERSION.RELEASE} / SDK ${Build.VERSION.SDK_INT}\n")
         append("Device: ${Build.MANUFACTURER} ${Build.MODEL}\nABI: ${Build.SUPPORTED_ABIS.joinToString()}\n")
         append("ROM verified: $romVerified\n$hashes\n")

@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "slug": "add-bounded-menu-text-input-diagnostics",
+  "title": "Add bounded UI input traces with actual host-menu focus and font diagnostics",
+  "kind": "added",
+  "platforms": [
+    "Windows cross builds and Wine/Xvfb; simulated XInput; offline Chrome desktop/mobile"
+  ],
+  "changes": [
+    "Add isolated menu Start UI / input trace and Save UI / input report plus acknowledged debug-control ui-start/ui-report. Expose actual status.host_menu page/row/binding/dropdown option and existing geometry. Start/save require an idle paused copy; collection observes keyboard/controller mapping, host dispatch/consumption, binding changes, control requests and actual guest-frame latches without input injection or guest mutation.",
+    "Bound explicit trace to30seconds/1024events/600frames, deduplicate unchanged mapped/controller polls, retain stop reason and refuse replacing an unsaved trace. State restoration seals the prefix. Keep at most8report folders including failed captures, windows1600x1000 and JSON2MiB; publish ui.json last without automatic pruning, overwriting or collector snapshots.",
+    "Observe the existing host-menu font on a disposable redraw: text prefix256characters,512runs,4096measured characters, actual advance/ascent/descent and rendered glyph-outline bounds, separate original width-stop/canvas clipping. Thread-local observer is normally off and unwinding clears collection; original renderer and dropdown geometry expressions remain intact.",
+    "Offline HTML/PNG/JSON report provides actual focus/layout, selectable text bounds and filtered host/guest sequence with independent host-ms/guest-frame clocks, ROM/runtime/full-state identities and effective bindings. Guest text/unknown selectors stay unknown. Homepage generator recognizes ui.json as its own category and links the feature guide; refreshed ignored homepage includes29indices/sixUI reports."
+  ],
+  "validation": [
+    "Frozen public07be4d2 plus20selected overlays retains accepted DBG10-12 and excludes concurrent extraction implementation. Final locked/offline feature/default Windows release builds warning-free; feature SHA2562be92f115b651960f716bf69e2dd1569a43feb0165e451893facaadbcf79467e, default9c15b92e991336535f4bf9cfcfe416917429a01a7b45246b4d41f97808597634. First git archive included absent root build.rs and refused before export/build; remove nonexistent pathspec only and retain source-export-attempt.",
+    "69distinct Wine tests pass:68initial (2collector,7control,12frontend,47menu) plus1new dropdown-focus test. Two affected report tests run after dropdown review and again after status/template review;73executions are not73distinct tests. Observer leaves every test pixel identical. Time/frame/event/dedup/output-capacity/error retention and parser/frontend boundaries verified.",
+    "Initial keyboard prefix accepted35events/14Enter autorepeats with one host Confirm opening Extended-saves dropdown, plus F7 neutral3ff and controlled3fe/3ff latches. Harness then navigated the open dropdown instead of Stop, requested verify while the lease was live and force-closed owner/Xvfb. Retain incomplete recording/unclean copy; no endpoint/clean-exit claim. Screenshot justified actual dropdown focus output; pre-dropdown-focus preserves source/build/results, accepted prefix never rerun.",
+    "Fresh Recorded CLI UI case records2A/release frames, publishes a readonly report, explicitly stops recording and closes0/inactive before debug-record verify. Full endpoint SHA256dd841ef6dba845974625e7e5ae5839f86069000066f876a32d0a86bf6fcb0b81 passes; input/start/end hashes independently checked. Separate simulated-pad copy accepts dropdown geometry and menu Start/Save, then unconditional Right enters MouseKeyboard after automatic Gamepad selection; preserve rejected remap arm/unclean diagnostic copy.",
+    "Readonly status focus and bounded selector width added in pre-status-browser review. Next harness catches actual row0=Open menu rather than A before any gamepad injection; pad-binding-target-attempt retains logs/source. Reopen the SAME unadvanced final copy only for remaining remap, selecting real Gamepad/A=row1 from status geometry/label. Actual simulated XInput South held1200ms commits North->South once, one keyboard Confirm opens capture, no second confirm or guest frame, exact complete state preserved. Final copy closes0/inactive; duplicate-start/capacity preserving report hash-mtimes/running/closed refusals pass.",
+    "41CLI invocations retained:40expected exits and one rejected early live-session verify. These include navigation retries, not41distinct acceptance cases. Two accepted clean copies and two diagnostic interrupted copies remain local. Source/runtime/input originals preserved; no normal executable replacement. Screenshots inspected and no live GUI/helper remains.",
+    "Known clipped diagnostic title measures545.8886px advance versus472available,64of75characters chosen, width_stopped=true/canvas_clipped=false. Extended-saves dropdown panel[266,202,320,76] at852x480 is independently identified. Chrome1400desktop/620mobile checks actual image/text/outline selection, dropdown/remap focus, event filtering and no overflow. Homepage checks29indices/sixUIreports/search/reset and new guide link.",
+    "Independent final-verification authenticates20live/frozen overlays,6reports against current/prior exact templates and pinned runtimes, PNG dimensions/event ordering/limits/no collector snapshots, recording input/start/end identities and terminal ready states. Removing only observers restores exact original menu canvas, guest frame runner and input mapping; dropdown helper body is byte-identical. All202selected originals preserved by final GUI and normal runtimes rechecked. Initial readonly checker selected unit parent instead of case parent; corrected only path arithmetic, no execution acceptance repeated.",
+    "Evidence under target/debug-tools-ui: build/fixture selections/protection maps, initial/affected/status-browser test results, accepted keyboard/remaining prefixes, CLI/GUI/browser/final-verification, logs/screenshots and source preimages. artifact-retention.json retires three exited Chrome profiles while retaining current candidates/cache/four session histories/six reports/complete and incomplete recordings. No managed disposable fixtures created; ROM-only completion helper does not apply.",
+    "Feature/checklist/durable-state/handoff close DBG13; only DBG01-13checked among22ordered IDs. All checked local Markdown links and42homepage file links exist. Project-memory workspace/base07be4d2 coverage and git diff --check pass, including the concurrent extraction record now provided by its own work. documentation-verification/command-results retain exact scope; no missing administrative deliverable."
+  ],
+  "limitations": [
+    "Wine/Xvfb interpreter validation with simulated XInput only. Native Windows/Linux/Wayland, physical controllers, other scenes/backend-native execution and hardware presentation/latency remain unverified. Raw Gilrs/DirectInput/mouse transitions are outside hooks; mapped merged results still observable. No new ROM/DS/native parity or performance acceptance.",
+    "Text metrics concern the actual host-menu font and glyph-outline bounds, not alpha-pixel extents or decoded guest glyphs. PNG is a disposable CPU menu redraw over existing preview, not monitor/GPU capture. Unknown guest menus/focus/text and ROM transfer provenance remain unknown. Width/canvas clipping and collector limits are explicit.",
+    "A trace is a bounded observed prefix, not a complete replay. Original incomplete keyboard recording and interrupted diagnostic sessions retain their actual failure status; only the separate complete2frame recording is replay-certified. State restoration seals the prior timeline; report current state may belong to a later restoration. Prior report paths in status remain historical after failure.",
+    "No normal runtime/save/native ABI change, extraction acceptance replay, Android, Godot, commit or push. Preserve unrelated accepted tool work and concurrent extraction; its records remain separate."
+  ],
+  "files": [
+    "crates/menu/src/canvas.rs",
+    "crates/menu/src/diagnostics.rs",
+    "crates/menu/src/lib.rs",
+    "crates/menu/src/theme.rs",
+    "crates/recomp/src/debug_control.rs",
+    "crates/recomp/src/debug_ui.rs",
+    "crates/recomp/src/debug_ui/report.html",
+    "crates/recomp/src/play.rs",
+    "crates/recomp/src/main.rs",
+    "scripts/report_home.py",
+    "scripts/report_home.html",
+    "docs/debug_ui.md",
+    "docs/debug_control.md",
+    "docs/report_home.md",
+    "scripts/README.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/debug_ui.md",
+    "docs/debug_control.md",
+    "docs/debug_recordings.md",
+    "docs/report_home.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "trace-upstream-scrollbar-shop-android",
+  "title": "Trace upstream shop scrollbar and Android entry points",
+  "kind": "docs",
+  "platforms": [
+    "Desktop source comparison; Android source audit; Linux synthetic geometry"
+  ],
+  "changes": [
+    "Trace EUR shop page redraw and desktop drag ownership, identify Android frontend gap, and prepare a bounded integration proposal with replay and native risks."
+  ],
+  "validation": [
+    "Compiled exact upstream ui_scrollbar.rs with rustc 1.94.0 --test: four tests passed; inspected pinned shop, Android, recording and replay call sites."
+  ],
+  "limitations": [
+    "No application build, GUI, game, region, native-dispatch or Android device test; upstream geometry is not fork integration."
+  ],
+  "files": [
+    "docs/development/upstream-audit/U31-02-scrollbars.md"
+  ],
+  "references": [
+    "docs/To_DO/FFTARecomp_Upstream_v3_1_Analisi_Decisioni_v0_2.md"
+  ]
+}

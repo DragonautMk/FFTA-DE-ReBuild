@@ -1,0 +1,16 @@
+---
+description: Bound local build and validation artifact retention
+alwaysApply: true
+---
+
+# Local artifact retention
+
+Follow `docs/development/LOCAL_ARTIFACTS.md` when creating or cleaning artifacts.
+Keep private originals and inputs, live or failed work, evidence, and the current
+datasets needed by active work. Historical datasets, test binaries and isolated
+Wine prefixes are not permanent merely because a previous check used them.
+Review dependencies and reproducibility, preview exact paths and sizes, coordinate
+with active work, and retain a local receipt before retiring superseded copies.
+Never use a global `target` deletion or Docker prune as unit cleanup.
+For Wine prefixes never follow their links to the host. A sandbox-only process
+listing or a missing lease does not establish that an old prefix is unused.

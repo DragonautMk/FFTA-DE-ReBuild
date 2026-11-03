@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "begin-debug-command-console",
+  "title": "Begin the debugger command console",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Add a bounded Unicode command draft editor with selection, history, explicit submission, clipboard integration, IME and initial context-sensitive completion.",
+    "Add a debug-menu host panel that submits through the same identity-checked local-control client as the CLI and suppresses gamepad input while focused.",
+    "Consume synthetic focus-return key presses briefly after hiding the command panel, before main-window shortcut or held-key handling."
+  ],
+  "validation": [
+    "Isolated Windows GNU test/menu/runtime builds passed without compiler messages; Wine editor2/parser2/protocol1/menu1 passed and 1510 frozen source hashes/20 overlays matched.",
+    "Wine/Xvfb synthetic GUI: malformed step 01 was not published, corrected step 1 matched the existing CLI complete state/clock; F9 stayed isolated and history recall/draft cancellation were visible.",
+    "Two intermediate visibility scripts accidentally resumed only the synthetic ROM after focus changed; both sessions were paused and closed with pinned inputs exact. UI trace then identified a synthetic Escape press delivered on focus return.",
+    "After the targeted fix, the Windows GNU test and production builds passed; one Wine/Xvfb traced hide/reopen/readonly help/window-close case preserved the selected Debug menu row and full guest state/frame0/clock0. An ordinary Escape still returned to Main. The synthetic press was observed and the isolated GUI/display closed with pins exact.",
+    "Atlas migration inventory check, project memory and whitespace checks are recorded separately at handoff.",
+    "A later synthetic Wine/Xvfb session with a new isolated prefix and display verified selection copy/cut, Unicode multiline clipboard paste and copied result JSON. The pasted draft round-tripped exactly, Enter refused it without publishing a primary command, and guest full state/frame0/clock0 and session pins stayed exact. The window and owned display closed and no process with the test prefix remained. The first cleanup command lacked wineserver in PATH and was corrected; the GUI log recorded one transient local-control access-denied warning while all tested queries returned successfully."
+  ],
+  "limitations": [
+    "DBG2-13 and DBG2-14 remain open: real IME composition, complete menu/CLI/console equivalence and broader command coverage are not verified. Controller editing, context completion and replay-profile selection have separate bounded evidence.",
+    "The clipboard check used an isolated Wine prefix and Xvfb display; native Windows/Linux, physical input and real IME were not tested. A transient control-channel access-denied warning was observed without a failed query in this session; its cause was not established."
+  ],
+  "files": [
+    "crates/menu/src/lib.rs",
+    "crates/menu/src/clan_atlas.rs",
+    "crates/menu/src/command_console.rs",
+    "crates/recomp/src/main.rs",
+    "crates/recomp/src/debug_command.rs",
+    "crates/recomp/src/debug_command/editor.rs",
+    "crates/recomp/src/debug_command_panel.rs",
+    "crates/recomp/src/debug_control.rs",
+    "crates/recomp/src/debug_operations.rs",
+    "crates/recomp/src/content_picker.rs",
+    "crates/recomp/src/play.rs"
+  ],
+  "references": [
+    "docs/debug_operations.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/development/MENU_ATLAS_INVENTORY.json"
+  ]
+}

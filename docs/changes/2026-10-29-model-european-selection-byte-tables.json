@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "slug": "model-european-selection-byte-tables",
+  "title": "Model European selection-byte tables and verify original stages",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add a strict lossless4+30 unsigned-byte model with two physical source spans, separate shape/source authentication, live-query diagnostic count/sum/choice projections and no invented RNG/value caps.",
+    "Preserve every raw live-byte query, physical order, zero-weight participation and full32-bit wrapping signed-rank subtraction; keep the opaque two-byte gap unowned."
+  ],
+  "validation": [
+    "One warning-free Windows core build b40503b87caafceae22f9b023a498df868e6fa31a7e49c71868f9d0b187d1ebc uses576 frozen files/245 selected core inputs;574 accepted preimages and inverse core hub remain exact.",
+    "One Wine filter passes18 guards,45 base and24 isolated synthetic original count/sum/choice stages with actual377BC live reader. Independent Python/model/actual results, query order and unsigned source-load order agree.",
+    "All34 bytes/two spans reconstruct; actual original stages observe34 base and32 synthetic bytes. EWRAM/IWRAM/VRAM/OAM/palette, SP/R8..R12 and final ROM are exact;30480 instructions are coverage only.",
+    "All123 preservation guards,576 frozen hashes,three current hashes,574 prior accepted hashes and96 closed-source guards pass; artifact completion retires zero paths.",
+    "Final changelog render, default/base999d0a6/metadata project-memory checks and CRLF-aware whitespace check all pass; no parallel implementation coverage gap."
+  ],
+  "limitations": [
+    "Schema1/e86-d85/79 managed files remain unchanged; managed publication/runtime/native-clock/lifecycle checks, actual CLI and ordinary use remain pending.",
+    "Numeric helpers/RNG distribution, prologue/epilogue/full routine ABI, all indirect references, opaque gap/event-catalog extent, Linux, USA, native Windows,new32:9 and full ROM TODO remain pending.",
+    "Synthetic stage inputs do not establish reachability through the full routine; no ordinary checkpoint is edited, no closed proof is repeated and no performance/storage measurement is performed. Parallel frontend changes stay outside the frozen core build."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/selection_byte_tables.rs",
+    "crates/gba-core/src/rom_data/selection_byte_tables/tests.rs",
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

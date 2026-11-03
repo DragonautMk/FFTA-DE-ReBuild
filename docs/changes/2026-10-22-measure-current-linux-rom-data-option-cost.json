@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-10-22",
+  "slug": "measure-current-linux-rom-data-option-cost",
+  "title": "Measure the current Linux release with ROM-data disabled and enabled",
+  "kind": "performance",
+  "platforms": ["Linux", "EUR", "Headless runtime"],
+  "changes": [
+    "Record the explicitly requested current Linux performance sample as a scoped exception to the earlier measurement deferral, preserving the paused implementation goal and unrelated historical queues.",
+    "Reuse the current exported release, bundled TinyCC, original EUR battle/menu/enemy replay and native translation, plus an isolated copy of the retained e12 dataset. Compare the same executable with ROM-data off/on; no rebuild, translation, recording or optimization."
+  ],
+  "validation": [
+    "Five alternating 3530-frame pairs with 120-frame warm-up, 16:9/zoom0 and CPU15 affinity give medians 5.950458ms ROM-data off and 5.959263ms on: +0.147972% option cost, approximately 168 headless frames/s. Paired differences range -0.4504% to +1.2898% with overlapping sample ranges, a neutral local result.",
+    "Separate verification matches every framebuffer/OAM frame, initial/final complete serialized states and all dispatch counts: 28740177 native blocks and 63558305 fallback steps. Every timing run also matches final identity/counts.",
+    "Usage counters prove 16988 OBJ bus reads/314108 typed host reads and 2167 text/font reads/8239 source bytes. All candidate processes reuse the source-authenticated dataset.",
+    "Per-second host samples show sibling CPU14 mean 0.258%/max 8% busy and benchmark CPU15 mean 99.885%. Original ROM/snapshot/input/cache/archive/loader/e12 and copied generation hashes/mtimes remain unchanged. Runner 73423 is terminal/pass; detailed logs/results are under target/rom-data-e12-linux-performance."
+  ],
+  "limitations": [
+    "This same-binary off/on comparison excludes always-present shared migration costs and does not establish a complete historical regression-gate result.",
+    "Headless emulation work excludes startup, window/GPU presentation and the audio device. No new full audio-stream comparison, p95/p99 profile, RSS/storage measurement or optimization.",
+    "BG/archive/program loading counters are zero in this battle replay. Other scenes and new Wine/native Windows/USA measurements remain unverified; no inference for AndroidPort, no commit or push."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_VALIDATION.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VALIDATION.md",
+    "docs/development/TASK_HANDOFF.md",
+    "scripts/benchmark_windows_runtime.py"
+  ]
+}

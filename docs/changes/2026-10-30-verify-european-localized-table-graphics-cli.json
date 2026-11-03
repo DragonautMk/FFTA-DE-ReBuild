@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-10-30",
+  "slug": "verify-european-localized-table-graphics-cli",
+  "title": "Verify actual CLI registration of European table-selected UI graphics",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Verify e92-d91 actualproductionCLI creation/reuse/startup fromsame601acceptedruntime sources withoutoverlays, preservingcanonical andallprior datasets."
+  ],
+  "validation": [
+    "One warningfreeWindowsGNUproductionbuild31c0f298529889b41ed72bff67e85ed35c9f1781586a085a7b8fbe94cc596edb/canonicalhashmtime restoredfinally.",
+    "OneWineorchestrationthreeexit0 commands create-reuse-neutral1normal24755copy\u219224756;84runtime-identicalfiles/83loggedIDhashes/86managedpathhashmtime nowrite/cache28859 unchanged.",
+    "Allsixnewtableusagecounts0, registration/compatibilityonly/no positiveordinary-fullpairclaim.202guards601CLI+601runtime/84accepted/ROM-seed-input-cache-TinyCC-canonical exact.",
+    "No newcheckpointderivation/navigation/old40model16UIindexed20native22-35ordinary41CLIacceptance/performance replay."
+  ],
+  "limitations": [
+    "Positiveordinarygameplay andfullsceneequivalence of40newbanks remainpending.",
+    "FulltransferhelperABI/livecontexts/globalextent/indirectaliases/71E5E0tablealias/sevenrawgroups/tails/modphases/fullROMTODO remainunverified; sparse27ordinary stayspartial.",
+    "Linux/USA/nativeWindows/new32:9 remainpending peruser scope."
+  ],
+  "files": [
+    "docs/rom_data_ui_graphics.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_graphics.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

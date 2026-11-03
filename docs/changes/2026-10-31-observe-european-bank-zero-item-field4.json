@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "observe-european-bank-zero-item-field4",
+  "title": "Observe European bank zero field four in battle Item menu",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Identify the battle Item-menu route to bank-zero field 4 and document its ordinary typed reads."
+  ],
+  "validation": [
+    "Wine disassembly authenticated the source path; one retained 340-frame Wine observation served 32 typed field-4 bytes, with guarded inputs and frozen sources unchanged."
+  ],
+  "limitations": [
+    "Aggregate counters do not identify exact executed PCs or all records; a full scene comparison, Linux, USA and native Windows remain unverified. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md"
+  ]
+}

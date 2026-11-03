@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "decode-european-item-linked-pairs",
+  "title": "Decode European counted item-linked pairs with original query and publication proofs",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Independently bound EUR item-linked table6e3ad0..6e4c64:225records/20bytes/4500source bytes, twelve checked LDR literals and a separately rooted following16byte table. All376item records reference220distinct rows; unreferenced rows remain owned.472active pairs include eightFFselectors; opaque header and all unused slots remain exact.",
+    "Add a standalone typed Links/Record/Pair catalog with fixed source/count/extent, u8count<=9, nine fixed slots, strict JSON, source equality and explicit item-owner validation. Preserve count-zero records, raw selector/value bytes, opaque/padding data and original u16item-ID truncation; do not invent full job/ability semantic names. Current managed dataset remains e23-d22, with no new resource/file/runtime projection yet.",
+    "Verify original item\u2192table selection, count-bounded query/ignored selector0/first-match behavior and isolated live-unit publication: normal values ORbit7at unit+40+value, FFvalues store at unit+3d. Later job/ability calls and the52byte table at6e5464remain original/unmigrated. Extend shared test helpers with a separate actual FFcontext-mismatch gate without reopening the completed main oracle."
+  ],
+  "validation": [
+    "Read-only exact-EUR independent inventory checks pass LDR roots/stride/count/pair code, following root,376owners, whole4500byte roundtrip and no e23resource overlap. Count histogram covers0..9; all225opaque bytes/current unused slots are zero but are preserved, not omitted. Private discovery data/disassembly under ignored target/rom-data-item-links.",
+    "Windows source test build7858warning-free and Wine66407main source check passes2244original cases:378item selectors includingu16truncation,1394queries across all225rows,464normal and8isolatedFFpublication prefixes.61906instructions/66PCs record coverage only. Four isolated machine-owned synthetic queries prove ignored active selector0, duplicate first match and nonzero unused slots beyond count. Strict JSON/array/count/extent/item-owner/coherent opaque-unused-active-reorder/source guards, live-unit/outer-RAM/stack guards pass.",
+    "A bounded audit identifies the predecessor comparison outside the isolatedFFprefixes. Warning-free83289build/Wine16475runs only eight new selector-load/context-mismatch/FFbranch/live-unit-store cases fromD09C4with unit selector2,80instructions. Main source oracle is not repeated; original table/item fixtures/ROM/cache/loader/canonical remain protected.",
+    "Project-memory/whitespace/protected-input/source hash checks recorded at closure; all source jobs terminal/pass. Existing uncommitted e23implementation was verified against its closed hashes before extension and is preserved. No agent commit/push."
+  ],
+  "limitations": [
+    "Source-model/original-code proof only. Managed e24preparation/direct CPU-DMA-native projections/lifecycle/ordinary scene/CLI acceptance remain next. Current dataset is e23-d22/18files/17resources; no new managed revision or runtime use is claimed for this catalog.",
+    "Proofs cover bounded original selectors/query/publication prefixes and actual FFentry gate, not complete surrounding job/ability routines. Wider maps/audio/other gameplay/GUI/archive/mod phases and new Linux/USA/native Windows verification stay pending. No performance/startup/RSS/space campaign or AndroidPort change; private ROM data/generated code/fixtures stay ignored."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/item_links.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/item_link_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

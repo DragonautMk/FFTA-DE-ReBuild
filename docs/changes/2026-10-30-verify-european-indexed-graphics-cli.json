@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-10-30",
+  "slug": "verify-european-indexed-graphics-cli",
+  "title": "Verify European indexed graphics registration through the actual CLI",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Verify actual e91-d90 productionCLI managed creation/reuse/normal startup with the same597accepted runtime sources and24source spans74907B; preserve canonical executable and all prior datasets."
+  ],
+  "validation": [
+    "One warningfree Windows GNU productionbuild d8767645ab8cbc7203e0ac6bb48e810feaab2003a4dcad7300361f01c09ffeb4 from597sources/nooverlays, canonicalhashmtime restoredfinally.",
+    "One Wine orchestration/threeexit0 commands: create, no-write reuse, neutral1normal24755\u219224756;84runtime-identical payloads/83loggedIDhashes/86managedpathhashmtime unchanged and28859oldnativeblocks loaded.",
+    "All12newusagecounts zero: registration/startup compatibility only, no positiveordinary or fullpair claim.201guards597CLI+597runtime/84accepted/ROM-seed-cache-TinyCC-canonical exact.",
+    "No new ordinary checkpoint derivation/navigation/oldsource-model-native-CLI acceptance/performance replay.",
+    "Final project-memory default/base35920d8/metadata and CRLF-aware diff checks all PASS. Earlier parallel recording/replay implementation and test coverage gaps are resolved by their own records; no ROM attribution or runtime proof replay. Accepted and diagnostic evidence retained by the artifact helper."
+  ],
+  "limitations": [
+    "Positive ordinary gameplay consumption/fullscene equivalence remain pending.",
+    "Linux/USA/nativeWindows/new32:9/fullroutineABI-liveuploads/mode3-widerwidth/globalextent/indirectaliases/opaquecontexts/tails/mod phases/fullROMTODO remain pending; sparse27ordinary remains partial."
+  ],
+  "files": [
+    "docs/rom_data_indexed_graphics.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_indexed_graphics.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

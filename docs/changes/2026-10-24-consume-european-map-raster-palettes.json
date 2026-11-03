@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "consume-european-map-raster-palettes",
+  "title": "Publish and consume European raster palette files through typed ROM APIs",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Publish map-raster-palettes.json/graphics.map-raster-palettes in EUR v1/e55-d54:51generation files50resources, all49prior decoded files unchanged/e54generation retained, USAe8-d7 unchanged. Validate actual BGdescriptor links, canonical source/file hashes and full33range10496Bset before activation.",
+    "Add one immutable typed index/header/color owner to existing CPU/DMA/BIOS-HLE/native ROM reads, merging owned bytes with prior owners. Keep extra489BB0halfword with the alternate-palette index and preserve raw neighbors, original selectors/windows,322Bcopies/wrap/clock and DMA. No ROMshadow, guestcap, host raster/DMA, save/native/cache ABI change.",
+    "Wire extraction, bounded parsing, managed file hashes, runtime reporting and ordinary source-use gate in six selected existing files. Add isolated owner and two private targeted filters; source model and accepted source oracle remain unchanged. Remove one new whitespace-only synthetic budget insertion before build; no format sweep or old-model rewrite."
+  ],
+  "validation": [
+    "Previous model turn is progress/terminal:289source-doc baseline matched/5447protected artifacts/643guards; no source/model/oldruntime/CLI/scene proof reopened. Exact selected preimages and one-shot wiring diff retained under target/rom-data-map-raster-palettes/runtime-before.",
+    "One Windows82612affected core/frontend test build firstPASS warning-free. Frozen core1c9e5c3b9ce56ea0ef24388047e0309494874a6532520438847fbfe436a00a07/frontendbd3e69fda059e58e4c1932122220fac2304de40cc0a7f3e22f17323a02cfef2a. Core tests compiled only. Wine41457two new exact filters firstPASS:managed17coherent/missingfile guards/actualBGdependency-complete set/create-reuse-repair-move/e54retention/unavailable-files/Load-Undo-backup-Restart/sameowner/all10496B/32programs.",
+    "Native28original-interpreter-compiled complete-state-clock paths pass with all10496new rawB and adjacent314Bold palette index poisoned. Compiled API classes15index46header24colorB; immediate/deferred/rawsigned-unsigned/sentinels/livewindow/explicit-source/queuedDMA/copy-wrap and oldowner/raw boundaries match. Width/mirror/realBIOS bus-mode/fourCpuSet-FastSet/oneimmediateDMA comparisons pass; mixed read and DMA each charge2new+2oldB.",
+    "All646hash-mtime guards pass.638instructions204PC55native dispatches are coverage counts only, no performance/whole camera/rasterDMA/ordinary ABI claim. Accepted datasetcfc4012ce77ff78dd5e77f2b2ff9cb247a62b94e05d0a2fb80e24759a4e321b1/newfiled263f1a538fa9bd8c02225c4a6c41b6931b1c85f0e13d886f66a437e22abe9e8. Terminal evidence windows-managed-{build,results}.json/runtime-targeted-outcome.json and windows-managed-europe/{managed,native}-result.json.",
+    "All5447prior protected artifact hashes unchanged. The289source/doc baseline changes only six selected implementation/wiring files and eight memory files; new owner/test/coherent record expand292. Accepted source model/oracle and all compiled integration inputs remain unchanged after their checks. Generated CHANGELOG, memory/default-base7597b92, CRLF-aware whitespace and formatting of only the new owner/test pass. User Debug-save/concurrent Docker and prior evidence preserved.",
+    "Production CLI/ordinary closure uses one needed Windows26915build firstPASS warning-free/candidate43c9992fc68038796f9c21066d536dd23c568e44963dfa295d2b81f1beebdf77. Canonical exact hash/mtime restored; main.rscontent unchanged, mtime-only Cargo invalidation as established. No new product code or test build/source-model-targeted replay.",
+    "Wine40160actual CLI create/reuse-no-write53managedfiles/unrelatedcwd/all51generation files identical to accepted e55/oldnativecache firstPASS. Single retained authentic coldboot demo1500locator/no initialstate-save/PC-RAMoverride positive50880aggregateB=2index322header50556color/25440busreads/programmask2. Neighbor header-only reads mark records too; not two full palette initializations or distinct sourceB.",
+    "Wine90978one same1500frame0..1500fullpair firstPASSevery complete gueststate-clock/central-wide image/OAM/dispatch/mixed-PSG-FIFO-bitwise-HLE sample with actualCLI generation/frozen bd3frontend/oldcache/input. Audio[3291096,3291096,395212,395212,3269758], exactly same new counters and701hash-mtime guards. Mixed native/fallback/widescreen0; Other ordinary contexts and an ordinary final31/alternate-index crossing are unclaimed; their targeted proof remains separate. Terminal windows-cli-summary.json/windows-scene-result.json and windows-boot-raster-full-state-audio.log.",
+    "Final CLI/ordinary preservation passes all5736prior artifact hashes and701hash-mtime guards. The292source/doc baseline differs only in nine selected memory files; all implementation/model/oracle files remain unchanged, maincontent unchanged/mtime-only Cargo invalidation. Generated CHANGELOG, memory/default-base7597b92 and CRLF-aware whitespace pass. Final source/protected/check/outcome maps under cli-final-*.json; no live build/test/process job or user/concurrent work altered."
+  ],
+  "limitations": [
+    "New-family source/model/managed/native/productionCLI/positiveordinary criteria are complete for the declared EUR/Wine scope. Other ordinary palettes/camera contexts, complete raster DMA/camera/real-BIOS ABI and new32:9 remain unclaimed. Linux/USA/native Windows checks remain pending.",
+    "No performance/space measurement, new fixture/navigation, oldproof replay, save/native ABI change, Android work, package, agent commit or push. FullTODO remains active."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/map_raster_palettes.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/map_raster_palette_runtime_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "scripts/extract_rom_data.py",
+    "docs/rom_data_maps.md",
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_maps.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

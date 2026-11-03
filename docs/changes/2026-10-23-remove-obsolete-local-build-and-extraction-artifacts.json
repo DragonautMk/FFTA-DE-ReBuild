@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "remove-obsolete-local-build-and-extraction-artifacts",
+  "title": "Remove obsolete local builds and extraction test outputs",
+  "kind": "changed",
+  "platforms": [
+    "Linux"
+  ],
+  "changes": [
+    "Removed an obsolete debug cache, eight historical Wine prefixes and 133 completed extraction/lifecycle test directories from ignored target storage.",
+    "Removed 219 superseded host executable/test copies and 62 old portable archives, retaining canonical runtimes, current exports, recent datasets and pending validation trees.",
+    "Preserved source preimages, game caches, ROMs, saves, recordings and validation logs/results; documented how local cleanup differs from runtime generation retention.",
+    "Recorded the terminal cleanup outcome without resuming the earlier ROM-data or performance queue; concurrent project-memory updates were preserved."
+  ],
+  "validation": [
+    "All 423 reviewed generated paths, comprising 19964 files, are absent; target allocation decreased from 57069301760 to approximately 21044056064 bytes, reclaiming 36.0 GB.",
+    "SHA-256 comparison preserved all 742 ROM/save/recording files and 528 implementation files in the initial inventory; canonical runtime/export hashes were also retained.",
+    "All 6190 pre-existing files in retained recent datasets, pending native-boundary trees and current export evidence retain their recorded size and modification time.",
+    "Deletion candidates were checked for tracked files, private game/save/input extensions and overlap with protected paths; directory symlinks were not traversed.",
+    "python3 scripts/project_memory.py check and git diff --check pass. Detailed local manifests and results remain under target/local-artifact-cleanup-2026-10-23/."
+  ],
+  "limitations": [
+    "No runtime implementation, extractor generation-retention policy, Docker image/global cache or AndroidPort behavior changed; no builds or gameplay tests were run.",
+    "Removed historical local artifacts are unavailable without regeneration; their retained logs and tracked results remain valid and do not authorize repeating closed work.",
+    "Some generated data and validation binaries remain intentionally because they support current or pending work; this was a selective cleanup rather than removal of the whole target tree."
+  ],
+  "files": [
+    "docs/docker.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/docker.md",
+    "docs/development/MEMORY_WORKFLOW.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

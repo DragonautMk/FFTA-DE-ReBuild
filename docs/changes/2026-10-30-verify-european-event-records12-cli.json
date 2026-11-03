@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-10-30",
+  "slug": "verify-european-event-records12-cli",
+  "title": "Verify actual European event-record CLI registration and reuse",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Close actual e88-d87/index79 CLI registration/create/reuse/startup using the same583 accepted runtime sources and81-file dataset; keep ordinary positive/equivalence separate."
+  ],
+  "validation": [
+    "One warning-free Windows production buildb9a60501ab6ef92011eadd81d79b2cd3720c25be7468ed392ba1ea8d243844bb from583 runtime-identical files/no overlays; canonical executable hash/mtime restored.",
+    "One Wine orchestration create/reuse/startup1 all exit0;81 generation files equal runtime,80 logged ID/hash pairs exact,83 managed paths hash/mtime unchanged,28859-block native cache retained.",
+    "Copied normal checkpoint advances24755 to24756 on one neutral frame; all11 counters zero, no ordinary positive acceptance or new checkpoint derivation.194 guards/583CLI+583runtime hashes/81 accepted files/ROM/cache/TinyCC/original seed/canonical exact; artifact helper retires zero paths.",
+    "Final changelog/default/base35920d8/metadata project-memory checks and CRLF-aware whitespace all pass."
+  ],
+  "limitations": [
+    "One ordinary positive suffix/full state-clock/image/OAM/audio comparison remains pending; neutral startup is compatibility evidence only.",
+    "Full routine ABI/live script-event effects, indirect references, preceding opaque gap, next27-byte catalog extent, Linux, USA, native Windows,new32:9 and full ROM TODO remain pending.",
+    "No source/model/native/old proof, navigation or fixture recreation/performance/storage measurement; concurrent debug-tool changes remain outside the frozen snapshot."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

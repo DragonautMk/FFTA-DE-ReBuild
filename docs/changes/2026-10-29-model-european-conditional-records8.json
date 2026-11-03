@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "slug": "model-european-conditional-records8",
+  "title": "Model European conditional records and verify the original selection loop",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add a standalone strict conditional-records8 model preserving127 ordered physical slots/all1016 bytes, unsigned gates/operands, little-endian16-bit live keys and original encoded output pointers; separate shape validation from exact EUR/source/eight-window authentication.",
+    "Expose live predicates and selection with original repeated flag queries, opposite first/second polarity, second-key-zero bypass, full32-bit context/capacity and zero-capacity wrap; keep mutable predicates and external output clearing outside base assets."
+  ],
+  "validation": [
+    "One warning-free core-only Windows build c6f5406d1f0e91595791aa90d606bf018edd555af4e8d07d2281679962485b44 from554 frozen files/239core inputs; only new model/test leaves and one module declaration overlaid on accepted552 sources, inverse hub preimage byte-exact and affected core-test fingerprint isolated.",
+    "One focused Wine filter passes24 parser/shape/authentication guards and109 original selection loops:16 base live-state/capacity profiles and93 isolated synthetic key/operand/filter/zero-gate boundaries. Independent Python expectations, typed model and real D56CE..D57A4 plus CCE98/CCF00 readers agree on output pointers/count/order, remaining capacity, visited positions and exact live-call traces.",
+    "All1016 bytes roundtrip. Actual base original-load union612 bytes; synthetic union134positions covers all8bytes of its final physical slot. Full EWRAM except expected output/IWRAM except original4-byte return-link scratch/stack-r11r12/VRAM-OAM-palette/final ROM exact;198372 instructions are coverage only.",
+    "All120 input guards/554 frozen hashes/three current implementation hashes and96 closed source guards remain exact; accepted77-file dataset/canonical executable/closed evidence preserved. Artifact helper retires zero paths. No game/checkpoint/navigation/helper reconstruction or completed-proof replay.",
+    "Generated memory metadata, default workspace/basee8bd939/base07be4d2 coverage and CRLF-aware whitespace checks pass. Concurrent owners supplied the previously missing debug-code/residue record; their tests are not attributed to this model."
+  ],
+  "limitations": [
+    "Original-loop proof excludes the entry output-clear helper and return epilogue, full caller ABI and native-clock equivalence. Actual reads612base/134synthetic do not mean all1016 base bytes are executed.",
+    "Managed publication/runtime, affected native/state-clock/lifecycle/DMA, actual CLI and ordinary use of this family remain pending. Schema1/e84-d83/76 resources, Machine/save/native-cache/C API are unchanged.",
+    "Linux, USA, native Windows, new32:9, all indirect references, successor70-byte extent and full ROM TODO remain pending. No performance/storage measurement, Android/package, assistant commit or push; parallel debug/audio/report/retention work preserved."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/conditional_records8.rs",
+    "crates/gba-core/src/rom_data/conditional_records8/tests.rs",
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

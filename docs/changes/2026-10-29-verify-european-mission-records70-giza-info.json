@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "slug": "verify-european-mission-records70-giza-info",
+  "title": "Verify ordinary European mission-record use on the Giza information page",
+  "kind": "changed",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add a passive13-counter normal-input observer and optional positive-use guard; verify the33-frame Giza Plains information suffix using actual CLI and complete state/clock/image/OAM/audio replay."
+  ],
+  "validation": [
+    "One warning-free574-source Windows host-test build3d21e89cd252485aed02065e58c158712772c6e677582ff284e7af800172528e derives from CLI573 with one new leaf/module and five-line guard; inverse hubs byte-exact, core/runtime unchanged.",
+    "One normal81-frame capture from retained Missions-list14969 uses Down3/A12, first read relative49/guest15019 and rolling48 produce33frames15017to15050. Actual Wine child/test pass; a missing postcapture steps list is repaired only by registering completed outputs, without replay.",
+    "Cached classic240x160/scale seed proof is reused; endpoint fullwide284x160/bitrep PPM matches authenticated FFSTATE and derived classic PNG shows Giza Plains mission information page1/3/rank1. No manual guest RAM/register/task/ROM edits or cartridge writes.",
+    "Five served bytes/five requests/allpacked/one physical record; other nine classes zero. All13 counters agree between capture, existing738b7f20 CLI/e86 generationhu7Ei8 and one same-test-executable33-frame Wine full pair; every complete state/clock/classic-wide pixels/OAM/five audio streams agrees.",
+    "All133 guards/574 frozen hashes/573 CLI hashes/three current hashes/78 logged ID/hash pairs/81 no-write paths/old28859-block cache remain exact; artifact helper retires zero paths. Dispatch168998/217502 and audio72418/72418/8712/8712/72342 are coverage only.",
+    "Initial generated changelog/metadata/default/base999d0a6/CRLF checks pass. Latest default/base checks now report four new concurrent tool-input paths without their own changed record; metadata/CRLF and all133 source/preservation guards still pass."
+  ],
+  "limitations": [
+    "This covers packed-byte use by one mission-information case; no all-fields/all512-record coverage, distinct-byte union, mission acceptance or battle outcome is inferred.",
+    "Both ordinary arms use the same old native cache; whole interpreter/native parity, full caller ABI, indirect references, other ordinary field classes, successor-array/event-catalog contracts, Linux, USA, native Windows, new32:9 and the full ROM TODO remain pending.",
+    "No source/model/runtime/registration or old620/397-frame route is repeated. Parallel menu/content/debug/package changes are preserved and excluded from the frozen builds; no performance/storage campaign, Android/package/assistant commit/push.",
+    "Workspace-wide memory coverage awaits separate records for crates/menu/src/tool_inputs.rs and crates/recomp/src/{debug_code.rs,debug_inputs.rs,save_state.rs}. Their parameter/editor changes are preserved, excluded from frozen574 sources and not validated by this unit."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/mission_records70_scene_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

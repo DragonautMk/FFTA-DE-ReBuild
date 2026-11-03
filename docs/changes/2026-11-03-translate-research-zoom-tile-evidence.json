@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "translate-research-zoom-tile-evidence",
+  "title": "Translate zoom and tile investigation evidence",
+  "kind": "docs",
+  "platforms": [
+    "Desktop development documentation"
+  ],
+  "changes": [
+    "Translate the zoom-out tile investigation and follow-up from Spanish to English while retaining the chronology and distinction between measured and unmeasured results."
+  ],
+  "validation": [
+    "Compared the passage to its preimage: numeric runs, paths, addresses, flags and named technical tokens match."
+  ],
+  "limitations": [
+    "The remaining research report and broader Markdown/source audit are unfinished; no ROM access, replay or runtime checks were performed."
+  ],
+  "files": [
+    "docs/ffta_estado.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

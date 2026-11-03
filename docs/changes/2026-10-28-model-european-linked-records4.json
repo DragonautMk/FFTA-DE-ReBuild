@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "slug": "model-european-linked-records4",
+  "title": "Model European linked four-byte records and verify original readers",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add standalone records4 model for211 ordered physical slots/four unsigned byte fields/844 source bytes, strict JSON and shape validation distinct from exact EUR base authentication and13 reader windows.",
+    "Keep original encoded u8-index addresses for all256 indices including unowned211..255; preserve distinct zero rows, unknown trailing reserve-or-padding meaning and existing schema/dataset/save/native/C API layouts."
+  ],
+  "validation": [
+    "One warning-free Windows core-only build from525 frozen files/233 core inputs produces a727058074a5c1e546a2528538cf9ff81507e147c5d62c4c8a35bdf740d43bb7. Only the affected core-test fingerprint is isolated; old snapshots and parallel DBG implementation are preserved.",
+    "One new Wine filter passes20 guards and1567 original calls/prefixes:1055 field probes cover all844 bytes;512 full global/instance setters cover all256 indices, high-input low8 aliases and outside-owner addresses. Two isolated high-bit variants pass10 additional unsigned field probes and fail original-base authentication.",
+    "EWRAM is exact apart from expected setter byte/pointer writes; callee registers/SP-LR/IWRAM/VRAM/OAM/palette/final ROM are exact. All125 actual guards/525 frozen hashes/three current implementation hashes and112 closed source guards pass; artifact helper retires zero paths. No gameplay, fixture derivation, metrics or closed-proof replay.",
+    "Project memory metadata-only and CRLF-aware diff checks pass. Default and base07be4d2 checks identify only four uncovered files from parallel DBG interface work; all three records4 implementation paths are covered."
+  ],
+  "limitations": [
+    "Managed publication/runtime bus ownership, targeted native full-state and guest-clock/LoadUndo/DMA proof, actual CLI and ordinary use remain pending for this family; this is a source/model/original-reader oracle only.",
+    "Linux, USA, native Windows, new32:9, full caller ABI, semantic count/trailing padding, external dispatch-table extents, indirect catalogs and the full ROM TODO remain pending.",
+    "General shared-workspace memory coverage awaits the parallel DBG record for menu canvas/diagnostics and debug_ui.rs/report.html; that implementation remains untouched and is not attributed here."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/records4.rs",
+    "crates/gba-core/src/rom_data/records4/tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

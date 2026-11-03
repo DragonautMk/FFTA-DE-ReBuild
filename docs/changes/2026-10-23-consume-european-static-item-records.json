@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "consume-european-static-item-records",
+  "title": "Consume European static item fields with original live property modifiers",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Add a fixed source-authenticated EUR item catalog:376records/32bytes/12032source bytes at6e0bd0..6e3ad0. Typed four-u16prefix/eight-u8/eight-i8/eight-u8tail fields preserve every bit and record0without inventing semantic names for unproved fields. Check original LDR roots/strides/enumeration bounds/property code targets and exact source equality/strict JSON/count guards.",
+    "Publish schema1/extractor23/decoder22, fixed items.json/resource gameplay.item-records/format item-records-v1-json,18files/17resources. All sixteen earlier decoded files/e22and prior generations stay unchanged; USA remains e8-d7. Add fixed-file loading/atomic managed preparation/whole-set identity and transactional attachment with source/dependency/path/role validation.",
+    "Project exact typed source bytes through original CPU/DMA/native/guest-BIOS reads with separate source/prefix-halfword/signed/remaining-byte counters. Preserve original property dispatch, live02002030bonuses/inventory, signed loads/unsigned255clamp, secondary-table reads and all guest clock work. No property HLE or new host ROM consumer; save/native identity and ABI unchanged."
+  ],
+  "validation": [
+    "Windows source build warning-free; one reduced EUR Wine source oracle passes14371original calls across all376records/19properties/two live-modifier branches/special bonuses/truncation/invalid properties plus240isolated synthetic negative-byte calls.354477instructions/139distinct PCs record coverage, not performance. Independent raw roundtrip/hash/JSON/source and stack/callee/live-RAM guards pass. Shipped signed fields are all nonnegative; initial fixture wrongly assumed a negative and failed before original execution, corrected with isolated machine-owned negative bytes rejected by source authentication. Failed evidence retained; only failed new source check repeated. Initial permission review timeout created no process; one permitted retry ran the test.",
+    "Two focused EUR Wine integration checks pass publication interruption/create/reuse/repair/move/e22retention, equality of all16prior decoded files, coherent prefix/signed/tail/reorder/source/dependency/path/role transactional guards and unavailable-copy Load/Undo/backup/restart.86sampled actual interpreter/native calls with12032new raw bytes altered match complete states/clocks;100compiled source bytes(24prefix-halfword/40signed/36remaining). All bytes/edges/widths/mirrors/real-BIOS bus/CpuSet/FastSet and4typed DMA bytes pass. Full source-only oracle and old UI checks not repeated.",
+    "Final Windows test/production builds warning-free/canonical restored. Actual CLI Wine create/no-write reuse/old-cache320-frame worldmap\u2192Party\u2192Unit replay from unrelated cwd consumes40new typed signed-field bytes. One320-frame ordinary pair matches every complete state/clock/central-wide image/OAM/dispatch and mixed/PSG/FIFO/HLE audio sample with identical positive use. Final Unit menu image inspected; no new input or extra locator needed.",
+    "Protected original ROM/states/inputs/e22dataset/cache/loader/canonical and source fixtures unchanged; ignored evidence under target/rom-data-gameplay-items. Project-memory/whitespace/protected-input/source/candidate closure checks recorded. No agent commit/push; external baseline9e52ea9and user work preserved."
+  ],
+  "limitations": [
+    "First static item table only, not all gameplay data. Following20byte item-linked table, broader item semantics/readers/jobs/abilities/laws/AI/maps/audio and GUI/archive/mod phases remain open; original secondary-table reads remain ROM-backed. Getter-exposed dynamic rules are bounded original contracts, not a new high-level gameplay interpreter.",
+    "Ordinary positive coverage is one EUR Unit scene using signed fields; prefix/tail are proved by targeted original/native/bus checks, not claimed read by that scene. New Linux/USA/native Windows checks remain pending. No performance/startup/RSS/space campaign or AndroidPort work; private assets/fixtures/generated code/previews stay ignored."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/items.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/item_records.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/item_tests.rs",
+    "crates/recomp/src/rom_data/item_runtime_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "scripts/extract_rom_data.py"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

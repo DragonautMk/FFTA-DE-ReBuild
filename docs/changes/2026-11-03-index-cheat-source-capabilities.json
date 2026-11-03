@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "index-cheat-source-capabilities",
+  "title": "Index source-bound cheat capabilities without enabling them",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Assess bounded CodeBreaker provenance against its explicitly linked master and report source-specific decoded plans, one-shot footprints, unresolved sources, unsupported formats and unevaluated limits in CLI and local summaries.",
+    "Show localized capability and ROM-context reasons in the read-only menu while preserving imported entries and leaving all cheats disabled and unverified."
+  ],
+  "validation": [
+    "Frozen offline Windows GNU release and test builds passed with 1914 source files, four overlays, no compiler messages or source drift. Wine passed 12 focused cheat tests; one local-catalog test remained intentionally ignored.",
+    "Seven EUR source plans matched their explicit source/master inspections, with the original catalog unchanged. A synthetic Wine/Xvfb menu displayed the ROM-context requirement with frame, clock and guest state unchanged; session pins and catalog remained exact. The first GUI setup failed on a helper path; a corrected fresh attempt passed and closed."
+  ],
+  "limitations": [
+    "Source decoding assumes the linked master and does not verify device behavior, ROM bytes, checksum, native hooks or gameplay. Manual one-shot requires explicit selection and runtime preflight; maintenance, toggles and full device/ROM capability coverage remain open.",
+    "Native Windows, Linux and physical controller paths were not exercised. The frozen validation excluded independent concurrent uncommitted changes."
+  ],
+  "files": [
+    "crates/recomp/src/debug_cheats.rs",
+    "crates/input-config/languages/en.json",
+    "crates/input-config/languages/it.json",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ]
+}

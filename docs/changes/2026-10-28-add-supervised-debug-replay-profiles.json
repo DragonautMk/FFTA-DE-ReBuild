@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "slug": "add-supervised-debug-replay-profiles",
+  "title": "Replay portable debug profiles from the menu and CLI with bounded workers",
+  "kind": "added",
+  "platforms": [
+    "Windows (Wine validation)"
+  ],
+  "changes": [
+    "Implement DBG-05: debug-replay create/run/cancel and Debug > Replay case, Choose replay profile and Cancel replay. Create a portable profile from a completed DBG04 recording and closed DBG02 source session, copying the selected runtime/ROM/BIOS/dataset/seed/input/endpoint into a fresh ignored folder and publishing replay.json last.",
+    "Pin selected runtime and recorded runtime identities separately, preserve relative paths, recorded frame origin/held keys and exact-endpoint stop condition. Profiles default to the interpreter; an explicit existing compatible native library and TinyCC may be copied without ROM compilation or external cache selection.",
+    "Supervise the selected runtime in a separate headless worker with no cartridge/slot/backup writer and no performance measurement. Publish versioned JSON progress/final outcome with case/build/input identities and full-state/clock comparison. Distinct exit codes identify pass0, divergence2, incompatible3, timeout4, interrupted5 and worker-error6.",
+    "Bound profiles to360000 frames and1..120000ms. Authenticate inputs, refuse active/duplicate use, keep the normal window paused, allow explicit cancellation and kill/reap an unresponsive or ownerless worker. Use supervisor-before-session lease ordering to prevent duplicate-start interference. Keep only last progress/result/cancel/log files per profile, with run IDs rejecting stale results.",
+    "Share immutable recording export/preflight with DBG04, preserve its focused verifier contract and existing recorder behavior. Atomically publish progress with a bounded32ms retry for transient Windows reader sharing denial. Document operation, actual acceptance and the explicitly unaccepted old-library native parity comparison."
+  ],
+  "validation": [
+    "Offline locked Windows release test/runtime builds use frozen public2fbf9f7 plus fifteen selected tool files in the reusable separate source/Cargo cache. Initial compile exposes private SHA256 fields required by recording export; crate-visible metadata fixes it. Final build is warning-free; candidate SHA25629b135eb5f267909b4b05d0bb4e92aca5d952a3783f23acd4a1a3dbc6557047e.",
+    "Wine passes seven initial replay/seven recording/45menu tests, then eight targeted replay tests after the publication fix:60 distinct tests. They cover exact repeated full endpoint, timeout/interruption progress and distinct codes, divergence, source preservation, existing/active/corrupt/wrong-session input, profile bounds and portable relocation. Accepted unaffected recording/menu checks are not replayed.",
+    "Initial real102-frame DS20 replay passes; second hits Access denied publishing progress while the supervisor reads it. Retain that failed attempt and its profile. Add bounded atomic retry plus a Windows regression holding an actual reader without delete-sharing; final eight replay tests pass. Retry profiles repeat exact state/clock, including relocation and parallel supervision without interference.",
+    "Sixteen real CLI behavior checks pass: create/run/repeat/move, destination refusal, idle cancel refusal, missing/modified/unordered input errors3, alternate valid-input divergence2, timeout4, public cancel/interrupted5 and one parallel pass with one refusal. Last-run IDs distinguish results; original session/profile save and pinned inputs remain unchanged.",
+    "Explicit native-library execution completes102frames with the same clock6269795841 but state76a654dc553be42a14529feda5e782064ee7a92f90eb75f4761da921efe8fbad differs from interpreter endpointd8c4dfc8281009d6f58cffc46fdf1ce56f8ea7d9234df671cfc86b5a421b708b. Runner correctly reports diverged2. Raw harness expected0/actual2 is retained; this is not native parity acceptance and no library/runtime repair is selected.",
+    "Final Wine/Xvfb GUI passes the same exact menu/CLI endpoint, queued real pointer Replay/Cancel, original parent state/frame/clock/progress preservation and owner-close worker interruption/reaping. Initial fast-keyboard route completed a second short replay before reaching Cancel; its failed harness evidence is retained, with no product/build change for the pointer check. Final screenshots inspected; parent exits0.",
+    "All171 selected source/library/recording/ROM collection hashes and mtimes stay unchanged. No managed publication/native-acceptance disposable interrupted/moved-resource trees exist in this frontend unit, so the ROM-only completion cleanup helper does not apply. Keep accepted/failed profiles, current candidate, logs/results and shared Cargo/Wine caches locally; no global cleanup or closed ROM/DBG acceptance replay.",
+    "Final verification passes fifteen compiled overlay identities,171 protected input hash/mtime guards, both production runtime identities,155 local document links and22 ordered IDs with only DBG01-05 checked. Private collection remains entirely untracked/ignored. Workspace/base project-memory and whitespace checks pass; GUI parent exits0 and last owner-close result is interrupted, with no live unit worker."
+  ],
+  "limitations": [
+    "The existing local EUR native DLL is not accepted as equivalent to the interpreter endpoint: same-clock full-state divergence remains unexplained and explicitly reported. Supporting selected native execution does not prove ABI/ROM/BIOS compatibility or full native parity. The tool does not compile or silently replace that library.",
+    "Native Windows, Linux/Wayland, physical controllers, real-terminal Ctrl+C delivery and replay with a nonempty authenticated dataset remain unverified in this unit. Existing input mouse semantics are reused; no new mouse scene acceptance is claimed.",
+    "Menu profile startup performs bounded input validation before worker launch; very brief keyboard navigation during that work may not be sampled. Final Cancel uses queued pointer events. Timeout bounds worker startup/execution; cooperative cancellation is checked between frames with a two-second kill fallback.",
+    "No new DS scene validation, performance campaign, ROM extraction replay, package, normal executable replacement, Android or Godot work. Concurrent extraction edits are preserved and outside this tool validation. Frozen export provenance is unknown in the executable; public base and overlay identities are retained separately."
+  ],
+  "files": [
+    "crates/recomp/src/main.rs",
+    "crates/recomp/src/play.rs",
+    "crates/recomp/src/debug_session.rs",
+    "crates/recomp/src/debug_recording.rs",
+    "crates/recomp/src/debug_replay.rs",
+    "crates/recomp/src/debug_replay/tests.rs",
+    "crates/menu/src/lib.rs",
+    "docs/debug_replays.md",
+    "docs/debug_recordings.md",
+    "docs/debug_sessions.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md",
+    "scripts/README.md"
+  ],
+  "references": [
+    "docs/debug_replays.md",
+    "docs/debug_recordings.md",
+    "docs/debug_sessions.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ]
+}

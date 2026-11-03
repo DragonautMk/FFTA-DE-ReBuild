@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "inventory-european-unit-obj-initial-pose",
+  "title": "Identify the European unit initial-pose graphics source graph",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Trace original2D394\u2192233A8\u2192CF144 and2D3F8\u219222788 with fullword animation0/part0. Existing metadata52 property4 and metadata14 halfword04 supply110route0 job/93special producers, projecting121sprite IDs without a global physical/live bound. Job0/1fields65535remain unresolved and unexported.",
+    "Follow394834 directory and first pointer cells to121counted sequences/477operation1frames; A50020relative object sources contain6lists31objects. Original221D4shape/size sum determines333raw4bpp requests135168B at898A40relative pixel offsets. Identify00B14as RAM DMA command construction and00800as real queue execution, not decompression.",
+    "Define415nonoverlapping source spans146358B with zero overlap against all51e56owners. Preserve count-header slack, frame tails, OAM attributes and source gaps; no adjacent action/part/root catalog is inferred. Record actual metadata52/14producer dependencies and retain other poses/parts/IDs/palettes as open."
+  ],
+  "validation": [
+    "Static audit authenticates exact EUR ROM, e56manifest and all51managed resource files/source hashes.94original instruction,13BL and6literal fingerprints pass on the first contract audit. Independent source fields/extent/hash graph is stored under target/rom-data-obj-remaining-sources/source-contract.json with disassembly and audit-initial-pose.py.",
+    "Concatenating415ordered source spans yields397b721c18a26cd080f0835e056f9af411b2c3ab34cfef8bc47291ca17dd490b. The static contract itself uses no guest execution, build, new fixture or old oracle replay; subsequent typed-model Wine validation is recorded separately.",
+    "Final preservation audit passes all6279prior protected artifact hashes,703prior hash-mtime guards and four compiled source inputs; user Debug-save/concurrent Docker/old proof artifacts remain unchanged. Project-memory default/base7597b92 and CRLF-aware whitespace checks pass. Only the selected source-model modules, registration lines and coherent memory documentation are changed in this unit."
+  ],
+  "limitations": [
+    "Bounded source projection for animation0/part0 only, not a complete sprite/action catalog or ordinary-reachability proof. Four routeFFjobs keep live alternate-job selection; unresolved65535values and IDs outside the projection retain original behavior. Other selectors/palettes and whole-unit/allocator semantics remain open.",
+    "No managed publication or runtime/revision change from this inventory. EUR remains e56-d55 and USAe8-d7; new Linux/USA/native Windows pending. No performance/space measurement, gameplay fixture/navigation/payload edit, Android change, package, agent commit or push."
+  ],
+  "files": [
+    "docs/rom_data_unit_obj.md",
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_unit_obj.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

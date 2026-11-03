@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "slug": "verify-european-conditional-records8-pub",
+  "title": "Verify ordinary European conditional-record use at the Pub Rumors entry",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add a passive normal-input observer and optional positive-use guard for the nine conditional-record counters, preserving original ROM/guest state and existing validator behavior.",
+    "Close one ordinary Rumors-entry use and complete per-frame equivalence for the declared127-slot/1016-byte family, using retained normal menu inputs/checkpoints and the existing e85 production CLI/data/native cache."
+  ],
+  "validation": [
+    "One warning-free Windows host-test build63584945ab7a1ff6d0cdbf9ddc98b6b274ae0b86ec6640caf8915ee0250e54ba from569 frozen files: CLI568 plus observer leaf/module/optional5lineguard; both inverse preimages byte-exact, core/runtime unchanged, exact host-test fingerprint isolated.",
+    "Two normal captures254frames: B180zero from retained Missions list14969, then Up3/A12positive74to15223. First source readrel42 plus32continuation yields rollingrel32 suffix42/15181to15223. All6classes positive:468reads468servedB/gate127/filter76/key02152/operand0476/key0534/operand073/127physicalslots including zero heads.",
+    "Same72d44985 CLI/e85generation-hw22uM replay42 passes all77IDhashes/80managedpath no-write/28859oldcache and all9counts equal capture. Same63584945 executable one full Wine pair passes every42complete state/clock/classic-wide/OAM/5audio with exact CLI counts; both arms use the same old native cache.",
+    "Read-only classic projection authenticates full FFSTATE payload/ROM hash/38400classic1228800wide vectors and complete matching native PPM. Older seed PPM isclassic240x160 with5bit*255//31, correcting recent-wide-only assumption without game execution; unlisted old PPM/PNG treated as auxiliary, original guarded FFSTATE/observation remain exact.",
+    "All143actualguards/569frozen/568CLI/threecurrent hashes and80managedfiles/canonical/ROM/loader/cache/original normal seeds exact; artifact helper retires zero paths. No old620/397route or source/model/runtime/registration proof replay, no manual guest edit/cart writer/performance or storage campaign.",
+    "Generated changelog/metadata, initial default/base999d0a6 coverage and CRLF-aware whitespace checks pass; debug-operation records resolve the earlier gap. A later final default check identifies five newly concurrent menu implementation paths without their changed record; this ROM unit remains covered."
+  ],
+  "limitations": [
+    "127 touched physical slots include51zero-gate headers;468served bytes are not a distinct union, all fields of all rows, all flag/counter branches or full caller ABI. Endpoint shows Heard the latest rumors; displayed rumor list, selected rumor and completed-mission outcome are not inferred.",
+    "The ordinary pair uses the same old native cache in both arms, so it does not establish whole interpreter/native parity. Dispatch202704/276411 and audio counts92168/92168/11088/11088/92106 are coverage only.",
+    "Linux, USA, native Windows, new32:9, all indirect references, successor70-byte extent and full ROM TODO remain pending. No Android/package/assistant commit/push; parallel debug-operation changes remain outside the frozen validation scope.",
+    "Latest workspace-wide memory coverage awaits separate concurrent menu canvas/content-selector/lib/theme records. Those inspected changes are preserved, outside this frozen ROM validation; earlier debug-operation gaps are resolved."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "crates/recomp/src/rom_data/conditional_records8_scene_tests.rs",
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

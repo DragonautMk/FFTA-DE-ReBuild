@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "slug": "plan-integrated-debug-menus-consoles-and-cheats",
+  "title": "Plan integrated debug selectors, event and command consoles, and a local cheat menu",
+  "kind": "docs",
+  "platforms": [
+    "Desktop planning; current menu/control sources and local cheat reference metadata"
+  ],
+  "changes": [
+    "Add DEBUG_TOOLS_V2_TODO.md with28unchecked stable DBG2 IDs, priorities, dependencies and per-item acceptance criteria; keep completed DBG01-22 and DS scene statuses unchanged. First expose existing profiles/inputs/scripts and parameters inside the current menu, with external file dialogs only from explicitly labelled buttons, including empty/missing/incompatible selections.",
+    "Plan a bounded typed content catalog and reusable menu selector for sessions, recordings, snapshots, replay/audit/capture/comparison profiles, runtime/dataset/library identities, labels, known plans, scripts and reports. Separate debug command recipes, registered host tools and guest script inspection; selection never implies execution.",
+    "Plan optional event console covering actual host selection/action changes and instrumented runtime events with correlation, explicit gaps, filters, caps and overflow counts. Plan command editor/completion/history and structured results above shared handlers/local control, plus bounded recipes and targeted cancellation for assistant use.",
+    "Ground cheat planning in the existing local341-entry CH catalog, including23declared EUR blocks and17specific existing CH references. Specify decoder/region/version checks, isolated mutation timing, conflict handling, active indicators, separate disable versus checkpoint restore, exact replay provenance and per-code validation. Prioritize UI access/resource/HP-MP candidates, then abilities/rules/mission transitions; preserve source anomalies and unknown formats.",
+    "Plan saved trigger editing, pinned readonly observations, correlated issue timelines, incremental platform validation and public-only packaging. Link the new plan from completed checklist, common guide, cheat docs, project state and scripts index; leave implementation unselected."
+  ],
+  "validation": [
+    "Read current FileDialog paths in play.rs, menu catalog selection, default-only menu capture actions, debug-control protocol/parser and UI/recent-event coverage. Confirmed implicit replay/catalog/issue file selection is a concrete new requirement, without reopening completed tools.",
+    "Read local cheat catalog metadata and quality notes:341unique CH entries,23EUR and all not-runtime-tested. Verified all17referenced CH IDs exist, preserving unknown-region/version and source-specific master relationships; no code payload copied into the plan or runtime execution performed.",
+    "Documentation checks pass:28unique ordered unchecked IDs,28closure criteria,68backward dependency edges and249local links across six documentation entry points. All22original DBG items remain checked. Cheat catalog remains ignored/untracked; no raw code-block payload in new checklist.",
+    "Project-memory workspace and metadata-only checks and git diff --check pass for the documentation-only change. No build, replay, benchmark, cheat application or package regeneration was performed."
+  ],
+  "limitations": [
+    "Planning only: no new selector, console, cheat engine, command or script integration is implemented. All28DBG2items remain unchecked and example command syntax is explicitly proposed.",
+    "Source cheat collections remain private and unverified at runtime. Declared region is not exact-ROM compatibility, combined codes are not silently split, missing European groups remain absent, and modified scenarios do not become ordinary DS acceptance.",
+    "Windows/native Linux/controller/hardware behavior of proposed features requires future scoped validation. This planning request neither resumes unrelated runtime work nor rebuilds closed acceptance artifacts."
+  ],
+  "files": [
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/debug_tools.md",
+    "docs/cheats.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md",
+    "scripts/README.md"
+  ],
+  "references": [
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/debug_tools.md",
+    "docs/cheats.md",
+    "docs/debug_control.md",
+    "docs/debug_ui.md",
+    "docs/debug_recent.md"
+  ]
+}

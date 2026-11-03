@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-romdata-constructor-reachability-evidence",
+  "title": "Translate constructor reachability evidence",
+  "kind": "docs",
+  "platforms": [
+    "Desktop ROM-data planning documentation"
+  ],
+  "changes": [
+    "Translate constructor flag and slot gates, eligible map and mission selection, and White Flowers battle navigation evidence while retaining partial outcomes."
+  ],
+  "validation": [
+    "Checked unchanged surrounding text and matching task IDs, link targets and literals; verified numeric values after separating a concatenated address label."
+  ],
+  "limitations": [
+    "Later evidence and the wider English-first audit remain open; no ROM access or runtime checks were performed."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_TODO.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

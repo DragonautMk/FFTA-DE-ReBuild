@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "slug": "verify-european-linked-records4-cli",
+  "title": "Verify European linked four-byte record CLI registration",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Verify actual e84-d83 production CLI create/reuse/startup with77 generation files identical to accepted runtime, all76 logged resource ID hashes,79 managed paths unchanged and old28859 native-cache blocks loaded.",
+    "Record a new normal StealArmor target-screen locator as closed negative:120 frames22711..22831 after A8 held12, all seven records4 counters zero; positive ordinary consumption/fullpair remains pending."
+  ],
+  "validation": [
+    "One warning-free Windows production build from551 sources byte-identical to accepted runtime yields bcf632fa30c6cb5c31c3d2f34e49dbb4ad3064cec87fcdc2a8dff6c3a1c3b64a; no source overlays, exact corelib/prod fingerprints isolated and canonical executable hash/mtime restored.",
+    "Exactly three CLI Wine children exit0. All187 actual input guards/551 frozen CLI hashes/551 accepted runtime hashes pass; original seed and copy remain exact, no new endpoint checkpoint derived, artifact completion retires zero paths. No source/model/native or prior ordinary proof replay.",
+    "Project memory metadata-only and CRLF-aware diff checks pass. Default/basee8bd939 checks currently report only six changed paths from parallel audio/debug work; this CLI unit changes documentation and ignored validation artifacts only."
+  ],
+  "limitations": [
+    "This completes registration/publication/reuse/normal startup, not positive records4 ordinary consumption or full per-frame equivalence. The identical zero locator and previous negative contexts remain closed.",
+    "Linux, USA, native Windows, new32:9, full caller ABI, external catalogs and the full ROM TODO remain pending. No performance measurement, storage campaign, Android work, package, assistant commit or push.",
+    "General shared-workspace memory coverage awaits the parallel menu/lib, debug_audio.rs/report.html, debug_control.rs, main.rs and play.rs record; these files and ROM-coverage edits remain untouched and are not attributed here."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

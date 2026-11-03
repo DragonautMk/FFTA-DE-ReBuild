@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "decode-european-evaluation-score-and-threshold-parameters",
+  "title": "Decode European score coefficients and class thresholds with original live arithmetic and RNG proof",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Add strict EvaluationParameters/Term/Bonus/Threshold for7divisor-weight terms/2conditional pairs at6e79a2..6e79b4and5activeclass1..5threshold records at6e79c6..6e79da,38Btotal. Fixedarrays/IDs/order/sourceoffsets preserve all fields and17unused structural bytes.14Bscoregap/4Bclass0row remain unowned; no whole32/24Bgap or foreign owner inferred.",
+    "Finite diagnostic arithmetic retains first unsigned-u8 quotient, remaining6signed32 divisions, wrapping products/sum, low8bonus predicates and signedlow16%256threshold comparison. Original live getters/RNG/guest routines remain unchanged. Zero divisor diagnosticNone does not create a guest fallback. Managed EUR e33-d32/28files/27resources and USAe8-d7 unchanged at this source boundary."
+  ],
+  "validation": [
+    "Independent exactEUR root/stride/zero-gate/class-range/caller/unsigned-signed division/RNG/next-source checks and38Broundtrip/noe33overlap pass. Windows60074warning-free and Wine42263single new oracle terminal/pass, no build/Winefailure.",
+    "132actual-source cases:12live score prefixes/49term/12bonus fragments/39RNG-class0 prefixes/20injected raw-draw suffixes.52mutated-source high coefficient/signed/wrap/conditional/threshold0-255/opaque cases pass. Actual02868LCGstate/15bit return checked; negative draws onlyisolated suffix arguments. Exact source addresses/values/branches/strictJSON/fixedshape/ID/order/offset/coherent edits/register/stack/liveunit/context guards pass.24147instructions/442PCs coverageonly; synthetic unauthenticated/unpublished.",
+    "All36protected ROM/e33/candidate/cache/loader/canonical/sourcefixture hashes unchanged; old source/native/scene proofs not repeated. Structured memory/feature/state/inventory/TODO/handoff/changelog and final checks/source hashes recorded; no agent commit/push."
+  ],
+  "limitations": [
+    "Source-only prefixes/fragments, not wholefunction behavior/ABI. Managed publication/direct CPU-DMA-native/lifecycle/positive ordinary use remain pending; semantic actor/action names/other consumers/unusedgaps and zero-divisor guest helper behavior remain unclaimed.",
+    "NewLinux/USA/nativeWindows and broader graphics/text/maps/gameplay/audio/GUI/archive/mod phases remain pending. No performance/startup/RSS/space campaign or AndroidPort change; private ROM/saves/inputs/generated/sourcefixtures remain ignored."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/evaluation_parameters.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/evaluation_parameter_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

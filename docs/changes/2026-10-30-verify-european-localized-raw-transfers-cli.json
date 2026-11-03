@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-10-30",
+  "slug": "verify-european-localized-raw-transfers-cli",
+  "title": "Verify European raw transfer CLI registration",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Verify actual e93-d92 CLI creation, no-write reuse and neutral startup for graphics.ui-raw-transfers, with85 files84 resource IDs and all preceding payloads retained."
+  ],
+  "validation": [
+    "One605-source runtime-identical/no-overlay Windows production buildffda6c595cfd38eae46e8f9ac2ee709ba077b4198a053f25b58ba09be214c483 warning-free; canonical executable hash/mtime restored in finally.",
+    "One Wine orchestration/three child exits0: create/reuse/normal24755 checkpoint copy neutral1\u219224756. All85 files match accepted runtime,84 logged ID/hash pairs exact,87 managed paths unchanged/native cache28859 exact.",
+    "203 preservation guards/605 CLI+605 runtime source hashes/all85 accepted files/ROM-original checkpoint-nativecache-TinyCC-canonical exact. Six new counts zero: registration/startup compatibility only, no ordinary/fullpair acceptance."
+  ],
+  "limitations": [
+    "Positive ordinary use/full scene equivalence, dynamic6F8 index domain/metadata/lower prefix/tails/full helper ABI and global catalog remain open.",
+    "New Linux/USA/native Windows/32:9 and full ROM TODO pending. No new checkpoint derivation/action/navigation, earlier acceptance replay/performance/space campaign/Android/package/commit/push."
+  ],
+  "files": [
+    "docs/rom_data_ui_raw_transfers.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_raw_transfers.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

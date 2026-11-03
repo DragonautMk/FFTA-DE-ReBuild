@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "date": "2026-10-25",
+  "slug": "refresh-rom-coverage-and-prepare-inputs",
+  "title": "Refresh EUR ROM coverage to e61 and make Docker generation self-contained",
+  "kind": "fixed",
+  "platforms": [
+    "Linux/Docker",
+    "Windows/PowerShell tooling"
+  ],
+  "changes": [
+    "Replace the e37-d36/private-fixture launcher defaults that regenerated the old snapshot or failed when its local dataset/ELF cache was absent. Docker now prepares and authenticates the reviewed dataset under a stable ignored cache, while explicit datasets stay read-only. The host needs only Docker and the EUR ROM.",
+    "Review and publish EUR e61-d60 coverage with56runtime resources,52historically ordinary-positive families, and one authenticated source/model-only projection of33spans/6436B. Exact unions are10207348identified B,10200912runtime-available B,6370688unclassified B, with61480code-data conflict B. Preserve scoped historical evidence and keep distinct ordinary read-byte coverage unavailable.",
+    "Publish28455ROM entry addresses as hash-bound metadata, with404original non-ROM entries excluded. Use those seeds instead of requiring the old private ELF cache by default; retain strict optional ELF validation. Candidate-code ranges remain260472B. No instructions, ROM bytes, assets or native binaries enter tracked metadata.",
+    "Extend the bounded sharing census with repeated song/header and tone/PCM-wave links:1359934shared B across294records. Keep shared references distinct from24120Bof multiple resource ownership and avoid counting repeated reads or equal bytes at different offsets as sharing.",
+    "Add generator progress/revision/output messages, explicit unchanged-content feedback, stale-dataset remedy, staged report writes and real output-file checks. Both launchers retain logs/errors; PowerShell optionally opens the HTML. Update the offline UI, regeneration guide, Docker docs, inventory and durable entry points."
+  ],
+  "validation": [
+    "Actual Docker build compiles the extraction CLI and metadata helper, then default preparation produces all57accepted e61files byte-for-byte. A second default launcher run publishes canonical HTML/JSON using cached data. The60protected source ROM/old dataset/retained ELF/database hashes and57cache hash/mtime guards remain unchanged.",
+    "Actual container checks reject a supplied e37dataset with expected e61revision and automatic-preparation remedy, preserve both existing output files on failure, reuse the cache mounted read-only, and report unchanged JSON explicitly. Canonical and preview outputs match. Unmounted image has no private game/save/recording/retained ELF files.",
+    "Ten ROM-free generator checks pass, including prior independent interval accounting plus new baseline diagnostics, authenticated source-only extents, portable seed identity, prepare-once cache reuse, failed-publication preservation, unchanged-result feedback and audio-sharing checks. Six Bash launcher checks pass without Python/Cargo/nm in child PATH; Bash syntax/ShellCheck pass. Initial missing-input assertions are adjusted for the logger merging child stdout/stderr.",
+    "Eight PowerShell7.4.6/mock-Docker cases pass in Linux, including automatic cache/no mandatory ELF, spaced paths, explicit read-only inputs, build/run failures, missing inputs/Docker, unsafe paths, absent report detection and persistent failure transcript. Native Windows execution is not claimed.",
+    "Chrome headless desktop1400/mobile620/dark checks pass57table rows,56runtime/52ordinary counts, current date/generation, numeric totals, address lookup, invalid-address feedback, source-only selection, resolved canvas colors and no page overflow; screenshots inspected. The first private probe incorrectly used0xffffff as invalid for16MiB, corrected to0x1000000 without product boundary changes; earlier captures retained.",
+    "An independent full-ROM byte-map check validates all nine layer totals, unknown complement and61480Bcode-data intersection. Code candidate ranges/seed hash match the prior atlas; source-only6436B remains outside runtime.61evidence references,152local documentation links and metadata-only field checks pass. Reuse all completed Wine runtime/ordinary results without replay or new gameplay fixtures.",
+    "Final project-memory coverage and git diff --check pass; final evidence regeneration uses the already verified image and read-only cache, without another build. All60protected inputs and57cache hash/mtime guards remain unchanged. No live unit process, private tracked artifact, commit or push."
+  ],
+  "limitations": [
+    "The atlas reviews exact EUR e61-d60 and scoped historical positive family proofs. New runtime generations still require evidence review; automatic extraction does not promote unreviewed ordinary use. Four runtime families and the source/model-only projection have no accepted ordinary-positive scope here.",
+    "Code is speculative static candidate coverage, not executed-byte/decompilation progress. Exact distinct ordinary read-byte coverage is unavailable; sharing is a lower bound limited to reviewed graphs. Unknown and code-data conflicts remain explicit.",
+    "PowerShell checks run on Linux with simulated Docker. Native Windows/PowerShell5.1/Docker Desktop/non-amd64, new Linux gameplay, USA/Android and performance are unverified. No personal saves, old accepted scene/oracle/benchmark campaigns, full ROM_DATA goal or unrelated runtime implementation are changed or resumed. No commit or push."
+  ],
+  "files": [
+    ".dockerignore",
+    "Dockerfile.linux",
+    "scripts/rom_coverage.py",
+    "scripts/rom_coverage.html",
+    "scripts/test_rom_coverage.py",
+    "scripts/tests/test_rom_coverage_docker.py",
+    "scripts/linux/rom_coverage_docker.sh",
+    "scripts/windows/rom_coverage_docker.ps1",
+    "docs/development/ROM_COVERAGE.md",
+    "docs/development/rom-coverage/evidence.json",
+    "docs/development/rom-coverage/code-seeds.json",
+    "docs/development/rom-coverage/coverage.json",
+    "docs/development/rom-coverage/index.html",
+    "docs/docker.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/development/ROM_COVERAGE.md",
+    "docs/docker.md",
+    "docs/development/rom-coverage/evidence.json",
+    "docs/changes/2026-10-24-run-rom-coverage-with-docker.json"
+  ]
+}

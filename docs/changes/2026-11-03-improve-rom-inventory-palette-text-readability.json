@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "improve-rom-inventory-palette-text-readability",
+  "title": "Improve palette and text inventory readability",
+  "kind": "docs",
+  "platforms": [
+    "Desktop development documentation"
+  ],
+  "changes": [
+    "Separate merged words, values and addresses in equipment OBJ, palettes, UI graphics, text and font summaries and remove an orphaned sentence fragment."
+  ],
+  "validation": [
+    "Compared the entire inventory against its tracked pre-edit version for identical digit runs, Markdown link targets and inline code spans; confirmed all text from the gameplay entry onward is unchanged. Checked the palette frame and byte counts against the linked guide."
+  ],
+  "limitations": [
+    "Inventory review remains partial from the gameplay entry onward; historical runtime results were not reproduced, and the wider English-first audit remains open."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_INVENTORY.md"
+  ],
+  "references": [
+    "docs/rom_data_color_palettes.md",
+    "docs/rom_data_text.md"
+  ]
+}

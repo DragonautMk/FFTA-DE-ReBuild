@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "maintain-bounded-interpreter-cheats",
+  "title": "Arm bounded cheat plans at interpreter frame boundaries",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Add explicit state-bound arm and disarm commands for up to eight immutable source-bound plans, with a 256-write aggregate frame budget and rejection of overlapping read/write footprints.",
+    "Apply armed plans through the guest bus before interpreter frames after the input latch; expose status and a localized catalog indicator, disarm on state restoration, and guard unsupported recording, replay, search and save interactions."
+  ],
+  "validation": [
+    "Frozen offline Windows GNU release and test builds passed without compiler messages or source drift (1915 source files). Wine passed 22 focused cheat tests with one local-catalog test intentionally ignored, plus 9 command, 30 control and 4 operation tests. One Wine test emitted a D-Bus diagnostic while the suite exited successfully.",
+    "Synthetic isolated Wine/Xvfb checks confirmed arm writes nothing, overlap refusal, two independent frame applications, one/all disarm and unchanged protected inputs. A separate synthetic paused menu displayed the armed indicator; sessions closed and pins remained exact.",
+    "A separate user-initiated System / Restart ROM check in an isolated Wine/Xvfb interpreter cleared an armed synthetic set; session pins and protected inputs remained exact.",
+    "In a separate paused Wine/Xvfb copy, a locally created save-state load and Undo each cleared the armed synthetic set and restored the expected exact machine state; the overwrite confirmation was cancelled, and protected inputs and pins stayed exact."
+  ],
+  "limitations": [
+    "Frame-boundary timing is not the original device hook; actual device, gameplay, native Windows, Linux and physical controllers were not verified. Disarm does not restore previous values.",
+    "Native backend, ROM and I/O writes, mirrors, full page toggles and provenance-aware save/replay remain unsupported. The frozen build included this work and selected overlays, not all concurrent uncommitted project changes."
+  ],
+  "files": [
+    "crates/recomp/src/debug_cheat_armed.rs",
+    "crates/recomp/src/debug_cheat_decoder.rs",
+    "crates/recomp/src/debug_command.rs",
+    "crates/recomp/src/debug_control.rs",
+    "crates/recomp/src/debug_operations.rs",
+    "crates/recomp/src/debug_operations.json",
+    "crates/recomp/src/main.rs",
+    "crates/recomp/src/play.rs",
+    "crates/input-config/languages/en.json",
+    "crates/input-config/languages/it.json",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/MENU_ATLAS_INVENTORY.json"
+  ]
+}

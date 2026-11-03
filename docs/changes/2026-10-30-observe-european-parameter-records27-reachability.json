@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "date": "2026-10-30",
+  "slug": "observe-european-parameter-records27-reachability",
+  "title": "Add passive European parameter-record observation and retain ordinary reachability gaps",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add passive15-counter ordinary observer and optional five-line positive-use guard; preserve exact CLI preimages after observer module/guard removal and leave product core/runtime unchanged.",
+    "Keep ordinary acceptance open: eleven authorized normal-input captures are closed negative bounds, including Sprohm/Nubswood navigation and Cyril Pub entry. Stop blind navigation after framebuffer/native-UI diagnostics show no readable choices; no positive suffix/CLI/fullpair is fabricated."
+  ],
+  "validation": [
+    "One warning-free589-source Windows test build8f0c02b7b9010247d0db4e4e69758a8e45841a122dc3c1370f0354f18344920b; accepted588 CLI/core/runtime sources unchanged, inverse hub/validator edits exact.",
+    "Wine R12 from guarded GizaInfo page1/3 runs180frames15050to15230, page unchanged; normal A12at1/161 from guarded visible WhiteFlowers openingdialogue runs240frames21889to22129. Both childrenexit0/all15counts0, negative bounds closed. Positive-use guard compiled but not exercised; no positiveCLI or fullpair. Nine further captures use the SAME589-source executable: Sprohm R180/B32, five cursor steps, Nubswood A360 and CyrilPub A240/A120, all15counts0; no rebuild or repeated negative bound.",
+    "Nine authenticated bounded static windows plus seven old checkpoint gate reads, no game mutation. Accepted command/archive/event join: opcode80/advance2/callback127324, five directmode2 programs53/65/74/93/95 and keys56/68/77/96/98 map events216to220/parameters116to120; WhiteFlowers58 uses param0/program163. Indirect links/mode0override0 not excluded. Six additional selected bank gates authenticated; no liveness claim. One extra80B initializer window matches40halfwords; broad entity census unproved and not used.",
+    "233 hashmtime guards/589 observer and588 CLI frozen hashes/three implementation paths/inverse hub-five-line guard/84 managed paths/ROM-originalseeds-nativecache-canonical preserved. Initial130guard/two-capture receipts retained. All partial diagnostics retained; no completed proof/route or negative bound repeated, no forcedRAM/IDs/RNG or performance campaign.",
+    "One SAMEbd99productionCLI neutral Wine frame with host layout disabled exits0; no resulting state saved/adopted. Read-only full saved-framebuffer authentication and source-ordered76800pixel nativeUI projection show Gil only, no readable Pub choices or positive/equivalence claim.",
+    "Final changelog/metadata/default/base35920d8 project-memory and CRLF-aware whitespace checks pass; earlier independent parallel record gaps are resolved by their own records, with no ordinary/CLI proof replay."
+  ],
+  "limitations": [
+    "Source-positive ordinary use and full state/clock/classic-wide/OAM/audio equivalence remain pending. Reuse SAMEobserver andbd99CLI/e89dataset only for a concrete normal source-specific trigger; stop blind Pub/world navigation. Independent source contracts can progress.",
+    "Whole catalog extent/unowned indices/full routine ABI/liveeffects/helpers/indirect references/Linux/USA/nativeWindows/new32:9/fullROM TODO remain pending.",
+    "Parallel Debug choices/content picker work is preserved and excluded; its tests are not attributed to this unit."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "crates/recomp/src/rom_data/parameter_records27_scene_tests.rs",
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

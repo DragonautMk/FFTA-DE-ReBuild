@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "inventory-european-map-raster-palettes",
+  "title": "Bound European map raster palette headers and exact source-copy boundaries",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Identify independent EUR readers1EAF0/1EDEC and root4872B0, with32relative-u16slots/32physical uncompressed records/33ranges/10496Bending489BB0. Preserve64directory192header10240colorB, three headeru16and160coloru16per record. All324BGdescriptor selector links cover all32IDs;26equal-content groups retain32physical identities.",
+    "Pin header-backed length/window and live metadata formulas, unsigned16index initializer versus signed16pointer getter withFFFFlive fallback, sentinel gates and original raw behavior outside the projection. Source cardinality does not introduce a guest32cap or host raster/DMA implementation.",
+    "Identify original CpuSet161halfword/322Bcopy, followed by destinationword160=word0. Extra source reads use next header for31records or the existing alternate-palette index at489BB0for lastrecord; preserve original read/cycle behavior and exclusive ownership without extending or duplicating the new source span. Original helper schedules channel2A2400001for one fixed-destination halfword per HBlank."
+  ],
+  "validation": [
+    "Previous terrain unit final-summary/source285hashes and memory checks terminal; source-model-runtime-CLI-scene/negative proofs stay closed, no build/replay used to reconstruct context.",
+    "Independent static parser firstPASS: exact EUR image, complete10496Breassembly/sourcehash,33range hashes/all324descriptor links, all49existing owner disjointness and authenticated314Balternate-index neighbor. Header-backed record extents agree with independent nextroot; allcopy boundaries and26distinct colorcontents verified.",
+    "Original disassembly and67halfword/13literal/10BL fingerprints establish roots, header/index formulas, SWI0BCpuSet count and queued DMA controls. Static caller/literal census retained separately without reachability claims. Evidence target/rom-data-map-raster-palettes/source-contract.json and source-plan.json; no source decoder/product code changed.",
+    "All5415prior protected artifact hashes unchanged. The285source/doc baseline changes only six selected memory files, new coherent inventory record expands286. Generated CHANGELOG, memory/default-base7597b92 and CRLF-aware whitespace checks pass. User Debug-save/concurrent Docker and old source/model/oracle/CLI/scene evidence preserved."
+  ],
+  "limitations": [
+    "Source inventory only. Strict typed model and one reduced Wine original-reader/copy oracle, managed publication/typed runtime-native-lifecycle/productionCLI/positiveordinary remain pending. No complete camera-scroll semantics, whole ABI, executed DMA trace or actual ordinary source-use claim.",
+    "EUR remains v1/e54-d53/USAe8-d7. New Linux/USA/native Windows checks pending. No build/new guest execution, performance/space measurement, fixture/navigation, Android change, package, agent commit or push. FullTODO remains active."
+  ],
+  "files": [
+    "docs/rom_data_maps.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_maps.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

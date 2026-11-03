@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "improve-rom-inventory-bg-packet-readability",
+  "title": "Improve BG packet and palette inventory readability",
+  "kind": "docs",
+  "platforms": [
+    "Desktop development documentation"
+  ],
+  "changes": [
+    "Separate merged words, addresses and values in alternate palette, descriptor packet, main graphics and transfer program summaries while preserving their documented validation limits."
+  ],
+  "validation": [
+    "Compared the inventory against its tracked pre-edit version: headings, Markdown link targets and inline code spans remain identical, as do digit runs after accounting for the previously clarified LZ77 tag boundary. Confirmed the remainder from trade parameters onward is unchanged."
+  ],
+  "limitations": [
+    "Inventory review remains partial from trade parameters onward; historical runtime results were not reproduced, and the wider English-first audit remains open."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_INVENTORY.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

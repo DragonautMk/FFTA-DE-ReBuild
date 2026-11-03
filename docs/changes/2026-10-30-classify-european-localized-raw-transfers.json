@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-10-30",
+  "slug": "classify-european-localized-raw-transfers",
+  "title": "Classify European localized raw UI transfer sources",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Authenticate seven raw-language pointer groups and35 fixed transfer views from original byte/halfword/word copy controls; retain exact raw source words and selector bytes without guessed graphics formats.",
+    "Keep the seventh group sparse at bank+0200..0380: four dynamic indexed copies, their metadata, lower prefix and uncapped domain remain open; preserve original live task/queue/helper work."
+  ],
+  "validation": [
+    "Static32 windows (23 new/nine reused),193 instruction/literal pins,13 root literals and13 fixed copy calls pass.42 disjoint spans38220B reconstruct exactly; source SHA256 e11ef4d5f16feea8ef90e7fce58056e19d689004b7ca973270285e3cd31b8f80.",
+    "130 hash/mtime guards preserve all84 accepted e92 files; no overlap83 existing owners/50602 source bindings.",
+    "A first classifier assertion stopped before outputs at fused12EE24\u2192145230; corrected CpuSet and000AD0 halfword counts authenticated before final source publication. No build/Wine/game/fixture/navigation/old acceptance or performance replay."
+  ],
+  "limitations": [
+    "This source unit does not integrate new runtime data: schema1/e92-d91 unchanged. Typed modeling/original-source Wine/runtime/native clock/actual CLI/ordinary use pending.",
+    "Dynamic6F8 index metadata/domain/lower prefix/tails, known71E5E0 alias/global extent/indirect/full helper ABI remain open.",
+    "New Linux/USA/native Windows/32:9 and full ROM TODO pending; no performance or storage campaign."
+  ],
+  "files": [
+    "docs/rom_data_ui_raw_transfers.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_raw_transfers.md",
+    "docs/rom_data_ui_palettes.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

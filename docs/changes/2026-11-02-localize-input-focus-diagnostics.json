@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "localize-input-focus-diagnostics",
+  "title": "Localize input tab and information focus diagnostics",
+  "kind": "changed",
+  "platforms": [
+    "Desktop menu diagnostics"
+  ],
+  "changes": [
+    "Use the displayed input-tab labels in localized selection and focus diagnostics, and localize the read-only information focus label while retaining structured page and item identifiers."
+  ],
+  "validation": [
+    "Offline Linux combined menu/screen build passed six semantic selection tests and the input-tab navigation test, including English/Italian focus labels and stable item IDs. Both 594-entry language catalogs validate."
+  ],
+  "limitations": [
+    "Runtime frontend build, native Windows and physical input were not checked; broader English-first audit remains open."
+  ],
+  "files": [
+    "crates/menu/src/lib.rs",
+    "crates/menu/src/theme.rs",
+    "crates/menu/src/selection.rs",
+    "crates/menu/src/selection/tests.rs",
+    "crates/input-config/languages/en.json",
+    "crates/input-config/languages/it.json",
+    "docs/menu_localization.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

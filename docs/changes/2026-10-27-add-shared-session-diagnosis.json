@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "date": "2026-10-27",
+  "slug": "add-shared-session-diagnosis",
+  "title": "Add shared session diagnosis and read-only preflight",
+  "kind": "added",
+  "platforms": [
+    "Windows (Wine validation)"
+  ],
+  "changes": [
+    "Implement DBG-01 with Debug > Copy diagnosis and recomp diagnose using one schema-1 JSON collector. Include executable SHA-256 and build-time revision/dirty/target/profile, exact ROM/BIOS identity, effective native/interpreter mode, selected cartridge/snapshot slots, input, dataset and storage/report paths.",
+    "Keep CLI preflight read-only: resolve saves without a picker or directory creation, validate snapshots on a disposable machine, parse bounded input recordings and authenticate explicit/current managed datasets without preparing or repairing them. Report missing/incompatible files and unavailable ROM-audit feature with causes, remedies and failure exit status.",
+    "Observe loaded image and attached dataset identities from the paused menu, flag changed on-disk sources, preserve guest state/clock and distinguish picker selection from live state and active recording from validated replay. Retain the clipboard owner and save a single bounded atomic report even when clipboard access fails.",
+    "Reuse the existing locked arboard dependency for clipboard access. Protect arbitrary output files from replacement; route the default report through portable/installed configuration storage. Document commands and limits, close DBG-01 and retain the later tool priorities."
+  ],
+  "validation": [
+    "Offline locked Windows release test build passes. Wine runs pass 5 diagnosis tests, all 40 menu tests and 2 save-selection tests, including transactional report refresh, original-file preservation, structured failures and complete guest-state equality before/after live diagnosis.",
+    "Eight actual Windows CLI cases under Wine pass on existing EUR inputs: explicit and managed dataset identity equality, older incompatible resource generation, malformed key mask, snapshot BIOS mismatch, absent optional feature, refusal to overwrite the supplied save and invalid slot range.",
+    "One Wine/Xvfb GUI session on copied saves/portable config passes menu action, clipboard JSON equality with the saved report, unchanged paused guest frame/clock between two captures, one-file refresh and normal exit. Menu screenshot inspected. The first shared headless-prefix GUI attempt failed before window creation; the isolated graphical prefix passed.",
+    "All 139 selected private input/dataset hashes and mtimes remain unchanged; current production Windows/Linux executable hashes and mtimes are preserved. A frozen candidate remains in target/debug-tools-diagnosis/recomp.exe; no release package was produced.",
+    "16 local document links and 22 ordered DBG IDs pass; only DBG-01 is complete. Metadata and task-scoped whitespace checks pass. Full workspace/base memory and global whitespace checks report only concurrent word_task_obj_animations/core Cargo/source edits awaiting their separate record. The artifact helper refuses this non-rom-data unit layout; no managed interrupted/moved-resources fixture copies were created."
+  ],
+  "limitations": [
+    "Native Windows, Linux/Wayland, physical controllers and an actively translated native GUI session remain unverified. No benchmark, extraction acceptance replay, new DS scene or Android/Godot development was performed.",
+    "Input parsing does not establish scene reachability or frame-origin compatibility. Native preflight reports intent without compiling/loading translations; SRAM identity does not validate in-game checksum fields.",
+    "The concurrent session committed implementation and Bank audit changes in 2ba3edb during validation. This task preserves that commit and records its own diagnosis work separately; no assistant commit or push was issued.",
+    "Concurrent word_task_obj_animations and core Cargo/module edits appeared after the frozen candidate build. Preserve this separate extraction work; global memory/whitespace closure belongs to that unit."
+  ],
+  "files": [
+    "Cargo.lock",
+    "crates/recomp/Cargo.toml",
+    "crates/recomp/build.rs",
+    "crates/recomp/src/diagnostics.rs",
+    "crates/recomp/src/diagnostics/tests.rs",
+    "crates/recomp/src/main.rs",
+    "crates/recomp/src/play.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/diagnosis.rs",
+    "crates/recomp/src/save_path.rs",
+    "crates/menu/src/lib.rs",
+    "scripts/README.md",
+    "docs/debug_diagnostics.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/debug_diagnostics.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ]
+}

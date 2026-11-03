@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "consume-european-palette-programs",
+  "title": "Publish European palette programs and feed original guest readers from typed fields",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Publish palette-programs.json/graphics.palette-programs in EUR e46-d45:41files/40resources and165authenticated source bindings/18697bytes. Retain all39prior decoded files and e45; USAe8-d7 unchanged. Add full preparation/parsing/manifest/lifecycle wiring and public resource descriptions.",
+    "Runtime bindings identify typed header/command/parameter/producer fields, reconstruct canonical pointers/nulls/list delays-reserved fields and merge previous owners/raw ROM across partial reads. Keep guest task sequencing/live indices/save/native ABI unchanged; category/program/table counters remain outside serialized machine state.",
+    "Add reduced managed and native checks. The prefix harness respects actual native event budgets and yields at declared endpoints even when another probe makes the endpoint interior to a chained graph; production emitter unchanged.",
+    "Complete ordinary EUR palette-program acceptance with Montblanc Richiamo/Pecorelle. The differential scene harness accepts typed bus or host consumers instead of requiring the unrelated OBJ-dimension host fast path; explicit palette header/command/parameter use remains mandatory. No production runtime change for this harness correction."
+  ],
+  "validation": [
+    "Previous goal turn classified progress; terminal model-final summary and222source-doc hashes checked,1661protected artifacts/concurrent edits preserved. No closed source230/indexed20/e45callback/audio acceptance repeat.",
+    "Windows74539and affected native-harness recompiles80348/4133compile warning-free. Wine78294managed check passes12coherent guards, failure-before-manifest publication, create/reuse/repair/move/e45retention, transactional missing-file and unavailable-file Load/Undo/backup/Restart. All18697poisoned raw bytes read from typed fields:1380header/6810command/10031parameter/476producer,230programs/25tables.",
+    "Initial native78294and diagnostic-only15650terminate101 at a missing traced block. Diagnostic identifies RawCommand endpoint080d7b6a inside another probe native chain; prior probes reached fullstate/clock checkpoints. Preserve both logs/objects. Correct the test checkpoint guard without changing production backend, and do not rerun passing source/managed checks.",
+    "Native-only Wine33298passes24original/interpreter/native complete-state-and-clock prefixes with generated-API reads[16header,52command,66parameter,12producer]bytes. Livecommand65535/coloroffset65534/mixedtableindex2 retain raw semantics outside all owners. Selected edges/allwidths/threeROMmirrors/realBIOS/CpuSet/FastSet/DMA two-typed-two-raw crossings pass.962instructions/328PCs/193dispatches are coverage, not performance.",
+    "Production Windows19390warning-free/canonical executable restored; candidateSHA9fe49ea4f35f140f7b6b0433d226a44f9d642b720edf5d3e51674b38ed919c96. Wine60759actual CLI prepare/reuse-no-write43managedfiles/old-cache/unrelatedcwd pass. Normal English-confirm1000uses0newprogram bytes: closednegative/no fullpair. New080d7faccriterion static scan of10protectedEURworldmap-bank snapshots finds no manager/callback/program task; no newfixture or guest run for that scan.",
+    "Evidence target/rom-data-palette-programs/{windows-managed-results.json,windows-native-diagnostic-results.json,windows-native-fixed-results.json,windows-managed-europe/{managed-result.json,native-result.json},windows-build.json,windows-cli-processes.json,windows-cli-no-write.json,windows-cli-summary.json,ordinary-palette-task-scan.json}. Original ROM/cache/loader/input retained.",
+    "At the prior runtime handoff, project-memory default/base7597b92 and CRLF-aware whitespace passed with1957protected artifacts/all1661prior hashes/old42-current43CLI hash-mtime guards unchanged. Its ordinary-pending status is superseded by the positive battle acceptance below; earlier source/managed/native/CLI proofs were not rerun.",
+    "Authenticate existing EUR previews/identity and prepare a genuine battle through ordinary pad-only Wine replay from EURslot4. Deploy Marsh/Montblanc, wait for his turn, select Richiamo/Pecorelle and confirm visible Esegui. Derived private checkpoints do not edit guest RAM/state payloads/cartridge saves. F09 navigation, river-start-two1400 and Pecorelle-self1600 are retained nonpositive locators, with no fullpair on those inputs.",
+    "Actual production CLI river-execute-sheep1000 under Wine passes170aggregate source-byte reads:32header/90command/48parameter,4programs,0producer bytes/tables. Classic240x160 mode, A32/release44 from the real confirmation checkpoint. Original ROM/state/input/cache/loader/43managed-file hashes and mtimes remain unchanged.",
+    "Initial Wine15902pair completes all1000per-frame fullstate/clock/image/OAM/dispatch/mixed-PSG-FIFO-bitwiseHLE checks and the positive170B/4program assertion, then exits101 at the old generic host-only consumer guard. Retain its log/result and old test executable. The scene has597typed dimension bus reads but0unrelated host-dimension calls. Correct the generic guard to accept actual typed bus or host reads; selected palette requirements unchanged.",
+    "Affected Windows40694test compile is warning-free. Only the same1000frame Winepair49430is rerun and passes all comparisons,170sourceB/4programs, and nonzero audio counts[2194500,2194500,264000,264000,2194366]. Counters include repeated reads, not170distinct source bytes. No performance measurements. Other source/managed/native/CLI proof scopes are closed and unchanged.",
+    "New evidence target/rom-data-palette-programs/{windows-river-execute-sheep1000-result.json,windows-sheep-scene-result.json,windows-scene-tests-build-result.json,windows-sheep-fixed-scene-result.json}, navigation scripts/checkpoints and images. Private positive scene state/input are not committed or packaged.",
+    "Scene closure: all1957prior artifact hashes and124deduplicated CLI/navigation/state/input hash-mtime guards pass. Against225source-doc hashes, only the scene-test guard, six feature/state/TODO docs, existing runtime record, generated changelog and handoff change; all other implementation and concurrent Debug-save work is preserved. Project-memory default/base7597b92 and CRLF-aware whitespace pass; no live unit job. Evidence scene-preservation-check.json and scene-final-summary/protected/source-hashes.json."
+  ],
+  "limitations": [
+    "Ordinary coverage is4of230programs in one classic240x160 EUR ability scene; producer reads are0and tables/other226programs retain their targeted-only scope. New32:9 scene coverage is pending. Targeted prefixes and this ordinary pair do not prove a wholeallocator/callback/scheduler ABI or all valid RAM inputs/fullphysical table extents. Closed negative intro/snapshot/navigation locators must not be repeated merely for context.",
+    "NewLinux/USA/nativeWindows runtime coverage and other asset/GUI-archive-modTODO remain open. No performance/space campaign, AndroidPort change, original game/save data publication, commit or push. Preserve concurrent Debug-save and previous implementation work."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data/palette_programs.rs",
+    "crates/gba-core/src/rom_data/runtime/palette_programs.rs",
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/palette_program_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "scripts/extract_rom_data.py"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

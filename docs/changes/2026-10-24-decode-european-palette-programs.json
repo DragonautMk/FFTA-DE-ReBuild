@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "decode-european-palette-programs",
+  "title": "Decode European palette programs and verify original parameter readers",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Add strict lossless palette_programs model for230producer-rooted programs/1135commands and25producer tables. Headers, raw modes-flags, durations-relative offsets, typed color-component-scalar-cycle payloads, canonical program references, repeated pointers/null slot and list delay-reserved fields roundtrip165source spans/18697bytes.",
+    "Authenticate the exact EUR profile with120original reader-producer fingerprints and independent source reconstruction. Reject overlapping/outside fields, malformed counts-source order, invalid references/null membership and mismatched opcode-parameter shapes. No new guest state clamp or scheduler/callback rewrite.",
+    "Expose the source model and one ignored private source check without adding a managed resource or changing EUR e45-d44/USAe8-d7. Managed publication, typed runtime consumption and ordinary acceptance remain next."
+  ],
+  "validation": [
+    "Previous goal turn classified as progress; linked indexed-final summary terminal/no livejob and219source-doc hashes match. Existing1645protected artifacts retained; no closed inventory/source/native/ordinary check repeated.",
+    "Windows target initial85775compiled warning-free; staticreview corrected2new stack prefix PCs from preceding literal loads to actualLDMIA and added6copy boundaries/3count-period/1rawdirection probes before Wine. Affected recompile23752passes warning-free; initial build logs retained. No Wine failure.",
+    "One focused Wine96989check passes all230headers/1135commands and every18221distinct program field byte through original Thumb header/start/command/parameter/copy/color-load prefixes.97indexed cells/8list rows/2stack tables bring observed distinct source bytes to18681;16reserved list bytes are authenticated/preserved and remain unread by the original producer.",
+    "Six original queued-copy probes confirm wrappingu16end/clamp511 including zero width/start0=>512words versus directwidth0=>0. Three constructor probes confirm count-period minimum1; rawdirection255 remains a model byte while original argument becomes1. Signed component arguments and raw packed colors match. Eleven malformed-shape cases plus changed-source,2unknownJSON and2wrong-emptyROM guards pass; independent field/hash/JSON roundtrip passes.",
+    "154347instructions/389PCs are coverage only. Frozen new executable and1645earlier artifacts pass protected hashes. Evidence target/rom-data-palette-programs/{windows-model-tests-build.jsonl,windows-model-tests-build.log,windows-model-tests.json,windows-model.log,windows-model-result.json,windows-model-europe/result.json,windows-model-europe/palette-programs.json}.",
+    "Final project-memory default/base7597b92 and CRLF-aware whitespace pass. 1661protected artifacts retained/all1645prior hashes/42CLIhash-mtimes unchanged. Only2expected implementation hubs and6memory files differ from previous snapshot, plus2new model-test files/1newrecord; concurrent Debug-save files unchanged. model-final-summary/protected retained, no liveunitjob."
+  ],
+  "limitations": [
+    "Source model/original-reader-prefix acceptance only: no fullallocator/callback/native/state-clock/ordinary program claim. File structure constraints are not live guest index guards; out-of-projection/invalid RAM semantics remain original. Source-present opcode-mode combinations and stated boundaries verified; absent combinations not claimed dynamically covered.",
+    "Managed EUR e45-d44/USAe8-d7 unchanged. Publication/runtime/positiveordinary remain pending. Other palette assets/families and GUI-archive-modTODO stay open; newLinux/USA/nativeWindows pending. No performance-space campaign/AndroidPort change/commit/push; concurrent Debug-save and earlier implementation work preserved."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data/palette_programs.rs",
+    "crates/gba-core/src/rom_data.rs",
+    "crates/recomp/src/rom_data/palette_program_model_tests.rs",
+    "crates/recomp/src/rom_data.rs"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

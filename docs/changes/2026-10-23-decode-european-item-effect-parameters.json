@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "decode-european-item-effect-parameters",
+  "title": "Decode European packed item effect parameters and verify original index widths",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Add strict source-only14record/98B item-effect-parameters model at6e879c..6e87fe, physical0..13/itemIDs362..375/source offsets/nine5bit coefficients/cap8/opaque3. Preserve all56bits and validate declared mapping against parsed376item owner without naming items or UI effects.",
+    "Diagnostic getter uses both low8arguments and invalid-property earlyzero; delta cap uses full(itemu16-minus362)u16 versus low8getter, live current-byte/quantityu8/capfit-zero-remaining/u16return. Out-of-owner source access returns no diagnostic value and remains raw/unclaimed. Guest code/RAM/clock untouched; e39-d38/34files/33resources/USAe8-d7 unchanged."
+  ],
+  "validation": [
+    "Windows94173testbuild warning-free; one Wine94185full originalCFE28/CFDA8oracle passes540real+4explicit raw-cap alias probes+166unauthenticated-unpublished synthetic cases. All98sourceB originalread/roundtrip,20propertymapping/low8wrapping/invalidearlyzero/fullu16capaddress distinction/livecurrent/quantity/capreturn guards pass.",
+    "Syntheticcoeff0-1-15-16-31/cap0-1-99-100-255/opaque0..7, strictJSON-array-bitwidth-ID-item-order-offset-owner/coherentedit/source guards and fullEWRAMreadonly/SP-callee-stack pass. Four external raw cap addresses are observed explicitly, not owned or fallback data.31740instructions/156PCcoverageonly; no build/Wine failure or old14371item/e39proof repetition.",
+    "Private evidence target/rom-data-item-effect-parameters/{windows-tests-build.*,windows-tests.json,recomp-tests-original.exe,windows-original-result.json,windows-original.log,windows-original-europe/{item-effect-parameters,result}.json,source-protected.json}, static target/rom-data-stride7/.258protected hashes cover original ROM/datasets/states/inputs/cache/loader/canonical/frozen test binary.",
+    "Final258protected hashes/project-memory including --base7597b92/whitespace pass; source-final-summary/source-final-source-hashes/source-final-protected retained, all unit processes terminal."
+  ],
+  "limitations": [
+    "Managed publication/direct consumption/lifecycle/ordinary scene/newLinux/USA/nativeWindows/full5AAAC-5DA44UIwrapper remain pending. Semantic opaque bits and arbitrary out-of-owner accesses remain unclaimed.",
+    "No performance/space/AndroidPort work, private game data publication/new gameplay fixtures/personal save writes or agent commit/push. Existing uncommitted e39/concurrent Debug-save work preserved."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/item_effect_parameters.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/item_effect_parameter_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

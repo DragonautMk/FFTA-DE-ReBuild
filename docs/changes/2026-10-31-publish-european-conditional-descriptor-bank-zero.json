@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "publish-european-conditional-descriptor-bank-zero",
+  "title": "Publish European conditional descriptor bank zero",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Publish EUR descriptor pointer0 and bank0 rows 1 through 15 in e99-d98 with authenticated typed reads, preserving row0 and original selectors."
+  ],
+  "validation": [
+    "One isolated Windows build and focused Wine test passed all 88 prior resource comparisons, mixed boundaries with the earlier descriptor owner, raw row0, coherent edit refusal and three original translated prefixes with state and clock equality."
+  ],
+  "limitations": [
+    "Production CLI, ordinary use, Linux, USA and native Windows remain open; no performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/conditional_descriptor_bank_zero.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/conditional_descriptor_bank_zero_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_descriptor_banks_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_four_byte_lookup_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_packed_lookup_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/table_graphics_runtime_tests.rs",
+    "crates/recomp/src/rom_data/clan_table_alias_runtime_tests.rs",
+    "crates/recomp/src/rom_data/dynamic_raw_fragments_runtime_tests.rs",
+    "scripts/extract_rom_data.py",
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md"
+  ]
+}

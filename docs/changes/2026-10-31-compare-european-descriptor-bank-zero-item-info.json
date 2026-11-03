@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "compare-european-descriptor-bank-zero-item-info",
+  "title": "Compare European descriptor bank zero Item information",
+  "kind": "changed",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add optional observed bank-zero field assertions to the recorded-scene differential harness."
+  ],
+  "validation": [
+    "An isolated Windows build and one Wine raw-versus-e99 comparison passed for 800 Item-info frames, matching complete state, clock, video, OAM, dispatch and five audio outputs; protected inputs and frozen sources were unchanged."
+  ],
+  "limitations": [
+    "Field 4 was not observed; both arms shared a native cache, and Linux, USA and native Windows remain unverified. No performance measurements."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_gameplay.md",
+    "docs/development/TASK_HANDOFF.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md"
+  ]
+}

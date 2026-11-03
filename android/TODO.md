@@ -1,5 +1,7 @@
-# Android pendientes
+<a id="android-pendientes"></a>
 
-- Seguir afinando la ergonomia y el tacto de los controles con feedback del usuario.
-  Ya existe editor de posiciones, visibilidad por boton y vibracion opcional.
-- Remapeo del teclado fisico.
+# Android pending work
+
+- Continue refining control ergonomics and feel with user feedback.
+  Position editing, per-button visibility and optional vibration already exist.
+- Physical keyboard remapping.

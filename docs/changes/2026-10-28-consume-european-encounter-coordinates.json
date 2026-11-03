@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "slug": "consume-european-encounter-coordinates",
+  "title": "Publish and consume European encounter coordinate lists",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Publish encounter-coordinates.json/gameplay.encounter-coordinates at e82-d81/index73 with header pointer/count/role dependency coherence.75files74resources, all73prior records/files exact; immutable691-span4684-byte typed owner and local/global70B..70C page routing.",
+    "Compose old template/header borders per byte, retain index0-prefix coordinate ownership without a typedheader0/fallback, and report four roles/XY/list-header usage. Original placement/RNG/live rules and Machine/native/save ABI unchanged."
+  ],
+  "validation": [
+    "Three warning-free Windows builds/accepted0f85fbf7.. from518stablefiles each; remainingcopy changes only newtestharness. Only affected corelib/test then test-only fingerprint isolated, no globalclean/oldsource edit/unrelatedDebug/frontend integration. FirstWine passespublication/attach/fullset then failsnative harness; test-onlyBLpair/ARMdecoderfix follows established helper pattern. Secondfilter exposes cross-case chaining beyond single-load stop; finalharness splits two case families/assertsnostopmember and preservesall22cases/nativechaining.",
+    "FirstWine publication/interruption/14attach/threefullset/failedowner-state retention plus remaining-only thirdWine native/lifecycle (75acceptedfiles exact/no publication-attach replay) pass22complete-state-clock cases with4684rawBpoisoned afterLoad:18actualloads/onefullindex0gate/threeoriginalrandomprefixes;156compiledinstructions/21newB/2oldtemplateB/13oldheaderB.",
+    "All4684B/fourroles/XY/691lists323headers/all691boundaries/widths-mirrors-prioredges/LoadUndo and threeDMA-CpuSet-CpuFastSet fullstate-clock checks pass. All253actualguards/518integrationhashes/516modelpreimages exact; artifacthelper onlyinterruptedcopy. No newgame/fixture/navigation/closedmodel-source-template-header-ordinary acceptance/performance.",
+    "Memory render/metadata-only/CRLF whitespace diff pass. Default/base07be4d2 report only six parallel Debug-memory/probe paths awaiting their owner record; no own ROM path uncovered. Final253actualguards/518accepted+518first+518second source hashes/516modelpreimages exact, accepted75dataset files unchanged."
+  ],
+  "limitations": [
+    "ActualproductionCLI/create-reuse/startup/positiveordinary next. Selected native cases are not fullplacement ABI/randomexhaustion/allcaller-nullgates/globalarchive/fullROM_DATA_TODO proof.",
+    "Linux/USA/nativeWindows/new32:9 pending, USA8-7/schema1 unchanged. No metrics/storage campaign, Android/package, assistantcommit/push; parallelDebug/userwork preserved.",
+    "Global project-memory check currently awaits the parallel Debug-memory/probe record; this record does not describe that work or claim its checks."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/encounter_coordinates.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/encounter_coordinate_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "scripts/extract_rom_data.py",
+    "scripts/README.md",
+    "docs/rom_data_maps.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_maps.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "slug": "add-bounded-gameplay-inspection",
+  "title": "Inspect observed task, script and unit fields with authenticated source provenance",
+  "kind": "added",
+  "platforms": [
+    "Windows cross builds and Wine/Xvfb; offline Chrome"
+  ],
+  "changes": [
+    "Add opt-in isolated menu Start task / script trace / Save gameplay report and acknowledged gameplay-start/gameplay-report commands with family/context filters. Observe verified EUR descriptor loadsites, primary/auxiliary script fetch/dispatch/post-advance points, actor sprite query/result and unit graphics reset/update checkpoints; retain per-field registers or immutable RAM/ROM backing with physical offsets and observed PC.",
+    "Authenticate existing exact-EUR task descriptors, script command/archive, auxiliary scripts and unit initial-pose models at Start; correlate physical rows, instruction boundaries and default-pose sprite bindings without replacing guest execution or imposing projection counts on guest domains. Expose signed16 cursors/wrapping, nullable callback and candidate sentinels separately from unknown reads. Actor/task pointers remain observation-local addresses; unknown fields, flag semantics, pools, lifetime and persistent unit identity stay unknown.",
+    "Compose gameplay and code collectors on the existing readonly pre-dispatch hook; share the exact original bounded interpreter step loop through a frontend helper. Disabled normal runner and native dispatch remain unchanged. Freeze on restore, refuse a separate replay while unsaved, retain frozen trace on Save failure; no guest fields, state/native ABI, snapshots or benchmark changes.",
+    "Bound collection to30seconds/60frames/512events/1MiB event bytes, eight private report folders and2MiBJSON. Offline report filters sequence/context/family/text, displays input/frame/clock, per-field provenance/unknowns and internal resource-to-contract links; homepage recognizes gameplay.json and links the guide. Keep source-plan hashes, session manifest/selected pins, runtime/build/ROM/BIOS/effective dataset/input/AV and initial/current complete-state identities distinct."
+  ],
+  "validation": [
+    "Frozen public e8bd939 plus14selected overlays excludes concurrent ROM extraction and preserves accepted tools. Initial test compile passes without execution; source review corrects selected session pins to actual manifest.pins and adds explicit fixture executable identity before final compilation. Pre-pin-review retains initial inputs/logs; no passed test or scene was repeated for that correction.",
+    "Final locked/offline Windows feature/default release builds pass without warnings. Feature5840493e4aee2e3de3e0a3f34b320885e891d12a977d32e6bd46400deac80d26; default4e3ae6b736ae94d40e4fec6cf64567a3f2493490dfcb308c04bc4b8168c91f80. Production executables retain hashes and modification times.",
+    "79distinct Wine tests pass:2gameplay,2affected code collector,11control,49menu,14frontend and1explicit retained-seed observer. Synthetic checks cover signed wrapping/mirrors, protocol/invalid backing refusal, out-of-projection opcode200, FFFF raw sentinel, unknown/context/family handling, event/time/byte limits and eight-folder failure retention. Affected code synthetic mixed native/interpreter observer still preserves complete state/counts; no old real-native oracle rerun.",
+    "One new affected observer comparison runs two A/release frames from the existing DS20 seed, same interpreter with/without collection. Both per-frame full states and clock match exactly; final frame22221/clock6241706243, full-state SHA2565dc38f52e57eb12140bbbe2b1f4cbf8b07f429e351dc6108e01053f5d75775af before frontend audio drains. Retain70events/200710event bytes at14observed task addresses:28entries/14countdown checkpoints/28exits. Events0,1,2,35,36,37 at one address reconstruct countdown10,9,9,9,8,8 across two frames with unchanged sequence cursor/current-frame pointer and exact RAM provenance. No persistent unit identity inferred; zero observed script events is specific to this window.",
+    "Actual default-runtime GUI/menu/CLI in a private path with spaces/apostrophe/Unicode passes29invocations: CLI70events, menu35, empty filter0with35excluded, selected unit context3. Coexisting code trace retains8events; two A/release frontend frames preserve exact endpointdd841ef6dba845974625e7e5ae5839f86069000066f876a32d0a86bf6fcb0b81. Start/Save preserve current complete state/frame/clock; duplicate/unarmed/invalid/capacity/running/closed cases pass. Six actual original inputs/normal executables retain hashes/mtimes; closed session server is inactive.",
+    "Offline Chrome1400desktop/620narrow verifies family/context/text filters, reset, per-field register/RAM provenance, unknown scope, internal resource contract targets and no document overflow; empty-prefix distinction explicit. Homepage55indices recognizes5gameplay and the coexisting code report. Menu and browser screenshots visually inspected; mobile field table scrolls internally.",
+    "Independent final-verification authenticates14live/frozen overlays, both candidates, five exact JSON/HTML reports/event-byte accounting/source PCs/selected session pin/runtime identities and closed ready marker. Normal native runner is byte-for-byte unchanged from the DBG16 preimage; removing the observer call yields the exact original core interpreter step loop. Retention receipt retires five exited Chrome profiles, keeping source/preimages/build/test/GUI/browser logs/results/current candidates/actual inputs and shared caches. No managed/native interrupted/moved-resource trees were created; ROM-only cleanup helper is inapplicable.",
+    "Feature/checklist/state/handoff/record/changelog, local links,22ordered IDs with01-17closed, metadata-only memory and diff whitespace checks pass. Workspace and basee8bd939 memory checks identify only the separate concurrent conditional_records8.rs and conditional_records8/tests.rs needing their own model record; preserve/unattribute that work. DBG17 implementation coverage is complete. No remaining DBG17 criterion; next selected unit must be DBG18 with a fresh checkpoint."
+  ],
+  "limitations": [
+    "Windows cross/Wine and offline browser coverage only; native Windows/Linux, physical controllers and live native gameplay capture remain unverified. This is new observer/menu/report acceptance, not new ROM/DS/interpreter-native parity or performance acceptance. Existing native instructions inside blocks remain unobserved.",
+    "Exact EUR only. Script/task/actor fields outside verified contracts and original allocator/pool/global unit identity are unknown; default initial-pose links do not identify current animation or typed consumption. Filtered/truncated/unobserved sites cannot establish global non-use. Native backend label alone does not authenticate a loaded code image.",
+    "Closing without Save loses in-memory collection. Private values/paths remain ignored and need review before sharing; no send, normal runtime replacement, new generated ROM code, Android/Godot, package, commit or push. Preserve separate concurrent extraction edits."
+  ],
+  "files": [
+    "crates/recomp/src/debug_gameplay.rs",
+    "crates/recomp/src/debug_gameplay/report.html",
+    "crates/recomp/src/debug_code.rs",
+    "crates/recomp/src/main.rs",
+    "crates/recomp/src/play.rs",
+    "crates/recomp/src/debug_control.rs",
+    "crates/menu/src/lib.rs",
+    "scripts/report_home.py",
+    "scripts/report_home.html",
+    "docs/debug_gameplay.md",
+    "docs/debug_control.md",
+    "docs/report_home.md",
+    "scripts/README.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/debug_gameplay.md",
+    "docs/rom_data_tasks.md",
+    "docs/rom_data_scripts.md",
+    "docs/rom_data_unit_obj.md",
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_TODO.md",
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ]
+}

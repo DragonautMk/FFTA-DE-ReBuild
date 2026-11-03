@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>FFTA DE-ReBuild — Local reports</title>
+<style>
+:root{color-scheme:light;--paper:#f6f5f1;--panel:#fff;--ink:#222b33;--muted:#616b74;--line:#d8dcd9;--accent:#285d59;--soft:#e6eeea}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:inherit;text-decoration:none}button,input{font:inherit}a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:4px}button{cursor:pointer}code{font-family:ui-monospace,Consolas,monospace}
+.shell{max-width:1180px;margin:auto;padding:0 40px}header{border-bottom:1px solid var(--line)}.topbar{display:flex;align-items:center;gap:28px;min-height:88px}.brand{font-size:18px;font-weight:750;letter-spacing:-.5px}.brand span{color:var(--muted);font-weight:450}.local{font-size:10px;letter-spacing:1.6px;color:var(--accent);border-left:1px solid var(--line);padding-left:24px}nav{margin-left:auto;display:flex;gap:24px;font-size:13px;color:var(--muted)}nav a:hover{color:var(--accent)}
+.intro{padding:62px 0 30px;display:flex;justify-content:space-between;gap:32px;align-items:flex-end}.eyebrow{color:var(--accent);font-size:11px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;margin:0 0 14px}h1{font-size:clamp(30px,4.5vw,48px);line-height:1.15;letter-spacing:-1.8px;font-weight:650;margin:0 0 18px;max-width:690px}.lead{color:var(--muted);margin:0;max-width:640px;font-size:16px}.inventory{text-align:right;flex-shrink:0;padding-bottom:4px}.inventory strong{display:block;font-size:42px;font-weight:500;line-height:1}.inventory span{color:var(--muted);font-size:12px}
+.shortcuts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:10px 0 48px}.shortcut{padding:22px;background:var(--panel);border-top:2px solid var(--accent);display:flex;flex-direction:column;align-items:flex-start;gap:8px;transition:background .15s}.shortcut:hover{background:var(--soft)}.shortcut>span{color:var(--accent);font-size:11px;text-transform:uppercase;letter-spacing:1px;font-weight:650}.shortcut strong{font-size:17px;overflow-wrap:anywhere;line-height:1.4}.shortcut small{width:100%;font-size:12px;color:var(--muted)}.shortcut small span{float:right;font-size:16px}
+h2{font-size:21px;font-weight:650;letter-spacing:-.5px;margin:0 0 5px}.section-head{display:flex;justify-content:space-between;align-items:center;gap:20px}.section-head p{margin:0;color:var(--muted);font-size:13px}.search{display:flex;gap:10px;align-items:center;background:var(--panel);border:1px solid var(--line);padding:9px 13px;min-width:310px;border-radius:4px}.search input{width:100%;background:none;color:var(--ink);border:0;outline:0;min-width:0}.search:focus-within{outline:2px solid var(--accent);outline-offset:2px}.search>span{color:var(--muted);font-size:17px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;padding:22px 0 16px;border-bottom:1px solid var(--line)}.filter{background:none;color:var(--muted);border:1px solid transparent;border-radius:4px;padding:6px 10px;font-size:12px}.filter span{margin-left:5px;opacity:.8}.filter.active{color:var(--accent);background:var(--soft);border-color:var(--soft)}.filter:hover{border-color:var(--line)}#visible-count{margin:14px 0 0;color:var(--muted);font-size:12px;min-height:19px}
+.report-group{margin:20px 0 30px}h3{font-size:12px;text-transform:uppercase;letter-spacing:1.3px;margin:0 0 9px;color:var(--muted);font-weight:650}h3 span{font-size:11px;margin-left:6px;letter-spacing:0}.report{display:grid;grid-template-columns:minmax(190px,.9fr) minmax(0,1.6fr) 92px 18px;gap:24px;align-items:center;padding:16px 8px;border-bottom:1px solid var(--line)}.report:hover{background:var(--soft)}.report-name{min-width:0}.report-name strong{font-size:14px;display:block;font-weight:650;overflow-wrap:anywhere}.report-name>span{display:block;font-size:12px;color:var(--muted);margin-top:3px}.report code{font-size:11px;color:var(--muted);overflow-wrap:anywhere;line-height:1.7}.report time{font-size:11px;color:var(--muted);white-space:nowrap}.arrow{color:var(--accent);font-size:18px}.empty{padding:28px 0;color:var(--muted)}[hidden]{display:none!important}
+.bottom{margin-top:48px;border-top:1px solid var(--line);padding:30px 0 38px;display:grid;grid-template-columns:1fr 1.2fr;gap:64px}.guides{display:grid;grid-template-columns:1fr 1fr;gap:10px 22px;margin-top:20px}.guides a{font-size:13px;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:4px}.guides a:hover{color:var(--accent)}.bottom p{font-size:13px;color:var(--muted);margin:12px 0}.bottom summary{color:var(--accent);font-size:13px;cursor:pointer;margin:14px 0 10px}.command{display:block;white-space:pre-wrap;overflow-wrap:anywhere;background:var(--soft);padding:12px 14px;font-size:11px;margin:8px 0}.note{font-size:11px!important}footer{border-top:1px solid var(--line);padding:18px 0 28px;display:flex;justify-content:space-between;gap:24px;color:var(--muted);font-size:11px}
+@media(prefers-color-scheme:dark){:root{color-scheme:dark;--paper:#171f24;--panel:#202a30;--ink:#e1e7e7;--muted:#a6b2b7;--line:#354247;--accent:#9bc9b9;--soft:#293c3b}}
+@media(max-width:760px){.shell{padding:0 20px}.topbar{min-height:74px;flex-wrap:wrap;gap:10px 18px;padding-top:16px;padding-bottom:16px}.local{font-size:9px;padding-left:16px}nav{width:100%;margin:0;gap:20px;font-size:12px}.intro{padding:36px 0 24px;gap:16px}h1{letter-spacing:-1px}.lead{font-size:14px}.inventory strong{font-size:30px}.shortcuts{grid-template-columns:1fr;margin-bottom:32px;gap:10px}.shortcut{padding:15px 18px;gap:4px}.shortcut strong{font-size:15px}.section-head{display:block}.search{margin-top:18px;min-width:0;width:100%}.report{grid-template-columns:minmax(0,1fr) 18px;gap:7px 12px;padding:14px 2px}.report-name{grid-column:1}.report code{grid-column:1;grid-row:2}.report time{grid-column:1;grid-row:3}.report .arrow{grid-column:2;grid-row:1}.bottom{grid-template-columns:1fr;gap:30px;margin-top:32px}.guides{gap:12px 16px}footer{flex-direction:column;gap:6px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+<header><div class="shell topbar"><a class="brand" href="index.html">FFTA<span>Recomp</span></a><span class="local">LOCAL REPORTS · OFFLINE</span><nav aria-label="Main navigation"><a href="#report">Reports</a><a href="#guide">Documentation</a><a href="#aggiornamento">Refresh</a></nav></div></header>
+<main class="shell">
+<section class="intro" aria-labelledby="title"><div><p class="eyebrow">Your project at a glance</p><h1 id="title">All your reports.<br>One place to start.</h1><p class="lead">ROM coverage, comparisons and debug views collected in your local project copy.</p></div><div class="inventory"><strong>@@COUNT@@</strong><span>indexes available</span></div></section>
+<div class="shortcuts" aria-label="Quick links">@@SHORTCUTS@@</div>
+<section id="report" aria-labelledby="report-title"><div class="section-head"><div><h2 id="report-title">Browse reports</h2><p>All discovered indexes, including historical reports. Newest first in each group.</p></div><label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" aria-label="Search reports" placeholder="Search name, type or path…" autocomplete="off"></label></div><div class="filters" aria-label="Report type">@@FILTERS@@</div><p id="visible-count" role="status" aria-live="polite"></p><div id="reports">@@REPORTS@@</div><p id="no-match" class="empty" hidden>No reports match your search. Try another name or select All.</p><noscript><p>JavaScript is disabled: all links are available; search and filters require JavaScript.</p></noscript></section>
+<div class="bottom"><section id="guide"><h2>Documentation</h2><div class="guides"><a href="docs/debug_tools.md">Shared debug guide</a><a href="docs/development/ROM_COVERAGE.md">Reading ROM coverage</a><a href="docs/debug_graphics.md">Graphics inspector</a><a href="docs/debug_ui.md">Menu, text and input</a><a href="docs/debug_audio.md">Audio diagnostics</a><a href="docs/debug_gameplay.md">Tasks, scripts and units</a><a href="docs/debug_code.md">Code and fallback</a><a href="docs/debug_recent.md">Recent events</a><a href="docs/debug_campaigns.md">Targeted campaigns</a><a href="docs/debug_artifacts.md">Sessions and artifacts</a><a href="docs/debug_issues.md">Issue report</a><a href="docs/debug_comparisons.md">Runtime comparisons</a><a href="docs/debug_control.md">Pause and stepping</a><a href="docs/development/DEBUG_TOOLS_TODO.md">Tool checklist</a><a href="docs/development/debug%20saves.md">DS cases and saves</a><a href="docs/development/ROM_DATA_TODO.md">ROM extraction</a><a href="docs/development/PROJECT_STATE.md">Project state</a></div></section><section id="aggiornamento"><h2>Refresh this page</h2><p>This list is a snapshot of existing files. After creating or moving a report, regenerate the homepage and reload it in your browser.</p><details><summary>Show commands</summary><p>Windows, with Docker Desktop already used for coverage:</p><code class="command">.\scripts\windows\report_home.ps1 -OpenReport</code><p>Linux, with the same Docker image:</p><code class="command">bash scripts/linux/report_home.sh</code><p>Alternatively, with Python 3 already installed:</p><code class="command">python3 scripts/report_home.py</code></details><p class="note">These commands update only this index. They do not regenerate coverage or run the game. File links remain relative; regenerate the list after moving individual reports.</p></section></div>
+<footer><span>Index generated <time id="generated" datetime="@@UPDATED@@"></time></span><span>Local files only · no external connections</span></footer>
+</main>
+<script>
+(() => {
+  const search = document.getElementById('search');
+  const buttons = [...document.querySelectorAll('[data-filter]')];
+  const groups = [...document.querySelectorAll('.report-group')];
+  const rows = [...document.querySelectorAll('.report')];
+  let filter = 'all';
+  const normalize = value => value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('en');
+  const text = new Map(rows.map(row => [row, normalize(row.textContent)]));
+  function update() {
+    const words = normalize(search.value).trim().split(/\s+/).filter(Boolean);
+    let visible = 0;
+    for (const group of groups) {
+      let groupVisible = 0;
+      for (const row of group.querySelectorAll('.report')) {
+        row.hidden = (filter !== 'all' && filter !== group.dataset.group) || !words.every(word => text.get(row).includes(word));
+        if (!row.hidden) groupVisible++;
+      }
+      group.hidden = groupVisible === 0;
+      group.querySelector('h3 span').textContent = groupVisible;
+      visible += groupVisible;
+    }
+    document.getElementById('visible-count').textContent = `${visible} of ${rows.length} reports`;
+    document.getElementById('no-match').hidden = visible !== 0 || rows.length === 0;
+    for (const button of buttons) {
+      const active = button.dataset.filter === filter;
+      button.classList.toggle('active', active);
+      button.setAttribute('aria-pressed', String(active));
+    }
+  }
+  search.addEventListener('input', update);
+  for (const button of buttons) button.addEventListener('click', () => { filter = button.dataset.filter; update(); });
+  for (const time of document.querySelectorAll('time[datetime]')) {
+    const date = new Date(time.dateTime);
+    time.textContent = new Intl.DateTimeFormat('en-GB', time.id === 'generated' ? {dateStyle:'medium', timeStyle:'short'} : {dateStyle:'medium'}).format(date);
+  }
+  update();
+})();
+</script>
+</body>
+</html>

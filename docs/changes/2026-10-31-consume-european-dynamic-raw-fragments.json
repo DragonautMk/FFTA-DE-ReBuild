@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "slug": "consume-european-dynamic-raw-fragments",
+  "title": "Publish and consume bounded European dynamic raw transfer fragments",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Publish a separately authenticated managed resource for seven bounded dynamic selector and bank fragments and compose typed bus reads with existing owners without limiting guest selectors."
+  ],
+  "validation": [
+    "Windows test build and one corrected focused Wine test pass 1304 source bytes, boundary reads, prior-owner composition, one DMA16 complete-state/clock comparison and altered-resource rejection; guarded ROM, old dataset and sources unchanged.",
+    "The first Wine attempt found a missing final-bank source page, corrected before the passing retry; a full disk was relieved using the retention helper on a previously completed unit and relocated executables were restored."
+  ],
+  "limitations": [
+    "Production CLI, original dynamic routine and native execution, positive ordinary use and the global selector domain remain open; Linux, USA and native Windows checks are pending. No performance measurement."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/ui_raw_transfers.rs",
+    "crates/gba-core/src/rom_data/ui_raw_transfers/dynamic_fragments.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/dynamic_raw_fragments_runtime_tests.rs",
+    "docs/rom_data_ui_raw_transfers.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_raw_transfers.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

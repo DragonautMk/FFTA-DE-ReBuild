@@ -1,0 +1,442 @@
+<a id="controllo-locale-pausa-e-avanzamento--dbg-1020"></a>
+
+# Local control, pause and stepping — DBG-10/20
+
+In [isolated sessions](debug_sessions.md), **F6** pauses or resumes, **F7**
+advances one frame and **F8** ten. The **Debug** menu offers Step 1 frame,
+Step 10 frames and Resume. Stepping requires an already paused copy: the request
+does not rewind the machine and stops after the requested number of completed
+frames. F6/F7/F8 are consumed before text, guest bindings, Fast and shortcut
+capture. They are reserved only in the debug copy; autorepeat generates no
+additional steps. Menu commands also work with gamepad navigation.
+
+Menu/keyboard steps use **neutral guest input** (`3ff`, all released). Menu
+confirmation and held physical keys do not become guest input. Use the CLI to
+select an explicit mask. Game clicks are not executed during a step. The normal
+menu continues to pause the main game too. The new commands do not control it.
+
+The copy's panel beside the menu shows guest frame, clock, reason
+(`PAUSE-COMMAND`, `MENU-PAUSE`, `STEPPING`, `STEP-COMPLETE`, `STATE-RESTORED`)
+and remaining frames. A frame is a completed PPU boundary, not an instruction
+breakpoint. Backends retain their own return granularity.
+
+<a id="cli-sulla-stessa-finestra"></a>
+
+## CLI on the same window
+
+Use a runtime containing this feature; old copies retain their pinned executable.
+Create a new session with that runtime without replacing the executable in an
+already authenticated session. It can open directly in pause:
+
+```powershell
+.\recomp.exe debug-session open 'target\caso-debug' --paused
+```
+
+In another terminal:
+
+```powershell
+.\recomp.exe debug-control status 'target\caso-debug'
+.\recomp.exe debug-control pause 'target\caso-debug'
+.\recomp.exe debug-control step 'target\caso-debug' 3
+.\recomp.exe debug-control step 'target\caso-debug' 1 --keys 3fe
+.\recomp.exe debug-control resume 'target\caso-debug'
+```
+
+`step N` accepts **1–600 frames**. `--keys HEX` accepts **000–3ff**, active-low:
+`3fe` holds A, `3ff` releases all. The mask applies to every frame of the
+request. `resume` returns to normal execution and current inputs. For a recorded
+variable sequence use [recording/replay](debug_recordings.md). An active recording
+in the copy can include steps and pauses: host pause time adds no recorded frames.
+
+Each command receives JSON with run/request identity, success/error,
+frame/clock/PC, reason, remaining budget, full-state hash and guest/host audio
+queue sizes. The hash is computed only on request and command completion,
+without saving an additional snapshot. Returned state is at the observed
+boundary: after `resume` the game continues. An incompatible request is refused
+without being applied and returns a nonzero outcome; during free execution the
+game still advances. A partial execution error is not counted as a completed frame.
+
+Only one client can await an operational command. **status**, **content-list**
+and **cancel** use a second mailbox with separate lock/response: they remain
+available during a step or search without overwriting the pending result.
+No automatic retry. F6/Escape and Load/Undo/Restart can still interrupt the
+budget; during a separate replay status is readable, but pause/step/resume are refused.
+
+The console and `debug-command` can discover and select content without opening
+the selector:
+
+~~~text
+content refresh
+content list --offset 0 --limit 16
+content list --offset 16 --limit 16 --generation GENERATION
+catalog select ID
+~~~
+
+`content refresh` explicitly scans roots already declared in the copy, in a
+worker with the same selector limits; it requires pause, no active step, search
+or replay and no other selector job. The request stays pending until completion
+and can be cancelled by ID: a cancelled result or one for a changed context is
+not applied. `content list` reads the current index without rescanning, even
+while another job is pending. The result is in `status.content_page`: generation,
+total, next offset, partial-scan indicator and up to 16 IDs with type, hash,
+availability and compatibility. Specify the received generation for later pages:
+a different one is refused. Long names and paths are shortened with explicit
+indicators; the ID retains the complete reference and selection rechecks it.
+Equivalent direct transport forms are `debug-control content-refresh SESSION` and
+`debug-control content-list SESSION [--offset N --limit N --generation N]`.
+An older server without this capability is refused before sending. A Wine/Xvfb
+check scanned a synthetic session and selected a catalog from one-item pages,
+without menu navigation or game advancement.
+
+The cheat catalog can be browsed through the same local channel:
+
+~~~text
+content refresh
+content list
+cheats select CONTENT_ID
+cheats refresh
+cheats list --offset 0 --limit 16
+cheats show CH-0001 --offset 0 --generation SHA_SNAPSHOT
+~~~
+
+Selection uses a `cheat-catalog` ID discovered by the selector; the text language
+does not accept a path. `cheats refresh` requires a paused isolated copy, rechecks
+the selected file in a worker and publishes an immutable snapshot identified by
+source hash, ROM and generation. Cancel with the exact ID or a deadline discards
+the result: the worker finishes reading before the final response. If selection
+or context changes, the previous snapshot is no longer queryable. `list` and
+`show` queries use the readonly mailbox and remain available during other jobs.
+The file is not reread for every query: the snapshot certifies checking at refresh,
+not the absence of later disk changes.
+
+A page contains at most 16 rows with truncation indicators. Original JSON detail
+is returned in UTF-8 parts of at most 4096 bytes: concatenate `json_part` following
+`next_offset_bytes` and verify `entry_sha256`. A different generation or invalid
+offset is refused. Direct forms are `debug-control cheat-select SESSION ID`, `cheat-refresh
+SESSION`, `cheat-list SESSION [--offset N --limit N --generation SHA]` and
+`cheat-show SESSION CH-ID [--offset N --generation SHA]`. A server without
+`cheat-catalog-v1` is refused before sending. Refresh assesses bounded
+source-linked plans; these catalog actions do not enable or apply a code.
+
+The explicit actions `cheats prepare CH-ID INDEX MASTER GENERATION` and
+`cheats apply-once CH-ID INDEX MASTER GENERATION TOKEN` use the same local control
+and require `cheat-once-v1`. The first returns the plan, ranges and a token bound
+to selection, content, ROM and paused state; the second rechecks everything and
+applies once. Retrying with the same identity recovers the outcome without
+repeating writes. Prerequisites and limits, including interpreter, allowed memory
+regions and guards on recording and new saves, are in
+[cheats](cheats.md#manual-one-shot-in-an-isolated-session--dbg2-19-in-progress).
+`cheats arm CH-ID INDEX MASTER GENERATION TOKEN` and `cheats disarm CH-ID|all`
+use the separate `cheat-maintain-v1` capability. Arm consumes a current preview;
+disarm stops subsequent frame applications without restoring earlier memory.
+The console completes these command names and `all`, and presents the relevant
+English or Italian argument hint without guessing a source, master or token.
+
+The selected replay profile can start with `replay run`, or `replay run audit`,
+`replay run capture` or `replay run compare`. Direct transport uses
+`debug-control replay-run SESSION [--mode plain|audit|capture|compare]`.
+The copy must be paused and a compatible profile already selected: the command
+does not open a selector. Execution uses the same isolated supervisor as the
+menu. `status.replay` distinguishes active worker, received progress and latest
+result; its frames are the worker's, not the main copy's. The request result
+retains the report and stays pending until worker termination. An older server
+without `replay-job-v1` is refused before sending.
+In a Wine/Xvfb check with copied synthetic profiles, replay returned `passed`,
+capture `captured` and compare `matched`; audit correctly reported endpoint
+divergence without claiming success. A replay retry returned the same JSON and
+worker run. A wrong ID was refused while another replay was pending. The separate
+cancellation/deadline check uses a slow synthetic process, not a worker executing
+the game: it confirms supervisor interruption and terminal `cancelled` and
+`timeout`, respectively. The main copy stayed at its initial frame and clock,
+with unchanged state. A second synthetic session sent `replay run` from the
+Command console window and copied terminal JSON identical to the channel response;
+clipboard and display were isolated for the check.
+
+<a id="richieste-cancellazione-e-scadenza--dbg-20"></a>
+
+## Requests, cancellation and deadlines — DBG-20
+
+Access explicitly targets the isolated copy's folder. No port, socket or network
+service is opened; the main game does not create the channel. Anyone able to
+write the folder can control the copy: this is not an authentication boundary
+against other system users.
+
+**ready.json** declares schema1, a unique run per start, PID, capabilities and
+session identity (manifest SHA256 and bounded label). Every request/response
+carries run and ID; the new client also compares manifest identity. An old copy
+without these capabilities requires a new session created with the current
+runtime; do not replace already authenticated executables.
+
+To query a long command and cancel only the one observed:
+
+~~~powershell
+.\recomp.exe debug-control step 'target\caso-debug' 600 --timeout-ms 120000
+# From another terminal, read status.pending_control.request_id:
+.\recomp.exe debug-control status 'target\caso-debug'
+.\recomp.exe debug-control cancel 'target\caso-debug' --request 'EXACT_ID'
+~~~
+
+**cancel** stops a CLI step/search budget at the next frontend return and leaves
+the copy paused. An old/different ID is refused without cancelling another
+command. The operational command ends with outcome **cancelled**, remaining 0
+and actual partial state; the cancel query confirms separately. It does not
+rewind completed frames. On shutdown a response without final state does not
+invent a guest boundary: status is null and the outcome is closed. For replay
+started from the channel, cancel requires the exact ID and confirms only the
+request: the terminal result confirms any interruption. At the deadline,
+cancellation is requested and the result stays pending until worker termination.
+Replay started from the menu uses its own Cancel replay; a menu/keyboard budget
+remains interruptible with F6/Escape.
+
+All commands accept **--timeout-ms N**, 20–120,000 ms, default 120,000.
+The request includes deadline_unix_ms: an already expired request is not
+executed; the frontend stops an expired pending budget with control-timeout.
+Client waiting uses a monotonic clock. The server deadline uses wall-clock time
+and may be affected by clock changes; it does not interrupt an instruction,
+frame, blocked callback or synchronous operation halfway through. A synchronous
+operation already completed after expiry returns timeout with the observed
+state, without rollback.
+
+The client returns JSON for local errors or lack of confirmation too:
+outcomes **ok / refused / cancelled / timeout / closed**, plus
+**identity-conflict / result-unavailable / capacity** for retries, with ok,
+error, run/id/session when available. Before sending, invalid syntax or arguments
+produce `parse-error`, an incompatible protocol, manifest, capability or run
+produces `incompatible`, and an unavailable session or lock produces `unavailable`:
+these local outcomes indicate `delivery: not-sent`. A transport or worker error
+may instead report `delivery: unknown`: it does not prove the server did not
+receive the request. The server continues to report `refused` for its refusals,
+including content-specific compatibility, with details in the error. Also
+possible are `invalid-request` for an invalid typed action and `composition-active`
+when the console blocks Enter during composition. A client timeout with
+server_acknowledged=false does not prove the frontend has stopped work. Use
+status and the ID to check before retrying. A later server response may be in
+result.json; only the latest per mailbox is retained. Concurrent queries are
+refused by their own OS lock; client death releases it automatically. A job's
+terminal response reports `pending_control: null`: the completed request no
+longer appears active. If publication must be retried, correlation retains
+the original job ID.
+
+The current runtime also offers explicit retry with the same identity:
+
+~~~powershell
+.\recomp.exe debug-control retry 'target\caso-debug' --run RUN --request ID --deadline-unix-ms DEADLINE --timeout-ms 5000 -- step 1 --keys 0x3ff
+~~~
+
+`RUN`, `ID` and `DEADLINE` come from the original request; after `--` repeat
+the exact action and arguments. They are present in results and client timeout.
+They may also be chosen before sending and retained for a possible retry. The
+server compares a fingerprint of the complete request: an ID with different
+parameters is refused, a pending one is not reexecuted and a completed one
+returns its retained result. The per-start limit is 4096 identities, with space
+reserved for cancelling the active job; at most 128 responses, 128 KiB each
+and 2 MiB serialized total remain cached. If the response is no longer available,
+the server states so without reexecuting the action. Memory applies only to the
+current run: a different run refuses retry. A new command with another ID is a
+distinct action. A Wine/Xvfb check verified that retrying a completed step does
+not execute another frame and a pending search retains its owner; different
+parameters and runs were refused. Responses include `request_sha256`, which the
+client compares before accepting a response from the updated runtime.
+Retry requires a server supporting this feature; `status` is an unrecorded read
+and is queried with a new request. The language shared by the console and
+`debug-command` also accepts, for example,
+`retry RUN ID DEADLINE -- step 1 --keys 0x3ff`, or after `--` a
+`profile select ID` or `catalog select ID` command. The deadline is the original
+decimal `deadline_unix_ms` number. JSON response fields can be copied from the
+console with Ctrl+Shift+C. The request is always explicit: if original identity
+or action is unavailable, do not invent an ID for recovery. Nested retries,
+help and status are not allowed; the console waits up to 120 seconds. A Wine/Xvfb
+check retried a completed step from the console: same JSON, no second frame and
+changed parameters refused.
+
+Schema1 requests without the new optional fields remain decodable for local
+compatibility, without a guaranteed deadline. The current client always
+publishes deadline and manifest. Primary and query channels refuse incompatible
+actions; stale/malformed requests are consumed without application and logged
+in the copy. Reopening changes run, so an earlier result does not confirm a new request.
+
+<a id="audio-pacing-e-file-locali"></a>
+
+## Audio, pacing and local files
+
+Pause invalidates frontend queues and DSP history and silences host output.
+Each step drains guest taps without queueing them to the device. Resume starts
+with empty queues, new audio priming and the current host deadline; pause time
+creates no frames to catch up. Guest audio-generator state remains part of normal
+emulation. Listening and physical-device delay are separate from queue checks.
+
+The local channel lives in `Data/config/debug-control/` of the portable copy:
+`ready.json`, `request.json`, `result.json` and client lock; query uses query.json,
+query-result.json and query.lock. Atomic publication, per-process and request
+identity and OS locks separate starts and clients; old results do not confirm a
+new command. Only the latest response is retained, without timeline, new slots
+or snapshot collections. All files stay in the private Git-ignored session.
+The channel closes with the window and is recreated with a new identity on reopening.
+
+Before reading a request the server atomically moves it to its own
+`request.claim` or `query.claim`, one per channel. A later published request
+cannot be removed in place of an already claimed one; if reading or removal
+fails temporarily, claiming is retried before taking another. A remnant of an
+old run is discarded by identity verification and not executed. Oversized or
+malformed inputs are consumed and logged without guaranteeing a client response;
+a nonordinary file may require intervention. Errors distinguish channel and phase.
+The mailbox remains single-slot: after an unconfirmed timeout, an unclaimed
+request may be replaced and is not confirmation of execution.
+
+<a id="ambito-della-verifica"></a>
+
+## Validation scope
+
+This unit's checks are recorded in its change record. The isolated Windows
+candidate is `target/debug-tools-step/recomp.exe`; normal executables remain
+separate. No new ROM/DS acceptance or native parity, benchmark, Godot frontend
+or Android change follows from these commands.
+
+<a id="verifiche-del-28-ottobre-2026"></a>
+
+## Validation on 28 October 2026
+
+Windows release feature/default builds without warnings from `07be4d2` plus five
+selected files, with locked/offline dependencies and outputs separate from
+production. **69 Wine tests** pass: four control, six session, twelve frontend,
+one audio callback reset and 46 menu. The first sandbox attempt could not create
+the Wine socket: no tests had started; the same executables pass with the socket
+exception. No product behavior changed for that environment limit.
+
+**24 CLI/GUI checks**, nine on the default worker and two controlled stepping
+processes pass. F7 held beyond autorepeat, deliberately also bound to A, produces
+only one frame with neutral input. F8 and the two menu commands produce ten/one/ten
+frames: the total of 22 matches a single 22-frame CLI command in complete state.
+Explicit A/release masks work. Pause and waiting preserve hash, frame and clock,
+with empty guest/host audio queues. Recordings of **22 stepped frames** and
+**80 frames with pause/resume** pass independent complete-state/clock verification
+against continuous interpreter execution.
+
+Refusals for limits/incompatible masks, concurrent client, command on closed
+session, Escape interruption, owner shutdown with active budget, F6/CLI/menu
+resume and refusal to step while running freely are verified. The default build
+executes the feature without audit. The revision added refusal of Replay/Choose
+profile/Audit/Capture/Compare during a budget, before opening the selector or
+starting a worker. After only that guard and a comment, both candidates were
+rebuilt and the new branch checked in the default GUI; previous results for
+remaining behavior are retained.
+
+The first GUI script assumed the initial menu cursor was on Resume. Normal hover
+had selected another row and the script entered bindings: the attempt was
+rejected and retained. The corrected test uses an explicit Debug hit and parks
+the pointer; final screenshots were inspected. All **202 checked original inputs**,
+including normal Windows/Linux executables, retain hashes and timestamps. Three
+accepted sessions close normally; private results and payloads remain under
+`target/debug-tools-step/`. Managed publication directories were not created;
+the associated ROM helper does not apply. Diagnostic copies and preimages are
+retained, reusing the build cache and replacing only superseded local candidates.
+
+Native Windows, Linux/Wayland, physical controllers, other scenes/ROMs/datasets
+and steps with native translation remain unverified. Audio checks cover buffers
+and callbacks, without listening or physical-device latency evidence. In this
+initial DBG-10 validation, a real 120-second client timeout and forced server
+death were not simulated; results from a killed process may remain local until reopening.
+
+To stop on PC/mode or bus access and read registers and memory without I/O, use
+[DBG-11: breakpoints, watchpoints and inspection](debug_probes.md). These are
+bounded interpreter searches to a point that can be inside a frame, distinct
+from the completed-frame stepping described here.
+
+To gather framebuffer, layers, palette/tile/OAM and windows in an offline report,
+use [DBG-12: graphics inspector](debug_graphics.md), from the menu or with
+`debug-control graphics SESSION [--compare-last]`. Capture remains readonly.
+
+<a id="ui-testo-e-input"></a>
+
+## UI, text and input
+
+`debug-control ui-start SESSION` begins bounded collection;
+`ui-report SESSION` saves focus, font metrics and observed sequence in an offline
+report. `status.host_menu` also exposes the dropdown and actually active page.
+See [DBG-13: use and limits](debug_ui.md).
+
+<a id="cattura-audio"></a>
+
+## Audio capture
+
+`debug-control audio-start SESSION [--frames 1..180] [--streams mixed,psg,hle,fifo0,fifo1]`
+arms a short window; `audio-report SESSION` publishes the report after pausing.
+`status.audio_diagnostic` distinguishes collection, limits and stop reason,
+while `audio_report` identifies the latest HTML. Menu and CLI share collection.
+See [DBG-14: guest buffers, callback, comparison and local WAVs](debug_audio.md).
+
+<a id="codice-label-e-fallback"></a>
+
+## Code, labels and fallback
+
+`debug-control code-start SESSION [--frames N --events N --start HEX --end HEX --mode arm|thumb|all --kind TYPE]`
+arms the prefix; `code-report SESSION` saves PC/mode/backing/disassembly/label
+and native/interpreter choice. `status.code_trace` reports limits and filters.
+See [DBG-15: dispatch meaning and limits](debug_code.md).
+
+<a id="report-locale-del-problema"></a>
+
+## Local issue report
+
+`debug-control issue-report SESSION [--profile FILE --symptom TEXT]` uses the
+selected profile and saves a local index without starting replay or sending
+attachments. `status.issue_report` identifies the file. [DBG-16](debug_issues.md)
+describes reproducible command, metadata and private attachments.
+
+<a id="task-script-e-unità"></a>
+
+## Tasks, scripts and units
+
+`debug-control gameplay-start SESSION [--frames N --events N --family all|task|script|unit --context HEX]`
+arms collection in the paused copy; `gameplay-report SESSION` saves events with
+per-field provenance and resource correlations. `status.gameplay_trace` exposes
+filters and limits; `gameplay_report` identifies the HTML.
+[DBG-17](debug_gameplay.md) distinguishes RAM contexts, ROM projections,
+sentinels and unknown fields without inventing persistent unit identities.
+
+<a id="finestra-recente-e-trigger-derrore"></a>
+
+## Recent window and error trigger
+
+recent-start SESSION [--events N --reads on|off --start HEX --end HEX --on-error on|off]
+arms the ring log. recent-freeze SESSION stops collection; recent-report SESSION
+saves in the paused copy. Recent status distinguishes window, eviction/drop totals,
+stop and write; recent_report retains the latest path. [DBG-19](debug_recent.md)
+describes reads and partial coverage, automatic save on error and limits.
+
+<a id="verifica-dbg-20-del-29-ottobre-2026"></a>
+
+## DBG-20 validation on 29 October 2026
+
+The audit reuses completed DBG-10/11/12/16 results for pause/step, inspection,
+capture, menu and moved profiles. It adds only actual gaps: queries while
+waiting, targeted cancellation, budget deadline and manifest identity.
+
+**30 distinct Wine tests passed** (16 protocol, 14 frontend, one frontend already
+ignored): separate locks/responses, ID/run/session/schema, actions in wrong
+channel, expired request/client timeout, late ack and retry of query response
+only. GUI-test revision corrects the shutdown label from refused to closed;
+only the affected protocol test is rerun on the final build, without repeating
+GUI frames or the 30 completed tests.
+
+**19 CLI invocations on the default Wine/Xvfb GUI**: query while a client awaits
+step 600, wrong ID refused while retaining the budget, exact cancellation after
+10 frames, stopped state and empty/muted audio. A 250 ms deadline returns an
+unconfirmed client timeout; the subsequent query proves control stopped,
+remaining 0/control-timeout and server response with the same ID. Readonly
+protocol graphics capture, different manifest refused before publication,
+shutdown with pending work and refusal on closed window verified.
+
+The first GUI runtime remains authenticated in the copy; the only final
+differences are closed-response classification, help spacing and its test.
+No guest-loop or cancellation/deadline behavior change. Screenshot inspected;
+six normal inputs/runtimes retain hashes/mtime. Sources, preimages, results,
+reports and logs retained under **target/debug-tools-control/**; no new disposable
+ROM fixture or old acceptance recreated. No network server added.
+
+Windows GNU release feature/default locked/offline builds without warnings.
+Native Windows/native Linux GUI, physical controllers, cancellation during native
+execution and a real clock change remain unverified; the long 120 s timeout was not
+waited again, with a new real 250 ms check. Search cancellation uses the same
+return with interrupt_probe; the new GUI check focused on steps.
+[DBG-20 record](changes/2026-10-29-complete-local-session-control.json).

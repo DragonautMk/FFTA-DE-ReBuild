@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-10-30",
+  "slug": "classify-european-localized-table-graphics",
+  "title": "Classify European table-selected custom graphics sources",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Classify eight independently rooted five-slot rawlanguage pointer groups and40new customLZ/RLE banks linked to original054A0; retain exact encoded packets/consumed extent/decoded words without borrowing indexed05228 semantics.",
+    "Separate physical bank ownership from uncapped rawu8 language addresses and live scratch/task/helper transfer work; neighboring71E5E0 oldbank tablealias andsevenraw-looking groups remain unowned."
+  ],
+  "validation": [
+    "All53667source bytes(53507bank+160selector) across48disjointspans and114880decoded bytes reconstruct exactly; source SHAdf69408f23205472246a37ab071670913bdb2ceebe151a91b18fadf9e297d5b4, decoded SHA11ba607260a1ae16c6eced9c1855ba3f98bd41b11d033b5950f3abb66f16c8fd.",
+    "14authenticated staticwindows(10new/fourcached)/48instructionliteralpins/eightexactrootliterals/111hashmtimeguards PASS; no overlap83acceptedowners50522spans,all84acceptedfiles unchanged.",
+    "Static only: no build/Wine/game/fixture/navigation/oldacceptance/performance replay."
+  ],
+  "limitations": [
+    "Strict typedtable model/new40bankoriginaldecoder-selectorWine/managedruntime-nativeclock/actualCLI/ordinary use remain pending; schema1/e91-d90 unchanged.",
+    "Globalextent/indirectaliases/sevennearbyrawgroups/71E5E0tablealias/gaps-tails/livetaskwork/fulltransferhelperABI remain unverified.",
+    "Linux/USA/nativeWindows/new32:9/modphases/fullROMTODO remain pending; sparse27ordinary remains partial."
+  ],
+  "files": [
+    "docs/rom_data_ui_graphics.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_graphics.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

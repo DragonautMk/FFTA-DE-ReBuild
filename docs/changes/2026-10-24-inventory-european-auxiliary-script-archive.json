@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "inventory-european-auxiliary-script-archive",
+  "title": "Bound the separate European auxiliary script archive and command directory",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Identify independent original readerA1F8/rootD69BC4 and its u8action-slot/two-level u16relative lookup, distinct from the primary u32archive. Bound a4098Bdeclared projection through the last linked zero terminatorD6ABC6:8banks/442slots/126distinct slot targets/30interior entries/133physical programs913instructions.",
+    "Identify the separate17x6Badvanceu16/Thumbcallback directory370F94..370FFA, with independently consumed successor370FFC and2unowned zeroB. Preserve900index913opcode2275parameter10internal-alignment archiveB and102directoryB. Archive depends only on its own directory; no primary-archive dependency, guest domain cap or host interpreter introduced.",
+    "Preserve raw argument widths, full-action comparison before low-byte wrapper, live02002191slot and slot0fallback, signed live cursor/u16advance/relative arithmetic and original predicate callbacks. Keep489relative links and every physical instruction, including69missed by linear root walks and five not covered by structural graph."
+  ],
+  "validation": [
+    "Coordinate runtime-final-summary is terminal: e53managed/native/production CLI/6000-frame fullstate-clock-image-audio Wine pair/memory complete,276source-doc hashes4966protected artifacts/581guards; no old proof/build/replay repeated for context.",
+    "Independent static typed reassembly covers all4200B exactly once, original hashes/723halfword4word fingerprints, all489relative formulas and disjointness from all47e53owners. Structural graph908/913instructions is recorded separately from actual reachability. Opcode13delegation to opcode12helper independently decoded. No build or guest execution for source inventory; existing Linux binary used solely as static disassembler.",
+    "Initial private root-walk-completeness assertion fails on bank0interior entry; complete physical parse retains69omitted instructions and30interior slot links without changing source grammar or guest checks. Rejected use of graphicsbaseD6B4C8 as archive end excludes2306unverifiedB after last linked terminator. LastFF2B/command-directory zero2B stay outside declared ranges.",
+    "Before documentation, the276-file baseline differs only in selected TASK_HANDOFF checkpoint; all implementation/source models/user Debug-save/concurrent Docker work unchanged. Evidence under target/rom-data-auxiliary-scripts/source-contract.json and static-source-verification.json. Final memory/source/protected outcomes are retained under inventory-final-*.json.",
+    "Final preservation passes all4966prior artifact hashes. The276-file source/doc baseline differs only in six selected memory files including generated CHANGELOG; the new inventory record expands it to277. Memory/default-base7597b92/CRLF-aware whitespace checks pass; no implementation, old evidence or user/concurrent changes altered."
+  ],
+  "limitations": [
+    "Static source contract only. Strict typed models and one reduced Wine original-reader oracle, managed publication/direct consumption/production CLI/positive ordinary remain pending. No complete live action-slot-opcode domain, all callback argument semantics, whole interpreter ABI or actual reachability claim. Declared projection excludes final padding and unrooted successor bytes.",
+    "EUR stays e53-d52/USAe8-d7. New Linux/USA/native Windows checks pending; no performance/space measurement, new fixture/navigation, save-RAM-input edits, Android change, package, agent commit or push. Full TODO goal remains active; completed/negative e49/e52/e53proofs stay closed."
+  ],
+  "files": [
+    "docs/rom_data_scripts.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_scripts.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

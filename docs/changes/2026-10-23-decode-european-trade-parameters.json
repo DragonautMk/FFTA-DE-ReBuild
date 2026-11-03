@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "decode-european-trade-parameters",
+  "title": "Decode five European trade parameter records and verify original price arithmetic",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Prove five explicit D0744 descriptor roots/physical IDs2..6/stride96/480B6e85bc..6e879c with biased D26AC price root and independent next source. Reject30-ROM-record hypothesis: D2728 counts30live RAM rows for the internal count0..30.",
+    "Add strict source-only model with64opaque bytes/u16markup40-41/30discount42-5f per record. Count0 aliases markup highbyte41 without duplicate ownership; diagnostic preserves zero early return, flags bothbits, low8 selectors/counts, unsigned division and wrap32product-add-sub. Original D1F30property36 uses a separate70B source, not items.json; no new ownership/FK claim or guest replacement.",
+    "Record precise partial adjacent6e9cb6 lookup discovery:16literal references/next6e9d8a, fixed64-67 and bounded16..20/21-22-4-23 lists, but natural106halfword domain unproved. No model inferred from values or neighbor boundary. EUR e38-d37/33files/32resources and USAe8-d7 unchanged."
+  ],
+  "validation": [
+    "Exact EUR/source literals/selector jumps/stride/field/count/independent next root/nonoverlap and independent480B roundtrip pass. Previous e38 and other closed proofs are not repeated.",
+    "Windows73640testbuild warning-free; one Wine52757oracle passes499real-source/160unauthenticated-unpublished edited-source/15explicitly separate injected-return-operand arithmetic cases. Full original D0744/D26AC/D1F30/146474/D2728 execute, all256descriptor low8 inputs/nulloutside/zero skips source-flags/flags/count0alias/count1..30/u16value selector/u8count/31live-count results pass. Synthetic high markup tests unsigned division; injected operand cases separately prove wrap32 arithmetic.",
+    "All160actual price-field bytes read/320opaque bytes roundtrip only/all480B preserved; full EWRAM read-only/SP/callee/stack/strictJSON-array-ID-order-offset-coherentedit/source rejection pass.72810instructions/184PCcoverageonly. No build or Wine failure.",
+    "Private evidence target/rom-data-trade-parameters/{windows-tests-build.*,windows-tests.json,recomp-tests-original.exe,windows-original-result.json,windows-original.log,windows-original-europe/{trade-parameters,result}.json,source-protected.json}, static target/rom-data-stride96/ and target/rom-data-adjacent-halfword/.146protected-file hashes include frozen test binary; originals/canonical/cache/loader/states/inputs/datasets unchanged.",
+    "Final project-memory including --base7597b92/whitespace and146protected hashes pass; source-final-summary/source-final-source-hashes/source-final-protected retained. All processes terminal."
+  ],
+  "limitations": [
+    "Managed publication/direct consumption/lifecycle/ordinary scene/newLinux/USA/nativeWindows and full remaining ROM_DATA_TODO pending. Other descriptor readers/opaque semantics, separate70B source ownership and adjacent lookup producer domain remain unverified.",
+    "No performance or space-budget work, AndroidPort changes, new game fixtures/personal save writes/private game data publication or agent commit/push. Concurrent Debug-save/coverage work and external7597b92e38commit preserved."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/trade_parameters.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/trade_parameter_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

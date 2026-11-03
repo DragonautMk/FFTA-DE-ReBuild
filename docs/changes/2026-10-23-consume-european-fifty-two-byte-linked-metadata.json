@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "date": "2026-10-23",
+  "slug": "consume-european-fifty-two-byte-linked-metadata",
+  "title": "Consume European packed fifty-two-byte metadata with original alternate and redirect work",
+  "kind": "added",
+  "platforms": [
+    "Windows",
+    "Wine"
+  ],
+  "changes": [
+    "Add EUR schema1/extractor26/decoder25 fixed linked-metadata52.json, resource gameplay.linked-metadata52, format linked-metadata52-v1-json. All21files/20resources authenticate before activation; all19previous decoded files/e25 generations remain unchanged, USAe8-d7. Preserve116records/6032source bytes and original packed fields, explicit routing and raw tails.",
+    "Validate actual parsed prior item-link normal selectors against116rows while preserving separateFFsentinels. Typed header/routing/packed/tail/opaque views serve CPU/DMA/native and guest-BIOS bus reads, merging prior metadata16ownership on crossings. Keep original packed getter, u8inputs, caller-alternate/redirect/nonreturning behavior, live-index readers, guest work/clock and save/native ABI.",
+    "Extend managed preparation, loading, reporting and CLI descriptions with source authentication, transactional activation and immutable-generation retention. Nonserialized counters distinguish new source categories; a2MiB malformed-input read guard is not a space optimization target. Source comparison property helper remains outside runtime execution."
+  ],
+  "validation": [
+    "Windows build26387 warning-free and Wine96091 two focused checks pass publication interruption/create/reuse/repair/move/e25retention, coherent routing/opaque/packed/reorder/source/dependency/path/role guards, parsed normal-selector116rejection with FFacceptance and unavailable-copy Load/Undo/backup/restart.",
+    "Seventy-five sampled original/interpreter/native paths cover all48properties, all fourFFrows with valid alternates, u8truncation and raw tails. All6032new raw ROMbytes altered; complete states/clocks equal,2414instructions/169dispatches as coverage only. Compiled reads:18header/83routing/68packed/8tail bytes. Opaque is bus-proved, not read by these paths. Every byte/edges/widths/mirrors/real-BIOS bus/CpuSet/FastSet/DMA4and narrow2typed metadata16+2metadata52crossing pass.",
+    "Windows production71119 warning-free/canonical restored. Actual WineCLI96132 prepares/reuses with unchanged file hashes/mtimes from unrelated cwd and uses old native cache for540frame ChangeJobs replay; final Marsh/Thief job-selection image inspected.664new bytes=74header/335routing/255packed,0tail/opaque.",
+    "One540-frame Winepair6205 matches every complete state/clock/central-wide framebuffer/OAM/dispatch and mixed/PSG/FIFO/HLE audio stream with the same664typed bytes. New normal menu input extends retained worldmap/Party/Unit context into visible ChangeJobs, without direct RAM edits/new recording or repeating closed Unit/Equip/MissionItem scenes.",
+    "No new build/test/harness/locator failure or repeated acceptance in this integration. Closed6369+294source calls and bounded loop probes not rerun. Protected original/e25/state/input/cache/loader/canonical/candidate/source hashes, project-memory and whitespace checks recorded at closure; all unit jobs terminal, no agent commit/push."
+  ],
+  "limitations": [
+    "Ordinary scene proves header/routing/packed use only; tail/opaque are covered by targeted native/bus checks. Structural field names, global FFcaller preconditions and broader surrounding unit/ability behavior remain separate. Nonreturning source probes remain closed; no host shortcut replaces those guest loops.",
+    "New Linux/USA/native Windows verification and broader gameplay/maps/audio/GUI/archive/mod work remain pending. No performance/startup/RSS/space campaign or AndroidPort change. Private game data, saves, recordings, source fixtures and generated native code remain ignored."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/metadata52.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/metadata52.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/metadata52_runtime_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "scripts/extract_rom_data.py"
+  ],
+  "references": [
+    "docs/rom_data.md",
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_gameplay.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

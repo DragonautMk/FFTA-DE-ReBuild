@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "date": "2026-10-24",
+  "slug": "consume-european-normal-battle-obj-poses",
+  "title": "Publish and consume typed normal European actor battle poses",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add managed EUR e60-d59 unit-obj-normal-battle.json/graphics.unit-obj-normal-battle with actual metadata52/14/initial-pose/equipment dependencies, leaving prior54decoded resources and e59retention intact and USAe8-d7 unchanged.",
+    "Attach an immutable typed owner only for6021new spans1455474B, clipping semantic items to the owned-source plan while retaining offsets within each item. Exact aliases are deduplicated; shared initial/equipment data keeps its earlier owners, and raw holes remain mutable in mixed CPU/DMA/BIOS/native reads.",
+    "Expose transient per-category and per-sequence use counters outside save state; preserve original animation commands, live tasks/RAM, DMA/VRAM/palettes, native cache and save ABI. Add two reduced new Wine integration filters; earlier source/model acceptance is not rerun.",
+    "Add a test-only positive normal-battle pixel guard/report to the existing complete recorded-scene oracle; actual production CLI and one retained authentic F09movement replay now close the declared CLI/ordinary criteria without a new gameplay fixture."
+  ],
+  "validation": [
+    "One affected Windows core/frontend test build passes without warnings. Core is compiled only, frozen dcf69b5730c78ce0b822200c5fd7d154827db92f9d589b74bdb76a8f7199ea8c; frontend frozen94ce453c76e6081df58406d4da3062eb86ec0f149cf5f8e4beed3ec692946525. Thirteen compiled source inputs/preimages and896build/898runtime hash-mtime guards pass.",
+    "Two exact new Wine filters pass on their first execution. Managed checks cover17guards/publication failure/create/reuse/repair/move/unavailablefile/Load/Undo/backup/restart/sharedowner/all1455474newtypedB categories[4,32948,9804,345500,4018,1063200]/2451newsequences. PriorOBJ/initial/equipment poisoned probes each serve4typedB with no new charge.",
+    "Independent manifest audit verifies56files55resources/all54prior decoded files/resource records/coverage unchanged/e59retained, accepted model fileSHA33d0c76b2a254cb565733c53317950531bf9b8fc0604eb6f1905d98e5c019d53 and all6021source-plan records identical. Runtime dataset identity4e153572d98b4f4ebcb66503e629d5c8eaae3fda71767591dee162a5e13103c9 differs from manifest-fileSHA87c4117e03c60572450ada3242aecf00fc871ab935de81ae020c7542da35d9f7.",
+    "32original/interpreter/compiled complete-state-clock paths pass allparts0/1/2/null/fullwordID-animation/liveRAMframe/commands0/2/3/6/7/8/two sampled uploads and twoDMAflushes. All six compiled API categories are positive[8,36,8,54,20,1], distinct from actual DMA state comparison.",
+    "All6021span edges/widths/mirrors/realBIOSbus/two BIOS copies/oneDMA pass. Mixed1610Bwindow [2new,1036raw,316initial,248equipment,8olderOBJ] preserves exact per-owner charges and complete states; separate unaligned2new+2editedraw API case passes. All new source bytes and relevant old-owner bytes are poisoned.1945instructions/512PC/118native dispatches describe coverage only.",
+    "All7767prior artifact hashes pass. Existing source changes match the five selected implementation files; accepted normal source/model is unchanged and earlier original-reader/managed/native/CLI/ordinary proofs are not repeated. Evidence is under target/rom-data-normal-battle-runtime/.",
+    "Final checks pass project-memory default/base7597b92, new-module rustfmt, CRLF-aware whitespace and 675local feature links. All7767prior artifacts,896build/898runtime guards and13compiled inputs/preimages remain intact. Shared hub diffs stay within selected additions; user Debug-save/concurrent Docker, ROM/save/state/input/canonical production/cache/TCC and previous accepted/rejected evidence are preserved.",
+    "One changed-code Windows production build passes without warnings, frozen e54a7970b9a803908fc75649abdf24de191852b9b8b172f8a9f37af00f10b3be. Canonical production f3e277db.. hash and mtime1792570130397888519 restored exactly; main content unchanged/mtime-only Cargo invalidation.",
+    "Actual Wine CLIcreate/no-write reuse passes56generationfiles/58managedfiles/all56equalaccepted e60 from unrelatedcwd/oldcache. Existing authentic F09Wait3530snapshot/input gives positive842236newaggregateB=[40index10header26826frame815360pixel]/fivesequences; no newdirectory/OBJ bytes in this scene. Originals and all957CLIguards unchanged.",
+    "One changed-guard Windows frontend test build passes without warnings, frozen656347466d48969e99fc999f948b587bcbdd81c7af5f58b4feb906a716a0f9e3. One exact Wine3530frame fullpair passes every complete state/guestclock/central-wide framebuffer/OAM/native dispatch/mixed-PSG-FIFO-bitwise-HLE audio sample; newfamily counters exactly match CLI. All958sceneguards/14compiledinputs/preimages and8083prior artifact hashes pass; thirteen runtime implementation inputs unchanged. No old acceptance or secondscene is replayed.",
+    "Final CLI/ordinary closure passes all8083prior artifacts/957CLI+958scene hash-mtime guards/14compiled inputs and preimages, exact canonical production hash-mtime restoration, 677local feature links and project-memory default/base7597b92/CRLF-aware whitespace. Only the five-line test guard and coherent family memory differ from the331source baseline; user Debug-save/concurrent Docker and all accepted/rejected evidence are preserved."
+  ],
+  "limitations": [
+    "Declared source/model/managed/native/actualCLI/ordinary acceptance is complete for the finite normal-mode projection. Other2446newsequence ordinary uses retain targeted coverage; no exhaustive playthrough or whole actor/allocator ABI claim.",
+    "Alternate/script/live-stream pairing and broader ROM data TODO remain incomplete. New Linux/USA/native Windows/new32:9 checks pending; no performance/storage measurements, gameplay checkpoints, Android changes, packaging, commits or pushes."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data/runtime/unit_obj_normal_battle.rs",
+    "crates/recomp/src/rom_data/unit_obj_normal_battle_runtime_tests.rs",
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "scripts/extract_rom_data.py",
+    "crates/recomp/src/rom_data/validation_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_unit_obj.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

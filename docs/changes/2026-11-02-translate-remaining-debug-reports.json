@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "date": "2026-11-02",
+  "slug": "translate-remaining-debug-reports",
+  "title": "Translate gameplay, issue, comparison and graphics reports into English",
+  "kind": "changed",
+  "platforms": [
+    "Desktop report HTML; headless Chrome on Linux with synthetic fixtures"
+  ],
+  "changes": [
+    "Translate fixed text, accessibility labels and JavaScript-generated statuses in the four remaining runtime debug report templates. Preserve report IDs, links, filter values, JSON keys, imported content and interactive behavior; comparison number formatting now uses English conventions.",
+    "Translate the four associated maintained guides while preserving old heading anchors, commands, source references, original in-game text, validation counts and the original acceptance limits. Update the English-first audit ledger and durable project state; whole-project migration remains partial."
+  ],
+  "validation": [
+    "Eight Chrome checks passed at actual viewport widths 1400 and 500 for four public synthetic reports, covering gameplay filters/unknowns/contracts, issue status/links/Windows and POSIX command quoting/clipboard fallback, comparison field/audio/images, and graphics palette/tile/window/OBJ interactions with both relative images loaded. Four additional alternative-state checks passed for empty gameplay, compatible issue, matched comparison without artifacts and graphics without previous report. Screenshots inspected; structural IDs, links, sources, option values, classes and types match preimages. Evidence: target/english-first-project/reports-2026-11-02/browser-results.json.",
+    "Guide preservation checks confirm all four heading hierarchies, old heading anchors, existing links, CLI flag counts, original numeric tokens and the original Italian game quote. Evidence: target/english-first-project/reports-2026-11-02/guide-preservation.json. Menu language catalogs checked separately: English and Italian each contain all 378 entries."
+  ],
+  "limitations": [
+    "Initial synthetic issue path and graphics click/VRAM fixtures were corrected; failed harness attempts and successful results are retained locally. Prior successful cases were reused rather than rerun. No ROM, save, recording, guest execution or native runtime build was used.",
+    "These templates are embedded at compile time; running executables must be rebuilt to pick up changes. Native Windows, other browsers, physical controllers and complete dynamic metadata are not newly validated. The larger English-first project still has pending guides and source areas."
+  ],
+  "files": [
+    "crates/recomp/src/debug_gameplay/report.html",
+    "crates/recomp/src/debug_issue/report.html",
+    "crates/recomp/src/debug_compare/report.html",
+    "crates/recomp/src/debug_graphics/report.html",
+    "docs/debug_issues.md",
+    "docs/debug_gameplay.md",
+    "docs/debug_comparisons.md",
+    "docs/debug_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/debug_issues.md",
+    "docs/debug_gameplay.md",
+    "docs/debug_comparisons.md",
+    "docs/debug_graphics.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

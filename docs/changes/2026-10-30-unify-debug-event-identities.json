@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-30",
+  "slug": "unify-debug-event-identities",
+  "title": "Share debug event identities, host order and request correlation across UI and recent reports",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU build",
+    "Wine"
+  ],
+  "changes": [
+    "Add a common monotonic host event clock, session identity, bounded request/job context and producer/category/severity/observation metadata. Preserve collector-local report aliases while sharing canonical event IDs and host order.",
+    "Fan out existing frontend observations once to UI and recent collectors; coalesce changed polls before fanout, keep guest aggregates explicit, and publish a versioned supported/partial/missing coverage map. Observers and report rendering never dispatch actions.",
+    "Correlate accepted menu navigation/action dispatch and shared control outcomes; preserve real local mailbox request IDs and distinguish pending step/search completion from handler acceptance. Status queries remain silent."
+  ],
+  "validation": [
+    "Windows GNU locked/offline build passes warning-free with606frozen source files/46host overlays; runtime126badf0f8c8824ce539c976b241a55325b9e6043f1fb8e6432fae8f98494a85. Canonical Windows/Linux runtime hashes and mtimes remain exact.",
+    "Wine11distinct Rust cases pass: three new common-clock/context/dedup/fanout tests, two UI caps/time cases, recent error/native/read cases, shared control budget/mailbox cases and the affected one-million-event rolling/byte-cap regression. No unchanged historical GUI or observer seed cases repeated.",
+    "GUI uses a new runtime variant of the same accepted closed public seed/ROM/portable marker without factory recreation. Capture off navigation keeps next_event_sequence0. Two collectors record35UI/47recent events; all35overlapping canonical events match byte-for-value excluding only collector-local aliases. Three accepted navigation dispatches produce one ContentOpen action and one handler-return result.",
+    "Actual local pause accepted and duplicate ui-start refused each retain exactly one request/result/completion with the real mailbox ID in both reports; correlated refusal/error severity and common session/coverage verified. Explicit save/freeze and later silent status show no recursive logging. Full machine state/frame0/clock0 exact; no content scan or guest execution. Capture lasts2.4seconds.",
+    "Initial sandbox Xvfb cannot bind local sockets and publishes no display; preserve failed helper log and fix harness validation to require a numeric live display. Host isolated Xvfb starts normally; this is test-environment failure, not runtime acceptance failure.",
+    "GUI closes, isolated Xvfb retires and authoritative host/proc audit finds no owned runtime/helper. Final preservation passes606frozen files/46current overlays, source and variant immutable pins, canonical runtimes hash+mtime, same seed/ROM/marker,20accepted file pins and no tool run. Evidence target/debug-tools-v2-events/{build-result,test-results,fixture-source,gui-result,gui-close,final-preservation,process-closure}.json.",
+    "Project memory render and diff checks pass. Final memory checker reports only concurrently added world_records38 runtime/test paths outside DBG2-08; no selected event implementation is uncovered. Preserve owner work and leave its record to that work unit."
+  ],
+  "limitations": [
+    "Exhaustive host selection changes, broad runtime/tool lifecycles, live console and performance acceptance remain DBG2-09/10/11/12. Native Windows/Linux and physical hardware unverified.",
+    "Reuse accepted public seed without factory recreation; keep unrelated ROM changes outside the frozen host overlay. No private game inputs, DS acceptance, package, commit or push.",
+    "The unit has no managed disposable ROM dataset; established rom-data-only retention helper is inapplicable. Keep current executables, accepted outputs, failed harness log and source snapshots."
+  ],
+  "files": [
+    "crates/recomp/src/debug_events.rs",
+    "crates/recomp/src/debug_events/tests.rs",
+    "crates/recomp/src/debug_ui.rs",
+    "crates/recomp/src/debug_recent.rs",
+    "crates/recomp/src/debug_control.rs",
+    "crates/recomp/src/play.rs",
+    "crates/recomp/src/main.rs"
+  ],
+  "references": [
+    "docs/debug_events.md",
+    "docs/debug_ui.md",
+    "docs/debug_recent.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ],
+  "schema": 1
+}

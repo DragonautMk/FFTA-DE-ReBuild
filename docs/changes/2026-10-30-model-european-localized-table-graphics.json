@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "date": "2026-10-30",
+  "slug": "model-european-localized-table-graphics",
+  "title": "Model European table-selected custom graphics and verify new decoder calls",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add strict ui_graphics::table_selected Catalog with eight five-pointer tables/40ordered Graphic banks, exactsource layouts/groupoutputs and separate editable-shape/exactEURauthentication; reuse establishedcustomLZ withoutchanging oldmanagedUIcatalog.",
+    "Keep rawu8language encodedaddress separate fromphysicalslots0..4 ownership, no fallback/skip/guestcap; old16UIbanks/twoinline switches/e91 remainunchanged untilruntimeintegration."
+  ],
+  "validation": [
+    "One warningfree600frozen-source/260core-input Windows GNU corebuild cb46ccb1bc7beeed00b997e21c44a72ffe7d038118a121dfd7351da8440c7dbb from598acceptedordinary+twoleaves/onepubmodule.",
+    "One focused Winefilter PASS23shape-JSON-sourceguards/40neworiginal054A0calls/56actualrawselectorprefixes; all53667sourceB48spans114880decodedB matchindependent model. Consumedcursor/produced-returnedsize/SP-R4..R11/completeEWRAM/IWRAMoutside40B originalstack/VRAM-OAM-palette/finalROM exact.",
+    "26unit111sourcehashmtimeguards/600frozen598acceptedpreimages/threecurrent/inverseUIhub exact,1335470instructions coverageonly. No old16UI/20indexed/native35/41ordinary/CLIacceptance/fixture-navigation/performance replay.",
+    "Offline metadata correction records actual23B2E\u219214522C control0150words/1344B versus oldlabel02A0halfwords; sourceopcodes/extents/modelinputs unchanged, guardedoldlabel+correctionreceipt retained, no proof rerun."
+  ],
+  "limitations": [
+    "NewCatalog remains separate fromexistingmanagedCatalog; publication/runtime-nativeclock/actualCLI/ordinary use pending.",
+    "FulltransferhelperABI/livecontexts/71E5E0tablealias/sevenrawgroups/globalextent/indirectaliases/tails/modphases/fullROMTODO remainunverified; sparse27ordinary stayspartial.",
+    "Linux/USA/nativeWindows/new32:9 remain pending peruser scope."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data/ui_graphics.rs",
+    "crates/gba-core/src/rom_data/ui_graphics/table_selected.rs",
+    "crates/gba-core/src/rom_data/ui_graphics/table_selected/tests.rs",
+    "docs/rom_data_ui_graphics.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_graphics.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

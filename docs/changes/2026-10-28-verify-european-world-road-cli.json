@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "slug": "verify-european-world-road-cli",
+  "title": "Verify European sampled-road production CLI and ordinary data use",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Verify actual e79-d78 production CLI creation, no-write reuse and normal Giza360 startup/consumption. All72generation files match acceptedruntime, all71logged ID/hashes and74managed paths remain exact; canonical executable restored.",
+    "Close positive ordinary count/pointer/sample-use prerequisite from exact normal state/input copies before fullpair. One travel case remains distinct from all45payloads/maps/opaqueordinary/global extent."
+  ],
+  "validation": [
+    "One warningfree Windows production build 1a86d341.. from506accepted sources, canonical hash/mtime restored. Exact old production fingerprint selected by copied-source dep-info after several legacy candidates; existing normalcopies validated without recreation, no failedbuild/globalclean/corechange.",
+    "Three Wine CLI children exit0: preparecreated/reused/runc360 with28859old nativecacheblocks; guest19049\u219219409, 2976reads/5067B=[885count,2788pointer,1394sample,0opaque]/40paths. All180guards/506source hashes exact, artifacthelper0paths; no newfixture/navigation/guestedit/performance or closedsource-model-runtime-node acceptance replay."
+  ],
+  "limitations": [
+    "Ordinary fullstate-clock/pixel/OAM/dispatch/audio pair remains next. One conditional usage window does not prove everypath/opaqueordinary/fullABI/globalarchive or complete ROM_DATA_TODO.",
+    "Linux/USA/nativeWindows/new32:9 pending; no performance/storage campaign, Android/package, assistantcommit/push. Existinguser/parallelDebug work preserved."
+  ],
+  "files": [
+    "docs/rom_data_maps.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/TASK_HANDOFF.md"
+  ],
+  "references": [
+    "docs/rom_data_maps.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "improve-rom-inventory-audio-dataset-readability",
+  "title": "Improve audio and dataset inventory readability",
+  "kind": "docs",
+  "platforms": [
+    "Desktop development documentation"
+  ],
+  "changes": [
+    "Separate merged words and values in audio and base dataset summaries; clarify the raw and LZ77 codec tags using the linked graphics contract."
+  ],
+  "validation": [
+    "Compared inventory against its tracked pre-edit version for identical Markdown link targets and inline code spans, and identical digit runs after accounting for separation of LZ77 and tag 10; confirmed the remainder from runtime gates onward is unchanged. Checked codec tags and audio endpoint terminology against linked guides."
+  ],
+  "limitations": [
+    "Inventory review remains partial from runtime gates onward; historical runtime results were not reproduced, and the wider English-first audit remains open."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_INVENTORY.md"
+  ],
+  "references": [
+    "docs/rom_data_audio.md",
+    "docs/rom_data_graphics.md"
+  ]
+}
