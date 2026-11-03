@@ -5313,7 +5313,7 @@
           "name": "NAME",
           "value_type": "text",
           "constraint": "1..48 ASCII letters, digits, '-' or '_'.",
-          "current_menu": "not-applicable",
+          "current_menu": "selected",
           "default": null
         }
       ],
@@ -5322,16 +5322,16 @@
         "named cheat preset"
       ],
       "menu": {
-        "current": null,
-        "destination": "Debug / Cheat",
-        "implemented": false
+        "current": "Debug / Cheat / Manage cheat / Presets",
+        "destination": "Debug / Cheat / Manage cheat / Presets",
+        "implemented": true
       },
       "allowed_state": "Idle paused isolated copy with a selected snapshot and at least one armed cheat.",
       "effects": "Save the currently armed source-bound set as a new inert named preset; no guest writes.",
       "result": "Structured outcome and current status; no implicit selection.",
       "limits": "Source/device behavior and hardware hook equivalence are unverified. Disarm does not restore earlier writes.",
       "open_work": [
-        "DBG2-20: parameter values and page preset controls remain open"
+        "DBG2-20: parameter values and device verification remain open"
       ],
       "external_dialog": null
     },
@@ -5353,7 +5353,7 @@
           "name": "NAME",
           "value_type": "text",
           "constraint": "1..48 ASCII letters, digits, '-' or '_'.",
-          "current_menu": "not-applicable",
+          "current_menu": "selected",
           "default": null
         }
       ],
@@ -5362,16 +5362,16 @@
         "named cheat preset"
       ],
       "menu": {
-        "current": null,
-        "destination": "Debug / Cheat",
-        "implemented": false
+        "current": "Debug / Cheat / Manage cheat / Presets",
+        "destination": "Debug / Cheat / Manage cheat / Presets",
+        "implemented": true
       },
       "allowed_state": "Idle paused interpreter with no armed cheats, selected matching catalog and ROM.",
       "effects": "Load the preset and recheck ROM, catalog, source lines, each plan and all group conflicts; return a state-bound preview.",
       "result": "Structured outcome and current status; no implicit selection.",
       "limits": "Source/device behavior and hardware hook equivalence are unverified. Disarm does not restore earlier writes.",
       "open_work": [
-        "DBG2-20: parameter values and page preset controls remain open"
+        "DBG2-20: parameter values and device verification remain open"
       ],
       "external_dialog": null
     },
@@ -5393,7 +5393,7 @@
           "name": "NAME",
           "value_type": "text",
           "constraint": "1..48 ASCII letters, digits, '-' or '_'.",
-          "current_menu": "not-applicable",
+          "current_menu": "selected",
           "default": null
         },
         {
@@ -5409,16 +5409,16 @@
         "named cheat preset"
       ],
       "menu": {
-        "current": null,
-        "destination": "Debug / Cheat",
-        "implemented": false
+        "current": "Debug / Cheat / Manage cheat / Presets",
+        "destination": "Debug / Cheat / Manage cheat / Presets",
+        "implemented": true
       },
       "allowed_state": "Idle paused interpreter, matching source and unchanged reviewed preview.",
       "effects": "Recheck the whole preview and atomically arm the complete set; no guest writes before the next frame.",
       "result": "Structured outcome and current status; no implicit selection.",
       "limits": "Source/device behavior and hardware hook equivalence are unverified. Disarm does not restore earlier writes.",
       "open_work": [
-        "DBG2-20: parameter values and page preset controls remain open"
+        "DBG2-20: parameter values and device verification remain open"
       ],
       "external_dialog": null
     },
@@ -5620,6 +5620,127 @@
         "DBG2-15: broader assistant procedure remains open"
       ],
       "external_dialog": null
+    },
+    {
+      "id": "recipe.save",
+      "title": "Save an inert typed command recipe",
+      "source": "crates/recomp/src/debug_command/recipe.rs",
+      "handler": "save_command",
+      "cli": "recomp debug-command SESSION \"recipe save NAME 'COMMAND'...\"",
+      "parameters": [
+        {"name":"NAME","value_type":"text","constraint":"1..48 ASCII letters, digits, hyphens or underscores; no overwrite.","current_menu":"selected","default":null},
+        {"name":"COMMAND","value_type":"text","constraint":"1..16 quoted typed commands, bounded assertions or bounded status waits; no nested recipe, retry, cancellation or unbounded resume.","current_menu":"selected","default":null}
+      ],
+      "selection": ["Isolated session manifest and its declared ROM/runtime pins"],
+      "menu": {"current":"Debug / Consoles and scripts / Command console","destination":"Debug / Consoles and scripts / Command console","implemented":true},
+      "allowed_state":"Selected isolated session with configuration directory and valid declared pins.",
+      "effects":"Atomically create an inert typed recipe file; no command is executed.",
+      "result":"Typed ordered actions, session pins and declared limits.",
+      "limits":"16 steps, 3600 explicit step frames, 64 KiB per recipe, 32 files; runner currently supports status, inspect and step only.",
+      "open_work":["DBG2-16: broader actions and real interrupted recovery remain missing"],
+      "external_dialog":null
+    },
+    {
+      "id": "recipe.preview",
+      "title": "Review an inert typed command recipe",
+      "source": "crates/recomp/src/debug_command/recipe.rs",
+      "handler": "preview_command",
+      "cli": "recomp debug-command SESSION \"recipe preview NAME\"",
+      "parameters": [
+        {"name":"NAME","value_type":"text","constraint":"Existing recipe name in the selected session.","current_menu":"selected","default":null}
+      ],
+      "selection":["Session-pinned recipe name"],
+      "menu":{"current":"Debug / Consoles and scripts / Command console; Scripts and tools / Debug command recipe","destination":"Debug / Consoles and scripts / Command console; Scripts and tools / Debug command recipe","implemented":true},
+      "allowed_state":"Selected isolated session and an unchanged session manifest.",
+      "effects":"Read and validate the recipe and declared pins; no command is executed.",
+      "result":"Typed ordered actions and declared limits, or a refusal.",
+      "limits":"64 KiB recipe and complete tool preview; direct preview compares declared pins, without independently rehashing session payloads.",
+      "open_work":["DBG2-16: broader actions and real interrupted recovery remain missing"],
+      "external_dialog":null
+    },
+    {
+      "id": "recipe.prepare",
+      "title": "Prepare an inert recipe checkpoint",
+      "source": "crates/recomp/src/debug_command/recipe/checkpoint.rs",
+      "handler": "prepare_command",
+      "cli": "recomp debug-command SESSION \"recipe prepare NAME\"",
+      "parameters": [
+        {"name":"NAME","value_type":"text","constraint":"Existing typed command recipe for the selected session.","current_menu":"selected","default":null}
+      ],
+      "selection":["Session-pinned typed recipe and active control run"],
+      "menu":{"current":"Debug / Consoles and scripts / Command console","destination":"Debug / Consoles and scripts / Command console","implemented":true},
+      "allowed_state":"Matching readiness metadata declaring an active control session with idempotent-request-v1.",
+      "effects":"Persist unique per-step planned identities and hashes; do not dispatch any request.",
+      "result":"Inert checkpoint and recipe run ID.",
+      "limits":"32 retained recipe runs and 16 steps. Run is separate and currently supports status, inspect and step only.",
+      "open_work":["DBG2-16: broader actions and real interrupted recovery remain missing"],
+      "external_dialog":null
+    },
+    {
+      "id": "recipe.checkpoint",
+      "title": "Inspect a planned recipe checkpoint",
+      "source": "crates/recomp/src/debug_command/recipe/checkpoint.rs",
+      "handler": "inspect_command",
+      "cli": "recomp debug-command SESSION \"recipe checkpoint RUN\"",
+      "parameters": [
+        {"name":"RUN","value_type":"text","constraint":"Previously prepared recipe run ID.","current_menu":"selected","default":null}
+      ],
+      "selection":["Retained checkpoint and its original recipe"],
+      "menu":{"current":"Debug / Consoles and scripts / Command console","destination":"Debug / Consoles and scripts / Command console","implemented":true},
+      "allowed_state":"Matching recipe and manifest; active control run is reported separately.",
+      "effects":"Validate planned action and request identities without sending a request.",
+      "result":"Checkpoint and whether readiness metadata still matches its original control run; this does not prove process liveness.",
+      "limits":"Bounded checkpoint; ambiguous read queries do not have a retry ledger.",
+      "open_work":["DBG2-16: broader actions and real interrupted recovery remain missing"],
+      "external_dialog":null
+    },
+    {
+      "id":"recipe.run",
+      "title":"Run a prepared bounded recipe",
+      "source":"crates/recomp/src/debug_command/recipe/checkpoint/runner.rs",
+      "handler":"command",
+      "cli":"recomp debug-command SESSION \"recipe run RUN\"",
+      "parameters":[{"name":"RUN","value_type":"text","constraint":"Previously prepared recipe run ID.","current_menu":"selected","default":null}],
+      "selection":["Original session run and prepared checkpoint; Scripts and tools also requires an unchanged reviewed recipe and session"],
+      "menu":{"current":"Debug / Consoles and scripts / Command console; Scripts and tools / Debug command recipe","destination":"Debug / Consoles and scripts / Command console; Scripts and tools / Debug command recipe","implemented":true},
+      "allowed_state":"Matching original session run and authenticated session inputs; each action enforces its own state guards.",
+      "effects":"Persist deadline and request identity before each dispatch; execute only status, inspect and bounded step in order.",
+      "result":"Completed, cancelled, assertion-failed, wait-timeout, failed, timeout or unconfirmed checkpoint with bounded results.",
+      "limits":"16 steps, 3600 explicit step frames, 120-second execution deadline and bounded output; read query with ambiguous result is not retried.",
+      "open_work":["DBG2-16: additional action types and real interrupted recovery remain missing"],
+      "external_dialog":null
+    },
+    {
+      "id":"recipe.resume",
+      "title":"Resume a prepared bounded recipe",
+      "source":"crates/recomp/src/debug_command/recipe/checkpoint/runner.rs",
+      "handler":"command",
+      "cli":"recomp debug-command SESSION \"recipe resume RUN\"",
+      "parameters":[{"name":"RUN","value_type":"text","constraint":"Original recipe run ID and unchanged session run.","current_menu":"selected","default":null}],
+      "selection":["Retained checkpoint with original request identities"],
+      "menu":{"current":"Debug / Consoles and scripts / Command console","destination":"Debug / Consoles and scripts / Command console","implemented":true},
+      "allowed_state":"Original control run still available and original deadline valid for any new step.",
+      "effects":"Continue after completed steps and retry an unresolved ledger-protected request with its original identity; clear a cancellation marker explicitly.",
+      "result":"Updated checkpoint or explicit refusal/unconfirmed outcome.",
+      "limits":"No automatic retry for ambiguous unrecorded read queries; evicted results are not reexecuted.",
+      "open_work":["DBG2-16: additional actions and real interrupted recovery remain missing"],
+      "external_dialog":null
+    },
+    {
+      "id":"recipe.cancel",
+      "title":"Cancel a recipe between steps",
+      "source":"crates/recomp/src/debug_command/recipe/checkpoint/runner.rs",
+      "handler":"cancel_command",
+      "cli":"recomp debug-command SESSION \"recipe cancel RUN\"",
+      "parameters":[{"name":"RUN","value_type":"text","constraint":"Existing recipe run ID.","current_menu":"selected","default":null}],
+      "selection":["Existing recipe checkpoint"],
+      "menu":{"current":"Debug / Consoles and scripts / Command console","destination":"Debug / Consoles and scripts / Command console","implemented":true},
+      "allowed_state":"Matching recipe checkpoint; cancellation is cooperative between steps.",
+      "effects":"Persist a cancellation request; an already reserved step may finish.",
+      "result":"Cancellation requested; the runner later reports a stopped checkpoint.",
+      "limits":"A busy transition can refuse the request; cancellation does not roll back earlier steps.",
+      "open_work":["DBG2-16: interactive picker and real interrupted recovery remain unverified"],
+      "external_dialog":null
     },
     {
       "id": "cheats.refresh",

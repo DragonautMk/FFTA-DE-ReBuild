@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "start-reviewed-recipes-in-tools",
+  "title": "Start reviewed command recipes from Scripts and tools",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Bind the complete typed recipe preview to its selected file and session; Start rechecks the identity and saved recipe before preparing and running the existing bounded checkpoint.",
+    "Connect tool cancellation to the runner, stop waiting for an unresolved request without claiming it was cancelled, persist its marker and retain its identity for explicit recovery.",
+    "Show the full bounded preview in the scrollable panel and allow Left/Right scrolling on Details; this replaces the previously accepted abbreviated preview because execution now requires reviewing every entry."
+  ],
+  "validation": [
+    "A Windows GNU application check and source-snapshot builds passed; the snapshot omitted only the unrelated ROM table test module while its owner was still implementing it.",
+    "Twenty-nine focused Wine tests passed, including synthetic workbench preview/Start/cancel/resume, stale preview refusal, pending-action cancellation and existing recipe/control contracts. Four subsequent Wine tests passed for long-preview rendering, narrow layout, controller scrolling and the updated workbench.",
+    "The first full test build failed because the concurrent ROM table test module had not yet been created. An initial snapshot build finished compilation but its validation guard caught a deliberate source edit during the build; both failed units retain diagnostics."
+  ],
+  "limitations": [
+    "Interactive picker navigation, actual graphical session execution, real interrupted process recovery, native Windows and physical controller input remain unverified. A published action can still finish after cancellation and is reported as pending until its result is confirmed."
+  ],
+  "files": [
+    "crates/menu/src/debug_tool.rs",
+    "crates/menu/src/debug_tool/tests.rs",
+    "crates/recomp/src/debug_control.rs",
+    "crates/recomp/src/debug_command/recipe.rs",
+    "crates/recomp/src/debug_command/recipe/checkpoint.rs",
+    "crates/recomp/src/debug_command/recipe/checkpoint/runner.rs",
+    "crates/recomp/src/debug_tools.rs",
+    "crates/recomp/src/debug_tools/tests.rs",
+    "crates/recomp/src/debug_workbench.rs",
+    "crates/recomp/src/debug_workbench/tests.rs",
+    "crates/recomp/src/debug_operations.json",
+    "crates/recomp/src/play.rs",
+    "docs/development/MENU_ATLAS_INVENTORY.json"
+  ],
+  "references": [
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

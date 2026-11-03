@@ -161,3 +161,32 @@ fn late_preset_read_after_back_and_reopen_cannot_replace_the_current_draft() {
     assert_eq!(observed["result"]["outcome"],"completed");
     assert_eq!(std::fs::read_dir(t.path()).unwrap().count(), 0);
 }
+
+#[test]
+fn typed_recipe_tool_requires_current_preview_and_cancels_between_actions() {
+    use std::sync::{Arc,atomic::{AtomicBool,AtomicUsize,Ordering}};
+    use std::time::{Duration,Instant};
+    let t=tempfile::tempdir().unwrap();let root=t.path().join("session");fs::create_dir_all(root.join("Data/config")).unwrap();
+    let exe=if cfg!(windows){"recomp.exe"}else{"recomp"};
+    for (name,bytes) in [("portable.txt",b"portable".as_slice()),("ffta.gba",b"PUBLIC ROM".as_slice()),(exe,b"PUBLIC executable".as_slice())]{fs::write(root.join(name),bytes).unwrap();}
+    let hash=|name:&str|gba_core::ffta_rom::digest(&fs::read(root.join(name)).unwrap());
+    let rom=hash("ffta.gba");let pins=json!({"portable.txt":hash("portable.txt"),"ffta.gba":rom,(exe):hash(exe)});
+    fs::write(root.join("debug-session.json"),serde_json::to_vec(&json!({"schema":1,"kind":"ffta-debug-session","label":"Synthetic","interp":true,"real_bios":false,"has_state":false,"has_dataset":false,"pins":pins})).unwrap()).unwrap();
+    assert_eq!(crate::debug_command::execute(&root,"recipe save tool 'step 1' 'step 2'")["ok"],true);
+    let path=root.join("Data/config/debug-command-recipes/recipe-tool.json");
+    let recipe_ref=crate::debug_inputs::Reference::explicit(&path,Slot::Recipe,&rom).unwrap();
+    let session_ref=crate::debug_inputs::Reference::explicit(&root.join("debug-session.json"),Slot::Session,&rom).unwrap();
+    let draft=||Draft{tool:Tool::Recipe,values:defaults(Tool::Recipe),refs:BTreeMap::from([(Slot::Recipe,recipe_ref.clone()),(Slot::Session,session_ref.clone())]),rom:rom.clone(),config:root.join("Data/config")};
+    let mut menu=menu::Menu::new(true,true);menu.set_debug_enabled(true);let mut workbench=Workbench::default();workbench.open(&mut menu,Tool::Recipe);
+    let finish=|w:&mut Workbench,m:&mut menu::Menu|{let deadline=Instant::now()+Duration::from_secs(10);while w.busy() && Instant::now()<deadline {w.poll(m);std::thread::sleep(Duration::from_millis(5));}assert!(!w.busy());};
+    workbench.request(&mut menu,draft(),ToolRequest::Run).unwrap();finish(&mut workbench,&mut menu);assert!(workbench.last.contains("Review this typed recipe"));assert!(!root.join("Data/config/debug-command-runs").exists());
+    workbench.request(&mut menu,draft(),ToolRequest::Validate).unwrap();finish(&mut workbench,&mut menu);assert!(workbench.last.contains("Start requires"));assert!(workbench.recipe_preview.is_some());
+    let mut server=crate::debug_control::Server::new(&root).unwrap();let stop=Arc::new(AtomicBool::new(false));let count=Arc::new(AtomicUsize::new(0));
+    workbench.request(&mut menu,draft(),ToolRequest::Run).unwrap();let cancel=workbench.cancel.as_ref().unwrap().clone();let end=stop.clone();let calls=count.clone();
+    let worker=std::thread::spawn(move||{while !end.load(Ordering::SeqCst){if let Ok(Some(request))=server.poll(){let n=calls.fetch_add(1,Ordering::SeqCst)+1;if n==1{cancel.store(true,Ordering::SeqCst);}let _=server.reply(&request,json!({"paused":true,"frame":n,"remaining":0}),None);}std::thread::sleep(Duration::from_millis(2));}});
+    finish(&mut workbench,&mut menu);assert!(matches!(workbench.observation.as_ref().unwrap()["outcome"].as_str(),Some("cancelled"|"cancellation-pending")));assert_eq!(count.load(Ordering::SeqCst),1);
+    let id=workbench.observation.as_ref().unwrap()["result"]["checkpoint_id"].as_str().unwrap();
+    assert_eq!(crate::debug_command::execute(&root,&format!("recipe resume {id}"))["outcome"],"completed");assert_eq!(count.load(Ordering::SeqCst),2);
+    workbench.cancel_view();workbench.request(&mut menu,draft(),ToolRequest::Run).unwrap();finish(&mut workbench,&mut menu);assert!(workbench.last.contains("Review this typed recipe"));assert_eq!(count.load(Ordering::SeqCst),2);
+    stop.store(true,Ordering::SeqCst);worker.join().unwrap();
+}

@@ -2456,7 +2456,7 @@ impl PlayApp {
         let result=self.workbench_request_inner(request);
         let family=if tool.library(){F::Script}else{F::Workbench};
         if result.is_ok()&&!was_busy&&self.workbench.busy(){
-            self.lifecycle_begin(family,serde_json::json!({"tool":format!("{tool:?}"),"operation":format!("{request:?}"),"scope":"One existing host worker; no new guest executor"}));
+            self.lifecycle_begin(family,serde_json::json!({"tool":format!("{tool:?}"),"operation":format!("{request:?}"),"scope":"Existing worker and shared handlers; execution depends on the selected operation"}));
         }else{
             let context=self.lifecycle.context(family);
             self.lifecycle_emit(family,if request==menu::ToolRequest::Prepare&&was_busy&&tool.library(){"cancellation-requested"}else if request==menu::ToolRequest::Back{"view-left"}else{"handler-result"},context,
@@ -2692,7 +2692,7 @@ impl PlayApp {
             if reference.entry.sha256.as_deref()!=Some(&catalog.source_sha256){return Err("Catalog changed; select it again".into());}
             self.cheat_snapshot=Some(crate::debug_cheats::Snapshot::new(catalog,reference.entry.id,rom)?);
         }
-        let sources=self.current_cheat_snapshot()?.menu_sources(&id)?;self.menu.open_cheat_management(sources);self.menu_dirty=true;Ok(())
+        let sources=self.current_cheat_snapshot()?.menu_sources(&id)?;let config=input_config::config_root().ok_or("No selected configuration root")?;let presets=crate::debug_cheat_preset::list(&config)?;self.menu.open_cheat_management(sources,presets);self.menu_dirty=true;Ok(())
     }
 
     fn cheat_menu_request(&mut self,request:menu::CheatRequest)->Result<(),String>{
@@ -2700,6 +2700,14 @@ impl PlayApp {
         let id=self.menu.cheat_highlight().map(str::to_owned);
         let action=match request{
             R::Disarm=>A::CheatDisarm{id:Some(id.ok_or("Select a cheat first")?)},R::DisarmAll=>A::CheatDisarm{id:None},
+            R::PresetSave=>A::CheatPresetSave{name:self.menu.cheat_preset_name().ok_or("Enter a preset name first")?.to_owned()},
+            R::PresetPrepare=>A::CheatPresetPrepare{name:self.menu.cheat_preset_selected().ok_or("Select a preset explicitly first")?.to_owned()},
+            R::PresetArm=>{
+                let name=self.menu.cheat_preset_selected().ok_or("Select a preset explicitly first")?.to_owned();
+                let token=self.menu.cheat_preview_token().ok_or("Prepare and review this preset first")?.to_owned();
+                if self.cheat_preview.as_ref().and_then(|v|v["token"].as_str())!=Some(token.as_str()){return Err("Preset preview changed; prepare again".into());}
+                A::CheatPresetArm{name,preview:token}
+            },
             R::Prepare|R::ApplyOnce|R::Arm=>{
                 let id=id.ok_or("Select a cheat first")?;
                 let source=self.menu.cheat_selected_source().cloned().ok_or("Select a source explicitly first")?;
@@ -2710,8 +2718,10 @@ impl PlayApp {
             }
         };
         self.debug_action(&action)?;
-        let preview=if request==R::Prepare{let value=self.cheat_preview.as_ref().ok_or("Preview unavailable")?;let details=&value["body"]["details"];Some(format!("{}\n{}\n{}\n{}\n{}\n{}",self.av.menu_language.text("Operations"),serde_json::to_string_pretty(&details["plan"]["operations"]).map_err(|e|e.to_string())?,self.av.menu_language.text("Potential reads and writes"),serde_json::to_string_pretty(&details["footprint"]).map_err(|e|e.to_string())?,self.av.menu_language.text("Source and verification"),serde_json::to_string_pretty(details).map_err(|e|e.to_string())?))}else{None};
-        self.menu.cheat_management_feedback(match request{R::Prepare=>"Review the plan, then return to choose an action",R::ApplyOnce=>"Applied once",R::Arm=>"Armed for future frames",R::Disarm|R::DisarmAll=>"Disarmed; earlier writes remain"}.into(),preview);self.menu_dirty=true;Ok(())
+        if request==R::PresetSave{let config=input_config::config_root().ok_or("No selected configuration root")?;self.menu.cheat_set_presets(crate::debug_cheat_preset::list(&config)?);}
+        let preview=if request==R::Prepare{let value=self.cheat_preview.as_ref().ok_or("Preview unavailable")?;let details=&value["body"]["details"];Some(format!("{}\n{}\n{}\n{}\n{}\n{}",self.av.menu_language.text("Operations"),serde_json::to_string_pretty(&details["plan"]["operations"]).map_err(|e|e.to_string())?,self.av.menu_language.text("Potential reads and writes"),serde_json::to_string_pretty(&details["footprint"]).map_err(|e|e.to_string())?,self.av.menu_language.text("Source and verification"),serde_json::to_string_pretty(details).map_err(|e|e.to_string())?))}else if request==R::PresetPrepare{Some(serde_json::to_string_pretty(&self.cheat_preview.as_ref().ok_or("Preview unavailable")?["body"]).map_err(|e|e.to_string())?)}else{None};
+        let token=if request==R::PresetPrepare{self.cheat_preview.as_ref().and_then(|v|v["token"].as_str()).map(str::to_owned)}else{None};
+        self.menu.cheat_management_feedback(match request{R::Prepare|R::PresetPrepare=>"Review the plan, then return to choose an action",R::ApplyOnce=>"Applied once",R::Arm|R::PresetArm=>"Armed for future frames",R::PresetSave=>"Preset saved",R::Disarm|R::DisarmAll=>"Disarmed; earlier writes remain"}.into(),preview);if let Some(token)=token{self.menu.cheat_set_preview_token(token);}self.menu_dirty=true;Ok(())
     }
 
     fn open_debug_catalog(&mut self, choose: bool) {

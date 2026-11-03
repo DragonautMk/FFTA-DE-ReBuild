@@ -242,7 +242,7 @@ fn metadata_kind(v: &Value, fallback: Kind) -> Kind {
         "ffta-debug-session" => Kind::Session,
         "ffta-input-recording" => Kind::Recording,
         "ffta-debug-replay-profile" => Kind::ReplayProfile,
-        "ffta-debug-recipe" => Kind::Recipe,
+        "ffta-debug-recipe" | "ffta-debug-command-recipe" => Kind::Recipe,
         "ffta-debug-campaign" => Kind::Campaign,
         k if k.starts_with("ffta-")
             && (k.ends_with("-report") || k.ends_with("-result") || k.ends_with("-audit")) =>
@@ -408,6 +408,7 @@ fn inspect(root: &Root, rel: &str, expected_rom: Option<&str>, stats: &mut Stats
                 Kind::Session => Some("ffta-debug-session"),
                 Kind::Recording => Some("ffta-input-recording"),
                 Kind::ReplayProfile => Some("ffta-debug-replay-profile"),
+                Kind::Recipe if value["kind"]=="ffta-debug-command-recipe" => Some("ffta-debug-command-recipe"),
                 Kind::Recipe => Some("ffta-debug-recipe"),
                 Kind::Campaign => Some("ffta-debug-campaign"),
                 _ => None,

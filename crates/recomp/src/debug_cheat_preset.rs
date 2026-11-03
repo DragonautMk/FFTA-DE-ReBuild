@@ -107,6 +107,26 @@ pub(crate) fn load(config: &Path, name: &str) -> Result<Preset, String> {
     Ok(preset)
 }
 
+/// Enumerate only valid preset filenames; contents are authenticated on prepare.
+pub(crate) fn list(config: &Path) -> Result<Vec<String>, String> {
+    crate::debug_content::ordinary(config)?;
+    let candidate=config.join("debug-cheat-presets");
+    match fs::symlink_metadata(&candidate) {
+        Err(e) if e.kind()==std::io::ErrorKind::NotFound => return Ok(Vec::new()),
+        Err(e) => return Err(e.to_string()),
+        Ok(_) => (),
+    }
+    let dir=directory(config,false)?;let entries=fs::read_dir(&dir).map_err(|e|e.to_string())?.take(MAX_PRESETS+1).collect::<Result<Vec<_>,_>>().map_err(|e|e.to_string())?;
+    if entries.len()>MAX_PRESETS{return Err("Cheat preset directory exceeds 32 entries".into());}
+    let mut names=Vec::new();
+    for entry in entries {
+        let filename=entry.file_name();let Some(filename)=filename.to_str() else{continue};
+        let Some(name)=filename.strip_prefix("preset-").and_then(|s|s.strip_suffix(".json")) else{continue};
+        if name_valid(name) && crate::debug_content::ordinary(&entry.path()).is_ok_and(|m|m.is_file()){names.push(name.to_owned());}
+    }
+    names.sort();Ok(names)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -121,6 +141,7 @@ mod tests {
     fn named_preset_roundtrip_is_inert_and_does_not_overwrite() {
         let root = tempfile::tempdir().unwrap(); let p = preset();
         save(root.path(), &p).unwrap(); assert_eq!(load(root.path(), &p.name).unwrap(), p);
+        assert_eq!(list(root.path()).unwrap(), vec!["shop-test"]);
         let mut changed = p.clone(); changed.members[0].provenance_index = 1;
         assert!(save(root.path(), &changed).is_err()); assert_eq!(load(root.path(), &p.name).unwrap(), p);
         assert!(load(root.path(), "../shop-test").is_err());

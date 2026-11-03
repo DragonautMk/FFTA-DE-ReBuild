@@ -40,6 +40,7 @@ impl CompactObjCatalogResources {
     }
     pub(super) fn resident_bytes(&self) -> usize {
         std::mem::size_of::<Self>()
+            + self.data.selector_tables.as_ref().map_or(0, |tables| tables.resident_bytes())
             + self.data.banks.capacity() * std::mem::size_of::<model::Bank>()
             + self.data.banks.iter().map(|bank| bank.lists.capacity() * std::mem::size_of::<model::IndexedList>()
                 + bank.lists.iter().map(|entry| entry.list.objects.capacity() * std::mem::size_of::<crate::rom_data::obj_lists::Object>()).sum::<usize>()

@@ -371,6 +371,8 @@ mod ui_context_templates_tests;
 #[cfg(test)]
 mod compact_obj_catalog_tests;
 #[cfg(test)]
+mod compact_obj_catalog_table_tests;
+#[cfg(test)]
 mod compact_obj_animations_secondary_runtime_tests;
 #[cfg(test)]
 mod compact_obj_animations_runtime_tests;

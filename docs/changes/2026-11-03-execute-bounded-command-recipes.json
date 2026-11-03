@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "execute-bounded-command-recipes",
+  "title": "Execute bounded command recipes with recoverable step identities",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Add explicit console run, cancel and resume for prepared recipes containing status, inspect and bounded step actions; unsupported actions are refused before dispatch.",
+    "Persist the original deadline and request identity before dispatch, journal terminal responses, retry unresolved ledger-protected steps without repeating completed steps, and distinguish cancellation requested from a stopped boundary.",
+    "Enforce the explicit step-frame budget, execution deadline and checkpoint/output bound; stop on the first refusal or output limit. Ambiguous read queries are not retried automatically."
+  ],
+  "validation": [
+    "Windows GNU build and 21 focused Wine tests passed, including synthetic control-server cancellation between steps, same-identity recovery after a lost response, first-error stop, deadline and output limits, ambiguous query refusal and legacy picker behavior.",
+    "A separate isolated EUR Wine/Xvfb interpreter session cancelled before execution, resumed a two-frame step followed by an inspect, and confirmed that a second resume did not change guest state; protected inputs stayed unchanged. The live unit retained private scratch as a named current-proof exception.",
+    "The first compile failed on two String conversions and was corrected. The successful live run logged two Access denied control messages; all requested commands completed, but the exact denied operation remains unconfirmed."
+  ],
+  "limitations": [
+    "Only status, inspect and step are supported. Waits, assertions, other actions, interactive Scripts/tools Start and full interrupted real-session acceptance remain open. Read queries lack ledger recovery; the system clock and non-interruptible input reads limit deadline guarantees, concurrent external controls are not excluded, and power-loss durability is not claimed. Native Windows and physical input were not tested."
+  ],
+  "files": [
+    "crates/recomp/src/debug_command.rs",
+    "crates/recomp/src/debug_command/recipe.rs",
+    "crates/recomp/src/debug_command/recipe/checkpoint.rs",
+    "crates/recomp/src/debug_command/recipe/checkpoint/runner.rs",
+    "crates/recomp/src/debug_command/completion.rs",
+    "crates/recomp/src/debug_control.rs",
+    "crates/recomp/src/debug_operations.json",
+    "crates/recomp/src/debug_tools.rs",
+    "crates/recomp/src/debug_tools/tests.rs",
+    "crates/input-config/languages/en.json",
+    "crates/input-config/languages/it.json",
+    "docs/development/MENU_ATLAS_INVENTORY.json"
+  ],
+  "references": [
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

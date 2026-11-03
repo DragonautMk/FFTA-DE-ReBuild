@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "migrate-european-compact-selector-tables",
+  "title": "Read European compact selector tables and three animation banks from typed files",
+  "kind": "added",
+  "platforms": [
+    "EUR Windows builds and execution under Wine"
+  ],
+  "changes": [
+    "Add three source-bounded compact banks and the known fields of three selector/position tables. v2 JSON adds selector_tables, requires bound tables for current validation and allows absent tables only when decoding historical v1 evidence. Keep 34 unknown bytes raw, preserve original index/branch semantics, and raise revisions to e112-d111.",
+    "The generic resource retains its ID and the dataset retains 100 resources; the projection now has 37 banks, 103 selectors and 9,208 source bytes. Add a focused new-only source/model/native check, preserving all 34 prior banks and 99 other resources. Native C API and save format remain unchanged."
+  ],
+  "validation": [
+    "Wine source query and four new original windows authenticate three table flows/seven BLs, exact 14/10/15 row bounds and branches, reusing four unchanged preservation pins. The three new banks have 22 selectors, 96 frames, 90 lists, 119 objects and 1,366 bytes; known table fields add 218 bytes, with no previous-owner overlap.",
+    "One stable source snapshot builds CLI and test harness together in canonical Cargo outputs, warning-free with 713 stable code hashes; the 844 source/assets snapshot files are removed. One provisional generation passes CLI create/reuse, independent typed-table decoding, 99 payload/34 bank preservation and hash/time/file-set reuse checks.",
+    "One new-only Wine filter passes poisoned-source mixed/mirrored reads, model/source/boundary checks and coherent in-memory rejection. Original readers verify 22 counts, 96 frame list/duration pairs and 90 list pointers. All 25 native count and 71 native table/skip cases match complete state/clock, serving 90 and 248 typed bytes respectively. The 34 unknown bytes stay raw. Previous cases are not repeated and no dataset copy is created; successful scratch is removed."
+  ],
+  "limitations": [
+    "The goal is paused before short production startup, e111 comparison retirement and scoped acceptance. One earlier wrapper selected zero tests due to the wrong module name; its diagnostics are retained, and the corrected filter passes without rebuilding. No ordinary-use, complete-bank or global coverage claim; 26 residual roots, Linux, USA, native Windows and ROM/mod work remain open. No performance or space measurements.",
+    "Sol gpt-6.1-sol/xhigh was explicitly requested; effective primary/delegated settings cannot be confirmed. Shared Wine prefix and canonical Cargo outputs are reused; source preimages remain outside disposable scratch. Keep e111 only as the named comparison until successor acceptance."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/compact_obj_catalog.rs",
+    "crates/gba-core/src/rom_data/compact_obj_catalog/contracts.rs",
+    "crates/gba-core/src/rom_data/runtime/compact_obj_catalog.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/conditional_descriptor_bank_zero_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_catalog_tests.rs",
+    "crates/recomp/src/rom_data/table_graphics_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_quinary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/clan_table_alias_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_secondary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/dynamic_raw_fragments_runtime_tests.rs",
+    "crates/recomp/src/rom_data/ui_context_templates_tests.rs",
+    "crates/recomp/src/rom_data/conditional_packed_lookup_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_senary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_tertiary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_four_byte_lookup_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_property_masks_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_quaternary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_octonary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_septenary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_descriptor_banks_runtime_tests.rs",
+    "docs/rom_data_compact_catalog.md",
+    "docs/rom_data_obj.md",
+    "docs/rom_data_ui.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "crates/gba-core/src/rom_data/compact_obj_catalog/selector_tables.rs",
+    "crates/recomp/src/rom_data/compact_obj_catalog_table_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ]
+}

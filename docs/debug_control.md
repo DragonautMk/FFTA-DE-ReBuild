@@ -203,6 +203,17 @@ the previously corrected replay worker completed 102/102 frames, and the
 paused parent and protected inputs stayed unchanged. This is one narrow view,
 not proof that every long label or parameter fits.
 
+Press **F2** in the Command console to inspect the session label, full ROM
+hash, run and pending request context in a wrapped, scrollable read-only view.
+Use Up/Down or Page Up/Down to scroll, then F2 or Esc to return to the draft.
+The view preserves the protocol's bounded request and content identifiers;
+larger unexpected values are abbreviated. It does not submit the draft. A
+separate Wine/Xvfb keyboard check used a verified 480×360 Windows client,
+showed a long session label and ROM hash, and returned to submit the unchanged
+`status` draft. The guest state and protected inputs stayed unchanged. Long
+pending parameters and scrolling were covered by focused tests, not that GUI
+session; native Windows and physical input remain unverified.
+
 The first narrow replay used an older pinned worker and stopped at frame 45 with
 `Access denied`. The profile with the corrected worker differs only in runtime
 hash and passed under the same kind of polling. That comparison is consistent
@@ -212,6 +223,178 @@ GUI helper also waited on the wrong response channel and did not attest a normal
 parent close; the corrected sessions closed normally.
 
 <a id="richieste-cancellazione-e-scadenza--dbg-20"></a>
+
+## Typed command recipes — DBG2-16 in progress
+
+The command console and `debug-command` can save and inspect an inert sequence:
+
+```text
+recipe save example 'status' 'step 3 --keys 0x3ff'
+recipe preview example
+recipe prepare example
+recipe checkpoint RUN-ID
+recipe run RUN-ID
+recipe cancel RUN-ID
+recipe resume RUN-ID
+```
+
+Quote each command, assertion or wait as a separate argument. The shared command
+parser converts each command to a typed action before any file is created. A
+recipe has at most 16 entries in total across commands, assertions and waits, with at
+least one command,
+at most 3,600 explicit `step` frames, with a 120-second execution deadline and
+1 MiB checkpoint/output limit. Unbounded guest `resume`, cancellation, retry,
+help and nested recipe commands are rejected. Saving never executes a step.
+Names use 1–48 ASCII letters, digits, hyphens or underscores. At most 32 files
+are stored in the selected session's `Data/config/debug-command-recipes/`;
+existing names are not overwritten.
+
+An assertion immediately follows the action whose terminal response it checks:
+
+```text
+recipe save checked 'status' 'assert /status/paused true' 'step 1' 'assert /status/frame 42'
+```
+
+The pointer uses JSON Pointer syntax and is limited to 256 bytes. Expected
+values are `true`, `false`, `null`, an integer, or `text:VALUE` for a string;
+objects, arrays and floating-point values are rejected. A missing pointer
+does not equal `null`. The checkpoint records each comparison. A false
+assertion stops the sequence with `assertion-failed`; a later resume does not
+resend the action that produced the response. Use values appropriate to the
+selected session rather than assuming the example frame number.
+
+A wait after an action polls the original session's read-only `status` response
+until a scalar matches, or a bounded time or poll limit is reached:
+
+```text
+recipe save observed 'step 1' 'wait /status/paused true 2000 100 10' 'step 1'
+```
+
+The numbers are timeout in milliseconds (20–30,000), interval in milliseconds
+(20–1,000) and maximum polls (1–128). There can be at most one wait per action;
+assertions attached to the action are checked against its terminal response
+before its wait, regardless of their textual order. The wait checks the same
+scalar and JSON Pointer rules as assertions. It observes the current state: it
+does not advance a paused guest or wait for a particular external job itself.
+
+The action's terminal result and wait deadline are stored before polling. Each
+poll is reserved in the checkpoint before the read; an interruption may consume
+a poll without recording its response. A resume explicitly continues with the
+remaining polls and original deadline and never resends the completed action.
+The checkpoint stores the last bounded scalar observation and response digest.
+A missing or non-scalar value cannot match. A timeout or exhausted poll count
+stops later actions with `wait-timeout`; an unconfirmed read stops with
+`unconfirmed`. Cancellation is checked between polls. Status polls are fresh,
+read-only observations and may see external changes; this runner does not own
+exclusive control of the session. The deadline uses the system clock.
+
+A Windows GNU test binary and 30 focused Wine tests passed, including a
+matching wait, exhausted poll budget, cancellation and resume without repeating
+the completed action, parser limits and existing recipe/control contracts.
+These use a synthetic server; real interrupted sessions and native Windows remain
+unverified. Two sandboxed Wine attempts could not create the server lock; their
+owned leases were released after host process checks, and diagnostics retained.
+A separate native Linux build attempt lacked ALSA development metadata and hit
+a temporary-file quota; it did not run tests.
+
+Windows GNU builds and 27 focused Wine tests covered passing and failing
+assertions, malformed values, missing versus explicit `null`, altered
+checkpoint checks and recovery after a lost action response. A separate
+Wine/Xvfb EUR interpreter run passed a status assertion, advanced one frame,
+then failed an assertion and confirmed that neither the next step nor a resume
+advanced the guest. Protected inputs stayed unchanged. A previously completed
+checkpoint without assertions was also reread successfully without modifying
+it. The live assertion unit retains its private test copies as a named
+current-proof exception. An initial test run failed when the synthetic server
+treated a temporarily denied result publication as fatal; its outbox retries
+on later polls, and the corrected test passed. Native Windows and interactive
+console entry were not tested for assertions.
+
+`recipe prepare` creates an inert checkpoint with a unique run ID and a
+planned request ID and action hash for each step. It binds these to the recipe,
+session manifest and control run in the readiness metadata; it sends no
+request. `recipe checkpoint RUN-ID` reloads and validates that plan, refusing
+changed recipe content or altered identities, and reports whether readiness
+metadata still matches the original run. That metadata alone does not prove the
+process is alive. At most 32 checkpoints are retained in the session's
+`Data/config/debug-command-runs/` directory. Preparation does not dispatch;
+`run` is a separate explicit action.
+
+The current runner accepts only `status`, `inspect` and bounded `step`; it
+rejects a recipe containing another action before sending any step. It checks
+session input pins, persists the original deadline and each request ID before
+sending, and journals terminal results in order. A retry of an unresolved
+ledger-protected step keeps the same ID, action and deadline; completed steps
+are skipped. A pending read query has no server retry ledger, so an ambiguous
+result stops with `unconfirmed` instead of being repeated automatically. A
+server run change, expired deadline, refusal or output limit also stops the
+sequence. The deadline uses the system clock and includes input validation,
+but a blocked filesystem read cannot be interrupted by this runner. Concurrent
+external controls are not excluded by a recipe-wide session lock.
+
+`cancel` requests a stop between steps; a step already reserved may finish.
+The runner reports `cancellation-pending` when that step's outcome is unknown,
+and `cancelled` only after reaching a boundary. `resume` explicitly clears the
+cancellation marker and continues within the original deadline. Cancellation
+does not roll back effects already applied. Checkpoint files
+are synced and atomically replaced, but power-loss durability is not claimed.
+
+Windows GNU builds and 16 focused Wine tests checked distinct planned IDs,
+checkpoint reload, changed recipe/session handling and rejection of altered
+identities, alongside the existing retry-ledger tests. A synthetic CLI check
+reloaded the same plan in a separate process without publishing a request. Its
+first wrapper failed to enumerate the generated directory under Wine; the
+corrected wrapper passed. These checks do not execute a recipe or test recovery.
+
+The file records the session manifest hash and its declared ROM/runtime hashes.
+Preview validates the typed actions and limits and refuses a different manifest
+or pins; it does not independently hash the session payloads. Preview returns
+the complete typed sequence and identifies the runner's supported subset.
+In **Scripts and tools → Debug command recipe**, select the recipe and its
+original session, then choose **Details** to review it. The picker validates
+the selected file and session; a changed selection or session is refused. The
+tool shows the complete bounded recipe in its scrollable details. **Start** now requires a
+successful Details preview for the current view and unchanged selection. It
+rechecks the recipe and session, prepares a new checkpoint and uses the same
+bounded runner as the console. The session's saved recipe of that name must
+match the reviewed selection; unsupported actions are refused before dispatch.
+The tool displays the run ID and outcome, and the full checkpoint remains in
+the session for inspection or explicit console resume. **Cancel process**
+requests a stop at the next action or wait boundary; an already reserved action
+may finish, and no prior effects are rolled back. If its response is still
+pending, the client stops waiting and reports `cancellation-pending`; the
+checkpoint and original request identity are retained for explicit recovery.
+The typed recipe's own limits
+apply; the readonly adapter's runtime and timeout fields apply only to its
+separate format. Focused synthetic Wine tests exercised Details, Start, cancellation and explicit resume. A menu rendering test checked that a long preview retains its tail and scrolls at a narrow size; an actual interactive picker and native Windows remain unverified.
+
+Additional action types, interactive picker verification and the full
+short/interrupted acceptance matrix remain missing. Windows GNU builds
+and 19 focused Wine tests passed for authoring, validation, parser, completion and
+operation metadata. A synthetic session without ROM or control mailbox also
+passed save, preview and duplicate refusal through the Windows CLI under Wine.
+Native Windows and the console GUI were not tested for this workflow.
+
+A separate synthetic Windows GNU/Wine integration check selected and reviewed
+a typed recipe through the tool's input and Details handlers, verified that
+Start was refused without creating a control mailbox or host run, and checked
+the long-preview warning. Eighteen focused tests passed; they did not exercise
+the interactive picker. An
+unrelated link-safety test could not materialize its symlink fixture under Wine;
+the scoped test rerun excluded that case and retained its failed unit.
+
+For the limited runner, 21 focused Wine tests passed. A synthetic control server
+checked cancellation after one completed step, explicit resumption without
+repeating it, a lost terminal response recovered through the same request ID,
+first-error stop, expired deadline, output cap and refusal to retry an ambiguous
+read query. A separate isolated EUR Wine/Xvfb interpreter session cancelled before
+execution, resumed a two-frame step followed by an inspect, and confirmed that
+a second resume did not advance the guest again. Protected inputs stayed
+unchanged. That live test did not interrupt between completed steps; the
+between-step interruption and lost-response checks used the synthetic server.
+Its log contains two `Access denied` control messages despite the successful
+terminal result; the exact denied operation is unconfirmed. The successful
+unit retains its private test copies as a named current-proof exception.
 
 ## Requests, cancellation and deadlines — DBG-20
 

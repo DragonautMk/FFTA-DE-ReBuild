@@ -15,6 +15,27 @@ pub struct Display<'a> {
 }
 pub struct Keyboard<'a> {pub labels:&'a [String],pub selected:usize}
 
+/// Wrapped lines and the clamped top line of the read-only context view.
+pub fn context_lines(target:&str,pending:&str,parameters:&str,width:usize,height:usize,scroll:usize)->(Vec<String>,usize,usize){
+    let available=(width as f32-24.0).max(1.0);
+    let mut lines=Vec::new();
+    for text in [target,pending,parameters] {lines.extend(Canvas::wrap_text(text,14.0,available));lines.push(String::new());}
+    let visible=height.saturating_sub(80)/19;
+    let top=scroll.min(lines.len().saturating_sub(visible.max(1)));
+    (lines,top,visible)
+}
+
+pub fn draw_context(language:input_config::Language,target:&str,pending:&str,parameters:&str,scroll:usize,pixels:&mut [[u8;4]],width:usize,height:usize){
+    if width==0 || height==0 || width.checked_mul(height)!=Some(pixels.len()){return;}
+    pixels.fill([15,20,27,255]);
+    let (lines,top,visible)=context_lines(target,pending,parameters,width,height,scroll);
+    let mut canvas=Canvas::new(pixels,width,height);let available=(width as f32-24.0).max(0.0);
+    canvas.text(12.0,10.0,language.text("Command context"),[232,224,195],20.0,true,available);
+    for (i,line) in lines.iter().skip(top).take(visible).enumerate(){canvas.text(12.0,38.0+i as f32*19.0,line,[218,226,226],14.0,false,available);}
+    canvas.text(12.0,(height as f32-30.0).max(0.0),language.text("Up/Down or Page Up/Down: scroll · F2/Esc: return"),[165,183,187],12.0,false,available);
+    canvas.finish(pixels);
+}
+
 fn wrap_hint(text:&str,capacity:usize)->[String;2]{
     let mut lines=[String::new(),String::new()];let mut row=0;
     for word in text.split_whitespace(){
@@ -61,6 +82,22 @@ pub fn draw(view: &Display<'_>, pixels: &mut [[u8; 4]], width: usize, height: us
     }
     canvas.text(12.0,(height as f32-48.0).max(0.0),view.notice,[240,187,130],12.0,false,available);
     canvas.text(12.0,(height as f32-30.0).max(0.0),view.language.text(if view.keyboard.is_some(){"Pad: directions / confirm · Back deletes · Send submits"}else{"Enter executes · ↑↓ history · Tab completes · Esc clears/closes"}),[165,183,187],12.0,false,available);
-    canvas.text(12.0,(height as f32-15.0).max(0.0),view.language.text("Ctrl+A/C/X/V select/copy/cut/paste · Ctrl+Shift+C copies result"),[165,183,187],12.0,false,available);
+    canvas.text(12.0,(height as f32-15.0).max(0.0),view.language.text("F2: context · Ctrl+A/C/X/V edit · Ctrl+Shift+C copies result"),[165,183,187],12.0,false,available);
     canvas.finish(pixels);
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn narrow_context_wraps_long_tokens_and_scrolls_without_losing_text(){
+        let target=format!("Session {} | ROM {} | run example", "session-with-a-long-name", "a".repeat(64));
+        let parameters=format!("Parameters: select {}", "b".repeat(72));
+        let (lines,top,visible)=context_lines(&target,"ID 123 | in progress",&parameters,480,100,usize::MAX);
+        assert!(top>0 && visible>0);
+        let joined=lines.join("");assert!(joined.contains(&target)&&joined.contains(&parameters));
+        assert!(top+visible>=lines.len());
+        let mut pixels=vec![[0;4];480*360];draw_context(input_config::Language::default(),&target,"ID 123 | in progress",&parameters,0,&mut pixels,480,360);
+        assert!(pixels.iter().any(|p|p[0]>100));
+    }
 }

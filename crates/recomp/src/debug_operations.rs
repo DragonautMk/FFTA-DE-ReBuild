@@ -141,6 +141,7 @@ pub(crate) fn menu_operation(action: &menu::MenuAction) -> Option<&'static str> 
         CheatManage => "cheats.open",
         CheatRequest(request) => match request {
             menu::CheatRequest::Prepare=>"cheats.prepare-once",menu::CheatRequest::ApplyOnce=>"cheats.apply-once",menu::CheatRequest::Arm=>"cheats.arm",menu::CheatRequest::Disarm|menu::CheatRequest::DisarmAll=>"cheats.disarm",
+            menu::CheatRequest::PresetSave=>"cheats.preset-save",menu::CheatRequest::PresetPrepare=>"cheats.preset-prepare",menu::CheatRequest::PresetArm=>"cheats.preset-arm",
         },
         ChooseDebugCatalog => "catalog.choose",
         CatalogSelection(_) => "catalog.select",

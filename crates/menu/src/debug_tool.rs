@@ -317,6 +317,12 @@ impl ToolForm {
             }
             MenuInput::Down => self.focus = (self.focus + 1) % (self.fields.len() + 6),
             MenuInput::Left | MenuInput::Right => {
+                // The recipe's complete preview can be scrolled with a controller
+                // while the Details action is focused; Up/Down still change focus.
+                if self.tool==DebugTool::Recipe && self.focus==self.fields.len(){
+                    self.detail.set(if input==MenuInput::Left{self.detail.get().saturating_sub(8)}else{self.detail.get().saturating_add(8).min(65536)});
+                    return None;
+                }
                 let count=self.fields.len()+6;
                 self.focus=(self.focus+if input==MenuInput::Left{count-1}else{1})%count;
             }
@@ -350,7 +356,7 @@ impl ToolForm {
             self.detail.set(if up {
                 self.detail.get().saturating_sub(2)
             } else {
-                (self.detail.get() + 2).min(2048)
+                self.detail.get().saturating_add(2).min(65536)
             });
         } else {
             self.handle(if up { MenuInput::Up } else { MenuInput::Down });
@@ -511,7 +517,7 @@ pub(super) fn draw(s: &ToolForm, px: &mut [[u8; 4]], w: usize, h: usize, languag
             locale.tr("Draft and selected input references are separate from execution. Existing authenticated profiles are never edited.")
         }
     );
-    let lines = Canvas::wrap_text(&text, size, g.details[2].saturating_sub(12) as f32);
+    let lines = wrap_details(&text, size, g.details[2].saturating_sub(12) as f32);
     let line = (18. * g.scale).max(6.) as usize;
     let visible = g.details[3] / line;
     let scroll = s.detail.get().min(lines.len().saturating_sub(visible));
@@ -549,6 +555,18 @@ pub(super) fn draw(s: &ToolForm, px: &mut [[u8; 4]], w: usize, h: usize, languag
         );
     }
     c.finish(px);
+}
+
+// Canvas::wrap_text caps each input at 16,384 characters. Split bounded
+// details so the end of a complete recipe preview remains reachable.
+fn wrap_details(text:&str,size:f32,width:f32)->Vec<String>{
+    let mut lines=Vec::new();let mut chunk=String::new();let mut count=0usize;
+    for ch in text.chars().take(72*1024){
+        chunk.push(ch);count+=1;
+        if count==8192 {lines.extend(Canvas::wrap_text(&chunk,size,width));chunk.clear();count=0;}
+    }
+    if !chunk.is_empty() || lines.is_empty(){lines.extend(Canvas::wrap_text(&chunk,size,width));}
+    lines
 }
 
 #[cfg(test)]

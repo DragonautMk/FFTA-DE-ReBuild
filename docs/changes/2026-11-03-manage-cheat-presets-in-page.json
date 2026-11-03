@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "manage-cheat-presets-in-page",
+  "title": "Manage source-bound cheat presets in the page",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Add explicit page controls to name, save, select, review and arm a source-bound preset, using the existing shared validation and atomic group operations.",
+    "Keep the reviewed token tied to the selected page preset and reject replacement by another client; expose bounded preset names and register the page operation routes."
+  ],
+  "validation": [
+    "Windows GNU build and 30 focused Wine tests passed; the menu atlas inventory check passed.",
+    "A synthetic Wine/Xvfb keyboard and pointer session saved, selected, reviewed, armed and disarmed a preset without advancing guest state, frame or clock. Protected inputs passed their checks and the GUI exited normally; the original unit retained its private test copies, and a separate evidence receipt passed.",
+    "Early GUI attempts exposed a bridge newline and outdated navigation timing; those failed units remain retained."
+  ],
+  "limitations": [
+    "The original GUI unit is FAIL for private scratch retention, not a runner PASS. Native Windows, physical controllers, parameter values and ranges, device-hook equivalence and gameplay effects remain unverified."
+  ],
+  "files": [
+    "crates/input-config/languages/en.json",
+    "crates/input-config/languages/it.json",
+    "crates/menu/src/cheat_management.rs",
+    "crates/menu/src/content_selector.rs",
+    "crates/menu/src/content_selector/tests.rs",
+    "crates/menu/src/lib.rs",
+    "crates/recomp/src/debug_cheat_preset.rs",
+    "crates/recomp/src/debug_operations.json",
+    "crates/recomp/src/debug_operations.rs",
+    "crates/recomp/src/play.rs",
+    "docs/development/MENU_ATLAS_INVENTORY.json"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

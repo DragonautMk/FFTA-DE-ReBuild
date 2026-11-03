@@ -2390,27 +2390,27 @@
       "id": "cheats.preset-save",
       "handler": "debug_cheat_preset::save",
       "cli": "recomp debug-control cheat-preset-save SESSION NAME [--timeout-ms N]",
-      "current": null,
-      "destination": "Debug / Cheat",
-      "menu_implemented": false,
+      "current": "Debug / Cheat / Manage cheat / Presets",
+      "destination": "Debug / Cheat / Manage cheat / Presets",
+      "menu_implemented": true,
       "reference": "readonly"
     },
     {
       "id": "cheats.preset-prepare",
       "handler": "PlayApp::prepare_cheat_preset",
       "cli": "recomp debug-control cheat-preset-prepare SESSION NAME [--timeout-ms N]",
-      "current": null,
-      "destination": "Debug / Cheat",
-      "menu_implemented": false,
+      "current": "Debug / Cheat / Manage cheat / Presets",
+      "destination": "Debug / Cheat / Manage cheat / Presets",
+      "menu_implemented": true,
       "reference": "readonly"
     },
     {
       "id": "cheats.preset-arm",
       "handler": "PlayApp::prepare_cheat_preset",
       "cli": "recomp debug-control cheat-preset-arm SESSION NAME PREVIEW [--timeout-ms N]",
-      "current": null,
-      "destination": "Debug / Cheat",
-      "menu_implemented": false,
+      "current": "Debug / Cheat / Manage cheat / Presets",
+      "destination": "Debug / Cheat / Manage cheat / Presets",
+      "menu_implemented": true,
       "reference": "readonly"
     },
     {
@@ -2455,6 +2455,69 @@
       "cli": "recomp debug-control retry SESSION --run RUN --request ID --deadline-unix-ms N [--timeout-ms N] -- ACTION",
       "current": "Debug / Console e script / Console comandi",
       "destination": "Debug / Console e script / Console comandi",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "recipe.save",
+      "handler": "save_command",
+      "cli": "recomp debug-command SESSION \"recipe save NAME 'COMMAND'...\"",
+      "current": "Debug / Consoles and scripts / Command console",
+      "destination": "Debug / Consoles and scripts / Command console",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "recipe.preview",
+      "handler": "preview_command",
+      "cli": "recomp debug-command SESSION \"recipe preview NAME\"",
+      "current": "Debug / Consoles and scripts / Command console; Scripts and tools / Debug command recipe",
+      "destination": "Debug / Consoles and scripts / Command console; Scripts and tools / Debug command recipe",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "recipe.prepare",
+      "handler": "prepare_command",
+      "cli": "recomp debug-command SESSION \"recipe prepare NAME\"",
+      "current": "Debug / Consoles and scripts / Command console",
+      "destination": "Debug / Consoles and scripts / Command console",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "recipe.checkpoint",
+      "handler": "inspect_command",
+      "cli": "recomp debug-command SESSION \"recipe checkpoint RUN\"",
+      "current": "Debug / Consoles and scripts / Command console",
+      "destination": "Debug / Consoles and scripts / Command console",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "recipe.run",
+      "handler": "command",
+      "cli": "recomp debug-command SESSION \"recipe run RUN\"",
+      "current": "Debug / Consoles and scripts / Command console; Scripts and tools / Debug command recipe",
+      "destination": "Debug / Consoles and scripts / Command console; Scripts and tools / Debug command recipe",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "recipe.resume",
+      "handler": "command",
+      "cli": "recomp debug-command SESSION \"recipe resume RUN\"",
+      "current": "Debug / Consoles and scripts / Command console",
+      "destination": "Debug / Consoles and scripts / Command console",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "recipe.cancel",
+      "handler": "cancel_command",
+      "cli": "recomp debug-command SESSION \"recipe cancel RUN\"",
+      "current": "Debug / Consoles and scripts / Command console",
+      "destination": "Debug / Consoles and scripts / Command console",
       "menu_implemented": true,
       "reference": "readonly"
     },

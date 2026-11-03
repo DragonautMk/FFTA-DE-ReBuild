@@ -5034,3 +5034,38 @@ human active bank; no cast of rejected leads performed. Ordinary/global/indirect
 coverage, Linux/USA/native Windows and other ROM/mod work remain open; no benchmark.
 One current dataset; old comparison retired with evidence and real inputs retained.
 [Contract](../rom_data_compact_catalog.md).
+
+
+**ROMDATA-04-COMPACT-CATALOG-STAR-CROSS-ORDINARY EUR/Wine (2026-11-03).**
+Original action46/task46/child0eead8 identifies a normal Star Cross producer;
+physical human Illusionist9 and IN-08 raw unit6/learned84=9e are source-backed.
+Live deployment pointers authenticate Douglas before normal placement and
+Phantasm Skill/Star Cross/Do it selection. One 480-frame case7857..8337 serves
+15,830 new-catalog reads/19,330 source bytes; the native raw/managed full state,
+clock, central/wide render, OAM, dispatch and five audio streams match every frame.
+Canonical binaries/native cache/current e110 dataset and generic input reused;
+no rebuild, extraction or dataset copy. Successful scratch and superseded
+navigation payloads retire under current-input guards; original saves, current
+seed, evidence and failed harness diagnostics remain. Wrong actor and list-top
+oracle branches are resolved, not ability negatives. Counter attribution is
+catalog-wide; complete animation, every bank/selector/consumer, Linux/USA/native
+Windows and remaining ROM/mod phases stay open. No benchmark.
+[Contract](../rom_data_compact_catalog.md#ordinary-european-star-cross-use).
+
+
+**ROMDATA-01-E110-RESIDUAL-COMPACT-SOURCES / ROMDATA-02-04-E111-LOOP-COMPACT-CATALOG
+EUR/Wine (2026-11-03).** Five original finite byte-counter loops add roots
+6c56a8/6c4c50/6c5800/6c88a8/6c894c and selector domains0..2/0..2/0..10/0..9/0..15.
+Fourteen Windows windows authenticate19BLs, index initialization/copy/tail and
+callee preservation. Independent 974B/7-span geometry has43 selectors/60frames/
+44lists/81objects, no previous100-owner overlap. E111-d110 extends the same
+resource to34banks/81selectors/7624B/71spans. All99 other payloads and29 oldbank
+structures are identical. New-only Wine poisoned-byte/boundary/in-memory-rejection
+and48 native state-clock cases PASS,180typedB (172valid+8outside intersections);
+old native cases not repeated. Canonical test build and disposable source-snapshot
+CLI build pass warning-free; two live-source guard failures retain concurrent-edit
+diagnostics. CLI create/reuse and12frame startup/100identities PASS, no new ordinary
+claim. Source/build/native/CLI scratch removed; e110103managedfiles retired with
+manifest/evidence/10real-input guards, onecurrentdataset remains.29residualroots,
+ordinary/global/scheduler/Linux/USA/nativeWindows/ROM-mod phases open; no metrics.
+[Contract](../rom_data_compact_catalog.md#finite-loop-european-source-extension).

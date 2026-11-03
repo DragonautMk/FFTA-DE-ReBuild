@@ -148,3 +148,16 @@ fn choice_focus_diagnostics_follow_menu_language() {
         assert_eq!(focus.selected, 1);
     }
 }
+
+#[test]
+fn long_recipe_preview_keeps_its_tail_and_supports_controller_scrolling() {
+    let preview=format!("{}RECIPE-END", "x".repeat(20_000));
+    let lines=wrap_details(&preview,16.,140.);
+    assert!(lines.concat().contains("RECIPE-END"));
+    let mut form=ToolForm::default();form.set(DebugTool::Recipe,fields(),preview);form.focus=form.fields.len();
+    assert!(form.handle(MenuInput::Right).is_none());assert_eq!(form.detail.get(),8);
+    assert!(form.handle(MenuInput::Left).is_none());assert_eq!(form.detail.get(),0);
+    form.detail.set(2048);form.wheel(false);assert_eq!(form.detail.get(),2050);
+    let mut pixels=vec![[0,0,0,255];400*300];draw(&form,&mut pixels,400,300,input_config::Language::default());
+    assert!(form.detail.get()>0);assert_eq!(form.focus,form.fields.len());
+}

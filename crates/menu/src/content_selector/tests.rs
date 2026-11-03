@@ -70,13 +70,51 @@ fn cheat_view_keeps_all_rows_and_never_dispatches_selection(){
 fn management_requires_explicit_source_and_dispatches_separate_requests(){
     let mut s=Selector::default();s.cheat_mode=true;s.set("Cheat".into(),vec![ContentEntry{id:"CH-0001".into(),name:"Example".into(),..Default::default()}],String::new(),0);
     s.focus=8;assert_eq!(s.handle(MenuInput::Confirm),Some(MenuAction::CheatManage));
-    s.open_cheat_management(vec![super::super::CheatSource{index:0,name:"source".into(),master:"CH-0002".into(),assessment:"manual-once-subset".into()}]);
+    s.open_cheat_management(vec![super::super::CheatSource{index:0,name:"source".into(),master:"CH-0002".into(),assessment:"manual-once-subset".into()}],vec![]);
     assert!(s.cheat_selected_source().is_none());s.handle(MenuInput::Right);assert_eq!(s.handle(MenuInput::Confirm),Some(MenuAction::CheatRequest(super::super::CheatRequest::Prepare)));assert!(s.cheat_selected_source().is_none());
     s.handle(MenuInput::Left);s.handle(MenuInput::Confirm);assert_eq!(s.cheat_selected_source().unwrap().index,0);
     s.handle(MenuInput::Right);assert_eq!(s.handle(MenuInput::Confirm),Some(MenuAction::CheatRequest(super::super::CheatRequest::Prepare)));
     s.cheat_management_feedback("Review".into(),Some("plan and footprint".into()));assert!(s.detail_mode);assert!(!s.cheat_preview_reviewed());s.handle(MenuInput::Cancel);assert!(!s.detail_mode);assert!(s.cheat_preview_reviewed());
     s.handle(MenuInput::Down);s.handle(MenuInput::Down);assert_eq!(s.handle(MenuInput::Confirm),Some(MenuAction::CheatRequest(super::super::CheatRequest::Arm)));
     s.handle(MenuInput::Cancel);assert!(!s.cheat_management_active());
+}
+
+#[test]
+fn preset_page_requires_explicit_selection_and_resets_review_on_change() {
+    use super::super::CheatRequest as R;
+    let mut s=Selector::default();s.cheat_mode=true;
+    s.set("Cheat".into(),vec![ContentEntry{id:"CH-0001".into(),..Default::default()}],String::new(),0);
+    s.open_cheat_management(vec![],vec!["alpha".into(),"beta".into()]);
+    s.handle(MenuInput::Right);for _ in 0..5{s.handle(MenuInput::Down);}s.handle(MenuInput::Confirm);
+    assert!(s.manage.as_ref().unwrap().preset_mode);assert!(s.cheat_preset_selected().is_none());
+    s.handle(MenuInput::Right);s.handle(MenuInput::Down);
+    assert_eq!(s.handle(MenuInput::Confirm),Some(MenuAction::CheatRequest(R::PresetPrepare)));
+    assert!(s.cheat_preset_selected().is_none());
+    s.handle(MenuInput::Left);s.handle(MenuInput::Confirm);assert_eq!(s.cheat_preset_selected(),Some("alpha"));
+    s.cheat_management_feedback("Review".into(),Some("all operations".into()));s.cheat_set_preview_token("token".into());
+    assert!(s.cheat_preview_token().is_none());s.handle(MenuInput::Cancel);assert_eq!(s.cheat_preview_token(),Some("token"));
+    s.handle(MenuInput::Down);s.handle(MenuInput::Confirm);assert_eq!(s.cheat_preset_selected(),Some("beta"));assert!(s.cheat_preview_token().is_none());
+    s.handle(MenuInput::Right);for _ in 0..4{s.handle(MenuInput::Down);}s.handle(MenuInput::Confirm);
+    assert!(s.preset_name_edit);s.text("my_preset");s.finish_search(false);assert_eq!(s.cheat_preset_name(),Some("my_preset"));
+    s.handle(MenuInput::Confirm);s.text("discard");s.finish_search(true);assert_eq!(s.cheat_preset_name(),Some("my_preset"));
+    s.handle(MenuInput::Up);s.handle(MenuInput::Up);s.handle(MenuInput::Up);s.handle(MenuInput::Up);
+    assert_eq!(s.handle(MenuInput::Confirm),Some(MenuAction::CheatRequest(R::PresetSave)));
+}
+
+#[test]
+fn preset_page_draws_actions_and_supports_pointer_selection() {
+    let mut s=Selector::default();s.cheat_mode=true;
+    s.set("Cheat".into(),vec![ContentEntry{id:"CH-0001".into(),..Default::default()}],String::new(),0);
+    s.open_cheat_management(vec![],vec!["example".into()]);
+    let g=geometry(940,620);let center=|r:[usize;4]|(r[0]+r[2]/2,r[1]+r[3]/2);
+    let (x,y)=center(g.actions[5]);s.click(x,y,940,620,true);
+    let mut pixels=vec![[0,0,0,255];940*620];
+    let capture=diagnostics::capture(||draw(&s,&mut pixels,940,620,input_config::Language::default())).unwrap();
+    for label in ["CHEAT PRESETS","Select preset","Save preset","Prepare preset","Arm preset","Edit preset name"] {
+        assert!(capture.runs.iter().any(|run|run.text==label),"missing {label}");
+    }
+    let (x,y)=center(g.controls[2]);s.click(x,y,940,620,true);assert_eq!(s.cheat_preset_selected(),Some("example"));
+    let (x,y)=center(g.actions[1]);assert_eq!(s.click(x,y,940,620,true),Some(MenuAction::CheatRequest(super::super::CheatRequest::PresetPrepare)));
 }
 
 #[test]

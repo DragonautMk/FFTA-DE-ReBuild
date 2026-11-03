@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "author-inert-debug-command-recipes",
+  "title": "Save and preview inert typed debug command recipes",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Add console and debug-command recipe save/preview for ordered typed actions, pinned to the selected session manifest and its declared ROM/runtime hashes; no action is dispatched.",
+    "Bound recipe names, file count, action count and explicit step frames; reject nested recipes, retry, cancellation, unbounded resume and overwriting an existing recipe. Add discoverable command hints and operation descriptors."
+  ],
+  "validation": [
+    "Windows GNU build and 19 focused Wine tests passed for recipe authoring, pin mismatch, malformed/unbounded input, existing command parser and completion, and operation contracts; the menu atlas inventory check passed.",
+    "A synthetic session without ROM or control mailbox passed save and preview through the Windows executable under Wine, with identical typed ordered actions and duplicate-name refusal; successful scratch was removed."
+  ],
+  "limitations": [
+    "These files are inert and the Scripts and tools selector does not yet accept them. Execution, enforcement of total runtime limits, assertions, cancellation, checkpoint, safe resume and short/interrupted end-to-end recipes remain open. Manifest pins are compared as declared, not independently rehashed. Native Windows and interactive console GUI were not tested."
+  ],
+  "files": [
+    "crates/recomp/src/debug_command.rs",
+    "crates/recomp/src/debug_command/recipe.rs",
+    "crates/recomp/src/debug_command/completion.rs",
+    "crates/recomp/src/debug_operations.json",
+    "crates/input-config/languages/en.json",
+    "crates/input-config/languages/it.json",
+    "docs/development/MENU_ATLAS_INVENTORY.json"
+  ],
+  "references": [
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

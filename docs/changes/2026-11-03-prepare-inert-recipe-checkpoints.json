@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "prepare-inert-recipe-checkpoints",
+  "title": "Prepare durable planned identities for command recipes",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Add console and CLI commands to prepare and inspect inert recipe checkpoints with unique namespaced step IDs, action hashes, recipe identity and the declared control run; preparation never dispatches a request.",
+    "Validate recipe and checkpoint identity on reload, bound retained runs and report readiness metadata separately from process liveness."
+  ],
+  "validation": [
+    "Windows GNU build and 16 focused Wine tests passed for checkpoint creation/reload, distinct IDs, changed recipe/run handling, altered identity rejection, existing ledger behavior and operation contracts.",
+    "A synthetic session without ROM passed checkpoint preparation and reload through separate Windows CLI processes under Wine, with identical planned steps and no request mailbox publication. The first batch wrapper failed to enumerate the generated directory; the corrected wrapper passed."
+  ],
+  "limitations": [
+    "Checkpoint states are planned only: deadlines, dispatch, result journaling, cancellation and recovery are not implemented or verified. Readiness metadata cannot prove process liveness; declared payload pins are not independently rehashed here, and power-loss durability is not claimed. Native Windows and interactive GUI were not tested."
+  ],
+  "files": [
+    "crates/recomp/src/debug_command.rs",
+    "crates/recomp/src/debug_command/recipe.rs",
+    "crates/recomp/src/debug_command/recipe/checkpoint.rs",
+    "crates/recomp/src/debug_command/completion.rs",
+    "crates/recomp/src/debug_operations.json",
+    "crates/input-config/languages/en.json",
+    "crates/input-config/languages/it.json",
+    "docs/development/MENU_ATLAS_INVENTORY.json"
+  ],
+  "references": [
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

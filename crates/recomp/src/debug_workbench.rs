@@ -67,7 +67,7 @@ pub(crate) fn fields(tool: Tool) -> Vec<Field> {
         Tool::Homepage => vec![input(Slot::Session), input(Slot::HostRuntime), input(Slot::HostTool), choice("--source","embedded",&["embedded","external"],"External requires exact declared script and sibling dependency hashes; embedded ignores any previous override."), text("--timeout-ms","120000","Total host deadline20..120000ms; explicit cancel keeps logs.")],
         Tool::CampaignReport => vec![input(Slot::Campaign), input(Slot::HostRuntime), input(Slot::HostTool), choice("--source","embedded",&["embedded","external"],"External requires exact declared script and sibling dependency hashes; embedded ignores any previous override."), text("--case","","One required explicit campaign case ID; no replay or default all."), text("--timeout-ms","120000","Total host deadline20..120000ms.")],
         Tool::ArtifactPreview => vec![input(Slot::Session), input(Slot::HostRuntime), input(Slot::HostTool), choice("--source","embedded",&["embedded","external"],"External requires exact declared script and sibling dependency hashes; embedded ignores any previous override."), text("--timeout-ms","120000","Readonly preview on a closed session; no artifact deletion/apply.")],
-        Tool::Recipe => vec![input(Slot::Recipe), input(Slot::Session), input(Slot::RuntimeB), text("--timeout-ms","120000","Total recipe deadline20..120000ms;16readonly status/inspect steps maximum.")],
+        Tool::Recipe => vec![input(Slot::Recipe), input(Slot::Session), input(Slot::RuntimeB), text("--timeout-ms","120000","Readonly adapter uses this timeout and selected runtime. Typed recipes use their own limits; review with Details before Start.")],
         Tool::GuestScripts => vec![input(Slot::GuestScripts)],
         Tool::Replay => Vec::new(),
         Tool::Audit => vec![
@@ -593,6 +593,7 @@ fn load_preset(config: &Path, tool: Tool) -> Result<Values, String> {
 enum Output {
     Message(String),
     Observed(crate::debug_tools::RunOutput),
+    RecipePreview {message:String,identity:String},
     Prepared(PathBuf),
     Loaded(Values),
 }
@@ -609,6 +610,7 @@ pub(crate) struct Workbench {
     drafts: BTreeMap<Tool, Values>,
     job: Option<Job>,
     cancel: Option<std::sync::Arc<std::sync::atomic::AtomicBool>>,
+    recipe_preview: Option<(u64,u64,String)>,
     pub prepared: Option<(Tool, PathBuf)>,
     pub last: String,
     pub observation: Option<Value>,
@@ -617,6 +619,7 @@ impl Workbench {
     pub fn open(&mut self, menu: &mut menu::Menu, tool: Tool) {
         self.remember(menu);
         self.view = self.view.wrapping_add(1);
+        self.recipe_preview=None;
         let values = self.drafts.entry(tool).or_insert_with(|| defaults(tool));
         let mut f = fields(tool);
         for field in &mut f {
@@ -666,10 +669,12 @@ impl Workbench {
         }
         let (_, _, revision) = menu.tool_values();
         let tool = draft.tool;
+        let preview=self.recipe_preview.as_ref().filter(|(view,rev,_)|*view==self.view && *rev==revision).map(|(_,_,identity)|identity.clone());
+        if r==ToolRequest::Validate && tool==Tool::Recipe{self.recipe_preview=None;}
         let cancel=std::sync::Arc::new(std::sync::atomic::AtomicBool::new(false));
         if r == ToolRequest::Run && tool.library() { self.cancel=Some(cancel.clone()); }
         let task = move || match r {
-            ToolRequest::Run if tool.library() => crate::debug_tools::run_observed(draft,cancel).map(Output::Observed),
+            ToolRequest::Run if tool.library() => crate::debug_tools::run_observed(draft,cancel,preview).map(Output::Observed),
             ToolRequest::LoadPreset => load_preset(&draft.config, tool).map(Output::Loaded),
             ToolRequest::SavePreset => {
                 draft.validate()?;
@@ -687,6 +692,7 @@ impl Workbench {
                 fs::create_dir_all(&parent).map_err(|e| e.to_string())?;
                 draft.profile(&dest, false).map(Output::Prepared)
             }
+            ToolRequest::Validate if tool==Tool::Recipe => match crate::debug_tools::typed_preview(&draft)? {Some((message,identity))=>Ok(Output::RecipePreview{message,identity}),None=>draft.validate().map(Output::Message)},
             ToolRequest::Validate | ToolRequest::Prepare => draft.validate().map(Output::Message),
             _ => Err("Use the explicit Start handler".into()),
         };
@@ -699,7 +705,7 @@ impl Workbench {
             handle: std::thread::spawn(task),
         });
         menu.tool_feedback(
-            "Checking selected host inputs; no guest execution.".into(),
+            if r==ToolRequest::Run && tool.library(){"Starting selected operation; its result will confirm execution."}else{"Checking selected inputs; no execution."}.into(),
             String::new(),
             true,
         );
@@ -721,6 +727,9 @@ impl Workbench {
             && menu.tool_active()
             && current.0 == job.tool
             && current.2 == job.revision;
+        if same {
+            if let Ok(Output::RecipePreview{identity,..})=&result {self.recipe_preview=Some((job.view,job.revision,identity.clone()));}
+        }
         let details=match &result {
             Ok(Output::Observed(result))=>result.observation.clone(),
             Ok(Output::Prepared(path))=>json!({"outcome":"completed","profile":path.to_string_lossy().chars().take(1024).collect::<String>(),"guest_execution":false}),
@@ -730,6 +739,7 @@ impl Workbench {
         self.observation=Some(json!({"tool":format!("{:?}",job.tool),"request":format!("{:?}",job.request),"view":job.view,"revision":job.revision,"current_draft":same,"outcome":details["outcome"],"result":details}));
         self.last = match result {
             Ok(Output::Message(m)) => m,
+            Ok(Output::RecipePreview{message,..})=>message,
             Ok(Output::Observed(result)) => result.message,
             Ok(Output::Prepared(p)) => {
                 self.prepared = Some((job.tool, p.clone()));
@@ -783,6 +793,7 @@ impl Workbench {
     }
     pub fn cancel_view(&mut self) {
         self.view = self.view.wrapping_add(1);
+        self.recipe_preview=None;
     }
     pub fn busy(&self) -> bool {
         self.job.is_some()

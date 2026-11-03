@@ -198,13 +198,19 @@ pub(super) struct Selector {
     detail_mode: bool,
     detail_scroll: Cell<usize>,
     manage: Option<super::cheat_management::State>,
+    preset_name_edit: bool,
 }
 impl Selector {
-    pub fn open_cheat_management(&mut self,sources:Vec<super::CheatSource>){self.detail_mode=false;self.manage=Some(super::cheat_management::State::new(sources));}
+    pub fn open_cheat_management(&mut self,sources:Vec<super::CheatSource>,presets:Vec<String>){self.detail_mode=false;self.manage=Some(super::cheat_management::State::new(sources,presets));}
     pub fn cheat_selected_source(&self)->Option<&super::CheatSource>{self.manage.as_ref()?.selected_source()}
     pub fn cheat_preview_reviewed(&self)->bool{self.manage.as_ref().is_some_and(|state|!state.preview.is_empty())&&!self.detail_mode}
+    pub fn cheat_preset_name(&self)->Option<&str>{self.manage.as_ref().map(|s|s.preset_name.as_str())}
+    pub fn cheat_preset_selected(&self)->Option<&str>{self.manage.as_ref()?.preset_selected.as_deref()}
+    pub fn cheat_preview_token(&self)->Option<&str>{self.manage.as_ref().map(|s|s.preview_token.as_str()).filter(|s|!s.is_empty() && !self.detail_mode)}
+    pub fn cheat_set_presets(&mut self,presets:Vec<String>){if let Some(s)=self.manage.as_mut(){s.presets=presets;s.preset_cursor=s.preset_cursor.min(s.presets.len().saturating_sub(1));}}
+    pub fn cheat_set_preview_token(&mut self,token:String){if let Some(s)=self.manage.as_mut(){s.preview_token=token;}}
     pub fn cheat_management_active(&self)->bool{self.manage.is_some()}
-    pub fn cheat_management_feedback(&mut self,message:String,preview:Option<String>){if let Some(state)=self.manage.as_mut(){state.feedback=message;if let Some(preview)=preview{state.preview=preview;self.detail_mode=true;self.detail_scroll.set(0);}else{state.preview.clear();}}else{self.message=message;}}
+    pub fn cheat_management_feedback(&mut self,message:String,preview:Option<String>){if let Some(state)=self.manage.as_mut(){state.feedback=message;if let Some(preview)=preview{state.preview=preview;self.detail_mode=true;self.detail_scroll.set(0);}else{state.preview.clear();state.preview_token.clear();}}else{self.message=message;}}
     fn cheat_details(&self,locale:&crate::i18n::Locale)->String{
         self.selected().map(|i|{let e=&self.entries[i];format!("{} · {} · {}\n{}\n{}\n{}",e.name,e.status,e.compatibility,e.reason,e.identity,e.description)})
             .unwrap_or_else(||locale.tr("No entry selected").into())
@@ -471,6 +477,10 @@ impl Selector {
         }
     }
     pub fn finish_search(&mut self, cancel: bool) {
+        if self.preset_name_edit {
+            if !cancel {if let Some(s)=self.manage.as_mut(){s.preset_name=self.query.clone();s.preview.clear();s.preview_token.clear();}}
+            self.query=self.search_backup.clone();let id=self.search_backup_id.clone();self.editing=false;self.preset_name_edit=false;self.preedit.clear();self.rebuild(id.as_deref());return;
+        }
         if let Some(index)=self.choice_edit.take() {
             if !cancel {
                 match self.focus {1=>self.kind=index,2=>self.filter=index,3=>self.sort=index,4=>self.collection=index,_=>{}}
@@ -568,7 +578,7 @@ impl Selector {
         None
     }
     pub fn tab(&mut self, back: bool) {
-        if let Some(manage)=self.manage.as_mut(){if !self.detail_mode{manage.focus=(manage.focus+if back{5}else{1})%6;}return;}
+        if !self.editing {if let Some(manage)=self.manage.as_mut(){if !self.detail_mode{manage.focus=(manage.focus+if back{6}else{1})%7;}return;}}
         if self.choice_focus(){self.finish_search(true);}
         if self.editing {
             self.finish_search(false);
@@ -577,9 +587,12 @@ impl Selector {
         self.focus = (self.focus + if back { 12 } else { 1 }) % 13;
     }
     pub fn handle(&mut self, input: MenuInput) -> Option<MenuAction> {
-        if self.manage.is_some(){
+        if self.manage.is_some() && !self.editing {
             if self.detail_mode {match input{MenuInput::Cancel|MenuInput::Confirm=>self.detail_mode=false,MenuInput::Up|MenuInput::Left=>self.detail_scroll.set(self.detail_scroll.get().saturating_sub(1)),_=>self.detail_scroll.set((self.detail_scroll.get()+1).min(8192))};return None;}
             if input==MenuInput::Cancel{self.manage=None;self.focus=5;return None;}
+            if input==MenuInput::Confirm && self.manage.as_ref().is_some_and(|s|s.preset_mode && s.focus==5) {
+                let name=self.manage.as_ref().unwrap().preset_name.clone();self.start_search();self.query=name;self.preset_name_edit=true;return None;
+            }
             return self.manage.as_mut().unwrap().handle(input).map(MenuAction::CheatRequest);
         }
         if let Some(index)=self.choice_edit {
@@ -688,7 +701,7 @@ impl Selector {
         ]
     }
     pub fn hover(&mut self, x: usize, y: usize, w: usize, h: usize) {
-        if self.manage.is_some(){return;}
+        if self.manage.is_some() && !self.editing{return;}
         if self.choice_focus(){return;}
         let g = geometry(w, h);
         if self.editing {
@@ -744,12 +757,12 @@ impl Selector {
             return self.handle(MenuInput::Cancel);
         }
         let g = geometry(w, h);
-        if self.manage.is_some(){
+        if self.manage.is_some() && !self.editing {
             if self.detail_mode{return if y>=g.panel[1]+g.panel[3].saturating_sub(g.row){self.handle(MenuInput::Cancel)}else{None};}
             if inside(g.controls[0],x,y){self.manage.as_mut().unwrap().focus=0;return self.handle(MenuInput::Up);}
             if inside(g.controls[1],x,y){self.manage.as_mut().unwrap().focus=0;return self.handle(MenuInput::Down);}
             if inside(g.controls[2],x,y){self.manage.as_mut().unwrap().focus=0;return self.handle(MenuInput::Confirm);}
-            for i in 0..5{if inside(g.actions[i],x,y){self.manage.as_mut().unwrap().focus=i+1;return self.handle(MenuInput::Confirm);}}
+            for i in 0..6{if inside(g.actions[i],x,y){self.manage.as_mut().unwrap().focus=i+1;return self.handle(MenuInput::Confirm);}}
             if inside(g.actions[6],x,y){return self.handle(MenuInput::Cancel);}
             return None;
         }
@@ -795,7 +808,7 @@ impl Selector {
         None
     }
     pub fn wheel(&mut self, up: bool) {
-        if self.manage.is_some() && !self.detail_mode{self.manage.as_mut().unwrap().focus=0;self.handle(if up{MenuInput::Up}else{MenuInput::Down});return;}
+        if self.manage.is_some() && !self.detail_mode && !self.editing{self.manage.as_mut().unwrap().focus=0;self.handle(if up{MenuInput::Up}else{MenuInput::Down});return;}
         if self.choice_focus(){self.handle(if up{MenuInput::Up}else{MenuInput::Down});return;}
         if self.detail_mode {
             self.detail_scroll.set(if up {
@@ -813,7 +826,7 @@ impl Selector {
         }
     }
     fn focus_label(&self)->String {
-        if let Some(manage)=&self.manage {return if manage.focus==0{manage.sources.get(manage.cursor).map_or_else(||"No source".into(),|s|format!("Source {} · {}",s.index,s.name))}else{["Prepare preview","Apply once","Arm","Disarm","Disarm all"][manage.focus-1].into()};}
+        if let Some(manage)=&self.manage {if !self.editing{return if manage.focus==0{if manage.preset_mode{manage.presets.get(manage.preset_cursor).cloned().unwrap_or_else(||"No preset".into())}else{manage.sources.get(manage.cursor).map_or_else(||"No source".into(),|s|format!("Source {} · {}",s.index,s.name))}}else{(if manage.preset_mode{["Save preset","Prepare preset","Arm preset","Disarm all","Edit preset name","Back to sources"]}else{["Prepare preview","Apply once","Arm","Disarm","Disarm all","Presets"]})[manage.focus-1].into()};}}
         if self.editing {
             format!("Search keyboard: {}", self.key_labels()[self.key])
         } else if self.detail_mode {
@@ -839,7 +852,7 @@ impl Selector {
         let label = self.focus_label();
         let bounds = if self.cheat_mode && self.detail_mode {
             g.panel
-        } else if let Some(manage)=&self.manage {
+        } else if let Some(manage)=self.manage.as_ref().filter(|_|!self.editing) {
             if manage.focus==0{g.controls[2]}else{g.actions[manage.focus-1]}
         } else if self.editing {
             self.key_rect(g, self.key)
@@ -945,14 +958,14 @@ pub(super) fn draw(s: &Selector, px: &mut [[u8; 4]], w: usize, h: usize, languag
         c.text((x+10) as f32,bottom as f32,locale.tr("Up/Down: scroll · OK/Cancel: return"),ink,size,false,pw.saturating_sub(20) as f32);
         c.finish(px);return;
     }
-    if let Some(m)=&s.manage {
-        c.text((x+10) as f32,(y+5) as f32,locale.tr("CHEAT MANAGEMENT"),ink,size*1.1,true,pw.saturating_sub(20) as f32);
-        for (i,label) in ["Previous source","Next source","Select source"].iter().enumerate(){button(&mut c,g.controls[i],locale.tr(label),i==2&&m.focus==0,size);}
-        let source=m.sources.get(m.cursor).map_or_else(||locale.tr("No source").to_owned(),|v|format!("{} · {} · {} · {}",v.index,v.name,v.master,v.assessment));
-        let selection=m.selected_source().map_or_else(||locale.tr("No source selected").to_owned(),|v|format!("{} · {}",locale.tr("Selected source"),v.index));
+    if let Some(m)=s.manage.as_ref().filter(|_|!s.editing) {
+        c.text((x+10) as f32,(y+5) as f32,locale.tr(if m.preset_mode{"CHEAT PRESETS"}else{"CHEAT MANAGEMENT"}),ink,size*1.1,true,pw.saturating_sub(20) as f32);
+        for (i,label) in (if m.preset_mode{["Previous preset","Next preset","Select preset"]}else{["Previous source","Next source","Select source"]}).iter().enumerate(){button(&mut c,g.controls[i],locale.tr(label),i==2&&m.focus==0,size);}
+        let source=if m.preset_mode{m.presets.get(m.preset_cursor).cloned().unwrap_or_else(||locale.tr("No preset").to_owned())}else{m.sources.get(m.cursor).map_or_else(||locale.tr("No source").to_owned(),|v|format!("{} · {} · {} · {}",v.index,v.name,v.master,v.assessment))};
+        let selection=if m.preset_mode{format!("{}: {} · {}: {}",locale.tr("Selected preset"),m.preset_selected.as_deref().unwrap_or("-"),locale.tr("Preset name"),m.preset_name)}else{m.selected_source().map_or_else(||locale.tr("No source selected").to_owned(),|v|format!("{} · {}",locale.tr("Selected source"),v.index))};
         c.text((x+10) as f32,(g.controls[0][1]+g.row+3) as f32,&source,ink,size,false,pw.saturating_sub(20) as f32);
         c.text((x+10) as f32,(g.controls[0][1]+g.row*2+3) as f32,&format!("{} · {}",selection,locale.tr(&m.feedback)),ink,size,false,pw.saturating_sub(20) as f32);
-        for (i,label) in ["Prepare preview","Apply once","Arm","Disarm","Disarm all"].iter().enumerate(){button(&mut c,g.actions[i],locale.tr(label),m.focus==i+1,size);}
+        for (i,label) in (if m.preset_mode{["Save preset","Prepare preset","Arm preset","Disarm all","Edit preset name","Back to sources"]}else{["Prepare preview","Apply once","Arm","Disarm","Disarm all","Presets"]}).iter().enumerate(){button(&mut c,g.actions[i],locale.tr(label),m.focus==i+1,size);}
         button(&mut c,g.actions[6],locale.tr("Back"),false,size);
         c.finish(px);return;
     }
@@ -976,7 +989,7 @@ pub(super) fn draw(s: &Selector, px: &mut [[u8; 4]], w: usize, h: usize, languag
     );
     let search = format!(
         "{}: {}{}{}",
-        if s.editor_only { locale.tr("Value") } else { locale.tr("Search") },
+        if s.preset_name_edit { locale.tr("Preset name") } else if s.editor_only { locale.tr("Value") } else { locale.tr("Search") },
         s.query,
         if s.editing { " | " } else { "" },
         s.preedit

@@ -4,6 +4,7 @@ pub(crate) mod editor;
 pub(crate) mod controller;
 pub(crate) mod completion;
 pub(crate) mod observation;
+pub(crate) mod recipe;
 
 const MAX_BYTES: usize = 4096;
 const MAX_TOKENS: usize = 64;
@@ -16,6 +17,12 @@ pub(crate) enum Command {
     Select { slot: menu::ContentSlot, id: String },
     JobsStatus,
     Retry { run: String, id: String, deadline_unix_ms: u64, action: Action },
+    RecipeSave { name:String, commands:Vec<String> },
+    RecipePreview { name:String },
+    RecipePrepare { name:String },
+    RecipeCheckpoint { id:String },
+    RecipeRun { id:String, resume:bool },
+    RecipeCancel { id:String },
 }
 
 /// Whitespace separates tokens; single/double quotes group text. Backslash
@@ -89,6 +96,14 @@ fn parse_tokens(t:&[String],allow_retry:bool)->Result<Command,String>{
         return Ok(Command::Retry{run,id:request,deadline_unix_ms,action});
     }
     match t {
+        [family,verb,name,commands @ ..] if family=="recipe" && verb=="save" && !commands.is_empty()=>{
+            return Ok(Command::RecipeSave{name:id(name,48)?,commands:commands.to_vec()});
+        },
+        [family,verb,name] if family=="recipe" && verb=="preview"=>return Ok(Command::RecipePreview{name:id(name,48)?}),
+        [family,verb,name] if family=="recipe" && verb=="prepare"=>return Ok(Command::RecipePrepare{name:id(name,48)?}),
+        [family,verb,value] if family=="recipe" && verb=="checkpoint"=>return Ok(Command::RecipeCheckpoint{id:id(value,48)?}),
+        [family,verb,value] if family=="recipe" && (verb=="run"||verb=="resume")=>return Ok(Command::RecipeRun{id:id(value,48)?,resume:verb=="resume"}),
+        [family,verb,value] if family=="recipe" && verb=="cancel"=>return Ok(Command::RecipeCancel{id:id(value,48)?}),
         [family,verb,rest @ ..] if family=="cheats" && ["refresh","list","show","capabilities","prepare","apply-once","arm","disarm","preset-save","preset-prepare","preset-arm"].contains(&verb.as_str())=>{
             let name=if verb=="apply-once"{"cheat-apply".into()}else{format!("cheat-{verb}")};
             let mut args=vec![name,"<current-session>".into()];for pair in rest.windows(2){if ["--offset","--limit"].contains(&pair[0].as_str()){decimal(&pair[1])?;}}args.extend_from_slice(rest);return crate::debug_control::parse(&args).map(|(_,a)|Command::Control(a));
@@ -137,6 +152,12 @@ pub(crate) fn execute(root:&std::path::Path,input:&str)->serde_json::Value {
         Command::Help(None)=>return serde_json::json!({"schema":1,"kind":"ffta-debug-command-help","operations":crate::debug_operations::registry().operations}),
         Command::Help(Some(id))=>return serde_json::json!({"schema":1,"kind":"ffta-debug-command-help","operation":crate::debug_operations::get(&id)}),
         Command::JobsStatus=>crate::debug_control::execute_action_classified(root,Action::Status,120_000),
+        Command::RecipeSave{name,commands}=>return recipe::save_command(root,&name,&commands),
+        Command::RecipePreview{name}=>return recipe::preview_command(root,&name),
+        Command::RecipePrepare{name}=>return recipe::prepare_command(root,&name),
+        Command::RecipeCheckpoint{id}=>return recipe::checkpoint_command(root,&id),
+        Command::RecipeRun{id,resume}=>return recipe::run_command(root,&id,resume),
+        Command::RecipeCancel{id}=>return recipe::cancel_command(root,&id),
         Command::Control(action)=>crate::debug_control::execute_action_classified(root,action,120_000),
         Command::Retry{run,id,deadline_unix_ms,action}=>crate::debug_control::retry_action_classified(root,action,120_000,run,id,deadline_unix_ms),
         Command::Select{slot,id}=>{

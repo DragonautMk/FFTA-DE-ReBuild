@@ -24,6 +24,30 @@ Documentation: [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.m
 
 [Change record](docs/changes/2026-11-03-verify-ui-trace-channel-parity.json)
 
+## 2026-11-03 — Verify ordinary European Star Cross use of the sparse compact catalog
+
+Type: docs. Platforms: EUR execution under Wine.
+
+**Changes**
+
+- Authenticate Star Cross action 46, task 46, callback 080eece4 and child 080eead8, which initializes root 6bacd8 with selector 2. Verify physical secondary Illusionist rows 9/23. Find Douglas in IN-08 raw unit 6 with learned descriptor 84 byte 9e, bind both live deployment pointers to 020006b0, and reach Phantasm Skill → Star Cross → Do it through normal inputs.
+- Reuse canonical e110 test/CLI binaries, the current dataset, native translation and coordinated Wine prefix. Consolidate the existing normal route without replaying it. Retire 29 superseded successful navigation work trees with guards for the current seed, originals and dataset; retain small evidence, source preimages and failed diagnostics.
+
+**Validation**
+
+- One reduced 480-frame Wine case, 7857..8337: the production native CLI serves 15,830 catalog reads and 19,330 source bytes. The existing native raw/managed filter passes full machine state and clock, central/wide pixels, OAM, dispatch and all five exact audio streams at every frame with actual samples. Input hashes and the current dataset remain unchanged; successful pair scratch is automatically removed. No rebuild, extraction or dataset copy.
+- Seven original Windows source windows and read-only queries of six checkpoints support the producer and actor. The original confirmation reader corrects a failing precheck: top index 0 plus cursor row 1 identifies Engage, with count 2 and Y offset 16. The precheck fails before guest frames; the sandbox socket launch failure is retained and exact owned leases are recovered only after host checks. Observed deployment pointers distinguish raw unit 17 from Douglas in raw unit 6.
+- Task handoff and whitespace checks pass. The shared project-memory check currently reports three concurrently modified implementation files without a record: command_console.rs, debug_command/observation.rs and debug_command_panel.rs. They are outside this ROM validation change and remain untouched; global check completion is pending that work.
+
+**Limitations**
+
+- Catalog counters aggregate banks; the 480-frame endpoint still animates. Complete animation, all banks/selectors, constructor branches, consumers and global extent remain unproved. Parent ROMDATA-04-COMPACT-CATALOG-ORDINARY and the full EUR goal remain partial. Linux, USA, native Windows and remaining ROM/mod phases are pending; no benchmarks or performance/space measurements.
+- Primary Terra/xhigh and effective delegated settings cannot be inspected; gpt-6.1-sol/xhigh was explicitly requested. Preliminary action adjacency, job command ID, menu index and actor assumptions were corrected from source and observations before the accepted cast. Personal saves, ROM and generated game data stay out of commits/packages.
+
+Documentation: [rom_data_compact_catalog.md](docs/rom_data_compact_catalog.md), [ROM_DATA_TODO.md](docs/development/ROM_DATA_TODO.md), [LOCAL_ARTIFACTS.md](docs/development/LOCAL_ARTIFACTS.md).
+
+[Change record](docs/changes/2026-11-03-verify-european-star-cross-catalog-use.json)
+
 ## 2026-11-03 — Verify ordinary European Roulette use of the compact OBJ bank
 
 Type: docs. Platforms: EUR Windows execution under Wine.
@@ -442,6 +466,30 @@ Documentation: [menu_clan_atlas.md](docs/menu_clan_atlas.md).
 
 [Change record](docs/changes/2026-11-03-translate-atlas-inventory-routes.json)
 
+## 2026-11-03 — Start reviewed command recipes from Scripts and tools
+
+Type: added. Platforms: Windows GNU / Wine.
+
+**Changes**
+
+- Bind the complete typed recipe preview to its selected file and session; Start rechecks the identity and saved recipe before preparing and running the existing bounded checkpoint.
+- Connect tool cancellation to the runner, stop waiting for an unresolved request without claiming it was cancelled, persist its marker and retain its identity for explicit recovery.
+- Show the full bounded preview in the scrollable panel and allow Left/Right scrolling on Details; this replaces the previously accepted abbreviated preview because execution now requires reviewing every entry.
+
+**Validation**
+
+- A Windows GNU application check and source-snapshot builds passed; the snapshot omitted only the unrelated ROM table test module while its owner was still implementing it.
+- Twenty-nine focused Wine tests passed, including synthetic workbench preview/Start/cancel/resume, stale preview refusal, pending-action cancellation and existing recipe/control contracts. Four subsequent Wine tests passed for long-preview rendering, narrow layout, controller scrolling and the updated workbench.
+- The first full test build failed because the concurrent ROM table test module had not yet been created. An initial snapshot build finished compilation but its validation guard caught a deliberate source edit during the build; both failed units retain diagnostics.
+
+**Limitations**
+
+- Interactive picker navigation, actual graphical session execution, real interrupted process recovery, native Windows and physical controller input remain unverified. A published action can still finish after cancellation and is reported as pending until its result is confirmed.
+
+Documentation: [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-03-start-reviewed-recipes-in-tools.json)
+
 ## 2026-11-03 — Show the project emblem in the desktop menu
 
 Type: changed. Platforms: Desktop menu.
@@ -525,6 +573,28 @@ Type: docs. Platforms: Desktop development documentation.
 Documentation: [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md).
 
 [Change record](docs/changes/2026-11-03-review-ui-graphics-guide-english.json)
+
+## 2026-11-03 — Select and review typed recipes in Scripts and tools
+
+Type: added. Platforms: Windows GNU / Wine.
+
+**Changes**
+
+- Recognize inert typed command recipes in content discovery and permit selecting them as recipe inputs alongside the existing readonly format.
+- Review selected typed actions and session identity in the tool, clearly mark abbreviated long previews, and refuse Start before creating a host run or dispatching any action.
+
+**Validation**
+
+- Windows GNU build and 18 focused Wine tests passed, including synthetic recipe/session selection, preview, long-preview warning, Start refusal, legacy readonly recipe checks and operation metadata.
+- The first wider Wine test run passed the new integration test but failed an unrelated link-safety test because its symlink fixture was not materialized; the scoped rerun excluded that single test and retained the failed unit.
+
+**Limitations**
+
+- The interactive picker and native Windows were not tested. Typed recipe execution, enforced runtime limits, assertions, cancellation, logging, checkpoints and safe resume remain missing. The console provides complete JSON when the tool preview is abbreviated.
+
+Documentation: [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-03-review-typed-recipes-in-tools.json)
 
 ## 2026-11-03 — Review development tools and CI in English
 
@@ -1263,6 +1333,28 @@ Type: added. Platforms: EUR; Wine.
 
 [Change record](docs/changes/2026-11-03-publish-european-compact-obj-seventh-root.json)
 
+## 2026-11-03 — Prepare durable planned identities for command recipes
+
+Type: added. Platforms: Windows GNU / Wine.
+
+**Changes**
+
+- Add console and CLI commands to prepare and inspect inert recipe checkpoints with unique namespaced step IDs, action hashes, recipe identity and the declared control run; preparation never dispatches a request.
+- Validate recipe and checkpoint identity on reload, bound retained runs and report readiness metadata separately from process liveness.
+
+**Validation**
+
+- Windows GNU build and 16 focused Wine tests passed for checkpoint creation/reload, distinct IDs, changed recipe/run handling, altered identity rejection, existing ledger behavior and operation contracts.
+- A synthetic session without ROM passed checkpoint preparation and reload through separate Windows CLI processes under Wine, with identical planned steps and no request mailbox publication. The first batch wrapper failed to enumerate the generated directory; the corrected wrapper passed.
+
+**Limitations**
+
+- Checkpoint states are planned only: deadlines, dispatch, result journaling, cancellation and recovery are not implemented or verified. Readiness metadata cannot prove process liveness; declared payload pins are not independently rehashed here, and power-loss durability is not claimed. Native Windows and interactive GUI were not tested.
+
+Documentation: [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-03-prepare-inert-recipe-checkpoints.json)
+
 ## 2026-11-03 — Prepare the first DE-Rebuild release
 
 Type: changed. Platforms: Linux x86_64, Windows x86_64, Android ARM64.
@@ -1377,6 +1469,30 @@ Documentation: [rom_data_compact_catalog.md](docs/rom_data_compact_catalog.md), 
 
 [Change record](docs/changes/2026-11-03-migrate-european-sparse-compact-obj-catalog.json)
 
+## 2026-11-03 — Read European compact selector tables and three animation banks from typed files
+
+Type: added. Platforms: EUR Windows builds and execution under Wine.
+
+**Changes**
+
+- Add three source-bounded compact banks and the known fields of three selector/position tables. v2 JSON adds selector_tables, requires bound tables for current validation and allows absent tables only when decoding historical v1 evidence. Keep 34 unknown bytes raw, preserve original index/branch semantics, and raise revisions to e112-d111.
+- The generic resource retains its ID and the dataset retains 100 resources; the projection now has 37 banks, 103 selectors and 9,208 source bytes. Add a focused new-only source/model/native check, preserving all 34 prior banks and 99 other resources. Native C API and save format remain unchanged.
+
+**Validation**
+
+- Wine source query and four new original windows authenticate three table flows/seven BLs, exact 14/10/15 row bounds and branches, reusing four unchanged preservation pins. The three new banks have 22 selectors, 96 frames, 90 lists, 119 objects and 1,366 bytes; known table fields add 218 bytes, with no previous-owner overlap.
+- One stable source snapshot builds CLI and test harness together in canonical Cargo outputs, warning-free with 713 stable code hashes; the 844 source/assets snapshot files are removed. One provisional generation passes CLI create/reuse, independent typed-table decoding, 99 payload/34 bank preservation and hash/time/file-set reuse checks.
+- One new-only Wine filter passes poisoned-source mixed/mirrored reads, model/source/boundary checks and coherent in-memory rejection. Original readers verify 22 counts, 96 frame list/duration pairs and 90 list pointers. All 25 native count and 71 native table/skip cases match complete state/clock, serving 90 and 248 typed bytes respectively. The 34 unknown bytes stay raw. Previous cases are not repeated and no dataset copy is created; successful scratch is removed.
+
+**Limitations**
+
+- The goal is paused before short production startup, e111 comparison retirement and scoped acceptance. One earlier wrapper selected zero tests due to the wrong module name; its diagnostics are retained, and the corrected filter passes without rebuilding. No ordinary-use, complete-bank or global coverage claim; 26 residual roots, Linux, USA, native Windows and ROM/mod work remain open. No performance or space measurements.
+- Sol gpt-6.1-sol/xhigh was explicitly requested; effective primary/delegated settings cannot be confirmed. Shared Wine prefix and canonical Cargo outputs are reused; source preimages remain outside disposable scratch. Keep e111 only as the named comparison until successor acceptance.
+
+Documentation: [rom_data_compact_catalog.md](docs/rom_data_compact_catalog.md), [ROM_DATA_TODO.md](docs/development/ROM_DATA_TODO.md), [LOCAL_ARTIFACTS.md](docs/development/LOCAL_ARTIFACTS.md).
+
+[Change record](docs/changes/2026-11-03-migrate-european-compact-selector-tables.json)
+
 ## 2026-11-03 — Manage the European compact OBJ bank at 6cc124
 
 Type: added. Platforms: EUR Windows builds under Wine.
@@ -1427,6 +1543,29 @@ Type: added. Platforms: Windows GNU / Wine.
 Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [MENU_ATLAS_INVENTORY.json](docs/development/MENU_ATLAS_INVENTORY.json).
 
 [Change record](docs/changes/2026-11-03-manage-cheats-from-catalog-page.json)
+
+## 2026-11-03 — Manage source-bound cheat presets in the page
+
+Type: added. Platforms: Windows GNU / Wine.
+
+**Changes**
+
+- Add explicit page controls to name, save, select, review and arm a source-bound preset, using the existing shared validation and atomic group operations.
+- Keep the reviewed token tied to the selected page preset and reject replacement by another client; expose bounded preset names and register the page operation routes.
+
+**Validation**
+
+- Windows GNU build and 30 focused Wine tests passed; the menu atlas inventory check passed.
+- A synthetic Wine/Xvfb keyboard and pointer session saved, selected, reviewed, armed and disarmed a preset without advancing guest state, frame or clock. Protected inputs passed their checks and the GUI exited normally; the original unit retained its private test copies, and a separate evidence receipt passed.
+- Early GUI attempts exposed a bridge newline and outdated navigation timing; those failed units remain retained.
+
+**Limitations**
+
+- The original GUI unit is FAIL for private scratch retention, not a runner PASS. Native Windows, physical controllers, parameter values and ranges, device-hook equivalence and gameplay effects remain unverified.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-03-manage-cheat-presets-in-page.json)
 
 ## 2026-11-03 — Arm bounded cheat plans at interpreter frame boundaries
 
@@ -1491,6 +1630,29 @@ Type: changed. Platforms: Windows GNU / Wine.
 Documentation: [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
 
 [Change record](docs/changes/2026-11-03-inspect-narrow-replay-console.json)
+
+## 2026-11-03 — Inspect long debug command context
+
+Type: added. Platforms: Windows GNU / Wine.
+
+**Changes**
+
+- Add a read-only F2 context view with wrapping and scrolling for session, ROM, run, pending request and parameters, retaining the draft and keeping protocol-sized identifiers visible.
+- Block controller and IME edits while the context view is open and restore normal console input on return.
+
+**Validation**
+
+- Windows GNU build passed; seven focused Wine tests covered context wrapping, identifier bounds, controller and editor behavior.
+- A Wine/Xvfb session used SetWindowPos and GetClientRect to confirm a 480x360 Windows client; the screenshot showed the long session label, full ROM hash and footer, and returning submitted the existing status draft without changing guest state or protected inputs.
+- An earlier X-only resize produced a clipped screenshot and was not accepted as evidence of adaptive layout; a read-only Sol/xhigh consultation identified the established Win32 resize procedure.
+
+**Limitations**
+
+- The GUI proof covered idle context with keyboard, not long live-job parameters, physical controllers or native Windows. Successful GUI units retain private scratch under named review exceptions; no cleanup of private copies is claimed. Effective primary and consultant model settings were not independently confirmed.
+
+Documentation: [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-03-inspect-debug-command-context.json)
 
 ## 2026-11-03 — Index source-bound cheat capabilities without enabling them
 
@@ -1935,6 +2097,35 @@ Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/develo
 
 [Change record](docs/changes/2026-11-03-filter-cheats-by-machine-state.json)
 
+## 2026-11-03 — Extend the European compact OBJ catalog from five finite selector loops
+
+Type: added. Platforms: EUR Windows cross-builds and execution under Wine.
+
+**Changes**
+
+- Extend the existing sparse compact OBJ catalog with five roots and 43 selectors authenticated by explicit original byte-counter loops. Keep the resource identity, JSON schema and 100-resource count, and raise revisions to e111-d110. The catalog now contains 34 banks, 81 selectors and 7,624 source bytes in 71 spans; represented bytes use typed files and other guest reads retain original semantics.
+- Add one focused Wine test for the new five-bank projection. Preserve all 29 earlier bank structures and 99 other resource records/payloads. Maintain current-revision expectations in the older private tests without rerunning their accepted cases.
+- Reuse canonical Cargo outputs, the retained native count-reader object, the coordinated Wine prefix and one successor dataset. Remove successful source/build/native/CLI scratch and retire the e110 comparison after exact successor acceptance; retain its manifest, logs, source preimages and failed diagnostics.
+
+**Validation**
+
+- Wine source query authenticates five finite loop specifications, all 19 BL targets, index initialization/direct argument/tail/back edges, seven helper bodies and two unchanged constructor preservation pins. Fourteen original Windows windows reviewed. New geometry: 43 selectors, 60 frames, 44 lists, 81 objects and 974 bytes in seven union spans, with no overlap against the current 100 owners or another new bank.
+- Canonical Windows test build passes without warnings and with 710 stable source hashes. Two production compiles succeed but their source guards reject concurrent debug-file edits. A single immutable snapshot of 841 source/assets files then builds the canonical production CLI without warnings, with all 710 code hashes stable and selected ROM-data hashes equal to the accepted test build. Successful snapshot work is removed; two prior busy-compiler guards stop before capture or compilation and retain diagnostics. No other writer or process is stopped.
+- Production CLI creates and reuses one e111-d110 generation: 100 resources, 101 generation files, all 99 other resource records/payloads and 29 prior bank structures unchanged. Reuse preserves managed file set, hashes and times.
+- One new-only Wine filter passes all 974 poisoned-ROM typed bytes, JSON/model bindings, mirrored mixed boundaries and coherent-edit rejection in memory. Original reader prefixes verify 43 counts, 60 list/duration pairs and 44 list pointers. Reused native prefix passes all 48 interpreter/native full-state-clock cases, serving 180 typed bytes: 172 from represented selectors and eight actual owned intersections in five outside-projection cases. No old native case or full dataset test copy is repeated.
+- Changed-generation production startup advances the existing EUR Do it seed for 12 frames, 7857..7869, with all 100 exact runtime resource identities. Aggregate catalog counters are zero in that short window; this is registration/startup evidence only. Earlier ordinary Star Cross/Roulette/UI proofs are not repeated.
+- Retire the e110 comparison after successor/native/CLI acceptance: 103 managed files removed, manifest/logs retained, ten real-input guards unchanged under old/new unit and Wine-prefix leases. The retirement map protects data inputs and leaves unrelated code-only compilers/canonical outputs outside the cleanup operation. One current e111 dataset remains.
+- Task handoff and git diff --check pass. The shared project-memory check currently reports two concurrently changed files outside this ROM-data change, recipe/checkpoint/runner.rs and debug_control.rs, without a current record. They remain untouched; global check closure is pending that separate work.
+
+**Limitations**
+
+- Conditional finite-loop domains and original reader prefixes do not prove complete banks, constructors, scheduler behavior, global/indirect reachability or ordinary use of the five new roots. Twenty-nine retained census candidates remain outside current compact ownership. Linux, USA, native Windows and remaining ROM/mod phases are pending. No benchmarks or performance/space measurements.
+- The older private tests have updated current metadata expectations but were not rerun. Two live-source CLI source-guard failures, two pre-capture busy guards and the initial broad compiler cleanup deferral remain recorded. Successful source snapshotting resolves the compilation race; effective primary Terra/xhigh and delegated Sol/xhigh settings cannot be independently confirmed. Sol gpt-6.1-sol/xhigh was explicitly requested.
+
+Documentation: [rom_data_compact_catalog.md](docs/rom_data_compact_catalog.md), [ROM_DATA_TODO.md](docs/development/ROM_DATA_TODO.md), [LOCAL_ARTIFACTS.md](docs/development/LOCAL_ARTIFACTS.md).
+
+[Change record](docs/changes/2026-11-03-extend-european-compact-catalog-from-finite-loops.json)
+
 ## 2026-11-03 — Expose source capability reports through the local channel
 
 Type: added. Platforms: Windows GNU / Wine.
@@ -1976,6 +2167,30 @@ Type: changed. Platforms: Windows GNU / Wine.
 Documentation: [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
 
 [Change record](docs/changes/2026-11-03-expire-live-eur-replay.json)
+
+## 2026-11-03 — Execute bounded command recipes with recoverable step identities
+
+Type: added. Platforms: Windows GNU / Wine.
+
+**Changes**
+
+- Add explicit console run, cancel and resume for prepared recipes containing status, inspect and bounded step actions; unsupported actions are refused before dispatch.
+- Persist the original deadline and request identity before dispatch, journal terminal responses, retry unresolved ledger-protected steps without repeating completed steps, and distinguish cancellation requested from a stopped boundary.
+- Enforce the explicit step-frame budget, execution deadline and checkpoint/output bound; stop on the first refusal or output limit. Ambiguous read queries are not retried automatically.
+
+**Validation**
+
+- Windows GNU build and 21 focused Wine tests passed, including synthetic control-server cancellation between steps, same-identity recovery after a lost response, first-error stop, deadline and output limits, ambiguous query refusal and legacy picker behavior.
+- A separate isolated EUR Wine/Xvfb interpreter session cancelled before execution, resumed a two-frame step followed by an inspect, and confirmed that a second resume did not change guest state; protected inputs stayed unchanged. The live unit retained private scratch as a named current-proof exception.
+- The first compile failed on two String conversions and was corrected. The successful live run logged two Access denied control messages; all requested commands completed, but the exact denied operation remains unconfirmed.
+
+**Limitations**
+
+- Only status, inspect and step are supported. Waits, assertions, other actions, interactive Scripts/tools Start and full interrupted real-session acceptance remain open. Read queries lack ledger recovery; the system clock and non-interruptible input reads limit deadline guarantees, concurrent external controls are not excluded, and power-loss durability is not claimed. Native Windows and physical input were not tested.
+
+Documentation: [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-03-execute-bounded-command-recipes.json)
 
 ## 2026-11-03 — Distinguish the independently maintained fork
 
@@ -2774,6 +2989,74 @@ Type: changed. Platforms: Local validation workflow, Wine.
 Documentation: [LOCAL_ARTIFACTS.md](docs/development/LOCAL_ARTIFACTS.md).
 
 [Change record](docs/changes/2026-11-03-bound-new-validation-unit-artifacts.json)
+
+## 2026-11-03 — Save and preview inert typed debug command recipes
+
+Type: added. Platforms: Windows GNU / Wine.
+
+**Changes**
+
+- Add console and debug-command recipe save/preview for ordered typed actions, pinned to the selected session manifest and its declared ROM/runtime hashes; no action is dispatched.
+- Bound recipe names, file count, action count and explicit step frames; reject nested recipes, retry, cancellation, unbounded resume and overwriting an existing recipe. Add discoverable command hints and operation descriptors.
+
+**Validation**
+
+- Windows GNU build and 19 focused Wine tests passed for recipe authoring, pin mismatch, malformed/unbounded input, existing command parser and completion, and operation contracts; the menu atlas inventory check passed.
+- A synthetic session without ROM or control mailbox passed save and preview through the Windows executable under Wine, with identical typed ordered actions and duplicate-name refusal; successful scratch was removed.
+
+**Limitations**
+
+- These files are inert and the Scripts and tools selector does not yet accept them. Execution, enforcement of total runtime limits, assertions, cancellation, checkpoint, safe resume and short/interrupted end-to-end recipes remain open. Manifest pins are compared as declared, not independently rehashed. Native Windows and interactive console GUI were not tested.
+
+Documentation: [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-03-author-inert-debug-command-recipes.json)
+
+## 2026-11-03 — Assert bounded command recipe results
+
+Type: added. Platforms: Windows GNU / Wine.
+
+**Changes**
+
+- Allow bounded JSON Pointer scalar assertions after a typed recipe action and include them in the pinned recipe identity; preserve serialization of recipes without assertions.
+- Evaluate and journal assertions against the terminal response, stop with assertion-failed before later actions, and validate stored checks on reload without reissuing the completed action.
+
+**Validation**
+
+- Windows GNU build and 27 focused Wine tests passed for typed/bounded assertions, missing versus null, pass/fail stop behavior, tamper detection, lost-response recovery and existing recipe/control contracts.
+- An isolated EUR Wine/Xvfb interpreter session passed a status assertion, advanced one frame, failed a second assertion and confirmed that neither the next step nor an explicit resume advanced the guest; protected inputs stayed unchanged. A previously completed checkpoint without assertions was reread unchanged.
+- The first wide test run failed when the synthetic server panicked on a temporarily denied response publication; its outbox is designed to retry on later polls, and the corrected fixture and rerun passed.
+
+**Limitations**
+
+- Only the existing status, inspect and step runner actions are supported; waits, additional actions, interactive tool Start and real interrupted recovery remain open. The live unit keeps private scratch as a named current-proof exception; native Windows and interactive console entry were not tested.
+
+Documentation: [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-03-assert-recipe-results.json)
+
+## 2026-11-03 — Add bounded status waits to command recipes
+
+Type: added. Platforms: Windows GNU / Wine.
+
+**Changes**
+
+- Add typed status waits with explicit timeout, interval and poll budgets; preserve serialization for recipes without waits.
+- Persist the completed action and reserve each read before polling so a resumed wait does not reissue the action or extend its original budget.
+
+**Validation**
+
+- Windows GNU targeted test binary compiled and 30 focused Wine tests passed, including matched status waits, exhausted poll budgets, cancellation/resume without repeating the action, input bounds and existing recipe/control contracts.
+- Two sandboxed Wine attempts failed before tests because the server lock location was read-only. Their exact owned leases were released after host process checks; diagnostics were retained. A native Linux build attempt failed for missing ALSA development metadata and temporary-file quota exhaustion.
+- Generated menu atlas inventory, project memory and handoff checks passed.
+
+**Limitations**
+
+- Wait tests used a synthetic server; real interrupted recovery, real sessions and native Windows remain unverified. Status polls observe external state and do not advance a paused guest. Broader recipe actions and interactive Start remain open.
+
+Documentation: [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-03-add-recipe-outcome-waits.json)
 
 ## 2026-11-02 — Validate upstream fractional fast-forward input tests
 

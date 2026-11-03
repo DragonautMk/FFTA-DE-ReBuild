@@ -953,9 +953,14 @@ impl Menu {
     }
     pub fn cheat_active(&self)->bool{self.page==Page::CheatCatalog}
     pub fn cheat_highlight(&self)->Option<&str>{self.cheats.highlighted_id()}
-    pub fn open_cheat_management(&mut self,sources:Vec<CheatSource>){self.cheats.open_cheat_management(sources);}
+    pub fn open_cheat_management(&mut self,sources:Vec<CheatSource>,presets:Vec<String>){self.cheats.open_cheat_management(sources,presets);}
     pub fn cheat_selected_source(&self)->Option<&CheatSource>{self.cheats.cheat_selected_source()}
     pub fn cheat_preview_reviewed(&self)->bool{self.cheats.cheat_preview_reviewed()}
+    pub fn cheat_preset_name(&self)->Option<&str>{self.cheats.cheat_preset_name()}
+    pub fn cheat_preset_selected(&self)->Option<&str>{self.cheats.cheat_preset_selected()}
+    pub fn cheat_preview_token(&self)->Option<&str>{self.cheats.cheat_preview_token()}
+    pub fn cheat_set_preview_token(&mut self,token:String){self.cheats.cheat_set_preview_token(token);}
+    pub fn cheat_set_presets(&mut self,presets:Vec<String>){self.cheats.cheat_set_presets(presets);}
     pub fn cheat_management_feedback(&mut self,message:String,preview:Option<String>){self.cheats.cheat_management_feedback(message,preview);}
     pub fn set_tool_inputs(&mut self, inputs:Vec<(ContentSlot,String)>){
         for f in &mut self.tool.fields{if let ToolFieldKind::Input(slot)=f.kind{f.value=inputs.iter().find(|(key,_)|*key==slot).map(|(_,v)|v.clone()).unwrap_or("Not selected".into());}}

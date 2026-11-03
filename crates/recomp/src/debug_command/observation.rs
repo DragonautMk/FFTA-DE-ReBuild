@@ -10,10 +10,10 @@ fn clean(value:&str,limit:usize)->String {
 }
 
 pub(crate) fn target(manifest:&Value,run:&str,language:Language)->String {
-    let label=clean(manifest["label"].as_str().unwrap_or("?"),12);
+    let label=clean(manifest["label"].as_str().unwrap_or("?"),48);
     let hash=manifest["pins"]["ffta.gba"].as_str().filter(|h|h.len()==64&&h.bytes().all(|c|c.is_ascii_hexdigit())).unwrap_or("");
-    let rom=if hash.is_empty(){"?".into()}else{format!("{}...",&hash[..12])};
-    tr(language,"Session {label} | ROM {rom} | run {run}",&[("label",label),("rom",rom),("run",clean(run,32))])
+    let rom=if hash.is_empty(){"?".into()}else{hash.to_owned()};
+    tr(language,"Session {label} | ROM {rom} | run {run}",&[("label",label),("rom",rom),("run",clean(run,100))])
 }
 pub(crate) fn verified_target(bytes:&[u8],run:&str,expected:&str,language:Language)->Result<String,String>{
     if gba_core::ffta_rom::digest(bytes)!=expected{return Err("Session manifest changed; reopen the debug copy".into());}
@@ -22,7 +22,7 @@ pub(crate) fn verified_target(bytes:&[u8],run:&str,expected:&str,language:Langua
 
 pub(crate) fn pending(value:&Value,remaining:u32,search_remaining:Option<u64>,language:Language)->(String,String) {
     if value.is_null(){return (language.text("No pending job").into(),language.text("Parameters: -").into());}
-    let id=clean(value["request_id"].as_str().unwrap_or("?"),32);
+    let id=clean(value["request_id"].as_str().unwrap_or("?"),100);
     let command=&value["command"];
     let progress=match command["action"].as_str(){
         Some("step")=>tr(language,"frames remaining {remaining}/{total}",&[("remaining",remaining.to_string()),("total",command["frames"].as_u64().unwrap_or(0).to_string())]),
@@ -44,10 +44,10 @@ pub(crate) fn pending(value:&Value,remaining:u32,search_remaining:Option<u64>,la
         },
         Some("content-refresh")=>"content refresh".into(),
         Some("cheat-refresh")=>"cheats refresh".into(),
-        Some("select-id")=>format!("select {} {}",command["slot"].as_str().unwrap_or("?"),clean(command["id"].as_str().unwrap_or("?"),72)),
+        Some("select-id")=>format!("select {} {}",command["slot"].as_str().unwrap_or("?"),clean(command["id"].as_str().unwrap_or("?"),512)),
         _=>serde_json::to_string(command).unwrap_or_else(|_|"?".into()),
     };
-    (format!("ID {id} | {progress}"),tr(language,"Parameters: {parameters}",&[("parameters",clean(&parameters,256))]))
+    (format!("ID {id} | {progress}"),tr(language,"Parameters: {parameters}",&[("parameters",clean(&parameters,4096))]))
 }
 
 #[cfg(test)]
@@ -57,10 +57,13 @@ mod tests {
     fn target_and_pending_progress_are_explicit_and_bounded(){
         let manifest=json!({"label":"Prova","pins":{"ffta.gba":"a".repeat(64)}});
         let en=Language::default();let it=Language::parse("it");
-        let target=target(&manifest,"run-42",en);assert!(target.starts_with("Session ")&&target.contains("Prova")&&target.contains("aaaaaaaaaaaa...")&&target.contains("run-42"));
+        let target=target(&manifest,"run-42",en);assert!(target.starts_with("Session ")&&target.contains("Prova")&&target.contains(&"a".repeat(64))&&target.contains("run-42"));
         assert!(super::target(&manifest,"run-42",it).starts_with("Sessione "));
         let braces=json!({"label":"{rom}","pins":{"ffta.gba":"a".repeat(64)}});
-        assert!(super::target(&braces,"run-42",en).contains("Session {rom} | ROM aaaaaaaaaaaa..."));
+        assert!(super::target(&braces,"run-42",en).contains(&format!("Session {{rom}} | ROM {}", "a".repeat(64))));
+        let long_label="A long session label with Unicode à and a clear ending";
+        let long_target=super::target(&json!({"label":long_label,"pins":{"ffta.gba":"a".repeat(64)}}),"run-42",en);
+        assert!(long_target.contains(&long_label.chars().take(48).collect::<String>()));
         let bytes=serde_json::to_vec(&manifest).unwrap();let hash=gba_core::ffta_rom::digest(&bytes);
         assert!(verified_target(&bytes,"run-42",&hash,en).unwrap().contains("Prova"));assert!(verified_target(&bytes,"run-42",&"0".repeat(64),en).is_err());
         let step=json!({"request_id":"id-1","command":{"action":"step","frames":10,"keys":1023}});
@@ -69,7 +72,9 @@ mod tests {
         let search=json!({"request_id":"id-2","command":{"action":"find","settings":{"steps":100,"condition":{"kind":"pc","address":134217728,"thumb":false}}}});
         let (progress,params)=pending(&search,0,Some(75),en);assert!(progress.contains("id-2")&&progress.contains("75/100"));assert!(params.contains("0x08000000 arm"));
         assert_eq!(pending(&Value::Null,0,None,en).0,"No pending job");assert_eq!(pending(&Value::Null,0,None,it).0,"Nessun job pendente");
-        let long=json!({"request_id":"x".repeat(500),"command":{"action":"select-id","id":"y".repeat(500)}});
-        let (progress,params)=pending(&long,0,None,en);assert!(progress.len()<160&&params.len()<300);
+        let long=json!({"request_id":"x".repeat(100),"command":{"action":"select-id","id":"y".repeat(512)}});
+        let (progress,params)=pending(&long,0,None,en);assert!(progress.contains(&"x".repeat(100))&&params.contains(&"y".repeat(512)));
+        let excessive=json!({"request_id":"x".repeat(500),"command":{"action":"select-id","id":"y".repeat(5000)}});
+        let (progress,params)=pending(&excessive,0,None,en);assert!(progress.len()<160&&params.len()<600);
     }
 }

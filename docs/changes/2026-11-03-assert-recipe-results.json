@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "assert-recipe-results",
+  "title": "Assert bounded command recipe results",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Allow bounded JSON Pointer scalar assertions after a typed recipe action and include them in the pinned recipe identity; preserve serialization of recipes without assertions.",
+    "Evaluate and journal assertions against the terminal response, stop with assertion-failed before later actions, and validate stored checks on reload without reissuing the completed action."
+  ],
+  "validation": [
+    "Windows GNU build and 27 focused Wine tests passed for typed/bounded assertions, missing versus null, pass/fail stop behavior, tamper detection, lost-response recovery and existing recipe/control contracts.",
+    "An isolated EUR Wine/Xvfb interpreter session passed a status assertion, advanced one frame, failed a second assertion and confirmed that neither the next step nor an explicit resume advanced the guest; protected inputs stayed unchanged. A previously completed checkpoint without assertions was reread unchanged.",
+    "The first wide test run failed when the synthetic server panicked on a temporarily denied response publication; its outbox is designed to retry on later polls, and the corrected fixture and rerun passed."
+  ],
+  "limitations": [
+    "Only the existing status, inspect and step runner actions are supported; waits, additional actions, interactive tool Start and real interrupted recovery remain open. The live unit keeps private scratch as a named current-proof exception; native Windows and interactive console entry were not tested."
+  ],
+  "files": [
+    "crates/recomp/src/debug_command/recipe.rs",
+    "crates/recomp/src/debug_command/recipe/checkpoint.rs",
+    "crates/recomp/src/debug_command/recipe/checkpoint/runner.rs",
+    "crates/recomp/src/debug_operations.json",
+    "docs/development/MENU_ATLAS_INVENTORY.json"
+  ],
+  "references": [
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

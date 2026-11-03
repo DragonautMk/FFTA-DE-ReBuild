@@ -2021,8 +2021,9 @@ The accepted e108 dataset was retained in
 until its exact e109 successor passed validation. That superseded payload is
 now retired; its manifest/logs/results remain and accepted proof is unchanged.
 The current dataset is under
-`target/validation/units/rom-data-compact-catalog-current-rdbcje1e/work/resources/`;
-the e109 comparison was subsequently retired after its e110 successor passed.
+`target/validation/units/rom-data-loop-compact-current-o_yv6xep/work/resources/`;
+the e109 and e110 comparisons were subsequently retired after their respective
+accepted successors passed.
 [UI template validation](rom_data_ui.md#category-selected-ui-context-templates)
 records the replacement and guards. Earlier exact replacement checks also
 retired the resolved failed unit's generated dataset under leases and host
@@ -2264,7 +2265,12 @@ roots and 38 selectors, with 207 compact frames and 888 objects across 65
 source spans (6,650 bytes). It preserves all 99 previous resources, including
 the eight earlier compact banks. Source/model, mixed-boundary/in-memory
 rejection, original interpreter/native prefixes and production CLI create/
-reuse/startup pass on Wine. Ordinary use and global/indirect coverage remain
-open; the short CLI sample has zero new-catalog use. No guest selector cap,
-complete scheduler claim or benchmark is introduced. See the
+reuse/startup pass on Wine. One normal IN-08 Star Cross 480-frame positive
+full pair is accepted separately. The e111-d110 extension adds five finite-loop
+roots/43 selectors, taking this catalog to 34 banks/81 selectors/7,624 bytes.
+A new-only Wine filter passes 48 native state/clock cases and all 974 new bytes,
+while preserving the prior 29 bank structures and 99 other resources. One current
+generation remains; the e110 comparison is retired with evidence. Complete
+ordinary/global/indirect coverage, Linux/USA/native Windows and scheduler behavior
+remain open; no guest cap or benchmark is introduced. See the
 [catalog contract and validation](rom_data_compact_catalog.md).

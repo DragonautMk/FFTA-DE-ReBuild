@@ -330,8 +330,9 @@ scratch is automatically removed; metadata, logs, the small native object and
 source preimages remain. The accepted e109 dataset was retained for comparison until its e110 successor
 passed; that payload is now retired with its manifest/logs/results preserved.
 The current dataset is under
-`target/validation/units/rom-data-compact-catalog-current-rdbcje1e/work/resources/`;
-[the compact catalog](rom_data_compact_catalog.md) records its validation.
+`target/validation/units/rom-data-loop-compact-current-o_yv6xep/work/resources/`;
+[the compact catalog](rom_data_compact_catalog.md) records the e111 successor
+and retirement of the later e110 comparison after exact prior-resource checks.
 The older e108 payload was likewise retired only after successor equality,
 input guards, unit/prefix leases and host activity checks. The original
 ROM, personal saves and the one current Do it seed are unchanged. Retired

@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "extend-european-compact-catalog-from-finite-loops",
+  "title": "Extend the European compact OBJ catalog from five finite selector loops",
+  "kind": "added",
+  "platforms": [
+    "EUR Windows cross-builds and execution under Wine"
+  ],
+  "changes": [
+    "Extend the existing sparse compact OBJ catalog with five roots and 43 selectors authenticated by explicit original byte-counter loops. Keep the resource identity, JSON schema and 100-resource count, and raise revisions to e111-d110. The catalog now contains 34 banks, 81 selectors and 7,624 source bytes in 71 spans; represented bytes use typed files and other guest reads retain original semantics.",
+    "Add one focused Wine test for the new five-bank projection. Preserve all 29 earlier bank structures and 99 other resource records/payloads. Maintain current-revision expectations in the older private tests without rerunning their accepted cases.",
+    "Reuse canonical Cargo outputs, the retained native count-reader object, the coordinated Wine prefix and one successor dataset. Remove successful source/build/native/CLI scratch and retire the e110 comparison after exact successor acceptance; retain its manifest, logs, source preimages and failed diagnostics."
+  ],
+  "validation": [
+    "Wine source query authenticates five finite loop specifications, all 19 BL targets, index initialization/direct argument/tail/back edges, seven helper bodies and two unchanged constructor preservation pins. Fourteen original Windows windows reviewed. New geometry: 43 selectors, 60 frames, 44 lists, 81 objects and 974 bytes in seven union spans, with no overlap against the current 100 owners or another new bank.",
+    "Canonical Windows test build passes without warnings and with 710 stable source hashes. Two production compiles succeed but their source guards reject concurrent debug-file edits. A single immutable snapshot of 841 source/assets files then builds the canonical production CLI without warnings, with all 710 code hashes stable and selected ROM-data hashes equal to the accepted test build. Successful snapshot work is removed; two prior busy-compiler guards stop before capture or compilation and retain diagnostics. No other writer or process is stopped.",
+    "Production CLI creates and reuses one e111-d110 generation: 100 resources, 101 generation files, all 99 other resource records/payloads and 29 prior bank structures unchanged. Reuse preserves managed file set, hashes and times.",
+    "One new-only Wine filter passes all 974 poisoned-ROM typed bytes, JSON/model bindings, mirrored mixed boundaries and coherent-edit rejection in memory. Original reader prefixes verify 43 counts, 60 list/duration pairs and 44 list pointers. Reused native prefix passes all 48 interpreter/native full-state-clock cases, serving 180 typed bytes: 172 from represented selectors and eight actual owned intersections in five outside-projection cases. No old native case or full dataset test copy is repeated.",
+    "Changed-generation production startup advances the existing EUR Do it seed for 12 frames, 7857..7869, with all 100 exact runtime resource identities. Aggregate catalog counters are zero in that short window; this is registration/startup evidence only. Earlier ordinary Star Cross/Roulette/UI proofs are not repeated.",
+    "Retire the e110 comparison after successor/native/CLI acceptance: 103 managed files removed, manifest/logs retained, ten real-input guards unchanged under old/new unit and Wine-prefix leases. The retirement map protects data inputs and leaves unrelated code-only compilers/canonical outputs outside the cleanup operation. One current e111 dataset remains.",
+    "Task handoff and git diff --check pass. The shared project-memory check currently reports two concurrently changed files outside this ROM-data change, recipe/checkpoint/runner.rs and debug_control.rs, without a current record. They remain untouched; global check closure is pending that separate work."
+  ],
+  "limitations": [
+    "Conditional finite-loop domains and original reader prefixes do not prove complete banks, constructors, scheduler behavior, global/indirect reachability or ordinary use of the five new roots. Twenty-nine retained census candidates remain outside current compact ownership. Linux, USA, native Windows and remaining ROM/mod phases are pending. No benchmarks or performance/space measurements.",
+    "The older private tests have updated current metadata expectations but were not rerun. Two live-source CLI source-guard failures, two pre-capture busy guards and the initial broad compiler cleanup deferral remain recorded. Successful source snapshotting resolves the compilation race; effective primary Terra/xhigh and delegated Sol/xhigh settings cannot be independently confirmed. Sol gpt-6.1-sol/xhigh was explicitly requested."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/compact_obj_catalog/contracts.rs",
+    "crates/recomp/src/rom_data/conditional_descriptor_bank_zero_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_catalog_tests.rs",
+    "crates/recomp/src/rom_data/table_graphics_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_quinary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/clan_table_alias_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_secondary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/dynamic_raw_fragments_runtime_tests.rs",
+    "crates/recomp/src/rom_data/ui_context_templates_tests.rs",
+    "crates/recomp/src/rom_data/conditional_packed_lookup_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_senary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_tertiary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_four_byte_lookup_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_property_masks_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_quaternary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_octonary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_septenary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_descriptor_banks_runtime_tests.rs",
+    "docs/rom_data_compact_catalog.md",
+    "docs/rom_data_obj.md",
+    "docs/rom_data_ui.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ]
+}

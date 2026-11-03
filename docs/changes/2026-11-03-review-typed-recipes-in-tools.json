@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "review-typed-recipes-in-tools",
+  "title": "Select and review typed recipes in Scripts and tools",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Recognize inert typed command recipes in content discovery and permit selecting them as recipe inputs alongside the existing readonly format.",
+    "Review selected typed actions and session identity in the tool, clearly mark abbreviated long previews, and refuse Start before creating a host run or dispatching any action."
+  ],
+  "validation": [
+    "Windows GNU build and 18 focused Wine tests passed, including synthetic recipe/session selection, preview, long-preview warning, Start refusal, legacy readonly recipe checks and operation metadata.",
+    "The first wider Wine test run passed the new integration test but failed an unrelated link-safety test because its symlink fixture was not materialized; the scoped rerun excluded that single test and retained the failed unit."
+  ],
+  "limitations": [
+    "The interactive picker and native Windows were not tested. Typed recipe execution, enforced runtime limits, assertions, cancellation, logging, checkpoints and safe resume remain missing. The console provides complete JSON when the tool preview is abbreviated."
+  ],
+  "files": [
+    "crates/recomp/src/debug_command/recipe.rs",
+    "crates/recomp/src/debug_content.rs",
+    "crates/recomp/src/debug_tools.rs",
+    "crates/recomp/src/debug_tools/tests.rs",
+    "crates/recomp/src/debug_workbench.rs",
+    "crates/recomp/src/debug_operations.json",
+    "docs/development/MENU_ATLAS_INVENTORY.json"
+  ],
+  "references": [
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

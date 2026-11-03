@@ -298,8 +298,11 @@ cheat-preset-save`, `cheat-preset-prepare` and `cheat-preset-arm`. Preparation
 and arming require the selected matching catalog, an idle paused interpreter
 and an empty armed set. Arming repeats the full source, ROM, paused-state,
 footprint and conflict checks and either arms the entire group or none. No
-guest write occurs until the next interpreter frame. Values and preset controls
-in the page remain open work.
+guest write occurs until the next interpreter frame. The **Manage cheat** page
+also has **Presets**: edit the name and save the armed set, then explicitly
+select a saved preset, prepare and review it, and arm it. Changing the selection
+or switching between source and preset views invalidates the stored review
+token. Parameter value and range selection remains open work.
 
 Frozen Windows GNU tests and an isolated synthetic Wine/Xvfb session checked a
 two-member save/preview/arm flow, duplicate name, changed preset, source lines,
@@ -307,7 +310,11 @@ ROM and selected catalog, and a conflicting group. The group was not partially
 armed on refusal. The first catalog-change attempt modified a different copy;
 a separate check targeted the selected source and confirmed refusal and
 recovery. No guest frames advanced, and original files and session pins stayed
-unchanged. Native Windows and physical input were not tested.
+unchanged. A separate synthetic Wine/Xvfb session exercised the page with
+keyboard and pointer: it saved, selected, reviewed, armed and disarmed one
+preset without advancing the guest. The validation runner retained that
+session's private test copies; a separate evidence receipt passed. Native Windows
+and physical input were not tested.
 
 Frozen Windows GNU builds and focused Wine tests passed. In a synthetic isolated
 Wine/Xvfb interpreter, arm left the paused guest unchanged, an overlap was

@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "inspect-debug-command-context",
+  "title": "Inspect long debug command context",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Add a read-only F2 context view with wrapping and scrolling for session, ROM, run, pending request and parameters, retaining the draft and keeping protocol-sized identifiers visible.",
+    "Block controller and IME edits while the context view is open and restore normal console input on return."
+  ],
+  "validation": [
+    "Windows GNU build passed; seven focused Wine tests covered context wrapping, identifier bounds, controller and editor behavior.",
+    "A Wine/Xvfb session used SetWindowPos and GetClientRect to confirm a 480x360 Windows client; the screenshot showed the long session label, full ROM hash and footer, and returning submitted the existing status draft without changing guest state or protected inputs.",
+    "An earlier X-only resize produced a clipped screenshot and was not accepted as evidence of adaptive layout; a read-only Sol/xhigh consultation identified the established Win32 resize procedure."
+  ],
+  "limitations": [
+    "The GUI proof covered idle context with keyboard, not long live-job parameters, physical controllers or native Windows. Successful GUI units retain private scratch under named review exceptions; no cleanup of private copies is claimed. Effective primary and consultant model settings were not independently confirmed."
+  ],
+  "files": [
+    "crates/input-config/languages/en.json",
+    "crates/input-config/languages/it.json",
+    "crates/menu/src/command_console.rs",
+    "crates/recomp/src/debug_command/observation.rs",
+    "crates/recomp/src/debug_command_panel.rs"
+  ],
+  "references": [
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

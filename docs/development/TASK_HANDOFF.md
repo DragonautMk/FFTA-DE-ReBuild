@@ -36,10 +36,11 @@ termination of another owner's process or changing another thread's goal state.
 
 ### ROM-DATA-FULL-EUR
 
-- State: active
+- State: suspended
 - Outcome: partial
-- Verified: e110-d109,100 resources/101 files;29-bank sparse compact catalog source/model/native/CLI accepted,99 previous resources/bytes unchanged. Current dataset: target/validation/units/rom-data-compact-catalog-current-rdbcje1e/work/resources/; proof: target/rom-data-compact-catalog-20261103/combined-result.json. Superseded e109/e108 payloads retired with manifests/evidence retained. Earlier Roulette600-frame and UI12-frame positives remain accepted; no repeat. Initial e108 oracle failure/tail acceptance and e110 interrupted-build/continuation limits preserved.
+- Verified: e111100resources/101files,34banks/81selectors/7624B; five-loop source/native48cases/CLI accepted. Current: target/validation/units/rom-data-loop-compact-current-o_yv6xep/work/resources/. Proof: target/rom-data-compact-residual-sources-20261103/combined-result.json. E110 retired; Roulette600/UI12/StarCross480 proofs and limits preserved.
 - Missing: unmigrated resources/consumers, missing ordinary-use evidence, ABI/global extent/indirect calls and mod phases ROMDATA-06/07; Linux/USA/native Windows/new32:9 remain distinct. EUR, reduced Wine scope, no performance/space measurements; originals and personal saves unchanged.
+- Selection: `ROMDATA-02-04-E112-TABLE-COMPACT-CATALOG` suspended/integrated_unverified. Latest advanced-save reply resolved by closed ordinary proofs; goal paused. E112 build/create-reuse/native96cases PASS. Missing: short CLI startup/e111 comparison retirement. No new execution selected; memory reconciliation only.
 - Resume: [ROM_DATA_TODO](ROM_DATA_TODO.md), only the selected criterion's section (ROMDATA-01/02/03/04/05/06/07); [inventory](ROM_DATA_INVENTORY.md). Do not read the whole TODO. The following children retain their IDs and limits, with no new attempts selected here:
   - `ROMDATA-04-PARAMETER-RECORDS27-ORDINARY`: source/model/runtime/CLI accepted; 59 records observed, full domain unproven; positive normal use and complete paired evidence missing. Eleven negative captures closed; archive legacy lines 17624..17672 and `docs/rom_data_gameplay.md`, ordinary sparse parameter record reachability section.
   - `ROMDATA-04-LOCALIZED-TABLE-GRAPHICS-ORDINARY`: 40 banks/8 tables source/model/runtime/CLI accepted; positive normal trigger and paired evidence missing; negative attempts remain closed. `docs/rom_data_ui_graphics.md`, ordinary table extension reachability section; archive 17844..17864.
@@ -48,7 +49,8 @@ termination of another owner's process or changing another thread's goal state.
   - `ROMDATA-05-OBJ-VALIDATION`: local equivalence/costs, GUI, archive and USA initializer have later accepted outcomes; native Windows gates, further catalogs/scenes and normal enablement remain. Archive 3945..4087. Old artificial RSS/space constraints and `ROMDATA-05-BG-SCENES-COSTS` do not authorize further measurements: superseded by EUR/no-metrics steering.
   - Compact OBJ e101..e108: conditional prefixes/model/runtime/CLI accepted. e101..e107 ordinary use remains open; record222/candidate-table and selector33 have only static conditions/bounded negatives. e108/6cc124 has one IN-19 Roulette 600-frame positive native pair; complete animation/ordinary selector-list domain remains unproved. Archive 11..65 and new ordinary-use record; no accepted replay repeated.
   - UI context templates e109: source selector/copy catalog and one ordinary20B copy accepted; complete UI extent/all consumers/all11 records in ordinary play remain unproved. docs/rom_data_ui.md. Do not repeat closed12-frame proof for context.
-  - ROMDATA-04-COMPACT-CATALOG-ORDINARY:29 new roots/38selectors/6650B managed by e110; source/native/CLI closed. Short startup counters0 do not prove use/absence. Selected actions303/310/312 lack human active-bank descriptors; child pointer source checked, no rejected-lead cast. Positive producer/scene/full pair missing; no blind navigation. docs/rom_data_compact_catalog.md.
+  - ROMDATA-04-COMPACT-CATALOG-ORDINARY: StarCross ordinary proof closed: IN08Douglas secondary9/mastered84, positive15830reads/19330B and480frame full native pair. Complete29-root/allselector/animation/consumer coverage remains open; counters aggregatecatalog. Prior303/310/312 human leads excluded. docs/rom_data_compact_catalog.md.
+  - `ROMDATA-04-LOOP-COMPACT-CATALOG-ORDINARY`: five-loop source/model/native/CLI accepted; ordinary producer/scene/pair missing.26residual census roots/global domains remain unproved. docs/rom_data_compact_catalog.md.
 
 ## Incomplete tasks and open criteria
 
@@ -79,17 +81,18 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 - State: suspended
 - Outcome: partial
-- Verified: structured context, retry, discovery and replay/panel; real EUR replay cancel/deadline and repeat procedure; 480×360 replay view; slow live refresh allows prior listing, rejects wrong ID, cancels exact ID without replacing index. `docs/changes/2026-11-03-cancel-slow-content-refresh.json`.
-- Missing: full operation parity and comprehensive narrow-window presentation for long labels/parameters.
-- Resume: select a missing criterion; do not repeat accepted replay, narrow replay view or live refresh.
+- Verified: context, retry, discovery, replay/cancel and live refresh; F2 wrapped context tested, idle narrow GUI checked. `docs/changes/2026-11-03-inspect-debug-command-context.json`.
+- Missing: full operation parity, live long-parameter GUI and comprehensive narrow-window presentation; native/physical input.
+- Resume: select missing criterion. Successful GUI units `dbg2-context-{gui-vnovoyb8,win32-gui-_eurj41o}` keep private scratch for review; retire exceptions safely after replacement. Do not repeat accepted replay.
 
 ### DBG2-16
 
-- State: waiting
-- Outcome: not_started
-- Verified: DBG2-06 host runner/observational recipes and supervised replay exist; these do not constitute console batches with checkpoints.
-- Missing: saved typed command sequence, pins, assertions/waits/caps, cancellation and resumption without repeating successful steps.
-- Resume: depends on DBG2-15; no new development selected during the audit.
+- State: active
+- Outcome: partial
+- Verified: assertions and EUR 1-frame stop/no-repeat; bounded waits and reviewed tool Start/cancellation pass synthetic Wine tests. `2026-11-03-start-reviewed-recipes-in-tools.json`.
+- Missing: other actions, interactive picker/real GUI, real interrupted recovery and real-session waits; ambiguous queries not retried.
+- Selection: user goal debugtools v2 / DBG2-16-REAL-INTERRUPTION; prior synthetic recovery and short EUR run accepted. Missing: real interrupted client recovery.
+- Resume: prepare bounded isolated Windows/Wine proof; preserve input pins and existing jobs. Failed build units retained; project-memory check flags other active ROM changes.
 
 ### DBG2-17
 
@@ -117,11 +120,11 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ### DBG2-20
 
-- State: suspended
+- State: active
 - Outcome: partial
-- Verified: catalog/source/preview, apply/arm/disarm, filters and named pinned groups save/preview/atomic arm via explicit commands. CH-0226..0241 have source placeholders referencing modifier tables, but their region and values are unvalidated; no substitutions inferred. `docs/changes/2026-11-03-save-and-review-cheat-presets.json`.
-- Missing: validated values/ranges, page preset controls and complete game-effect evidence; device/ROM limits remain.
-- Resume: select a safe missing criterion; inspect `cheats/tabelle-modificatori.md` only for a specific source and do not treat its declarations as verified.
+- Verified: source/preview/arm/disarm, filters and named group save/select/preview/arm via page and commands. `docs/changes/2026-11-03-manage-cheat-presets-in-page.json`.
+- Missing: validated values/ranges and broader game/device behavior.
+- Resume: select a missing criterion; do not repeat the accepted preset-page flow.
 
 ### DBG2-22
 
@@ -215,9 +218,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: ROMDATA-01-E109-COMPACT-CATALOG completed for conditional source/model/runtime/CLI scopes; full EUR goal partial.
-- Last verified result: 29 banks/38 selectors/6650B,100 resources/101 files;99 prior identical. Source/67 native state-clock cases/187 typed bytes and CLI create/reuse/startup PASS. Builds warning-free/709 stable hashes; initial interrupted logs retained. E109 102-file baseline retired with 11 guards/current e110 unchanged; successful scratch removed.
-- Remaining work: ROMDATA-04-COMPACT-CATALOG-ORDINARY positive source/scene/pair; other global/indirect/ROM/mod and Linux/USA/native Windows criteria. New startup counters0, selected human leads unavailable.
-- Errors or blockers: initial 81508 interrupted 143 resolved by same-source PASS36632;45988/89770/82680/93307/87212 terminal. No live jobs/benchmark; effective model settings unconfirmed.
-- Next action: scoped report; project-memory, handoff and diff checks passed. Next continuation selects missing ROM work; ordinary attempts require a supported producer/scene, no accepted-proof repeat.
-- References: docs/changes/2026-11-03-migrate-european-sparse-compact-obj-catalog.json, docs/rom_data_compact_catalog.md, target/rom-data-compact-catalog-20261103/combined-result.json.
+- Task: ROMDATA-02-04-E112-TABLE-COMPACT-CATALOG suspended/integrated_unverified; EUR goal paused/partial.
+- Last verified result: e112 source/model/build/create-reuse PASS; native hw7pz62y PASS25bank+71table/skip cases, full state-clock.34unknown bytes raw;99resources/prior34banks preserved; successful scratch removed.
+- Remaining work: short CLI startup, e111 comparison retirement/acceptance/memory closure;26residual/global/ordinary/Linux/USA/mod.
+- Errors or blockers: first filter ran0tests; corrected without rebuild, failed logs retained. Handle6774 unavailable; terminal receipts prove PASS. Model settings unconfirmed; preserve DBG2 work.
+- Next action: paused; native result/docs recorded, project-memory/handoff/diff checks PASS. On explicit resume inspect pins/ownership, then short CLI; no source/build/native/ordinary repeats.
+- References: target/rom-data-e111-next-sources-20261103/{native-unit,native-filter-correction,current-dataset,build-unit}.json; native unit rom-data-table-compact-native-hw7pz62y.

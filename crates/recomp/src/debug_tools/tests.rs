@@ -28,6 +28,24 @@ fn recipe_rejects_guest_mutations_unknown_fields_and_unbounded_steps_without_run
     assert_eq!(fs::read_dir(t.path()).unwrap().count(), 1);
 }
 #[test]
+fn typed_recipe_requires_a_review_before_start(){
+    let t=tempfile::tempdir().unwrap();let root=t.path().join("session");fs::create_dir_all(root.join("Data/config")).unwrap();
+    let exe=if cfg!(windows){"recomp.exe"}else{"recomp"};
+    for (name,bytes) in [("portable.txt",b"portable".as_slice()),("ffta.gba",b"PUBLIC ROM fixture".as_slice()),(exe,b"PUBLIC runtime fixture".as_slice())] {fs::write(root.join(name),bytes).unwrap();}
+    let hash=|name:&str|gba_core::ffta_rom::digest(&fs::read(root.join(name)).unwrap());
+    let rom=hash("ffta.gba");let pins=json!({"portable.txt":hash("portable.txt"),"ffta.gba":rom,(exe):hash(exe)});
+    let manifest=json!({"schema":1,"kind":"ffta-debug-session","label":"Synthetic","interp":true,"real_bios":false,"has_state":false,"has_dataset":false,"pins":pins});
+    fs::write(root.join("debug-session.json"),serde_json::to_vec(&manifest).unwrap()).unwrap();
+    assert_eq!(crate::debug_command::execute(&root,"recipe save trial 'status' 'step 3'")["ok"],true);
+    let path=root.join("Data/config/debug-command-recipes/recipe-trial.json");
+    let recipe_ref=crate::debug_inputs::Reference::explicit(&path,Slot::Recipe,&rom).unwrap();
+    let session_ref=crate::debug_inputs::Reference::explicit(&root.join("debug-session.json"),Slot::Session,&rom).unwrap();
+    let d=Draft{tool:Tool::Recipe,values:std::collections::BTreeMap::new(),refs:std::collections::BTreeMap::from([(Slot::Recipe,recipe_ref),(Slot::Session,session_ref)]),rom,config:root.join("Data/config")};
+    let review=details(&d).unwrap();assert!(review.contains("Start requires")&&review.contains("\"action\": \"step\""));
+    assert!(run(d,Arc::new(AtomicBool::new(false))).unwrap_err().contains("Review this typed recipe"));
+    assert!(!root.join("Data/config/debug-tool-runs").exists());assert!(!root.join("Data/config/debug-control").exists());
+}
+#[test]
 fn guest_metadata_and_declared_details_are_readonly_and_distinct() {
     let t = tempfile::tempdir().unwrap();
     let p = t.path().join("script-archive.json");

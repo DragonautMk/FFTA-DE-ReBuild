@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "add-recipe-outcome-waits",
+  "title": "Add bounded status waits to command recipes",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Add typed status waits with explicit timeout, interval and poll budgets; preserve serialization for recipes without waits.",
+    "Persist the completed action and reserve each read before polling so a resumed wait does not reissue the action or extend its original budget."
+  ],
+  "validation": [
+    "Windows GNU targeted test binary compiled and 30 focused Wine tests passed, including matched status waits, exhausted poll budgets, cancellation/resume without repeating the action, input bounds and existing recipe/control contracts.",
+    "Two sandboxed Wine attempts failed before tests because the server lock location was read-only. Their exact owned leases were released after host process checks; diagnostics were retained. A native Linux build attempt failed for missing ALSA development metadata and temporary-file quota exhaustion.",
+    "Generated menu atlas inventory, project memory and handoff checks passed."
+  ],
+  "limitations": [
+    "Wait tests used a synthetic server; real interrupted recovery, real sessions and native Windows remain unverified. Status polls observe external state and do not advance a paused guest. Broader recipe actions and interactive Start remain open."
+  ],
+  "files": [
+    "crates/recomp/src/debug_command/recipe.rs",
+    "crates/recomp/src/debug_command/recipe/checkpoint.rs",
+    "crates/recomp/src/debug_command/recipe/checkpoint/runner.rs",
+    "crates/recomp/src/debug_operations.json",
+    "docs/development/MENU_ATLAS_INVENTORY.json"
+  ],
+  "references": [
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

@@ -19942,3 +19942,59 @@ Clarified e26/e27/e31/e32 metadata and managed packet introductory text. Numeric
 - Verified criteria: conditional source/model/direct-runtime/CLI migration for29 unowned compact roots/38selectors,207frames/160list identities/888objects,6650B/65union spans. Wine bounded query from118 retained e100 readers gives65calls/36roots,41new calls;37 independently reviewed original windows plus12 constructor save/restore pins authenticate roots/selectors without control-flow joins or adjacency extents.8 prior compact roots excluded, no99-owner/interbank overlap. Corrected unaccepted6c30a4 old0/2/104B lead to0/1/2/152B before implementation. Generic e110-d109 typed model/runtime publishes100resources/101files; all99prior metadata/payloads identical. Canonical Windows test/CLI builds warning-free,709 source hashes unchanged. Initial81508 SIGTERM/143 before result retained; no host matching descendants/old e109 binary unchanged, same-source continuation36632 PASS. CLI create/reuse103managed files unchanged; one Wine filter passes poisoned typed bytes/JSON/shape/mixed mirrored boundaries/in-memory coherent rejection, all38 counts/207 frame list-duration pairs/160 list pointers,67 native/raw full-state-clock cases using retained authenticated object.187 native typedB=152 valid+35 actual out-of-projection owned intersections, no all-raw oracle or guest cap. Production CLI11960→11972 recognizes100 IDs/new counters0. Human actions303/310/312 absence and metadata/callback identity checked; two child-creation windows reviewed, action305 adjacency rejected without cast/search. Source/native/CLI success scratch removed. E109102-managed-file tree retired under old/new unit+prefix leases/host checks after99 exact successor payloads/11 real-input guards; current e110/Do it seed/native helper/originals intact, old manifest/logs/results/preimages retained.
 - Evidence: docs/changes/2026-11-03-migrate-european-sparse-compact-obj-catalog.json; docs/rom_data_compact_catalog.md; local target/rom-data-compact-catalog-20261103/{source-contract-result,combined-result,native-unit,cli-unit,current-dataset,baseline-retirement-result,interruption-result}.json and interrupted-1/source preimages. Wine units rom-data-compact-catalog-query-410il0gd, rom-data-compact-catalog-windows-xuq32lwl, rom-data-compact-catalog-current-rdbcje1e (only current dataset), rom-data-compact-catalog-native-9zzz4djk, rom-data-compact-catalog-cli-a8rqf6ha. Sol/xhigh /root/sol_e107_next_source read-only selection/ordinary-lead diagnoses independently checked. Handles53015/27941/81508/36632/45988/89770/82680/93307/87212 terminal.
 - Limits: completion is the declared conditional migration, not ROMDATA-04-COMPACT-CATALOG-ORDINARY or full ROM goal. No positive new-catalog ordinary/full-frame pair: startup12 counters0 is registration only; human lead exclusions are not global impossibility. Additional selectors/roots/global CFG/indirect/all consumers/full constructor-scheduler behavior and remaining ROM/mod phases unproved; Linux/USA/native Windows pending. In-memory rejection is not a new disk reload/lifecycle matrix. Initial signal cause unproved; no accepted build or600-frame proof repeated to reconstruct context. Effective primary Terra/xhigh and requested Sol/xhigh settings unconfirmed. No benchmark; retired payloads do not reopen accepted evidence.
+
+### DBG2-20-PRESET-PAGE
+
+- Outcome: completed
+- Verified criteria: named preset page save, explicit selection, review, atomic arm and disarm via shared guards; preview token is tied to the reviewed selection.
+- Evidence: `docs/changes/2026-11-03-manage-cheat-presets-in-page.json`; build and 30 Wine tests `target/validation/units/dbg2-preset-page-final-{build-v5m_kva_,tests-cyko1iif}`; synthetic GUI evidence `target/validation/units/dbg2-preset-page-gui-evidence-o7leltb0/`.
+- Limits: GUI functional PASS, but original validation unit FAIL retained private test copies; evidence receipt PASS. No native Windows, physical controller, values/ranges, device-hook or gameplay validation.
+
+### ROMDATA-04-COMPACT-CATALOG-STAR-CROSS-ORDINARY
+
+- Outcome: completed
+- Verified criteria: source action46/task46/callback0eece4/child0eead8/root6bacd8selector2 authenticated. IN08Douglas/rawunit6 secondary9/learned84=9e verified at both live deployment pointers; normal ElutSands encounter→PhantasmSkill→StarCross→Doit. One reduced Wine480frame7857..8337 CLI positive15830catalog reads/19330B and native raw/managed fullstate-clock/central-widepixels/OAM/dispatch/fiveaudio equality. Original inputs/current e110 unchanged, canonical binaries/native/dataset reused, no build/extraction/copy.29 superseded successful navigation work trees retired with guards; pair scratch removed; exact seed/evidence/failures retained.
+- Evidence: docs/rom_data_compact_catalog.md; target/rom-data-compact-catalog-ordinary-20261103/{source-and-actor-result,ordinary-unit,normal-route-result,navigation-retirement-1,navigation-retirement-final}.json; pairunit rom-data-catalog-star-cross-ordinary-pair-l8_s2yrr.
+- Limits: catalog counters aggregatebanks, endpoint still animates; no completeanimation/allbank/selector/consumer/global claim. Parent ROMDATA-04-COMPACT-CATALOG-ORDINARY partial; Linux/USA/nativeWindows and ROM/mod work open. Sandbox Wine socket failure and wrong list-top precheck retained; wrongjobID/actionadjacency/actor/menu assumptions corrected from source before accepted cast. Solgpt-6.1-sol/xhigh explicitly requested; effective primary/delegated settings unconfirmed. No metrics/benchmark/private data commit.
+
+### DBG2-15-CONTEXT-READABILITY
+
+- Outcome: completed
+- Verified criteria: F2 read-only wrapped and scrollable context retains bounded target and protocol identifiers; draft preserved. Windows GNU build and seven Wine tests passed; 480x360 Win32 client GUI showed full target and returned to submit status with guest state and protected inputs unchanged.
+- Evidence: `docs/changes/2026-11-03-inspect-debug-command-context.json`; `target/validation/units/dbg2-context-{ime-build-daj2scyf,tests-vozvxgrn,win32-gui-_eurj41o}/`.
+- Limits: GUI idle context and keyboard only; long pending parameters/scrolling tested at function level, not live GUI. No native Windows or physical input. Initial X-only resize produced cropped diagnostic; Sol/xhigh identified correct Win32 sizing (effective settings unconfirmed). GUI work kept for private scratch review.
+
+### ROMDATA-01-E110-RESIDUAL-COMPACT-SOURCES
+
+- Outcome: completed
+- Verified criteria: five explicit low-byte induction loops authenticate roots6c56a8/6c4c50/6c5800/6c88a8/6c894c and selectors0..2/0..2/0..10/0..9/0..15. Windows query verifies initialization/directargument/tail/backedge, all19BL, unchangedconstructorpreservation plus7helpers;14retainedoriginalwindows reviewed. Independentgeometry gives43selectors/60frames/44lists/81objects/974B/7unionspans, exactSHA82c918e0689a542496708401309022974b72fdf5aa1ffe41b2bf739542b32935, no current100owner/interbank overlap. Previousquerymisses unknownindex atliteralentry, not dataformat error. Wine unitPASS/scratchremoved; originalROM/currentdataset/canonicalCLI unchanged.
+- Evidence: target/rom-data-compact-residual-sources-20261103/{loop-plan,source-unit,source-contract-result}.json; rom-data-compact-residual-source-6dt5o4n2/evidence; Sol consultant /root/sol_e110_residual_sources explicitly gpt-6.1-sol/xhigh.
+- Limits: conditional finite-loop domains only, no globalreachability/ordinaryuse/completebank or remaining29censusroots. Typed integration selected separately as ROMDATA-02-04-E111-LOOP-COMPACT-CATALOG; Linux/USA/nativeWindows pending, no metrics. Effective primary/delegated modelsettings unconfirmed.
+
+### ROMDATA-02-04-E111-LOOP-COMPACT-CATALOG
+
+- Outcome: completed
+- Verified criteria: five-loop roots/43selectors/60frames/44lists/81objects/974B extend generic catalog to34banks/81selectors/7624B/71spans, e111-d110/100resources101files.99other payloads/prior29banks identical. Warning-free test/immutable-source CLI builds, selected data hashes match; new-only Wine poisonedbytes/boundaries/in-memory rejection/originalprefixes and48native fullstate-clock cases/180typedB (172valid+8outside) PASS. CLI create/reuse/12frame startup/100identities PASS. Successful841source-assets snapshot/native/CLI scratch removed; e110103managedfiles retired with10real-input guards/unit-prefix leases, manifest/logs kept, one currentgeneration.
+- Evidence: docs/rom_data_compact_catalog.md; docs/changes/2026-11-03-extend-european-compact-catalog-from-finite-loops.json; target/rom-data-compact-residual-sources-20261103/{combined-result,source-contract-result,current-dataset,native-unit,cli-unit,baseline-retirement-result}.json.
+- Limits: conditional source/readers, no completeconstructor/scheduler/ordinarynewroots/globaldomain proof.29residualroots and Linux/USA/nativeWindows/ROM/mod remain. No old reader/scene cases repeated, no dataset/executable copies or metrics. Two live-source CLI guard failures and two pre-capture busy guards retained; snapshot resolved compilation race without touching other jobs. Retired payloads/canonical supersession do not reopen proofs. Effective primary/Sol settings unconfirmed.
+
+### ROMDATA-01-E111-RESIDUAL-COMPACT-SOURCES
+
+- Outcome: completed
+- Verified criteria:3table-driven roots6c58b8/6c6e6c/6cbaf8 derive22selectors from14-row/10-row loops and15-row entry/tail guards, including skip paths.4new original Wine windows/7BLs/new11284helper and4unchanged ABI pins reviewed. Geometry96frames/90lists/119objects/1366B/9spans, SHA10a9d44fbe12e31d388dafa2907c7b4acc2fb402f219994134da6114b46a5c48, no100owner/interbank overlap. Unowned selector tables have218known byte/signed-halfword B,34unknownpadding B excluded. Combined newprojection1584B; sourcePASS/scratchremoved, inputs unchanged.
+- Evidence: target/rom-data-e111-next-sources-20261103/{flow-plan,source-unit,source-contract-result}.json; rom-data-table-compact-source-9sx6eqy3/evidence; Sol /root/sol_e110_residual_sources originally gpt-6.1-sol/xhigh.
+- Limits: conditional domains, no ordinary/global/completebank proof.26residualroots; typed integration separately selected as ROMDATA-02-04-E112-TABLE-COMPACT-CATALOG. Unknownpadding raw, no guestcaps/inferred fields. Linux/USA/nativeWindows/ROM-mod open; no metrics; effective modelsettings unconfirmed.
+
+### DBG2-16-OUTCOME-WAITS
+
+- Outcome: completed
+- Verified criteria: typed bounded status waits; persisted action outcome, deadline and poll budget; matching, exhausted budget and cancelled/resumed ordering without repeating completed action.
+- Evidence: docs/changes/2026-11-03-add-recipe-outcome-waits.json; target/validation/units/dbg2-recipe-wait-tests-2wfg4sl5/unit-result.json.
+- Limits: synthetic server under Wine; real interrupted/session behavior and native Windows remain open under DBG2-16. Sandbox Wine and native ALSA/quota failures retained; owned leases released after host checks.
+
+### DBG2-16-INTERACTIVE-START
+
+- Outcome: completed
+- Verified criteria: reviewed typed recipe Start uses pinned checkpoint runner, checks unchanged selection, cooperatively cancels or reports an unresolved reserved action, and explicitly resumes without automatically repeating the completed action. Full bounded preview and controller scrolling have synthetic menu rendering coverage.
+- Evidence: docs/changes/2026-11-03-start-reviewed-recipes-in-tools.json; target/validation/units/dbg2-recipe-tool-tests-2uy46oul/unit-result.json; target/validation/units/dbg2-recipe-tool-menu-tests-g2_z9z0e/unit-result.json.
+- Limits: synthetic server and menu rendering under Wine; actual picker/GUI, real interrupted process recovery, physical controller and native Windows remain open under DBG2-16. Test build snapshot excluded another owner's in-progress ROM table test module. Primary model/effort not independently confirmed.

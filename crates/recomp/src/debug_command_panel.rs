@@ -24,6 +24,8 @@ pub(crate) struct Panel {
     target:String,
     pending:String,
     parameters:String,
+    context_visible:bool,
+    context_scroll:usize,
     modifiers:ModifiersState,
     editor:Editor,
     completion:debug_command::completion::Cycle,
@@ -43,7 +45,7 @@ impl Panel {
         let context=softbuffer::Context::new(window.clone()).map_err(|e|e.to_string())?;
         let surface=softbuffer::Surface::new(&context,window.clone()).map_err(|e|e.to_string())?;
         window.set_ime_allowed(true);
-        Ok(Self{window,_context:context,surface,visible:true,focused:true,focus_handoff:Some(Instant::now()),hide_handoff:None,last_draw:Instant::now()-Duration::from_secs(1),last_observation:Instant::now()-Duration::from_secs(1),language,manifest,run:run.into(),manifest_sha256:manifest_sha256.into(),target,pending:language.text("No pending job").into(),parameters:language.text("Parameters: -").into(),modifiers:ModifiersState::empty(),editor:Editor::default(),completion:Default::default(),controller:Controller::default(),clipboard:None,jobs:Vec::new(),lines:VecDeque::new(),last_result:String::new(),notice:language.text("Type a command; submission is explicit.").into(),root})
+        Ok(Self{window,_context:context,surface,visible:true,focused:true,focus_handoff:Some(Instant::now()),hide_handoff:None,last_draw:Instant::now()-Duration::from_secs(1),last_observation:Instant::now()-Duration::from_secs(1),language,manifest,run:run.into(),manifest_sha256:manifest_sha256.into(),target,pending:language.text("No pending job").into(),parameters:language.text("Parameters: -").into(),context_visible:false,context_scroll:0,modifiers:ModifiersState::empty(),editor:Editor::default(),completion:Default::default(),controller:Controller::default(),clipboard:None,jobs:Vec::new(),lines:VecDeque::new(),last_result:String::new(),notice:language.text("Type a command; submission is explicit.").into(),root})
     }
     pub fn owns(&self,id:winit::window::WindowId)->bool{self.window.id()==id}
     pub fn show(&mut self,language:Language){
@@ -53,7 +55,7 @@ impl Panel {
             self.window.set_title(&format!("FFTA — {}",language.text("Command console")));
         }
         self.visible=true;self.focused=true;self.controller.reset();self.hide_handoff=None;self.focus_handoff=Some(Instant::now());self.window.set_visible(true);self.window.set_ime_allowed(true);self.window.focus_window();self.last_draw=Instant::now()-Duration::from_secs(1);self.last_observation=Instant::now()-Duration::from_secs(1);}
-    pub fn hide(&mut self){self.visible=false;self.focused=false;self.controller.reset();self.focus_handoff=None;self.hide_handoff=Some(Instant::now());self.window.set_ime_allowed(false);self.window.set_visible(false);}
+    pub fn hide(&mut self){self.visible=false;self.focused=false;self.context_visible=false;self.controller.reset();self.focus_handoff=None;self.hide_handoff=Some(Instant::now());self.window.set_ime_allowed(false);self.window.set_visible(false);}
     pub fn focused(&self)->bool{self.visible&&self.focused}
     pub fn wants_observation(&self)->bool{self.visible&&self.last_observation.elapsed()>=Duration::from_millis(250)}
     pub fn observe(&mut self,pending:&serde_json::Value,remaining:u32,search_remaining:Option<u64>){
@@ -93,6 +95,7 @@ impl Panel {
         use controller::Action as A;
         let Some(action)=self.controller.poll(input) else{return ControllerEvent::None;};
         self.last_draw=Instant::now()-Duration::from_secs(1);
+        if self.context_visible {return ControllerEvent::None;}
         match action {
             A::Changed=>{},
             A::Insert(text)=>if let Err(error)=self.editor.insert(&text){self.notice=error.into();},
@@ -110,11 +113,25 @@ impl Panel {
             WindowEvent::CloseRequested=>return true,
             WindowEvent::Focused(focused)=>{self.focused=*focused;self.controller.reset();if *focused{self.focus_handoff=None;}},
             WindowEvent::ModifiersChanged(m)=>self.modifiers=m.state(),
-            WindowEvent::Ime(winit::event::Ime::Preedit(text,_))=>self.editor.set_preedit(text),
-            WindowEvent::Ime(winit::event::Ime::Commit(text))=>{self.editor.set_preedit("");if let Err(e)=self.editor.insert(text){self.notice=e.into();}},
+            WindowEvent::Ime(winit::event::Ime::Preedit(text,_)) if !self.context_visible=>self.editor.set_preedit(text),
+            WindowEvent::Ime(winit::event::Ime::Commit(text)) if !self.context_visible=>{self.editor.set_preedit("");if let Err(e)=self.editor.insert(text){self.notice=e.into();}},
             WindowEvent::KeyboardInput{event,is_synthetic:false,..} if event.state==ElementState::Pressed=>{
                 let PhysicalKey::Code(code)=event.physical_key else{return false};
                 let control=self.modifiers.control_key();let shift=self.modifiers.shift_key();
+                if self.context_visible {
+                    match code {
+                        KeyCode::F2|KeyCode::Escape if !event.repeat=>{self.context_visible=false;self.controller.reset();},
+                        KeyCode::ArrowUp=>self.context_scroll=self.context_scroll.saturating_sub(1),
+                        KeyCode::ArrowDown=>self.context_scroll=self.context_scroll.saturating_add(1),
+                        KeyCode::PageUp=>self.context_scroll=self.context_scroll.saturating_sub(8),
+                        KeyCode::PageDown=>self.context_scroll=self.context_scroll.saturating_add(8),
+                        _=>{},
+                    }
+                    self.last_draw=Instant::now()-Duration::from_secs(1);return false;
+                }
+                if code==KeyCode::F2 && !event.repeat && !control && !shift && !self.modifiers.alt_key() && !self.modifiers.super_key() && self.editor.preedit().is_empty(){
+                    self.context_visible=true;self.context_scroll=0;self.last_draw=Instant::now()-Duration::from_secs(1);return false;
+                }
                 if control {
                     match code {
                         KeyCode::KeyA=>self.editor.select_all(),
@@ -176,7 +193,8 @@ impl Panel {
         let count=height.saturating_sub(204+keyboard_height)/17;let lines:Vec<String>=self.lines.iter().rev().take(count).cloned().collect::<Vec<_>>().into_iter().rev().collect();
         let labels=self.controller.localized_labels(self.language);let keyboard=self.controller.visible().then_some(menu::command_console::Keyboard{labels:&labels,selected:self.controller.selected()});
         let hint=debug_command::completion::hint(self.editor.text(),self.language);
-        menu::command_console::draw(&menu::command_console::Display{language:self.language,target:&self.target,pending:&self.pending,parameters:&self.parameters,draft:&draft,preedit:&preedit,hint,notice:&self.notice,lines:&lines,keyboard},&mut rgba,width,height);
+        if self.context_visible {self.context_scroll=menu::command_console::context_lines(&self.target,&self.pending,&self.parameters,width,height,self.context_scroll).1;menu::command_console::draw_context(self.language,&self.target,&self.pending,&self.parameters,self.context_scroll,&mut rgba,width,height);}
+        else {menu::command_console::draw(&menu::command_console::Display{language:self.language,target:&self.target,pending:&self.pending,parameters:&self.parameters,draft:&draft,preedit:&preedit,hint,notice:&self.notice,lines:&lines,keyboard},&mut rgba,width,height);}
         self.surface.resize(w,h).map_err(|e|e.to_string())?;let mut buffer=self.surface.buffer_mut().map_err(|e|e.to_string())?;
         for(out,p)in buffer.iter_mut().zip(rgba){*out=(u32::from(p[0])<<16)|(u32::from(p[1])<<8)|u32::from(p[2]);}buffer.present().map_err(|e|e.to_string())
     }

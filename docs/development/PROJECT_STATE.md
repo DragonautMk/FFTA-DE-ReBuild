@@ -2076,11 +2076,24 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   in 65 spans. All 99 earlier resources/file bytes remain unchanged. Wine
   source/model/typed-boundary/in-memory rejection and 67 native/interpreter
   state-clock cases pass; canonical builds and CLI create/reuse/startup pass
-  for 100 resources/101 files. The short startup has zero new-catalog use;
-  ordinary/all-consumer/global/indirect coverage and Linux/USA/native Windows
-  remain open. One current dataset, superseded baseline retired with evidence;
+  for 100 resources/101 files. A source-backed normal IN-08 Star Cross case
+  adds 15,830 catalog reads/19,330 source bytes and a 480-frame Wine native
+  raw/managed full-state-clock/render/OAM/dispatch/five-audio pair. Counters
+  aggregate banks; complete animation/all-bank/all-consumer/global/indirect
+  coverage and Linux/USA/native Windows remain open. One current dataset,
+  superseded baseline and navigation payloads retired with evidence;
   save format/C API/native compatibility unchanged, no benchmark.
   [Contract](../rom_data_compact_catalog.md).
+- EUR e111-d110 extends the same compact catalog from five explicit finite-loop
+  domains: 34 banks/81 selectors/7,624 bytes in 71 source spans. All 99 other
+  resources and prior 29 bank structures are identical. Wine source/new-byte/
+  mixed-boundary/in-memory rejection and 48 native state-clock cases pass;
+  canonical test build and disposable immutable-source CLI build are warning-free.
+  Production create/reuse/startup pass with 100 resources/101 files. One e111
+  generation remains; the e110 comparison and successful scratch are retired.
+  Ordinary use of the new five roots, 29 residual census roots and global/ROM/mod/
+  Linux/USA/native Windows criteria remain open. No benchmark or guest index cap.
+  [Contract](../rom_data_compact_catalog.md#finite-loop-european-source-extension).
 - The desktop loads the full ROM into `MemMap.rom` at startup; ordinary guest
   ROM reads use that in-memory buffer. The [ROM data TODO](ROM_DATA_TODO.md)
   orders extraction/decoding, startup reuse and direct runtime consumption first,

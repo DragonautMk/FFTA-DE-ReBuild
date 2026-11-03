@@ -1,7 +1,7 @@
 //! Pure, bounded command completion. Suggestions never dispatch an action.
 use std::ops::Range;
 
-const COMMANDS:&[&str]=&["help","status","pause","resume","step","inspect","break","watch","cancel","graphics","ui-start","ui-report","audio-start","audio-report","code-start","code-report","gameplay-start","gameplay-report","recent-start","recent-freeze","recent-report","issue-report","profile","catalog","cheats","content","replay","jobs","retry"];
+const COMMANDS:&[&str]=&["help","status","pause","resume","step","inspect","break","watch","cancel","graphics","ui-start","ui-report","audio-start","audio-report","code-start","code-report","gameplay-start","gameplay-report","recent-start","recent-freeze","recent-report","issue-report","profile","catalog","cheats","content","replay","jobs","retry","recipe"];
 
 #[derive(Debug)]
 struct Token {range:Range<usize>,value:String,prefix:String}
@@ -113,6 +113,7 @@ pub(crate) fn hint(text:&str,language:input_config::Language)->&'static str {
         "content"=>"content refresh | content list [--offset N --limit 1..16 --generation N]",
         "replay"=>"replay run [plain|audit|capture|compare] · selected profile",
         "jobs"=>"jobs status | jobs cancel REQUEST-ID",
+        "recipe"=>"recipe save NAME 'COMMAND'... | preview/prepare NAME | run/resume/cancel/checkpoint RUN",
         "retry"=>"retry RUN REQUEST-ID DEADLINE-UNIX-MS -- COMMAND · same request, no duplicates",
         "cancel"=>"cancel --request REQUEST-ID · cancel only the exact request",
         "step"=>"step N [--keys 0xMASK] · N 1..600; active-low mask",
@@ -142,6 +143,7 @@ pub(crate) fn complete(text:&str,cursor:usize,profiles:&[String],catalogs:&[Stri
     let mut options:Vec<String>=if before.is_empty(){COMMANDS.iter().map(|s|(*s).into()).collect()}else{match (c,before.len()){
         ("help",1)=>operations.to_vec(),("profile"|"catalog",1)=>vec!["select".into()],
         ("content",1)=>vec!["list".into(),"refresh".into()],
+        ("recipe",1)=>vec!["save".into(),"preview".into(),"prepare".into(),"checkpoint".into(),"run".into(),"resume".into(),"cancel".into()],
         ("cheats",1)=>vec!["select".into(),"refresh".into(),"list".into(),"show".into(),"capabilities".into(),"prepare".into(),"apply-once".into(),"arm".into(),"disarm".into(),"preset-save".into(),"preset-prepare".into(),"preset-arm".into()],
         ("cheats",2) if before[1]=="select"=>cheats.to_vec(),
         ("cheats",2) if before[1]=="disarm"=>vec!["all".into()],

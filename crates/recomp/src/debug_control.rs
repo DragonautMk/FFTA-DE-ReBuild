@@ -71,7 +71,7 @@ pub(crate) enum Action {
     },
 }
 impl Action {
-    fn read_query(&self)->bool{matches!(self,Self::Status|Self::ContentList{..}|Self::CheatList{..}|Self::CheatShow{..}|Self::CheatCapabilities{..})}
+    pub(crate) fn read_query(&self)->bool{matches!(self,Self::Status|Self::ContentList{..}|Self::CheatList{..}|Self::CheatShow{..}|Self::CheatCapabilities{..})}
     fn query_channel(&self)->bool{self.read_query()||matches!(self,Self::Cancel{..})}
     fn cheat_capability(&self)->bool{matches!(self,Self::SelectId{slot:SelectionSlot::CheatCatalog,..}|Self::CheatRefresh|Self::CheatList{..}|Self::CheatShow{..}|Self::CheatCapabilities{..}|Self::CheatPrepare{..}|Self::CheatApply{..}|Self::CheatArm{..}|Self::CheatDisarm{..}|Self::CheatPresetSave{..}|Self::CheatPresetPrepare{..}|Self::CheatPresetArm{..})}
     pub(crate) fn validate(&self) -> Result<(), String> {
@@ -598,6 +598,9 @@ fn response_matches(value:&Value,ready:&Value,request:&Request,fingerprint:&str,
         && (!protected||value["request_sha256"]==fingerprint)
 }
 fn exchange_with_retry(dir:&Path,ready:&Value,action:Action,query:bool,timeout:u64,retry:Option<&RetryIdentity>)->Result<Value,String>{
+    exchange_interruptible(dir,ready,action,query,timeout,retry,None)
+}
+fn exchange_interruptible(dir:&Path,ready:&Value,action:Action,query:bool,timeout:u64,retry:Option<&RetryIdentity>,cancel:Option<&std::sync::atomic::AtomicBool>)->Result<Value,String>{
     let run=ready["run"].as_str().ok_or("Missing session run identity")?.to_owned();
     if retry.is_some_and(|r|r.run!=run){return Err("Retry run differs from the active session; no command sent".into());}
     let protected=ready["capabilities"].as_array().is_some_and(|c|c.contains(&json!("idempotent-request-v1")));
@@ -613,6 +616,9 @@ fn exchange_with_retry(dir:&Path,ready:&Value,action:Action,query:bool,timeout:u
             if response_matches(&value,ready,&request,&fingerprint,protected){
                 return Ok(value);
             }
+        }
+        if cancel.is_some_and(|flag|flag.load(std::sync::atomic::Ordering::SeqCst)){
+            return Ok(json!({"schema":1,"kind":"ffta-debug-control-client","run":run,"id":request.id,"session":ready["session"],"ok":false,"outcome":"interrupted","error":"The client stopped waiting; the published request may still execute.","deadline_unix_ms":request.deadline_unix_ms,"request_sha256":fingerprint,"server_acknowledged":false}));
         }
         if start.elapsed()>=Duration::from_millis(timeout){
             return Ok(json!({"schema":1,"kind":"ffta-debug-control-client","run":run,"id":request.id,"session":ready["session"],
@@ -677,7 +683,28 @@ pub(crate) fn retry_action_classified(root:&Path,action:Action,timeout:u64,run:S
     if action.read_query(){return Err(ClientFailure::new("invalid-request","Read-only query: request a fresh result instead","not-sent"));}
     execute_action_inner(root,action,timeout,Some(&RetryIdentity{run,id,deadline_unix_ms}))
 }
-fn execute_action_inner(root:&Path,action:Action,timeout:u64,retry:Option<&RetryIdentity>)->Result<Value,ClientFailure>{
+/// Dispatch a recipe's already-persisted identity. Read queries are permitted
+/// on their first attempt, but their server mailbox has no deduplication ledger.
+pub(crate) fn planned_action_classified(root:&Path,action:Action,timeout:u64,run:String,id:String,deadline_unix_ms:u64)->Result<Value,ClientFailure>{
+    if [run.as_str(),id.as_str()].iter().any(|v|v.is_empty()||v.len()>100||v.chars().any(char::is_control)) {
+        return Err(ClientFailure::new("invalid-request","Planned run and request IDs need1..100 bytes without controls","not-sent"));
+    }
+    execute_action_inner(root,action,timeout,Some(&RetryIdentity{run,id,deadline_unix_ms}))
+}
+pub(crate) fn planned_action_interruptible(root:&Path,action:Action,timeout:u64,run:String,id:String,deadline_unix_ms:u64,cancel:&std::sync::atomic::AtomicBool)->Result<Value,ClientFailure>{
+    if [run.as_str(),id.as_str()].iter().any(|v|v.is_empty()||v.len()>100||v.chars().any(char::is_control)){return Err(ClientFailure::new("invalid-request","Planned run and request IDs need 1..100 bytes without controls","not-sent"));}
+    execute_action_inner_interruptible(root,action,timeout,Some(&RetryIdentity{run,id,deadline_unix_ms}),Some(cancel))
+}
+pub(crate) fn query_action_interruptible(root:&Path,action:Action,timeout:u64,cancel:&std::sync::atomic::AtomicBool)->Result<Value,ClientFailure>{
+    if !action.read_query(){return Err(ClientFailure::new("invalid-request","Interruptible observation requires a read query","not-sent"));}
+    execute_action_inner_interruptible(root,action,timeout,None,Some(cancel))
+}
+pub(crate) fn planned_fingerprint(action:Action,run:&str,id:&str,deadline_unix_ms:u64,manifest_sha256:&str)->Result<String,String>{
+    let query=action.query_channel();
+    Request{schema:1,run:run.into(),id:id.into(),command:action,deadline_unix_ms:Some(deadline_unix_ms),session_manifest_sha256:Some(manifest_sha256.into()),query}.fingerprint()
+}
+fn execute_action_inner(root:&Path,action:Action,timeout:u64,retry:Option<&RetryIdentity>)->Result<Value,ClientFailure>{execute_action_inner_interruptible(root,action,timeout,retry,None)}
+fn execute_action_inner_interruptible(root:&Path,action:Action,timeout:u64,retry:Option<&RetryIdentity>,cancel:Option<&std::sync::atomic::AtomicBool>)->Result<Value,ClientFailure>{
     action.validate().map_err(|e|ClientFailure::new("invalid-request",e,"not-sent"))?;
     if !(20..=120_000).contains(&timeout){return Err(ClientFailure::new("invalid-request","Timeout needs20..120000milliseconds","not-sent"));}
     let manifest=crate::diagnostics::read(&root.join("debug-session.json"),1024*1024)
@@ -713,7 +740,7 @@ fn execute_action_inner(root:&Path,action:Action,timeout:u64,retry:Option<&Retry
         if ready["run"].as_str()!=Some(retry.run.as_str()){return Err(ClientFailure::new("incompatible","Retry run differs from the active session; no command sent","not-sent"));}
         if ready["capabilities"].as_array().is_none_or(|c|!c.contains(&json!("idempotent-request-v1"))){return Err(ClientFailure::new("incompatible","This session does not support safe request retry","not-sent"));}
     }
-    let result=if let Some(retry)=retry{exchange_with_retry(&dir,&ready,action,query,timeout,Some(retry))}else{exchange(&dir,&ready,action,query,timeout)};
+    let result=if cancel.is_some(){exchange_interruptible(&dir,&ready,action,query,timeout,retry,cancel)}else if let Some(retry)=retry{exchange_with_retry(&dir,&ready,action,query,timeout,Some(retry))}else{exchange(&dir,&ready,action,query,timeout)};
     result.map_err(|e|ClientFailure::new("transport-error",e,"unknown"))
 }
 pub(crate) fn cmd(args:&[String])->Result<(),String>{

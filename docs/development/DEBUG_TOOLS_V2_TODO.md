@@ -345,8 +345,9 @@ No other development was selected. On resumption read only the individual ID in
   timeout. An isolated EUR procedure also repeated discovery, ID selection and
   a complete 102-frame replay twice with equal endpoints; retry of the first
   identity returned the same JSON and worker. At 480×360, a corrected-worker
-  replay showed its pending ID/parameters and successful result; long session
-  labels remain abbreviated. A slow refresh over 2,048 inert files allowed
+  replay showed its pending ID/parameters and successful result. A separate
+  F2 context view wraps the session and ROM identity; bounded long parameters
+  and scrolling have focused tests. A slow refresh over 2,048 inert files allowed
   listing the old index, refused wrong-ID cancellation and discarded the exact
   cancelled scan. Full operation parity and comprehensive narrow-window
   presentation remain.
@@ -361,14 +362,25 @@ No other development was selected. On resumption read only the individual ID in
   resumption does not automatically repeat successful operations.
   **Depends on:** DBG2-06/15, DBG-21.
 
-  **Audit 2026-11-01 — not started under the console contract.** [Workbench](../../crates/recomp/src/debug_workbench.rs)
+  **Partial implementation.** [Workbench](../../crates/recomp/src/debug_workbench.rs)
   and [declared library](../changes/2026-10-30-add-declared-debug-script-library.json)
   already have bounded read-only status/inspect recipes (DBG2-06 foundation).
-  The [console parser](../../crates/recomp/src/debug_command.rs) does not save/
-  execute typed batches with assertions, waits and checkpoints; the editor keeps
-  multiline input as a draft. Console serialization, resume without reexecution
-  and the requested short/interrupted tests are missing. Do not duplicate the
-  existing host runner.
+  The [console parser](../../crates/recomp/src/debug_command.rs) keeps multiline
+  input as a draft and does not execute batches with assertions, waits or
+  checkpoints. The console now saves and previews inert typed
+  sequences pinned to the session manifest; it does not execute them. Scripts
+  and tools can select and review them but refuse Start. A prepared inert
+  checkpoint retains per-step IDs and action hashes. A limited console runner
+  now handles status/inspect/step, journals results, stops between steps and
+  retries an unresolved ledger-protected request with its original identity.
+  Synthetic cancellation/recovery and a short EUR run passed. Bounded scalar
+  assertions on terminal responses stop the sequence on mismatch. Bounded status
+  waits pass focused synthetic Wine tests. Scripts and tools Start now connects
+  the reviewed selection to the same runner, with synthetic Wine tests for
+  preview, cancellation and explicit resume. Other actions, interactive picker
+  coverage and the complete interrupted acceptance
+  matrix remain missing. Do not
+  duplicate the existing host runner.
 
 <a id="p3--menu-cheat-utile-alla-preparazione-del-debug"></a>
 
@@ -457,8 +469,9 @@ No other development was selected. On resumption read only the individual ID in
   metadata rather than localized labels; synthetic Wine GUI checks include
   arm/disarm updates. Named source-bound groups can now be saved, reviewed and
   armed atomically through explicit text commands, with synthetic conflict and
-  drift refusals. Page preset controls, values/ranges and complete game-effect
-  evidence remain missing; retain the integrated view instead of rebuilding it.
+  drift refusals. The page also supports naming, saving, explicit selection,
+  preview and arming. Values/ranges and complete game-effect evidence remain
+  missing; retain the integrated view instead of rebuilding it.
 
 - [x] **DBG2-21 — First EUR selection useful for debugging.**
   Priorities, subject to decoding/verification: access to Card Shop/Item Shop/

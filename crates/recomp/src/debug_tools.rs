@@ -134,7 +134,7 @@ fn recipe(path: &Path) -> Result<Recipe, String> {
 }
 pub(crate) fn input_preflight(slot: Slot, path: &Path) -> Result<(), String> {
     if slot == Slot::Recipe {
-        recipe(path)?;
+        if crate::debug_command::recipe::is_command_recipe(path)? {crate::debug_command::recipe::validate_file(path)?;} else {recipe(path)?;}
         return Ok(());
     }
     let v = read_json(path, 1024 * 1024)?;
@@ -308,11 +308,26 @@ pub(crate) fn description(tool: Tool) -> String {
     if tool == Tool::GuestScripts {
         return "Guest catalog v1: bounded readonly metadata view. Inspect catalog reads the selected file; Gameplay inspector opens its form and requires existing authenticated ROM/model checks. Nothing starts on selection.".into();
     }
-    format!("Declared adapter v1: {}\n{}\n{}\nDetails verifies typed references without starting a process. Start is explicit; Cancel retains logs. Output: config/debug-tool-runs/<new-id>/;8runs,120s maximum,8MiB per stream. No overwrite or artifact deletion.", tool.label(),payload(tool).iter().map(|p|format!("{} SHA256 {}",p.name,digest(p.data))).collect::<Vec<_>>().join("\n"),if tool==Tool::Recipe {"Readonly schema1 recipe:1..16 control.status/control.inspect steps; selected recomp runtime. Python/PowerShell/Bash/Docker not used."} else {"Explicit Python3.11+ stdlib executable required. Embedded source by default, optional exact-hash external source. Direct argv adapter; PowerShell/Bash wrappers and Docker not used or installed."})
+    if tool == Tool::Recipe {
+        return "Recipe adapter v1: Details reviews the complete selected sequence without execution. Typed recipes require an unchanged preview and matching saved session recipe; Start prepares a checkpoint under the selected session's config/debug-command-runs and executes only status, inspect and bounded step. Cancel stops at a boundary; a reserved action may still finish. The older readonly recipe format uses the selected runtime and config/debug-tool-runs.".into();
+    }
+    format!("Declared adapter v1: {}\n{}\n{}\nDetails verifies typed references without starting a process. Start is explicit; Cancel retains logs. Output: config/debug-tool-runs/<new-id>/;8runs,120s maximum,8MiB per stream. No overwrite or artifact deletion.", tool.label(),payload(tool).iter().map(|p|format!("{} SHA256 {}",p.name,digest(p.data))).collect::<Vec<_>>().join("\n"),if tool==Tool::Recipe {"Readonly schema1 recipe:1..16 control.status/control.inspect steps; selected recomp runtime. Typed command recipes run only after reviewing the unchanged selection; Cancel stops between actions. Python/PowerShell/Bash/Docker not used."} else {"Explicit Python3.11+ stdlib executable required. Embedded source by default, optional exact-hash external source. Direct argv adapter; PowerShell/Bash wrappers and Docker not used or installed."})
+}
+pub(crate) fn typed_preview(d:&Draft)->Result<Option<(String,String)>,String>{
+    if d.tool!=Tool::Recipe{return Ok(None);}
+    let path=d.path(Slot::Recipe)?;
+    if !crate::debug_command::recipe::is_command_recipe(&path)?{return Ok(None);}
+    crate::debug_command::recipe::review_with_identity(&path,&d.path(Slot::Session)?).map(Some)
 }
 pub(crate) fn details(d: &Draft) -> Result<String, String> {
     if d.tool == Tool::GuestScripts {
         return guest(&d.path(Slot::GuestScripts)?);
+    }
+    if d.tool == Tool::Recipe {
+        let recipe=d.path(Slot::Recipe)?;
+        if crate::debug_command::recipe::is_command_recipe(&recipe)? {
+            return crate::debug_command::recipe::review_file(&recipe,&d.path(Slot::Session)?);
+        }
     }
     let limits = timeout(d)?;
     let (rt, hash) = runtime(d)?;
@@ -667,11 +682,22 @@ fn verify_version(root: &Path) -> Result<String, String> {
 }
 pub(crate) struct RunOutput { pub message:String, pub observation:Value }
 #[cfg(test)]
-pub(crate) fn run(d:Draft,cancel:Arc<AtomicBool>)->Result<String,String>{run_observed(d,cancel).map(|r|r.message)}
-pub(crate) fn run_observed(d: Draft, cancel: Arc<AtomicBool>) -> Result<RunOutput, String> {
+pub(crate) fn run(d:Draft,cancel:Arc<AtomicBool>)->Result<String,String>{run_observed(d,cancel,None).map(|r|r.message)}
+pub(crate) fn run_observed(d: Draft, cancel: Arc<AtomicBool>, preview: Option<String>) -> Result<RunOutput, String> {
     let summary = details(&d)?;
     if d.tool == Tool::GuestScripts {
         return Ok(RunOutput{message:summary,observation:json!({"outcome":"completed","operation":"guest-script-inspection","guest_execution":false,"host_process_started":false})});
+    }
+    if d.tool == Tool::Recipe && crate::debug_command::recipe::is_command_recipe(&d.path(Slot::Recipe)?)? {
+        let identity=preview.ok_or("Review this typed recipe with Details before Start")?;
+        let root=d.path(Slot::Session)?;let path=d.path(Slot::Recipe)?;
+        let result=crate::debug_command::recipe::run_reviewed(&path,&root,&identity,&cancel)?;
+        let id=result["checkpoint"]["id"].as_str().ok_or("Recipe runner did not return a checkpoint")?;
+        let outcome=result["outcome"].as_str().unwrap_or("unconfirmed");
+        let message=format!("Recipe {id}: {outcome}. {} Checkpoint retained; use the console to inspect or explicitly resume.",result["message"].as_str().unwrap_or("No terminal message."));
+        let steps=result["checkpoint"]["steps"].as_array().ok_or("Recipe checkpoint has no steps")?;
+        let guest=if steps.iter().any(|s|s["result"]["operation_id"]=="control.step" && s["result"]["ok"]==true){json!(true)}else if steps.iter().any(|s|s["state"]=="pending" || (s["result"]["operation_id"]=="control.step" && s["result"]["ok"]!=true) || s["result"]["kind"]=="ffta-recipe-output-limit"){Value::Null}else{json!(false)};
+        return Ok(RunOutput{message,observation:json!({"operation":"typed-command-recipe","outcome":outcome,"checkpoint_id":id,"guest_execution":guest,"host_process_started":false})});
     }
     let (rt, rt_hash) = runtime(&d)?;
     let deadline = Instant::now() + Duration::from_millis(timeout(&d)?);

@@ -6,6 +6,7 @@ use serde::{Deserialize, Serialize};
 
 mod contracts;
 pub use contracts::{BANK_SPECS, SOURCE_SPANS};
+pub mod selector_tables;
 
 pub struct BankSpec {
     pub root: u32,
@@ -139,11 +140,29 @@ impl Bank {
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
-pub struct CompactObjCatalog { pub banks: Vec<Bank> }
+pub struct CompactObjCatalog {
+    pub banks: Vec<Bank>,
+    // Historical v1 evidence can still be decoded for bank identity comparison.
+    // Current v2 validation requires all three source-authenticated tables.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub selector_tables: Option<selector_tables::SelectorTables>,
+}
 
 impl CompactObjCatalog {
     pub fn validate(&self) -> Result<(), String> {
         if self.banks.len() != BANK_SPECS.len() { return Err("Invalid compact catalog bank set".into()); }
+        let tables = self.selector_tables.as_ref().ok_or("Missing compact selector tables")?;
+        tables.validate()?;
+        for (root, values) in [
+            (0x6c58b8, tables.motion.rows.iter().map(|row| u16::from(row.selector)).collect::<std::collections::BTreeSet<_>>()),
+            (0x6c6e6c, tables.positions.rows.iter().map(|row| u16::from(row.selector)).collect()),
+            (0x6cbaf8, tables.horizontal.rows.iter().map(|row| u16::from(row.selector)).collect()),
+        ] {
+            let spec = BANK_SPECS.iter().find(|spec| spec.root == root).ok_or("Unbound compact selector table")?;
+            if values.into_iter().collect::<Vec<_>>().as_slice() != spec.selectors {
+                return Err("Compact selector table differs from bank projection".into());
+            }
+        }
         for (bank, spec) in self.banks.iter().zip(BANK_SPECS) {
             bank.validate_fields(spec)?;
             let spans = merge_pieces(bank.source_pieces()?)?;
@@ -156,7 +175,8 @@ impl CompactObjCatalog {
 
     pub fn source_spans(&self) -> Result<Vec<SourceSpan>, String> {
         self.validate()?;
-        let pieces = self.banks.iter().map(Bank::source_pieces).collect::<Result<Vec<_>, _>>()?.into_iter().flatten().collect();
+        let mut pieces: Vec<_> = self.banks.iter().map(Bank::source_pieces).collect::<Result<Vec<_>, _>>()?.into_iter().flatten().collect();
+        pieces.extend(self.selector_tables.as_ref().unwrap().source_pieces());
         let spans = merge_pieces(pieces)?;
         if spans.len() != SOURCE_SPANS.len() || spans.iter().zip(SOURCE_SPANS).any(|((at, bytes), &(start, end))| *at != start || bytes.len() != (end - start) as usize) {
             return Err("Invalid compact catalog source union".into());
@@ -164,7 +184,10 @@ impl CompactObjCatalog {
         Ok(spans.into_iter().map(|(at, bytes)| (at, bytes, "conditional-compact-obj-catalog".into())).collect())
     }
 
-    pub fn byte_at(&self, offset: u32) -> Option<u8> { self.banks.iter().find_map(|bank| bank.byte_at(offset)) }
+    pub fn byte_at(&self, offset: u32) -> Option<u8> {
+        self.banks.iter().find_map(|bank| bank.byte_at(offset))
+            .or_else(|| self.selector_tables.as_ref().and_then(|tables| tables.byte_at(offset)))
+    }
     pub fn verify_source(&self, rom: &[u8]) -> Result<(), String> {
         self.validate()?;
         if self != &Catalog::from_rom(rom)?.decoded { return Err("Compact catalog differs from authenticated EUR source".into()); }
@@ -204,7 +227,7 @@ impl Catalog {
             }
             banks.push(Bank { root: spec.root, flags: half(spec.root), sequence_relative_offset: half(spec.root + 2), lists, sequences });
         }
-        let decoded = CompactObjCatalog { banks };
+        let decoded = CompactObjCatalog { banks, selector_tables: Some(selector_tables::SelectorTables::from_rom(rom)) };
         let sources = decoded.source_spans()?.into_iter().map(|(offset, bytes, role)| SourceRange {
             offset, length: bytes.len() as u32, sha256: ffta_rom::digest(&bytes), role,
         }).collect();

@@ -1292,10 +1292,33 @@ Wine source/bytes/mixed-boundaries/in-memory rejection passes; all new reader
 fields and 67 native/interpreter state-clock cases pass, including actual
 out-of-projection owned intersections. CLI create/reuse/startup recognizes
 100 identities without managed writes. Its 12-frame new counters are zero;
-`ROMDATA-04-COMPACT-CATALOG-ORDINARY` remains open, requiring a source-backed
-producer/scene before any cast. Selected human-action leads are excluded
-without gameplay attempts. No previous positive pair repeated or benchmark.
+A later source-backed IN-08 Star Cross case serves 15,830 catalog reads/19,330
+source bytes and passes one 480-frame Wine native raw/managed complete-state,
+clock, render/OAM/dispatch/five-stream audio pair. Physical human Illusionist9
+and raw rosterunit6 are independently bound to the normal deployment/menu.
+`ROMDATA-04-COMPACT-CATALOG-ORDINARY` retains complete-bank/selector/consumer
+coverage as open; this single case does not complete the animation or global
+catalog. Canonical builds/current dataset reused; successful scratch retired,
+current seed/evidence/failures kept. Linux/USA/native Windows pending; no benchmark.
 [Contract](../rom_data_compact_catalog.md).
+
+**ROMDATA-01-E110-RESIDUAL-COMPACT-SOURCES / ROMDATA-02-04-E111-LOOP-COMPACT-CATALOG
+completed for scoped EUR/Wine:** five explicit original byte-counter loops prove
+43 selectors for roots 6c56a8/6c4c50/6c5800/6c88a8/6c894c. Fourteen original
+Windows windows and all 19 BL/index-preservation flows pass. Sparse geometry
+adds 60 frames/44 lists/81 objects/974 bytes without current-owner overlap.
+The existing resource reaches 34 banks/81 selectors/7,624 bytes, e111-d110;
+100 resources/101 files, 99 prior payloads and 29 prior banks unchanged.
+One new-only Wine filter passes poisoned bytes/mixed boundaries/in-memory
+rejection and 48 native state-clock cases, serving 180 typed bytes including
+eight actual outside-projection intersections. CLI create/reuse and 12-frame
+startup pass. Two live-source CLI guards reject concurrent debug edits; a
+stable disposable source snapshot builds cleanly and is removed. The e110
+comparison is retired after acceptance, with real inputs/evidence retained.
+Ordinary use of these five roots, 29 residual census roots, global domains,
+Linux/USA/native Windows and remaining ROM/mod phases stay open. No old reader
+or ordinary proof repeated, no benchmark or dataset test copy.
+[Contract](../rom_data_compact_catalog.md#finite-loop-european-source-extension).
 
 <a id="romdata-05--equivalenza-salvataggi-e-prestazioni"></a>
 
