@@ -229,9 +229,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: ENGLISH-FIRST-PROJECT partial; research report opening translated.
-- Last verified result: original command, hashes, numeric runs and links preserved; old heading anchor retained.
-- Remaining work: Spanish research report continuation, inventory review, 17 pending Markdown files and source/tool audit.
-- Errors or blockers: none; no ROM access or replay performed.
-- Next action: select and checkpoint the next research translation unit.
-- References: `docs/changes/2026-11-02-translate-research-status-opening.json`, `docs/development/ENGLISH_FIRST_AUDIT.json`.
+- Task: FORK-README-AI-FOCUS completed.
+- Last verified result: README states AI assistance, development focus and playable status.
+- Remaining work: none for this request; other tasks retain their recorded scope.
+- Errors or blockers: none; no runtime validation performed.
+- Next action: select work only in response to a relevant request.
+- References: `README.md`, `docs/changes/2026-11-03-distinguish-independent-fork.json`.

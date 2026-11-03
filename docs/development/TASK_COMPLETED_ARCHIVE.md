@@ -19160,3 +19160,19 @@ LOCAL-ARTIFACT-SWEEP-2026-10-31 — CLOSED. Latest request: clean residual proje
 - Outcome: translated the research report opening and first replay evidence into English while retaining the legacy heading anchor and original game labels.
 - Evidence: link targets, numeric runs, command block, hashes, literal script output and named paths match the preimage. No ROM access or replay performed.
 - Record: `docs/changes/2026-11-02-translate-research-status-opening.json`.
+
+
+### FORK-README-COPYRIGHT
+
+- Outcome: completed
+- Verified criteria: README presents the independent fork and links its repository/releases; the fork copyright and upstream credits appear in the license and credits.
+- Evidence: `docs/changes/2026-11-03-distinguish-independent-fork.json`; README local links and original MIT notice/terms checked; `git diff --check` passed.
+- Limits: release availability and Steam Deck compatibility not verified; no runtime builds or tests.
+
+
+### FORK-README-AI-FOCUS
+
+- Outcome: completed
+- Verified criteria: README describes AI-assisted development, decompilation followed by recompilation as the current focus, and the playable state reported by the user.
+- Evidence: `README.md`, `docs/changes/2026-11-03-distinguish-independent-fork.json`; wording and `git diff --check` reviewed.
+- Limits: no runtime validation performed for this documentation change.

@@ -5,13 +5,13 @@
 <h1 align="center">FFTARecomp</h1>
 
 <p align="center">
-  <b>Final Fantasy Tactics Advance, running natively on your Windows PC, Linux PC or Steam Deck.</b><br>
-  Widescreen, video and audio options, and a portable Windows edition.
+  <b>An independently maintained native recompilation project for Final Fantasy Tactics Advance.</b><br>
+  Portable desktop builds, widescreen options and tools for players and developers.
 </p>
 
 <p align="center">
-  <a href="https://github.com/Jorge262007/FFTARecomp/releases"><img src="https://img.shields.io/github/v/release/Jorge262007/FFTARecomp?include_prereleases&label=release" alt="Release"></a>
-  <img src="https://img.shields.io/badge/platform-Windows%2010%2F11%20%7C%20Linux%20%7C%20Steam%20Deck-blue" alt="Platforms">
+  <a href="https://github.com/DragonautMk/FFTARecomp"><img src="https://img.shields.io/badge/repository-DragonautMk%2FFFTARecomp-blue" alt="Project repository"></a>
+  <img src="https://img.shields.io/badge/desktop-Windows%20%7C%20Linux-blue" alt="Desktop platforms">
   <img src="https://img.shields.io/badge/built%20with-Rust-orange" alt="Rust">
 </p>
 
@@ -19,18 +19,26 @@
 
 ## ✨ What is this?
 
-**FFTARecomp** turns *Final Fantasy Tactics Advance* (USA version) into a native program for Windows, Linux and Steam Deck. Instead of running in an emulator, the game is recompiled from your own ROM, so it runs smoothly, needs no BIOS, and gets modern options. It is based on [gba-recomp](https://github.com/JRickey/gba-recomp) by JRickey.
+**FFTARecomp** recompiles *Final Fantasy Tactics Advance* from a ROM supplied by
+the player into a native program. The desktop project supports USA and European
+ROMs and provides portable Windows and Linux builds without a console BIOS.
+The Linux archive has been tested on Ubuntu 26.04 x86_64; Steam Deck support
+has not been verified for that archive.
 
-## 🆕 What's new in v3.0
+This repository is an independently maintained fork of
+[Jorge262007/FFTARecomp](https://github.com/Jorge262007/FFTARecomp), which is
+based on [gba-recomp](https://github.com/JRickey/gba-recomp) by JRickey.
+Its development, documentation and releases are separate from the original
+project. For this fork, use the [project repository](https://github.com/DragonautMk/FFTARecomp)
+and its [releases page](https://github.com/DragonautMk/FFTARecomp/releases);
+availability and version numbers may differ from upstream.
 
-- 🤖 **Native Android version.** FFTARecomp now runs natively on Android. It also includes touch support that works like the PC mouse support: tap to interact with the game's menus and interface. Touch mode (without a touchpad) is experimental for now; to enable it, go to **Input > Touchscreen > Touch Controls**. More solid touch support is coming soon.
-- ⚡ **Big PC optimization.** The compiler was switched, so the install size drops from roughly 800 MB to only about 11 MB, and compile time goes from roughly 120 seconds to about 4 seconds.
-- 💬 **Fully reworked game UI and text bubbles.** They are now editable: a new **Text Bubbles** option in the Settings menu lets you adjust their length and size in-game.
-- 🖱️ **Mouse support (experimental).** It doesn't cover the whole game yet, but it is already usable and enjoyable, and support will keep expanding. To enable it, go to **Input > Mouse and Keyboard** and turn it on. On Windows, mouse mode comes with its own remappable layout that doesn't affect the keyboard controls.
-- 🇪🇺 **European ROM support.** Saves are compatible between regions.
-- 🛠️ **Reworked installer.**
-- 🎮 **Reworked XInput gamepad support.**
-- 🕹️ **Steam Deck now has a dedicated installer** (the Linux installer also works).
+This fork has been developed with the help of AI. Current development focuses
+on decompiling the game and then recompiling it. The game is already playable,
+while this work continues.
+
+The Android port is maintained in a separate source tree; see its
+[README](AndroidPort/README.md) for its own instructions and status.
 
 ## 🎮 Features
 
@@ -48,7 +56,7 @@
 - ↩️ **Undo save/load:** undo the last save-state operation.
 - 🛟 **Automatic save backups:** keep two startup copies and restore from the menu.
 - 🐧 **Native Linux version.**
-- 🕹️ **Steam Deck support.**
+- 🕹️ **Steam Deck:** a target for Linux builds; the current portable archive has not been verified on the device.
 - 📦 **Portable on Windows:** extract, pick your ROM and keep all data in one folder.
 - 📦 **Portable on Linux:** keep settings, saves and cache in the game folder.
 - 🐳 **Docker builds:** compile Linux and Windows editions with containerized build dependencies.
@@ -114,6 +122,9 @@ then release all its controls to save it. Escape and Guide remain available.
 | Size | Changes the size of the text bubbles |
 
 ## 🚀 Installation
+
+Check this fork’s [releases](https://github.com/DragonautMk/FFTARecomp/releases)
+for available packages, or build them from source using the instructions below.
 
 ### Windows
 
@@ -273,15 +284,20 @@ to record changes and run `python3 scripts/project_memory.py check` before hando
 
 ## 📜 License and credits
 
-- License: MIT, see [LICENSE](Licenses/LICENSE). It keeps the original author's copyright line.
-- Based on [gba-recomp](https://github.com/JRickey/gba-recomp) by JRickey (MIT OR Apache-2.0).
-- `gamedb.sqlite` is by JRickey, released under CC0 1.0.
-- Includes [w64devkit](https://github.com/skeeto/w64devkit) (GCC, binutils and other tools under GPL and compatible licenses), unmodified. Their licenses are in `payload/toolchain`.
-- *Final Fantasy Tactics Advance* is owned by Square Enix / Nintendo. This project is not affiliated with them and does not distribute ROMs or copyrighted game data.
+- This fork's original contributions are copyright © 2026 Michele Savarese and
+  contributors and are available under the MIT license. See [LICENSE](Licenses/LICENSE).
+- The original FFTARecomp project is by [Jorge.R](https://github.com/Jorge262007).
+  Its copyright notice remains in the license, alongside the notice for JRickey's
+  upstream gba-recomp code.
+- [gba-recomp](https://github.com/JRickey/gba-recomp) is available under MIT or
+  Apache-2.0. `gamedb.sqlite` is by JRickey and released under CC0 1.0.
+- Dependencies, bundled tools and other components retain their own licenses;
+  see [credits](Licenses/CREDITS.md) and [third-party notices](Licenses/README.md).
+- *Final Fantasy Tactics Advance* and related names belong to their respective
+  rightsholders. This fan project is not affiliated with Square Enix or Nintendo
+  and does not distribute ROMs or copyrighted game data.
 
 ---
-
-<p align="center">Made by a fan, for fans.</p>
 
 ## Useful controls and commands
 

@@ -3,6 +3,29 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-03 — Distinguish the independently maintained fork
+
+Type: docs. Platforms: Documentation.
+
+**Changes**
+
+- Present this repository and its release page as an independently maintained fork, clarify desktop and Android scope, and remove upstream-specific release claims.
+- Add a copyright notice for this fork’s original contributions while retaining the original MIT notice and upstream credits.
+- Describe AI-assisted development, the current decompilation and recompilation focus, and the game’s playable status as reported by the user.
+
+**Validation**
+
+- Checked README local link targets, fork release URL, original MIT notice and terms, and git diff whitespace.
+- Reviewed the README wording for the requested AI, project focus and playable status.
+
+**Limitations**
+
+- Release availability and Steam Deck compatibility were not tested; no runtime or build validation was performed.
+
+Documentation: [README.md](Licenses/README.md).
+
+[Change record](docs/changes/2026-11-03-distinguish-independent-fork.json)
+
 ## 2026-11-02 — Validate upstream fractional fast-forward input tests
 
 Type: docs. Platforms: Linux isolated upstream input-config module.
