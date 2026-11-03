@@ -61,6 +61,9 @@ use gba_core::rom_data::{
     compact_obj_animations_quinary::CompactAnimationsQuinary as QuinaryCompactObjAnimations, QUINARY_COMPACT_OBJ_ANIMATIONS_ID, QUINARY_COMPACT_OBJ_ANIMATIONS_FILE, MAX_QUINARY_COMPACT_OBJ_ANIMATIONS_FILE_BYTES,
     compact_obj_animations_senary::CompactAnimationsSenary as SenaryCompactObjAnimations, SENARY_COMPACT_OBJ_ANIMATIONS_ID, SENARY_COMPACT_OBJ_ANIMATIONS_FILE, MAX_SENARY_COMPACT_OBJ_ANIMATIONS_FILE_BYTES,
     compact_obj_animations_septenary::CompactAnimationsSeptenary as SeptenaryCompactObjAnimations, SEPTENARY_COMPACT_OBJ_ANIMATIONS_ID, SEPTENARY_COMPACT_OBJ_ANIMATIONS_FILE, MAX_SEPTENARY_COMPACT_OBJ_ANIMATIONS_FILE_BYTES,
+    compact_obj_animations_octonary::CompactAnimationsOctonary as OctonaryCompactObjAnimations, OCTONARY_COMPACT_OBJ_ANIMATIONS_ID, OCTONARY_COMPACT_OBJ_ANIMATIONS_FILE, MAX_OCTONARY_COMPACT_OBJ_ANIMATIONS_FILE_BYTES,
+    ui_context_templates::UiContextTemplates, UI_CONTEXT_TEMPLATES_ID, UI_CONTEXT_TEMPLATES_FILE, MAX_UI_CONTEXT_TEMPLATES_FILE_BYTES,
+    compact_obj_catalog::CompactObjCatalog, COMPACT_OBJ_CATALOG_ID, COMPACT_OBJ_CATALOG_FILE, MAX_COMPACT_OBJ_CATALOG_FILE_BYTES,
     indexed_graphics::IndexedGraphics, INDEXED_GRAPHICS_ID, INDEXED_GRAPHICS_FILE, MAX_INDEXED_GRAPHICS_FILE_BYTES,
     world_records38::WorldRecords38, WORLD_RECORDS38_ID, WORLD_RECORDS38_FILE, MAX_WORLD_RECORDS38_FILE_BYTES,
     parameter_records27::ParameterRecords27, PARAMETER_RECORDS27_ID, PARAMETER_RECORDS27_FILE, MAX_PARAMETER_RECORDS27_FILE_BYTES,
@@ -350,6 +353,8 @@ mod compact_obj_animations_senary_tests;
 #[cfg(test)]
 mod compact_obj_animations_septenary_tests;
 #[cfg(test)]
+mod compact_obj_animations_octonary_tests;
+#[cfg(test)]
 mod compact_obj_animations_tertiary_runtime_tests;
 #[cfg(test)]
 mod compact_obj_animations_quaternary_runtime_tests;
@@ -359,6 +364,12 @@ mod compact_obj_animations_quinary_runtime_tests;
 mod compact_obj_animations_senary_runtime_tests;
 #[cfg(test)]
 mod compact_obj_animations_septenary_runtime_tests;
+#[cfg(test)]
+mod compact_obj_animations_octonary_runtime_tests;
+#[cfg(test)]
+mod ui_context_templates_tests;
+#[cfg(test)]
+mod compact_obj_catalog_tests;
 #[cfg(test)]
 mod compact_obj_animations_secondary_runtime_tests;
 #[cfg(test)]
@@ -914,6 +925,9 @@ fn parse_quaternary_compact_obj_animations(bytes:&[u8])->Result<QuaternaryCompac
 fn parse_quinary_compact_obj_animations(bytes:&[u8])->Result<QuinaryCompactObjAnimations,String> {let value:QuinaryCompactObjAnimations=serde_json::from_slice(bytes).map_err(|e|format!("Invalid quinary_compact_obj_animations: {e}"))?;value.validate()?;Ok(value)}
 fn parse_senary_compact_obj_animations(bytes:&[u8])->Result<SenaryCompactObjAnimations,String> {let value:SenaryCompactObjAnimations=serde_json::from_slice(bytes).map_err(|e|format!("Invalid senary_compact_obj_animations: {e}"))?;value.validate()?;Ok(value)}
 fn parse_septenary_compact_obj_animations(bytes:&[u8])->Result<SeptenaryCompactObjAnimations,String> {let value:SeptenaryCompactObjAnimations=serde_json::from_slice(bytes).map_err(|e|format!("Invalid septenary_compact_obj_animations: {e}"))?;value.validate()?;Ok(value)}
+fn parse_octonary_compact_obj_animations(bytes:&[u8])->Result<OctonaryCompactObjAnimations,String> {let value:OctonaryCompactObjAnimations=serde_json::from_slice(bytes).map_err(|e|format!("Invalid octonary_compact_obj_animations: {e}"))?;value.validate()?;Ok(value)}
+fn parse_ui_context_templates(bytes:&[u8])->Result<UiContextTemplates,String> {let value:UiContextTemplates=serde_json::from_slice(bytes).map_err(|e|format!("Invalid ui_context_templates: {e}"))?;value.validate()?;Ok(value)}
+fn parse_compact_obj_catalog(bytes:&[u8])->Result<CompactObjCatalog,String> {let value:CompactObjCatalog=serde_json::from_slice(bytes).map_err(|e|format!("Invalid compact_obj_catalog: {e}"))?;value.validate()?;Ok(value)}
 fn encode_conditional_property_masks(value:&ConditionalPropertyMasks)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode conditional_property_masks: {e}"))}
 fn encode_compact_obj_animations(value:&CompactObjAnimations)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode compact_obj_animations: {e}"))}
 fn encode_secondary_compact_obj_animations(value:&SecondaryCompactObjAnimations)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode secondary_compact_obj_animations: {e}"))}
@@ -922,6 +936,9 @@ fn encode_quaternary_compact_obj_animations(value:&QuaternaryCompactObjAnimation
 fn encode_quinary_compact_obj_animations(value:&QuinaryCompactObjAnimations)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode quinary_compact_obj_animations: {e}"))}
 fn encode_senary_compact_obj_animations(value:&SenaryCompactObjAnimations)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode senary_compact_obj_animations: {e}"))}
 fn encode_septenary_compact_obj_animations(value:&SeptenaryCompactObjAnimations)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode septenary_compact_obj_animations: {e}"))}
+fn encode_octonary_compact_obj_animations(value:&OctonaryCompactObjAnimations)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode octonary_compact_obj_animations: {e}"))}
+fn encode_ui_context_templates(value:&UiContextTemplates)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode ui_context_templates: {e}"))}
+fn encode_compact_obj_catalog(value:&CompactObjCatalog)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode compact_obj_catalog: {e}"))}
 fn encode_ui_raw_transfers(value:&RawTransfers)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode ui_raw_transfers: {e}"))}
 fn encode_dynamic_raw_fragments(value:&DynamicRawFragments)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode dynamic_raw_fragments: {e}"))}
 fn parse_indexed_graphics(bytes:&[u8])->Result<IndexedGraphics,String> {let value:IndexedGraphics=serde_json::from_slice(bytes).map_err(|e|format!("Invalid indexed_graphics: {e}"))?;value.validate()?;Ok(value)}
@@ -1190,6 +1207,9 @@ struct Dataset {
     quinary_compact_obj_animations: Option<QuinaryCompactObjAnimations>,
     senary_compact_obj_animations: Option<SenaryCompactObjAnimations>,
     septenary_compact_obj_animations: Option<SeptenaryCompactObjAnimations>,
+    octonary_compact_obj_animations: Option<OctonaryCompactObjAnimations>,
+    ui_context_templates: Option<UiContextTemplates>,
+    compact_obj_catalog: Option<CompactObjCatalog>,
     map_raster_palettes: Option<MapRasterPalettes>,
     auxiliary_commands: Option<AuxiliaryCommands>,
     auxiliary_archive: Option<AuxiliaryArchive>,
@@ -1269,6 +1289,9 @@ struct Dataset {
     quinary_compact_obj_animations_bytes: Option<Vec<u8>>,
     senary_compact_obj_animations_bytes: Option<Vec<u8>>,
     septenary_compact_obj_animations_bytes: Option<Vec<u8>>,
+    octonary_compact_obj_animations_bytes: Option<Vec<u8>>,
+    ui_context_templates_bytes: Option<Vec<u8>>,
+    compact_obj_catalog_bytes: Option<Vec<u8>>,
     map_raster_palettes_bytes: Option<Vec<u8>>,
     auxiliary_commands_bytes: Option<Vec<u8>>,
     auxiliary_archive_bytes: Option<Vec<u8>>,
@@ -1374,6 +1397,9 @@ impl Dataset {
             quinary_compact_obj_animations: self.quinary_compact_obj_animations.as_ref().zip(self.quinary_compact_obj_animations_bytes.as_deref()),
             senary_compact_obj_animations: self.senary_compact_obj_animations.as_ref().zip(self.senary_compact_obj_animations_bytes.as_deref()),
             septenary_compact_obj_animations: self.septenary_compact_obj_animations.as_ref().zip(self.septenary_compact_obj_animations_bytes.as_deref()),
+            octonary_compact_obj_animations: self.octonary_compact_obj_animations.as_ref().zip(self.octonary_compact_obj_animations_bytes.as_deref()),
+            ui_context_templates: self.ui_context_templates.as_ref().zip(self.ui_context_templates_bytes.as_deref()),
+            compact_obj_catalog: self.compact_obj_catalog.as_ref().zip(self.compact_obj_catalog_bytes.as_deref()),
             map_raster_palettes: self.map_raster_palettes.as_ref().zip(self.map_raster_palettes_bytes.as_deref()),
             auxiliary_commands: self.auxiliary_commands.as_ref().zip(self.auxiliary_commands_bytes.as_deref()),
             auxiliary_archive: self.auxiliary_archive.as_ref().zip(self.auxiliary_archive_bytes.as_deref()),
@@ -1547,6 +1573,9 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
     let quinary_compact_obj_animations_bytes=manifest.coverage.iter().any(|id|id==QUINARY_COMPACT_OBJ_ANIMATIONS_ID).then(||read_bounded(&path.join(QUINARY_COMPACT_OBJ_ANIMATIONS_FILE),MAX_QUINARY_COMPACT_OBJ_ANIMATIONS_FILE_BYTES)).transpose()?;
     let senary_compact_obj_animations_bytes=manifest.coverage.iter().any(|id|id==SENARY_COMPACT_OBJ_ANIMATIONS_ID).then(||read_bounded(&path.join(SENARY_COMPACT_OBJ_ANIMATIONS_FILE),MAX_SENARY_COMPACT_OBJ_ANIMATIONS_FILE_BYTES)).transpose()?;
     let septenary_compact_obj_animations_bytes=manifest.coverage.iter().any(|id|id==SEPTENARY_COMPACT_OBJ_ANIMATIONS_ID).then(||read_bounded(&path.join(SEPTENARY_COMPACT_OBJ_ANIMATIONS_FILE),MAX_SEPTENARY_COMPACT_OBJ_ANIMATIONS_FILE_BYTES)).transpose()?;
+    let octonary_compact_obj_animations_bytes=manifest.coverage.iter().any(|id|id==OCTONARY_COMPACT_OBJ_ANIMATIONS_ID).then(||read_bounded(&path.join(OCTONARY_COMPACT_OBJ_ANIMATIONS_FILE),MAX_OCTONARY_COMPACT_OBJ_ANIMATIONS_FILE_BYTES)).transpose()?;
+    let ui_context_templates_bytes=manifest.coverage.iter().any(|id|id==UI_CONTEXT_TEMPLATES_ID).then(||read_bounded(&path.join(UI_CONTEXT_TEMPLATES_FILE),MAX_UI_CONTEXT_TEMPLATES_FILE_BYTES)).transpose()?;
+    let compact_obj_catalog_bytes=manifest.coverage.iter().any(|id|id==COMPACT_OBJ_CATALOG_ID).then(||read_bounded(&path.join(COMPACT_OBJ_CATALOG_FILE),MAX_COMPACT_OBJ_CATALOG_FILE_BYTES)).transpose()?;
     let indexed_graphics_bytes=manifest.coverage.iter().any(|id|id==INDEXED_GRAPHICS_ID).then(||read_bounded(&path.join(INDEXED_GRAPHICS_FILE),MAX_INDEXED_GRAPHICS_FILE_BYTES)).transpose()?;
     let world_records38_bytes=manifest.coverage.iter().any(|id|id==WORLD_RECORDS38_ID).then(||read_bounded(&path.join(WORLD_RECORDS38_FILE),MAX_WORLD_RECORDS38_FILE_BYTES)).transpose()?;
     let parameter_records27_bytes=manifest.coverage.iter().any(|id|id==PARAMETER_RECORDS27_ID).then(||read_bounded(&path.join(PARAMETER_RECORDS27_FILE),MAX_PARAMETER_RECORDS27_FILE_BYTES)).transpose()?;
@@ -1669,6 +1698,9 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
         quinary_compact_obj_animations_bytes.as_ref().map_or(0, Vec::len),
         senary_compact_obj_animations_bytes.as_ref().map_or(0, Vec::len),
         septenary_compact_obj_animations_bytes.as_ref().map_or(0, Vec::len),
+        octonary_compact_obj_animations_bytes.as_ref().map_or(0, Vec::len),
+        ui_context_templates_bytes.as_ref().map_or(0, Vec::len),
+        compact_obj_catalog_bytes.as_ref().map_or(0, Vec::len),
         map_raster_palettes_bytes.as_ref().map_or(0, Vec::len),
         auxiliary_commands_bytes.as_ref().map_or(0, Vec::len),
         auxiliary_archive_bytes.as_ref().map_or(0, Vec::len),
@@ -1752,6 +1784,9 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
     let quinary_compact_obj_animations=quinary_compact_obj_animations_bytes.as_deref().map(parse_quinary_compact_obj_animations).transpose()?;
     let senary_compact_obj_animations=senary_compact_obj_animations_bytes.as_deref().map(parse_senary_compact_obj_animations).transpose()?;
     let septenary_compact_obj_animations=septenary_compact_obj_animations_bytes.as_deref().map(parse_septenary_compact_obj_animations).transpose()?;
+    let octonary_compact_obj_animations=octonary_compact_obj_animations_bytes.as_deref().map(parse_octonary_compact_obj_animations).transpose()?;
+    let ui_context_templates=ui_context_templates_bytes.as_deref().map(parse_ui_context_templates).transpose()?;
+    let compact_obj_catalog=compact_obj_catalog_bytes.as_deref().map(parse_compact_obj_catalog).transpose()?;
     let indexed_graphics=indexed_graphics_bytes.as_deref().map(parse_indexed_graphics).transpose()?;
     let world_records38=world_records38_bytes.as_deref().map(parse_world_records38).transpose()?;
     let parameter_records27=parameter_records27_bytes.as_deref().map(parse_parameter_records27).transpose()?;
@@ -1882,6 +1917,9 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
         quinary_compact_obj_animations,
         senary_compact_obj_animations,
         septenary_compact_obj_animations,
+        octonary_compact_obj_animations,
+        ui_context_templates,
+        compact_obj_catalog,
         map_raster_palettes,
         auxiliary_commands,
         auxiliary_archive,
@@ -1961,6 +1999,9 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
         quinary_compact_obj_animations_bytes,
         senary_compact_obj_animations_bytes,
         septenary_compact_obj_animations_bytes,
+        octonary_compact_obj_animations_bytes,
+        ui_context_templates_bytes,
+        compact_obj_catalog_bytes,
         map_raster_palettes_bytes,
         auxiliary_commands_bytes,
         auxiliary_archive_bytes,
@@ -2065,6 +2106,9 @@ fn check_dataset_budget(
     quinary_compact_obj_animations: usize,
     senary_compact_obj_animations: usize,
     septenary_compact_obj_animations: usize,
+    octonary_compact_obj_animations: usize,
+    ui_context_templates: usize,
+    compact_obj_catalog: usize,
     map_raster_palettes: usize,
     auxiliary_commands: usize,
     auxiliary_archive: usize,
@@ -2163,6 +2207,9 @@ fn check_dataset_budget(
         || quinary_compact_obj_animations as u64 > MAX_QUINARY_COMPACT_OBJ_ANIMATIONS_FILE_BYTES
         || senary_compact_obj_animations as u64 > MAX_SENARY_COMPACT_OBJ_ANIMATIONS_FILE_BYTES
         || septenary_compact_obj_animations as u64 > MAX_SEPTENARY_COMPACT_OBJ_ANIMATIONS_FILE_BYTES
+        || octonary_compact_obj_animations as u64 > MAX_OCTONARY_COMPACT_OBJ_ANIMATIONS_FILE_BYTES
+        || ui_context_templates as u64 > MAX_UI_CONTEXT_TEMPLATES_FILE_BYTES
+        || compact_obj_catalog as u64 > MAX_COMPACT_OBJ_CATALOG_FILE_BYTES
         || map_raster_palettes as u64 > MAX_MAP_RASTER_PALETTES_FILE_BYTES
         || auxiliary_commands as u64 > MAX_AUXILIARY_COMMANDS_FILE_BYTES
         || auxiliary_archive as u64 > MAX_AUXILIARY_ARCHIVE_FILE_BYTES
@@ -2264,6 +2311,9 @@ fn check_dataset_budget(
         .saturating_add(quinary_compact_obj_animations)
         .saturating_add(senary_compact_obj_animations)
         .saturating_add(septenary_compact_obj_animations)
+        .saturating_add(octonary_compact_obj_animations)
+        .saturating_add(ui_context_templates)
+        .saturating_add(compact_obj_catalog)
         .saturating_add(map_raster_palettes)
         .saturating_add(auxiliary_commands)
         .saturating_add(auxiliary_archive)
@@ -2457,6 +2507,9 @@ pub fn attach_from_directory(machine: &mut gba_core::Machine, path: &Path) -> Re
     if let Some(data)=&dataset.quinary_compact_obj_animations {eprintln!("ROM_DATA runtime=decoded resource={QUINARY_COMPACT_OBJ_ANIMATIONS_ID} file={} lists={} sequences={}",dataset.manifest.resources[94].sha256,data.lists.len(),data.sequences.len());}
     if let Some(data)=&dataset.senary_compact_obj_animations {eprintln!("ROM_DATA runtime=decoded resource={SENARY_COMPACT_OBJ_ANIMATIONS_ID} file={} lists={} sequences={}",dataset.manifest.resources[95].sha256,data.lists.len(),data.sequences.len());}
     if let Some(data)=&dataset.septenary_compact_obj_animations {eprintln!("ROM_DATA runtime=decoded resource={SEPTENARY_COMPACT_OBJ_ANIMATIONS_ID} file={} lists={} sequences={}",dataset.manifest.resources[96].sha256,data.lists.len(),data.sequences.len());}
+    if let Some(data)=&dataset.octonary_compact_obj_animations {eprintln!("ROM_DATA runtime=decoded resource={OCTONARY_COMPACT_OBJ_ANIMATIONS_ID} file={} lists={} sequences={}",dataset.manifest.resources[97].sha256,data.lists.len(),data.sequences.len());}
+    if let Some(data)=&dataset.ui_context_templates {eprintln!("ROM_DATA runtime=decoded resource={UI_CONTEXT_TEMPLATES_ID} file={} records={}",dataset.manifest.resources[98].sha256,data.records.len());}
+    if let Some(data)=&dataset.compact_obj_catalog {eprintln!("ROM_DATA runtime=decoded resource={COMPACT_OBJ_CATALOG_ID} file={} banks={}",dataset.manifest.resources[99].sha256,data.banks.len());}
     if let Some(data)=&dataset.indexed_graphics {eprintln!("ROM_DATA runtime=decoded resource={INDEXED_GRAPHICS_ID} file={} archives={}",dataset.manifest.resources[82].sha256,data.archives.len());}
     if let Some(data)=&dataset.world_records38 {eprintln!("ROM_DATA runtime=decoded resource={WORLD_RECORDS38_ID} file={} records={}",dataset.manifest.resources[81].sha256,data.records.len());}
     if let Some(data)=&dataset.parameter_records27 {eprintln!("ROM_DATA runtime=decoded resource={PARAMETER_RECORDS27_ID} file={} records={}",dataset.manifest.resources[80].sha256,data.records.len());}
@@ -2598,6 +2651,15 @@ pub fn report_usage(machine: &gba_core::Machine) {
         }
         if let Some(i)=resources.septenary_compact_obj_animations_stats() {
             eprintln!("ROM_DATA_USE resource={SEPTENARY_COMPACT_OBJ_ANIMATIONS_ID} dataset={} bus_reads={} source_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes);
+        }
+        if let Some(i)=resources.octonary_compact_obj_animations_stats() {
+            eprintln!("ROM_DATA_USE resource={OCTONARY_COMPACT_OBJ_ANIMATIONS_ID} dataset={} bus_reads={} source_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes);
+        }
+        if let Some(i)=resources.ui_context_templates_stats() {
+            eprintln!("ROM_DATA_USE resource={UI_CONTEXT_TEMPLATES_ID} dataset={} bus_reads={} source_bytes={} coordinate_bytes={} count_bytes={} flag_bytes={} opaque_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.coordinate_bytes,i.count_bytes,i.flag_bytes,i.opaque_bytes);
+        }
+        if let Some(i)=resources.compact_obj_catalog_stats() {
+            eprintln!("ROM_DATA_USE resource={COMPACT_OBJ_CATALOG_ID} dataset={} bus_reads={} source_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes);
         }
         if let Some(i)=resources.conditional_descriptor_banks_stats() {
             eprintln!("ROM_DATA_USE resource={CONDITIONAL_DESCRIPTOR_BANKS_ID} dataset={} bus_reads={} source_bytes={} pointer_bytes={} field0_bytes={} field2_bytes={} field4_bytes={} kind_bytes={} byte7_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.pointer_bytes,i.field0_bytes,i.field2_bytes,i.field4_bytes,i.kind_bytes,i.byte7_bytes);
@@ -2969,6 +3031,9 @@ fn write_dataset(
     let quinary_compact_obj_animations_data=source.quinary_compact_obj_animations.as_ref().map(|c|encode_quinary_compact_obj_animations(&c.decoded)).transpose()?;
     let senary_compact_obj_animations_data=source.senary_compact_obj_animations.as_ref().map(|c|encode_senary_compact_obj_animations(&c.decoded)).transpose()?;
     let septenary_compact_obj_animations_data=source.septenary_compact_obj_animations.as_ref().map(|c|encode_septenary_compact_obj_animations(&c.decoded)).transpose()?;
+    let octonary_compact_obj_animations_data=source.octonary_compact_obj_animations.as_ref().map(|c|encode_octonary_compact_obj_animations(&c.decoded)).transpose()?;
+    let ui_context_templates_data=source.ui_context_templates.as_ref().map(|c|encode_ui_context_templates(&c.decoded)).transpose()?;
+    let compact_obj_catalog_data=source.compact_obj_catalog.as_ref().map(|c|encode_compact_obj_catalog(&c.decoded)).transpose()?;
     let indexed_graphics_data=source.indexed_graphics.as_ref().map(|c|encode_indexed_graphics(&c.decoded)).transpose()?;
     let world_records38_data=source.world_records38.as_ref().map(|c|encode_world_records38(&c.decoded)).transpose()?;
     let parameter_records27_data=source.parameter_records27.as_ref().map(|c|encode_parameter_records27(&c.decoded)).transpose()?;
@@ -3080,6 +3145,9 @@ fn write_dataset(
     if let Some(bytes)=&quinary_compact_obj_animations_data {files.push(bytes);}
     if let Some(bytes)=&senary_compact_obj_animations_data {files.push(bytes);}
     if let Some(bytes)=&septenary_compact_obj_animations_data {files.push(bytes);}
+    if let Some(bytes)=&octonary_compact_obj_animations_data {files.push(bytes);}
+    if let Some(bytes)=&ui_context_templates_data {files.push(bytes);}
+    if let Some(bytes)=&compact_obj_catalog_data {files.push(bytes);}
     source.set_file_hashes(&files)?;
     let manifest = toml::to_string_pretty(&source.manifest)
         .map_err(|e| format!("Cannot encode manifest: {e}"))?;
@@ -3179,6 +3247,9 @@ fn write_dataset(
         quinary_compact_obj_animations_data.as_ref().map_or(0, Vec::len),
         senary_compact_obj_animations_data.as_ref().map_or(0, Vec::len),
         septenary_compact_obj_animations_data.as_ref().map_or(0, Vec::len),
+        octonary_compact_obj_animations_data.as_ref().map_or(0, Vec::len),
+        ui_context_templates_data.as_ref().map_or(0, Vec::len),
+        compact_obj_catalog_data.as_ref().map_or(0, Vec::len),
         map_raster_palettes_data.as_ref().map_or(0, Vec::len),
         auxiliary_commands_data.as_ref().map_or(0, Vec::len),
         auxiliary_archive_data.as_ref().map_or(0, Vec::len),
@@ -3277,6 +3348,9 @@ fn write_dataset(
     if let Some(bytes)=&quinary_compact_obj_animations_data {write(&path.join(QUINARY_COMPACT_OBJ_ANIMATIONS_FILE),bytes)?;}
     if let Some(bytes)=&senary_compact_obj_animations_data {write(&path.join(SENARY_COMPACT_OBJ_ANIMATIONS_FILE),bytes)?;}
     if let Some(bytes)=&septenary_compact_obj_animations_data {write(&path.join(SEPTENARY_COMPACT_OBJ_ANIMATIONS_FILE),bytes)?;}
+    if let Some(bytes)=&octonary_compact_obj_animations_data {write(&path.join(OCTONARY_COMPACT_OBJ_ANIMATIONS_FILE),bytes)?;}
+    if let Some(bytes)=&ui_context_templates_data {write(&path.join(UI_CONTEXT_TEMPLATES_FILE),bytes)?;}
+    if let Some(bytes)=&compact_obj_catalog_data {write(&path.join(COMPACT_OBJ_CATALOG_FILE),bytes)?;}
     if let Some(bytes) = &map_raster_palettes_data {write(&path.join(MAP_RASTER_PALETTES_FILE),bytes)?;}
     if let Some(bytes) = &auxiliary_commands_data {write(&path.join(AUXILIARY_COMMANDS_FILE),bytes)?;}
     if let Some(bytes) = &auxiliary_archive_data {write(&path.join(AUXILIARY_ARCHIVE_FILE),bytes)?;}
@@ -3598,6 +3672,9 @@ mod tests {
             quinary_compact_obj_animations: None,
             senary_compact_obj_animations: None,
             septenary_compact_obj_animations: None,
+            octonary_compact_obj_animations: None,
+            ui_context_templates: None,
+            compact_obj_catalog: None,
             map_raster_palettes: None,
             auxiliary_scripts: None,
             font_bank: None,
@@ -3925,8 +4002,8 @@ mod tests {
         verify(&path, &source).unwrap();
         // Exercise the actual aggregate boundary without allocating that much
         // JSON. Each individual file still fits its own input guard.
-        check_dataset_budget(0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0).unwrap();
-        assert!(check_dataset_budget(0, 1, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+        check_dataset_budget(0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0).unwrap();
+        assert!(check_dataset_budget(0, 1, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
             .unwrap_err()
             .contains("total size"));
         for (name, limit) in [

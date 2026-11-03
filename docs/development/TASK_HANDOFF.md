@@ -36,9 +36,9 @@ termination of another owner's process or changing another thread's goal state.
 
 ### ROM-DATA-FULL-EUR
 
-- State: suspended
+- State: active
 - Outcome: partial
-- Verified: e107-d106, 97 resources/98 files; CLI create/reuse/startup and 100 protected files PASS in `target/rom-data-compact-obj-septenary-cli-retry-20261103/result.json`, read during the audit. Neutral 24755→24756 with new counters zero does not prove ordinary use. Do not repeat accepted source/model/runtime/CLI checks or closed negative attempts.
+- Verified: e110-d109,100 resources/101 files;29-bank sparse compact catalog source/model/native/CLI accepted,99 previous resources/bytes unchanged. Current dataset: target/validation/units/rom-data-compact-catalog-current-rdbcje1e/work/resources/; proof: target/rom-data-compact-catalog-20261103/combined-result.json. Superseded e109/e108 payloads retired with manifests/evidence retained. Earlier Roulette600-frame and UI12-frame positives remain accepted; no repeat. Initial e108 oracle failure/tail acceptance and e110 interrupted-build/continuation limits preserved.
 - Missing: unmigrated resources/consumers, missing ordinary-use evidence, ABI/global extent/indirect calls and mod phases ROMDATA-06/07; Linux/USA/native Windows/new32:9 remain distinct. EUR, reduced Wine scope, no performance/space measurements; originals and personal saves unchanged.
 - Resume: [ROM_DATA_TODO](ROM_DATA_TODO.md), only the selected criterion's section (ROMDATA-01/02/03/04/05/06/07); [inventory](ROM_DATA_INVENTORY.md). Do not read the whole TODO. The following children retain their IDs and limits, with no new attempts selected here:
   - `ROMDATA-04-PARAMETER-RECORDS27-ORDINARY`: source/model/runtime/CLI accepted; 59 records observed, full domain unproven; positive normal use and complete paired evidence missing. Eleven negative captures closed; archive legacy lines 17624..17672 and `docs/rom_data_gameplay.md`, ordinary sparse parameter record reachability section.
@@ -46,7 +46,9 @@ termination of another owner's process or changing another thread's goal state.
   - `ROMDATA-05-DYNAMIC-RAW-ORDINARY-REACHABILITY` and `ROMDATA-01-LOCALIZED-RAW-DYNAMIC-DOMAIN`: conditional fragments/paths accepted; global domain and ordinary invocation unproven. Unit320 negative closed; later state2/state4/selector-witnesses diagnosis closed without a scene. Archive 59..75 and 789..866; no blind navigation.
   - `ROMDATA-01-OBJ-REMAINING-DRAW-ROOTS`, `ROMDATA-01-OBJ-REMAINING-CONSTRUCTOR-SOURCES`, `ROMDATA-01-OBJ-GRAPHICS-PAYLOADS`: authenticated increments accepted; global inventory/remaining consumers open. Do not repeat the broad experiment with 61 truncations. Archive 2853..2874, then only the selected family's record.
   - `ROMDATA-05-OBJ-VALIDATION`: local equivalence/costs, GUI, archive and USA initializer have later accepted outcomes; native Windows gates, further catalogs/scenes and normal enablement remain. Archive 3945..4087. Old artificial RSS/space constraints and `ROMDATA-05-BG-SCENES-COSTS` do not authorize further measurements: superseded by EUR/no-metrics steering.
-  - Compact OBJ e101..e107: conditional prefixes/model/runtime/CLI accepted; ordinary use still open. Record222/candidate-table and selector33 have only static conditions and bounded negatives. Archive 11..65; do not infer a scene from its name.
+  - Compact OBJ e101..e108: conditional prefixes/model/runtime/CLI accepted. e101..e107 ordinary use remains open; record222/candidate-table and selector33 have only static conditions/bounded negatives. e108/6cc124 has one IN-19 Roulette 600-frame positive native pair; complete animation/ordinary selector-list domain remains unproved. Archive 11..65 and new ordinary-use record; no accepted replay repeated.
+  - UI context templates e109: source selector/copy catalog and one ordinary20B copy accepted; complete UI extent/all consumers/all11 records in ordinary play remain unproved. docs/rom_data_ui.md. Do not repeat closed12-frame proof for context.
+  - ROMDATA-04-COMPACT-CATALOG-ORDINARY:29 new roots/38selectors/6650B managed by e110; source/native/CLI closed. Short startup counters0 do not prove use/absence. Selected actions303/310/312 lack human active-bank descriptors; child pointer source checked, no rejected-lead cast. Positive producer/scene/full pair missing; no blind navigation. docs/rom_data_compact_catalog.md.
 
 ## Incomplete tasks and open criteria
 
@@ -213,9 +215,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: VALIDATION-BOUNDED-WORKFLOW completed; new local validation uses owned disposable scratch and one coordinated Wine prefix. Prior cleanup remains closed; English-first retains its owner.
-- Last verified result: nine synthetic lifecycle cases passed on Wine, one native link case skipped; host-side Wine integration removed successful scratch and refused a real external POSIX link while retaining its work and preserving its destination. Shared prefix reused; completed leases released. Skill metadata valid.
-- Remaining work: no implementation criterion remains for this workflow unit. Native Linux/native Windows remain unverified; future units must adopt the runner and explicitly isolate mutable saves/configuration. Historical and AndroidPort artifacts are not automatically migrated.
-- Errors or blockers: Wine's initial Python symlink probe produced no link and is not link-refusal evidence; the later gated real-link probe passed. No application rebuild, gameplay test or benchmark selected.
-- Next action: use `scripts/validation_unit.py` for new local checks; retain a current dataset and only a named comparison baseline while needed. No unrelated runtime work selected.
-- References: `docs/development/LOCAL_ARTIFACTS.md#default-lifecycle-for-new-validation`, `docs/changes/2026-11-03-bound-new-validation-unit-artifacts.json`, `target/validation-workflow-20261103/integration-result.json`, `target/validation/units/retention-tooling-t37v5wee/`.
+- Task: ROMDATA-01-E109-COMPACT-CATALOG completed for conditional source/model/runtime/CLI scopes; full EUR goal partial.
+- Last verified result: 29 banks/38 selectors/6650B,100 resources/101 files;99 prior identical. Source/67 native state-clock cases/187 typed bytes and CLI create/reuse/startup PASS. Builds warning-free/709 stable hashes; initial interrupted logs retained. E109 102-file baseline retired with 11 guards/current e110 unchanged; successful scratch removed.
+- Remaining work: ROMDATA-04-COMPACT-CATALOG-ORDINARY positive source/scene/pair; other global/indirect/ROM/mod and Linux/USA/native Windows criteria. New startup counters0, selected human leads unavailable.
+- Errors or blockers: initial 81508 interrupted 143 resolved by same-source PASS36632;45988/89770/82680/93307/87212 terminal. No live jobs/benchmark; effective model settings unconfirmed.
+- Next action: scoped report; project-memory, handoff and diff checks passed. Next continuation selects missing ROM work; ordinary attempts require a supported producer/scene, no accepted-proof repeat.
+- References: docs/changes/2026-11-03-migrate-european-sparse-compact-obj-catalog.json, docs/rom_data_compact_catalog.md, target/rom-data-compact-catalog-20261103/combined-result.json.

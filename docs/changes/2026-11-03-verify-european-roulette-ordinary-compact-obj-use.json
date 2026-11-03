@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "verify-european-roulette-ordinary-compact-obj-use",
+  "title": "Verify ordinary European Roulette use of the compact OBJ bank",
+  "kind": "docs",
+  "platforms": [
+    "EUR Windows execution under Wine"
+  ],
+  "changes": [
+    "Identify the original Roulette producer: action301 metadata maps to task296 and handler081108ec with a nonzero target-count gate; declared ability banks distinguish human Blue Mage and Ahriman from Moogle Juggler.",
+    "Record read-only existing EUR checkpoint capability probes and a normal IN-19 route through Mage Tourney, deployment, facing confirmation and Marche Blue Magic/Roulette20MP to the Do it seed at11960. Preserve the original save and scope of older DS16 acceptance."
+  ],
+  "validation": [
+    "Source/label/roster Wine checks pass. Offline probes execute no guest instructions and preserve full serialized states/clocks; IN19 unit 0 has Blue Mage secondary and slot109 flag E4. Other queried roster negatives are checkpoint-specific.",
+    "Managed native CLI confirms ordinary Roulette consumption over 600 frames, 11960..12560: 4744 reads and 5831 typed bank bytes. The existing native raw/managed test passes 600 full states, clock, central/wide buffers, OAM, dispatch and all five exact audio streams on the same seed/input. All protected inputs and managed resource files remain unchanged.",
+    "Reuse canonical Cargo CLI/test/native/TCC outputs, current e108 dataset and coordinated Wine prefix without application rebuild or extraction. Successful verification scratch auto-retires. Under leases and host activity checks, two receipts retire 45 superseded navigation scratch trees, preserving logs/results and one current seed.",
+    "Correct the initial inverse-key-mask navigation and restart from the unchanged original; invalid outputs are not negative scene evidence. Source-backed placement and visible label reach Bervenia; a separate facing A resolves ignored Start using an accepted EUR precedent."
+  ],
+  "limitations": [
+    "The 600-frame endpoint still contains the Roulette animation. Full action completion, ordinary use of all selectors/frames/lists, global domains and remaining ROM/mod criteria are unproved. Linux, USA and native Windows remain pending; no performance benchmark.",
+    "Primary Terra/xhigh settings are unavailable for independent inspection. Read-only consultations explicitly requested Sol/xhigh via the existing consultant handle; effective settings remain unconfirmed."
+  ],
+  "files": [
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md",
+    "docs/rom_data_maps.md",
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ]
+}

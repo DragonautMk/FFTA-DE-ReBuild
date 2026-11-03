@@ -60,8 +60,17 @@ mod compact_obj_animations_senary;
 use compact_obj_animations_senary::SenaryCompactObjResources;
 pub use compact_obj_animations_senary::SenaryCompactObjStats;
 mod compact_obj_animations_septenary;
+mod compact_obj_animations_octonary;
+mod ui_context_templates;
+mod compact_obj_catalog;
 use compact_obj_animations_septenary::SeptenaryCompactObjResources;
+use compact_obj_animations_octonary::OctonaryCompactObjResources;
+use ui_context_templates::UiContextTemplateResources;
+use compact_obj_catalog::CompactObjCatalogResources;
 pub use compact_obj_animations_septenary::SeptenaryCompactObjStats;
+pub use compact_obj_animations_octonary::OctonaryCompactObjStats;
+pub use ui_context_templates::UiContextTemplateStats;
+pub use compact_obj_catalog::CompactObjCatalogStats;
 mod metadata2;
 use metadata2::Metadata2Resources;
 pub use metadata2::Metadata2Stats;
@@ -402,6 +411,9 @@ pub struct RuntimeResources {
     quinary_compact_obj_animations: Option<Box<QuinaryCompactObjResources>>,
     senary_compact_obj_animations: Option<Box<SenaryCompactObjResources>>,
     septenary_compact_obj_animations: Option<Box<SeptenaryCompactObjResources>>,
+    octonary_compact_obj_animations: Option<Box<OctonaryCompactObjResources>>,
+    ui_context_templates: Option<Box<UiContextTemplateResources>>,
+    compact_obj_catalog: Option<Box<CompactObjCatalogResources>>,
     map_raster_palettes: Option<Box<MapRasterPaletteResources>>,
     auxiliary_scripts: Option<Box<AuxiliaryScriptResources>>,
 }
@@ -419,6 +431,9 @@ impl RuntimeResources {
     pub fn quinary_compact_obj_animations_stats(&self) -> Option<QuinaryCompactObjStats> { self.quinary_compact_obj_animations.as_ref().map(|r| r.stats()) }
     pub fn senary_compact_obj_animations_stats(&self) -> Option<SenaryCompactObjStats> { self.senary_compact_obj_animations.as_ref().map(|r| r.stats()) }
     pub fn septenary_compact_obj_animations_stats(&self) -> Option<SeptenaryCompactObjStats> { self.septenary_compact_obj_animations.as_ref().map(|r| r.stats()) }
+    pub fn octonary_compact_obj_animations_stats(&self) -> Option<OctonaryCompactObjStats> { self.octonary_compact_obj_animations.as_ref().map(|r| r.stats()) }
+    pub fn ui_context_templates_stats(&self) -> Option<UiContextTemplateStats> { self.ui_context_templates.as_ref().map(|r| r.stats()) }
+    pub fn compact_obj_catalog_stats(&self) -> Option<CompactObjCatalogStats> { self.compact_obj_catalog.as_ref().map(|r| r.stats()) }
     /// The frontend supplies structures parsed from the very bytes whose file
     /// digest is in the manifest. Reauthenticate the base against the actual
     /// selected image; no editable/mod resource can enter through this API.
@@ -764,6 +779,15 @@ impl RuntimeResources {
         if let Some((data,_))=files.septenary_compact_obj_animations {
             resources.septenary_compact_obj_animations=Some(Box::new(SeptenaryCompactObjResources::new(data.clone(),&source.septenary_compact_obj_animations.as_ref().unwrap().sources)?));
         }
+        if let Some((data,_))=files.octonary_compact_obj_animations {
+            resources.octonary_compact_obj_animations=Some(Box::new(OctonaryCompactObjResources::new(data.clone(),&source.octonary_compact_obj_animations.as_ref().unwrap().sources)?));
+        }
+        if let Some((data,_))=files.ui_context_templates {
+            resources.ui_context_templates=Some(Box::new(UiContextTemplateResources::new(data.clone(),&source.ui_context_templates.as_ref().unwrap().sources)?));
+        }
+        if let Some((data,_))=files.compact_obj_catalog {
+            resources.compact_obj_catalog=Some(Box::new(CompactObjCatalogResources::new(data.clone(),&source.compact_obj_catalog.as_ref().unwrap().sources)?));
+        }
         if let Some((data,_))= files.map_raster_palettes {
             resources.map_raster_palettes = Some(Box::new(MapRasterPaletteResources::new(data.clone(), &source.map_raster_palettes.as_ref().unwrap().sources)?));
         }
@@ -886,6 +910,9 @@ impl RuntimeResources {
             quinary_compact_obj_animations: None,
             senary_compact_obj_animations: None,
             septenary_compact_obj_animations: None,
+            octonary_compact_obj_animations: None,
+            ui_context_templates: None,
+            compact_obj_catalog: None,
             map_raster_palettes: None,
             auxiliary_scripts: None,
         }
@@ -1009,6 +1036,9 @@ impl RuntimeResources {
             + self.quinary_compact_obj_animations.as_ref().map_or(0, |i| i.resident_bytes())
             + self.senary_compact_obj_animations.as_ref().map_or(0, |i| i.resident_bytes())
             + self.septenary_compact_obj_animations.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.octonary_compact_obj_animations.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.ui_context_templates.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.compact_obj_catalog.as_ref().map_or(0, |i| i.resident_bytes())
             + self.map_raster_palettes.as_ref().map_or(0, |i| i.resident_bytes())
             + self.auxiliary_scripts.as_ref().map_or(0, |i| i.resident_bytes())
     }
@@ -1519,7 +1549,10 @@ impl RuntimeResources {
             let prior = match &self.quaternary_compact_obj_animations {Some(data)=>data.guest_read(index,rom,prior),None=>prior};
             let prior = match &self.quinary_compact_obj_animations {Some(data)=>data.guest_read(index,rom,prior),None=>prior};
             let prior = match &self.senary_compact_obj_animations {Some(data)=>data.guest_read(index,rom,prior),None=>prior};
-            return match &self.septenary_compact_obj_animations {Some(data)=>data.guest_read(index,rom,prior),None=>prior};
+            let prior = match &self.septenary_compact_obj_animations {Some(data)=>data.guest_read(index,rom,prior),None=>prior};
+            let prior = match &self.octonary_compact_obj_animations {Some(data)=>data.guest_read(index,rom,prior),None=>prior};
+            let prior = match &self.ui_context_templates {Some(data)=>data.guest_read(index,rom,prior),None=>prior};
+            return match &self.compact_obj_catalog {Some(data)=>data.guest_read(index,rom,prior),None=>prior};
         };
         self.bus_reads.fetch_add(1, Ordering::Relaxed);
         let source_bit = if matches!(base, 0x149510 | 0x14ced8) {
@@ -1699,6 +1732,9 @@ impl crate::MemMap {
             || QuinaryCompactObjResources::source_page(index)
             || SenaryCompactObjResources::source_page(index)
             || SeptenaryCompactObjResources::source_page(index)
+            || OctonaryCompactObjResources::source_page(index)
+            || UiContextTemplateResources::source_page(index)
+            || CompactObjCatalogResources::source_page(index)
             || ObjGraphicsResources::source_page(index)
             || UiPaletteResources::source_page(index)
             || UiGraphicsResources::source_page(index)

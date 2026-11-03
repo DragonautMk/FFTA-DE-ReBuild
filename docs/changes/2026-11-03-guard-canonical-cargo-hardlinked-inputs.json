@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "guard-canonical-cargo-hardlinked-inputs",
+  "title": "Allow canonical Cargo hard links in read-only validation guards",
+  "kind": "fixed",
+  "platforms": [
+    "Wine",
+    "Validation tooling"
+  ],
+  "changes": [
+    "Allow hard-linked read-only inputs in validation snapshots so canonical Cargo executables can be reused directly. Scratch, activity leases, symlinks and junction checks retain their existing strict behavior."
+  ],
+  "validation": [
+    "One focused Windows Python check passed on Wine: a hard-linked canonical input remains intact, successful scratch is removed, default snapshots refuse shared files and shared scratch is retained. The real canonical Cargo executable with two links was guarded during this invocation and the subsequent production CLI proof."
+  ],
+  "limitations": [
+    "Native Linux and native Windows gates remain pending; no unrelated lifecycle cases were repeated. Input guards detect changes after the foreground command and do not provide OS-level write protection."
+  ],
+  "files": [
+    "scripts/artifact_coordinator.py",
+    "scripts/validation_unit.py",
+    "scripts/tests/test_validation_unit.py",
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ],
+  "references": [
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ]
+}

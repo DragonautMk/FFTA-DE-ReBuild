@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "migrate-european-ui-context-templates",
+  "title": "Migrate the European category-selected UI context templates",
+  "kind": "added",
+  "platforms": [
+    "EUR Windows builds and execution under Wine"
+  ],
+  "changes": [
+    "Discover the source-backed UI template catalog at 394e44..394f20 through a fresh twelve-frame native address audit. Original category selection and explicit copy length define eleven 20-byte records; preserve coordinate fields, allocation count, flags and fifteen opaque bytes without a global UI bound or guest index cap.",
+    "Publish ui.context-templates/ui-context-templates.json in e109-d108 with 99 resources/100 files; all 98 previous resources and payload bytes remain identical. Add immutable typed runtime ownership, mixed boundary reads and per-field use counters while leaving original selection, copies, allocation and live UI code in place. Save format, C API and native cache are unchanged.",
+    "Use canonical Cargo outputs, one coordinated Wine prefix and one current prepared dataset. Form coherent corruption in memory instead of creating full dataset copies. Retire the superseded e108 comparison only after successor acceptance and retain its manifest/logs/results."
+  ],
+  "validation": [
+    "New Wine native API audit 11960..11972 passes observer transparency and records 20835 contexts/21845 image bytes/732 unowned bytes. Independent source checks pass 48 opcode pins, the complete category mapping, exact 220-byte reconstruction, no 98-owner overlap and an offline 64-byte IWRAM/ROM memcpy identity check with complete snapshot/clock unchanged. Context attribution limits remain explicit.",
+    "Canonical Windows test and production CLI builds pass without warnings; 705 source hashes remain stable. CLI create/reuse passes 99 resources/100 generation files/102 managed files, preserves 98 prior resource records/file bytes and leaves file sets/hashes/times unchanged on reuse.",
+    "One focused Wine filter passes lossless JSON/shape/source checks, poisoned-ROM typed bytes, mirrored mixed boundaries, per-field counters and coherent-edit rejection formed in memory. The original selector passes all 256 byte categories; eleven constructor/copy and eleven coordinate native/raw prefixes pass full state-clock equality with 308 typed native bytes. No complete dataset copy is created.",
+    "Production CLI over the existing ordinary IN19 EUR Roulette Do it seed 11960..11972 serves 5 new-owner reads/20 bytes (2 coordinate,2 count,1 flag,15 opaque); all 99 runtime identities match. Existing native raw/managed verification passes all 12 frames for complete serialized state/clock/central-wide buffers/OAM/dispatch/five exact audio streams. The accepted 600-frame Roulette proof is not repeated.",
+    "Native and ordinary successful scratch auto-retires with logs/results/native object retained. Under old/new unit and Wine-prefix leases plus host activity checks, retire the old 101-managed-file tree (99 generation files); 98 successor payload hashes and ten retained input trees/files remain unchanged. Keep the e109 dataset and current Do it seed."
+  ],
+  "limitations": [
+    "This proves the selected catalog and one ordinary template copy, not all UI data, all consumers, all eleven records in ordinary play or full constructor/UI behavior. The in-memory rejection is not a new disk-failure reload/lifecycle matrix. Linux, USA, native Windows and remaining ROM/mod phases stay pending; no benchmark.",
+    "The primary Terra/xhigh setting and resolved Sol consultation settings cannot be independently inspected. Existing explicitly requested Sol/xhigh consultant diagnosed source selection, callback provenance and the bounded contract; new evidence was independently checked. A transient sandbox /tmp/.git quota error required focused approved commands and no source restoration or test rerun."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_octonary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/clan_table_alias_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_quaternary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_quinary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_secondary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_senary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_septenary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_tertiary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_descriptor_bank_zero_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_descriptor_banks_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_four_byte_lookup_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_packed_lookup_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_property_masks_runtime_tests.rs",
+    "crates/recomp/src/rom_data/dynamic_raw_fragments_runtime_tests.rs",
+    "crates/recomp/src/rom_data/table_graphics_runtime_tests.rs",
+    "crates/gba-core/src/rom_data/ui_context_templates.rs",
+    "crates/gba-core/src/rom_data/runtime/ui_context_templates.rs",
+    "crates/recomp/src/rom_data/ui_context_templates_tests.rs",
+    "docs/rom_data_ui.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/rom_data_obj.md"
+  ],
+  "references": [
+    "docs/rom_data_ui.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ]
+}

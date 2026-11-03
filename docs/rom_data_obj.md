@@ -1966,6 +1966,150 @@ bank's counters were zero in that frame, so ordinary use remains unverified.
 Linux, USA and native Windows remain pending; no performance measurement was
 made.
 
+## Conditional compact OBJ animation source at 6cc124
+
+Three original EUR calls to constructor `080d97d0` witness selectors 0, 1 and 2:
+`08110a4c`, `08110af4` and `08110d5e`. Independent Wine disassembly, literal/BL
+decoding and register-flow checks confirm the root and selector arguments.
+This establishes a conditional source contract. The normal EUR Roulette replay
+below additionally proves ordinary consumption within its 600-frame bound; it
+does not establish a global selector domain.
+
+The bank occupies `6cc124..6cc18a`: 102 contiguous bytes, with no overlap with
+e107 owners. Flags are 12, the list directory starts at `6cc128` and the sequence
+directory at `6cc154`. The three sequences contain 8, 4 and 9 frames and reference
+all five lists: list 0 is empty and the other four contain one object each.
+Padding `6cc18a..6cc18c` and the next candidate are excluded. The witnessed
+selectors are not a new guest bounds rule.
+
+EUR `e108-d107` publishes the source-authenticated typed model as
+`graphics.conditional-compact-obj-animations-octonary` in
+`compact-obj-animations-octonary.json`. It retains all 97 previous resources and
+their file bytes. Runtime reads compose the new owner with earlier owners and
+raw ROM outside its span; coherent resource/manifest edits are rejected before
+replacing the active owner. No save-format or C API change is introduced.
+
+The reduced Wine evidence combines a passing source/model check and accepted
+managed/native substeps with a remaining-only native check. The first full
+runtime filter reached selector 256 after preservation, mixed boundary/width,
+transaction and native/interpreter state/clock checks for selectors 0/1/2 passed.
+It then failed because its counter oracle expected zero owned bytes. The
+original selector reads raw `u16[6cc354] = 0`, returning to owned `6cc154` for
+count bytes `06 00`: two typed bytes and result `r3 = 6` are correct. Sol's
+read-only diagnosis was independently checked; only the test oracle changed.
+The retained-dataset/object continuation passes that selector's exact counter,
+`r1 = 086cc154`, `r3 = 6` and full state/clock equality. Combined native cases
+serve 14 typed bytes. The aggregate input-boundary check also passes. The full
+filter was not rerun or reported as a full-filter PASS.
+
+Source and build evidence is under `target/rom-data-root-6cc124-20261103/`.
+Wine units are `target/validation/units/rom-data-6cc124-source-v6pw9mta`,
+`rom-data-6cc124-contract-pbkps4ta`, `rom-data-octonary-runtime-xcoaavjw` and
+`rom-data-octonary-remaining-8pixy381`. The first build's missing zero-budget
+arguments were corrected; subsequent Windows builds are warning-free.
+
+The production CLI also passes Wine create/reuse/startup: 99 generation files
+match the accepted runtime dataset, all 98 runtime identities match, and 101
+managed files retain their hashes and times through reuse and one frame. The
+frame advances from 24755 to 24756 but the new bank counters remain zero, so it
+does not prove ordinary use. The canonical Cargo executable is reused directly;
+its hard links are permitted only by read-only input guards, verified in a
+focused Wine check. Disposable scratch still refuses shared files.
+
+The accepted e108 dataset was retained in
+`target/validation/units/rom-data-octonary-cli-qtmou06g/work/resources/`
+until its exact e109 successor passed validation. That superseded payload is
+now retired; its manifest/logs/results remain and accepted proof is unchanged.
+The current dataset is under
+`target/validation/units/rom-data-compact-catalog-current-rdbcje1e/work/resources/`;
+the e109 comparison was subsequently retired after its e110 successor passed.
+[UI template validation](rom_data_ui.md#category-selected-ui-context-templates)
+records the replacement and guards. Earlier exact replacement checks also
+retired the resolved failed unit's generated dataset under leases and host
+activity checks; its manifest, native object, source preimages and original
+failure logs remain. The retained dataset and six real-input guards
+were unchanged; `diagnostic-retirement-result.json` records the retirement.
+These initial checks did not establish ordinary use. The later replay below
+closes one positive EUR use; Linux, USA and native Windows remain unverified.
+No performance measurement was made.
+
+<a id="ordinary-roulette-producer-and-eur-candidate"></a>
+
+### Ordinary Roulette producer and EUR validation
+
+Focused EUR source inspection identifies the ordinary producer, rather than
+inferring reachability from the animation's shape. Metadata28 record 301 alone
+in the authenticated 347-row projection returns task ID 296 through property
+32 (`080d07a4`, field +0x14). The default action dispatcher passes this ID to
+`080d7018`; its descriptor selects handler `081108ec`. The source label's exact
+pointer and compact font glyphs read **Roulette**. Normal action types/override
+flags must reach this default path, and handler state 100 requires a nonzero
+`action+0x2c0` target count before selector 0. Later handler states request
+selectors 1 and 2. These source facts alone do not prove execution of each
+handler state.
+
+Declared ability banks place action 301 at human bank 1/slot 109 and Ahriman
+bank 16/slot 5. The Moogle bank does not declare it. Original job metadata maps
+Blue Mage job 10 to the human slot range containing 109; Juggler job 40 uses
+the Moogle bank. The original flag getter `080d0fb4` tests the high bit at
+`unit+0x40+slot`, independently of the low seven progress bits. The bounded clan
+roster is 24 entries at `0x02000080+i*0x108`. A flag and current job establish only
+a candidate: deployment, actual command availability, MP/status, targets and
+the dispatch gates still need observation.
+
+Read-only Wine probes loaded existing EUR snapshots without executing guest
+instructions and preserved complete serialized states and clocks. IN-19 unit 0
+has secondary job 10 and slot-109 byte `e4` (flag set, progress 100). IN-08,
+IN-07, IN-13, the existing DS-16 EUR candidate and USER-DS-20 lacked a positive
+human Roulette flag in this roster; no global absence or enemy exclusion is
+inferred. DS-16's older EUR acceptance limits remain unchanged. The existing
+IN-19 preview is the Baguba Port world map. Normal Wine navigation from the
+original snapshot accepted Mage Tourney, whose objective is Win battle at
+Bervenia Palace. A bounded read-only placement query reused the accepted world
+coordinate contract and found Palace region 0/node 28 at world (72,152), versus
+Baguba region 5/node 14 at (216,232). Normal cursor input reached the visible
+Palace label, then travel reached its mission menu with 12 days remaining.
+Placement and a separate facing A produced START To Battle, matching the
+accepted EUR precedent; Start/Yes and the opening dialogue reached Marche’s
+first turn. The real UI shows Paladin level 44, Blue Magic secondary, Roulette
+20 MP and 107 available MP. Selecting it reaches the ordinary Do it confirmation
+at guest frame 11960.
+Two initial navigation observations used inverse key masks and were abandoned,
+then navigation restarted from the unchanged original with active-low inputs.
+They are not negative reachability results.
+
+Evidence is under `target/rom-data-octonary-ordinary-20261103/`, with source,
+label and roster Wine units `rom-data-octonary-handler-r8ue8qje`,
+`rom-data-octonary-producer-bqsjzwqr`, `rom-data-octonary-label-g6i6ddwk`,
+`rom-data-octonary-roster-v6xzlrvg` and
+`rom-data-octonary-candidates-_7pm1xjk`. Canonical core outputs and the coordinated
+Wine prefix were reused; the application and extracted dataset were not rebuilt.
+
+A managed native CLI replay confirms Do it with A for eight frames, then
+releases all keys. Guest frames 11960..12560 serve **4,744 reads and 5,831 bytes**
+from the octonary owner. The existing native raw/managed scene test passes on
+the same seed/input for all 600 frames: full serialized states, guest clock,
+central/wide buffers, OAM, dispatch and all five exact audio streams match.
+It records 600 full-state comparisons and positive audio in every stream.
+The endpoint image still shows the Roulette animation: action completion,
+all three selectors in ordinary play and all 21 frames/lists are not inferred
+from aggregate usage. This closes a scoped ordinary positive consumption and
+equivalence criterion, rather than the complete animation or global family.
+
+`rom-data-octonary-ordinary-pair-cxaqwj0g` retains CLI/pair logs, explicit PASS
+results and the endpoint image; its successful scratch was automatically
+removed. The existing e108 dataset and canonical Cargo CLI/test/native/TCC
+outputs were reused, with no extraction or application rebuild. Protected
+inputs and the complete managed resource tree remain unchanged. The ordinary
+selection manifest pins the seed, input and executable identities; the
+consolidated normal-input route preserves provenance from original IN-19.
+Two leased cleanup receipts retire 45 superseded navigation scratch trees,
+including the resolved inverse-mask outputs, preserving their logs/results
+and the one current Do it seed. Originals and personal saves remain unchanged.
+Retired payloads do not reopen their accepted observations. Linux, USA, native
+Windows, full animation completion and broader ROM/mod criteria remain open.
+No performance benchmark was run.
+
 ## Conditional compact OBJ animation source at 6bf490
 
 Five original EUR callers pass selectors 2 and 3 through `080d98e4` for this
@@ -2111,3 +2255,16 @@ frame advances from 24755 to 24756 without changing managed files. The new
 bank's counters were zero in that frame, so ordinary use remains unverified.
 Linux, USA and native Windows remain pending; no performance measurement was
 made.
+
+
+## Sparse multi-bank compact OBJ catalog
+
+EUR e110-d109 adds one generic typed catalog for 29 further caller-witnessed
+roots and 38 selectors, with 207 compact frames and 888 objects across 65
+source spans (6,650 bytes). It preserves all 99 previous resources, including
+the eight earlier compact banks. Source/model, mixed-boundary/in-memory
+rejection, original interpreter/native prefixes and production CLI create/
+reuse/startup pass on Wine. Ordinary use and global/indirect coverage remain
+open; the short CLI sample has zero new-catalog use. No guest selector cap,
+complete scheduler claim or benchmark is introduced. See the
+[catalog contract and validation](rom_data_compact_catalog.md).

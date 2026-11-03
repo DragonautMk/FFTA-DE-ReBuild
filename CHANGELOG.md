@@ -24,6 +24,31 @@ Documentation: [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.m
 
 [Change record](docs/changes/2026-11-03-verify-ui-trace-channel-parity.json)
 
+## 2026-11-03 — Verify ordinary European Roulette use of the compact OBJ bank
+
+Type: docs. Platforms: EUR Windows execution under Wine.
+
+**Changes**
+
+- Identify the original Roulette producer: action301 metadata maps to task296 and handler081108ec with a nonzero target-count gate; declared ability banks distinguish human Blue Mage and Ahriman from Moogle Juggler.
+- Record read-only existing EUR checkpoint capability probes and a normal IN-19 route through Mage Tourney, deployment, facing confirmation and Marche Blue Magic/Roulette20MP to the Do it seed at11960. Preserve the original save and scope of older DS16 acceptance.
+
+**Validation**
+
+- Source/label/roster Wine checks pass. Offline probes execute no guest instructions and preserve full serialized states/clocks; IN19 unit 0 has Blue Mage secondary and slot109 flag E4. Other queried roster negatives are checkpoint-specific.
+- Managed native CLI confirms ordinary Roulette consumption over 600 frames, 11960..12560: 4744 reads and 5831 typed bank bytes. The existing native raw/managed test passes 600 full states, clock, central/wide buffers, OAM, dispatch and all five exact audio streams on the same seed/input. All protected inputs and managed resource files remain unchanged.
+- Reuse canonical Cargo CLI/test/native/TCC outputs, current e108 dataset and coordinated Wine prefix without application rebuild or extraction. Successful verification scratch auto-retires. Under leases and host activity checks, two receipts retire 45 superseded navigation scratch trees, preserving logs/results and one current seed.
+- Correct the initial inverse-key-mask navigation and restart from the unchanged original; invalid outputs are not negative scene evidence. Source-backed placement and visible label reach Bervenia; a separate facing A resolves ignored Start using an accepted EUR precedent.
+
+**Limitations**
+
+- The 600-frame endpoint still contains the Roulette animation. Full action completion, ordinary use of all selectors/frames/lists, global domains and remaining ROM/mod criteria are unproved. Linux, USA and native Windows remain pending; no performance benchmark.
+- Primary Terra/xhigh settings are unavailable for independent inspection. Read-only consultations explicitly requested Sol/xhigh via the existing consultant handle; effective settings remain unconfirmed.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md), [rom_data_maps.md](docs/rom_data_maps.md), [LOCAL_ARTIFACTS.md](docs/development/LOCAL_ARTIFACTS.md).
+
+[Change record](docs/changes/2026-11-03-verify-european-roulette-ordinary-compact-obj-use.json)
+
 ## 2026-11-03 — Verify European compact OBJ sixth runtime
 
 Type: docs. Platforms: EUR; Wine.
@@ -1297,6 +1322,88 @@ Type: added. Platforms: EUR; Wine.
 
 [Change record](docs/changes/2026-11-03-model-european-compact-obj-seventh-root.json)
 
+## 2026-11-03 — Migrate the European category-selected UI context templates
+
+Type: added. Platforms: EUR Windows builds and execution under Wine.
+
+**Changes**
+
+- Discover the source-backed UI template catalog at 394e44..394f20 through a fresh twelve-frame native address audit. Original category selection and explicit copy length define eleven 20-byte records; preserve coordinate fields, allocation count, flags and fifteen opaque bytes without a global UI bound or guest index cap.
+- Publish ui.context-templates/ui-context-templates.json in e109-d108 with 99 resources/100 files; all 98 previous resources and payload bytes remain identical. Add immutable typed runtime ownership, mixed boundary reads and per-field use counters while leaving original selection, copies, allocation and live UI code in place. Save format, C API and native cache are unchanged.
+- Use canonical Cargo outputs, one coordinated Wine prefix and one current prepared dataset. Form coherent corruption in memory instead of creating full dataset copies. Retire the superseded e108 comparison only after successor acceptance and retain its manifest/logs/results.
+
+**Validation**
+
+- New Wine native API audit 11960..11972 passes observer transparency and records 20835 contexts/21845 image bytes/732 unowned bytes. Independent source checks pass 48 opcode pins, the complete category mapping, exact 220-byte reconstruction, no 98-owner overlap and an offline 64-byte IWRAM/ROM memcpy identity check with complete snapshot/clock unchanged. Context attribution limits remain explicit.
+- Canonical Windows test and production CLI builds pass without warnings; 705 source hashes remain stable. CLI create/reuse passes 99 resources/100 generation files/102 managed files, preserves 98 prior resource records/file bytes and leaves file sets/hashes/times unchanged on reuse.
+- One focused Wine filter passes lossless JSON/shape/source checks, poisoned-ROM typed bytes, mirrored mixed boundaries, per-field counters and coherent-edit rejection formed in memory. The original selector passes all 256 byte categories; eleven constructor/copy and eleven coordinate native/raw prefixes pass full state-clock equality with 308 typed native bytes. No complete dataset copy is created.
+- Production CLI over the existing ordinary IN19 EUR Roulette Do it seed 11960..11972 serves 5 new-owner reads/20 bytes (2 coordinate,2 count,1 flag,15 opaque); all 99 runtime identities match. Existing native raw/managed verification passes all 12 frames for complete serialized state/clock/central-wide buffers/OAM/dispatch/five exact audio streams. The accepted 600-frame Roulette proof is not repeated.
+- Native and ordinary successful scratch auto-retires with logs/results/native object retained. Under old/new unit and Wine-prefix leases plus host activity checks, retire the old 101-managed-file tree (99 generation files); 98 successor payload hashes and ten retained input trees/files remain unchanged. Keep the e109 dataset and current Do it seed.
+
+**Limitations**
+
+- This proves the selected catalog and one ordinary template copy, not all UI data, all consumers, all eleven records in ordinary play or full constructor/UI behavior. The in-memory rejection is not a new disk-failure reload/lifecycle matrix. Linux, USA, native Windows and remaining ROM/mod phases stay pending; no benchmark.
+- The primary Terra/xhigh setting and resolved Sol consultation settings cannot be independently inspected. Existing explicitly requested Sol/xhigh consultant diagnosed source selection, callback provenance and the bounded contract; new evidence was independently checked. A transient sandbox /tmp/.git quota error required focused approved commands and no source restoration or test rerun.
+
+Documentation: [rom_data_ui.md](docs/rom_data_ui.md), [ROM_DATA_TODO.md](docs/development/ROM_DATA_TODO.md), [LOCAL_ARTIFACTS.md](docs/development/LOCAL_ARTIFACTS.md).
+
+[Change record](docs/changes/2026-11-03-migrate-european-ui-context-templates.json)
+
+## 2026-11-03 — Migrate 29 European compact OBJ banks as one sparse catalog
+
+Type: added. Platforms: EUR Windows builds and execution under Wine.
+
+**Changes**
+
+- Add one generic typed compact catalog for 29 unowned direct-call roots/38 witnessed selectors, 207 frames/160 list identities/888 objects, 6650 source bytes in 65 spans. Preserve source flags/relative directories/six-byte objects/eight-bit frame fields and only the referenced sparse projection; no directory cardinality, global boundary or guest index cap is inferred.
+- Publish graphics.conditional-compact-obj-catalog/compact-obj-catalog.json in e110-d109 with 100 resources/101 files. Preserve all 99 previous resource records and payload bytes; compose typed reads with prior owners/raw gaps and expose actual use counters. Save format, C API and native translation compatibility are unchanged.
+- Reuse canonical Cargo outputs, the coordinated Wine prefix, one prepared current generation and the retained authenticated native count-reader object. Form coherent corruption in memory; successful scratch auto-retires. Retire the superseded e109 comparison only after acceptance and preserve its manifest/logs/results.
+
+**Validation**
+
+- Wine bounded query over 118 retained readers (at most 0x120 bytes, stopping at control flow/unsupported instructions) finds 65 calls/36 roots; 41 calls/29 roots are new. Independently review 37 original windows, root literals/BL/register flow and 12 constructor save/restore pins; all source geometry and no 99-owner/interbank overlap pass. Correct an unaccepted preliminary 6c30a4 selector 0/2 lead to 0/1/2 and 152 bytes. No old 61-truncation experiment repeated.
+- The initial test-build wrapper exits 143 before result publication. Host checks find no matching descendants, 709 sources unchanged and accepted e109 binary intact; original logs are preserved. Same-source continuation and canonical CLI build pass without warnings; all 709 source hashes remain stable. Cause of the signal remains unproved.
+- CLI create/reuse passes 100 resources/101 generation files/103 managed files; all 99 prior resource records/file bytes identical, reuse preserves file sets/hashes/times. One focused Wine filter verifies 6650 poisoned-ROM typed bytes, JSON/shape/source and mirrored mixed boundaries; coherent edits are rejected in memory without changing the existing machine/owner or creating full dataset copies.
+- Original interpreter prefixes verify 38 sequence counts,207 list/duration pairs and 160 list pointers. Reuse the native count object for 38 valid and 29 out-of-projection cases: all 67 native/interpreter full-state-clock comparisons pass, serving 187 typed bytes (152 valid plus 35 actual out-of-projection owned intersections). Counter expectations follow the original directory/count addresses, never an all-raw assumption.
+- Production CLI uses the existing EUR Roulette Do it seed 11960..11972, loads 100 exact runtime identities and preserves the managed tree. New catalog counters are zero: startup registration is proved, ordinary use is not. Dataset/ROM checks exclude actions 303/310/312 from 142 declared human active records; two original child-creation windows retained. No casts of rejected leads or blind scene search, and no new full-frame ordinary pair claimed.
+- Source/native/CLI success scratch removed with logs/results retained. Retire the old 102-managed-file e109 tree (100 generation files) under old/new unit and Wine-prefix leases plus host checks, with 99 matching successor payloads and 11 retained input guards unchanged. Keep one e110 current dataset and existing real inputs/native helper.
+
+**Limitations**
+
+- The source-supported projection and conditional readers do not establish global ROM CFG/catalog extent, indirect/all consumers, complete constructor/scheduler/UI behavior, additional selectors or positive ordinary use. ROMDATA-04-COMPACT-CATALOG-ORDINARY remains open. In-memory rejection is not a new disk failed-reload/lifecycle matrix. Linux, USA, native Windows and remaining ROM/mod phases pending; no benchmark.
+- Primary Terra/xhigh and resolved Sol/xhigh settings cannot be independently inspected. The existing explicitly requested Sol/xhigh consultant supplied source-selection and rejected ordinary-lead diagnoses; metadata/code evidence was independently checked. Nearest-descriptor/action 305 adjacency was rejected before any attempted cast.
+
+Documentation: [rom_data_compact_catalog.md](docs/rom_data_compact_catalog.md), [ROM_DATA_TODO.md](docs/development/ROM_DATA_TODO.md), [LOCAL_ARTIFACTS.md](docs/development/LOCAL_ARTIFACTS.md).
+
+[Change record](docs/changes/2026-11-03-migrate-european-sparse-compact-obj-catalog.json)
+
+## 2026-11-03 — Manage the European compact OBJ bank at 6cc124
+
+Type: added. Platforms: EUR Windows builds under Wine.
+
+**Changes**
+
+- Add the source-authenticated octonary compact OBJ model for the 102-byte bank at 6cc124: caller-witnessed selectors 0/1/2, 21 frames, five lists and four objects including one empty list. No guest selector bound is introduced.
+- Publish EUR e108-d107 with 98 resources and 99 files, authenticate typed runtime ownership and compose boundary reads with previous owners/raw ROM. All 97 previous resources and file bytes remain unchanged; save format and C API are unchanged.
+- Update current revision/count assertions and budget-test arguments; preserve previous accepted test scopes without rerunning them. Use canonical Cargo outputs and the bounded validation runner, retaining one named current e108 dataset.
+
+**Validation**
+
+- Independent Wine disassembly and source-contract checks passed the three literal/selector/BL witnesses, complete geometry, exact SHA and absence of e107 overlap. Focused source/model Wine test passed bytes, boundaries, JSON/shape, modification rejection and original readers for all 21 frames/five lists.
+- Managed Wine substeps passed previous-resource preservation, full owned bytes/mixed boundaries, coherent-tamper rejection and native/interpreter state-clock equality for selectors 0/1/2. The first full runtime filter failed only on an expected-zero counter oracle for selector 256. Sol/xhigh diagnosed a raw zero offset returning to two owned count bytes; production sources did not change. A retained-dataset/object continuation passed exactly two typed bytes, r1=086cc154/r3=6 and full state-clock equality; combined native cases serve 14 typed bytes. Budget check passed separately.
+- Canonical Windows test and production builds passed without warnings; 702 source hashes were stable. The first compile failure from three missing zero budget arguments and the first runtime failure were preserved. The complete runtime filter was not rerun or claimed as PASS.
+- Production Wine CLI create/reuse/startup passed: all 99 generation files match runtime, 98 runtime identities match the manifest and 101 managed files retain hashes/times. One neutral frame advances 24755 to 24756 with zero new-bank usage.
+- After diagnosis and replacement acceptance, retired only the owned 99-file diagnostic dataset under unit/prefix leases and host activity checks. Exact replacement hashes, current dataset and six retained real-input guards passed; manifest, original logs, native object and source preimages remain.
+
+**Limitations**
+
+- Ordinary reachability/use, global catalog/selector domains, whole-game indirect-call/ABI coverage and remaining ROM/mod phases are unproved. Linux, USA and native Windows remain pending. No performance measurements or unrelated scene searches.
+- Primary Terra/xhigh cannot be independently observed. Sol consultations explicitly requested gpt-6.1-sol/xhigh and returned handle /root/sol_e107_next_source without resolved-setting metadata. Acceptance is scoped to the recorded combined substeps, not an entire runtime-filter rerun.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md), [ROM_DATA_TODO.md](docs/development/ROM_DATA_TODO.md).
+
+[Change record](docs/changes/2026-11-03-manage-european-octonary-compact-obj-bank.json)
+
 ## 2026-11-03 — Manage source-bound cheats from the catalog page
 
 Type: added. Platforms: Windows GNU / Wine.
@@ -1785,6 +1892,26 @@ Type: docs. Platforms: Desktop development documentation.
 Documentation: [rom_data_unit_obj.md](docs/rom_data_unit_obj.md).
 
 [Change record](docs/changes/2026-11-03-improve-rom-inventory-alternate-script-pose-readability.json)
+
+## 2026-11-03 — Allow canonical Cargo hard links in read-only validation guards
+
+Type: fixed. Platforms: Wine, Validation tooling.
+
+**Changes**
+
+- Allow hard-linked read-only inputs in validation snapshots so canonical Cargo executables can be reused directly. Scratch, activity leases, symlinks and junction checks retain their existing strict behavior.
+
+**Validation**
+
+- One focused Windows Python check passed on Wine: a hard-linked canonical input remains intact, successful scratch is removed, default snapshots refuse shared files and shared scratch is retained. The real canonical Cargo executable with two links was guarded during this invocation and the subsequent production CLI proof.
+
+**Limitations**
+
+- Native Linux and native Windows gates remain pending; no unrelated lifecycle cases were repeated. Input guards detect changes after the foreground command and do not provide OS-level write protection.
+
+Documentation: [LOCAL_ARTIFACTS.md](docs/development/LOCAL_ARTIFACTS.md).
+
+[Change record](docs/changes/2026-11-03-guard-canonical-cargo-hardlinked-inputs.json)
 
 ## 2026-11-03 — Filter cheats by source and armed state
 

@@ -81,6 +81,9 @@ overrides are cleared; pass every required test setting explicitly. Protect
 the actual ROM, dataset, state, recording and other read-only inputs with
 repeatable `--protect` options. Complete file sets, identities, hashes and
 modification times are checked after the command, before retirement.
+Read-only input guards permit hard-linked files, as used by canonical Cargo
+executables; they never unlink those inputs. Scratch and lease paths retain
+their strict shared-file checks. Symlinks and junctions remain refused.
 
 With `--wine`, the runner owns `target/validation/wine-prefix`, refuses adoption
 of an unmarked legacy prefix and holds its lease through `wineserver -w`. Use

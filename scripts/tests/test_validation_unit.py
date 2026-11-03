@@ -83,6 +83,22 @@ class ValidationUnitTests(unittest.TestCase):
             validation.run_unit(args, root=self.root)
         self.assertEqual((self.units()[0] / 'work/unexpected.sav').read_bytes(), b'save')
 
+    def test_canonical_hardlinked_inputs_are_guarded_but_shared_scratch_is_refused(self):
+        canonical = self.root / 'canonical.exe'
+        canonical.write_bytes(b'canonical build')
+        alias = self.root / 'cargo-alias.exe'
+        os.link(canonical, alias)
+        self.assertEqual(canonical.stat().st_nlink, 2)
+        unit = validation.run_unit(self.args(protect=[str(canonical)]), root=self.root)
+        self.assertFalse((unit / 'work').exists())
+        self.assertEqual(alias.read_bytes(), b'canonical build')
+        with self.assertRaisesRegex(ValueError, 'Nonordinary/shared'):
+            validation.snapshot(canonical)
+        args = self.args(protect=[str(canonical)])
+        args.command[-1] += f'; import os; os.link({str(canonical)!r}, "shared.bin")'
+        with self.assertRaisesRegex(ValueError, 'Nonordinary/shared'):
+            validation.run_unit(args, root=self.root)
+
     def test_explicit_keep_reason_and_extra_evidence(self):
         args = self.args(keep_work='current comparison dataset', evidence=['dataset/resource.json'])
         unit = validation.run_unit(args, root=self.root)

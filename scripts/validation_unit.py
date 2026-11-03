@@ -47,11 +47,11 @@ def digest(path):
     return h.hexdigest()
 
 
-def snapshot(path, *, hashes=False, disposable=False):
+def snapshot(path, *, hashes=False, disposable=False, read_only=False):
     """Guard complete trees, including empty directories; refuse links/junctions."""
     path = Path(os.path.abspath(path))
     is_dir = path.is_dir()
-    ordinary(path, directory=is_dir)
+    ordinary(path, directory=is_dir, allow_hardlinks=read_only)
     entries = [path]
     if is_dir:
         for parent, dirs, files in os.walk(path, followlinks=False):
@@ -63,7 +63,7 @@ def snapshot(path, *, hashes=False, disposable=False):
     result = {}
     for p in entries:
         directory = p.is_dir()
-        st = ordinary(p, directory=directory)
+        st = ordinary(p, directory=directory, allow_hardlinks=read_only)
         if disposable and not directory and p.suffix.lower() in PRIVATE:
             raise ValueError(f'Private input in scratch; retained for review: {p}')
         row = {'directory': directory, 'identity': [st.st_dev, st.st_ino]}
@@ -110,7 +110,7 @@ def run_unit(args, *, root=ROOT):
     results = [relative_path(p) for p in args.result]
     evidence = [relative_path(p) for p in args.evidence]
     protected = [Path(os.path.abspath(p)) for p in args.protect]
-    before = {str(p): snapshot(p, hashes=True) for p in protected}
+    before = {str(p): snapshot(p, hashes=True, read_only=True) for p in protected}
     command = args.command[1:] if args.command[:1] == ['--'] else args.command
     if not command:
         raise ValueError('A foreground validation command is required after --')
@@ -185,7 +185,7 @@ def run_unit(args, *, root=ROOT):
         if child.returncode:
             raise ValueError(f'Validation command exited {child.returncode}')
         for p, saved in before.items():
-            if snapshot(Path(p), hashes=True) != saved:
+            if snapshot(Path(p), hashes=True, read_only=True) != saved:
                 raise ValueError(f'Protected input changed: {p}')
         for rel in results:
             p = work / rel

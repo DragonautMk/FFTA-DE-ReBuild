@@ -1065,6 +1065,13 @@ gate 4 coexistence pass. Source 80+25 closed/not repeated. CLI/scene 05 complete
 below; receipt UI-FK/new Linux-USA-native Windows remain, no performance measurements.
 [Contract](../rom_data_gameplay.md#managed-and-direct-progression-gates).
 
+**ROMDATA-02-OCTONARY-COMPACT-OBJ completed for the declared EUR/Wine source:**
+caller-witnessed selectors 0/1/2 at `6cc124` cover 21 frames, five lists/four
+objects and 102 contiguous bytes, including the empty list. Source geometry,
+lossless JSON, original reader prefixes and modification rejection pass on
+Wine. This does not establish a global selector cap or ordinary use; Linux/USA
+remain pending. [Contract](../rom_data_obj.md#conditional-compact-obj-animation-source-at-6cc124).
+
 <a id="romdata-03--preparazione-automatica-e-riuso-allavvio"></a>
 
 ## ROMDATA-03 — Automatic preparation and reuse at startup
@@ -1237,6 +1244,58 @@ without writes and the native cache, same result as retained legacy reference
 without repeating it. Other scenes/GUI/archives, Linux/USA and native Windows
 remain open; no performance measurement.
 
+
+**ROMDATA-04-OCTONARY-COMPACT-OBJ completed for combined EUR/Wine substeps:**
+e108-d107 adds the 102-byte typed bank and preserves all 97 previous resources.
+Owned bytes, mixed boundaries, transactional rejection and original native/
+interpreter state-clock equality pass for selectors 0/1/2 plus a retained-input
+continuation for selector 256. That selector reads a raw zero offset returning
+to two owned count bytes; no guest cap or all-raw fallback is inferred. The
+initial full filter failed on the counter oracle and was not rerun. Production
+CLI create/reuse/startup also passes: 99 files match runtime, 98 identities and
+101 managed files remain unchanged. Neutral new-bank counters are zero;
+the later ordinary replay is recorded below. Linux/USA remain pending, with no
+measurements.
+**ROMDATA-04-OCTONARY-ORDINARY completed for one positive EUR/Wine replay:**
+normal IN-19 Marche Blue Magic→Roulette→Do it in Mage Tourney serves 4,744
+new-bank reads/5,831 bytes. Existing native raw/managed verification passes all
+600 frames, 11960..12560 with full state/clock/images/OAM/dispatch/five audio
+streams. Canonical outputs/current dataset reused; inputs unchanged, no build
+or extraction. Scratch auto-retired, 45 superseded navigation copies retired
+with evidence and one current seed retained. Animation completion, ordinary
+selector/list completeness and global domains remain unproved; Linux/USA and
+native Windows pending, no benchmark.
+[Evidence](../rom_data_obj.md#ordinary-roulette-producer-and-eur-validation).
+
+**ROMDATA-01/02/03/04/05-UI-CONTEXT-TEMPLATES completed for scoped EUR/Wine:**
+source-backed category selection and explicit 20-byte copy define eleven UI
+records/220 bytes at 394e44, without a global bound or guest cap. e109-d108
+adds the typed file/runtime owner and field counters; all 98 earlier resources
+and bytes stay identical. Warning-free canonical Windows builds, one-generation
+CLI create/reuse and focused Wine checks pass: 256 original categories,
+eleven copy plus eleven coordinate native/raw state-clock prefixes, typed
+boundaries and coherent rejection in memory (no dataset copies). One ordinary
+11960..11972 CLI/native raw-managed pair serves five new-owner reads/20 bytes
+with full state/clock/images/OAM/dispatch/five-stream audio equality. Ordinary
+all-record/all-consumer coverage, global UI extent and Linux/USA/native Windows
+remain open. Superseded e108 payload retired with evidence/current inputs
+preserved; no benchmark.
+[Contract](../rom_data_ui.md#category-selected-ui-context-templates).
+
+**ROMDATA-01/02/03/04-COMPACT-CATALOG completed for scoped EUR/Wine:**
+one sparse typed resource covers 29 new literal-root banks/38 selectors,
+207 frames/160 list identities/888 objects, 6,650 bytes in 65 spans. The
+118-reader retained-census query and 37 original windows prove the declared
+projection; gaps/unwitnessed selectors/global CFG remain unproved. e110-d109
+publishes 100 resources/101 files and preserves all 99 prior payloads. Focused
+Wine source/bytes/mixed-boundaries/in-memory rejection passes; all new reader
+fields and 67 native/interpreter state-clock cases pass, including actual
+out-of-projection owned intersections. CLI create/reuse/startup recognizes
+100 identities without managed writes. Its 12-frame new counters are zero;
+`ROMDATA-04-COMPACT-CATALOG-ORDINARY` remains open, requiring a source-backed
+producer/scene before any cast. Selected human-action leads are excluded
+without gameplay attempts. No previous positive pair repeated or benchmark.
+[Contract](../rom_data_compact_catalog.md).
 
 <a id="romdata-05--equivalenza-salvataggi-e-prestazioni"></a>
 

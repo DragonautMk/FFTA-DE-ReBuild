@@ -2047,6 +2047,40 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   guest semantics; a host-only overlay does not itself change the guest ABI.
 - Desktop packaging covers Windows and Linux. The release profile uses thin
   LTO and 16 codegen units; the Cargo manifest is authoritative.
+- EUR e108-d107 additionally owns the caller-witnessed compact OBJ bank at
+  `6cc124..6cc18a`: 102 bytes, 21 frames, five lists/four objects. All 97 prior
+  resources remain identical. Reduced Wine source/model and combined managed/
+  native substeps pass, including raw-directory-to-owned-count selector 256;
+  the initial test oracle was corrected without changing runtime routing.
+  Production CLI create/reuse/startup passes for all 99 files/98 identities,
+  without modifying 101 managed files. The neutral frame has zero new-bank use.
+  [Contract and limits](../rom_data_obj.md#conditional-compact-obj-animation-source-at-6cc124).
+  A normal IN-19 EUR Marche Blue Magic/Roulette confirmation in Mage Tourney
+  now proves 4,744 new-bank reads/5,831 bytes and native raw/managed equivalence
+  across 600 frames, 11960..12560 (full state/clock/render/OAM/dispatch/audio).
+  Full animation and ordinary selector/list completeness, Linux/USA/native
+  Windows remain unverified; no benchmark or new extraction/build.
+- EUR e109-d108 additionally owns eleven category-selected UI context templates
+  at `394e44..394f20` (220 bytes), with typed coordinates, allocation count,
+  flags and preserved opaque bytes. All 98 previous resources/file bytes remain
+  identical. CLI creation/reuse and focused Wine original-selector, native
+  copy/coordinate, boundaries and in-memory rejection checks pass. One ordinary
+  12-frame native raw/managed pair proves 5 reads/20 bytes and complete
+  state/clock/render/OAM/dispatch/audio equality. Keep one current dataset;
+  superseded comparison payloads retire after acceptance with evidence retained.
+  Global UI extent, other consumers/all-record ordinary use and Linux/USA/native
+  Windows remain open. No save-format/C API/native-cache change or benchmark.
+  [Contract](../rom_data_ui.md#category-selected-ui-context-templates).
+- EUR e110-d109 adds one sparse generic compact OBJ catalog for 29 more
+  caller-witnessed roots/38 selectors, 207 frames/888 objects and 6,650 bytes
+  in 65 spans. All 99 earlier resources/file bytes remain unchanged. Wine
+  source/model/typed-boundary/in-memory rejection and 67 native/interpreter
+  state-clock cases pass; canonical builds and CLI create/reuse/startup pass
+  for 100 resources/101 files. The short startup has zero new-catalog use;
+  ordinary/all-consumer/global/indirect coverage and Linux/USA/native Windows
+  remain open. One current dataset, superseded baseline retired with evidence;
+  save format/C API/native compatibility unchanged, no benchmark.
+  [Contract](../rom_data_compact_catalog.md).
 - The desktop loads the full ROM into `MemMap.rom` at startup; ordinary guest
   ROM reads use that in-memory buffer. The [ROM data TODO](ROM_DATA_TODO.md)
   orders extraction/decoding, startup reuse and direct runtime consumption first,

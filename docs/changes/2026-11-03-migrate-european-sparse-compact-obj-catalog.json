@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "migrate-european-sparse-compact-obj-catalog",
+  "title": "Migrate 29 European compact OBJ banks as one sparse catalog",
+  "kind": "added",
+  "platforms": [
+    "EUR Windows builds and execution under Wine"
+  ],
+  "changes": [
+    "Add one generic typed compact catalog for 29 unowned direct-call roots/38 witnessed selectors, 207 frames/160 list identities/888 objects, 6650 source bytes in 65 spans. Preserve source flags/relative directories/six-byte objects/eight-bit frame fields and only the referenced sparse projection; no directory cardinality, global boundary or guest index cap is inferred.",
+    "Publish graphics.conditional-compact-obj-catalog/compact-obj-catalog.json in e110-d109 with 100 resources/101 files. Preserve all 99 previous resource records and payload bytes; compose typed reads with prior owners/raw gaps and expose actual use counters. Save format, C API and native translation compatibility are unchanged.",
+    "Reuse canonical Cargo outputs, the coordinated Wine prefix, one prepared current generation and the retained authenticated native count-reader object. Form coherent corruption in memory; successful scratch auto-retires. Retire the superseded e109 comparison only after acceptance and preserve its manifest/logs/results."
+  ],
+  "validation": [
+    "Wine bounded query over 118 retained readers (at most 0x120 bytes, stopping at control flow/unsupported instructions) finds 65 calls/36 roots; 41 calls/29 roots are new. Independently review 37 original windows, root literals/BL/register flow and 12 constructor save/restore pins; all source geometry and no 99-owner/interbank overlap pass. Correct an unaccepted preliminary 6c30a4 selector 0/2 lead to 0/1/2 and 152 bytes. No old 61-truncation experiment repeated.",
+    "The initial test-build wrapper exits 143 before result publication. Host checks find no matching descendants, 709 sources unchanged and accepted e109 binary intact; original logs are preserved. Same-source continuation and canonical CLI build pass without warnings; all 709 source hashes remain stable. Cause of the signal remains unproved.",
+    "CLI create/reuse passes 100 resources/101 generation files/103 managed files; all 99 prior resource records/file bytes identical, reuse preserves file sets/hashes/times. One focused Wine filter verifies 6650 poisoned-ROM typed bytes, JSON/shape/source and mirrored mixed boundaries; coherent edits are rejected in memory without changing the existing machine/owner or creating full dataset copies.",
+    "Original interpreter prefixes verify 38 sequence counts,207 list/duration pairs and 160 list pointers. Reuse the native count object for 38 valid and 29 out-of-projection cases: all 67 native/interpreter full-state-clock comparisons pass, serving 187 typed bytes (152 valid plus 35 actual out-of-projection owned intersections). Counter expectations follow the original directory/count addresses, never an all-raw assumption.",
+    "Production CLI uses the existing EUR Roulette Do it seed 11960..11972, loads 100 exact runtime identities and preserves the managed tree. New catalog counters are zero: startup registration is proved, ordinary use is not. Dataset/ROM checks exclude actions 303/310/312 from 142 declared human active records; two original child-creation windows retained. No casts of rejected leads or blind scene search, and no new full-frame ordinary pair claimed.",
+    "Source/native/CLI success scratch removed with logs/results retained. Retire the old 102-managed-file e109 tree (100 generation files) under old/new unit and Wine-prefix leases plus host checks, with 99 matching successor payloads and 11 retained input guards unchanged. Keep one e110 current dataset and existing real inputs/native helper."
+  ],
+  "limitations": [
+    "The source-supported projection and conditional readers do not establish global ROM CFG/catalog extent, indirect/all consumers, complete constructor/scheduler/UI behavior, additional selectors or positive ordinary use. ROMDATA-04-COMPACT-CATALOG-ORDINARY remains open. In-memory rejection is not a new disk failed-reload/lifecycle matrix. Linux, USA, native Windows and remaining ROM/mod phases pending; no benchmark.",
+    "Primary Terra/xhigh and resolved Sol/xhigh settings cannot be independently inspected. The existing explicitly requested Sol/xhigh consultant supplied source-selection and rejected ordinary-lead diagnoses; metadata/code evidence was independently checked. Nearest-descriptor/action 305 adjacency was rejected before any attempted cast."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/clan_table_alias_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_octonary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_quaternary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_quinary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_secondary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_senary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_septenary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_tertiary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_descriptor_bank_zero_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_descriptor_banks_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_four_byte_lookup_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_packed_lookup_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_property_masks_runtime_tests.rs",
+    "crates/recomp/src/rom_data/dynamic_raw_fragments_runtime_tests.rs",
+    "crates/recomp/src/rom_data/table_graphics_runtime_tests.rs",
+    "crates/recomp/src/rom_data/ui_context_templates_tests.rs",
+    "crates/gba-core/src/rom_data/compact_obj_catalog.rs",
+    "crates/gba-core/src/rom_data/compact_obj_catalog/contracts.rs",
+    "crates/gba-core/src/rom_data/runtime/compact_obj_catalog.rs",
+    "crates/recomp/src/rom_data/compact_obj_catalog_tests.rs",
+    "docs/rom_data_compact_catalog.md",
+    "docs/rom_data_obj.md",
+    "docs/rom_data_ui.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ]
+}

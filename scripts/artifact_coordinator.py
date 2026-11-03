@@ -14,7 +14,8 @@ NAME = '.debug-artifacts-lease'
 PROTOCOL = 'directory-v1'
 
 
-def ordinary(path, *, directory=False):
+def ordinary(path, *, directory=False, allow_hardlinks=False):
+    """Check ordinary paths; shared files are allowed only for read-only guards."""
     path = Path(os.path.abspath(path))
     for parent in reversed(path.parents):
         s = parent.lstat()
@@ -23,7 +24,7 @@ def ordinary(path, *, directory=False):
     s = path.lstat()
     if (getattr(s, 'st_file_attributes', 0) & 0x400
             or (not stat.S_ISDIR(s.st_mode) if directory else not stat.S_ISREG(s.st_mode))
-            or (not directory and s.st_nlink != 1)):
+            or (not directory and s.st_nlink != 1 and not allow_hardlinks)):
         raise ValueError(f'Nonordinary/shared path refused: {path}')
     return s
 

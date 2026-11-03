@@ -4977,3 +4977,60 @@ The CLI creates and reuses e103-d102, retains 94 files identical to the accepted
 dataset and recognizes 93 resources on startup of one neutral frame. New bank
 counters are zero in that frame; ordinary use, Linux and USA remain open. No
 performance measurement. [Evidence](../rom_data_obj.md#conditional-compact-obj-animation-source-at-6bf490).
+
+
+**ROMDATA-01/02/04-E107-ROOT-6CC124 EUR/Wine (2026-11-03).**
+Three original constructor calls witness selectors 0/1/2: 21 frames, five lists
+and four objects, with one empty list. The contiguous 102-byte bank has no
+current-owner overlap; following padding/candidate excluded and no guest cap
+introduced. e108-d107 publishes its typed JSON while preserving all 97 previous
+resources. Source/model, byte/boundary/transaction and native valid-selector
+substeps pass; the initial full runtime filter failed only on its expected-zero
+counter oracle for selector 256. A retained-input continuation confirms the raw
+zero directory offset returns to two owned count bytes, with full state/clock
+matching. Combined native cases serve 14 typed bytes; budget check passes. Production CLI
+create/reuse/startup also passes: 99 files equal runtime, 98 resource identities
+match and all 101 managed files are unchanged. Neutral new-bank counters remain
+zero in that initial frame. A later normal IN-19 EUR Roulette confirmation in
+Mage Tourney serves 4,744 reads/5,831 new-bank bytes; the same 600-frame native
+raw/managed pair passes full state/clock/render/OAM/dispatch/audio. Animation
+completion and ordinary selector/list completeness remain unproved. Linux,
+USA and native Windows remain pending; no benchmark.
+[Contract](../rom_data_obj.md#ordinary-roulette-producer-and-eur-validation).
+
+
+**ROMDATA-01/02/03/04/05-UI-CONTEXT-TEMPLATES EUR/Wine (2026-11-03).**
+A fresh 12-frame native API inventory identifies record 5 of the category-selected
+UI context templates 394e44..394f20. Original selector image 0..10 and copy length 20
+prove eleven records/220 bytes; no adjacency/global domain inferred. 48 opcode pins,
+full mapping, exact copied IWRAM helper and no e108 overlap pass. Typed x/y,
+LE16 allocation count, flags and 15 opaque bytes retain every bit. e109-d108 publishes
+99 resources/100 files, preserving all 98 earlier resources/bytes. CLI create/reuse
+and focused source/integrity/boundary/in-memory rejection checks pass; 256 original
+categories and 22 native/raw copy/coordinate prefixes match state-clock with 308
+typed bytes. Ordinary seed 11960→11972 serves 5 reads/20 bytes and passes full raw/managed
+state-clock-render-OAM-dispatch-five-stream audio equality; all 99 CLI identities match.
+One current dataset only; old baseline retired under input/lease/host checks,
+evidence and originals retained. Complete UI extent/consumers/all-record ordinary
+coverage, Linux/USA/native Windows and remaining ROM/mod work open; no benchmark.
+[Contract](../rom_data_ui.md#category-selected-ui-context-templates).
+
+
+**ROMDATA-01/02/03/04-COMPACT-CATALOG EUR/Wine (2026-11-03).**
+A bounded retained 118-reader query yields 65 calls/36 roots. Excluding eight
+prior compact owners leaves 41 calls/29 new roots/38 selectors; 37 original Wine
+windows and 12 constructor save/restore pins authenticate the selected flows.
+Only witnessed directory cells/sequences/referenced lists are included:
+207 frames/160 list identities/888 objects, 6650 bytes/65 union spans, no 99-owner overlap.
+The generic e110-d109 model/runtime publishes 100 resources/101 files; all 99 prior
+resources/bytes unchanged. Canonical builds warning-free, 709 source hashes stable;
+initial signal 143 interruption retained, same-source continuation accepted.
+One Wine source/native filter passes full bytes/boundaries/coherent rejection
+in memory, all new reader fields and 67 native state-clock cases (187 typed bytes,
+including 35 out-of-projection owned intersections). CLI create/reuse/startup
+recognizes 100 identities, 103 managed files unchanged. Twelve startup frames
+have new counters 0, not ordinary proof. Actions 303/310/312 are absent from the
+human active bank; no cast of rejected leads performed. Ordinary/global/indirect
+coverage, Linux/USA/native Windows and other ROM/mod work remain open; no benchmark.
+One current dataset; old comparison retired with evidence and real inputs retained.
+[Contract](../rom_data_compact_catalog.md).

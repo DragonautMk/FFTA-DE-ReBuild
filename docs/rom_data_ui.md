@@ -242,3 +242,98 @@ All source/model/managed/native/actualCLI/positiveordinary children are complete
 for the declared EUR scope. New Linux/USA/native Windows/new32:9 and other
 ordinary contexts remain pending. No performance/space measurements, Android
 change, package, agent commit or push.
+
+
+## Category-selected UI context templates
+
+A fresh e108 native API address inventory over the accepted EUR Roulette Do it
+seed, guest frames 11960..11972, preserves complete state, clock, video, OAM,
+dispatch and all five audio streams with its observer active. It records 20,835
+unique read contexts, 21,845 image bytes and 732 unowned bytes in 87 merged
+ranges. Those ranges are observations, not catalog extents. Interpreter,
+host/HLE/direct DMA and other scenes remain outside this native API sample.
+
+Five observed words at 394ea8..394ebc are data copied from template 5, rather
+than a jump table. The original selector 08028f4c..08028fda reads the live category
+byte through [0200f438]+4. Categories 1..15 select indices
+0,6,7,1,2,3,3,3,0,1,4,5,8,9,10; other categories return 0.
+The constructor at 08028fdc computes 08394e44+20*index, sets copy count 20
+and copies through callback [08370eb4] into its live context +80. This complete
+selector image and explicit byte count support eleven 20-byte templates,
+394e44..394f20 (220 bytes). Neighbor spacing and the observed five words do not
+supply the bound. The projection has no overlap with the 98 e108 owners.
+
+The copied memcpy is executable support and remains in guest memory. A read-only
+query of the existing frame 11960 checkpoint executes no guest instructions
+and preserves its complete serialized state/clock. Its IWRAM 03005ee8..03005f28
+matches ROM d968a8..d968e8 exactly. The observed 03005f04 context corresponds to
+ROM d968c4 LDMIA r1!,{r0}; the word-store/subtract-four/loop instructions agree
+with a 20-byte copy. The callback's original initializer provenance is already
+documented in [UI palette provenance](rom_data_ui_palettes.md). Exported PC/outer dispatch remain context
+hints; an exact dynamic caller stack is not inferred.
+
+The second source reader 08029446..0802948c uses the same selector/root and
+scales bytes 00/01 by eight for coordinates. The constructor reads LE16 +04 for
+n*4 and n allocations and tests byte 09 bit 3. The model therefore retains x/y
+in units of eight, that allocation entry count, all flag bits and fifteen
+explicitly opaque bytes (02..03,06..08,0a..13). Opaque does not mean padding.
+The source contract passes 48 independent opcode pins, selector mapping,
+lossless reconstruction, copied-reader identity and current-owner exclusion
+under Wine. SHA256:
+f3f20b6c259a2353b0db6189b8596c37dabdb312850b7d92a8b0b9d23898c16f.
+
+EUR `e109-d108` publishes `ui.context-templates` in
+`ui-context-templates.json`, preserving all 98 earlier resource records and
+file bytes. It retains original guest selection, copies, allocation, timing
+and live UI state; out-of-owner reads keep their previous semantics. Typed
+source counters distinguish coordinates, count, flags and opaque data. No
+global UI catalog boundary or guest index cap is introduced. Save format,
+native cache and C API are unchanged.
+
+Canonical Windows test and production CLI builds pass without warnings; all
+705 source hashes remain stable. CLI create/reuse passes for one retained
+current generation: 99 resources, 100 generation files and 102 managed files.
+Every previous file matches e108; reuse preserves file sets, hashes and times.
+No complete dataset copy is created for each test.
+
+One focused Wine test passes the lossless 220-byte model, JSON/shape/source
+checks, poisoned-ROM typed byte reads, mirrored mixed boundaries, field
+counters and in-memory coherent-edit rejection. The canonical generation stays
+read-only during corruption checks. Original interpretation covers the
+selector's complete 256-category byte domain. Eleven original constructor/copy
+prefixes and eleven coordinate prefixes compare raw interpretation against
+native execution with complete state and clock equality; 308 aggregate native
+bytes come from the typed owner. These are conditional source-path proofs,
+not all templates' ordinary use or complete constructor execution. Creating
+a rejected owner in memory leaves the existing machine/owner unchanged; this
+check does not claim a new disk-based failed-reload/lifecycle matrix.
+
+A production CLI replay of the existing ordinary IN-19 EUR Roulette Do it
+seed advances guest 11960..11972. The new owner serves five reads/20 bytes:
+two coordinate, two count, one flag and fifteen opaque bytes. All 99 runtime
+resource identities match the manifest. The existing raw/managed native scene
+test passes the same twelve frames, comparing complete serialized state,
+guest clock, central/wide images, OAM, dispatch and all five exact audio
+streams. Positive audio lengths are [26334,26334,3168,3168,26230]. This proves
+one ordinary template copy; it does not prove ordinary use of all eleven
+records, every consumer, complete UI behavior or global catalog extent.
+The previously accepted 600-frame Roulette animation proof was not rerun.
+
+Evidence is under `target/rom-data-e108-next-source-20261103/`. Wine units:
+`rom-data-e108-roulette-residue-07n4xsdy`,
+`rom-data-ui-templates-source-okgmc0c8`,
+`rom-data-ui-templates-contract-j0v50ag4`,
+`rom-data-ui-templates-current-1y75gnqo`,
+`rom-data-ui-templates-native-h95faz1x` and
+`rom-data-ui-templates-ordinary-dk6lf1zi`. Successful diagnostic/native/ordinary
+scratch is automatically removed; metadata, logs, the small native object and
+source preimages remain. The accepted e109 dataset was retained for comparison until its e110 successor
+passed; that payload is now retired with its manifest/logs/results preserved.
+The current dataset is under
+`target/validation/units/rom-data-compact-catalog-current-rdbcje1e/work/resources/`;
+[the compact catalog](rom_data_compact_catalog.md) records its validation.
+The older e108 payload was likewise retired only after successor equality,
+input guards, unit/prefix leases and host activity checks. The original
+ROM, personal saves and the one current Do it seed are unchanged. Retired
+payloads do not reopen accepted evidence. Linux, USA, native Windows, broader
+UI coverage and the remaining ROM/mod phases stay open. No benchmark was run.

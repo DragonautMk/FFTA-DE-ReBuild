@@ -1,0 +1,59 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "manage-european-octonary-compact-obj-bank",
+  "title": "Manage the European compact OBJ bank at 6cc124",
+  "kind": "added",
+  "platforms": [
+    "EUR Windows builds under Wine"
+  ],
+  "changes": [
+    "Add the source-authenticated octonary compact OBJ model for the 102-byte bank at 6cc124: caller-witnessed selectors 0/1/2, 21 frames, five lists and four objects including one empty list. No guest selector bound is introduced.",
+    "Publish EUR e108-d107 with 98 resources and 99 files, authenticate typed runtime ownership and compose boundary reads with previous owners/raw ROM. All 97 previous resources and file bytes remain unchanged; save format and C API are unchanged.",
+    "Update current revision/count assertions and budget-test arguments; preserve previous accepted test scopes without rerunning them. Use canonical Cargo outputs and the bounded validation runner, retaining one named current e108 dataset."
+  ],
+  "validation": [
+    "Independent Wine disassembly and source-contract checks passed the three literal/selector/BL witnesses, complete geometry, exact SHA and absence of e107 overlap. Focused source/model Wine test passed bytes, boundaries, JSON/shape, modification rejection and original readers for all 21 frames/five lists.",
+    "Managed Wine substeps passed previous-resource preservation, full owned bytes/mixed boundaries, coherent-tamper rejection and native/interpreter state-clock equality for selectors 0/1/2. The first full runtime filter failed only on an expected-zero counter oracle for selector 256. Sol/xhigh diagnosed a raw zero offset returning to two owned count bytes; production sources did not change. A retained-dataset/object continuation passed exactly two typed bytes, r1=086cc154/r3=6 and full state-clock equality; combined native cases serve 14 typed bytes. Budget check passed separately.",
+    "Canonical Windows test and production builds passed without warnings; 702 source hashes were stable. The first compile failure from three missing zero budget arguments and the first runtime failure were preserved. The complete runtime filter was not rerun or claimed as PASS.",
+    "Production Wine CLI create/reuse/startup passed: all 99 generation files match runtime, 98 runtime identities match the manifest and 101 managed files retain hashes/times. One neutral frame advances 24755 to 24756 with zero new-bank usage.",
+    "After diagnosis and replacement acceptance, retired only the owned 99-file diagnostic dataset under unit/prefix leases and host activity checks. Exact replacement hashes, current dataset and six retained real-input guards passed; manifest, original logs, native object and source preimages remain."
+  ],
+  "limitations": [
+    "Ordinary reachability/use, global catalog/selector domains, whole-game indirect-call/ABI coverage and remaining ROM/mod phases are unproved. Linux, USA and native Windows remain pending. No performance measurements or unrelated scene searches.",
+    "Primary Terra/xhigh cannot be independently observed. Sol consultations explicitly requested gpt-6.1-sol/xhigh and returned handle /root/sol_e107_next_source without resolved-setting metadata. Acceptance is scoped to the recorded combined substeps, not an entire runtime-filter rerun."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/compact_obj_animations_octonary.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/compact_obj_animations_octonary.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/clan_table_alias_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_octonary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_octonary_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_quaternary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_quinary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_secondary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_senary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_septenary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_tertiary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_descriptor_bank_zero_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_descriptor_banks_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_four_byte_lookup_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_packed_lookup_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_property_masks_runtime_tests.rs",
+    "crates/recomp/src/rom_data/dynamic_raw_fragments_runtime_tests.rs",
+    "crates/recomp/src/rom_data/table_graphics_runtime_tests.rs",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/rom_data_obj.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}
