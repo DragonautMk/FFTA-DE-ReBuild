@@ -85,6 +85,8 @@ impl crate::debug_control::Action {
             CheatShow { .. } => "cheats.show",
             CheatPrepare { .. } => "cheats.prepare-once",
             CheatApply { .. } => "cheats.apply-once",
+            CheatArm { .. } => "cheats.arm",
+            CheatDisarm { .. } => "cheats.disarm",
             Replay { mode } => match mode {crate::debug_control::ReplayMode::Plain=>"replay.run",crate::debug_control::ReplayMode::Audit=>"audit.run",crate::debug_control::ReplayMode::Capture=>"capture.run",crate::debug_control::ReplayMode::Comparison=>"compare.run"},
             Pause => "control.pause",
             Resume => "control.resume",

@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="Image/logo.png" alt="FFTARecomp logo" width="50%">
+  <img src="Image/de-rebuild-logo.png" alt="FFTA DE-ReBuild logo" width="50%">
 </p>
 
-<h1 align="center">FFTARecomp</h1>
+<h1 align="center">FFTA DE-ReBuild</h1>
 
 <p align="center">
   <b>An independently maintained native recompilation project for Final Fantasy Tactics Advance.</b><br>
@@ -19,19 +19,20 @@
 
 ## ✨ What is this?
 
-**FFTARecomp** recompiles *Final Fantasy Tactics Advance* from a ROM supplied by
+**FFTA DE-ReBuild** recompiles *Final Fantasy Tactics Advance* from a ROM supplied by
 the player into a native program. The desktop project supports USA and European
 ROMs and provides portable Windows and Linux builds without a console BIOS.
 The Linux archive has been tested on Ubuntu 26.04 x86_64; Steam Deck support
 has not been verified for that archive.
 
-This repository is an independently maintained fork of
+Formerly named FFTARecomp, this repository is an independently maintained fork of
 [Jorge262007/FFTARecomp](https://github.com/Jorge262007/FFTARecomp), which is
 based on [gba-recomp](https://github.com/JRickey/gba-recomp) by JRickey.
 Its development, documentation and releases are separate from the original
 project. For this fork, use the [project repository](https://github.com/DragonautMk/FFTARecomp)
 and its [releases page](https://github.com/DragonautMk/FFTARecomp/releases);
-availability and version numbers may differ from upstream.
+availability and version numbers may differ from upstream. Existing executable names,
+package filenames and data directories retain `FFTARecomp` for compatibility.
 
 This fork has been developed with the help of AI. Current development focuses
 on decompiling the game and then recompiling it. The game is already playable,

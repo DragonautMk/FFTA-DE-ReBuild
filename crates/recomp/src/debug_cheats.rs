@@ -5,8 +5,11 @@ use std::{collections::BTreeSet, path::{Path, PathBuf}};
 const MAX_BYTES:u64=4*1024*1024;
 const MAX_ENTRIES:usize=2048;
 const MAX_PAGE:usize=64;
+const MAX_CAPABILITY_SOURCES:usize=8;
+const MAX_CAPABILITY_LINES:usize=64;
+const MAX_CATALOG_CAPABILITY_LINES:usize=16384;
 
-pub(crate) struct Catalog { pub source_sha256:String, metadata:Value, entries:Vec<Value> }
+pub(crate) struct Catalog { pub source_sha256:String, metadata:Value, entries:Vec<Value>, capabilities:Vec<Value> }
 
 /// Only the two project-known exact digests identify a ROM region. An entry's
 /// region remains a source declaration, not proof that its codes work.
@@ -53,7 +56,10 @@ impl Catalog {
             let provenance=entry.get("provenance").and_then(Value::as_array).ok_or("Invalid provenance array")?;
             if provenance.len()>256 || provenance.iter().any(|p|!p.is_object()){return Err("Invalid provenance array".into());}
         }
-        Ok(Self{source_sha256:gba_core::ffta_rom::digest(bytes),metadata:value,entries})
+        let mut catalog=Self{source_sha256:gba_core::ffta_rom::digest(bytes),metadata:value,entries,capabilities:Vec::new()};
+        let mut budget=MAX_CATALOG_CAPABILITY_LINES;
+        catalog.capabilities=catalog.entries.iter().map(|entry|catalog.assess(entry,&mut budget)).collect();
+        Ok(catalog)
     }
     pub(crate) fn load(path:&Path)->Result<Self,String>{
         crate::debug_content::ordinary(path)?;
@@ -66,11 +72,61 @@ impl Catalog {
             "enabled":false,"executable":false,"compatibility":{
                 "rom":{"state":target.declaration(region),"sha256":target.sha256,"recognized_region":target.region,"reason":target.explanation(region)},
                 "device_version":{"state":"unknown","reason":"Source device version or encryption has not been verified"},
-                "decoder":{"state":"unsupported","reason":"No verified source decoder or application handler is implemented; optional plaintext inspection is only an assumption"},
+                "decoder":{"state":"unresolved","reason":"Source capability has not been assessed"},
                 "verification":{"state":"unverified","reason":"Catalog preservation does not establish runtime behavior"}},
             "source_status":entry["status"]})
     }
     fn entry(&self,id:&str)->Option<&Value>{self.entries.iter().find(|e|e["id"]==id)}
+    /// Evaluate only explicitly linked source masters, without ROM bytes or
+    /// guest access. A decoding result is an assumption, not verification.
+    fn assess(&self,entry:&Value,budget:&mut usize)->Value {
+        if !entry["format"].as_str().unwrap().eq_ignore_ascii_case("codebreaker") {
+            return json!({"state":"unsupported-format","sources":[],"unexamined":0});
+        }
+        let provenance=entry["provenance"].as_array().unwrap();let mut sources=Vec::new();
+        for (index,p) in provenance.iter().take(MAX_CAPABILITY_SOURCES).enumerate(){
+            let master=p.get("master_id").and_then(Value::as_str);
+            let lines=p.get("raw_code_lines").and_then(Value::as_array);
+            let n=lines.map_or(0,Vec::len);
+            let outcome=if master.is_none() || lines.is_none() || n==0 {json!({"state":"unresolved","reason":"Source lines or master reference are missing"})}
+            else if n>MAX_CAPABILITY_LINES || n>*budget {json!({"state":"not-evaluated","reason":"Capability assessment limit reached"})}
+            else if self.entry(master.unwrap()).and_then(|m|m.get("provenance")).and_then(Value::as_array).is_none_or(|items|{
+                let matches=items.iter().filter(|m|m.get("source").and_then(Value::as_str)==p.get("source").and_then(Value::as_str)).collect::<Vec<_>>();
+                matches.len()!=1 || matches[0].get("raw_code_lines").and_then(Value::as_array).is_none_or(|lines|lines.len()!=3)
+            }) {json!({"state":"unresolved","reason":"Source master is missing, ambiguous or not a supported three-line block"})}
+            else {
+                *budget-=n;
+                match self.source_bound(entry,index,master.unwrap()) {
+                    Err(error)=>json!({"state":"unresolved","reason":error}),
+                    Ok((_,lines,master_lines))=>match crate::debug_cheat_decoder::inspect_source(&lines,&master_lines,None){
+                        Err(error)=>json!({"state":"not-decoded","reason":error}),
+                        Ok((plan,master_info))=>match plan.footprint(){
+                            Ok(footprint)=>json!({"state":"manual-once-subset","plan":plan,"footprint":footprint,"checksum_required":master_info["game_id"]["checksum_enabled"]}),
+                            Err(error)=>json!({"state":"decoded-outside-once-limits","reason":error,"plan":plan}),
+                        }
+                    }
+                }
+            };
+            sources.push(json!({"provenance_index":index,"master_id":master,"assessment":outcome}));
+        }
+        let accepted=sources.iter().filter(|s|s["assessment"]["state"]=="manual-once-subset").count();
+        let decoded=sources.iter().filter(|s|s["assessment"]["state"]=="decoded-outside-once-limits").count();
+        let unexamined=provenance.len().saturating_sub(sources.len());
+        let state=if accepted>0 {"manual-once-subset"} else if decoded>0 {"decoded-outside-once-limits"} else if unexamined>0 || sources.iter().any(|s|s["assessment"]["state"]=="not-evaluated") {"not-evaluated"} else {"unresolved"};
+        json!({"state":state,"sources":sources,"unexamined":unexamined,"scope":"Source assumptions only; device, ROM bytes, checksum and behavior require separate verification"})
+    }
+    fn indexed_summary(&self,index:usize,rom:Option<&str>)->Value {
+        let entry=&self.entries[index];let mut value=Self::summary(entry,rom);let c=&self.capabilities[index];
+        let count=c["sources"].as_array().unwrap().iter().filter(|s|s["assessment"]["state"]=="manual-once-subset").count();
+        let checksum_sources=c["sources"].as_array().unwrap().iter().filter(|s|s["assessment"]["state"]=="manual-once-subset" && s["assessment"]["checksum_required"]==true).count();
+        let pending=c["sources"].as_array().unwrap().iter().filter(|s|s["assessment"]["state"]=="not-evaluated").count();
+        let unexamined=c["unexamined"].as_u64().unwrap_or(0) as usize+pending;
+        let relation=Target::new(rom).declaration(entry["region"].as_str().unwrap());
+        let once=if count==0 && unexamined>0 {"not-evaluated"} else if count==0 {match c["state"].as_str().unwrap(){"not-evaluated"=>"not-evaluated","unresolved"=>"not-established",_=>"unavailable"}} else if checksum_sources==0 {"master-checksum-required"} else if relation=="declared-mismatch" {"rom-region-mismatch"} else if relation=="unknown" {"rom-context-required"} else {"requires-runtime-preflight"};
+        value["compatibility"]["decoder"]=json!({"state":c["state"],"reason":"Source-bound assessment only; inspect the selected provenance for its full plan"});
+        value["compatibility"]["manual_once"]=json!({"state":once,"assessed_sources":c["sources"].as_array().unwrap().len()-pending,"supported_sources":count,"unexamined_sources":unexamined,"scope":"Requires explicit source and master, isolated paused interpreter, unchanged snapshot and actual ROM checksum; not a device or gameplay verification"});
+        value
+    }
     fn source_lines(provenance:&Value)->Result<Vec<String>,String>{
         let lines=provenance.get("raw_code_lines").and_then(Value::as_array).ok_or("Source record has no raw code lines")?;
         if lines.is_empty() || lines.len()>1024{return Err("Source needs 1..1024 raw code lines".into());}
@@ -104,15 +160,23 @@ impl Catalog {
     /// A separate bounded host view; original entry data remains in the catalog.
     pub fn menu_entries(&self,rom:Option<&str>,language:input_config::Language)->Vec<menu::ContentEntry>{
         let target=Target::new(rom);
-        self.entries.iter().map(|entry|{
+        self.entries.iter().enumerate().map(|(index,entry)|{
             let full=serde_json::to_string_pretty(entry).unwrap_or_default();
             let truncated=full.chars().count()>8192;let mut details:String=full.chars().take(8192).collect();
             if truncated{details.push_str(&format!("\n[{}]",language.text("Details abbreviated; use debug-cheats show for the complete record")));}
             let region=entry["region"].as_str().unwrap();let relation=language.text(match target.declaration(region){"declared-match"=>"Declared source region matches","declared-mismatch"=>"Declared source region differs",_=>"Source region match unknown"});
+            let summary=self.indexed_summary(index,rom);
+            let capability=language.text(match summary["compatibility"]["manual_once"]["state"].as_str().unwrap(){
+                "requires-runtime-preflight"=>"Source plan supports a guarded one-shot preview",
+                "rom-context-required"=>"Source plan needs a recognized matching ROM",
+                "rom-region-mismatch"=>"Source region differs from the selected ROM",
+                "master-checksum-required"=>"Source master needs a supported checksum",
+                "not-evaluated"=>"Source capability was not evaluated",
+                _=>match self.capabilities[index]["state"].as_str().unwrap(){"decoded-outside-once-limits"=>"Source plan exceeds one-shot limits","unsupported-format"=>"Source format is not supported",_=>"Source capability is unresolved"}});
             menu::ContentEntry{id:entry["id"].as_str().unwrap().into(),name:format!("{} · {}",entry["id"].as_str().unwrap(),entry["title"].as_str().unwrap()),
                 kind:format!("{} / {}",entry["format"].as_str().unwrap(),entry["region"].as_str().unwrap()),description:details,
                 location:language.text("Local catalog · read only").into(),identity:menu::i18n::format(language,"Catalog SHA256 {catalog}\nROM SHA256 {rom} · recognized region {region}",&[("catalog",self.source_sha256.clone()),("rom",target.sha256.unwrap_or_else(||language.text("Unknown ROM hash")).into()),("region",target.region.unwrap_or_else(||language.text("Unknown recognized region")).into())]),status:language.text("Cheat disabled").into(),compatibility:language.text("Cheat unverified").into(),
-                reason:menu::i18n::format(language,"{relation}; source declaration only, not code verification. Device version unknown; decoder unsupported; behavior unverified. No executable code.",&[("relation",relation.into())]),available:true}
+                reason:menu::i18n::format(language,"{relation}; {capability}. Source declaration only, not code verification. Device and behavior unverified; runtime preflight required.",&[("relation",relation.into()),("capability",capability.into())]),available:true}
         }).collect()
     }
 }
@@ -165,8 +229,8 @@ impl Snapshot {
     pub fn page(&self,offset:u32,limit:u8,generation:Option<&str>)->Result<Value,String>{
         if !(1..=16).contains(&limit){return Err("Cheat page limit needs 1..16".into());}self.check_generation(generation)?;
         let start=offset as usize;if start>self.catalog.entries.len(){return Err("Cheat page offset exceeds entry count".into());}let end=start.saturating_add(limit as usize).min(self.catalog.entries.len());
-        let entries=if start>=end{Vec::new()}else{self.catalog.entries[start..end].iter().map(|entry|{
-            let mut v=Catalog::summary(entry,Some(&self.rom_sha256));let mut truncated=false;
+        let entries=if start>=end{Vec::new()}else{(start..end).map(|index|{
+            let mut v=self.catalog.indexed_summary(index,Some(&self.rom_sha256));let mut truncated=false;
             for key in ["title","section","format","region","source_status"] {if let Some(text)=v[key].as_str(){truncated|=text.chars().count()>128;let shortened:String=text.chars().take(128).collect();v[key]=json!(shortened);}}
             v["display_truncated"]=json!(truncated);
             v
@@ -237,23 +301,24 @@ fn execute(args:&[String],default_root:&Path)->Result<Value,String>{
     }
     let catalog=Catalog::load(&path)?;let total=catalog.entries.len();let identity=rom.as_deref();
     let payload=match operation{
-        "list"=>{let end=offset.saturating_add(limit).min(total);let entries=if offset>=total{Vec::new()}else{catalog.entries[offset..end].iter().map(|e|Catalog::summary(e,identity)).collect()};
+        "list"=>{let end=offset.saturating_add(limit).min(total);let entries=if offset>=total{Vec::new()}else{(offset..end).map(|i|catalog.indexed_summary(i,identity)).collect()};
             json!({"entries":entries,"offset":offset,"limit":limit,"next_offset":if end<total{Some(end)}else{None}})},
-        "show"=>{let entry=catalog.entry(id.as_deref().unwrap()).ok_or("Unknown CH identifier")?;json!({"summary":Catalog::summary(entry,identity),"entry":entry,"master_dependencies":catalog.master_links(entry)})},
+        "show"=>{let index=catalog.entries.iter().position(|e|e["id"]==id.as_deref().unwrap()).ok_or("Unknown CH identifier")?;let entry=&catalog.entries[index];json!({"summary":catalog.indexed_summary(index,identity),"entry":entry,"source_capabilities":catalog.capabilities[index],"master_dependencies":catalog.master_links(entry)})},
         "inspect"=>{let entry=catalog.entry(id.as_deref().unwrap()).ok_or("Unknown CH identifier")?;
             if !entry["format"].as_str().unwrap().eq_ignore_ascii_case("codebreaker"){return Err("Inspection supports only entries declared CodeBreaker".into());}
+            let entry_index=catalog.entries.iter().position(|e|e["id"]==id.as_deref().unwrap()).unwrap();
             if let Some(index)=source_index {
                 let master_id=master_id.as_deref().unwrap();let (source,lines,master)=catalog.source_bound(entry,index,master_id)?;
                 let rom_bytes=if let Some(path)=rom_file.as_ref(){crate::debug_content::ordinary(path)?;Some(crate::diagnostics::read(path,32<<20)?)}else{None};
                 let (plan,master_info)=crate::debug_cheat_decoder::inspect_source(&lines,&master,rom_bytes.as_deref())?;
                 let actual_sha=rom_bytes.as_deref().map(gba_core::ffta_rom::digest);let target_sha=actual_sha.as_deref().or(identity);
                 let canonical=entry["codes"].as_array().unwrap().iter().map(|v|v.as_str().unwrap()).eq(lines.iter().map(String::as_str));
-                json!({"summary":Catalog::summary(entry,target_sha),"plan":plan,"master":master_info,"source":{"provenance_index":index,"source":source,"master_id":master_id,
+                json!({"summary":catalog.indexed_summary(entry_index,target_sha),"plan":plan,"master":master_info,"source":{"provenance_index":index,"source":source,"master_id":master_id,
                     "entry_lines_sha256":gba_core::ffta_rom::digest(&serde_json::to_vec(&lines).unwrap()),"master_lines_sha256":gba_core::ffta_rom::digest(&serde_json::to_vec(&master).unwrap()),"canonical_lines_equal":canonical},"master_dependencies":catalog.master_links(entry)})
             }else{
             let lines=entry["codes"].as_array().unwrap().iter().map(|v|v.as_str().unwrap().to_owned()).collect::<Vec<_>>();
             let plan=if let Some(seed)=seed.as_deref(){crate::debug_cheat_decoder::inspect_seeded(&lines,seed)?}else{crate::debug_cheat_decoder::inspect(&lines)?};
-            json!({"summary":Catalog::summary(entry,identity),"plan":plan,"supplied_seed":seed,"master_dependencies":catalog.master_links(entry)})}},
+            json!({"summary":catalog.indexed_summary(entry_index,identity),"plan":plan,"supplied_seed":seed,"master_dependencies":catalog.master_links(entry)})}},
         _=>json!({"metadata":catalog.metadata}),
     };
     Ok(json!({"schema":1,"kind":"ffta-debug-cheat-catalog","outcome":"loaded","source_sha256":catalog.source_sha256,"total":total,"enabled_count":0,"result":payload,"scope":"Readonly reference and explicitly assumed inspection only; no guest writes"}))
@@ -273,7 +338,7 @@ mod tests {
     fn imports_order_provenance_and_inert_separate_states(){
         let v=fixture();let bytes=serde_json::to_vec(&v).unwrap();let catalog=Catalog::parse(&bytes).unwrap();assert_eq!(catalog.entries,v["entries"].as_array().unwrap().clone());assert_eq!(catalog.metadata["sources"],v["sources"]);
         assert_eq!(catalog.entry("CH-0001").unwrap()["codes"],json!(["FIRST","SECOND","FIRST"]));assert_eq!(catalog.entry("CH-0001").unwrap()["provenance"][0]["master_id"],"CH-0002");
-        let result=Catalog::summary(&catalog.entries[0],Some(&"a".repeat(64)));assert_eq!(result["enabled"],false);assert_eq!(result["executable"],false);assert_eq!(result["compatibility"]["rom"]["state"],"unknown");assert_eq!(result["compatibility"]["decoder"]["state"],"unsupported");assert_eq!(result["compatibility"]["verification"]["state"],"unverified");
+        let result=catalog.indexed_summary(0,Some(&"a".repeat(64)));assert_eq!(result["enabled"],false);assert_eq!(result["executable"],false);assert_eq!(result["compatibility"]["rom"]["state"],"unknown");assert_eq!(result["compatibility"]["decoder"]["state"],"unresolved");assert_eq!(result["compatibility"]["verification"]["state"],"unverified");
     }
     #[test]
     fn inspection_requires_explicit_assumption_and_does_not_enable_a_catalog_entry(){
@@ -321,6 +386,36 @@ mod tests {
         v["entries"][1]["provenance"]=json!([{"source":"synthetic","raw_code_lines":["9ABCDEF0 1234","B131BCEF 0691","26960CD0 140B"]},{"source":"synthetic","raw_code_lines":["9ABCDEF0 1234","B131BCEF 0691","26960CD0 140B"]}]);std::fs::write(&path,serde_json::to_vec(&v).unwrap()).unwrap();assert!(execute(&args(&a),dir.path()).is_err());
     }
     #[test]
+    fn per_source_capabilities_distinguish_decoding_context_and_limits(){
+        let mut v=fixture();v["entries"][0]["codes"]=json!(["BB28F300 B8C0"]);
+        v["entries"][0]["provenance"]=json!([
+            {"source":"synthetic","master_id":"CH-0002","raw_code_lines":["BB28F300 B8C0"]},
+            {"source":"synthetic","master_id":"CH-0002","raw_code_lines":["4CD38AFF 7753"]},
+            {"source":"synthetic","master_id":"CH-0002","raw_code_lines":vec!["BB28F300 B8C0";65]},
+            {"source":"other","master_id":"CH-0002","raw_code_lines":["BB28F300 B8C0"]}]);
+        v["entries"][1]["format"]=json!("codebreaker");v["entries"][1]["region"]=json!("EUR");
+        v["entries"][1]["provenance"]=json!([{"source":"synthetic","raw_code_lines":["9ABCDEF0 1234","B131BCEF 0691","26960CD0 140B"]}]);
+        let catalog=Catalog::parse(&serde_json::to_vec(&v).unwrap()).unwrap();let report=&catalog.capabilities[0];
+        assert_eq!(report["state"],"manual-once-subset");assert_eq!(report["sources"][0]["assessment"]["state"],"manual-once-subset");
+        assert_eq!(report["sources"][0]["assessment"]["plan"]["operations"][0]["kind"],"write");
+        assert_eq!(report["sources"][1]["assessment"]["state"],"not-decoded");assert_eq!(report["sources"][2]["assessment"]["state"],"not-evaluated");assert_eq!(report["sources"][3]["assessment"]["state"],"unresolved");
+        for (sha,state) in [(Some(gba_core::ffta_rom::EUROPE_SHA256),"requires-runtime-preflight"),(Some(gba_core::ffta_rom::SHA256),"rom-region-mismatch"),(None,"rom-context-required")]{
+            let summary=catalog.indexed_summary(0,sha);assert_eq!(summary["compatibility"]["manual_once"]["state"],state);assert_eq!(summary["compatibility"]["manual_once"]["unexamined_sources"],1);assert_eq!(summary["enabled"],false);assert_eq!(summary["executable"],false);assert_eq!(summary["compatibility"]["verification"]["state"],"unverified");
+        }
+        assert_eq!(catalog.indexed_summary(1,None)["compatibility"]["decoder"]["state"],"unresolved");
+        let menu=catalog.menu_entries(Some(gba_core::ffta_rom::EUROPE_SHA256),input_config::Language::default());assert!(menu[0].reason.contains("guarded one-shot preview"));assert!(menu[0].reason.contains("behavior unverified"));
+        assert_eq!(catalog.entries,v["entries"].as_array().unwrap().clone());
+        let mut none=0;let bounded=catalog.assess(&catalog.entries[0],&mut none);assert_eq!(bounded["state"],"not-evaluated");
+        assert_eq!(bounded["sources"][0]["assessment"]["state"],"not-evaluated");
+        let mut limited=v.clone();limited["entries"][0]["provenance"]=json!([{"source":"synthetic","master_id":"CH-0002","raw_code_lines":vec!["BB28F300 B8C0";65]}]);
+        let limited=Catalog::parse(&serde_json::to_vec(&limited).unwrap()).unwrap();assert_eq!(limited.indexed_summary(0,None)["compatibility"]["manual_once"]["state"],"not-evaluated");assert!(limited.menu_entries(None,input_config::Language::default())[0].reason.contains("was not evaluated"));
+        let mut mixed=limited;mixed.capabilities[0]=json!({"state":"decoded-outside-once-limits","unexamined":0,"sources":[{"assessment":{"state":"decoded-outside-once-limits"}},{"assessment":{"state":"not-evaluated"}}]});
+        assert_eq!(mixed.indexed_summary(0,None)["compatibility"]["manual_once"]["state"],"not-evaluated");assert!(mixed.menu_entries(None,input_config::Language::default())[0].reason.contains("was not evaluated"));
+        let mut more=v.clone();more["entries"][0]["provenance"]=json!(vec![json!({"source":"synthetic","master_id":"CH-0002","raw_code_lines":["BB28F300 B8C0"]});10]);
+        let c=Catalog::parse(&serde_json::to_vec(&more).unwrap()).unwrap();assert_eq!(c.capabilities[0]["unexamined"],2);
+        assert_eq!(c.indexed_summary(0,None)["compatibility"]["manual_once"]["unexamined_sources"],2);
+    }
+    #[test]
     fn master_links_distinguish_source_records_without_selecting_dependencies(){
         let mut v=fixture();v["entries"][1]["format"]=json!("codebreaker");v["entries"][1]["region"]=json!("EUR");
         v["entries"][1]["provenance"]=json!([{"source":"one"},{"source":"one"}]);
@@ -345,7 +440,7 @@ mod tests {
         for (sha,state,region) in [(gba_core::ffta_rom::EUROPE_SHA256,"declared-match",Some("EUR")),(gba_core::ffta_rom::SHA256,"declared-mismatch",Some("USA")),("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","unknown",None)]{
             let summary=Catalog::summary(entry,Some(sha));assert_eq!(summary["compatibility"]["rom"]["state"],state);assert_eq!(summary["compatibility"]["rom"]["recognized_region"],json!(region));
             assert_eq!(summary["enabled"],false);assert_eq!(summary["executable"],false);assert_eq!(summary["compatibility"]["verification"]["state"],"unverified");assert_eq!(summary["compatibility"]["device_version"]["state"],"unknown");
-            let view=catalog.menu_entries(Some(sha),input_config::Language::default());assert!(view[0].identity.contains(sha));assert!(view[0].reason.contains("not code verification"));assert!(view[0].reason.contains("decoder unsupported"));
+            let view=catalog.menu_entries(Some(sha),input_config::Language::default());assert!(view[0].identity.contains(sha));assert!(view[0].reason.contains("not code verification"));assert!(view[0].reason.contains("capability is unresolved"));
         }
         let unknown=Catalog::summary(&catalog.entries[1],Some(gba_core::ffta_rom::EUROPE_SHA256));assert_eq!(unknown["compatibility"]["rom"]["state"],"unknown");
     }
@@ -361,7 +456,8 @@ mod tests {
             assert_eq!(english.description,italian.description);assert_eq!(english.available,italian.available);
             assert!(english.identity.contains(gba_core::ffta_rom::EUROPE_SHA256));
             assert!(italian.identity.contains(gba_core::ffta_rom::EUROPE_SHA256));
-            assert!(english.reason.contains("decoder unsupported"));assert!(italian.reason.contains("decoder non supportato"));
+            if index==0 {assert!(english.reason.contains("capability is unresolved"));assert!(italian.reason.contains("capacità della fonte non è determinata"));}
+            else {assert!(english.reason.contains("format is not supported"));assert!(italian.reason.contains("formato della fonte non è supportato"));}
         }
         assert_eq!(en[0].status,"Disabled");assert_eq!(it[0].status,"Disattivato");
         assert_eq!(Catalog::summary(&catalog.entries[0],Some(gba_core::ffta_rom::EUROPE_SHA256)),before);
@@ -402,7 +498,7 @@ mod tests {
     fn local_catalog_menu_mapping_keeps_every_original_entry(){
         let path=PathBuf::from(std::env::var_os("FFTA_CHEAT_REFERENCE").unwrap());let before=std::fs::read(&path).unwrap();let catalog=Catalog::load(&path).unwrap();
         let rows=catalog.menu_entries(None,input_config::Language::default());assert_eq!(rows.len(),catalog.entries.len());assert_eq!(rows.len(),341);
-        for (row,entry) in rows.iter().zip(&catalog.entries){assert_eq!(row.id,entry["id"].as_str().unwrap());assert_eq!(row.description,serde_json::to_string_pretty(entry).unwrap());assert!(row.reason.contains("decoder unsupported"));}
+        for (row,entry) in rows.iter().zip(&catalog.entries){assert_eq!(row.id,entry["id"].as_str().unwrap());assert_eq!(row.description,serde_json::to_string_pretty(entry).unwrap());assert!(row.reason.contains("behavior unverified"));}
         assert_eq!(std::fs::read(path).unwrap(),before);
     }
 }

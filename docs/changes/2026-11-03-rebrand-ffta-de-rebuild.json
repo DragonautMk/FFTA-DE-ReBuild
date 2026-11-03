@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "rebrand-ffta-de-rebuild",
+  "title": "Rename the fork FFTA DE-ReBuild",
+  "kind": "changed",
+  "platforms": [
+    "Desktop and Android source trees"
+  ],
+  "changes": [
+    "Present FFTA DE-ReBuild as the fork name and introduce a new generated compass emblem for the README, installer, package icon and Android launchers.",
+    "Retain existing executable, archive, install/data directory and Android package identifiers for compatibility."
+  ],
+  "validation": [
+    "Portable packaging unit tests: 11 passed; gba-pack icon tests: 6 passed. PNG alpha, matching masters, ICO sizes and Android resource XML checked; git diff --check passed."
+  ],
+  "limitations": [
+    "Installer cargo check blocked by pre-existing missing serde dependency in the included ROM module; launcher/menu cargo check blocked by missing wayland-client development package. Windows and Android builds and runtime visuals were not tested."
+  ],
+  "files": [
+    "README.md",
+    "AndroidPort/README.md",
+    "android/README.md",
+    "Image/de-rebuild-logo.png",
+    "crates/installer/README.md",
+    "crates/installer/assets/de-rebuild-logo.png",
+    "crates/installer/assets/icon.ico",
+    "crates/installer/src/main.rs",
+    "crates/installer/src/native_picker.rs",
+    "crates/installer/src/platform.rs",
+    "crates/ffta-play/src/main.rs",
+    "crates/menu/src/atlas_theme.rs",
+    "crates/pack/src/icon.rs",
+    "crates/recomp/src/play.rs",
+    "scripts/package_ffta_portable.py",
+    "scripts/report_home.html",
+    "android/app/src/main/java/com/fftarecomp/port/MainActivity.kt",
+    "android/app/src/main/java/com/fftarecomp/port/NativeBridge.kt",
+    "android/app/src/main/res/drawable-nodpi/de_rebuild_logo.png",
+    "android/app/src/main/res/drawable/ic_launcher_background.xml",
+    "android/app/src/main/res/drawable/ic_launcher_foreground.xml",
+    "android/app/src/main/res/values/strings.xml",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/MainActivity.kt",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/NativeBridge.kt",
+    "AndroidPort/android/app/src/main/res/drawable-nodpi/de_rebuild_logo.png",
+    "AndroidPort/android/app/src/main/res/drawable/ic_launcher_background.xml",
+    "AndroidPort/android/app/src/main/res/drawable/ic_launcher_foreground.xml",
+    "AndroidPort/android/app/src/main/res/values/strings.xml",
+    "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp",
+    "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp",
+    "android/app/src/main/res/mipmap-mdpi/ic_launcher_round.webp",
+    "android/app/src/main/res/mipmap-mdpi/ic_launcher.webp",
+    "android/app/src/main/res/mipmap-hdpi/ic_launcher_round.webp",
+    "android/app/src/main/res/mipmap-hdpi/ic_launcher.webp",
+    "android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.webp",
+    "android/app/src/main/res/mipmap-xhdpi/ic_launcher.webp",
+    "android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.webp",
+    "android/app/src/main/res/mipmap-xxhdpi/ic_launcher.webp"
+  ],
+  "references": [
+    "README.md"
+  ]
+}

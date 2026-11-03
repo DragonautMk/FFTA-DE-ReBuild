@@ -3,7 +3,7 @@
 # Clan Atlas — native desktop menu
 
 The menu uses the Rust canvas, tiny-skia and the already embedded Cinzel/Inter
-fonts. The mineral-blue and brass frame, original geometric crest, left sidebar
+fonts. The mineral-blue and brass frame, FFTA DE-ReBuild emblem, left sidebar
 and footers are independent of content scrolling. The canvas's technical
 minimum is 480×360 physical pixels; below that size, it asks the user to enlarge
 the window, with Escape available for recovery.
@@ -41,6 +41,9 @@ the Italian catalog provides their optional translations. Older configurations
 without a language use English; ROM language remains independent. Details and
 instructions for adding a single automatically registered JSON file:
 [menu language](menu_localization.md).
+
+The sidebar displays the project emblem above the navigation; the emblem stays
+opaque when menu transparency changes.
 
 **Game > Video > Menu transparency** adjusts backgrounds from 0% (opaque)
 to 100% (transparent), in 10% steps. The initial value is **10%**. Text, borders

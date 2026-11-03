@@ -112,7 +112,7 @@ def main(default_platform="windows", argv=None):
     if output in files.values() or output.is_symlink():
         raise SystemExit('Package output must not replace a selected input or symlink')
     prefix = 'FFTARecomp-portable'
-    readme = '''FFTARecomp portable - {platform} x86_64
+    readme = '''FFTA DE-ReBuild portable - {platform} x86_64
 Extract the whole folder to a writable location and launch {launch}.
 On first launch, select your own FFTA USA/Europe ROM: it is copied as ffta.gba.
 You can also copy it manually beside the executables before launching.
@@ -136,7 +136,7 @@ PACKAGE-MANIFEST.json identifies all payloads; it does not certify the platform.
         readme += '\nRequires Ubuntu/Linux x86_64 with a graphical session, ALSA and libudev.\n'
         readme += 'Wine is not required. If the desktop asks what to do, choose Run.\n'
     generated = {
-        'portable.txt': b'FFTARecomp portable mode. Keep beside both executables.\n',
+        'portable.txt': b'FFTA DE-ReBuild portable mode. Keep beside both executables.\n',
         'LEGGIMI.txt': readme.encode('utf-8'),
         '.gitignore': b'/Data/\n/target/\n/cheats/\n/ffta.gba\n/gba_bios.bin\n/index.html\n/*.log\n',
     }

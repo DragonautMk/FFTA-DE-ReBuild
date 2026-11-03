@@ -2367,6 +2367,24 @@
       "reference": "readonly"
     },
     {
+      "id": "cheats.arm",
+      "handler": "PlayApp::debug_action_inner / ArmedSet::arm",
+      "cli": "recomp debug-control cheat-arm SESSION ID PROVENANCE MASTER GENERATION PREVIEW [--timeout-ms N]",
+      "current": null,
+      "destination": "Debug / Cheat",
+      "menu_implemented": false,
+      "reference": "readonly"
+    },
+    {
+      "id": "cheats.disarm",
+      "handler": "PlayApp::debug_action_inner / ArmedSet::disarm",
+      "cli": "recomp debug-control cheat-disarm SESSION ID|all [--timeout-ms N]",
+      "current": null,
+      "destination": "Debug / Cheat",
+      "menu_implemented": false,
+      "reference": "readonly"
+    },
+    {
       "id": "cheats.info",
       "handler": "execute",
       "cli": "recomp debug-cheats info [--catalog FILE --rom-sha256 SHA]",

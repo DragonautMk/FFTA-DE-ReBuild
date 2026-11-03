@@ -19176,3 +19176,80 @@ LOCAL-ARTIFACT-SWEEP-2026-10-31 — CLOSED. Latest request: clean residual proje
 - Verified criteria: README describes AI-assisted development, decompilation followed by recompilation as the current focus, and the playable state reported by the user.
 - Evidence: `README.md`, `docs/changes/2026-11-03-distinguish-independent-fork.json`; wording and `git diff --check` reviewed.
 - Limits: no runtime validation performed for this documentation change.
+
+### ENGLISH-FIRST-RESEARCH-VISIBILITY
+
+- Outcome: translated visibility investigation, superseded proposal and tutorial metric to English while retaining observed and unmeasured distinctions.
+- Evidence: numeric runs, paths, addresses and flags match the preimage; literal notice and `other=false` retained. Committed record `docs/changes/2026-11-02-translate-research-visibility-evidence.json`; no ROM access or replay.
+
+### ENGLISH-FIRST-RESEARCH-ZOOM
+
+- Outcome: translated zoom-out tile investigation and follow-up into English while preserving chronology and measured/unmeasured distinctions.
+- Evidence: numeric runs, paths, addresses, flags and named technical tokens match the preimage. No ROM access or replay performed.
+- Record: `docs/changes/2026-11-03-translate-research-zoom-tile-evidence.json`.
+
+### ENGLISH-FIRST-RESEARCH-SKY-STATS
+
+- Outcome: translated sky gradient, stage zoom and stats panel research history while preserving rejected approaches and later corrections.
+- Evidence: numeric runs, paths, flags, image and input filenames, register tokens and error name match the preimage. No ROM access or replay performed.
+- Record: `docs/changes/2026-11-03-translate-research-sky-stage-stats.json`.
+
+### ENGLISH-FIRST-RESEARCH-MENU-TINYCC
+
+- Outcome: translated native pause menu, TinyCC and initial dialogue-layout research; legacy heading anchors retained.
+- Evidence: numeric runs excluding new anchors, paths, flags, source hash and technical identifiers match preimage. No ROM access or replay performed.
+- Record: `docs/changes/2026-11-03-translate-research-menu-tinycc-dialogue.json`.
+
+### ENGLISH-FIRST-RESEARCH-EVIDENCE-LABELS
+
+- Outcome: translated the remaining measured and not-measured labels in later English research entries, retaining evidence and limitations.
+- Evidence: 37 measured and 15 not-measured label replacements reverse exactly to the preimage; no other text changed. No ROM access or replay performed.
+- Record: `docs/changes/2026-11-03-translate-research-evidence-labels.json`.
+
+### ENGLISH-FIRST-RESEARCH-REVIEW
+
+- Outcome: completed English-language review of translated research status report, retaining historical anchors and original game labels.
+- Evidence: full-file comparison preserved numeric runs excluding explicit anchors, link targets, fenced commands, paths, flags and named artifacts; reviewed hash recorded in audit. No ROM access or replay performed.
+- Record: `docs/changes/2026-11-03-review-research-status-english.json`.
+
+### PROJECT-REBRAND-DE-REBUILD
+
+- Outcome: completed
+- Verified criteria: Rebranded visible desktop and Android source surfaces and documentation, created and integrated new emblem, retained existing identifiers and user-data paths. Portable packaging tests 11/11 and packager icon tests 6/6 passed; image formats and Android XML inspected.
+- Evidence: `docs/changes/2026-11-03-rebrand-ffta-de-rebuild.json`, `README.md`.
+- Limits: Installer check blocked by pre-existing missing serde dependency; launcher/menu check blocked by missing wayland-client development library. Windows/Android builds and runtime visuals unverified. Repository URL and legacy filenames remain unchanged.
+
+### DBG2-17-CAPABILITY-INDEX
+
+- Outcome: completed bounded source-capability increment; parents DBG2-17/18 remain partial.
+- Verified: frozen Windows GNU build, 12 focused Wine tests, seven EUR source plans matching explicit inspection with source unchanged, and synthetic Wine/Xvfb menu showing the ROM-context requirement with paused guest and pins unchanged. First GUI setup failed on a test-helper path; fresh corrected attempt passed.
+- Evidence: `docs/changes/2026-11-03-index-cheat-source-capabilities.json`, `target/debug-tools-v2-capabilities/catalog-proof-result.json`, `target/debug-tools-v2-capabilities-gui2/gui-result.json`.
+- Limits: source assumptions do not verify device, actual ROM checksum, hooks or gameplay; native Windows and physical input untested. Cleanup helper refused non-ROM-data unit paths; no files removed.
+
+### DBG2-19-MAINTAINED-INTERPRETER
+
+- Outcome: completed bounded maintained-set increment; parent remains partial.
+- Verified: frozen Windows GNU build; Wine 22 cheat tests (one ignored), 9 command, 30 control and 4 registry tests; synthetic two-frame arm/conflict/disarm and separate active-indicator Wine/Xvfb proofs. Session pins and originals unchanged; Wine emitted a D-Bus diagnostic despite successful tests.
+- Evidence: `docs/changes/2026-11-03-maintain-bounded-interpreter-cheats.json`, `target/debug-tools-v2-maintained/gui-result.json`, `target/debug-tools-v2-maintained-ui/gui-result.json`.
+- Limits: interpreter frame timing is not original hardware-hook equivalence; gameplay, native Windows, physical input and interactive restoration unverified. Disarm is not memory restoration. Cleanup helper refused non-ROM-data units; no files removed.
+
+### DBG2-19-RESTART-DISARM
+
+- Outcome: completed isolated user-initiated restart check; parent remains partial.
+- Verified: System / Restart ROM cleared an armed synthetic set under Wine/Xvfb; session pins and protected original inputs unchanged; session and display closed.
+- Evidence: `target/debug-tools-v2-maintained-restart/gui-result.json`, `close-result.json`, `cleanup-result.json`; `docs/changes/2026-11-03-maintain-bounded-interpreter-cheats.json`.
+- Limits: save-state load/Undo and device/gameplay behavior not tested. Cleanup helper refused non-ROM-data unit; no files removed.
+
+### DBG2-19-LOAD-UNDO-DISARM
+
+- Outcome: completed isolated load/Undo check; parent remains partial.
+- Verified: a locally created save-state load and its Undo each cleared an armed synthetic set and restored the expected exact machine state in paused Wine/Xvfb; overwrite confirmation cancelled, session pins and protected inputs unchanged; session and display closed.
+- Evidence: `target/debug-tools-v2-maintained-load/gui-result.json`, `close-result.json`, `cleanup-result.json`; `docs/changes/2026-11-03-maintain-bounded-interpreter-cheats.json`.
+- Limits: device and gameplay behavior not tested; cleanup helper refused non-ROM-data unit, no files removed.
+
+### PROJECT-REBRAND-MENU-LOGO
+
+- Outcome: completed
+- Verified criteria: New emblem displayed in desktop menu sidebar; offscreen rendering stays within bounds at four resolutions and works at both transparency extremes. Existing video-menu test and 640x480 capture inspected.
+- Evidence: `docs/changes/2026-11-03-show-rebuild-logo-in-menu.json`, `docs/menu_clan_atlas.md`.
+- Limits: No live game or native Windows validation; Linux test used installed Wayland runtime with temporary build metadata.

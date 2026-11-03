@@ -1,7 +1,8 @@
-# FFTARecomp Android
+# FFTA DE-ReBuild Android
 
 This is a self-contained Android port. You can move or upload **this entire
-folder** without copying anything from FFTARecomp - Copy or the PC project.
+folder** without copying anything from the PC project. The app keeps its existing
+package ID and APK filename for compatibility.
 The README stays at the top of this folder so GitHub displays it.
 
 - Preview APK: `APK/FFTARecomp-android-arm64-preview.apk`.

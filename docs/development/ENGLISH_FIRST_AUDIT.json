@@ -437,7 +437,7 @@
     },
     {
       "path": "Licenses/CREDITS.md",
-      "sha256": "c1809c67fbd6388e141351e4bc38a72946852b5fa65ccde3c6e6b1b0b4372d68",
+      "sha256": "b66bbe5c32f5d50f0ee3db624b913842e4d43d754173ca06b0ae97fe0aa82767",
       "scope": "English maintained entry/build/Android/license-guide prose reviewed in each tree; two Android TODOs translated with legacy anchors; legal text/commands/recorded limits otherwise unchanged; no legal or platform recertification"
     },
     {
@@ -447,7 +447,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "b7f465a36a5296853f0230b152eb2ff451ec7518bb75267401ce21e751b2c984",
+      "sha256": "7624df6335e1b9ac87ad4732aa5de8aab62c1f528677afcda9ea5c869d9530ce",
       "scope": "English maintained entry/build/Android/license-guide prose reviewed in each tree; two Android TODOs translated with legacy anchors; legal text/commands/recorded limits otherwise unchanged; no legal or platform recertification"
     },
     {
@@ -617,7 +617,7 @@
     },
     {
       "path": "docs/cheats.md",
-      "sha256": "afcba7b5b81fde09a5cd41c44b9fe2c5062cd63bef432a9608ec5b0d25abab2d",
+      "sha256": "6d14a5e1bcbef2776e9a0161b4b634d308b9c92b6c8d1175bbb37f6e7bf42d1a",
       "scope": "English public guide reviewed; corrected current menu labels and distinguished original readonly catalog validation from the later bounded one-shot; original local catalog paths and provenance retained."
     },
     {
@@ -812,7 +812,7 @@
     },
     {
       "path": "docs/development/TASK_HANDOFF.md",
-      "sha256": "44ef6a52e3bb424a067a02dc2f897cd5e2f82914ede80fd9eb4445d8fafcbf69",
+      "sha256": "e00a77edca81db6d676c9abb4343f910370eea6584d4ee7cfeeeb37b55974ec6",
       "scope": "maintained prose and fixed default text; legacy compatibility keys/anchors and imported text retained"
     },
     {
@@ -884,6 +884,11 @@
       "path": "docs/ffta_character_metric.md",
       "sha256": "44b5ce72611e6eb88cffe7c81148f02b1db44fc8d07e4848929b9fcba4949cb2",
       "scope": "English rendering/interaction prose reviewed; Spanish text and measurement labels translated; technical tokens, commands, legacy anchors and recorded acceptance limits preserved"
+    },
+    {
+      "path": "docs/ffta_estado.md",
+      "sha256": "48fc3a863cec5e90c3292476ce4a50f4e20620fb11241fb428e93488a9ab3007",
+      "scope": "Full English review of historical research prose; original game labels, legacy anchors, commands, evidence and technical identifiers retained. Results retain their recorded scope."
     },
     {
       "path": "docs/ffta_interaction_grid.md",
@@ -1196,7 +1201,6 @@
     "docs/development/PERFORMANCE_WORKFLOW.md",
     "docs/development/PROJECT_STATE.md",
     "docs/development/ROM_DATA_INVENTORY.md",
-    "docs/ffta_estado.md",
     "docs/rom_data.md",
     "docs/rom_data_audio.md",
     "docs/rom_data_gameplay.md",
@@ -1414,6 +1418,23 @@
     "docs/changes/2026-11-02-review-indexed-graphics-ui-guides-english.json",
     "docs/changes/2026-11-02-review-docker-rom-validation-guides-english.json",
     "docs/changes/2026-11-02-review-script-raw-transfer-guides-english.json",
-    "docs/changes/2026-11-02-translate-research-status-opening.json"
+    "docs/changes/2026-11-02-translate-research-status-opening.json",
+    "docs/changes/2026-11-02-translate-research-visibility-evidence.json",
+    "docs/changes/2026-11-03-translate-research-zoom-tile-evidence.json",
+    "docs/changes/2026-11-03-translate-research-sky-stage-stats.json",
+    "docs/changes/2026-11-03-translate-research-menu-tinycc-dialogue.json",
+    "docs/changes/2026-11-03-translate-research-evidence-labels.json",
+    "docs/changes/2026-11-03-review-research-status-english.json",
+    "docs/changes/2026-11-03-improve-rom-inventory-opening-readability.json",
+    "docs/changes/2026-11-03-improve-rom-inventory-obj-readability.json",
+    "docs/changes/2026-11-03-improve-rom-inventory-palette-text-readability.json",
+    "docs/changes/2026-11-03-improve-rom-inventory-item-metadata-readability.json",
+    "docs/changes/2026-11-03-improve-rom-inventory-gameplay-tables-readability.json",
+    "docs/changes/2026-11-03-improve-rom-inventory-audio-dataset-readability.json",
+    "docs/changes/2026-11-03-improve-rom-inventory-bg-packet-readability.json",
+    "docs/changes/2026-11-03-improve-rom-inventory-trade-effects-readability.json",
+    "docs/changes/2026-11-03-improve-rom-inventory-palette-blend-readability.json",
+    "docs/changes/2026-11-03-improve-rom-inventory-task-events-readability.json",
+    "docs/changes/2026-11-03-improve-rom-inventory-script-text-readability.json"
   ]
 }

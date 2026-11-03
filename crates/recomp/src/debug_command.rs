@@ -89,7 +89,7 @@ fn parse_tokens(t:&[String],allow_retry:bool)->Result<Command,String>{
         return Ok(Command::Retry{run,id:request,deadline_unix_ms,action});
     }
     match t {
-        [family,verb,rest @ ..] if family=="cheats" && ["refresh","list","show","prepare","apply-once"].contains(&verb.as_str())=>{
+        [family,verb,rest @ ..] if family=="cheats" && ["refresh","list","show","prepare","apply-once","arm","disarm"].contains(&verb.as_str())=>{
             let name=if verb=="apply-once"{"cheat-apply".into()}else{format!("cheat-{verb}")};
             let mut args=vec![name,"<current-session>".into()];for pair in rest.windows(2){if ["--offset","--limit"].contains(&pair[0].as_str()){decimal(&pair[1])?;}}args.extend_from_slice(rest);return crate::debug_control::parse(&args).map(|(_,a)|Command::Control(a));
         },
@@ -194,6 +194,10 @@ mod tests {
         let hash="a".repeat(64);let preview="b".repeat(64);
         assert!(matches!(parse(&format!("cheats prepare CH-0001 0 CH-0002 {hash}")),Ok(Command::Control(Action::CheatPrepare{provenance:0,..}))));
         assert!(matches!(parse(&format!("cheats apply-once CH-0001 0 CH-0002 {hash} {preview}")),Ok(Command::Control(Action::CheatApply{provenance:0,..}))));
+        assert!(matches!(parse(&format!("cheats arm CH-0001 0 CH-0002 {hash} {preview}")),Ok(Command::Control(Action::CheatArm{provenance:0,..}))));
+        assert!(matches!(parse("cheats disarm CH-0001"),Ok(Command::Control(Action::CheatDisarm{id:Some(id)})) if id=="CH-0001"));
+        assert!(matches!(parse("cheats disarm all"),Ok(Command::Control(Action::CheatDisarm{id:None}))));
+        assert!(parse("cheats disarm invalid").is_err());
         assert!(parse(&format!("cheats prepare CH-0001 00 CH-0002 {hash}")).is_err());
         for text in ["cheats list --offset 01","cheats list --limit 17","cheats show /tmp/code","cheats show CH-0001 --generation invalid","cheats refresh extra","retry run id 123 -- cheats list"]{assert!(parse(text).is_err(),"{text}");}
     }

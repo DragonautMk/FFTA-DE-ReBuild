@@ -1,4 +1,4 @@
-//! Mineral-blue clan ledger, composed entirely by the existing native canvas.
+//! Mineral-blue clan ledger, composed by the native canvas.
 use super::{
     canvas::Canvas,
     clan_atlas::{self as atlas, Rect},
@@ -11,6 +11,41 @@ const TEXT: [u8; 3] = [233, 239, 236];
 const MUTED: [u8; 3] = [168, 189, 199];
 const BRASS: [u8; 3] = [209, 175, 117];
 const EDGE: [u8; 3] = [89, 121, 139];
+
+fn brand_logo(c: &mut Canvas, sidebar: Rect, scale: f32) {
+    static LOGOS: std::sync::OnceLock<Vec<tiny_skia::Pixmap>> = std::sync::OnceLock::new();
+    let logos = LOGOS.get_or_init(|| {
+        let master = image::load_from_memory(include_bytes!("../assets/de-rebuild-logo.png"))
+            .expect("embedded menu logo must be a valid PNG")
+            .to_rgba8();
+        [32, 64, 128, 256].into_iter().map(|side| {
+            let image = image::imageops::resize(&master, side, side, image::imageops::FilterType::Lanczos3);
+            let size = tiny_skia::IntSize::from_wh(side, side).unwrap();
+            let mut pixels = image.into_raw();
+            // tiny-skia requires premultiplied alpha.
+            for pixel in pixels.chunks_exact_mut(4) {
+                let alpha = u16::from(pixel[3]);
+                for channel in &mut pixel[..3] {
+                    *channel = ((u16::from(*channel) * alpha + 127) / 255) as u8;
+                }
+            }
+            tiny_skia::Pixmap::from_vec(pixels, size).expect("valid menu logo dimensions")
+        }).collect()
+    });
+    let size = 44. * scale;
+    let x = sidebar.x as f32 + 4. * scale;
+    let y = sidebar.y as f32 + 4. * scale;
+    let logo = logos.iter().find(|logo| logo.width() as f32 >= size).unwrap_or(&logos[3]);
+    let factor = size / logo.width() as f32;
+    let paint = tiny_skia::PixmapPaint {
+        quality: tiny_skia::FilterQuality::Bilinear,
+        ..Default::default()
+    };
+    c.pix.draw_pixmap(
+        0, 0, logo.as_ref(), &paint,
+        tiny_skia::Transform::from_row(factor, 0., 0., factor, x, y), None,
+    );
+}
 fn focused_panel(c: &mut Canvas, r: Rect) {
     // Focus must remain distinguishable from the active page, even at100% transparency.
     canvas::with_panel_alpha(255,||c.rect(r.x as f32,r.y as f32,r.w as f32,r.h as f32,2.,BRASS,BRASS,TEXT));
@@ -180,7 +215,7 @@ pub(super) fn draw(
     text(
         &mut c,
         g.header,
-        "FFTARecomp",
+        "FFTA DE-ReBuild",
         (17. * s).max(12.),
         true,
         TEXT,
@@ -197,17 +232,10 @@ pub(super) fn draw(
         );
     }
     panel(&mut c, g.sidebar, false);
-    // Original compass/shield crest, built from native line primitives.
-    let cx = g.sidebar.x as f32 + 25. * s;
-    let cy = g.sidebar.y as f32 + 27. * s;
-    c.line(cx, cy - 14. * s, cx + 13. * s, cy, BRASS, 1.5 * s);
-    c.line(cx + 13. * s, cy, cx, cy + 14. * s, BRASS, 1.5 * s);
-    c.line(cx, cy + 14. * s, cx - 13. * s, cy, BRASS, 1.5 * s);
-    c.line(cx - 13. * s, cy, cx, cy - 14. * s, BRASS, 1.5 * s);
-    c.line(cx, cy - 9. * s, cx, cy + 9. * s, EDGE, s);
+    brand_logo(&mut c, g.sidebar, s);
     c.text(
-        cx + 22. * s,
-        cy - 12. * s,
+        g.sidebar.x as f32 + 54. * s,
+        g.sidebar.y as f32 + 15. * s,
         menu.tr("ATLAS"),
         TEXT,
         (13. * s).max(9.),
@@ -636,4 +664,34 @@ fn draw_references(menu: &Menu, px: &mut [[u8; 4]], w: usize, h: usize) {
         r.w.saturating_sub(20) as f32,
     );
     c.finish(px);
+}
+
+#[cfg(test)]
+mod brand_tests {
+    use super::*;
+
+    #[test]
+    fn emblem_renders_within_sidebar_at_supported_sizes_and_transparency() {
+        for (w, h) in [(480, 360), (640, 480), (854, 480), (1920, 1080)] {
+            let geometry = atlas::geometry(w, h);
+            let scale = geometry.scale_milli as f32 / 1000.;
+            let background = [28, 56, 78, 255];
+            let pixels = vec![background; w * h];
+            let mut opaque = Canvas::new(&pixels, w, h);
+            let mut transparent = Canvas::new(&pixels, w, h);
+            canvas::with_panel_alpha(255, || brand_logo(&mut opaque, geometry.sidebar, scale));
+            canvas::with_panel_alpha(0, || brand_logo(&mut transparent, geometry.sidebar, scale));
+            assert_eq!(opaque.pix.data(), transparent.pix.data());
+            let mut changed = 0;
+            for (i, pixel) in opaque.pix.data().chunks_exact(4).enumerate() {
+                if pixel != background {
+                    let (x, y) = (i % w, i / w);
+                    assert!(x >= geometry.sidebar.x && x < geometry.sidebar.x + geometry.sidebar.w);
+                    assert!(y >= geometry.sidebar.y && y < geometry.domain.y);
+                    changed += 1;
+                }
+            }
+            assert!(changed > 50, "logo missing at {w}x{h}");
+        }
+    }
 }

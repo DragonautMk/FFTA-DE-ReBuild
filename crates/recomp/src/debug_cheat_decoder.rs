@@ -1,7 +1,7 @@
 //! Readonly, explicitly assumed plaintext CodeBreaker inspection. Never executes.
 use serde::Serialize;
 
-#[derive(Debug, PartialEq, Eq, Serialize)]
+#[derive(Clone, Debug, PartialEq, Eq, Serialize)]
 #[serde(tag = "kind", rename_all = "kebab-case")]
 enum Operation {
     Write {
@@ -32,7 +32,7 @@ enum Operation {
     },
 }
 
-#[derive(Debug, Serialize)]
+#[derive(Clone, Debug, Serialize)]
 pub(crate) struct Plan {
     format: &'static str,
     assumption: &'static str,
@@ -48,6 +48,20 @@ pub(crate) struct Footprint {
     writes: Vec<(u32, u32)>,
     reads: Vec<(u32, u32)>,
     max_writes: usize,
+}
+
+impl Footprint {
+    pub(crate) fn max_writes(&self) -> usize { self.max_writes }
+
+    /// Reject write/write and write/read overlap, including conditional reads.
+    pub(crate) fn conflicts(&self, other: &Self) -> bool {
+        fn overlaps(a: &[(u32, u32)], b: &[(u32, u32)]) -> bool {
+            a.iter().any(|&(start, end)| b.iter().any(|&(other_start, other_end)| start <= other_end && other_start <= end))
+        }
+        overlaps(&self.writes, &other.writes)
+            || overlaps(&self.writes, &other.reads)
+            || overlaps(&self.reads, &other.writes)
+    }
 }
 
 fn ram_range(address: u32, width: u8) -> bool {

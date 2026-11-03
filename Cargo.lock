@@ -3348,6 +3348,7 @@ name = "menu"
 version = "0.2.0"
 dependencies = [
  "ab_glyph",
+ "image",
  "input-config",
  "screen",
  "tiny-skia",

@@ -532,6 +532,7 @@ struct PlayApp {
     cheat_snapshot: Option<crate::debug_cheats::Snapshot>,
     cheat_preview: Option<serde_json::Value>,
     last_cheat_once: Option<serde_json::Value>,
+    cheat_armed: crate::debug_cheat_armed::ArmedSet,
     replay_preparation_seen:usize,
     replay_message: String,
     game_saves: crate::game_saves::GameSaves,
@@ -1821,12 +1822,14 @@ impl PlayApp {
         let operation=action.operation_id();
         let capture=match action{A::UiStart|A::UiReport=>Some(F::Ui),A::RecentStart{..}|A::RecentFreeze|A::RecentReport=>Some(F::Recent),A::CodeStart{..}|A::CodeReport=>Some(F::Code),A::GameplayStart{..}|A::GameplayReport=>Some(F::Gameplay),A::AudioStart{..}|A::AudioReport=>Some(F::Audio),_=>None};
         if let Err(error)=result {
-            if !matches!(action,A::Status){self.lifecycle_emit(capture.unwrap_or(if matches!(action,A::Graphics{..}|A::IssueReport{..}){F::Report}else if matches!(action,A::CheatPrepare{..}|A::CheatApply{..}){F::Cheat}else{F::Machine}),"refused",None,serde_json::json!({"operation_id":operation,"outcome":"refused","error":error.chars().take(1024).collect::<String>(),"artifact":report}));}
+            if !matches!(action,A::Status){self.lifecycle_emit(capture.unwrap_or(if matches!(action,A::Graphics{..}|A::IssueReport{..}){F::Report}else if matches!(action,A::CheatPrepare{..}|A::CheatApply{..}|A::CheatArm{..}|A::CheatDisarm{..}){F::Cheat}else{F::Machine}),"refused",None,serde_json::json!({"operation_id":operation,"outcome":"refused","error":error.chars().take(1024).collect::<String>(),"artifact":report}));}
             return;
         }
         match action {
             A::CheatPrepare{id,..}=>self.lifecycle_emit(F::Cheat,"prepared",None,serde_json::json!({"operation_id":operation,"id":id,"outcome":"completed","scope":"Bounded paused preview; no guest writes"})),
             A::CheatApply{id,..}=>self.lifecycle_emit(F::Cheat,"applied-once",None,serde_json::json!({"operation_id":operation,"id":id,"outcome":"completed","result":self.last_cheat_once})),
+            A::CheatArm{id,..}=>self.lifecycle_emit(F::Cheat,"armed",None,serde_json::json!({"operation_id":operation,"id":id,"outcome":"completed","scope":"No write until the next interpreter frame"})),
+            A::CheatDisarm{id}=>self.lifecycle_emit(F::Cheat,"disarmed",None,serde_json::json!({"operation_id":operation,"id":id,"outcome":"completed","scope":"Earlier writes are not restored"})),
             A::UiStart|A::RecentStart{..}|A::CodeStart{..}|A::GameplayStart{..}|A::AudioStart{..}=>{
                 let family=capture.unwrap();
                 if self.lifecycle.context(family).is_some(){self.lifecycle_finish(family,serde_json::json!({"outcome":"rearmed","scope":"Previous observer ownership replaced by an accepted explicit start"}));}
@@ -2013,12 +2016,31 @@ impl PlayApp {
             },
             crate::debug_control::Action::CheatApply{id,provenance,master,generation,preview}=>{
                 action.validate()?;
+                if !self.cheat_armed.is_empty(){return Err("Disarm maintained cheats before applying a manual one-shot".into());}
                 if self.cheat_preview.as_ref().and_then(|v|v["token"].as_str())!=Some(preview.as_str()){return Err("Prepare this exact one-shot preview first".into());}
                 let (plan,current)=self.prepare_cheat_once(id,*provenance,master,generation)?;
                 if current["token"].as_str()!=Some(preview.as_str()){return Err("Cheat preview, source, ROM or paused state changed; prepare again".into());}
                 let before=(self.machine.bus.frames,self.machine.bus.clock);let count=plan.apply_once(&mut self.machine.bus)?;
                 self.cheat_preview=None;self.last_cheat_once=Some(serde_json::json!({"id":id,"preview":preview,"writes":count,"frame":before.0,"clock":before.1,"scope":"Manual paused one-shot, no hardware hook or maintained toggle"}));
                 self.menu.diagnosis_result(format!("Applied {count} writes once in the isolated paused copy."));self.menu_dirty=true;return Ok(());
+            },
+            crate::debug_control::Action::CheatArm{id,provenance,master,generation,preview}=>{
+                action.validate()?;
+                if self.cheat_preview.as_ref().and_then(|v|v["token"].as_str())!=Some(preview.as_str()){return Err("Prepare this exact cheat preview first".into());}
+                let (plan,current)=self.prepare_cheat_once(id,*provenance,master,generation)?;
+                if current["token"].as_str()!=Some(preview.as_str()){return Err("Cheat preview, source, ROM or paused state changed; prepare again".into());}
+                let details=&current["body"]["details"];
+                let identity=serde_json::json!({"provenance_index":provenance,"master_id":master,"generation":generation,"source_sha256":details["source_sha256"],"rom_sha256":details["rom_sha256"],"entry_lines_sha256":details["entry_lines_sha256"],"master_lines_sha256":details["master_lines_sha256"]});
+                self.cheat_armed.arm(id,plan,identity)?;self.cheat_preview=None;
+                if self.menu.cheat_active(){self.open_cheat_catalog();}
+                self.menu.diagnosis_result("Cheat armed for the next interpreter frame; disarm stops future writes.".into());self.menu_dirty=true;return Ok(());
+            },
+            crate::debug_control::Action::CheatDisarm{id}=>{
+                action.validate()?;
+                if !self.paused || self.probe.is_some() || self.frame_control.remaining>0 || self.replay_job.is_some(){return Err("Disarm requires an idle paused copy".into());}
+                if let Some(id)=id{self.cheat_armed.disarm(id)?;}else{self.cheat_armed.clear();}
+                if self.menu.cheat_active(){self.open_cheat_catalog();}
+                self.cheat_preview=None;self.menu.diagnosis_result("Cheat disarmed; earlier writes remain until separately restored.".into());self.menu_dirty=true;return Ok(());
             },
             crate::debug_control::Action::Replay{mode}=>{
                 if !self.paused{return Err("Replay requires an idle paused copy".into());}
@@ -2174,6 +2196,7 @@ impl PlayApp {
                 self.inspection=Some(value);self.menu_dirty=true;return Ok(());
             },
             crate::debug_control::Action::Find{settings}=>{
+                if !self.cheat_armed.is_empty(){return Err("Disarm maintained cheats before instruction search".into());}
                 if !self.paused || self.probe.is_some() || self.frame_control.remaining>0 || self.replay_job.is_some() || self.recording_active() {return Err("Search requires an idle paused copy without recording or replay".into());}
                 let search=crate::debug_probe::Search::start(settings.clone(),self.native.is_some())?;
                 self.frame_control.stop("searching");self.probe_result=None;self.probe=Some(search);self.debug_audio_boundary();self.menu_dirty=true;return Ok(());
@@ -2270,6 +2293,7 @@ impl PlayApp {
         value["replay"]=serde_json::json!({"active":self.replay_job.is_some(),"progress":self.replay_job.as_ref().and_then(|j|j.progress()),"result":self.replay_terminal.as_ref().map(|r|match r{Ok(report)=>serde_json::json!({"report":report}),Err(error)=>serde_json::json!({"error":error})})});
         value["cheat_snapshot"]=self.current_cheat_snapshot().ok().map(|s|serde_json::json!({"generation":s.generation,"source_sha256":s.source_sha256,"rom_sha256":s.rom_sha256,"scope":"Immutable snapshot verified at explicit refresh"})).unwrap_or(serde_json::Value::Null);
         value["cheat_preview"]=self.cheat_preview.clone().unwrap_or(serde_json::Value::Null);value["cheat_once"]=self.last_cheat_once.clone().unwrap_or(serde_json::Value::Null);
+        value["cheat_armed"]=self.cheat_armed.status();
         value["runtime_lifecycles"]=self.lifecycle.status();
         value["request_ledger"]=self.control_server.as_ref().map_or(serde_json::Value::Null,|s|s.retry_status());
         value["event_console"]=self.event_console.borrow().status();
@@ -2318,7 +2342,11 @@ impl PlayApp {
                     let mut status=self.debug_status();let error=result.err().or_else(||status.as_ref().err().cloned());
                     if error.is_none(){if let Ok(value)=&mut status{match &request.command{
                         crate::debug_control::Action::ContentList{offset,limit,generation}=>value["content_page"]=self.content_picker.page(*offset,*limit,*generation).unwrap(),
-                        crate::debug_control::Action::CheatList{offset,limit,generation}=>value["cheat_page"]=self.current_cheat_snapshot().unwrap().page(*offset,*limit,generation.as_deref()).unwrap(),
+                        crate::debug_control::Action::CheatList{offset,limit,generation}=>{
+                            let snapshot=self.current_cheat_snapshot().unwrap();let mut page=snapshot.page(*offset,*limit,generation.as_deref()).unwrap();
+                            if let Some(entries)=page["entries"].as_array_mut(){for entry in entries{if let Some(id)=entry["id"].as_str(){entry["enabled"]=serde_json::json!(self.cheat_armed.contains(id,&snapshot.source_sha256));}}}
+                            value["cheat_page"]=page;
+                        },
                         crate::debug_control::Action::CheatShow{id,offset,generation}=>value["cheat_detail"]=self.current_cheat_snapshot().unwrap().show(id,*offset,generation.as_deref()).unwrap(),
                         _=>{},
                     }}}
@@ -2471,6 +2499,7 @@ impl PlayApp {
         result
     }
     fn start_replay_inner(&mut self, choose_only: bool, kind: ReplayKind,interactive:bool)->Result<bool,String> {
+        if !self.cheat_armed.is_empty(){return Err("Disarm maintained cheats before starting a separate replay.".into());}
         if self.recent.as_ref().is_some_and(|b|!b.saved()){return Err("Save the recent window before starting a separate replay.".into());}
         if self.gameplay_trace.is_some(){return Err("Save the gameplay trace before starting a separate replay.".into());}
         if self.code_trace.is_some(){return Err("Save the code trace before starting a separate replay.".into());}
@@ -2535,7 +2564,8 @@ impl PlayApp {
         let result = (|| -> Result<(), String> {
             if self.probe.is_some() {return Err("Finish or interrupt the search before recording.".into());}
             if !self.debug_session { return Err("Open an isolated debug copy before recording.".into()); }
-            if self.last_cheat_once.is_some(){return Err("Recording after a cheat one-shot needs provenance support; restart the isolated copy first.".into());}
+            if !self.cheat_armed.is_empty(){return Err("Disarm maintained cheats before recording.".into());}
+            if self.last_cheat_once.is_some(){return Err("Recording after cheat writes needs provenance support; restart the isolated copy first.".into());}
             if self.replay_job.is_some() {return Err("Finish or cancel the replay before recording.".into());}
             if self.recording_active() { return Err("An input recording is already active.".into()); }
             self.sync_view();
@@ -2599,8 +2629,8 @@ impl PlayApp {
             Ok(Some(catalog))
         })();
         match result {
-            Ok(Some(catalog))=>{let entries=catalog.menu_entries(Some(&rom),self.av.menu_language);let message=self.menu_text("{count} entries · all disabled · compatibility unverified",&[("count",entries.len().to_string())]);self.menu.open_cheats(entries,message);},
-            Ok(None)=>{let message=self.menu_text("No catalog. Choose Import catalog; no entries are active.",&[]);self.menu.open_cheats(Vec::new(),message);},
+            Ok(Some(catalog))=>{let mut entries=catalog.menu_entries(Some(&rom),self.av.menu_language);for entry in &mut entries{if self.cheat_armed.contains(&entry.id,&catalog.source_sha256){entry.status=self.av.menu_language.text("Cheat armed").into();}}let message=self.menu_text("{count} entries · {active} armed · compatibility unverified",&[("count",entries.len().to_string()),("active",self.cheat_armed.len().to_string())]);self.menu.open_cheats(entries,message);},
+            Ok(None)=>{let message=self.menu_text("No catalog. Choose Import catalog.",&[]);self.menu.open_cheats(Vec::new(),message);},
             Err(error)=>{let message=self.menu_text("Catalog unavailable: {error}. Import a valid source.",&[("error",error)]);self.menu.open_cheats(Vec::new(),message);},
         }
         self.menu_dirty=true;
@@ -2900,6 +2930,7 @@ impl PlayApp {
     }
 
     fn after_state_restore(&mut self) {
+        self.cheat_armed.clear();self.cheat_preview=None;
         self.lifecycle_emit(crate::debug_lifecycle::Family::State,"timeline-restored",None,serde_json::json!({"frame":self.machine.bus.frames,"clock":self.machine.bus.clock,"scope":"Existing frontend restore boundary before collector discontinuity freeze"}));
         if let Some(buffer)=self.recent.as_mut(){buffer.freeze(&self.machine,"state-restored");}
         if let Some(trace)=self.code_trace.as_mut(){trace.freeze("state-restored");}
@@ -2974,7 +3005,7 @@ impl PlayApp {
     fn state_operation(&mut self, saving: bool, slot: u8, overwrite: bool) {
         let operation=if saving{"save"}else{"load"};let before=(self.machine.bus.frames,self.machine.bus.clock);
         self.lifecycle_emit(crate::debug_lifecycle::Family::State,"requested",None,serde_json::json!({"operation":operation,"slot":slot,"overwrite":overwrite}));
-        if saving && self.last_cheat_once.is_some(){self.menu.state_result("Saving after a cheat one-shot needs provenance support; restart the isolated copy first.".into());self.menu_dirty=true;return;}
+        if saving && (!self.cheat_armed.is_empty() || self.last_cheat_once.is_some()){self.menu.state_result("Saving with or after cheats needs provenance support; restart the isolated copy first.".into());self.menu_dirty=true;return;}
         if !saving && self.recording_active() {
             let message = if self.capture.is_some() {
                 if self.stop_input_recording("Load requested; retry after recording stopped", true) {
@@ -3139,6 +3170,12 @@ impl PlayApp {
                     self.paused = true;
                     return true;
                 }
+            }
+        }
+        if !self.cheat_armed.is_empty(){
+            match self.cheat_armed.apply(&mut self.machine.bus){
+                Ok(writes)=>self.last_cheat_once=Some(serde_json::json!({"writes":writes,"frame":self.machine.bus.frames,"clock":self.machine.bus.clock,"scope":"Maintained set applied before interpreter frame; no original hardware hook"})),
+                Err(error)=>{self.error=Some(format!("Maintained cheat preflight failed: {error}"));return false;}
             }
         }
         let emu_t0 = Instant::now();
@@ -4768,7 +4805,7 @@ Place your own dump as gba_bios.bin next to the executable:\n  {}",
         }
     };
 
-    let title = session.map_or_else(|| "FFTARecomp".into(), |s| format!("FFTARecomp - DEBUG: {}", s.manifest.label));
+    let title = session.map_or_else(|| "FFTA DE-ReBuild".into(), |s| format!("FFTA DE-ReBuild - DEBUG: {}", s.manifest.label));
 
     // Audio. Both paths run at once so the in-game menu can crossfade between
     // faithful and enhanced live (the callback slews between them, the producer
@@ -4959,6 +4996,7 @@ Place your own dump as gba_bios.bin next to the executable:\n  {}",
         cheat_snapshot: None,
         cheat_preview: None,
         last_cheat_once: None,
+        cheat_armed: crate::debug_cheat_armed::ArmedSet::default(),
         replay_preparation_seen:0,
         replay_message: String::new(),
         machine,

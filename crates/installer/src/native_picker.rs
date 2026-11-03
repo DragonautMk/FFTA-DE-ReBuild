@@ -27,13 +27,13 @@ pub fn pick(kind: Kind) -> Result {
     for tool in tools {
         let mut cmd = Command::new(tool);
         if tool == "kdialog" {
-            cmd.args(["--title", "FFTARecomp"]);
+            cmd.args(["--title", "FFTA DE-ReBuild"]);
             match kind {
                 Kind::Rom => { cmd.arg("--getopenfilename").arg(&home).arg("*.gba *.GBA|GBA ROM"); },
                 Kind::Folder => { cmd.arg("--getexistingdirectory").arg(&home); },
             }
         } else {
-            cmd.args(["--file-selection", "--title=FFTARecomp"]);
+            cmd.args(["--file-selection", "--title=FFTA DE-ReBuild"]);
             let mut start = home.as_os_str().to_os_string();
             start.push("/");
             let mut filename = std::ffi::OsString::from("--filename=");

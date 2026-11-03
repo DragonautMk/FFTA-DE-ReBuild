@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "translate-research-evidence-labels",
+  "title": "Translate research evidence labels",
+  "kind": "docs",
+  "platforms": [
+    "Desktop development documentation"
+  ],
+  "changes": [
+    "Translate measured and not-measured labels in the later English research history while preserving the associated evidence and limitations."
+  ],
+  "validation": [
+    "Verified all 37 measured and 15 not-measured label replacements are exactly reversible to the preimage; no other text in the section changed."
+  ],
+  "limitations": [
+    "The research report and broader Markdown/source audit still require final review; no ROM access, replay or runtime checks were performed."
+  ],
+  "files": [
+    "docs/ffta_estado.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

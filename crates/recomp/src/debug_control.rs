@@ -34,6 +34,8 @@ pub(crate) enum Action {
     CheatShow { id:String, offset:u32, generation:Option<String> },
     CheatPrepare { id:String, provenance:u16, master:String, generation:String },
     CheatApply { id:String, provenance:u16, master:String, generation:String, preview:String },
+    CheatArm { id:String, provenance:u16, master:String, generation:String, preview:String },
+    CheatDisarm { id:Option<String> },
     Replay { mode: ReplayMode },
     Pause,
     Resume,
@@ -67,7 +69,7 @@ pub(crate) enum Action {
 impl Action {
     fn read_query(&self)->bool{matches!(self,Self::Status|Self::ContentList{..}|Self::CheatList{..}|Self::CheatShow{..})}
     fn query_channel(&self)->bool{self.read_query()||matches!(self,Self::Cancel{..})}
-    fn cheat_capability(&self)->bool{matches!(self,Self::SelectId{slot:SelectionSlot::CheatCatalog,..}|Self::CheatRefresh|Self::CheatList{..}|Self::CheatShow{..}|Self::CheatPrepare{..}|Self::CheatApply{..})}
+    fn cheat_capability(&self)->bool{matches!(self,Self::SelectId{slot:SelectionSlot::CheatCatalog,..}|Self::CheatRefresh|Self::CheatList{..}|Self::CheatShow{..}|Self::CheatPrepare{..}|Self::CheatApply{..}|Self::CheatArm{..}|Self::CheatDisarm{..})}
     pub(crate) fn validate(&self) -> Result<(), String> {
         if let Self::Step { frames, keys } = self {
             if !(1..=MAX_STEP).contains(frames) || *keys > 0x3ff {
@@ -81,11 +83,12 @@ impl Action {
             Self::CheatList {limit,..} if !(1..=16).contains(limit) => return Err("Cheat page limit needs1..16".into()),
             Self::CheatShow{id,..} if id.len()!=7 || !id.starts_with("CH-") || !id[3..].bytes().all(|b|b.is_ascii_digit())=>return Err("Cheat ID must be CH- followed by four digits".into()),
             Self::CheatList{generation:Some(g),..}|Self::CheatShow{generation:Some(g),..} if g.len()!=64 || !g.bytes().all(|b|b.is_ascii_hexdigit())=>return Err("Cheat snapshot generation must be a SHA-256".into()),
-            Self::CheatPrepare{id,master,generation,..}|Self::CheatApply{id,master,generation,..}=>{
+            Self::CheatPrepare{id,master,generation,..}|Self::CheatApply{id,master,generation,..}|Self::CheatArm{id,master,generation,..}=>{
                 let valid_id=|v:&str|v.len()==7 && v.starts_with("CH-") && v[3..].bytes().all(|b|b.is_ascii_digit());
                 if !valid_id(id)||!valid_id(master)||generation.len()!=64||!generation.bytes().all(|b|b.is_ascii_hexdigit()){return Err("Cheat preparation needs CH IDs and a SHA-256 snapshot generation".into());}
-                if let Self::CheatApply{preview,..}=self {if preview.len()!=64||!preview.bytes().all(|b|b.is_ascii_hexdigit()){return Err("Apply needs the exact preview SHA-256".into());}}
+                if let Self::CheatApply{preview,..}|Self::CheatArm{preview,..}=self {if preview.len()!=64||!preview.bytes().all(|b|b.is_ascii_hexdigit()){return Err("Apply or arm needs the exact preview SHA-256".into());}}
             },
+            Self::CheatDisarm{id:Some(id)} if id.len()!=7 || !id.starts_with("CH-") || !id[3..].bytes().all(|b|b.is_ascii_digit())=>return Err("Cheat ID must be CH- followed by four digits".into()),
             Self::Inspect { address, length }
                 if *length == 0 || *length > 256 || address.checked_add(*length - 1).is_none() =>
             {
@@ -149,7 +152,7 @@ impl Control {
                 self.reason = "stepping";
                 Ok(true)
             }
-            Action::SelectId{..} | Action::ContentRefresh | Action::ContentList{..} | Action::CheatRefresh | Action::CheatList{..} | Action::CheatShow{..} | Action::CheatPrepare{..} | Action::CheatApply{..} | Action::Replay{..} | Action::RecentStart{..} | Action::RecentFreeze | Action::RecentReport | Action::GameplayStart{..} | Action::GameplayReport | Action::IssueReport{..} | Action::CodeStart{..} | Action::CodeReport | Action::AudioStart{..} | Action::AudioReport | Action::UiStart | Action::UiReport | Action::Graphics { .. } | Action::Inspect { .. } | Action::Find { .. } => {
+            Action::SelectId{..} | Action::ContentRefresh | Action::ContentList{..} | Action::CheatRefresh | Action::CheatList{..} | Action::CheatShow{..} | Action::CheatPrepare{..} | Action::CheatApply{..} | Action::CheatArm{..} | Action::CheatDisarm{..} | Action::Replay{..} | Action::RecentStart{..} | Action::RecentFreeze | Action::RecentReport | Action::GameplayStart{..} | Action::GameplayReport | Action::IssueReport{..} | Action::CodeStart{..} | Action::CodeReport | Action::AudioStart{..} | Action::AudioReport | Action::UiStart | Action::UiReport | Action::Graphics { .. } | Action::Inspect { .. } | Action::Find { .. } => {
                 Err("Inspection/search is owned by the isolated frontend".into())
             }
             Action::Status => unreachable!(),
@@ -251,7 +254,7 @@ impl Server {
     fn ready(&self,active:bool)->Value{
         json!({"schema":1,"kind":"ffta-debug-control","run":self.run,"active":active,
             "pid":std::process::id(),"session":self.session,
-            "capabilities":["query-status","targeted-cancel","request-deadline","idempotent-request-v1","content-discovery-v1","replay-job-v1","cheat-catalog-v1","cheat-once-v1"]})
+            "capabilities":["query-status","targeted-cancel","request-deadline","idempotent-request-v1","content-discovery-v1","replay-job-v1","cheat-catalog-v1","cheat-once-v1","cheat-maintain-v1"]})
     }
     pub fn pending_status(&self)->Value{
         self.pending.as_ref().map_or(Value::Null,|r|json!({"request_id":r.id,"operation_id":r.command.operation_id(),"command":r.command,"deadline_unix_ms":r.deadline_unix_ms}))
@@ -397,6 +400,8 @@ pub(crate) fn parse(args: &[String]) -> Result<(PathBuf, Action), String> {
         "cheat-refresh" if args.len()==2=>Action::CheatRefresh,
         "cheat-prepare" if args.len()==6=>Action::CheatPrepare{id:args[2].clone(),provenance:provenance(&args[3])?,master:args[4].clone(),generation:args[5].clone()},
         "cheat-apply" if args.len()==7=>Action::CheatApply{id:args[2].clone(),provenance:provenance(&args[3])?,master:args[4].clone(),generation:args[5].clone(),preview:args[6].clone()},
+        "cheat-arm" if args.len()==7=>Action::CheatArm{id:args[2].clone(),provenance:provenance(&args[3])?,master:args[4].clone(),generation:args[5].clone(),preview:args[6].clone()},
+        "cheat-disarm" if args.len()==3=>Action::CheatDisarm{id:if args[2]=="all"{None}else{Some(args[2].clone())}},
         "cheat-list" | "cheat-show"=>{
             let show=args[0]=="cheat-show";let(mut offset,mut limit,mut generation)=(0u32,16u8,None);let mut pos=2;
             let id=if show{let value=args.get(pos).ok_or("Cheat show needs a CH ID")?.clone();pos+=1;Some(value)}else{None};
@@ -687,6 +692,7 @@ fn execute_action_inner(root:&Path,action:Action,timeout:u64,retry:Option<&Retry
         return Err(ClientFailure::new("incompatible","This session does not support cheat catalog queries; use the current runtime","not-sent"));
     }
     if matches!(action,Action::CheatPrepare{..}|Action::CheatApply{..}) && ready["capabilities"].as_array().is_none_or(|c|!c.contains(&json!("cheat-once-v1"))){return Err(ClientFailure::new("incompatible","This session does not support guarded cheat one-shot","not-sent"));}
+    if matches!(action,Action::CheatArm{..}|Action::CheatDisarm{..}) && ready["capabilities"].as_array().is_none_or(|c|!c.contains(&json!("cheat-maintain-v1"))){return Err(ClientFailure::new("incompatible","This session does not support maintained cheats","not-sent"));}
     if matches!(action,Action::Replay{..}) && ready["capabilities"].as_array().is_none_or(|c|!c.contains(&json!("replay-job-v1"))){
         return Err(ClientFailure::new("incompatible","This session does not support replay jobs; use the current runtime","not-sent"));
     }

@@ -15,6 +15,12 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
 
 ## Architecture and current scope
 
+- FFTA DE-ReBuild is the visible name of the independently maintained fork
+  formerly called FFTARecomp. Its new emblem is used by the README, desktop
+  installer and package icon, and both Android trees. Existing executable and
+  archive names, Android package IDs and data paths retain FFTARecomp for
+  compatibility; the upstream project keeps its own name.
+
 - The [English-first policy](ENGLISH_FIRST.md) applies to maintained documentation,
   comments and default product/tooling text in both source trees. Optional locale
   catalogs retain their languages; English remains the default/fallback. The
@@ -35,7 +41,9 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   entries have static source/CRC and mGBA comparison evidence; CH-0334 also has
   a bounded isolated RAM before/after and fresh-seed restoration proof. Device
   behavior, native hook handling and gameplay effects remain unverified.
-  Maintained cheats, conflict handling and provenance-aware replay remain open.
+  Bounded source-bound plans may be armed for interpreter frame boundaries;
+  conflicting footprints are refused and disarm stops future writes without
+  restoring memory. Broader backends and provenance-aware replay remain open.
 
 - The explicitly requested [private debug-assets export](../private_debug_assets.md)
   builds a separate ignored Windows portable ZIP from the user's selected local
@@ -51,7 +59,7 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   active; a sandbox-only process listing is insufficient.
 
 - The desktop [Clan Atlas menu](../menu_clan_atlas.md) uses the existing native
-  Canvas/tiny-skia fonts with a permanent left sidebar (eight Game/eight Debug
+  Canvas/tiny-skia fonts and the FFTA DE-ReBuild emblem with a permanent left sidebar (eight Game/eight Debug
   sections), fixed shell and internal list/detail scrolling. Legacy handlers,
   confirmations, DS/content selectors and 9/99 slots remain in use; the readonly
   operation and 28-task references do not execute CLI strings or future tools.
@@ -109,10 +117,10 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   while redistribution permissions are unverified. Regions/device formats and
   source-specific master codes remain distinct; static preservation checks do
   not establish runtime compatibility. The readonly `debug-cheats` CLI builds a
-  bounded in-memory index with ordered entries and source metadata, disabled
-  states and explicit unknown/unsupported/unverified compatibility. A separate
+  bounded in-memory index with ordered entries, source-specific assumed decoder
+  plans and explicit unevaluated/unsupported/unverified compatibility. A separate
   readonly Cheat view reuses the content selector for explicit import, search
-  and details; opening an entry never decodes or applies it. Exact known EUR/USA
+  and details; index assessment never applies an entry. Exact known EUR/USA
   ROM hashes now provide source-declared region comparisons without treating
   them as code verification; device version stays unknown. The public portable
   whitelist includes the guide, excludes catalog payloads and ignores imported

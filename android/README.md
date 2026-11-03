@@ -1,4 +1,4 @@
-# Android preview
+# FFTA DE-ReBuild Android preview
 
 This Android app replaces the initial mock hardware, simulated compilation,
 and fallback checkerboard with the repository's real `gba-core::Machine`, PPU,

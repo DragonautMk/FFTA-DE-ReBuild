@@ -6,10 +6,7 @@ Updated 2026-11-02. User confirmed English-first project with optional Italian. 
 reports, guide reviews and portable/private exporter instructions are accepted
 within their recorded scopes; the cross-tree audit remains open.
 
-Read this entire file and its final handover, then only the relevant sections
-linked below. Do not automatically load the archive, full CHANGELOG,
-PROJECT_STATE or large TODOs. Accepted evidence remains valid even when local
-artifacts have been retired. Rules: [MEMORY_WORKFLOW](MEMORY_WORKFLOW.md#resume-and-repeat-decisions).
+Read this file, then only relevant linked sections. Do not preload archives, CHANGELOG, PROJECT_STATE or large TODOs. Retired artifacts do not invalidate accepted evidence. Rules: [MEMORY_WORKFLOW](MEMORY_WORKFLOW.md#resume-and-repeat-decisions).
 
 Execution state and acceptance outcome are separate: `active`, `suspended`,
 `interrupted`, `failed`, `waiting`; open outcomes are `partial`,
@@ -32,9 +29,9 @@ termination of another owner's process or changing another thread's goal state.
 
 - State: active
 - Outcome: partial
-- Verified: previous runtime/report/guide/export units accepted, including shared debug guides. Command/event consoles and operation cards use English/Italian presentation; targeted tests PASS. Audit: 234 reviewed files, 17 Markdown pending.
+- Verified: previous runtime/report/guide/export units accepted, including shared debug guides. Command/event consoles and operation cards use English/Italian presentation; targeted tests PASS. Audit: 235 reviewed files, 16 Markdown pending.
 - Missing: remaining documentation, other dynamic report producers/metadata, helper/test modules, tools/build text, source comments and full audit across both trees. Planned-task checklist/reference translated and synchronized. Preserve optional locales, imported content and immutable history.
-- Resume: selection checkpoint for continued English-first work: ENGLISH-FIRST-RESEARCH-VISIBILITY. Opening translated; graphics visibility evidence and superseded proposal remain Spanish. Next: translate while preserving observations, limits and recorded identifiers.
+- Resume: ENGLISH-FIRST-INVENTORY-REVIEW partial: opening through localized script text corrected. Continue at coordinate paths; full review remains open. Evidence: `docs/changes/2026-11-03-improve-rom-inventory-script-text-readability.json`.
 
 ### ROMDATA-03-04-E105-SENARY-COMPACT-OBJ
 
@@ -77,11 +74,11 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ### DBG2-14
 
-- State: suspended
+- State: active
 - Outcome: integrated_unverified
-- Verified: Unicode editor, history/selection, contextual completion, simulated XInput keyboard, focus/hide, isolated clipboard and multiline paste without submission accepted. `docs/changes/2026-10-31-begin-debug-command-console.json`, add-debug-command-context-completion and add-debug-command-controller-keyboard; clipboard/gui-result read and positive.
-- Missing: real IME composition and relevant layouts; composition/capability guards unverified in GUI. Native Windows/Linux/physical controller unverified, distinct from accepted Wine evidence.
-- Resume: select only the missing input criterion; editor/panel/completion and focus in play.rs. Do not recreate the clipboard check.
+- Verified: Unicode editor, history/selection, completion, simulated XInput keyboard, focus/hide, isolated clipboard and multiline paste; October 31 panel/controller/completion records.
+- Missing: real IME composition and layouts, GUI guards; native Windows/Linux/physical input unverified.
+- Resume: 2026-11-03 full debugtools v2 checkpoint: new maintained `cheats arm`/`disarm` commands are absent from contextual hint and completion. Add English/Italian hints and exact grammar completions, validate without repeating accepted clipboard or editor checks; `debug_command/completion.rs`.
 
 ### DBG2-15
 
@@ -103,33 +100,33 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 - State: suspended
 - Outcome: partial
-- Verified: readonly index with 341 entries, empty/explicit import, simulated menu/controller, metadata/provenance/master, EUR/USA hash context, local channel and guide/package exclusion. October 31 records index-local-cheat-catalog-readonly, browse-local-cheat-catalog-in-menu, describe-cheat-target-and-public-guide and expose-cheat-snapshot-local-control. menu-gui2 confirms 341 synthetic entries/import/exact state.
-- Missing: runtime/verification index by ROM/device/decoder; summary/menu_entries still report decoder unsupported and no handler despite verified source-bound inspection/one-shot. Connect per-CH capabilities; seven static plans do not prove behavior/device acceptance.
-- Resume: [cheats.md](../cheats.md#readonly-index-and-cli--dbg2-17-in-progress), debug_cheats.rs and contract; import/browsing are complete, not to be reimplemented.
+- Verified: 341-entry readonly index, import/menu, ROM context and local channel; October 31 index, browse, target and snapshot records. Bounded per-source capability index, menu and CLI accepted in `2026-11-03-index-cheat-source-capabilities.json`.
+- Missing: complete per-CH device/ROM and behavioral verification; plans are assumptions, not proof.
+- Resume: use `docs/cheats.md`; do not repeat accepted index or GUI checks.
 
 ### DBG2-18
 
 - State: suspended
 - Outcome: partial
-- Verified: CodeBreaker subset with synthetic fixtures, explicit plaintext inspection, explicit seed, source/master/CRC; seven EUR priorities compared statically with mGBA. October 31 records inspect-assumed-plaintext-codebreaker, inspect-explicit-seeded-codebreaker and inspect-source-bound-codebreaker-masters.
-- Missing: connect executable CH capabilities consistently with the index still fixed at unsupported (each CH must report what it can execute). The subset is verified; other opcodes/formats may remain rejected. A decoded master is not an executed hook; this limit is distinct from decoding.
-- Resume: [cheats.md](../cheats.md#assumed-plaintext-codebreaker-inspection--dbg2-18-in-progress), debug_cheat_decoder.rs; do not duplicate the verified decoder.
+- Verified: CodeBreaker subset, explicit plaintext/seed/source/master/CRC and seven static mGBA comparisons; October 31 inspection records. The source-bound index now exposes supported plans and unevaluated limits.
+- Missing: complete per-CH ROM/device verification; unsupported opcodes/formats may remain rejected. A decoded master is not an executed hook.
+- Resume: `docs/cheats.md`, `debug_cheat_decoder.rs`; do not duplicate the decoder.
 
 ### DBG2-19
 
 - State: suspended
 - Outcome: partial
-- Verified: source/state-bound preview and manual one-shot in the bus of a paused interpreter copy, atomic refusals, retry without duplication; October 31 record apply-guarded-cheat-once. This is not periodic enforcement.
-- Missing: distinct arm/maintain/disarm operations, deterministic timing, conflicts/overlaps and supported memory/backend coverage; I/O writes, native/ROM and mirrors unsupported.
-- Resume: [cheats.md](../cheats.md#manual-one-shot-in-an-isolated-session--dbg2-19-in-progress); do not repeat accepted one-shot validation.
+- Verified: one-shot/CH-0334, maintained interpreter timing, conflict/disarm and active indicator; isolated System/Restart, save-state load and Undo disarm synthetic plans, load/Undo restore exact expected state. `2026-11-03-maintain-bounded-interpreter-cheats.json`.
+- Missing: device/gameplay equivalence and broader memory/backend coverage; I/O writes, native/ROM and mirrors unsupported. Disarm does not itself restore memory.
+- Resume: `docs/cheats.md`; do not repeat accepted synthetic checks or restoration paths.
 
 ### DBG2-20
 
 - State: waiting
 - Outcome: partial
-- Verified: readonly search/details/filters and prepare/apply-once commands exist; menu remains readonly, without implicit activation.
-- Missing: values/ranges, groups/presets, toggles, disable all, active indicator, conflict checks and full controller flow. Depends on DBG2-19 and DBG2-15.
-- Resume: only after the required dependency, without duplicating the catalog view or equating CLI one-shot with a complete Cheats page.
+- Verified: readonly search/details/filters, prepare/apply-once and console arm/disarm, conflict refusal and GUI active indicator; no implicit activation.
+- Missing: values/ranges, groups/presets, page toggles and full controller flow; depends on DBG2-19 and DBG2-15.
+- Resume: select missing page flow, without rebuilding catalog browsing.
 
 ### DBG2-21
 
@@ -229,9 +226,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: FORK-README-AI-FOCUS completed.
-- Last verified result: README states AI assistance, development focus and playable status.
-- Remaining work: none for this request; other tasks retain their recorded scope.
-- Errors or blockers: none; no runtime validation performed.
-- Next action: select work only in response to a relevant request.
-- References: `README.md`, `docs/changes/2026-11-03-distinguish-independent-fork.json`.
+- Task: DBG2-19 load/Undo-disarm check complete; parent partial. ENGLISH-FIRST-INVENTORY-REVIEW partial.
+- Last verified result: isolated Wine/Xvfb save-state load and Undo each disarmed a synthetic set and restored exact expected state; inputs and session pins unchanged. Restart previously passed.
+- Remaining work: gameplay/device equivalence, broader memory/backend and other DBG2 criteria; English inventory review remains open.
+- Errors or blockers: save overwrite confirmation was cancelled. Cleanup helper refused non-ROM-data unit paths; no cleanup applied. Rebrand installer/Wayland checks blocked as recorded.
+- Next action: select and checkpoint the next unfinished DBG2 criterion; preserve concurrent work.
+- References: `docs/changes/2026-11-03-maintain-bounded-interpreter-cheats.json`, `target/debug-tools-v2-maintained-load/gui-result.json`.

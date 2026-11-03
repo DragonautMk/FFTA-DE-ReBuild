@@ -291,7 +291,7 @@ private fun MainScreen(settings: GameSettings, input: GameInput, setInGame: (Boo
             Column(Modifier.widthIn(max=540.dp).fillMaxWidth().padding(20.dp)
                 .background(Paper,RoundedCornerShape(20.dp)).border(1.dp,Gold,RoundedCornerShape(20.dp))
                 .padding(24.dp).verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(16.dp)) {
-                Text("FFTARecomp",fontFamily=FontFamily.Serif,fontWeight=FontWeight.Bold,fontSize=32.sp,color=Ink)
+                Text("FFTA DE-ReBuild",fontFamily=FontFamily.Serif,fontWeight=FontWeight.Bold,fontSize=32.sp,color=Ink)
                 Text("ANDROID PREVIEW",color=Gold,letterSpacing=3.sp,fontSize=11.sp)
                 HorizontalDivider(color=Gold)
                 Text("Your adventure, a wider view.",fontFamily=FontFamily.Serif,fontSize=20.sp)
@@ -402,7 +402,7 @@ private fun GameScreen(settings: GameSettings,input: GameInput,onExit:()->Unit) 
                     .heightIn(max=(LocalConfiguration.current.screenHeightDp-28).dp)
                     .background(Paper,RoundedCornerShape(18.dp)).border(1.dp,Gold,RoundedCornerShape(18.dp))
                     .padding(20.dp).verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(8.dp)) {
-                    Text(if(page=="main")"FFTARecomp" else page.replaceFirstChar{it.uppercase()},fontFamily=FontFamily.Serif,fontSize=26.sp,fontWeight=FontWeight.Bold,color=Ink)
+                    Text(if(page=="main")"FFTA DE-ReBuild" else page.replaceFirstChar{it.uppercase()},fontFamily=FontFamily.Serif,fontSize=26.sp,fontWeight=FontWeight.Bold,color=Ink)
                     Text("PAUSED",letterSpacing=3.sp,fontSize=10.sp,color=Gold)
                     HorizontalDivider(color=Gold)
                     failure?.let{Text(it,color=Color(0xFF9B2929),fontSize=12.sp)}

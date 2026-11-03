@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "translate-research-sky-stage-stats",
+  "title": "Translate sky, stage and stats investigation",
+  "kind": "docs",
+  "platforms": [
+    "Desktop development documentation"
+  ],
+  "changes": [
+    "Translate the sky gradient, stage zoom and stats panel research history into English, preserving rejected approaches and subsequent corrections."
+  ],
+  "validation": [
+    "Compared the translated passage to its preimage: numeric runs, paths, flags, image and input filenames, hardware registers and recorded command error match."
+  ],
+  "limitations": [
+    "The remaining research report and broader Markdown/source audit are unfinished; no ROM access, replay or runtime checks were performed."
+  ],
+  "files": [
+    "docs/ffta_estado.md"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ]
+}

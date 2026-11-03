@@ -5,7 +5,7 @@ use std::os::windows::process::CommandExt;
 
 fn fail(dir: &PathBuf, msg: &str) {
     let _ = fs::write(dir.join("play-error.log"), msg);
-    rfd::MessageDialog::new().set_title("FFTARecomp")
+    rfd::MessageDialog::new().set_title("FFTA DE-ReBuild")
         .set_description(msg).set_level(rfd::MessageLevel::Error).show();
 }
 

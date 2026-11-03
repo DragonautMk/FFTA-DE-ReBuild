@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "improve-rom-inventory-opening-readability",
+  "title": "Improve ROM inventory opening readability",
+  "kind": "docs",
+  "platforms": [
+    "Desktop development documentation"
+  ],
+  "changes": [
+    "Separate merged words, numbers and addresses in the inventory introduction and BG graphics, terrain and UI choice-list summaries while retaining recorded evidence and limits."
+  ],
+  "validation": [
+    "Compared the entire edited inventory with its pre-edit version for identical digit runs, Markdown link targets and inline code spans; checked the 320-frame Party and palette byte counts against the linked evidence guides."
+  ],
+  "limitations": [
+    "Only the opening and first three migration-matrix entries were reviewed for readability; the rest of this large inventory and the wider English-first audit remain pending. Historical runtime results were not reproduced."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_INVENTORY.md"
+  ],
+  "references": [
+    "docs/rom_data_ui.md",
+    "docs/rom_data_maps.md"
+  ]
+}

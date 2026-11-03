@@ -1,6 +1,6 @@
 <a id="fftarecomp---instalador"></a>
 
-# FFTARecomp installer
+# FFTA DE-ReBuild installer
 
 Desktop installer (Rust + egui) that takes **your own ROM** of Final Fantasy
 Tactics Advance and installs it with the player and your settings.
@@ -11,7 +11,8 @@ This repository **contains no ROM, game asset or game-derived file**.
 ## Building on Windows
 
 Requirements: Rust (rustup) and the MSVC toolchain.
-Supply your own `assets/logo.png` and `assets/icon.ico`, then run:
+The bundled `assets/de-rebuild-logo.png` and `assets/icon.ico` provide the
+installer branding. Build and run with:
 
     cargo run --release
 

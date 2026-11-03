@@ -271,6 +271,8 @@ fixed reason “no decoder/handler implemented”, now inconsistent with
 source-bound inspection and manual one-shot: per-CH capability integration
 remains to be completed and was not fixed in this audit. The guard that refuses
 recording/save after a one-shot alone does not implement DBG2-23.
+  Subsequent work added the bounded source-capability index and maintained
+  interpreter plans described under DBG2-17..19 below; this audit is historical.
 No other development was selected. On resumption read only the individual ID in
 [TASK_HANDOFF.md](TASK_HANDOFF.md); consult history only for a specific doubt.
 
@@ -378,12 +380,12 @@ No other development was selected. On resumption read only the individual ID in
   [target/guide/package exclusion](../changes/2026-10-31-describe-cheat-target-and-public-guide.json)
   and [local channel](../changes/2026-10-31-expose-cheat-snapshot-local-control.json)
   have 341-entry/empty/import/query/unchanged-state evidence. EUR/USA hashes
-  mean comparison with the declared region, not compatibility. A runtime index
-  of decoder/verification by device/ROM is missing: Catalog::summary/menu_entries
-  still report decoder unsupported and no implemented handler unconditionally,
-  although inspect_source and prepare_once/apply_once exist and have evidence.
-  Device version is unknown; distinguish capability from behavioral verification.
-  The seven static source/master checks do not verify all entries or behavior.
+  mean comparison with the declared region, not compatibility. A bounded index
+  now assesses each linked CodeBreaker source against its declared master and
+  reports a one-shot plan, refusal or unevaluated state; the menu and local
+  queries distinguish this from verification. Device version and actual ROM
+  checksum still require separate verification. The seven static source/master
+  checks do not verify all entries or behavior.
 
 - [ ] **DBG2-18 — Format decoder and actual operations.**
   Start with the documentable EUR Codebreaker subset; define typed operations
@@ -401,12 +403,12 @@ No other development was selected. On resumption read only the individual ID in
   [explicit seed](../changes/2026-10-31-inspect-explicit-seeded-codebreaker.json) and
   [source/master](../changes/2026-10-31-inspect-source-bound-codebreaker-masters.json)
   record synthetic fixtures and mGBA/CRC comparison for seven EUR priorities.
-  The per-CH connection between executable capabilities and the index that
-  still declares every decoder unsupported is missing (criterion: “each
-  candidate CH reports exactly what it can execute”). Unknown opcodes/formats and
-  placeholders may remain refused as planned; the verified subset must not be
-  expanded merely to claim closure. Later manual one-shot is distinct from
-  non-executable inspection. Do not implement a second decoder.
+  The bounded per-source index now exposes assumed decoded operations and the
+  one-shot footprint, with explicit unevaluated and unresolved cases. Complete
+  per-CH capability and ROM/device verification remain open. Unknown opcodes,
+  formats and placeholders may remain refused as planned; the verified subset
+  must not be expanded merely to claim closure. Manual one-shot is distinct
+  from inspection. Do not implement a second decoder.
 
 - [ ] **DBG2-19 — Controlled application in the debug copy.**
   Reuse the isolated session: arm, apply once, maintain and disarm are distinct
@@ -421,9 +423,13 @@ No other development was selected. On resumption read only the individual ID in
   **Audit 2026-11-01 — partial.** [One-shot](../changes/2026-10-31-apply-guarded-cheat-once.json)
   and CheatPrepare/CheatApply handlers in [play.rs](../../crates/recomp/src/play.rs)
   verify source/state/ROM and preflight before bus writes; synthetic Wine tests
-  and bounded CH-0334. Arm/disarm maintenance, periodic timing and conflicts are
-  missing; native backend, I/O write, ROM and mirrors are refused. Deactivation
-  and checkpoint restoration remain distinct operations.
+  and bounded CH-0334. A later bounded interpreter set supports explicit arm,
+  application before each frame, overlap refusal and disarm, with synthetic
+  Wine/Xvfb evidence. Native backend, I/O writes, ROM and mirrors are refused;
+  device hook equivalence and gameplay remain unproven. A later isolated menu
+  restart, save-state load and Undo each cleared the armed set in isolated
+  Wine/Xvfb checks; load and Undo restored the expected machine states.
+  Deactivation and checkpoint restoration remain distinct operations.
 
 - [ ] **DBG2-20 — Cheats page with values, groups and profiles.**
   Search by CH/name/category, filter ROM/format/state, describe debug use, actual
@@ -436,10 +442,9 @@ No other development was selected. On resumption read only the individual ID in
   conflicts and changed codes prevent silent activation. **Depends on:** DBG2-04/15/19.
 
   **Audit 2026-11-01 — partial.** The [catalog view](../changes/2026-10-31-browse-local-cheat-catalog-in-menu.json)
-  provides read-only search/details/filters; prepare/apply-once commands are not
-  page toggles. Values/groups/profiles, active/disable all, conflicts and a full
-  controller flow are missing; wait for DBG2-19/15 and retain the integrated view
-  instead of rebuilding it.
+  provides read-only search/details/filters; later console arm/disarm and the
+  active indicator are not page toggles. Values/groups/profiles and a full
+  controller flow remain missing; retain the integrated view instead of rebuilding it.
 
 - [ ] **DBG2-21 — First EUR selection useful for debugging.**
   Priorities, subject to decoding/verification: access to Card Shop/Item Shop/

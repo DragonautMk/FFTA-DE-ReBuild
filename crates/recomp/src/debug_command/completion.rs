@@ -100,7 +100,13 @@ pub(crate) fn hint(text:&str,language:input_config::Language)->&'static str {
     language.text(match command {
         "help"=>"help [operation-id] · list or details from the registry",
         "profile"|"catalog"=>"profile|catalog select ID · select without executing",
-        "cheats"=>"cheats select ID | refresh | list | show CH-ID | prepare CH-ID SOURCE MASTER GENERATION | apply-once CH-ID SOURCE MASTER GENERATION TOKEN",
+        "cheats"=>match tokens.get(1).map(|t|t.value.as_str()) {
+            Some("prepare")=>"cheats prepare CH-ID SOURCE MASTER GENERATION · review the preview",
+            Some("apply-once")=>"cheats apply-once CH-ID SOURCE MASTER GENERATION TOKEN · apply once",
+            Some("arm")=>"cheats arm CH-ID SOURCE MASTER GENERATION TOKEN · arm after preview",
+            Some("disarm")=>"cheats disarm CH-ID|all · stop future writes, without restoring memory",
+            _=>"cheats select ID | refresh | list | show CH-ID | prepare | apply-once | arm | disarm",
+        },
         "content"=>"content refresh | content list [--offset N --limit 1..16 --generation N]",
         "replay"=>"replay run [plain|audit|capture|compare] · selected profile",
         "jobs"=>"jobs status | jobs cancel REQUEST-ID",
@@ -133,8 +139,9 @@ pub(crate) fn complete(text:&str,cursor:usize,profiles:&[String],catalogs:&[Stri
     let mut options:Vec<String>=if before.is_empty(){COMMANDS.iter().map(|s|(*s).into()).collect()}else{match (c,before.len()){
         ("help",1)=>operations.to_vec(),("profile"|"catalog",1)=>vec!["select".into()],
         ("content",1)=>vec!["list".into(),"refresh".into()],
-        ("cheats",1)=>vec!["select".into(),"refresh".into(),"list".into(),"show".into(),"prepare".into(),"apply-once".into()],
+        ("cheats",1)=>vec!["select".into(),"refresh".into(),"list".into(),"show".into(),"prepare".into(),"apply-once".into(),"arm".into(),"disarm".into()],
         ("cheats",2) if before[1]=="select"=>cheats.to_vec(),
+        ("cheats",2) if before[1]=="disarm"=>vec!["all".into()],
         ("cheats",2) if before[1]=="show"=>Vec::new(),
         ("cheats",_) if before.get(1)==Some(&"list") || before.get(1)==Some(&"show")=>{
             if before.last()==Some(&"--offset"){vec!["0".into()]}else if before.last()==Some(&"--limit"){vec!["16".into()]}else if before.last()==Some(&"--generation"){Vec::new()}else{
@@ -182,6 +189,9 @@ mod tests {
             ("watch read 0x02000000 0x02000010 --width ",vec!["1","2","4"]),
             ("jobs cancel req",vec!["req-42"]),
             ("cheats select content-c",vec!["content-cheat"]),
+            ("cheats a",vec!["apply-once","arm"]),
+            ("cheats dis",vec!["disarm"]),
+            ("cheats disarm a",vec!["all"]),
             ("replay run c",vec!["capture","compare"]),
             ("code-start --mode ",vec!["all","arm","thumb"]),
             ("audio-start --streams mixed,ps",vec!["mixed,psg"]),
@@ -193,6 +203,10 @@ mod tests {
         let en=input_config::Language::default();let it=input_config::Language::parse("it");
         assert!(hint("step 1",en).contains("active-low mask"));
         assert!(hint("step 1",it).contains("maschera active-low"));
+        assert!(hint("cheats arm",en).contains("arm after preview"));
+        assert!(hint("cheats arm",it).contains("anteprima"));
+        assert!(hint("cheats disarm",en).contains("without restoring memory"));
+        assert!(hint("cheats disarm",it).contains("senza ripristinare la memoria"));
         for language in [en,it] {assert!(hint("step 1",language).starts_with("step N [--keys 0xMASK]"));}
     }
     #[test]

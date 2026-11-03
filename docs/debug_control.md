@@ -115,8 +115,8 @@ is returned in UTF-8 parts of at most 4096 bytes: concatenate `json_part` follow
 offset is refused. Direct forms are `debug-control cheat-select SESSION ID`, `cheat-refresh
 SESSION`, `cheat-list SESSION [--offset N --limit N --generation SHA]` and
 `cheat-show SESSION CH-ID [--offset N --generation SHA]`. A server without
-`cheat-catalog-v1` is refused before sending. None of these actions enables,
-decodes or applies a code.
+`cheat-catalog-v1` is refused before sending. Refresh assesses bounded
+source-linked plans; these catalog actions do not enable or apply a code.
 
 The explicit actions `cheats prepare CH-ID INDEX MASTER GENERATION` and
 `cheats apply-once CH-ID INDEX MASTER GENERATION TOKEN` use the same local control
@@ -126,6 +126,11 @@ applies once. Retrying with the same identity recovers the outcome without
 repeating writes. Prerequisites and limits, including interpreter, allowed memory
 regions and guards on recording and new saves, are in
 [cheats](cheats.md#manual-one-shot-in-an-isolated-session--dbg2-19-in-progress).
+`cheats arm CH-ID INDEX MASTER GENERATION TOKEN` and `cheats disarm CH-ID|all`
+use the separate `cheat-maintain-v1` capability. Arm consumes a current preview;
+disarm stops subsequent frame applications without restoring earlier memory.
+The console completes these command names and `all`, and presents the relevant
+English or Italian argument hint without guessing a source, master or token.
 
 The selected replay profile can start with `replay run`, or `replay run audit`,
 `replay run capture` or `replay run compare`. Direct transport uses

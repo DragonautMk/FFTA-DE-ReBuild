@@ -185,241 +185,247 @@ MEASURED: extra=0 preserves all 1201 metrics and 41 hash samples.
 Details, limits and complete lists in docs/ffta_character_metric.md.
 The additional proposal to remove Y rejection has not been applied.
 
-Siguiente investigacion: casillas durante zoom-out
-MEDIDO POR EL USUARIO: personajes validados jugando en 32:9, ya no
-desaparecen. El parche de personajes se conserva sin modificaciones.
-Los fallos anteriores de ocho publicados no anulan esa validacion visual;
-la definicion del octavo personaje y la diferencia con visibilidad Y
-siguen documentadas en ffta_character_metric.md.
-MEDIDO: ffta-batalla-4.input y su sidecar no estan en la raiz del repo.
-Busqueda rg --files bajo E:/AI/ARC, filtrada por batalla-4, sin resultados.
-NO MEDIDO: replay 4, determinismo, lista de rango en RAM, frames del fallo,
-condicion del escritor BG0/BG1 y capturas antes/despues. Falta la grabacion.
-MEDIDO por lectura: InputScript v1 contiene frame y mascara KEYINPUT;
-el grabador escribe solo cambios de keys. No graba zoom_level ni extra_y.
-El zoom se procesa aparte en play.rs por Minus/Equal. El replay headless
-configure_headless_widescreen solo fija extra X; no reproduce zoom-out.
-MEDIDO por lectura: MAX_ZOOM=2, MAX_EXTRA_Y=320; play limita los pasos por
-MAX_ZOOM y por ancho/alto maximos. No equivale a poder alcanzar extra_y=320
-desde 32:9 con la configuracion actual. El maximo real de la captura falta.
-Logging anadido bajo FFTA_OAM_LOG: FFTA_VIEW al cambiar dimensiones,
-con frame, nivel de zoom, extra X/Y y dimensiones de vista/render.
-No cambia el estado emulado ni el zoom, no toca sprites ni instalador.
-No se aplica un parche BG nuevo sin medir antes la causa.
+Next investigation: tiles during zoom-out
+MEASURED BY THE USER: characters validated by playing in 32:9; they no longer
+disappear. The character patch is retained without changes.
+Earlier failures to publish eight do not invalidate that visual validation;
+the definition of the eighth character and the difference with Y visibility
+remain documented in ffta_character_metric.md.
+MEASURED: ffta-batalla-4.input and its sidecar are not at the repository root.
+Search with rg --files under E:/AI/ARC, filtered for batalla-4, found no results.
+NOT MEASURED: replay 4, determinism, range list in RAM, failure frames,
+BG0/BG1 writer condition and before/after captures. The recording is missing.
+MEASURED by reading: InputScript v1 contains frame and KEYINPUT mask;
+the recorder writes only key changes. It does not record zoom_level or extra_y.
+Zoom is processed separately in play.rs through Minus/Equal. Headless replay
+configure_headless_widescreen only sets extra X; it does not reproduce zoom-out.
+MEASURED by reading: MAX_ZOOM=2, MAX_EXTRA_Y=320; play limits steps by
+MAX_ZOOM and maximum width/height. This does not mean extra_y=320 can be reached
+from 32:9 with the current configuration. The actual capture maximum is missing.
+Logging added under FFTA_OAM_LOG: FFTA_VIEW when dimensions change,
+with frame, zoom level, extra X/Y and view/render dimensions.
+It does not change emulated state or zoom, or touch sprites or the installer.
+No new BG patch is applied before measuring the cause.
 
-Actualizacion zoom y casillas, prueba manual pendiente
-MEDIDO: runner runc admite FFTA_ZOOM_LEVEL=n o calendario frame:nivel.
-32:9 niveles 0..6: extra X 164,199,238,282,331,387,448;
-extra Y 0,10,21,34,47,63,80. Variable ausente conserva el runner anterior.
-MEDIDO: replays completos de batalla-3 coinciden en 1201 hashes finales.
-Se construyo movement-freeze.input conservando todos los eventos y anadiendo
-12540 3ff. No se requiere otra grabacion del usuario.
-MEDIDO: matriz calculada en 02005CB0, 64x64; BG0 copia una ventana 32x32.
-En la muestra final, 108 tiles RAM frente a 102 VRAM; 1024/1024 palabras
-VRAM coinciden con el recorte RAM de origen (33,35).
-MEDIDO: escritor Thumb 0801AF08, llamador 0801B80C. Productor de casillas
-0801D130: 20 llamadas style=1, caller 0801D803, coordenadas logicas X/Y
-y proyeccion en tiles, cuatro cuadrantes por casilla. La tabla de flags
-02008190 contiene marcas parciales de vecinos; contar bytes no cuenta casillas.
-MEDIDO: PPU solo escribia 160 filas. En zoom 6 las 160 filas adicionales
-quedaban negras; capturas before-11347.png y frozen-13101.ppm.
-IMPLEMENTADO PARA PRUEBA: FFTA_PATCH_MOVEMENT=1, requiere PATCH_BG y ROM
-exacta, SHA256 de 0801AF08..0801B5D0 y coincidencia de los 1024 valores
-de cada plano VRAM con su recorte RAM. Si no coincide usa la ruta anterior.
-El host lee los planos RAM completos y termina las filas extra en batalla.
-No cambia escrituras originales del juego, sus ciclos, el enganche de
-personajes ni la politica de borde del terreno. Por defecto esta desactivado.
-MEDIDO: extra=0, 600 frames, MOVEMENT=0/1: framebuffer y OAM identicos.
-NO MEDIDO TODAVIA: exito visual del parche nuevo, metrica por casilla antes
-y despues, y regresion de los 1201 frames con el parche nuevo activo.
-Prueba manual preparada en target/ffta-zoom/manual/FFTA-movement-test.gba;
-su save privado procede de ffta-respaldo.sav. No se toco ningun save original.
-Actualizacion: el usuario confirma que las casillas ya no desaparecen.
-MOVEMENT esta activo por defecto, con las mismas verificaciones de ROM y RAM.
-MEDIDO: el escenario conserva planos RAM 64x64 en 0200B1A0 y 020091A0;
-VRAM contiene recortes 64x32. El parche STAGE lee esos planos completos solo
-tras verificar el recorte entero (2048 palabras por capa). No modifica el juego.
-MEDIDO: comparacion STAGE=0/1: 1861 frames de personajes sin cambios,
-incluidos los 1201 finales de la grabacion; 63 muestras de framebuffer central
-y OAM sin cambios. Frame final: 8 personajes, sin grupos duplicados.
-MEDIDO: extra=0, comparacion por frame durante 600 frames: framebuffer y OAM
-identicos. Capturas stage-off-13101.png y stage-on-13101.png muestran mas tejado
-y arquitectura lateral. La confirmacion en juego real sigue NO MEDIDO.
-MEDIDO: las filas adicionales de zoom ahora se dibujan, no quedan vacias.
-Input contiene Keyboard y Gamepad, remapeo y layout Xbox por defecto.
-NO MEDIDO: mando real; no se prueba por instruccion del usuario.
-Instalador Linux: codigo, script y workflow preparados; ejecucion NO MEDIDO.
-La carpeta assets tiene referencias de compilacion y no se elimina.
+Zoom and tile update, manual test pending
+MEASURED: runc runner supports FFTA_ZOOM_LEVEL=n or a frame:level schedule.
+32:9 levels 0..6: extra X 164,199,238,282,331,387,448;
+extra Y 0,10,21,34,47,63,80. If absent, the variable preserves previous behavior.
+MEASURED: complete batalla-3 replays match in the final 1201 hashes.
+movement-freeze.input was constructed retaining all events and adding
+12540 3ff. No additional user recording is needed.
+MEASURED: matrix computed at 02005CB0, 64x64; BG0 copies a 32x32 window.
+In the final sample, 108 RAM tiles versus 102 VRAM tiles; 1024/1024 VRAM words
+match the source RAM crop at (33,35).
+MEASURED: Thumb writer 0801AF08, caller 0801B80C. Tile producer
+0801D130: 20 calls style=1, caller 0801D803, logical X/Y coordinates
+and tile projection, four quadrants per tile. The flags table
+02008190 contains partial neighbor marks; counting bytes does not count tiles.
+MEASURED: PPU wrote only 160 rows. At zoom 6 the additional 160 rows
+remained black; captures before-11347.png and frozen-13101.ppm.
+IMPLEMENTED FOR TESTING: FFTA_PATCH_MOVEMENT=1 requires PATCH_BG and the exact
+ROM, SHA256 of 0801AF08..0801B5D0 and equality of the 1024 values
+of each VRAM plane with its RAM crop. On mismatch it uses the previous path.
+The host reads full RAM planes and completes the extra rows in battle.
+It does not change original game writes, their cycles, the character hook or
+the terrain edge policy. It is disabled by default at this stage.
+MEASURED: extra=0, 600 frames, MOVEMENT=0/1: framebuffer and OAM identical.
+NOT YET MEASURED: visual success of the new patch, per-tile metric before
+and after, and regression of the 1201 frames with the new patch active.
+Manual test prepared at target/ffta-zoom/manual/FFTA-movement-test.gba;
+its private save comes from ffta-respaldo.sav. No original save was touched.
+Update: the user confirms that the tiles no longer disappear.
+MOVEMENT is enabled by default, with the same ROM and RAM checks.
+MEASURED: the stage retains 64x64 RAM planes at 0200B1A0 and 020091A0;
+VRAM contains 64x32 crops. The STAGE patch reads those full planes only
+after checking the entire crop (2048 words per layer). It does not modify the game.
+MEASURED: STAGE=0/1 comparison: 1861 character frames unchanged,
+including the final 1201 of the recording; 63 central framebuffer samples
+and OAM unchanged. Final frame: 8 characters, no duplicate groups.
+MEASURED: extra=0, per-frame comparison for 600 frames: framebuffer and OAM
+identical. Captures stage-off-13101.png and stage-on-13101.png show more roof
+and side architecture. Confirmation during actual play remains NOT MEASURED.
+MEASURED: additional zoom rows are now drawn rather than left empty.
+Input contains Keyboard and Gamepad, remapping and an Xbox layout by default.
+NOT MEASURED: physical controller; not tested on the user's instruction.
+Linux installer: code, script and workflow prepared; execution NOT MEASURED.
+The assets folder has build references and is not removed.
 
-Correccion del cielo durante zoom:
-MEDIDO: replay frame 13100, palette0 cambia por linea: 7D21,7DA4,7E67,
-7F2A,7FCC en lineas 0,40,80,120,159. El gradiente es raster de paleta,
-no una capa affine o bitmap como se afirmo antes sin medir.
-Las filas host adicionales leian la paleta de VBlank (azul inicial).
-Ahora conservan los colores de los extremos antes de VBlank y prolongan
-esos colores fuera de las 160 lineas. No se copian filas del escenario.
-Actualizacion: prolongar un color fijo seguia dejando una banda lisa.
-El host ahora extrapola por canal RGB555 el gradiente observado entre
-las lineas 0 y 159; los pixeles originales de 240x160 no cambian.
-MEDIDO: en frame 13101, filas 0/79/80/239/240/319 cambian RGB
-de 0,0,255 a 8,74,255 a 99,247,255 a 140,255,255 sin salto en
-los bordes de la pantalla original. Captura sky-extended-13101.png.
-MEDIDO: 600 frames extra=0 framebuffer y OAM iguales; 1201 frames de
-personajes del tutorial sin cambios respecto al parche validado.
-Retiradas heuristicas OBJ VRAM/paleta/OAM no vacias: no resolvian las
-siluetas segun el usuario y anadian exploraciones de memoria por linea.
-Se intento una comprobacion de la paleta propia de cada pieza OBJ en
-widescreen: evita dibujar una pieza cuando su banco de 16 colores esta
-completamente vacio. No se ha confirmado si elimina las siluetas reales.
-NO MEDIDO: causa de las siluetas transitorias; no aparecen en las muestras
-10020,10200,10400,10600 del replay existente. No se dan por arregladas.
+Sky correction during zoom:
+MEASURED: replay frame 13100, palette0 changes by line: 7D21,7DA4,7E67,
+7F2A,7FCC on lines 0,40,80,120,159. The gradient is a palette raster,
+not an affine or bitmap layer as previously asserted without measurement.
+Additional host rows read the VBlank palette (initial blue).
+They now retain the edge colors before VBlank and extend those colors
+beyond the 160 lines. No stage rows are copied.
+Update: extending a fixed color still left a flat band.
+The host now extrapolates the gradient observed between
+lines 0 and 159 per RGB555 channel; original 240x160 pixels do not change.
+MEASURED: at frame 13101, rows 0/79/80/239/240/319 change RGB
+from 0,0,255 to 8,74,255 to 99,247,255 to 140,255,255 without a jump at
+the original screen edges. Capture sky-extended-13101.png.
+MEASURED: 600 frames extra=0 framebuffer and OAM equal; 1201 tutorial
+character frames unchanged relative to the validated patch.
+Removed nonempty OBJ VRAM/palette/OAM heuristics: according to the user they
+did not resolve silhouettes and added per-line memory scans.
+A check of each OBJ piece's own palette was attempted in
+widescreen: it avoids drawing a piece when its 16-color bank is
+completely empty. Whether it removes the actual silhouettes is unconfirmed.
+NOT MEASURED: cause of transient silhouettes; they do not appear in samples
+10020,10200,10400,10600 of the existing replay. They are not claimed fixed.
 
-Zoom de escenario durante menus y cinematicas (2026-10-12):
-MEDIDO EN CODIGO: la ruta de planos completos solo aceptaba BG2/BG3 y
-exigia ambos fondos activos con scroll identico. El detector anterior tambien
-admitia terreno en BG0/BG1, pero esas capas no leian el plano RAM completo.
-CORRECCION: identificar cada plano por BGCNT 4C03/4E02 y su estado RAM
-ya verificado, sin depender de la activacion ni del scroll de su pareja.
-Se conserva la verificacion de ROM, FFTA_PATCH_STAGE y FFTA_PATCH_BG.
-No se modifican datos del juego ni el parche de personajes.
-MEDIDO: tests gba-core: 85 passed, 3 ignored. Prueba sintetica de pareja
-oculta, cambio BG0/BG2, extension vertical y 600 frames con extra=0 iguales.
-NO MEDIDO: replay del fallo real, hashes de framebuffer/OAM de 600 frames
-reales y metrica de 8 personajes. No hay grabaciones .input en el repo
-ni en la raiz E:/AI/ARC. Requiere validacion jugando; no se afirma resuelto.
+Stage zoom during menus and cutscenes (2026-10-12):
+MEASURED IN CODE: the full-plane path accepted only BG2/BG3 and
+required both backgrounds active with identical scroll. The earlier detector also
+accepted terrain in BG0/BG1, but those layers did not read the full RAM plane.
+CORRECTION: identify each plane by BGCNT 4C03/4E02 and its already verified
+RAM state, without depending on activation or scroll of its partner.
+ROM, FFTA_PATCH_STAGE and FFTA_PATCH_BG checks are retained.
+Game data and the character patch are unchanged.
+MEASURED: gba-core tests: 85 passed, 3 ignored. Synthetic test of a hidden
+partner, BG0/BG2 change, vertical extension and equal 600 frames with extra=0.
+NOT MEASURED: actual failure replay, framebuffer/OAM hashes for 600 real frames
+and 8-character metric. No .input recordings exist in the repo
+or at E:/AI/ARC. Gameplay validation is required; it is not claimed resolved.
 
-Panel de stats y zoom (2026-10-12):
-MEDIDO EN CODIGO: las filas extra excluian capas UI, pero dibujaban OBJ.
-Cambio: incluir todas las capas texto activas tambien en las filas extra;
-las UI no repiten verticalmente fuera de su mapa de tiles. Ruta extra=0 intacta.
-MEDIDO: 86 tests passed, 3 ignored; prueba de panel en y=180 y no repeticion.
-NO MEDIDO: reproduccion visual del panel del enemigo de la captura del usuario.
+Stats panel and zoom (2026-10-12):
+MEASURED IN CODE: extra rows excluded UI layers but drew OBJ.
+Change: include all active text layers in extra rows as well;
+UI does not repeat vertically outside its tile map. extra=0 path intact.
+MEASURED: 86 tests passed, 3 ignored; test for panel at y=180 and no repetition.
+NOT MEASURED: visual reproduction of the enemy panel in the user's screenshot.
 
-Panel al pasar el cursor sobre unidades (2026-10-12):
-MEDIDO: replay derivado zoom-no-range.input recuperado del repo anterior.
-La grabacion ffta-batalla-3.input de ese repo contiene solo su cabecera.
-Dos ejecuciones desde frame 0 hasta 13000: hash f158877f466426fb igual.
-Se usa exclusivamente target/ffta-stats/repro.sav, copia del respaldo.
-MEDIDO: el panel de Ritz no es un BG: productor 080014C8, lista 083916FA,
-cuatro piezas semitransparentes, tiles 1F0/200/208, paleta OBJ 11.
-Todas las piezas y tiles existen. BLDCNT=3F43, BLDALPHA=090E: el fondo
-se mezcla con terreno y parece parcialmente ausente; no es descarte de piezas.
-Cambio de presentacion: FFTA_PATCH_STATS=1 por defecto vuelve opaco solo
-ese fondo identificado en la lista host de la ROM exacta y funciones verificadas.
-No cambia atributos OAM ni logica del juego; extra=0 conserva la ruta original.
-MEDIDO: 87 tests normales y 3 con ROM local pasan. Frame 13000 cambia
-2558 pixels, todos dentro de x600..687/y184..231; exterior identico y OAM igual.
-MEDIDO: framebuffer y OAM iguales en 600 frames con extra=0, STATS=0/1.
-Capturas hover-13000.png y after-13000.png en target/ffta-stats.
-NO MEDIDO: panel rojo de enemigos; el replay construido no llego a mostrarlo.
-La metrica de este recorrido derivado tiene frames con menos de 8: no se
-considera aprobada la prueba de 8 constantes ni se toca el parche de personajes.
-MEDIDO: comparacion STATS=0/1 en 1201 frames (11800..13000): metrica
-identica en todos. 297 frames dan menos de 8 en ambas versiones de este
-replay derivado con la biblioteca nativa recuperada; no es una regresion nueva.
-La lista completa queda en target/ffta-stats/character-failures.json.
-Windows Installer/payload y TAR Linux compilados y actualizados, sin commits.
+Panel while hovering over units (2026-10-12):
+MEASURED: derived replay zoom-no-range.input recovered from the previous repo.
+That repo's ffta-batalla-3.input recording contains only its header.
+Two runs from frame 0 through 13000: hash f158877f466426fb equal.
+Only target/ffta-stats/repro.sav, a backup copy, is used.
+MEASURED: Ritz's panel is not a BG: producer 080014C8, list 083916FA,
+four semitransparent pieces, tiles 1F0/200/208, OBJ palette 11.
+All pieces and tiles exist. BLDCNT=3F43, BLDALPHA=090E: the background
+blends with terrain and looks partially absent; pieces are not rejected.
+Presentation change: FFTA_PATCH_STATS=1 by default makes only
+that background opaque, identified in the host list of the exact ROM and verified functions.
+It does not change OAM attributes or game logic; extra=0 retains the original path.
+MEASURED: 87 normal tests and 3 with local ROM pass. Frame 13000 changes
+2558 pixels, all within x600..687/y184..231; exterior identical and OAM equal.
+MEASURED: framebuffer and OAM equal for 600 frames with extra=0, STATS=0/1.
+Captures hover-13000.png and after-13000.png in target/ffta-stats.
+NOT MEASURED: red enemy panel; the constructed replay did not show it.
+The metric for this derived route has frames with fewer than 8: the constant
+8 test is not considered passed and the character patch is not touched.
+MEASURED: STATS=0/1 comparison over 1201 frames (11800..13000): metric
+identical throughout. 297 frames have fewer than 8 in both versions of this
+derived replay with the recovered native library; this is not a new regression.
+The complete list is in target/ffta-stats/character-failures.json.
+Windows Installer/payload and Linux TAR built and updated, without commits.
 
-Correccion del intento anterior de stats (2026-10-12):
-El usuario confirma que quitar semitransparencia NO arreglo el recorte.
-Se RESTAURA siempre el modo semi original; se descarta el intento opaco.
-MEDIDO en VRAM: las cuatro piezas del fondo contienen una curva con
-pixels transparentes: cobertura de 67 pixels en fila 104 y 88 en fila 127.
-Esto es distinto de las capas BG del menu de acciones.
-Cambio host: completar solo los texels transparentes de esas piezas
-identificadas, usando el indice de color vivo del tile rectangular 208.
-Se preservan paleta, letras, atributos OAM, prioridad y alpha original.
-FFTA_PATCH_STATS=0 conserva forma original; 1 completa el fondo en widescreen.
-No es una recuperacion de sprites o tiles ausentes: es completar la geometria
-del fondo del panel, limitado a la plantilla verificada y sin tocar la ROM.
-MEDIDO: 88 tests passed, 3 ignored. Test de huecos, color vivo, semitransparencia
-y extra=0. Nueva comparacion real de 600 frames: framebuffer/OAM iguales.
-NO MEDIDO: panel rojo; la validacion visual del usuario sigue pendiente.
-MEDIDO: replay completo hasta 13000 con el cambio nuevo. Fondo sin huecos
-y alpha preservado: cap-after-13000.png. Se completan 217 pixels, todos
-dentro del panel; fuera del panel identico y atributos OAM identicos.
-MEDIDO: metrica de personajes identica en los 1201 frames de STATS=0/1.
-Los 297 frames con menos de 8 del recorrido derivado permanecen iguales.
-El comando PowerShell devolvio 1 pese a llegar al frame 13000 y generar
-los volcados; el log registra NativeCommandError para mensajes de stderr.
-Los verificadores posteriores terminan con codigo 0; no se oculta ese retorno.
-Windows y Linux compilados y actualizados, sin tocar saves originales.
+Correction to the previous stats attempt (2026-10-12):
+The user confirms that removing semitransparency did NOT fix the clipping.
+The original semi mode is always RESTORED; the opaque attempt is discarded.
+MEASURED in VRAM: the four background pieces contain a curve with
+transparent pixels: coverage of 67 pixels on row 104 and 88 on row 127.
+This differs from the action-menu BG layers.
+Host change: fill only transparent texels of those identified pieces,
+using the live color index of rectangular tile 208.
+Palette, lettering, OAM attributes, priority and original alpha are preserved.
+FFTA_PATCH_STATS=0 keeps the original shape; 1 fills the background in widescreen.
+This is not recovery of missing sprites or tiles: it completes panel background
+geometry, limited to the verified template without touching the ROM.
+MEASURED: 88 tests passed, 3 ignored. Test of gaps, live color, semitransparency
+and extra=0. New actual 600-frame comparison: framebuffer/OAM equal.
+NOT MEASURED: red panel; user visual validation remains pending.
+MEASURED: complete replay through 13000 with the new change. Background without gaps
+and alpha preserved: cap-after-13000.png. 217 pixels are filled, all
+inside the panel; outside the panel and OAM attributes are identical.
+MEASURED: character metric identical for all 1201 frames of STATS=0/1.
+The 297 frames with fewer than 8 in the derived route remain unchanged.
+The PowerShell command returned 1 despite reaching frame 13000 and producing
+the dumps; the log records NativeCommandError for stderr messages.
+Subsequent verifiers exit with code 0; that return is not concealed.
+Windows and Linux built and updated, without touching original saves.
 
-Objetivo correcto del panel de stats (aclaracion del usuario):
-El semicirculo NO estaba mal. El fallo es que el panel no llega al borde.
-Se REVIERTE completar sus texels transparentes. Forma y alpha originales.
-Nuevo STATS=1: solo las piezas rectangulares del tile 208 se prolongan
-hasta el borde del framebuffer ancho. H-flip elige izquierda o derecha.
-Se repite su columna exterior viva, con su textura, paleta y semitransparencia.
-Capas, posiciones de texto, curva, OAM y logica de personajes intactas.
-MEDIDO: 88 tests passed, 3 ignored. Test de ambas orientaciones, curva
-sin rellenar, alpha y no extension con STATS=0 o extra=0.
-MEDIDO: comparacion real de 600 frames extra=0: framebuffer/OAM iguales.
-MEDIDO: reconstruccion del volcado privado en edge-preview.png muestra
-la banda transparente hasta el borde derecho, con la curva conservada.
-NO MEDIDO: replay completo nuevo de 1201 frames, panel rojo y validacion
-jugando del usuario. El preview reconstruye el volcado, no es una captura nueva.
-Windows y Linux compilados; Installer/payload y TAR actualizados, sin commits.
+Correct target for the stats panel (user clarification):
+The semicircle was NOT wrong. The problem is that the panel does not reach the edge.
+Filling its transparent texels is REVERTED. Original shape and alpha.
+New STATS=1: only rectangular pieces of tile 208 are extended
+to the wide framebuffer edge. H-flip selects left or right.
+Its live outer column is repeated, with its texture, palette and semitransparency.
+Layers, text positions, curve, OAM and character logic remain intact.
+MEASURED: 88 tests passed, 3 ignored. Test of both orientations, unfilled
+curve, alpha and no extension with STATS=0 or extra=0.
+MEASURED: actual 600-frame comparison extra=0: framebuffer/OAM equal.
+MEASURED: reconstruction of the private dump in edge-preview.png shows
+the transparent band through the right edge, with the curve retained.
+NOT MEASURED: new complete 1201-frame replay, red panel and user gameplay
+validation. The preview reconstructs the dump; it is not a new capture.
+Windows and Linux built; Installer/payload and TAR updated, without commits.
 
-Menu de pausa nativo adaptado del HTML del usuario (2026-10-13):
-Estilo pergamino, gradientes crema, bordes laton, esquinas ornamentales,
-seleccion cuero/dorado y dibujos propios para iconos. Sin motor HTML,
-red, dependencias nuevas ni fuentes o iconos web empaquetados.
-Se conserva la fuente pixel nativa: Cinzel/Inter y los efectos Web Audio
-no se trasladan literalmente. Valores reales de av.cfg/input.cfg conservados.
-Input abre pestanas Keyboard/Gamepad y conserva el dispositivo elegido.
-Listas desplazables por teclado/mando/rueda; boton Back siempre visible.
-Selectores video desplegables con aceptar/cancelar; FF segmentado clickable.
-Exit pide confirmacion con No seleccionado por defecto.
-MEDIDO: 42 tests passed: input-config 12, menu 19, recomp 11.
-Pruebas de dropdown, targets de remapeo con scroll, tabs, FF y salida segura.
-MEDIDO: previews nativos generados/revisados para main, gamepad, FF,
-salida y selector. Windows/Linux release compilados y payload/TAR actualizados.
-NO MEDIDO: interaccion jugando con ventana/mando fisico y efectos del GPU
-sobre el estilo; no se inicio una partida ni se tocaron saves originales.
-Referencia HTML en target/pause-menu/reference.html; previews en esa carpeta.
+Native pause menu adapted from the user's HTML (2026-10-13):
+Parchment style, cream gradients, brass edges, ornamental corners,
+leather/gold selection and original icon drawings. No HTML engine,
+network, new dependencies or bundled web fonts or icons.
+The native pixel font is retained: Cinzel/Inter and Web Audio effects
+are not transferred literally. Actual av.cfg/input.cfg values are preserved.
+Input opens Keyboard/Gamepad tabs and preserves the selected device.
+Lists scroll by keyboard/controller/wheel; the Back button remains visible.
+Video dropdowns accept/cancel; segmented FF is clickable.
+Exit asks for confirmation with No selected by default.
+MEASURED: 42 tests passed: input-config 12, menu 19, recomp 11.
+Tests cover dropdowns, remapping targets with scroll, tabs, FF and safe exit.
+MEASURED: native previews generated/reviewed for main, gamepad, FF,
+exit and selector. Windows/Linux release builds and payload/TAR updated.
+NOT MEASURED: gameplay interaction with window/physical controller and GPU
+effects on the style; no game was started and original saves were untouched.
+HTML reference in target/pause-menu/reference.html; previews in that folder.
 
-## 2026-10-13 - Menu moderno e iconos de mando completos
+<a id="2026-10-13---menu-moderno-e-iconos-de-mando-completos"></a>
 
-Menu renderizado en un canvas independiente de la GBA, sin alterar el framebuffer
-del juego. Cinzel/Inter con antialiasing y avisos OFL en Licenses/fonts.
-Iconos vectoriales para A/B/X/Y, LB/RB, LT/RT, View/Menu/Guide, L3/R3,
-las cuatro direcciones del D-pad y las direcciones de ambos sticks.
-Ratones usan coordenadas del canvas; GPU y fallback CPU presentan el mismo menu.
-Asignaciones y parches del juego conservados. Preview: target/pause-menu/gamepad-modern.png.
-Prueba fisica del mando: NO MEDIDO.
+## 2026-10-13 - Modern menu and complete controller icons
 
-## 2026-10-16 - TinyCC en memoria para Windows y Linux
-MEDIDO: mismo TinyCC que Android, fuente 43c7708b85681a2fd4451c8a541af4494a8919b2.
-MEDIDO: EUR build completo 3.611 s; USA 4.706 s; USA GCC anterior 116.634 s.
-MEDIDO: cache EUR 0.079 s; framebuffer/OAM iguales a GCC en 600 frames de ambas ROMs.
-MEDIDO: USA extra=0 identico con parches off/on en 600 frames.
-MEDIDO: 141 tests existentes y 2 pruebas TinyCC adicionales pasaron.
-MEDIDO: replay 12540 frames igual a GCC; metrica antigua cuenta 4 en ambos, no valida 8.
-MEDIDO: Windows y Linux compilados; no se empaqueta GCC. TinyCC incluye su fuente exacto y licencia.
-NO MEDIDO: ejecucion Linux, no hay WSL instalado en este host.
-Detalles y limites en docs/desktop_tinycc.md. Sin cambios en sprites, fondos o gamepad.
+Menu rendered on a canvas independent of the GBA, without altering the game
+framebuffer. Cinzel/Inter with antialiasing and OFL notices in Licenses/fonts.
+Vector icons for A/B/X/Y, LB/RB, LT/RT, View/Menu/Guide, L3/R3,
+the four D-pad directions and directions of both sticks.
+Mice use canvas coordinates; GPU and CPU fallback present the same menu.
+Game bindings and patches preserved. Preview: target/pause-menu/gamepad-modern.png.
+Physical controller test: NOT MEASURED.
 
-## 2026-10-16 - Dialogos anclados al borde y tamano independiente del zoom
-MEDIDO: snapshot EUR separa BG2 texto, BG3 fondo y cinco piezas OAM 8-bpp de retrato.
-MEDIDO: previews 32:9 x1/x2 muestran texto, fondo y retrato juntos al borde, sin extension.
-MEDIDO: 99 tests core pasaron; 600 frames extra=0 con layout off/on dan framebuffer/OAM identicos.
-Windows compilado en recomp-dialogue-layout.exe y copiado al recomp.exe habitual y payload.
-NO MEDIDO: validacion jugando; no se afirma validacion visual USA ni otros formatos de dialogo.
-Punto futuro de Settings: MemMap.ffta_dialogue.style (scale, offset_x, offset_y), sin menu nuevo.
-A/B: FFTA_DIALOGUE_LAYOUT=0/1, por defecto 1. Detalles en docs/dialogue_layout.md.
+<a id="2026-10-16---tinycc-en-memoria-para-windows-y-linux"></a>
+
+## 2026-10-16 - In-memory TinyCC for Windows and Linux
+MEASURED: same TinyCC as Android, source 43c7708b85681a2fd4451c8a541af4494a8919b2.
+MEASURED: complete EUR build 3.611 s; USA 4.706 s; previous USA GCC 116.634 s.
+MEASURED: EUR cache 0.079 s; framebuffer/OAM equal to GCC over 600 frames for both ROMs.
+MEASURED: USA extra=0 identical with patches off/on over 600 frames.
+MEASURED: 141 existing tests and 2 additional TinyCC tests passed.
+MEASURED: 12540-frame replay equal to GCC; old metric counts 4 in both, does not validate 8.
+MEASURED: Windows and Linux built; GCC is not packaged. TinyCC includes its exact source and license.
+NOT MEASURED: Linux execution; this host has no WSL installed.
+Details and limits in docs/desktop_tinycc.md. No changes to sprites, backgrounds or gamepad.
+
+<a id="2026-10-16---dialogos-anclados-al-borde-y-tamano-independiente-del-zoom"></a>
+
+## 2026-10-16 - Edge-anchored dialogue with size independent of zoom
+MEASURED: EUR snapshot separates BG2 text, BG3 background and five 8-bpp portrait OAM pieces.
+MEASURED: 32:9 x1/x2 previews show text, background and portrait together at the edge, without extension.
+MEASURED: 99 core tests passed; 600 frames extra=0 with layout off/on give identical framebuffer/OAM.
+Windows built in recomp-dialogue-layout.exe and copied to the usual recomp.exe and payload.
+NOT MEASURED: gameplay validation; no USA visual validation or other dialogue formats are claimed.
+Future Settings point: MemMap.ffta_dialogue.style (scale, offset_x, offset_y), with no new menu.
+A/B: FFTA_DIALOGUE_LAYOUT=0/1, default 1. Details in docs/dialogue_layout.md.
 
 
 2026-10-16: Text Bubbles submenu under Video: persistent size and backing length.
 Exact desktop zoom/crop now drives uniform dialogue scale. Host-list objects cannot
 be treated as portrait pieces. Parked sentinel filter also covers horizontal-only wide.
-MEDIDO: 157 tests passed; EUR extra=0 framebuffer/OAM identical for 600 frames.
-NO MEDIDO: visual elimination of startup flashes and appearance on the user display.
+MEASURED: 157 tests passed; EUR extra=0 framebuffer/OAM identical for 600 frames.
+NOT MEASURED: visual elimination of startup flashes and appearance on the user display.
 
 
 2026-10-16 portrait follow-up: corrected host-list portrait exclusion introduced
 in prior dialogue update. Host portraits now share text/backing placement and scale.
-MEDIDO: both edges x 3 sizes x 7 zooms, host and OAM rendering identical with
+MEASURED: both edges x 3 sizes x 7 zooms, host and OAM rendering identical with
 expected portrait bounds; 158 tests passed, 4 ignored. No game logic or saves changed.
 
 
@@ -427,11 +433,11 @@ expected portrait bounds; 158 tests passed, 4 ignored. No game logic or saves ch
 Native BG2/BG3 and portrait capture; world pass excludes them. GPU draws UI once
 in physical window coordinates, independent of world zoom. Software and pause
 paths included. FFTA_UI_LAYER=0 restores the preceding layout for comparison.
-MEDIDO: 189 suite tests pass; separate RTX 5050 offscreen GPU/CPU comparison passes.
-MEDIDO: EUR and USA extra=0 framebuffer/OAM equal for 600 frames each.
-MEDIDO: real saved snapshot UI data and 72,855 opaque output pixels unchanged
+MEASURED: 189 suite tests pass; separate RTX 5050 offscreen GPU/CPU comparison passes.
+MEASURED: EUR and USA extra=0 framebuffer/OAM equal for 600 frames each.
+MEASURED: real saved snapshot UI data and 72,855 opaque output pixels unchanged
 at x1, x1.122462 and x2. Captures target/ui-layer-after-*.png.
-NO MEDIDO: live user transitions and 8-character replay metric in this change.
+NOT MEASURED: live user transitions and 8-character replay metric in this change.
 Other menu profiles remain on existing paths; Android and installer code unchanged.
 
 
@@ -440,7 +446,7 @@ OBJ attrs 803B/0088/2122, tile 0x122, 8x16, palette 2, priority 0. Its graphics
 match the existing EUR snapshot. Marker now shares dialogue layer, retaining
 bounce and disabled state; tested with raw OAM and host replacements.
 Text Bubbles moved to root directly after Fast Forward; eight rows fit.
-MEDIDO: reconstructed before/after captures at x1/x2 confirm attachment.
+MEASURED: reconstructed before/after captures at x1/x2 confirm attachment.
 
 
 2026-10-16 inward Size pivot: verified lower dialogue clipping in open window.
@@ -452,19 +458,19 @@ following its bounce. Measured same live scene reconstructed at 110/200 percent.
 User's existing game process was not closed; its in-use executable may remain old.
 
 2026-10-16 independent action and hover-stat panels:
-MEDIDO: actual EUR open-actions snapshot BG2=5C08/BG3=4A09; native left
+MEASURED: actual EUR open-actions snapshot BG2=5C08/BG3=4A09; native left
 information/portrait and right action list extracted into two separate layers.
 Stats recognized from complete four-piece palette-11 OAM backing; glyph palette
 12 retained. Native alpha blends against raw top BG, not world OBJ or an already
 blended BG. Reused buffers include serial and parallel zoom rows.
 Panels anchor to their screen corners and Size grows uniformly inward; world
 zoom does not affect native UI size. Length remains dialogue-only.
-MEDIDO: actual EUR action and USA stats snapshots reconstruct original hardware
+MEASURED: actual EUR action and USA stats snapshots reconstruct original hardware
 framebuffer with changed_pixels=0, including Size=200 percent output captures:
 target/panels-actions-after-200.png and target/panels-stats-after-200.png.
-MEDIDO: 196 tests pass, 5 ignored; separate RTX 5050 GPU/CPU test passes.
-MEDIDO: USA and EUR extra=0 framebuffer AND OAM equal for 600 frames each.
-NO MEDIDO: new live user transitions and 1201-frame eight-character metric.
+MEASURED: 196 tests pass, 5 ignored; separate RTX 5050 GPU/CPU test passes.
+MEASURED: USA and EUR extra=0 framebuffer AND OAM equal for 600 frames each.
+NOT MEASURED: new live user transitions and 1201-frame eight-character metric.
 No sprite producer, installer logic, Android source, ROM or original save changed.
 Windows executable: target/release/recomp-panels-corners.exe.
 FFTA_UI_LAYER=0 retains old world UI for A/B comparison.
@@ -472,12 +478,12 @@ FFTA_UI_LAYER=0 retains old world UI for A/B comparison.
 2026-10-16 panel Length: actions, portrait/info and hover stats now use the
 persisted Text Bubbles Length for horizontal scale about their existing corner.
 Size remains uniform scale; Length leaves vertical dimensions unchanged.
-MEDIDO: 47 screen/recomp tests pass, 1 ignored; actual saved USA stats and EUR
+MEASURED: 47 screen/recomp tests pass, 1 ignored; actual saved USA stats and EUR
 actions reconstruct native UI with zero changed pixels at Length 150 percent.
-MEDIDO: USA/EUR extra=0 framebuffer and OAM identical over 600 frames each.
+MEASURED: USA/EUR extra=0 framebuffer and OAM identical over 600 frames each.
 Windows built: target/release/recomp-panels-length.exe; payload updated.
 Captures: target/panels-actions-length150.png, target/panels-stats-length150.png.
-NO MEDIDO: live user check. No sprite/game logic or installer source changed.
+NOT MEASURED: live user check. No sprite/game logic or installer source changed.
 
 2026-10-16 Length correction: removed horizontal texture scaling for compact
 panels. Capture native backing independently from glyphs/portraits/cursor.
@@ -485,17 +491,17 @@ Stats backing uses palette-11 pieces, excluding palette-12 glyph pieces.
 Length translates foreground by an integer native offset toward screen center;
 only the backing is extended using an interior column, keeping the outer cap.
 Size still scales both axes equally; GPU/software/pause use the same packed UI.
-MEDIDO: complete test suite passes, including rigid glyph translation, fixed
+MEASURED: complete test suite passes, including rigid glyph translation, fixed
 outer cap and exact Length=100 percent pixels. Actual saved EUR action/USA
 stats native reconstruction: changed_pixels=0. Length=150 percent captures:
 target/panels-actions-length-content150.png and target/panels-stats-length-content150.png.
-MEDIDO: USA/EUR extra=0 framebuffer AND OAM identical for 600 frames each.
-NO MEDIDO: live user transitions and new eight-character replay metric.
+MEASURED: USA/EUR extra=0 framebuffer AND OAM identical for 600 frames each.
+NOT MEASURED: live user transitions and new eight-character replay metric.
 Windows: target/release/recomp-panels-length-content.exe; payload updated.
 No guest logic, sprite producers, installer source or original saves changed.
 
 2026-10-16 panel border completion:
-MEDIDO: read-only live EUR snapshot PID 9292 at Length=200 percent shows action
+MEASURED: read-only live EUR snapshot PID 9292 at Length=200 percent shows action
 header/footer and info strip cut short. BG2 action frame tiles 005..00A and
 0A8..0B9 are decoration, not ordinary action labels. Include these in backing.
 Background-only capture now ignores foreground world OBJ: portrait silhouettes
@@ -503,16 +509,16 @@ must not punch holes into the blue plane used for Length completion.
 Use a fixed flat-side stretch seam, not one following each row's curve.
 Separate native stats capture excludes legacy EUR host gap padding; original
 cap geometry is retained in both orientations. Guest sprite producers unchanged.
-MEDIDO: 201 tests passed, 5 ignored; tests cover action border retention,
+MEASURED: 201 tests passed, 5 ignored; tests cover action border retention,
 background under portrait, mirrored rounded caps, and legacy host padding.
-MEDIDO: saved native UI reconstruction zero changed pixels, including Length
+MEASURED: saved native UI reconstruction zero changed pixels, including Length
 100/200 and zoom x1/x2, Size100/150 percent. Before/after captures:
 target/panels-current-window.png (actual original window),
 target/panels-borders-actions-before.png / panels-borders-actions-after.png,
 target/panels-borders-stats-before.png / panels-borders-stats-after.png,
 target/panels-borders-actions-zoom2-size150.png (snapshot reconstructions).
-MEDIDO: USA/EUR extra=0 framebuffer and OAM identical over 600 frames each.
-NO MEDIDO: actual red enemy hover scene after fix; cap orientation regression
+MEASURED: USA/EUR extra=0 framebuffer and OAM identical over 600 frames each.
+NOT MEASURED: actual red enemy hover scene after fix; cap orientation regression
 uses generated mirrored fixtures. No new 1201-frame character metric run.
 Windows build target/release/recomp-panels-borders.exe; payload updated.
 No installer source, original save, ROM or Android source modified. No commits.
@@ -521,34 +527,34 @@ No installer source, original save, ROM or Android source modified. No commits.
 Cause: full UI pixel bounds included animated OBJ cursor. Its varying left edge
 changed Length displacement for the entire panel. Use static backing bounds for
 Length distance and action panel anchoring. Cursor animation stays in foreground.
-MEDIDO: saved real EUR menu snapshot with only cursor X changed to 171/173/175/177:
+MEASURED: saved real EUR menu snapshot with only cursor X changed to 171/173/175/177:
 all UI rects identical; packed menu excluding cursor animation has identical SHA256
 084a981ed32e54d7c077a13699e921167230f687534350701c698d120ddea7a7.
 Captures target/menu-jitter-171.png through menu-jitter-177.png.
-MEDIDO: 202 tests pass, 5 ignored; new regression includes cursor blink and Length
+MEASURED: 202 tests pass, 5 ignored; new regression includes cursor blink and Length
 100/125/150/200 percent. USA/EUR extra=0 framebuffer AND OAM equal for 600 frames.
-NO MEDIDO: live user validation after fix; live read-only sample had no matching
+NOT MEASURED: live user validation after fix; live read-only sample had no matching
 active menu cursor, so saved snapshot variants are a controlled reproduction.
 Windows: target/release/recomp-menu-stable.exe; payload updated.
 No installer source, guest producer, ROM or original save changes; no commits.
 
 2026-10-16 target attack forecast in native screen-space UI:
-MEDIDO: captured live EUR window PID6968 and six graphics/RAM regions read-only.
+MEASURED: captured live EUR window PID6968 and six graphics/RAM regions read-only.
 BG attacker signature 5C08/4A09 coexists with target OBJ backing 1F0/200/208.
 Bug: begin_dialogue_frame detected Stats then unconditionally replaced it with
 Actions. Target OAM remained in zoomed world. Preserve detected Stats beside BG
 attacker info. Forecast glyphs share bank11: backing-only capture must identify
 backing tiles, not the entire bank (glyph 228/230/238 must stay foreground).
-MEDIDO: real EUR snapshot UI reconstruction changed_pixels=0 at zoom x1/x2;
+MEASURED: real EUR snapshot UI reconstruction changed_pixels=0 at zoom x1/x2;
 UI layout rect identical, native target UI byte hash identical:
 80F72591E91B9BC939864EFCEC4B82A1FEBFF6647AB755651B835EC5E3148841.
 Captures target/forecast-live-window.png (before, actual window),
 target/forecast-after-x1.png / forecast-after-x2.png (reconstructions),
 target/forecast-after-size125-length200.png (Size/Length verification).
-MEDIDO: 203 tests pass, 5 ignored, including both regional profiles, two zooms,
+MEASURED: 203 tests pass, 5 ignored, including both regional profiles, two zooms,
 combined attacker BG and target OBJ, bank11 glyph exclusion, original OAM intact.
-MEDIDO: USA/EUR extra=0 framebuffer and OAM equal for 600 frames each.
-NO MEDIDO: actual USA target screenshot and live user verification after fix;
+MEASURED: USA/EUR extra=0 framebuffer and OAM equal for 600 frames each.
+NOT MEASURED: actual USA target screenshot and live user verification after fix;
 no new 1201-frame eight-character metric. No guest producer changes.
 Windows target/release/recomp-attack-forecast.exe; payload updated.
 No installer source, Android source, ROM or original save writes; no commits.
@@ -561,10 +567,10 @@ selection+2=0200F3D6, Thumb write0813FFCA. No guest memory/function modification
 Hover navigates through ordinary Down pulses; click confirms once with A.
 Targets follow existing viewport/zoom inverse transform. Per-frame virtual keys
 recorded for replay. Manual buttons, pause/focus/scene loss cancel automation.
-MEDIDO: all five target requests reached; one confirmation edge;206 tests pass,
+MEASURED: all five target requests reached; one confirmation edge;206 tests pass,
 5 ignored.700-frame interpreter and two native replay PPM files byte-identical,
 hash d17fc597c1fb9325. USA/EUR extra=0 framebuffer/OAM equal for600 frames.
-NO MEDIDO: physical mouse in user window, touch, other game scenes. Disabled by
+NOT MEASURED: physical mouse in user window, touch, other game scenes. Disabled by
 default; no original save writes, ROM distribution, installer source or commits.
 See docs/ffta_mouse_language.md. Windows target/release/recomp-mouse-language.exe.
 
@@ -576,13 +582,13 @@ emulated frames, then original game redraws; A confirmation remains one edge.
 Exact EUR hash, short original bytes and complete current scene/pointer bounds
 required. Recording adds FRAME mouse:INDEX; frames/runc/verify use guarded replay
 and fail on scene/ROM mismatch. Historical key-only inputs remain compatible.
-MEDIDO: all25 source/target pairs tested; real controller reaches4,2,0,3,1 with
+MEASURED: all25 source/target pairs tested; real controller reaches4,2,0,3,1 with
 no directional keys, no intermediate quill or palette state; one confirmation.
-MEDIDO:208 suite tests pass,5 ignored. Interpreter/native full PPM byte equality
+MEASURED:208 suite tests pass,5 ignored. Interpreter/native full PPM byte equality
 at all five destinations304/308/312/316/320;370-frame final also identical to
 repeated native replay, hash d17fc597c1fb9325. Private target/mouse-direct-* files.
-MEDIDO: USA/EUR extra=0 framebuffer AND OAM equal over600 frames without requests.
-NO MEDIDO: user's physical mouse after direct-selection change. Experimental
+MEASURED: USA/EUR extra=0 framebuffer AND OAM equal over600 frames without requests.
+NOT MEASURED: user's physical mouse after direct-selection change. Experimental
 FFTA_MOUSE=1 still required; only EUR language selector supported.
 Windows target/release/recomp-mouse-direct.exe; payload updated. No original save,
 ROM, installer source, Android or sprite producer changes; no commits.
@@ -592,13 +598,13 @@ Implemented interaction_grid.rs:8x8 logical cells across viewport, exact target
 bounds within shared cells, EventId(context,option), layers/modal blockers,
 cell tracking and hover entry/exit/click. Unchanged targets reuse the index.
 EUR language adapter now routes through the grid; direct state commit unchanged.
-MEDIDO:214 tests pass,5 ignored. Exact reference match at153600 test positions;
+MEASURED:214 tests pass,5 ignored. Exact reference match at153600 test positions;
 all38400 native language pixel centers match the previous target rectangles.
 Actual EUR run:600 cells,1 build, five direct selections, one confirmation.
 Five rendered images and input events byte-identical to direct-rectangle build.
 Native/interpreter replay equal,370-frame hash d17fc597c1fb9325.
 USA/EUR extra=0 framebuffer AND OAM identical over600 frames each.
-NO MEDIDO: user's physical mouse with this build, new menu event adapters, any
+NOT MEASURED: user's physical mouse with this build, new menu event adapters, any
 speed gain over the five-option prototype. Main menu and battles not started.
 Docs ffta_interaction_grid.md. Windows target/release/recomp-mouse-grid.exe.
 No original save, ROM, installer source or Android modifications; no commits.
@@ -608,11 +614,11 @@ Reused invisible grid for Press Start, New Game, Saved Game, Color Mode,
 Language, name keyboard/categories/Delete/OK and name Yes/No. Direct verified
 selection bytes and original confirm/back keys; queued clicks cannot cross
 menu contexts. Scene/ROM checks fail closed. FFTA_MOUSE=1 remains experimental.
-MEDIDO: actual full-boot click scripts traverse the front-end, select TV,
+MEASURED: actual full-boot click scripts traverse the front-end, select TV,
 Resume/Load and start New Game; letters/categories/name confirmation exercised.
 Native1490-frame click replay equals interpreter pixels. USA/EUR extra=0
 framebuffer AND OAM equal previous600-frame references.
-NO MEDIDO: populated save-file slots/resume (all available saves blank), physical
+NOT MEASURED: populated save-file slots/resume (all available saves blank), physical
 mouse acceptance, USA mouse front-end and battle mouse controls.
 Windows target/release/recomp-mouse-main.exe; docs/ffta_mouse_frontend.md.
 No original save/ROM, installer source, Android or sprite-producer changes.
@@ -624,15 +630,15 @@ range styles and camera projection. Mouse movement queues a logical destination;
 original cursor handler commits it. Left click confirms via original A after
 commit; right click B. Exact USA/EUR ROM profiles and short code checks required.
 FFTA_MOUSE=1 opt-in; action menus and unsupported cursor modes stay excluded.
-MEDIDO:196 existing tutorial cells,20 range-style1; original projection matches
+MEASURED:196 existing tutorial cells,20 range-style1; original projection matches
 196/196 and range query256/256. Real USA full replay: three direct targets stay
 exact in interpreter and Windows native32:9 zoom6; no intermediate arrow walk.
 Single-frame wake pulse fixes an observed extra-step failure in the first build.
-MEDIDO:221 tests pass,5 ignored; USA/EUR600-frame extra=0 framebuffer/OAM match.
+MEASURED:221 tests pass,5 ignored; USA/EUR600-frame extra=0 framebuffer/OAM match.
 Character metric11340..12540:1201 frames, exactly8 present, no duplicates.
 EUR isolated original-function test passes on copied RAM; original scripted
 mode4 was explicitly overridden only in that test, not in runtime behavior.
-NO MEDIDO: full EUR manual hover, all stages/slopes, battle action menu mouse.
+NOT MEASURED: full EUR manual hover, all stages/slopes, battle action menu mouse.
 Windows target/release/recomp-mouse-battle.exe. docs/ffta_mouse_battle.md.
 No original save/ROM, installer source, Android or sprite-producer edits.
 No commits.
@@ -640,7 +646,7 @@ No commits.
 2026-10-17 battle input follow-up, awaiting user gameplay test:
 Live vertical lists use their instance count/cursor rather than option names.
 Original navigation commit USA080287A0 / EUR080299DC selects the requested row.
-MEDIDO: USA replay jumps0->3->0, opens Action and Snowball; first one-frame wake
+MEASURED: USA replay jumps0->3->0, opens Action and Snowball; first one-frame wake
 was missed by the menu polling cadence and replaced with wake-until-commit plus
 suppression of repeated steps. Exact ROM and short function-byte checks gate it.
 Follow-up adds plain left=A/right=B outside semantic targets, including dialogue
@@ -648,26 +654,26 @@ and forecasts, and fixes the field gate when unused BG layers are disabled.
 Wait-facing arrows adapt mouse direction and queue original direction then A.
 Name typing supports ASCII letters/digits, Backspace and Enter; original glyph
 selection and keys insert the name. EUR3/USA2-page profiles are checked.
-MEDIDO:10 battle-input tests and9 frontend/name tests pass; earlier filtered
-FFTA suite37 pass,4 ignored. NO MEDIDO: user gameplay acceptance of follow-up.
+MEASURED:10 battle-input tests and9 frontend/name tests pass; earlier filtered
+FFTA suite37 pass,4 ignored. NOT MEASURED: user gameplay acceptance of follow-up.
 Windows target/release/recomp.exe. No installer/save/ROM edits or commits.
 
 2026-10-17 desktop mouse follow-up (experimental, off by default):
 Input now has Keyboard / Gamepad / Mouse and Keyboard. The last uses its own
 persisted ten-button profile (WASD, Q/E), preserving the Keyboard bindings.
 The runtime and launcher select the active profile; assets/cursor.png is original.
-MEDIDO: Do it/Cancel is a separate two-button handler, USA08029350/EUR0802A58C.
+MEASURED: Do it/Cancel is a separate two-button handler, USA08029350/EUR0802A58C.
 The adapter reads its live button records and drives original input, including
 deferred A after the requested row. A controlled call selects Cancel successfully.
-MEDIDO: world-map cursor logical stores USA080375CE/080376A2 and EUR08038B3A/
+MEASURED: world-map cursor logical stores USA080375CE/080376A2 and EUR08038B3A/
 08038C0E, reached through the original input routine. Native replay matches the
 interpreter framebuffer; requested native screen points remain exact after release.
 Town window lists and nested shop/pub text lists use live row counts/geometry.
 Two cursor styles are handled. Polling lists release each direction after an
 observed step because the pub list consumes edges instead of repeating held input.
-MEDIDO: extra=0 framebuffer and OAM identical in600 frames against the previous
+MEASURED: extra=0 framebuffer and OAM identical in600 frames against the previous
 executable; tutorial regression8 present/8 drawn in all1201 final frames, no duplicates.
-NO MEDIDO: every mission/inventory paging state and manual clicks at every scale.
+NOT MEASURED: every mission/inventory paging state and manual clicks at every scale.
 Pending: reported end-turn facing issue and repeated thunder/effects in32:9.
 Android port is deferred; mouse remains off by default there. No installer,
 original ROM/save or sprite/PPU renderer edits. No commits. docs/ffta_mouse_world.md.

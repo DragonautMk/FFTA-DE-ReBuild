@@ -63,12 +63,33 @@ two exact ROM hashes already recognized by the project, the index compares the
 recognized region with the region declared by the source and labels the result
 `declared-match` or `declared-mismatch`; an unrecognized hash or source region
 remains `unknown`. The CLI does not authenticate the caller's ROM bytes, and a
-regional declaration never verifies a code. Every entry is disabled and
-non-executable: the device version is unknown, a verified source decoder is
-unsupported, and runtime behavior is unverified. An explicitly assumed
-plaintext inspection is available as described below; no code is applied.
+regional declaration never verifies a code. Every entry remains disabled and
+unverified. The index assesses source-linked CodeBreaker plans separately from
+the original entry: `decoder.state` describes the bounded source assessment,
+and `manual_once.state` describes whether a matching ROM context and runtime
+preflight are still required. These states are not device or gameplay proof.
+An unresolved source is `not-established`; exhausted assessment limits are
+`not-evaluated`. A supported plan with a recognized matching region still
+reports `requires-runtime-preflight`, not that it is executable.
+`show` includes per-source assessment and, when decoded, its typed plan and
+potential footprint. Inspection itself does not apply code; an explicit
+guarded one-shot is a separate action described below.
 Catalog contents are not included in source or
 public packages; CLI output itself may contain private third-party text.
+For bounded host work the index assesses at most eight sources per entry, at
+most 64 lines per source and 16,384 lines per catalog. Sources beyond a limit
+are reported as not evaluated, never silently promoted to unsupported or
+verified. The source-bound interpretation assumes the linked master is the
+correct seed; ambiguous, missing or undecodable sources remain unresolved.
+A listed one-shot candidate still requires explicit source/master selection,
+the actual loaded ROM checksum, a paused isolated interpreter and a fresh
+preview. A caller-supplied ROM hash alone does not verify the ROM bytes.
+For the source-capability index, a frozen Windows GNU build and 12 focused Wine
+tests passed. Seven local EUR source plans matched their explicit inspections
+without changing the catalog; a synthetic Wine/Xvfb view displayed the ROM
+context requirement while the isolated guest remained paused and unchanged.
+The first GUI setup attempt failed on its test-helper path; a corrected attempt
+passed. These checks do not verify the device or gameplay effects.
 Focused Wine tests and a synthetic CLI check cover recognized EUR and USA hashes,
 a declared mismatch and an unknown hash without loading ROM bytes. A separate
 synthetic Wine/Xvfb view confirms that the loaded ROM hash and the unknown state
@@ -212,12 +233,42 @@ Other reads, I/O writes, mirrors, ROM writes, native code and oversized plans
 are refused. Operations execute once at the paused frame/clock, in their source
 order, without installing the original device hook or maintaining a toggle.
 This is an explicit manual experiment, not verification of the code's intended
-game effect; restoring a checkpoint remains a separate action. Maintained
-cheats, overlap management, broader memory semantics and provenance-aware
-recording are unfinished.
+game effect; restoring a checkpoint remains a separate action. Broader memory
+semantics and provenance-aware recording remain unfinished.
 Until cheat provenance is supported, starting an input recording or saving a
 new state after a one-shot is refused for the lifetime of that isolated process;
 existing checkpoints may still be loaded.
+
+For maintained use, prepare the same state-bound preview, then issue `cheats
+arm CH-0001 0 CH-0002 GENERATION TOKEN`. Arm itself writes nothing. The frozen
+plan runs through the guest bus before each interpreter frame, after the input
+mask is latched, including controlled steps. `cheats disarm CH-0001` stops its
+future applications; `cheats disarm all` clears the set. These operations are
+also available as `debug-control cheat-arm` and `cheat-disarm`. Status reports
+the armed identities and footprints; the read-only catalog displays an armed
+indicator. A disarm does not undo earlier writes. Loading or restoring a state
+clears the armed set; saving while armed, recording while armed or after cheat
+writes, instruction search and starting a separate replay while armed are
+refused. Manual one-shot is refused until the set is disarmed.
+
+At most eight source-bound plans and 256 potential writes per frame can be
+armed. Read/write and write/write overlaps are refused before changing the set,
+including conditional reads. Each plan retains the source and ROM identities
+verified at arm time; it is an immutable snapshot, not a live catalog reload.
+The same interpreter, ROM, checksum and canonical memory restrictions as the
+manual preview apply. Timing is a host-defined frame boundary, not the original
+device hook; device and gameplay behavior are unverified.
+
+Frozen Windows GNU builds and focused Wine tests passed. In a synthetic isolated
+Wine/Xvfb interpreter, arm left the paused guest unchanged, an overlap was
+refused, two independent plans applied on two controlled frames, and disarming
+stopped later writes; the original inputs and session pins remained unchanged.
+A separate paused synthetic view displayed the armed indicator. A user-initiated
+ROM restart through the System menu cleared an armed synthetic set in a fresh
+isolated copy. In another paused copy, loading a locally created state and
+undoing that load each disarmed the set and restored the expected exact machine
+state. Protected inputs and session pins remained unchanged. Native Windows,
+physical controllers and gameplay effects remain unverified.
 
 In an isolated EUR interpreter session under Wine/Xvfb, a synthetic block
 performed three bus writes with the expected bytes while frame, clock and CPU

@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "improve-rom-inventory-item-metadata-readability",
+  "title": "Improve item and metadata inventory readability",
+  "kind": "docs",
+  "platforms": [
+    "Desktop development documentation"
+  ],
+  "changes": [
+    "Separate merged values and words in the item table, item links, metadata2/4/14/16/52 and constructor template summaries while retaining scope and unresolved criteria."
+  ],
+  "validation": [
+    "Compared the entire inventory against the tracked pre-edit version for identical digit runs, Markdown link targets and inline code spans; confirmed the remainder from the metadata12 banks onward is unchanged. Checked selected frame counts against the linked gameplay guide."
+  ],
+  "limitations": [
+    "Inventory review remains partial from metadata12 banks onward; historical runtime results were not reproduced, and the wider English-first audit remains open."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_INVENTORY.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md"
+  ]
+}

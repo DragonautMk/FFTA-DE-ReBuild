@@ -3,6 +3,415 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-03 — Translate zoom and tile investigation evidence
+
+Type: docs. Platforms: Desktop development documentation.
+
+**Changes**
+
+- Translate the zoom-out tile investigation and follow-up from Spanish to English while retaining the chronology and distinction between measured and unmeasured results.
+
+**Validation**
+
+- Compared the passage to its preimage: numeric runs, paths, addresses, flags and named technical tokens match.
+
+**Limitations**
+
+- The remaining research report and broader Markdown/source audit are unfinished; no ROM access, replay or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-03-translate-research-zoom-tile-evidence.json)
+
+## 2026-11-03 — Translate sky, stage and stats investigation
+
+Type: docs. Platforms: Desktop development documentation.
+
+**Changes**
+
+- Translate the sky gradient, stage zoom and stats panel research history into English, preserving rejected approaches and subsequent corrections.
+
+**Validation**
+
+- Compared the translated passage to its preimage: numeric runs, paths, flags, image and input filenames, hardware registers and recorded command error match.
+
+**Limitations**
+
+- The remaining research report and broader Markdown/source audit are unfinished; no ROM access, replay or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-03-translate-research-sky-stage-stats.json)
+
+## 2026-11-03 — Translate menu, TinyCC and dialogue research notes
+
+Type: docs. Platforms: Desktop development documentation.
+
+**Changes**
+
+- Translate the native pause menu, TinyCC and initial dialogue-layout research notes into English while retaining legacy heading anchors.
+
+**Validation**
+
+- Compared the translated passage to its preimage: numeric runs excluding new anchor IDs, paths, flags, source hash and technical identifiers match.
+
+**Limitations**
+
+- The remaining research report and broader Markdown/source audit are unfinished; no ROM access, replay or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-03-translate-research-menu-tinycc-dialogue.json)
+
+## 2026-11-03 — Translate research evidence labels
+
+Type: docs. Platforms: Desktop development documentation.
+
+**Changes**
+
+- Translate measured and not-measured labels in the later English research history while preserving the associated evidence and limitations.
+
+**Validation**
+
+- Verified all 37 measured and 15 not-measured label replacements are exactly reversible to the preimage; no other text in the section changed.
+
+**Limitations**
+
+- The research report and broader Markdown/source audit still require final review; no ROM access, replay or runtime checks were performed.
+
+Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.json).
+
+[Change record](docs/changes/2026-11-03-translate-research-evidence-labels.json)
+
+## 2026-11-03 — Show the project emblem in the desktop menu
+
+Type: changed. Platforms: Desktop menu.
+
+**Changes**
+
+- Replace the original sidebar crest with the FFTA DE-ReBuild emblem, rendered at multiple cached sizes and independent of menu background transparency.
+
+**Validation**
+
+- Linux offscreen menu test passed at 480x360, 640x480, 854x480 and 1920x1080 with opaque and transparent backgrounds. Existing video-menu test and visual inspection of its 640x480 capture passed.
+
+**Limitations**
+
+- No Windows or live game runtime validation performed; Linux build used the installed Wayland runtime with temporary pkg-config and linker metadata.
+
+Documentation: [menu_clan_atlas.md](docs/menu_clan_atlas.md).
+
+[Change record](docs/changes/2026-11-03-show-rebuild-logo-in-menu.json)
+
+## 2026-11-03 — Review translated research status report
+
+Type: docs. Platforms: Desktop development documentation.
+
+**Changes**
+
+- Complete English-language review of the translated research status report and record its exact hash in the audit.
+
+**Validation**
+
+- Full-file comparison against the pretranslation revision preserved numeric runs excluding explicit legacy anchors, link targets, fenced commands, paths, flags and named artifact filenames; historical limitations retained.
+
+**Limitations**
+
+- This is a language and evidence-preservation review, not independent reproduction of historical results; wider Markdown and source audit remains open.
+
+Documentation: [ffta_estado.md](docs/ffta_estado.md).
+
+[Change record](docs/changes/2026-11-03-review-research-status-english.json)
+
+## 2026-11-03 — Rename the fork FFTA DE-ReBuild
+
+Type: changed. Platforms: Desktop and Android source trees.
+
+**Changes**
+
+- Present FFTA DE-ReBuild as the fork name and introduce a new generated compass emblem for the README, installer, package icon and Android launchers.
+- Retain existing executable, archive, install/data directory and Android package identifiers for compatibility.
+
+**Validation**
+
+- Portable packaging unit tests: 11 passed; gba-pack icon tests: 6 passed. PNG alpha, matching masters, ICO sizes and Android resource XML checked; git diff --check passed.
+
+**Limitations**
+
+- Installer cargo check blocked by pre-existing missing serde dependency in the included ROM module; launcher/menu cargo check blocked by missing wayland-client development package. Windows and Android builds and runtime visuals were not tested.
+
+Documentation: [README.md](README.md).
+
+[Change record](docs/changes/2026-11-03-rebrand-ffta-de-rebuild.json)
+
+## 2026-11-03 — Arm bounded cheat plans at interpreter frame boundaries
+
+Type: added. Platforms: Windows GNU / Wine.
+
+**Changes**
+
+- Add explicit state-bound arm and disarm commands for up to eight immutable source-bound plans, with a 256-write aggregate frame budget and rejection of overlapping read/write footprints.
+- Apply armed plans through the guest bus before interpreter frames after the input latch; expose status and a localized catalog indicator, disarm on state restoration, and guard unsupported recording, replay, search and save interactions.
+
+**Validation**
+
+- Frozen offline Windows GNU release and test builds passed without compiler messages or source drift (1915 source files). Wine passed 22 focused cheat tests with one local-catalog test intentionally ignored, plus 9 command, 30 control and 4 operation tests. One Wine test emitted a D-Bus diagnostic while the suite exited successfully.
+- Synthetic isolated Wine/Xvfb checks confirmed arm writes nothing, overlap refusal, two independent frame applications, one/all disarm and unchanged protected inputs. A separate synthetic paused menu displayed the armed indicator; sessions closed and pins remained exact.
+- A separate user-initiated System / Restart ROM check in an isolated Wine/Xvfb interpreter cleared an armed synthetic set; session pins and protected inputs remained exact.
+- In a separate paused Wine/Xvfb copy, a locally created save-state load and Undo each cleared the armed synthetic set and restored the expected exact machine state; the overwrite confirmation was cancelled, and protected inputs and pins stayed exact.
+
+**Limitations**
+
+- Frame-boundary timing is not the original device hook; actual device, gameplay, native Windows, Linux and physical controllers were not verified. Disarm does not restore previous values.
+- Native backend, ROM and I/O writes, mirrors, full page toggles and provenance-aware save/replay remain unsupported. The frozen build included this work and selected overlays, not all concurrent uncommitted project changes.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [MENU_ATLAS_INVENTORY.json](docs/development/MENU_ATLAS_INVENTORY.json).
+
+[Change record](docs/changes/2026-11-03-maintain-bounded-interpreter-cheats.json)
+
+## 2026-11-03 — Index source-bound cheat capabilities without enabling them
+
+Type: changed. Platforms: Windows GNU / Wine.
+
+**Changes**
+
+- Assess bounded CodeBreaker provenance against its explicitly linked master and report source-specific decoded plans, one-shot footprints, unresolved sources, unsupported formats and unevaluated limits in CLI and local summaries.
+- Show localized capability and ROM-context reasons in the read-only menu while preserving imported entries and leaving all cheats disabled and unverified.
+
+**Validation**
+
+- Frozen offline Windows GNU release and test builds passed with 1914 source files, four overlays, no compiler messages or source drift. Wine passed 12 focused cheat tests; one local-catalog test remained intentionally ignored.
+- Seven EUR source plans matched their explicit source/master inspections, with the original catalog unchanged. A synthetic Wine/Xvfb menu displayed the ROM-context requirement with frame, clock and guest state unchanged; session pins and catalog remained exact. The first GUI setup failed on a helper path; a corrected fresh attempt passed and closed.
+
+**Limitations**
+
+- Source decoding assumes the linked master and does not verify device behavior, ROM bytes, checksum, native hooks or gameplay. Manual one-shot requires explicit selection and runtime preflight; maintenance, toggles and full device/ROM capability coverage remain open.
+- Native Windows, Linux and physical controller paths were not exercised. The frozen validation excluded independent concurrent uncommitted changes.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-03-index-cheat-source-capabilities.json)
+
+## 2026-11-03 — Improve trade and item-effect inventory readability
+
+Type: docs. Platforms: Desktop development documentation.
+
+**Changes**
+
+- Separate merged words, addresses and counts in trade and item-effect source, runtime and scene summaries; clarify counts for shared byte fields.
+
+**Validation**
+
+- Compared the inventory against its tracked pre-edit version for identical headings, Markdown link targets and inline code spans, and identical digit runs after normalizing three documented numeric-boundary clarifications. Confirmed the remainder from palette-effect sources onward is unchanged and checked shared-byte counts against the linked gameplay guide.
+
+**Limitations**
+
+- Inventory review remains partial from palette-effect sources onward; historical runtime results were not reproduced, and the wider English-first audit remains open.
+
+Documentation: [rom_data_gameplay.md](docs/rom_data_gameplay.md).
+
+[Change record](docs/changes/2026-11-03-improve-rom-inventory-trade-effects-readability.json)
+
+## 2026-11-03 — Improve task and event inventory readability
+
+Type: docs. Platforms: Desktop development documentation.
+
+**Changes**
+
+- Separate merged words, addresses and counts in task descriptor, effect/event directory and script command summaries, preserving recorded validation limits.
+
+**Validation**
+
+- Compared the inventory against its tracked pre-edit version for identical headings, Markdown link targets and inline code spans, and identical digit runs after normalizing three previously documented numeric-boundary clarifications. Confirmed the remainder from the relative script archive onward is unchanged and checked the selector index against the event guide.
+
+**Limitations**
+
+- Inventory review remains partial from the relative script archive onward; historical runtime results were not reproduced, and the wider English-first audit remains open.
+
+Documentation: [rom_data_events.md](docs/rom_data_events.md), [rom_data_tasks.md](docs/rom_data_tasks.md), [rom_data_scripts.md](docs/rom_data_scripts.md).
+
+[Change record](docs/changes/2026-11-03-improve-rom-inventory-task-events-readability.json)
+
+## 2026-11-03 — Improve script archive and text inventory readability
+
+Type: docs. Platforms: Desktop development documentation.
+
+**Changes**
+
+- Separate merged words, addresses and counts in relative script archive and localized script-text source, runtime and scene summaries, retaining recorded validation limits.
+
+**Validation**
+
+- Compared the inventory against its tracked pre-edit version for identical headings, Markdown link targets and inline code spans, and identical digit runs after normalizing three previously documented numeric-boundary clarifications. Confirmed the remainder from script coordinate paths onward is unchanged.
+
+**Limitations**
+
+- Inventory review remains partial from script coordinate paths onward; historical runtime results were not reproduced, and the wider English-first audit remains open.
+
+Documentation: [rom_data_scripts.md](docs/rom_data_scripts.md), [rom_data_text.md](docs/rom_data_text.md).
+
+[Change record](docs/changes/2026-11-03-improve-rom-inventory-script-text-readability.json)
+
+## 2026-11-03 — Improve palette and text inventory readability
+
+Type: docs. Platforms: Desktop development documentation.
+
+**Changes**
+
+- Separate merged words, values and addresses in equipment OBJ, palettes, UI graphics, text and font summaries and remove an orphaned sentence fragment.
+
+**Validation**
+
+- Compared the entire inventory against its tracked pre-edit version for identical digit runs, Markdown link targets and inline code spans; confirmed all text from the gameplay entry onward is unchanged. Checked the palette frame and byte counts against the linked guide.
+
+**Limitations**
+
+- Inventory review remains partial from the gameplay entry onward; historical runtime results were not reproduced, and the wider English-first audit remains open.
+
+Documentation: [rom_data_color_palettes.md](docs/rom_data_color_palettes.md), [rom_data_text.md](docs/rom_data_text.md).
+
+[Change record](docs/changes/2026-11-03-improve-rom-inventory-palette-text-readability.json)
+
+## 2026-11-03 — Improve palette and blend inventory readability
+
+Type: docs. Platforms: Desktop development documentation.
+
+**Changes**
+
+- Separate merged words, addresses and counts in palette-effect dispatch, palette program and blend program source, runtime and scene summaries while preserving recorded limits.
+
+**Validation**
+
+- Compared the inventory against its tracked pre-edit version for identical headings, Markdown link targets and inline code spans, and identical digit runs after normalizing three previously documented numeric-boundary clarifications. Confirmed the remainder from task descriptor sources onward is unchanged.
+
+**Limitations**
+
+- Inventory review remains partial from task descriptor sources onward; historical runtime results were not reproduced, and the wider English-first audit remains open.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-03-improve-rom-inventory-palette-blend-readability.json)
+
+## 2026-11-03 — Improve ROM inventory opening readability
+
+Type: docs. Platforms: Desktop development documentation.
+
+**Changes**
+
+- Separate merged words, numbers and addresses in the inventory introduction and BG graphics, terrain and UI choice-list summaries while retaining recorded evidence and limits.
+
+**Validation**
+
+- Compared the entire edited inventory with its pre-edit version for identical digit runs, Markdown link targets and inline code spans; checked the 320-frame Party and palette byte counts against the linked evidence guides.
+
+**Limitations**
+
+- Only the opening and first three migration-matrix entries were reviewed for readability; the rest of this large inventory and the wider English-first audit remain pending. Historical runtime results were not reproduced.
+
+Documentation: [rom_data_ui.md](docs/rom_data_ui.md), [rom_data_maps.md](docs/rom_data_maps.md).
+
+[Change record](docs/changes/2026-11-03-improve-rom-inventory-opening-readability.json)
+
+## 2026-11-03 — Improve OBJ inventory readability
+
+Type: docs. Platforms: Desktop development documentation.
+
+**Changes**
+
+- Separate merged words, values and addresses in the OBJ graphics, normal and alternate battle pose, script binding and special-unit pose summaries; preserve recorded evidence and open limits.
+
+**Validation**
+
+- Compared the entire inventory against its tracked pre-edit version for identical digit runs, Markdown link targets and inline code spans; confirmed all text from the equipment-pose entry onward is unchanged. Checked frame counts against the linked unit OBJ guide.
+
+**Limitations**
+
+- The inventory is only partially reviewed: the equipment-pose entry onward and the wider English-first audit remain pending. No historical runtime result was reproduced.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md), [rom_data_unit_obj.md](docs/rom_data_unit_obj.md).
+
+[Change record](docs/changes/2026-11-03-improve-rom-inventory-obj-readability.json)
+
+## 2026-11-03 — Improve item and metadata inventory readability
+
+Type: docs. Platforms: Desktop development documentation.
+
+**Changes**
+
+- Separate merged values and words in the item table, item links, metadata2/4/14/16/52 and constructor template summaries while retaining scope and unresolved criteria.
+
+**Validation**
+
+- Compared the entire inventory against the tracked pre-edit version for identical digit runs, Markdown link targets and inline code spans; confirmed the remainder from the metadata12 banks onward is unchanged. Checked selected frame counts against the linked gameplay guide.
+
+**Limitations**
+
+- Inventory review remains partial from metadata12 banks onward; historical runtime results were not reproduced, and the wider English-first audit remains open.
+
+Documentation: [rom_data_gameplay.md](docs/rom_data_gameplay.md).
+
+[Change record](docs/changes/2026-11-03-improve-rom-inventory-item-metadata-readability.json)
+
+## 2026-11-03 — Improve gameplay table inventory readability
+
+Type: docs. Platforms: Desktop development documentation.
+
+**Changes**
+
+- Separate merged words, values and addresses in the remaining metadata12, global flags, evaluation parameters, progression and selection gate, and aggregate key summaries.
+
+**Validation**
+
+- Compared the inventory against its tracked pre-edit version for identical digit runs, Markdown link targets and inline code spans; confirmed the remainder from the audio entry onward is unchanged. Checked selected frame counts and the 32-bit row input against the linked gameplay guide.
+
+**Limitations**
+
+- Inventory review remains partial from the audio entry onward; historical runtime results were not reproduced, and the wider English-first audit remains open.
+
+Documentation: [rom_data_gameplay.md](docs/rom_data_gameplay.md).
+
+[Change record](docs/changes/2026-11-03-improve-rom-inventory-gameplay-tables-readability.json)
+
+## 2026-11-03 — Improve BG packet and palette inventory readability
+
+Type: docs. Platforms: Desktop development documentation.
+
+**Changes**
+
+- Separate merged words, addresses and values in alternate palette, descriptor packet, main graphics and transfer program summaries while preserving their documented validation limits.
+
+**Validation**
+
+- Compared the inventory against its tracked pre-edit version: headings, Markdown link targets and inline code spans remain identical, as do digit runs after accounting for the previously clarified LZ77 tag boundary. Confirmed the remainder from trade parameters onward is unchanged.
+
+**Limitations**
+
+- Inventory review remains partial from trade parameters onward; historical runtime results were not reproduced, and the wider English-first audit remains open.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-03-improve-rom-inventory-bg-packet-readability.json)
+
+## 2026-11-03 — Improve audio and dataset inventory readability
+
+Type: docs. Platforms: Desktop development documentation.
+
+**Changes**
+
+- Separate merged words and values in audio and base dataset summaries; clarify the raw and LZ77 codec tags using the linked graphics contract.
+
+**Validation**
+
+- Compared inventory against its tracked pre-edit version for identical Markdown link targets and inline code spans, and identical digit runs after accounting for separation of LZ77 and tag 10; confirmed the remainder from runtime gates onward is unchanged. Checked codec tags and audio endpoint terminology against linked guides.
+
+**Limitations**
+
+- Inventory review remains partial from runtime gates onward; historical runtime results were not reproduced, and the wider English-first audit remains open.
+
+Documentation: [rom_data_audio.md](docs/rom_data_audio.md), [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-03-improve-rom-inventory-audio-dataset-readability.json)
+
 ## 2026-11-03 — Distinguish the independently maintained fork
 
 Type: docs. Platforms: Documentation.

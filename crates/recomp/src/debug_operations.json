@@ -5158,6 +5158,130 @@
       "external_dialog": null
     },
     {
+      "id": "cheats.arm",
+      "title": "Arm a prepared cheat for interpreter frames",
+      "source": "crates/recomp/src/debug_control.rs",
+      "handler": "PlayApp::debug_action_inner / ArmedSet::arm",
+      "cli": "recomp debug-control cheat-arm SESSION ID PROVENANCE MASTER GENERATION PREVIEW [--timeout-ms N]",
+      "parameters": [
+        {
+          "name": "SESSION",
+          "value_type": "path",
+          "constraint": "Authenticated isolated session directory.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--timeout-ms",
+          "value_type": "decimal",
+          "constraint": "20..120000 host milliseconds; timeout does not establish non-delivery.",
+          "current_menu": "not-applicable",
+          "default": 120000
+        },
+        {
+          "name": "ID",
+          "value_type": "text",
+          "constraint": "CH identifier in the selected pinned snapshot.",
+          "current_menu": "not-applicable",
+          "default": null
+        },
+        {
+          "name": "PROVENANCE",
+          "value_type": "integer",
+          "constraint": "Explicit zero-based source provenance index.",
+          "current_menu": "not-applicable",
+          "default": null
+        },
+        {
+          "name": "MASTER",
+          "value_type": "text",
+          "constraint": "Exact linked master CH identifier.",
+          "current_menu": "not-applicable",
+          "default": null
+        },
+        {
+          "name": "GENERATION",
+          "value_type": "sha256",
+          "constraint": "Exact current cheat snapshot generation.",
+          "current_menu": "not-applicable",
+          "default": null
+        },
+        {
+          "name": "PREVIEW",
+          "value_type": "sha256",
+          "constraint": "Exact token returned by preparation for unchanged state and source.",
+          "current_menu": "not-applicable",
+          "default": null
+        }
+      ],
+      "selection": [
+        "isolated session",
+        "pinned cheat catalog",
+        "source provenance",
+        "master"
+      ],
+      "menu": {
+        "current": null,
+        "destination": "Debug / Cheat",
+        "implemented": false
+      },
+      "allowed_state": "Idle paused isolated copy, interpreter only, no recording or replay; exact known ROM and matching source master checksum.",
+      "effects": "Rechecks the state-bound preview and arms an immutable bounded plan; no write occurs until the next interpreter frame.",
+      "result": "Armed state or atomic refusal, including overlap and aggregate write limits.",
+      "limits": "Interpreter only; at most eight plans and 256 potential writes per frame. No original device hook or automatic restoration.",
+      "open_work": [
+        "DBG2-19: broader memory and native handling remain open",
+        "DBG2-21: game effects not verified"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "cheats.disarm",
+      "title": "Disarm one or all maintained cheats",
+      "source": "crates/recomp/src/debug_control.rs",
+      "handler": "PlayApp::debug_action_inner / ArmedSet::disarm",
+      "cli": "recomp debug-control cheat-disarm SESSION ID|all [--timeout-ms N]",
+      "parameters": [
+        {
+          "name": "SESSION",
+          "value_type": "path",
+          "constraint": "Authenticated isolated session directory.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--timeout-ms",
+          "value_type": "decimal",
+          "constraint": "20..120000 host milliseconds; timeout does not establish non-delivery.",
+          "current_menu": "not-applicable",
+          "default": 120000
+        },
+        {
+          "name": "ID",
+          "value_type": "text",
+          "constraint": "Exact armed CH identifier, or all.",
+          "current_menu": "not-applicable",
+          "default": null
+        }
+      ],
+      "selection": [
+        "isolated session"
+      ],
+      "menu": {
+        "current": null,
+        "destination": "Debug / Cheat",
+        "implemented": false
+      },
+      "allowed_state": "Idle paused isolated copy.",
+      "effects": "Stop future frame-boundary writes for the selected ID or all plans.",
+      "result": "Updated armed set or refusal if the selected ID is absent.",
+      "limits": "Previously written memory is not restored. Loading or restoring a state disarms the set.",
+      "open_work": [
+        "DBG2-19: automatic restoration and broader memory handling remain open"
+      ],
+      "external_dialog": null
+    },
+    {
       "id": "cheats.info",
       "title": "Inspect cheat catalog metadata",
       "source": "crates/recomp/src/debug_cheats.rs",

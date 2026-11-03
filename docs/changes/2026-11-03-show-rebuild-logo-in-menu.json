@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "show-rebuild-logo-in-menu",
+  "title": "Show the project emblem in the desktop menu",
+  "kind": "changed",
+  "platforms": [
+    "Desktop menu"
+  ],
+  "changes": [
+    "Replace the original sidebar crest with the FFTA DE-ReBuild emblem, rendered at multiple cached sizes and independent of menu background transparency."
+  ],
+  "validation": [
+    "Linux offscreen menu test passed at 480x360, 640x480, 854x480 and 1920x1080 with opaque and transparent backgrounds. Existing video-menu test and visual inspection of its 640x480 capture passed."
+  ],
+  "limitations": [
+    "No Windows or live game runtime validation performed; Linux build used the installed Wayland runtime with temporary pkg-config and linker metadata."
+  ],
+  "files": [
+    "crates/menu/Cargo.toml",
+    "crates/menu/src/atlas_theme.rs",
+    "crates/menu/assets/de-rebuild-logo.png",
+    "Cargo.lock"
+  ],
+  "references": [
+    "docs/menu_clan_atlas.md"
+  ]
+}
