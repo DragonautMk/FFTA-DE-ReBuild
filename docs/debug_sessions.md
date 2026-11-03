@@ -47,8 +47,8 @@ session or move those to retain: it does not delete evidence or failed attempts.
 PowerShell example:
 
 ```powershell
-.\recomp.exe debug-session create 'C:\Giochi\FFTA EUR.gba' `
-  --dir 'C:\Debug\DS-20' --sav 'C:\Salvataggi\partita.sav' `
+.\recomp.exe debug-session create 'C:\Games\FFTA EUR.gba' `
+  --dir 'C:\Debug\DS-20' --sav 'C:\Saves\game.sav' `
   --state 'C:\Debug\DS-20.ffstate' --no-bios --interp --open
 ```
 

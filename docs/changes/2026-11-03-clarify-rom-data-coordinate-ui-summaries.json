@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "clarify-rom-data-coordinate-ui-summaries",
+  "title": "Clarify ROM coordinate and UI summaries",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Rewrite four EUR e53–e56 coordinate, auxiliary script, raster palette and UI summaries in readable English while preserving evidence and limits."
+  ],
+  "validation": [
+    "Compared numeric tokens, linked destinations and inline code with the prior text; git diff --check passed."
+  ],
+  "limitations": [
+    "Documentation only; no ROM, build, runtime, benchmark or platform validation was performed. Other guide sections remain under review."
+  ],
+  "files": [
+    "docs/rom_data.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": []
+}

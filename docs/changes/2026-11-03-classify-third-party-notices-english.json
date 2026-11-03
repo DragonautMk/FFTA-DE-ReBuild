@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "classify-third-party-notices-english",
+  "title": "Classify preserved third-party notices",
+  "kind": "docs",
+  "platforms": [
+    "Desktop and AndroidPort documentation"
+  ],
+  "changes": [
+    "Classify both identical third-party notice bundles as preserved upstream material with English project-authored wrappers."
+  ],
+  "validation": [
+    "Inspected generator and all non-fenced prose structure, counted 298 fenced notices and verified both bundle SHA-256 values match."
+  ],
+  "limitations": [
+    "Upstream license wording was preserved rather than translated or legally audited; other documentation and source audits remain open."
+  ],
+  "files": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": [
+    "Licenses/THIRD_PARTY_NOTICES.md",
+    "AndroidPort/Licenses/THIRD_PARTY_NOTICES.md",
+    "scripts/generate_notices.py"
+  ]
+}

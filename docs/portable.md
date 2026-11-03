@@ -69,6 +69,9 @@ An unwritable folder produces an error rather than redirecting save data.
 | `play-error.log` | Startup/runtime error details |
 | `play.log` (Linux) | Last runtime output |
 
+The launcher displays startup errors in English and writes the same details to
+`play-error.log` beside the executable.
+
 The optional developer `play --rom-data` path prepares decoded game metadata
 under `Data/resources/<ROM SHA-256>/v1/e2-d1/`. A relative `current` file selects
 a verified immutable generation, so moving the whole bundle reuses it. Missing

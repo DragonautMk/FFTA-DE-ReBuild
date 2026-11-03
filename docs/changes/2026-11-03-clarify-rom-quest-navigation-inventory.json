@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "clarify-rom-quest-navigation-inventory",
+  "title": "Clarify ROM quest and navigation inventory",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Rewrite four compressed inventory summaries covering quest location, White Flowers acceptance, world selection and Giza battle entry, preserving their historical scope and evidence limits."
+  ],
+  "validation": [
+    "Compared numeric tokens, links and task IDs against prior text and checked details against the linked map analysis; git diff --check passed."
+  ],
+  "limitations": [
+    "Documentation review only; no ROM exploration, build, runtime or platform validation was performed. The broader English-first audit remains open."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": []
+}

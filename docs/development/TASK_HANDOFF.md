@@ -29,9 +29,9 @@ termination of another owner's process or changing another thread's goal state.
 
 - State: active
 - Outcome: partial
-- Verified: previous runtime/report/guide/export units accepted, including shared debug guides. Command/event consoles and operation cards use English/Italian presentation; targeted tests PASS. Audit: 235 reviewed files, 16 Markdown pending.
-- Missing: remaining documentation, other dynamic report producers/metadata, helper/test modules, tools/build text, source comments and full audit across both trees. Planned-task checklist/reference translated and synchronized. Preserve optional locales, imported content and immutable history.
-- Resume: ENGLISH-FIRST-INVENTORY-REVIEW partial: opening through localized script text corrected. Continue at coordinate paths; full review remains open. Evidence: `docs/changes/2026-11-03-improve-rom-inventory-script-text-readability.json`.
+- Verified: previous runtime/report/guide/export units accepted, including shared debug guides. Command/event consoles and operation cards use English/Italian presentation; targeted tests PASS. Audit: 342 reviewed files, 10 Markdown pending; upstream decision plan translated with legacy anchors.
+- Missing: remaining documentation (ROM guide e11–e25, e28–e30, e33–e34, e37–e41, e44–e61 and e66–e76 clarified; rest pending), other dynamic report producers/metadata, helper/test modules, tools/build text, source comments and full audit across both trees. Planned-task checklist/reference translated and synchronized. Preserve optional locales, imported content and immutable history. Focus choice diagnostics follow English/Italian; preserve active DBG2 work. DBG2 checklist and TSV matched at last review; reconcile future concurrent changes. The handoff audit hash is volatile; saved ROM coverage JSON/HTML reconciled. Do not repeat the lost character diff.
+- Resume: ENGLISH-FIRST-INVENTORY-REVIEW partial: linked metadata28 summaries clarified; continue at linked records4. Full review open. Evidence: `docs/changes/2026-11-03-clarify-rom-metadata28-inventory.json`.
 
 ### ROMDATA-03-04-E105-SENARY-COMPACT-OBJ
 
@@ -68,25 +68,25 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 - State: suspended
 - Outcome: partial
-- Verified: typed parser, catalog/profile ID selection, cancel/deadline, retry, discovery and shared replay have Windows GNU/Wine evidence. `2026-10-31-prepare-debug-content-id-selection.json` and `2026-10-31-connect-shared-replay-commands.json` in docs/changes; profile-result and replay-panel/gui-result confirm selection/panel, without personal replay.
-- Missing: full menu/CLI/console parity for validation, actions and results across all requested operations, beyond the selected subset.
-- Resume: compare the contract and handlers only for the missing group in debug_command.rs/debug_control.rs/play.rs; do not repeat accepted profile selection, cancel or replay.
+- Verified: typed parser, catalog/profile selection, cancellation, retry, discovery and shared replay; UI trace start, duplicate refusal and report have matching menu/CLI/console outcome evidence. `docs/changes/2026-11-03-verify-ui-trace-channel-parity.json`.
+- Missing: full menu/CLI/console parity for validation, actions and results across other operations.
+- Resume: select a missing group without repeating accepted profile/replay or UI-trace paths.
 
 ### DBG2-14
 
-- State: active
+- State: suspended
 - Outcome: integrated_unverified
-- Verified: Unicode editor, history/selection, completion, simulated XInput keyboard, focus/hide, isolated clipboard and multiline paste; October 31 panel/controller/completion records.
-- Missing: real IME composition and layouts, GUI guards; native Windows/Linux/physical input unverified.
-- Resume: 2026-11-03 full debugtools v2 checkpoint: new maintained `cheats arm`/`disarm` commands are absent from contextual hint and completion. Add English/Italian hints and exact grammar completions, validate without repeating accepted clipboard or editor checks; `debug_command/completion.rs`.
+- Verified: Unicode editor, history/selection, completion, simulated XInput, focus/hide and clipboard; October 31 records. New maintained-cheat hints/completions pass Wine tests and synthetic console GUI; `2026-11-03-complete-maintained-cheat-console-hints.json`.
+- Missing: real IME composition/layout and GUI guards; native Windows/Linux/physical input unverified.
+- Resume: select a missing input criterion; do not repeat accepted clipboard, editor or completion checks.
 
 ### DBG2-15
 
 - State: suspended
 - Outcome: partial
-- Verified: JSON outcome/target/progress, ownership, cancel/deadline, idempotency, text retry, discovery and replay/panel checked in the October 31 records show-debug-command-job-context, classify-debug-command-local-errors, add-debug-command-retry and connect-shared-replay-commands. terminal-result confirms pending null; replay JSON copy matches.
-- Missing: complete assistant procedure and full console API parity; cancel/deadline while replay actually executes guest frames (so far a synthetic slow child), slow live refresh and complete presentation in a narrow window.
-- Resume: only the missing flow; do not reopen closed retry, wrong-ID, synthetic deadline or selection steps. A client timeout means unconfirmed delivery/outcome, not a stuck process.
+- Verified: structured context, retry, discovery and replay/panel; real EUR replay cancel/deadline and repeat procedure; 480×360 replay view; slow live refresh allows prior listing, rejects wrong ID, cancels exact ID without replacing index. `docs/changes/2026-11-03-cancel-slow-content-refresh.json`.
+- Missing: full operation parity and comprehensive narrow-window presentation for long labels/parameters.
+- Resume: select a missing criterion; do not repeat accepted replay, narrow replay view or live refresh.
 
 ### DBG2-16
 
@@ -100,9 +100,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 - State: suspended
 - Outcome: partial
-- Verified: 341-entry readonly index, import/menu, ROM context and local channel; October 31 index, browse, target and snapshot records. Bounded per-source capability index, menu and CLI accepted in `2026-11-03-index-cheat-source-capabilities.json`.
-- Missing: complete per-CH device/ROM and behavioral verification; plans are assumptions, not proof.
-- Resume: use `docs/cheats.md`; do not repeat accepted index or GUI checks.
+- Verified: readonly catalog/import/menu, bounded source index/CLI, and source-capability local query with generation, chunk/hash and CLI parity; `2026-11-03-index-cheat-source-capabilities.json`, `2026-11-03-expose-source-capability-local-control.json`.
+- Missing: complete device/ROM and behavioral verification; source plans are assumptions.
+- Resume: `docs/cheats.md`; do not repeat accepted index or channel checks.
 
 ### DBG2-18
 
@@ -122,27 +122,19 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ### DBG2-20
 
-- State: waiting
+- State: suspended
 - Outcome: partial
-- Verified: readonly search/details/filters, prepare/apply-once and console arm/disarm, conflict refusal and GUI active indicator; no implicit activation.
-- Missing: values/ranges, groups/presets, page toggles and full controller flow; depends on DBG2-19 and DBG2-15.
-- Resume: select missing page flow, without rebuilding catalog browsing.
-
-### DBG2-21
-
-- State: waiting
-- Outcome: partial
-- Verified: CH-0321/0323/0324/0325/0331/0334/0336 decoded statically; CH-0334 changes two RAM values and reopening the seed restores exact state. `target/debug-tools-v2-cheat-eur-resource/result.json` read: true for two writes/restoration/unchanged originals, no private payload.
-- Missing: at least one UI access and one resource modifier with gameplay effect, isolated activation/deactivation/restoration; combined CH-0321 is not simple HP.
-- Resume: depends on DBG2-19/20; do not equate static RAM or a fresh seed with a reversible toggle or UI evidence.
+- Verified: catalog/source/preview, apply/arm/disarm, filters and named pinned groups save/preview/atomic arm via explicit commands. CH-0226..0241 have source placeholders referencing modifier tables, but their region and values are unvalidated; no substitutions inferred. `docs/changes/2026-11-03-save-and-review-cheat-presets.json`.
+- Missing: validated values/ranges, page preset controls and complete game-effect evidence; device/ROM limits remain.
+- Resume: select a safe missing criterion; inspect `cheats/tabelle-modificatori.md` only for a specific source and do not treat its declarations as verified.
 
 ### DBG2-22
 
-- State: waiting
-- Outcome: not_started
-- Verified: generic catalog/decoder does not prove advanced-group effects.
-- Missing: evidence for each selected CH affecting abilities/AP/rules/transitions, with before/after and persistent effects; Clear Mission note uncertain.
-- Resume: after DBG2-21, with an explicit small group; no development or activation selected here.
+- State: suspended
+- Outcome: partial
+- Verified: CH-0340 EXP and CH-0320 Steal: Ability each accepted in a EUR Party scene with paired control and exact restoration. CH-0330 plan conditional; source has no notes. Documented battle-reward checkpoint DS-13 is USA, not EUR; no suitable EUR reward scene identified.
+- Missing: CH-0330 suitable EUR scene, before/after and side effects; other group entries, actual level-up and device-hook equivalence.
+- Resume: identify a relevant EUR reward checkpoint before testing CH-0330; no blind scene navigation. `docs/changes/2026-11-03-verify-eur-ability-mastery.json`.
 
 ### DBG2-23
 
@@ -218,6 +210,8 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Blockers, dependencies and shared resources
 
+- A read-only coverage HTML character diff yielded with no retained handle on 2026-11-03; outcome/host status unknown. Do not restart or infer termination.
+
 - Async work: the collaboration inventory observed on 2026-11-01 showed only `/root`; ps visibility is limited to the sandbox namespace. Recent isolated Linux test builds completed; no Wine/runtime job was started or signaled. Host/other-thread state is unobservable: do not assert global inactivity. Historical results prove their children's closure, not today's host state. Before resuming, check handle/process, output and owner; no response or a lost handle does not establish failure.
 - Shared resources: checkout, handoff/archive/CHANGELOG, canonical targets, Wine prefixes, display, datasets and fixtures. Do not stop others' processes, restore source/binaries without ownership or clean live/failed tasks. Historical Wine retention audit: deleting a prefix requires coordination/host visibility, not sandbox ps. Disk nearly full in an old sweep; current availability not measured here.
 - Memory writes: one coordinated writer; proposals with both preimage hashes and common lock through scripts/task_handoff.py update. If changed, reread and merge before publication. No background writer; no lock authorizes interference with other jobs. Details in MEMORY_WORKFLOW.
@@ -226,9 +220,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: RELEASE-LOCAL-CLEANUP completed.
-- Last verified result: six selected release build cache records retired; Docker reported 4.32 GB reclaimed, and all three local release package hashes still match.
-- Remaining work: no further release cleanup selected; larger historical Wine, test and active-work artifacts were retained.
-- Errors or blockers: the exact SDK parent-layer cleanup returned zero bytes; no global cache prune attempted.
-- Next action: no further action for this selection.
-- References: dist/first-release-v1.0.0-preparation/cleanup-receipt.json and build-cache-preview.txt.
+- Task: debugtools v2 objective paused; DBG2 selections suspended. Other active tasks retain their sections and ownership.
+- Last verified result: named source-bound cheat presets and typed filters passed Windows GNU/Wine checks; EUR cheat effects and live replay cancel/deadline/retry, slow refresh and UI trace channel parity recorded within bounded scopes.
+- Remaining work: DBG2-13..20 and 22..28 retain open criteria; values, page preset controls, broader parity, provenance/recipes and device/platform verification remain. DBG2-21 closed within its EUR/Wine scope.
+- Errors or blockers: cleanup helper refused non-ROM-data units without deletion. One old replay worker returned Access denied; fixed-worker comparison passed, precise OS cause unconfirmed. Initial narrow helper did not attest normal parent close; failed fixture retained.
+- Next action: do not select work while the goal is paused; upon authorized resumption read this handoff and checkpoint a specific missing criterion.
+- References: `docs/development/DEBUG_TOOLS_V2_TODO.md`, `docs/changes/2026-11-03-save-and-review-cheat-presets.json`, `docs/changes/2026-11-03-verify-ui-trace-channel-parity.json`.

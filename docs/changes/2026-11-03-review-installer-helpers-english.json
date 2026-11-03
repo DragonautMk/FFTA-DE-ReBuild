@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "review-installer-helpers-english",
+  "title": "Review installer helpers and database source in English",
+  "kind": "docs",
+  "platforms": [
+    "Desktop installer and development tooling"
+  ],
+  "changes": [
+    "Review installer selector, platform and policy helpers, two build scripts and the game database reader for English and register their exact revisions."
+  ],
+  "validation": [
+    "Read all eight source files in full and verified their SHA-256 hashes; existing paths, identifiers and imported names remain unchanged."
+  ],
+  "limitations": [
+    "Language review only; no build, UI, installation, database or ROM execution was performed. Other source and documentation audits remain open."
+  ],
+  "files": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": [
+    "crates/installer/src/native_picker.rs",
+    "crates/installer/src/platform.rs",
+    "crates/installer/src/presentation.rs",
+    "crates/installer/src/path_picker.rs",
+    "crates/installer/src/rom_policy.rs",
+    "crates/installer/build.rs",
+    "crates/gamedb/src/lib.rs",
+    "crates/ffta-play/build.rs"
+  ]
+}

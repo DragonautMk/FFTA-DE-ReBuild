@@ -5009,6 +5009,66 @@
       "external_dialog": null
     },
     {
+      "id": "cheats.capabilities",
+      "title": "Read source capability report",
+      "source": "crates/recomp/src/debug_cheats.rs",
+      "handler": "Snapshot::capabilities",
+      "cli": "recomp debug-control cheat-capabilities SESSION CH-ID [--offset N --generation SHA] [--timeout-ms N]",
+      "parameters": [
+        {
+          "name": "ID",
+          "value_type": "text",
+          "constraint": "Existing CH identifier.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--catalog",
+          "value_type": "path",
+          "constraint": "Explicit local catalogo.json; default is beside the executable.",
+          "current_menu": "not-applicable",
+          "default": null
+        },
+        {
+          "name": "--rom-sha256",
+          "value_type": "sha256",
+          "constraint": "Optional supplied exact ROM hash; no code behavior is inferred.",
+          "current_menu": "not-applicable",
+          "default": null
+        },
+        {
+          "name": "--offset",
+          "value_type": "integer",
+          "constraint": "Control detail UTF-8 byte offset.",
+          "current_menu": "not-applicable",
+          "default": 0
+        },
+        {
+          "name": "--generation",
+          "value_type": "sha256",
+          "constraint": "Optional immutable control snapshot generation.",
+          "current_menu": "not-applicable",
+          "default": null
+        }
+      ],
+      "selection": [
+        "local cheat catalog"
+      ],
+      "menu": {
+        "current": "Debug / Cheat / Catalogo cheat",
+        "destination": "Debug / Cheat / Catalogo cheat",
+        "implemented": true
+      },
+      "allowed_state": "Local readonly source; selection by type and hash is rechecked when used.",
+      "effects": "Read a bounded UTF-8 part of the immutable source capability report without applying code.",
+      "result": "Snapshot identity, report hash, JSON part and next byte offset.",
+      "limits": "Source-linked interpretations remain assumptions, not ROM checksum, device or gameplay verification; the source is not reread.",
+      "open_work": [
+        "DBG2-17/18: full device and behavioral verification remains open"
+      ],
+      "external_dialog": null
+    },
+    {
       "id": "cheats.prepare-once",
       "title": "Prepare a one-shot cheat plan",
       "source": "crates/recomp/src/debug_control.rs",
@@ -5065,16 +5125,16 @@
         "master"
       ],
       "menu": {
-        "current": null,
-        "destination": "Debug / Cheat",
-        "implemented": false
+        "current": "Debug / Cheat / Manage cheat / Prepare preview",
+        "destination": "Debug / Cheat / Manage cheat / Prepare preview",
+        "implemented": true
       },
       "allowed_state": "Idle paused isolated copy, interpreter only, no recording or replay; exact known ROM and matching source master checksum.",
       "effects": "Rechecks source and ROM and returns a bounded plan, footprint and state-bound preview token.",
       "result": "Unverified typed plan, affected ranges and preview token.",
-      "limits": "Only aligned canonical EWRAM/IWRAM writes and RAM/KEYINPUT reads, up to 256 writes; no hardware hook, native backend, maintained toggle or automatic restore.",
+      "limits": "Only aligned canonical EWRAM/IWRAM writes and RAM/KEYINPUT reads, up to 256 writes; no original hardware hook, native backend or automatic restore.",
       "open_work": [
-        "DBG2-19: maintained state, conflicts, other memory and native handling remain open",
+        "DBG2-19: broader memory and native handling remain open",
         "DBG2-21: game effects not verified"
       ],
       "external_dialog": null
@@ -5143,16 +5203,16 @@
         "master"
       ],
       "menu": {
-        "current": null,
-        "destination": "Debug / Cheat",
-        "implemented": false
+        "current": "Debug / Cheat / Manage cheat / Apply once",
+        "destination": "Debug / Cheat / Manage cheat / Apply once",
+        "implemented": true
       },
       "allowed_state": "Idle paused isolated copy, interpreter only, no recording or replay; exact known ROM and matching source master checksum.",
       "effects": "One explicit manual bus application at the paused frame boundary.",
       "result": "Applied write count or atomic refusal; token consumed after success.",
-      "limits": "Only aligned canonical EWRAM/IWRAM writes and RAM/KEYINPUT reads, up to 256 writes; no hardware hook, native backend, maintained toggle or automatic restore.",
+      "limits": "Only aligned canonical EWRAM/IWRAM writes and RAM/KEYINPUT reads, up to 256 writes; no original hardware hook, native backend or automatic restore.",
       "open_work": [
-        "DBG2-19: maintained state, conflicts, other memory and native handling remain open",
+        "DBG2-19: broader memory and native handling remain open",
         "DBG2-21: game effects not verified"
       ],
       "external_dialog": null
@@ -5221,9 +5281,9 @@
         "master"
       ],
       "menu": {
-        "current": null,
-        "destination": "Debug / Cheat",
-        "implemented": false
+        "current": "Debug / Cheat / Manage cheat / Arm",
+        "destination": "Debug / Cheat / Manage cheat / Arm",
+        "implemented": true
       },
       "allowed_state": "Idle paused isolated copy, interpreter only, no recording or replay; exact known ROM and matching source master checksum.",
       "effects": "Rechecks the state-bound preview and arms an immutable bounded plan; no write occurs until the next interpreter frame.",
@@ -5232,6 +5292,133 @@
       "open_work": [
         "DBG2-19: broader memory and native handling remain open",
         "DBG2-21: game effects not verified"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "cheats.preset-save",
+      "title": "Save named cheat preset",
+      "source": "crates/recomp/src/debug_cheat_preset.rs",
+      "handler": "debug_cheat_preset::save",
+      "cli": "recomp debug-control cheat-preset-save SESSION NAME [--timeout-ms N]",
+      "parameters": [
+        {
+          "name": "SESSION",
+          "value_type": "path",
+          "constraint": "Authenticated isolated session directory.",
+          "current_menu": "not-applicable",
+          "default": null
+        },
+        {
+          "name": "NAME",
+          "value_type": "text",
+          "constraint": "1..48 ASCII letters, digits, '-' or '_'.",
+          "current_menu": "not-applicable",
+          "default": null
+        }
+      ],
+      "selection": [
+        "explicit cheat catalog",
+        "named cheat preset"
+      ],
+      "menu": {
+        "current": null,
+        "destination": "Debug / Cheat",
+        "implemented": false
+      },
+      "allowed_state": "Idle paused isolated copy with a selected snapshot and at least one armed cheat.",
+      "effects": "Save the currently armed source-bound set as a new inert named preset; no guest writes.",
+      "result": "Structured outcome and current status; no implicit selection.",
+      "limits": "Source/device behavior and hardware hook equivalence are unverified. Disarm does not restore earlier writes.",
+      "open_work": [
+        "DBG2-20: parameter values and page preset controls remain open"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "cheats.preset-prepare",
+      "title": "Prepare a named cheat preset",
+      "source": "crates/recomp/src/debug_cheat_preset.rs",
+      "handler": "PlayApp::prepare_cheat_preset",
+      "cli": "recomp debug-control cheat-preset-prepare SESSION NAME [--timeout-ms N]",
+      "parameters": [
+        {
+          "name": "SESSION",
+          "value_type": "path",
+          "constraint": "Authenticated isolated session directory.",
+          "current_menu": "not-applicable",
+          "default": null
+        },
+        {
+          "name": "NAME",
+          "value_type": "text",
+          "constraint": "1..48 ASCII letters, digits, '-' or '_'.",
+          "current_menu": "not-applicable",
+          "default": null
+        }
+      ],
+      "selection": [
+        "explicit cheat catalog",
+        "named cheat preset"
+      ],
+      "menu": {
+        "current": null,
+        "destination": "Debug / Cheat",
+        "implemented": false
+      },
+      "allowed_state": "Idle paused interpreter with no armed cheats, selected matching catalog and ROM.",
+      "effects": "Load the preset and recheck ROM, catalog, source lines, each plan and all group conflicts; return a state-bound preview.",
+      "result": "Structured outcome and current status; no implicit selection.",
+      "limits": "Source/device behavior and hardware hook equivalence are unverified. Disarm does not restore earlier writes.",
+      "open_work": [
+        "DBG2-20: parameter values and page preset controls remain open"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "cheats.preset-arm",
+      "title": "Arm a reviewed cheat preset",
+      "source": "crates/recomp/src/debug_cheat_preset.rs",
+      "handler": "PlayApp::prepare_cheat_preset",
+      "cli": "recomp debug-control cheat-preset-arm SESSION NAME PREVIEW [--timeout-ms N]",
+      "parameters": [
+        {
+          "name": "SESSION",
+          "value_type": "path",
+          "constraint": "Authenticated isolated session directory.",
+          "current_menu": "not-applicable",
+          "default": null
+        },
+        {
+          "name": "NAME",
+          "value_type": "text",
+          "constraint": "1..48 ASCII letters, digits, '-' or '_'.",
+          "current_menu": "not-applicable",
+          "default": null
+        },
+        {
+          "name": "PREVIEW",
+          "value_type": "sha256",
+          "constraint": "Exact token from preset preview.",
+          "current_menu": "not-applicable",
+          "default": null
+        }
+      ],
+      "selection": [
+        "explicit cheat catalog",
+        "named cheat preset"
+      ],
+      "menu": {
+        "current": null,
+        "destination": "Debug / Cheat",
+        "implemented": false
+      },
+      "allowed_state": "Idle paused interpreter, matching source and unchanged reviewed preview.",
+      "effects": "Recheck the whole preview and atomically arm the complete set; no guest writes before the next frame.",
+      "result": "Structured outcome and current status; no implicit selection.",
+      "limits": "Source/device behavior and hardware hook equivalence are unverified. Disarm does not restore earlier writes.",
+      "open_work": [
+        "DBG2-20: parameter values and page preset controls remain open"
       ],
       "external_dialog": null
     },
@@ -5268,9 +5455,9 @@
         "isolated session"
       ],
       "menu": {
-        "current": null,
-        "destination": "Debug / Cheat",
-        "implemented": false
+        "current": "Debug / Cheat / Manage cheat / Disarm / Disarm all",
+        "destination": "Debug / Cheat / Manage cheat / Disarm / Disarm all",
+        "implemented": true
       },
       "allowed_state": "Idle paused isolated copy.",
       "effects": "Stop future frame-boundary writes for the selected ID or all plans.",
@@ -5333,18 +5520,18 @@
         "local cheat catalog"
       ],
       "menu": {
-        "current": "Debug / Cheat / Catalogo cheat",
-        "destination": "Debug / Cheat / Catalogo cheat",
+        "current": "Debug / Cheat / Cheat catalog",
+        "destination": "Debug / Cheat / Cheat catalog",
         "implemented": true
       },
       "allowed_state": "Local readonly source; selection by type and hash is rechecked when used.",
       "effects": "Opens readonly rows after source identity recheck.",
       "result": "Disabled view or explicit empty/error state.",
-      "limits": "No automatic dialog, decoder or guest execution.",
+      "limits": "Browsing assesses bounded source-linked plans; explicit management is required for any guest writes.",
       "open_work": [
-        "DBG2-17: ROM/device compatibility remains unverified",
-        "DBG2-18: no verified source decoder or guest application",
-        "DBG2-15: shared assistant access remains open"
+        "DBG2-17: device compatibility remains unverified",
+        "DBG2-20: values, groups and presets remain open",
+        "DBG2-21: game effects not verified"
       ],
       "external_dialog": null
     },

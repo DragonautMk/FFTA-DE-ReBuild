@@ -43,7 +43,7 @@ if (( status == 0 )); then status=${statuses[1]}; fi
 if (( status != 0 )); then
     printf '\nLinux build failed (exit %s). Log: %s\n' "$status" "$log_file" >&2
     if [[ -t 0 && -t 2 ]]; then
-        read -r -p 'Premi Invio per chiudere questa finestra...' _ || true
+        read -r -p 'Press Enter to close this window...' _ || true
     fi
 fi
 exit "$status"

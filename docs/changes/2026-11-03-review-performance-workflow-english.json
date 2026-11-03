@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "review-performance-workflow-english",
+  "title": "Review performance workflow in English",
+  "kind": "docs",
+  "platforms": [
+    "Desktop development documentation"
+  ],
+  "changes": [
+    "Review the entire performance workflow for English and register its exact revision in the audit."
+  ],
+  "validation": [
+    "Full-file manual language review; existing benchmark commands, historical evidence and platform limitations retained; file SHA-256 recorded."
+  ],
+  "limitations": [
+    "No measurements, builds, replays or ROM data were run; remaining documentation and source audits are open."
+  ],
+  "files": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": [
+    "docs/development/PERFORMANCE_WORKFLOW.md"
+  ]
+}

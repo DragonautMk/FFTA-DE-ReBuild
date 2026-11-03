@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "clarify-rom-data-early-resource-history",
+  "title": "Clarify early ROM resource history",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Correct fused words and numbers in the EUR e11–e25 resource summaries, preserving the recorded behavior and evidence."
+  ],
+  "validation": [
+    "Compared numeric tokens, linked destinations and inline code with the prior text; git diff --check passed."
+  ],
+  "limitations": [
+    "Documentation only; no ROM, build, runtime, benchmark or platform validation was performed. Other guide sections remain under review."
+  ],
+  "files": [
+    "docs/rom_data.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": []
+}

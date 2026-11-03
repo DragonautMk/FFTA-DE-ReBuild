@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "verify-eur-ability-mastery",
+  "title": "Verify bounded EUR ability mastery effect",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Record one bounded CH-0320 ability mastery effect in the advanced cheat group without claiming verification of every ability or character."
+  ],
+  "validation": [
+    "In an isolated EUR Party scene, Marsh Steal: Ability displayed 180 before one armed interpreter frame and MASTER! after disarm and reopening the list; the same-seed/input/frame no-cheat control remained at 180. Pre-cheat state, frame and clock matched. Both exact seeds were restored, sessions and displays closed, and protected originals and pins stayed unchanged.",
+    "The enabled list expanded, so the final selected rows differed while the same ability remained visible. A first interactive run closed on EOF before gameplay; a later graphics request hit the report cap after inputs and the paused GUI was captured instead."
+  ],
+  "limitations": [
+    "This covers one ability and Party scene under Wine/interpreter; all abilities and characters, other side effects, native Windows, physical input and original device-hook equivalence remain unverified. Disarm itself did not restore state."
+  ],
+  "files": [
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

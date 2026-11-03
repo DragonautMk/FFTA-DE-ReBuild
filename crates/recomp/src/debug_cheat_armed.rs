@@ -46,6 +46,29 @@ impl ArmedSet {
 
     pub(crate) fn clear(&mut self) { self.entries.clear(); }
 
+    pub(crate) fn preset(&self, name: &str, catalog_sha256: &str, rom_sha256: &str) -> Result<crate::debug_cheat_preset::Preset, String> {
+        use crate::debug_cheat_preset::{Member, Preset};
+        let mut members = Vec::with_capacity(self.entries.len());
+        for entry in &self.entries {
+            let identity = &entry.identity;
+            if identity["source_sha256"].as_str() != Some(catalog_sha256)
+                || identity["rom_sha256"].as_str() != Some(rom_sha256) {
+                return Err("Armed cheat belongs to a different catalog or ROM".into());
+            }
+            let text = |key: &str| identity[key].as_str().map(str::to_owned).ok_or_else(|| format!("Armed cheat is missing {key}"));
+            members.push(Member {
+                id: entry.id.clone(),
+                provenance_index: identity["provenance_index"].as_u64().and_then(|v| u16::try_from(v).ok()).ok_or("Armed cheat has invalid provenance")?,
+                master_id: text("master_id")?,
+                entry_lines_sha256: text("entry_lines_sha256")?,
+                master_lines_sha256: text("master_lines_sha256")?,
+            });
+        }
+        let preset = Preset { schema: 1, kind: "ffta-debug-cheat-preset".into(), name: name.into(), catalog_sha256: catalog_sha256.into(), rom_sha256: rom_sha256.into(), members };
+        preset.validate()?;
+        Ok(preset)
+    }
+
     pub(crate) fn status(&self) -> Value {
         json!({"active":!self.is_empty(),"entries":self.entries.iter().map(|entry|json!({"id":entry.id,"identity":entry.identity,"footprint":entry.footprint})).collect::<Vec<_>>(),
             "timing":"Before each interpreter frame after input latch","scope":"Frozen source-bound plans; disarming stops future writes and does not restore prior bytes"})
@@ -106,5 +129,16 @@ mod tests {
         set.arm("CH-0001",plan(&["42000000 0000","00000100 0002"]),json!({})).unwrap();
         assert!(set.arm("CH-0002",plan(&["82000400 1234"]),json!({})).is_err());
         assert_eq!(set.len(),1);
+    }
+
+    #[test]
+    fn preset_export_requires_a_single_pinned_catalog_and_rom() {
+        let mut set=ArmedSet::default();let catalog="a".repeat(64);let rom="b".repeat(64);
+        let identity=json!({"provenance_index":2,"master_id":"CH-0002","source_sha256":catalog,"rom_sha256":rom,"entry_lines_sha256":"c".repeat(64),"master_lines_sha256":"d".repeat(64)});
+        set.arm("CH-0001",plan(&["82000002 1234"]),identity).unwrap();
+        let saved=set.preset("example",&catalog,&rom).unwrap();
+        assert_eq!(saved.members[0].id,"CH-0001");assert_eq!(saved.members[0].provenance_index,2);
+        assert!(set.preset("example",&"e".repeat(64),&rom).is_err());
+        assert!(set.preset("../example",&catalog,&rom).is_err());
     }
 }

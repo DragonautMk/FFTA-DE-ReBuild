@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "verify-ui-trace-channel-parity",
+  "title": "Verify UI trace outcomes across control channels",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Record a bounded DBG2-13 menu, CLI and console parity check for UI trace start, duplicate refusal and report."
+  ],
+  "validation": [
+    "In isolated Wine/Xvfb interpreter copies, each of direct local-control CLI, menu and integrated command console started a UI trace, refused a second start while active, and saved a report. CLI and console returned identical refusal text; the menu displayed it. Parent state, frame and clock, original inputs and pins remained unchanged; sessions and displays closed.",
+    "The first helper read a nonexistent report field after the CLI had succeeded; the next helper completed the menu path but failed to navigate to the console. Both copies closed normally, and a third copy completed only the missing console path."
+  ],
+  "limitations": [
+    "Trace contents differ because the user interactions differ; this checks action and validation outcomes, not byte-identical reports, all operations, native Windows or physical input."
+  ],
+  "files": [
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

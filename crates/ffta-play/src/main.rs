@@ -20,7 +20,7 @@ fn main() {
     let bundled_rom = exe_dir.join("ffta.gba");
     let rom = if bundled_rom.is_file() || portable { bundled_rom } else { local };
 
-    if !recomp.exists() { return fail(&exe_dir, &format!("Falta {}", recomp.display())); }
+    if !recomp.exists() { return fail(&exe_dir, &format!("Missing executable: {}", recomp.display())); }
     if !rom.is_file() && portable {
         let Some(selected) = rfd::FileDialog::new()
             .set_title("Choose your FFTA ROM (copied into the portable folder)")
@@ -62,11 +62,11 @@ fn main() {
     }
 
     match r {
-        Err(e) => fail(&exe_dir, &format!("No se pudo lanzar recomp.exe: {e}")),
+        Err(e) => fail(&exe_dir, &format!("Could not launch recomp: {e}")),
         Ok(o) if !o.status.success() => fail(
             &exe_dir,
             &format!(
-                "recomp.exe termino con {}\n--- stderr ---\n{}\n--- stdout ---\n{}",
+                "recomp exited with {}\n--- stderr ---\n{}\n--- stdout ---\n{}",
                 o.status,
                 String::from_utf8_lossy(&o.stderr),
                 String::from_utf8_lossy(&o.stdout)

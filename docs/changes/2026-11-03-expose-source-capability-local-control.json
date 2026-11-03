@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "expose-source-capability-local-control",
+  "title": "Expose source capability reports through the local channel",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Add an authenticated read-only cheats capabilities query and direct control form returning bounded UTF-8 chunks of the immutable source-capability report, its SHA-256 and snapshot generation.",
+    "Advertise a separate channel capability, refuse older servers before sending, preserve original-entry detail format, and add command completion and operation metadata."
+  ],
+  "validation": [
+    "Frozen offline Windows GNU test and runtime builds passed without compiler messages or source drift across 1941 files. Wine passed 13 cheat tests (one ignored), 9 command, 4 completion, 31 control and 4 operation tests, including multi-part UTF-8 reconstruction, invalid offsets and generation, and old-server refusal.",
+    "A synthetic isolated Wine/Xvfb interpreter returned the same capability report via CLI, console and direct control with matching hash; stale generation was refused, paused guest and protected inputs remained unchanged, and session/display closed."
+  ],
+  "limitations": [
+    "Source-bound reports remain assumptions and do not verify device behavior, actual ROM checksum or gameplay. Native Windows, Linux and physical input were not tested; the runtime parity proof used one synthetic report part, while multi-part behavior was tested separately."
+  ],
+  "files": [
+    "crates/recomp/src/debug_cheats.rs",
+    "crates/recomp/src/debug_command.rs",
+    "crates/recomp/src/debug_command/completion.rs",
+    "crates/recomp/src/debug_control.rs",
+    "crates/recomp/src/debug_operations.rs",
+    "crates/recomp/src/debug_operations.json",
+    "crates/recomp/src/play.rs",
+    "crates/input-config/languages/en.json",
+    "crates/input-config/languages/it.json"
+  ],
+  "references": [
+    "docs/debug_control.md",
+    "docs/cheats.md",
+    "docs/development/MENU_ATLAS_INVENTORY.json"
+  ]
+}

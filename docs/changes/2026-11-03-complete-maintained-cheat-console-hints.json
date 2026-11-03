@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "complete-maintained-cheat-console-hints",
+  "title": "Complete maintained cheat command hints in the console",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Offer arm and disarm completion and the explicit all argument; show localized contextual syntax for prepare, apply-once, arm and disarm without inventing source identities or preview tokens."
+  ],
+  "validation": [
+    "Frozen offline Windows GNU release and test builds passed with 1915 source files and no drift. Four Wine completion tests passed, including English and Italian hints.",
+    "An isolated paused Wine/Xvfb command console showed the completed arm and disarm all drafts and their English hints; visual screenshots were reviewed, neither draft was submitted, and the guest, session pins and protected inputs remained unchanged."
+  ],
+  "limitations": [
+    "Real IME composition and keyboard layouts, native Windows, Linux and physical controllers remain unverified. The captured GUI uses English; Italian hints were covered by Wine tests."
+  ],
+  "files": [
+    "crates/recomp/src/debug_command/completion.rs",
+    "crates/input-config/languages/en.json",
+    "crates/input-config/languages/it.json"
+  ],
+  "references": [
+    "docs/debug_control.md",
+    "docs/cheats.md"
+  ]
+}

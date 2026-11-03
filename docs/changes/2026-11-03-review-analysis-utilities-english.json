@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "review-analysis-utilities-english",
+  "title": "Review analysis and audit utilities in English",
+  "kind": "docs",
+  "platforms": [
+    "Desktop development tooling"
+  ],
+  "changes": [
+    "Review eight analysis, image conversion and audit tools for English and register their exact revisions in the audit."
+  ],
+  "validation": [
+    "Read all eight tools in full and confirmed their hashes; English comments and messages retained, with existing Spanish status tokens classified as legacy output compatibility."
+  ],
+  "limitations": [
+    "Tools were not executed on captures, ROMs, saves or private data; other source and documentation audits remain open."
+  ],
+  "files": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": [
+    "scripts/ffta_character_metric.py",
+    "scripts/ffta_log_analysis.py",
+    "scripts/ffta_compare_extra0.py",
+    "scripts/ffta_ppm_to_png.py",
+    "scripts/ffta_sky_verify.py",
+    "scripts/ffta_stage_compare.py",
+    "scripts/compare_native_backends.py",
+    "scripts/audit_release.py"
+  ]
+}

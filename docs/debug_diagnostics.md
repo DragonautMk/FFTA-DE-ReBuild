@@ -35,15 +35,15 @@ claiming it is already ready for replay.
 PowerShell example, from the selected executable's directory:
 
 ```powershell
-.\recomp.exe diagnose 'C:\Giochi\FFTA EUR.gba' --no-bios --interp --json
+.\recomp.exe diagnose 'C:\Games\FFTA EUR.gba' --no-bios --interp --json
 ```
 
 For a recorded case with an explicit dataset:
 
 ```powershell
-.\recomp.exe diagnose 'C:\Giochi\FFTA EUR.gba' --no-bios --interp `
-  --sav 'C:\Debug\partita.sav' --state 'C:\Debug\scena.ffstate' `
-  --input 'C:\Debug\scena.input' --dataset 'C:\Debug\dataset' `
+.\recomp.exe diagnose 'C:\Games\FFTA EUR.gba' --no-bios --interp `
+  --sav 'C:\Debug\game.sav' --state 'C:\Debug\scene.ffstate' `
+  --input 'C:\Debug\scene.input' --dataset 'C:\Debug\dataset' `
   --out 'C:\Debug\diagnosis.json' --json
 ```
 

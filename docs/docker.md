@@ -96,7 +96,7 @@ reuse a binary produced from different source content. Unchanged Docker layers
 remain cached. The refresh happens inside the image, without touching the host
 checkout. The coverage recipe already refreshes its Git archive at extraction.
 
-The Bash Linux builder prints the path of a new log under
+The Bash Linux builder uses English for its diagnostics and terminal prompt. It prints the path of a new log under
 `target/build-logs/linux-*.log` on every invocation and saves both normal output
 and errors there. When a build fails in an interactive terminal, it waits for
 Enter before exiting, so a terminal opened by a file manager keeps the error

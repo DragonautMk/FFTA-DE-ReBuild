@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "review-updated-debug-plan-english",
+  "title": "Review updated debug plan and task references",
+  "kind": "docs",
+  "platforms": [
+    "Desktop development documentation"
+  ],
+  "changes": [
+    "Review subsequent changes to the English debug checklist and generated task references and refresh their audit hashes."
+  ],
+  "validation": [
+    "Compared both files with the exact previously reviewed Git revisions, read changed content and verified that 28 generated task references match the checklist."
+  ],
+  "limitations": [
+    "Language and generator freshness only; no debug actions, runtime tests or ROM access performed. Other stale audit hashes and unreviewed surfaces remain.",
+    "After the freshness check, concurrent DBG2-20 work changed the checklist again; its current hash and generated reference require reconciliation after that work."
+  ],
+  "files": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": [
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "crates/menu/assets/debug_v2.tsv"
+  ]
+}

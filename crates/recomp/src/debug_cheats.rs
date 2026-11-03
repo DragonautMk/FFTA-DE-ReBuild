@@ -176,8 +176,17 @@ impl Catalog {
             menu::ContentEntry{id:entry["id"].as_str().unwrap().into(),name:format!("{} · {}",entry["id"].as_str().unwrap(),entry["title"].as_str().unwrap()),
                 kind:format!("{} / {}",entry["format"].as_str().unwrap(),entry["region"].as_str().unwrap()),description:details,
                 location:language.text("Local catalog · read only").into(),identity:menu::i18n::format(language,"Catalog SHA256 {catalog}\nROM SHA256 {rom} · recognized region {region}",&[("catalog",self.source_sha256.clone()),("rom",target.sha256.unwrap_or_else(||language.text("Unknown ROM hash")).into()),("region",target.region.unwrap_or_else(||language.text("Unknown recognized region")).into())]),status:language.text("Cheat disabled").into(),compatibility:language.text("Cheat unverified").into(),
-                reason:menu::i18n::format(language,"{relation}; {capability}. Source declaration only, not code verification. Device and behavior unverified; runtime preflight required.",&[("relation",relation.into()),("capability",capability.into())]),available:true}
+                reason:menu::i18n::format(language,"{relation}; {capability}. Source declaration only, not code verification. Device and behavior unverified; runtime preflight required.",&[("relation",relation.into()),("capability",capability.into())]),available:true,
+                cheat_filter:Some(menu::CheatFilter{armed:false,declared_match:target.declaration(region)=="declared-match",plan_candidate:summary["compatibility"]["manual_once"]["state"]=="requires-runtime-preflight"})}
         }).collect()
+    }
+    pub fn menu_sources(&self,id:&str)->Result<Vec<menu::CheatSource>,String>{
+        let index=self.entries.iter().position(|e|e["id"]==id).ok_or("Unknown CH identifier")?;
+        let entry=&self.entries[index];let sources=self.capabilities[index]["sources"].as_array().ok_or("Missing source assessment")?;
+        Ok(sources.iter().filter_map(|s|{
+            let index=s["provenance_index"].as_u64()?;let provenance=entry["provenance"].as_array()?.get(index as usize)?;
+            Some(menu::CheatSource{index:u16::try_from(index).ok()?,name:provenance["source"].as_str().unwrap_or("unknown").chars().take(80).collect(),master:s["master_id"].as_str().unwrap_or("unknown").chars().take(16).collect(),assessment:s["assessment"]["state"].as_str().unwrap_or("unresolved").into()})
+        }).collect())
     }
 }
 
@@ -188,19 +197,24 @@ pub(crate) struct Snapshot {
     catalog:Catalog,
     encoded:Vec<String>,
     encoded_sha256:Vec<String>,
+    capabilities_encoded:Vec<String>,
+    capabilities_sha256:Vec<String>,
     pub selection_id:String,
     pub source_sha256:String,
     pub rom_sha256:String,
     pub generation:String,
 }
 impl Snapshot {
-    fn new(catalog:Catalog,selection_id:String,rom_sha256:String)->Result<Self,String>{
+    pub(crate) fn new(catalog:Catalog,selection_id:String,rom_sha256:String)->Result<Self,String>{
         let source_sha256=catalog.source_sha256.clone();
         let generation=gba_core::ffta_rom::digest(format!("{source_sha256}\n{rom_sha256}").as_bytes());
         let encoded=catalog.entries.iter().map(|v|serde_json::to_string(v).map_err(|e|e.to_string())).collect::<Result<Vec<_>,_>>()?;
         let encoded_sha256=encoded.iter().map(|s|gba_core::ffta_rom::digest(s.as_bytes())).collect();
-        Ok(Self{catalog,encoded,encoded_sha256,selection_id,source_sha256,rom_sha256,generation})
+        let capabilities_encoded=catalog.capabilities.iter().map(|v|serde_json::to_string(v).map_err(|e|e.to_string())).collect::<Result<Vec<_>,_>>()?;
+        let capabilities_sha256=capabilities_encoded.iter().map(|s|gba_core::ffta_rom::digest(s.as_bytes())).collect();
+        Ok(Self{catalog,encoded,encoded_sha256,capabilities_encoded,capabilities_sha256,selection_id,source_sha256,rom_sha256,generation})
     }
+    pub fn menu_sources(&self,id:&str)->Result<Vec<menu::CheatSource>,String>{self.catalog.menu_sources(id)}
     pub fn matches(&self,reference:Option<&crate::debug_inputs::Reference>,rom:&str)->bool{
         rom==self.rom_sha256 && reference.is_some_and(|r|r.entry.id==self.selection_id && r.entry.sha256.as_deref()==Some(&self.source_sha256))
     }
@@ -242,6 +256,12 @@ impl Snapshot {
         let value=&self.encoded[index];let start=offset as usize;if start>value.len() || !value.is_char_boundary(start){return Err("Detail offset is not a valid UTF-8 boundary".into());}
         let mut end=start.saturating_add(4096).min(value.len());while !value.is_char_boundary(end){end-=1;}
         Ok(json!({"snapshot":self.identity(),"id":id,"offset_bytes":start,"total_bytes":value.len(),"entry_sha256":self.encoded_sha256[index],"json_part":&value[start..end],"next_offset_bytes":if end<value.len(){Some(end)}else{None},"scope":"Concatenate UTF-8 parts for the complete original entry JSON"}))
+    }
+    pub fn capabilities(&self,id:&str,offset:u32,generation:Option<&str>)->Result<Value,String>{
+        self.check_generation(generation)?;let index=self.catalog.entries.iter().position(|e|e["id"]==id).ok_or("Unknown CH identifier")?;
+        let value=&self.capabilities_encoded[index];let start=offset as usize;if start>value.len() || !value.is_char_boundary(start){return Err("Capability offset is not a valid UTF-8 boundary".into());}
+        let mut end=start.saturating_add(4096).min(value.len());while !value.is_char_boundary(end){end-=1;}
+        Ok(json!({"snapshot":self.identity(),"id":id,"offset_bytes":start,"total_bytes":value.len(),"capability_sha256":self.capabilities_sha256[index],"json_part":&value[start..end],"next_offset_bytes":if end<value.len(){Some(end)}else{None},"scope":"Concatenate UTF-8 parts for the source-assumed capability report; not ROM, device or gameplay verification"}))
     }
 }
 
@@ -470,6 +490,16 @@ mod tests {
         let mut offset=0u32;let mut joined=String::new();loop{let chunk=s.show("CH-0001",offset,Some(&s.generation)).unwrap();let text=chunk["json_part"].as_str().unwrap();assert!(text.len()<=4096);joined.push_str(text);match chunk["next_offset_bytes"].as_u64(){Some(next)=>offset=next as u32,None=>break,}}
         assert_eq!(serde_json::from_str::<Value>(&joined).unwrap(),v["entries"][0]);assert!(s.show("CH-9999",0,None).is_err());
         let pos=joined.find('é').unwrap();assert!(s.show("CH-0001",(pos+1) as u32,None).is_err());
+    }
+    #[test]
+    fn capability_snapshot_chunks_preserve_report_generation_and_utf8(){
+        let mut c=Catalog::parse(&serde_json::to_vec(&fixture()).unwrap()).unwrap();
+        c.capabilities[0]["test_long_reason"]=json!("é".repeat(5000));
+        let expected=c.capabilities[0].clone();let s=Snapshot::new(c,"content-id".into(),"a".repeat(64)).unwrap();
+        let mut offset=0;let mut joined=String::new();let mut expected_hash=None;
+        loop{let chunk=s.capabilities("CH-0001",offset,Some(&s.generation)).unwrap();let text=chunk["json_part"].as_str().unwrap();assert!(text.len()<=4096);joined.push_str(text);let hash=chunk["capability_sha256"].as_str().unwrap();if let Some(previous)=&expected_hash{assert_eq!(previous,hash)}else{expected_hash=Some(hash.to_owned());}match chunk["next_offset_bytes"].as_u64(){Some(next)=>offset=next as u32,None=>break,}}
+        assert_eq!(serde_json::from_str::<Value>(&joined).unwrap(),expected);assert_eq!(expected_hash.unwrap(),gba_core::ffta_rom::digest(joined.as_bytes()));
+        let invalid=joined.find('é').unwrap()+1;assert!(s.capabilities("CH-0001",invalid as u32,None).is_err());assert!(s.capabilities("CH-0001",0,Some(&"0".repeat(64))).is_err());assert!(s.capabilities("CH-9999",0,None).is_err());
     }
     #[test]
     fn cancelled_refresh_never_commits_a_snapshot(){

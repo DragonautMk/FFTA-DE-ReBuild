@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "inspect-narrow-replay-console",
+  "title": "Inspect narrow replay console and worker version",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Record bounded narrow-window presentation evidence for a replay request and distinguish an older replay worker from the corrected worker."
+  ],
+  "validation": [
+    "At a real Windows client size of 480×360 under Wine/Xvfb, the console displayed the pending replay request ID and parameters, then the successful result and copy hint. The corrected worker completed 102/102 frames with exact endpoint; parent state, frame and clock, original inputs and session pins stayed unchanged.",
+    "An earlier copied profile with the old worker stopped at frame 45 with Access denied; a source-bound profile with the previously corrected worker differed only in runtime hash and passed with status polling. This is consistent with the documented publication-sharing fix, but the denied OS operation was not reported. An initial GUI helper waited on the wrong response channel and did not attest normal parent close; corrected sessions closed normally."
+  ],
+  "limitations": [
+    "The session label is abbreviated and one narrow replay does not prove all long labels/parameters, native Windows, physical input or complete operation parity."
+  ],
+  "files": [
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

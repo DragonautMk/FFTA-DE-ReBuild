@@ -105,7 +105,10 @@ pub(crate) fn hint(text:&str,language:input_config::Language)->&'static str {
             Some("apply-once")=>"cheats apply-once CH-ID SOURCE MASTER GENERATION TOKEN · apply once",
             Some("arm")=>"cheats arm CH-ID SOURCE MASTER GENERATION TOKEN · arm after preview",
             Some("disarm")=>"cheats disarm CH-ID|all · stop future writes, without restoring memory",
-            _=>"cheats select ID | refresh | list | show CH-ID | prepare | apply-once | arm | disarm",
+            Some("preset-save")=>"cheats preset-save NAME · save the armed set without applying it",
+            Some("preset-prepare")=>"cheats preset-prepare NAME · inspect the complete group preview",
+            Some("preset-arm")=>"cheats preset-arm NAME TOKEN · arm the reviewed group",
+            _=>"cheats select ID | refresh | list | show | capabilities | prepare | apply-once | arm | disarm",
         },
         "content"=>"content refresh | content list [--offset N --limit 1..16 --generation N]",
         "replay"=>"replay run [plain|audit|capture|compare] · selected profile",
@@ -139,11 +142,11 @@ pub(crate) fn complete(text:&str,cursor:usize,profiles:&[String],catalogs:&[Stri
     let mut options:Vec<String>=if before.is_empty(){COMMANDS.iter().map(|s|(*s).into()).collect()}else{match (c,before.len()){
         ("help",1)=>operations.to_vec(),("profile"|"catalog",1)=>vec!["select".into()],
         ("content",1)=>vec!["list".into(),"refresh".into()],
-        ("cheats",1)=>vec!["select".into(),"refresh".into(),"list".into(),"show".into(),"prepare".into(),"apply-once".into(),"arm".into(),"disarm".into()],
+        ("cheats",1)=>vec!["select".into(),"refresh".into(),"list".into(),"show".into(),"capabilities".into(),"prepare".into(),"apply-once".into(),"arm".into(),"disarm".into(),"preset-save".into(),"preset-prepare".into(),"preset-arm".into()],
         ("cheats",2) if before[1]=="select"=>cheats.to_vec(),
         ("cheats",2) if before[1]=="disarm"=>vec!["all".into()],
-        ("cheats",2) if before[1]=="show"=>Vec::new(),
-        ("cheats",_) if before.get(1)==Some(&"list") || before.get(1)==Some(&"show")=>{
+        ("cheats",2) if before[1]=="show" || before[1]=="capabilities"=>Vec::new(),
+        ("cheats",_) if ["list","show","capabilities"].contains(&before.get(1).copied().unwrap_or(""))=>{
             if before.last()==Some(&"--offset"){vec!["0".into()]}else if before.last()==Some(&"--limit"){vec!["16".into()]}else if before.last()==Some(&"--generation"){Vec::new()}else{
                 let flags:Vec<&str>=if before[1]=="list"{vec!["--offset","--limit","--generation"]}else{vec!["--offset","--generation"]};flags.into_iter().filter(|flag|!used.contains(flag)).map(str::to_owned).collect()
             }
@@ -192,6 +195,8 @@ mod tests {
             ("cheats a",vec!["apply-once","arm"]),
             ("cheats dis",vec!["disarm"]),
             ("cheats disarm a",vec!["all"]),
+            ("cheats cap",vec!["capabilities"]),
+            ("cheats capabilities CH-0001 --o",vec!["--offset"]),
             ("replay run c",vec!["capture","compare"]),
             ("code-start --mode ",vec!["all","arm","thumb"]),
             ("audio-start --streams mixed,ps",vec!["mixed,psg"]),

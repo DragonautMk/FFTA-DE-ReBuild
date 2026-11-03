@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "translate-upstream-decision-audit-plan",
+  "title": "Translate the upstream decision and audit plan",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Translate the maintained upstream v3.1 decision plan into English while retaining the owner-approved directions, authorization boundaries, audit evidence and legacy heading anchors."
+  ],
+  "validation": [
+    "Compared inline code tokens, URLs, task IDs and checkboxes against the original; verified original heading anchors and reviewed the decision matrix and acceptance limits."
+  ],
+  "limitations": [
+    "This translation does not perform the upstream audit or authorize implementation, tests or merging."
+  ],
+  "files": [
+    "docs/To_DO/FFTARecomp_Upstream_v3_1_Analisi_Decisioni_v0_2.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": []
+}

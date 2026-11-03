@@ -295,8 +295,9 @@ No other development was selected. On resumption read only the individual ID in
   discovery, retry and shared replay are present and verified in substeps.
   [Profile selection](../changes/2026-10-31-prepare-debug-content-id-selection.json)
   includes the later positive CLI/panel test; [shared replay](../changes/2026-10-31-connect-shared-replay-commands.json)
-  includes JSON copied from the console. Full menu/CLI/console contract parity
-  remains missing; these paths do not need reimplementation.
+  includes JSON copied from the console. UI trace start, duplicate-start refusal
+  and report now have matching menu/CLI/console outcome evidence. Full parity
+  across other operations remains missing; these paths do not need reimplementation.
 
 - [ ] **DBG2-14 — Integrated editor, completion and contextual help.**
   Provide a “Command console” panel with explicit submission, history,
@@ -337,9 +338,18 @@ No other development was selected. On resumption read only the individual ID in
   [retry](../changes/2026-10-31-add-debug-command-retry.json),
   [discovery](../changes/2026-10-31-add-debug-content-discovery-commands.json) and
   [replay](../changes/2026-10-31-connect-shared-replay-commands.json).
-  pending null after cancel is proven; replay cancel/deadline used a synthetic
-  slow child, not interruption of guest frames. Complete assistant procedure and
-  parity, live slow-refresh and narrow-window presentation remain.
+  pending null after cancel is proven. A copied EUR replay later confirmed
+  exact-ID cancellation after real worker progress (10/102 observed, stopped at
+  21). A separate deadline run observed 9/102 and confirmed the server timeout
+  with the worker interrupted at 13/102 after the client's unacknowledged
+  timeout. An isolated EUR procedure also repeated discovery, ID selection and
+  a complete 102-frame replay twice with equal endpoints; retry of the first
+  identity returned the same JSON and worker. At 480×360, a corrected-worker
+  replay showed its pending ID/parameters and successful result; long session
+  labels remain abbreviated. A slow refresh over 2,048 inert files allowed
+  listing the old index, refused wrong-ID cancellation and discarded the exact
+  cancelled scan. Full operation parity and comprehensive narrow-window
+  presentation remain.
 
 - [ ] **DBG2-16 — Repeatable recipes and bounded batches.**
   Save a sequence of typed commands from the console, selectable in Scripts and
@@ -442,11 +452,15 @@ No other development was selected. On resumption read only the individual ID in
   conflicts and changed codes prevent silent activation. **Depends on:** DBG2-04/15/19.
 
   **Audit 2026-11-01 — partial.** The [catalog view](../changes/2026-10-31-browse-local-cheat-catalog-in-menu.json)
-  provides read-only search/details/filters; later console arm/disarm and the
-  active indicator are not page toggles. Values/groups/profiles and a full
-  controller flow remain missing; retain the integrated view instead of rebuilding it.
+  provides search/details/filters and a later explicit source/preview/arm/disarm
+  page flow. The cheat filters now use source-plan, declared-region and armed
+  metadata rather than localized labels; synthetic Wine GUI checks include
+  arm/disarm updates. Named source-bound groups can now be saved, reviewed and
+  armed atomically through explicit text commands, with synthetic conflict and
+  drift refusals. Page preset controls, values/ranges and complete game-effect
+  evidence remain missing; retain the integrated view instead of rebuilding it.
 
-- [ ] **DBG2-21 — First EUR selection useful for debugging.**
+- [x] **DBG2-21 — First EUR selection useful for debugging.**
   Priorities, subject to decoding/verification: access to Card Shop/Item Shop/
   Monster Bank (CH-0323/0324/0325) to reach UI and transitions; funds/resources
   (CH-0331/0334/0336) to repeat actions; HP/MP/stats (CH-0321) to keep the case
@@ -456,9 +470,20 @@ No other development was selected. On resumption read only the individual ID in
   access and one resource modifier have isolated activation, effect,
   deactivation and restoration evidence; report each other CH individually,
   without marking a whole group verified. **Depends on:** DBG2-19/20.
-  Progress: CH-0334 applied once in an isolated Wine EUR copy; both RAM writes
-  match the plan and restart from the seed restores state. Visible effect,
-  toggle/deactivation and UI evidence remain open; [details](../cheats.md#manual-one-shot-in-an-isolated-session--dbg2-19-in-progress).
+  Completed within a bounded EUR/Wine interpreter scope: CH-0324 reached Item
+  Shop after one Select+Right frame and disarm; the same-seed/input/frame
+  control remained on the map, and seed restoration was exact. At the same shop
+  purchase checkpoint, a 500-gil purchase produced 7,249 funds without a cheat
+  and 99,999,499 with CH-0334 armed; disarm and exact checkpoint restoration
+  were checked. [Details](../cheats.md#manual-one-shot-in-an-isolated-session--dbg2-19-in-progress).
+
+  Individual status: CH-0324 has the bounded shop-access evidence above;
+  CH-0334 has the bounded purchase evidence above, while a map redraw showed no
+  visible change. CH-0336 reported 24 writes but Marsh remained at JP 4 after
+  bounded next/previous inputs; the intermediate selection was not captured and
+  the redraw is unconfirmed. Other units are untested. CH-0321 (combined block),
+  CH-0323 (Card Shop), CH-0325 (Monster Bank) and CH-0331 (gil reward) retain
+  static source/master decoding only; their gameplay effects are unverified.
 
   **Audit 2026-11-01 — partial.** [Static source/master](../changes/2026-10-31-inspect-source-bound-codebreaker-masters.json)
   covers seven priorities; [application](../changes/2026-10-31-apply-guarded-cheat-once.json)
@@ -476,6 +501,17 @@ No other development was selected. On resumption read only the individual ID in
   skip the scene being diagnosed. **Completion:** check before/after state and
   side effects for each selected CH; others remain explicitly unverified. A
   forced victory is not evidence of the ordinary sequence. **Depends on:** DBG2-21.
+
+  Progress: in one isolated EUR/Wine Party scenario, CH-0340 changed Marsh's
+  displayed EXP 78→99 while level stayed 5; a same-seed/input/frame no-cheat
+  control remained at 78. The plan recorded 24 writes; the observed effect
+  persisted after disarm and a confirmed selection change, and both seeds were
+  restored exactly. Montblanc showed 99 versus 92 in a control captured at a
+  different frame; this is secondary evidence. In another EUR Party scenario,
+  CH-0320 changed Marsh's Steal: Ability display from 180 to MASTER! after one
+  armed frame and disarm; the same-seed/input/frame control remained at 180.
+  Both seeds were restored exactly. Other abilities and side effects, actual
+  level-up, CH-0330, rules/cards and transition entries remain unverified.
 
   **Audit 2026-11-01 — not started.** Catalog entries and the generic decoder
   are not evidence of abilities/AP/rules/transitions. No acceptance record for

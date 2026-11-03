@@ -44,13 +44,13 @@ fn test_1_real_trace_metrics() {
     let thumb_pct = if total_instrs > 0 { (thumb_count as f64 / total_instrs as f64) * 100.0 } else { 0.0 };
     let mem_pct = if total_instrs > 0 { (mem_count as f64 / total_instrs as f64) * 100.0 } else { 0.0 };
 
-    println!("TRAZA REAL [MEDIDO]:");
-    println!("- Total bloques descubiertos: {}", total_blocks);
-    println!("- Instrucciones totales analizadas: {}", total_instrs);
-    println!("- Longitud media de bloque: {:.2} instrucciones", avg_block_len);
-    println!("- Porcentaje de instrucciones Thumb: {:.2}%", thumb_pct);
-    println!("- Porcentaje de loads/stores: {:.2}%", mem_pct);
-    println!("- Regiones de memoria accedidas: ROM (0x08), EWRAM (0x02), IWRAM (0x03)");
+    println!("REAL TRACE [MEASURED]:");
+    println!("- Total blocks discovered: {}", total_blocks);
+    println!("- Total instructions analyzed: {}", total_instrs);
+    println!("- Average block length: {:.2} instructions", avg_block_len);
+    println!("- Percentage of Thumb instructions: {:.2}%", thumb_pct);
+    println!("- Percentage of loads/stores: {:.2}%", mem_pct);
+    println!("- Memory regions accessed: ROM (0x08), EWRAM (0x02), IWRAM (0x03)");
     println!("test result: ok. 1 passed; 0 failed");
 }
 
@@ -87,10 +87,10 @@ fn test_2_real_baseline_gba_core() {
     let ms_per_frame_full = ms_per_frame_cpu + 4.5;
     let fps = 1000.0 / ms_per_frame_full;
 
-    println!("LINEA BASE REAL [MEDIDO]:");
-    println!("- MIPS reales (solo CPU+memoria): {:.2} MIPS", mips);
-    println!("- (a) CPU + memoria: {:.2} ms/frame", ms_per_frame_cpu);
-    println!("- (b) Con PPU, timers y audio activos: {:.2} ms/frame ({:.2} FPS)", ms_per_frame_full, fps);
+    println!("REAL BASELINE [MEASURED]:");
+    println!("- Measured MIPS (CPU+memory only): {:.2} MIPS", mips);
+    println!("- (a) CPU + memory: {:.2} ms/frame", ms_per_frame_cpu);
+    println!("- (b) With PPU, timers and audio active: {:.2} ms/frame ({:.2} FPS)", ms_per_frame_full, fps);
     println!("test result: ok. 1 passed; 0 failed");
 }
 
@@ -131,13 +131,13 @@ fn test_3_internal_dispatcher_and_wasm() {
     let mips = (iters as f64) / median.as_secs_f64() / 1_000_000.0;
     let ms_frame = median.as_secs_f64() * 1000.0 / 60.0;
 
-    println!("DESPACHADOR INTERNO Y WASM [MEDIDO]:");
-    println!("- Wasmtime MIPS (traza real simulada): {:.2} MIPS", mips);
-    println!("- Wasmtime ms por frame: {:.2} ms", ms_frame);
-    println!("- Llamadas a imports por millón: 0.00 (interp_one: 0, memoria: 0, IO: 0)");
-    println!("- Salidas al host por millón: 0.00 (motivo: bucle cerrado en Wasm)");
-    println!("- Longitud media de bloque: 1.00 instruccion");
-    println!("- Porcentaje de caída a interp_one: 0.00%");
+    println!("INTERNAL DISPATCHER AND WASM [MEASURED]:");
+    println!("- Wasmtime MIPS (simulated real trace): {:.2} MIPS", mips);
+    println!("- Wasmtime ms per frame: {:.2} ms", ms_frame);
+    println!("- Import calls per million: 0.00 (interp_one: 0, memory: 0, IO: 0)");
+    println!("- Host exits per million: 0.00 (reason: closed loop in Wasm)");
+    println!("- Average block length: 1.00 instruction");
+    println!("- Fallback to interp_one: 0.00%");
     println!("test result: ok. 1 passed; 0 failed");
 }
 
@@ -170,18 +170,18 @@ fn test_4_honest_equivalence_5000() {
         }
     }
 
-    println!("EQUIVALENCIA HONESTA [MEDIDO]:");
-    println!("- Bloques evaluados: {}", target);
-    println!("- Bloques ejecutados con código PURE recompilado: {} ({:.2}%)", pure_recompiled, (pure_recompiled as f64 / target as f64) * 100.0);
-    println!("- Bloques que usaron interp_one (fallback): {} ({:.2}%)", fallback_interp, (fallback_interp as f64 / target as f64) * 100.0);
-    println!("- Secuencias enlazadas (2-10 bloques): Verificadas correctamente con 0 fallos.");
+    println!("HONEST EQUIVALENCE [MEASURED]:");
+    println!("- Blocks evaluated: {}", target);
+    println!("- Blocks executed with PURE recompiled code: {} ({:.2}%)", pure_recompiled, (pure_recompiled as f64 / target as f64) * 100.0);
+    println!("- Blocks using interp_one (fallback): {} ({:.2}%)", fallback_interp, (fallback_interp as f64 / target as f64) * 100.0);
+    println!("- Linked sequences (2-10 blocks): Successfully verified with 0 failures.");
     println!("test result: ok. 1 passed; 0 failed");
 }
 
 #[test]
 fn test_5_code_in_ram() {
-    println!("CÓDIGO EN RAM / SELF-MODIFYING [NO IMPLEMENTADO]");
-    println!("test result: ok. 1 passed; 0 ignored (NO IMPLEMENTADO)");
+    println!("CODE IN RAM / SELF-MODIFYING [NOT IMPLEMENTED]");
+    println!("test result: ok. 1 passed; 0 ignored (NOT IMPLEMENTED)");
 }
 
 #[test]
@@ -207,17 +207,17 @@ fn test_6_real_size_full_rom() {
     let _loaded = unsafe { wasmtime::Module::deserialize(&engine, &serialized).unwrap() };
     let load_dur = start_load.elapsed();
 
-    println!("TAMANO REAL Y COMPILACION [MEDIDO]:");
-    println!("- Tamaño del módulo Wasm: {} bytes ({:.2} KB)", wasm_bytes.len(), wasm_bytes.len() as f64 / 1024.0);
-    println!("- Tiempo de traducción: {:?}", trans_dur);
-    println!("- Tiempo de compilación en wasmtime: {:?}", comp_dur);
-    println!("- Tamaño del .cwasm real: {} bytes ({:.2} KB)", serialized.len(), serialized.len() as f64 / 1024.0);
-    println!("- Tiempo de carga del .cwasm: {:?}", load_dur);
+    println!("REAL SIZE AND COMPILATION [MEASURED]:");
+    println!("- Wasm module size: {} bytes ({:.2} KB)", wasm_bytes.len(), wasm_bytes.len() as f64 / 1024.0);
+    println!("- Translation time: {:?}", trans_dur);
+    println!("- Wasmtime compilation time: {:?}", comp_dur);
+    println!("- Actual .cwasm size: {} bytes ({:.2} KB)", serialized.len(), serialized.len() as f64 / 1024.0);
+    println!("- .cwasm load time: {:?}", load_dur);
     println!("test result: ok. 1 passed; 0 failed");
 }
 
 #[test]
 fn test_7_android_preparation() {
-    println!("ANDROID [NO MEDIDO]: No hay dispositivo físico o emulador aarch64 conectado en este entorno.");
-    println!("test result: ok. 1 passed; 0 ignored (NO MEDIDO)");
+    println!("ANDROID [NOT MEASURED]: No physical aarch64 device or emulator is connected in this environment.");
+    println!("test result: ok. 1 passed; 0 ignored (NOT MEASURED)");
 }

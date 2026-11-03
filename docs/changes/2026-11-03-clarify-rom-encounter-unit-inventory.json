@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "clarify-rom-encounter-unit-inventory",
+  "title": "Clarify ROM encounter-unit inventory",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Rewrite five encounter unit-template source, model, runtime, CLI and ordinary-use summaries in readable English, preserving shared ownership and validation boundaries."
+  ],
+  "validation": [
+    "Compared numeric tokens, links and task IDs with prior summaries, confirmed outside text matches the preimage and checked details against linked analyses; git diff --check passed."
+  ],
+  "limitations": [
+    "Documentation review only; no ROM exploration, build, runtime or platform validation was performed. The broader English-first audit remains open."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": []
+}

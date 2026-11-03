@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "manage-cheats-from-catalog-page",
+  "title": "Manage source-bound cheats from the catalog page",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Add an explicit source-selection and reviewed-preview view with separate prepare, apply once, arm, disarm and disarm-all actions, dispatched through the existing guarded handlers.",
+    "Show operations and possible read/write ranges before execution, preserve original catalog details, expose a global disarm-all action even with an unavailable catalog, and update localized labels and operation routes."
+  ],
+  "validation": [
+    "Frozen offline Windows GNU runtime and test builds passed without compiler messages or source drift across 1942 files. Wine passed 17 selector, one source-selection and four operation-registry tests; Atlas inventory and checklist checks passed.",
+    "A synthetic isolated Wine/Xvfb keyboard flow refused arm without source or preview, then selected, previewed, armed, disarmed, applied once and disabled all; expected RAM write and unchanged frame/clock were checked. A separate prior build with identical management code passed simulated XInput. Screenshots of focus, refusals and preview were reviewed.",
+    "A further isolated Wine/Xvfb test changed only the copied catalog after arming: reload reported it unavailable and the catalog-level disarm-all still cleared the set. Session pins and protected original inputs stayed exact and displays closed."
+  ],
+  "limitations": [
+    "Real cheat game effects, actual device hook, native Windows, Linux and physical controllers remain unverified. Values, ranges, groups and presets remain open; disarm stops future writes but does not restore previous bytes.",
+    "The XInput test used a prior build with identical management and runtime source files but earlier catalog labels; the final keyboard and unavailable-catalog checks used the final build."
+  ],
+  "files": [
+    "crates/menu/src/lib.rs",
+    "crates/menu/src/content_selector.rs",
+    "crates/menu/src/content_selector/tests.rs",
+    "crates/menu/src/cheat_management.rs",
+    "crates/menu/assets/debug_v2.tsv",
+    "crates/recomp/src/debug_cheats.rs",
+    "crates/recomp/src/debug_operations.rs",
+    "crates/recomp/src/debug_operations.json",
+    "crates/recomp/src/play.rs",
+    "crates/input-config/languages/en.json",
+    "crates/input-config/languages/it.json"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/MENU_ATLAS_INVENTORY.json"
+  ]
+}

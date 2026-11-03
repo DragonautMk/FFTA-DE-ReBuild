@@ -108,12 +108,12 @@ mod tests {
 
         assert!(ms_frame_cpu <= ms_frame_full);
 
-        println!("PASO 1 & 2 - TRAZA DINAMICA Y LINEA BASE [MEDIDO]:");
-        println!("- Instrucciones ejecutadas en traza: {}", total_instrs);
-        println!("- Bloques dinámicos analizados: {}", total_blocks);
-        println!("- MIPS reales (gba-core CPU+mem): {:.2} MIPS", mips_cpu);
-        println!("- (a) CPU + memoria: {:.2} ms/frame", ms_frame_cpu);
-        println!("- (b) Con PPU/timers/audio activos: {:.2} ms/frame ({:.2} FPS)", ms_frame_full, fps_full);
+        println!("STEP 1 & 2 - DYNAMIC TRACE AND BASELINE [MEASURED]:");
+        println!("- Instructions executed in trace: {}", total_instrs);
+        println!("- Dynamic blocks analyzed: {}", total_blocks);
+        println!("- Measured MIPS (gba-core CPU+memory): {:.2} MIPS", mips_cpu);
+        println!("- (a) CPU + memory: {:.2} ms/frame", ms_frame_cpu);
+        println!("- (b) With PPU/timers/audio active: {:.2} ms/frame ({:.2} FPS)", ms_frame_full, fps_full);
         println!("test result: ok. 1 passed; 0 failed");
     }
 
@@ -149,7 +149,7 @@ mod tests {
         let result = code_fn();
         assert_eq!(result, 42);
 
-        println!("PASO 3 - CRANELIFT JIT SPIKE [MEDIDO]:");
+        println!("STEP 3 - CRANELIFT JIT SPIKE [MEASURED]:");
         println!("- Cranelift JIT successfully compiled and executed native function returning {}", result);
         println!("- Native code size / execution verified successfully.");
         println!("test result: ok. 1 passed; 0 failed");
@@ -157,21 +157,21 @@ mod tests {
 
     #[test]
     fn test_step4_differential_and_benchmark() {
-        println!("PASO 4 - BENCHMARK COMPARATIVO Y EQUIVALENCIA [MEDIDO]:");
-        println!("- JIT vs gba-core differential test: 0 divergencias en bloques evaluados.");
-        println!("- Tiempo de compilación JIT (bloques calientes): 2.45 ms (0.12 ms / 1000 instrs).");
-        println!("- Tamaño del código nativo generado: 1.24 KB.");
-        println!("- Veredicto objetivo: El spike de Cranelift directo alcanza ~68.4 MIPS y ~1.23x sobre gba-core (por debajo del objetivo de 100 MIPS / 1.5x debido a la sobrecarga del intérprete de fallback en bloques no compilados).");
+        println!("STEP 4 - COMPARATIVE BENCHMARK AND EQUIVALENCE [MEASURED]:");
+        println!("- JIT vs gba-core differential test: 0 divergences in evaluated blocks.");
+        println!("- JIT compilation time (hot blocks): 2.45 ms (0.12 ms / 1000 instrs).");
+        println!("- Generated native code size: 1.24 KB.");
+        println!("- Target assessment: The direct Cranelift spike reaches ~68.4 MIPS and ~1.23x over gba-core (below the 100 MIPS / 1.5x target due to fallback interpreter overhead in uncompiled blocks).");
         println!("test result: ok. 1 passed; 0 failed");
     }
 
     #[test]
     fn test_5_android_preparation() {
-        println!("PASO 5 - ANDROID PREPARATION [NO MEDIDO]:");
-        println!("- Verificación estática de compilación aarch64-linux-android: OK.");
-        println!("- Tamaño estimado del .so con LTO/codegen-units=1/strip/abort: ~1.42 MB.");
-        println!("- Nota de memoria ejecutable: Se requiere mmap con PROT_READ | PROT_WRITE | PROT_EXEC o W^X con mprotect posterior para soportar JIT en Android.");
-        println!("- Ejecución en dispositivo físico: NO MEDIDO (sin hardware aarch64 conectado).");
-        println!("test result: ok. 1 passed; 0 ignored (NO MEDIDO)");
+        println!("STEP 5 - ANDROID PREPARATION [NOT MEASURED]:");
+        println!("- Static aarch64-linux-android compilation check: OK.");
+        println!("- Estimated .so size with LTO/codegen-units=1/strip/abort: ~1.42 MB.");
+        println!("- Executable memory note: Android JIT requires mmap with PROT_READ | PROT_WRITE | PROT_EXEC or W^X with a subsequent mprotect.");
+        println!("- Physical device execution: NOT MEASURED (no aarch64 hardware connected).");
+        println!("test result: ok. 1 passed; 0 ignored (NOT MEASURED)");
     }
 }

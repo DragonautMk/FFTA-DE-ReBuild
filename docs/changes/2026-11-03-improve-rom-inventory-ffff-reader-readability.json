@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "improve-rom-inventory-ffff-reader-readability",
+  "title": "Improve FFFF reader inventory readability",
+  "kind": "docs",
+  "platforms": [
+    "Desktop development documentation"
+  ],
+  "changes": [
+    "Separate counts and byte units in FFFF numeric reader model, runtime and CLI summaries while preserving validation limits."
+  ],
+  "validation": [
+    "Compared the inventory with its immediate preimage: digit runs, headings, Markdown links and inline code match; text outside the selected summaries is unchanged."
+  ],
+  "limitations": [
+    "Inventory review remains partial from the UI job lookup source onward; historical runtime results were not reproduced and the wider English-first audit remains open."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_INVENTORY.md"
+  ],
+  "references": [
+    "docs/rom_data_unit_obj.md"
+  ]
+}

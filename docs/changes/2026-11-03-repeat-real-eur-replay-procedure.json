@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "repeat-real-eur-replay-procedure",
+  "title": "Repeat an authenticated EUR replay procedure",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Record a repeatable DBG2-15 assistant procedure using content discovery, ID selection, replay and safe exact-identity retry."
+  ],
+  "validation": [
+    "In an isolated copied EUR DS-20 case, the command API refreshed and selected the same profile by ID twice; two explicit replay runs each passed 102 frames with equal endpoint state and clock. Retrying the first request returned identical JSON and the same worker run, without creating another execution. Parent state, frame, clock, protected profile inputs and session pins remained unchanged; session and display closed."
+  ],
+  "limitations": [
+    "This covers one interpreter replay through the shared command API, not complete menu/CLI/console parity, live slow-refresh, native Windows or physical input."
+  ],
+  "files": [
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

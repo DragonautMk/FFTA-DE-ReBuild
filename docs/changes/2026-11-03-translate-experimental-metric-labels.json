@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "translate-experimental-metric-labels",
+  "title": "Translate experimental metric labels",
+  "kind": "changed",
+  "platforms": [
+    "Desktop development tooling"
+  ],
+  "changes": [
+    "Translate Spanish labels for dynamically calculated Wasm and Cranelift experimental test metrics into English while preserving fixed historical claims, numeric formatting, code and ROM paths."
+  ],
+  "validation": [
+    "rustfmt parsed both Rust files; formatting placeholders matched the tracked versions. Existing CRLF was normalized to LF after git diff --check flagged changed lines."
+  ],
+  "limitations": [
+    "Experimental tests were not executed; several depend on a locally named ROM or write artifacts, and fixed historical claims remain unchanged."
+  ],
+  "files": [
+    "crates/cl-spike/src/lib.rs",
+    "crates/wasm-poc/tests/fase4b_tests.rs"
+  ],
+  "references": [
+    "docs/development/ENGLISH_FIRST.md"
+  ]
+}

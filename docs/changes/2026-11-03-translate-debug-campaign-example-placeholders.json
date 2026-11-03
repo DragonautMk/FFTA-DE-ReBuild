@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "translate-debug-campaign-example-placeholders",
+  "title": "Translate debug campaign example placeholders",
+  "kind": "docs",
+  "platforms": [
+    "Desktop development documentation"
+  ],
+  "changes": [
+    "Translate illustrative campaign and profile paths, reasons and profile and Wine placeholders in the maintained campaign guide; retain command flags, case IDs and legacy anchors."
+  ],
+  "validation": [
+    "Parsed the JSON example and checked consistent profile paths; compared Markdown link targets, legacy anchors and command flags against the prior version; verified run-case options with its help command."
+  ],
+  "limitations": [
+    "Examples are illustrative and were not dispatched against a runtime; the wider English-first audit remains open."
+  ],
+  "files": [
+    "docs/debug_campaigns.md"
+  ],
+  "references": [
+    "scripts/debug_campaign.py"
+  ]
+}

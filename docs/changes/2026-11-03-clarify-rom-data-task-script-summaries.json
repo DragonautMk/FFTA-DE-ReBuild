@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "clarify-rom-data-task-script-summaries",
+  "title": "Clarify ROM task and script summaries",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Rewrite five EUR e48–e52 task, event and script summaries in readable English while preserving evidence and limits."
+  ],
+  "validation": [
+    "Compared numeric tokens, linked destinations and inline code with prior text; checked the event-count interpretation in the linked guide and ran git diff --check."
+  ],
+  "limitations": [
+    "Documentation only; no ROM, build, runtime, benchmark or platform validation was performed. Other guide sections remain under review."
+  ],
+  "files": [
+    "docs/rom_data.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": []
+}

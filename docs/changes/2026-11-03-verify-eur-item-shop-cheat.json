@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "verify-eur-item-shop-cheat",
+  "title": "Verify one EUR item-shop cheat transition against control",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Record CH-0324 as verified for one isolated EUR world-map transition, with explicit source-bound arm, disarm and exact seed restoration; retain other entries as unverified."
+  ],
+  "validation": [
+    "At the same initial ROM, runtime and state, one Select+Right frame followed by 90 neutral frames reached the Item Shop with CH-0324 armed for the first frame and disarmed afterward; the no-cheat control stayed on the world map. Both screenshots were visually inspected, seed restoration was exact, sessions closed and protected inputs stayed unchanged.",
+    "CH-0334 produced no visible change from 7,749 clan funds after one armed frame, 30 neutral frames and a city-menu redraw on that seed; this is a bounded negative observation, not proof about other scenes."
+  ],
+  "limitations": [
+    "The graphics control request initially failed after eight reports existed; an unoccluded same-seed control was captured in a separate isolated copy without removing earlier evidence. A first control-copy setup stopped at an existing-path assertion before creating a session, then the path was corrected.",
+    "This is one EUR interpreter/Wine scenario, not native Windows, physical controller, device-hook equivalence or verification of other CH entries. A visible resource modifier remains required for DBG2-21."
+  ],
+  "files": [
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ]
+}

@@ -1334,149 +1334,149 @@ other records/variants/slack targeted-only, new Linux-USA-native Windows pending
 
 ## European script coordinate paths
 
-Independent reader128914/literal128994and successor readerA1F8/literalA234 bound
-D68FD4..D69BC4:3056B, a self-delimiting840B/210-slot relative directory,210u16
-counts420B,856XYpairs1712B and42FFalignment spans84B. All physical storage is
-covered once; these are no global live index/count/coordinate caps. Original
-low16index/low8destination/buffer+80count-low8return and live map-height query
-1DD88remain distinct.68primary-script links reach56paths:66opcode44low8/ignored
-byte3 and2opcode45u16. Actual archive/command dependencies are checked; source
-is disjoint from all46e52owners and shares only theD68page with earlier owners.
+Independent reader 128914/literal 128994 and successor reader A1F8/literal A234 bound
+D68FD4..D69BC4: 3056 B, a self-delimiting 840 B/210-slot relative directory, 210 u16
+counts/420 B, 856 XY pairs/1712 B and 42 FF alignment spans/84 B. All physical storage is
+covered once; these do not establish global live index/count/coordinate caps. Original
+low16 index/low8 destination/buffer+80 count-low8 return and live map-height query
+1DD88 remain distinct. 68 primary-script links reach 56 paths: 66 opcode 44 low8/ignored
+byte 3 and 2 opcode 45 u16. Actual archive/command dependencies are checked; source
+is disjoint from all 46 e52 owners and shares only the D68 page with earlier owners.
 
-The strict typed model reconstructs/hashes all3056B. One warning-free Windows
-build and one Wine source oracle pass24guards/allindependent fields/194halfword/
-5word fingerprints,212original path copies (all210lists/two changed live map
-cells),13raw-index/destination and13producer prefixes.2972sourceB observed;
-84alignment Bpreserved-unread.40116instructions/134PCs coverage only, no native/
-fullstate-clock/wholemovement-task/allocator/ordinary claim. Model source stage
+The strict typed model reconstructs/hashes all 3056 B. One warning-free Windows
+build and one Wine source oracle pass 24 guards/all independent fields/194 halfword/
+5 word fingerprints, 212 original path copies (all 210 lists/two changed live map
+cells), 13 raw-index/destination and 13 producer prefixes. 2972 source B observed;
+84 alignment B preserved-unread. 40116 instructions/134 PCs coverage only, no native/
+full-state-clock/whole movement-task/allocator/ordinary claim. Model source stage
 closed; managed publication/direct runtime/CLI/ordinary remain pending, e52-d51/
-USAe8-d7 unchanged. No new fixture/navigation/Linux-USA-nativeWindows/performance
+USA e8-d7 unchanged. No new fixture/navigation/Linux-USA-native Windows/performance
 check. [Source/model contract](../rom_data_scripts.md#european-script-coordinate-paths-source-contract).
 
-Managed e53-d52now publishes48files47resources/all46prior decoded/e52retained,
-USAe8-d7. Actual archive/command links authenticate before one shared typed
-index/count/XY/alignment owner activates; D68merges text/key/coordinate fields,
-rawD69BC4outside retained, guest height/control/ABI unchanged. Reduced Wine
-managed/native checks pass14guards/lifecycle/all3056B/210paths856points42alignment
-and24original-interpreter-compiled fullstate-clock cases/four full copies/live
-height/allfour classes[28,85,76,2]B/mixed owners/edges-BIOS-SWI-DMA. New-test array/
+Managed e53-d52 now publishes 48 files/47 resources/all 46 prior decoded/e52 retained,
+USA e8-d7. Actual archive/command links authenticate before one shared typed
+index/count/XY/alignment owner activates; D68 merges text/key/coordinate fields,
+raw D69BC4 outside retained, guest height/control/ABI unchanged. Reduced Wine
+managed/native checks pass 14 guards/lifecycle/all 3056 B/210 paths/856 points/42 alignment
+and 24 original-interpreter-compiled full-state-clock cases/four full copies/live
+height/all four classes[28,85,76,2]B/mixed owners/edges-BIOS-SWI-DMA. New-test array/
 observer errors corrected with evidence retained; successful checks reused.
-ProductionCLIcreate/reuse-no-write50files/oldcache/all48generation equality and
-one6000-frame genuine EUR ordinary pair pass every fullstate-clock-image-OAM-
-dispatch-audio with28aggregateB=4index14count10XY/one path,0alignment;581guards.
-Other209paths/42alignment targeted-only; wholemovement/allocatorABI/new32:9/
-Linux-USA-nativeWindows unverified, no performance measurement. [Runtime evidence](../rom_data_scripts.md#coordinate-path-production-cli-and-ordinary-scene).
+Production CLI create/reuse-no-write 50 files/old cache/all 48 generation equality and
+one 6000-frame genuine EUR ordinary pair pass every full-state-clock-image-OAM-
+dispatch-audio with 28 aggregate B = 4 index/14 count/10 XY/one path, 0 alignment; 581 guards.
+Other 209 paths/42 alignment targeted-only; whole movement/allocator ABI/new 32:9/
+Linux-USA-native Windows unverified, no performance measurement. [Runtime evidence](../rom_data_scripts.md#coordinate-path-production-cli-and-ordinary-scene).
 
 
 ## European auxiliary script archive source projection
 
-Independent readerA1F8/rootD69BC4 uses u8action/slot and two levels of relative
-u16 offsets, separate from the primary u32 archive. The declared4098B projection
-throughD6ABC6 has8banks/442slots/126distinct targets/30interior entries,
-133physical programs/913instructions/2275parameterB/900indexB and5internalFFgaps
-10B. Root walks alone miss69physical instructions. All489relative branch links
-resolve to instruction boundaries; structural908/913coverage is not ordinary
+Independent reader A1F8/root D69BC4 uses u8 action/slot and two levels of relative
+u16 offsets, separate from the primary u32 archive. The declared 4098 B projection
+through D6ABC6 has 8 banks/442 slots/126 distinct targets/30 interior entries,
+133 physical programs/913 instructions/2275 parameter B/900 index B and 5 internal FF gaps
+10 B. Root walks alone miss 69 physical instructions. All 489 relative branch links
+resolve to instruction boundaries; structural 908/913 coverage is not ordinary
 reachability, and the five remaining instructions stay preserved.
 
-Separate17x6Bcommand directory370F94..370FFA supplies advanceu16/Thumbcallbacks;
-its successor370FFC is independently consumed. Its two zero-gapB and the last
-archiveFF2B remain unowned. GraphicsbaseD6B4C8 is a ceiling, not archive end;
-2306B afterD6ABC6 are excluded. Reassembly/hash/all4200B/723halfword4word/static
-link formulas/all47e53owner disjointness pass. No build/guest test was run for
-source inventory. Strictmodel/oneWineoracle are verified below; managed/runtime/
-CLI/positiveordinary remain pending; no guest action-slot-opcode caps, primary-archive dependency or
-wholeABI claim. e53-d52/USAe8-d7 unchanged, newLinux-USA-nativeWindows pending.
+Separate 17x6 B command directory 370F94..370FFA supplies advance u16/Thumb callbacks;
+its successor 370FFC is independently consumed. Its two zero-gap B and the last
+archive FF 2 B remain unowned. Graphics base D6B4C8 is a ceiling, not archive end;
+2306 B after D6ABC6 are excluded. Reassembly/hash/all 4200 B/723 halfword/4 word/static
+link formulas/all 47 e53 owner disjointness pass. No build/guest test was run for
+source inventory. Strict model/one Wine oracle are verified below; managed/runtime/
+CLI/positive ordinary remain pending; no guest action-slot-opcode caps, primary-archive dependency or
+whole ABI claim. e53-d52/USA e8-d7 unchanged, new Linux-USA-native Windows pending.
 [Contract](../rom_data_scripts.md#european-auxiliary-script-archive-source-contract).
 
 
-The strict auxiliary directory/archive model now reconstructs all4200B without
-a ROMshadow; typed program+instruction entries preserve30interior links and133
+The strict auxiliary directory/archive model now reconstructs all 4200 B without
+a ROM shadow; typed program+instruction entries preserve 30 interior links and 133
 physical programs. All nested JSON/source identities/own-callback+advance
- dependencies are checked. Warning-free Windows builds and the final new Wine
-source filter pass40guards/442lookups/913dispatch+oneRAMopcode3/80advance/
-489relative suffixes/10wrap/15raw/11wrapper probes.2887distinct canonicalB are
-observed;1297other params+10gaps+6zero-rowB remain preserved/hash-checked unread.
+dependencies are checked. Warning-free Windows builds and the final new Wine
+source filter pass 40 guards/442 lookups/913 dispatch+one RAM opcode 3/80 advance/
+489 relative suffixes/10 wrap/15 raw/11 wrapper probes. 2887 distinct canonical B are
+observed; 1297 other params+10 gaps+6 zero-row B remain preserved/hash-checked unread.
 First raw expectation fails on odd LDRH; corrected test-only observer, then a
-specific32-bit high-rotation case added. First failure/earlier narrower passed
+specific 32-bit high-rotation case added. First failure/earlier narrower passed
 retry retained, unchanged model/core reused; only frontend/filter affected.
-31839instructions177PCs coverageonly; no wholepredicates/interpreter/native/
-fullstate-clock/ordinary claim. e53-d52/USAe8-d7 unchanged. [Model evidence](../rom_data_scripts.md#typed-auxiliary-archive-and-reduced-wine-source-oracle).
+31839 instructions/177 PCs coverage only; no whole predicates/interpreter/native/
+full-state-clock/ordinary claim. e53-d52/USA e8-d7 unchanged. [Model evidence](../rom_data_scripts.md#typed-auxiliary-archive-and-reduced-wine-source-oracle).
 
 
-Managed EUR e54-d53now publishes both auxiliary directory/archive resources:
-50files49resources/all47prior decoded/e53retained/USAe8-d7. One shared immutable
-owner serves4200B after actualarchive→owndirectory authentication, with typed
-index/callback/advance/opcode/parameter/gaps and no ROMshadow/hostinterpreter/
-guestcap/save-nativeABI change. Shared370audio/D69coordinates and raw370FFA+/
+Managed EUR e54-d53 now publishes both auxiliary directory/archive resources:
+50 files/49 resources/all 47 prior decoded/e53 retained/USA e8-d7. One shared immutable
+owner serves 4200 B after actual archive→own directory authentication, with typed
+index/callback/advance/opcode/parameter/gaps and no ROM shadow/host interpreter/
+guest cap/save-native ABI change. Shared 370 audio/D69 coordinates and raw 370FFA+/
 D6ABC6+ remain correct. One warning-free affected Windows build/two exact new
-Wine filters firstPASS26guards/lifecycle/all4200B and44original-interpreter-
-compiled complete-state-clock prefixes/all6classes[6,65,18,19,15,2]B/unaligned
-u32LDRH/interiorentries/signedcursor/rawopcodes/widths-mirrors-BIOS-SWI-DMA.
-624instructions92PC52dispatchescoverageonly; whole predicates/interpreter/
-callback ABI/ordinary unclaimed for that targeted scope. ActualproductionCLI
-create/reuse-no-write52managedfiles/oldcache/all50file equality and one6000frame
-positive ordinary Wine fullstate-clock-image-OAM-dispatch-audio pair nowpass:
-96directoryB=32advance64callback/6commands,82archiveB=16index20opcode46parameter/
-2banks2programs,0alignment/640guards. Other11commands6banks131programs/5alignment
-spans targeted-only, newLinux-USA-nativeWindows/32:9pending without performance/
-space work. No newfixture/navigation or oldproof repeat.
+Wine filters pass: the first covers 26 guards/lifecycle/all 4200 B; the second covers 44 original-interpreter-
+compiled complete-state-clock prefixes/all 6 classes[6,65,18,19,15,2]B/unaligned
+u32 LDRH/interior entries/signed cursor/raw opcodes/widths-mirrors-BIOS-SWI-DMA.
+624 instructions/92 PC/52 dispatches coverage only; whole predicates/interpreter/
+callback ABI/ordinary unclaimed for that targeted scope. Actual production CLI
+create/reuse-no-write 52 managed files/old cache/all 50 file equality and one 6000-frame
+positive ordinary Wine full-state-clock-image-OAM-dispatch-audio pair now passes:
+96 directory B = 32 advance/64 callback/6 commands, 82 archive B = 16 index/20 opcode/46 parameter/
+2 banks/2 programs, 0 alignment/640 guards. Other 11 commands/6 banks/131 programs/5 alignment
+spans targeted-only, new Linux-USA-native Windows/32:9 pending without performance/
+space work. No new fixture/navigation or old proof repeat.
 [Runtime and ordinary](../rom_data_scripts.md#auxiliary-script-production-cli-and-positive-ordinary-scene).
 
 
 ## European conditional normal script-special pose model
 
-The151low-selector script references/20logical metadata14producer witnesses
-retain108physical keys/12roots/32sequences241frames/11OBJ64objects/95pixel requests.
-Strict lossless model reconstructs41802B and independently validates overlapping
-initial/normal shared views before subtracting their union; only33spans6436B
+The 151 low-selector script references/20 logical metadata14 producer witnesses
+retain 108 physical keys/12 roots/32 sequences/241 frames/11 OBJ/64 objects/95 pixel requests.
+Strict lossless model reconstructs 41802 B and independently validates overlapping
+initial/normal shared views before subtracting their union; only 33 spans/6436 B
 have new ownership. One warning-free affected Windows frontend test build and
-single reduced new Wine source oracle pass18guards/120constructor prefixes/
-53null7proper resets/17scheduler-realDMA3 uploads/all5248newpixelB/wholeVRAM.
-No oldcommands2/6/8or source/scene/census oracle repeated. Conditional source/
-model closed; managed/runtime/CLI/ordinary and alternative/override/highregistry/
-current-state coverage pending. e61/USAe8unchanged; newLinux-USA-nativeWindows-
-32:9pending, no performance/storage measurements.
+single reduced new Wine source oracle pass 18 guards/120 constructor prefixes/
+53 null/7 proper resets/17 scheduler-real DMA3 uploads/all 5248 new pixel B/whole VRAM.
+No old commands 2/6/8 or source/scene/census oracle repeated. Conditional source/
+model closed; managed/runtime/CLI/ordinary and alternative/override/high registry/
+current-state coverage pending. e61/USA e8 unchanged; new Linux-USA-native Windows-
+32:9 pending, no performance/storage measurements.
 [Model and scope](../rom_data_unit_obj.md#typed-normal-script-special-pose-model).
 
 
 The conditional normal script-special owner now publishes/consumes EUR e62-d61:
-58files57resources/fouractual metadata14-scriptarchive-initial-normal dependencies,
-all56prior decoded files/resources/coverage and e61 retained, USAe8 unchanged.
-One warning-free Windows core/frontend build(core compiledonly) and two new Wine
-filters firstPASS29guards/lifecycle/all6436newtypedB/seven sequences and23original-
-interpreter-compiled fullstate-clock paths/33edges-mirrors-BIOS-SWI-DMA. Shared
-initial/normal owners stay intact under41802graphB poisoning; new-role bytes
-0dir240index28header920frame0OBJ5248pixel, nativeAPI0/36/6/43/0/1. Mixed2new4normal
-transfers and2new2rawAPI preserve exact charges. No oldcommands/source/census/
-scene repeat. ActualproductionCLI58generation60managed/all58matchaccepted/no-write
-reuse and oneframeoldcacheattachment pass; zero newuse/smokeonly. Ordinarysource/
-newpixel and newLinux-USA-nativeWindows-32:9pending, without measurements. [Managed runtime](../rom_data_unit_obj.md#conditional-script-special-normal-managed-runtime).
+58 files/57 resources/four actual metadata14-scriptarchive-initial-normal dependencies,
+all 56 prior decoded files/resources/coverage and e61 retained, USA e8 unchanged.
+One warning-free Windows core/frontend build (core compiled only) and two new Wine
+filters pass: first 29 guards/lifecycle/all 6436 new typed B/seven sequences and 23 original-
+interpreter-compiled full-state-clock paths/33 edges-mirrors-BIOS-SWI-DMA. Shared
+initial/normal owners stay intact under 41802 graph B poisoning; new-role bytes
+0 dir/240 index/28 header/920 frame/0 OBJ/5248 pixel, native API 0/36/6/43/0/1. Mixed 2 new/4 normal
+transfers and 2 new/2 raw API preserve exact charges. No old commands/source/census/
+scene repeat. Actual production CLI 58 generation/60 managed/all 58 match accepted/no-write
+reuse and one-frame old cache attachment pass; zero new use/smoke only. Ordinary source/
+new pixel and new Linux-USA-native Windows-32:9 pending, without measurements. [Managed runtime](../rom_data_unit_obj.md#conditional-script-special-normal-managed-runtime).
 
 
-New actuale62ordinary locators distinguish typednull-source use from pixels:
-Snow6000reads48newindexB/zero sequences-pixels; retainedRIVERstart618reads0newB.
-No fullpair/guardbuild/oldcensus repeat. Newseven-sequence static81snapshot scan
-finds no matching task; program159contains a producer but actualtrigger remains
-unproven. Ordinarynewsequence/pixel/equivalence staysopen, original/cart inputs
-preserved and no performance/otherplatform work. [Evidence limits](../rom_data_unit_obj.md#script-special-ordinary-source-locators-and-remaining-pixel-gate).
+New actual e62 ordinary locators distinguish typed null-source use from pixels:
+Snow 6000 reads 48 new index B/zero sequences-pixels; retained RIVER start 618 reads 0 new B.
+No full pair/guard build/old census repeat. New seven-sequence static 81 snapshot scan
+finds no matching task; program 159 contains a producer but actual trigger remains
+unproven. Ordinary new sequence/pixel/equivalence stays open, original/cart inputs
+preserved and no performance/other platform work. [Evidence limits](../rom_data_unit_obj.md#script-special-ordinary-source-locators-and-remaining-pixel-gate).
 
 
 The alternate script-special branch now has a separate source projection over the
 same 151 references/20 low-selector witnesses, metadata14 half 06 and original
 current alternate assignment with override 20 clear. 84 cells/68 null/14 sequences
-64 frames, 9048B total; new 20 spans 816B = 216 index 8 header 80 frame 512 pixel,
-remaining 8142 alternate + 38 initial + 52 normal. Offline model/warning-free Windows
-build/single Wine filter pass 19 guards, 108 constructor prefixes/52 null + 2 proper
+64 frames, 9048 B total; 20 new spans total 816 B: 216 index, 8 header, 80 frame
+and 512 pixel bytes, with the remaining 8142 alternate + 38 initial + 52 normal
+bytes shared. The offline model, warning-free Windows build and single Wine filter pass 19 guards, 108 constructor prefixes/52 null + 2 proper
 resets/two real DMA uploads and 512 pixel B/full VRAM exact; initial sandbox Wine
 startup before test retained, same binary retry PASS. e62-d61 runtime unchanged.
-Ordinary new pixels/high16/override/current state remain explicit.
+Ordinary new pixels, high16, override and current state remain explicit limits.
 [Contract](../rom_data_unit_obj.md#conditional-alternate-script-special-source-and-typed-model).
 
 
-EUR e63-d62 publishes/consumes the alternate script-special model: 59 files
+EUR e63-d62 publishes/consumes the alternate script-special model: 59 files,
 58 resources, actual metadata14/script archive/initial/normal/alternate, 57 previous
 data/records/coverage unchanged/e62 retained/USA e8. New owner serves only 20 spans
-816B; 31 guards/lifecycle/all 816 typed B and 24 Wine original-interpreter-compiled
+816 B; 31 guards/lifecycle/all 816 typed B and 24 Wine original-interpreter-compiled
 full state/clock paths/all 20 boundaries/BIOS-SWI-DMA/mixed owners/raw pass. Real
 CLI/ordinary/high16/override/current actor and new Linux/USA/native Windows/32:9
 remain to verify, no performance/space measurements/new fixture.
@@ -1484,7 +1484,8 @@ remain to verify, no performance/space measurements/new fixture.
 
 
 EUR e63-d62 production CLI now verified on Wine: create/reuse 59 generation 61 managed,
-all 59 match accepted/no-write, canonical exactly restored/old-cache one-frame PASS.
+all 59 match the accepted data, with no writes on reuse; canonical data exactly
+restored/old-cache one-frame PASS.
 Zero new alternate-script use in the single frame, no ordinary/pixel/full-scene proof.
 Source/model/managed/native/CLI closed; ordinary/high16/override/current actor and
 new Linux/USA/native Windows/32:9 remain open. No performance measurement.
@@ -1499,9 +1500,9 @@ override/high-registry source contracts continue.
 
 Script override 42/230 has a separate source contract: 167 script refs/13 groups
 with original forced current assignment/flag 20 set/facing 0..3, 26 mode-base
-witnesses/156 cells/11722B. Shared 6252 normal + 4420 alternate; new 40 spans
-1050B = 384 index 24 header 360 frame 26 OBJ 256 pixel, six sequences 18 frames
-including two new op 2 argument copies. Offline model/warning-free Windows build/
+witnesses/156 cells/11722 B. Shared 6252 normal + 4420 alternate bytes; 40 new spans
+total 1050 B: 384 index, 24 header, 360 frame, 26 OBJ and 256 pixel bytes. The six
+sequences/18 frames include two new op 2 argument copies. Offline model/warning-free Windows build/
 single new Wine filter first PASS 19 guards/192 constructor aliases/90 null + 6
 proper resets/two op 2 argument copies/two DMA uploads 256 pixel B/full VRAM.
 e63/USA e8/runtime unchanged; no invented static high-registry identity.
@@ -1509,8 +1510,8 @@ e63/USA e8/runtime unchanged; no invented static high-registry identity.
 
 
 EUR e64-d63 now publishes/consumes script-override 42/230: 60 files 59 resources,
-three deps script archive/normal battle/alternate battle/all 58 previous/e63/USA e8
-unchanged. Owner 40 spans 1050B; 31 guards/lifecycle/all typed B and 27 Wine
+three dependencies: script archive/normal battle/alternate battle; all 58 previous/e63/USA e8
+unchanged. Owner: 40 spans/1050 B; 31 guards/lifecycle/all typed B and 27 Wine
 original-interpreter-compiled full state/clock paths/both new op 2/new OBJ/40 edges/
 BIOS-SWI-DMA/mixed owners/raw pass. Production CLI/ordinary/high registry-current
 actor/new Linux-USA-native Windows/32:9 remain pending, no performance/space
@@ -1535,21 +1536,21 @@ high registry/current actor sources remain independent.
 High-registry known-special script 49 has a new conditional source contract over
 the 16 actual references/seven pairs and 93 logical metadata14 unit rows with
 original current assignment/override 20 clear. 1302 witnesses/2220 logical keys
-1908 cells/373842B; 358566B shared from 6 owners, new 272 spans 15276B (2392 index
-84 header 1920 frame 10880 pixel), 21 sequences 96 op 1 frames/37 pixel requests.
+1908 cells/373842 B; 358566 B shared from 6 owners, 272 new spans/15276 B (2392 index,
+84 header, 1920 frame and 10880 pixel bytes), 21 sequences/96 op 1 frames/37 pixel requests.
 All 59 e64 owners and 41 halfword 4 literal 8 BL pins pass, no target root/mixed
 item/conflict/variable extent. Lossless model and first targeted Wine test pass
-26 guards/1196 constructor aliases/567 null + 21 resets/37 DMA 10880B/full VRAM,
+26 guards/1196 constructor aliases/567 null + 21 resets/37 DMA/10880 B/full VRAM,
 six previous views independently validated/consistent physical aliases. Corrected
 warning-free frontend build; EUR e65-d64 publishes 61 files 60 resources with
 metadata14/archive and 6 actual previous views. Two targeted Wine filters first PASS
-33 attach + 10 dependency guards/lifecycle/all 15276 typed B 21 sequences and
+33 attach + 10 dependency guards/lifecycle/all 15276 typed B/21 sequences and
 25 original-interpreter-compiled full state-clock paths/272 edges/BIOS-SWI-DMA/
 mixed old-raw-new. Real Wine CLI prepare/reuse 61 generation 63 managed/all 61
 accepted/no-write/one-frame old cache attach first PASS (all new counters 0/smoke
 only); ordinary new pixels/equivalence pending, USA e8 unchanged. New readonly
 locator 81 snapshots/21 new sequences finds 0 active or dormant tasks; lead closed/
-no guest-build-fixture-full pair or retry unchanged. Registry identity/generic job/
+no guest/build/fixture/full pair or retry; inputs unchanged. Registry identity/generic job/
 out of catalog/redirect/current changed remain separate. No measurement or new fixture.
 [Contract](../rom_data_unit_obj.md#registry-selectors-and-known-special-unit-source-projection).
 
@@ -1558,37 +1559,37 @@ High-registry generic unit 0/1 has a separate contract for 16 high refs/seven pa
 and metadata52 route 0 with concrete field per mode. CCC48 reads job+5/alternate+7,
 properties 4-5 skip RAM property 0 override; CF getters zero-extend u16. All 116 rows
 classified: 100 both concrete/10 normal only/2 both FFFF/4 route FF, 110 normal
-100 alternate → 2940 witnesses 6720 refs; initial 110 joint assumption corrected
-before targets. 83 halfword 6 literal-dispatch 11 BL pins and all 60 e65 owners
-authenticated before targets. 107 sprites 535 pairs 3210 keys/cells 2420 null/
-777 proper sequences 5093 frames/45 OBJ lists 231 objects/1895 pixel requests 677280B;
-12 initial index-root targets 48..59 with exact-field witnesses. Full 796992B/shared
-697168B, new 659 spans 99824B (5544 index 504 header 11760 frame 82016 pixel),
-1386 new cells 1260 null/126 new sequences 588 op 1/268 pixel requests. No new OBJ/
+100 alternate → 2940 witnesses/6720 refs; initial 110 joint assumption corrected
+before targets. 83 halfword/6 literal-dispatch/11 BL pins and all 60 e65 owners
+authenticated before targets. 107 sprites/535 pairs/3210 keys/cells/2420 null/
+777 proper sequences/5093 frames/45 OBJ lists/231 objects/1895 pixel requests/677280 B;
+12 initial index-root targets 48..59 with exact-field witnesses. Full 796992 B/shared
+697168 B, 659 new spans/99824 B (5544 index, 504 header, 11760 frame, 82016 pixel),
+1386 new cells/1260 null/126 new sequences/588 op 1/268 pixel requests. No new OBJ/
 mixed item/role/extent conflict. Lossless model and first targeted Wine pass 34 guards/
-2772 new-cell aliases/1260 null 126 proper resets/268 DMA 82016B/full VRAM/12 initial
+2772 new-cell aliases/1260 null/126 proper resets/268 DMA/82016 B/full VRAM/12 initial
 root views; six previous views independently validated. First warning-free Windows
-frontend build; EUR e66-d65 publishes 62 files 61 resources/metadata52-archive +
+frontend build; EUR e66-d65 publishes 62 files/61 resources/metadata52-archive +
 6 previous views. First two targeted Wine filters pass 36 attach + 10 dependency
 guards/lifecycle/all 99824 typed B/126 new sequences and 25 original-interpreter-
 compiled full state-clock paths/659 edges/BIOS-SWI-DMA/mixed old-raw-new. Real Wine
-CLI create/reuse 62 generation 64 managed/all 62 accepted/no-write/one-frame old
+CLI create/reuse: 62 generation/64 managed/all 62 accepted/no-write/one-frame old
 cache attach first PASS (all new counters 0/smoke only); ordinary new pixels/
 equivalence pending/USA e8 unchanged. New readonly locator 81 snapshots/126 new
 sequences finds 0 active/dormant body tasks without current-pointer/end-of-frame
-filter; lead closed/no guest-build-fixture-full pair or retry unchanged. FFFF/
+filter; lead closed with no guest/build/fixture/full pair or retry; inputs unchanged. FFFF/
 redirect/out of catalog/changed actor/global identity and other platforms separate;
 no old proof replay/fixture/navigation/measurements.
 [Contract](../rom_data_unit_obj.md#registry-selectors-and-generic-direct-job-source-projection).
 
 The high-registry contract also covers current jobs 80/81/82/85 route FF with known
-alternate job route 0/concrete field: 110 normal 100 alternate → 11760 witnesses
+alternate job route 0/concrete field: 110 normal/100 alternate → 11760 witnesses/
 26880 refs. The primary source is FF routing, sprite field comes from alternate row;
-98 halfword 6 literal 11 BL pins verify CC35A/unchanged r4/return to same property.
-All 116 rows and 928 actual classifications retained (840 concrete 56 FFFF 32 loop).
+98 halfword/6 literal/11 BL pins verify CC35A/unchanged r4/return to same property.
+All 116 rows and 928 actual classifications retained (840 concrete/56 FFFF/32 loop).
 All 61 current resources/sources authenticated before targets: each of 2940 direct
 witnesses has four preimages, same 3210 cells/777 sequences/12 root views/full
-796992B/seven owners. Zero new bytes or resources; e66-d65 unchanged, metadata52/e66
+796992 B/seven owners. Zero new bytes or resources; e66-d65 unchanged, metadata52/e66
 Wine proofs reused without build/guest/fixture/navigation. Ordinary/global identity/
 FFFF/nonreturning/out of catalog/changed actor and Linux/USA/native Windows/new 32:9
 remain open.
@@ -1599,34 +1600,34 @@ redirected witnesses/2240 refs, 71 reader pins/three code blocks/two literals.
 Property read 083B4C12 returns DC86, directory 083D4830 returns 14AE3F1E;
 60 queries/30 words remain in unmapped region 14. CPU aligns/rotates 16, MemMap
 uses livebios_open: no ROM sequence/constant null or universal nonreturn proven.
-The two ROM reads total 6B without typed owner; raw fallback retained, 6B migration/
+The two ROM reads total 6 B without typed owner; raw fallback retained, 6 B migration/
 ordinary reachability still open. No invented ID cap/pointer fix/fake counted asset
 or build/guest/fixture/navigation/measurements, e66/USA e8 unchanged.
 [Reads and limits](../rom_data_unit_obj.md#known-generic-job-ffff-results-and-raw-bus-reads).
 
 Actor property reader 221C4 now has a distinct source contract: 394C14+2*sprite,
 u16→9AD0E/r8→constructor r3→allocation request/task+16. 398 normal/alternate
-job-special-override witnesses derive 182 queries before targets; 98 halfword 15 BL/
+job-special-override witnesses derive 182 queries before targets; 98 halfword/15 BL/
 four code blocks/one literal and 61 owners/files/sources pass. Four new disjoint
-ranges 364B, SHA ad328c8ebccfc43091dc878c06dab33b22521d7b617d4b11232e4a532ffc2208;
+ranges totaling 364 B, SHA ad328c8ebccfc43091dc878c06dab33b22521d7b617d4b11232e4a532ffc2208;
 139 words 16/43 words 24, all u16 bits retained, raw gaps. No inferred catalog 248/
 ID cap, flag bitfield or VRAM unit. Source child and lossless model/Wine oracle now
-closed: 20 guards/all 182 getters 364B/3 raw fullword/four new-task prefixes/two
+closed: 20 guards/all 182 getters/364 B/3 raw fullword/four new-task prefixes/two
 reuse/four u16 setters/whole RAM guards pass. Existing tasks retain their own +16.
-First warning-free Windows frontend build, 82 build 83 Wine guards 11 compiled inputs
+First warning-free Windows frontend build, 82 build/83 Wine guards/11 compiled inputs
 unchanged; no full allocator/native-clock/ordinary claim for 02. EUR e67-d66 now
-publishes 63 files 62 resources/metadata52-14 dependencies/all 61 previous-e66 retained.
+publishes 63 files/62 resources/metadata52-14 dependencies/all 61 previous-e66 retained.
 First two Wine filters pass 17 attach + 4 full-set guards/lifecycle/364 typed B/
 182 mask records and 16 original-interpreter-compiled full state-clock paths with
 364 raw B altered. Four edges/width-mirrors/real BIOS bus/SWI-DMA/mixed new-old-raw
-pass; 84 build/86 Wine guards 20 compiled inputs unchanged. Production CLI create/
+pass; 84 build/86 Wine guards/20 compiled inputs unchanged. Production CLI create/
 reuse 63 generation/65 managed/all 63 accepted/no-write/one-frame old cache attach
 first PASS (all new counters 0/smoke only), 154 active guards unchanged. New ordinary
-F09 Wait 3530 CLI/full pair first PASS 10 reads 20 aggregate B/two words: every frame
-state-clock-central-wide-OAM-dispatch-all audio equal; 155 active guards 21 compiled
+F09 Wait 3530 CLI/full pair first PASS with 10 reads/20 aggregate B/two words; every frame
+state-clock-central-wide-OAM-dispatch-all audio equal; 155 active guards/21 compiled
 inputs unchanged, other 180 words ordinary targeted only. Optional positive guard,
 old normal scene child remains closed/no other proof repeated. No full allocator/
-new 32:9 claim, USA e8 unchanged. FFFF raw 6B/other inputs/changed actor/global identity
+new 32:9 claim, USA e8 unchanged. FFFF raw 6 B/other inputs/changed actor/global identity
 separate, no repeat of old proof/fixture/navigation/measurements.
 [Source and limits](../rom_data_unit_obj.md#actor-property-words-from-known-sprite-assignments).
 
@@ -1637,14 +1638,14 @@ catalog extension or fullword getter limit. Builder and four missing paths authe
 with 680 halfword/25 BL/21 literal-control-flow pins. The two u16 paths update the
 property while retaining allocation; known concrete assignments reuse the 182 words.
 All 62 owners/files/sources verified: 184 shared words (182 properties + two words from
-the four palette offsets), 72 new words/144B in 394CF4/2, 394CFE/2, 394D0C/128,
+the four palette offsets), 72 new words/144 B in 394CF4/2, 394CFE/2, 394D0C/128,
 394E08/12, SHA 9d1239cc29ec40185c1605aed84b4cf74cedbc21cc217c001efb8348407253f9.
 New complement with source contract and lossless model/Wine oracle closed: 14 guards,
-512 UI prefixes/all 512B, eight skips, four high-u16 comparisons, four byte writers
+512 UI prefixes/all 512 B, eight skips, four high-u16 comparisons, four byte writers
 and six setter prefixes pass on first attempt. RAM outside destinations and VRAM/OAM/
-palette verified; 109 build 110 Wine guards/13 compiled inputs unchanged. The 184 shared
+palette verified; 109 build/110 Wine guards/13 compiled inputs unchanged. The 184 shared
 words come from the two dependencies without duplicate copies. Managed-runtime/CLI/
-ordinary pending, e67-d66 and USA e8-d7 unchanged. FFFF raw 6B/unknown/changed actor/
+ordinary pending, e67-d66 and USA e8-d7 unchanged. FFFF raw 6 B/unknown/changed actor/
 global identity/computed indirect remain separate; no old proof replay/full UI-native
 clock/fixture/navigation/measurement.
 [Details](../rom_data_unit_obj.md#additional-property-getter-callers-and-the-ui-byte-input-window).
@@ -1652,21 +1653,21 @@ clock/fixture/navigation/measurement.
 
 The OBJ property byte-input complement is now managed and consumed in EUR e68-d67:
 64 files/63 resources, all 62 previous records/63 files and e67 retained. Only 72 new
-words/144B; 184 shared words remain with the propertywords and colorpalettes owners,
+words/144 B; 184 shared words remain with the propertywords and colorpalettes owners,
 real dependencies. Two new Wine filters pass 17 attach + four dependency checks/
-lifecycle/all 144B and 72 records, plus original/interpreter/compiled full state-clock
+lifecycle/all 144 B and 72 records, plus original/interpreter/compiled full state-clock
 equivalence on getter/UI prefix/mixed/fullword/live RAM. Four edges/width-mirrors/
-real BIOS bus/SWI-DMA pass: API 2 new 2 property/2 new 2 palette/2 new 2 raw, CpuSet
-2 new 4 property/FastSet 28 new 4 property/DMA 4 new 2 palette. No source/model/old
+real BIOS bus/SWI-DMA pass: API 2 new/2 property, 2 new/2 palette, 2 new/2 raw; CpuSet
+2 new/4 property; FastSet 28 new/4 property; DMA 4 new/2 palette. No source/model/old
 scene replay or measurement; production CLI/ordinary remain pending, USA e8 unchanged.
 [Consumption and limits](../rom_data_unit_obj.md#managed-ui-byte-property-words-and-typed-runtime-reads).
 
 
 The e68-d67 byte-property complement production CLI now passes first Wine prepare/
-reuse: 64 generation 66 managed files/63 resources/two dependencies/all 64 equal to
+reuse: 64 generation/66 managed files/63 resources/two dependencies/all 64 equal to
 dataset 03, no writes on reuse from different cwd. First warning-free Windows build/
 frozen 0c0f5082.. and canonical hash+mtime restored; main content unchanged. One
-authentic F09 frame loads previous native cache and uses 1 read/2B/1 new word, positive
+authentic F09 frame loads previous native cache and uses 1 read/2 B/1 new word, positive
 attachment check; ordinary full scene still open. 182 active guards/23 compiled inputs
 unchanged; source/model/runtime/old scenes closed without replay. No fixture/navigation/
 private payload/measurement, other platforms to verify.
@@ -1688,8 +1689,8 @@ The UI list selected by property==16, `3950A4`, now has a source contract: 48 ha
 4 literal/4 BL and old UI/reader proofs verify four A4/B2 branches, 1F6C→1500 and stride
 6. All 63 owners/sources authenticated before payload. A header 2 yields 14 new B/two
 objects, SHA 1f9cfc55a363c69dcf8422d47641705427d4291a3801ff1c7646bfb8bc5daa64;
-B2/14B already typed are an exact alias. Three additional references project 126 refs/
-74 lists 175 objects 1198B in the same owner `graphics.obj-static-lists`, without a new
+B2/14 B already typed are an exact alias. Three additional references project 126 refs/
+74 lists/175 objects/1198 B in the same owner `graphics.obj-static-lists`, without a new
 family/format. Source closed, model/publication/runtime/CLI/ordinary A4 pending;
 e68-d67/USA e8-d7 unchanged. No old CFG campaign/oracle/scenes repeated, build/guest/
 fixture/navigation or measurement.
@@ -1698,14 +1699,14 @@ fixture/navigation or measurement.
 
 **ROMDATA-02-03-UI-PROPERTY-OBJ-LIST-EXTENSION completed EUR (2026-10-26).**
 e69-d68 integrates three references in the same Catalog/List/Object/owner/format,
-126 refs/74 lists 175 objects 1198B; new A4 only 14B/two objects, B2 shared. Same
+126 refs/74 lists/175 objects/1198 B; new A4 only 14 B/two objects, B2 shared. Same
 64 files/63 resources and size dependency; all 73 previous records, 62 other files/
 records and e68 unchanged. Corrected warning-free Windows build (first error only an
 unqualified test constant). First two Wine filters pass: roundtrip/eight guards/
 publication-repair-move management/lifecycle; two original-interpreter-compiled
 draws full state-clock/709 instructions/4 dispatch/36 compiled B, two host
-publications, edges-width-mirror-BIOS and mixed API 2 new 2 B2/DMA-CpuSet 14 new
-2 B2/FastSet 4 prior 14 new 14 B2. Runtime handlers unchanged. 77 build 79 Wine
+publications, edges-width-mirror-BIOS and mixed API 2 new/2 B2, DMA-CpuSet 14 new/
+2 B2, FastSet 4 prior/14 new/14 B2. Runtime handlers unchanged. 77 build/79 Wine
 guards/29 compiled inputs exact. Real CLI 04 and ordinary A4 guest-host 05 still to
 do; USA e8-d7/Linux/native Windows/new 32:9 pending. No old evidence/scene replay,
 fixture/navigation or performance-space measurement.
@@ -1715,7 +1716,7 @@ fixture/navigation or performance-space measurement.
 **ROMDATA-04-UI-PROPERTY-OBJ-LIST-CLI completed EUR/Wine (2026-10-26).**
 First warning-free Windows production build/frozen 17488009..; canonical restored
 hash+mtime, main content unchanged. First Wine prepare/reuse/old-cache one frame
-from /tmp pass 64 generation 66 managed/63 resources/74 spans 1198B/all 64 equal to
+from /tmp pass: 64 generation/66 managed/63 resources/74 spans/1198 B/all 64 equal to
 dataset 03, reuse without writes. 148 active CLI guards/29 compiled inputs exact.
 Ordinary A4 scene equivalence still open; no old oracle/scene repeated, fixture/
 navigation/private payload or performance-space measurement. Other platforms remain
@@ -1755,32 +1756,32 @@ measurement. [Scene and limits](../rom_data_obj.md#positive-dispatch-use-and-sce
 
 **ROMDATA-02-UNIT-OBJ-FFFF-READER-FIELDS model completed EUR (2026-10-26).**
 New lossless model: query 65535, encoded property u16 word + directory u32 word,
-two ranges 6B, 980 conditional witnesses/2240 references (196 direct 784 redirect)
+two ranges totaling 6 B, 980 conditional witnesses/2240 references (196 direct/784 redirect)
 with metadata52/archive49 dependencies. Previous valid models and byte aliases
 unchanged; no interpreted root/sequence/corrected pointer/cap. First warning-free
 Windows build/frozen 83ffcd75.. and first single Wine filter pass 13 guards/3 numeric
-roundtrips/980 records/6B and two complete original readers 28 instructions,
-registers/RAM guard. 156 build 157 Wine guards/35 compiled inputs exact. 71-pin/
+roundtrips/980 records/6 B and two complete original readers/28 instructions,
+registers/RAM guard. 156 build/157 Wine guards/35 compiled inputs exact. 71-pin/
 60-query classification and old A4/model/runtime/scene evidence closed without
 replay. Publication/owner runtime 03, native clock/ordinary pending; production
-e69-d68/64 files 63 resources and USA e8-d7 unchanged. Linux/USA/native Windows/
+e69-d68/64 files/63 resources and USA e8-d7 unchanged. Linux/USA/native Windows/
 new 32:9 to do, no fixture/navigation/performance-space measurement.
 [Model and limits](../rom_data_unit_obj.md#typed-model-for-known-ffff-reader-fields).
 
 
 **ROMDATA-03-UNIT-OBJ-FFFF-READER-FIELDS managed/runtime completed EUR (2026-10-26).**
-e70-d69: 65 files 64 resources, all 63 previous decoded records/files and e69
+e70-d69: 65 files/64 resources, all 63 previous decoded records/files and e69
 preserved; USA e8-d7 unchanged. New numeric resource with real metadata52/script
-archive dependencies, model 980 witnesses 2240 refs unchanged. Immutable owner
-serves only 2B property + 4B directory from typed fields; gate 3B4/3D4, counters and
+archive dependencies, model 980 witnesses/2240 refs unchanged. Immutable owner
+serves only 2 B property + 4 B directory from typed fields; gate 3B4/3D4, counters and
 two bit fields. Full pointer, live open BIOS/unaligned LDR rotate 16 and guest
 control preserved, no invented sequence/target/null/cap. First warning-free Windows
 core/frontend build and first two new Wine filters PASS: 20 attach guards, four
-dependency guards, publication/lifecycle unavailable directory, all 6B raw altered/
+dependency guards, publication/lifecycle unavailable directory, all 6 B raw altered/
 two fields and distinct old owner. Original/interpreter/native 14 paths equal full
 state/clock: getter/directory/zero early return/three BIOS prefixes, live RAM/mixed
-reads. Two edges/width/mirrors/real BIOS bus; API 2 new 2 raw, CpuSet 2 new 6 raw/
-FastSet 4 new 28 raw/DMA 4 new 4 raw preserved. Source/model/A4/old proof closed
+reads. Two edges/width/mirrors/real BIOS bus; API 2 new/2 raw, CpuSet 2 new/6 raw,
+FastSet 4 new/28 raw, DMA 4 new/4 raw preserved. Source/model/A4/old proof closed
 without replay. Production CLI 04 and ordinary 05 remain to do, no full sprite/
 allocator ABI claimed. Linux/USA/native Windows/new 32:9 pending. No fixture/navigation/
 private payload/performance-space/Android/package/commit/push.
@@ -1790,7 +1791,7 @@ private payload/performance-space/Android/package/commit/push.
 **ROMDATA-04-UNIT-OBJ-FFFF-READER-FIELDS-ACTUAL-CLI completed EUR/Wine (2026-10-26).**
 First warning-free Windows production build/frozen candidate; canonical exact hash+
 mtime restored/main content unchanged. First three Wine calls prepare/reuse/old-cache
-one frame from unrelated cwd pass 65 generation 67 managed/64 resources/all 65 equal
+one frame from unrelated cwd pass: 65 generation/67 managed/64 resources/all 65 equal
 to dataset 03/two real dependencies/reuse without writes. Original F09 checkpoint and
 previous cache intact: attachment proof only, positive ordinary/equivalence not
 claimed. Source/model/runtime/old scene closed without replay; USA e8-d7 and Linux/
@@ -1815,1215 +1816,1521 @@ Windows/new 32:9 pending.
 
 
 **ROMDATA-01-UI-JOB-LOOKUP-SOURCE completed for EUR 20-slot projection (2026-10-26).**
-Root 399750 shared by six readers D0538/D0548/D0568/D0588/D05A8/D05C8: job byte
-or CBEC8 property 1/4/6/9/0, original truncations and name helper 165E8. Domain
-selected before data from 12CA98: index list of 20 RAM slots 02002E78/stride 16,
-mode 3 maximum +5/inclusive tie; one occupied slot allows any 0..19. R6 preserved
-through CFF70 clear before D05C8. 268 halfword/27 critical pins/9 literal/8 BL
-authenticated. No invented global cap/full physical extent/adjacency/game identity;
-other raw caller matches are not automatically semantic code. Twenty distinct u8
-jobs/20B/one range SHA 969b2cd5.., 20 metadata52 rows reconstructed, disjoint from
-all 64 current owners. No sprite target followed. Source child closed; model/Wine
-oracle/managed/runtime/CLI/ordinary open. e70-d69/65 files 64 resources and USA 8-7
-unchanged; no build/guest/test/fixture/navigation/private payload/performance-space/
-Android/package/commit/push. Linux/USA/native Windows/new 32:9 pending.
+Root 399750 is shared by six readers D0538/D0548/D0568/D0588/D05A8/D05C8. They read
+the job byte or CBEC8 properties 1/4/6/9/0, with original truncations and name helper
+165E8. Before reading data, 12CA98 selects an index from 20 RAM slots at 02002E78
+with stride 16; mode 3 uses maximum +5 with an inclusive tie. One occupied slot can
+permit any index 0..19. R6 is preserved through the CFF70 clear before D05C8.
+The evidence authenticates 268 halfwords, 27 critical pins, 9 literals and 8 BLs.
+It does not establish a global cap, full physical extent, adjacency or game identity;
+other raw caller matches are not automatically semantic code. The projection contains
+20 distinct u8 jobs over 20 B in one range, SHA 969b2cd5.., and reconstructs 20
+metadata52 rows disjoint from all 64 current owners. No sprite target was followed.
+The source child is closed; model, Wine oracle, managed/runtime, CLI and ordinary use
+were open at this checkpoint. e70-d69 (65 files/64 resources) and USA 8-7 were
+unchanged. No build, guest execution, test, fixture, navigation, private payload,
+performance/space measurement, Android, package, commit or push. Linux, USA, native
+Windows and new 32:9 remain pending.
 [Contract and limits](../rom_data_gameplay.md#twenty-slot-job-lookup-source-contract).
 
 
 **ROMDATA-02-SLOT-JOB-LOOKUP-MODEL model completed EUR (2026-10-26).**
-Strict model 20 (slot,u8 job)/20B/source base/hash/byte_at/direct metadata52; Catalog
-checks EUR/three producer-reader blocks. Only two module declarations, no Extraction/
-runtime registration: e70-d69/65 files 64 resources/USA 8-7 unchanged. First warning-
-free Windows frontend build and first single Wine filter PASS: 20 independent entries/
-20B/12 JSON-shape-source-dependency guards/roundtrip/disjoint from all 64 owners.
-123 original paths: 21 bare job/81 complete property wrappers/21 property 0 prefixes
-before 165E8, three high input aliases. All 20B at six original LDRB, callee/full
-RAM outside 20B stack/VRAM-OAM-palette preserved. No guest cap 20/null/host fallback,
-code parser 268 pins/metadata52/FFFF/A4/old proof not repeated. Managed/runtime 03/
-CLI 04/ordinary 05 open; no new fixture/navigation/private payload/performance-space/
-Android/package/commit/push. Linux/USA/native Windows/new 32:9 pending.
+The strict model records 20 (slot,u8 job) entries, 20 B, source base/hash, byte_at
+and direct metadata52. Catalog checks cover EUR and three producer-reader blocks.
+Only two module declarations were added, without Extraction/runtime registration:
+e70-d69 (65 files/64 resources) and USA 8-7 were unchanged. The first warning-free
+Windows frontend build and first single Wine filter passed: 20 independent entries,
+20 B, 12 JSON-shape/source/dependency guards, roundtrip and disjointness from all
+64 owners. The proof covers 123 original paths: 21 bare job reads, 81 complete
+property wrappers and 21 property 0 prefixes before 165E8, plus three high input
+aliases. All 20 B at the six original LDRB reads, the callee, full RAM outside the
+20 B, stack and VRAM-OAM-palette were preserved. No guest cap of 20, null or host
+fallback was introduced. The code parser's 268 pins and metadata52/FFFF/A4/old
+proofs were not repeated. Managed/runtime 03, CLI 04 and ordinary 05 were open at
+this checkpoint. No new fixture, navigation, private payload, performance/space
+measurement, Android, package, commit or push. Linux, USA, native Windows and new
+32:9 remain pending.
 [Model and limits](../rom_data_gameplay.md#typed-twenty-slot-job-lookup-and-original-reader-proof).
 
 
 **ROMDATA-03-SLOT-JOB-LOOKUP-RUNTIME managed/runtime completed EUR (2026-10-26).**
-e71-d70: 66 files 65 resources/gameplay.slot-job-lookup/slot-job-lookup.json, real
-metadata52 dependency; all 64 previous records/files and e70 preserved, USA 8-7
-unchanged. Immutable owner 20 u8/20B/page 399/20-record mask, original low 8 input/
-slot selection/clear/properties/name/raw outside preserved, no guest cap 20. First
-warning-free Windows core/frontend build and two new Wine filters PASS after ENOSPC
-stop and retry on temporary filesystem: 18 attach guards/3 dependency guards/
-publication/lifecycle unavailable directory/all 20B raw altered/all 20 bits/distinct
-FFF owner. Sixteen original/interpreter/native paths equal full state-clock: getter/
-properties/name ID prefix/high input/slot 20 raw/live RAM and 12CA98 mode 3 slot 19
-→ CFF70 clear → D05C8 before 165E8. Edges/width/mirrors/real BIOS bus; API 2 new
-2 raw, CpuSet 20 new 4 raw/FastSet 20 new 12 raw/DMA 20 new 4 raw preserved. Old
-64 owners confirm raw neighbors. Source 268 pins/model 123 readers/old proof closed
-without replay. CLI 04/ordinary 05 open; Linux/USA/native Windows/new 32:9 pending.
-No fixture/navigation/private payload/performance-space/Android/package/commit/push.
+Release e71-d70 contains 66 files and 65 resources, including
+gameplay.slot-job-lookup/slot-job-lookup.json and its real metadata52 dependency.
+All 64 previous records/files and e70 were preserved; USA 8-7 was unchanged. The
+immutable owner covers 20 u8 entries/20 B on page 399 with a 20-record mask. It
+preserves original low 8 input bits, slot selection, clear, properties, name and raw
+outside reads, without a guest cap of 20. After an ENOSPC stop and retry on a
+temporary filesystem, the first warning-free Windows core/frontend build and first
+two new Wine filters passed: 18 attach guards, 3 dependency guards, publication and
+lifecycle with an unavailable directory, all 20 B of raw data altered, all 20 bits
+and a distinct FFF owner. Sixteen original/interpreter/native paths matched full
+state and clock: getter, properties, name ID prefix, high input, slot 20 raw, live
+RAM and 12CA98 mode 3 slot 19 → CFF70 clear → D05C8 before 165E8. Edges, widths,
+mirrors and the real BIOS bus were preserved; mixed API reads covered 2 new/2 raw,
+CpuSet 20 new/4 raw, FastSet 20 new/12 raw and DMA 20 new/4 raw. The old 64 owners
+confirmed raw neighbors. Source 268 pins, model 123 readers and old proof were
+closed without replay. CLI 04 and ordinary 05 were open at this checkpoint; Linux,
+USA, native Windows and new 32:9 remain pending. No fixture, navigation, private
+payload, performance/space measurement, Android, package, commit or push.
 [Consumption and limits](../rom_data_gameplay.md#managed-twenty-slot-job-lookup-and-typed-bus-consumption).
 
 
 **ROMDATA-04-SLOT-JOB-LOOKUP-ACTUAL-CLI completed EUR/Wine (2026-10-26).**
-First warning-free Windows production build/frozen candidate; canonical exact hash+
-mtime restored/main content unchanged. First three Wine calls prepare/reuse/old-cache
-one frame from unrelated cwd pass 66 generation 68 managed/65 resources/all 66 equal
-to dataset 03/metadata52 dependency/reuse without writes. Private root on temporary
-filesystem via workspace link after ENOSPC 03, no further cleanup/budget formatting/
-build retry. F09/original cache intact: attachment proof only, positive ordinary/
-equivalence open. Source/model/runtime/old proof closed without replay; Linux/USA/
-native Windows/new 32:9 to verify. No fixture/navigation/private payload/performance-
-space/Android/package/commit/push.
+The first warning-free Windows production build produced a frozen candidate. The
+canonical file's exact hash and mtime were restored, with main content unchanged.
+The first three Wine calls for prepare/reuse/old-cache, one frame from an unrelated
+working directory, passed: 66 generation entries, 68 managed entries, 65 resources,
+all 66 equal to dataset 03, the metadata52 dependency and reuse without writes. The
+private root was on a temporary filesystem via a workspace link after ENOSPC in 03;
+there was no further cleanup, budget formatting or build retry. F09 and the original
+cache were intact. This proves attachment only; positive ordinary use and equivalence
+were still open. Source, model, runtime and old proof were closed without replay;
+Linux, USA, native Windows and new 32:9 remain to verify. No fixture, navigation,
+private payload, performance/space measurement, Android, package, commit or push.
 [CLI and limits](../rom_data_gameplay.md#actual-production-cli-for-the-twenty-slot-job-lookup).
 
 
 **ROMDATA-05-SLOT-JOB-LOOKUP-BANK-ORDINARY completed for declared EUR scene (2026-10-26).**
-First new CLI bank 120 positive 2 reads/2B/1 slot, with existing copied checkpoint/
-Down 8..20 input and production e71 dataset generation-GmxCy2. Sole scope new job
-lookup, old A4 negative/B2 positive closed. Only 5 optional guard/report lines in scene
-validator, runtime/product/old guards/states unchanged. First warning-free Windows
-frontend build and first exact Wine filter PASS: 120 full state-clock from 3660 to
-3780/central-wide/OAM/native-fallback dispatch and bit-exact mixed PSG-FIFO left-right-
-HLE. All 5 sample counts [263340,263340,31680,31680,263264] positive; new use 2B
-1 slot matches CLI. Other 19 ordinary slots targeted only. Inspected CLI capture
-284x160: Bank background, UI panels absent from raw framebuffer; no final composite
-GUI/full name-actor-allocator ABI/new 32:9 claimed. Input/copy/original/cache/dataset
-intact; no fixture/navigation/private payload/performance-space/old proof replay.
-Source/model/03/04/05 declared closed, full TODO active/Linux-USA-native Windows-
-new 32:9 pending.
+The first new CLI bank 120 run observed positive use: 2 reads/2 B/1 slot, with an
+existing copied checkpoint, Down 8..20 input and production e71 dataset
+generation-GmxCy2. The only new scope was job lookup; old A4 negative and B2
+positive evidence remained closed. Only 5 optional guard/report lines changed in the
+scene validator; runtime, product, old guards and states were unchanged. The first
+warning-free Windows frontend build and first exact Wine filter passed: 120 full
+state-clock comparisons from 3660 to 3780, central-wide/OAM/native-fallback dispatch
+and bit-exact mixed PSG-FIFO left-right-HLE. All 5 sample counts
+[263340,263340,31680,31680,263264] were positive; new use of 2 B in 1 slot matched
+the CLI. The other 19 ordinary slots were targeted only. The inspected CLI capture
+was 284x160: Bank background, with UI panels absent from the raw framebuffer. No
+final composite GUI, full name-actor-allocator ABI or new 32:9 was claimed. Input,
+copy, original, cache and dataset were intact; no fixture, navigation, private
+payload, performance/space measurement or old proof replay. Source, model and
+03/04/05 are closed within their declared scope; the full TODO remains active and
+Linux, USA, native Windows and new 32:9 remain pending.
 [Scene and limits](../rom_data_gameplay.md#ordinary-bank-scene-use-of-the-twenty-slot-job-lookup).
 
 
 **ROMDATA-01-POST-SLOT-LOOKUP-READERS completed for three EUR RAM APIs (2026-10-26).**
-D05E8 any nonnull and D0618 count read only the first words of 20 RAM slots 02002E78/
-stride 16; they do not validate pointers/liveness, D05E8 returns early. D0650 increments
-byte 02001F68 only if old<=98, leaves 99..255 unchanged (no global clamp). All ignore
-incoming args for these addresses; six literals are executable RAM base/offset support,
-no new ROM asset root. 68 halfword/30 critical pins/6 literals/three complete blocks
-verified; 3/2/1 raw BL matches remain candidates/not semantic completeness. No live RAM
-export/new decoder-resource-owner/revision/ROM table cap 20. e71-d70/66 files 65
-resources/USA 8-7 unchanged. Next partial D0670 excluded. Source child closed,
-old evidence/Bank not repeated; no build/guest/test/fixture/navigation/private
-payload/performance-space. Linux/USA/native Windows/new 32:9 pending.
+D05E8 checks for any nonnull slot and D0618 counts slots by reading only the first
+words of 20 RAM slots at 02002E78 with stride 16. They do not validate pointers or
+liveness, and D05E8 returns early. D0650 increments byte 02001F68 only if old<=98,
+leaving 99..255 unchanged; there is no global clamp. All ignore incoming arguments
+for these addresses. Six literals support the executable RAM base/offset, with no
+new ROM asset root. The proof verifies 68 halfwords, 30 critical pins, 6 literals
+and three complete blocks; 3/2/1 raw BL matches remain candidates, not semantic
+completeness. There is no live RAM export, new decoder-resource-owner, revision or
+ROM table cap of 20. e71-d70 (66 files/65 resources) and USA 8-7 were unchanged.
+The next partial D0670 was excluded. The source child closed without repeating old
+evidence or Bank; no build, guest execution, test, fixture, navigation, private
+payload or performance/space measurement. Linux, USA, native Windows and new 32:9
+remain pending.
 [Live state and limits](../rom_data_gameplay.md#live-state-helpers-following-the-slot-job-lookup).
 
 
 **ROMDATA-01-NATIVE-ROM-DATA-RESIDUE completed for the EUR Bank12 sample
-(2026-10-26).** A test-only observer wraps native read8/16/32 APIs and subtracts the
-20756 merged ranges from the 65 e71 source plans. First warning-free Windows build
-and one Wine filter: 3166 context reads/3683 image bytes; 198 reads include 676 bytes
-outside the plans, 79 ranges observed. Full state/clock, central-wide/OAM/dispatch
-and five audio streams match at each frame 3660–3672. The 676 bytes are leads to
-authenticate, including five words 370E70/74/80/84/EB0; no new resource/revision
-or global completeness. Exported PC may be stale; interpreter/HLE/DMA/native
-constants and other scenes outside sample. 73 input hash-mtime exact; main/C API/
-old validators unchanged, only new test module with cfg declaration. No new fixture/
-navigation/performance measurement. Old Bank 120/source/model/runtime/CLI
-acceptances remain closed. Linux/USA/native Windows/new 32:9 to do.
+(2026-10-26).** A test-only observer wraps the native read8/16/32 APIs and subtracts
+20756 merged ranges from the 65 e71 source plans. The first warning-free Windows
+build and one Wine filter report 3166 context reads/3683 image bytes; 198 reads
+include 676 bytes outside the plans, with 79 ranges observed. Full state/clock,
+central-wide/OAM/dispatch and five audio streams match at each frame 3660–3672.
+The 676 bytes are leads to authenticate, including five words 370E70/74/80/84/EB0;
+no new resource/revision or global completeness is claimed. Exported PC may be
+stale; interpreter/HLE/DMA/native constants and other scenes are outside the
+sample. All 73 input hash-mtime checks are exact; main/C API/old validators are
+unchanged, with only a new test module and cfg declaration. No new fixture,
+navigation or performance measurement. Old Bank 120/source/model/runtime/CLI
+acceptances remain closed. Linux, USA, native Windows and new 32:9 remain to do.
 [Contract, transparency and limits](../rom_data_runtime.md#bounded-native-rom-api-residue-inventory).
 
 
 **ROMDATA-01-NATIVE-RESIDUE-HIGH-WORD-READERS statically completed EUR
 (2026-10-26).** The five observed words 370E70/74/80/84/EB0 support execution:
 two DMA register address directories and one Thumb IWRAM entry passed to BX r2.
-392 halfword/47 pins/5 literal/4 BL in six complete blocks authenticated; actual
-loads 0846/09B2/0D56/3A7E/11DA/11EE distinguished from exported PC. Original callers
-prove two 4x4B projections 370E68/78 and one word 370EB0, 36B disjoint from 65
-owners; 20B observed classified, 656B lower still to classify. No inferred global
-cap, RAM body/ABI/scheduler or new asset/owner/revision; explicit ROM/code dependency
-and 676B still outside managed plans. No build/guest/test/fixture/navigation/
-measurement/old acceptance repeated. e71-d70/USA 8-7 unchanged; Linux/USA/native
-Windows/new 32:9 pending.
+The proof authenticates 392 halfwords/47 pins/5 literals/4 BL in six complete
+blocks; actual loads 0846/09B2/0D56/3A7E/11DA/11EE are distinguished from exported
+PC. Original callers prove two 4x4 B projections 370E68/78 and one word 370EB0,
+36 B disjoint from 65 owners; 20 B observed are classified, with 656 B lower still
+to classify. No global cap, RAM body/ABI/scheduler or new asset/owner/revision is
+inferred; ROM/code remains an explicit dependency and 676 B remain outside managed
+plans. No build, guest execution, test, fixture, navigation, measurement or repeat
+of old acceptance. e71-d70/USA 8-7 unchanged; Linux, USA, native Windows and new
+32:9 pending.
 [Hardware directories and branch control](../rom_data_runtime.md#high-offset-native-residue-is-hardware-and-branch-support).
 
 
 **ROMDATA-01-NATIVE-RESIDUE-LOWER-READERS completed for EUR static witnesses
-(2026-10-26).** 656B observed: 158 literal words/632B with 184 linear Thumb paths
-within 96B of saved contexts (507 distinct halfwords), and 6 words/24B in 5 jump
-tables with 82 halfwords of bounds/index/load/MOV pc prefix authenticated.
-8/35/69/48/5-entry projections; only 0/0/27/4-6/1 observed. This is not a dynamic
-instruction/mode trace or proof of all uses. Together with the 20B high hardware/
-branch support, all 676B outside plans have static code-support witnesses; they
-remain outside the 65 owners/original ROM dependency. No inferred new family/asset
-root/owner/revision/complete migration. No build/guest/test/fixture/navigation/
-measurement/old acceptance repeated. e71-d70/USA 8-7 unchanged; interpreter/HLE/
-DMA/native constants/other scenes and Linux/USA/native Windows/new 32:9 separate.
+(2026-10-26).** The 656 B observed comprise 158 literal words/632 B with 184
+linear Thumb paths within 96 B of saved contexts (507 distinct halfwords), and 6
+words/24 B in 5 jump tables with 82 authenticated halfwords of bounds/index/load/
+MOV pc prefix. The projections have 8/35/69/48/5 entries; only 0/0/27/4-6/1 were
+observed. This is not a dynamic instruction/mode trace or proof of all uses.
+Together with the 20 B of high hardware/branch support, all 676 B outside plans
+have static code-support witnesses; they remain outside the 65 owners and depend
+on the original ROM. No new family/asset root/owner/revision or complete migration
+is inferred. No build, guest execution, test, fixture, navigation, measurement or
+repeat of old acceptance. e71-d70/USA 8-7 unchanged; interpreter/HLE/DMA/native
+constants, other scenes and Linux/USA/native Windows/new 32:9 remain separate.
 [Literals and jump tables](../rom_data_runtime.md#lower-native-residue-has-literal-and-switch-table-witnesses).
 
 
 **ROMDATA-01-NATIVE-ROM-DATA-RESIDUE-F09 completed for second EUR sample
-(2026-10-26).** Same frozen observer executable, no build: one Wine filter 12 frames
-8476→8488 from existing F09 checkpoint/inputs preserves state/clock/buffer/OAM/
-dispatch and five audio streams. 13671 context reads/13961B image; 604B outside
-plans, 584 shared with Bank and 20 new B/5 words. All 5 have linear Thumb PC-relative
-witnesses (20 halfwords); static source, not a dynamic trace/mode/all uses. Union of
-two samples 696B still outside 65 owners, no asset/revision inferred. 76 input
-hash-mtime and compiled code exact, retention helper 0 paths. No fixture/navigation/
-measurement or old F09/Bank acceptance repeated. Other interpreter/HLE/DMA/constant
-paths and Linux/USA/native Windows/new 32:9 remain separate.
+(2026-10-26).** The same frozen observer executable was used without a build: one
+Wine filter over 12 frames 8476→8488 from the existing F09 checkpoint/inputs
+preserves state/clock/buffer/OAM/dispatch and five audio streams. It reports 13671
+context reads/13961 B image, with 604 B outside plans, 584 shared with Bank and
+20 new B/5 words. All 5 have linear Thumb PC-relative witnesses (20 halfwords):
+static source, not a dynamic trace/mode or all uses. The union of the two samples
+is 696 B still outside 65 owners, with no asset/revision inferred. All 76 input
+hash-mtime checks and compiled code are exact; the retention helper found 0 paths.
+No fixture, navigation, measurement or repeat of old F09/Bank acceptance. Other
+interpreter/HLE/DMA/constant paths and Linux/USA/native Windows/new 32:9 remain
+separate.
 [Second sample](../rom_data_runtime.md#second-native-api-sample-from-the-existing-f09-checkpoint).
 
 
 **ROMDATA-01-HOST-ROM-READ-RESIDUE completed for collector and EUR F09 sample
-(2026-10-26).** Optional non-default Cargo feature rom-data-read-audit: thread-local
-address/reader/length collector on resolved bus and selected host audio/sprite/
-tables/keyboard; interpreter instruction fetch excluded, execution/clock/API/
-savestate unchanged. First build core compiled/frontend failed due to missing c_void
-qualification in test; test-only correction and warning-free incremental build. One
-Wine filter: ARM/Thumb/width/mirror/audio/lifecycle probe and 12 frames 8476→8488
-state-clock-buffer-OAM-dispatch-five audio identical. 23061 requests/19984B image,
-1146B outside 65 owners; includes all 604B outside plans from old API report and adds
-542B. 90 new high B/6 ranges remain sources to authenticate, 64B also from SpritePeek.
-No format/asset/extent/owner/revision inferred. 76 execution inputs + 1 comparison
-report hash-mtime exact, no old evidence/fixture/navigation/measurement. e71-d70/
-USA 8-7 unchanged; KeyboardWidths inactive/other threads-scenes/host accesses/typed
-HLE fast path out of scope; Linux/USA/native Windows/new 32:9 pending.
+(2026-10-26).** The optional non-default Cargo feature rom-data-read-audit provides
+a thread-local address/reader/length collector on the resolved bus and selected
+host audio/sprite/tables/keyboard. Interpreter instruction fetch is excluded;
+execution/clock/API/savestate are unchanged. The first build compiled core but
+failed in the frontend because a test omitted c_void qualification; a test-only
+correction produced a warning-free incremental build. One Wine filter covers the
+ARM/Thumb/width/mirror/audio/lifecycle probe and 12 frames 8476→8488 with identical
+state/clock/buffer/OAM/dispatch and five audio streams. It reports 23061 requests/
+19984 B image, with 1146 B outside 65 owners; this includes all 604 B outside plans
+from the old API report and adds 542 B. The 90 new high B/6 ranges remain sources
+to authenticate; 64 B also come from SpritePeek. No format/asset/extent/owner/
+revision is inferred. Hash-mtime checks are exact for 76 execution inputs + 1
+comparison report; no old evidence, fixture, navigation or measurement. e71-d70/
+USA 8-7 unchanged. KeyboardWidths was inactive; other threads/scenes, host accesses
+and the typed HLE fast path are out of scope. Linux/USA/native Windows/new 32:9
+remain pending.
 [Collector, proof and limits](../rom_data_runtime.md#optional-bus-and-host-rom-read-audit).
 
 
 **ROMDATA-01-BUS-HOST-HIGH-RESIDUE completed for EUR source contracts
-(2026-10-26).** 90 new B classified: 64B two indirect OBJ lists 394F4C/26B/4 objects
-and 40D89E/38B/6 objects; 10B parameters (2 phase thresholds, 4 signed vertical
-words); 16B Thumb IWRAM control pointers. 295 window halfwords/53 pins/7 literals +
-ABI hash reused. Original copy 0924E8 proves D968E8..D97728→03005F28..03006D68,
-constructor D9752C writes list+158; raw ROM disassembly at empty RAM target rejected.
-One existing F09 producer-args Wine frame confirms 2 readers/10 objects, no old
-equivalence repeated. 40D89E from task+24 is an indirect observation, not an invented
-literal; command creation not reconstructed. Timing compares OLD counter, post-update
-phase 0..2 not a global cap; corrected byte>>1 query has 128 possible indices, only
-4..7 new here. 64B lists + 10B parameters still to model/publish; 16B control remain
-ROM/code dependency; 452B lower separate. e71-d70/65 owners/USA 8-7 unchanged, no
-build/fixture/navigation/measurement. Linux/USA/native Windows/new 32:9 pending.
+(2026-10-26).** The 90 new B are classified: 64 B in two indirect OBJ lists
+394F4C/26 B/4 objects and 40D89E/38 B/6 objects; 10 B of parameters (2 phase
+thresholds, 4 signed vertical words); and 16 B of Thumb IWRAM control pointers.
+The proof reuses 295 window halfwords/53 pins/7 literals and the ABI hash. Original
+copy 0924E8 proves D968E8..D97728→03005F28..03006D68; constructor D9752C writes
+list+158. Raw ROM disassembly at an empty RAM target was rejected. One existing
+F09 producer-args Wine frame confirms 2 readers/10 objects; old equivalence was
+not repeated. 40D89E from task+24 is an indirect observation, not an invented
+literal; command creation was not reconstructed. Timing compares the OLD counter;
+post-update phase 0..2 is not a global cap. The corrected byte>>1 query has 128
+possible indices, with only 4..7 new here. The 64 B of lists + 10 B of parameters
+remain to model/publish; the 16 B of control remain a ROM/code dependency, with
+452 B lower separate. e71-d70/65 owners/USA 8-7 unchanged; no build, fixture,
+navigation or measurement. Linux/USA/native Windows/new 32:9 pending.
 [Indirect lists and evidence](../rom_data_obj.md#observed-indirect-obj-list-sources-beyond-the-direct-catalog),
 [parameters and control](../rom_data_runtime.md#high-bus-and-host-residue-source-contracts).
 
 
 **ROMDATA-02-OBSERVED-OBJ-LISTS-MODEL completed for two EUR lists
-(2026-10-26).** Isolated obj_lists::observed API reuses List/Object: 2 lists/
-10 objects/64B, identity/count/shape/field width/strict JSON/source consistency
-authenticated, constructor-bound root distinct from ordinary-task argument. First
-warning-free Windows frontend build and one Wine filter: 64B/2 spans/14 guards/
-6 original paths ROM 1500/170C/copied RAM 030065A8, output/matrices/stack/callee/
-external RAM/OAM-VRAM-palette exact. Canonical JSON 4530552b..; 75 input-artifact
-guards and compiled code unchanged. Only 2 declarations in existing files; old
-Catalog 74/175 objects 1198B/e71-d70/66 files 65 resources/USA 8-7 unchanged. No
-publication/owner/revision or ordinary evidence to infer; model closed, managed
-runtime/CLI/new use from file still open. No old 74/ABI/copier/scene check repeated,
-new fixture/navigation/measurement. 10B parameters and 452B lower separate; Linux/
-USA/native Windows/new 32:9 pending.
+(2026-10-26).** The isolated obj_lists::observed API reuses List/Object: 2 lists/
+10 objects/64 B. Identity/count/shape/field width/strict JSON/source consistency
+are authenticated; the constructor-bound root is distinct from the ordinary-task
+argument. The first warning-free Windows frontend build and one Wine filter cover
+64 B/2 spans/14 guards/6 original paths at ROM 1500/170C and copied RAM 030065A8;
+output/matrices/stack/callee/external RAM/OAM-VRAM-palette are exact. Canonical
+JSON is 4530552b..; 75 input-artifact guards and compiled code are unchanged. Only
+2 declarations were added to existing files; the old Catalog of 74 lists/175
+objects/1198 B, e71-d70/66 files/65 resources and USA 8-7 are unchanged. No
+publication/owner/revision or ordinary evidence is inferred: the model is closed,
+while managed runtime/CLI/new use from file were still open at this checkpoint.
+No old 74/ABI/copier/scene check was repeated and no new fixture, navigation or
+measurement was performed. The 10 B of parameters and 452 B lower remain separate;
+Linux/USA/native Windows/new 32:9 are pending.
 [Model and checks](../rom_data_obj.md#isolated-typed-model-for-the-two-observed-indirect-lists).
 
 
 **ROMDATA-03-OBSERVED-OBJ-LISTS-RUNTIME completed for two EUR lists
 (2026-10-26).** e72-d71 integrates the two indirect identities into the existing
-OBJ resource: 76 lists, 185 objects and 1262 source bytes. The 126 direct references,
-66 files/65 resources, same size dependency, all 74 previous lists, other 64 files/
-records and e71 remain. USA 8-7 unchanged. First warning-free Windows build and two
-Wine filters pass publication/repair/move, 12 attach guards and Load/Undo/backup/
-restart; six original/interpreter/native paths have equal full state and clock with
-all 64 new ROM bytes altered. Edges/widths/mirror/BIOS, six DMA-CpuSet-FastSet
-transfers, API reads 2B old + 2B new and 2B altered raw + 2B new, six host publications
-pass. 5571 instructions/2418 dispatch are coverage only; 265 typed bytes served by
-native APIs. File exactly matches accepted model, 77 input/executable guards and
-compiled code unchanged; artifact completion removes only interrupted/moved copies.
-Production CLI and new ordinary equivalence remain open; ten parameter bytes and
-452 lower bytes separate. No old model/ABI/scene repeated, new fixture/navigation/
-measurement. Linux, USA, native Windows and new 32:9 to verify.
+OBJ resource: 76 lists, 185 objects and 1262 source bytes. The 126 direct
+references, 66 files/65 resources, same size dependency, all 74 previous lists,
+other 64 files/records and e71 remain. USA 8-7 is unchanged. The first warning-free
+Windows build and two Wine filters pass publication/repair/move, 12 attach guards
+and Load/Undo/backup/restart; six original/interpreter/native paths have equal full
+state and clock with all 64 new ROM bytes altered. Edges/widths/mirror/BIOS, six
+DMA-CpuSet-FastSet transfers, API reads of 2 B old + 2 B new and 2 B altered raw +
+2 B new, and six host publications pass. The 5571 instructions/2418 dispatch are
+coverage only; native APIs served 265 typed bytes. The file exactly matches the
+accepted model; 77 input/executable guards and compiled code are unchanged. Artifact
+completion removes only interrupted/moved copies. Production CLI and new ordinary
+equivalence were open at this checkpoint; ten parameter bytes and 452 lower bytes
+remain separate. No old model/ABI/scene was repeated and no new fixture, navigation
+or measurement was performed. Linux, USA, native Windows and new 32:9 remain to
+verify.
 [Integration and evidence](../rom_data_obj.md#managed-observed-indirect-lists-and-typed-consumption).
 
 
 **ROMDATA-04-OBSERVED-OBJ-LISTS-ACTUAL-CLI completed EUR (2026-10-26).**
-First warning-free Windows production build; separate CLI c6d674d7.., canonical
-executable hash/mtime exactly restored, main content unchanged with mtime-only Cargo
-invalidation. First three Wine commands from unrelated cwd pass create/reuse/old-cache
-one frame: 66 generation files/68 managed, all 66 equal to runtime dataset, 65 resources/
-76 OBJ spans/size dependency. Reuse without hash/mtime changes. Original F09/inputs/
-cache at 16:9: both new lists 00394f4c/0040d89e guest=true host=true; OBJ totals
-147 reads/147B/14B count/133B attributes/12 host reads. Positive use, full ordinary
-equivalence still open. All 143 CLI guards and implementation/canonical/originals
-exact; artifact helper zero paths. No old source/model/runtime/producer logging/
-scenario repeated, new fixture/navigation or measurements. Linux/USA/native Windows/
-new 32:9 to verify; ten parameter bytes and 452 lower separate.
+The first warning-free Windows production build produced separate CLI c6d674d7..;
+the canonical executable hash/mtime were exactly restored, with main content
+unchanged and mtime-only Cargo invalidation. The first three Wine commands from an
+unrelated working directory pass create/reuse/old-cache one frame: 66 generation
+files/68 managed, all 66 equal to the runtime dataset, 65 resources/76 OBJ spans/
+size dependency. Reuse made no hash/mtime changes. With original F09/inputs/cache
+at 16:9, both new lists 00394f4c/0040d89e have guest=true and host=true; OBJ totals
+are 147 reads/147 B/14 B count/133 B attributes/12 host reads. This is positive
+use; full ordinary equivalence was still open. All 143 CLI guards and the
+implementation/canonical/originals are exact; the artifact helper found zero
+paths. No old source/model/runtime/producer logging/scenario was repeated and no
+new fixture, navigation or measurement was performed. Linux/USA/native Windows/
+new 32:9 remain to verify; ten parameter bytes and 452 lower remain separate.
 [CLI and evidence](../rom_data_obj.md#actual-cli-for-the-observed-indirect-lists).
 
 
 **ROMDATA-05-OBSERVED-OBJ-LISTS-ORDINARY completed for the first EUR F09 frame
-(2026-10-26).** Only five optional lines in existing validator require both new lists
-guest+host. First warning-free Windows build and one Wine filter: frame 8476→8477,
-full state/clock/central-wide images/OAM/dispatch and all audio equal. Five streams
-with real samples [2196,2196,264,264,2120]; OBJ counters 147 reads/147B/14 count/
-133 attributes/12 host exactly match CLI. 6803 native/22849 fallback coverage only;
-75 input/executable guards, originals/cache/dataset/canonical exact. Five-line delta
-checked against preimage, other implementations unchanged; artifact helper zero paths.
-Source/model/managed/runtime/CLI and declared ordinary closed; other scenes/indirect
-calls/composed GUI/ABI/new 32:9 open. No old 12/3530/scenario/model/runtime repeated,
-new fixture/navigation or measurements. Ten parameter bytes/452 lower and Linux/USA/
-native Windows separate or to verify.
+(2026-10-26).** Only five optional lines in the existing validator require both new
+lists in guest and host. The first warning-free Windows build and one Wine filter
+compare frame 8476→8477: full state/clock/central-wide images/OAM/dispatch and all
+audio are equal. Five streams contain real samples [2196,2196,264,264,2120]; OBJ
+counters of 147 reads/147 B/14 count/133 attributes/12 host exactly match the CLI.
+The 6803 native/22849 fallback counts are coverage only; 75 input/executable guards,
+originals/cache/dataset/canonical are exact. The five-line delta was checked against
+the preimage, with other implementations unchanged; the artifact helper found zero
+paths. Source/model/managed/runtime/CLI and declared ordinary acceptance are closed;
+other scenes/indirect calls/composed GUI/ABI/new 32:9 remain open. No old 12/3530/
+scenario/model/runtime check was repeated and no new fixture, navigation or
+measurement was performed. Ten parameter bytes/452 lower and Linux/USA/native
+Windows remain separate or to verify.
 [Equivalence and limits](../rom_data_obj.md#ordinary-first-frame-equivalence-for-the-observed-lists).
 
 
 **ROMDATA-02-OBSERVED-TASK-PARAMETERS-MODEL completed EUR (2026-10-26).**
-Isolated observed_task_parameters API for two independent fragments: phase 1/2 u8
-thresholds at 371065..67 and four signed16 corrections indices 4..7 at 394E14..1C.
-Identity/indices/strict JSON/10B reconstruction/two spans/code-literal-source hash;
-no inferred duration/global cap/physical extent. Phase 0/other bytes outside model;
-corrections 0..3 retain previous owner, 8..127 remain external. First warning-free
-Windows build and one Wine filter: 27 guards and 18 original prefixes (10 old-counter/
-phase-wrap, 8 low-bit alias/signed-sub), RAM/callee/OAM-VRAM-palette exact. Canonical
-model 4b52c5f1..; 79 input/executable guards and implementation exact. Only two
-declarations in old hubs; pipeline/e72-d71/66 files 65 resources/76 OBJ lists/USA 8-7
-unchanged. New 10B disjoint from all owners and not yet published; parameter managed/
-runtime/CLI/ordinary open. Artifact helper zero paths. No source/295 pins/old model-
-ABI-runtime-CLI-scene repeated, new fixture/navigation/measurement. 452 lower separate;
-Linux/USA/native Windows/new 32:9 to verify.
+The isolated observed_task_parameters API covers two independent fragments: phase
+1/2 u8 thresholds at 371065..67 and four signed16 corrections, indices 4..7, at
+394E14..1C. It authenticates identity/indices/strict JSON/10 B reconstruction/two
+spans/code-literal-source hash, without inferring duration, a global cap or physical
+extent. Phase 0/other bytes are outside the model; corrections 0..3 retain their
+previous owner and 8..127 remain external. The first warning-free Windows build and
+one Wine filter cover 27 guards and 18 original prefixes (10 old-counter/phase-wrap,
+8 low-bit alias/signed-sub), with RAM/callee/OAM-VRAM-palette exact. Canonical model
+4b52c5f1.., 79 input/executable guards and the implementation are exact. Only two
+declarations were added in old hubs; pipeline/e72-d71/66 files/65 resources/76 OBJ
+lists/USA 8-7 are unchanged. The new 10 B are disjoint from all owners and were not
+yet published; parameter managed/runtime/CLI/ordinary remained open at this
+checkpoint. The artifact helper found zero paths. No source/295 pins/old model-ABI-
+runtime-CLI-scene checks were repeated and no new fixture, navigation or measurement
+was performed. The 452 lower remain separate; Linux/USA/native Windows/new 32:9 are
+to verify.
 [Model and limits](../rom_data_gameplay.md#isolated-model-for-observed-task-parameter-fragments).
 
 
 **ROMDATA-03-OBSERVED-TASK-PARAMETERS-RUNTIME completed EUR (2026-10-26).**
 e73-d72 publishes gameplay.observed-task-parameters/observed-task-parameters.json:
-67 files/66 resources, all 65 previous files/records/e72/76 OBJ lists retained. Two
-independent fields, no invented dependency, only 10B/two spans 371065..67 and
-394E14..1C; pages 371/394 compose previous owners and ROM, without new cap/ABI/clock/
-state. First two Wine filters pass 13 attach refusals/3 full-set guards, publication/
-repair/move/lifecycle and 24 original-interpreter-native prefixes with equal full
-state/clock and all 10B raw altered. Includes phases 0/3/255, corrections 0/16/255,
-edges/mirror/BIOS, six DMA-CpuSet-FastSet, API reads 2 new + 2 old with old raw
-altered and 2 new + 2 modified raw. 26B native; 316 instructions/24 dispatch coverage
-only. Model 4b52c5f1.. exact, 74 guards and compiled code exact. First build core
-compiled, frontend omitted two test arguments: only two zeros corrected, warning-free
-retry; no Wine filter failed. Artifact helper removes only interrupted/moved. Production
-CLI and ordinary parameters remain open; Linux/USA/native Windows/new 32:9 pending,
-452 lower separate. No old model/source/ABI/scenario repeated, new fixture/navigation/
-measurement.
+67 files/66 resources, with all 65 previous files/records, e72 and 76 OBJ lists
+retained. The two independent fields have no invented dependency and cover only
+10 B/two spans 371065..67 and 394E14..1C. Pages 371/394 compose previous owners
+and ROM without a new cap/ABI/clock/state. The first two Wine filters pass 13 attach
+refusals/3 full-set guards, publication/repair/move/lifecycle and 24 original-
+interpreter-native prefixes with equal full state/clock and all 10 raw B altered.
+They include phases 0/3/255, corrections 0/16/255, edges/mirror/BIOS, six DMA-
+CpuSet-FastSet transfers, API reads of 2 new + 2 old with old raw altered and 2 new
++ 2 modified raw. Native APIs served 26 B; the 316 instructions/24 dispatch are
+coverage only. Model 4b52c5f1.., 74 guards and compiled code are exact. The first build
+compiled core but the frontend omitted two test arguments: only two zeros were
+corrected, then a warning-free retry succeeded; no Wine filter failed. The artifact
+helper removes only interrupted/moved copies. Production CLI and ordinary parameters
+were still open at this checkpoint; Linux/USA/native Windows/new 32:9 remain pending,
+with 452 lower separate. No old model/source/ABI/scenario was repeated and no new
+fixture, navigation or measurement was performed.
 [Runtime and evidence](../rom_data_gameplay.md#managed-observed-task-parameters-and-typed-bus-consumption).
 
 
 **ROMDATA-04-OBSERVED-TASK-PARAMETERS-ACTUAL-CLI completed EUR (2026-10-27).**
-Warning-free Windows production build/c7f47bd4..; canonical hash/mtime exactly restored,
-main content unchanged. First prepare interrupted by user: runner absent, manifest
-without current/result; copy/log archived and same binary reused. Three accepted
-commands exit 0: create/reuse/old-cache one frame, 67 generation files/69 managed/
-66 resources/two spans 10B/no deps/all 67 exact, reuse without writes. First frame
-1B threshold/1 phase but 0 corrections: presence gate explicitly negative, retained.
-One new runc 12 frames, motivated by that negative and existing source lead, exit 0
-with 20 reads/28B/12 thresholds 16 corrections/2 phases 4 rows. 145 guards and
-implementation/originals/cache/canonical/user Atlas unchanged; artifact helper zero
-paths, interrupted copy retained. CLI closed; ordinary full state 12 frames to verify.
-No prepare/reuse/build/old source-model-runtime-scenario repeated, new fixture/
-navigation or measurements. Linux/USA/native Windows/new 32:9 and 452 lower separate
-or pending.
+A warning-free Windows production build produced c7f47bd4..; canonical hash/mtime
+were exactly restored and main content unchanged. The first prepare was interrupted
+by the user: runner absent, manifest without current/result. Its copy/log were
+archived and the same binary reused. Three accepted commands exit 0: create/reuse/
+old-cache one frame, with 67 generation files/69 managed/66 resources/two spans of
+10 B/no dependencies/all 67 exact, and reuse without writes. The first frame has
+1 B threshold/1 phase but 0 corrections: the presence gate is explicitly negative
+and retained. One new 12-frame runc, motivated by that negative and an existing
+source lead, exits 0 with 20 reads/28 B/12 thresholds/16 corrections/2 phases/
+4 rows. The 145 guards and implementation/originals/cache/canonical/user Atlas are
+unchanged; the artifact helper found zero paths and the interrupted copy is retained.
+CLI is closed; ordinary full state for 12 frames was still to verify. No prepare/
+reuse/build/old source-model-runtime-scenario was repeated and no new fixture,
+navigation or measurement was performed. Linux/USA/native Windows/new 32:9 and
+452 lower remain separate or pending.
 [CLI and limits](../rom_data_gameplay.md#actual-cli-for-observed-task-parameters).
 
 
 **ROMDATA-05-OBSERVED-TASK-PARAMETERS-ORDINARY completed EUR (2026-10-27).**
-Only five optional lines in existing validator require both groups and all six rows.
-First warning-free Windows build and one Wine filter: 12 F09 guest frames 8476→8488,
-every full state/clock/central-wide image/OAM/dispatch/audio equal. Five streams with
-real samples [26334,26334,3168,3168,26258]; 20 reads/28B/12 thresholds 16 corrections/
-2 phases 4 rows exactly match CLI. 88123 native/279744 fallback coverage only.
-76 guards, originals/cache/67-file dataset/canonical/code/user Atlas exact. Five-line
-delta checked against preimage; artifact helper zero paths. Source/model/managed/
-runtime/CLI/declared ordinary closed. First correction-negative frame and interrupted
-prepare remain closed; no old source-model-runtime-CLI-collector-scenario repeated,
-new fixture/navigation/measurement. Other scenes, indirect calls/ABI/composed GUI/
-new 32:9 open; 452 lower and Linux/USA/native Windows separate or pending.
+Only five optional lines in the existing validator require both groups and all six
+rows. The first warning-free Windows build and one Wine filter compare 12 F09 guest
+frames 8476→8488: every full state/clock/central-wide image/OAM/dispatch/audio is
+equal. Five streams contain real samples [26334,26334,3168,3168,26258]; 20 reads/
+28 B/12 thresholds/16 corrections/2 phases/4 rows exactly match the CLI. The 88123
+native/279744 fallback counts are coverage only. The 76 guards, originals/cache/
+67-file dataset/canonical/code/user Atlas are exact. The five-line delta was checked
+against its preimage; the artifact helper found zero paths. Source/model/managed/
+runtime/CLI/declared ordinary acceptance are closed. The first correction-negative
+frame and interrupted prepare remain closed; no old source-model-runtime-CLI-
+collector-scenario was repeated and no new fixture, navigation or measurement was
+performed. Other scenes, indirect calls/ABI/composed GUI/new 32:9 remain open; 452
+lower and Linux/USA/native Windows remain separate or pending.
 [Equivalence and limits](../rom_data_gameplay.md#ordinary-twelve-frame-equivalence-for-observed-task-parameters).
 
 
 **ROMDATA-01-BUS-HOST-LOWER-RESIDUE completed EUR (2026-10-27).**
-452 bytes/113 words/62 ranges classified with 114 contextual reads: 404B from
-102 Thumb PC-relative LDRs on 101 literals, 48B from 12 observed switch entries 7–18.
-Load 080A1146/MOV PC 080A1148 retains Thumb; original prefix normalizes u16 zero/>24
-to 1 before index, without new global limit. New optional SiteCapture retains previous
-schema/keys; PC/mode scope requires opcode/address/width verification, not automatic
-attribution for nested HLE/DMA. One warning-free incremental Windows build after
-helper error only in test; one Wine filter with new probes and one current F09 arm
-12 frames observes all 113 words. 85 guards/cfg preimage/code/Atlas exact; artifact
-helper zero paths. No old acceptance repeated, fixture or measurement. The 452B support
-code, e73-d72/67 files 66 resources unchanged. New sources 394FBC/371064 phase 0/
-371034 require their own contracts; no format/extent inferred from literals. Linux/
-USA/native Windows/new 32:9 to verify, global TODO open.
+The classified 452 bytes/113 words/62 ranges have 114 contextual reads: 404 B from
+102 Thumb PC-relative LDRs on 101 literals, and 48 B from 12 observed switch entries
+7–18. Load 080A1146/MOV PC 080A1148 retains Thumb; the original prefix normalizes u16
+zero/>24 to 1 before indexing, without a new global limit. The new optional SiteCapture
+retains the previous schema/keys; PC/mode scope requires opcode/address/width
+verification, not automatic attribution for nested HLE/DMA. One warning-free
+incremental Windows build followed a helper error only in the test; one Wine filter
+with new probes and one current F09 arm over 12 frames observed all 113 words.
+The 85 guards/cfg preimage/code/Atlas are exact; the artifact helper found zero paths.
+No old acceptance was repeated and no fixture or measurement was added. The 452 B
+support code; e73-d72/67 files/66 resources are unchanged. New sources 394FBC/
+371064 phase 0/371034 require their own contracts; no format/extent is inferred
+from literals. Linux/USA/native Windows/new 32:9 remain to verify; the global TODO
+is open.
 [Contract and limits](../rom_data_runtime.md#lower-bus-and-host-residue-source-contracts).
 
 
 **ROMDATA-01-ADDITIONAL-CONSTRUCTOR-OBJ source/model completed EUR (2026-10-27).**
-394FBC is a table of four conditional 32-bit threshold/list pointer pairs, 32B;
-original readers 9DB56/9DBCA and already authenticated constructor prove four lists
-394F82/90/9E/AC, 56B/eight objects. Total 88B, no owner overlap. Increment/store/
-reload u8 before comparison; 255→0, new phase >3 disables. Old phase not bounded
-before lookup: model 0–3, no new global cap. Isolated model with strict JSON/source
-projection/list dependency verification. First warning-free Windows build/single
-Wine filter passes 13 guards, 15 counter prefixes, four pointer-constructor prefixes
-and four new draws with existing copied oracle. 94 guards/code exact, hub declarations
-only/helper visibility only; artifact helper zero paths. Retained F09 does not read
-these data: no ordinary use claimed. Production e73-d72/67 files 66 resources unchanged;
-extraction/runtime owner/positive use to do. Linux/USA/native Windows/new 32:9 pending,
-no old acceptance repeated/fixture/navigation/measurement.
+394FBC is a 32 B table of four conditional 32-bit threshold/list pointer pairs.
+Original readers 9DB56/9DBCA and the already authenticated constructor prove four
+lists 394F82/90/9E/AC, 56 B/eight objects. Total: 88 B, with no owner overlap.
+The u8 is incremented/stored/reloaded before comparison; 255→0, and a new phase
+>3 disables. The old phase is not bounded before lookup: model 0–3, no new global
+cap. The isolated model verifies strict JSON/source projection/list dependency.
+The first warning-free Windows build and single Wine filter pass 13 guards, 15
+counter prefixes, four pointer-constructor prefixes and four new draws with the
+existing copied oracle. The 94 guards/code are exact; only hub declarations/helper
+visibility changed, and the artifact helper found zero paths. Retained F09 does not
+read these data: no ordinary use is claimed. Production e73-d72/67 files/66 resources
+is unchanged; extraction/runtime owner/positive use remained to do. Linux/USA/native
+Windows/new 32:9 remain pending, with no old acceptance repeated and no fixture,
+navigation or measurement.
 [Contract and model](../rom_data_obj.md#conditional-constructor-obj-animation-source-and-model).
 
 
 **ROMDATA-03-CONSTRUCTOR-ANIMATION-RUNTIME completed EUR (2026-10-27).**
-e74-d73/68 files 67 resources publishes 32B table with OBJ dependency; catalog 80 lists/
-193 objects 1318B, all 76 previous lists/126 direct refs/65 other files-records exact.
-Exact table owner with previous/raw composition, lists served by existing OBJ owner.
-First Wine run passes 10 guards/2 halfsets/lifecycle/publication and 13 original-
-interpreter-native state-clock prefixes with 88B raw altered: 36B typed native/
-20 thresholds 16 pointers/4 phases, 4 external queries without charges, 708 bus and
-composition cases. It then stops on test setup error: load_state before ROM restoration.
-Failure retained, no full PASS claimed. Only test order corrected; remaining filter on
-already validated dataset passes 6 DMA/SWI and 4 host publications/two actual objects
-each, without repeating passed portions. Production identical between filters. Final
-builds warning-free, 169 guards/code/Atlas exact; artifact helper 0 paths, failed
-diagnostics and offline 68 retained, only superseded never-run exe retired. Real CLI/
-positive ordinary use to do; retained inactive F09 insufficient. Linux/USA/native
-Windows/new 32:9 pending; no new fixture/measurement/replay.
+e74-d73/68 files/67 resources publishes the 32 B table with an OBJ dependency; the
+catalog has 80 lists/193 objects/1318 B, with all 76 previous lists/126 direct refs/
+65 other files-records exact. The exact table owner composes previous and raw data;
+lists are served by the existing OBJ owner. The first Wine run passes 10 guards/
+2 halfsets/lifecycle/publication and 13 original-interpreter-native state-clock
+prefixes with 88 raw B altered: 36 B typed native/20 thresholds/16 pointers/4 phases,
+4 external queries without charges, and 708 bus and composition cases. It then stops
+on a test setup error: load_state before ROM restoration. The failure is retained;
+no full PASS is claimed for that run. Only test order was corrected; a remaining
+filter on the already validated dataset passes 6 DMA/SWI and 4 host publications/
+two actual objects each, without repeating passed portions. Production was identical
+between filters. Final builds were warning-free; 169 guards/code/Atlas are exact.
+The artifact helper found 0 paths; failed diagnostics and offline 68 were retained,
+with only a superseded never-run executable retired. Real CLI/positive ordinary use
+remained to do; retained inactive F09 was insufficient. Linux/USA/native Windows/new
+32:9 remain pending; no new fixture, measurement or replay.
 [Consumption and evidence](../rom_data_obj.md#managed-constructor-obj-animation-and-typed-consumption).
 
 
 **ROMDATA-04-CONSTRUCTOR-ANIMATION-CLI completed EUR (2026-10-27).**
-First warning-free Windows production build/1e98de03..; canonical hash/mtime restored
-and main content unchanged. Three Wine CLI calls exit 0: prepare/reuse without writes/
-runc 0 frames. 68 generation files/70 managed/67 resources, all 68 hashes identical
-to accepted runtime and all 67 runtime IDs/hashes exact; old cache loaded. Reuse and
-startup hash/mtime unchanged, 145 guards/439 sources exact; helper 0 paths. Zero frames/
-dispatch/fallback/new counters: real registration/attach evidence, no positive ordinary
-use inferred. No F09/source-model-runtime-scenario repeated, new fixture/navigation/
-measurement. Positive ordinary use and Linux/USA/native Windows/new 32:9 remain to verify.
+The first warning-free Windows production build produced 1e98de03..; canonical
+hash/mtime were restored and main content unchanged. Three Wine CLI calls exit 0:
+prepare/reuse without writes/runc 0 frames. There are 68 generation files/70 managed/
+67 resources; all 68 hashes match the accepted runtime and all 67 runtime IDs/hashes
+are exact, with old cache loaded. Reuse and startup hash/mtime are unchanged, and
+145 guards/439 sources are exact; the helper found 0 paths. Zero frames/dispatch/
+fallback/new counters provide real registration/attach evidence, but no positive
+ordinary use is inferred. No F09/source-model-runtime-scenario was repeated and no
+new fixture, navigation or measurement was performed. Positive ordinary use and
+Linux/USA/native Windows/new 32:9 remained to verify.
 [CLI and limits](../rom_data_obj.md#actual-cli-for-constructor-obj-animation).
 
 
 **ROMDATA-05-CONSTRUCTOR-ANIMATION-ORDINARY-POSITIVE partial EUR (2026-10-27).**
-Passive Wine-only observer implemented and optional positive guard in validator
-(seven lines; previous loop exact without guard). First warning-free Windows build;
-four normal observations exit 0 but NEGATIVE: two movements 160/200 frames from
-copied EUR 12006 checkpoint, delayed selection 160, confirmation 200 from new selection
-state. Table 0/phases 0/lists unused, no full pair or positive fixture claimed.
-84 guards/code/originals exact; previous normal provenance retained without 3530-frame
-replay. No manual RAM/task/phase/ROM mutation. Flag setter 9D054/call 6 verified as
-lead, normal action/semantics still to prove; no further blind route or forced flag.
-Unit open, fixture/diagnostics retained; independent 371064 phase 0 source separate.
-Linux/USA/native Windows/new 32:9 pending, no measurement.
+A passive Wine-only observer and optional positive validator guard were implemented
+(seven lines; the previous loop is exact without the guard). The first warning-free
+Windows build was followed by four normal observations that exit 0 but are NEGATIVE:
+two movements of 160/200 frames from a copied EUR 12006 checkpoint, delayed selection
+160 and confirmation 200 from a new selection state. Table 0/phases 0/lists were
+unused; no full pair or positive fixture is claimed. The 84 guards/code/originals are
+exact; previous normal provenance was retained without a 3530-frame replay. There
+was no manual RAM/task/phase/ROM mutation. Flag setter 9D054/call 6 was verified as
+a lead, while the normal action/semantics still need proof; no further blind route
+or forced flag. The unit remains open and fixture/diagnostics retained; independent
+371064 phase 0 source is separate. Linux/USA/native Windows/new 32:9 remain pending;
+no measurement.
 [Evidence still open](../rom_data_obj.md#ordinary-constructor-animation-discovery-remains-partial).
 
 
 **ROMDATA-01..05-CONDITIONAL-PHASE-ZERO completed EUR (2026-10-27).**
-371064 phase 0 now typed: conditional thresholds 0/1/2=16/8/8, 3B span plus
-8 corrections, 11B in same file/68 files 67 resources/e75-d74. Old 2 rows +
-4 corrections/all 66 other records-files exact. No global cap before lookup or ABI
-change. Disjoint coverage partition 3 phases/4 corrections. First warning-free Windows
-build/single Wine run passes 4 new original prefixes/7 attach/6 native state-clock/
-3 DMA and raw edges. First production build/canonical restored, one auto-prepare
-28-frame CLI passes all 68 files/3 phases 4 corrections/36 reads 44B/28 thresholds
-16 corrections. Only offline log matcher corrected after CLI exit 0; command not
-repeated. Same frontend exe: one new full pair 28 frames 8476→8504 passes every
-state-clock/image/OAM/dispatch/audio with samples [61446,61446,7392,7392,61370],
-exact CLI counts. 215 guards/code/5-line unguarded loop exact; helper 0 paths. No old
-12 frames/source/model/runtime/constructor repeated or new fixture/measurement.
-Ordinary constructor remains partial; 371034 and Linux/USA/native Windows/new 32:9
-platforms still to verify.
+371064 phase 0 is now typed: conditional thresholds 0/1/2 = 16/8/8, a 3 B span
+plus 8 corrections, 11 B in the same file/68 files/67 resources/e75-d74. The old
+2 rows + 4 corrections and all 66 other records-files are exact. There is no global
+cap before lookup or ABI change. The disjoint coverage partition is 3 phases/
+4 corrections. The first warning-free Windows build and single Wine run pass 4 new
+original prefixes/7 attach/6 native state-clock/3 DMA and raw edges. The first
+production build restores the canonical executable; one auto-prepare 28-frame CLI
+passes all 68 files/3 phases/4 corrections/36 reads/44 B/28 thresholds/16 corrections.
+Only the offline log matcher was corrected after CLI exit 0; the command was not
+repeated. With the same frontend executable, one new full pair over 28 frames
+8476→8504 passes every state-clock/image/OAM/dispatch/audio comparison with samples
+[61446,61446,7392,7392,61370] and exact CLI counts. The 215 guards/code/5-line
+unguarded loop are exact; the helper found 0 paths. No old 12-frame/source/model/
+runtime/constructor checks were repeated and no new fixture or measurement was made.
+Ordinary constructor use remains partial; 371034 and Linux/USA/native Windows/new
+32:9 platforms remain to verify.
 [Contract and evidence](../rom_data_gameplay.md#conditional-phase-zero-threshold-extension).
 
 
 **ROMDATA-01-TASK-CYCLE-DELTAS / ROMDATA-02-TASK-CYCLE-MODEL completed EUR
-(2026-10-27).** Conditional projection 371034–371064/48 signed-i8 deltas, disjoint
-from all 67 e75 resources. Readers 18E10/18E2A use OLD u8 before normalization;
-increment stored as u8 before helper 1464EC/remainder 48, 255→0. Signed addition/
-subtraction on halfword task+8 with low 16 store; axis/unit/lifetime not inferred.
-No cap introduced: queries 48..255 None, 48/49/50 belong to old owner. First
-warning-free Windows build/single Wine filter passes 23 guards/58 original prefixes/
-8 helper edges/all 48 rows and RAM-callee guards, 77 frozen inputs exact. Lossless
-model/strict JSON; revision e75-d74/68 files 67 resources unchanged. Management/
-runtime consumption/CLI/ordinary 48 completed in units below; source test alone did
-not claim consumption or scene. Previous constructor ordinary still partial; Linux/
-USA/native Windows/new 32:9 pending, no measurement or new ordinary fixture.
+(2026-10-27).** The conditional projection covers 371034–371064/48 signed-i8 deltas,
+disjoint from all 67 e75 resources. Readers 18E10/18E2A use the OLD u8 before
+normalization; the increment is stored as u8 before helper 1464EC/remainder 48,
+with 255→0. Signed addition/subtraction applies to halfword task+8 with a low 16
+store; axis/unit/lifetime are not inferred. No cap is introduced: queries 48..255
+return None, while 48/49/50 belong to the old owner. The first warning-free Windows
+build and single Wine filter pass 23 guards/58 original prefixes/8 helper edges/all
+48 rows and RAM-callee guards; 77 frozen inputs are exact. The model is lossless
+with strict JSON; e75-d74/68 files/67 resources are unchanged. Management/runtime
+consumption/CLI/ordinary 48 were completed in the units below; the source test alone
+did not claim consumption or a scene. Previous constructor ordinary use remains
+partial; Linux/USA/native Windows/new 32:9 remain pending, with no measurement or
+new ordinary fixture.
 [Contract and evidence](../rom_data_gameplay.md#conditional-european-task-cycle-delta-source-and-model).
 
 
 **ROMDATA-02/04-TASK-CYCLE-RUNTIME completed EUR/Wine (2026-10-27).**
-New resource gameplay.task-cycle-deltas/file task-cycle-deltas.json/e76-d75:
-69 files 68 resources, 48B signed-i8/one span, all 67 previous resources/files
-exact. Typed owner composes new bytes/prior/raw, no cap or ABI change; USA 8-7.
-First warning-free Windows build/first Wine filter passes 9 transactional attach
-refusals/2 full-set/interrupted new file, 8 original-interpreter-native prefixes
-with equal full state/clock and 48 raw B altered, 5 explicitly compiled reads. All
-48 rows, read32 boundary with 2 new + 2 old bytes, edges/mirror, 3 DMA/SWI transfers
-across owners, unavailable files/Load/Undo with owner retained. 154 guards/code exact;
-helper retires only interrupted copy. No source filter or old acceptances repeated.
-Production CLI completed below; positive ordinary 48 deltas completed below;
-constructor ordinary partial. Linux/USA/native Windows/new 32:9 pending, no measurement.
+The new resource gameplay.task-cycle-deltas/file task-cycle-deltas.json is part of
+e76-d75: 69 files/68 resources, 48 B signed-i8/one span, with all 67 previous
+resources/files exact. The typed owner composes new bytes/prior/raw without a cap or
+ABI change; USA remains 8-7. The first warning-free Windows build and first Wine
+filter pass 9 transactional attach refusals/2 full-set/interrupted new file, 8
+original-interpreter-native prefixes with equal full state/clock and 48 raw B altered,
+and 5 explicitly compiled reads. They cover all 48 rows, a read32 boundary with
+2 new + 2 old bytes, edges/mirror, 3 DMA/SWI transfers across owners, unavailable
+files and Load/Undo with the owner retained. The 154 guards/code are exact; the helper
+retires only the interrupted copy. No source filter or old acceptances were repeated.
+Production CLI and positive ordinary use of the 48 deltas were completed below;
+constructor ordinary use remains partial. Linux/USA/native Windows/new 32:9 remain
+pending; no measurement.
 [Consumption and evidence](../rom_data_gameplay.md#managed-task-cycle-deltas-and-typed-consumption).
 
 
 **ROMDATA-05-TASK-CYCLE-CLI completed EUR/Wine (2026-10-27).**
-First warning-free Windows production build/canonical restored with exact hash mtime;
-three Wine commands prepare/reuse/runc 0 exit 0. All 69 files equal accepted Rust
-dataset, all 68 runtime IDs/hashes equal manifest, 48 delta rows registered, existing
-native cache loaded. Entire 71-file pathset/hash mtime unchanged on reuse and startup;
-226 guards/code exact, helper 0 paths. Zero frames/dispatch/fallback/delta reads:
-attachment only; ordinary positivity and full pair 48 completed below. No blind route/
-manual flag. Linux/USA/native Windows/new 32:9 pending, no measurement.
+The first warning-free Windows production build restored the canonical executable
+with exact hash and mtime; three Wine commands prepare/reuse/runc 0 exit 0. All 69
+files equal the accepted Rust dataset, all 68 runtime IDs/hashes equal the manifest,
+48 delta rows are registered and the existing native cache is loaded. The entire
+71-file pathset/hash/mtime remains unchanged on reuse and startup; 226 guards/code
+are exact and the helper found 0 paths. Zero frames/dispatch/fallback/delta reads
+provide attachment evidence only; ordinary positivity and the full pair for 48 were
+completed below. No blind route or manual flag. Linux/USA/native Windows/new 32:9
+remain pending; no measurement.
 [CLI and limits](../rom_data_gameplay.md#actual-cli-for-task-cycle-deltas).
 
 
 **ROMDATA-05-TASK-CYCLE-ORDINARY completed EUR/Wine (2026-10-27).**
-Neutral Bank 48 scene 3660→3708 selected from source and normal snapshot: initializer
-18D6C/default 03, generic 015E48/03-07 and candidate Bank root+D40 flags 03 phase 21,
-address consistent with caller 5C1F8. Setter 18E5C retains old 04/08 with new 01:
-argument 03 alone does not prove mode. 11/3/89 raw BL are candidates, no call graph/
-liveness inferred from RAM alone. One existing CLI without rebuild uses 48 reads 48B/
-all 48 phases, dataset 71 paths/hash mtime unchanged. First warning-free frontend build
-for 5 positive-guard lines; old loop byte-exact without guard. One Wine full pair passes
-every full state/clock/image/OAM/dispatch/five audio streams, samples
-[105336,105336,12672,12672,105260], exact CLI counts 48/48/48. 97 guards/code/preimage
-exact, helper 0 paths. No navigation/RAM-task-ROM/cartridge tampering or old Bank 12/F09
-acceptance repeated. Declared cycle children 01/02/04/CLI 05/ordinary 05 closed, total
-migration still open; distinct constructor ordinary partial. Linux/USA/native Windows/
-new 32:9 pending, no measurements.
+The neutral Bank 48 scene 3660→3708 was selected from source and a normal snapshot:
+initializer 18D6C/default 03, generic 015E48/03-07 and candidate Bank root+D40 flags
+03 phase 21, with address consistent with caller 5C1F8. Setter 18E5C retains old
+04/08 with new 01: argument 03 alone does not prove mode. The 11/3/89 raw BL are
+candidates; no call graph/liveness is inferred from RAM alone. One existing CLI
+without rebuilding uses 48 reads/48 B/all 48 phases; dataset 71 paths/hash/mtime
+remain unchanged. The first warning-free frontend build adds 5 positive-guard lines;
+the old loop is byte-exact without the guard. One Wine full pair passes every full
+state/clock/image/OAM/dispatch/five audio streams, with samples
+[105336,105336,12672,12672,105260] and exact CLI counts 48/48/48. The 97 guards/
+code/preimage are exact; the helper found 0 paths. No navigation, RAM-task-ROM or
+cartridge tampering, or repeat of old Bank 12/F09 acceptance. Declared cycle
+children 01/02/04/CLI 05/ordinary 05 are closed, while total migration remains open
+and distinct constructor ordinary use remains partial. Linux/USA/native Windows/new
+32:9 remain pending; no measurements.
 [Scene and evidence](../rom_data_gameplay.md#ordinary-european-task-cycle-scene).
 
 
-**ROMDATA-01-BANK-BUS-HOST-RESIDUE: EUR/Wine census completed, 90B sources open
+**ROMDATA-01-BANK-BUS-HOST-RESIDUE: EUR/Wine census completed, 90 B sources open
 (2026-10-27).** Optional SiteCapture::start_all mode preserves empty/single filters
-and old keys. First warning-free Windows feature build/single Wine run: new probes and
-one decoded Bank 12 arm 3660–3672 with existing normal input, no old full pair repeated.
-7430 reads/7532 sites, 497 with interpreter context/7035 None; 7083B image, 1434B
-outside 68 owners. All 3683B of old NativeAPI included; 992B already classified,
-80 literals/320B and 8 dispatch cells/32B verified now: 1344B code support, no global
-127 cap from branch with helper. 90B data remain: 18 program/12 directory/60 OBJ lists,
-root 4165A0+4114FC via 5E6F4/8, readers 2C5E0/2C60C with tick-phase-selector u16,
-distinct from already typed u8 banks. Contract and model of four authenticated prefixes
-completed below; management/consumption remain open. No new resource/revision from
-census alone. Twelve typed deltas 21–32 read by interpreter LDRB 18E2A explain the
-limit of old NativeAPI. 95 guards/code/default preimage exact, helper 0 paths. e76-d75/
-USA 8-7 unchanged, user Atlas preserved; Linux/USA/native Windows/new 32:9 pending,
-no measurements/fixture.
+and old keys. The first warning-free Windows feature build and single Wine run cover
+new probes and one decoded Bank 12 arm, 3660–3672, with existing normal input; the
+old full pair was not repeated. It reports 7430 reads/7532 sites, 497 with interpreter
+context/7035 None; 7083 B image, 1434 B outside 68 owners. All 3683 B of the old
+NativeAPI are included; 992 B were already classified, with 80 literals/320 B and
+8 dispatch cells/32 B verified now: 1344 B code support, with no global 127 cap
+inferred from the branch with helper. The remaining 90 B are data: 18 program/
+12 directory/60 OBJ lists, root 4165A0+4114FC via 5E6F4/8, readers 2C5E0/2C60C
+with a tick-phase-selector u16, distinct from already typed u8 banks. The contract
+and model of four authenticated prefixes were completed below; management/
+consumption remained open at this checkpoint. The census alone yields no new
+resource/revision. Twelve typed deltas 21–32 read by interpreter LDRB 18E2A explain
+the old NativeAPI limit. The 95 guards/code/default preimage are exact; the helper
+found 0 paths. e76-d75/USA 8-7 unchanged and user Atlas preserved; Linux/USA/native
+Windows/new 32:9 pending, with no measurements or fixture.
 [Inventory and new sources](../rom_data_runtime.md#bank-bus-and-selected-host-rom-inventory).
 
 
 **ROMDATA-01-U16-TASK-OBJ-BANK / ROMDATA-02-U16-TASK-OBJ-MODEL completed within
 selected EUR prefix scope (2026-10-27).** Four 2C5E0 producers authenticate roots
-41634C/411478, 41647C/4114AC, 4165A0/4114FC, 4166C4/41154C: 50 lists 140 OBJ/
-7 seq 49 frames/65 spans 1378B disjoint from 68 owners. Relative-index/payload format
-verified, padding excluded; seven unreferenced lists and three empty seq remain data,
-not reachability evidence/invented holds. u16 counter-phase-selector, low u8 repeat,
-return old list before increment, 255→256/65535→0, clamp/repeat/done latch; no cap
-before lookup or global archive boundary. Lossless strict JSON model reuses pure
-fields, not u8 timing. First warning-free core build: Wine passes 23 guards/1378B
-projection then fails test expectation on ctor return r0. Test-only correction; second
-warning-free core build/remaining-only filter passes 23 ctor/93 update/6 producer,
-RAM-callee/alias/edges. First filter not declared PASS and 23 guards not repeated.
-88 guards/199 core sources exact; helper 0 paths. Core dev serde_json preserves parallel
-frontend changes without compiling them. Revision e76-d75/USA 8-7 unchanged: management/
-consumption/CLI/ordinary for these banks still open; Linux/USA/native Windows/new 32:9
-pending, no measurements/fixture.
+41634C/411478, 41647C/4114AC, 4165A0/4114FC, 4166C4/41154C: 50 lists/140 OBJ/
+7 sequences/49 frames/65 spans/1378 B disjoint from 68 owners. Relative-index/
+payload format is verified, with padding excluded; seven unreferenced lists and
+three empty sequences remain data, not reachability evidence or invented holds.
+The u16 counter-phase-selector, low u8 repeat, old-list return before increment,
+255→256/65535→0 and clamp/repeat/done latch are preserved; no cap is inferred
+before lookup or at the global archive boundary. The lossless strict JSON model
+reuses pure fields, not u8 timing. The first warning-free core build runs Wine:
+23 guards/1378 B projection pass, then a test expectation fails on constructor
+return r0. A test-only correction and second warning-free core build/remaining-only
+filter pass 23 constructor/93 update/6 producer checks and RAM-callee/alias/edges.
+The first filter is not declared PASS and the 23 guards were not repeated. The
+88 guards/199 core sources are exact; the helper found 0 paths. Core dev serde_json
+preserves parallel frontend changes without compiling them. e76-d75/USA 8-7 are
+unchanged: management/consumption/CLI/ordinary for these banks were still open at
+this checkpoint; Linux/USA/native Windows/new 32:9 pending, with no measurements
+or fixture.
 [Contract and model](../rom_data_obj.md#european-obj-banks-with-u16-task-counters).
 
 
 **ROMDATA-02/04-U16-TASK-OBJ-RUNTIME completed in EUR/Wine phases (2026-10-27).**
 e77-d76 adds graphics.word-task-obj-animations/file word-task-obj-animations:
-70 files 69 resources/all 68 previous records-files identical, 65 spans 1378B/
-4 banks/50 lists/140 OBJ/7 seq 49 frames. Strict binding/transactional attach; shared
-pure projection retains old owner body and gate, new 411/416 gate and host lookup.
-Indexing/counters/guest old-list return and ABI/states/cache unchanged. First warning-
-free Windows build; Wine passes publication/interrupted file/9 attach guards/2 full-set,
-27 original prefixes 7 ctor 20 update/202B compiled/full state-clock, 1378B/6 classes/
-217 mixed reads/66B raw gap/old owner/Load-slot Undo without file/DMA3. Then process
-without terminal result: no full PASS claimed, receipts retained, no passed phase
-repeated. Remaining build compiled clean but rejected by source guard for 2 parallel
-DBG changes; stable snapshot. Host test draft isolated per frame; test-only private
-field compilation error and OAM/register origin corrected, product unchanged. Final
-warning-free build/single host-only Wine run passes 50 lists/140 OBJ/95 host reads with
-65 ROM spans altered, accepted OAM per list and equal raw/typed descriptors. 165 guards/
-496 snapshot sources/current ROM inputs exact; helper retires only expected interrupted
-copy, retains dataset/logs/preimages/executables. Real CLI subsequently verified below;
-ordinary subsequently verified in Bank window below, no old model/census/scene acceptance
-repeated. USA e8-d7/Linux/native Windows/new 32:9 pending; no measurements or new
-fixture/navigation.
+70 files/69 resources with all 68 previous records-files identical, 65 spans/1378 B/
+4 banks/50 lists/140 OBJ/7 sequences/49 frames. Strict binding/transactional attach
+and the shared pure projection retain the old owner body and gate, new 411/416 gate
+and host lookup. Indexing/counters/guest old-list return and ABI/states/cache are
+unchanged. The first warning-free Windows build runs Wine: publication/interrupted
+file/9 attach guards/2 full-set pass, as do 27 original prefixes (7 constructor/
+20 update), 202 B compiled/full state-clock, 1378 B/6 classes/217 mixed reads/66 B
+raw gap/old owner/Load-slot Undo without file/DMA3. The process then has no terminal
+result: no full PASS is claimed, receipts are retained and the passed phase was not
+repeated. The remaining build compiled clean but a source guard rejected it because
+of 2 parallel DBG changes; a stable snapshot was used. A host-test draft was
+isolated per frame; a test-only private-field compilation error and OAM/register
+origin were corrected, without product changes. The final warning-free build and
+single host-only Wine run pass 50 lists/140 OBJ/95 host reads with 65 ROM spans
+altered, accepted OAM per list and equal raw/typed descriptors. The 165 guards/
+496 snapshot sources/current ROM inputs are exact. The helper retires only the
+expected interrupted copy and retains dataset/logs/preimages/executables. Real CLI
+and ordinary use in the Bank window were subsequently verified below, without
+repeating old model/census/scene acceptance. USA e8-d7/Linux/native Windows/new
+32:9 remain pending; no measurements or new fixture/navigation.
 [Runtime contract and evidence](../rom_data_obj.md#managed-runtime-for-the-u16-task-obj-banks).
 
 
 **ROMDATA-05-U16-TASK-OBJ-CLI completed EUR/Wine (2026-10-27).**
-One warning-free Windows production build from accepted runtime snapshot copy;
-CLI candidate b3bfe6f425923ce461793771fe6c84b86eb5da7dda69b3b9c7e0f5208eab51ea,
-canonical executable hash/mtime restored. One Wine script/3 real commands prepare
-created/reused/runc 0 pass: 70 generation files identical to runtime/69 registered
-resources with exact hashes/72 managed paths. Reuse and startup without hash mtime
-writes; original cache loaded, 0 guest frames/dispatch/fallback and 9 new owner fields
-all 0. 154 guards/496 copied sources/current ROM inputs exact/helper 0 paths. Dataset
-27463ce4f7ffccc3d0b9c8ab5ee78160a3e1c844ed80f68768f9adea87cb7757.
-CLI child closed, separate positive ordinary verified below; no old acceptance or
-fixture/navigation repeated. Linux/USA/native Windows/new 32:9 pending, no measurements/
+One warning-free Windows production build used the accepted runtime snapshot copy.
+The CLI candidate is b3bfe6f425923ce461793771fe6c84b86eb5da7dda69b3b9c7e0f5208eab51ea;
+canonical executable hash/mtime were restored. One Wine script with 3 real commands,
+prepare created/reused/runc 0, passes: 70 generation files identical to runtime/
+69 registered resources with exact hashes/72 managed paths. Reuse and startup make
+no hash/mtime writes; the original cache loads, with 0 guest frames/dispatch/
+fallback and all 9 new owner fields at 0. The 154 guards/496 copied sources/current
+ROM inputs are exact; the helper found 0 paths. Dataset:
+27463ce4f7ffccc3d0b9c8ab5ee78160a3e1c844ed80f68768f9adea87cb7757. CLI is closed;
+separate positive ordinary use was verified below. No old acceptance or fixture/
+navigation was repeated. Linux/USA/native Windows/new 32:9 pending; no measurements/
 Android/package/commit/push. Parallel DBG changes preserved.
 [Real CLI and evidence](../rom_data_obj.md#actual-cli-for-the-u16-task-obj-banks).
 
 
 **ROMDATA-05-U16-TASK-OBJ-ORDINARY completed EUR/Wine (2026-10-27).**
-Bank window 3660→3672 chosen from already accepted census/root 4165A0+4114FC,
-byte-identical copies of normal snapshot/inputs, no navigation/new checkpoint/
-RAM-task-ROM/cartridge tampering. One existing e77 CLI passes positive use:
-292 reads/346B = [44 index 20 count 240 attr 2 seq header 20 frame-list 20 duration]/
-20 host, 72 managed paths/hash mtime unchanged. Optional 5-line guard on new owner in
-full-pair test; old validator/loop byte-exact with it removed. First warning-free Windows
-snapshot frontend build/single Wine full pair first PASS: all 12 full states/clock/
-central-wide images/OAM/dispatch and 5 audio streams identical, 9 exact CLI counters.
-Dispatch [19962,85770], samples [26334,26334,3168,3168,26258]. 94 guards/496 snapshot
-sources/current ROM inputs exact/helper 0 paths. No previous model/runtime/scene/census
-acceptance repeated or new production build. Declared source/model/management-consumption/
-CLI/ordinary children for this family closed; no evidence for all 4 banks/50 lists/
-7 unreferenced lists/empty seq update/indirect index/full archive/full game. Distinct
-constructor ordinary partial; whole TODO and Linux/USA/native Windows/new 32:9 open,
-no measurements/Android/package/commit/push, parallel DBG preserved.
+The Bank window 3660→3672 was chosen from the already accepted census/root
+4165A0+4114FC with byte-identical copies of the normal snapshot/inputs; no navigation,
+new checkpoint or RAM-task-ROM/cartridge tampering. One existing e77 CLI passes
+positive use: 292 reads/346 B = [44 index/20 count/240 attr/2 seq header/20 frame-
+list/20 duration]/20 host, with 72 managed paths/hash/mtime unchanged. An optional
+5-line guard covers the new owner in the full-pair test; the old validator/loop is
+byte-exact with it removed. The first warning-free Windows snapshot frontend build
+and single Wine full pair first PASS: all 12 full states/clock/central-wide images/
+OAM/dispatch and 5 audio streams identical, with 9 exact CLI counters. Dispatch
+[19962,85770], samples [26334,26334,3168,3168,26258]. The 94 guards/496 snapshot
+sources/current ROM inputs are exact; the helper found 0 paths. No previous model/
+runtime/scene/census acceptance was repeated and there was no new production build.
+Declared source/model/management-consumption/CLI/ordinary children for this family
+are closed; there is no evidence for all 4 banks/50 lists/7 unreferenced lists/empty
+sequence update/indirect index/full archive/full game. Distinct constructor ordinary
+use is partial; the whole TODO and Linux/USA/native Windows/new 32:9 remain open,
+with no measurements/Android/package/commit/push and parallel DBG preserved.
 [Scene and evidence](../rom_data_obj.md#ordinary-european-u16-task-obj-bank-scene).
 
 
 **ROMDATA-01/05-CONSTRUCTOR-FLAG-REACHABILITY closed for EUR/Wine flag
 (2026-10-28); ordinary animation still partial.** Twenty-one source windows link
 95EA0/wrapper 9A594/global 0200F4A8/state DC/root 960F0: Move 27/A after B cancel/
-validation 9D6C8/different destination → count 1A4/28-29, signed count >1 → enable
-99F18. Other 3A→99300 and A5544 case 6→A57BE/case 1→A570A are distinct paths, not
-global liveness. Two authenticated normal snapshots read only to choose A-only,
-without old Right: one reused Wine observer 160 closes fifth negative test, table 0/
-phases 0/lists unused; no full pair/positive fixture or new build. Endpoint state 25/
-count 3 does not imply invalid destination. New missing flag/slot criterion during
-transition: one existing readonly 64-frame CLI captures 448 RAM-image files, normal
-Move and flag 20 active 12186–12230/45 postframes; both slots 394/3A4 always inactive/
-counter-phase 0/table 0. Ordinary flag reachability proved, slot creation/callback
-still to authenticate; no PC/intraframe attribution. 587 guards/496 frozen sources/
-21 window hashes exact, originals/e77 dataset 72 paths unchanged/helper 0 paths. No old
-acceptance repeated or RAM/ROM/cart tampered with; static disassembler is not a Linux
-game test. New full pair only after positive use of 4 phases/4 lists guest-host; no
-more blind Move attempts. Linux/USA/native Windows/new 32:9/full TODO open, no
+validation 9D6C8/different destination → count 1A4/28-29, with signed count >1 →
+enable 99F18. Other 3A→99300 and A5544 case 6→A57BE/case 1→A570A are distinct
+paths, not global liveness. Two authenticated normal snapshots were read only to
+choose A-only, without the old Right: one reused Wine observer over 160 frames closes
+the fifth negative test, with table 0/phases 0/lists unused; no full pair, positive
+fixture or new build. Endpoint state 25/count 3 does not imply an invalid destination.
+For the new missing flag/slot criterion during transition, one existing readonly
+64-frame CLI captures 448 RAM-image files: normal Move and flag 20 active during
+12186–12230/45 postframes, while both slots 394/3A4 remain inactive with counter-
+phase 0/table 0. Ordinary flag reachability is proved, but slot creation/callback
+still need authentication; no PC/intraframe attribution. The 587 guards/496 frozen
+sources/21 window hashes are exact; originals/e77 dataset 72 paths are unchanged and
+the helper found 0 paths. No old acceptance was repeated and RAM/ROM/cart were not
+tampered with; a static disassembler is not a Linux game test. A new full pair is
+allowed only after positive use of 4 phases/4 lists guest-host; no more blind Move
+attempts. Linux/USA/native Windows/new 32:9/full TODO remain open, with no
 measurements/Android/package/commit/push.
 [Flag and slots](../rom_data_obj.md#ordinary-constructor-flag-activation-and-inactive-slots).
 
 
 **ROMDATA-01/05-CONSTRUCTOR-SLOT-ACTIVATION closed for source gate and map exclusion
-(2026-10-28); ordinary still partial.** Eight new windows authenticate 9DB0C→owner+10/
-pair [owner,9B11D]→9E300/145C10→9B11C(actor,owner); same slots 394/3A4 as counter
-and 9DBA4. 9DAD4 is a distinct earlier helper. Beyond movement and flag 20, normal
-branch 9B460 requires unit FD2, signed XY 0..15, valid cell/flags 02/S8 height > actor
-S16 height >>4, anim 36!=40; entry-exit bit 8000, skip mask 10000, free slot. Live
-cell root 02007F10, width+8/base+4, stride 2 height-flags, no new ROM asset. Readonly
-inspection of existing 64 RAM dumps: FD2/actor flags 0/anim 0, three traversed cells
-height 2/flags 0; all 256 declared cells without 02, stable 512B hash. This unchanged
-map offers no destinations for the gate; no further blind Move or repeat of old five
-negatives/flag capture. 87 guards/8 window hashes exact/helper 0 paths, no new gameplay/
-build/Wine-Linux test/capture/schema/runtime/ABI/cache/save. Next criterion: readonly
-inventory of existing normal EUR snapshots, suitable map and actor and provenance; no
-synthetic states or recreation of retired copies. Full pair only after positive use of
-4 phases/4 lists guest-host; ordinary/Linux/USA/native Windows/new 32:9/full TODO open,
-no measurements/Android/package/commit/push.
+(2026-10-28); ordinary still partial.** Eight new windows authenticate
+9DB0C→owner+10/pair [owner,9B11D]→9E300/145C10→9B11C(actor,owner), using the same
+slots 394/3A4 as the counter and 9DBA4. 9DAD4 is a distinct earlier helper. Beyond
+movement and flag 20, normal branch 9B460 requires unit FD2, signed XY 0..15, a
+valid cell/flags 02/S8 height > actor S16 height >>4, anim 36!=40, entry-exit bit
+8000, skip mask 10000 and a free slot. The live cell root is 02007F10, width+8/
+base+4, stride 2 height-flags, without a new ROM asset. Readonly inspection of the
+existing 64 RAM dumps found FD2/actor flags 0/anim 0, three traversed cells with
+height 2/flags 0 and all 256 declared cells without 02; the 512 B hash is stable.
+This unchanged map offers no destinations for the gate; no further blind Move or
+repeat of the old five negatives/flag capture. The 87 guards/8 window hashes are
+exact; the helper found 0 paths. No new gameplay/build/Wine-Linux test/capture/
+schema/runtime/ABI/cache/save. The next criterion is a readonly inventory of
+existing normal EUR snapshots, suitable map and actor and provenance, without
+synthetic states or recreation of retired copies. A full pair is allowed only after
+positive use of 4 phases/4 lists guest-host; ordinary/Linux/USA/native Windows/new
+32:9/full TODO remain open, with no measurements/Android/package/commit/push.
 [Cell and slot gate](../rom_data_obj.md#constructor-slot-creation-depends-on-live-cell-flags-and-height).
 
 
 **ROMDATA-05-CONSTRUCTOR-ELIGIBLE-MAP-INVENTORY closed negative (2026-10-28).**
-New readonly criterion on 81 normal EUR snapshots/already verified provenance: all
-hash/payload/ROM/16x16 domains valid, only 2 map projections 512B (1 F09/80 river),
-zero 02 cells/candidates. Old 606 alternate sequence scan not repeated. 88 snapshot-
-report-parser-contract-output guards exact; no build/gameplay/Wine-Linux test/capture/
-checkpoint/tampering. Terminal negative bound on 2 retained maps, not all maps/future
-script; do not repeat same 81 states or Move here. Parent ordinary still partial; next
-source lead cell-flag producer 02007F10/terrain ROM before choosing eligible map. Full
-pair only after positive use of 4 phases/4 lists guest-host. Linux/USA/native Windows/
-new 32:9/full TODO open, no measurements/deployment.
+The new readonly criterion covers 81 normal EUR snapshots with already verified
+provenance: all hash/payload/ROM/16x16 domains are valid, but only 2 map projections
+of 512 B exist (1 F09/80 river), with zero 02 cells/candidates. The old 606
+alternate sequence scan was not repeated. The 88 snapshot-report-parser-contract-
+output guards are exact; no build/gameplay/Wine-Linux test/capture/checkpoint/
+tampering. This terminal negative is bounded to 2 retained maps, not all maps or
+future script; do not repeat the same 81 states or Move here. The ordinary parent
+remains partial; the next source lead is cell-flag producer 02007F10/terrain ROM
+before choosing an eligible map. A full pair is allowed only after positive use of
+4 phases/4 lists guest-host. Linux/USA/native Windows/new 32:9/full TODO remain
+open, with no measurements or deployment.
 [Retained maps](../rom_data_obj.md#retained-normal-maps-have-no-eligible-constructor-animation-cells).
 
 
 **ROMDATA-01-CELL-FLAG-WRITERS closed for EUR census/candidate seeds (2026-10-28).**
-Old TERRAIN-MAP-SOURCE from the 24th already closed/352 BG packages reused, no new
-archive. New direct census 1DE98 no Thumb BL/aligned pointer (not dead code/indirect),
-sole BL 1DD68 to 1D798 reads flags 02. New semantic query of authenticated e77 BG
-dataset: 113 auxiliary programs/162 links/zero fill-parent-child/ordered u16 writes,
-25 programs and 44 IDs initialize 02; flags 0/1/2/3/4/8/9. No decoder/resource/
-revision or old codec/loader acceptance repeated. 24 guards/4 source windows exact/
-helper 0 paths, no build/gameplay/Wine-Linux test/capture/checkpoint. Private quote
-typo corrected before execution; early cleanup rejects unit without result, then passes
-after summary, product unchanged. Asset candidates do not prove normal battle/place
-name; next actual map selection script/caller → eligible ID/normal reachable battle.
-81 snapshots/5 Move bound/flag capture remain closed. Ordinary 4 phases/4 lists
-guest-host/full pair and Linux/USA/native Windows/new 32:9/full TODO open, no
-measurements/deployment.
+The already closed TERRAIN-MAP-SOURCE from the 24th and its 352 BG packages were
+reused, without a new archive. A new direct census found no Thumb BL/aligned pointer
+to 1DE98 (not proof of dead code or absent indirect calls); the sole BL from 1DD68
+to 1D798 reads flags 02. A new semantic query of the authenticated e77 BG dataset
+covers 113 auxiliary programs/162 links/zero fill-parent-child/ordered u16 writes:
+25 programs and 44 IDs initialize 02; flags are 0/1/2/3/4/8/9. No new decoder,
+resource or revision was created; old codec/loader acceptance was not repeated. The 24 guards/4 source windows
+are exact and the helper found 0 paths; no build/gameplay/Wine-Linux test/capture/
+checkpoint. A private quote typo was corrected before execution; early cleanup
+rejected the unit without a result, then passed after the summary, with product
+unchanged. Asset candidates do not prove a normal battle or place name; the next
+lead is the actual map selection script/caller → eligible ID/normal reachable battle.
+The 81 snapshots/5 Move bound/flag capture remain closed. Ordinary 4 phases/4 lists
+guest-host/full pair and Linux/USA/native Windows/new 32:9/full TODO remain open,
+with no measurements or deployment.
 [Seeds and sources](../rom_data_maps.md#constructor-animation-cell-flag-seeds).
 
 
 **ROMDATA-01-CONSTRUCTOR-ELIGIBLE-MAP-SELECTION: source link closed,
-reachable battle still partial (2026-10-28).** 253C8 state 10/2549C reads CCF00(7)
-→02002037 low u8→1B270/1B689 loader/state 11; 2540C is dispatch table. Opcode 12
-advance 2/callback 126831: byte 1 nonzero→CCF18 variable 7; zero→70C8CC+40*U16(02002170)
-+2→variable 7, then sets 0200F390=10. 51 CCF18 candidates, two literal 7 arms
-authenticated, no all-writer claim. Typed script query 204 instructions 56 default/
-148 literal: 19 eligible literals/10 map args [31,33,34,73,75,89,91,109,115,129];
-exact references private, not place names/ordinary reachability or event key = active
-index. Two retained normal examples active 35/197 map args 99/85→descriptor 98/84/
-consistent default/ineligible, not a repeated 81 scan. 37 guards 9 windows exact, no
-build/gameplay/Wine-Linux test/capture/checkpoint/runtime/schema/ABI/cache/save. Next
-active-index producer/40B record 70C8CC/map byte 2→normal quest/event, no forced ID/
-guessed navigation. Positive 4 phases/4 lists guest-host/full pair and whole TODO/
-Linux/USA/native Windows/32:9 open, no measurements/deployment.
+reachable battle still partial (2026-10-28).** State 10 of handler 253C8 reaches
+2549C, reads variable 7 through CCF00 from 02002037, and narrows it to a low u8.
+It calls 1B270, creates the 1B689 loader and advances to state 11; 2540C is the
+dispatch table. Opcode 12 advances by 2 and calls 126831. If instruction byte 1
+is nonzero, CCF18 writes it to variable 7; otherwise byte 2 of the record at
+`70C8CC + 40 * U16(02002170)` is written to variable 7. Both paths then set
+0200F390 to 10. Of 51 CCF18 candidates, two literal-7 arms were authenticated;
+this is not a claim that all writers were found.
+
+A typed script query found 204 instructions: 56 use the default and 148 use a
+literal. The 19 eligible literals use 10 map arguments
+[31,33,34,73,75,89,91,109,115,129]. Exact references remain private; these do
+not establish place names or ordinary reachability, and an event key is not
+necessarily the active index. Two retained normal examples have active indices
+35/197, map arguments 99/85 and descriptors 98/84. They are consistent with the
+default path and ineligible maps; the 81-snapshot scan was not repeated. All 37
+guards and 9 source windows matched. There was no build, gameplay, Wine/Linux
+test, capture, checkpoint, runtime, schema, ABI, cache or save change.
+
+The next lead was the active-index producer and byte 2 of the 40B record at
+70C8CC, to find a normal quest or event without forced IDs or guessed navigation.
+At this checkpoint, the positive 4 phases and 4 lists through guest and host,
+the full pair, the whole TODO, Linux, USA, native Windows and 32:9 remained
+open; no measurements or deployment occurred.
 [Script selection and limits](../rom_data_maps.md#script-map-selection-and-remaining-battle-reachability).
 
 
 **ROMDATA-01-ACTIVE-ENCOUNTER-RECORDS: producer and conditional join closed EUR
-(2026-10-28), complete catalog and ordinary battle still partial.** Setter 9CF0 writes
-low16 r0/r1 to 02002170/172; two direct BL 9D2C/1273A8, no aligned Thumb pointer,
-without claiming all writers. 9D04 chooses primary/alternate from row+2 or 71D1EC+
-12*low8(arg1), according to row+4. 63944 links live selector 219E, record 70B713B3C+45
-and 12B row 71C760; 127388 searches event key on rows 255..1, first descending match,
-duplicates distinct. New query over caller u8 domain: 208 direct-primary rows, 54 with
-seed 02, 44 also with default-map script. Does not prove mission availability, names
-or 40B catalog extent; max reference 442 and separate constant 300 are not limits.
-Retained normal pub selector 0/row 0/map arg 11 ineligible, readonly. 42 guards/
-23 windows exact; private Python import corrected after stop before output; originals
-unchanged. No build/gameplay/Wine-Linux test/capture/checkpoint/new resource. Next
-criterion: eligible mission/event actually available from normal checkpoint and
-original UI. No forced ID/RAM or further blind Move; 4 phases/4 lists guest-host and
-ordinary full pair remain open. Old acceptances not repeated; Linux/USA/native Windows/
-new 32:9/full TODO pending, no measurements or deployment.
+(2026-10-28), complete catalog and ordinary battle still partial.** Setter 9CF0
+writes the low 16 bits of r0/r1 to 02002170/172. Two direct BLs at 9D2C/1273A8
+were found, with no aligned Thumb pointer; this does not establish all writers.
+Depending on row+4, 9D04 chooses the primary or alternate value from row+2 or
+`71D1EC + 12 * low8(arg1)`. At 63944, live selector 219E selects a 70-byte record
+at 713B3C; byte 45 selects a 12B row at 71C760. Callback 127388 searches event
+keys in rows 255..1, taking the first descending match; duplicate keys remain
+distinct.
+
+A query over the caller's u8 domain found 208 direct-primary rows, 54 with seed
+02 and 44 also referencing a default-map script. It does not prove mission
+availability, names or the 40B catalog extent: the maximum reference 442 and a
+separate constant 300 are not limits. Read-only inspection of the retained
+normal pub state found selector 0, row 0 and ineligible map argument 11. All 42
+guards and 23 windows matched. A private Python import was corrected after the
+first attempt stopped before output; originals were unchanged. There was no
+build, gameplay, Wine/Linux test, capture, checkpoint or new resource.
+
+The next criterion was an eligible mission or event actually available from a
+normal checkpoint and the original UI, without forced ID/RAM or further blind
+Move attempts. At this checkpoint, the 4 phases and 4 lists through guest and
+host and the ordinary full pair remained open. Old acceptances were not repeated;
+Linux, USA, native Windows, new 32:9 and the full TODO remained pending, with
+no measurements or deployment.
 [Producer and evidence](../rom_data_maps.md#active-index-producer-and-event-record-links).
 
 
 **ROMDATA-05-ELIGIBLE-QUEST-LOCATOR closed EUR/Wine (2026-10-28): eligible mission
-present in normal menu.** Observer 309ba31c/e77 reused, no build: a known 620-frame
-path retains missing-menu endpoint 14969; then 300 frames 4 Down+A open White Flowers
-detail 15269. Old 620 scene not repeated as acceptance; new checkpoint/selectors
-criterion. Originals and copies exact, no RAM/task/ROM/cart edit. Live F44C 02024D5C/
-count+1B14/pointers+20+4*ordinal, low 10 mission ID from 62126..5E. New 14-entry
-query finds 2 direct-primary/default-script/cell 02 candidates: 58/72. Fifth row and
-visible detail confirm 58; F448 0202389C +1450→02002268/ID 58 with 60208..28. Event
-58/primary 315/map arg 69/descriptor 68 eligible; Giza Plains in description, but
-acceptance and battle not yet reached. 130 guards/496 frozen sources/23 windows exact/
-helper 0 paths. Candidate layout 031C/03D0 03001028 rejected because not linked to live
-menu. Both Wine workers pass, constructor counters 0 in pub expected, not positive
-proof/full pair. Next normal confirmation and verify acceptance/battle entry, then
-actor/cells before guided Move. 4 phases/4 lists guest-host/full pair, complete 40B
-catalog, Linux/USA/native Windows/new 32:9/full TODO pending; old acceptances closed,
-no measurements/deployment.
+present in normal menu.** The existing observer 309ba31c and e77 dataset were reused
+without a build. A known 620-frame path retained the previously missing menu endpoint
+at 14969; another 300 frames with 4 Down presses and A opened the White Flowers detail
+at 15269. The old 620-frame scene was not repeated as acceptance: the new criterion
+was the checkpoint and its selectors. Originals and copies remained exact, with no
+RAM, task, ROM or cartridge edit.
+
+The live list context F44C is 02024D5C, with count at +1B and pointers at
++20+4*ordinal; 62126..5E derives the low 10-bit mission ID. A new query of 14 entries
+found 2 direct-primary/default-script/cell 02 candidates, 58/72. The fifth row and
+visible detail confirm 58; F448 is 0202389C, whose +1450 pointer selects 02002268
+with ID 58, as authenticated by 60208..28. Event 58, primary 315, map argument 69
+and descriptor 68 are eligible. The description names Giza Plains, but acceptance
+and battle had not yet been reached at this checkpoint. All 130 guards, 496 frozen
+sources and 23 windows matched; the helper found 0 paths. Candidate layout 031C/03D0
+at 03001028 was rejected because it was not linked to the live menu. Both Wine
+workers passed; constructor counters of 0 in the pub were expected and did not prove
+positive use or a full pair.
+
+The next step was normal confirmation and verification of acceptance and battle
+entry, followed by actor/cell inspection before guided Move. At this checkpoint,
+4 phases and 4 lists through guest and host, the full pair, complete 40B catalog,
+Linux, USA, native Windows, new 32:9 and the full TODO remained pending. Old
+acceptances remained closed; no measurements or deployment occurred.
 [Normal mission and evidence](../rom_data_maps.md#normal-pub-menu-identifies-an-eligible-quest).
 
 
 **ROMDATA-05-WHITE-FLOWERS-BATTLE-NAVIGATION partial EUR/Wine (2026-10-28);
-normal acceptance closed.** Exact copy of ID 58 detail→loadout OK→cost/objective→
-conditions Yes; 300 gil payment/funds 7709→7409 and subsequent Fee:Paid prove active
-mission. Entry initially read as QuitPub is QuitMission: only A:Cancel detail opened,
-no cancellation confirmation; B/B/Down/A on Leave leads to map. 27 normal captures/
-4840 frames, existing observer 309ba31c/e77, no build/manual RAM-task-ROM/cart write.
-All Wine workers pass, table 0, not 27 equivalence acceptances/no full pair. World
-labels Cyril/LutiaPass/Nubswood/Sprohm, central patch excluded; camera scroll/overshoot
-documented. Giza Plains not proved reachable/absent/not placed. 337 guards/496 sources/
-17 exploratory window hashes exact. 92524 init/stale task/031C 03001028 do not prove
-world dispatch; 165E8 catalog index 725 Giza and base 718/list 3EE60 are only leads,
-not coordinates. Partial unit retains all diagnostic checkpoints, no fixture retirement.
-Next source selector/placed locations from retained states, no further blind cursor or
-27 bound/5 Move/81 map/old acceptances repeated. Battle/actor/4 phases 4 lists guest-host/
-full pair and full TODO/Linux/USA/native Windows/new 32:9 remain open, no measurements
-or deployment.
+normal acceptance closed.** From an exact copy of the ID 58 detail, normal input
+completed loadout OK, cost/objective and conditions Yes. Payment of 300 gil, funds
+changing from 7709 to 7409 and the later Fee:Paid label prove the mission was active.
+An entry initially read as QuitPub was QuitMission: only the A:Cancel detail opened,
+with no cancellation confirmation. B/B/Down/A on Leave reached the map.
+
+The unit used 27 normal captures and 4840 frames with the existing 309ba31c observer
+and e77 dataset, with no build or manual RAM, task, ROM or cartridge write. All Wine
+workers passed and table use was 0; the captures were not 27 equivalence acceptances
+and no full pair was run. Visible world labels included Cyril, LutiaPass, Nubswood
+and Sprohm; the central patch was excluded, and camera scroll and overshoot were
+documented. This did not prove Giza Plains reachable, absent or unplaced. All 337
+guards, 496 sources and 17 exploratory window hashes matched. The 92524 initializer,
+stale task data and 031C 03001028 did not prove world dispatch. Catalog 165E8 index
+725 for Giza and base 718/list 3EE60 were leads, not coordinates. The partial unit
+retained all diagnostic checkpoints; no fixtures were retired.
+
+The next lead was the source selector and placed locations from retained states,
+without further blind cursor attempts or repeating the 27 bound, 5 Move, 81 map or
+old acceptances. At this checkpoint, battle, actor state, 4 phases and 4 lists through
+guest and host, the full pair, full TODO, Linux, USA, native Windows and new 32:9
+remained open; no measurements or deployment occurred.
 [Acceptance and limits](../rom_data_maps.md#normal-white-flowers-acceptance-and-open-battle-entry).
 
 
-**ROMDATA-01-WORLD-LOCATION-SELECTOR closed EUR/Wine (2026-10-28).** Corrected
-inspection assumptions: 254B2→6B40, count task byte+2 not word+4; literal 2810/0300
-is 03002810, not 03001028. Optional passive test: one warning-free Windows build
-from 497-source snapshot, one neutral Wine frame 18829→18830/2232 reads 2276 sites
-323 scoped, actual RAM matches parser. Parent[03002810]=0200F3A4; nodes[parent+67C]
-=08395CA8. 375F8 loop 30/stride 20, byte 0/1*8+8 center, conditional hitbox and
-1-pixel snap; 37D6A..70 cursor view+6/+8, 37A44 display Y=world Y−scroll C.
-385CC..38668 save base+B0+12*i enabled byte 1 bit 0/byte 3 one-based selector→node
-(selector−1). Giza index 7/catalog 725/node 20/source 395E24 is placed at 112,296.
-Readonly two southern endpoints: 21 cursor 128,287, 22 cursor 128,330; old 27 bound
-not repeated. 152 guards/497 sources/32 windows exact/helper 0 paths. New ROM family
-30 nodes 20B: only 2 coordinate B classified, 18B/schema/model/extraction/runtime
-open. Next short Left from 21, verify Giza label before A; no forced coordinates/RAM/
-map ID. Battle and 4 phases 4 lists guest-host/full pair/full TODO/Linux/USA/native
-Windows/new 32:9 open, no measurements/deployment/old acceptances repeated.
+**ROMDATA-01-WORLD-LOCATION-SELECTOR closed EUR/Wine (2026-10-28).** Inspection
+corrected two assumptions: 254B2 calls 6B40, and the scheduler count is task byte+2,
+not word+4; literal halves 2810/0300 give 03002810, not 03001028. An optional
+passive test used one warning-free Windows build from a 497-source snapshot and one
+neutral Wine frame, 18829→18830. It observed 2232 reads and 2276 sites, 323 scoped;
+actual RAM matched the parser. Parent[03002810]=0200F3A4 and
+nodes[parent+67C]=08395CA8.
+
+The 375F8 loop visits 30 nodes at stride 20; bytes 0/1 multiplied by 8 and increased
+by 8 give the center, with a conditional hitbox and 1-pixel snap. At 37D6A..70 the
+cursor is view+6/+8; 37A44 draws display Y as world Y minus scroll C. At 385CC..38668,
+save base+B0+12*i uses enabled byte 1 bit 0 and byte 3 as a one-based selector of node
+(selector−1). Giza index 7, catalog 725, node 20 and source 395E24 place it at
+112,296. Read-only southern endpoints were step 21 with cursor 128,287 and step 22
+with cursor 128,330; the old 27 bound was not repeated. All 152 guards, 497 sources
+and 32 windows matched; the helper found 0 paths.
+
+For the new ROM family of 30 nodes of 20B each, only 2 coordinate B were classified;
+the other 18B, schema, model, extraction and runtime remained open. The next step was
+a short Left from 21 and verification of the Giza label before A, without forced
+coordinates, RAM or map ID. At this checkpoint, battle, 4 phases and 4 lists through
+guest and host, the full pair, full TODO, Linux, USA, native Windows and new 32:9
+remained open. No measurements, deployment or old acceptance repeats occurred.
 [Selector and evidence](../rom_data_maps.md#world-selector-and-placed-region-coordinates).
 
 
-**ROMDATA-05-GIZA-BATTLE-ENTRY closed EUR/Wine (2026-10-28).** Guided short Left
-leads to Giza Plains label; A travel/menu White Flowers/A deployment. Primary 315/
-map 69/descriptor 68, live grid 512B e8427b5e.. matches seed packet 56/20 cells 02.
-Marsh deployed with position/direction confirmed; START To Battle/Yes/dialogue leads
-to Move. Actor FD2 (6,5), Left/Down/Down actual cursor (5,7), normal A activates
-4 phases/4 lists guest-host: 75 frames/22 reads 88B = 44 threshold 44 pointer.
-Checkpoint 22713 + suffix 11 retained, not yet full pair. 16 Wine captures/3875 frames,
-existing 309ba31c/e77/no build; 221 guards 496 sources exact/helper 0 paths. Keys
-only on copies, no manual guest RAM/task/ROM/cart save modification. First STARTs before
-facing confirmation inert/B returns to placement: corrected and closed, do not repeat.
-Next single positive CLI 11 and full state-clock-images-OAM-dispatch-audio comparison
-from suffix, without repeating discovery/navigation. 40B catalogs/world nodes 18B/full
-TODO/Linux/USA/native Windows/new 32:9 pending; no measurements/deployment/old
-acceptances repeated.
+**ROMDATA-05-GIZA-BATTLE-ENTRY closed EUR/Wine (2026-10-28).** A guided short Left
+reached the Giza Plains label; A traveled there, the White Flowers menu opened, and
+A entered deployment. The live primary index was 315, map argument 69 and descriptor
+68. The 512B grid e8427b5e.. matched seed packet 56 and its 20 cells 02. Marsh was deployed with
+position and direction confirmed; START To Battle, Yes and dialogue led to Move.
+Actor FD2 was at (6,5); Left/Down/Down moved the actual cursor to (5,7). Normal A
+activated 4 phases and 4 lists through guest and host: 75 frames and 22 reads of 88B,
+comprising 44 threshold and 44 pointer bytes. Checkpoint 22713 and suffix 11 were
+retained; a full pair had not yet been run.
+
+The unit used 16 Wine captures and 3875 frames with the existing 309ba31c observer
+and e77 dataset, without a build. All 221 guards and 496 sources matched; the helper
+found 0 paths. Keys were applied only to copies, with no manual guest RAM, task, ROM
+or cartridge-save modification. Initial START presses before facing confirmation
+were inert and B returned to placement; the issue was corrected and closed, without
+repeating it. The next step was one positive CLI 11 and a full state-clock-images-
+OAM-dispatch-audio comparison from the suffix, without repeating discovery or
+navigation. At this checkpoint, 40B catalogs, 18B world-node data, the full TODO,
+Linux, USA, native Windows and new 32:9 remained pending; no measurements,
+deployment or old acceptance repeats occurred.
 [Entry and positive evidence](../rom_data_maps.md#normal-giza-battle-entry-and-positive-constructor-animation).
 
 
 **ROMDATA-05-CONSTRUCTOR-ANIMATION-ORDINARY-POSITIVE completed EUR/Wine
-(2026-10-28).** Exact copy of new normal Giza checkpoint 22713/suffix 11→22724.
-One existing production CLI b3bfe6/e77 reuses dataset/cache and passes 22 reads 88B/
-44 threshold 44 pointer/all 4 phases. One Wine full pair 309ba31c passes each of
-11 state-clock/classic-central-extended images/OAM/dispatch/five audio streams and all
-4 lists guest-host; counters match CLI, dispatch 57833/223470, audio
-24138/24138/2904/2904/23966. 91 guards 496 sources/72 managed paths exact/helper 0;
-no build/preparation/navigation/discovery/old acceptances repeated, guest edit/cart
-write/measurements. Constructor ordinary case closed, not coverage of all actors/maps/
-full game. Linux/USA/native Windows/new 32:9/full TODO remain pending; 40B catalogs and
-new world nodes 18B to complete. u16/DBG work preserved, no deployment.
+(2026-10-28).** An exact copy of the normal Giza checkpoint 22713 and its 11-frame
+suffix reached 22724. The existing production CLI b3bfe6 reused the e77 dataset and
+cache, passing with 22 reads of 88B: 44 threshold bytes and 44 pointer bytes across
+all 4 phases. One Wine full pair with validator 309ba31c passed each of 11 serialized
+states and guest clocks, classic/central/extended images, OAM, dispatch and five audio
+streams, with all 4 lists used by guest and host readers. Counters matched the CLI;
+dispatch was 57833/223470 and audio was 24138/24138/2904/2904/23966.
+
+All 91 guards, 496 sources and 72 managed paths matched; the helper found 0 paths.
+There was no build, preparation, navigation, discovery, repeat of old acceptances,
+guest edit, cartridge write or measurement. The ordinary constructor case is closed
+for this scene, not all actors, maps or the full game. Linux, USA, native Windows,
+new 32:9 and the full TODO remained pending, as did the 40B catalogs and the 18B
+remaining in the new world nodes. u16 and DBG work was preserved; no deployment
+occurred.
 [Full ordinary evidence](../rom_data_obj.md#ordinary-constructor-animation-positive-giza-scene).
 
 
-**ROMDATA-01-WORLD-NODE-RECORDS EUR source projection closed (2026-10-28).**
-395CA8..395F00/30 records 20B/600B, count from already proven 375F8 loop; no runtime
-cap 30 inferred (low u8 getter/work array 32). Producers 31488/32BE6 write root
-[parent 03002810+67C]. Bytes 0/1 coordinates; four slots 2/6/10/14 path ID/neighbor/
-opaque 2B plus opaque 2B tail: 300 semantic B/300 opaque B retained. 120 slots/
-90 active links/30 path 0/45 paths each in 2 directions. Valid node 0 distinct from
-path 0; 4DAD0 matches neighbor before path (22 target 0→0), 46EB0 same node or path!=0/
-neighbor. 4DB80 graph copies 4 slots/skips path 0/gate 8-27; reference 397018+(path−1)*8
-external, road catalog/payload open. 25 windows (21 new 4 reused)/44 pins/42 guards
-pass, 600B disjoint from 49746 spans 69 owners. New criterion on existing trace:
-35 reads 42 sites coordinates only, no new edge coverage or repeated audit. No build/
-game/test/fixture/guest edit/measurement. Next typed lossless model/source plan and
-one targeted Wine oracle; extraction/runtime/CLI/ordinary, Linux/USA/native Windows/
-new 32:9/full TODO pending.
+**ROMDATA-01-WORLD-NODE-RECORDS EUR source projection closed (2026-10-28).** The
+projection at 395CA8..395F00 has 30 records of 20B, or 600B. The count comes from the
+already proven 375F8 loop and does not establish a runtime cap of 30: getters narrow
+to low u8 and work arrays have 32 entries. Producers 31488/32BE6 write the root at
+[parent 03002810+67C]. Bytes 0/1 are coordinates; slots 2/6/10/14 hold path ID,
+neighbor and opaque 2B, followed by an opaque 2B tail. The projection retains 300
+semantic B and 300 opaque B. Its 120 slots include 90 active links and 30 path 0
+slots; 45 paths each appear in 2 directions.
+
+Node 0 is distinct from path 0. Reader 4DAD0 matches neighbor before path, yielding
+0 for target 0 at 22 nodes; 46EB0 accepts the same node or requires path!=0 before
+matching a neighbor. The 4DB80 graph copies 4 slots, skips path 0 and has an 8-27
+gate; external reference 397018+(path−1)*8 leaves the road catalog and payload open.
+All 25 windows (21 new and 4 reused), 44 pins and 42 guards passed; the 600B are
+disjoint from 49746 spans belonging to 69 owners. A new criterion on an existing
+trace found 35 reads at 42 sites, coordinates only, with no new edge coverage or
+repeated audit. No build, game, test, fixture, guest edit or measurement occurred.
+The next step was a typed lossless model/source plan and one targeted Wine oracle;
+extraction, runtime, CLI, ordinary use, Linux, USA, native Windows, new 32:9 and the
+full TODO remained pending.
 [Schema and readers](../rom_data_maps.md#world-node-record-source-projection).
 
 
-**ROMDATA-02-WORLD-NODE-MODEL completed EUR/Wine (2026-10-28).** world_nodes
-catalog authenticates exact image/6 windows/600B hash. Model 30 ordered nodes,
-4 Link path/neighbor/opaque 2B + opaque 2B tail, lossless source plan 1 span 600B;
-strict JSON/shape distinct from authenticity, no inferred 45/29 cap/opaque zero.
-One warning-free Windows core-only build/6c2ef15a.., one Wine filter passes 23 guards/
-566 original calls with independent return values/read addresses, 300 semantic B
-observed/300 opaque B preserved unread/16 byte aliases/24 outside projection. Callee/
-SP/RAM outside stack/VRAM/OAM/palette checked, not native/full state-clock/BFS/
-ordinary. 24 guards 215 frozen sources/helper 0 exact. No gameplay/frontend build/
-old oracles repeated; e77-d76 and schema 1 unchanged. Next managed publication/typed
-guest consumption/real CLI/retained world scene. Linux/USA/native Windows/new 32:9/
-full TODO pending, no measurements/deployment.
+**ROMDATA-02-WORLD-NODE-MODEL completed EUR/Wine (2026-10-28).** The world_nodes
+catalog authenticates the exact image, 6 windows and 600B hash. The model represents
+30 ordered nodes and 4 Link slots with path, neighbor and opaque 2B, plus an opaque
+2B tail. Its lossless source plan has 1 span of 600B. Strict JSON and shape checks
+are separate from authenticity; the model does not infer a 45/29 cap or require
+opaque bytes to be zero.
+
+One warning-free Windows core-only build, 6c2ef15a.., and one Wine filter passed
+23 guards and 566 original calls, with independent return values and read addresses.
+All 300 semantic B were observed; 300 opaque B were preserved unread. The checks
+included 16 byte aliases and 24 calls outside the projection. Callee registers, SP,
+RAM outside the stack, VRAM, OAM and palette were checked; this was not native, full
+state-clock, BFS or ordinary-use acceptance. All 24 preservation guards and 215
+frozen sources matched; the helper found 0 paths. There was no gameplay, frontend
+build or repeat of old oracles; e77-d76 and schema 1 were unchanged. The next steps
+were managed publication, typed guest consumption, real CLI and a retained world
+scene. Linux, USA, native Windows, new 32:9 and the full TODO remained pending, with
+no measurements or deployment.
 [Model and proof](../rom_data_maps.md#typed-world-nodes-and-original-reader-proof).
 
 
 **ROMDATA-03/04-WORLD-NODE-RUNTIME completed EUR/Wine (2026-10-28).** e78-d77
-publishes world-nodes.json/gameplay.world-nodes/index 69: 71 files 70 resources, all
-69 previous records/files exact, USA e8-d7 unchanged. 600B binding/7 statistics
-fields, coordinates/path/neighbor/opaque read from model, prior/raw/edge composition
-without cap on guest input or replacement of placement/pathfinder/ABI/save/cache.
-One Wine filter passes 12 attach/2 full-set/interrupted publication, 15 native full
-state-clock prefixes/32B compiled 124 instructions/600B raw altered after Load, alias/
-mirror/outside 30-31/equal 255/root RAM. Bus all 600B/4 classes 30 nodes/width/edges/
-prior owner, Load/Undo/unavailable files and 3 DMA/CpuSet/CpuFastSet full state-clock
-pass. First 2 builds rejected by stale core cache: dep-info points to old copy, touching
-new copy ineffective; moved only specific fingerprint. Third warning-free build/
-fresh=false/2cf1d882.. from 502 stable sources. 200 guards/502 sources + 215 model
-preimages exact; helper retires only interrupted copy, accepted dataset/executable
-retained. Real CLI/ordinary scene still to do. No new gameplay/old model or proof
-repeated/measurement; Linux/USA/native Windows/new 32:9/road 397018/full TODO pending.
-Parallel DBG/u16 work preserved.
+publishes world-nodes.json as gameplay.world-nodes at index 69: 71 files and 70
+resources, with all 69 previous records and files exact and USA e8-d7 unchanged.
+The 600B binding and 7 statistics fields cover reads of coordinates, path, neighbor
+and opaque data from the model. The owner composes with prior, raw and edge reads
+without imposing a guest-input cap or replacing placement, pathfinding, ABI, save
+or cache behavior.
+
+One Wine filter passed 12 attachment guards, 2 full-set guards and interrupted
+publication checks. It also passed 15 native full state-clock prefixes covering 32B of compiled source and 124
+compiled instructions, with all 600B raw source bytes altered after Load;
+cases included alias, mirror, outside 30-31, equal 255 and a RAM root override. Bus
+checks covered all 600B, 4 field classes, 30 nodes, widths, edges and a prior owner.
+Load, Undo and unavailable-file behavior passed, as did 3 DMA/CpuSet/CpuFastSet
+full state-clock checks.
+
+The first 2 builds were rejected because stale core-cache dep-info pointed to an
+old copy; touching the new copy was ineffective, so only the specific fingerprint
+was moved. The third build was warning-free, fresh=false, 2cf1d882.., from 502 stable
+sources. All 200 guards, 502 sources and 215 model preimages matched. The helper
+retired only the interrupted copy, retaining the accepted dataset and executable.
+At this checkpoint, real CLI and an ordinary scene remained to do. No new gameplay,
+repeat of the old model or proof, or measurement occurred. Linux, USA, native
+Windows, new 32:9, road 397018 and the full TODO remained pending; parallel DBG/u16
+work was preserved.
 [Consumption and evidence](../rom_data_maps.md#managed-world-nodes-and-typed-guest-reads).
 
 
 **ROMDATA-04-WORLD-NODE-CLI completed EUR/Wine (2026-10-28); ordinary partial.**
-Warning-free Windows production build/e0491cdc.. from 502 stable sources; canonical
-hash/mtime restored. Three Wine CLI exit 0 prepare created/reused/runc normal 16,
-71 files identical to runtime/70 ID hashes exact/73 managed paths unchanged on reuse-
-startup, cache 28859 blocks loaded. Normal Giza 01/02 input copies, 19049→19065:
-402 reads 402B coordinates/22 nodes; path/neighbor/opaque 0, no full pair. Private
-matcher expected relative frame 16, CLI shows absolute 19065: corrected offline after
-all 3 exit 0/guards, no repeat. Bound 16 without path/neighbor closed, next source
-callers/justified normal state before new observation. 169 guards/502 sources exact/
-helper 0. No new fixture/navigation/previous proof/measurement. Ordinary 3 classes/
-full pair/road 397018/full TODO/Linux/USA/native Windows/new 32:9 pending; DBG/u16 work
-preserved.
+A warning-free Windows production build, e0491cdc.., used 502 stable sources; the
+canonical hash and mtime were restored. Three Wine CLI commands exited 0: prepare
+created the dataset, prepare reused it and runc ran normal input for 16 frames.
+All 71 files matched the runtime dataset, 70 ID hashes matched, and 73 managed paths
+were unchanged on reuse and startup; the cache loaded 28859 blocks.
+
+Exact copies of normal Giza 01/02 state and input covered 19049→19065: 402 reads of
+402B of coordinates across 22 nodes. Path, neighbor and opaque usage were 0, and no
+full pair was run. A private matcher expected relative frame 16 while the CLI showed
+absolute frame 19065; it was corrected offline after all 3 exits of 0 and guard checks,
+without a repeat. The 16-frame bound without path/neighbor use was closed. The next
+lead was source callers or a justified normal state before another observation. All
+169 guards and 502 sources matched; the helper found 0 paths. No new fixture,
+navigation, repeat of previous proof or measurement occurred. At this checkpoint,
+ordinary use of 3 classes, the full pair, road 397018, the full TODO, Linux, USA,
+native Windows and new 32:9 remained pending; DBG/u16 work was preserved.
 [CLI and ordinary limits](../rom_data_maps.md#actual-world-node-cli-and-ordinary-coordinate-use).
 
 
 **ROMDATA-01-WORLD-NODE-ORDINARY-CALLERS and ROMDATA-05-WORLD-NODE-TRAVEL-ORDINARY
-completed EUR/Wine (2026-10-28).** New direct BL query/10 windows 27 guards links
-3B012→4DB1C→4DB80 to view 1A (dest−1) different from parent 7BB; output 7C1.
-47034 progress!=FF →4DAD0; entity parent 7B8+52*i. Two existing normal checkpoints
-17/selected 20→19/progress FF and entity 1 node 0→1 motivate bound 360, not PC/frame
-or all-caller inference. One positive CLI 360 and one full pair 360 pass 6841B =
-4820 coordinates 864 path 1157 neighbor/29 nodes, all state-clock/classic-central-
-extended images/OAM/dispatch/five audio and CLI counters identical. Opaque 0 distinct
-from targeted tests. Dispatch 2006894/3620371, audio 790020/790020/95040/95040/789942.
-One warning-free Windows build/dabb1ac6.. from 502 sources with optional 5-line guard;
-old validator exact without guard, runtime/core unchanged. 103 guards/502 sources/
-27 caller/169 CLI exact/helper 0. First 16 path/neighbor negative remains closed; no
-new fixture/navigation/guest edit/old proof repeated/measurements. Ordinary case closed,
-not all nodes/maps/opaque ordinary/full pathfinder. Linux/USA/native Windows/new 32:9/
-road 397018/full TODO pending, DBG/u16 work preserved.
+completed EUR/Wine (2026-10-28).** A direct BL query, 10 windows and 27 guards link
+3B012→4DB1C→4DB80 to view 1A (dest−1), distinct from parent 7BB, with output at
+7C1. Reader 47034 calls 4DAD0 when progress!=FF; the entity is at parent 7B8+52*i.
+Two existing normal checkpoints, with node 17, selected 20→19, progress FF and
+entity 1 moving node 0→1, justify the 360-frame bound. They do not establish an
+exact PC/frame attribution or all callers.
+
+One positive CLI run of 360 frames and one full pair of 360 frames passed with
+6841B: 4820 coordinates, 864 path and 1157 neighbor bytes across 29 nodes. All
+state-clock, classic/central/extended images, OAM, dispatch and five audio streams
+matched, and counters matched the CLI. Opaque usage of 0 remains distinct from
+targeted tests. Dispatch counts were 2006894/3620371 and audio counts were
+790020/790020/95040/95040/789942. One warning-free Windows build, dabb1ac6.., used
+502 sources and an optional 5-line guard. Removing the guard restored the old
+validator exactly; runtime and core were unchanged. All 103 guards, 502 source
+hashes, 27 caller guards and 169 CLI guards matched; the helper found 0 paths.
+
+The first 16-frame negative path/neighbor bound remains closed. There was no new
+fixture, navigation, guest edit, repeat of old proof or measurement. This closes
+the ordinary case, not all nodes or maps, ordinary opaque use or the full
+pathfinder. Linux, USA, native Windows, new 32:9, road 397018 and the full TODO
+remained pending; DBG/u16 work was preserved.
 [Ordinary evidence and gates](../rom_data_maps.md#ordinary-world-node-travel-and-caller-gates).
 
 
 **ROMDATA-01-WORLD-ROAD-PATHS EUR source projection completed (2026-10-28).**
-45 path IDs from 90 active links/30 nodes select 45 headers 8B 397018..397180:
-u8 count, opaque 3B, u32 ROM pointer. 45 distinct contiguous payloads
-395F00..397018/2188 signed i8 XY pairs/4376B, 46 spans 4736B = 4601 semantic
-135 opaque. Root store parent 680 reused; 4DC cost byte 0, 4DD0C flag/index/low u8
-step/no cap 45, outside step count output zero 32 without pointer/sample load,
-reverse order/no negation, two packed i16/return pointer. 4DD70 flag current>target/
-4DD84 min node; caller adds node XY*8 to offsets, 46B64 differences max 5 samples/
-facing not full ABI. 3 root literals/3 point calls/1 dir/1 min candidate query,
-not global absence of indirect calls. 5 endpoints 1 pixel short 4/6/8/10/12 retained;
-zero points absent/count 32..85 not constraints. 6 windows 60 pins 17 guards/
-70 owners 49747 spans disjoint/helper 0. No build/game/test/fixture/old proof
-repeated/measurement. Next lossless model/source plan and targeted Wine oracle;
-extraction/runtime/CLI/ordinary/global catalog/opaque meaning/Linux/USA/native
-Windows/new 32:9/full TODO pending. DBG/u16 work preserved.
+The 45 path IDs from 90 active links across 30 nodes select 45 headers of 8B at
+397018..397180, each with a u8 count, opaque 3B and u32 ROM pointer. The 45 distinct
+contiguous payloads at 395F00..397018 contain 2188 signed i8 XY pairs, or 4376B.
+The 46 spans total 4736B: 4601 semantic and 135 opaque. The root store at parent 680
+was reused.
+
+Reader 4DC uses byte 0 for cost; 4DD0C takes flag, index and low u8 step without a
+45 cap. A step outside the count writes zero 32 without loading a pointer or sample;
+reverse order does not negate coordinates, and the reader packs two i16 values and
+returns the output pointer. Reader 4DD70 selects the flag for current>target, while
+4DD84 finds the minimum node; the caller adds node XY*8 to offsets. Reader 46B64 uses
+at most 5 sample differences for facing, without proving the full ABI. A candidate
+query found 3 root literals, 3 point calls, 1 direction and 1 minimum call; it does
+not rule out indirect calls globally. Five endpoints, 4/6/8/10/12, are 1 pixel short
+and retained; the absence of zero points and observed count range 32..85 are not
+constraints.
+
+All 6 windows, 60 pins and 17 guards passed; the projection is disjoint from 70 owners
+and 49747 spans. The helper found 0 paths. No build, game, test, fixture, repeat of old
+proof or measurement occurred. The next steps were a lossless model/source plan and
+targeted Wine oracle; extraction, runtime, CLI, ordinary use, global catalog, opaque
+meaning, Linux, USA, native Windows, new 32:9 and the full TODO remained pending.
+DBG/u16 work was preserved.
 [Road contract](../rom_data_maps.md#world-road-path-source-contract).
 
 
-**ROMDATA-02-WORLD-ROAD-MODEL completed EUR/Wine (2026-10-28).** Standalone
-world_roads model: 45 ordered headers with u8 count/opaque 3/encoded pointer,
-2.188 signed XY pairs and shared source plan 46 spans/4.736 B. Strict JSON,
-consistent partition and separate authenticity; five short endpoints, possible
-zero sample and structural count 0/255 retained without inferred 32..85 cap.
-One warning-free Windows core-only build/de9d1e11.. and one Wine filter pass
-29 guards/2.537 original calls: 2.188 forward points, 135 reverse, 180 exits,
-6 u8 aliases, 6 external headers and 22 order helpers. Exact outputs/returns/read
-sequences; all 4.601 semantic B read, 135 opaque B reconstructed/unread.
-32 preservation guards/504 build files (218 core) exact/helper 0. No ordinary scene/
-fixture/frontend build/measurement or already closed node proof repeated. Schema 1/
-e78-d77 unchanged. Next managed extraction/typed guest reads, real CLI and one
-positive ordinary scene. Linux/USA/native Windows/new 32:9, global catalog extension
-and full TODO pending.
+**ROMDATA-02-WORLD-ROAD-MODEL completed EUR/Wine (2026-10-28).** The standalone
+world_roads model contains 45 ordered headers with u8 count, opaque 3 bytes and
+encoded pointer, and 2,188 signed XY pairs. Its shared source plan has 46 spans and
+4,736 B. Strict JSON and a consistent partition are checked separately from
+authenticity. The 5 short endpoints, a possible zero sample and structural counts
+0/255 are retained without inferring a 32..85 cap.
+
+One warning-free Windows core-only build, de9d1e11.., and one Wine filter passed
+29 guards and 2,537 original calls: 2,188 forward points, 135 reverse, 180 exits,
+6 u8 aliases, 6 external headers and 22 order helpers. Outputs, returns and read
+sequences matched exactly. All 4,601 semantic B were read; 135 opaque B were
+reconstructed and remained unread. All 32 preservation guards and 504 build files
+(218 core) matched; the helper found 0 paths. No ordinary scene, fixture, frontend
+build, measurement or repeat of the closed node proof occurred. Schema 1 and e78-d77
+were unchanged. The next steps were managed extraction, typed guest reads, real CLI
+and one positive ordinary scene. Linux, USA, native Windows, new 32:9, global catalog
+extension and the full TODO remained pending.
 [Model and proof](../rom_data_maps.md#typed-sampled-world-roads-and-original-reader-proof).
 
 
-**ROMDATA-03-04-WORLD-ROAD-RUNTIME completed EUR/Wine (2026-10-28).**
-e79-d78/index 70/gameplay.world-roads/world-roads.json: 72 files 71 resources, all
-70 previous records/files exact, USA 8-7/schema 1 unchanged. Immutable count/pointer/
-sample/opaque owner from 46 spans 4736B; composes world node at left boundary and
-raw right/header 45..255, no movement/facing/pathfinding algorithm replaced. Two
-warning-free Windows builds/accepted 52be2981.. from 506 stable files; first filter
-closes publication/attach, then fails native case 3 due to omitted page 396. Page gate
-fix and remaining native/bus/lifecycle filter without republishing: 12 attach guards/
-2 full-set, 12 original/interpreter/native full state-clock prefixes, 67 compiled
-instructions/44B explicit, 4736B sources poisoned after Load; all 4736B/4 classes
-45 paths/widths/mirrors/edges/prior owner/Load Undo and DMA3 PASS. 221 guards 506
-source hashes + 504 model preimages exact; helper retires only interrupted copy. No
-scene/model/nodes/fixture repeated, measurement or ABI change. Real CLI and one
-positive ordinary scene next; Linux/USA/native Windows/new 32:9/global extent/full
-TODO pending.
+**ROMDATA-03-04-WORLD-ROAD-RUNTIME completed EUR/Wine (2026-10-28).** e79-d78
+publishes gameplay.world-roads and world-roads.json at index 70: 72 files and 71
+resources. All 70 previous records and files were exact; USA 8-7 and schema 1 were
+unchanged. The immutable count, pointer, sample and opaque owner uses 46 spans of
+4736B. It composes with the world node at the left boundary and raw data at the
+right and for headers 45..255; movement, facing and pathfinding remain unchanged.
+
+Two warning-free Windows builds used 506 stable files, with 52be2981.. accepted. The
+first filter closed publication and attachment, then failed native case 3 because page
+396 was omitted. After fixing the page gate, the remaining native/bus/lifecycle
+filter passed without republishing: 12 attachment guards, 2 full-set guards and 12
+original/interpreter/native full state-clock prefixes. Those prefixes used 67 compiled
+instructions and 44B explicit source bytes, with 4736B of source poisoned after Load.
+All 4736B, 4 field classes, 45 paths, widths, mirrors, edges, prior ownership, Load,
+Undo and 3 DMA/CpuSet/CpuFastSet checks passed. All 221 guards, 506 source hashes
+and 504 model preimages matched; the helper retired only the interrupted copy.
+
+No scene, model, node or fixture was repeated, and no measurement or ABI change
+occurred. Real CLI and one positive ordinary scene were next; Linux, USA, native
+Windows, new 32:9, global extent and the full TODO remained pending.
 [Consumption and evidence](../rom_data_maps.md#managed-world-roads-and-typed-guest-reads).
 
 
-**ROMDATA-04-WORLD-ROAD-CLI completed EUR/Wine (2026-10-28).** Warning-free Windows
-production build/1a86d341.. from 506 accepted sources, canonical hash mtime restored.
-Three Wine commands prepare created/reused/runc 360: 72 files exact to runtime/71 ID
-hashes/74 paths unchanged hash mtime, old 28859 cache blocks loaded. Normal Giza
-01 state/02 input copies 19049→19409: 2976 reads/5067B = 885 count/2788 pointer/
-1394 sample/0 opaque/40 paths, 3 semantic classes positive. 180 guards 506 hashes/
-helper 0; no new scene, navigation, measurement or already closed proof repeated.
-Next one ordinary full pair with identical CLI counts; not all 45 payloads/maps/
-opaque ordinary/global extent. Linux/USA/native Windows/new 32:9/full TODO remain pending.
+**ROMDATA-04-WORLD-ROAD-CLI completed EUR/Wine (2026-10-28).** A warning-free
+Windows production build, 1a86d341.., used 506 accepted sources; canonical hash and
+mtime were restored. Three Wine commands prepared a new dataset, reused it and ran
+runc for 360 frames. All 72 files matched the runtime dataset, 71 ID hashes matched,
+and 74 paths retained hash and mtime; the old cache loaded 28859 blocks.
+
+Copies of normal Giza 01 state and 02 input covered 19049→19409: 2976 reads of 5067B,
+comprising 885 count, 2788 pointer, 1394 sample and 0 opaque bytes across 40 paths.
+All 3 semantic classes were positive. All 180 guards and 506 source hashes matched;
+the helper found 0 paths. No new scene, navigation, measurement or repeat of closed
+proof occurred. The next step was one ordinary full pair with identical CLI counts;
+this did not establish all 45 payloads, maps, ordinary opaque use or global extent.
+Linux, USA, native Windows, new 32:9 and the full TODO remained pending.
 [CLI and consumption](../rom_data_maps.md#actual-sampled-road-cli-and-ordinary-consumption).
 
 
-**ROMDATA-05-WORLD-ROAD-TRAVEL-ORDINARY completed EUR/Wine (2026-10-28).**
-One normal Giza 01/02 Wine full pair 360 with CLI dataset e79-d78, 19049→19409:
-all 360 state-clock/classic-central-wide/OAM/dispatch/five audio exact. Seven counts
-match CLI: 2976 reads 5067B = 885 count 2788 pointer 1394 sample 0 opaque, 40 paths
-(any field, not 40 payloads). Optional 5-line guard preserves old validator byte exact;
-one warning-free Windows build/4c453f07.. from 506 stable files. 100 guards 506 hashes
-+ 180 CLI guards exact/helper 0; no new scene/fixture/navigation/measurement or already
-closed source/model/runtime/node proof repeated. Road ordinary case closed; all 45
-payloads/maps/opaque ordinary/full ABI/global extent, Linux/USA/native Windows/new 32:9
-and full TODO still pending.
+**ROMDATA-05-WORLD-ROAD-TRAVEL-ORDINARY completed EUR/Wine (2026-10-28).** One
+normal Giza 01/02 Wine full pair of 360 frames used CLI dataset e79-d78 from
+19049→19409. All 360 state-clock, classic/central/wide, OAM, dispatch and five audio
+checks matched. Seven counts matched the CLI: 2976 reads of 5067B, comprising
+885 count, 2788 pointer, 1394 sample and 0 opaque bytes, with 40 paths used in any
+field, not necessarily 40 payloads. An optional 5-line guard preserved the old
+validator byte for byte when removed; one warning-free Windows build, 4c453f07..,
+used 506 stable files. All 100 guards, 506 source hashes and 180 CLI guards matched;
+the helper found 0 paths.
+
+No new scene, fixture, navigation, measurement or repeat of closed source, model,
+runtime or node proof occurred. The ordinary road case was closed; all 45 payloads,
+maps, ordinary opaque use, full ABI, global extent, Linux, USA, native Windows, new
+32:9 and the full TODO remained pending.
 [Ordinary equivalence](../rom_data_maps.md#ordinary-sampled-road-travel-equivalence).
 
 
 **ROMDATA-01-ENCOUNTER-CATALOG-READERS EUR contract completed (2026-10-28).**
-Declared physical catalog 442 headers 40B 1..442: origin 70C8CC, first 70C8F4 from
-two independent roots, next 710E04 independent 28B family. 17680B, no assumption
-that max 442 is count/nor constant 300/nor guest cap. 442 contiguous template links
-2850 records 48B/136800B corroborate partition. 17 semantic fields/33B and 7 opaque
-per header; original low 16 indices without 442 guard. Index 0 is coordinate prefix:
-last 16B payload of header 442, no invented valid header. Header 29+4 pointer to
-70CD58 already owned by constructor-alternates: dependency/consistency/skip 4B,
-2 new spans 17676B, 14582 semantic/3094 opaque disjoint from 71 owners 49793 spans.
-Already owned 192B template retained; unit/coordinate payload separate, not migrated.
-27 loaders from cached root/40 windows (39 new 1 reused)/54 pins 68 guards/helper 0
-PASS. No build/game/test/fixture/previous proof repeated. Next lossless 442-header
-model/shared pointer + one Wine oracle; extraction/runtime/CLI/ordinary, all indirect/
-global extent/Linux/USA/native Windows/new 32:9/full TODO pending, no measurement.
+The declared physical catalog has 442 headers of 40B, indexed 1..442. Its indexing
+origin is 70C8CC and the first header at 70C8F4 is supported by two independent roots;
+the next family at 710E04 uses independent 28B records. The catalog spans 17680B.
+Neither the previously observed maximum 442 nor constant 300 is assumed to be a
+count or guest cap. Links from all 442 headers form a contiguous chain of 2850
+48B templates, totaling 136800B, and corroborate the partition.
+
+Each header has 17 semantic fields covering 33B and 7 opaque bytes. Original readers
+narrow indices to low 16 bits without a 442 guard. Index 0 is a coordinate prefix:
+its last 16B are payload selected by header 442, not a valid header. The pointer at
+header 29+4, address 70CD58, is already owned by constructor-alternates. The new
+plan checks that dependency and consistency, skips the shared 4B and has 2 new spans
+of 17676B: 14582 semantic and 3094 opaque. These are disjoint from 71 owners and
+49793 spans. The existing 192B template remains owned; unit and coordinate payloads
+are separate and were not migrated.
+
+The query identified 27 loaders from cached roots. All 40 windows (39 new and 1
+reused), 54 pins and 68 guards passed; the helper found 0 paths. No build, game, test,
+fixture or repeat of prior proof occurred. The next step was a lossless 442-header
+model with the shared pointer and one Wine oracle; extraction, runtime, CLI, ordinary
+use, all indirect callers, global extent, Linux, USA, native Windows, new 32:9 and
+the full TODO remained pending, without measurement.
 [Headers and ownership](../rom_data_maps.md#european-encounter-headers-and-shared-ownership).
 
 
-**ROMDATA-02-ENCOUNTER-HEADERS-MODEL completed EUR/Wine (2026-10-28).**
-Lossless encounter_headers model 442 headers 1..442: 17 fields/opaque 7, 17680B full;
-2 spans 17676B exclude 70CD58 len 4 from constructor-alternates owner. Strict JSON/
-shape separate from authenticity/dependency consistency; modified shared pointer leaves
-spans unchanged but is rejected. Low u16 alias/None 0-443..65535/prior raw, no inferred
-count cap/null pointer/enum/opaque zero. One warning-free Windows core-only build
-5855af92.. and one Wine filter pass 29 guards/7523 probes: 7072 single-load prefixes
-and 451 complete C0034 calls (442 + 6 aliases + 3 outside), all 14586 semantic B incl
-4 shared observed, 3094 opaque B reconstructed/unread. Reg/flags/PC prefix, callee/
-SP/LR gate, RAM outside stack 4/VRAM/OAM/palette checked; not full ABI/importer/native
-clock/ordinary. 33 guards 508 files (221 core) exact/helper 0, e79-d78 unchanged, no
-old oracles/scene/fixture/measurements. Next managed/typed bus/source page 70C..710/
-dependency, then CLI/ordinary; nested payload/all callers/global/Linux/USA/native
-Windows/new 32:9/full TODO still pending.
+**ROMDATA-02-ENCOUNTER-HEADERS-MODEL completed EUR/Wine (2026-10-28).** The
+lossless encounter_headers model contains 442 headers indexed 1..442, with 17 fields
+and 7 opaque bytes each, covering 17680B. Its 2 spans own 17676B and exclude the
+4-byte field at 70CD58 owned by constructor-alternates. Strict JSON and shape checks
+are separate from authenticity and dependency consistency: a modified shared pointer
+can leave the new spans unchanged but is rejected. The model preserves low u16 aliases
+and returns None for 0 and 443..65535, allowing prior/raw fallback. It does not infer
+a count cap, null-pointer policy, enum restriction or opaque-zero rule.
+
+One warning-free Windows core-only build, 5855af92.., and one Wine filter passed
+29 guards and 7523 probes: 7072 single-load prefixes and 451 complete C0034 calls
+(442 declared headers, 6 aliases and 3 outside). All 14586 semantic B, including
+the 4 shared bytes, were observed; 3094 opaque B were reconstructed but unread.
+Register, flags and PC for prefixes; callee registers, SP and LR for the gate; and
+RAM outside stack 4, VRAM, OAM and palette were checked. This does not establish full
+ABI, importer, native clock or ordinary use. All 33 guards and 508 files (221 core)
+matched; the helper found 0 paths. e79-d78 was unchanged, with no old oracle, scene,
+fixture or measurement repeated.
+
+The next steps were managed publication, typed bus access, source pages 70C..710 and
+the dependency, then CLI and ordinary use. Nested payloads, all callers, global
+extent, Linux, USA, native Windows, new 32:9 and the full TODO remained pending.
 [Model and proof](../rom_data_maps.md#typed-encounter-headers-and-original-reader-proof).
 
 
 **ROMDATA-03-04-ENCOUNTER-HEADERS-RUNTIME completed EUR/Wine (2026-10-28).**
-e80-d79/index 71/encounter-headers.json: 73 files 72 resources, all 71 previous exact,
-constructor-alternates dependency and shared-pointer consistency. Owner 2 spans 17676B
-excludes 4 old B, source pages 70C..710, 8 classes/442 header mask/11 stats; guest
-algorithms/indices/ABI/cache/save unchanged, USA 8-7/schema 1. One warning-free Windows
-build 1c4135f5.. from 510 stable files, one Wine filter: 14 attach guards/3 full-set/
-failed owner-state, 26 original/interpreter/native full state-clock prefixes with 17680B
-raw poison, 31 compiled instructions/37 new B + 4 old B. All 17676 new + 4 shared B/
-8 classes/442 headers/widths/mirrors/edges/prior owner/Load Undo/DMA3 PASS. 206 guards
-510 hashes + 508 model preimages exact/helper retires only interrupted. No scene/fixture/
-measurement/7523 model proof/already closed node-road-constructor repeated. Next real
-CLI/ordinary; nested payload/all callers/global/Linux/USA/native Windows/new 32:9/full
-TODO pending.
+e80-d79 publishes encounter-headers.json at index 71: 73 files and 72 resources, with
+all 71 prior records exact. It requires constructor-alternates and validates the
+shared pointer. The owner has 2 spans of 17676B excluding the 4 old bytes, source
+pages 70C..710, 8 field classes, a 442-header mask and 11 statistics. Guest algorithms,
+indices, ABI, cache and save behavior were unchanged, as were USA 8-7 and schema 1.
+
+One warning-free Windows build, 1c4135f5.., used 510 stable files. One Wine filter
+passed 14 attachment guards, 3 full-set guards and failed-owner/state retention. It
+also passed 26 original/interpreter/native full state-clock prefixes with 17680B of
+raw headers poisoned, covering 31 compiled instructions, 37 new B and 4 old B. All
+17676 new and 4 shared B, 8 classes, 442 headers, widths, mirrors, edges, prior owner,
+Load and Undo passed, as did 3 DMA/CpuSet/CpuFastSet checks. All 206 guards,
+510 source hashes and 508 model preimages matched; the helper retired only the
+interrupted copy. No scene, fixture, measurement, 7523-probe model proof or closed
+node, road or constructor proof was repeated. Real CLI and ordinary use were next;
+nested payloads, all callers, global extent, Linux, USA, native Windows, new 32:9
+and the full TODO remained pending.
 [Consumption and evidence](../rom_data_maps.md#managed-encounter-headers-and-typed-guest-reads).
 
 
-**ROMDATA-04-ENCOUNTER-HEADERS-CLI completed EUR/Wine (2026-10-28).** One warning-free
-Windows production build/9d0a772d.. from 510 accepted sources; canonical hash mtime
-restored. Three Wine commands prepare created/reused/runc 700 pass: 73 files exact to
-runtime/72 ID hashes/75 paths no-write, 28859 cache blocks loaded. Normal Giza 02 menu/
-03 input copies 19409→20109: 17 reads/41B, six positive semantic classes/1 header/
-0 opaque. 184 guards 510 hashes/helper 0; no new navigation, checkpoint, measurement
-or closed proof repeated. Next one full pair with identical CLI counts; not all 442
-headers/payload/opaque ordinary/full ABI/global catalog. Linux/USA/native Windows/new
-32:9/full TODO pending.
+**ROMDATA-04-ENCOUNTER-HEADERS-CLI completed EUR/Wine (2026-10-28).** One
+warning-free Windows production build, 9d0a772d.., used 510 accepted sources; the
+canonical hash and mtime were restored. Three Wine commands passed: prepare created
+the dataset, prepare reused it and runc executed 700 frames. All 73 files matched the
+runtime dataset, 72 ID hashes matched and 75 paths were unchanged; 28859 cache blocks
+loaded. Copies of normal Giza 02 menu and 03 input covered 19409→20109, with 17 reads
+of 41B, six positive semantic classes, 1 header and 0 opaque bytes.
+
+All 184 guards and 510 source hashes matched; the helper found 0 paths. No new
+navigation, checkpoint, measurement or repeat of closed proof occurred. The next step
+was one full pair with identical CLI counts. This did not establish all 442 headers,
+payload, ordinary opaque use, full ABI or the global catalog. Linux, USA, native
+Windows, new 32:9 and the full TODO remained pending.
 [CLI and consumption](../rom_data_maps.md#actual-encounter-header-cli-and-ordinary-consumption).
 
 
 **ROMDATA-05-ENCOUNTER-HEADERS-BATTLE-ORDINARY completed EUR/Wine (2026-10-28).**
-One normal full pair 700 Giza 02 menu/03 input 19409→20109 with CLI dataset e80-d79:
-every full state/clock/classic-central-wide image/OAM/dispatch/5 audio passes. All 11
-counts match CLI: 17 reads 41B = 12 count/1 map/4 template pointer/0 parameter/
-1 placement count/20 position pointer/3 control/0 opaque, one header; six positive
-classes. Parameter ordinary and opaque not observed, previous targeted evidence distinct.
-One optional 5-line guard/old validator byte exact, one warning-free Windows build/
-43fcc614.. from 510 sources and one Wine filter. 103 ordinary + 184 CLI guards/510
-hashes each exact/helper 0. No new fixture/navigation/closed proof repeated or
-measurement. Ordinary case closed; all 442 headers/payload/full ABI/global catalog,
-Linux/USA/native Windows/new 32:9/full TODO remain pending.
+One normal 700-frame full pair used Giza 02 menu and 03 input, 19409→20109, with CLI
+dataset e80-d79. Every full state and clock, classic/central/wide image, OAM, dispatch
+and 5 audio streams passed. All 11 counts matched the CLI: 17 reads of 41B, comprising
+12 count, 1 map, 4 template-pointer, 0 parameter, 1 placement-count, 20 position-pointer,
+3 control and 0 opaque bytes, for one header and six positive classes. Ordinary
+parameter and opaque reads were not observed; the earlier targeted evidence remains
+separate.
+
+An optional 5-line guard restored the old validator byte for byte when removed. One
+warning-free Windows build, 43fcc614.., used 510 sources, and one Wine filter passed.
+All 103 ordinary and 184 CLI guards and each set of 510 hashes matched; the helper
+found 0 paths. No new fixture, navigation, repeat of closed proof or measurement
+occurred. The ordinary case was closed; all 442 headers, payload, full ABI, global
+catalog, Linux, USA, native Windows, new 32:9 and the full TODO remained pending.
 [Equivalence](../rom_data_maps.md#ordinary-encounter-header-battle-entry-equivalence).
 
 
 **ROMDATA-01-ENCOUNTER-UNIT-TEMPLATES completed for the EUR source contract
-(2026-10-28).** The 442 already authenticated header links partition 2.850 records
-48B, 6EA048..70B6A8/136.800B; independent complete projection. New readers separate
-selectors/arguments, five u16 equipment values, halfword 12, physical bitset 14..27
-with dynamic index without 20B/160-bit cap, controls 28/29/flags 2A/2C/2D and opaque
-2E..2F. All 14.250 equipment references within 376 items, selectors consistent with
-metadata14/metadata52 owners; observed values are not caps. Old 192B constructor
-6ECA78..6ECB38/records 225..228/header 29 excluded from new 136.608B/two spans;
-full 48 coherence and header/constructor dependencies required, no duplication among
-49.795 spans/72 owners. Eight windows 5 new 3 reused/39 pins/4 BL/41 guards pass,
-no build/game/Wine-Linux test/fixture/old proof or census repeated/measurement. Next
-strict model + one targeted Wine oracle; managed/runtime/CLI/ordinary/coordinate pool/
-global/full ABI/Linux-USA/native Windows/new 32:9/full TODO pending.
+(2026-10-28).** The 442 authenticated header links partition 2,850 records of 48B at
+6EA048..70B6A8, totaling 136,800B; this is an independent complete projection.
+The readers distinguish selectors and arguments, five u16 equipment values, halfword
+12, the physical bitset at 14..27, controls 28/29, flags 2A/2C/2D and opaque bytes
+2E..2F. Dynamic bit indices have no proven 20B or 160-bit guest cap. All 14,250
+equipment references fall within 376 items; selectors agree with metadata14 and
+metadata52 owners, but observed values are not caps.
+
+The existing constructor owner retains 192B at 6ECA78..6ECB38, records 225..228
+under header 29. The new ownership plan excludes these bytes from its two spans of
+136,608B, requires full 48-byte coherence and header/constructor dependencies, and
+does not duplicate any of 49,795 spans owned by 72 owners. All eight windows (5 new
+and 3 reused), 39 pins, 4 BL targets and 41 guards passed. No build, game, Wine/Linux
+test, fixture, repeat of old proof or census, or measurement occurred. The next steps
+were a strict model and one targeted Wine oracle; managed/runtime/CLI/ordinary use,
+coordinate pool, global extent, full ABI, Linux-USA, native Windows, new 32:9 and the
+full TODO remained pending.
 [Contract](../rom_data_gameplay.md#european-encounter-unit-templates-and-shared-ownership).
 
 
 **ROMDATA-02-ENCOUNTER-UNIT-TEMPLATE-MODEL completed EUR/Wine (2026-10-28).**
-Strict lossless model 2.850 records 48B, full 136.800B/two spans 136.608 new,
-192B previous constructor excluded from byte_at but compared in full. Shape/JSON/
-header partition/shared coherence/item-metadata14-job references and source auth
-separate; full u8/u16/opaque 2, no invented value caps or 160-bit guest cap. One
-warning-free Windows core-only build/e0ae0d5c.. from 512 sources/224 core inputs,
-one Wine filter passes 38 guards/2.100 selected original prefixes: 1.020 LDR,
-1.080 bit including 120 indices beyond 20B. 1531 new/102 old/4 raw distinct bytes
-observed, registers/addresses/values and all RAM/VRAM/OAM/palette/ROM exact;
-independent full projection, not full ABI/semantic coverage of all 2.850 records.
-34 guards 512 hashes + 41 source guards exact/helper 0; no new fixture, measurement
-or closed proof repeated. Next e81-d80/index 72 publication + typed consumption,
-then CLI/ordinary; Linux-USA/native Windows/new 32:9/coordinate pool/global/full ABI/
-full TODO pending.
+The strict lossless model contains 2,850 records of 48B, totaling 136,800B; its two
+spans own 136,608 new bytes. The 192B owned by the previous constructor are excluded
+from byte_at but compared in full. Shape and JSON validation, header partition, shared
+coherence, item/metadata14/job references and source authentication remain distinct.
+The model retains full u8/u16 values and opaque 2 bytes, without inventing value caps
+or a 160-bit guest cap.
+
+One warning-free Windows core-only build, e0ae0d5c.., used 512 sources, including
+224 core inputs. One Wine filter passed 38 guards and 2,100 selected original
+prefixes: 1,020 LDR and 1,080 bit cases, including 120 indices beyond the 20B field.
+The probes observed 1531 new, 102 old and 4 raw distinct bytes; registers, addresses,
+values, RAM, VRAM, OAM, palette and ROM were exact. The full projection was checked
+independently; this is not full ABI or semantic coverage of all 2,850 records.
+All 34 guards, 512 source hashes and 41 source-contract guards matched; the helper
+found 0 paths. No new fixture, measurement or repeat of closed proof occurred. The
+next steps were e81-d80/index 72 publication and typed consumption, then CLI and
+ordinary use. Linux-USA, native Windows, new 32:9, coordinate pool, global extent,
+full ABI and the full TODO remained pending.
 [Model and evidence](../rom_data_gameplay.md#typed-encounter-unit-templates-and-original-reader-proof).
 
 
 **ROMDATA-03-04-ENCOUNTER-UNIT-TEMPLATE-RUNTIME completed EUR/Wine (2026-10-28).**
-e81-d80/index 72/encounter-unit-templates.json, 74 files 73 resources/all 72 previous
-exact/five dependencies; 192B constructor remain with old owner. Immutable owner
-136.608B/two spans, nine classes and record/header stats, local/global 6EA..70B routing.
-One warning-free Windows build/3d4b2af2.. from 514 sources and one Wine filter pass
-14 attach/7 full-set/transactional failures, 27 original-interpreter-native prefixes
-with full state/clock and 136800B raw altered after Load, 25 new B/8 prior B compiled.
-Every 136608 new B + 192 old/9 classes/2846 records 441 headers, widths/mirrors/
-boundaries/Load Undo and DMA word 34202/CpuSet 68404 halfword/FastSet 34208 word
-pass. 215 guards 514 hashes 512 model preimages exact/helper only interrupted. ABI/
-algorithms unchanged; USA 8-7/schema 1. Next real CLI + ordinary; coordinate pool/all
-callers/full ABI/global/Linux-USA/native Windows/new 32:9/full TODO pending, no
+e81-d80 publishes encounter-unit-templates.json at index 72: 74 files, 73 resources,
+all 72 previous records exact and five dependencies. The 192B constructor range stays
+with its old owner. The immutable owner has two spans totaling 136,608B, nine byte
+classes, record/header statistics and local/global 6EA..70B routing.
+
+One warning-free Windows build, 3d4b2af2.., used 514 sources. One Wine filter passed
+14 attachment guards, 7 full-set guards and transactional failure cases, along with
+27 original/interpreter/native prefixes matching full state and clock after 136800B
+of raw source was altered following Load. Compiled reads covered 25 new B and 8 prior
+B. All 136608 new B and 192 old B, 9 classes, 2846 records, 441 headers, widths,
+mirrors, boundaries, Load and Undo passed. DMA used 34202 words, CpuSet 68404
+halfwords and FastSet 34208 words; these also passed. All 215 guards, 514 source
+hashes and 512 model preimages matched; the helper retired only the interrupted copy.
+ABI and algorithms were unchanged, as were USA 8-7 and schema 1. Real CLI and
+ordinary use were next; the coordinate pool, all callers, full ABI, global extent,
+Linux-USA, native Windows, new 32:9 and the full TODO remained pending, without
 measurements.
 [Consumption and evidence](../rom_data_gameplay.md#managed-encounter-unit-templates-and-typed-guest-reads).
 
 
 **ROMDATA-04-ENCOUNTER-UNIT-TEMPLATE-CLI completed EUR/Wine (2026-10-28).**
-One warning-free Windows production build/afeaef25.. from 514 accepted runtime sources,
-canonical hash mtime restored. Three Wine commands prepare created/reused/runc 700
-pass: 74 files exact to runtime/73 ID hashes/76 paths no-write, 28859 cache blocks.
-Normal Giza 02 menu/03 A 700 input copies 19409→20109: 186 reads/211B, 5 records/
-1 header, 8 positive classes and 1 unobserved. Positive selector/argument/equipment/
-flag criterion satisfied; all 13 counts retained for subsequent full pair. 184 guards
-514 hashes/helper 0, no new fixture/navigation/measurement or closed proof repeated.
-Ordinary full pair/all 2850 records 442 headers/full ABI/coordinate pool/global/
-Linux-USA/native Windows/new 32:9/full TODO pending.
+One warning-free Windows production build, afeaef25.., used 514 accepted runtime
+sources; the canonical hash and mtime were restored. Three Wine commands passed:
+prepare created the dataset, prepare reused it and runc executed 700 frames. All 74
+files matched runtime, 73 ID hashes matched and 76 paths were unchanged; the cache
+loaded 28859 blocks. Copies of normal Giza 02 menu and 03 A input covered 700 frames,
+19409→20109: 186 reads of 211B across 5 records and 1 header, with 8 positive classes
+and 1 unobserved. The positive selector/argument/equipment/flag criterion was met;
+all 13 counts were retained for the subsequent full pair.
+
+All 184 guards and 514 hashes matched; the helper found 0 paths. No new fixture,
+navigation, measurement or repeat of closed proof occurred. The ordinary full pair,
+all 2850 records and 442 headers, full ABI, coordinate pool, global extent, Linux-USA,
+native Windows, new 32:9 and the full TODO remained pending.
 [CLI and consumption](../rom_data_gameplay.md#actual-encounter-unit-template-cli-and-ordinary-consumption).
 
 
 **ROMDATA-05-ENCOUNTER-UNIT-TEMPLATE-BATTLE-ORDINARY completed EUR/Wine
-(2026-10-28).** One normal Giza 02 menu/03 input full pair 700 19409→20109 with
-CLI dataset e81-d80: every full state/clock/classic-central-wide image/OAM/dispatch/
-5 audio passes. All 13 counts match CLI: 186 reads 211B, 35 selector/15 argument/
-80 equipment/10 auxiliary/41 bit/10 optional/10 flag/10 control/0 opaque, five
-records and one header; eight semantic classes positive. Opaque ordinary not observed,
-separate bus proof. One optional 5-line guard/old validator byte exact, one warning-
-free Windows build/33c61082.. from 514 sources and one Wine filter. 104 ordinary +
-184 CLI guards/514 hashes each exact/helper 0; no new fixture/navigation/measurement/
-closed proof repeated. Case closed; all 2850 records 442 headers/full ABI/coordinate
-pool/global/Linux-USA/native Windows/new 32:9/full TODO pending.
+(2026-10-28).** One normal Giza 02 menu/03 input full pair covered 700 frames,
+19409→20109, using CLI dataset e81-d80. Every full state and clock, classic/central/
+wide image, OAM, dispatch and 5 audio streams passed. All 13 counts matched the CLI:
+186 reads of 211B, comprising 35 selector, 15 argument, 80 equipment, 10 auxiliary,
+41 bit, 10 optional, 10 flag, 10 control and 0 opaque bytes, across five records and
+one header. Eight semantic classes were positive; ordinary opaque use was not
+observed and remains covered separately by the bus proof.
+
+An optional 5-line guard restored the old validator byte for byte when removed. One
+warning-free Windows build, 33c61082.., used 514 sources and one Wine filter passed.
+All 104 ordinary and 184 CLI guards and each set of 514 hashes matched; the helper
+found 0 paths. No new fixture, navigation, measurement or repeat of closed proof
+occurred. This case was closed; all 2850 records and 442 headers, full ABI, coordinate
+pool, global extent, Linux-USA, native Windows, new 32:9 and the full TODO remained
+pending.
 [Equivalence](../rom_data_gameplay.md#ordinary-encounter-unit-template-battle-entry-equivalence).
 
 
 **ROMDATA-01-ENCOUNTER-COORDINATES completed for the EUR source contract
-(2026-10-28).** 691 lists/2342 XY pairs/4684B 70B6A8..70C8F4 exactly partitioned
-by header pointer-count links: no gap/alias/overlap among 49797 spans 73 owners.
-323 placement 0 lists 3272B/34 random 680B/12 placement 2 = 88B/322 default 644B,
-323 headers with payload 119 all null. Raw u8 XY preserve signed search and unsigned
-reads; RNG 02868 nonnegative 15-bit/remainder 146314/mask u16 remain original, no
-invented 10/16 cap or safe null fallback. Nine reused + three new helper/RNG windows,
-41 pins/38 guards pass; no build/Wine-Linux test/game/fixture/navigation/closed proof
-repeated/measurement. Next strict 691-list model + header coherence and one targeted
-Wine oracle, then extraction/runtime/CLI/ordinary. Schema 1/e81-d80/USA 8-7 unchanged;
-Linux-USA/native Windows/new 32:9/all callers/full ABI/global/full TODO open.
+(2026-10-28).** Header pointer/count links partition 691 lists containing 2342 XY
+pairs, or 4684B, at 70B6A8..70C8F4. There are no gaps, aliases or overlaps among
+49797 spans and 73 owners. The roles are 323 placement 0 lists totaling 3272B,
+34 random lists totaling 680B, 12 placement 2 lists totaling 88B and 322 default
+lists totaling 644B. Payloads belong to 323 headers; all pointers are null in 119.
+
+Raw u8 XY values preserve signed search and unsigned reads. RNG 02868 returns a
+nonnegative 15-bit value; remainder 146314 and the u16 mask remain original guest
+behavior. Neither the observed 10 nor the 16-bit mask establishes a guest cap, and
+null pointers do not acquire a safe fallback. Nine reused and three new helper/RNG
+windows, 41 pins and 38 guards passed. No build, Wine/Linux test, game, fixture,
+navigation, repeat of closed proof or measurement occurred. The next steps were a
+strict 691-list model with header coherence and one targeted Wine oracle, then
+extraction, runtime, CLI and ordinary use. Schema 1, e81-d80 and USA 8-7 were
+unchanged; Linux-USA, native Windows, new 32:9, all callers, full ABI, global extent
+and the full TODO remained open.
 [Contract](../rom_data_maps.md#european-encounter-coordinate-lists-and-original-readers).
 
 
 **ROMDATA-02-ENCOUNTER-COORDINATE-MODEL completed EUR/Wine (2026-10-28).**
-Strict model 691 lists 2342 raw u8 XY pairs/4684B/691 spans; shape/header coherence/
-authenticity separate, diagnostic signed view, no safe null fallback/value cap.
-First Windows core build fails due to Bus import in test; only import corrected,
-second 516-source copy accepted/2fe3e236.. warning-free/227 core inputs, preimages
-retained. One Wine filter passes 30 guards/8044 original signed-unsigned prefixes
-across all 4684B, 12 isolated high bits and 102 original random prefixes (34 lists *
-3 seeds). RNG/index/addresses/u16 mask/writes/callee-SP/outer RAM-VRAM-OAM-palette-ROM
-exact; not full ABI, repeated random/exhaustion/native clock/ordinary. 40 guards
-516 accepted + 516 failed hashes/38 source guards exact/helper 0; no new fixture/
-navigation/closed proof repeated/measurement. Next managed e82-d81/index 73 + typed
-bus, then CLI ordinary; Linux-USA/native Windows/new 32:9/all callers/global/full TODO
-pending.
+The strict model retains 691 lists, 2342 raw u8 XY pairs, 4684B and 691 spans. Shape,
+header coherence and authenticity are separate checks. A signed diagnostic view is
+available; no safe null fallback or value cap is inferred.
+
+The first Windows core build failed because a test lacked the Bus import; only that
+import was corrected. The accepted second 516-source copy, 2fe3e236.., built without
+warnings with 227 core inputs; preimages were retained. One Wine filter passed 30
+guards and 8044 original signed/unsigned prefixes across all 4684B, plus 12 isolated
+high-bit cases and 102 original random prefixes across 34 lists and 3 seeds. RNG,
+index, addresses, u16 mask, writes, callee registers, SP, outer RAM, VRAM, OAM,
+palette and ROM were exact. This does not establish full ABI, repeated random
+selection or exhaustion, native clock or ordinary use.
+
+All 40 guards, 516 accepted and 516 failed-build source hashes, and 38 source guards
+matched; the helper found 0 paths. No new fixture, navigation, repeat of closed proof
+or measurement occurred. The next step was managed e82-d81/index 73 and typed bus
+access, followed by CLI and ordinary use; Linux-USA, native Windows, new 32:9, all
+callers, global extent and the full TODO remained pending.
 [Model and proof](../rom_data_maps.md#typed-encounter-coordinates-and-original-reader-proof).
 
 
 **ROMDATA-03-04-ENCOUNTER-COORDINATE-RUNTIME completed EUR/Wine (2026-10-28).**
-e82-d81/index 73/encounter-coordinates.json, 75 files 74 resources/all 73 previous
-exact/header dependency. Immutable owner 691 spans 4684B/four roles + XY/list-header
-statistics, local and global 70B..70C routing/composition of old owners at edges.
-Three warning-free Windows builds, accepted 0f85fbf7.. from 518 sources. First Wine
-filter passes publication/14 attach/3 full-set and stops in native harness; second
-isolates concatenation beyond stop. Only test corrected with BL pair and two families
-that exclude their respective stops. Third filter reuses dataset, retains all 22 cases
-and completes native/lifecycle without repeating publication or attach. The 22 original-
-interpreter-native cases match full state and clock with 4684B raw altered after Load
-(18 loads/index 0 gate/3 random prefixes), 21 new B/2 template/13 header compiled.
-All 4684B/691 lists 323 headers/XY roles/691 boundaries/width-mirror/Load Undo/DMA-
-CpuSet-FastSet pass. 253 guards/518 hashes 516 model preimages exact/helper only
-interrupted; algorithms/ABI unchanged. Next real CLI + ordinary; Linux-USA/native
-Windows/new 32:9/full ABI/all callers/global/full TODO pending. No fixture/navigation/
-measurement/old proof repeated.
+e82-d81 publishes encounter-coordinates.json at index 73: 75 files and 74 resources,
+with all 73 previous records exact and an encounter-header dependency. The immutable
+owner covers 691 spans and 4684B, with four roles and XY/list/header statistics.
+Local and global routing covers 70B..70C and composes with old owners at the edges.
+
+Three warning-free Windows builds used 518 sources; 0f85fbf7.. was accepted. The
+first Wine filter passed publication, 14 attachment and 3 full-set guards, then
+stopped in the native harness. A second isolated concatenation beyond a stop. Only the
+test was corrected with a BL pair and two families that exclude their respective
+stops. The third filter reused the dataset, retained all 22 cases and completed the
+native/lifecycle checks without repeating publication or attachment. All 22 original/
+interpreter/native cases matched full state and clock after 4684B of raw source was
+altered following Load: 18 loads, an index 0 gate and 3 random prefixes. Compiled
+reads covered 21 new B, 2 template B and 13 header B.
+
+Bus and lifecycle checks passed for all 4684B, 691 lists, 323 headers, XY roles,
+691 boundaries, widths, mirrors, Load, Undo, DMA, CpuSet and FastSet. All 253 guards,
+518 source hashes and 516 model preimages matched; the helper retired only the
+interrupted copy. Algorithms and ABI were unchanged. Real CLI and ordinary use were
+next; Linux-USA, native Windows, new 32:9, full ABI, all callers, global extent and
+the full TODO remained pending. No fixture, navigation, measurement or repeat of old
+proof occurred.
 [Consumption and evidence](../rom_data_maps.md#managed-encounter-coordinates-and-typed-guest-reads).
 
 
 **ROMDATA-04-ENCOUNTER-COORDINATE-CLI completed EUR/Wine (2026-10-28).** One
-warning-free Windows production build/b467d4ad.. from 518 accepted sources, canonical
-hash mtime restored. Three Wine commands prepare created/reused/runc 700 pass: 75 files
-exact to runtime/74 ID hashes/77 paths no-write/28859 cache blocks loaded. Normal Giza
-02 menu/03 input copies 19409→20109: 20 reads 20B/1 list 1 header, placement 0-X-Y
-positive; all 10 counts retained. 186 guards 518 hashes/helper 0, no new fixture/
-navigation/measurement/closed proof repeated. Full pair next, not all 691 lists/roles/
-headers/ABI. Linux-USA/native Windows/new 32:9/global/full TODO pending.
+warning-free Windows production build, b467d4ad.., used 518 accepted sources; the
+canonical hash and mtime were restored. Three Wine commands passed: prepare created
+the dataset, prepare reused it and runc executed 700 frames. All 75 files matched
+the runtime dataset, 74 ID hashes matched and 77 paths remained unchanged; 28859
+cache blocks loaded. Copies of normal Giza 02 menu and 03 input covered 19409→20109:
+20 reads of 20B, across 1 list and 1 header, with placement 0, X and Y positive. All
+10 counts were retained.
+
+All 186 guards and 518 source hashes matched; the helper found 0 paths. No new
+fixture, navigation, measurement or repeat of closed proof occurred. A full pair was
+next; this did not establish all 691 lists, roles, headers or ABI. Linux-USA, native
+Windows, new 32:9, global extent and the full TODO remained pending.
 [CLI and consumption](../rom_data_maps.md#actual-encounter-coordinate-cli-and-ordinary-consumption).
 
 
 **ROMDATA-05-ENCOUNTER-COORDINATE-BATTLE-ORDINARY completed EUR/Wine
-(2026-10-28).** One normal Giza 02 menu/03 input full pair 700 19409→20109 with
-CLI dataset e82-d81: every full state/clock/classic-central-wide image/OAM/5 audio
-passes; native and fallback dispatch executed. All 10 counts match CLI: 20 reads 20B,
-placement 0=20, X 10/Y 10, one list and one header. Random/placement 2/default not
-observed here, previously completed targeted tests remain separate. Optional 5-line
-guard/old validator byte exact, one warning-free Windows build/de67e015.. from 518
-sources and one Wine filter. 104 ordinary + 186 CLI guards/518 hashes each exact/
-helper 0. Case closed; all 691 lists 323 headers with payload/placement-RNG/full ABI/
-global/Linux-USA/native Windows/new 32:9/full TODO pending. No new fixture, navigation
-or performance measurement.
+(2026-10-28).** One normal Giza 02 menu/03 input full pair covered 700 frames,
+19409→20109, using CLI dataset e82-d81. Every full state and clock, classic/central/
+wide image, OAM and 5 audio streams matched; native and fallback dispatch executed.
+All 10 counts matched the CLI: 20 reads of 20B, with placement 0=20, X 10 and Y 10,
+covering one list and one header. Random, placement 2 and default roles were not
+observed here; prior targeted tests remain separate.
+
+An optional 5-line guard restored the old validator byte for byte when removed. One
+warning-free Windows build, de67e015.., used 518 sources and one Wine filter passed.
+All 104 ordinary and 186 CLI guards and each set of 518 hashes matched; the helper
+found 0 paths. This case was closed; all 691 lists and 323 headers with payload,
+placement/RNG, full ABI, global extent, Linux-USA, native Windows, new 32:9 and the
+full TODO remained pending. No new fixture, navigation or performance measurement
+occurred.
 [Equivalence](../rom_data_maps.md#ordinary-encounter-coordinate-battle-entry-equivalence).
 
 
 **ROMDATA-01-LINKED-METADATA28 completed for the EUR source contract
-(2026-10-28).** 347 records 28B/9716B 710E04..7133F8, 17 roots and 28B arithmetic,
-next 4B family with two independent readers. Physical boundary, no guest cap 347.
-Getter D07A4 low16/low8: scalars, internal view +12, word flag/21 bits, selectors
-34..255→0 without data reads. Direct readers u16+22/byte 24..26; opaque bytes 3/15/27
-retained. All 347 records reconstructed, no overlap with 74 owners/50488 spans,
-20 windows 14 new 6 reused/69 pins/122 guards/helper 0. Static contract only;
-model/Wine/runtime/CLI/ordinary next. Schema 1/e82-d81 unchanged. Linux-USA/native
-Windows/new 32:9/global/full TODO pending; no build/game/checkpoint/navigation/
-measurement or closed proof repeated.
+(2026-10-28).** The physical partition contains 347 records of 28B, or 9716B, at
+710E04..7133F8. It is supported by 17 roots and 28B arithmetic; the following 4B
+family has two independent readers. The physical boundary does not establish a guest
+cap of 347. Getter D07A4 narrows the index to low16 and selector to low8. It exposes
+scalars, an internal view at +12, a flag word and 21 bits; selectors 34..255 return
+0 without reading record data. Direct readers use u16 at +22 and bytes 24..26;
+opaque bytes 3/15/27 are retained.
+
+All 347 records were reconstructed without overlap with 74 owners or 50488 spans.
+All 20 windows (14 new, 6 reused), 69 pins and 122 guards passed; the helper found
+0 paths. This is a static contract only; model, Wine, runtime, CLI and ordinary use
+were next. Schema 1 and e82-d81 were unchanged. Linux-USA, native Windows, new 32:9,
+global extent and the full TODO remained pending; there was no build, game,
+checkpoint, navigation, measurement or repeat of closed proof.
 [Contract](../rom_data_gameplay.md#european-indexed-28-byte-metadata-source-contract).
 
 
-**ROMDATA-02-LINKED-METADATA28 completed EUR/Wine (2026-10-28).** Lossless model
-347 records/9716B, unsigned fields/flag32/opaque bytes, shape/source auth separate;
-low16/low8 lookup retains scalars/address view +12/21 bits/default without read,
-no invented guest cap or null fallback. One warning-free Windows core build/
-358dba2c.. from 520 stable sources and one Wine filter: 27 guards/14517 original
-prefixes (12088 complete getters 1388 tail 1041 inline), 8675 interpreted bytes
-observed/1041 opaque reconstructed, 9 isolated variants 342 prefixes; RAM/callee/
-SP-LR/VRAM/OAM/palette/ROM exact. 36 model guards 520 hashes + 122 source exact/
-helper 0. Schema 1/e82-d81 unchanged; managed/runtime next then CLI/ordinary. Full ABI/
-next 4B family/global/Linux-USA/native Windows/new 32:9/full TODO pending, no
-measurement or new fixture/navigation/old closed proof repeated.
+**ROMDATA-02-LINKED-METADATA28 completed EUR/Wine (2026-10-28).** The lossless
+model retains 347 records and 9716B of unsigned fields, flag32 and opaque bytes.
+Shape and source authentication are separate. Low16/low8 lookup preserves scalars,
+the address view at +12, 21 bits and a default with no data read; it introduces no
+guest cap or null fallback.
+
+One warning-free Windows core build, 358dba2c.., used 520 stable sources. One Wine
+filter passed 27 guards and 14517 original prefixes: 12088 complete getters, 1388
+tail loads and 1041 inline prefixes. They observed 8675 interpreted bytes; 1041
+opaque bytes were reconstructed. The 9 isolated variants passed 342 prefixes. RAM,
+callee registers, SP-LR, VRAM, OAM, palette and ROM were exact. All 36 model guards,
+520 source hashes and 122 source-contract guards matched; the helper found 0 paths.
+Schema 1 and e82-d81 were unchanged. Managed/runtime integration was next, followed
+by CLI and ordinary use. Full ABI, the following 4B family, global extent, Linux-USA,
+native Windows, new 32:9 and the full TODO remained pending. No measurement, new
+fixture, navigation or repeat of old closed proof occurred.
 [Model and proof](../rom_data_gameplay.md#typed-indexed-28-byte-metadata-and-original-reader-proof).
 
 
 **ROMDATA-03-04-LINKED-METADATA28-RUNTIME completed EUR/Wine (2026-10-28).**
-e83-d82/index 74/linked-metadata28.json: 76 files 75 resources/all 74 previous exact,
-one span 9716B/no invented dependency. Immutable typed owner 5 classes/347 records/
-8 counters, local + global pages 710..713, previous header/raw successor boundaries.
-One warning-free Windows build/040133f5.. from 522 sources, one Wine filter publication/
-interruption 14 attach 2 full-set/23 native full state-clock cases with 9716 raw bytes
-altered after Load: 17 loads + 6 D07A4 getters, 31 new bytes + 1 header compiled.
-All 9716 bytes/5 classes 347 records/all 347 boundaries/Load Undo/DMA-CpuSet-FastSet
-3 state-clock pass. 216 guards 522 hashes 520 model preimages exact/helper retires
-only interrupted copy. Actual CLI/ordinary next; ABI/USA 8-7/schema 1 unchanged, no
-new game/checkpoint/navigation/measurement or old closed proof repeated. Full ABI/
-global/next 4B family/Linux-USA/native Windows/new 32:9/full TODO pending.
+e83-d82 publishes linked-metadata28.json at index 74: 76 files and 75 resources, with
+all 74 previous records exact. Its one 9716B span introduces no invented dependency.
+The immutable typed owner has 5 classes, 347 records and 8 counters; local and
+global pages 710..713 compose with the previous header and raw successor.
+
+One warning-free Windows build, 040133f5.., used 522 sources. One Wine filter passed
+publication/interruption, 14 attachment guards and 2 full-set guards. It also passed
+23 native full state-clock cases with 9716 raw bytes altered after Load: 17 loads and
+6 D07A4 getters, with 31 new bytes and 1 header byte consumed by compiled code.
+Checks passed for all 9716 bytes, 5 classes, 347 records, all 347 boundaries, Load,
+Undo and 3 DMA/CpuSet/FastSet state-clock comparisons. All 216 guards, 522 source
+hashes and 520 model preimages matched; the helper retired only the interrupted copy.
+Actual CLI and ordinary use were next; ABI, USA 8-7 and schema 1 were unchanged.
+There was no new game, checkpoint, navigation, measurement or repeat of closed proof.
+Full ABI, global extent, the next 4B family, Linux-USA, native Windows, new 32:9 and
+the full TODO remained pending.
 [Direct consumption](../rom_data_gameplay.md#managed-indexed-28-byte-metadata-and-typed-guest-reads).
 
 
 **ROMDATA-04-LINKED-METADATA28-CLI registration completed EUR/Wine;
 positive ordinary use still open (2026-10-28).** One warning-free Windows production
-build/0acb352e.. from 522 sources: only correction of 3 metadata28 messages, inverse
-byte exact/other 521 files exact/canonical hash mtime restored. Create/reuse/normal
-starts: 76 files exact to runtime/75 ID hashes/78 paths no-write/28859 cache blocks.
-Four normal locators Giza 700/Jobs 540/Abilityset 700/BattleTechRinfo 800 have ALL
-8 counters 0, retained as negatives not to repeat; no full pair executed. Menus
-observed, new input from normal commands on authorized copy; no new checkpoint or
-manual guest edit. 220 guards 522 hashes/helper 0. Next: combat path with nonzero
-action before positive/full pair. Linux-USA/native Windows/new 32:9/full ABI/global/
-full TODO pending; no measurement.
+build, 0acb352e.., used 522 sources. Its only correction changed 3 metadata28 messages;
+the inverse was byte-exact, the other 521 files were exact, and canonical hash and
+mtime were restored. Create, reuse and normal starts retained 76 files identical to
+the runtime dataset, 75 matching ID hashes and 78 unchanged paths; 28859 cache blocks
+loaded.
+
+Four normal locators, Giza 700, Jobs 540, Abilityset 700 and BattleTechRinfo 800,
+had all 8 counters at 0. They are retained negative observations, not cases to repeat,
+and no full pair was run. Menus were observed using new normal-command input on an
+authorized copy, without a new checkpoint or manual guest edit. All 220 guards and
+522 source hashes matched; the helper found 0 paths. The next lead was a combat path
+with a nonzero action before a positive/full pair. Linux-USA, native Windows, new
+32:9, full ABI, global extent and the full TODO remained pending; no measurement
+occurred.
 [CLI and limits](../rom_data_gameplay.md#actual-indexed-metadata28-cli-registration-and-ordinary-locators).
 
 
 **ROMDATA-04-05-LINKED-METADATA28-COMBAT completed EUR/Wine (2026-10-28).**
-Normal opening of Steal menu on dry ground at Giza: 42 frames 22669→22711, 15 reads
-20 bytes served/five records, 10 halfword + 10 byte; inline/flag/opaque 0. Capture,
-existing CLI 0acb352e.. and one Wine full pair match all 8 counts; every full state/
-clock/classic-central-wide image/OAM/5 audio passes. No ability effect executed or
-all 347 records claimed. One warning-free Windows test build/5a6c81be.. from 523
-sources, optional 5-line guard/old validator byte exact and normal-input-only observer;
-seven captures 1182 frames on authorized copies, no manual guest/original save edit.
-177 guards 523 hashes + 220 CLI/522 hashes exact/78 paths no-write/helper 0. Four old
-negative locators remain closed; source/model/runtime/registration or other family
-evidence not repeated. Ordinary case closed; effects/all 347/full ABI/global/next 4B
-family/Linux-USA/native Windows/new 32:9/full TODO pending, no performance measurement.
+Normally opening the Steal menu on dry ground at Giza covered 42 frames, 22669→22711,
+with 15 reads serving 20 bytes across five records: 10 bytes from halfword fields
+and 10 from byte fields.
+Inline, flag and opaque usage were 0. Capture, existing CLI 0acb352e.. and one Wine
+full pair matched all 8 counts; every full state and clock, classic/central/wide image,
+OAM and 5 audio streams passed. No ability effect was executed, and coverage of all
+347 records was not claimed.
+
+One warning-free Windows test build, 5a6c81be.., used 523 sources, an optional 5-line
+guard that restored the old validator byte for byte when removed, and a normal-input-
+only observer. Seven captures covered 1182 frames on authorized copies, without manual
+guest or original-save edits. All 177 guards, 523 source hashes, 220 CLI guards and
+522 CLI hashes matched; 78 paths remained unchanged and the helper found 0 paths.
+The four old negative locators remained closed; source, model, runtime, registration
+and other-family evidence was not repeated. The ordinary case was closed; effects,
+all 347 records, full ABI, global extent, the next 4B family, Linux-USA, native Windows,
+new 32:9 and the full TODO remained pending, with no performance measurement.
 [Equivalence](../rom_data_gameplay.md#ordinary-metadata28-steal-menu-equivalence).
 
 

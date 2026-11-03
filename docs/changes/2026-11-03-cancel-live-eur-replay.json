@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "cancel-live-eur-replay",
+  "title": "Verify cancellation during EUR replay execution",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Record exact-request cancellation during a real interpreter replay as a bounded DBG2-15 validation increment."
+  ],
+  "validation": [
+    "In a copied EUR DS-20 replay, the worker reported running at 10/102 frames before exact-ID cancellation; the same run reported interrupted at 21/102 and the control request returned cancelled. The paused parent state, frame and clock, source profile, protected inputs and session pins remained unchanged; session and display closed."
+  ],
+  "limitations": [
+    "This validates cancellation in one Wine/interpreter case. A deadline while guest frames execute, complete assistant procedure and parity, native Windows and physical input remain unverified."
+  ],
+  "files": [
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "review-tools-ci-english",
+  "title": "Review development tools and CI in English",
+  "kind": "docs",
+  "platforms": [
+    "Desktop build and development tooling"
+  ],
+  "changes": [
+    "Review eight sweep, comparison, toolchain and CI files for English and register their exact revisions in the audit."
+  ],
+  "validation": [
+    "Read each file in full and confirmed its SHA-256; existing commands, paths and output identifiers remain unchanged."
+  ],
+  "limitations": [
+    "No sweeps, image analyses, downloads, builds or ROM access were performed; other source and documentation audits remain open."
+  ],
+  "files": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": [
+    "tools/full_sweep.sh",
+    "tools/sweep.sh",
+    "tools/ppmdiff.py",
+    "tools/rowalign.py",
+    "tools/libcluster.py",
+    "Installer/scripts/fetch-toolchain.ps1",
+    ".github/workflows/installer-linux.yml",
+    ".github/workflows/project-memory.yml"
+  ]
+}

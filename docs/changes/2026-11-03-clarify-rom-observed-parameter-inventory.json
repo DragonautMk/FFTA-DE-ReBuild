@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "clarify-rom-observed-parameter-inventory",
+  "title": "Clarify observed parameter inventory summaries",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Rewrite four observed task parameter model, runtime, CLI and ordinary-frame summaries in readable English while retaining evidence and limits."
+  ],
+  "validation": [
+    "Compared numeric tokens, links, task IDs and inline code with the prior text; git diff --check passed."
+  ],
+  "limitations": [
+    "Documentation only; no ROM, build, runtime, benchmark or platform validation was performed. The rest of the inventory remains under review."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": []
+}

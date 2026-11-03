@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "clarify-rom-data-selection-program-summaries",
+  "title": "Clarify ROM selection and program summaries",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Rewrite five EUR e34–e47 selection, flag, palette and blend summaries as readable English while retaining evidence scope and limits."
+  ],
+  "validation": [
+    "Compared numeric tokens, linked destinations and inline code with the prior text; git diff --check passed."
+  ],
+  "limitations": [
+    "Documentation only; no ROM, build, runtime, benchmark or platform validation was performed. Other guide sections remain under review."
+  ],
+  "files": [
+    "docs/rom_data.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": []
+}

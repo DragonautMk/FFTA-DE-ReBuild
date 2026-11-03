@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "translate-experimental-spike-test-messages",
+  "title": "Translate experimental spike test messages",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Translate the remaining Spanish output in the Cranelift and Wasm experimental test files, preserving their values, test behavior and existing status qualifiers."
+  ],
+  "validation": [
+    "Rustfmt parsed both files; comparison with their preimages confirmed only print statements changed and numeric tokens were preserved; git diff --check passed."
+  ],
+  "limitations": [
+    "Text-only review: tests, ROM traces, benchmarks, Android execution and hard-coded result claims were not validated or rerun. The broader English-first audit remains open."
+  ],
+  "files": [
+    "crates/cl-spike/src/lib.rs",
+    "crates/wasm-poc/tests/fase4b_tests.rs",
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": []
+}

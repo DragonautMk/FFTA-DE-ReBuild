@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "review-maintenance-helper-english",
+  "title": "Review maintenance helper text",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Review eight development helper scripts for English authored comments, CLI messages and generated labels, and record their hashes in the English-first audit."
+  ],
+  "validation": [
+    "Read each complete script and inspected the existing Atlas generator diff; script text is English and source status was checked before hashing."
+  ],
+  "limitations": [
+    "Scripts and separate tests were not executed; generated third-party notices and imported metadata remain verbatim. Other tools remain pending."
+  ],
+  "files": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": [
+    "scripts/generate_cursor.py",
+    "scripts/package_source.py",
+    "scripts/rom_coverage_ranges.py",
+    "scripts/artifact_coordinator.py",
+    "scripts/generate_notices.py",
+    "scripts/fetch_missing_notices.py",
+    "scripts/build_desktop.py",
+    "scripts/menu_atlas_inventory.py"
+  ]
+}

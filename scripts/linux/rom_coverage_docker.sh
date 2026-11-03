@@ -154,6 +154,6 @@ status=${statuses[0]}
 if (( status == 0 )); then status=${statuses[1]}; fi
 if (( status != 0 )); then
     printf '\nROM coverage failed (exit %s). Log: %s\n' "$status" "$log_file" | tee -a -- "$log_file" >&2
-    if [[ -t 0 && -t 2 ]]; then read -r -p 'Premi Invio per chiudere...' _ || true; fi
+    if [[ -t 0 && -t 2 ]]; then read -r -p 'Press Enter to close...' _ || true; fi
 fi
 exit "$status"

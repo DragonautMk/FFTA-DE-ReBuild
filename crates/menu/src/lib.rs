@@ -30,6 +30,7 @@ mod game_saves;
 mod save_backups;
 mod debug_catalog;
 mod content_selector;
+mod cheat_management;
 mod tool_inputs;
 mod debug_tool;
 mod selection;
@@ -39,7 +40,8 @@ mod controls;
 mod debug_unlock;
 pub use debug_tool::{DebugTool,ToolRequest,ToolField,ToolFieldKind};
 pub use tool_inputs::ContentSlot;
-pub use content_selector::{ContentEntry,ContentViewPreferences,ContentHistory};
+pub use content_selector::{CheatFilter,ContentEntry,ContentViewPreferences,ContentHistory};
+pub use cheat_management::{Source as CheatSource, Request as CheatRequest};
 pub use debug_catalog::CatalogEntry;
 pub use save_backups::BackupInfo;
 pub use save_states::StateSlot;
@@ -129,6 +131,8 @@ pub enum MenuAction {
     OpenCheatCatalog,
     CheatChoose,
     CheatReload,
+    CheatManage,
+    CheatRequest(CheatRequest),
     ChooseDebugCatalog,
     CatalogSelection(usize),
     CatalogImport(usize),
@@ -501,7 +505,7 @@ impl Row {
             Row::CloseDebugSession => "Close debug session",
             Row::ContentPicker => "Content selector",
             Row::DebugCatalog => "Debug catalog",
-            Row::CheatCatalog => "Cheat catalog (read only)",
+            Row::CheatCatalog => "Cheat catalog",
             Row::CatalogRegion => "Region", Row::CatalogStatus => "Recorded status",
             Row::CatalogKind => "Kind", Row::CatalogCase => "DS case",
             Row::CatalogEntry => "Entry", Row::CatalogImport => "Import to free snapshot slot",
@@ -906,6 +910,11 @@ impl Menu {
         if self.tool_active() || self.content_active() || self.cheat_active(){
             let b=clan_atlas::geometry(w,h).body;
             let mut focus=if self.tool_active(){self.tool.focus(b.w,b.h)}else if self.cheat_active(){self.cheats.focus(b.w,b.h)}else{self.content.focus(b.w,b.h)};
+            if let Some(capture)=focus.capture.as_mut() {
+                if matches!(capture.as_str(), "Choice: arrows adjust · OK applies · Cancel discards" | "Filter choice: arrows · OK applies · Cancel discards") {
+                    *capture=self.tr(capture).to_owned();
+                }
+            }
             focus.panel[0]+=b.x;focus.panel[1]+=b.y;
             if let Some(bounds)=focus.selected_bounds.as_mut(){bounds[0]+=b.x;bounds[1]+=b.y;}
             if let Some(drop)=focus.dropdown.as_mut(){drop.panel[0]+=b.x;drop.panel[1]+=b.y;}
@@ -940,9 +949,14 @@ impl Menu {
     }
     pub fn open_cheats(&mut self,entries:Vec<ContentEntry>,message:String){
         if !self.cheat_active(){self.open(Page::CheatCatalog);}
-        self.cheats.set("Cheat · read only".into(),entries,message,0);
+        self.cheats.set("Cheat catalog".into(),entries,message,0);
     }
     pub fn cheat_active(&self)->bool{self.page==Page::CheatCatalog}
+    pub fn cheat_highlight(&self)->Option<&str>{self.cheats.highlighted_id()}
+    pub fn open_cheat_management(&mut self,sources:Vec<CheatSource>){self.cheats.open_cheat_management(sources);}
+    pub fn cheat_selected_source(&self)->Option<&CheatSource>{self.cheats.cheat_selected_source()}
+    pub fn cheat_preview_reviewed(&self)->bool{self.cheats.cheat_preview_reviewed()}
+    pub fn cheat_management_feedback(&mut self,message:String,preview:Option<String>){self.cheats.cheat_management_feedback(message,preview);}
     pub fn set_tool_inputs(&mut self, inputs:Vec<(ContentSlot,String)>){
         for f in &mut self.tool.fields{if let ToolFieldKind::Input(slot)=f.kind{f.value=inputs.iter().find(|(key,_)|*key==slot).map(|(_,v)|v.clone()).unwrap_or("Not selected".into());}}
         self.tool_inputs=inputs;
@@ -1166,7 +1180,7 @@ impl Menu {
 
         if self.page==Page::Information{return self.information_input(input);}
         if self.atlas_reference_active(){return self.atlas_reference_input(input);}
-        if (self.tool_active()||self.content_active()||self.cheat_active()) && !self.content_text_focus() && input==MenuInput::Left {
+        if (self.tool_active()||self.content_active()||self.cheat_active()) && !self.content_text_focus() && !(self.cheat_active()&&self.cheats.cheat_management_active()) && input==MenuInput::Left {
             self.atlas.sidebar_focus=true;self.atlas.nav_cursor=self.atlas.selected_section()+1;return None;
         }
         if self.tool_active(){let a=self.tool.handle(input);return self.tool_action(a);}

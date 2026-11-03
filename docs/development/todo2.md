@@ -36,6 +36,8 @@ remove debuff from prison
 
 more detailed shop with effect shown
 
+guild level equal scout level. Higher scout level means more info about enemy and other stuff
+
 Long term:
 
 Extract data from FFTA2

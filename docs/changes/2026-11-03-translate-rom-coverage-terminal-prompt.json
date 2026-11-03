@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "translate-rom-coverage-terminal-prompt",
+  "title": "Translate ROM coverage terminal prompt",
+  "kind": "changed",
+  "platforms": [
+    "Linux development tooling"
+  ],
+  "changes": [
+    "Translate the interactive failure prompt in the Linux ROM coverage launcher into English while retaining its exit and logging behavior."
+  ],
+  "validation": [
+    "Eight mocked Docker launcher tests pass; Bash syntax check passes; isolated pseudo-terminal check confirms the English prompt waits for Enter and retains failure exit code 2."
+  ],
+  "limitations": [
+    "No ROM data were read and no actual Docker build or coverage run was performed."
+  ],
+  "files": [
+    "scripts/linux/rom_coverage_docker.sh"
+  ],
+  "references": [
+    "docs/development/ROM_COVERAGE.md"
+  ]
+}

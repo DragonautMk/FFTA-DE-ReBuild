@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "save-and-review-cheat-presets",
+  "title": "Save and review source-bound cheat presets",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Add bounded named cheat presets saved from the current armed set with exact ROM, catalog, provenance and source-line hashes, without overwriting an existing name.",
+    "Expose explicit preset save, group preview and atomic arm through the shared console and local control; recheck every plan, state and group conflict before changing the armed set."
+  ],
+  "validation": [
+    "Frozen Windows GNU build succeeded for 1943 source files without source or overlay drift. Under Wine, 29 focused tests passed across preset storage, armed sets, command parsing and completion, operation contracts and capability negotiation.",
+    "A synthetic isolated EUR Wine session saved and reviewed a two-cheat group, armed both, and refused duplicate names, changed preview, overlapping plans, changed source-line hashes and wrong ROM without partially arming; a separate selected-catalog change was refused and restored. Guest state, frame and clock, session pins and protected originals stayed unchanged.",
+    "The first selected-catalog drift attempt modified a different duplicate catalog and did not produce the expected refusal; its session closed cleanly, and a focused follow-up targeted the selected file and passed."
+  ],
+  "limitations": [
+    "Preset activation remains source-bound interpreter behavior, not original hardware-hook or gameplay verification. Page controls and parameter value/range selection remain open; native Windows and physical input were not tested."
+  ],
+  "files": [
+    "crates/recomp/src/main.rs",
+    "crates/recomp/src/debug_cheat_preset.rs",
+    "crates/recomp/src/debug_cheat_armed.rs",
+    "crates/recomp/src/debug_command.rs",
+    "crates/recomp/src/debug_command/completion.rs",
+    "crates/recomp/src/debug_control.rs",
+    "crates/recomp/src/debug_operations.rs",
+    "crates/recomp/src/debug_operations.json",
+    "crates/recomp/src/play.rs",
+    "crates/input-config/languages/en.json",
+    "crates/input-config/languages/it.json",
+    "crates/menu/assets/debug_v2.tsv",
+    "docs/development/MENU_ATLAS_INVENTORY.json"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

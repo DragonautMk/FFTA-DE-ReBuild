@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "review-rom-audio-resources-english",
+  "title": "Review ROM audio resource guide in English",
+  "kind": "docs",
+  "platforms": [
+    "Desktop development documentation"
+  ],
+  "changes": [
+    "Review the entire audio resource guide for English and register its exact revision in the audit."
+  ],
+  "validation": [
+    "Read the complete guide and recorded its SHA-256; identifiers, historical evidence and validation limits remain unchanged."
+  ],
+  "limitations": [
+    "No tests, builds, replay or ROM access performed; other documentation and source audits remain open."
+  ],
+  "files": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": [
+    "docs/rom_data_audio.md"
+  ]
+}

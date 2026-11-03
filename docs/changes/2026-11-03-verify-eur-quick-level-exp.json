@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "verify-eur-quick-level-exp",
+  "title": "Verify bounded EUR quick-level experience effect",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Record one bounded CH-0340 experience effect in the first advanced cheat group without claiming a level-up or verification of other entries."
+  ],
+  "validation": [
+    "In an isolated EUR Party scene, one armed interpreter frame recorded 24 writes; after disarm and a visibly confirmed change to Montblanc and back, Marsh displayed level 5 EXP 99 instead of initial EXP 78. A same-ROM/runtime/seed/input/frame and clock no-cheat control displayed EXP 78. Both exact seeds were restored, sessions/displays closed and protected inputs stayed unchanged.",
+    "Montblanc displayed EXP 99 in the enabled run and EXP 92 in the control; the captures were at different frames and are secondary evidence. The first control script rejected an oversized input batch before executing any input; the same sequence then ran in two bounded batches."
+  ],
+  "limitations": [
+    "One EUR Party scene under Wine/interpreter does not prove an actual level-up, every unit, other advanced CH entries, native Windows, physical input or original device-hook equivalence. Disarm did not undo the observed changes; restoration was separate."
+  ],
+  "files": [
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

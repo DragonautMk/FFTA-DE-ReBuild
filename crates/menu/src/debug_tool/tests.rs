@@ -117,3 +117,34 @@ fn library_has_explicit_cancel_while_busy_and_distinct_guest_inspector() {
     assert_eq!(request_label(ToolRequest::Prepare,DebugTool::Homepage),"Cancel process");
     assert_eq!(request_label(ToolRequest::Prepare,DebugTool::GuestScripts),"Gameplay inspector");
 }
+
+#[test]
+fn choice_focus_diagnostics_follow_menu_language() {
+    let mut menu = crate::Menu::unlocked_for_test(true, true);
+    menu.open_tool(DebugTool::Step, fields(), String::new());
+    menu.tool.handle(MenuInput::Down);
+    menu.tool.handle(MenuInput::Confirm);
+    for (language, expected) in [
+        (input_config::Language::default(), "Choice: arrows adjust · OK applies · Cancel discards"),
+        (input_config::Language::parse("it"), "Scelta: frecce regolano · OK applica · Annulla scarta"),
+    ] {
+        menu.language.set(language);
+        let focus = menu.debug_focus(940, 620);
+        assert_eq!(focus.page, "DebugTool");
+        assert_eq!(focus.capture.as_deref(), Some(expected));
+        assert_eq!(focus.selected, 1);
+    }
+    menu.open_content("Synthetic".into(), Vec::new(), String::new(), 0);
+    menu.content.handle(MenuInput::Down);
+    menu.content.handle(MenuInput::Confirm);
+    for (language, expected) in [
+        (input_config::Language::default(), "Filter choice: arrows · OK applies · Cancel discards"),
+        (input_config::Language::parse("it"), "Scelta filtro: frecce · OK applica · Annulla scarta"),
+    ] {
+        menu.language.set(language);
+        let focus = menu.debug_focus(940, 620);
+        assert_eq!(focus.page, "ContentSelector");
+        assert_eq!(focus.capture.as_deref(), Some(expected));
+        assert_eq!(focus.selected, 1);
+    }
+}

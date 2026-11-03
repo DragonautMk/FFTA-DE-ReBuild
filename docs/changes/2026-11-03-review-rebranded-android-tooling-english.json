@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "review-rebranded-android-tooling-english",
+  "title": "Review rebranded Android and tooling text",
+  "kind": "docs",
+  "platforms": [
+    "Android and desktop development tooling"
+  ],
+  "changes": [
+    "Review English rebrand edits in AndroidPort default UI/report strings, portable package text and report homepage, and refresh their audit hashes."
+  ],
+  "validation": [
+    "Located Git versions matching all five previously recorded SHA-256 hashes, inspected each change through HEAD, and confirmed current working files matched HEAD before updating hashes."
+  ],
+  "limitations": [
+    "This is a language review of rebrand changes, not a build or UI validation; the wider English-first audit remains open."
+  ],
+  "files": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": [
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/MainActivity.kt",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/NativeBridge.kt",
+    "AndroidPort/android/app/src/main/res/values/strings.xml",
+    "scripts/package_ffta_portable.py",
+    "scripts/report_home.html"
+  ]
+}

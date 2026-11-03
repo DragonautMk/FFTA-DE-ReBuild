@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "verify-eur-clan-funds-cheat",
+  "title": "Verify one EUR clan-funds cheat purchase against control",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Complete DBG2-21 within a bounded EUR interpreter scope by pairing the separately verified Item Shop access with a visible CH-0334 resource effect and individual statuses for the remaining priority entries."
+  ],
+  "validation": [
+    "Two isolated copies used the same ROM, runtime and exact quantity-one Bronze Helm checkpoint. With identical 98 input/neutral frames, the 500-gil purchase changed displayed funds from 7,749 to 7,249 without a cheat and to 99,999,499 with CH-0334 armed. Screenshots were inspected; disarming did not mutate the paused state, both checkpoints restored exactly, sessions and displays closed, and protected originals remained unchanged.",
+    "The preceding world-map observation of unchanged 7,749 funds and CH-0336 Party observation of unchanged JP 4 remain recorded as bounded negative scenarios. A naturally reached shop checkpoint was created only inside the isolated copy."
+  ],
+  "limitations": [
+    "One EUR shop purchase under Wine/interpreter does not establish original device-hook behavior, other scenes, native Windows, physical controllers or the unverified priority CH entries. Disarm stops future writes; it does not undo prior memory changes."
+  ],
+  "files": [
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ]
+}

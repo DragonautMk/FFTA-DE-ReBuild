@@ -2009,6 +2009,7 @@ impl PlayApp {
             },
             crate::debug_control::Action::CheatList{offset,limit,generation}=>{action.validate()?;self.current_cheat_snapshot()?.page(*offset,*limit,generation.as_deref())?;return Ok(());},
             crate::debug_control::Action::CheatShow{id,offset,generation}=>{action.validate()?;self.current_cheat_snapshot()?.show(id,*offset,generation.as_deref())?;return Ok(());},
+            crate::debug_control::Action::CheatCapabilities{id,offset,generation}=>{action.validate()?;self.current_cheat_snapshot()?.capabilities(id,*offset,generation.as_deref())?;return Ok(());},
             crate::debug_control::Action::CheatPrepare{id,provenance,master,generation}=>{
                 action.validate()?;self.cheat_preview=None;
                 let (_,preview)=self.prepare_cheat_once(id,*provenance,master,generation)?;
@@ -2041,6 +2042,29 @@ impl PlayApp {
                 if let Some(id)=id{self.cheat_armed.disarm(id)?;}else{self.cheat_armed.clear();}
                 if self.menu.cheat_active(){self.open_cheat_catalog();}
                 self.cheat_preview=None;self.menu.diagnosis_result("Cheat disarmed; earlier writes remain until separately restored.".into());self.menu_dirty=true;return Ok(());
+            },
+            crate::debug_control::Action::CheatPresetSave{name}=>{
+                action.validate()?;
+                if !self.paused || self.probe.is_some() || self.frame_control.remaining>0 || self.replay_job.is_some(){return Err("Saving a cheat preset requires an idle paused copy".into());}
+                let snapshot=self.current_cheat_snapshot()?;
+                let preset=self.cheat_armed.preset(name,&snapshot.source_sha256,&snapshot.rom_sha256)?;
+                let config=input_config::config_root().ok_or("No selected configuration root")?;
+                crate::debug_cheat_preset::save(&config,&preset)?;
+                self.menu.diagnosis_result(format!("Saved cheat preset {name}; no cheat was applied."));self.menu_dirty=true;return Ok(());
+            },
+            crate::debug_control::Action::CheatPresetPrepare{name}=>{
+                action.validate()?;self.cheat_preview=None;
+                let (_,preview)=self.prepare_cheat_preset(name)?;
+                self.cheat_preview=Some(preview);self.menu.diagnosis_result("Cheat preset preview prepared; inspect all plans before arming.".into());self.menu_dirty=true;return Ok(());
+            },
+            crate::debug_control::Action::CheatPresetArm{name,preview}=>{
+                action.validate()?;
+                if self.cheat_preview.as_ref().and_then(|v|v["token"].as_str())!=Some(preview.as_str()){return Err("Prepare this exact cheat preset preview first".into());}
+                let (armed,current)=self.prepare_cheat_preset(name)?;
+                if current["token"].as_str()!=Some(preview.as_str()){return Err("Cheat preset, source, ROM or paused state changed; prepare again".into());}
+                self.cheat_armed=armed;self.cheat_preview=None;
+                if self.menu.cheat_active(){self.open_cheat_catalog();}
+                self.menu.diagnosis_result("Cheat preset armed for the next interpreter frame; disarm stops future writes.".into());self.menu_dirty=true;return Ok(());
             },
             crate::debug_control::Action::Replay{mode}=>{
                 if !self.paused{return Err("Replay requires an idle paused copy".into());}
@@ -2348,6 +2372,7 @@ impl PlayApp {
                             value["cheat_page"]=page;
                         },
                         crate::debug_control::Action::CheatShow{id,offset,generation}=>value["cheat_detail"]=self.current_cheat_snapshot().unwrap().show(id,*offset,generation.as_deref()).unwrap(),
+                        crate::debug_control::Action::CheatCapabilities{id,offset,generation}=>value["cheat_capabilities"]=self.current_cheat_snapshot().unwrap().capabilities(id,*offset,generation.as_deref()).unwrap(),
                         _=>{},
                     }}}
                     if !matches!(request.command,crate::debug_control::Action::Status)&&self.events_enabled(){self.ui_event("control-complete",serde_json::json!({"command":request.command,"outcome":if error.is_some(){"refused"}else{"complete"},"error":error}));}
@@ -2614,6 +2639,27 @@ impl PlayApp {
         Ok((plan,serde_json::json!({"token":token,"body":body,"scope":"Preview only; source behavior and original hardware hook remain unverified"})))
     }
 
+    fn prepare_cheat_preset(&self,name:&str)->Result<(crate::debug_cheat_armed::ArmedSet,serde_json::Value),String>{
+        if !self.cheat_armed.is_empty(){return Err("Disarm all cheats before preparing a preset".into());}
+        let config=input_config::config_root().ok_or("No selected configuration root")?;
+        let preset=crate::debug_cheat_preset::load(&config,name)?;
+        let snapshot=self.current_cheat_snapshot()?;
+        if preset.catalog_sha256!=snapshot.source_sha256 || preset.rom_sha256!=snapshot.rom_sha256{return Err("Cheat preset catalog or ROM differs from the selected snapshot".into());}
+        let mut armed=crate::debug_cheat_armed::ArmedSet::default();let mut previews=Vec::with_capacity(preset.members.len());
+        for member in &preset.members {
+            let (plan,preview)=self.prepare_cheat_once(&member.id,member.provenance_index,&member.master_id,&snapshot.generation)?;
+            let details=&preview["body"]["details"];
+            if details["entry_lines_sha256"].as_str()!=Some(member.entry_lines_sha256.as_str()) || details["master_lines_sha256"].as_str()!=Some(member.master_lines_sha256.as_str()) {return Err("Cheat preset source lines changed".into());}
+            let identity=serde_json::json!({"provenance_index":member.provenance_index,"master_id":member.master_id,"generation":snapshot.generation,"source_sha256":details["source_sha256"],"rom_sha256":details["rom_sha256"],"entry_lines_sha256":details["entry_lines_sha256"],"master_lines_sha256":details["master_lines_sha256"]});
+            armed.arm(&member.id,plan,identity)?;previews.push(preview["body"].clone());
+        }
+        let body=serde_json::json!({"preset":preset,"members":previews});
+        let bytes=serde_json::to_vec(&body).map_err(|e|e.to_string())?;
+        if bytes.len()>64*1024{return Err("Cheat preset preview exceeds 64 KiB; use a smaller group".into());}
+        let token=gba_core::ffta_rom::digest(&bytes);
+        Ok((armed,serde_json::json!({"token":token,"body":body,"scope":"Preset preview only; no guest writes or device-hook verification"})))
+    }
+
     fn open_cheat_catalog(&mut self) {
         let rom=gba_core::ffta_rom::digest(&self.machine.bus.rom);
         let result=(||->Result<Option<crate::debug_cheats::Catalog>,String>{
@@ -2629,11 +2675,43 @@ impl PlayApp {
             Ok(Some(catalog))
         })();
         match result {
-            Ok(Some(catalog))=>{let mut entries=catalog.menu_entries(Some(&rom),self.av.menu_language);for entry in &mut entries{if self.cheat_armed.contains(&entry.id,&catalog.source_sha256){entry.status=self.av.menu_language.text("Cheat armed").into();}}let message=self.menu_text("{count} entries · {active} armed · compatibility unverified",&[("count",entries.len().to_string()),("active",self.cheat_armed.len().to_string())]);self.menu.open_cheats(entries,message);},
+            Ok(Some(catalog))=>{let mut entries=catalog.menu_entries(Some(&rom),self.av.menu_language);for entry in &mut entries{if self.cheat_armed.contains(&entry.id,&catalog.source_sha256){entry.status=self.av.menu_language.text("Cheat armed").into();if let Some(filter)=entry.cheat_filter.as_mut(){filter.armed=true;}}}let message=self.menu_text("{count} entries · {active} armed · compatibility unverified",&[("count",entries.len().to_string()),("active",self.cheat_armed.len().to_string())]);self.menu.open_cheats(entries,message);},
             Ok(None)=>{let message=self.menu_text("No catalog. Choose Import catalog.",&[]);self.menu.open_cheats(Vec::new(),message);},
             Err(error)=>{let message=self.menu_text("Catalog unavailable: {error}. Import a valid source.",&[("error",error)]);self.menu.open_cheats(Vec::new(),message);},
         }
         self.menu_dirty=true;
+    }
+
+    fn open_cheat_management(&mut self)->Result<(),String>{
+        let id=self.menu.cheat_highlight().ok_or("Select a cheat first")?.to_owned();
+        if self.cheat_refresh.is_some(){return Err("Wait for the catalog refresh to finish".into());}
+        if self.current_cheat_snapshot().is_err(){
+            let rom=self.content_picker.rom_context().ok_or("No ROM context")?.to_owned();
+            let reference=self.content_picker.reference(menu::ContentSlot::CheatCatalog).cloned().ok_or("Select a cheat catalog first")?;
+            let path=reference.recheck(menu::ContentSlot::CheatCatalog,&rom)?;let catalog=crate::debug_cheats::Catalog::load(&path)?;
+            if reference.entry.sha256.as_deref()!=Some(&catalog.source_sha256){return Err("Catalog changed; select it again".into());}
+            self.cheat_snapshot=Some(crate::debug_cheats::Snapshot::new(catalog,reference.entry.id,rom)?);
+        }
+        let sources=self.current_cheat_snapshot()?.menu_sources(&id)?;self.menu.open_cheat_management(sources);self.menu_dirty=true;Ok(())
+    }
+
+    fn cheat_menu_request(&mut self,request:menu::CheatRequest)->Result<(),String>{
+        use menu::CheatRequest as R;use crate::debug_control::Action as A;
+        let id=self.menu.cheat_highlight().map(str::to_owned);
+        let action=match request{
+            R::Disarm=>A::CheatDisarm{id:Some(id.ok_or("Select a cheat first")?)},R::DisarmAll=>A::CheatDisarm{id:None},
+            R::Prepare|R::ApplyOnce|R::Arm=>{
+                let id=id.ok_or("Select a cheat first")?;
+                let source=self.menu.cheat_selected_source().cloned().ok_or("Select a source explicitly first")?;
+                let generation=self.current_cheat_snapshot()?.generation.clone();
+                if request==R::Prepare{A::CheatPrepare{id,provenance:source.index,master:source.master,generation}}
+                else{if !self.menu.cheat_preview_reviewed(){return Err("Prepare and review this source first".into());}let preview=self.cheat_preview.as_ref().and_then(|v|v["token"].as_str()).ok_or("Prepare and review this source first")?.to_owned();
+                    if request==R::Arm{A::CheatArm{id,provenance:source.index,master:source.master,generation,preview}}else{A::CheatApply{id,provenance:source.index,master:source.master,generation,preview}}}
+            }
+        };
+        self.debug_action(&action)?;
+        let preview=if request==R::Prepare{let value=self.cheat_preview.as_ref().ok_or("Preview unavailable")?;let details=&value["body"]["details"];Some(format!("{}\n{}\n{}\n{}\n{}\n{}",self.av.menu_language.text("Operations"),serde_json::to_string_pretty(&details["plan"]["operations"]).map_err(|e|e.to_string())?,self.av.menu_language.text("Potential reads and writes"),serde_json::to_string_pretty(&details["footprint"]).map_err(|e|e.to_string())?,self.av.menu_language.text("Source and verification"),serde_json::to_string_pretty(details).map_err(|e|e.to_string())?))}else{None};
+        self.menu.cheat_management_feedback(match request{R::Prepare=>"Review the plan, then return to choose an action",R::ApplyOnce=>"Applied once",R::Arm=>"Armed for future frames",R::Disarm|R::DisarmAll=>"Disarmed; earlier writes remain"}.into(),preview);self.menu_dirty=true;Ok(())
     }
 
     fn open_debug_catalog(&mut self, choose: bool) {
@@ -4096,6 +4174,8 @@ impl PlayApp {
                     menu::MenuAction::UndoState => self.undo_state_operation(),
                     menu::MenuAction::OpenDebugCatalog => self.open_debug_catalog(false),
                     menu::MenuAction::OpenCheatCatalog | menu::MenuAction::CheatReload => self.open_cheat_catalog(),
+                    menu::MenuAction::CheatManage => {if let Err(error)=self.open_cheat_management(){self.menu.cheat_management_feedback(error,None);}},
+                    menu::MenuAction::CheatRequest(request) => {if let Err(error)=self.cheat_menu_request(request){self.menu.cheat_management_feedback(error,None);self.menu_dirty=true;}},
                     menu::MenuAction::CheatChoose => self.choose_tool_input(menu::ContentSlot::CheatCatalog,self.menu_text("Select the catalog, return and press Reload. No code is executed.",&[])),
                     menu::MenuAction::ChooseDebugCatalog => self.open_debug_catalog(true),
                     menu::MenuAction::CatalogSelection(index) => self.catalog_preview(index),

@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "improve-rom-inventory-normal-script-pose-readability",
+  "title": "Improve normal script pose inventory readability",
+  "kind": "docs",
+  "platforms": [
+    "Desktop development documentation"
+  ],
+  "changes": [
+    "Separate merged words, values and counts in normal script-special pose source, runtime and ordinary-use summaries, retaining validation limits."
+  ],
+  "validation": [
+    "Compared the inventory against its tracked pre-edit version for identical digit runs, headings, Markdown link targets and inline code spans. Confirmed the remainder from the alternate pose branch onward is unchanged."
+  ],
+  "limitations": [
+    "Inventory review remains partial from the alternate pose branch onward; historical runtime results were not reproduced, and the wider English-first audit remains open."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_INVENTORY.md"
+  ],
+  "references": [
+    "docs/rom_data_unit_obj.md"
+  ]
+}

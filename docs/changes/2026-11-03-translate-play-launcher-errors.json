@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "translate-play-launcher-errors",
+  "title": "Translate desktop launcher errors",
+  "kind": "changed",
+  "platforms": [
+    "Windows and Linux desktop launcher"
+  ],
+  "changes": [
+    "Translate missing-executable, process-launch and unsuccessful-exit messages into English for the default dialog and play-error.log, preserving process handling and captured output."
+  ],
+  "validation": [
+    "rustfmt parsed the launcher source; inspected the diff to confirm only three diagnostic strings changed. Attempted cargo check --offline --locked -p ffta-play --target x86_64-pc-windows-gnu; the build script failed with OS error 2 while compiling the Windows icon resource."
+  ],
+  "limitations": [
+    "Windows compilation and graphical error dialogs remain unverified because the icon resource build step failed in this environment; no ROM was used."
+  ],
+  "files": [
+    "crates/ffta-play/src/main.rs"
+  ],
+  "references": [
+    "docs/portable.md"
+  ]
+}

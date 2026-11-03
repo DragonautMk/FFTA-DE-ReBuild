@@ -18,8 +18,8 @@ You need **Python 3.11+**, the complete public `scripts/` directory, and Git whe
 From the portable/project root, select folders you own:
 
 ```powershell
-python3 scripts/debug_artifacts.py preview --session 'Data/debug-sessions/caso uno' --session 'Data/debug-sessions/caso due' --keep 'Data/debug-sessions/caso uno' --out 'target/artefatti-preview-1'
-python3 scripts/debug_artifacts.py apply 'target/artefatti-preview-1/plan.json' --receipt 'target/artefatti-ricevuta-1.json'
+python3 scripts/debug_artifacts.py preview --session 'Data/debug-sessions/case one' --session 'Data/debug-sessions/case two' --keep 'Data/debug-sessions/case one' --out 'target/artifacts-preview-1'
+python3 scripts/debug_artifacts.py apply 'target/artifacts-preview-1/plan.json' --receipt 'target/artifacts-receipt-1.json'
 ```
 
 `--sessions-root FOLDER` lists immediate children without searching the entire project. `--session` and `--unit target/rom-data-NAME` may be repeated; `--unit` declares that unit's checks complete and reuses the old helper's `interrupted` / `moved resources` selection. The accepted dataset, results, originals and evidence are retained. The new manager does not retire unit executables; the old explicit option remains separate.
@@ -27,13 +27,13 @@ python3 scripts/debug_artifacts.py apply 'target/artefatti-preview-1/plan.json' 
 To always obtain the command log, even when starting from another directory:
 
 ```powershell
-.\scripts\windows\debug_artifacts.ps1 -ToolArguments @('preview', '--session', 'Data/debug-sessions/caso uno', '--keep', 'Data/debug-sessions/caso uno', '--out', 'target/artefatti-preview-2')
+.\scripts\windows\debug_artifacts.ps1 -ToolArguments @('preview', '--session', 'Data/debug-sessions/case one', '--keep', 'Data/debug-sessions/case one', '--out', 'target/artifacts-preview-2')
 ```
 
 Or on Linux:
 
 ```sh
-bash scripts/linux/debug_artifacts.sh preview --session 'Data/debug-sessions/caso uno' --out 'target/artefatti-preview-3'
+bash scripts/linux/debug_artifacts.sh preview --session 'Data/debug-sessions/case one' --out 'target/artifacts-preview-3'
 ```
 
 Launchers resolve the root from their location and identify the file in `target/build-logs/`. Exit **0** means the command succeeded, **1** an error or changed plan; preview can succeed with protected contexts and zero candidates, so read each row's status. No command overwrites an existing preview folder or receipt. After regeneration, the [homepage](report_home.md) indexes local previews.
@@ -44,8 +44,8 @@ The launcher uses `ffta-debug-tools:local`, derived from the existing coverage i
 
 ```sh
 docker build -f Dockerfile.debug-tools -t ffta-debug-tools:local .
-bash scripts/linux/debug_artifacts.sh --docker preview --session 'Data/debug-sessions/caso uno' --out 'target/artefatti-docker-1'
-bash scripts/linux/debug_artifacts.sh --docker apply 'target/artefatti-docker-1/plan.json' --receipt 'target/ricevuta-docker-1.json'
+bash scripts/linux/debug_artifacts.sh --docker preview --session 'Data/debug-sessions/case one' --out 'target/artifacts-docker-1'
+bash scripts/linux/debug_artifacts.sh --docker apply 'target/artifacts-docker-1/plan.json' --receipt 'target/docker-receipt-1.json'
 ```
 
 On PowerShell use `-Docker -ToolArguments @(...)`. Host Python and Git are not required for this path. Docker Desktop/daemon and the coverage image are prerequisites. Preview and apply must use the same launcher: Docker paths are `/project/...`. Generate a new preview after moving the folder or updating the tool. Retained plans describe file locations and identities at selection time.

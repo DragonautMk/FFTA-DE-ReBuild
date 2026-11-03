@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "review-menu-input-core-english",
+  "title": "Review menu and input configuration text",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Review fifteen menu and input-configuration source files for English default text, comments and inline test prose; record each reviewed hash in the English-first audit."
+  ],
+  "validation": [
+    "Read each complete file and confirmed authored comments and default messages are in English; verified the reviewed files had no uncommitted changes before hashing."
+  ],
+  "limitations": [
+    "Separate test modules, dynamic/imported values and other menu and input sources remain outside this review; no runtime or build tests were required."
+  ],
+  "files": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": [
+    "crates/menu/src/save_backups.rs",
+    "crates/menu/src/fps.rs",
+    "crates/menu/src/i18n.rs",
+    "crates/menu/src/save_states.rs",
+    "crates/menu/src/game_saves.rs",
+    "crates/menu/src/tool_inputs.rs",
+    "crates/menu/src/controls.rs",
+    "crates/menu/src/debug_unlock.rs",
+    "crates/menu/src/shortcuts.rs",
+    "crates/menu/src/selection.rs",
+    "crates/menu/src/interaction.rs",
+    "crates/menu/src/diagnostics.rs",
+    "crates/input-config/src/storage.rs",
+    "crates/input-config/src/fast_forward.rs",
+    "crates/input-config/src/language.rs"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "improve-rom-inventory-coordinate-auxiliary-readability",
+  "title": "Improve coordinate and auxiliary script inventory readability",
+  "kind": "docs",
+  "platforms": [
+    "Desktop development documentation"
+  ],
+  "changes": [
+    "Separate merged words, addresses and counts in coordinate path and auxiliary script source, runtime and scene summaries, retaining recorded validation limits."
+  ],
+  "validation": [
+    "Compared the inventory against its tracked pre-edit version for identical digit runs, headings, Markdown link targets and inline code spans. Confirmed the remainder from the conditional pose model onward is unchanged."
+  ],
+  "limitations": [
+    "Inventory review remains partial from the conditional pose model onward; historical runtime results were not reproduced, and the wider English-first audit remains open."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_INVENTORY.md"
+  ],
+  "references": [
+    "docs/rom_data_scripts.md"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "review-core-audio-backup-english",
+  "title": "Review core audio and backup sources in English",
+  "kind": "docs",
+  "platforms": [
+    "Desktop and AndroidPort"
+  ],
+  "changes": [
+    "Review three Android audio and backup modules and their desktop counterparts for English and record their exact revisions."
+  ],
+  "validation": [
+    "Read all Android versions and compared all normalized textual differences with desktop versions; verified six SHA-256 hashes."
+  ],
+  "limitations": [
+    "Language review only; no builds, runtime checks, saves or ROM data were used. Other source and documentation audits remain open."
+  ],
+  "files": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": [
+    "AndroidPort/crates/gba-core/src/apu.rs",
+    "AndroidPort/crates/gba-core/src/backup.rs",
+    "AndroidPort/crates/gba-core/src/shadow.rs",
+    "crates/gba-core/src/apu.rs",
+    "crates/gba-core/src/backup.rs",
+    "crates/gba-core/src/shadow.rs"
+  ]
+}

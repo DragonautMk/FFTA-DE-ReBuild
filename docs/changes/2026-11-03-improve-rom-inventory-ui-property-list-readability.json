@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "improve-rom-inventory-ui-property-list-readability",
+  "title": "Improve UI property list inventory readability",
+  "kind": "docs",
+  "platforms": [
+    "Desktop development documentation"
+  ],
+  "changes": [
+    "Separate counts and byte units in property-selected UI list source, integration and CLI summaries while preserving validation limits."
+  ],
+  "validation": [
+    "Compared the inventory with its immediate preimage: digit runs, headings, Markdown links and inline code match; text outside the selected summaries is unchanged."
+  ],
+  "limitations": [
+    "Inventory review remains partial from the FFFF numeric reader model onward; historical runtime results were not reproduced and the wider English-first audit remains open."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_INVENTORY.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

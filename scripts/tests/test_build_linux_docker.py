@@ -64,7 +64,7 @@ sys.exit(int(os.environ.get('DOCKER_TEST_STATUS', '0')))
         self.assertIn('builder stdout', self.log())
         self.assertIn('builder stderr', self.log())
         self.assertNotIn('Portable archive', result.stdout)
-        self.assertNotIn('Premi Invio', result.stdout + result.stderr)
+        self.assertNotIn('Press Enter', result.stdout + result.stderr)
 
     def test_csv_unsafe_output_is_rejected_before_docker(self):
         for character in [',', '"', '\n', '\r']:
@@ -104,7 +104,7 @@ sys.exit(int(os.environ.get('DOCKER_TEST_STATUS', '0')))
             slave = None
             output = b''
             deadline = time.monotonic() + 10
-            while b'Premi Invio' not in output:
+            while b'Press Enter' not in output:
                 remaining = deadline - time.monotonic()
                 self.assertGreater(remaining, 0, output.decode(errors='replace'))
                 ready, _, _ = select.select([master], [], [], remaining)

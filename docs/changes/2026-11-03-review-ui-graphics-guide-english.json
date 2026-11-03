@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "review-ui-graphics-guide-english",
+  "title": "Review UI graphics resource guide in English",
+  "kind": "docs",
+  "platforms": [
+    "Desktop development documentation"
+  ],
+  "changes": [
+    "Review the entire UI graphics resource guide for English and register its exact revision in the audit."
+  ],
+  "validation": [
+    "Full-file manual language review; original identifiers, historical evidence and platform limitations retained; file SHA-256 recorded."
+  ],
+  "limitations": [
+    "No builds, runtime tests, replays or ROM data were run; remaining documentation and source audits are open."
+  ],
+  "files": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": [
+    "docs/rom_data_ui_graphics.md"
+  ]
+}

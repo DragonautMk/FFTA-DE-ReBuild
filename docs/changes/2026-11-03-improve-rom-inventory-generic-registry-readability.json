@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "improve-rom-inventory-generic-registry-readability",
+  "title": "Improve generic registry inventory readability",
+  "kind": "docs",
+  "platforms": [
+    "Desktop development documentation"
+  ],
+  "changes": [
+    "Separate counts and byte units in generic registry, redirect and FFFF reader summaries while preserving the original validation boundaries."
+  ],
+  "validation": [
+    "Compared the inventory with its immediate preimage: digit runs, headings, Markdown link targets and inline code match; text outside the selected summaries is unchanged."
+  ],
+  "limitations": [
+    "The inventory language review remains partial from the actor property reader onward; historical runtime results were not reproduced and the wider English-first audit remains open."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_INVENTORY.md"
+  ],
+  "references": [
+    "docs/rom_data_unit_obj.md"
+  ]
+}

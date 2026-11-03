@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "translate-debug-guide-example-paths",
+  "title": "Translate illustrative debug guide paths",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Replace Italian user-supplied example path and case names with English across debug, capture, artifact, probe, session, diagnostics, catalog, replay and ROM coverage guides."
+  ],
+  "validation": [
+    "Compared CLI flags, links, legacy anchors and code fences with the original guides; shell examples passed bash -n and git diff --check passed."
+  ],
+  "limitations": [
+    "Only illustrative placeholders changed; existing paths, persisted tokens, case IDs, imported data and historical evidence remain unchanged. No example command was executed."
+  ],
+  "files": [
+    "docs/debug_tools.md",
+    "docs/debug_captures.md",
+    "docs/debug_artifacts.md",
+    "docs/debug_probes.md",
+    "docs/debug_control.md",
+    "docs/development/ROM_COVERAGE.md",
+    "docs/debug_replays.md",
+    "docs/debug_sessions.md",
+    "docs/debug_catalog.md",
+    "docs/debug_diagnostics.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": []
+}

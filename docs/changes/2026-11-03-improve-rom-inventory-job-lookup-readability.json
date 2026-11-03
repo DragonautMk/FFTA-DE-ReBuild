@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "improve-rom-inventory-job-lookup-readability",
+  "title": "Clarify ROM inventory job lookup summaries",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Rewrite six compact job lookup source, model, runtime, CLI, ordinary-scene and follow-up reader summaries as readable English without changing their acceptance boundaries."
+  ],
+  "validation": [
+    "Compared task identifiers, links and numerical facts with the original summaries; reviewed the stated scopes and limitations."
+  ],
+  "limitations": [
+    "Documentation-only edit; no ROM, build, runtime or platform validation was run. The remaining inventory review is partial."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": []
+}

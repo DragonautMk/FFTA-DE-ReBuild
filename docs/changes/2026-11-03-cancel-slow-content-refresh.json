@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "cancel-slow-content-refresh",
+  "title": "Verify cancellation during a slow content refresh",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Record live DBG2-15 status, listing and targeted cancellation while a bounded content scan is in progress."
+  ],
+  "validation": [
+    "In a copied Wine/Xvfb session, a refresh over 2048 inert files remained pending while the previous generation was listed. A wrong cancellation ID was refused; exact-ID cancellation returned cancelled, cleared pending status and left the prior index unchanged after the worker finished. Parent state, frame and clock, original inputs and session pins stayed unchanged; session and display closed."
+  ],
+  "limitations": [
+    "This uses one synthetic bounded scan under Wine/interpreter. Cancellation is cooperative and discards the result after the scanner returns; native Windows, physical input and full operation parity remain unverified."
+  ],
+  "files": [
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

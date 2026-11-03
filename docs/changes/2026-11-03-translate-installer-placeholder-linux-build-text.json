@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "translate-installer-placeholder-linux-build-text",
+  "title": "Translate installer placeholder and Linux build diagnostics",
+  "kind": "changed",
+  "platforms": [
+    "Desktop installer and Linux build tooling"
+  ],
+  "changes": [
+    "Translate Spanish comments, progress and error messages in the unconnected installer translator placeholder and the Italian Linux builder terminal prompt into English. Preserve the .lex representation and build behavior."
+  ],
+  "validation": [
+    "Five Linux builder unit tests pass, including interactive failure and noninteractive exit behavior; bash -n passes and rustfmt parses the translator module. Checked that no installer module references the translator placeholder."
+  ],
+  "limitations": [
+    "The translator remains an unconnected placeholder and was not compiled or executed as part of the installer; no Docker build or native GUI run was performed."
+  ],
+  "files": [
+    "crates/installer/src/translator.rs",
+    "scripts/linux/build_linux_docker.sh",
+    "scripts/tests/test_build_linux_docker.py"
+  ],
+  "references": [
+    "docs/docker.md"
+  ]
+}

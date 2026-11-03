@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "check-eur-jp-cheat-party-display",
+  "title": "Record bounded EUR JP cheat display observation",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Record the selected CH-0336 Party-screen observation without promoting it to a verified resource effect."
+  ],
+  "validation": [
+    "In a fresh isolated EUR world-map copy, Party showed Marsh at JP 4. One armed interpreter frame recorded 24 writes; after disarm and bounded next/previous inputs, with no intermediate selection capture, the display still showed JP 4. Screenshots were inspected, the seed restored exactly, the session and display closed, and original inputs and session pins stayed unchanged."
+  ],
+  "limitations": [
+    "This is a negative observation for one unit, source and scene; it does not establish behavior for other units, scenes or hardware. A visible resource modifier remains required for DBG2-21.",
+    "The intermediate unit selection was not captured; a redraw cannot be asserted."
+  ],
+  "files": [
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

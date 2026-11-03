@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "reconcile-coverage-language-snapshot",
+  "title": "Reconcile coverage snapshot language audit",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Reconcile the English-language audit hashes for the saved ROM coverage JSON and HTML after a later generated snapshot replaced the reviewed version."
+  ],
+  "validation": [
+    "Compared string-value multisets with reviewed commit 735b1bc: new values are snapshot metadata. Confirmed HTML outside its embedded report is identical and its embedded JSON equals the saved JSON."
+  ],
+  "limitations": [
+    "Only language and saved artifact consistency were reviewed; no ROM, dataset, generator, runtime or source analysis was run. The earlier handleless character diff was not repeated."
+  ],
+  "files": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": [
+    "docs/development/rom-coverage/coverage.json",
+    "docs/development/rom-coverage/index.html"
+  ]
+}

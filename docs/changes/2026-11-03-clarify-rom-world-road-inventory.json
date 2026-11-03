@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "clarify-rom-world-road-inventory",
+  "title": "Clarify ROM world-road inventory",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Rewrite six compressed summaries of ordinary world-node use and world-road source, model, runtime, CLI and ordinary validation, preserving evidence scope and limits."
+  ],
+  "validation": [
+    "Compared numeric tokens, links and task IDs with prior summaries, confirmed outside text matches the preimage and checked details against linked analyses; git diff --check passed."
+  ],
+  "limitations": [
+    "Documentation review only; no ROM exploration, build, runtime or platform validation was performed. The broader English-first audit remains open."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": []
+}

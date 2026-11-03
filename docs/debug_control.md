@@ -29,17 +29,17 @@ Create a new session with that runtime without replacing the executable in an
 already authenticated session. It can open directly in pause:
 
 ```powershell
-.\recomp.exe debug-session open 'target\caso-debug' --paused
+.\recomp.exe debug-session open 'target\debug-case' --paused
 ```
 
 In another terminal:
 
 ```powershell
-.\recomp.exe debug-control status 'target\caso-debug'
-.\recomp.exe debug-control pause 'target\caso-debug'
-.\recomp.exe debug-control step 'target\caso-debug' 3
-.\recomp.exe debug-control step 'target\caso-debug' 1 --keys 3fe
-.\recomp.exe debug-control resume 'target\caso-debug'
+.\recomp.exe debug-control status 'target\debug-case'
+.\recomp.exe debug-control pause 'target\debug-case'
+.\recomp.exe debug-control step 'target\debug-case' 3
+.\recomp.exe debug-control step 'target\debug-case' 1 --keys 3fe
+.\recomp.exe debug-control resume 'target\debug-case'
 ```
 
 `step N` accepts **1–600 frames**. `--keys HEX` accepts **000–3ff**, active-low:
@@ -88,6 +88,12 @@ An older server without this capability is refused before sending. A Wine/Xvfb
 check scanned a synthetic session and selected a catalog from one-item pages,
 without menu navigation or game advancement.
 
+A separate Wine/Xvfb check scanned 2,048 inert files in an isolated copy. While
+refresh was pending, the prior generation remained listable; cancellation of a
+wrong request ID was refused, and cancellation of the exact ID returned
+`cancelled` with no pending request. The old index remained unchanged after the
+worker finished. Parent state/frame/clock and protected inputs stayed exact.
+
 The cheat catalog can be browsed through the same local channel:
 
 ~~~text
@@ -117,6 +123,18 @@ SESSION`, `cheat-list SESSION [--offset N --limit N --generation SHA]` and
 `cheat-show SESSION CH-ID [--offset N --generation SHA]`. A server without
 `cheat-catalog-v1` is refused before sending. Refresh assesses bounded
 source-linked plans; these catalog actions do not enable or apply a code.
+Use `cheats capabilities CH-ID [--offset N --generation SHA]` (or
+`debug-control cheat-capabilities SESSION CH-ID ...`) to read the same bounded
+source-capability report as the CLI index. Concatenate its UTF-8 `json_part`
+pieces using `next_offset_bytes` and verify `capability_sha256`; the immutable
+snapshot and its generation are reported with every part. The read-only query
+requires `cheat-capabilities-v1` and does not verify the actual ROM checksum,
+device or gameplay. Servers lacking this capability are refused before sending.
+Frozen Windows GNU builds and focused Wine tests passed, including multi-part
+UTF-8 reconstruction, invalid boundaries and old-server refusal. An isolated
+synthetic Wine/Xvfb session returned the same report via console, local control
+and CLI, with matching hash; a stale generation was refused and the paused
+guest, source and protected inputs remained unchanged.
 
 The explicit actions `cheats prepare CH-ID INDEX MASTER GENERATION` and
 `cheats apply-once CH-ID INDEX MASTER GENERATION TOKEN` use the same local control
@@ -129,8 +147,17 @@ regions and guards on recording and new saves, are in
 `cheats arm CH-ID INDEX MASTER GENERATION TOKEN` and `cheats disarm CH-ID|all`
 use the separate `cheat-maintain-v1` capability. Arm consumes a current preview;
 disarm stops subsequent frame applications without restoring earlier memory.
+`cheats preset-save NAME`, `cheats preset-prepare NAME` and `cheats preset-arm
+NAME TOKEN` use `cheat-presets-v1`. The first saves the current armed set as a
+new inert named file, the second returns a complete group preview, and the last
+rechecks and arms all members atomically. Direct control uses the equivalent
+`cheat-preset-*` actions. See [preset limits and workflow](cheats.md#manual-one-shot-in-an-isolated-session--dbg2-19-in-progress).
 The console completes these command names and `all`, and presents the relevant
 English or Italian argument hint without guessing a source, master or token.
+A frozen Windows GNU build and four focused Wine completion tests passed. In a
+separate paused Wine/Xvfb console, keyboard completion displayed `cheats arm`
+and `cheats disarm all` with their hints without submitting either draft or
+changing the guest. The session pins and protected inputs stayed unchanged.
 
 The selected replay profile can start with `replay run`, or `replay run audit`,
 `replay run capture` or `replay run compare`. Direct transport uses
@@ -152,6 +179,38 @@ with unchanged state. A second synthetic session sent `replay run` from the
 Command console window and copied terminal JSON identical to the channel response;
 clipboard and display were isolated for the check.
 
+A separate copied EUR DS-20 replay confirmed exact-request cancellation while
+the real interpreter worker was executing: progress reported 10 of 102 frames
+before cancellation, and the same worker reported `interrupted` at frame 21
+with the request outcome `cancelled`. The paused parent state/frame/clock,
+source profile and protected inputs remained unchanged. In a second copied
+DS-20 run, progress reached 9/102 frames before a 1,400 ms deadline. The client
+reported an unacknowledged timeout; the later server result for the same request
+confirmed `timeout`, no pending request, and the same worker interrupted at
+13/102. The paused parent and protected inputs remained unchanged. These checks
+do not establish native Windows behavior.
+
+In another isolated EUR DS-20 session, the command API refreshed discovery,
+selected the profile by ID and completed the 102-frame replay twice. Both runs
+reached the same state hash and clock; retrying the first request identity
+returned its exact original JSON and worker run. The second execution was an
+explicit new request. The paused parent and protected files stayed unchanged.
+
+At a Windows client size of 480×360 under Wine/Xvfb, the console showed a
+replay's full test request ID and parameters while pending, then its result,
+frame/clock and copy hint. The session label was abbreviated. A profile using
+the previously corrected replay worker completed 102/102 frames, and the
+paused parent and protected inputs stayed unchanged. This is one narrow view,
+not proof that every long label or parameter fits.
+
+The first narrow replay used an older pinned worker and stopped at frame 45 with
+`Access denied`. The profile with the corrected worker differs only in runtime
+hash and passed under the same kind of polling. That comparison is consistent
+with the earlier progress-publication sharing fix, but the error did not name
+the denied OS operation, so the precise cause remains unconfirmed. An initial
+GUI helper also waited on the wrong response channel and did not attest a normal
+parent close; the corrected sessions closed normally.
+
 <a id="richieste-cancellazione-e-scadenza--dbg-20"></a>
 
 ## Requests, cancellation and deadlines — DBG-20
@@ -170,10 +229,10 @@ runtime; do not replace already authenticated executables.
 To query a long command and cancel only the one observed:
 
 ~~~powershell
-.\recomp.exe debug-control step 'target\caso-debug' 600 --timeout-ms 120000
+.\recomp.exe debug-control step 'target\debug-case' 600 --timeout-ms 120000
 # From another terminal, read status.pending_control.request_id:
-.\recomp.exe debug-control status 'target\caso-debug'
-.\recomp.exe debug-control cancel 'target\caso-debug' --request 'EXACT_ID'
+.\recomp.exe debug-control status 'target\debug-case'
+.\recomp.exe debug-control cancel 'target\debug-case' --request 'EXACT_ID'
 ~~~
 
 **cancel** stops a CLI step/search budget at the next frontend return and leaves
@@ -220,7 +279,7 @@ the original job ID.
 The current runtime also offers explicit retry with the same identity:
 
 ~~~powershell
-.\recomp.exe debug-control retry 'target\caso-debug' --run RUN --request ID --deadline-unix-ms DEADLINE --timeout-ms 5000 -- step 1 --keys 0x3ff
+.\recomp.exe debug-control retry 'target\debug-case' --run RUN --request ID --deadline-unix-ms DEADLINE --timeout-ms 5000 -- step 1 --keys 0x3ff
 ~~~
 
 `RUN`, `ID` and `DEADLINE` come from the original request; after `--` repeat
@@ -354,6 +413,12 @@ use [DBG-12: graphics inspector](debug_graphics.md), from the menu or with
 `ui-report SESSION` saves focus, font metrics and observed sequence in an offline
 report. `status.host_menu` also exposes the dropdown and actually active page.
 See [DBG-13: use and limits](debug_ui.md).
+
+In isolated Windows GNU/Wine sessions, direct control, the menu and the command
+console each started a UI trace, refused a second start while it was active and
+saved a report. The CLI and console returned the same refusal text; the menu
+displayed it. Guest state/frame/clock and protected inputs stayed unchanged.
+The reports contain different UI events, so they were not compared byte for byte.
 
 <a id="cattura-audio"></a>
 

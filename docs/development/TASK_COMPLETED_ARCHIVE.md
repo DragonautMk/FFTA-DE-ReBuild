@@ -19274,3 +19274,483 @@ LOCAL-ARTIFACT-SWEEP-2026-10-31 — CLOSED. Latest request: clean residual proje
 - Verified criteria: removed six exact Docker build cache IDs from the completed v1.0.0 release; Docker reported 4.3207 GB. All three preserved local packages passed SHA-256 checks after cleanup.
 - Evidence: dist/first-release-v1.0.0-preparation/cleanup-receipt.json and build-cache-preview.txt; published release at https://github.com/DragonautMk/FFTARecomp/releases/tag/v1.0.0.
 - Limits: exact SDK parent-layer request reclaimed zero bytes; Wine prefixes, active and unverified test artifacts, private data and other projects were retained. Future builds will recreate deleted caches.
+
+### DBG2-14-MAINTAINED-CHEAT-COMPLETION
+
+- Outcome: completed maintained-cheat console hint and completion increment; parent remains integrated_unverified.
+- Verified: frozen Windows GNU builds, four Wine completion tests including English/Italian, and visually reviewed English arm/disarm drafts in a paused Wine/Xvfb console without submission; guest, session pins and originals unchanged.
+- Evidence: `docs/changes/2026-11-03-complete-maintained-cheat-console-hints.json`, `target/debug-tools-v2-maintained-completion/gui-result.json` and screenshots.
+- Limits: real IME/layout, native Windows and physical input unverified; cleanup helper refused non-ROM-data path, no files removed.
+
+### ENGLISH-FIRST-CAMPAIGN-EXAMPLES
+
+- Outcome: completed
+- Result: translated illustrative paths, reasons and placeholders in the maintained debug campaign guide; compatibility anchors, IDs and command flags retained.
+- Evidence: `docs/changes/2026-11-03-translate-debug-campaign-example-placeholders.json`; JSON and profile references parsed, anchors/links/flags compared, run-case help checked. No runtime dispatch.
+
+### ENGLISH-FIRST-INSTALLER-BUILD-TEXT
+
+- Outcome: completed
+- Result: translated the unconnected installer translator placeholder and Linux builder terminal prompt; `.lex` format and build behavior preserved.
+- Evidence: `docs/changes/2026-11-03-translate-installer-placeholder-linux-build-text.json`; five Linux builder tests, Bash syntax and Rust parser PASS. Placeholder not compiled or executed; no Docker build.
+
+### DBG2-17-SOURCE-CAPABILITY-CHANNEL
+
+- Outcome: completed bounded source-capability local channel increment; parent remains partial.
+- Verified: frozen Windows GNU builds; Wine 13 cheat (one ignored), 9 command, 4 completion, 31 control and 4 operation tests; multi-part UTF-8 reconstruction and old-server refusal. Synthetic Wine/Xvfb console and local-control report matched CLI and hash; stale generation refused; guest and protected inputs unchanged.
+- Evidence: `docs/changes/2026-11-03-expose-source-capability-local-control.json`, `target/debug-tools-v2-capability-channel/gui-result.json`, tests and closure receipts.
+- Limits: source assumptions do not establish device, actual checksum or gameplay; runtime parity used one part. Cleanup helper refused non-ROM-data unit, no files removed.
+
+### ENGLISH-FIRST-COVERAGE-PROMPT
+
+- Outcome: completed
+- Result: translated Linux ROM coverage failure prompt, preserving terminal wait, exit and logging.
+- Evidence: `docs/changes/2026-11-03-translate-rom-coverage-terminal-prompt.json`; eight mocked launcher tests, Bash syntax and isolated interactive failure PASS. No ROM read or real Docker run.
+
+### ENGLISH-FIRST-ATLAS-ROUTES
+
+- Outcome: completed
+- Result: translated generated Atlas row-route descriptions, retaining operation contract fields and concurrent additions.
+- Evidence: `docs/changes/2026-11-03-translate-atlas-inventory-routes.json`; generator check PASS, non-route fields preserved.
+
+### ENGLISH-FIRST-PLAY-LAUNCHER-ERRORS
+
+- Outcome: completed
+- Result: three desktop launcher error messages translated; process behavior unchanged.
+- Evidence: `docs/changes/2026-11-03-translate-play-launcher-errors.json`; Rust parser PASS. Windows cargo check stopped at icon resource build script with OS error 2; GUI and compilation remain unverified.
+
+### ENGLISH-FIRST-EXPERIMENT-METRICS
+
+- Outcome: completed
+- Result: translated dynamic Wasm and Cranelift test metric labels; fixed historical claims and ROM paths retained.
+- Evidence: `docs/changes/2026-11-03-translate-experimental-metric-labels.json`; Rust parsing, format placeholders and CRLF preservation PASS. Tests not executed; no ROM used.
+
+### ENGLISH-FIRST-EXPERIMENT-METRICS-LINE-ENDINGS
+
+- Outcome: completed
+- Result: normalized both edited experimental Rust files from CRLF to LF after the initial diff check flagged changed lines.
+- Evidence: `docs/changes/2026-11-03-translate-experimental-metric-labels.json`; code and format placeholders unchanged.
+
+### ENGLISH-FIRST-REBRAND-GUIDES-REVIEW
+
+- Outcome: completed
+- Result: reviewed rebrand changes in four previously reviewed root, Android and installer guides; audit hashes updated.
+- Evidence: `docs/changes/2026-11-03-review-rebranded-entry-guides-english.json`; compared changes with exact prior hashed Git versions and verified current files matched HEAD. No build validation claimed.
+
+### ENGLISH-FIRST-REBRAND-TOOLS-REVIEW
+
+- Outcome: completed
+- Result: reviewed rebrand text changes in three AndroidPort files and two package/report tools; audit hashes updated.
+- Evidence: `docs/changes/2026-11-03-review-rebranded-android-tooling-english.json`; compared changes with exact prior hashed Git versions and verified current files matched HEAD. No build or UI validation claimed.
+
+### ENGLISH-FIRST-PERFORMANCE-GUIDE-REVIEW
+
+- Outcome: completed
+- Result: reviewed the full existing English performance workflow; registered its exact SHA-256 without changing benchmark commands or historical evidence.
+- Evidence: `docs/changes/2026-11-03-review-performance-workflow-english.json`; no measurements, builds, replays or ROM access performed.
+
+### ENGLISH-FIRST-UI-GRAPHICS-GUIDE-REVIEW
+
+- Outcome: completed
+- Result: reviewed the full existing English UI graphics resource guide and registered its exact SHA-256; historical evidence and validation limits remain unchanged.
+- Evidence: `docs/changes/2026-11-03-review-ui-graphics-guide-english.json`; no builds, runtime tests, replays or ROM access performed.
+
+### ENGLISH-FIRST-ANALYSIS-TOOLS-REVIEW
+
+- Outcome: completed
+- Result: reviewed eight analysis, comparison, conversion and audit tools; existing Spanish status tokens remain as output compatibility values.
+- Evidence: `docs/changes/2026-11-03-review-analysis-utilities-english.json`; no tools were run on captures, ROMs, saves or private data.
+
+### ENGLISH-FIRST-ANDROID-CORE-REVIEW
+
+- Outcome: completed
+- Result: fully reviewed eight Android core foundation modules; English comments and diagnostics and exact source hashes recorded.
+- Evidence: `docs/changes/2026-11-03-review-android-core-foundation-english.json`; no builds, emulation or ROM access. Other Android modules remain open.
+
+### ENGLISH-FIRST-CROSS-TREE-CORE-REVIEW
+
+- Outcome: completed
+- Result: reviewed four Android core sources and three byte-identical root sources; preserved the legacy diagnostic status token.
+- Evidence: `docs/changes/2026-11-03-review-cross-tree-core-diagnostics-english.json`; all seven source hashes checked, no build, emulation or ROM access.
+
+### ENGLISH-FIRST-DESKTOP-CORE-COMPARISON
+
+- Outcome: completed
+- Result: reviewed nine desktop core modules against hash-verified reviewed Android counterparts; all desktop-specific differences were read.
+- Evidence: `docs/changes/2026-11-03-review-desktop-core-against-android-english.json`; language scope only, no builds or ROM access.
+
+### ENGLISH-FIRST-DEBUG-PLAN-REVIEW
+
+- Outcome: completed
+- Result: reviewed changed English checklist and TSV against their prior reviewed revisions; refreshed both audit hashes.
+- Evidence: `docs/changes/2026-11-03-review-updated-debug-plan-english.json`; 28 generated references match, no runtime or ROM access. Other stale audit hashes remain.
+
+### ENGLISH-FIRST-ROM-TEXT-GUIDE-REVIEW
+
+- Outcome: completed
+- Result: reviewed the full English text, font and keyboard resource guide and recorded its exact hash; identifiers and validation limits retained.
+- Evidence: `docs/changes/2026-11-03-review-rom-text-resources-english.json`; no tests, builds, replay or ROM access.
+
+### ENGLISH-FIRST-ROM-AUDIO-GUIDE-REVIEW
+
+- Outcome: completed
+- Result: reviewed the full English audio resource guide and recorded its exact hash; identifiers and validation limits retained.
+- Evidence: `docs/changes/2026-11-03-review-rom-audio-resources-english.json`; no tests, builds, replay or ROM access.
+
+### ENGLISH-FIRST-NOTICES-CLASSIFICATION
+
+- Outcome: completed
+- Result: classified both identical notice bundles as English project wrapper plus preserved upstream notices; recorded exact hashes without translating license text.
+- Evidence: `docs/changes/2026-11-03-classify-third-party-notices-english.json`; 298 fenced notices, no legal audit or regeneration.
+
+### ENGLISH-FIRST-TOOLS-CI-REVIEW
+
+- Outcome: completed
+- Result: reviewed eight development tools and CI files in English; exact source hashes recorded.
+- Evidence: `docs/changes/2026-11-03-review-tools-ci-english.json`; no sweeps, image analysis, downloads, builds or ROM access.
+
+### ENGLISH-FIRST-CORE-AUDIO-BACKUP-REVIEW
+
+- Outcome: completed
+- Result: reviewed Android audio/backup modules and the desktop differences for English; six exact hashes recorded.
+- Evidence: `docs/changes/2026-11-03-review-core-audio-backup-english.json`; language scope only, no builds, saves or ROM access.
+
+### ENGLISH-FIRST-DEBUG-LAUNCHERS-REVIEW
+
+- Outcome: completed
+- Result: reviewed ten Linux and Windows debug/report launchers and registered exact hashes; messages and instructions are English.
+- Evidence: `docs/changes/2026-11-03-review-debug-report-launchers-english.json`; no launchers, exports, runtime commands or private data executed.
+
+### ENGLISH-FIRST-BUILD-LAUNCHERS-REVIEW
+
+- Outcome: completed
+- Result: reviewed ten Linux/Windows build, extraction, packaging, coverage and controller-test launchers; exact hashes recorded.
+- Evidence: `docs/changes/2026-11-03-review-build-extraction-launchers-english.json`; no builds, downloads, extraction, controller tests or ROM access.
+
+### ENGLISH-FIRST-INSTALLER-HELPERS-REVIEW
+
+- Outcome: completed
+- Result: reviewed eight installer, build and database source files for English and recorded exact hashes.
+- Evidence: `docs/changes/2026-11-03-review-installer-helpers-english.json`; language scope only, no build, UI, installation, database or ROM execution.
+
+### ENGLISH-FIRST-INSTALLER-ENTRY-REVIEW
+
+- Outcome: completed
+- Result: reviewed installer, launcher and placeholder translator source in English, including existing translation diffs; exact hashes recorded.
+- Evidence: `docs/changes/2026-11-03-review-installer-launcher-entry-english.json`; no build, GUI, installation or ROM execution.
+
+### DBG2-20-EXPLICIT-CHEAT-PAGE
+
+- Outcome: completed source/preview/action page increment; parent remains partial.
+- Verified: frozen Windows builds, Wine 17 selector/1 management/4 operation tests; synthetic keyboard source selection, refusal without source/preview, arm/disarm, apply once and disarm-all; simulated XInput management on a prior build with identical management code. Catalog-change case retained global disarm; session pins and protected originals unchanged.
+- Evidence: `docs/changes/2026-11-03-manage-cheats-from-catalog-page.json`, `target/debug-tools-v2-cheat-page-accepted/gui-result.json`, `target/debug-tools-v2-cheat-page-controller/gui-result.json`, `target/debug-tools-v2-cheat-page-unavailable/gui-result.json`.
+- Limits: values/groups/presets, real game effects, native Windows and physical input unverified; disarm does not restore prior bytes. Cleanup helper refused non-ROM-data unit, no files removed.
+
+### ENGLISH-FIRST-UPSTREAM-DECISIONS
+
+- Outcome: completed
+- Verified criteria: Translated the maintained upstream v3.1 plan; original inline code, URLs, task IDs, checklist states and legacy heading anchors preserved. Owner policy and implementation limits retained.
+- Evidence: `docs/changes/2026-11-03-translate-upstream-decision-audit-plan.json`; `docs/development/ENGLISH_FIRST_AUDIT.json`.
+- Limits: Translation only; no new upstream audit, implementation, build or merge.
+
+### ENGLISH-FIRST-UI-JOB-READABILITY
+
+- Outcome: completed
+- Verified criteria: Six inventory summaries rewritten; IDs, links and numerical facts compared to prior text, with scope and evidence limits retained.
+- Evidence: `docs/changes/2026-11-03-improve-rom-inventory-job-lookup-readability.json`.
+- Limits: Documentation only; no ROM, builds or runtime checks; inventory audit remains partial.
+
+### ENGLISH-FIRST-FOCUS-CAPTURE
+
+- Outcome: completed
+- Verified criteria: Tool and content-selector focus choice diagnostics follow English and Italian; targeted offline Linux test and locale catalog check passed, with unchanged selection IDs.
+- Evidence: `docs/changes/2026-11-03-localize-focus-choice-diagnostics.json`.
+- Limits: First build lacked Wayland metadata; first test needed unlocked setup. Passing run used temporary metadata and installed runtime. No Windows or live GUI check.
+
+### ENGLISH-FIRST-GUIDE-EXAMPLE-PATHS
+
+- Outcome: completed
+- Verified criteria: English placeholders in ten maintained guides; compared flags, links, anchors and fences; shell syntax and diff checks passed. Current debug-control additions reviewed as English.
+- Evidence: `docs/changes/2026-11-03-translate-debug-guide-example-paths.json`.
+- Limits: Only illustrative names changed; real paths, case IDs and machine tokens preserved. Examples were not executed.
+
+### DBG2-21-EUR-ITEM-SHOP
+
+- Outcome: completed one bounded EUR UI-access increment; parent remains partial.
+- Verified: CH-0324, one Select+Right frame then disarm and 90 neutral frames, reached Item Shop; identical seed/ROM/runtime/input/frame no-cheat control stayed on world map. Both screenshots inspected; seed restored exactly, sessions/display closed and protected originals unchanged. CH-0334 left displayed funds 7749 after one armed frame and bounded map redraw.
+- Evidence: `docs/changes/2026-11-03-verify-eur-item-shop-cheat.json`, `target/debug-tools-v2-cheat-eur-visible/comparison-result.json`, `target/debug-tools-v2-cheat-eur-control/control-result.json`.
+- Limits: one EUR Wine interpreter scene; no device-hook equivalence or visible resource effect. Graphics request failed with eight reports present; second copy retained earlier evidence. Setup path assertion corrected before creating control. Cleanup helper refused non-ROM-data units, no files removed.
+
+### ENGLISH-FIRST-MENU-INPUT-SOURCE-REVIEW
+
+- Outcome: completed
+- Verified criteria: Fifteen complete menu and input-configuration source files reviewed for English authored text and inline test prose; hashes recorded.
+- Evidence: `docs/changes/2026-11-03-review-menu-input-core-english.json`; `docs/development/ENGLISH_FIRST_AUDIT.json`.
+- Limits: Separate test modules, imported/dynamic values and remaining source trees are not covered. No build or runtime test.
+
+### ENGLISH-FIRST-HELPER-SOURCE-REVIEW
+
+- Outcome: completed
+- Verified criteria: Eight development helper scripts reviewed in full for English comments, output and generated labels; source hashes recorded. Existing Atlas generator diff inspected.
+- Evidence: `docs/changes/2026-11-03-review-maintenance-helper-english.json`; `docs/development/ENGLISH_FIRST_AUDIT.json`.
+- Limits: No scripts or tests executed; imported metadata and third-party notices remain verbatim. Other tools remain pending.
+
+### ENGLISH-FIRST-STALE-DBG-REVIEW
+
+- Outcome: completed
+- Verified criteria: Six stale audit hashes reconciled after reading current English changes; all 28 generated task references matched the checklist.
+- Evidence: `docs/changes/2026-11-03-reconcile-debug-language-audit-hashes.json`.
+- Limits: Other stale entries and later concurrent changes remain open; no runtime validation.
+
+### DBG2-21-EUR-JP-PARTY-NEGATIVE
+
+- Outcome: closed bounded negative observation; parent remains partial.
+- Verified: in a fresh EUR/Wine copy, Marsh Party display remained JP 0 after CH-0336 recorded 24 writes in one armed frame, disarm and selection redraw. Exact seed restored; originals and pins unchanged, session/display closed.
+- Evidence: `docs/changes/2026-11-03-check-eur-jp-cheat-party-display.json`, `target/debug-tools-v2-cheat-eur-jp/comparison-result.json` and graphics reports.
+- Limits: one unit and scene only; no general device or gameplay conclusion. Cleanup helper refused non-ROM-data unit, no files removed.
+
+### ENGLISH-FIRST-COVERAGE-RECONCILE
+
+- Outcome: completed
+- Verified criteria: Current saved JSON string values compared with reviewed 735b1bc; new strings are metadata only. HTML outside embedded JSON identical; embedded JSON equals saved JSON. Audit hashes refreshed.
+- Evidence: `docs/changes/2026-11-03-reconcile-coverage-language-snapshot.json`.
+- Limits: Language and artifact consistency only; no source analysis, regeneration, ROM or runtime validation. Earlier handleless character diff not repeated.
+
+### ENGLISH-FIRST-ROM-GUIDE-OPENING
+
+- Outcome: completed
+- Verified criteria: Six opening e71–e76 ROM guide summaries made readable; numeric tokens, links and generation/metadata identifiers match prior text, and platform limits remain explicit.
+- Evidence: `docs/changes/2026-11-03-clarify-rom-data-opening-summaries.json`.
+- Limits: Documentation only; no ROM, build, runtime or benchmark check. Rest of guide and wider audit remain pending.
+
+### ENGLISH-FIRST-ROM-GUIDE-E66-E70
+
+- Outcome: completed
+- Verified criteria: Five EUR e66–e70 summaries and UI property model clarified; numeric tokens, links and generation/metadata identifiers compared, evidence limits retained.
+- Evidence: `docs/changes/2026-11-03-clarify-rom-data-property-summaries.json`.
+- Limits: Documentation only; no ROM, build, runtime or benchmark check. Other guide sections remain pending.
+
+### ENGLISH-FIRST-ROM-GUIDE-E57-E60
+
+- Outcome: completed
+- Verified criteria: Four EUR pose/palette summaries clarified; numeric tokens, links and inline code compared, preserving evidence and platform limits.
+- Evidence: `docs/changes/2026-11-03-clarify-rom-data-pose-palette-summaries.json`.
+- Limits: Documentation only; no ROM, build, runtime or benchmark check. Other guide sections remain pending.
+
+### ENGLISH-FIRST-ROM-GUIDE-E11-E25
+
+- Outcome: completed
+- Verified criteria: Fused words and numbers corrected in EUR e11–e25 summaries; numeric tokens, links and inline code matched prior text.
+- Evidence: `docs/changes/2026-11-03-clarify-rom-data-early-resource-history.json`.
+- Limits: Documentation only; no ROM, build, runtime or benchmark check. Other guide sections remain pending.
+
+### ENGLISH-FIRST-ROM-GUIDE-E28-E33
+
+- Outcome: completed
+- Verified criteria: Four key, constructor and flag summaries clarified; numeric tokens, links and inline code matched prior text and pending cases remain explicit.
+- Evidence: `docs/changes/2026-11-03-clarify-rom-data-constructor-summaries.json`.
+- Limits: Documentation only; no ROM, build, runtime or benchmark check. Other guide sections remain pending.
+
+### ENGLISH-FIRST-ROM-GUIDE-E39-E45
+
+- Outcome: completed
+- Verified criteria: Five audio, parameter and palette summaries clarified; numbers, links and inline code compared after identifying two fused label/count pairs. Evidence limits retained.
+- Evidence: `docs/changes/2026-11-03-clarify-rom-data-audio-parameter-summaries.json`.
+- Limits: Documentation only; no ROM, build, runtime or benchmark check. Other guide sections remain pending.
+
+### ENGLISH-FIRST-ROM-GUIDE-E34-E47
+
+- Outcome: completed
+- Verified criteria: Five flag, selection, palette and blend summaries clarified; numeric tokens, links and inline code matched prior text, with limits preserved.
+- Evidence: `docs/changes/2026-11-03-clarify-rom-data-selection-program-summaries.json`.
+- Limits: Documentation only; no ROM, build, runtime or benchmark check. Other guide sections remain pending.
+
+### ENGLISH-FIRST-ROM-GUIDE-E48-E52
+
+- Outcome: completed
+- Verified criteria: Five task, event and script summaries clarified; numbers, links and inline code matched prior text, with event count checked against linked guide.
+- Evidence: `docs/changes/2026-11-03-clarify-rom-data-task-script-summaries.json`.
+- Limits: Documentation only; no ROM, build, runtime or benchmark check. Other guide sections remain pending.
+
+### ENGLISH-FIRST-ROM-GUIDE-E53-E56
+
+- Outcome: completed
+- Verified criteria: Four coordinate, auxiliary script, palette and UI summaries clarified; numbers, links and inline code matched prior text and limits were retained.
+- Evidence: `docs/changes/2026-11-03-clarify-rom-data-coordinate-ui-summaries.json`.
+- Limits: Documentation only; no ROM, build, runtime or benchmark check. Other guide sections remain pending.
+
+### ENGLISH-FIRST-NATIVE-RESIDUE
+
+- Outcome: completed
+- Verified criteria: Six native/host residue inventory summaries and the e61 guide entry clarified; numeric tokens, task IDs, links and inline code matched prior text.
+- Evidence: `docs/changes/2026-11-03-clarify-rom-native-residue-summaries.json`.
+- Limits: Documentation only; no ROM, build, runtime or benchmark check. Both documents remain under review.
+
+### DBG2-21
+
+- Outcome: completed
+- Verified criteria: CH-0324 reached Item Shop after explicit arm, one Select+Right frame and disarm; same-seed/input/frame control stayed on map, with exact restoration. CH-0334 was armed throughout a 500-gil purchase: displayed funds became 99,999,499 versus 7,249 in the same-checkpoint/input/frame control; disarm left state unchanged and both checkpoints restored exactly. Original inputs and pins unchanged; sessions/displays closed. Other priority CH statuses are individually documented.
+- Evidence: `docs/changes/2026-11-03-verify-eur-item-shop-cheat.json`, `docs/changes/2026-11-03-verify-eur-clan-funds-cheat.json`, `target/debug-tools-v2-cheat-eur-visible/comparison-result.json`, `target/debug-tools-v2-cheat-eur-purchase-enabled/comparison-result.json` and inspected graphics.
+- Limits: one EUR/Wine interpreter scenario per accepted effect; no original device-hook equivalence, native Windows or physical input claim. CH-0334 map and CH-0336 Party redraw negatives retained; exploratory one-frame Down opened Pub, slot-focus assertion corrected without save. Cleanup helper refused non-ROM-data units; no files removed.
+
+### ENGLISH-FIRST-OBSERVED-OBJ
+
+- Outcome: completed
+- Verified criteria: Four observed OBJ model, runtime, CLI and ordinary-frame inventory summaries clarified; numeric tokens, task IDs, links and inline code matched prior text.
+- Evidence: `docs/changes/2026-11-03-clarify-rom-observed-obj-inventory.json`.
+- Limits: Documentation only; no ROM, build, runtime or benchmark check. Other inventory sections remain pending.
+
+### DBG2-21-EUR-JP-OBSERVATION-CORRECTION
+
+- Outcome: closed
+- Verified criteria: CH-0336 recorded 24 writes and Marsh still displayed JP 0 after bounded next/previous inputs; exact seed restoration and original preservation remain verified.
+- Evidence: `docs/changes/2026-11-03-check-eur-jp-cheat-party-display.json`, `target/debug-tools-v2-cheat-eur-jp/comparison-result.json`.
+- Limits: no intermediate selection image was captured, so the earlier archive wording that a selection redraw occurred is not established. This correction preserves the original history.
+
+### ENGLISH-FIRST-OBSERVED-PARAMETERS
+
+- Outcome: completed
+- Verified criteria: Four observed task parameter model, runtime, CLI and ordinary-frame summaries clarified; numeric tokens, task IDs, links and inline code matched prior text.
+- Evidence: `docs/changes/2026-11-03-clarify-rom-observed-parameter-inventory.json`.
+- Limits: Documentation only; no ROM, build, runtime or benchmark check. Other inventory sections remain pending.
+
+### ENGLISH-FIRST-CONSTRUCTOR-OBJ
+
+- Outcome: completed
+- Verified criteria: Five bus residue and constructor OBJ inventory summaries clarified; numeric tokens, task IDs, links and inline code matched prior text, including failed and negative evidence.
+- Evidence: `docs/changes/2026-11-03-clarify-rom-constructor-obj-inventory.json`.
+- Limits: Documentation only; no ROM, build, runtime or benchmark check. Other inventory sections remain pending.
+
+### DBG2-21-EUR-JP-VALUE-CORRECTION
+
+- Outcome: closed
+- Verified criteria: Enlarged inspection of both retained CH-0336 Party screenshots shows Marsh at JP 4 before and after the bounded input sequence, not JP 0 as previously recorded; the conclusion remains no visible change in that observation.
+- Evidence: `docs/changes/2026-11-03-check-eur-jp-cheat-party-display.json`, `target/debug-tools-v2-cheat-eur-jp/comparison-result.json` and original graphics reports.
+- Limits: No intermediate selection capture was made, so a redraw remains unconfirmed. This correction preserves prior historical entries.
+
+### ENGLISH-FIRST-TASK-CYCLE
+
+- Outcome: completed
+- Verified criteria: Five conditional phase and task-cycle inventory summaries clarified; numeric tokens, task IDs, links and inline code matched prior text and limits remain explicit.
+- Evidence: `docs/changes/2026-11-03-clarify-rom-task-cycle-inventory.json`.
+- Limits: Documentation only; no ROM, build, runtime or benchmark check. Other inventory sections remain pending.
+
+### ENGLISH-FIRST-U16-OBJ
+
+- Outcome: completed
+- Verified criteria: Five census and u16 OBJ model, runtime, CLI and ordinary-scene inventory summaries clarified; numbers, task IDs, links and inline code matched prior text, preserving failure and missing-terminal-result limits.
+- Evidence: `docs/changes/2026-11-03-clarify-rom-u16-obj-inventory.json`.
+- Limits: Documentation only; no ROM, build, runtime or benchmark check. Other inventory sections remain pending.
+
+### ENGLISH-FIRST-CONSTRUCTOR-REACHABILITY
+
+- Outcome: completed
+- Verified criteria: Four flag, slot, map inventory and cell writer summaries clarified; numbers, task IDs, links and inline code matched prior text, with negative-scope limits retained.
+- Evidence: `docs/changes/2026-11-03-clarify-rom-constructor-reachability-inventory.json`.
+- Limits: Documentation only; no ROM, build, runtime or benchmark check. Other inventory sections remain pending.
+
+### ENGLISH-FIRST-INVENTORY-MAP-RECORDS — completed (2026-11-03)
+
+Clarified two ROM inventory summaries; corrected a fused 70-byte record size and 713B3C address against the linked map analysis. Numeric tokens, links and task IDs match the prior text; project-memory check and git diff --check passed. Documentation only, no ROM/build/runtime/platform validation. Evidence: `docs/changes/2026-11-03-clarify-rom-map-record-selection.json`. The wider audit remains open.
+
+### DBG2-22-EUR-QUICK-LEVEL
+
+- Outcome: completed within the bounded EUR/Wine interpreter scope.
+- Verified criteria: CH-0340 wrote 24 values in one frame; after disarm and selection change, Marsh remained level 5 and EXP 99 versus initial 78 and a same-seed/input/frame/clock control at 78. Both exact seeds restored, original protected files and pins unchanged; sessions closed.
+- Evidence: `docs/changes/2026-11-03-verify-eur-quick-level-exp.json`, `target/debug-tools-v2-cheat-eur-level/comparison-result.json`; memory and handoff checks and atlas checklist passed.
+- Limits: Montblanc captures occurred at different frames, so are secondary; no level-up, every unit, other entries, native Windows, physical input or device-hook equivalence verified. Cleanup helper rejected non-ROM-data unit paths; no deletion occurred.
+
+### ENGLISH-FIRST-SPIKE-TEST-MESSAGES — completed (2026-11-03)
+
+Translated remaining Spanish output in experimental Cranelift and Wasm tests; only print statements changed and numeric tokens were preserved. Rustfmt parsed both sources, project-memory check and git diff --check passed. No test, benchmark, ROM trace, Android execution or hard-coded result claim was validated. Evidence: `docs/changes/2026-11-03-translate-experimental-spike-test-messages.json`. Wider English-first audit remains open.
+
+### ENGLISH-FIRST-INVENTORY-QUEST-MAP — completed (2026-11-03)
+
+Clarified four quest, navigation, selector and battle-entry inventory summaries while retaining the limits at each historical checkpoint. Numeric tokens, links and task IDs match the prior text; project-memory check and git diff --check passed. Documentation only, no ROM/build/runtime/platform validation. Evidence: `docs/changes/2026-11-03-clarify-rom-quest-navigation-inventory.json`. The wider audit remains open.
+
+### ENGLISH-FIRST-INVENTORY-WORLD-NODES — completed (2026-11-03)
+
+Clarified five constructor and world-node inventory summaries; numeric tokens, links and task IDs match the prior text, and all text outside the selected summaries matches the preimage. Project-memory check and git diff --check passed. Documentation only, no ROM/build/runtime/platform validation. Evidence: `docs/changes/2026-11-03-clarify-rom-world-node-inventory.json`. The wider audit remains open.
+
+### ENGLISH-FIRST-INVENTORY-WORLD-ROADS — completed (2026-11-03)
+
+Clarified six world-node and road inventory summaries; numeric tokens, links and task IDs match the prior text, and all text outside the selection matches the preimage. Project-memory check and git diff --check passed. Documentation only, no ROM/build/runtime/platform validation. Evidence: `docs/changes/2026-11-03-clarify-rom-world-road-inventory.json`. The wider audit remains open.
+
+### DBG2-22-EUR-ABILITIES
+
+- Outcome: completed within the bounded EUR/Wine interpreter scope.
+- Verified criteria: CH-0320 was armed for one frame and disarmed; Marsh Steal: Ability displayed 180 before and MASTER! after reopening the list and scrolling, versus 180 in same-seed/input/frame no-cheat control. Pre-cheat state/frame/clock matched; both exact seeds restored, originals/pins unchanged and sessions closed.
+- Evidence: `docs/changes/2026-11-03-verify-eur-ability-mastery.json`, `target/debug-tools-v2-cheat-eur-ability/comparison-result.json`; memory, handoff and atlas checks passed.
+- Limits: final selections differed due to an expanded enabled list. One ability and Party scene only; other abilities, characters, side effects and device-hook equivalence remain unverified. A first GUI run hit EOF before gameplay; later report cap was handled by capturing the paused GUI. Cleanup helper rejected non-ROM-data unit paths, deleting nothing.
+
+### ENGLISH-FIRST-INVENTORY-ENCOUNTER-HEADERS — completed (2026-11-03)
+
+Clarified five encounter-header inventory summaries; numeric tokens, links and task IDs match the prior text, and all text outside the selection matches the preimage. Project-memory check and git diff --check passed. Documentation only, no ROM/build/runtime/platform validation. Evidence: `docs/changes/2026-11-03-clarify-rom-encounter-header-inventory.json`. The wider audit remains open.
+
+### ENGLISH-FIRST-INVENTORY-ENCOUNTER-UNITS — completed (2026-11-03)
+
+Clarified five encounter unit-template inventory summaries; numeric tokens, links and task IDs match the prior text, and all text outside the selection matches the preimage. Project-memory check and git diff --check passed. Documentation only, no ROM/build/runtime/platform validation. Evidence: `docs/changes/2026-11-03-clarify-rom-encounter-unit-inventory.json`. The wider audit remains open.
+
+### ENGLISH-FIRST-INVENTORY-ENCOUNTER-COORDINATES — completed (2026-11-03)
+
+Clarified five encounter-coordinate inventory summaries; numeric tokens, links and task IDs match the prior text, and all text outside the selection matches the preimage. git diff --check passed; project-memory check initially reported concurrent `crates/recomp/src/content_picker.rs` without its record. Documentation only, no ROM/build/runtime/platform validation. Evidence: `docs/changes/2026-11-03-clarify-rom-encounter-coordinate-inventory.json`. The wider audit remains open.
+
+### ENGLISH-FIRST-INVENTORY-METADATA28 — completed (2026-11-03)
+
+Clarified five indexed metadata inventory summaries; numeric tokens, links and task IDs match the prior text, and all text outside the selection matches the preimage. git diff --check passed; project-memory check reported concurrent `crates/recomp/src/content_picker.rs` without its record. Documentation only, no ROM/build/runtime/platform validation. Evidence: `docs/changes/2026-11-03-clarify-rom-metadata28-inventory.json`. The wider audit remains open.
+
+### DBG2-20-FILTERS
+
+- Outcome: completed within Windows GNU/Wine synthetic scope.
+- Verified criteria: cheat filtering uses typed plan/declared-region/armed metadata independently of translated presentation; generic content filtering remains unchanged. Frozen build passed, 18 selector tests passed; GUI observed candidate 3, declared match 4, attention 1, armed 0→1→0 and not armed 4 without guest advancement. Original pins/files unchanged; session/display closed.
+- Evidence: `docs/changes/2026-11-03-filter-cheats-by-machine-state.json`, `target/debug-tools-v2-cheat-filters/gui-result.json`, `target/debug-tools-v2-cheat-filters/runtime-result.json`; memory, handoff, atlas inventory and checklist checks passed.
+- Limits: plan candidate still needs preflight and is not device/gameplay verification; native Windows and physical controller untested. First immediate post-disarm capture preceded redraw; later image confirmed zero. Cleanup helper refused the non-ROM-data path; no deletion.
+
+### DBG2-20-PRESETS
+
+- Outcome: completed for named source-bound groups through explicit text commands, within Windows GNU/Wine synthetic scope.
+- Verified criteria: save a new named armed set without overwrite; preview and atomically arm a two-member group only after rechecking ROM/catalog/source hashes, paused state, bounds and conflicts. 29 focused tests passed. Synthetic proof rejected changed preview, source lines, ROM, selected catalog and overlaps without partial arm; original files, session pins and guest state/frame/clock unchanged.
+- Evidence: `docs/changes/2026-11-03-save-and-review-cheat-presets.json`, `target/debug-tools-v2-cheat-presets/comparison-result.json`, `target/debug-tools-v2-cheat-presets/runtime-result.json`; memory, handoff and atlas checks passed.
+- Limits: first catalog drift attempt changed an unselected duplicate; focused follow-up changed and restored the selected file and passed. No native Windows/physical input or hardware-hook/gameplay equivalence. Page preset controls and parameter values remain open. Cleanup helper refused non-ROM-data path; no deletion.
+
+### DBG2-15-LIVE-REPLAY-CANCEL
+
+- Outcome: completed within one EUR Windows GNU/Wine interpreter case.
+- Verified criteria: copied DS-20 worker reported running at 10/102; exact request cancellation produced cancelled and the same worker reported interrupted at 21/102. Parent state/frame/clock, source profile, session pins and protected inputs unchanged; session/display closed.
+- Evidence: `target/debug-tools-v2-replay-live-cancel/result.json`, `docs/changes/2026-11-03-cancel-live-eur-replay.json`; memory, handoff and atlas checks passed.
+- Limits: no deadline while executing guest frames, native Windows or physical input claim. Cleanup helper refused non-ROM-data path and removed nothing.
+
+### DBG2-15-LIVE-REPLAY-DEADLINE
+
+- Outcome: completed within one EUR Windows GNU/Wine interpreter case.
+- Verified criteria: copied DS-20 worker reported running at 9/102 before a 1400 ms deadline. Client returned unacknowledged timeout; same request's server result confirmed timeout with pending null and the same worker interrupted at 13/102. Parent state/frame/clock, source profile, session pins and protected inputs unchanged; session/display closed.
+- Evidence: `target/debug-tools-v2-replay-live-deadline/result.json`, `docs/changes/2026-11-03-expire-live-eur-replay.json`; memory, handoff and atlas checks passed.
+- Limits: one interpreter case; native Windows, physical input, full assistant procedure and parity remain unverified. Cleanup helper refused non-ROM-data path and removed nothing.
+
+### DBG2-15-REPEAT-PROCEDURE
+
+- Outcome: completed within one EUR Windows GNU/Wine interpreter case.
+- Verified criteria: discovery, ID selection and real DS-20 replay repeated twice; both runs passed 102 frames with identical endpoint hash/clock. Exact retry of first request returned identical JSON and worker run, without duplicate execution. Parent state/frame/clock, source inputs and session pins unchanged; session/display closed.
+- Evidence: `target/debug-tools-v2-replay-real-procedure/result.json`, `docs/changes/2026-11-03-repeat-real-eur-replay-procedure.json`; memory, handoff and atlas checks passed.
+- Limits: one replay procedure; full operation parity, live slow refresh, native Windows and physical input remain unverified. Cleanup helper refused non-ROM-data path and removed nothing.
+
+### DBG2-15-NARROW-CONSOLE
+
+- Outcome: completed for one 480×360 Windows GNU/Wine replay view; broader layout remains open.
+- Verified criteria: actual Win32 client resize showed pending request ID/parameters and terminal result, frame/clock and copy hint; corrected worker passed 102 frames. Parent state/frame/clock, pins and protected inputs unchanged; corrected sessions/displays closed.
+- Evidence: `target/debug-tools-v2-console-narrow-fixed-worker/result.json`, screenshots in that unit, `docs/changes/2026-11-03-inspect-narrow-replay-console.json`; memory, handoff and atlas checks passed.
+- Limits: session label abbreviated; not all long labels/parameters, native Windows or physical input verified. Old worker replay stopped at 45 with Access denied; matching fixed worker passed, consistent with historical publication fix but OS operation unconfirmed. Initial helper used wrong response channel; display closed and pins exact, normal parent close unattested. Retain failed fixture. Cleanup helper refused non-ROM-data paths and removed nothing.
+
+### DBG2-15-LIVE-REFRESH
+
+- Outcome: completed within one synthetic Windows GNU/Wine scan.
+- Verified criteria: 2048 inert files kept refresh pending; old index remained listable, wrong request ID refused, exact cancellation returned cancelled with pending null and prior generation/index unchanged. Parent state/frame/clock, pins and protected originals unchanged; session/display closed.
+- Evidence: `target/debug-tools-v2-slow-content-refresh/result.json`, `docs/changes/2026-11-03-cancel-slow-content-refresh.json`; memory, handoff and atlas checks passed.
+- Limits: cooperative cancellation discards results after worker completion; one synthetic scan, no native Windows/physical input or full operation parity. Cleanup helper refused non-ROM-data path and removed nothing.
+
+### DBG2-13-UI-TRACE-PARITY
+
+- Outcome: completed for UI trace start, duplicate refusal and report within Windows GNU/Wine interpreter scope.
+- Verified criteria: menu, direct CLI and integrated console each started a trace, refused a second start and saved a report. CLI/console refusal text matched; menu displayed it. Guest state/frame/clock, pins and protected originals unchanged; all three sessions/displays closed.
+- Evidence: `target/debug-tools-v2-ui-trace-parity-console/comparison-result.json`, `docs/changes/2026-11-03-verify-ui-trace-channel-parity.json`; memory, handoff and atlas checks passed.
+- Limits: trace events differ by interaction; no byte-identical reports, other operation parity, native Windows or physical input claim. First helper used the wrong report field after successful CLI; second completed menu then missed console navigation; third completed console only. Cleanup helper refused non-ROM-data paths, deleting nothing.

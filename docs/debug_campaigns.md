@@ -26,10 +26,10 @@ Create a private JSON file outside commits with this format:
       "ds": ["DS-20"],
       "families": ["task"],
       "transitions": ["entry"],
-      "profile": {"path": "profili/task/replay.json", "sha256": "EXACT_SHA256_64_HEX"},
+      "profile": {"path": "profiles/task/replay.json", "sha256": "EXACT_SHA256_64_HEX"},
       "evidence": {
-        "result": {"path": "profili/task/Data/config/replay/result.json", "sha256": "EXACT_SHA256_64_HEX"},
-        "audit": {"path": "profili/task/Data/config/replay/rom-audit.json", "sha256": "EXACT_SHA256_64_HEX"}
+        "result": {"path": "profiles/task/Data/config/replay/result.json", "sha256": "EXACT_SHA256_64_HEX"},
+        "audit": {"path": "profiles/task/Data/config/replay/rom-audit.json", "sha256": "EXACT_SHA256_64_HEX"}
       }
     },
     {"id": "DS03-unprepared", "ds": ["DS-03"], "families": ["scene-transition"]}
@@ -42,7 +42,7 @@ Replace the placeholders with real hashes. Paths are relative to the manifest an
 Omit evidence for a profile that has yet to run; omit profile for an unprepared case. Do not change an old hash to hide an altered file. After a new explicit run, declare new pins in a new manifest version while retaining the previous provenance. The tool does not infer a complete historical association between profile and outcome from an mtime.
 
 ~~~powershell
-python3 scripts/debug_campaign.py report campagne/modifica.json --ds DS-20 --family task --out target/campaign-reports/task-entry
+python3 scripts/debug_campaign.py report campaigns/change.json --ds DS-20 --family task --out target/campaign-reports/task-entry
 ~~~
 
 At least one of **--case ID / --ds DS / --family TAG / --transition TAG** is required. Repeated values of one filter are combined with OR; different filters are combined with AND. An unknown ID is rejected; a filter without matches selects zero cases. Evidence for excluded cases is not opened.
@@ -69,14 +69,14 @@ The report limits the audit to useful metadata; it does not copy all events. Ses
 ## Running one selected case
 
 ~~~powershell
-python3 scripts/debug_campaign.py run-case campagne/modifica.json task-entry-EUR --reason "Modificato il reader di ingresso" --reopen-reason "La modifica invalida questa specifica verifica" --out target/campaign-intents/task-entry
+python3 scripts/debug_campaign.py run-case campaigns/change.json task-entry-EUR --reason "Changed the entry reader" --reopen-reason "The change invalidates this specific check" --out target/campaign-intents/task-entry
 ~~~
 
 **--reopen-reason** is required if the manifest contains prior evidence or result.json already exists in the profile, even if undeclared. A new case still requires --reason. Do not use lost context or an open parent TODO as a reason to repeat work; follow the [memory rules](development/MEMORY_WORKFLOW.md#resume-and-repeat-decisions).
 
-The tool verifies profile/runtime pins, saves **intent.json** and replaces its own process with **recomp debug-replay run PROFILO --json**. The same runner handles payload preflight, locking, timeouts, progress and cancellation. An intent is not a completed result. The worker retains logs/results in the profile; a subsequent campaign may explicitly reference those new pins.
+The tool verifies profile/runtime pins, saves **intent.json** and replaces its own process with **recomp debug-replay run PROFILE --json**. The same runner handles payload preflight, locking, timeouts, progress and cancellation. An intent is not a completed result. The worker retains logs/results in the profile; a subsequent campaign may explicitly reference those new pins.
 
-On POSIX, a Windows profile requires **--wine /percorso/reale/wine64**. Native Windows and Linux runtimes do not require the launcher. Dispatch does not compile a ROM or runtime. If exec fails, the receipt remains dispatch-error. Final exit codes come from replay. No alternative supervisor is written.
+On POSIX, a Windows profile requires **--wine /actual/path/to/wine64**. Native Windows and Linux runtimes do not require the launcher. Dispatch does not compile a ROM or runtime. If exec fails, the receipt remains dispatch-error. Final exit codes come from replay. No alternative supervisor is written.
 
 <a id="launcher-limiti-e-privacy"></a>
 
@@ -85,7 +85,7 @@ On POSIX, a Windows profile requires **--wine /percorso/reale/wine64**. Native W
 **scripts/windows/debug_campaign.ps1** and **scripts/linux/debug_campaign.sh** resolve the root from their location and always show the log under target/build-logs. With --docker (Bash) or -Docker (PowerShell), they use the existing ffta-debug-tools:local image, disabled networking, a read-only container filesystem and a project mount for output/coordination. Docker allows only report/help; dispatch uses host Python. No automatic build is performed.
 
 ~~~bash
-bash scripts/linux/debug_campaign.sh --docker report campagne/modifica.json --case task-entry-EUR --out target/campaign-reports/docker-entry
+bash scripts/linux/debug_campaign.sh --docker report campaigns/change.json --case task-entry-EUR --out target/campaign-reports/docker-entry
 ~~~
 
 Python 3.11 and the standard library are required, together with artifact_coordinator.py and the HTML template. Limits: 32 cases, 256 KiB manifest, 128 KiB profile/result, 16 MiB audit read, 64 KiB audit summary and 2 MiB report. Duplicate or non-finite JSON is rejected. At most 8 directories per report/intent store, including failed attempts: choose a dedicated parent directory. No automatic overwrite or cleanup occurs. Links/symlinks, reparse points and shared files are rejected.

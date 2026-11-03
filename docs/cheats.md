@@ -102,19 +102,44 @@ absent catalog and an unknown ID. This does not validate cheat semantics.
 
 The Debug / Cheat page computes the exact hash from the currently loaded ROM
 and shows it alongside the catalog hash and the same declared-region comparison.
-It opens a separate readonly view with search, filters and
-scrollable details. A catalog next to the executable is loaded when present;
+It opens a catalog view with search, filters and scrollable original details.
+The type filter combines the source format and declared region. State filters
+can show armed entries, entries not armed, matching declared regions, source
+plan candidates or entries needing attention. A plan candidate still requires
+runtime preflight and does not establish device or gameplay compatibility.
+In a synthetic Windows GNU/Wine GUI test, the armed filter changed from zero
+to one entry and back after disarm; candidate, declared-region, attention and
+not-armed filters were also checked without advancing the guest.
+**Manage cheat** opens explicit source selection and separate **Prepare
+preview**, **Apply once**, **Arm**, **Disarm** and **Disarm all** actions.
+Choose a source and review the operations and potential read/write ranges before
+explicitly applying or arming; the shared identity, state, checksum and overlap
+guards still apply. Disarm stops future writes without restoring memory.
+The catalog's **Disarm all** action is also available when the selected catalog
+is empty or unavailable, so it can stop an already armed set.
+A catalog next to the executable is loaded when present;
 otherwise the page explains the empty state. **Import catalog...** opens the
 internal content selector: refresh its declared roots, select `catalogo.json`,
 return and choose **Reload**. External file/folder dialogs remain explicit
 buttons in that selector. The selected file is checked against its pinned hash
-before loading. Selecting a CH only opens its details; it cannot enable or run
-it. Cheat action labels use English source keys and follow the selected menu
+before loading. Selecting a CH only opens its details; execution requires the
+separate management view. Cheat action labels use English source keys and follow the selected menu
 language; existing Italian keys remain available for compatibility. Details
 occupy a separate scrollable panel with the compatibility reasons
 before the original record. Long individual records are marked as abbreviated
 in the view and remain available in full through `debug-cheats show`. Decoding
 and controlled application remain partial, with the one-shot scope below.
+
+In isolated Wine/Xvfb tests, keyboard navigation selected a synthetic source,
+reviewed its preview, armed and disarmed it, applied it once and disabled all.
+Attempts to arm without a selected source or reviewed preview were refused.
+A separate test exercised the management sequence with simulated XInput;
+physical controllers and native Windows were not tested. Protected inputs and
+session pins remained unchanged. This does not prove a real cheat's game effect.
+Another isolated test changed the selected catalog after arming; reloading
+reported it unavailable, and the catalog-level **Disarm all** still stopped the
+armed set. The temporary catalog was restored and protected originals remained
+unchanged.
 
 ### Assumed plaintext CodeBreaker inspection — DBG2-18 in progress
 
@@ -259,6 +284,31 @@ The same interpreter, ROM, checksum and canonical memory restrictions as the
 manual preview apply. Timing is a host-defined frame boundary, not the original
 device hook; device and gameplay behavior are unverified.
 
+To save the currently armed set without applying it, issue `cheats preset-save
+NAME`. Names contain 1–48 ASCII letters, digits, hyphens or underscores. The
+new file is stored in `Data/config/debug-cheat-presets/` for a portable isolated
+copy; an existing name is never overwritten, and the directory is capped at
+32 files. The preset records the ordered members and exact ROM, catalog, source
+and master hashes. It contains no game data.
+
+After `cheats disarm all`, use `cheats preset-prepare NAME` and inspect every
+member in `status.cheat_preview`; then use `cheats preset-arm NAME TOKEN` with
+the returned token. The corresponding direct commands are `debug-control
+cheat-preset-save`, `cheat-preset-prepare` and `cheat-preset-arm`. Preparation
+and arming require the selected matching catalog, an idle paused interpreter
+and an empty armed set. Arming repeats the full source, ROM, paused-state,
+footprint and conflict checks and either arms the entire group or none. No
+guest write occurs until the next interpreter frame. Values and preset controls
+in the page remain open work.
+
+Frozen Windows GNU tests and an isolated synthetic Wine/Xvfb session checked a
+two-member save/preview/arm flow, duplicate name, changed preset, source lines,
+ROM and selected catalog, and a conflicting group. The group was not partially
+armed on refusal. The first catalog-change attempt modified a different copy;
+a separate check targeted the selected source and confirmed refusal and
+recovery. No guest frames advanced, and original files and session pins stayed
+unchanged. Native Windows and physical input were not tested.
+
 Frozen Windows GNU builds and focused Wine tests passed. In a synthetic isolated
 Wine/Xvfb interpreter, arm left the paused guest unchanged, an overlap was
 refused, two independent plans applied on two controlled frames, and disarming
@@ -290,9 +340,56 @@ original saves stayed unchanged. This establishes a bounded RAM effect, not a
 visible gameplay effect, maintained activation, device-hook equivalence or a
 reversible toggle. The retained result excludes the private code payload.
 
+On a separate isolated EUR world-map seed, CH-0324 was armed for one
+Select+Right frame and disarmed. After 90 neutral frames, the Item Shop greeting
+and Buy/Sell/Leave menu appeared. A second copy with the same ROM, runtime and
+exact starting state received the same input and frame count without the cheat
+and remained on the world map. Loading the first copy's seed restored the exact
+state; protected originals remained unchanged. This verifies that one bounded
+interpreter scenario reaches the shop, not original device-hook timing or every
+scene. In the same seed, CH-0334 left displayed clan funds at 7,749 after one
+armed frame, 30 neutral frames and a city-menu redraw; the earlier RAM writes do
+not establish a visible funds effect in this scenario.
+In a distinct EUR shop purchase, two isolated copies started from the exact same
+quantity-one Bronze Helm checkpoint and received the same 98 input/neutral
+frames. Without a cheat, the 500-gil purchase reduced displayed funds from
+7,749 to 7,249. With CH-0334 armed throughout the same purchase, the displayed
+result was 99,999,499. The cheat was explicitly disarmed without changing the
+paused state, and both copies restored their exact checkpoint. The source ROM,
+catalog, checkpoint and guarded original saves remained unchanged. This verifies
+the resource effect for this purchase and interpreter timing, not the original
+device hook or every game scenario.
+In a separate copy of that EUR seed, the Party screen showed Marsh at JP 4.
+CH-0336 was armed for one frame and reported 24 writes, then disarmed; after a
+bounded next/previous input sequence, Marsh still displayed JP 4. No intermediate
+selection image was captured, so the redraw itself is unconfirmed. The original seed
+was restored exactly. This is a negative observation for that unit and scene,
+not a conclusion about other units, scenes or device behavior.
+
+For the advanced level group, CH-0340 was armed for one frame in an isolated
+EUR Party screen, then disarmed. After a confirmed selection of Montblanc and
+return to Marsh, Marsh remained level 5 while displayed EXP changed from 78 to
+99. The same-seed/input/frame control remained at EXP 78; both copies restored
+their exact seeds. The plan recorded 24 writes. Montblanc displayed EXP 99 in
+the enabled run and 92 in the control, but these secondary captures were at
+different frames. No actual level-up, other unit's prior value or original device
+hook was verified. The effect persisted through the observed selection change
+after disarm; disarm itself did not restore memory.
+
+In an isolated EUR Party scenario, CH-0320 was armed for one interpreter
+frame and then disarmed. Marsh's Steal: Ability displayed 180 beforehand and
+MASTER! after reopening the list and scrolling; the same-seed/input/frame
+no-cheat control still displayed 180. The expanded enabled list and the control
+had different selected rows, but the same ability was visible in both. The
+observed change persisted after disarm; both exact seeds were restored and
+protected originals remained unchanged. This checks one ability and scene, not
+all abilities or characters, other side effects, native Windows or equivalence
+to the original device hook.
+
 In an isolated session, the local control channel and command console can
 select a discovered cheat catalog by ID, refresh an immutable snapshot, list
-bounded pages and retrieve complete entry JSON in UTF-8 chunks. The snapshot
+bounded pages and retrieve complete entry or source-capability JSON in UTF-8
+chunks with their respective hashes. The snapshot
 reports the source hash and ROM identity checked at refresh; it does not claim
 that the underlying file remains unchanged afterward. See
 [debug control](debug_control.md) for syntax, cancellation and limits.

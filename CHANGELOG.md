@@ -3,6 +3,150 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-03 — Verify UI trace outcomes across control channels
+
+Type: changed. Platforms: Windows GNU / Wine.
+
+**Changes**
+
+- Record a bounded DBG2-13 menu, CLI and console parity check for UI trace start, duplicate refusal and report.
+
+**Validation**
+
+- In isolated Wine/Xvfb interpreter copies, each of direct local-control CLI, menu and integrated command console started a UI trace, refused a second start while active, and saved a report. CLI and console returned identical refusal text; the menu displayed it. Parent state, frame and clock, original inputs and pins remained unchanged; sessions and displays closed.
+- The first helper read a nonexistent report field after the CLI had succeeded; the next helper completed the menu path but failed to navigate to the console. Both copies closed normally, and a third copy completed only the missing console path.
+
+**Limitations**
+
+- Trace contents differ because the user interactions differ; this checks action and validation outcomes, not byte-identical reports, all operations, native Windows or physical input.
+
+Documentation: [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-03-verify-ui-trace-channel-parity.json)
+
+## 2026-11-03 — Verify bounded EUR quick-level experience effect
+
+Type: changed. Platforms: Windows GNU / Wine.
+
+**Changes**
+
+- Record one bounded CH-0340 experience effect in the first advanced cheat group without claiming a level-up or verification of other entries.
+
+**Validation**
+
+- In an isolated EUR Party scene, one armed interpreter frame recorded 24 writes; after disarm and a visibly confirmed change to Montblanc and back, Marsh displayed level 5 EXP 99 instead of initial EXP 78. A same-ROM/runtime/seed/input/frame and clock no-cheat control displayed EXP 78. Both exact seeds were restored, sessions/displays closed and protected inputs stayed unchanged.
+- Montblanc displayed EXP 99 in the enabled run and EXP 92 in the control; the captures were at different frames and are secondary evidence. The first control script rejected an oversized input batch before executing any input; the same sequence then ran in two bounded batches.
+
+**Limitations**
+
+- One EUR Party scene under Wine/interpreter does not prove an actual level-up, every unit, other advanced CH entries, native Windows, physical input or original device-hook equivalence. Disarm did not undo the observed changes; restoration was separate.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-03-verify-eur-quick-level-exp.json)
+
+## 2026-11-03 — Verify one EUR item-shop cheat transition against control
+
+Type: changed. Platforms: Windows GNU / Wine.
+
+**Changes**
+
+- Record CH-0324 as verified for one isolated EUR world-map transition, with explicit source-bound arm, disarm and exact seed restoration; retain other entries as unverified.
+
+**Validation**
+
+- At the same initial ROM, runtime and state, one Select+Right frame followed by 90 neutral frames reached the Item Shop with CH-0324 armed for the first frame and disarmed afterward; the no-cheat control stayed on the world map. Both screenshots were visually inspected, seed restoration was exact, sessions closed and protected inputs stayed unchanged.
+- CH-0334 produced no visible change from 7,749 clan funds after one armed frame, 30 neutral frames and a city-menu redraw on that seed; this is a bounded negative observation, not proof about other scenes.
+
+**Limitations**
+
+- The graphics control request initially failed after eight reports existed; an unoccluded same-seed control was captured in a separate isolated copy without removing earlier evidence. A first control-copy setup stopped at an existing-path assertion before creating a session, then the path was corrected.
+- This is one EUR interpreter/Wine scenario, not native Windows, physical controller, device-hook equivalence or verification of other CH entries. A visible resource modifier remains required for DBG2-21.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-03-verify-eur-item-shop-cheat.json)
+
+## 2026-11-03 — Verify one EUR clan-funds cheat purchase against control
+
+Type: changed. Platforms: Windows GNU / Wine.
+
+**Changes**
+
+- Complete DBG2-21 within a bounded EUR interpreter scope by pairing the separately verified Item Shop access with a visible CH-0334 resource effect and individual statuses for the remaining priority entries.
+
+**Validation**
+
+- Two isolated copies used the same ROM, runtime and exact quantity-one Bronze Helm checkpoint. With identical 98 input/neutral frames, the 500-gil purchase changed displayed funds from 7,749 to 7,249 without a cheat and to 99,999,499 with CH-0334 armed. Screenshots were inspected; disarming did not mutate the paused state, both checkpoints restored exactly, sessions and displays closed, and protected originals remained unchanged.
+- The preceding world-map observation of unchanged 7,749 funds and CH-0336 Party observation of unchanged JP 4 remain recorded as bounded negative scenarios. A naturally reached shop checkpoint was created only inside the isolated copy.
+
+**Limitations**
+
+- One EUR shop purchase under Wine/interpreter does not establish original device-hook behavior, other scenes, native Windows, physical controllers or the unverified priority CH entries. Disarm stops future writes; it does not undo prior memory changes.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-03-verify-eur-clan-funds-cheat.json)
+
+## 2026-11-03 — Verify bounded EUR ability mastery effect
+
+Type: changed. Platforms: Windows GNU / Wine.
+
+**Changes**
+
+- Record one bounded CH-0320 ability mastery effect in the advanced cheat group without claiming verification of every ability or character.
+
+**Validation**
+
+- In an isolated EUR Party scene, Marsh Steal: Ability displayed 180 before one armed interpreter frame and MASTER! after disarm and reopening the list; the same-seed/input/frame no-cheat control remained at 180. Pre-cheat state, frame and clock matched. Both exact seeds were restored, sessions and displays closed, and protected originals and pins stayed unchanged.
+- The enabled list expanded, so the final selected rows differed while the same ability remained visible. A first interactive run closed on EOF before gameplay; a later graphics request hit the report cap after inputs and the paused GUI was captured instead.
+
+**Limitations**
+
+- This covers one ability and Party scene under Wine/interpreter; all abilities and characters, other side effects, native Windows, physical input and original device-hook equivalence remain unverified. Disarm itself did not restore state.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-03-verify-eur-ability-mastery.json)
+
+## 2026-11-03 — Translate the upstream decision and audit plan
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Translate the maintained upstream v3.1 decision plan into English while retaining the owner-approved directions, authorization boundaries, audit evidence and legacy heading anchors.
+
+**Validation**
+
+- Compared inline code tokens, URLs, task IDs and checkboxes against the original; verified original heading anchors and reviewed the decision matrix and acceptance limits.
+
+**Limitations**
+
+- This translation does not perform the upstream audit or authorize implementation, tests or merging.
+
+[Change record](docs/changes/2026-11-03-translate-upstream-decision-audit-plan.json)
+
+## 2026-11-03 — Translate ROM coverage terminal prompt
+
+Type: changed. Platforms: Linux development tooling.
+
+**Changes**
+
+- Translate the interactive failure prompt in the Linux ROM coverage launcher into English while retaining its exit and logging behavior.
+
+**Validation**
+
+- Eight mocked Docker launcher tests pass; Bash syntax check passes; isolated pseudo-terminal check confirms the English prompt waits for Enter and retains failure exit code 2.
+
+**Limitations**
+
+- No ROM data were read and no actual Docker build or coverage run was performed.
+
+Documentation: [ROM_COVERAGE.md](docs/development/ROM_COVERAGE.md).
+
+[Change record](docs/changes/2026-11-03-translate-rom-coverage-terminal-prompt.json)
+
 ## 2026-11-03 — Translate zoom and tile investigation evidence
 
 Type: docs. Platforms: Desktop development documentation.
@@ -83,6 +227,142 @@ Documentation: [ENGLISH_FIRST_AUDIT.json](docs/development/ENGLISH_FIRST_AUDIT.j
 
 [Change record](docs/changes/2026-11-03-translate-research-evidence-labels.json)
 
+## 2026-11-03 — Translate desktop launcher errors
+
+Type: changed. Platforms: Windows and Linux desktop launcher.
+
+**Changes**
+
+- Translate missing-executable, process-launch and unsuccessful-exit messages into English for the default dialog and play-error.log, preserving process handling and captured output.
+
+**Validation**
+
+- rustfmt parsed the launcher source; inspected the diff to confirm only three diagnostic strings changed. Attempted cargo check --offline --locked -p ffta-play --target x86_64-pc-windows-gnu; the build script failed with OS error 2 while compiling the Windows icon resource.
+
+**Limitations**
+
+- Windows compilation and graphical error dialogs remain unverified because the icon resource build step failed in this environment; no ROM was used.
+
+Documentation: [portable.md](docs/portable.md).
+
+[Change record](docs/changes/2026-11-03-translate-play-launcher-errors.json)
+
+## 2026-11-03 — Translate installer placeholder and Linux build diagnostics
+
+Type: changed. Platforms: Desktop installer and Linux build tooling.
+
+**Changes**
+
+- Translate Spanish comments, progress and error messages in the unconnected installer translator placeholder and the Italian Linux builder terminal prompt into English. Preserve the .lex representation and build behavior.
+
+**Validation**
+
+- Five Linux builder unit tests pass, including interactive failure and noninteractive exit behavior; bash -n passes and rustfmt parses the translator module. Checked that no installer module references the translator placeholder.
+
+**Limitations**
+
+- The translator remains an unconnected placeholder and was not compiled or executed as part of the installer; no Docker build or native GUI run was performed.
+
+Documentation: [docker.md](docs/docker.md).
+
+[Change record](docs/changes/2026-11-03-translate-installer-placeholder-linux-build-text.json)
+
+## 2026-11-03 — Translate experimental spike test messages
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Translate the remaining Spanish output in the Cranelift and Wasm experimental test files, preserving their values, test behavior and existing status qualifiers.
+
+**Validation**
+
+- Rustfmt parsed both files; comparison with their preimages confirmed only print statements changed and numeric tokens were preserved; git diff --check passed.
+
+**Limitations**
+
+- Text-only review: tests, ROM traces, benchmarks, Android execution and hard-coded result claims were not validated or rerun. The broader English-first audit remains open.
+
+[Change record](docs/changes/2026-11-03-translate-experimental-spike-test-messages.json)
+
+## 2026-11-03 — Translate experimental metric labels
+
+Type: changed. Platforms: Desktop development tooling.
+
+**Changes**
+
+- Translate Spanish labels for dynamically calculated Wasm and Cranelift experimental test metrics into English while preserving fixed historical claims, numeric formatting, code and ROM paths.
+
+**Validation**
+
+- rustfmt parsed both Rust files; formatting placeholders matched the tracked versions. Existing CRLF was normalized to LF after git diff --check flagged changed lines.
+
+**Limitations**
+
+- Experimental tests were not executed; several depend on a locally named ROM or write artifacts, and fixed historical claims remain unchanged.
+
+Documentation: [ENGLISH_FIRST.md](docs/development/ENGLISH_FIRST.md).
+
+[Change record](docs/changes/2026-11-03-translate-experimental-metric-labels.json)
+
+## 2026-11-03 — Translate illustrative debug guide paths
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Replace Italian user-supplied example path and case names with English across debug, capture, artifact, probe, session, diagnostics, catalog, replay and ROM coverage guides.
+
+**Validation**
+
+- Compared CLI flags, links, legacy anchors and code fences with the original guides; shell examples passed bash -n and git diff --check passed.
+
+**Limitations**
+
+- Only illustrative placeholders changed; existing paths, persisted tokens, case IDs, imported data and historical evidence remain unchanged. No example command was executed.
+
+[Change record](docs/changes/2026-11-03-translate-debug-guide-example-paths.json)
+
+## 2026-11-03 — Translate debug campaign example placeholders
+
+Type: docs. Platforms: Desktop development documentation.
+
+**Changes**
+
+- Translate illustrative campaign and profile paths, reasons and profile and Wine placeholders in the maintained campaign guide; retain command flags, case IDs and legacy anchors.
+
+**Validation**
+
+- Parsed the JSON example and checked consistent profile paths; compared Markdown link targets, legacy anchors and command flags against the prior version; verified run-case options with its help command.
+
+**Limitations**
+
+- Examples are illustrative and were not dispatched against a runtime; the wider English-first audit remains open.
+
+Documentation: [debug_campaign.py](scripts/debug_campaign.py).
+
+[Change record](docs/changes/2026-11-03-translate-debug-campaign-example-placeholders.json)
+
+## 2026-11-03 — Translate Atlas inventory route descriptions
+
+Type: changed. Platforms: Desktop development tooling.
+
+**Changes**
+
+- Use English menu labels for generated Atlas row-route descriptions while retaining existing operation contract fields and concurrent operation additions.
+
+**Validation**
+
+- Atlas inventory --check passes for 190 legacy rows, 54 actions and 97 operation contracts; compared every non-route field before and after the edit and retained it unchanged.
+
+**Limitations**
+
+- Operation metadata compatibility values remain as recorded; the wider English-first audit and inventory review remain open.
+
+Documentation: [menu_clan_atlas.md](docs/menu_clan_atlas.md).
+
+[Change record](docs/changes/2026-11-03-translate-atlas-inventory-routes.json)
+
 ## 2026-11-03 — Show the project emblem in the desktop menu
 
 Type: changed. Platforms: Desktop menu.
@@ -103,6 +383,130 @@ Documentation: [menu_clan_atlas.md](docs/menu_clan_atlas.md).
 
 [Change record](docs/changes/2026-11-03-show-rebuild-logo-in-menu.json)
 
+## 2026-11-03 — Save and review source-bound cheat presets
+
+Type: added. Platforms: Windows GNU / Wine.
+
+**Changes**
+
+- Add bounded named cheat presets saved from the current armed set with exact ROM, catalog, provenance and source-line hashes, without overwriting an existing name.
+- Expose explicit preset save, group preview and atomic arm through the shared console and local control; recheck every plan, state and group conflict before changing the armed set.
+
+**Validation**
+
+- Frozen Windows GNU build succeeded for 1943 source files without source or overlay drift. Under Wine, 29 focused tests passed across preset storage, armed sets, command parsing and completion, operation contracts and capability negotiation.
+- A synthetic isolated EUR Wine session saved and reviewed a two-cheat group, armed both, and refused duplicate names, changed preview, overlapping plans, changed source-line hashes and wrong ROM without partially arming; a separate selected-catalog change was refused and restored. Guest state, frame and clock, session pins and protected originals stayed unchanged.
+- The first selected-catalog drift attempt modified a different duplicate catalog and did not produce the expected refusal; its session closed cleanly, and a focused follow-up targeted the selected file and passed.
+
+**Limitations**
+
+- Preset activation remains source-bound interpreter behavior, not original hardware-hook or gameplay verification. Page controls and parameter value/range selection remain open; native Windows and physical input were not tested.
+
+Documentation: [cheats.md](docs/cheats.md), [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-03-save-and-review-cheat-presets.json)
+
+## 2026-11-03 — Review updated debug plan and task references
+
+Type: docs. Platforms: Desktop development documentation.
+
+**Changes**
+
+- Review subsequent changes to the English debug checklist and generated task references and refresh their audit hashes.
+
+**Validation**
+
+- Compared both files with the exact previously reviewed Git revisions, read changed content and verified that 28 generated task references match the checklist.
+
+**Limitations**
+
+- Language and generator freshness only; no debug actions, runtime tests or ROM access performed. Other stale audit hashes and unreviewed surfaces remain.
+- After the freshness check, concurrent DBG2-20 work changed the checklist again; its current hash and generated reference require reconciliation after that work.
+
+Documentation: [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [debug_v2.tsv](crates/menu/assets/debug_v2.tsv).
+
+[Change record](docs/changes/2026-11-03-review-updated-debug-plan-english.json)
+
+## 2026-11-03 — Review UI graphics resource guide in English
+
+Type: docs. Platforms: Desktop development documentation.
+
+**Changes**
+
+- Review the entire UI graphics resource guide for English and register its exact revision in the audit.
+
+**Validation**
+
+- Full-file manual language review; original identifiers, historical evidence and platform limitations retained; file SHA-256 recorded.
+
+**Limitations**
+
+- No builds, runtime tests, replays or ROM data were run; remaining documentation and source audits are open.
+
+Documentation: [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md).
+
+[Change record](docs/changes/2026-11-03-review-ui-graphics-guide-english.json)
+
+## 2026-11-03 — Review development tools and CI in English
+
+Type: docs. Platforms: Desktop build and development tooling.
+
+**Changes**
+
+- Review eight sweep, comparison, toolchain and CI files for English and register their exact revisions in the audit.
+
+**Validation**
+
+- Read each file in full and confirmed its SHA-256; existing commands, paths and output identifiers remain unchanged.
+
+**Limitations**
+
+- No sweeps, image analyses, downloads, builds or ROM access were performed; other source and documentation audits remain open.
+
+Documentation: [full_sweep.sh](tools/full_sweep.sh), [sweep.sh](tools/sweep.sh), [ppmdiff.py](tools/ppmdiff.py), [rowalign.py](tools/rowalign.py), [libcluster.py](tools/libcluster.py), [fetch-toolchain.ps1](Installer/scripts/fetch-toolchain.ps1), [installer-linux.yml](.github/workflows/installer-linux.yml), [project-memory.yml](.github/workflows/project-memory.yml).
+
+[Change record](docs/changes/2026-11-03-review-tools-ci-english.json)
+
+## 2026-11-03 — Review ROM text resource guide in English
+
+Type: docs. Platforms: Desktop development documentation.
+
+**Changes**
+
+- Review the entire text, font and keyboard resource guide for English and register its exact revision in the audit.
+
+**Validation**
+
+- Read the complete guide and recorded its SHA-256; identifiers, historical evidence and validation limits remain unchanged.
+
+**Limitations**
+
+- No tests, builds, replay or ROM access performed; other documentation and source audits remain open.
+
+Documentation: [rom_data_text.md](docs/rom_data_text.md).
+
+[Change record](docs/changes/2026-11-03-review-rom-text-resources-english.json)
+
+## 2026-11-03 — Review ROM audio resource guide in English
+
+Type: docs. Platforms: Desktop development documentation.
+
+**Changes**
+
+- Review the entire audio resource guide for English and register its exact revision in the audit.
+
+**Validation**
+
+- Read the complete guide and recorded its SHA-256; identifiers, historical evidence and validation limits remain unchanged.
+
+**Limitations**
+
+- No tests, builds, replay or ROM access performed; other documentation and source audits remain open.
+
+Documentation: [rom_data_audio.md](docs/rom_data_audio.md).
+
+[Change record](docs/changes/2026-11-03-review-rom-audio-resources-english.json)
+
 ## 2026-11-03 — Review translated research status report
 
 Type: docs. Platforms: Desktop development documentation.
@@ -122,6 +526,346 @@ Type: docs. Platforms: Desktop development documentation.
 Documentation: [ffta_estado.md](docs/ffta_estado.md).
 
 [Change record](docs/changes/2026-11-03-review-research-status-english.json)
+
+## 2026-11-03 — Review rebranded entry guides in English
+
+Type: docs. Platforms: Desktop and Android development documentation.
+
+**Changes**
+
+- Review the English rebrand changes in the root, Android and installer entry guides and update their audit hashes against previously reviewed versions.
+
+**Validation**
+
+- Located Git versions matching all four previously recorded SHA-256 hashes, inspected each change through HEAD, and confirmed current working files matched HEAD before updating hashes.
+
+**Limitations**
+
+- This is a language review of the rebrand changes, not validation of the rebrand build or the remaining whole-project English audit.
+
+Documentation: [README.md](README.md), [README.md](AndroidPort/README.md), [README.md](android/README.md), [README.md](crates/installer/README.md).
+
+[Change record](docs/changes/2026-11-03-review-rebranded-entry-guides-english.json)
+
+## 2026-11-03 — Review rebranded Android and tooling text
+
+Type: docs. Platforms: Android and desktop development tooling.
+
+**Changes**
+
+- Review English rebrand edits in AndroidPort default UI/report strings, portable package text and report homepage, and refresh their audit hashes.
+
+**Validation**
+
+- Located Git versions matching all five previously recorded SHA-256 hashes, inspected each change through HEAD, and confirmed current working files matched HEAD before updating hashes.
+
+**Limitations**
+
+- This is a language review of rebrand changes, not a build or UI validation; the wider English-first audit remains open.
+
+Documentation: [MainActivity.kt](AndroidPort/android/app/src/main/java/com/fftarecomp/port/MainActivity.kt), [NativeBridge.kt](AndroidPort/android/app/src/main/java/com/fftarecomp/port/NativeBridge.kt), [strings.xml](AndroidPort/android/app/src/main/res/values/strings.xml), [package_ffta_portable.py](scripts/package_ffta_portable.py), [report_home.html](scripts/report_home.html).
+
+[Change record](docs/changes/2026-11-03-review-rebranded-android-tooling-english.json)
+
+## 2026-11-03 — Review performance workflow in English
+
+Type: docs. Platforms: Desktop development documentation.
+
+**Changes**
+
+- Review the entire performance workflow for English and register its exact revision in the audit.
+
+**Validation**
+
+- Full-file manual language review; existing benchmark commands, historical evidence and platform limitations retained; file SHA-256 recorded.
+
+**Limitations**
+
+- No measurements, builds, replays or ROM data were run; remaining documentation and source audits are open.
+
+Documentation: [PERFORMANCE_WORKFLOW.md](docs/development/PERFORMANCE_WORKFLOW.md).
+
+[Change record](docs/changes/2026-11-03-review-performance-workflow-english.json)
+
+## 2026-11-03 — Review menu and input configuration text
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Review fifteen menu and input-configuration source files for English default text, comments and inline test prose; record each reviewed hash in the English-first audit.
+
+**Validation**
+
+- Read each complete file and confirmed authored comments and default messages are in English; verified the reviewed files had no uncommitted changes before hashing.
+
+**Limitations**
+
+- Separate test modules, dynamic/imported values and other menu and input sources remain outside this review; no runtime or build tests were required.
+
+Documentation: [save_backups.rs](crates/menu/src/save_backups.rs), [fps.rs](crates/menu/src/fps.rs), [i18n.rs](crates/menu/src/i18n.rs), [save_states.rs](crates/menu/src/save_states.rs), [game_saves.rs](crates/menu/src/game_saves.rs), [tool_inputs.rs](crates/menu/src/tool_inputs.rs), [controls.rs](crates/menu/src/controls.rs), [debug_unlock.rs](crates/menu/src/debug_unlock.rs), [shortcuts.rs](crates/menu/src/shortcuts.rs), [selection.rs](crates/menu/src/selection.rs), [interaction.rs](crates/menu/src/interaction.rs), [diagnostics.rs](crates/menu/src/diagnostics.rs), [storage.rs](crates/input-config/src/storage.rs), [fast_forward.rs](crates/input-config/src/fast_forward.rs), [language.rs](crates/input-config/src/language.rs).
+
+[Change record](docs/changes/2026-11-03-review-menu-input-core-english.json)
+
+## 2026-11-03 — Review maintenance helper text
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Review eight development helper scripts for English authored comments, CLI messages and generated labels, and record their hashes in the English-first audit.
+
+**Validation**
+
+- Read each complete script and inspected the existing Atlas generator diff; script text is English and source status was checked before hashing.
+
+**Limitations**
+
+- Scripts and separate tests were not executed; generated third-party notices and imported metadata remain verbatim. Other tools remain pending.
+
+Documentation: [generate_cursor.py](scripts/generate_cursor.py), [package_source.py](scripts/package_source.py), [rom_coverage_ranges.py](scripts/rom_coverage_ranges.py), [artifact_coordinator.py](scripts/artifact_coordinator.py), [generate_notices.py](scripts/generate_notices.py), [fetch_missing_notices.py](scripts/fetch_missing_notices.py), [build_desktop.py](scripts/build_desktop.py), [menu_atlas_inventory.py](scripts/menu_atlas_inventory.py).
+
+[Change record](docs/changes/2026-11-03-review-maintenance-helper-english.json)
+
+## 2026-11-03 — Review installer and launcher entry points in English
+
+Type: docs. Platforms: Desktop installer and launcher.
+
+**Changes**
+
+- Review the installer, launcher and placeholder translator source for English and record their exact current revisions.
+
+**Validation**
+
+- Read all three sources in full, inspected their existing translation diffs and verified SHA-256 hashes; no source behavior was changed in this review.
+
+**Limitations**
+
+- Language review only; no build, GUI, installation or ROM execution was performed. Other source and documentation audits remain open.
+
+Documentation: [main.rs](crates/installer/src/main.rs), [translator.rs](crates/installer/src/translator.rs), [main.rs](crates/ffta-play/src/main.rs).
+
+[Change record](docs/changes/2026-11-03-review-installer-launcher-entry-english.json)
+
+## 2026-11-03 — Review installer helpers and database source in English
+
+Type: docs. Platforms: Desktop installer and development tooling.
+
+**Changes**
+
+- Review installer selector, platform and policy helpers, two build scripts and the game database reader for English and register their exact revisions.
+
+**Validation**
+
+- Read all eight source files in full and verified their SHA-256 hashes; existing paths, identifiers and imported names remain unchanged.
+
+**Limitations**
+
+- Language review only; no build, UI, installation, database or ROM execution was performed. Other source and documentation audits remain open.
+
+Documentation: [native_picker.rs](crates/installer/src/native_picker.rs), [platform.rs](crates/installer/src/platform.rs), [presentation.rs](crates/installer/src/presentation.rs), [path_picker.rs](crates/installer/src/path_picker.rs), [rom_policy.rs](crates/installer/src/rom_policy.rs), [build.rs](crates/installer/build.rs), [lib.rs](crates/gamedb/src/lib.rs), [build.rs](crates/ffta-play/build.rs).
+
+[Change record](docs/changes/2026-11-03-review-installer-helpers-english.json)
+
+## 2026-11-03 — Review desktop core against Android sources in English
+
+Type: docs. Platforms: Desktop development.
+
+**Changes**
+
+- Review nine desktop core modules against their fully reviewed Android counterparts and register exact desktop revisions in the language audit.
+
+**Validation**
+
+- Confirmed Android counterparts still match their previously reviewed hashes, read all normalized textual differences and verified all nine desktop hashes.
+
+**Limitations**
+
+- This reviews language only; no builds, runtime checks or ROM access were performed. Other source and documentation audits remain open.
+
+Documentation: [lib.rs](crates/gba-core/src/lib.rs), [bus.rs](crates/gba-core/src/bus.rs), [capi.rs](crates/gba-core/src/capi.rs), [engine.rs](crates/gba-core/src/engine.rs), [ffta_movement.rs](crates/gba-core/src/ffta_movement.rs), [ffta_stage.rs](crates/gba-core/src/ffta_stage.rs), [hostclock.rs](crates/gba-core/src/hostclock.rs), [cpu.rs](crates/gba-core/src/cpu.rs), [ffta_rom.rs](crates/gba-core/src/ffta_rom.rs).
+
+[Change record](docs/changes/2026-11-03-review-desktop-core-against-android-english.json)
+
+## 2026-11-03 — Review debug and report launchers in English
+
+Type: docs. Platforms: Windows and Linux development tooling.
+
+**Changes**
+
+- Review ten platform launchers for debug, reports and private export for English and register their exact revisions.
+
+**Validation**
+
+- Read each launcher in full and confirmed its SHA-256; command syntax, paths and logging behavior remain unchanged.
+
+**Limitations**
+
+- No launcher, export, Docker image, runtime command or private data was executed; other source and documentation audits remain open.
+
+Documentation: [debug_artifacts.sh](scripts/linux/debug_artifacts.sh), [debug_campaign.sh](scripts/linux/debug_campaign.sh), [debug_runtime.sh](scripts/linux/debug_runtime.sh), [report_home.sh](scripts/linux/report_home.sh), [export_debug_assets.sh](scripts/linux/export_debug_assets.sh), [debug_artifacts.ps1](scripts/windows/debug_artifacts.ps1), [debug_campaign.ps1](scripts/windows/debug_campaign.ps1), [debug_runtime.ps1](scripts/windows/debug_runtime.ps1), [report_home.ps1](scripts/windows/report_home.ps1), [export_debug_assets.ps1](scripts/windows/export_debug_assets.ps1).
+
+[Change record](docs/changes/2026-11-03-review-debug-report-launchers-english.json)
+
+## 2026-11-03 — Review cross-tree core diagnostics in English
+
+Type: docs. Platforms: Desktop and AndroidPort.
+
+**Changes**
+
+- Review four Android core modules and three identical desktop counterparts for English, recording exact hashes in the audit.
+
+**Validation**
+
+- Read the four Android modules in full and compared the three desktop sources byte for byte with reviewed Android versions; verified all seven hashes.
+
+**Limitations**
+
+- Legacy SUPOSICION log token retained for compatibility; no builds, emulation or ROM access performed; other source and documentation audits remain open.
+
+Documentation: [ffta_shop_mouse.rs](AndroidPort/crates/gba-core/src/ffta_shop_mouse.rs), [ffta_rom.rs](AndroidPort/crates/gba-core/src/ffta_rom.rs), [cpu.rs](AndroidPort/crates/gba-core/src/cpu.rs), [ffta_log.rs](AndroidPort/crates/gba-core/src/ffta_log.rs), [interaction_grid.rs](crates/gba-core/src/interaction_grid.rs), [ffta_shop_mouse.rs](crates/gba-core/src/ffta_shop_mouse.rs), [ffta_log.rs](crates/gba-core/src/ffta_log.rs).
+
+[Change record](docs/changes/2026-11-03-review-cross-tree-core-diagnostics-english.json)
+
+## 2026-11-03 — Review core audio and backup sources in English
+
+Type: docs. Platforms: Desktop and AndroidPort.
+
+**Changes**
+
+- Review three Android audio and backup modules and their desktop counterparts for English and record their exact revisions.
+
+**Validation**
+
+- Read all Android versions and compared all normalized textual differences with desktop versions; verified six SHA-256 hashes.
+
+**Limitations**
+
+- Language review only; no builds, runtime checks, saves or ROM data were used. Other source and documentation audits remain open.
+
+Documentation: [apu.rs](AndroidPort/crates/gba-core/src/apu.rs), [backup.rs](AndroidPort/crates/gba-core/src/backup.rs), [shadow.rs](AndroidPort/crates/gba-core/src/shadow.rs), [apu.rs](crates/gba-core/src/apu.rs), [backup.rs](crates/gba-core/src/backup.rs), [shadow.rs](crates/gba-core/src/shadow.rs).
+
+[Change record](docs/changes/2026-11-03-review-core-audio-backup-english.json)
+
+## 2026-11-03 — Review build and extraction launchers in English
+
+Type: docs. Platforms: Windows and Linux development tooling.
+
+**Changes**
+
+- Review ten build, extraction, packaging, coverage and controller-test launchers for English and register their exact revisions.
+
+**Validation**
+
+- Read each launcher in full and confirmed its SHA-256; existing command syntax, paths and output remain unchanged.
+
+**Limitations**
+
+- No builds, downloads, extraction, controller tests or ROM data were run; other source and documentation audits remain open.
+
+Documentation: [build_windows_docker.sh](scripts/linux/build_windows_docker.sh), [extract_rom_data_docker.sh](scripts/linux/extract_rom_data_docker.sh), [package_ffta_linux.sh](scripts/linux/package_ffta_linux.sh), [build_docker.ps1](scripts/windows/build_docker.ps1), [extract_rom_data_docker.ps1](scripts/windows/extract_rom_data_docker.ps1), [simulate_gamepad_remap.ps1](scripts/windows/simulate_gamepad_remap.ps1), [build-linux-windows.ps1](scripts/windows/build-linux-windows.ps1), [rom_coverage_docker.ps1](scripts/windows/rom_coverage_docker.ps1), [build-tcc-windows.sh](scripts/windows/build-tcc-windows.sh), [package_ffta_windows.py](scripts/windows/package_ffta_windows.py).
+
+[Change record](docs/changes/2026-11-03-review-build-extraction-launchers-english.json)
+
+## 2026-11-03 — Review Android core foundation in English
+
+Type: docs. Platforms: AndroidPort.
+
+**Changes**
+
+- Review eight Android core foundation modules for English and record their exact revisions in the audit.
+
+**Validation**
+
+- Read each listed source module in full and confirmed its SHA-256; existing machine identifiers and imported signatures remain unchanged.
+
+**Limitations**
+
+- No builds, emulation or ROM access were run; remaining Android core modules and other project surfaces still need review.
+
+Documentation: [lib.rs](AndroidPort/crates/gba-core/src/lib.rs), [bus.rs](AndroidPort/crates/gba-core/src/bus.rs), [capi.rs](AndroidPort/crates/gba-core/src/capi.rs), [engine.rs](AndroidPort/crates/gba-core/src/engine.rs), [ffta_movement.rs](AndroidPort/crates/gba-core/src/ffta_movement.rs), [ffta_stage.rs](AndroidPort/crates/gba-core/src/ffta_stage.rs), [hostclock.rs](AndroidPort/crates/gba-core/src/hostclock.rs), [interaction_grid.rs](AndroidPort/crates/gba-core/src/interaction_grid.rs).
+
+[Change record](docs/changes/2026-11-03-review-android-core-foundation-english.json)
+
+## 2026-11-03 — Review analysis and audit utilities in English
+
+Type: docs. Platforms: Desktop development tooling.
+
+**Changes**
+
+- Review eight analysis, image conversion and audit tools for English and register their exact revisions in the audit.
+
+**Validation**
+
+- Read all eight tools in full and confirmed their hashes; English comments and messages retained, with existing Spanish status tokens classified as legacy output compatibility.
+
+**Limitations**
+
+- Tools were not executed on captures, ROMs, saves or private data; other source and documentation audits remain open.
+
+Documentation: [ffta_character_metric.py](scripts/ffta_character_metric.py), [ffta_log_analysis.py](scripts/ffta_log_analysis.py), [ffta_compare_extra0.py](scripts/ffta_compare_extra0.py), [ffta_ppm_to_png.py](scripts/ffta_ppm_to_png.py), [ffta_sky_verify.py](scripts/ffta_sky_verify.py), [ffta_stage_compare.py](scripts/ffta_stage_compare.py), [compare_native_backends.py](scripts/compare_native_backends.py), [audit_release.py](scripts/audit_release.py).
+
+[Change record](docs/changes/2026-11-03-review-analysis-utilities-english.json)
+
+## 2026-11-03 — Repeat an authenticated EUR replay procedure
+
+Type: changed. Platforms: Windows GNU / Wine.
+
+**Changes**
+
+- Record a repeatable DBG2-15 assistant procedure using content discovery, ID selection, replay and safe exact-identity retry.
+
+**Validation**
+
+- In an isolated copied EUR DS-20 case, the command API refreshed and selected the same profile by ID twice; two explicit replay runs each passed 102 frames with equal endpoint state and clock. Retrying the first request returned identical JSON and the same worker run, without creating another execution. Parent state, frame, clock, protected profile inputs and session pins remained unchanged; session and display closed.
+
+**Limitations**
+
+- This covers one interpreter replay through the shared command API, not complete menu/CLI/console parity, live slow-refresh, native Windows or physical input.
+
+Documentation: [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-03-repeat-real-eur-replay-procedure.json)
+
+## 2026-11-03 — Reconcile debug language audit hashes
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Review current debug checklist, task reference, console completion, operation mapping, cheat guide and proposal changes, and refresh six stale English-first audit hashes.
+
+**Validation**
+
+- Read current changes and language-sensitive text, inspected optional Italian test strings and ran scripts/menu_atlas_tasks.py --check: all 28 task references match.
+
+**Limitations**
+
+- Review covers only the identified current versions; other stale or concurrently changing audit entries remain open. No runtime checks or source modifications were performed.
+
+Documentation: [debug_v2.tsv](crates/menu/assets/debug_v2.tsv), [completion.rs](crates/recomp/src/debug_command/completion.rs), [debug_operations.rs](crates/recomp/src/debug_operations.rs), [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [todo2.md](docs/development/todo2.md).
+
+[Change record](docs/changes/2026-11-03-reconcile-debug-language-audit-hashes.json)
+
+## 2026-11-03 — Reconcile coverage snapshot language audit
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Reconcile the English-language audit hashes for the saved ROM coverage JSON and HTML after a later generated snapshot replaced the reviewed version.
+
+**Validation**
+
+- Compared string-value multisets with reviewed commit 735b1bc: new values are snapshot metadata. Confirmed HTML outside its embedded report is identical and its embedded JSON equals the saved JSON.
+
+**Limitations**
+
+- Only language and saved artifact consistency were reviewed; no ROM, dataset, generator, runtime or source analysis was run. The earlier handleless character diff was not repeated.
+
+Documentation: [coverage.json](docs/development/rom-coverage/coverage.json), [index.html](docs/development/rom-coverage/index.html).
+
+[Change record](docs/changes/2026-11-03-reconcile-coverage-language-snapshot.json)
 
 ## 2026-11-03 — Rename the fork FFTA DE-ReBuild
 
@@ -167,6 +911,30 @@ Documentation: [portable.md](docs/portable.md).
 
 [Change record](docs/changes/2026-11-03-prepare-first-release-linux.json)
 
+## 2026-11-03 — Manage source-bound cheats from the catalog page
+
+Type: added. Platforms: Windows GNU / Wine.
+
+**Changes**
+
+- Add an explicit source-selection and reviewed-preview view with separate prepare, apply once, arm, disarm and disarm-all actions, dispatched through the existing guarded handlers.
+- Show operations and possible read/write ranges before execution, preserve original catalog details, expose a global disarm-all action even with an unavailable catalog, and update localized labels and operation routes.
+
+**Validation**
+
+- Frozen offline Windows GNU runtime and test builds passed without compiler messages or source drift across 1942 files. Wine passed 17 selector, one source-selection and four operation-registry tests; Atlas inventory and checklist checks passed.
+- A synthetic isolated Wine/Xvfb keyboard flow refused arm without source or preview, then selected, previewed, armed, disarmed, applied once and disabled all; expected RAM write and unchanged frame/clock were checked. A separate prior build with identical management code passed simulated XInput. Screenshots of focus, refusals and preview were reviewed.
+- A further isolated Wine/Xvfb test changed only the copied catalog after arming: reload reported it unavailable and the catalog-level disarm-all still cleared the set. Session pins and protected original inputs stayed exact and displays closed.
+
+**Limitations**
+
+- Real cheat game effects, actual device hook, native Windows, Linux and physical controllers remain unverified. Values, ranges, groups and presets remain open; disarm stops future writes but does not restore previous bytes.
+- The XInput test used a prior build with identical management and runtime source files but earlier catalog labels; the final keyboard and unavailable-catalog checks used the final build.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [MENU_ATLAS_INVENTORY.json](docs/development/MENU_ATLAS_INVENTORY.json).
+
+[Change record](docs/changes/2026-11-03-manage-cheats-from-catalog-page.json)
+
 ## 2026-11-03 — Arm bounded cheat plans at interpreter frame boundaries
 
 Type: added. Platforms: Windows GNU / Wine.
@@ -192,6 +960,45 @@ Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/develo
 
 [Change record](docs/changes/2026-11-03-maintain-bounded-interpreter-cheats.json)
 
+## 2026-11-03 — Localize focus choice diagnostics
+
+Type: fixed. Platforms: Linux.
+
+**Changes**
+
+- Use English source messages and the existing English and Italian catalogs for tool and content-selector choice instructions in focus diagnostics, without changing selection identifiers or geometry.
+
+**Validation**
+
+- Offline isolated Linux menu test choice_focus_diagnostics_follow_menu_language passed for both screens and languages; scripts/menu_language.py check passed with 635 entries in each catalog; git diff --check passed.
+
+**Limitations**
+
+- First Linux build lacked Wayland pkg-config metadata; the passing build used temporary metadata with the installed runtime. The first test exposed locked test setup and passed after unlocking it. Native Windows and live GUI were not tested.
+
+[Change record](docs/changes/2026-11-03-localize-focus-choice-diagnostics.json)
+
+## 2026-11-03 — Inspect narrow replay console and worker version
+
+Type: changed. Platforms: Windows GNU / Wine.
+
+**Changes**
+
+- Record bounded narrow-window presentation evidence for a replay request and distinguish an older replay worker from the corrected worker.
+
+**Validation**
+
+- At a real Windows client size of 480×360 under Wine/Xvfb, the console displayed the pending replay request ID and parameters, then the successful result and copy hint. The corrected worker completed 102/102 frames with exact endpoint; parent state, frame and clock, original inputs and session pins stayed unchanged.
+- An earlier copied profile with the old worker stopped at frame 45 with Access denied; a source-bound profile with the previously corrected worker differed only in runtime hash and passed with status polling. This is consistent with the documented publication-sharing fix, but the denied OS operation was not reported. An initial GUI helper waited on the wrong response channel and did not attest normal parent close; corrected sessions closed normally.
+
+**Limitations**
+
+- The session label is abbreviated and one narrow replay does not prove all long labels/parameters, native Windows, physical input or complete operation parity.
+
+Documentation: [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-03-inspect-narrow-replay-console.json)
+
 ## 2026-11-03 — Index source-bound cheat capabilities without enabling them
 
 Type: changed. Platforms: Windows GNU / Wine.
@@ -214,6 +1021,26 @@ Type: changed. Platforms: Windows GNU / Wine.
 Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
 
 [Change record](docs/changes/2026-11-03-index-cheat-source-capabilities.json)
+
+## 2026-11-03 — Improve UI property list inventory readability
+
+Type: docs. Platforms: Desktop development documentation.
+
+**Changes**
+
+- Separate counts and byte units in property-selected UI list source, integration and CLI summaries while preserving validation limits.
+
+**Validation**
+
+- Compared the inventory with its immediate preimage: digit runs, headings, Markdown links and inline code match; text outside the selected summaries is unchanged.
+
+**Limitations**
+
+- Inventory review remains partial from the FFFF numeric reader model onward; historical runtime results were not reproduced and the wider English-first audit remains open.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md).
+
+[Change record](docs/changes/2026-11-03-improve-rom-inventory-ui-property-list-readability.json)
 
 ## 2026-11-03 — Improve trade and item-effect inventory readability
 
@@ -274,6 +1101,26 @@ Type: docs. Platforms: Desktop development documentation.
 Documentation: [rom_data_scripts.md](docs/rom_data_scripts.md), [rom_data_text.md](docs/rom_data_text.md).
 
 [Change record](docs/changes/2026-11-03-improve-rom-inventory-script-text-readability.json)
+
+## 2026-11-03 — Improve actor property inventory readability
+
+Type: docs. Platforms: Desktop development documentation.
+
+**Changes**
+
+- Separate byte units and counts in actor property and UI byte-input summaries while retaining the original validation boundaries.
+
+**Validation**
+
+- Compared the inventory with its immediate preimage: digit runs, headings, Markdown links and inline code match; text outside the selected summaries is unchanged.
+
+**Limitations**
+
+- Inventory review remains partial from the UI property-selected list section onward; historical runtime results were not reproduced and the wider English-first audit remains open.
+
+Documentation: [rom_data_unit_obj.md](docs/rom_data_unit_obj.md).
+
+[Change record](docs/changes/2026-11-03-improve-rom-inventory-property-readability.json)
 
 ## 2026-11-03 — Improve palette and text inventory readability
 
@@ -355,6 +1202,44 @@ Documentation: [rom_data_obj.md](docs/rom_data_obj.md), [rom_data_unit_obj.md](d
 
 [Change record](docs/changes/2026-11-03-improve-rom-inventory-obj-readability.json)
 
+## 2026-11-03 — Improve normal script pose inventory readability
+
+Type: docs. Platforms: Desktop development documentation.
+
+**Changes**
+
+- Separate merged words, values and counts in normal script-special pose source, runtime and ordinary-use summaries, retaining validation limits.
+
+**Validation**
+
+- Compared the inventory against its tracked pre-edit version for identical digit runs, headings, Markdown link targets and inline code spans. Confirmed the remainder from the alternate pose branch onward is unchanged.
+
+**Limitations**
+
+- Inventory review remains partial from the alternate pose branch onward; historical runtime results were not reproduced, and the wider English-first audit remains open.
+
+Documentation: [rom_data_unit_obj.md](docs/rom_data_unit_obj.md).
+
+[Change record](docs/changes/2026-11-03-improve-rom-inventory-normal-script-pose-readability.json)
+
+## 2026-11-03 — Clarify ROM inventory job lookup summaries
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Rewrite six compact job lookup source, model, runtime, CLI, ordinary-scene and follow-up reader summaries as readable English without changing their acceptance boundaries.
+
+**Validation**
+
+- Compared task identifiers, links and numerical facts with the original summaries; reviewed the stated scopes and limitations.
+
+**Limitations**
+
+- Documentation-only edit; no ROM, build, runtime or platform validation was run. The remaining inventory review is partial.
+
+[Change record](docs/changes/2026-11-03-improve-rom-inventory-job-lookup-readability.json)
+
 ## 2026-11-03 — Improve item and metadata inventory readability
 
 Type: docs. Platforms: Desktop development documentation.
@@ -375,6 +1260,26 @@ Documentation: [rom_data_gameplay.md](docs/rom_data_gameplay.md).
 
 [Change record](docs/changes/2026-11-03-improve-rom-inventory-item-metadata-readability.json)
 
+## 2026-11-03 — Improve generic registry inventory readability
+
+Type: docs. Platforms: Desktop development documentation.
+
+**Changes**
+
+- Separate counts and byte units in generic registry, redirect and FFFF reader summaries while preserving the original validation boundaries.
+
+**Validation**
+
+- Compared the inventory with its immediate preimage: digit runs, headings, Markdown link targets and inline code match; text outside the selected summaries is unchanged.
+
+**Limitations**
+
+- The inventory language review remains partial from the actor property reader onward; historical runtime results were not reproduced and the wider English-first audit remains open.
+
+Documentation: [rom_data_unit_obj.md](docs/rom_data_unit_obj.md).
+
+[Change record](docs/changes/2026-11-03-improve-rom-inventory-generic-registry-readability.json)
+
 ## 2026-11-03 — Improve gameplay table inventory readability
 
 Type: docs. Platforms: Desktop development documentation.
@@ -394,6 +1299,46 @@ Type: docs. Platforms: Desktop development documentation.
 Documentation: [rom_data_gameplay.md](docs/rom_data_gameplay.md).
 
 [Change record](docs/changes/2026-11-03-improve-rom-inventory-gameplay-tables-readability.json)
+
+## 2026-11-03 — Improve FFFF reader inventory readability
+
+Type: docs. Platforms: Desktop development documentation.
+
+**Changes**
+
+- Separate counts and byte units in FFFF numeric reader model, runtime and CLI summaries while preserving validation limits.
+
+**Validation**
+
+- Compared the inventory with its immediate preimage: digit runs, headings, Markdown links and inline code match; text outside the selected summaries is unchanged.
+
+**Limitations**
+
+- Inventory review remains partial from the UI job lookup source onward; historical runtime results were not reproduced and the wider English-first audit remains open.
+
+Documentation: [rom_data_unit_obj.md](docs/rom_data_unit_obj.md).
+
+[Change record](docs/changes/2026-11-03-improve-rom-inventory-ffff-reader-readability.json)
+
+## 2026-11-03 — Improve coordinate and auxiliary script inventory readability
+
+Type: docs. Platforms: Desktop development documentation.
+
+**Changes**
+
+- Separate merged words, addresses and counts in coordinate path and auxiliary script source, runtime and scene summaries, retaining recorded validation limits.
+
+**Validation**
+
+- Compared the inventory against its tracked pre-edit version for identical digit runs, headings, Markdown link targets and inline code spans. Confirmed the remainder from the conditional pose model onward is unchanged.
+
+**Limitations**
+
+- Inventory review remains partial from the conditional pose model onward; historical runtime results were not reproduced, and the wider English-first audit remains open.
+
+Documentation: [rom_data_scripts.md](docs/rom_data_scripts.md).
+
+[Change record](docs/changes/2026-11-03-improve-rom-inventory-coordinate-auxiliary-readability.json)
 
 ## 2026-11-03 — Improve BG packet and palette inventory readability
 
@@ -435,6 +1380,90 @@ Documentation: [rom_data_audio.md](docs/rom_data_audio.md), [rom_data_graphics.m
 
 [Change record](docs/changes/2026-11-03-improve-rom-inventory-audio-dataset-readability.json)
 
+## 2026-11-03 — Improve alternate script pose inventory readability
+
+Type: docs. Platforms: Desktop development documentation.
+
+**Changes**
+
+- Clarify counts and byte ownership in alternate, forced-override and known-special script pose summaries without changing historical evidence.
+
+**Validation**
+
+- Compared the inventory with the immediate preimage: digit runs, headings, Markdown links and inline code match; text outside the selected summaries is unchanged. Checked the alternate ownership description against its source contract.
+
+**Limitations**
+
+- Inventory language review remains partial from the high-registry generic unit section onward; historical runtime results were not reproduced and the wider English-first audit remains open.
+
+Documentation: [rom_data_unit_obj.md](docs/rom_data_unit_obj.md).
+
+[Change record](docs/changes/2026-11-03-improve-rom-inventory-alternate-script-pose-readability.json)
+
+## 2026-11-03 — Filter cheats by source and armed state
+
+Type: fixed. Platforms: Windows GNU / Wine.
+
+**Changes**
+
+- Use machine-readable source-plan, declared-region and armed metadata for cheat filters instead of comparing translated labels; add explicit armed and not-armed choices while keeping generic content filters unchanged.
+- Explain that a plan candidate still needs runtime preflight and is not proof of device or gameplay compatibility.
+
+**Validation**
+
+- Frozen Windows GNU release build succeeded with 1942 source files and no source or overlay drift; 18 selector tests passed under Wine, including localized labels and refresh after armed-state changes.
+- Synthetic Wine/Xvfb GUI showed 3 plan candidates, 4 declared-region matches, 1 needing attention, and armed count 0→1→0 plus 4 not armed; the game state, frame and clock stayed unchanged, and the isolated session closed with original inputs and pins unchanged. The first immediate post-disarm screenshot preceded redraw; the later image confirms the cleared state.
+
+**Limitations**
+
+- This implements filter behavior only: values, named groups and presets remain open. Candidate status is a source-bound preflight hint, not execution or compatibility verification; native Windows and physical controller input were not tested.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-03-filter-cheats-by-machine-state.json)
+
+## 2026-11-03 — Expose source capability reports through the local channel
+
+Type: added. Platforms: Windows GNU / Wine.
+
+**Changes**
+
+- Add an authenticated read-only cheats capabilities query and direct control form returning bounded UTF-8 chunks of the immutable source-capability report, its SHA-256 and snapshot generation.
+- Advertise a separate channel capability, refuse older servers before sending, preserve original-entry detail format, and add command completion and operation metadata.
+
+**Validation**
+
+- Frozen offline Windows GNU test and runtime builds passed without compiler messages or source drift across 1941 files. Wine passed 13 cheat tests (one ignored), 9 command, 4 completion, 31 control and 4 operation tests, including multi-part UTF-8 reconstruction, invalid offsets and generation, and old-server refusal.
+- A synthetic isolated Wine/Xvfb interpreter returned the same capability report via CLI, console and direct control with matching hash; stale generation was refused, paused guest and protected inputs remained unchanged, and session/display closed.
+
+**Limitations**
+
+- Source-bound reports remain assumptions and do not verify device behavior, actual ROM checksum or gameplay. Native Windows, Linux and physical input were not tested; the runtime parity proof used one synthetic report part, while multi-part behavior was tested separately.
+
+Documentation: [debug_control.md](docs/debug_control.md), [cheats.md](docs/cheats.md), [MENU_ATLAS_INVENTORY.json](docs/development/MENU_ATLAS_INVENTORY.json).
+
+[Change record](docs/changes/2026-11-03-expose-source-capability-local-control.json)
+
+## 2026-11-03 — Verify deadline during EUR replay execution
+
+Type: changed. Platforms: Windows GNU / Wine.
+
+**Changes**
+
+- Record a bounded DBG2-15 server deadline while a real interpreter replay is executing guest frames.
+
+**Validation**
+
+- A copied EUR DS-20 worker reported running at 9/102 frames. The client reported an unacknowledged timeout at the 1400 ms deadline; the later server result for the same request reported timeout with no pending request and the same worker interrupted at 13/102. The paused parent state, frame and clock, source profile, protected inputs and session pins remained unchanged; session and display closed.
+
+**Limitations**
+
+- This covers one Wine/interpreter replay and does not prove the complete assistant procedure, all parity, native Windows or physical input.
+
+Documentation: [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-03-expire-live-eur-replay.json)
+
 ## 2026-11-03 — Distinguish the independently maintained fork
 
 Type: docs. Platforms: Documentation.
@@ -457,6 +1486,540 @@ Type: docs. Platforms: Documentation.
 Documentation: [README.md](Licenses/README.md).
 
 [Change record](docs/changes/2026-11-03-distinguish-independent-fork.json)
+
+## 2026-11-03 — Complete maintained cheat command hints in the console
+
+Type: changed. Platforms: Windows GNU / Wine.
+
+**Changes**
+
+- Offer arm and disarm completion and the explicit all argument; show localized contextual syntax for prepare, apply-once, arm and disarm without inventing source identities or preview tokens.
+
+**Validation**
+
+- Frozen offline Windows GNU release and test builds passed with 1915 source files and no drift. Four Wine completion tests passed, including English and Italian hints.
+- An isolated paused Wine/Xvfb command console showed the completed arm and disarm all drafts and their English hints; visual screenshots were reviewed, neither draft was submitted, and the guest, session pins and protected inputs remained unchanged.
+
+**Limitations**
+
+- Real IME composition and keyboard layouts, native Windows, Linux and physical controllers remain unverified. The captured GUI uses English; Italian hints were covered by Wine tests.
+
+Documentation: [debug_control.md](docs/debug_control.md), [cheats.md](docs/cheats.md).
+
+[Change record](docs/changes/2026-11-03-complete-maintained-cheat-console-hints.json)
+
+## 2026-11-03 — Classify preserved third-party notices
+
+Type: docs. Platforms: Desktop and AndroidPort documentation.
+
+**Changes**
+
+- Classify both identical third-party notice bundles as preserved upstream material with English project-authored wrappers.
+
+**Validation**
+
+- Inspected generator and all non-fenced prose structure, counted 298 fenced notices and verified both bundle SHA-256 values match.
+
+**Limitations**
+
+- Upstream license wording was preserved rather than translated or legally audited; other documentation and source audits remain open.
+
+Documentation: [THIRD_PARTY_NOTICES.md](Licenses/THIRD_PARTY_NOTICES.md), [THIRD_PARTY_NOTICES.md](AndroidPort/Licenses/THIRD_PARTY_NOTICES.md), [generate_notices.py](scripts/generate_notices.py).
+
+[Change record](docs/changes/2026-11-03-classify-third-party-notices-english.json)
+
+## 2026-11-03 — Clarify ROM world-road inventory
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Rewrite six compressed summaries of ordinary world-node use and world-road source, model, runtime, CLI and ordinary validation, preserving evidence scope and limits.
+
+**Validation**
+
+- Compared numeric tokens, links and task IDs with prior summaries, confirmed outside text matches the preimage and checked details against linked analyses; git diff --check passed.
+
+**Limitations**
+
+- Documentation review only; no ROM exploration, build, runtime or platform validation was performed. The broader English-first audit remains open.
+
+[Change record](docs/changes/2026-11-03-clarify-rom-world-road-inventory.json)
+
+## 2026-11-03 — Clarify ROM world-node inventory
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Rewrite the ordinary constructor result and four world-node source, model, runtime and CLI summaries in readable English, preserving their scope and validation limits.
+
+**Validation**
+
+- Compared numeric tokens, links and task IDs with the prior summaries; confirmed all text outside the selected summaries matches the preimage and checked details against linked analyses; git diff --check passed.
+
+**Limitations**
+
+- Documentation review only; no ROM exploration, build, runtime or platform validation was performed. The broader English-first audit remains open.
+
+[Change record](docs/changes/2026-11-03-clarify-rom-world-node-inventory.json)
+
+## 2026-11-03 — Clarify u16 OBJ inventory summaries
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Rewrite five Bank bus/host census and u16 task OBJ model, runtime, CLI and ordinary-scene summaries in readable English while retaining evidence and limits.
+
+**Validation**
+
+- Compared numeric tokens, links, task IDs and inline code with the prior text; git diff --check passed.
+
+**Limitations**
+
+- Documentation only; no ROM, build, runtime, benchmark or platform validation was performed. The rest of the inventory remains under review.
+
+[Change record](docs/changes/2026-11-03-clarify-rom-u16-obj-inventory.json)
+
+## 2026-11-03 — Clarify task-cycle inventory summaries
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Rewrite five conditional phase and task-cycle source, runtime, CLI and ordinary-scene inventory summaries in readable English while retaining evidence and limits.
+
+**Validation**
+
+- Compared numeric tokens, links, task IDs and inline code with the prior text; git diff --check passed.
+
+**Limitations**
+
+- Documentation only; no ROM, build, runtime, benchmark or platform validation was performed. The rest of the inventory remains under review.
+
+[Change record](docs/changes/2026-11-03-clarify-rom-task-cycle-inventory.json)
+
+## 2026-11-03 — Clarify ROM quest and navigation inventory
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Rewrite four compressed inventory summaries covering quest location, White Flowers acceptance, world selection and Giza battle entry, preserving their historical scope and evidence limits.
+
+**Validation**
+
+- Compared numeric tokens, links and task IDs against prior text and checked details against the linked map analysis; git diff --check passed.
+
+**Limitations**
+
+- Documentation review only; no ROM exploration, build, runtime or platform validation was performed. The broader English-first audit remains open.
+
+[Change record](docs/changes/2026-11-03-clarify-rom-quest-navigation-inventory.json)
+
+## 2026-11-03 — Clarify observed parameter inventory summaries
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Rewrite four observed task parameter model, runtime, CLI and ordinary-frame summaries in readable English while retaining evidence and limits.
+
+**Validation**
+
+- Compared numeric tokens, links, task IDs and inline code with the prior text; git diff --check passed.
+
+**Limitations**
+
+- Documentation only; no ROM, build, runtime, benchmark or platform validation was performed. The rest of the inventory remains under review.
+
+[Change record](docs/changes/2026-11-03-clarify-rom-observed-parameter-inventory.json)
+
+## 2026-11-03 — Clarify observed OBJ inventory summaries
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Rewrite four observed OBJ list model, runtime, CLI and ordinary-frame inventory summaries in readable English while retaining evidence and limits.
+
+**Validation**
+
+- Compared numeric tokens, links, task IDs and inline code with the prior text; git diff --check passed.
+
+**Limitations**
+
+- Documentation only; no ROM, build, runtime, benchmark or platform validation was performed. The rest of the inventory remains under review.
+
+[Change record](docs/changes/2026-11-03-clarify-rom-observed-obj-inventory.json)
+
+## 2026-11-03 — Clarify native ROM residue summaries
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Rewrite six inventory summaries for native and host ROM-read residue and the e61 alternate-pose guide entry in readable English, preserving their evidence and limits.
+
+**Validation**
+
+- Compared numeric tokens, links, task IDs and inline code against the prior text; git diff --check passed.
+
+**Limitations**
+
+- Documentation only; no ROM, build, runtime, benchmark or platform validation was performed. Both documents remain under review.
+
+[Change record](docs/changes/2026-11-03-clarify-rom-native-residue-summaries.json)
+
+## 2026-11-03 — Clarify ROM metadata28 inventory
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Rewrite five indexed metadata source, model, runtime, CLI and ordinary combat summaries in readable English, preserving evidence and scope limits.
+
+**Validation**
+
+- Compared numeric tokens, links and task IDs with prior summaries, confirmed outside text matches the preimage and checked details against linked analysis; git diff --check passed.
+
+**Limitations**
+
+- Documentation review only; no ROM exploration, build, runtime or platform validation was performed. The broader English-first audit remains open.
+
+[Change record](docs/changes/2026-11-03-clarify-rom-metadata28-inventory.json)
+
+## 2026-11-03 — Clarify ROM map selection and encounter records
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Rewrite two inventory summaries in readable English and separate the 70-byte record size from address 713B3C using the linked source analysis.
+
+**Validation**
+
+- Compared numeric tokens, links and task IDs against the prior summaries and checked the record size and address against the linked map analysis; git diff --check passed.
+
+**Limitations**
+
+- Documentation review only; no ROM exploration, build, runtime or platform validation was performed. The wider English-first audit remains open.
+
+[Change record](docs/changes/2026-11-03-clarify-rom-map-record-selection.json)
+
+## 2026-11-03 — Clarify ROM encounter-unit inventory
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Rewrite five encounter unit-template source, model, runtime, CLI and ordinary-use summaries in readable English, preserving shared ownership and validation boundaries.
+
+**Validation**
+
+- Compared numeric tokens, links and task IDs with prior summaries, confirmed outside text matches the preimage and checked details against linked analyses; git diff --check passed.
+
+**Limitations**
+
+- Documentation review only; no ROM exploration, build, runtime or platform validation was performed. The broader English-first audit remains open.
+
+[Change record](docs/changes/2026-11-03-clarify-rom-encounter-unit-inventory.json)
+
+## 2026-11-03 — Clarify ROM encounter-header inventory
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Rewrite five encounter catalog and header summaries in readable English, retaining shared ownership, source/model/runtime/CLI evidence and ordinary-use limits.
+
+**Validation**
+
+- Compared numeric tokens, links and task IDs with prior summaries, confirmed outside text matches the preimage and checked details against linked analyses; git diff --check passed.
+
+**Limitations**
+
+- Documentation review only; no ROM exploration, build, runtime or platform validation was performed. The broader English-first audit remains open.
+
+[Change record](docs/changes/2026-11-03-clarify-rom-encounter-header-inventory.json)
+
+## 2026-11-03 — Clarify ROM encounter-coordinate inventory
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Rewrite five encounter coordinate source, model, runtime, CLI and ordinary-use summaries in readable English, preserving verification and scope limits.
+
+**Validation**
+
+- Compared numeric tokens, links and task IDs with prior summaries, confirmed outside text matches the preimage and checked details against linked analysis; git diff --check passed.
+
+**Limitations**
+
+- Documentation review only; no ROM exploration, build, runtime or platform validation was performed. The broader English-first audit remains open.
+
+[Change record](docs/changes/2026-11-03-clarify-rom-encounter-coordinate-inventory.json)
+
+## 2026-11-03 — Clarify ROM task and script summaries
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Rewrite five EUR e48–e52 task, event and script summaries in readable English while preserving evidence and limits.
+
+**Validation**
+
+- Compared numeric tokens, linked destinations and inline code with prior text; checked the event-count interpretation in the linked guide and ran git diff --check.
+
+**Limitations**
+
+- Documentation only; no ROM, build, runtime, benchmark or platform validation was performed. Other guide sections remain under review.
+
+[Change record](docs/changes/2026-11-03-clarify-rom-data-task-script-summaries.json)
+
+## 2026-11-03 — Clarify ROM selection and program summaries
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Rewrite five EUR e34–e47 selection, flag, palette and blend summaries as readable English while retaining evidence scope and limits.
+
+**Validation**
+
+- Compared numeric tokens, linked destinations and inline code with the prior text; git diff --check passed.
+
+**Limitations**
+
+- Documentation only; no ROM, build, runtime, benchmark or platform validation was performed. Other guide sections remain under review.
+
+[Change record](docs/changes/2026-11-03-clarify-rom-data-selection-program-summaries.json)
+
+## 2026-11-03 — Clarify ROM data property summaries
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Rewrite the EUR e66–e70 ROM guide summaries and UI property model description as readable English while retaining their reported evidence and limitations.
+
+**Validation**
+
+- Compared all numeric tokens, linked destinations and generation/metadata identifiers with the prior text; git diff --check passed.
+
+**Limitations**
+
+- Documentation only; no ROM, build, runtime, benchmark or platform validation was performed. The rest of the ROM data guide remains under review.
+
+[Change record](docs/changes/2026-11-03-clarify-rom-data-property-summaries.json)
+
+## 2026-11-03 — Clarify ROM data pose and palette summaries
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Rewrite four EUR e57–e60 pose and palette summaries in readable English while retaining evidence scope and limitations.
+
+**Validation**
+
+- Compared numeric tokens, linked destinations and inline code with the prior text; git diff --check passed.
+
+**Limitations**
+
+- Documentation only; no ROM, build, runtime, benchmark or platform validation was performed. The remaining ROM data guide is still under review.
+
+[Change record](docs/changes/2026-11-03-clarify-rom-data-pose-palette-summaries.json)
+
+## 2026-11-03 — Clarify ROM data opening summaries
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Rewrite the EUR e71–e76 summaries at the start of the ROM data guide as readable English while preserving their reported evidence and platform limits.
+
+**Validation**
+
+- Compared every numeric token, linked destination and generation/metadata identifier against the prior six sections; git diff --check passed.
+
+**Limitations**
+
+- Documentation only; no ROM, build, runtime, benchmark or platform validation was run. The rest of the ROM data guide remains under review.
+
+[Change record](docs/changes/2026-11-03-clarify-rom-data-opening-summaries.json)
+
+## 2026-11-03 — Clarify early ROM resource history
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Correct fused words and numbers in the EUR e11–e25 resource summaries, preserving the recorded behavior and evidence.
+
+**Validation**
+
+- Compared numeric tokens, linked destinations and inline code with the prior text; git diff --check passed.
+
+**Limitations**
+
+- Documentation only; no ROM, build, runtime, benchmark or platform validation was performed. Other guide sections remain under review.
+
+[Change record](docs/changes/2026-11-03-clarify-rom-data-early-resource-history.json)
+
+## 2026-11-03 — Clarify ROM coordinate and UI summaries
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Rewrite four EUR e53–e56 coordinate, auxiliary script, raster palette and UI summaries in readable English while preserving evidence and limits.
+
+**Validation**
+
+- Compared numeric tokens, linked destinations and inline code with the prior text; git diff --check passed.
+
+**Limitations**
+
+- Documentation only; no ROM, build, runtime, benchmark or platform validation was performed. Other guide sections remain under review.
+
+[Change record](docs/changes/2026-11-03-clarify-rom-data-coordinate-ui-summaries.json)
+
+## 2026-11-03 — Clarify ROM data constructor summaries
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Rewrite four EUR e28–e33 key, constructor and flag summaries as readable English while retaining reported results and limits.
+
+**Validation**
+
+- Compared numeric tokens, linked destinations and inline code with the prior text; git diff --check passed.
+
+**Limitations**
+
+- Documentation only; no ROM, build, runtime, benchmark or platform validation was performed. Other guide sections remain under review.
+
+[Change record](docs/changes/2026-11-03-clarify-rom-data-constructor-summaries.json)
+
+## 2026-11-03 — Clarify ROM audio and parameter summaries
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Rewrite five EUR e39–e45 audio, parameter and palette summaries in readable English while retaining their evidence and limits.
+
+**Validation**
+
+- Compared numbers, links and inline code with prior text, treating the fused shared05/shared06 counters as separate labels and counts; checked their linked source and ran git diff --check.
+
+**Limitations**
+
+- Documentation only; no ROM, build, runtime, benchmark or platform validation was performed. Other guide sections remain under review.
+
+[Change record](docs/changes/2026-11-03-clarify-rom-data-audio-parameter-summaries.json)
+
+## 2026-11-03 — Clarify constructor reachability inventory
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Rewrite four constructor flag, slot, map inventory and cell writer summaries in readable English while retaining evidence and limits.
+
+**Validation**
+
+- Compared numeric tokens, links, task IDs and inline code with the prior text; git diff --check passed.
+
+**Limitations**
+
+- Documentation only; no ROM, build, runtime, benchmark or platform validation was performed. The rest of the inventory remains under review.
+
+[Change record](docs/changes/2026-11-03-clarify-rom-constructor-reachability-inventory.json)
+
+## 2026-11-03 — Clarify constructor OBJ inventory summaries
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Rewrite five bus residue and constructor OBJ source, runtime, CLI and ordinary-discovery summaries in readable English while retaining evidence and limits.
+
+**Validation**
+
+- Compared numeric tokens, links, task IDs and inline code with the prior text; git diff --check passed.
+
+**Limitations**
+
+- Documentation only; no ROM, build, runtime, benchmark or platform validation was performed. The rest of the inventory remains under review.
+
+[Change record](docs/changes/2026-11-03-clarify-rom-constructor-obj-inventory.json)
+
+## 2026-11-03 — Record bounded EUR JP cheat display observation
+
+Type: changed. Platforms: Windows GNU / Wine.
+
+**Changes**
+
+- Record the selected CH-0336 Party-screen observation without promoting it to a verified resource effect.
+
+**Validation**
+
+- In a fresh isolated EUR world-map copy, Party showed Marsh at JP 4. One armed interpreter frame recorded 24 writes; after disarm and bounded next/previous inputs, with no intermediate selection capture, the display still showed JP 4. Screenshots were inspected, the seed restored exactly, the session and display closed, and original inputs and session pins stayed unchanged.
+
+**Limitations**
+
+- This is a negative observation for one unit, source and scene; it does not establish behavior for other units, scenes or hardware. A visible resource modifier remains required for DBG2-21.
+- The intermediate unit selection was not captured; a redraw cannot be asserted.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-03-check-eur-jp-cheat-party-display.json)
+
+## 2026-11-03 — Verify cancellation during a slow content refresh
+
+Type: changed. Platforms: Windows GNU / Wine.
+
+**Changes**
+
+- Record live DBG2-15 status, listing and targeted cancellation while a bounded content scan is in progress.
+
+**Validation**
+
+- In a copied Wine/Xvfb session, a refresh over 2048 inert files remained pending while the previous generation was listed. A wrong cancellation ID was refused; exact-ID cancellation returned cancelled, cleared pending status and left the prior index unchanged after the worker finished. Parent state, frame and clock, original inputs and session pins stayed unchanged; session and display closed.
+
+**Limitations**
+
+- This uses one synthetic bounded scan under Wine/interpreter. Cancellation is cooperative and discards the result after the scanner returns; native Windows, physical input and full operation parity remain unverified.
+
+Documentation: [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-03-cancel-slow-content-refresh.json)
+
+## 2026-11-03 — Verify cancellation during EUR replay execution
+
+Type: changed. Platforms: Windows GNU / Wine.
+
+**Changes**
+
+- Record exact-request cancellation during a real interpreter replay as a bounded DBG2-15 validation increment.
+
+**Validation**
+
+- In a copied EUR DS-20 replay, the worker reported running at 10/102 frames before exact-ID cancellation; the same run reported interrupted at 21/102 and the control request returned cancelled. The paused parent state, frame and clock, source profile, protected inputs and session pins remained unchanged; session and display closed.
+
+**Limitations**
+
+- This validates cancellation in one Wine/interpreter case. A deadline while guest frames execute, complete assistant procedure and parity, native Windows and physical input remain unverified.
+
+Documentation: [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-03-cancel-live-eur-replay.json)
 
 ## 2026-11-02 — Validate upstream fractional fast-forward input tests
 

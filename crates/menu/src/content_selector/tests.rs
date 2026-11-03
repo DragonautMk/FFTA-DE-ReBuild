@@ -6,8 +6,8 @@ fn cheat_action_labels_use_english_keys_and_preserve_italian_presentation() {
     selector.cheat_mode = true;
     let italian = input_config::Language::parse("it");
     let expected = [
-        "Dettagli", "Preferito", "Dettagli / scorri", "Ricarica",
-        "Importa catalogo...", "Scegli cartella...", "Indietro",
+        "Dettagli", "Preferito", "Gestisci cheat", "Ricarica",
+        "Importa catalogo...", "Disattiva tutti", "Indietro",
     ];
     for (index, (&key, &translation)) in CHEAT_ACTIONS.iter().zip(&expected).enumerate() {
         selector.focus = index + 6;
@@ -62,7 +62,21 @@ fn cheat_view_keeps_all_rows_and_never_dispatches_selection(){
     s.handle(MenuInput::Cancel);s.focus=10;assert_eq!(s.handle(MenuInput::Confirm),Some(MenuAction::CheatChoose));s.focus=9;assert_eq!(s.handle(MenuInput::Confirm),Some(MenuAction::CheatReload));
     s.set("Cheat".into(),Vec::new(),String::new(),0);s.focus=6;assert!(s.handle(MenuInput::Confirm).is_none());
     assert!(s.message.contains("Import catalog"));
+    s.focus=11;assert_eq!(s.handle(MenuInput::Confirm),Some(MenuAction::CheatRequest(super::super::CheatRequest::DisarmAll)));
     assert!(crate::i18n::Locale(input_config::Language::parse("it")).tr(&s.message).contains("Importa catalogo"));
+}
+
+#[test]
+fn management_requires_explicit_source_and_dispatches_separate_requests(){
+    let mut s=Selector::default();s.cheat_mode=true;s.set("Cheat".into(),vec![ContentEntry{id:"CH-0001".into(),name:"Example".into(),..Default::default()}],String::new(),0);
+    s.focus=8;assert_eq!(s.handle(MenuInput::Confirm),Some(MenuAction::CheatManage));
+    s.open_cheat_management(vec![super::super::CheatSource{index:0,name:"source".into(),master:"CH-0002".into(),assessment:"manual-once-subset".into()}]);
+    assert!(s.cheat_selected_source().is_none());s.handle(MenuInput::Right);assert_eq!(s.handle(MenuInput::Confirm),Some(MenuAction::CheatRequest(super::super::CheatRequest::Prepare)));assert!(s.cheat_selected_source().is_none());
+    s.handle(MenuInput::Left);s.handle(MenuInput::Confirm);assert_eq!(s.cheat_selected_source().unwrap().index,0);
+    s.handle(MenuInput::Right);assert_eq!(s.handle(MenuInput::Confirm),Some(MenuAction::CheatRequest(super::super::CheatRequest::Prepare)));
+    s.cheat_management_feedback("Review".into(),Some("plan and footprint".into()));assert!(s.detail_mode);assert!(!s.cheat_preview_reviewed());s.handle(MenuInput::Cancel);assert!(!s.detail_mode);assert!(s.cheat_preview_reviewed());
+    s.handle(MenuInput::Down);s.handle(MenuInput::Down);assert_eq!(s.handle(MenuInput::Confirm),Some(MenuAction::CheatRequest(super::super::CheatRequest::Arm)));
+    s.handle(MenuInput::Cancel);assert!(!s.cheat_management_active());
 }
 
 #[test]
@@ -107,8 +121,38 @@ fn entries() -> Vec<ContentEntry> {
             status: "available".into(),
             compatibility: "unknown".into(),
             available: true,
+            cheat_filter: None,
         })
         .collect()
+}
+
+#[test]
+fn cheat_filters_use_machine_metadata_and_follow_armed_changes() {
+    let entry = |id: &str, armed, declared_match, plan_candidate| ContentEntry {
+        id: id.into(), name: id.into(), available: true,
+        // Localized presentation must not control the filter.
+        status: "Attivo".into(), compatibility: "Non verificato".into(),
+        cheat_filter: Some(CheatFilter { armed, declared_match, plan_candidate }),
+        ..Default::default()
+    };
+    let mut s = Selector::default();
+    s.cheat_mode = true;
+    s.set("Cheats".into(), vec![entry("a", true, true, true), entry("b", false, true, false), entry("c", false, false, false)], String::new(), 0);
+    s.focus = 2;
+    let visible = |s: &Selector| s.visible.iter().map(|&i| s.entries[i].id.clone()).collect::<Vec<_>>();
+    for expected in [vec!["a"], vec!["a", "b"], vec!["b", "c"], vec!["a"], vec!["b", "c"], vec!["a", "b", "c"]] {
+        s.handle(MenuInput::Confirm);
+        s.handle(MenuInput::Right);
+        s.handle(MenuInput::Confirm);
+        assert_eq!(visible(&s), expected);
+    }
+    s.handle(MenuInput::Confirm);
+    for _ in 0..4 { s.handle(MenuInput::Right); }
+    s.handle(MenuInput::Confirm);
+    assert_eq!(visible(&s), vec!["a"]);
+    s.set("Cheats".into(), vec![entry("a", false, true, true), entry("b", true, true, false)], String::new(), 1);
+    assert_eq!(visible(&s), vec!["b"]);
+    assert_eq!(input_config::Language::parse("it").text(CHEAT_FILTERS[4]), "Attivi");
 }
 fn selector() -> Selector {
     let mut s = Selector::default();

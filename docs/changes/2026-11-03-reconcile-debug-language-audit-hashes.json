@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "reconcile-debug-language-audit-hashes",
+  "title": "Reconcile debug language audit hashes",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Review current debug checklist, task reference, console completion, operation mapping, cheat guide and proposal changes, and refresh six stale English-first audit hashes."
+  ],
+  "validation": [
+    "Read current changes and language-sensitive text, inspected optional Italian test strings and ran scripts/menu_atlas_tasks.py --check: all 28 task references match."
+  ],
+  "limitations": [
+    "Review covers only the identified current versions; other stale or concurrently changing audit entries remain open. No runtime checks or source modifications were performed."
+  ],
+  "files": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": [
+    "crates/menu/assets/debug_v2.tsv",
+    "crates/recomp/src/debug_command/completion.rs",
+    "crates/recomp/src/debug_operations.rs",
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/development/todo2.md"
+  ]
+}

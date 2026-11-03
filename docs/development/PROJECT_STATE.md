@@ -39,8 +39,10 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   after a state-bound preview and source/ROM/checksum recheck. Explicit source/master inspection decodes master metadata and
   can compare its checksum against supplied ROM bytes; seven priority EUR
   entries have static source/CRC and mGBA comparison evidence; CH-0334 also has
-  a bounded isolated RAM before/after and fresh-seed restoration proof. Device
-  behavior, native hook handling and gameplay effects remain unverified.
+  a bounded isolated RAM before/after and fresh-seed restoration proof. CH-0324
+  reached Item Shop in one controlled EUR interpreter scenario against a
+  same-input control. CH-0334 changed displayed funds during one controlled
+  EUR shop purchase; other listed cheat effects and device hooks remain unverified.
   Bounded source-bound plans may be armed for interpreter frame boundaries;
   conflicting footprints are refused and disarm stops future writes without
   restoring memory. Broader backends and provenance-aware replay remain open.
@@ -119,8 +121,9 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   not establish runtime compatibility. The readonly `debug-cheats` CLI builds a
   bounded in-memory index with ordered entries, source-specific assumed decoder
   plans and explicit unevaluated/unsupported/unverified compatibility. A separate
-  readonly Cheat view reuses the content selector for explicit import, search
-  and details; index assessment never applies an entry. Exact known EUR/USA
+  Cheat view reuses the content selector for explicit import, search and details;
+  a separate management view requires source selection and reviewed preview for
+  guarded actions. Index assessment never applies an entry. Exact known EUR/USA
   ROM hashes now provide source-declared region comparisons without treating
   them as code verification; device version stays unknown. The public portable
   whitelist includes the guide, excludes catalog payloads and ignores imported

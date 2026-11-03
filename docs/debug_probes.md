@@ -11,8 +11,8 @@ result from the local `debug-control` channel.
 ## Read registers and memory
 
 ```powershell
-.\recomp.exe debug-control inspect 'target\caso' 080003d6 32
-.\recomp.exe debug-control inspect 'target\caso' 02000000 256
+.\recomp.exe debug-control inspect 'target\case' 080003d6 32
+.\recomp.exe debug-control inspect 'target\case' 02000000 256
 ```
 
 The address is hexadecimal; length is decimal (**1–256 bytes**). The report
@@ -50,7 +50,7 @@ read, reachability or new ROM/DS acceptance. For reads actually served, use
 ## Stop on PC and mode
 
 ```powershell
-.\recomp.exe debug-control break 'target\caso' 080003d6 thumb --steps 100000
+.\recomp.exe debug-control break 'target\case' 080003d6 thumb --steps 100000
 ```
 
 The PC must be aligned for `arm` or `thumb`. Search starts at the current point
@@ -66,8 +66,8 @@ execute its body is still an instruction entry.
 ## Stop on bus accesses
 
 ```powershell
-.\recomp.exe debug-control watch 'target\caso' read 03007ffc 03008000 --width 4 --steps 100000
-.\recomp.exe debug-control watch 'target\caso' write 02000000 02000004 --width 4 --value 00000001 --steps 100000
+.\recomp.exe debug-control watch 'target\case' read 03007ffc 03008000 --width 4 --steps 100000
+.\recomp.exe debug-control watch 'target\case' write 02000000 02000004 --width 4 --value 00000001 --steps 100000
 ```
 
 The copy's runtime needs the **rom-data-read-audit** feature. The `START END`

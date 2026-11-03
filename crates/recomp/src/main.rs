@@ -31,6 +31,7 @@ mod debug_content;
 mod debug_cheats;
 mod debug_cheat_decoder;
 mod debug_cheat_armed;
+mod debug_cheat_preset;
 mod content_picker;
 mod debug_inputs;
 mod debug_workbench;

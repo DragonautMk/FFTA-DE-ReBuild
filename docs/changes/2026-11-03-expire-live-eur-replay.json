@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "expire-live-eur-replay",
+  "title": "Verify deadline during EUR replay execution",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Record a bounded DBG2-15 server deadline while a real interpreter replay is executing guest frames."
+  ],
+  "validation": [
+    "A copied EUR DS-20 worker reported running at 9/102 frames. The client reported an unacknowledged timeout at the 1400 ms deadline; the later server result for the same request reported timeout with no pending request and the same worker interrupted at 13/102. The paused parent state, frame and clock, source profile, protected inputs and session pins remained unchanged; session and display closed."
+  ],
+  "limitations": [
+    "This covers one Wine/interpreter replay and does not prove the complete assistant procedure, all parity, native Windows or physical input."
+  ],
+  "files": [
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

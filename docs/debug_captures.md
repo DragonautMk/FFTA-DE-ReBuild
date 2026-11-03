@@ -26,10 +26,10 @@ PowerShell example, capture after the fiftieth replay frame:
 
 ```powershell
 .\recomp.exe debug-capture create `
-  --recording 'target/sessione/Data/config/recordings/registrazione' `
-  --session 'target/sessione' --dir 'target/cattura-caso' --case DS-20-EUR `
+  --recording 'target/session/Data/config/recordings/recording' `
+  --session 'target/session' --dir 'target/capture-case' --case DS-20-EUR `
   --frame 50 --limit-frames 100 --timeout-ms 120000
-.\recomp.exe debug-capture run 'target/cattura-caso/replay.json'
+.\recomp.exe debug-capture run 'target/capture-case/replay.json'
 ```
 
 The recording must contain at least 100 frames for this example. The default
@@ -70,7 +70,7 @@ CLI. This action refuses a profile without a condition. **Cancel replay** also
 cancels a capture; closing the owner window terminates the worker.
 
 ```powershell
-.\recomp.exe debug-capture cancel 'target/cattura-caso/replay.json'
+.\recomp.exe debug-capture cancel 'target/capture-case/replay.json'
 ```
 
 The profile retains `capture.condition`, `capture.limit_frames` and
@@ -115,10 +115,10 @@ the original input file may contain later events. Retain the profile with
 Open the catalog from [Debug catalog](debug_catalog.md), or:
 
 ```powershell
-.\recomp.exe debug-catalog list 'target/cattura-caso/captures/RUN/debug-catalog.json' --json
-.\recomp.exe debug-catalog open 'target/cattura-caso/captures/RUN/debug-catalog.json' `
-  --entry 'CAP/RUN' --rom 'rom/la-propria-rom.gba' --no-bios --interp `
-  --dir 'target/punto-riutilizzato'
+.\recomp.exe debug-catalog list 'target/capture-case/captures/RUN/debug-catalog.json' --json
+.\recomp.exe debug-catalog open 'target/capture-case/captures/RUN/debug-catalog.json' `
+  --entry 'CAP/RUN' --rom 'rom/your-rom.gba' --no-bios --interp `
+  --dir 'target/reused-point'
 ```
 
 Use the BIOS matching the origin when present, instead of `--no-bios`.

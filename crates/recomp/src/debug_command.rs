@@ -81,7 +81,7 @@ fn parse_tokens(t:&[String],allow_retry:bool)->Result<Command,String>{
         let run=id(&t[1],100)?;let request=id(&t[2],100)?;decimal(&t[3])?;
         let deadline_unix_ms=t[3].parse().map_err(|_|"Invalid original deadline")?;
         let action=match parse_tokens(&t[5..],false)? {
-            Command::Control(Action::Status|Action::ContentList{..}|Action::CheatList{..}|Action::CheatShow{..})|Command::JobsStatus=>return Err("Read-only query: request a fresh result instead".into()),
+            Command::Control(Action::Status|Action::ContentList{..}|Action::CheatList{..}|Action::CheatShow{..}|Action::CheatCapabilities{..})|Command::JobsStatus=>return Err("Read-only query: request a fresh result instead".into()),
             Command::Control(action)=>action,
             Command::Select{slot,id}=>Action::SelectId{slot:match slot {menu::ContentSlot::Replay=>crate::debug_control::SelectionSlot::Replay,menu::ContentSlot::Catalog=>crate::debug_control::SelectionSlot::Catalog,menu::ContentSlot::CheatCatalog=>crate::debug_control::SelectionSlot::CheatCatalog,_=>return Err("Unsupported selection slot".into())},id},
             _=>return Err("Retry requires an executable command".into()),
@@ -89,7 +89,7 @@ fn parse_tokens(t:&[String],allow_retry:bool)->Result<Command,String>{
         return Ok(Command::Retry{run,id:request,deadline_unix_ms,action});
     }
     match t {
-        [family,verb,rest @ ..] if family=="cheats" && ["refresh","list","show","prepare","apply-once","arm","disarm"].contains(&verb.as_str())=>{
+        [family,verb,rest @ ..] if family=="cheats" && ["refresh","list","show","capabilities","prepare","apply-once","arm","disarm","preset-save","preset-prepare","preset-arm"].contains(&verb.as_str())=>{
             let name=if verb=="apply-once"{"cheat-apply".into()}else{format!("cheat-{verb}")};
             let mut args=vec![name,"<current-session>".into()];for pair in rest.windows(2){if ["--offset","--limit"].contains(&pair[0].as_str()){decimal(&pair[1])?;}}args.extend_from_slice(rest);return crate::debug_control::parse(&args).map(|(_,a)|Command::Control(a));
         },
@@ -190,6 +190,9 @@ mod tests {
         assert!(matches!(parse("cheats refresh"),Ok(Command::Control(Action::CheatRefresh))));
         assert!(matches!(parse("cheats list --offset 2 --limit 1"),Ok(Command::Control(Action::CheatList{offset:2,limit:1,..}))));
         assert!(matches!(parse("cheats show CH-0001 --offset 4096"),Ok(Command::Control(Action::CheatShow{id,offset:4096,..})) if id=="CH-0001"));
+        assert!(matches!(parse("cheats capabilities CH-0001 --offset 4096"),Ok(Command::Control(Action::CheatCapabilities{id,offset:4096,..})) if id=="CH-0001"));
+        assert!(parse("retry run id 123 -- cheats capabilities CH-0001").is_err());
+        assert!(parse("cheats capabilities CH-0001 --offset 01").is_err());
         assert!(matches!(parse("retry run id 123 -- cheats select content-123"),Ok(Command::Retry{action:Action::SelectId{slot:crate::debug_control::SelectionSlot::CheatCatalog,..},..})));
         let hash="a".repeat(64);let preview="b".repeat(64);
         assert!(matches!(parse(&format!("cheats prepare CH-0001 0 CH-0002 {hash}")),Ok(Command::Control(Action::CheatPrepare{provenance:0,..}))));
@@ -197,6 +200,10 @@ mod tests {
         assert!(matches!(parse(&format!("cheats arm CH-0001 0 CH-0002 {hash} {preview}")),Ok(Command::Control(Action::CheatArm{provenance:0,..}))));
         assert!(matches!(parse("cheats disarm CH-0001"),Ok(Command::Control(Action::CheatDisarm{id:Some(id)})) if id=="CH-0001"));
         assert!(matches!(parse("cheats disarm all"),Ok(Command::Control(Action::CheatDisarm{id:None}))));
+        assert!(matches!(parse("cheats preset-save shop_test"),Ok(Command::Control(Action::CheatPresetSave{name})) if name=="shop_test"));
+        assert!(matches!(parse("cheats preset-prepare shop_test"),Ok(Command::Control(Action::CheatPresetPrepare{name})) if name=="shop_test"));
+        assert!(matches!(parse(&format!("cheats preset-arm shop_test {preview}")),Ok(Command::Control(Action::CheatPresetArm{name,..})) if name=="shop_test"));
+        assert!(parse("cheats preset-save ../bad").is_err());
         assert!(parse("cheats disarm invalid").is_err());
         assert!(parse(&format!("cheats prepare CH-0001 00 CH-0002 {hash}")).is_err());
         for text in ["cheats list --offset 01","cheats list --limit 17","cheats show /tmp/code","cheats show CH-0001 --generation invalid","cheats refresh extra","retry run id 123 -- cheats list"]{assert!(parse(text).is_err(),"{text}");}

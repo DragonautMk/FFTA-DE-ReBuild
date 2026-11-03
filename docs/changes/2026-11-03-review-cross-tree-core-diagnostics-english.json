@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "review-cross-tree-core-diagnostics-english",
+  "title": "Review cross-tree core diagnostics in English",
+  "kind": "docs",
+  "platforms": [
+    "Desktop and AndroidPort"
+  ],
+  "changes": [
+    "Review four Android core modules and three identical desktop counterparts for English, recording exact hashes in the audit."
+  ],
+  "validation": [
+    "Read the four Android modules in full and compared the three desktop sources byte for byte with reviewed Android versions; verified all seven hashes."
+  ],
+  "limitations": [
+    "Legacy SUPOSICION log token retained for compatibility; no builds, emulation or ROM access performed; other source and documentation audits remain open."
+  ],
+  "files": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": [
+    "AndroidPort/crates/gba-core/src/ffta_shop_mouse.rs",
+    "AndroidPort/crates/gba-core/src/ffta_rom.rs",
+    "AndroidPort/crates/gba-core/src/cpu.rs",
+    "AndroidPort/crates/gba-core/src/ffta_log.rs",
+    "crates/gba-core/src/interaction_grid.rs",
+    "crates/gba-core/src/ffta_shop_mouse.rs",
+    "crates/gba-core/src/ffta_log.rs"
+  ]
+}

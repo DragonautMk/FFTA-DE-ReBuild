@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "translate-atlas-inventory-routes",
+  "title": "Translate Atlas inventory route descriptions",
+  "kind": "changed",
+  "platforms": [
+    "Desktop development tooling"
+  ],
+  "changes": [
+    "Use English menu labels for generated Atlas row-route descriptions while retaining existing operation contract fields and concurrent operation additions."
+  ],
+  "validation": [
+    "Atlas inventory --check passes for 190 legacy rows, 54 actions and 97 operation contracts; compared every non-route field before and after the edit and retained it unchanged."
+  ],
+  "limitations": [
+    "Operation metadata compatibility values remain as recorded; the wider English-first audit and inventory review remain open."
+  ],
+  "files": [
+    "scripts/menu_atlas_inventory.py",
+    "docs/development/MENU_ATLAS_INVENTORY.json"
+  ],
+  "references": [
+    "docs/menu_clan_atlas.md"
+  ]
+}

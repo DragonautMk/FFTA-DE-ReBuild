@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "review-desktop-core-against-android-english",
+  "title": "Review desktop core against Android sources in English",
+  "kind": "docs",
+  "platforms": [
+    "Desktop development"
+  ],
+  "changes": [
+    "Review nine desktop core modules against their fully reviewed Android counterparts and register exact desktop revisions in the language audit."
+  ],
+  "validation": [
+    "Confirmed Android counterparts still match their previously reviewed hashes, read all normalized textual differences and verified all nine desktop hashes."
+  ],
+  "limitations": [
+    "This reviews language only; no builds, runtime checks or ROM access were performed. Other source and documentation audits remain open."
+  ],
+  "files": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": [
+    "crates/gba-core/src/lib.rs",
+    "crates/gba-core/src/bus.rs",
+    "crates/gba-core/src/capi.rs",
+    "crates/gba-core/src/engine.rs",
+    "crates/gba-core/src/ffta_movement.rs",
+    "crates/gba-core/src/ffta_stage.rs",
+    "crates/gba-core/src/hostclock.rs",
+    "crates/gba-core/src/cpu.rs",
+    "crates/gba-core/src/ffta_rom.rs"
+  ]
+}

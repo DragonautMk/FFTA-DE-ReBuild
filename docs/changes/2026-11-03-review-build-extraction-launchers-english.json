@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "review-build-extraction-launchers-english",
+  "title": "Review build and extraction launchers in English",
+  "kind": "docs",
+  "platforms": [
+    "Windows and Linux development tooling"
+  ],
+  "changes": [
+    "Review ten build, extraction, packaging, coverage and controller-test launchers for English and register their exact revisions."
+  ],
+  "validation": [
+    "Read each launcher in full and confirmed its SHA-256; existing command syntax, paths and output remain unchanged."
+  ],
+  "limitations": [
+    "No builds, downloads, extraction, controller tests or ROM data were run; other source and documentation audits remain open."
+  ],
+  "files": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": [
+    "scripts/linux/build_windows_docker.sh",
+    "scripts/linux/extract_rom_data_docker.sh",
+    "scripts/linux/package_ffta_linux.sh",
+    "scripts/windows/build_docker.ps1",
+    "scripts/windows/extract_rom_data_docker.ps1",
+    "scripts/windows/simulate_gamepad_remap.ps1",
+    "scripts/windows/build-linux-windows.ps1",
+    "scripts/windows/rom_coverage_docker.ps1",
+    "scripts/windows/build-tcc-windows.sh",
+    "scripts/windows/package_ffta_windows.py"
+  ]
+}

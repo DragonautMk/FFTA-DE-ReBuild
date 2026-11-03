@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "clarify-rom-data-audio-parameter-summaries",
+  "title": "Clarify ROM audio and parameter summaries",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Rewrite five EUR e39–e45 audio, parameter and palette summaries in readable English while retaining their evidence and limits."
+  ],
+  "validation": [
+    "Compared numbers, links and inline code with prior text, treating the fused shared05/shared06 counters as separate labels and counts; checked their linked source and ran git diff --check."
+  ],
+  "limitations": [
+    "Documentation only; no ROM, build, runtime, benchmark or platform validation was performed. Other guide sections remain under review."
+  ],
+  "files": [
+    "docs/rom_data.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": []
+}

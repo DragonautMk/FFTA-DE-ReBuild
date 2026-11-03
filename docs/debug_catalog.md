@@ -19,7 +19,7 @@ when they have no checkpoints.
 To use the project's collection directly:
 
 ```powershell
-.\recomp.exe play 'C:\Giochi\FFTA EUR.gba' --no-bios --interp `
+.\recomp.exe play 'C:\Games\FFTA EUR.gba' --no-bios --interp `
   --debug-catalog 'C:\FFTARecomp\debug_saves\ready\catalog.json'
 ```
 
@@ -79,7 +79,7 @@ the filtered entries. PowerShell examples:
   --status non_coperta --json
 
 .\recomp.exe debug-catalog open '.\debug_saves\ready\catalog.json' `
-  --entry 'DS-20/EUR/20' --rom 'C:\Giochi\FFTA EUR.gba' `
+  --entry 'DS-20/EUR/20' --rom 'C:\Games\FFTA EUR.gba' `
   --dir 'C:\Debug\DS-20' --no-bios --interp --launch
 ```
 

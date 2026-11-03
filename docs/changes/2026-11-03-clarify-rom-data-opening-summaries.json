@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "clarify-rom-data-opening-summaries",
+  "title": "Clarify ROM data opening summaries",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Rewrite the EUR e71–e76 summaries at the start of the ROM data guide as readable English while preserving their reported evidence and platform limits."
+  ],
+  "validation": [
+    "Compared every numeric token, linked destination and generation/metadata identifier against the prior six sections; git diff --check passed."
+  ],
+  "limitations": [
+    "Documentation only; no ROM, build, runtime, benchmark or platform validation was run. The rest of the ROM data guide remains under review."
+  ],
+  "files": [
+    "docs/rom_data.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": []
+}

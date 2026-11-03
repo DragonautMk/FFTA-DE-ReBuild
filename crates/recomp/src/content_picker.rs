@@ -76,6 +76,7 @@ fn rows(index: &Index) -> Vec<menu::ContentEntry> {
             compatibility: e.compatibility.clone(),
             reason: format!("{} | {}", e.verification, e.reason),
             available: e.availability == "available",
+            cheat_filter: None,
         })
         .collect()
 }

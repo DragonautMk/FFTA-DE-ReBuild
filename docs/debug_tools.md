@@ -60,8 +60,8 @@ $Dbg = Join-Path $Bundle 'scripts/windows/debug_runtime.ps1'
 
 All relative launcher arguments resolve from Bundle, even when the terminal is
 elsewhere. On Linux use bash scripts/linux/debug_runtime.sh COMMAND...; for a
-Windows package under Wine add --wine /percorso/reale/wine64. Wine runtime path
-arguments use Windows paths, for example Z:/percorso/Linux/caso. The launcher
+Windows package under Wine add --wine /path/to/wine64. Wine runtime path
+arguments use Windows paths, for example Z:/path/to/case. The launcher
 does not convert arbitrary names/arguments.
 
 The runtime launcher always prints the log path in Data/config/debug-logs.
@@ -80,8 +80,8 @@ Prepare a case with a new destination. Replace the three paths with your own
 inputs; --state is optional when starting from boot:
 
 ~~~powershell
-$Case = 'Data/debug-sessions/caso'
-& $Dbg debug-session create 'C:/Giochi/FFTA EUR.gba' --dir $Case --sav 'C:/Debug/progressi.sav' --state 'C:/Debug/scena.ffstate' --no-bios --interp
+$Case = 'Data/debug-sessions/case'
+& $Dbg debug-session create 'C:/Games/FFTA EUR.gba' --dir $Case --sav 'C:/Debug/progress.sav' --state 'C:/Debug/scene.ffstate' --no-bios --interp
 & $Dbg debug-session open $Case --paused
 ~~~
 
@@ -105,7 +105,7 @@ before preparing the profile:
 
 ~~~powershell
 $Recording = "$Case/Data/config/recordings/recording-EXACT_NAME"
-$Profile = 'Data/debug-profiles/riproduzione'
+$Profile = 'Data/debug-profiles/replay'
 & $Dbg debug-replay create --recording $Recording --session $Case --dir $Profile --case 'Locale-EUR' --timeout-ms 120000
 & $Dbg debug-replay run "$Profile/replay.json" --json
 ~~~
@@ -160,8 +160,8 @@ explicitly selecting A and B. Do not replace a binary inside an already
 authenticated profile:
 
 ~~~powershell
-& $Dbg debug-replay create --recording $Recording --session $Case --dir 'Data/debug-profiles/runtime-A' --case 'Versione-A' --runtime 'C:/Build-A/recomp.exe'
-& $Dbg debug-replay create --recording $Recording --session $Case --dir 'Data/debug-profiles/runtime-B' --case 'Versione-B' --runtime 'C:/Build-B/recomp.exe'
+& $Dbg debug-replay create --recording $Recording --session $Case --dir 'Data/debug-profiles/runtime-A' --case 'Version-A' --runtime 'C:/Build-A/recomp.exe'
+& $Dbg debug-replay create --recording $Recording --session $Case --dir 'Data/debug-profiles/runtime-B' --case 'Version-B' --runtime 'C:/Build-B/recomp.exe'
 & $Dbg debug-replay run 'Data/debug-profiles/runtime-A/replay.json' --json
 & $Dbg debug-replay run 'Data/debug-profiles/runtime-B/replay.json' --json
 ~~~
@@ -177,8 +177,8 @@ To locate a difference between interpreter/raw and native or typed **within the
 same selected runtime**, use frame-by-frame comparison:
 
 ~~~powershell
-& $Dbg debug-compare create --recording $Recording --session $Case --dir 'Data/debug-profiles/prima-differenza' --case 'Raw-vs-typed' --dataset 'C:/Debug/dataset-verificato' --frames 100
-& $Dbg debug-compare run 'Data/debug-profiles/prima-differenza/replay.json'
+& $Dbg debug-compare create --recording $Recording --session $Case --dir 'Data/debug-profiles/first-difference' --case 'Raw-vs-typed' --dataset 'C:/Debug/verified-dataset' --frames 100
+& $Dbg debug-compare run 'Data/debug-profiles/first-difference/replay.json'
 ~~~
 
 Choose frames within the recording; for native select an existing library with
@@ -200,8 +200,8 @@ recording and a TOML manifest already verified for the same ROM; no extraction
 or regeneration is implicit. Choose a window within the recorded frame count:
 
 ~~~powershell
-& $Dbg debug-rom-audit create --recording $Recording --session $Case --dir 'Data/debug-profiles/letture' --case 'Finestra-letture' --preset all --from 0 --to 100 --limit 20000 --known-manifest 'C:/Debug/dataset-verificato/manifest.toml'
-& $Dbg debug-rom-audit run 'Data/debug-profiles/letture/replay.json'
+& $Dbg debug-rom-audit create --recording $Recording --session $Case --dir 'Data/debug-profiles/reads' --case 'Read-window' --preset all --from 0 --to 100 --limit 20000 --known-manifest 'C:/Debug/verified-dataset/manifest.toml'
+& $Dbg debug-rom-audit run 'Data/debug-profiles/reads/replay.json'
 ~~~
 
 In the profile's rom-audit.json read known_plan.outside_distinct_bytes, physical

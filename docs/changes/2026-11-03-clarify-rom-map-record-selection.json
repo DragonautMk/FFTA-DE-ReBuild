@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "clarify-rom-map-record-selection",
+  "title": "Clarify ROM map selection and encounter records",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Rewrite two inventory summaries in readable English and separate the 70-byte record size from address 713B3C using the linked source analysis."
+  ],
+  "validation": [
+    "Compared numeric tokens, links and task IDs against the prior summaries and checked the record size and address against the linked map analysis; git diff --check passed."
+  ],
+  "limitations": [
+    "Documentation review only; no ROM exploration, build, runtime or platform validation was performed. The wider English-first audit remains open."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": []
+}

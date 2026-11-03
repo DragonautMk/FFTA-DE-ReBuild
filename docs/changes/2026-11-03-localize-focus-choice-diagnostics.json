@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "localize-focus-choice-diagnostics",
+  "title": "Localize focus choice diagnostics",
+  "kind": "fixed",
+  "platforms": [
+    "Linux"
+  ],
+  "changes": [
+    "Use English source messages and the existing English and Italian catalogs for tool and content-selector choice instructions in focus diagnostics, without changing selection identifiers or geometry."
+  ],
+  "validation": [
+    "Offline isolated Linux menu test choice_focus_diagnostics_follow_menu_language passed for both screens and languages; scripts/menu_language.py check passed with 635 entries in each catalog; git diff --check passed."
+  ],
+  "limitations": [
+    "First Linux build lacked Wayland pkg-config metadata; the passing build used temporary metadata with the installed runtime. The first test exposed locked test setup and passed after unlocking it. Native Windows and live GUI were not tested."
+  ],
+  "files": [
+    "crates/menu/src/debug_tool.rs",
+    "crates/menu/src/debug_tool/tests.rs",
+    "crates/menu/src/content_selector.rs",
+    "crates/menu/src/lib.rs",
+    "docs/menu_localization.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": []
+}

@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "review-android-core-foundation-english",
+  "title": "Review Android core foundation in English",
+  "kind": "docs",
+  "platforms": [
+    "AndroidPort"
+  ],
+  "changes": [
+    "Review eight Android core foundation modules for English and record their exact revisions in the audit."
+  ],
+  "validation": [
+    "Read each listed source module in full and confirmed its SHA-256; existing machine identifiers and imported signatures remain unchanged."
+  ],
+  "limitations": [
+    "No builds, emulation or ROM access were run; remaining Android core modules and other project surfaces still need review."
+  ],
+  "files": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": [
+    "AndroidPort/crates/gba-core/src/lib.rs",
+    "AndroidPort/crates/gba-core/src/bus.rs",
+    "AndroidPort/crates/gba-core/src/capi.rs",
+    "AndroidPort/crates/gba-core/src/engine.rs",
+    "AndroidPort/crates/gba-core/src/ffta_movement.rs",
+    "AndroidPort/crates/gba-core/src/ffta_stage.rs",
+    "AndroidPort/crates/gba-core/src/hostclock.rs",
+    "AndroidPort/crates/gba-core/src/interaction_grid.rs"
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "review-installer-launcher-entry-english",
+  "title": "Review installer and launcher entry points in English",
+  "kind": "docs",
+  "platforms": [
+    "Desktop installer and launcher"
+  ],
+  "changes": [
+    "Review the installer, launcher and placeholder translator source for English and record their exact current revisions."
+  ],
+  "validation": [
+    "Read all three sources in full, inspected their existing translation diffs and verified SHA-256 hashes; no source behavior was changed in this review."
+  ],
+  "limitations": [
+    "Language review only; no build, GUI, installation or ROM execution was performed. Other source and documentation audits remain open."
+  ],
+  "files": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": [
+    "crates/installer/src/main.rs",
+    "crates/installer/src/translator.rs",
+    "crates/ffta-play/src/main.rs"
+  ]
+}

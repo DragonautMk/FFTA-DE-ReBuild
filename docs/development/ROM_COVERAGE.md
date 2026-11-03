@@ -52,15 +52,15 @@ Example (replace paths with your own reports):
 
 ```powershell
 .\scripts\windows\rom_coverage_docker.ps1 `
-  -AuditPath 'target/caso-a/Data/config/replay/rom-audit.json','target/caso-b/Data/config/replay/rom-audit.json' `
-  -ComparePath 'target/fotografia-precedente/coverage.json' -OpenReport
+  -AuditPath 'target/case-a/Data/config/replay/rom-audit.json','target/case-b/Data/config/replay/rom-audit.json' `
+  -ComparePath 'target/previous-snapshot/coverage.json' -OpenReport
 ```
 
 ```bash
 bash scripts/linux/rom_coverage_docker.sh \
-  --audit target/caso-a/Data/config/replay/rom-audit.json \
-  --audit target/caso-b/Data/config/replay/rom-audit.json \
-  --compare target/fotografia-precedente/coverage.json
+  --audit target/case-a/Data/config/replay/rom-audit.json \
+  --audit target/case-b/Data/config/replay/rom-audit.json \
+  --compare target/previous-snapshot/coverage.json
 ```
 
 Audits and comparison are mounted read-only at runtime and remain outside the Docker context. Host Python is unnecessary. Without these arguments the map is generated **without audits**: the old selection is not silently reused. To repeat a selection, pass the same reports again.

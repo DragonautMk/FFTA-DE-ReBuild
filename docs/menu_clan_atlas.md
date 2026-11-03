@@ -160,6 +160,8 @@ remaining criteria; this migration baseline does not reopen completed steps.
 The [previous inventory](development/MENU_ATLAS_BASELINE.json) preserves contracts
 before migration; the [new map](development/MENU_ATLAS_INVENTORY.json) maps all
 190 row occurrences, 54 previous actions and 97 operations to current paths.
+Row-route descriptions use the English menu labels; operation contract fields
+retain their existing compatibility values.
 It includes subforms, dropdowns and confirmations; ToggleFastForward is the only
 new frontend action. Operation IDs, parameters, safety contracts and CLI handlers
 are unchanged.

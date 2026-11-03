@@ -52,6 +52,8 @@ Sidebar labels use English presentation keys while existing debug-route names
 remain stable for operation grouping.
 Input-tab and information focus labels follow the current menu language in
 diagnostic views; their structured page and item identifiers remain unchanged.
+Tool and content-selector choice instructions in focus diagnostics also follow
+the menu language.
 The debug save catalog localizes its status labels and detail headings while
 retaining its original filter tokens and imported case data.
 

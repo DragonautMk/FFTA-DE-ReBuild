@@ -431,7 +431,7 @@ impl ToolForm {
             page: "DebugTool".into(),
             selected: self.focus,
             label,
-            capture: self.choice_focus().then(||"Scelta: OK applica / Annulla scarta".into()),
+            capture: self.choice_focus().then(||"Choice: arrows adjust · OK applies · Cancel discards".into()),
             panel: g.panel,
             selected_bounds: Some(bounds),
             first_visible: first,

@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "clarify-rom-data-property-summaries",
+  "title": "Clarify ROM data property summaries",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Rewrite the EUR e66–e70 ROM guide summaries and UI property model description as readable English while retaining their reported evidence and limitations."
+  ],
+  "validation": [
+    "Compared all numeric tokens, linked destinations and generation/metadata identifiers with the prior text; git diff --check passed."
+  ],
+  "limitations": [
+    "Documentation only; no ROM, build, runtime, benchmark or platform validation was performed. The rest of the ROM data guide remains under review."
+  ],
+  "files": [
+    "docs/rom_data.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": []
+}

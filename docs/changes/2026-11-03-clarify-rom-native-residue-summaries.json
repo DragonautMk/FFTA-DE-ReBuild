@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "clarify-rom-native-residue-summaries",
+  "title": "Clarify native ROM residue summaries",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Rewrite six inventory summaries for native and host ROM-read residue and the e61 alternate-pose guide entry in readable English, preserving their evidence and limits."
+  ],
+  "validation": [
+    "Compared numeric tokens, links, task IDs and inline code against the prior text; git diff --check passed."
+  ],
+  "limitations": [
+    "Documentation only; no ROM, build, runtime, benchmark or platform validation was performed. Both documents remain under review."
+  ],
+  "files": [
+    "docs/rom_data.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": []
+}

@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "review-rebranded-entry-guides-english",
+  "title": "Review rebranded entry guides in English",
+  "kind": "docs",
+  "platforms": [
+    "Desktop and Android development documentation"
+  ],
+  "changes": [
+    "Review the English rebrand changes in the root, Android and installer entry guides and update their audit hashes against previously reviewed versions."
+  ],
+  "validation": [
+    "Located Git versions matching all four previously recorded SHA-256 hashes, inspected each change through HEAD, and confirmed current working files matched HEAD before updating hashes."
+  ],
+  "limitations": [
+    "This is a language review of the rebrand changes, not validation of the rebrand build or the remaining whole-project English audit."
+  ],
+  "files": [
+    "docs/development/ENGLISH_FIRST_AUDIT.json"
+  ],
+  "references": [
+    "README.md",
+    "AndroidPort/README.md",
+    "android/README.md",
+    "crates/installer/README.md"
+  ]
+}

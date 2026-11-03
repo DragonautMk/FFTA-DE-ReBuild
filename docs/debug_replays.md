@@ -107,7 +107,7 @@ needs only one button.
 To preselect it at startup:
 
 ```powershell
-.\recomp.exe play 'C:\Giochi\FFTA EUR.gba' --no-bios --interp `
+.\recomp.exe play 'C:\Games\FFTA EUR.gba' --no-bios --interp `
   --debug-replay 'C:\Debug\replay-DS-20\replay.json'
 ```
 
