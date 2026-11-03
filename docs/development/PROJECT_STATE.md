@@ -59,6 +59,11 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   not permanent inputs. Prefix cleanup must not follow Wine's links into host
   folders and requires host-visible or coordinated evidence that no user is
   active; a sandbox-only process listing is insufficient.
+  New local validation uses `scripts/validation_unit.py`: success-only scratch
+  retirement after PASS results and input guards, durable evidence, retained
+  failure diagnostics and one coordinated Wine prefix. Keep one current dataset
+  per ROM/profile and only explicitly needed comparison baselines; avoid full
+  per-build payload snapshots. Legacy cleanup remains a separate reviewed action.
 
 - The desktop [Clan Atlas menu](../menu_clan_atlas.md) uses the existing native
   Canvas/tiny-skia fonts and the FFTA DE-ReBuild emblem with a permanent left sidebar (eight Game/eight Debug

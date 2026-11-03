@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "retire-completed-test-datasets-and-wine-prefixes",
+  "title": "Retire completed test datasets and isolated Wine prefixes",
+  "kind": "changed",
+  "platforms": [
+    "Local development artifacts"
+  ],
+  "changes": [
+    "Retired 23 superseded EUR datasets and 13 completed isolated Wine prefixes using a reviewed 36-path plan; removed 28,723,036,160 allocated bytes (26.75 GiB).",
+    "Retained current e107 and USA datasets, shared environments, diagnostic scopes, logs and results; backed up 101 manifest and Wine configuration files."
+  ],
+  "validation": [
+    "Applied the exact plan under unit leases after host process scans and immediate file-identity rechecks; receipt status PASS with all 36 removals and no pending paths or errors.",
+    "All 4,931 protected private-input hashes and 295,715 retained-file identities, sizes and modification times remained unchanged; backup hashes matched their preimages.",
+    "Selected nonconfiguration Wine payloads matched a retained generated reference. A synthetic linked-directory deletion probe preserved its external sentinel."
+  ],
+  "limitations": [
+    "Four process-detail reads were denied during the host scan; no relevant active Wine/build/runtime consumer was observed. Shared, active, failed and interrupted scopes were excluded.",
+    "Retired payloads require regeneration for exact historical reuse. This bounded cleanup does not close the older interrupted hygiene task; no game tests, builds or performance measurements were repeated."
+  ],
+  "files": [
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ],
+  "references": [
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ]
+}

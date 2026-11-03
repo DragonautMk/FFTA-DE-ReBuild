@@ -917,6 +917,30 @@ Documentation: [ffta_character_metric.py](scripts/ffta_character_metric.py), [ff
 
 [Change record](docs/changes/2026-11-03-review-analysis-utilities-english.json)
 
+## 2026-11-03 — Retire completed test datasets and isolated Wine prefixes
+
+Type: changed. Platforms: Local development artifacts.
+
+**Changes**
+
+- Retired 23 superseded EUR datasets and 13 completed isolated Wine prefixes using a reviewed 36-path plan; removed 28,723,036,160 allocated bytes (26.75 GiB).
+- Retained current e107 and USA datasets, shared environments, diagnostic scopes, logs and results; backed up 101 manifest and Wine configuration files.
+
+**Validation**
+
+- Applied the exact plan under unit leases after host process scans and immediate file-identity rechecks; receipt status PASS with all 36 removals and no pending paths or errors.
+- All 4,931 protected private-input hashes and 295,715 retained-file identities, sizes and modification times remained unchanged; backup hashes matched their preimages.
+- Selected nonconfiguration Wine payloads matched a retained generated reference. A synthetic linked-directory deletion probe preserved its external sentinel.
+
+**Limitations**
+
+- Four process-detail reads were denied during the host scan; no relevant active Wine/build/runtime consumer was observed. Shared, active, failed and interrupted scopes were excluded.
+- Retired payloads require regeneration for exact historical reuse. This bounded cleanup does not close the older interrupted hygiene task; no game tests, builds or performance measurements were repeated.
+
+Documentation: [LOCAL_ARTIFACTS.md](docs/development/LOCAL_ARTIFACTS.md).
+
+[Change record](docs/changes/2026-11-03-retire-completed-test-datasets-and-wine-prefixes.json)
+
 ## 2026-11-03 — Restore spacing in world node travel sections
 
 Type: docs. Platforms: project-wide.
@@ -2598,6 +2622,31 @@ Type: changed. Platforms: Windows GNU / Wine.
 Documentation: [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
 
 [Change record](docs/changes/2026-11-03-cancel-live-eur-replay.json)
+
+## 2026-11-03 — Retire successful validation scratch and reuse one Wine environment
+
+Type: changed. Platforms: Local validation workflow, Wine.
+
+**Changes**
+
+- Added scripts/validation_unit.py for new foreground validation units: hash protected inputs, require explicit PASS JSON, retain logs/manifests/results, then automatically retire owned generated scratch.
+- Routine Wine units reuse one marked, leased prefix and wait for wineserver completion. Errors keep diagnostic work; timeouts and interruptions also keep protective leases.
+- Updated project guidance and Windows validation skill to retain one current dataset per ROM/profile, a named comparison baseline only while needed, and canonical Cargo artifacts instead of full per-version snapshots. Explicit keep-work exceptions require a reason.
+
+**Validation**
+
+- Windows Python 3.11 under Wine: nine synthetic lifecycle tests passed, covering success/evidence retention, nonzero/missing/negative results, input changes, private files, explicit retention, tracked/nested-lease refusal, timeout protection, prefix ownership/contention and unsafe paths/environment; one native link case skipped.
+- The host-side runner executed those Wine tests, verified its real Git guard and removed successful scratch. Subsequent Wine invocations reused the same coordinated prefix. A gated real POSIX-link probe was refused with its work retained and external sentinel hash unchanged; leases released after foreground completion.
+- Windows skill metadata validation passed; modified Python modules compiled successfully.
+
+**Limitations**
+
+- Native Linux and native Windows checks remain pending. No game build, gameplay test or performance measurement was run. Windows Python symlink creation was ineffective in the initial probe, so only the gated real-link probe is accepted for link refusal.
+- New units must use the runner and explicitly isolate mutable saves/configuration; commands must finish their foreground children. Existing historical artifacts and independent AndroidPort tooling are not automatically migrated or pruned. A reusable current dataset still needs explicit retention while a consumer requires it.
+
+Documentation: [LOCAL_ARTIFACTS.md](docs/development/LOCAL_ARTIFACTS.md).
+
+[Change record](docs/changes/2026-11-03-bound-new-validation-unit-artifacts.json)
 
 ## 2026-11-02 — Validate upstream fractional fast-forward input tests
 

@@ -46,21 +46,25 @@ another agent's jobs. Sandbox ps alone does not prove host inactivity.
 - A GUI change needs a relevant menu/HUD check as well as compilation.
   Gamepad tests should identify the backend and whether input was simulated.
 
-Use an isolated save, configuration and Wine prefix for interactive tests.
+Use isolated saves/configuration for interactive tests. New routine Wine checks
+reuse the runner-owned, leased prefix; create a separate prefix only for an
+explicit clean-profile or incompatible-configuration criterion.
 Wine may initialize APPDATA itself; inspect the effective path rather than
 assuming an environment override isolated the config. Keep test controller
 DLLs and screenshots under ignored `target/`, outside deliverables.
 
-Keep validation output bounded using
-[local artifact retention](../../../docs/development/LOCAL_ARTIFACTS.md).
-After the managed/native unit passes and its preservation checks and results
-are recorded, run `python3 scripts/local_artifacts.py complete target/<unit> --apply`.
-The helper retires disposable interrupted/moved fixture copies, retaining the
-accepted offline dataset, source preimages and result/log evidence. Do not run
-it on a failed/live unit. Retire superseded unit-local executables explicitly,
-keeping the canonical runtime and current helpers. Guard actual inputs of the
-new check instead of rehashing every historical mutable output; cleanup receipts
-record availability and do not invalidate completed proofs.
+Use `scripts/validation_unit.py` for new local units, following the
+[bounded lifecycle](../../../docs/development/LOCAL_ARTIFACTS.md#default-lifecycle-for-new-validation).
+Put extraction/mutation/relocation copies under its `work`; select explicit PASS
+JSON results and protect actual input paths. Successful scratch is automatically
+retired after evidence/preservation checks. Keep one reusable current dataset
+per ROM/profile, plus a named comparison baseline only while needed. Reuse
+canonical Cargo artifacts; avoid per-version prefix and executable copies.
+`--keep-work` needs a concrete consumer/reason and later retirement. Failures and
+interruptions retain work; inspect timeout descendants before lease recovery.
+For legacy successful units use `scripts/local_artifacts.py complete` as before;
+it retires only interrupted/moved fixture copies. Historical cleanup stays
+explicit, and receipts do not reopen accepted proofs.
 
 For performance comparisons, use the same translation, input, warm-up and
 settings; separate hash capture from timing. Reuse

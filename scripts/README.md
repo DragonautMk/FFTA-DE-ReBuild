@@ -125,11 +125,15 @@ The Linux Docker builder saves each run's output and errors under
 `target/build-logs/linux-*.log`. On failure it waits for Enter in an interactive
 terminal; noninteractive automation receives the original exit code immediately.
 
-After recording successful managed/native validation, retire disposable test
-copies with `python3 scripts/local_artifacts.py complete target/<unit> --apply`.
-Preview without `--apply`; retain the accepted offline dataset and proof logs.
-See [local artifact retention](../docs/development/LOCAL_ARTIFACTS.md) for safety
-checks, optional superseded-binary retirement and coverage cache limits.
+For new local validation, use `python3 scripts/validation_unit.py --help`.
+Its owned scratch is automatically removed after foreground completion, PASS
+results and input preservation checks; logs, manifests and results survive.
+Wine units share one leased prefix. Keep a current reusable dataset and only
+explicitly needed comparison inputs rather than full copies per build.
+See the [bounded lifecycle](../docs/development/LOCAL_ARTIFACTS.md#default-lifecycle-for-new-validation)
+for commands, output placeholders, failure retention and explicit keep reasons.
+Older successful units still use `scripts/local_artifacts.py complete` to
+retire interrupted/moved fixtures; historical cleanup remains explicit.
 
 
 EUR e79-d78 extraction additionally publishes `world-roads.json`

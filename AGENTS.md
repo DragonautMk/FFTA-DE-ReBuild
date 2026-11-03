@@ -102,14 +102,20 @@ The CI workflow runs the same check; it does not invent change descriptions.
 
 ## Keep local validation output bounded
 
-Follow [local artifact retention](docs/development/LOCAL_ARTIFACTS.md). After a
-managed/native validation unit succeeds and its preservation checks/results are
-recorded, run `python3 scripts/local_artifacts.py complete target/<unit> --apply`.
-This retires only the disposable `interrupted` and `moved resources` copies;
-retain the current dataset needed by active work, source preimages, logs/results
-and current executables. Historical accepted datasets are not permanent: review
-and retire superseded, reproducible copies as described in the retention guide.
-Failed or live units must retain their diagnostic fixtures.
+Follow [local artifact retention](docs/development/LOCAL_ARTIFACTS.md#default-lifecycle-for-new-validation).
+For new local validation use `scripts/validation_unit.py`: put generated test
+copies under its owned `work`, protect actual inputs and require PASS results.
+It retains evidence and automatically removes successful scratch; failed/live
+units keep their diagnostics. Reuse its coordinated Wine prefix and canonical
+Cargo outputs instead of creating a prefix and copying executables per version.
+Keep one current dataset per ROM/profile and a previous version only for a named
+comparison. Additional extraction is needed only when the selected check or
+changed extraction inputs require it. Record a reason for `--keep-work`; retire
+that exception after replacement. Keep source preimages outside scratch.
+For older successful managed/native units, after recording preservation/results,
+run `python3 scripts/local_artifacts.py complete target/<unit> --apply`; this
+older helper removes only `interrupted` and `moved resources` copies. Review
+superseded historical datasets separately; do not sweep failed or live units.
 Retire old unit-local executables only after verifying they are superseded.
 Future preservation maps should guard the selected unit's real inputs, rather
 than require every historical mutable test copy to remain present forever.

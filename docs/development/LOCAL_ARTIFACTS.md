@@ -32,6 +32,78 @@ removal. Record successes and failures in a local receipt. Never silently delete
 an explicit external dataset or use a global clean as a substitute. Cleanup
 receipts describe missing local payloads; they do not reopen completed checks.
 
+## Default lifecycle for new validation
+
+Use `scripts/validation_unit.py` for new local build/test units instead of
+writing another per-revision runner with permanent output directories. It
+creates `target/validation/units/<name>-<unique>/work`, runs one foreground
+command there and automatically retires that scratch after successful checks.
+The command must finish all its children and write an explicit `status: PASS`
+JSON for every selected `--result`. A harness may run several related phases
+and assert their results before writing that final JSON.
+
+Keep only these durable outputs from a successful unit:
+
+- The command log, PASS results, source/input identities and cleanup receipt.
+  The runner retains these outside `work`; manifests and result/summary JSON
+  are copied to `evidence/` automatically. Select additional small evidence
+  with `--evidence`; each evidence file is limited to 16 MiB.
+- One current reusable dataset per ROM/profile, plus a previous dataset only
+  while a named comparison actually needs it. Test extraction, mutation,
+  repair and relocation copies belong in `work`. A build-only/source-only
+  change does not require extracting another dataset. Reuse authenticated
+  read-only inputs for unchanged extraction revisions.
+- Canonical Cargo outputs and shared compiler caches. Resolve test binaries
+  from Cargo's artifact output; avoid copying another executable into every
+  unit unless preserving that exact binary is an acceptance requirement.
+- One runner-owned Wine prefix, leased across all participating units. Per-test
+  saves/configuration still need explicit isolation. Prefix contents are not
+  a per-version snapshot. Use a separate prefix only for a named clean-profile
+  or incompatible-configuration test, with a documented lifetime.
+
+Example for an existing ignored EUR runtime test (replace the binary, test name
+and its output environment variable with the selected test's actual values):
+
+```sh
+python3 scripts/validation_unit.py --name rom-data-family-runtime --wine \
+  --protect path/to/current-dataset --protect path/to/private-eur.gba \
+  --result runtime/result.json \
+  --env 'FFTA_SELECTED_RUNTIME_ROOT={wine_work}\runtime' \
+  -- 'Z:\path\to\current-test.exe' 'rom_data::family::selected_test' \
+  --exact --ignored --nocapture --test-threads=1
+```
+
+Paths in `--result` and `--evidence` are relative to `work`. Command arguments
+and `--env NAME=value` accept `{repo}`, `{unit}`, `{work}` and their Wine
+counterparts `{wine_repo}`, `{wine_unit}`, `{wine_work}`. The child also receives
+`FFTA_VALIDATION_WORK` and `FFTA_VALIDATION_UNIT`. Inherited FFTA/RECOMP/GBA
+overrides are cleared; pass every required test setting explicitly. Protect
+the actual ROM, dataset, state, recording and other read-only inputs with
+repeatable `--protect` options. Complete file sets, identities, hashes and
+modification times are checked after the command, before retirement.
+
+With `--wine`, the runner owns `target/validation/wine-prefix`, refuses adoption
+of an unmarked legacy prefix and holds its lease through `wineserver -w`. Use
+the matching `--wineserver /path/to/wineserver` if it is absent from `PATH`.
+All consumers of this prefix must use the runner; never launch a separate
+uncoordinated Wine process against it. Existing personal/shared prefixes are
+neither adopted nor removed. On native Windows omit `--wine` and use native
+path placeholders. Native Linux validation remains a separate gate.
+
+Nonzero exit, missing/negative results, changed protected inputs, linked or
+shared scratch paths, private input extensions and tracked scratch content
+prevent retirement. A timeout or interruption retains protective leases too,
+because descendants may still be alive; inspect the recorded owner and process
+before manual recovery. There is no automatic stale-lease reclamation.
+`--keep-work 'named current-input or diagnostic reason'` is an explicit retention
+exception; record its consumer and retire it after replacement. It must not
+become a default flag on each revision. Source preimages and personal inputs
+belong outside disposable scratch. Failures keep their work and evidence.
+
+This lifecycle applies to new units, not a background sweep of historical
+artifacts. Existing completed scopes still use the reviewed cleanup procedures
+below; failed/interrupted work is never selected merely to meet a disk quota.
+
 ### Wine test prefixes
 
 Wine prefixes are generated environments, not evidence that their entire tree
@@ -167,3 +239,26 @@ deletion. Local manifests are under `target/local-artifact-cleanup-2026-10-26/`.
 
 The lifetime of build caches is separate from these per-test payloads:
 there is no scheduled background deletion, Cargo clean or global Docker prune.
+
+## 3 November cleanup
+
+The reviewed 36-path plan retired 23 superseded EUR datasets (e94–e105) and
+13 isolated Wine prefixes from completed debug-tool tests: 28,723,036,160 bytes
+of allocated file blocks (26.75 GiB). The current e107 datasets, USA datasets,
+shared environments, active/failed/interrupted scopes, logs, results and source
+preimages were retained. The 4,931 protected ROM/save/checkpoint/recording files
+kept their hashes; 295,715 retained files kept their identities, sizes and times.
+The cleanup also retained 101 manifest and Wine configuration preimages.
+
+Prefix payloads matched a retained generated reference apart from the backed-up
+configuration. Links were inventoried without traversal; a deletion probe
+confirmed that an external link destination remained intact. Unit leases,
+fresh host process checks and exact inventory rechecks guarded each removal.
+No relevant active process was observed; four process-detail reads were denied,
+as recorded in the receipt. No game tests, builds or performance measurements
+were repeated for this cleanup.
+
+The exact plan, preservation inventories, preimages and `PASS` receipt remain
+under `target/local-artifact-cleanup-20261103/`. Retired payloads are no longer
+available locally; historical acceptance remains valid within its original
+scope. This sweep does not close the older interrupted cleanup task.

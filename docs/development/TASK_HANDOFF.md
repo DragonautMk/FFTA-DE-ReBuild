@@ -2,7 +2,7 @@
 
 ## Operational status
 
-Updated 2026-11-02. User confirmed English-first project with optional Italian. Runtime/offline
+Updated 2026-11-03. User confirmed English-first project with optional Italian. Runtime/offline
 reports, guide reviews and portable/private exporter instructions are accepted
 within their recorded scopes; the cross-tree audit remains open.
 
@@ -206,16 +206,16 @@ for a specific question: archive legacy lines 179..744 or the named record below
 - A read-only coverage HTML character diff yielded with no retained handle on 2026-11-03; outcome/host status unknown. Do not restart or infer termination.
 
 - Async work: the collaboration inventory observed on 2026-11-01 showed only `/root`; ps visibility is limited to the sandbox namespace. Recent isolated Linux test builds completed; no Wine/runtime job was started or signaled. Host/other-thread state is unobservable: do not assert global inactivity. Historical results prove their children's closure, not today's host state. Before resuming, check handle/process, output and owner; no response or a lost handle does not establish failure.
-- Shared resources: checkout, handoff/archive/CHANGELOG, canonical targets, Wine prefixes, display, datasets and fixtures. Do not stop others' processes, restore source/binaries without ownership or clean live/failed tasks. Historical Wine retention audit: deleting a prefix requires coordination/host visibility, not sandbox ps. Disk nearly full in an old sweep; current availability not measured here.
+- Shared resources: checkout, handoff/archive/CHANGELOG, canonical targets, Wine prefixes, display, datasets and fixtures. Do not stop others' processes, restore source/binaries without ownership or clean live/failed tasks. Historical Wine retention audit: deleting a prefix requires coordination/host visibility, not sandbox ps. The 3 November cleanup removed 26.75 GiB; its receipt records host-visible selected-unit checks and preservation limits. Other tasks still require fresh coordination before cleanup.
 - Memory writes: one coordinated writer; proposals with both preimage hashes and common lock through scripts/task_handoff.py update. If changed, reread and merge before publication. No background writer; no lock authorizes interference with other jobs. Details in MEMORY_WORKFLOW.
 - Complete history: [TASK_COMPLETED_ARCHIVE](TASK_COMPLETED_ARCHIVE.md#legacy-handoff-snapshot), a provenance snapshot, not an operational queue. Old partial descriptions remain to prevent information loss: open tasks remain here, not promoted to closed. `TASK_HANDOFF_MIGRATION.json` records sections, hashes and terminal-outcome index. Search an ID and read only the necessary range.
 - Godot: planned assessment complete, implementation deferred, not a current dependency. AndroidPort is separate; originals/ROM/BIOS/private catalogs/saves/recordings stay out of commits/packages.
 
 ## Final handover
 
-- Task: ROMDATA-04-E107-SEPTENARY-COMPACT-OBJ-CLI accepted for EUR/Wine; English-first audit remains active under its existing owner.
-- Last verified result: production CLI create, reuse and one-frame startup passed; 98 generation files equal accepted e107 and 97 runtime resource identities match.
-- Remaining work: ordinary use, other ROM data families and mod phases; Linux and USA remain pending.
-- Errors or blockers: new bank counters were zero in the neutral frame; earlier workspace-full build diagnostics retained. Primary Terra/xhigh is not independently confirmed.
-- Next action: record the CLI result, then select an unfinished EUR criterion from the ROM data goal.
-- References: `target/rom-data-compact-obj-septenary-cli-retry-20261103/{build-result,result,processes}.json`, `docs/rom_data_obj.md`.
+- Task: VALIDATION-BOUNDED-WORKFLOW completed; new local validation uses owned disposable scratch and one coordinated Wine prefix. Prior cleanup remains closed; English-first retains its owner.
+- Last verified result: nine synthetic lifecycle cases passed on Wine, one native link case skipped; host-side Wine integration removed successful scratch and refused a real external POSIX link while retaining its work and preserving its destination. Shared prefix reused; completed leases released. Skill metadata valid.
+- Remaining work: no implementation criterion remains for this workflow unit. Native Linux/native Windows remain unverified; future units must adopt the runner and explicitly isolate mutable saves/configuration. Historical and AndroidPort artifacts are not automatically migrated.
+- Errors or blockers: Wine's initial Python symlink probe produced no link and is not link-refusal evidence; the later gated real-link probe passed. No application rebuild, gameplay test or benchmark selected.
+- Next action: use `scripts/validation_unit.py` for new local checks; retain a current dataset and only a named comparison baseline while needed. No unrelated runtime work selected.
+- References: `docs/development/LOCAL_ARTIFACTS.md#default-lifecycle-for-new-validation`, `docs/changes/2026-11-03-bound-new-validation-unit-artifacts.json`, `target/validation-workflow-20261103/integration-result.json`, `target/validation/units/retention-tooling-t37v5wee/`.

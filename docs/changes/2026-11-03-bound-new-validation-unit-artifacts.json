@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "bound-new-validation-unit-artifacts",
+  "title": "Retire successful validation scratch and reuse one Wine environment",
+  "kind": "changed",
+  "platforms": [
+    "Local validation workflow",
+    "Wine"
+  ],
+  "changes": [
+    "Added scripts/validation_unit.py for new foreground validation units: hash protected inputs, require explicit PASS JSON, retain logs/manifests/results, then automatically retire owned generated scratch.",
+    "Routine Wine units reuse one marked, leased prefix and wait for wineserver completion. Errors keep diagnostic work; timeouts and interruptions also keep protective leases.",
+    "Updated project guidance and Windows validation skill to retain one current dataset per ROM/profile, a named comparison baseline only while needed, and canonical Cargo artifacts instead of full per-version snapshots. Explicit keep-work exceptions require a reason."
+  ],
+  "validation": [
+    "Windows Python 3.11 under Wine: nine synthetic lifecycle tests passed, covering success/evidence retention, nonzero/missing/negative results, input changes, private files, explicit retention, tracked/nested-lease refusal, timeout protection, prefix ownership/contention and unsafe paths/environment; one native link case skipped.",
+    "The host-side runner executed those Wine tests, verified its real Git guard and removed successful scratch. Subsequent Wine invocations reused the same coordinated prefix. A gated real POSIX-link probe was refused with its work retained and external sentinel hash unchanged; leases released after foreground completion.",
+    "Windows skill metadata validation passed; modified Python modules compiled successfully."
+  ],
+  "limitations": [
+    "Native Linux and native Windows checks remain pending. No game build, gameplay test or performance measurement was run. Windows Python symlink creation was ineffective in the initial probe, so only the gated real-link probe is accepted for link refusal.",
+    "New units must use the runner and explicitly isolate mutable saves/configuration; commands must finish their foreground children. Existing historical artifacts and independent AndroidPort tooling are not automatically migrated or pruned. A reusable current dataset still needs explicit retention while a consumer requires it."
+  ],
+  "files": [
+    "scripts/validation_unit.py",
+    "scripts/tests/test_validation_unit.py",
+    "AGENTS.md",
+    ".cursor/skills/ffta-windows-validation/SKILL.md",
+    "scripts/README.md",
+    "docs/development/LOCAL_ARTIFACTS.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ]
+}
