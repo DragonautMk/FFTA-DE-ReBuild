@@ -19253,3 +19253,10 @@ LOCAL-ARTIFACT-SWEEP-2026-10-31 — CLOSED. Latest request: clean residual proje
 - Verified criteria: New emblem displayed in desktop menu sidebar; offscreen rendering stays within bounds at four resolutions and works at both transparency extremes. Existing video-menu test and 640x480 capture inspected.
 - Evidence: `docs/changes/2026-11-03-show-rebuild-logo-in-menu.json`, `docs/menu_clan_atlas.md`.
 - Limits: No live game or native Windows validation; Linux test used installed Wayland runtime with temporary build metadata.
+
+### FORK-MAIN-PUBLICATION
+
+- Outcome: completed
+- Verified criteria: User authorized updating the fork main from decomp; GitHub PR #1 merged all 135 commits into DragonautMk/FFTARecomp main. Remote main is 8d276a06 and the GitHub home shows FFTA DE-ReBuild and the emblem. Upstream was not targeted.
+- Evidence: https://github.com/DragonautMk/FFTARecomp/pull/1 and GitHub home; project-memory PR check passed.
+- Limits: Earlier decomp push check failed due to missing completion.rs change record; local main still tracks upstream/main and was not changed. No software builds or runtime validation performed.
