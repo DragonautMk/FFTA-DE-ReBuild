@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "publish-european-compact-obj-seventh-root",
+  "title": "Publish European compact OBJ seventh root",
+  "kind": "added",
+  "platforms": [
+    "EUR; Wine"
+  ],
+  "changes": [
+    "Publish the authenticated sparse 20-byte compact OBJ resource in e107-d106 and compose typed reads with previous owners and ROM in the gap."
+  ],
+  "validation": [
+    "Isolated Windows build and focused Wine managed/native test passed: 96 prior resources unchanged, bytes and gap boundaries, transactional tamper rejection, full-state/clock equality and four typed native bytes."
+  ],
+  "limitations": [
+    "Prior Wine attempts failed from workspace exhaustion and one temporary-output write failed with error 31; diagnostics retained. Older revision assertions were updated but not individually rerun. Production CLI, ordinary use, Linux, USA and native Windows pending; no performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/compact_obj_animations_septenary.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_septenary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "scripts/extract_rom_data.py",
+    "docs/rom_data_obj.md",
+    "crates/recomp/src/rom_data/conditional_descriptor_bank_zero_runtime_tests.rs",
+    "crates/recomp/src/rom_data/table_graphics_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_quinary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/clan_table_alias_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_secondary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/dynamic_raw_fragments_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_packed_lookup_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_senary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_tertiary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_four_byte_lookup_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_property_masks_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_quaternary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_descriptor_banks_runtime_tests.rs"
+  ],
+  "references": []
+}

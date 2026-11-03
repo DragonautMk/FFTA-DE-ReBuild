@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "classify-european-compact-obj-seventh-root",
+  "title": "Classify European compact OBJ seventh root",
+  "kind": "docs",
+  "platforms": [
+    "EUR; Wine"
+  ],
+  "changes": [
+    "Classify a conditional 20-byte compact OBJ source at 6be570, preserving its two-byte gap."
+  ],
+  "validation": [
+    "Original Wine disassembly and independent authenticated ROM, caller, extent and e106 ownership checks passed."
+  ],
+  "limitations": [
+    "Caller reachability, ordinary use, model and runtime publication remain unverified; Linux, USA and native Windows pending; no performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_obj.md"
+  ],
+  "references": []
+}

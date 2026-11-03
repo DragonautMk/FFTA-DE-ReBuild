@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "verify-european-compact-obj-seventh-cli",
+  "title": "Verify European compact OBJ seventh CLI",
+  "kind": "docs",
+  "platforms": [
+    "EUR; Wine"
+  ],
+  "changes": [
+    "Record production CLI creation, reuse and startup with the seventh sparse compact OBJ bank."
+  ],
+  "validation": [
+    "Isolated Windows production build and Wine create, reuse and one-frame startup passed; all 98 generation files equal accepted e107 and all 97 resource identities match."
+  ],
+  "limitations": [
+    "The new resource counters were zero in the neutral frame; ordinary use, Linux, USA and native Windows remain unverified. The prior workspace-full build diagnostics were retained; no performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_obj.md"
+  ],
+  "references": []
+}

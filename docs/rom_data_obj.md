@@ -1904,6 +1904,68 @@ references and 60 list pointers. Runtime publication and ordinary use remain
 open; Linux, USA and native Windows remain pending. No performance measurement
 was made.
 
+The EUR `e106-d105` managed runtime publishes the authenticated sparse bank.
+A focused Wine test using the retained Windows test executable passed all 95
+prior resource comparisons, both owned spans and mixed gap boundaries, and
+transactional rejection of a coherent data and manifest edit. The original
+native reader prefix matched the raw interpreter's full state and clock for
+selectors 0 through 6 and fallback 81, serving 28 typed bytes. The executable,
+ROM, manifest and TinyCC hashes matched the recorded build inputs; the
+historical temporary source snapshot had been retired. Production CLI and
+ordinary use remain open, as do Linux, USA and native Windows verification.
+No performance measurement was made.
+
+The production Windows CLI passed isolated Wine create, reuse and startup
+checks: all 97 generation files equal the accepted e106 dataset, all 96
+runtime resource identities and hashes match the manifest, and the retained
+neutral frame advances from 24755 to 24756 without changing managed files.
+The new bank's counters were zero in that frame, so ordinary use remains
+unverified. Linux, USA and native Windows remain pending; no performance
+measurement was made.
+
+## Conditional compact OBJ animation source at 6be570
+
+Three original EUR calls conditionally pass selector 0 to constructor
+`080d97d0`. Its witnessed sequence has one frame referring to one list with
+one object. The header, offsets and records occupy 20 bytes in two spans
+separated by a two-byte gap, without overlap with e106 owners. Wine
+disassembly and independent ROM, call and manifest checks passed; caller
+reachability and ordinary use remain unproved, and the physical extent does
+not establish a guest selector bound. Model, runtime publication, Linux,
+USA and native Windows remain open. No gameplay replay or performance
+measurement was made.
+
+The source-authenticated `compact_obj_animations_septenary` model reconstructs
+the 20 witnessed bytes and excludes the gap. An isolated Windows build and
+focused Wine test passed byte and boundary checks, JSON and shape validation,
+coherent-tamper rejection and the original count, frame and list reader
+prefixes for selector 0. Runtime publication and ordinary use remain open;
+Linux, USA and native Windows remain pending. No performance measurement was
+made.
+
+EUR `e107-d106` publishes the sparse bank as
+`graphics.conditional-compact-obj-animations-septenary`. The loader
+authenticates its source bindings, and runtime reads compose the two owned
+spans with previous owners and ROM in the gap and outside the projection.
+A focused Windows build and Wine test passed: all 96 e106 resources remained
+identical, all owned bytes and mixed boundaries matched, and coherent
+data/manifest tampering was rejected transactionally. One original native
+reader prefix matched the raw interpreter's full state and clock for
+selector 0 and raw-fallback 4, serving four typed native bytes. Earlier
+revision assertions were updated but not individually rerun. Two Wine
+attempts ran out of workspace space, and a temporary-output attempt failed
+with Wine error 31; their diagnostics were retained. Production CLI and
+ordinary use, Linux, USA and native Windows remain open. No performance
+measurement was made.
+
+The production Windows CLI passed isolated Wine create, reuse and startup
+checks: all 98 generation files equal the accepted e107 dataset, all 97
+runtime identities and hashes match the manifest, and the retained neutral
+frame advances from 24755 to 24756 without changing managed files. The new
+bank's counters were zero in that frame, so ordinary use remains unverified.
+Linux, USA and native Windows remain pending; no performance measurement was
+made.
+
 ## Conditional compact OBJ animation source at 6bf490
 
 Five original EUR callers pass selectors 2 and 3 through `080d98e4` for this

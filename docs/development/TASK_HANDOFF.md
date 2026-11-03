@@ -34,19 +34,11 @@ termination of another owner's process or changing another thread's goal state.
 - Launcher: foundation and play/input/audio/video authored text reviewed in English; dynamic values and runtime/platform behavior remain unverified. Evidence: `docs/changes/2026-11-03-review-launcher-screens-english.json`.
 - Resume: ENGLISH-FIRST-INVENTORY-REVIEW partial: map guide reviewed; ROM guide e26/e27/e31/e32, packet intro and extracted-files/validation text clarified. Earlier inventory and remaining ROM guide sections need review. Evidence: `docs/changes/2026-11-03-clarify-rom-guide-metadata-and-packets.json`.
 
-### ROMDATA-03-04-E105-SENARY-COMPACT-OBJ
-
-- State: active
-- Outcome: integrated_unverified
-- Verified: source/756-byte sparse model PASS Wine, two spans/gap2; e105 has 95 resources. Read-only CI repair found Windows test compilation PASS/exit0/no messages in build-result.json, with both integration hashes matching selection.json. This supersedes recorded build session51589's stale next action, not proof of host inactivity.
-- Missing: runtime acceptance of publication, loader authentication and composition preserving gaps, inputs and previous resources; no runtime result.json exists in the unit. Compiling an ignored test is not executing it.
-- Resume: only on a relevant ROM request, check owner/handle/output before prepared Wine runtime test. target/rom-data-compact-obj-senary-runtime retains evidence; fallback81 remains statically verified. Scope: docs/changes/2026-11-02-record-partial-senary-compact-obj-integration.json. No runtime work selected here.
-
 ### ROM-DATA-FULL-EUR
 
 - State: suspended
 - Outcome: partial
-- Verified: e105-d104, 95 resources/96 files; CLI create/reuse/startup and 98 protected files PASS in `target/rom-data-compact-obj-quinary-cli/result.json`, read during the audit. Neutral 24755→24756 with new counters zero does not prove ordinary use. Do not repeat accepted source/model/runtime/CLI checks or closed negative attempts.
+- Verified: e107-d106, 97 resources/98 files; CLI create/reuse/startup and 100 protected files PASS in `target/rom-data-compact-obj-septenary-cli-retry-20261103/result.json`, read during the audit. Neutral 24755→24756 with new counters zero does not prove ordinary use. Do not repeat accepted source/model/runtime/CLI checks or closed negative attempts.
 - Missing: unmigrated resources/consumers, missing ordinary-use evidence, ABI/global extent/indirect calls and mod phases ROMDATA-06/07; Linux/USA/native Windows/new32:9 remain distinct. EUR, reduced Wine scope, no performance/space measurements; originals and personal saves unchanged.
 - Resume: [ROM_DATA_TODO](ROM_DATA_TODO.md), only the selected criterion's section (ROMDATA-01/02/03/04/05/06/07); [inventory](ROM_DATA_INVENTORY.md). Do not read the whole TODO. The following children retain their IDs and limits, with no new attempts selected here:
   - `ROMDATA-04-PARAMETER-RECORDS27-ORDINARY`: source/model/runtime/CLI accepted; 59 records observed, full domain unproven; positive normal use and complete paired evidence missing. Eleven negative captures closed; archive legacy lines 17624..17672 and `docs/rom_data_gameplay.md`, ordinary sparse parameter record reachability section.
@@ -54,7 +46,7 @@ termination of another owner's process or changing another thread's goal state.
   - `ROMDATA-05-DYNAMIC-RAW-ORDINARY-REACHABILITY` and `ROMDATA-01-LOCALIZED-RAW-DYNAMIC-DOMAIN`: conditional fragments/paths accepted; global domain and ordinary invocation unproven. Unit320 negative closed; later state2/state4/selector-witnesses diagnosis closed without a scene. Archive 59..75 and 789..866; no blind navigation.
   - `ROMDATA-01-OBJ-REMAINING-DRAW-ROOTS`, `ROMDATA-01-OBJ-REMAINING-CONSTRUCTOR-SOURCES`, `ROMDATA-01-OBJ-GRAPHICS-PAYLOADS`: authenticated increments accepted; global inventory/remaining consumers open. Do not repeat the broad experiment with 61 truncations. Archive 2853..2874, then only the selected family's record.
   - `ROMDATA-05-OBJ-VALIDATION`: local equivalence/costs, GUI, archive and USA initializer have later accepted outcomes; native Windows gates, further catalogs/scenes and normal enablement remain. Archive 3945..4087. Old artificial RSS/space constraints and `ROMDATA-05-BG-SCENES-COSTS` do not authorize further measurements: superseded by EUR/no-metrics steering.
-  - Compact OBJ e101..e105: conditional prefixes/model/runtime/CLI accepted; ordinary use still open. Record222/candidate-table and selector33 have only static conditions and bounded negatives. Archive 11..65; do not infer a scene from its name.
+  - Compact OBJ e101..e107: conditional prefixes/model/runtime/CLI accepted; ordinary use still open. Record222/candidate-table and selector33 have only static conditions and bounded negatives. Archive 11..65; do not infer a scene from its name.
 
 ## Incomplete tasks and open criteria
 
@@ -221,9 +213,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: debugtools v2 objective paused; DBG2 selections suspended. Other active tasks retain their sections and ownership.
-- Last verified result: named source-bound cheat presets and typed filters passed Windows GNU/Wine checks; EUR cheat effects and live replay cancel/deadline/retry, slow refresh and UI trace channel parity recorded within bounded scopes.
-- Remaining work: DBG2-13..20 and 22..28 retain open criteria; values, page preset controls, broader parity, provenance/recipes and device/platform verification remain. DBG2-21 closed within its EUR/Wine scope.
-- Errors or blockers: cleanup helper refused non-ROM-data units without deletion. One old replay worker returned Access denied; fixed-worker comparison passed, precise OS cause unconfirmed. Initial narrow helper did not attest normal parent close; failed fixture retained.
-- Next action: do not select work while the goal is paused; upon authorized resumption read this handoff and checkpoint a specific missing criterion.
-- References: `docs/development/DEBUG_TOOLS_V2_TODO.md`, `docs/changes/2026-11-03-save-and-review-cheat-presets.json`, `docs/changes/2026-11-03-verify-ui-trace-channel-parity.json`.
+- Task: ROMDATA-04-E107-SEPTENARY-COMPACT-OBJ-CLI accepted for EUR/Wine; English-first audit remains active under its existing owner.
+- Last verified result: production CLI create, reuse and one-frame startup passed; 98 generation files equal accepted e107 and 97 runtime resource identities match.
+- Remaining work: ordinary use, other ROM data families and mod phases; Linux and USA remain pending.
+- Errors or blockers: new bank counters were zero in the neutral frame; earlier workspace-full build diagnostics retained. Primary Terra/xhigh is not independently confirmed.
+- Next action: record the CLI result, then select an unfinished EUR criterion from the ROM data goal.
+- References: `target/rom-data-compact-obj-septenary-cli-retry-20261103/{build-result,result,processes}.json`, `docs/rom_data_obj.md`.

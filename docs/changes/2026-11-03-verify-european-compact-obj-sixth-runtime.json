@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "verify-european-compact-obj-sixth-runtime",
+  "title": "Verify European compact OBJ sixth runtime",
+  "kind": "docs",
+  "platforms": [
+    "EUR; Wine"
+  ],
+  "changes": [
+    "Record managed publication and native reader acceptance for the sixth sparse compact OBJ bank."
+  ],
+  "validation": [
+    "Retained Windows test executable and recorded ROM, manifest and TinyCC hashes matched; isolated Wine test passed 95 prior-resource comparisons, sparse bytes and gap boundaries, transactional tamper rejection and native/interpreter full-state and clock equality."
+  ],
+  "limitations": [
+    "The historical temporary build snapshot was retired and could not be rechecked. Production CLI, ordinary use, Linux, USA and native Windows remain unverified; no performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_obj.md"
+  ],
+  "references": []
+}

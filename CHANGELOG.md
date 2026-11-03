@@ -24,6 +24,60 @@ Documentation: [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.m
 
 [Change record](docs/changes/2026-11-03-verify-ui-trace-channel-parity.json)
 
+## 2026-11-03 — Verify European compact OBJ sixth runtime
+
+Type: docs. Platforms: EUR; Wine.
+
+**Changes**
+
+- Record managed publication and native reader acceptance for the sixth sparse compact OBJ bank.
+
+**Validation**
+
+- Retained Windows test executable and recorded ROM, manifest and TinyCC hashes matched; isolated Wine test passed 95 prior-resource comparisons, sparse bytes and gap boundaries, transactional tamper rejection and native/interpreter full-state and clock equality.
+
+**Limitations**
+
+- The historical temporary build snapshot was retired and could not be rechecked. Production CLI, ordinary use, Linux, USA and native Windows remain unverified; no performance measurements.
+
+[Change record](docs/changes/2026-11-03-verify-european-compact-obj-sixth-runtime.json)
+
+## 2026-11-03 — Verify European compact OBJ sixth CLI
+
+Type: docs. Platforms: EUR; Wine.
+
+**Changes**
+
+- Record production CLI creation, reuse and startup with the sixth sparse compact OBJ bank.
+
+**Validation**
+
+- Isolated Windows production build and Wine create, reuse and one-frame startup passed; all 97 generation files equal accepted e106 and all 96 resource identities match.
+
+**Limitations**
+
+- The new resource counters were zero in the neutral frame; ordinary use, Linux, USA and native Windows remain unverified; no performance measurements.
+
+[Change record](docs/changes/2026-11-03-verify-european-compact-obj-sixth-cli.json)
+
+## 2026-11-03 — Verify European compact OBJ seventh CLI
+
+Type: docs. Platforms: EUR; Wine.
+
+**Changes**
+
+- Record production CLI creation, reuse and startup with the seventh sparse compact OBJ bank.
+
+**Validation**
+
+- Isolated Windows production build and Wine create, reuse and one-frame startup passed; all 98 generation files equal accepted e107 and all 97 resource identities match.
+
+**Limitations**
+
+- The new resource counters were zero in the neutral frame; ordinary use, Linux, USA and native Windows remain unverified. The prior workspace-full build diagnostics were retained; no performance measurements.
+
+[Change record](docs/changes/2026-11-03-verify-european-compact-obj-seventh-cli.json)
+
 ## 2026-11-03 — Verify bounded EUR quick-level experience effect
 
 Type: changed. Platforms: Windows GNU / Wine.
@@ -1142,6 +1196,24 @@ Documentation: [README.md](README.md).
 
 [Change record](docs/changes/2026-11-03-rebrand-ffta-de-rebuild.json)
 
+## 2026-11-03 — Publish European compact OBJ seventh root
+
+Type: added. Platforms: EUR; Wine.
+
+**Changes**
+
+- Publish the authenticated sparse 20-byte compact OBJ resource in e107-d106 and compose typed reads with previous owners and ROM in the gap.
+
+**Validation**
+
+- Isolated Windows build and focused Wine managed/native test passed: 96 prior resources unchanged, bytes and gap boundaries, transactional tamper rejection, full-state/clock equality and four typed native bytes.
+
+**Limitations**
+
+- Prior Wine attempts failed from workspace exhaustion and one temporary-output write failed with error 31; diagnostics retained. Older revision assertions were updated but not individually rerun. Production CLI, ordinary use, Linux, USA and native Windows pending; no performance measurements.
+
+[Change record](docs/changes/2026-11-03-publish-european-compact-obj-seventh-root.json)
+
 ## 2026-11-03 — Prepare the first DE-Rebuild release
 
 Type: changed. Platforms: Linux x86_64, Windows x86_64, Android ARM64.
@@ -1182,6 +1254,24 @@ Type: docs. Platforms: project-wide.
 - Documentation review only; no ROM exploration, build, runtime or platform validation was performed. Other inventory sections and the broader English-first audit remain open.
 
 [Change record](docs/changes/2026-11-03-normalize-rom-inventory-tail-counts.json)
+
+## 2026-11-03 — Model European compact OBJ seventh root
+
+Type: added. Platforms: EUR; Wine.
+
+**Changes**
+
+- Add a source-authenticated sparse model for one compact OBJ sequence, one list and 20 source bytes, preserving the two-byte gap.
+
+**Validation**
+
+- Isolated Windows build and focused Wine byte, boundary, gap, tamper and original reader-prefix checks passed; protected inputs unchanged.
+
+**Limitations**
+
+- Two earlier builds hit the temporary OS quota; failed diagnostics were retained. Runtime publication and ordinary use remain open; Linux, USA and native Windows pending; no performance measurements.
+
+[Change record](docs/changes/2026-11-03-model-european-compact-obj-seventh-root.json)
 
 ## 2026-11-03 — Manage source-bound cheats from the catalog page
 
@@ -1799,6 +1889,24 @@ Type: docs. Platforms: Desktop and AndroidPort documentation.
 Documentation: [THIRD_PARTY_NOTICES.md](Licenses/THIRD_PARTY_NOTICES.md), [THIRD_PARTY_NOTICES.md](AndroidPort/Licenses/THIRD_PARTY_NOTICES.md), [generate_notices.py](scripts/generate_notices.py).
 
 [Change record](docs/changes/2026-11-03-classify-third-party-notices-english.json)
+
+## 2026-11-03 — Classify European compact OBJ seventh root
+
+Type: docs. Platforms: EUR; Wine.
+
+**Changes**
+
+- Classify a conditional 20-byte compact OBJ source at 6be570, preserving its two-byte gap.
+
+**Validation**
+
+- Original Wine disassembly and independent authenticated ROM, caller, extent and e106 ownership checks passed.
+
+**Limitations**
+
+- Caller reachability, ordinary use, model and runtime publication remain unverified; Linux, USA and native Windows pending; no performance measurements.
+
+[Change record](docs/changes/2026-11-03-classify-european-compact-obj-seventh-root.json)
 
 ## 2026-11-03 — Clarify ROM world-road inventory
 

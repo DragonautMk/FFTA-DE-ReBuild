@@ -19858,3 +19858,45 @@ Restored spacing in extracted-files and validation-limit ROM guide sections and 
 ### ENGLISH-FIRST-ROM-GUIDE-METADATA — completed (2026-11-03)
 
 Clarified e26/e27/e31/e32 metadata and managed packet introductory text. Numeric sequences, headings, links, inline/fenced code and text outside selected passages match the immediate preimage; project-memory check and git diff --check passed. No build, extraction, game or platform validation. The remaining guide and broader audit stay open. Evidence: `docs/changes/2026-11-03-clarify-rom-guide-metadata-and-packets.json`.
+
+### ROMDATA-03-04-E105-SENARY-COMPACT-OBJ
+
+- Outcome: completed
+- Verified criteria: e106-d105 managed/native test passes with 96 resources and all 95 e105 resources unchanged; 756 source bytes in two spans, mixed boundaries and gap fallback, transactional tamper rejection, native versus interpreter full state and clock for selectors 0..6 and fallback 81, 28 typed native bytes.
+- Evidence: Windows build `target/rom-data-compact-obj-senary-runtime/build-result.json`; isolated Wine `target/rom-data-compact-obj-senary-runtime-20261103/{wine-result.json,wine-runtime/result.json}`. Protected inputs unchanged, retention removed nothing.
+- Limits: retained binary and ROM, manifest and TinyCC hashes match original selection; the retired frozen build snapshot was unavailable for rechecking. CLI and ordinary use, Linux, USA and native Windows remain unverified. No performance measurements.
+
+### ROMDATA-04-E106-SENARY-COMPACT-OBJ-CLI
+
+- Outcome: completed
+- Verified criteria: isolated Windows production build and Wine create/reuse/one-frame startup passed; all 97 generation files equal the accepted e106 dataset, all 96 resource identities and hashes match, 99 managed files remain unchanged and three processes exit zero.
+- Evidence: `target/rom-data-compact-obj-senary-cli-20261103/{build-result,result,processes}.json` and startup.log; protected inputs unchanged, retention removed nothing.
+- Limits: new bank counters were zero in the neutral frame, so ordinary use remains open. Linux, USA and native Windows pending; no performance measurements.
+
+### ROMDATA-01-E106-ROOT-6BE570
+
+- Outcome: completed
+- Verified criteria: three conditional original EUR calls pass selector 0; header, one frame and one list/object cover 20 bytes in two spans separated by a two-byte gap, without overlap with e106 owners.
+- Evidence: Wine disassembly and independent ROM/caller/manifest reconciliation `target/rom-data-root-6be570-20261103/{caller-disassembly-result,source-contract}.json`; protected inputs unchanged.
+- Limits: original calls are conditional, guest bounds and ordinary use remain unproved. Model/runtime/CLI and Linux, USA and native Windows remain open; no performance measurements.
+
+### ROMDATA-02-E106-ROOT-6BE570
+
+- Outcome: completed
+- Verified criteria: authenticated model reconstructs 20 bytes over two spans, excludes the two-byte gap, validates JSON and structure, rejects coherent source tampering and matches original count, frame and list reader prefixes for selector 0.
+- Evidence: isolated Windows build and Wine result `target/rom-data-compact-obj-septenary-model-disk-20261103/{build-result,wine-result}.json`, `wine-runtime/result.json`; protected inputs unchanged, retention removed nothing.
+- Limits: initial build and retry exhausted temporary OS quota; failed fixtures retained. Runtime/CLI/ordinary use and Linux/USA/native Windows remain open; no performance measurements.
+
+### ROMDATA-03-04-E106-SEPTENARY-COMPACT-OBJ
+
+- Outcome: completed
+- Verified criteria: e107-d106 managed/native test passes with 97 resources, 96 prior resource files unchanged, 20 owned bytes across two spans, gap and mixed-boundary fallback, transactional tamper rejection and full-state/clock native/interpreter equality for selector 0 and fallback 4, serving four typed bytes.
+- Evidence: `target/rom-data-compact-obj-septenary-runtime-20261103/build-result.json`, `target/rom-data-compact-obj-septenary-runtime-final-20261103/{wine-result.json,wine-runtime/result.json}`; protected source and inputs unchanged; retention removed nothing.
+- Limits: failed Wine setup and dataset attempts retained; one temporary-output attempt failed with Wine error 31. Duplicate e106 CLI dataset was retired only after all 97 files matched the retained e106 acceptance dataset, with receipt. Old revision assertions updated but not individually rerun. Production CLI and ordinary use, Linux, USA and native Windows remain open; no performance measurements.
+
+### ROMDATA-04-E107-SEPTENARY-COMPACT-OBJ-CLI
+
+- Outcome: completed
+- Verified criteria: isolated Windows production build and Wine create/reuse/one-frame startup passed; 98 generation files equal accepted e107, 97 runtime identities and hashes match, 100 managed files remain unchanged and all three child processes exit zero.
+- Evidence: `target/rom-data-compact-obj-septenary-cli-retry-20261103/{build-result,result,processes}.json` and startup.log; protected inputs unchanged, retention removed nothing.
+- Limits: bank counters were zero in the neutral frame, so ordinary use remains open. The first build ran out of workspace space; failed logs retained. Linux, USA and native Windows remain pending; no performance measurements.

@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "date": "2026-11-03",
+  "slug": "verify-european-compact-obj-sixth-cli",
+  "title": "Verify European compact OBJ sixth CLI",
+  "kind": "docs",
+  "platforms": [
+    "EUR; Wine"
+  ],
+  "changes": [
+    "Record production CLI creation, reuse and startup with the sixth sparse compact OBJ bank."
+  ],
+  "validation": [
+    "Isolated Windows production build and Wine create, reuse and one-frame startup passed; all 97 generation files equal accepted e106 and all 96 resource identities match."
+  ],
+  "limitations": [
+    "The new resource counters were zero in the neutral frame; ordinary use, Linux, USA and native Windows remain unverified; no performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_obj.md"
+  ],
+  "references": []
+}

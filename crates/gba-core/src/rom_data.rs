@@ -27,6 +27,7 @@ pub mod compact_obj_animations_tertiary;
 pub mod compact_obj_animations_quaternary;
 pub mod compact_obj_animations_quinary;
 pub mod compact_obj_animations_senary;
+pub mod compact_obj_animations_septenary;
 pub mod word_task_obj_animations;
 pub mod obj_graphics;
 pub mod ui_palettes;
@@ -106,8 +107,8 @@ mod custom_lz;
 pub mod lz77;
 
 pub const SCHEMA: u32 = 1;
-pub const EXTRACTOR_REV: u32 = 106;
-pub const DECODER_REV: u32 = 105;
+pub const EXTRACTOR_REV: u32 = 107;
+pub const DECODER_REV: u32 = 106;
 pub const METADATA16_ID: &str = "gameplay.linked-metadata16";
 pub const METADATA16_FILE: &str = "linked-metadata16.json";
 pub const METADATA16_FORMAT: &str = "linked-metadata16-v1-json";
@@ -348,6 +349,10 @@ pub const SENARY_COMPACT_OBJ_ANIMATIONS_ID: &str = "graphics.conditional-compact
 pub const SENARY_COMPACT_OBJ_ANIMATIONS_FILE: &str = "compact-obj-animations-senary.json";
 pub const SENARY_COMPACT_OBJ_ANIMATIONS_FORMAT: &str = "compact-obj-animations-senary-v1-json";
 pub const MAX_SENARY_COMPACT_OBJ_ANIMATIONS_FILE_BYTES: u64 = 2 * 1024 * 1024;
+pub const SEPTENARY_COMPACT_OBJ_ANIMATIONS_ID: &str = "graphics.conditional-compact-obj-animations-septenary";
+pub const SEPTENARY_COMPACT_OBJ_ANIMATIONS_FILE: &str = "compact-obj-animations-septenary.json";
+pub const SEPTENARY_COMPACT_OBJ_ANIMATIONS_FORMAT: &str = "compact-obj-animations-septenary-v1-json";
+pub const MAX_SEPTENARY_COMPACT_OBJ_ANIMATIONS_FILE_BYTES: u64 = 2 * 1024 * 1024;
 pub const INDEXED_GRAPHICS_ID: &str = "graphics.indexed-archives";
 pub const INDEXED_GRAPHICS_FILE: &str = "indexed-graphics.json";
 pub const INDEXED_GRAPHICS_FORMAT: &str = "indexed-graphics-v1-json";
@@ -684,6 +689,7 @@ pub struct Extraction {
     pub quaternary_compact_obj_animations: Option<compact_obj_animations_quaternary::Catalog>,
     pub quinary_compact_obj_animations: Option<compact_obj_animations_quinary::Catalog>,
     pub senary_compact_obj_animations: Option<compact_obj_animations_senary::Catalog>,
+    pub septenary_compact_obj_animations: Option<compact_obj_animations_septenary::Catalog>,
     pub map_raster_palettes: Option<map_raster_palettes::Catalog>,
     pub auxiliary_scripts: Option<auxiliary_scripts::Catalog>,
     pub text_catalogs: Option<text_catalogs::Catalog>,
@@ -786,6 +792,7 @@ pub struct BaseFiles<'a> {
     pub quaternary_compact_obj_animations: Option<(&'a compact_obj_animations_quaternary::CompactAnimationsQuaternary, &'a [u8])>,
     pub quinary_compact_obj_animations: Option<(&'a compact_obj_animations_quinary::CompactAnimationsQuinary, &'a [u8])>,
     pub senary_compact_obj_animations: Option<(&'a compact_obj_animations_senary::CompactAnimationsSenary, &'a [u8])>,
+    pub septenary_compact_obj_animations: Option<(&'a compact_obj_animations_septenary::CompactAnimationsSeptenary, &'a [u8])>,
     pub map_raster_palettes: Option<(&'a map_raster_palettes::MapRasterPalettes, &'a [u8])>,
     pub auxiliary_commands: Option<(&'a auxiliary_scripts::AuxiliaryCommands, &'a [u8])>,
     pub auxiliary_archive: Option<(&'a auxiliary_scripts::AuxiliaryArchive, &'a [u8])>,
@@ -1436,6 +1443,10 @@ impl Extraction {
             result.manifest.coverage.push(SENARY_COMPACT_OBJ_ANIMATIONS_ID.into());
             result.manifest.resources.push(Resource {id:SENARY_COMPACT_OBJ_ANIMATIONS_ID.into(),path:SENARY_COMPACT_OBJ_ANIMATIONS_FILE.into(),format:SENARY_COMPACT_OBJ_ANIMATIONS_FORMAT.into(),sha256:String::new(),dependencies:vec![],sources:metadata.sources.clone()});
             result.senary_compact_obj_animations = Some(metadata);
+            let metadata = compact_obj_animations_septenary::Catalog::from_rom(rom)?;
+            result.manifest.coverage.push(SEPTENARY_COMPACT_OBJ_ANIMATIONS_ID.into());
+            result.manifest.resources.push(Resource {id:SEPTENARY_COMPACT_OBJ_ANIMATIONS_ID.into(),path:SEPTENARY_COMPACT_OBJ_ANIMATIONS_FILE.into(),format:SEPTENARY_COMPACT_OBJ_ANIMATIONS_FORMAT.into(),sha256:String::new(),dependencies:vec![],sources:metadata.sources.clone()});
+            result.septenary_compact_obj_animations = Some(metadata);
         } else {
             result.manifest.extractor_revision = 8;
             result.manifest.decoder_revision = 7;
@@ -1566,6 +1577,7 @@ impl Extraction {
             quaternary_compact_obj_animations: None,
             quinary_compact_obj_animations: None,
             senary_compact_obj_animations: None,
+            septenary_compact_obj_animations: None,
             map_raster_palettes: None,
             auxiliary_scripts: None,
             font_bank: None,
@@ -1697,6 +1709,7 @@ impl Extraction {
             || self.tertiary_compact_obj_animations.is_some() != self.quaternary_compact_obj_animations.is_some()
             || self.quaternary_compact_obj_animations.is_some() != self.quinary_compact_obj_animations.is_some()
             || self.quinary_compact_obj_animations.is_some() != self.senary_compact_obj_animations.is_some()
+            || self.senary_compact_obj_animations.is_some() != self.septenary_compact_obj_animations.is_some()
             || self.constructor_obj_animation.is_some() && self.obj_lists.is_none()
             || self.map_raster_palettes.is_some() && self.auxiliary_scripts.is_none()
             || self.auxiliary_scripts.is_some() && self.script_coordinates.is_none()
@@ -2438,6 +2451,10 @@ impl Extraction {
             (Some(_),Some((_,bytes)))=>{if bytes.len() as u64>MAX_SENARY_COMPACT_OBJ_ANIMATIONS_FILE_BYTES {return Err("Senary compact OBJ animations file exceeds input guard".into());}total=total.saturating_add(bytes.len());expected.resources[95].sha256=ffta_rom::digest(bytes);}
             (None,None)=>{},_=>return Err("Missing or unexpected senary_compact_obj_animations".into()),
         }
+        match (&self.septenary_compact_obj_animations, files.septenary_compact_obj_animations) {
+            (Some(_),Some((_,bytes)))=>{if bytes.len() as u64>MAX_SEPTENARY_COMPACT_OBJ_ANIMATIONS_FILE_BYTES {return Err("Septenary compact OBJ animations file exceeds input guard".into());}total=total.saturating_add(bytes.len());expected.resources[96].sha256=ffta_rom::digest(bytes);}
+            (None,None)=>{},_=>return Err("Missing or unexpected septenary_compact_obj_animations".into()),
+        }
         match (&self.map_raster_palettes, files.map_raster_palettes) {
             (Some(_), Some((_, bytes))) => {
                 if bytes.len() as u64 > MAX_MAP_RASTER_PALETTES_FILE_BYTES { return Err("MapRasterPalettes file exceeds input guard".into()); }
@@ -2924,6 +2941,10 @@ impl Extraction {
             decoded.validate()?;
             if decoded!=&expected.decoded {return Err("Decoded senary_compact_obj_animations differs from authenticated source".into());}
         }
+        if let (Some(expected),Some((decoded,_)))=(&self.septenary_compact_obj_animations,files.septenary_compact_obj_animations) {
+            decoded.validate()?;
+            if decoded!=&expected.decoded {return Err("Decoded septenary_compact_obj_animations differs from authenticated source".into());}
+        }
         if let (Some(expected),Some((decoded,_))) = (&self.map_raster_palettes, files.map_raster_palettes) {
             let descriptors=files.background.ok_or("Missing raster palette descriptor dependency")?.0;
             decoded.validate_dependencies(descriptors)?;
@@ -3031,6 +3052,7 @@ impl Extraction {
             + usize::from(self.quaternary_compact_obj_animations.is_some())
             + usize::from(self.quinary_compact_obj_animations.is_some())
             + usize::from(self.senary_compact_obj_animations.is_some())
+            + usize::from(self.septenary_compact_obj_animations.is_some())
             + usize::from(self.map_raster_palettes.is_some())
             + 2 * usize::from(self.auxiliary_scripts.is_some())
     }
@@ -3181,6 +3203,7 @@ mod tests {
             quaternary_compact_obj_animations: None,
             quinary_compact_obj_animations: None,
             senary_compact_obj_animations: None,
+            septenary_compact_obj_animations: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -3284,6 +3307,7 @@ mod tests {
             quaternary_compact_obj_animations: None,
             quinary_compact_obj_animations: None,
             senary_compact_obj_animations: None,
+            septenary_compact_obj_animations: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -3397,6 +3421,7 @@ mod tests {
             quaternary_compact_obj_animations: None,
             quinary_compact_obj_animations: None,
             senary_compact_obj_animations: None,
+            septenary_compact_obj_animations: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -3499,6 +3524,7 @@ mod tests {
             quaternary_compact_obj_animations: None,
             quinary_compact_obj_animations: None,
             senary_compact_obj_animations: None,
+            septenary_compact_obj_animations: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
