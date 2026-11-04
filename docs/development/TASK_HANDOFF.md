@@ -39,6 +39,7 @@ termination of another owner's process or changing another thread's goal state.
 - Verified: E127 100 resources/101 files, 63 banks; EUR Wine create/reuse, nibble reads/fallback, four native comparisons and 12-frame CLI PASS (zero catalog reads). Current: target/validation/units/rom-data-e127-nibble-current-evuagp74/work/resources/. Prior scoped proofs preserved.
 - Missing: unmigrated resources/consumers, missing ordinary-use evidence, ABI/global extent/indirect calls and mod phases ROMDATA-06/07; Linux/USA/native Windows/new32:9 remain distinct. EUR, reduced Wine scope, no performance/space measurements; originals and personal saves unchanged.
 - Selection: `ROMDATA-04-LOOP-COMPACT-CATALOG-ORDINARY` active/partial. EUR/Wine, Linux/USA pending, no metrics. Soil Evidence 6bac28/6c0614, Freezeblink 6babc4 and Stardust 6bb574 exact reads and paired Wine scenes PASS. Audit CLI compilation recovered after ENOSPC; emitted test passed. Missing: remaining banks and global coverage. Selection: `ROMDATA-02-04-6C1E78-DEFAULT-SELECTORS` partial. Caller branch also derives 4/6, while only conditional 3/5 are represented. Next: Wine source geometry and current-manifest conflict check; if coherent, extend catalog and validate. EUR/Wine only; no metrics. Model/effort unconfirmed.
+- Recovery selection: `RVR-01` active/partial. Octonary manifest-derived counts PASS in full e127 EUR/Wine rerun (100 current/97 prior); prior failed wrapper retained. Missing: other fixed report counts and their tests; table graphics also has a 94-file assertion to reconcile. Next: select one affected report and available inputs. Terra effort unconfirmed.
 - Resume: [validation recovery checklist](ROM_DATA_VALIDATION_RECOVERY_TODO.md) for skipped checks; [ROM_DATA_TODO](ROM_DATA_TODO.md), only the selected criterion's section (ROMDATA-01/02/03/04/05/06/07); [inventory](ROM_DATA_INVENTORY.md). Do not read the whole TODO. Children retain their IDs and limits:
   - `ROMDATA-04-PARAMETER-RECORDS27-ORDINARY`: source/model/runtime/CLI accepted; 59 records observed, full domain unproven; positive normal use and complete paired evidence missing. Eleven negative captures closed; archive legacy lines 17624..17672 and `docs/rom_data_gameplay.md`, ordinary sparse parameter record reachability section.
   - `ROMDATA-04-LOCALIZED-TABLE-GRAPHICS-ORDINARY`: 40 banks/8 tables source/model/runtime/CLI accepted; positive normal trigger and paired evidence missing; negative attempts remain closed. `docs/rom_data_ui_graphics.md`, ordinary table extension reachability section; archive 17844..17864.
@@ -202,9 +203,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: ROMDATA-VALIDATION-RECOVERY-CHECKLIST completed; documentation only.
-- Last verified result: linked checklist with 37 open items and three recovered groups; local links/anchors and unique IDs checked. Main TODO reflects accepted e127 full-filter recovery.
-- Remaining work: checklist regression/reporting/lifecycle/ordinary-use items and source prerequisites; platforms and metrics retain their deferred scope.
-- Errors or blockers: no new runtime result; stale test report counts remain an explicit checklist item. Existing uncommitted full-filter evidence preserved.
-- Next action: on validation resumption, select one unchecked recovery item and inspect its evidence/inputs before execution.
-- References: docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md; docs/changes/2026-11-04-add-rom-data-validation-recovery-checklist.json.
+- Task: RVR-01 partial; execute ROM-data validation recovery checklist.
+- Last verified result: corrected octonary JSON reports 100 current/97 prior; full EUR Wine filter and independent manifest/schema checks PASS.
+- Remaining work: other stale reports and updated-revision filters in checklist; wider ordinary, lifecycle and platform criteria remain open.
+- Errors or blockers: first wrapper failed after an accidentally omitted JSON field; corrected retry passed. Failed diagnostics retained. Terra effort unconfirmed.
+- Next action: select another affected report, inspect its predecessor input and validate its corrected output.
+- References: docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md; docs/changes/2026-11-04-fix-octonary-validation-report.json.

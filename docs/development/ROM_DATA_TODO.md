@@ -1258,8 +1258,8 @@ continuation for selector 256. That selector reads a raw zero offset returning
 to two owned count bytes; no guest cap or all-raw fallback is inferred. The
 initial full filter failed on the counter oracle; a later complete e127-d126
 filter passed with the corrected oracle, 100 resources and 97 prior resources
-preserved. Its JSON summary still has a stale fixed resources=98 field; the
-assertion and retained manifest establish the actual count.
+preserved. That run's JSON summary has a stale fixed resources=98 field; a
+later corrected full-filter rerun reports the actual 100 from its manifest.
 [Full-filter recovery](../changes/2026-11-04-verify-e127-octonary-full-filter.json).
 The e108 production CLI create/reuse/startup also passes: 99 files match runtime,
 98 identities and 101 managed files remain unchanged. Neutral new-bank counters are zero;

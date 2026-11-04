@@ -1030,6 +1030,29 @@ Documentation: [debug_control.md](docs/debug_control.md).
 
 [Change record](docs/changes/2026-11-04-forward-late-wine-ime-results.json)
 
+## 2026-11-04 — Correct the octonary validation resource counts
+
+Type: fixed. Platforms: EUR Windows executable under Wine.
+
+**Changes**
+
+- Report the current and previous resource counts from their manifests in the octonary runtime test, preserving its existing JSON keys.
+- Record the completed octonary increment under RVR-01 and retain the remaining report audit and table-graphics file-count discrepancy as open work.
+
+**Validation**
+
+- An isolated Windows release test cross-build and complete EUR Wine filter pass; the JSON and generated e127 manifest both contain 100 current resources, 97 prior resources match, and selector state/clock and tamper checks pass.
+- Compared report keys with the preimage; only the two count expressions changed. Source snapshot contained 845 files, protected inputs passed, and successful build and Wine scratch were removed.
+
+**Limitations**
+
+- An initial Wine test passed after an accidental report field omission; the surrounding contract check failed, the field was restored, and the subsequent build and Wine test passed. The initial failed wrapper and diagnostics remain retained.
+- Other report families remain uncorrected and RVR-01 remains partial; the earlier source snapshot differs from current unrelated files. Linux, USA, native Windows, broader gameplay and performance are not covered. Terra model is reported by the client, while its reasoning effort is not independently observable.
+
+Documentation: [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md), [2026-11-04-verify-e127-octonary-full-filter.json](docs/changes/2026-11-04-verify-e127-octonary-full-filter.json).
+
+[Change record](docs/changes/2026-11-04-fix-octonary-validation-report.json)
+
 ## 2026-11-04 — Consume a table-driven European compact animation root
 
 Type: changed. Platforms: Windows executable on Wine; EUR.

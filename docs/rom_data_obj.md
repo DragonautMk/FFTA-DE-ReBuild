@@ -2017,6 +2017,14 @@ the test on a read-only Wine server lock; its owned leases were released after
 a host process check, with diagnostics retained. Linux, USA, native Windows and
 ordinary-use coverage beyond the previously recorded scene remain open.
 
+The octonary report now derives current and prior resource counts from their
+manifests. A subsequent isolated Windows cross-build and full EUR/Wine rerun
+pass, with both report and generated e127 manifest showing 100 resources and
+97 prior resources preserved; the existing JSON keys remain present. Evidence:
+`target/validation/units/rvr01-octonary-build-retry-f45ooxrq/` and
+`target/validation/units/rvr01-octonary-wine-dbiu_zv9/`. The earlier result
+remains historical evidence; other report corrections are still pending.
+
 Source and build evidence is under `target/rom-data-root-6cc124-20261103/`.
 Wine units are `target/validation/units/rom-data-6cc124-source-v6pw9mta`,
 `rom-data-6cc124-contract-pbkps4ta`, `rom-data-octonary-runtime-xcoaavjw` and

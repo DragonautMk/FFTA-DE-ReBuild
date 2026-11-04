@@ -20452,3 +20452,10 @@ Two 24-row EUR callers select 0–7; 132 bank bytes and 594 conditional table by
 - Verified criteria: 37 open items and three recovered groups cover skipped revision reruns, reporting/lifecycle/ordinary-use gaps, source prerequisites and deferred platforms/metrics. Local links/anchors and unique RVR IDs pass; main TODO reconciles the accepted e127 octonary full filter while preserving e108 CLI scope.
 - Evidence: docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md; docs/changes/2026-11-04-add-rom-data-validation-recovery-checklist.json.
 - Limits: no new build, extraction, runtime test or benchmark; checklist incompleteness does not reopen earlier accepted scopes or attribute every gap to storage exhaustion.
+
+### RVR-01-OCTONARY-REPORT
+
+- Outcome: completed; RVR-01 remains partial.
+- Verified criteria: octonary runtime report derives current/prior counts from manifests; isolated Windows release test cross-build and full EUR/Wine filter PASS. Generated manifest and report both show 100 resources; 97 prior resources preserved; existing JSON keys retained.
+- Evidence: docs/changes/2026-11-04-fix-octonary-validation-report.json; target/validation/units/rvr01-octonary-build-retry-f45ooxrq/; target/validation/units/rvr01-octonary-wine-dbiu_zv9/.
+- Limits: earlier wrapper failed on a field accidentally omitted in the first edit; the field was restored and the corrected retry passed. Failed diagnostics retained. Other fixed counts and table-graphics file assertion remain open. Snapshot differs from unrelated current sources; no Linux, USA, native Windows, new gameplay or performance claim. Terra effort unconfirmed.

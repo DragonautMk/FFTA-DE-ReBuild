@@ -75,7 +75,7 @@ fn european_octonary_compact_obj_managed_native_reads() {
         assert_eq!(used,if index==0x100 {2} else {4});served+=used;
         native.bus.rom.copy_from_slice(&rom);assert_eq!(native.save_state().unwrap(),raw.save_state().unwrap(),"selector {index}");
     }
-    fs::write(root.join("result.json"),serde_json::to_vec_pretty(&serde_json::json!({"status":"PASS","resources":98,"previous_unchanged":97,"spans":1,"source_bytes":102,"native_prefixes":1,"selectors":[0,1,2,256],"typed_native_bytes":served,"raw_directory_owned_count":true,"tamper_transaction":true,"full_state_clock":true,"Linux":"pending","USA":"pending","nativeWindows":"pending","performance_measurements":false})).unwrap()).unwrap();
+    fs::write(root.join("result.json"),serde_json::to_vec_pretty(&serde_json::json!({"status":"PASS","resources":source.manifest.resources.len(),"previous_unchanged":prior.resources.len(),"spans":1,"source_bytes":102,"native_prefixes":1,"selectors":[0,1,2,256],"typed_native_bytes":served,"raw_directory_owned_count":true,"tamper_transaction":true,"full_state_clock":true,"Linux":"pending","USA":"pending","nativeWindows":"pending","performance_measurements":false})).unwrap()).unwrap();
 }
 
 #[test]

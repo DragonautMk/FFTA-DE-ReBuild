@@ -43,6 +43,16 @@ The evidence does not attribute every unchecked item to lack of disk space.
   reruns pass. Preserve old evidence verbatim.
   [Observed discrepancy](../changes/2026-11-04-verify-e127-octonary-full-filter.json),
   [octonary test](../../crates/recomp/src/rom_data/compact_obj_animations_octonary_runtime_tests.rs).
+  - [x] Correct the octonary report's current and prior resource counts and
+    rerun its full EUR/Wine filter. Its report and generated e127 manifest
+    both say 100, all 97 prior resources match, and the report retains its
+    existing fields. [Recovery](../changes/2026-11-04-fix-octonary-validation-report.json).
+  - [ ] Correct and validate the other affected reports. The source audit
+    found fixed historical resource counts in the primary through septenary
+    compact OBJ tests, the four-byte and packed lookup, both descriptor-bank
+    tests, property masks and UI context tests. Table graphics also has old
+    revision, file and resource summaries; reconcile its assertion described
+    in RVR-15. The original compact-catalog report has old aggregate counts.
 
 ## 2. Run the older tests whose revision expectations changed
 
@@ -102,7 +112,9 @@ checks pass, and the record names the tested revision and precise scope.
   [Tests](../../crates/recomp/src/rom_data/dynamic_raw_fragments_runtime_tests.rs).
 - [ ] **RVR-15 — Table-selected graphics:** run
   `european_table_graphics_managed_native_and_lifecycle` against the updated
-  complete-set expectations.
+  complete-set expectations. First reconcile its 94-file directory assertion
+  with the current e127 generation, recorded as 101 files, and derive the
+  result summary from the actual manifest and file set.
   [Test](../../crates/recomp/src/rom_data/table_graphics_runtime_tests.rs).
 - [ ] **RVR-16 — Clan table alias:** run
   `european_clan_alias_managed_reads`.
