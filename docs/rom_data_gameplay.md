@@ -5966,6 +5966,10 @@ is under `target/rom-data-6df4d4-runtime/`; guarded inputs and frozen sources
 were unchanged. Production CLI, ordinary scenes, Linux, USA and native Windows
 remain to verify. No performance measurements were made.
 
+The complete EUR/Wine filter also passes against e127-d126 with 100 current
+resources and 87 authenticated predecessor resources. Its report now derives
+both counts from the manifests. [Recovery record](changes/2026-11-04-verify-e127-descriptor-mask-regressions.json).
+
 
 ## Conditional descriptor banks production CLI
 
@@ -6108,6 +6112,10 @@ Linux, USA and native Windows remain to verify. No performance measurements
 were made. The initial build's missing test trait import was corrected before
 the successful retry.
 
+The complete EUR/Wine filter also passes against e127-d126 with 100 current
+resources and 89 authenticated predecessor resources. Its report now derives
+both counts from the manifests. [Recovery record](changes/2026-11-04-verify-e127-descriptor-mask-regressions.json).
+
 An isolated production Windows build subsequently created and reused e100
 under Wine and advanced one retained neutral frame. All 91 generation files
 matched the accepted dataset, 90 runtime resource identities matched the
@@ -6215,6 +6223,10 @@ inside/outside cases matched raw interpreter state and clock. Evidence is under
 `target/rom-data-6df4d4-bank0-runtime/`; guarded inputs and frozen sources were
 unchanged. Production CLI, ordinary use, Linux, USA and native Windows remain
 to verify. No performance measurements were made.
+
+The complete EUR/Wine filter also passes against e127-d126 with 100 current
+resources and 88 authenticated predecessor resources. Its report now derives
+both counts from the manifests. [Recovery record](changes/2026-11-04-verify-e127-descriptor-mask-regressions.json).
 
 
 ## Conditional descriptor bank 0 production CLI

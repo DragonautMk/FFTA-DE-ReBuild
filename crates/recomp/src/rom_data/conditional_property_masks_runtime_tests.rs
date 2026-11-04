@@ -79,5 +79,5 @@ fn european_conditional_property_masks_managed_native_reads() {
         assert_eq!(used, if index < 35 { 4 } else { 0 }, "index {index}"); served += used;
         native.bus.rom.copy_from_slice(&rom); assert_eq!(native.save_state().unwrap(), raw.save_state().unwrap(), "index {index}");
     }
-    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({"status":"PASS", "resources":90, "previous_unchanged":89, "source_bytes":140, "native_prefixes":1, "indices":[0,1,34,35,255,4294967295u32], "typed_native_bytes":served, "prior_owner_composition":true, "tamper_transaction":true, "full_state_clock":true, "Linux":"pending", "USA":"pending", "nativeWindows":"pending", "performance_measurements":false})).unwrap()).unwrap();
+    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({"status":"PASS", "resources":source.manifest.resources.len(), "previous_unchanged":prior.resources.len(), "source_bytes":140, "native_prefixes":1, "indices":[0,1,34,35,255,4294967295u32], "typed_native_bytes":served, "prior_owner_composition":true, "tamper_transaction":true, "full_state_clock":true, "Linux":"pending", "USA":"pending", "nativeWindows":"pending", "performance_measurements":false})).unwrap()).unwrap();
 }

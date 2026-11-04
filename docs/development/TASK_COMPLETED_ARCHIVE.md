@@ -20508,3 +20508,24 @@ Two 24-row EUR callers select 0–7; 132 bank bytes and 594 conditional table by
 - Verified criteria: e127-d126, 132 bytes and boundaries, metadata14 alias, two native prefixes with state-clock equality and coherent tamper rejection; corrected report matches 100 current/86 prior. Retained e96 manifest and 86 matching records/hashes authenticate the scratch predecessor. Protected inputs unchanged; successful test and build scratch removed.
 - Evidence: docs/changes/2026-11-04-verify-e127-packed-lookup.json; target/validation/units/rvr10-packed-e127-74y398c2/; target/validation/units/rvr10-packed-build-u97r3hgw/retirement-result.json.
 - Limits: predecessor reconstructed only in scratch from authenticated existing payloads, not original retired directory; six unrelated snapshot files older. No native Windows, Linux, USA, new ordinary scene or performance claim.
+
+### RVR-11
+
+- Outcome: completed
+- Verified criteria: full conditional descriptor banks filter passes on e127 EUR/Wine; 100 current and 87 authenticated prior resources, five prefixes over eight cases, full state/clock equality and transactional tamper rejection. Report counts come from the tested manifests.
+- Evidence: docs/changes/2026-11-04-verify-e127-descriptor-mask-regressions.json; target/validation/units/rvr11-descriptor-e127-hk861pmk/.
+- Limits: EUR/Wine only; six unrelated source files in the retained build snapshot were older than the workspace. No native Windows, Linux, USA or performance validation.
+
+### RVR-12
+
+- Outcome: completed
+- Verified criteria: full descriptor bank zero filter passes on e127 EUR/Wine; 100 current and 88 authenticated prior resources, three prefixes over five cases, full state/clock equality and transactional tamper rejection. Report counts come from the tested manifests.
+- Evidence: docs/changes/2026-11-04-verify-e127-descriptor-mask-regressions.json; target/validation/units/rvr12-descriptor-zero-e127-mvls0ur3/.
+- Limits: EUR/Wine only; six unrelated source files in the retained build snapshot were older than the workspace. No native Windows, Linux, USA or performance validation.
+
+### RVR-13
+
+- Outcome: completed
+- Verified criteria: full property masks filter passes on e127 EUR/Wine; 100 current and 89 authenticated prior resources, one prefix over six boundary indices, full state/clock equality and transactional tamper rejection. Report counts come from the tested manifests.
+- Evidence: docs/changes/2026-11-04-verify-e127-descriptor-mask-regressions.json; target/validation/units/rvr13-property-masks-e127-ygf0eja3/.
+- Limits: EUR/Wine only; six unrelated source files in the retained build snapshot were older than the workspace. No native Windows, Linux, USA or performance validation.

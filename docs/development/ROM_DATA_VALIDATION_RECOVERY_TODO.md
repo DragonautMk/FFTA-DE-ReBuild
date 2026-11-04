@@ -62,11 +62,14 @@ The evidence does not attribute every unchecked item to lack of disk space.
   - [x] Correct the packed lookup report and verify its e127 EUR/Wine filter
     against authenticated e96 inputs. It reports 100 current/86 prior resources.
     [Recovery](../changes/2026-11-04-verify-e127-packed-lookup.json).
+  - [x] Correct descriptor-bank, bank-zero and property-mask report counts and
+    verify their complete e127 EUR/Wine filters. Reports match the manifests:
+    100 current and 87, 88 and 89 prior resources, respectively.
+    [Recovery](../changes/2026-11-04-verify-e127-descriptor-mask-regressions.json).
   - [ ] Correct and validate the other affected reports. The source audit
     found fixed historical resource counts in the primary through septenary
-    compact OBJ tests, both descriptor-bank tests and property masks. The
-    original compact-catalog report has old
-    aggregate counts.
+    compact OBJ tests. The original compact-catalog report has old aggregate
+    counts.
 
 ## 2. Run the older tests whose revision expectations changed
 
@@ -117,15 +120,21 @@ checks pass, and the record names the tested revision and precise scope.
   two native prefixes, full state/clock equality and tamper rejection. Its e96
   predecessor copy was authenticated and removed with test scratch.
   [Evidence](../changes/2026-11-04-verify-e127-packed-lookup.json).
-- [ ] **RVR-11 — Conditional descriptor banks:** run
-  `european_conditional_descriptor_banks_managed_native_reads`.
-  [Test](../../crates/recomp/src/rom_data/conditional_descriptor_banks_runtime_tests.rs).
-- [ ] **RVR-12 — Descriptor bank zero:** run
-  `european_conditional_descriptor_bank_zero_managed_native_reads`.
-  [Test](../../crates/recomp/src/rom_data/conditional_descriptor_bank_zero_runtime_tests.rs).
-- [ ] **RVR-13 — Property masks:** run
-  `european_conditional_property_masks_managed_native_reads`.
-  [Test](../../crates/recomp/src/rom_data/conditional_property_masks_runtime_tests.rs).
+- [x] **RVR-11 — Conditional descriptor banks:** the complete e127 EUR/Wine
+  filter passes: 5,564 source bytes, five native prefixes and eight cases each,
+  full state/clock equality and tamper rejection. The 87-resource e97
+  predecessor was authenticated and removed with test scratch.
+  [Evidence](../changes/2026-11-04-verify-e127-descriptor-mask-regressions.json).
+- [x] **RVR-12 — Descriptor bank zero:** the complete e127 EUR/Wine filter
+  passes: 124 source bytes, three native prefixes and five cases each, full
+  state/clock equality and tamper rejection. The 88-resource e98 predecessor
+  was authenticated and removed with test scratch.
+  [Evidence](../changes/2026-11-04-verify-e127-descriptor-mask-regressions.json).
+- [x] **RVR-13 — Property masks:** the complete e127 EUR/Wine filter passes:
+  140 source bytes, one native prefix and six boundary indices, full state/clock
+  equality and tamper rejection. The 89-resource e99 predecessor was
+  authenticated and removed with test scratch.
+  [Evidence](../changes/2026-11-04-verify-e127-descriptor-mask-regressions.json).
 - [x] **RVR-14 — Dynamic raw fragments:** the full
   `european_dynamic_fragments_managed_reads` filter passes in EUR/Wine with
   e127-d126. It checks all 1,304 bytes, seven source spans and boundaries, a

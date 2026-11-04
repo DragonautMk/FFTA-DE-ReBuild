@@ -51,5 +51,5 @@ fn european_conditional_descriptor_banks_managed_native_reads() {
         let expected=if prefix==0 {if bank!=0 {4} else {0}} else if selected {if prefix==4 {1} else {2}} else {0};
         assert_eq!(used,expected,"bank {bank} row {row} prefix {prefix}");served+=used;native.bus.rom.copy_from_slice(&rom);assert_eq!(native.save_state().unwrap(),raw.save_state().unwrap(),"bank {bank} row {row} prefix {prefix}");
     }}
-    fs::write(root.join("result.json"),serde_json::to_vec_pretty(&serde_json::json!({"status":"PASS","resources":90,"previous_unchanged":87,"source_bytes":5564,"native_prefixes":5,"cases_per_prefix":8,"typed_native_bytes":served,"pointer0_typed_bank0_row0_and_gap_raw":true,"full_state_clock":true,"tamper_transaction":true,"Linux":"pending","USA":"pending","nativeWindows":"pending","performance_measurements":false})).unwrap()).unwrap();
+    fs::write(root.join("result.json"),serde_json::to_vec_pretty(&serde_json::json!({"status":"PASS","resources":source.manifest.resources.len(),"previous_unchanged":prior.resources.len(),"source_bytes":5564,"native_prefixes":5,"cases_per_prefix":8,"typed_native_bytes":served,"pointer0_typed_bank0_row0_and_gap_raw":true,"full_state_clock":true,"tamper_transaction":true,"Linux":"pending","USA":"pending","nativeWindows":"pending","performance_measurements":false})).unwrap()).unwrap();
 }

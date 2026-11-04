@@ -441,6 +441,28 @@ Documentation: [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_
 
 [Change record](docs/changes/2026-11-04-verify-e127-dynamic-fragments.json)
 
+## 2026-11-04 — Verify e127 descriptor and mask regressions
+
+Type: fixed. Platforms: EUR Windows executable under Wine.
+
+**Changes**
+
+- Derive the descriptor banks, descriptor bank zero and property mask test report resource counts from the tested current and predecessor manifests, preserving report keys.
+
+**Validation**
+
+- The full RVR-11, RVR-12 and RVR-13 filters pass against e127-d126: each reports 100 current resources and respectively 87, 88 and 89 unchanged predecessor resources. The tests check source bytes, translated native prefixes, full state and clock equality and transactional tamper rejection.
+- Predecessor payloads were reconstructed only in owned test scratch and authenticated against retained e97, e98 and e99 manifests and current e127 resource hashes. Guarded inputs passed preservation checks. The three successful Wine workspaces and the isolated build workspace were retired with evidence preserved.
+- Results: target/validation/units/rvr11-descriptor-e127-hk861pmk/, target/validation/units/rvr12-descriptor-zero-e127-mvls0ur3/, target/validation/units/rvr13-property-masks-e127-ygf0eja3/; build and retirement receipts: target/validation/units/rvr11-13-descriptors-build-2ut4gz63/.
+
+**Limitations**
+
+- The isolated build used the authenticated selected current test sources over a retained source snapshot; six unrelated source files were older than the workspace. This is EUR Wine coverage only, not native Windows, Linux or USA validation, complete ordinary-use coverage or a performance measurement.
+
+Documentation: [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md), [rom_data_gameplay.md](docs/rom_data_gameplay.md).
+
+[Change record](docs/changes/2026-11-04-verify-e127-descriptor-mask-regressions.json)
+
 ## 2026-11-04 — Verify the e127 conditional lookup regression
 
 Type: fixed. Platforms: EUR Windows executable under Wine.
