@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "recover-compact-obj-report-counts",
+  "title": "Recover compact OBJ manifest-based reports",
+  "kind": "fixed",
+  "platforms": [
+    "EUR Windows executable under Wine"
+  ],
+  "changes": [
+    "Derive the secondary through septenary compact OBJ validation report counts from the current and predecessor manifests while preserving existing fields."
+  ],
+  "validation": [
+    "Current source Windows release test compilation passed in target/validation/units/rvr03-08-compact-build-92a352mq/; selected test sources and executable are hashed and input guards passed.",
+    "Retained e101 through e106 predecessor records and payload hashes independently match the current e127 dataset.",
+    "RVR-03 secondary full e127-d126 EUR/Wine filter passes 334 source bytes, boundary and tamper checks, five selector full state/clock comparisons and 16 typed native bytes; 100 current and 91 e101 predecessor resources match, input guards pass, and scratch was removed. Evidence: target/validation/units/rvr03-secondary-e127-in4lgtqr/.",
+    "RVR-04 tertiary full e127-d126 EUR/Wine filter passes 108 source bytes, boundary and tamper checks, three selector full state/clock comparisons and eight typed native bytes; 100 current and 92 e102 predecessor resources match, input guards pass and scratch was removed. Evidence: target/validation/units/rvr04-tertiary-e127-av__e5xq/.",
+    "RVR-05 quaternary full e127-d126 EUR/Wine filter passes 202 source bytes, boundary and tamper checks, five selector full state/clock comparisons and 16 typed native bytes; 100 current and 93 e103 predecessor resources match, input guards pass and scratch was removed. Evidence: target/validation/units/rvr05-quaternary-e127-tc7sjefs/.",
+    "RVR-06 quinary full e127-d126 EUR/Wine filter passes 140 source bytes, boundary and tamper checks, three selector full state/clock comparisons and eight typed native bytes; 100 current and 94 e104 predecessor resources match, input guards pass and scratch was removed. Evidence: target/validation/units/rvr06-quinary-e127-v3a7erhp/.",
+    "RVR-07 senary full e127-d126 EUR/Wine filter passes 756 source bytes, boundary and tamper checks, eight selector full state/clock comparisons and 28 typed native bytes; 100 current and 95 e105 predecessor resources match, input guards pass and scratch was removed. Evidence: target/validation/units/rvr07-senary-e127-i9fynz4a/.",
+    "RVR-08 septenary full e127-d126 EUR/Wine filter passes 20 source bytes, boundary and tamper checks, two selector full state/clock comparisons and four typed native bytes; 100 current and 96 e106 predecessor resources match, input guards pass and scratch was removed. Evidence: target/validation/units/rvr08-septenary-e127-ymlajk0s/.",
+    "Consumed successful build scratch was retired after host open-file, lease and inventory checks; evidence and receipt remain in target/validation/units/rvr03-08-compact-build-92a352mq/."
+  ],
+  "limitations": [
+    "Native Windows, Linux, USA, ordinary-use coverage and performance remain unverified."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/compact_obj_animations_secondary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_tertiary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_quaternary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_quinary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_senary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_septenary_runtime_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

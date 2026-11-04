@@ -2,6 +2,19 @@
 use super::*;
 use gba_core::{Bus, Machine, capi::RT_API, rom_data::{RuntimeResources, compact_obj_catalog as model}};
 
+fn assert_previous_bank_preserved(old: &model::Bank, current: &model::Bank) {
+    if old.root != 0x6c1e78 {
+        assert_eq!(old, current);
+        return;
+    }
+    assert_eq!((old.root, old.flags, old.sequence_relative_offset),
+        (current.root, current.flags, current.sequence_relative_offset));
+    assert_eq!(old.lists, current.lists);
+    for sequence in &old.sequences {
+        assert_eq!(current.sequences.iter().find(|entry| entry.sequence.selector == sequence.sequence.selector), Some(sequence));
+    }
+}
+
 pub(super) fn prefix(machine: &mut Machine, start: u32, end: u32) {
     machine.cpu.regs[15] = start;
     machine.cpu.cpsr = 0xbf;
@@ -12,6 +25,96 @@ pub(super) fn prefix(machine: &mut Machine, start: u32, end: u32) {
         machine.step();
         steps += 1;
     }
+}
+
+#[test]
+#[ignore = "private EUR e128 current/e127 prior and native reader; Wine only"]
+fn european_6c1e78_default_selectors_match_source_and_native_readers() {
+    let root = PathBuf::from(std::env::var_os("FFTA_COMPACT_CATALOG_ROOT").unwrap());
+    assert!(!root.exists()); fs::create_dir_all(&root).unwrap();
+    let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    let current_dir = PathBuf::from(std::env::var_os("FFTA_STATE_TEST_DATASET").unwrap());
+    let prior_dir = PathBuf::from(std::env::var_os("FFTA_COMPACT_CATALOG_PRIOR").unwrap());
+    let prior_manifest: Manifest = toml::from_str(&fs::read_to_string(prior_dir.join(MANIFEST_FILE)).unwrap()).unwrap();
+    assert_eq!((prior_manifest.extractor_revision, prior_manifest.decoder_revision, prior_manifest.resources.len()), (127, 126, 100));
+    let prior: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior_dir.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
+    let current = read_dataset(&current_dir).unwrap();
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
+    assert_eq!(current.manifest.resources[..99], prior_manifest.resources[..99]);
+    let data = current.compact_obj_catalog.as_ref().unwrap();
+    data.verify_source(&rom).unwrap();
+    assert_eq!(data.banks.len(), 63);
+    assert_eq!(data.selector_tables, prior.selector_tables);
+    for bank in &prior.banks { assert_previous_bank_preserved(bank, data.banks.iter().find(|new| new.root == bank.root).unwrap()); }
+    let bank = data.banks.iter().find(|bank| bank.root == 0x6c1e78).unwrap();
+    assert_eq!(bank.sequences.iter().map(|entry| entry.sequence.selector).collect::<Vec<_>>(), [3, 4, 5, 6]);
+    assert_eq!(bank.sequences.iter().map(|entry| entry.sequence.frames.len()).collect::<Vec<_>>(), [13, 19, 43, 43]);
+    let spans = model::BANK_SPECS.iter().find(|spec| spec.root == bank.root).unwrap().spans;
+    assert_eq!(spans.iter().map(|(a,z)| z-a).sum::<u32>(), 524);
+    let mut raw = crate::make_machine(rom.clone(), None);
+    for base in [3, 4] { for value in 0..=10 {
+        raw.cpu.regs = [0; 16]; raw.cpu.regs[0] = value; raw.cpu.regs[5] = base;
+        prefix(&mut raw, 0x08109688, 0x0810969a);
+        assert_eq!(raw.cpu.regs[5], base + if [3,5,7].contains(&value) { 2 } else { 0 });
+    } }
+    let mut managed = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut managed, &current_dir).unwrap();
+    let owner = managed.bus.rom_resources().unwrap().clone();
+    let initial = managed.save_state().unwrap();
+    for &(a,z) in spans { managed.bus.rom[a as usize..z as usize].fill(0xcd); }
+    let before = owner.compact_obj_catalog_stats().unwrap().source_bytes;
+    for &(a,z) in spans { for at in a..z { assert_eq!(managed.bus.read8(0x0c000000 + at), rom[at as usize]); } }
+    assert_eq!(owner.compact_obj_catalog_stats().unwrap().source_bytes - before, 524);
+    for &(a,z) in spans { for edge in [a,z] { for delta in [-3i32,-1,0,1] {
+        let at = edge.wrapping_add_signed(delta) as usize;
+        let ptr = &mut managed as *mut Machine as *mut std::ffi::c_void;
+        assert_eq!((RT_API.read16)(ptr, 0x0a000000 + at as u32), u32::from(u16::from_le_bytes(rom[at..at+2].try_into().unwrap())));
+        assert_eq!((RT_API.read32)(ptr, 0x08000000 + at as u32), u32::from_le_bytes(rom[at..at+4].try_into().unwrap()));
+    } } }
+    managed.bus.rom.copy_from_slice(&rom); assert_eq!(managed.save_state().unwrap(), initial);
+    let mut bad = read_dataset(&current_dir).unwrap();
+    bad.compact_obj_catalog.as_mut().unwrap().banks.iter_mut().find(|bank| bank.root == 0x6c1e78).unwrap().sequences[1].sequence.frames[0].duration ^= 1;
+    let bytes = encode_compact_obj_catalog(bad.compact_obj_catalog.as_ref().unwrap()).unwrap();
+    bad.manifest.resources[99].sha256 = gba_core::ffta_rom::digest(&bytes); bad.compact_obj_catalog_bytes = Some(bytes);
+    assert!(RuntimeResources::from_base_files(&rom, bad.files()).is_err());
+    assert!(std::sync::Arc::ptr_eq(managed.bus.rom_resources().unwrap(), &owner));
+    assert_eq!(managed.save_state().unwrap(), initial); drop(bad); drop(managed);
+
+    let object = PathBuf::from(std::env::var_os("FFTA_COMPACT_CATALOG_NATIVE").unwrap());
+    let (_library, table) = crate::load_native(&object).unwrap();
+    let mut native = crate::make_machine(rom.clone(), None); attach_from_directory(&mut native, &current_dir).unwrap();
+    let native_owner = native.bus.rom_resources().unwrap().clone(); let initial = raw.save_state().unwrap();
+    let state = 0x02007f00; let mut served = 0;
+    for selector in [4u16, 6, 0x100] {
+        for m in [&mut raw, &mut native] {
+            m.load_state(&initial).unwrap(); m.bus.ffta_sprites.enabled = false;
+            m.bus.write32(state + 8, 0x08000000 + bank.sequence_root());
+            m.cpu.regs = std::array::from_fn(|i| 0x11000000 + i as u32); m.cpu.regs[3] = u32::from(selector); m.cpu.regs[4] = state;
+            m.cpu.regs[13] = 0x03007c00; m.cpu.regs[15] = 0x08010870; m.cpu.cpsr = 0xbf;
+        }
+        for &(a,z) in spans { native.bus.rom[a as usize..z as usize].fill(0xcd); }
+        let directory = bank.sequence_root() + u32::from(selector) * 2;
+        let relative = u16::from_le_bytes(rom[directory as usize..directory as usize + 2].try_into().unwrap());
+        let count_at = bank.sequence_root() + u32::from(relative);
+        let expected: u64 = [directory, count_at].into_iter().flat_map(|at| at..at+2).map(|at| u64::from(data.byte_at(at).is_some())).sum();
+        prefix(&mut raw, 0x08010870, 0x08010884);
+        let before = native_owner.compact_obj_catalog_stats().unwrap().source_bytes; let mut steps = 0;
+        while native.cpu.regs[15] != 0x08010884 {
+            assert!(steps < 32); native.bus.frame_ready = false;
+            table.get(native.cpu.regs[15] | 1).unwrap()(&RT_API, &mut native as *mut Machine as *mut std::ffi::c_void); steps += 1;
+        }
+        let used = native_owner.compact_obj_catalog_stats().unwrap().source_bytes - before;
+        assert_eq!(used, expected); if selector != 0x100 { assert_eq!(used, 4); } served += used;
+        native.bus.rom.copy_from_slice(&rom); assert_eq!(native.save_state().unwrap(), raw.save_state().unwrap());
+    }
+    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
+        "status":"PASS", "revision":[128,127], "resources":current.manifest.resources.len(),
+        "unchanged_other_resources":99, "preserved_banks":prior.banks.len(), "bank_source_bytes":524,
+        "selectors":[3,4,5,6], "new_selectors":[4,6], "branch_cases":22,
+        "native_count_cases":3, "typed_native_bytes":served, "full_state_clock":true,
+        "coherent_rejection_in_memory":true, "Linux":"pending", "USA":"pending",
+        "nativeWindows":"pending", "ordinary_use":"pending", "performance_measurements":false
+    })).unwrap()).unwrap();
 }
 
 #[test]
@@ -30,7 +133,7 @@ fn european_loop_compact_catalog_matches_new_source_and_native_readers() {
     assert_eq!(banks.iter().map(|bank| bank.sequences.len()).sum::<usize>(), 43);
     assert_eq!(banks.iter().flat_map(|bank| &bank.sequences).map(|entry| entry.sequence.frames.len()).sum::<usize>(), 60);
     assert_eq!(banks.iter().map(|bank| bank.lists.len()).sum::<usize>(), 44);
-    assert_eq!(banks.iter().flat_map(|bank| &bank.lists).map(|entry| entry.list.objects.len()).sum::<usize>(), 103);
+    assert_eq!(banks.iter().flat_map(|bank| &bank.lists).map(|entry| entry.list.objects.len()).sum::<usize>(), 81);
     let new_spans: Vec<_> = model::BANK_SPECS.iter().filter(|spec| selected.contains(&spec.root))
         .flat_map(|spec| spec.spans.iter().copied()).collect();
     assert_eq!(new_spans.iter().map(|(a, z)| z - a).sum::<u32>(), 974);
@@ -38,14 +141,15 @@ fn european_loop_compact_catalog_matches_new_source_and_native_readers() {
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (110, 109, 100));
     let current = read_dataset(&dataset).unwrap();
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (127, 126, 100));
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
+    let current_resources = current.manifest.resources.len();
     assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
     // Read the accepted older JSON without applying the new complete bank-set
     // validator to its historical projection. Its protected file is unchanged.
     let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
     assert_eq!(old.banks.len(), 29);
     assert_eq!(data.banks.iter().filter(|bank| !selected.contains(&bank.root)).count(), model::BANK_SPECS.len() - selected.len());
-    for bank in &old.banks { assert_eq!(data.banks.iter().find(|new| new.root == bank.root), Some(bank)); }
+    for bank in &old.banks { assert_previous_bank_preserved(bank, data.banks.iter().find(|new| new.root == bank.root).unwrap()); }
     assert_eq!(current.compact_obj_catalog.as_ref().unwrap(), data);
     let bytes = encode_compact_obj_catalog(data).unwrap();
     assert_eq!(parse_compact_obj_catalog(&bytes).unwrap(), *data);
@@ -146,9 +250,13 @@ fn european_loop_compact_catalog_matches_new_source_and_native_readers() {
     } }
     assert_eq!(native_cases, 48);
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":29,
-        "new_banks":5, "new_selectors":43, "new_source_bytes":974, "new_frames":60, "new_lists":44, "new_objects":81,
-        "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":5,
+        "status":"PASS", "resources":current_resources, "previous_resources_unchanged":old_manifest.resources[..99].len(), "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
+        "new_banks":banks.len(), "new_selectors":banks.iter().map(|bank| bank.sequences.len()).sum::<usize>(),
+        "new_source_bytes":new_spans.iter().map(|(a, z)| z - a).sum::<u32>(),
+        "new_frames":banks.iter().flat_map(|bank| &bank.sequences).map(|entry| entry.sequence.frames.len()).sum::<usize>(),
+        "new_lists":banks.iter().map(|bank| bank.lists.len()).sum::<usize>(),
+        "new_objects":banks.iter().flat_map(|bank| &bank.lists).map(|entry| entry.list.objects.len()).sum::<usize>(),
+        "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":banks.len(),
         "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
         "coherent_rejection_in_memory":true, "dataset_copies_created":0, "old_reader_cases_repeated":false,
         "ordinary_use":"not attempted", "Linux":"pending", "USA":"pending", "nativeWindows":"pending", "performance_measurements":false
@@ -180,14 +288,14 @@ fn european_6ca5f8_compact_catalog_matches_source_and_native_readers() {
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (112, 111, 100));
     let current = read_dataset(&dataset).unwrap();
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (127, 126, 100));
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
     assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
     // Read the accepted older JSON without applying the new complete bank-set
     // validator to its historical projection. Its protected file is unchanged.
     let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
     assert_eq!(old.banks.len(), 37);
     assert_eq!(data.banks.iter().filter(|bank| !selected.contains(&bank.root)).count(), model::BANK_SPECS.len() - selected.len());
-    for bank in &old.banks { assert_eq!(data.banks.iter().find(|new| new.root == bank.root), Some(bank)); }
+    for bank in &old.banks { assert_previous_bank_preserved(bank, data.banks.iter().find(|new| new.root == bank.root).unwrap()); }
     assert_eq!(current.compact_obj_catalog.as_ref().unwrap(), data);
     let bytes = encode_compact_obj_catalog(data).unwrap();
     assert_eq!(parse_compact_obj_catalog(&bytes).unwrap(), *data);
@@ -288,7 +396,7 @@ fn european_6ca5f8_compact_catalog_matches_source_and_native_readers() {
     } }
     assert_eq!(native_cases, 4);
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":37,
+        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
         "new_banks":1, "new_selectors":3, "new_source_bytes":174, "new_frames":37, "new_lists":9, "new_objects":8,
         "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":1,
         "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
@@ -324,14 +432,14 @@ fn european_6c4910_compact_catalog_matches_source_and_native_readers() {
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (115, 114, 100));
     let current = read_dataset(&dataset).unwrap();
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (127, 126, 100));
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
     assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
     // Read the accepted older JSON without applying the new complete bank-set
     // validator to its historical projection. Its protected file is unchanged.
     let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
     assert_eq!(old.banks.len(), 40);
     assert_eq!(data.banks.iter().filter(|bank| !selected.contains(&bank.root)).count(), model::BANK_SPECS.len() - selected.len());
-    for bank in &old.banks { assert_eq!(data.banks.iter().find(|new| new.root == bank.root), Some(bank)); }
+    for bank in &old.banks { assert_previous_bank_preserved(bank, data.banks.iter().find(|new| new.root == bank.root).unwrap()); }
     assert_eq!(current.compact_obj_catalog.as_ref().unwrap(), data);
     let bytes = encode_compact_obj_catalog(data).unwrap();
     assert_eq!(parse_compact_obj_catalog(&bytes).unwrap(), *data);
@@ -432,7 +540,7 @@ fn european_6c4910_compact_catalog_matches_source_and_native_readers() {
     } }
     assert_eq!(native_cases, 2);
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":40,
+        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
         "new_banks":1, "new_selectors":1, "new_source_bytes":162, "new_frames":8, "new_lists":6, "new_objects":19,
         "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":1,
         "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
@@ -465,14 +573,14 @@ fn european_alternate_compact_catalog_matches_source_and_native_readers() {
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (116, 115, 100));
     let current = read_dataset(&dataset).unwrap();
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (127, 126, 100));
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
     assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
     // Read the accepted older JSON without applying the new complete bank-set
     // validator to its historical projection. Its protected file is unchanged.
     let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
     assert_eq!(old.banks.len(), 41);
     assert_eq!(data.banks.iter().filter(|bank| !selected.contains(&bank.root)).count(), model::BANK_SPECS.len() - selected.len());
-    for bank in &old.banks { assert_eq!(data.banks.iter().find(|new| new.root == bank.root), Some(bank)); }
+    for bank in &old.banks { assert_previous_bank_preserved(bank, data.banks.iter().find(|new| new.root == bank.root).unwrap()); }
     assert_eq!(current.compact_obj_catalog.as_ref().unwrap(), data);
     let bytes = encode_compact_obj_catalog(data).unwrap();
     assert_eq!(parse_compact_obj_catalog(&bytes).unwrap(), *data);
@@ -573,7 +681,7 @@ fn european_alternate_compact_catalog_matches_source_and_native_readers() {
     } }
     assert_eq!(native_cases, 22);
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":41,
+        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
         "new_banks":10, "new_selectors":12, "new_source_bytes":1818, "new_frames":120, "new_lists":95, "new_objects":185,
         "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":10,
         "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
@@ -595,25 +703,25 @@ fn european_6c1e78_compact_catalog_matches_source_and_native_readers() {
     let data = &catalog.decoded;
     let banks: Vec<_> = data.banks.iter().filter(|bank| selected.contains(&bank.root)).collect();
     assert_eq!(banks.len(), 1);
-    assert_eq!(banks.iter().map(|bank| bank.sequences.len()).sum::<usize>(), 2);
-    assert_eq!(banks.iter().flat_map(|bank| &bank.sequences).map(|entry| entry.sequence.frames.len()).sum::<usize>(), 56);
+    assert_eq!(banks.iter().map(|bank| bank.sequences.len()).sum::<usize>(), 4);
+    assert_eq!(banks.iter().flat_map(|bank| &bank.sequences).map(|entry| entry.sequence.frames.len()).sum::<usize>(), 118);
     assert_eq!(banks.iter().map(|bank| bank.lists.len()).sum::<usize>(), 13);
     assert_eq!(banks.iter().flat_map(|bank| &bank.lists).map(|entry| entry.list.objects.len()).sum::<usize>(), 36);
     let new_spans: Vec<_> = model::BANK_SPECS.iter().filter(|spec| selected.contains(&spec.root))
         .flat_map(|spec| spec.spans.iter().copied()).collect();
-    assert_eq!(new_spans.iter().map(|(a, z)| z - a).sum::<u32>(), 392);
+    assert_eq!(new_spans.iter().map(|(a, z)| z - a).sum::<u32>(), 524);
 
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (118, 117, 100));
     let current = read_dataset(&dataset).unwrap();
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (127, 126, 100));
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
     assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
     // Read the accepted older JSON without applying the new complete bank-set
     // validator to its historical projection. Its protected file is unchanged.
     let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
     assert_eq!(old.banks.len(), 52);
     assert_eq!(data.banks.iter().filter(|bank| !selected.contains(&bank.root)).count(), model::BANK_SPECS.len() - selected.len());
-    for bank in &old.banks { assert_eq!(data.banks.iter().find(|new| new.root == bank.root), Some(bank)); }
+    for bank in &old.banks { assert_previous_bank_preserved(bank, data.banks.iter().find(|new| new.root == bank.root).unwrap()); }
     let mut previous_tables = data.selector_tables.clone().unwrap(); previous_tables.schedule = None; previous_tables.flight = None; previous_tables.burst = None; previous_tables.effects = None; previous_tables.grid_first = None; previous_tables.grid_second = None; previous_tables.script_lookup = None; previous_tables.scene = None;
     assert_eq!(old.selector_tables.as_ref(), Some(&previous_tables));
     assert_eq!(current.compact_obj_catalog.as_ref().unwrap(), data);
@@ -633,7 +741,7 @@ fn european_6c1e78_compact_catalog_matches_source_and_native_readers() {
         assert_eq!(data.byte_at(at), Some(rom[at as usize]));
         assert_eq!(machine.bus.read8(0x0c000000 + at), rom[at as usize]);
     } }
-    assert_eq!(owner.compact_obj_catalog_stats().unwrap().source_bytes - before, 392);
+    assert_eq!(owner.compact_obj_catalog_stats().unwrap().source_bytes - before, 524);
     for &(start, end) in &new_spans { for edge in [start, end] { for delta in [-3i32, -1, 0, 1] {
         let at = edge.wrapping_add_signed(delta) as usize;
         let ptr = &mut machine as *mut Machine as *mut std::ffi::c_void;
@@ -654,12 +762,12 @@ fn european_6c1e78_compact_catalog_matches_source_and_native_readers() {
     drop(bad); drop(current); drop(machine);
 
     let mut raw = crate::make_machine(rom.clone(), None);
-    // The original conditional branch derives selector 3 or 5 from this value.
-    for value in 0..=10 {
-        raw.cpu.regs = [0; 16]; raw.cpu.regs[0] = value; raw.cpu.regs[5] = 3;
+    // The caller selects base 3 or 4, then conditionally adds two.
+    for base in [3, 4] { for value in 0..=10 {
+        raw.cpu.regs = [0; 16]; raw.cpu.regs[0] = value; raw.cpu.regs[5] = base;
         prefix(&mut raw, 0x08109688, 0x0810969a);
-        assert_eq!(raw.cpu.regs[5], if [3, 5, 7].contains(&value) { 5 } else { 3 });
-    }
+        assert_eq!(raw.cpu.regs[5], base + if [3, 5, 7].contains(&value) { 2 } else { 0 });
+    } }
     raw.bus.ffta_sprites.enabled = false;
     let state = 0x02007f00;
     for bank in &banks {
@@ -720,10 +828,10 @@ fn european_6c1e78_compact_catalog_matches_source_and_native_readers() {
         native.bus.rom.copy_from_slice(&rom);
         assert_eq!(native.save_state().unwrap(), raw.save_state().unwrap(), "bank {:x} selector {selector}", bank.root);
     } }
-    assert_eq!(native_cases, 3);
+    assert_eq!(native_cases, 5);
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":52,
-        "new_banks":1, "new_selectors":2, "new_source_bytes":392, "new_frames":56, "new_lists":13, "new_objects":36,
+        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
+        "new_banks":1, "new_selectors":4, "new_source_bytes":524, "new_frames":118, "new_lists":13, "new_objects":36,
         "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":1,
         "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
         "coherent_rejection_in_memory":true, "dataset_copies_created":0, "old_reader_cases_repeated":false,
@@ -757,14 +865,14 @@ fn european_6bac28_schedule_catalog_matches_source_and_native_readers() {
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (119, 118, 100));
     let current = read_dataset(&dataset).unwrap();
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (127, 126, 100));
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
     assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
     // Read the accepted older JSON without applying the new complete bank-set
     // validator to its historical projection. Its protected file is unchanged.
     let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
     assert_eq!(old.banks.len(), 53);
     assert_eq!(data.banks.iter().filter(|bank| !selected.contains(&bank.root)).count(), model::BANK_SPECS.len() - selected.len());
-    for bank in &old.banks { assert_eq!(data.banks.iter().find(|new| new.root == bank.root), Some(bank)); }
+    for bank in &old.banks { assert_previous_bank_preserved(bank, data.banks.iter().find(|new| new.root == bank.root).unwrap()); }
     let mut previous_tables = data.selector_tables.clone().unwrap(); previous_tables.schedule = None; previous_tables.flight = None; previous_tables.burst = None; previous_tables.effects = None; previous_tables.grid_first = None; previous_tables.grid_second = None; previous_tables.script_lookup = None; previous_tables.scene = None;
     assert_eq!(old.selector_tables.as_ref(), Some(&previous_tables));
     assert_eq!(current.compact_obj_catalog.as_ref().unwrap(), data);
@@ -880,7 +988,7 @@ fn european_6bac28_schedule_catalog_matches_source_and_native_readers() {
     } }
     assert_eq!(native_cases, 10);
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":53,
+        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
         "new_banks":1, "new_selectors":9, "new_source_bytes":268, "new_frames":9, "new_lists":9, "new_objects":13, "table_rows":12,
         "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":1,
         "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
@@ -916,14 +1024,14 @@ fn european_6babc4_flight_burst_catalog_matches_source_and_native_readers() {
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (120, 119, 100));
     let current = read_dataset(&dataset).unwrap();
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (127, 126, 100));
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
     assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
     // Read the accepted older JSON without applying the new complete bank-set
     // validator to its historical projection. Its protected file is unchanged.
     let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
     assert_eq!(old.banks.len(), 54);
     assert_eq!(data.banks.iter().filter(|bank| !selected.contains(&bank.root)).count(), model::BANK_SPECS.len() - selected.len());
-    for bank in &old.banks { assert_eq!(data.banks.iter().find(|new| new.root == bank.root), Some(bank)); }
+    for bank in &old.banks { assert_previous_bank_preserved(bank, data.banks.iter().find(|new| new.root == bank.root).unwrap()); }
     let mut previous_tables = data.selector_tables.clone().unwrap(); previous_tables.flight = None; previous_tables.burst = None; previous_tables.effects = None; previous_tables.grid_first = None; previous_tables.grid_second = None; previous_tables.script_lookup = None; previous_tables.scene = None;
     assert_eq!(old.selector_tables.as_ref(), Some(&previous_tables));
     assert_eq!(current.compact_obj_catalog.as_ref().unwrap(), data);
@@ -1040,7 +1148,7 @@ fn european_6babc4_flight_burst_catalog_matches_source_and_native_readers() {
     } }
     assert_eq!(native_cases, 7);
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":54,
+        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
         "new_banks":1, "new_selectors":6, "new_source_bytes":428, "new_frames":6, "new_lists":6, "new_objects":6, "table_rows":41,
         "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":1,
         "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
@@ -1075,14 +1183,14 @@ fn european_6bb574_effect_catalog_matches_source_and_native_readers() {
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (121, 120, 100));
     let current = read_dataset(&dataset).unwrap();
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (127, 126, 100));
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
     assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
     // Read the accepted older JSON without applying the new complete bank-set
     // validator to its historical projection. Its protected file is unchanged.
     let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
     assert_eq!(old.banks.len(), 55);
     assert_eq!(data.banks.iter().filter(|bank| !selected.contains(&bank.root)).count(), model::BANK_SPECS.len() - selected.len());
-    for bank in &old.banks { assert_eq!(data.banks.iter().find(|new| new.root == bank.root), Some(bank)); }
+    for bank in &old.banks { assert_previous_bank_preserved(bank, data.banks.iter().find(|new| new.root == bank.root).unwrap()); }
     let mut previous_tables = data.selector_tables.clone().unwrap(); previous_tables.effects = None; previous_tables.grid_first = None; previous_tables.grid_second = None; previous_tables.script_lookup = None; previous_tables.scene = None;
     assert_eq!(old.selector_tables.as_ref(), Some(&previous_tables));
     assert_eq!(current.compact_obj_catalog.as_ref().unwrap(), data);
@@ -1205,7 +1313,7 @@ fn european_6bb574_effect_catalog_matches_source_and_native_readers() {
     } }
     assert_eq!(native_cases, 4);
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":55,
+        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
         "new_banks":1, "new_selectors":3, "new_source_bytes":193, "new_frames":3, "new_lists":3, "new_objects":3, "table_rows":10,
         "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":1,
         "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
@@ -1241,14 +1349,14 @@ fn european_6c316c_initial_catalog_matches_source_and_native_readers() {
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (123, 122, 100));
     let current = read_dataset(&dataset).unwrap();
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (127, 126, 100));
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
     assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
     // Read the accepted older JSON without applying the new complete bank-set
     // validator to its historical projection. Its protected file is unchanged.
     let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
     assert_eq!(old.banks.len(), 57);
     assert_eq!(data.banks.iter().filter(|bank| !selected.contains(&bank.root)).count(), model::BANK_SPECS.len() - selected.len());
-    for bank in &old.banks { assert_eq!(data.banks.iter().find(|new| new.root == bank.root), Some(bank)); }
+    for bank in &old.banks { assert_previous_bank_preserved(bank, data.banks.iter().find(|new| new.root == bank.root).unwrap()); }
     let mut previous_tables = data.selector_tables.clone().unwrap(); previous_tables.script_lookup = None; previous_tables.scene = None;
     assert_eq!(old.selector_tables.as_ref(), Some(&previous_tables));
     assert_eq!(current.compact_obj_catalog.as_ref().unwrap(), data);
@@ -1369,7 +1477,7 @@ fn european_6c316c_initial_catalog_matches_source_and_native_readers() {
     } }
     assert_eq!(native_cases, 4);
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":57,
+        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
         "new_banks":1, "new_selectors":3, "new_source_bytes":188, "new_frames":39, "new_lists":10, "new_objects":9, "initial_records":3,
         "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":1,
         "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
@@ -1382,7 +1490,7 @@ fn european_6c316c_initial_catalog_matches_source_and_native_readers() {
 
 
 #[test]
-#[ignore = "private EUR source/e127 current dataset/e126 baseline/native prefix; Wine only, Linux/USA pending"]
+#[ignore = "private EUR source/current dataset/e126 baseline/native prefix; Wine only, Linux/USA pending"]
 fn european_6ca580_nibble_catalog_matches_source_and_native_readers() {
     let root = PathBuf::from(std::env::var_os("FFTA_COMPACT_CATALOG_ROOT").unwrap());
     assert!(!root.exists()); fs::create_dir_all(&root).unwrap();
@@ -1406,14 +1514,14 @@ fn european_6ca580_nibble_catalog_matches_source_and_native_readers() {
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (126, 125, 100));
     let current = read_dataset(&dataset).unwrap();
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (127, 126, 100));
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
     assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
     // Read the accepted older JSON without applying the new complete bank-set
     // validator to its historical projection. Its protected file is unchanged.
     let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
     assert_eq!(old.banks.len(), 62);
     assert_eq!(data.banks.iter().filter(|bank| !selected.contains(&bank.root)).count(), model::BANK_SPECS.len() - selected.len());
-    for bank in &old.banks { assert_eq!(data.banks.iter().find(|new| new.root == bank.root), Some(bank)); }
+    for bank in &old.banks { assert_previous_bank_preserved(bank, data.banks.iter().find(|new| new.root == bank.root).unwrap()); }
     let previous_tables = data.selector_tables.clone().unwrap();
     assert_eq!(old.selector_tables.as_ref(), Some(&previous_tables));
     assert_eq!(current.compact_obj_catalog.as_ref().unwrap(), data);
@@ -1534,7 +1642,7 @@ fn european_6ca580_nibble_catalog_matches_source_and_native_readers() {
     } }
     assert_eq!(native_cases, 4);
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":62,
+        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
         "new_banks":1, "new_selectors":7, "new_source_bytes":116, "new_frames":7, "new_lists":7, "new_objects":7, "nibble_values":16,
         "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":1,
         "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
@@ -1571,14 +1679,14 @@ fn european_6cb278_secondary_catalog_matches_source_and_native_readers() {
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (124, 123, 100));
     let current = read_dataset(&dataset).unwrap();
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (127, 126, 100));
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
     assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
     // Read the accepted older JSON without applying the new complete bank-set
     // validator to its historical projection. Its protected file is unchanged.
     let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
     assert_eq!(old.banks.len(), 58);
     assert_eq!(data.banks.iter().filter(|bank| !selected.contains(&bank.root)).count(), model::BANK_SPECS.len() - selected.len());
-    for bank in &old.banks { assert_eq!(data.banks.iter().find(|new| new.root == bank.root), Some(bank)); }
+    for bank in &old.banks { assert_previous_bank_preserved(bank, data.banks.iter().find(|new| new.root == bank.root).unwrap()); }
     let mut previous_tables = data.selector_tables.clone().unwrap(); previous_tables.script_lookup = None; previous_tables.scene = None;
     assert_eq!(old.selector_tables.as_ref(), Some(&previous_tables));
     assert_eq!(current.compact_obj_catalog.as_ref().unwrap(), data);
@@ -1698,7 +1806,7 @@ fn european_6cb278_secondary_catalog_matches_source_and_native_readers() {
     } }
     assert_eq!(native_cases, 5);
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":58,
+        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
         "new_banks":1, "new_selectors":4, "new_source_bytes":1092, "new_frames":44, "new_lists":14, "new_objects":154, "initial_records":4,
         "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":1,
         "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
@@ -1735,14 +1843,14 @@ fn european_6cca_scene_catalog_matches_source_and_native_readers() {
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (125, 124, 100));
     let current = read_dataset(&dataset).unwrap();
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (127, 126, 100));
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
     assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
     // Read the accepted older JSON without applying the new complete bank-set
     // validator to its historical projection. Its protected file is unchanged.
     let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
     assert_eq!(old.banks.len(), 59);
     assert_eq!(data.banks.iter().filter(|bank| !selected.contains(&bank.root)).count(), model::BANK_SPECS.len() - selected.len());
-    for bank in &old.banks { assert_eq!(data.banks.iter().find(|new| new.root == bank.root), Some(bank)); }
+    for bank in &old.banks { assert_previous_bank_preserved(bank, data.banks.iter().find(|new| new.root == bank.root).unwrap()); }
     let mut previous_tables = data.selector_tables.clone().unwrap(); previous_tables.scene = None;
     assert_eq!(old.selector_tables.as_ref(), Some(&previous_tables));
     assert_eq!(current.compact_obj_catalog.as_ref().unwrap(), data);
@@ -1869,7 +1977,7 @@ fn european_6cca_scene_catalog_matches_source_and_native_readers() {
     } }
     assert_eq!(native_cases, 11);
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":59,
+        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
         "new_banks":3, "new_selectors":27, "new_source_bytes":3870, "new_frames":72, "new_lists":72, "new_objects":533, "initial_records":20,
         "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":3,
         "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
@@ -1914,14 +2022,14 @@ fn european_6cac40_grid_catalog_matches_source_and_native_readers() {
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (122, 121, 100));
     let current = read_dataset(&dataset).unwrap();
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (127, 126, 100));
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
     assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
     // Read the accepted older JSON without applying the new complete bank-set
     // validator to its historical projection. Its protected file is unchanged.
     let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
     assert_eq!(old.banks.len(), 56);
     assert_eq!(data.banks.iter().filter(|bank| !selected.contains(&bank.root)).count(), model::BANK_SPECS.len() - selected.len());
-    for bank in &old.banks { assert_eq!(data.banks.iter().find(|new| new.root == bank.root), Some(bank)); }
+    for bank in &old.banks { assert_previous_bank_preserved(bank, data.banks.iter().find(|new| new.root == bank.root).unwrap()); }
     let mut previous_tables = data.selector_tables.clone().unwrap(); previous_tables.grid_first = None; previous_tables.grid_second = None; previous_tables.script_lookup = None; previous_tables.scene = None;
     assert_eq!(old.selector_tables.as_ref(), Some(&previous_tables));
     assert_eq!(current.compact_obj_catalog.as_ref().unwrap(), data);
@@ -2050,7 +2158,7 @@ fn european_6cac40_grid_catalog_matches_source_and_native_readers() {
     } }
     assert_eq!(native_cases, 9);
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":56,
+        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
         "new_banks":1, "new_selectors":8, "new_source_bytes":726, "new_frames":8, "new_lists":8, "new_objects":8, "table_rows":48,
         "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":1,
         "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
@@ -2085,14 +2193,14 @@ fn european_6c0614_timer_catalog_matches_source_and_native_readers() {
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (117, 116, 100));
     let current = read_dataset(&dataset).unwrap();
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (127, 126, 100));
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
     assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
     // Read the accepted older JSON without applying the new complete bank-set
     // validator to its historical projection. Its protected file is unchanged.
     let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
     assert_eq!(old.banks.len(), 51);
     assert_eq!(data.banks.iter().filter(|bank| !selected.contains(&bank.root)).count(), model::BANK_SPECS.len() - selected.len());
-    for bank in &old.banks { assert_eq!(data.banks.iter().find(|new| new.root == bank.root), Some(bank)); }
+    for bank in &old.banks { assert_previous_bank_preserved(bank, data.banks.iter().find(|new| new.root == bank.root).unwrap()); }
     let mut previous_tables = data.selector_tables.clone().unwrap();
     previous_tables.timer_positions = None; previous_tables.schedule = None; previous_tables.flight = None; previous_tables.burst = None; previous_tables.effects = None; previous_tables.grid_first = None; previous_tables.grid_second = None; previous_tables.script_lookup = None; previous_tables.scene = None;
     assert_eq!(old.selector_tables.as_ref(), Some(&previous_tables));
@@ -2210,7 +2318,7 @@ fn european_6c0614_timer_catalog_matches_source_and_native_readers() {
     } }
     assert_eq!(native_cases, 7);
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":51,
+        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
         "new_banks":1, "new_selectors":6, "new_source_bytes":730, "new_frames":42, "new_lists":19, "new_objects":61, "table_rows":44,
         "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":1,
         "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
@@ -2245,14 +2353,14 @@ fn european_6c95d4_motion_catalog_matches_source_and_native_readers() {
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (114, 113, 100));
     let current = read_dataset(&dataset).unwrap();
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (127, 126, 100));
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
     assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
     // Read the accepted older JSON without applying the new complete bank-set
     // validator to its historical projection. Its protected file is unchanged.
     let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
     assert_eq!(old.banks.len(), 39);
     assert_eq!(data.banks.iter().filter(|bank| !selected.contains(&bank.root)).count(), model::BANK_SPECS.len() - selected.len());
-    for bank in &old.banks { assert_eq!(data.banks.iter().find(|new| new.root == bank.root), Some(bank)); }
+    for bank in &old.banks { assert_previous_bank_preserved(bank, data.banks.iter().find(|new| new.root == bank.root).unwrap()); }
     assert_eq!(current.compact_obj_catalog.as_ref().unwrap(), data);
     let mut old_tables = data.selector_tables.clone().unwrap(); old_tables.motion_positions = None; old_tables.timer_positions = None; old_tables.schedule = None; old_tables.flight = None; old_tables.burst = None; old_tables.effects = None; old_tables.grid_first = None; old_tables.grid_second = None; old_tables.script_lookup = None; old_tables.scene = None;
     assert_eq!(old.selector_tables.as_ref(), Some(&old_tables));
@@ -2400,7 +2508,7 @@ fn european_6c95d4_motion_catalog_matches_source_and_native_readers() {
     } }
     assert_eq!(native_cases, 4);
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":39,
+        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
         "new_banks":1, "new_selectors":3, "new_source_bytes":572, "new_frames":33, "new_lists":33, "new_objects":33,
         "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":1,
         "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
@@ -2436,14 +2544,14 @@ fn european_6c992c_table_catalog_matches_source_and_native_readers() {
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (113, 112, 100));
     let current = read_dataset(&dataset).unwrap();
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (127, 126, 100));
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
     assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
     // Read the accepted older JSON without applying the new complete bank-set
     // validator to its historical projection. Its protected file is unchanged.
     let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
     assert_eq!(old.banks.len(), 38);
     assert_eq!(data.banks.iter().filter(|bank| !selected.contains(&bank.root)).count(), model::BANK_SPECS.len() - selected.len());
-    for bank in &old.banks { assert_eq!(data.banks.iter().find(|new| new.root == bank.root), Some(bank)); }
+    for bank in &old.banks { assert_previous_bank_preserved(bank, data.banks.iter().find(|new| new.root == bank.root).unwrap()); }
     assert_eq!(current.compact_obj_catalog.as_ref().unwrap(), data);
     let mut old_tables = data.selector_tables.clone().unwrap(); old_tables.timed_positions = None; old_tables.motion_positions = None; old_tables.timer_positions = None; old_tables.schedule = None; old_tables.flight = None; old_tables.burst = None; old_tables.effects = None; old_tables.grid_first = None; old_tables.grid_second = None; old_tables.script_lookup = None; old_tables.scene = None;
     assert_eq!(old.selector_tables.as_ref(), Some(&old_tables));
@@ -2587,7 +2695,7 @@ fn european_6c992c_table_catalog_matches_source_and_native_readers() {
     } }
     assert_eq!(native_cases, 9);
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":38,
+        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
         "new_banks":1, "new_selectors":8, "new_source_bytes":320, "new_frames":40, "new_lists":9, "new_objects":8,
         "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":1,
         "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
@@ -2608,13 +2716,13 @@ fn european_compact_catalog_matches_source_and_native_readers() {
     let data = &catalog.decoded;
     data.verify_source(&rom).unwrap();
     assert_eq!(data.banks.len(), 63);
-    assert_eq!(data.banks.iter().map(|bank| bank.sequences.len()).sum::<usize>(), 205);
-    assert_eq!(data.banks.iter().flat_map(|bank| &bank.sequences).map(|entry| entry.sequence.frames.len()).sum::<usize>(), 887);
+    assert_eq!(data.banks.iter().map(|bank| bank.sequences.len()).sum::<usize>(), 207);
+    assert_eq!(data.banks.iter().flat_map(|bank| &bank.sequences).map(|entry| entry.sequence.frames.len()).sum::<usize>(), 949);
     assert_eq!(data.banks.iter().map(|bank| bank.lists.len()).sum::<usize>(), 607);
     assert_eq!(data.banks.iter().flat_map(|bank| &bank.lists).map(|entry| entry.list.objects.len()).sum::<usize>(), 2171);
     let spans = data.source_spans().unwrap();
-    assert_eq!(spans.len(), 330);
-    assert_eq!(spans.iter().map(|(_, bytes, _)| bytes.len()).sum::<usize>(), 20257);
+    assert_eq!(spans.len(), 328);
+    assert_eq!(spans.iter().map(|(_, bytes, _)| bytes.len()).sum::<usize>(), 20389);
     for &(start, end) in model::SOURCE_SPANS {
         for at in start..end { assert_eq!(data.byte_at(at), Some(rom[at as usize])); }
         for at in [start - 1, end] { assert_eq!(data.byte_at(at), None); }
@@ -2629,7 +2737,8 @@ fn european_compact_catalog_matches_source_and_native_readers() {
     let old: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     let current = read_dataset(&dataset).unwrap();
     assert_eq!(old.resources.len(), 100);
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (127, 126, 100));
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
+    let current_resources = current.manifest.resources.len();
     for entry in &old.resources[..99] { assert_eq!(current.manifest.resources.iter().find(|resource| resource.id == entry.id), Some(entry)); }
     assert_eq!(current.compact_obj_catalog.as_ref().unwrap(), data);
     assert_eq!(current.manifest.resources[99].id, COMPACT_OBJ_CATALOG_ID);
@@ -2639,7 +2748,8 @@ fn european_compact_catalog_matches_source_and_native_readers() {
     for &(start, end) in model::SOURCE_SPANS { machine.bus.rom[start as usize..end as usize].fill(0xcd); }
     let before = owner.compact_obj_catalog_stats().unwrap().source_bytes;
     for &(start, end) in model::SOURCE_SPANS { for at in start..end { assert_eq!(machine.bus.read8(0x0c000000 + at), rom[at as usize]); } }
-    assert_eq!(owner.compact_obj_catalog_stats().unwrap().source_bytes - before, 14265);
+    assert_eq!(owner.compact_obj_catalog_stats().unwrap().source_bytes - before,
+        spans.iter().map(|(_, bytes, _)| bytes.len() as u64).sum::<u64>());
     for &(start, end) in model::SOURCE_SPANS { for edge in [start, end] { for delta in [-3i32, -1, 0, 1] {
         let at = edge.wrapping_add_signed(delta) as usize; let ptr = &mut machine as *mut Machine as *mut std::ffi::c_void;
         assert_eq!((RT_API.read16)(ptr, 0x0a000000 + at as u32), u32::from(u16::from_le_bytes(rom[at..at + 2].try_into().unwrap())));
@@ -2681,7 +2791,8 @@ fn european_compact_catalog_matches_source_and_native_readers() {
     let (_library, table) = crate::load_native(&object).unwrap();
     let mut native = crate::make_machine(rom.clone(), None); attach_from_directory(&mut native, &dataset).unwrap();
     let owner = native.bus.rom_resources().unwrap().clone(); let initial = raw.save_state().unwrap(); let mut served = 0; let mut native_cases = 0;
-    for bank in &data.banks { for selector in bank.sequences.iter().map(|entry| entry.sequence.selector).chain([0x100]) {
+    for bank in &data.banks { assert!(!bank.sequences.iter().any(|entry| entry.sequence.selector == 0x100));
+      for selector in bank.sequences.iter().map(|entry| entry.sequence.selector).chain([0x100]) {
         for m in [&mut raw, &mut native] {
             m.load_state(&initial).unwrap(); m.bus.ffta_sprites.enabled = false; m.bus.write32(state + 8, 0x08000000 + bank.sequence_root());
             m.cpu.regs = std::array::from_fn(|i| 0x11000000 + i as u32); m.cpu.regs[3] = u32::from(selector); m.cpu.regs[4] = state;
@@ -2703,11 +2814,92 @@ fn european_compact_catalog_matches_source_and_native_readers() {
         assert_eq!(native.save_state().unwrap(), raw.save_state().unwrap(), "bank {:x} selector {selector}", bank.root);
     } }
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "resources":100, "previous_unchanged":99, "banks":56, "selectors":156,
-        "source_bytes":14265, "spans":194, "frames":717, "lists":496, "objects":1460,
+        "status":"PASS", "resources":current_resources, "previous_unchanged":old.resources[..99].len(),
+        "banks":data.banks.len(), "selectors":data.banks.iter().map(|bank| bank.sequences.len()).sum::<usize>(),
+        "source_bytes":spans.iter().map(|(_, bytes, _)| bytes.len()).sum::<usize>(), "spans":spans.len(),
+        "frames":data.banks.iter().flat_map(|bank| &bank.sequences).map(|entry| entry.sequence.frames.len()).sum::<usize>(),
+        "lists":data.banks.iter().map(|bank| bank.lists.len()).sum::<usize>(),
+        "objects":data.banks.iter().flat_map(|bank| &bank.lists).map(|entry| entry.list.objects.len()).sum::<usize>(),
         "native_count_cases":native_cases, "typed_native_bytes":served,
-        "out_of_projection_cases":56, "counter_oracle_from_actual_owned_intersections":true,
+        "out_of_projection_cases":data.banks.len(), "counter_oracle_from_actual_owned_intersections":true,
         "full_state_clock":true, "coherent_rejection_in_memory":true, "dataset_copies_created":0,
         "ordinary_use":"pending", "Linux":"pending", "USA":"pending", "nativeWindows":"pending", "performance_measurements":false
+    })).unwrap()).unwrap();
+}
+
+#[test]
+#[ignore = "private EUR ROM and current dataset; Wine only, Linux/USA pending"]
+fn european_compact_catalog_failed_disk_replacement_preserves_owner() {
+    let root = PathBuf::from(std::env::var_os("FFTA_COMPACT_CATALOG_ROOT").unwrap());
+    assert!(!root.exists());
+    fs::create_dir_all(&root).unwrap();
+    let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    let committed = PathBuf::from(std::env::var_os("FFTA_STATE_TEST_DATASET").unwrap());
+    let replacement = root.join("replacement");
+    fs::create_dir(&replacement).unwrap();
+    for entry in fs::read_dir(&committed).unwrap() {
+        let entry = entry.unwrap();
+        assert!(entry.file_type().unwrap().is_file());
+        fs::copy(entry.path(), replacement.join(entry.file_name())).unwrap();
+    }
+    let original = read_dataset(&replacement).unwrap();
+    assert_eq!((original.manifest.extractor_revision, original.manifest.decoder_revision), (128, 127));
+    let index = original.manifest.resources.iter().position(|resource| resource.id == COMPACT_OBJ_CATALOG_ID).unwrap();
+    let manifest_bytes = fs::read(replacement.join(MANIFEST_FILE)).unwrap();
+    let catalog_bytes = fs::read(replacement.join(COMPACT_OBJ_CATALOG_FILE)).unwrap();
+    let mut machine = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut machine, &committed).unwrap();
+    let owner = machine.bus.rom_resources().unwrap().clone();
+    let initial = machine.save_state().unwrap();
+
+    let missing = root.join("catalog-held-aside.json");
+    fs::rename(replacement.join(COMPACT_OBJ_CATALOG_FILE), &missing).unwrap();
+    assert!(attach_from_directory(&mut machine, &replacement).is_err());
+    assert!(std::sync::Arc::ptr_eq(machine.bus.rom_resources().unwrap(), &owner));
+    assert_eq!(machine.save_state().unwrap(), initial);
+    fs::rename(&missing, replacement.join(COMPACT_OBJ_CATALOG_FILE)).unwrap();
+
+    let mut modified = original.compact_obj_catalog.as_ref().unwrap().clone();
+    modified.banks[0].sequences[0].sequence.frames[0].duration ^= 1;
+    let forged_bytes = encode_compact_obj_catalog(&modified).unwrap();
+    let mut forged_manifest = original.manifest.clone();
+    forged_manifest.resources[index].sha256 = gba_core::ffta_rom::digest(&forged_bytes);
+    fs::write(replacement.join(COMPACT_OBJ_CATALOG_FILE), &forged_bytes).unwrap();
+    fs::write(replacement.join(MANIFEST_FILE), toml::to_string_pretty(&forged_manifest).unwrap()).unwrap();
+    // Parsing succeeds and the manifest hash matches the changed disk bytes;
+    // source authentication must reject them before machine publication.
+    let parsed = read_dataset(&replacement).unwrap();
+    assert_eq!(parsed.compact_obj_catalog.as_ref().unwrap(), &modified);
+    assert_eq!(parsed.manifest.resources[index].sha256,
+        gba_core::ffta_rom::digest(&fs::read(replacement.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()));
+    drop(parsed);
+    assert!(attach_from_directory(&mut machine, &replacement).is_err());
+    assert!(std::sync::Arc::ptr_eq(machine.bus.rom_resources().unwrap(), &owner));
+    assert_eq!(machine.save_state().unwrap(), initial);
+    fs::write(replacement.join(COMPACT_OBJ_CATALOG_FILE), catalog_bytes).unwrap();
+    fs::write(replacement.join(MANIFEST_FILE), manifest_bytes).unwrap();
+
+    // The existing owner continues to serve catalog bytes after both failed
+    // replacements, and the untouched committed generation can be attached.
+    let offset = 0x6c4c50usize;
+    let before = owner.compact_obj_catalog_stats().unwrap().source_bytes;
+    machine.bus.rom[offset] ^= 0xff;
+    assert_eq!(machine.bus.read8(0x08000000 + offset as u32), rom[offset]);
+    assert_eq!(owner.compact_obj_catalog_stats().unwrap().source_bytes, before + 1);
+    machine.bus.rom[offset] = rom[offset];
+    assert_eq!(machine.save_state().unwrap(), initial);
+    let mut fresh = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut fresh, &committed).unwrap();
+    let fresh_owner = fresh.bus.rom_resources().unwrap().clone();
+    let before = fresh_owner.compact_obj_catalog_stats().unwrap().source_bytes;
+    fresh.bus.rom[offset] ^= 0xff;
+    assert_eq!(fresh.bus.read8(0x08000000 + offset as u32), rom[offset]);
+    assert_eq!(fresh_owner.compact_obj_catalog_stats().unwrap().source_bytes, before + 1);
+    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
+        "status":"PASS", "revision":[128,127], "missing_catalog_rejected":true,
+        "coherent_disk_edit_parsed_and_rejected":true, "active_owner_unchanged":true,
+        "machine_state_unchanged":true, "active_owner_reads":true,
+        "committed_generation_reattached_and_read":true, "Linux":"pending",
+        "USA":"pending", "nativeWindows":"pending", "performance_measurements":false
     })).unwrap()).unwrap();
 }

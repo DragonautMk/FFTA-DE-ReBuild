@@ -15,6 +15,89 @@ fn interpreter_until(machine: &mut Machine, end: u32, bound: usize) {
     }
 }
 
+fn assert_context_owner_reads(machine: &mut Machine, rom: &[u8]) {
+    let owner = machine.bus.rom_resources().unwrap().clone();
+    let state = machine.save_state().unwrap();
+    let before = owner.ui_context_templates_stats().unwrap().source_bytes;
+    machine.bus.rom[model::SOURCE_OFFSET as usize..model::END_OFFSET as usize].fill(0xcd);
+    for offset in model::SOURCE_OFFSET..model::END_OFFSET {
+        assert_eq!(machine.bus.read8(0x08000000 + offset), rom[offset as usize]);
+    }
+    assert_eq!(owner.ui_context_templates_stats().unwrap().source_bytes - before, 220);
+    machine.bus.rom.copy_from_slice(rom);
+    assert_eq!(machine.save_state().unwrap(), state);
+}
+
+#[test]
+#[ignore = "private EUR ROM and current dataset; Wine only, Linux/USA pending"]
+fn european_ui_context_unavailable_copy_load_undo_restart() {
+    let root = PathBuf::from(std::env::var_os("FFTA_UI_CONTEXT_TEMPLATES_ROOT").unwrap());
+    assert!(!root.exists());
+    fs::create_dir_all(&root).unwrap();
+    let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    let committed = PathBuf::from(std::env::var_os("FFTA_STATE_TEST_DATASET").unwrap());
+    let copy = root.join("selected dataset");
+    fs::create_dir(&copy).unwrap();
+    for entry in fs::read_dir(&committed).unwrap() {
+        let entry = entry.unwrap();
+        assert!(entry.file_type().unwrap().is_file());
+        fs::copy(entry.path(), copy.join(entry.file_name())).unwrap();
+    }
+    let dataset = read_dataset(&copy).unwrap();
+    assert_eq!((dataset.manifest.extractor_revision, dataset.manifest.decoder_revision), (128, 127));
+    assert!(dataset.ui_context_templates.is_some());
+    drop(dataset);
+    let mut machine = crate::make_machine(rom.clone(), None);
+    let boot = machine.save_state().unwrap();
+    attach_from_directory(&mut machine, &copy).unwrap();
+    let owner = machine.bus.rom_resources().unwrap().clone();
+    assert_eq!(machine.save_state().unwrap(), boot);
+
+    let private = root.join("synthetic state files");
+    fs::create_dir(&private).unwrap();
+    let save = private.join("test.sav");
+    let mut slots = crate::save_state::Slots::new(&save, &rom);
+    slots.save(&machine, 1, &vec![[0; 4]; 240 * 160], false).unwrap();
+    machine.cpu.regs[4] = 0x12345678;
+    machine.bus.write8(0x02001000, 0x5a);
+    let changed = machine.save_state().unwrap();
+    assert_ne!(changed, boot);
+    let unavailable = root.join("unavailable dataset");
+    fs::rename(&copy, &unavailable).unwrap();
+    assert!(attach_from_directory(&mut machine, &copy).is_err());
+    assert!(std::sync::Arc::ptr_eq(machine.bus.rom_resources().unwrap(), &owner));
+    assert_eq!(machine.save_state().unwrap(), changed);
+
+    slots.load(&mut machine, 1).unwrap();
+    assert_eq!(machine.save_state().unwrap(), boot);
+    assert!(std::sync::Arc::ptr_eq(machine.bus.rom_resources().unwrap(), &owner));
+    assert_context_owner_reads(&mut machine, &rom);
+    slots.undo(&mut machine).unwrap();
+    assert_eq!(machine.save_state().unwrap(), changed);
+    assert!(std::sync::Arc::ptr_eq(machine.bus.rom_resources().unwrap(), &owner));
+    assert_context_owner_reads(&mut machine, &rom);
+    crate::save_backups::restart(&mut machine, &boot, &save).unwrap();
+    assert_eq!(machine.save_state().unwrap(), boot);
+    assert!(std::sync::Arc::ptr_eq(machine.bus.rom_resources().unwrap(), &owner));
+    assert_context_owner_reads(&mut machine, &rom);
+
+    fs::rename(&unavailable, &copy).unwrap();
+    let mut fresh = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut fresh, &copy).unwrap();
+    assert!(!std::sync::Arc::ptr_eq(fresh.bus.rom_resources().unwrap(), &owner));
+    assert_eq!(fresh.save_state().unwrap(), boot);
+    assert_context_owner_reads(&mut fresh, &rom);
+    drop(slots);
+    fs::remove_dir_all(private).unwrap();
+    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
+        "status":"PASS", "revision":[128,127], "unavailable_copy_rejected":true,
+        "load_undo_restart_full_state_exact":true, "owner_retained":true,
+        "typed_bytes_per_stage":220, "restored_copy_owner_reconstructed":true,
+        "synthetic_state_files_removed":true, "Linux":"pending", "USA":"pending",
+        "nativeWindows":"pending", "performance_measurements":false
+    })).unwrap()).unwrap();
+}
+
 #[test]
 #[ignore = "private EUR ROM, prepared current/prior dataset and TinyCC; Wine only, Linux/USA pending"]
 fn european_ui_context_templates_match_source_and_native_readers() {
@@ -48,7 +131,7 @@ fn european_ui_context_templates_match_source_and_native_readers() {
     let current = read_dataset(&dataset).unwrap();
     let resource_count = current.manifest.resources.len();
     assert_eq!(old.resources.len(), 98);
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (127, 126, 100));
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
     for resource in &old.resources {
         assert_eq!(current.manifest.resources.iter().find(|entry| entry.id == resource.id), Some(resource));
     }

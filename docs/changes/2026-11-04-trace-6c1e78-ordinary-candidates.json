@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "trace-6c1e78-ordinary-candidates",
+  "title": "Verify an ordinary compact OBJ selector",
+  "kind": "docs",
+  "platforms": [
+    "EUR source and retained checkpoints; Windows executable under Wine"
+  ],
+  "changes": [
+    "Document the source-backed 6c1e78 action, task, descriptor and candidate roster join without claiming ordinary execution.",
+    "Reach an IN-08 Red Spring confirmation through normal selection and deployment of the observed source-backed unit; preserve the route as a partial ordinary candidate.",
+    "Verify ordinary IN-08 Red Spring use of bank 6c1e78 selector 5 and close the scoped recovery criterion while leaving broader catalog coverage open."
+  ],
+  "validation": [
+    "Guarded EUR source and six checkpoint roster join passed; a second protected source-byte check confirmed physical metadata52 rows and the bank and secondary-job access instructions. Both checks executed zero guest instructions and removed successful scratch. Evidence: target/validation/units/e128-6c1e78-source-rosters-blgppao9/ and e128-6c1e78-job-mapping-hxmci6q6/.",
+    "The protected IN-08 normal-input prefix reproduced the retained deployment-selector hash; nine observed cursor steps reached slot 13, and ordinary input deployed Skimble and opened Action \u2192 Pandora \u2192 Red Spring \u2192 Do it at frame 7657. Evidence: target/validation/units/e128-6c1e78-deployment-branch-2_ca0kz8/ and e128-6c1e78-redspring-slot13-rwsxgiz7/.",
+    "The e128 source-matched read-audit Windows test passes the new 600-frame Red Spring EUR Wine raw/managed pair with full state, clock, central/wide images, OAM, dispatch and five audio streams equal each frame. It observes root byte 0x086c1e7a at frame 7876 and 12,983 aggregate catalog source bytes; guarded inputs pass. Evidence: target/validation/units/e128-6c1e78-redspring-watch-pair-yj07anhh/.",
+    "A snapshot-only audit watches the selector-offset span and observes a two-byte read at 0x086c218a on frame 8031, identifying selector 5; the 600-frame EUR Wine pair passes again. The initial 300-frame watch ended before the read and retained diagnostics. Evidence: target/validation/units/e128-6c1e78-selector-watch-600-2emk682f/ and e128-6c1e78-selector-watch-pair-03yu4i2w/."
+  ],
+  "limitations": [
+    "The first roster join failed from an off-by-one task ordinal and the first deployment launcher used a relative path; both corrected retries passed. Complete animation, other selectors and consumers, Linux, USA and native Windows remain unverified. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_compact_catalog.md"
+  ]
+}

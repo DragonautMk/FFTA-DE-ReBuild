@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "verify-e127-original-compact-catalog",
+  "title": "Verify the original compact catalog against e127",
+  "kind": "fixed",
+  "platforms": [
+    "EUR Windows executable under Wine"
+  ],
+  "changes": [
+    "Update the original catalog test counter and report to reflect the complete current represented source union and actual manifest and catalog counts; assert that each out-of-projection selector probe is unrepresented."
+  ],
+  "validation": [
+    "The complete RVR-18 e127-d126 Wine filter passes 63 banks, 205 selectors, 887 frames, 607 lists, 2,171 objects, 330 spans and 20,257 source bytes; original interpreter readers and 268 native count cases match full state and clock, with 925 typed native bytes.",
+    "The first 99 e126 resource records match e127. An independent report check matches catalog and manifest totals; input guards pass and runtime scratch was removed. Evidence: target/validation/units/rvr18-original-catalog-e127-t7fbavvb/.",
+    "Current-source Windows release test compilation passed with selected source and executable hashes recorded; evidence: target/validation/units/rvr18-compact-catalog-build-23ykdlrr/.",
+    "Consumed successful build scratch was retired after host open-file, lease and inventory checks; evidence and receipt remain in target/validation/units/rvr18-compact-catalog-build-23ykdlrr/."
+  ],
+  "limitations": [
+    "Disk reload failure, complete ordinary use, native Windows, Linux, USA and performance remain unverified. The separately identified five-loop assertion was corrected and verified in the linked recovery record."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/compact_obj_catalog_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

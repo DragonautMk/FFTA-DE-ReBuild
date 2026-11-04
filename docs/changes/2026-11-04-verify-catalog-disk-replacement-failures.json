@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "verify-catalog-disk-replacement-failures",
+  "title": "Verify failed catalog disk replacement preserves the active owner",
+  "kind": "added",
+  "platforms": [
+    "EUR Windows executable under Wine"
+  ],
+  "changes": [
+    "Add a focused current-dataset disk attachment test for a missing compact catalog and a structurally valid edited catalog with a matching manifest file hash."
+  ],
+  "validation": [
+    "The e127-d126 Wine test confirms both disk replacements are rejected with the same owner and exact machine state, the existing owner still serves a catalog byte, and a fresh machine attaches and reads the untouched committed generation.",
+    "Current-source Windows release test compilation and selected source/executable identity pass; runtime input guards pass and successful test scratch was removed. Evidence: target/validation/units/rvr19-disk-replacement-build-2aa39q12/ and target/validation/units/rvr19-disk-replacement-e127-udu8zj00/.",
+    "Consumed successful build scratch was retired after host open-file, lease and inventory checks; evidence and receipt remain in target/validation/units/rvr19-disk-replacement-build-2aa39q12/."
+  ],
+  "limitations": [
+    "This covers disk attachment failure, not a generation-write interruption, complete ordinary use, native Windows, Linux, USA or performance."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/compact_obj_catalog_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

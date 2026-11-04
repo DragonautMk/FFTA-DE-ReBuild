@@ -246,6 +246,15 @@ change, package, agent commit or push.
 
 ## Category-selected UI context templates
 
+An e127-d126 EUR/Wine lifecycle test attaches a selected dataset copy, makes
+its original path unavailable, and confirms failed reattachment leaves the
+owner and machine state intact. Load, Undo and Restart retain that owner and
+restore the exact expected state; all 220 typed bytes remain readable after
+each operation. After restoring the copy, a fresh machine reconstructs a new
+owner and reads all 220 bytes. This is a synthetic lifecycle check, not proof
+of all ordinary UI consumers or native Windows, Linux or USA behavior.
+[Recovery record](changes/2026-11-04-verify-ui-context-resource-lifecycle.json).
+
 A fresh e108 native API address inventory over the accepted EUR Roulette Do it
 seed, guest frames 11960..11972, preserves complete state, clock, video, OAM,
 dispatch and all five audio streams with its observer active. It records 20,835
@@ -328,6 +337,23 @@ streams. Positive audio lengths are [26334,26334,3168,3168,26230]. This proves
 one ordinary template copy; it does not prove ordinary use of all eleven
 records, every consumer, complete UI behavior or global catalog extent.
 The previously accepted 600-frame Roulette animation proof was not rerun.
+
+A second ordinary EUR scene uses IN-08 Skimble's turn-to-Action transition,
+frames 7481..7545. Production CLI serves five typed reads/20 bytes. A
+snapshot-only address audit observes a four-byte read at `0x08394e6c` at
+frame 7504, identifying template 2, and a 64-frame native raw/managed pair
+matches complete state, clock, central/wide images, OAM, dispatch and all five
+audio streams at every frame. The prior IN-19 12-frame native address inventory
+recorded five words from template 5 with the same seed and input as its
+accepted owner proof; a guarded evidence join confirms the records differ.
+The initial join expected a status field in the raw inventory rather than its
+unit receipt and failed before guest execution; the corrected join passes.
+Evidence: `target/validation/units/e128-ui-context-action-cli-04r1f0p0/`,
+`e128-ui-context-action-watch-pair-jkiu_u9u/`,
+`e128-ui-context-ordinary-distinct-iybjczy_/` and failed diagnostic
+`e128-ui-context-ordinary-distinct-huidb6fr/`. This covers templates 2 and 5
+in two ordinary scenes, not the remaining records or all consumers. Linux,
+USA and native Windows remain open; no performance measurements were made.
 
 Evidence is under `target/rom-data-e108-next-source-20261103/`. Wine units:
 `rom-data-e108-roulette-residue-07n4xsdy`,

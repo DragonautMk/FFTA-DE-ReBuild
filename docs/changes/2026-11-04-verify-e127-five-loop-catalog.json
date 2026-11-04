@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "verify-e127-five-loop-catalog",
+  "title": "Verify the current five-loop compact catalog projection",
+  "kind": "fixed",
+  "platforms": [
+    "EUR Windows executable under Wine"
+  ],
+  "changes": [
+    "Correct the five-loop object assertion to 81 and derive report totals from the current selected catalog and predecessor manifests."
+  ],
+  "validation": [
+    "The complete e127-d126 EUR/Wine filter passes 974 source bytes, 43 selectors, 60 frames, 44 lists and 81 objects, with 48 native full state/clock cases serving 184 typed bytes; report totals independently match the current catalog.",
+    "The minimal 29-bank e110 catalog reconstructed in owned scratch matched its retained manifest SHA-256 byte for byte, and the first 99 resource records match e127. Guarded inputs passed and scratch was removed. Evidence: target/validation/units/rvr01-five-loop-e127-ul971q_7/.",
+    "The current-source Windows release test build and selected source/executable hashes pass in target/validation/units/rvr01-five-loop-build-ic1qivch/.",
+    "Consumed successful build scratch was retired after host open-file, lease and inventory checks; evidence and receipt remain in target/validation/units/rvr01-five-loop-build-ic1qivch/."
+  ],
+  "limitations": [
+    "The e111 accepted result remains historical and unchanged; newer owned intersections account for the current 184 typed bytes. Ordinary use, disk lifecycle, native Windows, Linux, USA and performance remain separate."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/compact_obj_catalog_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/changes/2026-11-04-verify-e127-original-compact-catalog.json"
+  ]
+}

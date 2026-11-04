@@ -36,10 +36,9 @@ termination of another owner's process or changing another thread's goal state.
 
 - State: waiting
 - Outcome: partial
-- Verified: E127 100 resources/101 files, 63 banks; EUR Wine create/reuse, nibble reads/fallback, four native comparisons and 12-frame CLI PASS (zero catalog reads). Current: target/validation/units/rom-data-e127-nibble-current-evuagp74/work/resources/. Prior scoped proofs preserved.
+- Verified: E128 100 resources/101 files, 63 banks; 6c1e78 selectors 3/4/5/6, EUR Wine create/reuse, selected native reads, full catalog and 12-frame CLI PASS (zero catalog reads). Current: target/validation/units/e128-default-selectors-current-8vj19j2r/work/resources/. E127 retained as comparison; prior scoped proofs preserved.
 - Missing: unmigrated resources/consumers, missing ordinary-use evidence, ABI/global extent/indirect calls and mod phases ROMDATA-06/07; Linux/USA/native Windows/new32:9 remain distinct. EUR, reduced Wine scope, no performance/space measurements; originals and personal saves unchanged.
-- Selection: `ROMDATA-04-LOOP-COMPACT-CATALOG-ORDINARY` active/partial. EUR/Wine, Linux/USA pending, no metrics. Soil Evidence 6bac28/6c0614, Freezeblink 6babc4 and Stardust 6bb574 exact reads and paired Wine scenes PASS. Audit CLI compilation recovered after ENOSPC; emitted test passed. Missing: remaining banks and global coverage. Selection: `ROMDATA-02-04-6C1E78-DEFAULT-SELECTORS` partial. Caller branch also derives 4/6, while only conditional 3/5 are represented. Next: Wine source geometry and current-manifest conflict check; if coherent, extend catalog and validate. EUR/Wine only; no metrics. Model/effort unconfirmed.
-- Recovery selection: `RVR-01` active/partial. RVR-09..17 EUR/Wine filters pass; descriptor and mask reports now match e127 and authenticated predecessors. Missing: compact OBJ primary through septenary and original compact-catalog stale reports. Resume from the recovery checklist without repeating accepted filters.
+- Selection: `ROMDATA-04-LOOP-COMPACT-CATALOG-ORDINARY` active/partial. EUR/Wine, Linux/USA pending, no metrics. Soil Evidence 6bac28/6c0614, Freezeblink 6babc4 and Stardust 6bb574 exact reads and paired Wine scenes PASS. Audit CLI compilation recovered after ENOSPC; emitted test passed. Missing: remaining banks and global coverage.
 - Resume: [validation recovery checklist](ROM_DATA_VALIDATION_RECOVERY_TODO.md) for skipped checks; [ROM_DATA_TODO](ROM_DATA_TODO.md), only the selected criterion's section (ROMDATA-01/02/03/04/05/06/07); [inventory](ROM_DATA_INVENTORY.md). Do not read the whole TODO. Children retain their IDs and limits:
   - `ROMDATA-04-PARAMETER-RECORDS27-ORDINARY`: source/model/runtime/CLI accepted; 59 records observed, full domain unproven; positive normal use and complete paired evidence missing. Eleven negative captures closed; archive legacy lines 17624..17672 and `docs/rom_data_gameplay.md`, ordinary sparse parameter record reachability section.
   - `ROMDATA-04-LOCALIZED-TABLE-GRAPHICS-ORDINARY`: 40 banks/8 tables source/model/runtime/CLI accepted; positive normal trigger and paired evidence missing; negative attempts remain closed. `docs/rom_data_ui_graphics.md`, ordinary table extension reachability section; archive 17844..17864.
@@ -47,8 +46,8 @@ termination of another owner's process or changing another thread's goal state.
   - `ROMDATA-01-OBJ-REMAINING-DRAW-ROOTS`, `ROMDATA-01-OBJ-REMAINING-CONSTRUCTOR-SOURCES`, `ROMDATA-01-OBJ-GRAPHICS-PAYLOADS`: authenticated increments accepted; global inventory/remaining consumers open. Do not repeat the broad experiment with 61 truncations. Archive 2853..2874, then only the selected family's record.
   - `ROMDATA-05-OBJ-VALIDATION`: local equivalence/costs, GUI, archive and USA initializer have later accepted outcomes; native Windows gates, further catalogs/scenes and normal enablement remain. Archive 3945..4087. Old artificial RSS/space constraints and `ROMDATA-05-BG-SCENES-COSTS` do not authorize further measurements: superseded by EUR/no-metrics steering.
   - Compact OBJ e101..e108: conditional prefixes/model/runtime/CLI accepted. e101..e107 ordinary use remains open; record222/candidate-table and selector33 have only static conditions/bounded negatives. e108/6cc124 has one IN-19 Roulette 600-frame positive native pair; complete animation/ordinary selector-list domain remains unproved. Archive 11..65 and new ordinary-use record; no accepted replay repeated.
-  - UI context templates e109: source selector/copy catalog and one ordinary20B copy accepted; complete UI extent/all consumers/all11 records in ordinary play remain unproved. docs/rom_data_ui.md. Do not repeat closed12-frame proof for context.
-  - ROMDATA-04-COMPACT-CATALOG-ORDINARY: StarCross ordinary proof closed: IN08Douglas secondary9/mastered84, positive15830reads/19330B and480frame full native pair. Complete29-root/allselector/animation/consumer coverage remains open; counters aggregatecatalog. Prior303/310/312 human leads excluded. docs/rom_data_compact_catalog.md.
+  - UI context templates e109: source selector/copy catalog and ordinary templates 5 and 2 accepted with paired Wine scenes; complete UI extent/all consumers/all11 records remain unproved. docs/rom_data_ui.md. Do not repeat accepted pairs.
+  - ROMDATA-04-COMPACT-CATALOG-ORDINARY: Star Cross and IN-08 Red Spring selector 5 scoped proofs accepted. Complete29-root/allselector/animation/consumer coverage remains open; catalog counters aggregate banks. Prior303/310/312 human leads excluded. docs/rom_data_compact_catalog.md.
   - `ROMDATA-04-LOOP-COMPACT-CATALOG-ORDINARY`: five-loop source/model/native/CLI accepted; Soil Evidence 6bac28/6c0614, Freezeblink 6babc4 and Stardust 6bb574 exact reads with paired Wine scenes PASS. Other banks, complete animation and global domains remain open. docs/rom_data_compact_catalog.md.
 
 ## Incomplete tasks and open criteria
@@ -203,9 +202,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: RVR-11..13 completed; RVR-01 remains partial.
-- Last verified result: three e127 EUR/Wine filters pass with 100 current resources and 87/88/89 authenticated prior resources; corrected reports derive manifest counts.
-- Remaining work: RVR-01 compact OBJ primary through septenary and compact-catalog report corrections; other unchecked recovery criteria.
-- Errors or blockers: retained build snapshot has six unrelated older source files; native Windows, Linux and USA not verified.
-- Next action: select an unchecked recovery criterion and inspect its exact predecessor and build inputs.
-- References: docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md; docs/changes/2026-11-04-verify-e127-descriptor-mask-regressions.json.
+- Task: ROM-DATA-FULL-EUR active/partial; scoped ROMDATA-04-UI-CONTEXT-ORDINARY-TEMPLATE2 complete.
+- Last verified result: IN-08 Action template 2 read 08394e6c at frame 7504 and passed a 64-frame EUR Wine raw/managed pair. Earlier IN-19 source inventory identifies template 5; the read-only join confirms distinct records.
+- Remaining work: other recovery criteria, templates/consumers, platforms and ROM/mod phases remain open.
+- Errors or blockers: first distinct-record join expected a status field in raw inventory; corrected retry passed, failed diagnostics retained.
+- Next action: select another unchecked recovery criterion and checkpoint before new work; preserve accepted scene pairs.
+- References: docs/rom_data_ui.md#category-selected-ui-context-templates; docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md; target/validation/units/e128-ui-context-action-watch-pair-jkiu_u9u/.

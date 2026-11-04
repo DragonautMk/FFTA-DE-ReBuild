@@ -20529,3 +20529,115 @@ Two 24-row EUR callers select 0–7; 132 bank bytes and 594 conditional table by
 - Verified criteria: full property masks filter passes on e127 EUR/Wine; 100 current and 89 authenticated prior resources, one prefix over six boundary indices, full state/clock equality and transactional tamper rejection. Report counts come from the tested manifests.
 - Evidence: docs/changes/2026-11-04-verify-e127-descriptor-mask-regressions.json; target/validation/units/rvr13-property-masks-e127-ygf0eja3/.
 - Limits: EUR/Wine only; six unrelated source files in the retained build snapshot were older than the workspace. No native Windows, Linux, USA or performance validation.
+
+### RVR-02
+
+- Outcome: completed
+- Verified criteria: full primary compact OBJ e127-d126 EUR/Wine filter, authenticated e100 predecessor, corrected manifest-derived report and guarded inputs.
+- Evidence: docs/changes/2026-11-04-verify-e127-primary-compact-obj.json; target/validation/units/rvr02-primary-e127-host-3buwaix0/.
+- Limits: native Windows, Linux, USA, ordinary use and performance not established; build unit inventory failed on Cargo hard links after compilation succeeded.
+
+### RVR-03
+
+- Outcome: completed
+- Verified criteria: complete secondary compact OBJ e127-d126 EUR/Wine filter, authenticated e101 predecessor and corrected report.
+- Evidence: docs/changes/2026-11-04-recover-compact-obj-report-counts.json; target/validation/units/rvr03-secondary-e127-in4lgtqr/.
+- Limits: native Windows, Linux, USA, ordinary use and performance remain unverified.
+
+### RVR-04
+
+- Outcome: completed
+- Verified criteria: complete tertiary compact OBJ e127-d126 EUR/Wine filter, authenticated e102 predecessor and corrected report.
+- Evidence: docs/changes/2026-11-04-recover-compact-obj-report-counts.json; target/validation/units/rvr04-tertiary-e127-av__e5xq/.
+- Limits: native Windows, Linux, USA, ordinary use and performance remain unverified.
+
+### RVR-05
+
+- Outcome: completed
+- Verified criteria: complete quaternary compact OBJ e127-d126 EUR/Wine filter, authenticated e103 predecessor and corrected report.
+- Evidence: docs/changes/2026-11-04-recover-compact-obj-report-counts.json; target/validation/units/rvr05-quaternary-e127-tc7sjefs/.
+- Limits: native Windows, Linux, USA, ordinary use and performance remain unverified.
+
+### RVR-06
+
+- Outcome: completed
+- Verified criteria: complete quinary compact OBJ e127-d126 EUR/Wine filter, authenticated e104 predecessor and corrected report.
+- Evidence: docs/changes/2026-11-04-recover-compact-obj-report-counts.json; target/validation/units/rvr06-quinary-e127-v3a7erhp/.
+- Limits: native Windows, Linux, USA, ordinary use and performance remain unverified.
+
+### RVR-07
+
+- Outcome: completed
+- Verified criteria: complete senary compact OBJ e127-d126 EUR/Wine filter, authenticated e105 predecessor and corrected report.
+- Evidence: docs/changes/2026-11-04-recover-compact-obj-report-counts.json; target/validation/units/rvr07-senary-e127-i9fynz4a/.
+- Limits: native Windows, Linux, USA, ordinary use and performance remain unverified.
+
+### RVR-08
+
+- Outcome: completed
+- Verified criteria: complete septenary compact OBJ e127-d126 EUR/Wine filter, authenticated e106 predecessor and corrected report.
+- Evidence: docs/changes/2026-11-04-recover-compact-obj-report-counts.json; target/validation/units/rvr08-septenary-e127-ymlajk0s/.
+- Limits: native Windows, Linux, USA, ordinary use and performance remain unverified.
+
+### RVR-18
+
+- Outcome: completed
+- Verified criteria: original complete catalog e127-d126 EUR/Wine projection, corrected union counter and aggregate report, 99 unchanged e126 records and 268 full state/clock native cases.
+- Evidence: docs/changes/2026-11-04-verify-e127-original-compact-catalog.json; target/validation/units/rvr18-original-catalog-e127-t7fbavvb/.
+- Limits: ordinary use, disk-reload failure, native Windows, Linux, USA and performance remain separate.
+
+### RVR-01
+
+- Outcome: completed
+- Verified criteria: affected resource/revision and catalog aggregate reports corrected and compared with tested manifests; selected e127 EUR/Wine filters pass, including the independently discovered five-loop assertion correction.
+- Evidence: docs/changes/2026-11-04-verify-e127-primary-compact-obj.json; docs/changes/2026-11-04-recover-compact-obj-report-counts.json; docs/changes/2026-11-04-verify-e127-original-compact-catalog.json; docs/changes/2026-11-04-verify-e127-five-loop-catalog.json.
+- Limits: historical evidence remains unchanged; lifecycle, ordinary play, other platforms and performance are separate.
+
+### RVR-19
+
+- Outcome: completed
+- Verified criteria: e127 EUR/Wine missing and coherent altered catalog disk attachments fail without owner/state change; existing owner reads and original committed generation reattaches and reads.
+- Evidence: docs/changes/2026-11-04-verify-catalog-disk-replacement-failures.json; target/validation/units/rvr19-disk-replacement-e127-udu8zj00/.
+- Limits: no injected generation-write interruption; ordinary use, native Windows, Linux, USA and performance remain separate.
+
+### RVR-20
+
+- Outcome: completed
+- Verified criteria: e127 EUR/Wine selected copy unavailable; failed reattachment, exact Load/Undo/Restart states and retained owner; restored copy reconstructs owner; all 220 typed bytes read per stage.
+- Evidence: docs/changes/2026-11-04-verify-ui-context-resource-lifecycle.json; target/validation/units/rvr20-ui-context-e127-h1n2fo7g/.
+- Limits: synthetic scope; backup restoration, ordinary UI completeness, native Windows, Linux, USA and performance remain separate.
+
+### ROMDATA-02-04-6C1E78-DEFAULT-SELECTORS
+
+- Outcome: completed
+- Verified criteria: caller-derived selectors 4/6 integrated in e128-d127, prior projections/resources preserved, EUR/Wine selected native readers, complete catalog, CLI create/reuse/startup and affected regressions pass.
+- Evidence: docs/changes/2026-11-04-integrate-default-selectors-6c1e78.json; target/validation/units/e128-default-selectors-current-8vj19j2r/.
+- Limits: conditional caller scope only; ordinary use, other callers, native Windows, Linux, USA and performance remain separate.
+
+### RVR-21
+
+- Outcome: completed
+- Verified criteria: e128 affected primary through octonary, conditional lookup/descriptor/mask, dynamic, table graphics, clan alias, UI context, catalog and UI lifecycle filters pass with guarded inputs; previous-bank report tested.
+- Evidence: docs/changes/2026-11-04-integrate-default-selectors-6c1e78.json; target/validation/units/e128-compact-obj-regressions-1k41xocp/; target/validation/units/e128-conditional-regressions-zbofhgeo/; target/validation/units/e128-other-data-regressions-5gflnz6h/.
+- Limits: EUR/Wine only; e127 outcomes remain historical, other platforms and ordinary scenes separate.
+
+### RVR-22
+
+- Outcome: completed
+- Verified criteria: updated original 6c1e78 and five-loop e128 EUR/Wine filters pass; minimal e118/e110 catalog preimages match retained manifest hashes, reports and native state/clock checks pass.
+- Evidence: docs/changes/2026-11-04-integrate-default-selectors-6c1e78.json; target/validation/units/e128-historical-catalog-regressions-ixhjx1e0/.
+- Limits: conditional source coverage; ordinary scenes, native Windows, Linux, USA and performance remain separate.
+
+### ROMDATA-04-COMPACT-CATALOG-ORDINARY-6C1E78-SELECTOR5
+
+- Outcome: completed
+- Verified criteria: IN-08 normal Red Spring use; e128 EUR Wine 600-frame native raw/managed state/clock/image/OAM/dispatch/five-audio pair PASS. Root byte 086c1e7a read at frame 7876 and selector 5 offset 086c218a at frame 8031; protected inputs unchanged.
+- Evidence: docs/changes/2026-11-04-trace-6c1e78-ordinary-candidates.json; target/validation/units/e128-6c1e78-redspring-watch-pair-yj07anhh/; target/validation/units/e128-6c1e78-selector-watch-600-2emk682f/.
+- Limits: initial 300-frame selector watch ended before the hit; complete animation, other selectors/consumers, Linux, USA, native Windows and performance remain separate. The broader parent remains partial.
+
+### ROMDATA-04-UI-CONTEXT-ORDINARY-TEMPLATE2
+
+- Outcome: completed
+- Verified criteria: IN-08 Action transition observes UI template 2 at 08394e6c on frame 7504, with 5 typed reads/20 bytes; 64-frame EUR Wine native raw/managed pair matches full state/clock/images/OAM/dispatch/five audio. Previous IN-19 native address inventory identifies distinct template 5.
+- Evidence: docs/changes/2026-11-04-verify-second-ordinary-ui-context.json; target/validation/units/e128-ui-context-action-watch-pair-jkiu_u9u/; target/validation/units/e128-ui-context-ordinary-distinct-iybjczy_/.
+- Limits: other records/consumers, complete UI extent, Linux, USA, native Windows and performance remain separate. First evidence join failed before guest execution and corrected retry passed.

@@ -2065,8 +2065,9 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   flags and preserved opaque bytes. All 98 previous resources/file bytes remain
   identical. CLI creation/reuse and focused Wine original-selector, native
   copy/coordinate, boundaries and in-memory rejection checks pass. One ordinary
-  12-frame native raw/managed pair proves 5 reads/20 bytes and complete
-  state/clock/render/OAM/dispatch/audio equality. Keep one current dataset;
+  12-frame native raw/managed pair proves template 5; a later IN-08 Action
+  scene observes template 2 and passes a 64-frame pair with 5 reads/20 bytes
+  and complete state/clock/render/OAM/dispatch/audio equality. Keep one current dataset;
   superseded comparison payloads retire after acceptance with evidence retained.
   Global UI extent, other consumers/all-record ordinary use and Linux/USA/native
   Windows remain open. No save-format/C API/native-cache change or benchmark.
@@ -2106,6 +2107,14 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   emitted test executable from a Cargo run whose CLI build failed for lack of
   disk space. Other selectors/consumers, complete animations,
   Linux, USA, native Windows and mod phases remain open; no benchmark.
+  [Contract](../rom_data_compact_catalog.md).
+- EUR e128-d127 extends bank `6c1e78` to conditional selectors 3/4/5/6,
+  preserving the prior bank projection and 99 other resources. EUR Wine
+  create/reuse/startup, selected readers, complete catalog and affected recovery
+  regression checks pass. An IN-08 Red Spring scene observes selector 5 and
+  passes a 600-frame Wine raw/managed state/clock/image/OAM/dispatch/audio pair.
+  Other selectors, animation coverage, callers and deferred platforms remain
+  open. No benchmark.
   [Contract](../rom_data_compact_catalog.md).
 - The desktop loads the full ROM into `MemMap.rom` at startup; ordinary guest
   ROM reads use that in-memory buffer. The [ROM data TODO](ROM_DATA_TODO.md)

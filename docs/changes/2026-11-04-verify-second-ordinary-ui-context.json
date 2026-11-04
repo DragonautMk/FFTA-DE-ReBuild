@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "verify-second-ordinary-ui-context",
+  "title": "Verify a second ordinary UI context template",
+  "kind": "docs",
+  "platforms": [
+    "EUR Windows executable under Wine"
+  ],
+  "changes": [
+    "Extend scoped ordinary UI context evidence from template 5 to template 2 while retaining the broader all-record and consumer gaps."
+  ],
+  "validation": [
+    "A protected read-only checkpoint query identified source-selected categories for the IN-08 menu. The e128 production CLI turn-to-Action scene served five typed reads and 20 bytes. A snapshot-only watch observed four bytes at 0x08394e6c on frame 7504 (template 2), and the 64-frame EUR Wine native raw/managed pair matched complete state, clock, central and wide images, OAM, dispatch and five audio streams at each frame. Evidence: target/validation/units/e128-ui-context-action-cli-04r1f0p0/ and e128-ui-context-action-watch-pair-jkiu_u9u/.",
+    "The retained previous 12-frame native address inventory contains five original reads from template 5 and shares the seed/input used by the earlier accepted owner proof. A guarded read-only evidence join verifies the two records differ: target/validation/units/e128-ui-context-ordinary-distinct-iybjczy_/."
+  ],
+  "limitations": [
+    "The first evidence join expected a status field in the raw report and failed before guest execution; its corrected retry passed. Other templates and consumers, complete UI extent, Linux, USA and native Windows remain open; no performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_ui.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_ui.md"
+  ]
+}

@@ -35,7 +35,7 @@ The evidence does not attribute every unchecked item to lack of disk space.
 
 ## 1. Correct validation reports
 
-- [ ] **RVR-01 — Resource counts:** replace stale hard-coded resource/revision
+- [x] **RVR-01 — Resource counts:** replace stale hard-coded resource/revision
   summaries in the affected private tests with values from the actual tested
   manifest. The earlier full octonary e127 report said 98; its correction is
   recorded below. Audit the other checklist filters for the same discrepancy.
@@ -66,12 +66,39 @@ The evidence does not attribute every unchecked item to lack of disk space.
     verify their complete e127 EUR/Wine filters. Reports match the manifests:
     100 current and 87, 88 and 89 prior resources, respectively.
     [Recovery](../changes/2026-11-04-verify-e127-descriptor-mask-regressions.json).
-  - [ ] Correct and validate the other affected reports. The source audit
-    found fixed historical resource counts in the primary through septenary
-    compact OBJ tests. The original compact-catalog report has old aggregate
-    counts.
+  - [x] Correct the primary compact OBJ report counts and run its complete
+    e127 EUR/Wine filter. Its report matches 100 current and 90 authenticated
+    e100 predecessor resources. [Recovery](../changes/2026-11-04-verify-e127-primary-compact-obj.json).
+  - [x] Correct and validate the secondary through septenary compact OBJ
+    reports. Their complete e127 EUR/Wine filters match the authenticated
+    current and predecessor manifests. [Recovery](../changes/2026-11-04-recover-compact-obj-report-counts.json).
+  - [x] Correct the original compact-catalog report and its aggregate counts;
+    the complete e127 EUR/Wine filter passes under RVR-18.
+    [Recovery](../changes/2026-11-04-verify-e127-original-compact-catalog.json).
+  - [x] Correct the separate five-loop assertion to the 81 objects present in
+    e127 and the accepted e111 report. Its complete current EUR/Wine filter
+    passes against the authenticated e110 catalog. [Recovery](../changes/2026-11-04-verify-e127-five-loop-catalog.json).
 
 ## 2. Run the older tests whose revision expectations changed
+
+The e128-d127 integration of selectors 4/6 changes the current extraction
+revision and catalog projection. The accepted e127 results below remain valid
+for e127.
+
+- [x] **RVR-21 — e128 affected regressions:** primary through octonary full
+  filters pass with authenticated e100..e107 predecessors; RVR-09..13 pass with
+  authenticated e95..e99 predecessors. Dynamic fragments, table graphics,
+  clan alias, UI context and RVR-19/20 lifecycle filters also pass. The complete
+  catalog and selected new-selector filters pass, and a previous-bank report
+  distinguishes 61 identical banks from 62 preserved projections. Inputs were
+  guarded and successful runtime scratch removed.
+  [Evidence](../changes/2026-11-04-integrate-default-selectors-6c1e78.json).
+- [x] **RVR-22 — Updated historical catalog filters:** the changed `6c1e78`
+  and five-loop full filters pass on e128 under EUR Wine with e118 and e110
+  catalog reconstructions authenticated against their retained manifest hashes.
+  The former covers 118 frames and five native cases; the latter verifies the
+  previous-bank report and 48 native cases. Guarded inputs passed and successful
+  scratch was removed. [Evidence](../changes/2026-11-04-integrate-default-selectors-6c1e78.json).
 
 The [finite-loop change record](../changes/2026-11-03-extend-european-compact-catalog-from-finite-loops.json)
 explicitly records updated older test expectations without their reruns.
@@ -87,27 +114,24 @@ and accepted new-only filters are not implicitly selected by this list.
 Close each item only after its complete selected filter passes, preservation
 checks pass, and the record names the tested revision and precise scope.
 
-- [ ] **RVR-02 — Primary compact OBJ:** run
-  `european_compact_obj_managed_native_reads` with the current expectations.
-  [Test](../../crates/recomp/src/rom_data/compact_obj_animations_runtime_tests.rs).
-- [ ] **RVR-03 — Secondary compact OBJ:** run
-  `european_secondary_compact_obj_managed_native_reads`.
-  [Test](../../crates/recomp/src/rom_data/compact_obj_animations_secondary_runtime_tests.rs).
-- [ ] **RVR-04 — Tertiary compact OBJ:** run
-  `european_tertiary_compact_obj_managed_native_reads`.
-  [Test](../../crates/recomp/src/rom_data/compact_obj_animations_tertiary_runtime_tests.rs).
-- [ ] **RVR-05 — Quaternary compact OBJ:** run
-  `european_quaternary_compact_obj_managed_native_reads`.
-  [Test](../../crates/recomp/src/rom_data/compact_obj_animations_quaternary_runtime_tests.rs).
-- [ ] **RVR-06 — Quinary compact OBJ:** run
-  `european_quinary_compact_obj_managed_native_reads`.
-  [Test](../../crates/recomp/src/rom_data/compact_obj_animations_quinary_runtime_tests.rs).
-- [ ] **RVR-07 — Senary compact OBJ:** run
-  `european_senary_compact_obj_managed_native_reads`.
-  [Test](../../crates/recomp/src/rom_data/compact_obj_animations_senary_runtime_tests.rs).
-- [ ] **RVR-08 — Septenary compact OBJ:** run
-  `european_septenary_compact_obj_managed_native_reads`.
-  [Test](../../crates/recomp/src/rom_data/compact_obj_animations_septenary_runtime_tests.rs).
+- [x] **RVR-02 — Primary compact OBJ:** the complete
+  `european_compact_obj_managed_native_reads` filter passes on e127-d126 under
+  EUR Wine with authenticated e100 predecessor files. It checks 2,028 bytes,
+  mixed boundaries, coherent-tamper rejection, ten typed selectors and raw gap
+  selector 8 with full state/clock equality; 40 typed native bytes. Protected
+  inputs passed and successful runtime scratch was removed.
+  [Evidence](../changes/2026-11-04-verify-e127-primary-compact-obj.json).
+- [x] **RVR-03 — Secondary compact OBJ:** the full e127-d126 EUR/Wine filter
+  checks 334 bytes, boundaries, coherent-tamper rejection and five selector
+  cases with full state/clock equality and 16 typed native bytes. Its report
+  matches 100 current and 91 authenticated e101 predecessor resources; guarded
+  inputs passed and runtime scratch was removed.
+  [Evidence](../changes/2026-11-04-recover-compact-obj-report-counts.json).
+- [x] **RVR-04 — Tertiary compact OBJ:** full e127-d126 EUR/Wine filter passes 108 source bytes, boundaries, tamper rejection and three full state/clock selector comparisons with eight typed native bytes. Report counts match 100 current and 92 authenticated e102 resources; guarded inputs passed and scratch was removed. [Evidence](../changes/2026-11-04-recover-compact-obj-report-counts.json).
+- [x] **RVR-05 — Quaternary compact OBJ:** full e127-d126 EUR/Wine filter passes 202 source bytes, boundaries, tamper rejection and five full state/clock selector comparisons with 16 typed native bytes. Report counts match 100 current and 93 authenticated e103 resources; guarded inputs passed and scratch was removed. [Evidence](../changes/2026-11-04-recover-compact-obj-report-counts.json).
+- [x] **RVR-06 — Quinary compact OBJ:** full e127-d126 EUR/Wine filter passes 140 source bytes, boundaries, tamper rejection and three full state/clock selector comparisons with eight typed native bytes. Report counts match 100 current and 94 authenticated e104 resources; guarded inputs passed and scratch was removed. [Evidence](../changes/2026-11-04-recover-compact-obj-report-counts.json).
+- [x] **RVR-07 — Senary compact OBJ:** full e127-d126 EUR/Wine filter passes 756 source bytes, boundaries, tamper rejection and eight full state/clock selector comparisons with 28 typed native bytes. Report counts match 100 current and 95 authenticated e105 resources; guarded inputs passed and scratch was removed. [Evidence](../changes/2026-11-04-recover-compact-obj-report-counts.json).
+- [x] **RVR-08 — Septenary compact OBJ:** full e127-d126 EUR/Wine filter passes 20 source bytes, boundaries, tamper rejection and two full state/clock selector comparisons with four typed native bytes. Report counts match 100 current and 96 authenticated e106 resources; guarded inputs passed and scratch was removed. [Evidence](../changes/2026-11-04-recover-compact-obj-report-counts.json).
 - [x] **RVR-09 — Four-byte conditional lookup:** the complete
   `european_conditional_lookup_managed_native_reads` filter passes on e127
   under EUR Wine. It checks all 296 bytes, three native prefixes, six indices,
@@ -159,30 +183,32 @@ checks pass, and the record names the tested revision and precise scope.
   Coherent edits are rejected in memory; 98 prior resource records match. The
   corrected report matches both manifests (100 current, 98 prior).
   [Evidence and limits](../changes/2026-11-04-prepare-ui-context-validation.json).
-- [ ] **RVR-18 — Original compact-catalog projection:** reconcile the original
-  `european_compact_catalog_matches_source_and_native_readers` assumptions
-  with the extended catalog, then run the affected original projection checks.
-  Keep previously accepted extension-specific filters separately recorded.
-  [Tests](../../crates/recomp/src/rom_data/compact_obj_catalog_tests.rs).
+- [x] **RVR-18 — Original compact-catalog projection:** the complete original
+  filter passes with e127-d126 under EUR Wine. Its manifest-derived report
+  covers 63 banks, 330 spans and 20,257 bytes; all 205 represented selectors
+  and 63 out-of-projection probes pass full state/clock comparisons. The first
+  99 e126 resources match, guarded inputs pass, and scratch was removed.
+  Earlier extension-specific proofs remain separate.
+  [Evidence](../changes/2026-11-04-verify-e127-original-compact-catalog.json).
 
 ## 3. Complete targeted lifecycle evidence
 
 These are unproved integration criteria, rather than known space failures.
 Reuse older lifecycle evidence where its implementation and inputs still apply.
 
-- [ ] **RVR-19 / ROMDATA-03/05 — Failed catalog replacement:** select a current
-  compact-catalog disk reload/publication failure case. Verify that a missing or
-  coherently altered replacement is rejected without changing the active owner
-  or machine state. Record whether the old committed generation remains usable.
-  In-memory owner rejection alone does not close this item.
-  [Current limit](../rom_data_compact_catalog.md).
-- [ ] **RVR-20 / ROMDATA-05 — UI context resource lifecycle:** establish the
-  missing current-owner Load/Undo/restart scope, including a selected test copy
-  becoming unavailable. Verify owner reconstruction/retention and exact state
-  restoration for the operations actually exercised. Reuse existing compatible
-  lifecycle proofs and state their limits.
-  [UI context contract](../rom_data_ui.md#category-selected-ui-context-templates),
-  [parent criteria](ROM_DATA_TODO.md#romdata-05--equivalenza-salvataggi-e-prestazioni).
+- [x] **RVR-19 / ROMDATA-03/05 — Failed catalog replacement:** the e127
+  EUR/Wine disk reload test rejects both a missing catalog and a structurally
+  valid edit with an updated manifest hash. The active owner and complete
+  machine state remain unchanged; that owner still serves a catalog byte and
+  the untouched committed generation can be reattached and read. Inputs were
+  guarded and test scratch removed. This tests disk attachment, not an injected
+  interruption during generation writing. [Evidence](../changes/2026-11-04-verify-catalog-disk-replacement-failures.json).
+- [x] **RVR-20 / ROMDATA-05 — UI context resource lifecycle:** an e127
+  EUR/Wine test makes a selected dataset copy unavailable, verifies failed
+  reattachment, exact Load/Undo/Restart states and retained owner, and reads
+  all 220 typed bytes after each operation. A fresh owner is reconstructed from
+  the restored copy and also reads all 220 bytes. Guarded inputs passed and
+  synthetic state files and scratch were removed. [Evidence](../changes/2026-11-04-verify-ui-context-resource-lifecycle.json).
 
 ## 4. Fill ordinary-use gaps with source-backed scenes
 
@@ -209,12 +235,15 @@ complete animation. Rejected leads and closed negative locators remain closed.
   justified ordinary caller and complete its positive paired scene. Record the
   exact bank/selector; conditional reader tests do not close ordinary use.
   [Contracts](../rom_data_obj.md).
-- [ ] **ROMDATA-04, UI context templates:** extend ordinary coverage beyond the
-  accepted single 20-byte copy toward the remaining records/consumers.
-  [Gap](../rom_data_ui.md#category-selected-ui-context-templates).
-- [ ] **ROMDATA-04-COMPACT-CATALOG-ORDINARY:** verify a remaining bank/selector
-  beyond the accepted Star Cross case. Preserve that closed 480-frame proof.
-  [Evidence and limits](../rom_data_compact_catalog.md#ordinary-european-star-cross-use).
+- [x] **ROMDATA-04, UI context templates:** extend ordinary coverage beyond the
+  prior template 5 copy: IN-08 Action observes template 2 and passes a 64-frame
+  EUR Wine raw/managed pair. Other records and consumers remain open.
+  [Evidence](../rom_data_ui.md#category-selected-ui-context-templates).
+- [x] **ROMDATA-04-COMPACT-CATALOG-ORDINARY:** IN-08 Red Spring observes
+  bank `6c1e78` selector 5 and passes a 600-frame EUR Wine raw/managed pair.
+  The accepted 480-frame Star Cross proof remains intact; other banks, selectors,
+  animations and consumers remain open.
+  [Evidence and limits](../rom_data_compact_catalog.md#european-6c1e78-ordinary-route-candidates).
 - [ ] **ROMDATA-04-LOOP-COMPACT-CATALOG-ORDINARY:** verify a remaining root or
   animation window beyond Soil Evidence, Freezeblink and Stardust. Preserve
   their accepted exact-root watches and paired scenes.
@@ -225,11 +254,15 @@ complete animation. Rejected leads and closed negative locators remain closed.
 
 ## 5. Resolve prerequisites before selecting further proofs
 
-- [ ] **ROMDATA-02-04-6C1E78-DEFAULT-SELECTORS:** reconcile source geometry and
+- [x] **ROMDATA-02-04-6C1E78-DEFAULT-SELECTORS:** reconcile source geometry and
   current-manifest conflicts for caller-derived selectors 4/6, then integrate
   and validate them if supported. Current conditional selectors 3/5 do not
-  establish the missing branches.
-  [Current selection](TASK_HANDOFF.md#rom-data-full-eur).
+  establish the missing branches. Retained EUR/Wine source evidence confirms
+  four-selector geometry (524 bytes) and no e127 non-catalog resource conflict.
+  EUR e128-d127 integrates the additional selectors; Wine create/reuse, native
+  readers and complete catalog checks, regression filters and 12-frame CLI
+  startup pass. Ordinary use, other callers and deferred platforms remain open.
+  [Evidence](../changes/2026-11-04-integrate-default-selectors-6c1e78.json).
 - [ ] **ROMDATA-01-LOCALIZED-RAW-DYNAMIC-DOMAIN:** establish further source-backed
   dynamic domains and consumers before making a global coverage claim.
 - [ ] **ROMDATA-01-OBJ-REMAINING-DRAW-ROOTS / CONSTRUCTOR-SOURCES /

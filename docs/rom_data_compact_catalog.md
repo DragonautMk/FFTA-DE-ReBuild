@@ -59,6 +59,15 @@ These source extents are not a claim that all their bytes execute in gameplay.
 
 ## Integration and validation status
 
+The original complete catalog regression now passes against e127-d126 under
+EUR Wine. It verifies all 20,257 represented bytes and 330 source spans, 63
+banks, 205 selectors, boundary reads and coherent edits rejected in memory.
+The original interpreter readers and 268 native count cases agree in complete
+state and clock, serving 925 typed bytes; the first 99 e126 resource records
+match. The corrected report agrees with the tested manifest and catalog. This
+does not establish ordinary use of every bank, disk-reload failure behavior,
+native Windows, Linux, USA or performance. [Recovery record](changes/2026-11-04-verify-e127-original-compact-catalog.json).
+
 EUR e110-d109 adds
 `graphics.conditional-compact-obj-catalog` / `compact-obj-catalog.json` after
 the 99 existing resources. One generic typed model authenticates the exact EUR
@@ -95,6 +104,14 @@ and do not introduce a guest cap. This is conditional reader coverage, not
 complete constructor/scheduler or ordinary gameplay equivalence. In-memory
 failed-owner creation is not a new disk failed-reload/lifecycle matrix.
 
+A focused e127 EUR/Wine disk-attachment test now covers a missing catalog file
+and a structurally valid catalog edit whose file hash is updated in the copied
+manifest. Both replacement attempts fail while retaining the exact active owner
+and machine state. The existing owner still serves catalog bytes, and a fresh
+machine can attach and read the unchanged committed generation. This does not
+test an interrupted generation write or complete lifecycle/platform coverage.
+[Recovery record](changes/2026-11-04-verify-catalog-disk-replacement-failures.json).
+
 A short production CLI startup reuses the existing EUR Roulette Do it seed,
 advances guest 11960..11972 and recognizes all 100 exact resource identities.
 Its new-catalog counters are zero. This proves startup registration/reuse,
@@ -113,6 +130,15 @@ other class, actor or ordinary path can use the catalog. A supported producer
 and appropriate scene are required before another ordinary attempt.
 
 ## Finite-loop European source extension
+
+The five-loop filter was rerun on e127-d126 under EUR Wine after correcting
+its stale 103-object assertion to the 81 objects in both the current catalog
+and the original accepted projection. It verifies all 974 selected source
+bytes, 43 selectors and 48 native full state/clock cases, with 184 typed bytes
+under current ownership. The 29-bank e110 catalog was reconstructed only in
+scratch and matched its retained manifest hash; 99 prior resource records
+matched and input preservation passed. The earlier e111 result remains
+unchanged. [Recovery record](changes/2026-11-04-verify-e127-five-loop-catalog.json).
 
 Five additional original callers initialize a byte-sized induction register to
 zero before the retained literal reader. Each passes that register as selector,
@@ -396,6 +422,14 @@ Other callers and selector values are not bounded. Source receipts are under
 `target/rom-data-e119-root-20261104/`. Linux, USA and native Windows remain
 unverified; no performance measurements were made.
 
+The caller also derives selectors 4 and 6 from the other flag branch. EUR
+e128-d127 extends this bank to selectors 3/4/5/6 and 524 represented bytes,
+preserving the previous lists and sequences. Source geometry and conflict
+checks, Windows builds, Wine create/reuse, the selected native-reader test and
+a 12-frame production startup pass. The full e128 catalog and affected recovery
+regressions also pass. This conditional source
+coverage does not establish ordinary use or all callers. [Integration record](changes/2026-11-04-integrate-default-selectors-6c1e78.json).
+
 A conditional EUR caller at `0x080f01e8` uses a 12-row table at `0x39e0c4`
 and root `0x6bac28`; the loop starts at zero and the table supplies selectors
 0–8. Its represented bank covers 172 source bytes; the full table contributes
@@ -525,6 +559,52 @@ Source evidence: `target/rom-data-e111-next-sources-20261103/`,
 `rom-data-table-compact-source-9sx6eqy3`. Ordinary use, complete banks/global
 reachability, the remaining census roots, Linux/USA/native Windows and the
 ROM/mod phases remain open. No benchmark or space measurement is performed.
+
+## European 6c1e78 ordinary-route candidates
+
+A guarded EUR source join links bank 5 descriptors 55–62 to actions 243–250,
+primary task IDs 239–246 and the shared callback `0x08109440`. The callback
+branches to its `0x6c1e78` constructor path only under state `0x0103` and
+further conditions; the join does not demonstrate that path executing. The
+original panel source indexes descriptor-bank pointers by unit byte +6, while
+the secondary producer passes unit byte +8 directly as the physical metadata52
+row. Original ROM bytes and the e128 dataset agree that rows 41, 42 and 43
+contain respectively `[55, 65]`, `[66, 77]` and `[78, 87]` at offsets
+`+0x2e..+0x2f`. These are source fields, not proof of menu availability.
+
+Read-only inspection of six authenticated EUR checkpoints found IN-08 unit 13
+with species 5, primary job 41 and learned bits for slots 55–62; IN-19 unit 4
+has species 5, secondary job 41 and learned bits for 55–59 and 61–62. These
+are source candidates; their learned bits alone do not establish execution.
+
+The documented IN-08 input prefix was replayed to its retired deployment
+selector solely to branch into this new scene, with its recorded state hash
+reproduced. Normal input selected the observed slot-13 pointer, deployed
+Skimble and reached the first turn. The visible Action → Pandora → Red Spring
+route reaches a `Do it` confirmation at frame 7657. This establishes menu
+availability for that scene. A 600-frame native raw/managed EUR Wine pair on
+e128 matches complete state and clock, central and wide images, OAM, dispatch
+and five audio streams at every frame. A read audit observed represented root
+byte `0x086c1e7a` at frame 7876; aggregate catalog source bytes were 12,983.
+A second, snapshot-only audit watches the selector-offset span and observes
+`0x086c218a` at frame 8031: `(0x6c218a - 0x6c2180) / 2 = 5`, so the observed
+selector is 5. This second 600-frame pair also passes all comparisons. Its
+initial 300-frame window did not reach the selector read; failed diagnostics
+are retained. Evidence: `target/validation/units/`
+`e128-6c1e78-redspring-watch-pair-yj07anhh/`,
+`e128-6c1e78-selector-watch-600-2emk682f/` and
+`e128-6c1e78-selector-watch-pair-03yu4i2w/`. Complete animation, other
+selectors and all consumers remain unverified.
+The retained branch is `target/validation/units/`
+`e128-6c1e78-redspring-slot13-rwsxgiz7/`; the prefix/selection evidence is in
+`e128-6c1e78-deployment-branch-2_ca0kz8/`. The first launch failed before
+guest execution due to a relative checkpoint path; the corrected run passed.
+
+The first source/roster script failed on an off-by-one task ordinal; the corrected
+run passed without guest execution. Evidence: `target/validation/units/`
+`e128-6c1e78-source-rosters-blgppao9/`, `e128-6c1e78-job-mapping-hxmci6q6/`
+and failed diagnostic `e128-6c1e78-source-rosters-rqgukn11/`. Linux, USA and
+native Windows remain open; no performance measurements were made.
 
 ## European Soil Evidence ordinary route
 

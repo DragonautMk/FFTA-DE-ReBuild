@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "integrate-default-selectors-6c1e78",
+  "title": "Integrate the default compact OBJ selectors",
+  "kind": "changed",
+  "platforms": [
+    "EUR Windows executable under Wine"
+  ],
+  "changes": [
+    "Extend the 6c1e78 compact OBJ projection to caller-derived selectors 4 and 6, retain selectors 3 and 5, and advance extraction and decoder revisions to e128-d127.",
+    "Reconcile current test expectations and preserve previous bank projections when the same bank has been extended; distinguish unchanged banks from preserved projections in reports."
+  ],
+  "validation": [
+    "Retained protected EUR/Wine source analysis identifies four-selector 524-byte geometry with no e127 non-catalog resource conflicts. e128 Windows test and CLI builds pass; CLI create/reuse preserves 99 other resources, 62 other banks and previous target sequences.",
+    "The e128 EUR/Wine new-selector test passes 22 branch cases, 524 source bytes, mixed boundaries, coherent rejection and three native full state/clock comparisons. The complete catalog filter passes 63 banks, 207 selectors, 20,389 bytes and 270 native cases; 12-frame production startup matches 100 resource identities.",
+    "Evidence: target/validation/units/e128-default-selectors-build-g1m74mq9/, e128-default-selectors-current-8vj19j2r/, e128-6c1e78-default-selectors-match-source-and-native-readers-sfaqd6vh/, e128-compact-catalog-matches-source-and-native-readers-intpnhst/ and e128-default-selectors-startup-1376rbwi/.",
+    "RVR-21 primary through octonary full EUR/Wine filters pass on e128-d127 with authenticated e100..e107 predecessors and guarded inputs; successful scratch removed. Evidence: target/validation/units/e128-compact-obj-regressions-1k41xocp/.",
+    "RVR-21 conditional lookup, packed lookup, descriptor banks, descriptor bank zero and property masks full EUR/Wine filters pass on e128-d127 with authenticated e95..e99 predecessors; guarded inputs pass and scratch is removed. Evidence: target/validation/units/e128-conditional-regressions-zbofhgeo/.",
+    "RVR-21 dynamic fragments, table graphics, clan alias, UI context and both disk/UI lifecycle EUR/Wine filters pass on e128; a prior-bank report verifies 61 identical banks and all 62 prior projections preserved. Guarded inputs pass and successful scratch is removed. Evidence: target/validation/units/e128-other-data-regressions-5gflnz6h/.",
+    "The selected new-selector and complete catalog filters also pass from the final reconciled source build: target/validation/units/e128-6c1e78-default-selectors-match-source-and-native-readers-qoyk6lw0/ and e128-compact-catalog-matches-source-and-native-readers-tyg9rxka/.",
+    "RVR-22 updated original 6c1e78 and five-loop catalog filters pass on e128 under EUR Wine. Minimal e118 and e110 predecessor catalogs match retained manifest hashes; 118-frame/five-native and 60-frame/48-native checks pass with guarded inputs. Evidence: target/validation/units/e128-historical-catalog-regressions-ixhjx1e0/."
+  ],
+  "limitations": [
+    "The first native test failed because the launcher omitted the protected TinyCC DLL; the corrected rerun passed and diagnostics remain. Ordinary use, other callers, Linux, USA, native Windows and performance remain separate."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/compact_obj_catalog/contracts.rs",
+    "crates/recomp/src/rom_data/clan_table_alias_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_octonary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_quaternary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_quinary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_secondary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_senary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_septenary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_tertiary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_catalog_table_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_catalog_tests.rs",
+    "crates/recomp/src/rom_data/conditional_descriptor_bank_zero_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_descriptor_banks_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_four_byte_lookup_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_packed_lookup_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_property_masks_runtime_tests.rs",
+    "crates/recomp/src/rom_data/dynamic_raw_fragments_runtime_tests.rs",
+    "crates/recomp/src/rom_data/table_graphics_runtime_tests.rs",
+    "crates/recomp/src/rom_data/ui_context_templates_tests.rs"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_compact_catalog.md"
+  ]
+}

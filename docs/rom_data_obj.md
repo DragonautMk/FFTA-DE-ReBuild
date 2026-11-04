@@ -1722,6 +1722,17 @@ advances from 24755 to 24756 without changing the managed files. Compact OBJ
 counters were zero in that frame; ordinary use remains unverified. Linux, USA
 and native Windows remain pending. No performance measurement was made.
 
+The full primary compact OBJ regression was rerun against e127-d126 under EUR
+Wine. All 90 authenticated e100 predecessor resources and their files matched;
+owned bytes, mixed boundaries, coherent-tamper rejection and full state/clock
+comparisons passed, including 40 typed native bytes across ten selectors and
+raw fallback for selector 8. The corrected report derives its 100 current and
+90 predecessor counts from the respective manifests. This does not establish
+ordinary use, other platforms or performance. The build command succeeded, but
+its containing validation unit retained a FAIL status because its scratch
+inventory rejected Cargo-created hard links; the separate runtime unit passed
+and protected its inputs. [Recovery record](changes/2026-11-04-verify-e127-primary-compact-obj.json).
+
 A conditional original-source route to ordinary use is now identified:
 `080a2450` dispatches `context+cc == 3` to `080a2e58`, which requests
 primary task 6. Its original descriptor points to callback `080e7cf5`, whose
@@ -1781,6 +1792,12 @@ or performance measurement was made.
 
 ## Conditional compact OBJ animation source at 6c6460
 
+The secondary bank's complete e127-d126 EUR/Wine regression passes with 334
+source bytes, boundary and tamper checks, five full state/clock selector
+comparisons and 16 typed native bytes. Its manifest-derived report matches 100
+current and 91 authenticated e101 predecessor resources. Ordinary use, other
+platforms and performance remain separate. [Recovery record](changes/2026-11-04-recover-compact-obj-report-counts.json).
+
 Six original EUR callers pass this root to `080d98e4`, a distinct
 constructor using the same relative-u16 compact list and sequence format as
 the `6b9b80` source. Its repeat argument is 1. Caller-witnessed sequence
@@ -1830,6 +1847,8 @@ made.
 
 
 ## Conditional compact OBJ animation source at 6c5fb0
+
+The quinary bank full e127-d126 EUR/Wine regression passes 140 bytes, boundary and tamper checks and three full state/clock selector comparisons with eight typed native bytes. Its report matches 100 current and 94 authenticated e104 resources. Ordinary use, other platforms and performance remain separate. [Recovery record](changes/2026-11-04-recover-compact-obj-report-counts.json).
 
 Four EUR references pass this root to original constructor `080d97d0`.
 Two conditional directional paths index authenticated four-byte tables whose
@@ -1885,6 +1904,8 @@ availability. No gameplay replay or performance measurement was made.
 
 ## Conditional compact OBJ animation source at 6c6928
 
+The senary bank full e127-d126 EUR/Wine regression passes 756 bytes, boundary and tamper checks and eight full state/clock selector comparisons with 28 typed native bytes. Its report matches 100 current and 95 authenticated e105 resources. Ordinary use, other platforms and performance remain separate. [Recovery record](changes/2026-11-04-recover-compact-obj-report-counts.json).
+
 Original EUR callers conditionally provide selectors 0 through 5 through
 `08106658` and selector 6 directly to another constructor. Together the
 seven sequences reference 65 frames and 60 lists containing 59 objects.
@@ -1924,6 +1945,8 @@ unverified. Linux, USA and native Windows remain pending; no performance
 measurement was made.
 
 ## Conditional compact OBJ animation source at 6be570
+
+The septenary bank full e127-d126 EUR/Wine regression passes 20 bytes, boundary and tamper checks and two full state/clock selector comparisons with four typed native bytes. Its report matches 100 current and 96 authenticated e106 resources. Ordinary use, other platforms and performance remain separate. [Recovery record](changes/2026-11-04-recover-compact-obj-report-counts.json).
 
 Three original EUR calls conditionally pass selector 0 to constructor
 `080d97d0`. Its witnessed sequence has one frame referring to one list with
@@ -2136,6 +2159,8 @@ No performance benchmark was run.
 
 ## Conditional compact OBJ animation source at 6bf490
 
+The tertiary bank full e127-d126 EUR/Wine regression passes 108 bytes, boundary and tamper checks and three full state/clock selector comparisons with eight typed native bytes. Its report matches 100 current and 92 authenticated e102 resources. Ordinary use, other platforms and performance remain separate. [Recovery record](changes/2026-11-04-recover-compact-obj-report-counts.json).
+
 Five original EUR callers pass selectors 2 and 3 through `080d98e4` for this
 root. The shared compact format yields 11 witnessed frames and eight lists
 with seven objects; list 16 is empty and its two-byte count remains part of
@@ -2240,6 +2265,8 @@ the alternate availability branch and later acceptance are not resolved by
 those values. No replay or performance measurement was made.
 
 ## Conditional compact OBJ animation source at 6c87dc
+
+The quaternary bank full e127-d126 EUR/Wine regression passes 202 bytes, boundary and tamper checks and five full state/clock selector comparisons with 16 typed native bytes. Its report matches 100 current and 93 authenticated e103 resources. Ordinary use, other platforms and performance remain separate. [Recovery record](changes/2026-11-04-recover-compact-obj-report-counts.json).
 
 Five EUR references pass this root to original constructor `080d97d0`.
 One conditionally passes selector 2, three pass selector 3, and another

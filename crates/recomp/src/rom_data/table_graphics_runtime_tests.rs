@@ -676,7 +676,7 @@ fn european_table_graphics_managed_native_and_lifecycle() {
             source.manifest.decoder_revision,
             source.manifest.resources.len()
         ),
-        (127, 126, 100)
+        (128, 127, 100)
     );
     extract(&dataset(), &mut source).unwrap();
     let mut expected_files: BTreeSet<_> = source.manifest.resources.iter()

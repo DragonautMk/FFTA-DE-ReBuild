@@ -48,7 +48,7 @@ fn european_table_compact_catalog_matches_new_fields_and_native_readers() {
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     let current = read_dataset(&dataset).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (111, 110, 100));
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (127, 126, 100));
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
     assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
     assert_eq!(current.manifest.resources[99].format, "compact-obj-catalog-v11-json");
     assert_eq!(old_manifest.resources[99].format, "compact-obj-catalog-v1-json");

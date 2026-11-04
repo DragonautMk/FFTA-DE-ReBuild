@@ -3,6 +3,28 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-04 — Verify UI context owner lifecycle with unavailable data
+
+Type: added. Platforms: EUR Windows executable under Wine.
+
+**Changes**
+
+- Add a focused current UI-context lifecycle test using an owned selected dataset copy and synthetic state files.
+
+**Validation**
+
+- The e127-d126 Wine test confirms failed reattachment after the selected copy becomes unavailable, exact Load/Undo/Restart states, retained owner and 220 typed bytes after each operation; restoring the copy allows a fresh machine to reconstruct an owner and read all 220 bytes.
+- Current-source Windows release test compilation passes with selected source and executable hashes; guarded inputs pass and synthetic state files plus successful scratch are removed. Evidence: target/validation/units/rvr20-ui-context-build-ji43yrp5/ and target/validation/units/rvr20-ui-context-e127-h1n2fo7g/.
+- Consumed successful build scratch was retired after host open-file, lease and inventory checks; evidence and receipt remain in target/validation/units/rvr20-ui-context-build-ji43yrp5/.
+
+**Limitations**
+
+- Synthetic scope does not establish all ordinary UI consumers, backup restoration, native Windows, Linux, USA or performance.
+
+Documentation: [rom_data_ui.md](docs/rom_data_ui.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-04-verify-ui-context-resource-lifecycle.json)
+
 ## 2026-11-04 — Verify typed recipe picker and explicit start
 
 Type: changed. Platforms: Windows GNU under Wine/Xvfb, isolated EUR session.
@@ -44,6 +66,27 @@ Type: docs. Platforms: Wine/Xvfb EUR interpreter.
 Documentation: [debug_control.md](docs/debug_control.md).
 
 [Change record](docs/changes/2026-11-04-verify-step-inspect-channel-parity.json)
+
+## 2026-11-04 — Verify a second ordinary UI context template
+
+Type: docs. Platforms: EUR Windows executable under Wine.
+
+**Changes**
+
+- Extend scoped ordinary UI context evidence from template 5 to template 2 while retaining the broader all-record and consumer gaps.
+
+**Validation**
+
+- A protected read-only checkpoint query identified source-selected categories for the IN-08 menu. The e128 production CLI turn-to-Action scene served five typed reads and 20 bytes. A snapshot-only watch observed four bytes at 0x08394e6c on frame 7504 (template 2), and the 64-frame EUR Wine native raw/managed pair matched complete state, clock, central and wide images, OAM, dispatch and five audio streams at each frame. Evidence: target/validation/units/e128-ui-context-action-cli-04r1f0p0/ and e128-ui-context-action-watch-pair-jkiu_u9u/.
+- The retained previous 12-frame native address inventory contains five original reads from template 5 and shares the seed/input used by the earlier accepted owner proof. A guarded read-only evidence join verifies the two records differ: target/validation/units/e128-ui-context-ordinary-distinct-iybjczy_/.
+
+**Limitations**
+
+- The first evidence join expected a status field in the raw report and failed before guest execution; its corrected retry passed. Other templates and consumers, complete UI extent, Linux, USA and native Windows remain open; no performance measurements.
+
+Documentation: [rom_data_ui.md](docs/rom_data_ui.md).
+
+[Change record](docs/changes/2026-11-04-verify-second-ordinary-ui-context.json)
 
 ## 2026-11-04 — Verify breakpoint and watch-refusal channel parity
 
@@ -376,6 +419,28 @@ Documentation: [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_
 
 [Change record](docs/changes/2026-11-04-verify-e127-table-graphics.json)
 
+## 2026-11-04 — Verify the e127 primary compact OBJ regression
+
+Type: fixed. Platforms: EUR Windows executable under Wine.
+
+**Changes**
+
+- Derive the primary compact OBJ validation report resource counts from the tested current and predecessor manifests, preserving existing report fields.
+
+**Validation**
+
+- The complete RVR-02 e127-d126 Wine filter passes 2,028 owned bytes, mixed boundaries, coherent-tamper rejection, ten typed selector cases and raw selector 8 with full state and clock equality and 40 typed native bytes.
+- All 90 e100 predecessor records match e127 and each staged predecessor payload matches the authenticated e100 hash; report counts match both manifests (100 current, 90 prior). Runtime input guards passed and scratch was removed. Evidence: target/validation/units/rvr02-primary-e127-host-3buwaix0/.
+- The current source Windows release test compilation succeeded and the selected source and executable hashes were recorded; the containing build unit is FAIL because scratch inventory rejected Cargo-created hard links, after input guard checks passed. Diagnostics: target/validation/units/rvr02-primary-build-retry-zobcz2_w/.
+
+**Limitations**
+
+- EUR Wine only; native Windows, Linux, USA, ordinary-use coverage and performance are not established. Two sandbox Wine setup attempts failed before starting the test; their owned leases were released after host process checks and diagnostics retained.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-04-verify-e127-primary-compact-obj.json)
+
 ## 2026-11-04 — Verify the e127 packed lookup regression
 
 Type: fixed. Platforms: EUR Windows executable under Wine.
@@ -398,6 +463,29 @@ Documentation: [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_
 
 [Change record](docs/changes/2026-11-04-verify-e127-packed-lookup.json)
 
+## 2026-11-04 — Verify the original compact catalog against e127
+
+Type: fixed. Platforms: EUR Windows executable under Wine.
+
+**Changes**
+
+- Update the original catalog test counter and report to reflect the complete current represented source union and actual manifest and catalog counts; assert that each out-of-projection selector probe is unrepresented.
+
+**Validation**
+
+- The complete RVR-18 e127-d126 Wine filter passes 63 banks, 205 selectors, 887 frames, 607 lists, 2,171 objects, 330 spans and 20,257 source bytes; original interpreter readers and 268 native count cases match full state and clock, with 925 typed native bytes.
+- The first 99 e126 resource records match e127. An independent report check matches catalog and manifest totals; input guards pass and runtime scratch was removed. Evidence: target/validation/units/rvr18-original-catalog-e127-t7fbavvb/.
+- Current-source Windows release test compilation passed with selected source and executable hashes recorded; evidence: target/validation/units/rvr18-compact-catalog-build-23ykdlrr/.
+- Consumed successful build scratch was retired after host open-file, lease and inventory checks; evidence and receipt remain in target/validation/units/rvr18-compact-catalog-build-23ykdlrr/.
+
+**Limitations**
+
+- Disk reload failure, complete ordinary use, native Windows, Linux, USA and performance remain unverified. The separately identified five-loop assertion was corrected and verified in the linked recovery record.
+
+Documentation: [rom_data_compact_catalog.md](docs/rom_data_compact_catalog.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-04-verify-e127-original-compact-catalog.json)
+
 ## 2026-11-04 — Verify the complete e127 compact OBJ runtime filter
 
 Type: docs. Platforms: EUR Windows executable under Wine.
@@ -419,6 +507,29 @@ Type: docs. Platforms: EUR Windows executable under Wine.
 Documentation: [rom_data_obj.md](docs/rom_data_obj.md).
 
 [Change record](docs/changes/2026-11-04-verify-e127-octonary-full-filter.json)
+
+## 2026-11-04 — Verify the current five-loop compact catalog projection
+
+Type: fixed. Platforms: EUR Windows executable under Wine.
+
+**Changes**
+
+- Correct the five-loop object assertion to 81 and derive report totals from the current selected catalog and predecessor manifests.
+
+**Validation**
+
+- The complete e127-d126 EUR/Wine filter passes 974 source bytes, 43 selectors, 60 frames, 44 lists and 81 objects, with 48 native full state/clock cases serving 184 typed bytes; report totals independently match the current catalog.
+- The minimal 29-bank e110 catalog reconstructed in owned scratch matched its retained manifest SHA-256 byte for byte, and the first 99 resource records match e127. Guarded inputs passed and scratch was removed. Evidence: target/validation/units/rvr01-five-loop-e127-ul971q_7/.
+- The current-source Windows release test build and selected source/executable hashes pass in target/validation/units/rvr01-five-loop-build-ic1qivch/.
+- Consumed successful build scratch was retired after host open-file, lease and inventory checks; evidence and receipt remain in target/validation/units/rvr01-five-loop-build-ic1qivch/.
+
+**Limitations**
+
+- The e111 accepted result remains historical and unchanged; newer owned intersections account for the current 184 typed bytes. Ordinary use, disk lifecycle, native Windows, Linux, USA and performance remain separate.
+
+Documentation: [rom_data_compact_catalog.md](docs/rom_data_compact_catalog.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md), [2026-11-04-verify-e127-original-compact-catalog.json](docs/changes/2026-11-04-verify-e127-original-compact-catalog.json).
+
+[Change record](docs/changes/2026-11-04-verify-e127-five-loop-catalog.json)
 
 ## 2026-11-04 — Verify e127 dynamic raw fragment regression
 
@@ -548,6 +659,28 @@ Documentation: [runner.rs](crates/recomp/src/debug_command/recipe/checkpoint/run
 
 [Change record](docs/changes/2026-11-04-verify-cheat-catalog-recipe-in-live-session.json)
 
+## 2026-11-04 — Verify failed catalog disk replacement preserves the active owner
+
+Type: added. Platforms: EUR Windows executable under Wine.
+
+**Changes**
+
+- Add a focused current-dataset disk attachment test for a missing compact catalog and a structurally valid edited catalog with a matching manifest file hash.
+
+**Validation**
+
+- The e127-d126 Wine test confirms both disk replacements are rejected with the same owner and exact machine state, the existing owner still serves a catalog byte, and a fresh machine attaches and reads the untouched committed generation.
+- Current-source Windows release test compilation and selected source/executable identity pass; runtime input guards pass and successful test scratch was removed. Evidence: target/validation/units/rvr19-disk-replacement-build-2aa39q12/ and target/validation/units/rvr19-disk-replacement-e127-udu8zj00/.
+- Consumed successful build scratch was retired after host open-file, lease and inventory checks; evidence and receipt remain in target/validation/units/rvr19-disk-replacement-build-2aa39q12/.
+
+**Limitations**
+
+- This covers disk attachment failure, not a generation-write interruption, complete ordinary use, native Windows, Linux, USA or performance.
+
+Documentation: [rom_data_compact_catalog.md](docs/rom_data_compact_catalog.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-04-verify-catalog-disk-replacement-failures.json)
+
 ## 2026-11-04 — Verify audio and Recent report channel parity
 
 Type: docs. Platforms: Wine/Xvfb EUR interpreter.
@@ -589,6 +722,31 @@ Type: changed. Platforms: Windows executable on Wine; EUR.
 Documentation: [2026-11-04-integrate-alternate-european-compact-catalog-unverified.json](docs/changes/2026-11-04-integrate-alternate-european-compact-catalog-unverified.json).
 
 [Change record](docs/changes/2026-11-04-verify-alternate-european-compact-catalog.json)
+
+## 2026-11-04 — Verify an ordinary compact OBJ selector
+
+Type: docs. Platforms: EUR source and retained checkpoints; Windows executable under Wine.
+
+**Changes**
+
+- Document the source-backed 6c1e78 action, task, descriptor and candidate roster join without claiming ordinary execution.
+- Reach an IN-08 Red Spring confirmation through normal selection and deployment of the observed source-backed unit; preserve the route as a partial ordinary candidate.
+- Verify ordinary IN-08 Red Spring use of bank 6c1e78 selector 5 and close the scoped recovery criterion while leaving broader catalog coverage open.
+
+**Validation**
+
+- Guarded EUR source and six checkpoint roster join passed; a second protected source-byte check confirmed physical metadata52 rows and the bank and secondary-job access instructions. Both checks executed zero guest instructions and removed successful scratch. Evidence: target/validation/units/e128-6c1e78-source-rosters-blgppao9/ and e128-6c1e78-job-mapping-hxmci6q6/.
+- The protected IN-08 normal-input prefix reproduced the retained deployment-selector hash; nine observed cursor steps reached slot 13, and ordinary input deployed Skimble and opened Action → Pandora → Red Spring → Do it at frame 7657. Evidence: target/validation/units/e128-6c1e78-deployment-branch-2_ca0kz8/ and e128-6c1e78-redspring-slot13-rwsxgiz7/.
+- The e128 source-matched read-audit Windows test passes the new 600-frame Red Spring EUR Wine raw/managed pair with full state, clock, central/wide images, OAM, dispatch and five audio streams equal each frame. It observes root byte 0x086c1e7a at frame 7876 and 12,983 aggregate catalog source bytes; guarded inputs pass. Evidence: target/validation/units/e128-6c1e78-redspring-watch-pair-yj07anhh/.
+- A snapshot-only audit watches the selector-offset span and observes a two-byte read at 0x086c218a on frame 8031, identifying selector 5; the 600-frame EUR Wine pair passes again. The initial 300-frame watch ended before the read and retained diagnostics. Evidence: target/validation/units/e128-6c1e78-selector-watch-600-2emk682f/ and e128-6c1e78-selector-watch-pair-03yu4i2w/.
+
+**Limitations**
+
+- The first roster join failed from an off-by-one task ordinal and the first deployment launcher used a relative path; both corrected retries passed. Complete animation, other selectors and consumers, Linux, USA and native Windows remain unverified. No performance measurement.
+
+Documentation: [rom_data_compact_catalog.md](docs/rom_data_compact_catalog.md).
+
+[Change record](docs/changes/2026-11-04-trace-6c1e78-ordinary-candidates.json)
 
 ## 2026-11-04 — Show complete live search context
 
@@ -749,6 +907,34 @@ Type: docs. Platforms: Windows cross-build on Linux.
 Documentation: [rom_data_compact_catalog.md](docs/rom_data_compact_catalog.md).
 
 [Change record](docs/changes/2026-11-04-recover-rom-data-audit-cli-build.json)
+
+## 2026-11-04 — Recover compact OBJ manifest-based reports
+
+Type: fixed. Platforms: EUR Windows executable under Wine.
+
+**Changes**
+
+- Derive the secondary through septenary compact OBJ validation report counts from the current and predecessor manifests while preserving existing fields.
+
+**Validation**
+
+- Current source Windows release test compilation passed in target/validation/units/rvr03-08-compact-build-92a352mq/; selected test sources and executable are hashed and input guards passed.
+- Retained e101 through e106 predecessor records and payload hashes independently match the current e127 dataset.
+- RVR-03 secondary full e127-d126 EUR/Wine filter passes 334 source bytes, boundary and tamper checks, five selector full state/clock comparisons and 16 typed native bytes; 100 current and 91 e101 predecessor resources match, input guards pass, and scratch was removed. Evidence: target/validation/units/rvr03-secondary-e127-in4lgtqr/.
+- RVR-04 tertiary full e127-d126 EUR/Wine filter passes 108 source bytes, boundary and tamper checks, three selector full state/clock comparisons and eight typed native bytes; 100 current and 92 e102 predecessor resources match, input guards pass and scratch was removed. Evidence: target/validation/units/rvr04-tertiary-e127-av__e5xq/.
+- RVR-05 quaternary full e127-d126 EUR/Wine filter passes 202 source bytes, boundary and tamper checks, five selector full state/clock comparisons and 16 typed native bytes; 100 current and 93 e103 predecessor resources match, input guards pass and scratch was removed. Evidence: target/validation/units/rvr05-quaternary-e127-tc7sjefs/.
+- RVR-06 quinary full e127-d126 EUR/Wine filter passes 140 source bytes, boundary and tamper checks, three selector full state/clock comparisons and eight typed native bytes; 100 current and 94 e104 predecessor resources match, input guards pass and scratch was removed. Evidence: target/validation/units/rvr06-quinary-e127-v3a7erhp/.
+- RVR-07 senary full e127-d126 EUR/Wine filter passes 756 source bytes, boundary and tamper checks, eight selector full state/clock comparisons and 28 typed native bytes; 100 current and 95 e105 predecessor resources match, input guards pass and scratch was removed. Evidence: target/validation/units/rvr07-senary-e127-i9fynz4a/.
+- RVR-08 septenary full e127-d126 EUR/Wine filter passes 20 source bytes, boundary and tamper checks, two selector full state/clock comparisons and four typed native bytes; 100 current and 96 e106 predecessor resources match, input guards pass and scratch was removed. Evidence: target/validation/units/rvr08-septenary-e127-ymlajk0s/.
+- Consumed successful build scratch was retired after host open-file, lease and inventory checks; evidence and receipt remain in target/validation/units/rvr03-08-compact-build-92a352mq/.
+
+**Limitations**
+
+- Native Windows, Linux, USA, ordinary-use coverage and performance remain unverified.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-04-recover-compact-obj-report-counts.json)
 
 ## 2026-11-04 — Preserve selection on empty IME commit
 
@@ -1028,6 +1214,34 @@ Type: changed. Platforms: Windows executable on Wine; EUR.
 Documentation: [2026-11-04-integrate-european-compact-flight-burst-6babc4.json](docs/changes/2026-11-04-integrate-european-compact-flight-burst-6babc4.json).
 
 [Change record](docs/changes/2026-11-04-integrate-european-compact-effects-6bb574.json)
+
+## 2026-11-04 — Integrate the default compact OBJ selectors
+
+Type: changed. Platforms: EUR Windows executable under Wine.
+
+**Changes**
+
+- Extend the 6c1e78 compact OBJ projection to caller-derived selectors 4 and 6, retain selectors 3 and 5, and advance extraction and decoder revisions to e128-d127.
+- Reconcile current test expectations and preserve previous bank projections when the same bank has been extended; distinguish unchanged banks from preserved projections in reports.
+
+**Validation**
+
+- Retained protected EUR/Wine source analysis identifies four-selector 524-byte geometry with no e127 non-catalog resource conflicts. e128 Windows test and CLI builds pass; CLI create/reuse preserves 99 other resources, 62 other banks and previous target sequences.
+- The e128 EUR/Wine new-selector test passes 22 branch cases, 524 source bytes, mixed boundaries, coherent rejection and three native full state/clock comparisons. The complete catalog filter passes 63 banks, 207 selectors, 20,389 bytes and 270 native cases; 12-frame production startup matches 100 resource identities.
+- Evidence: target/validation/units/e128-default-selectors-build-g1m74mq9/, e128-default-selectors-current-8vj19j2r/, e128-6c1e78-default-selectors-match-source-and-native-readers-sfaqd6vh/, e128-compact-catalog-matches-source-and-native-readers-intpnhst/ and e128-default-selectors-startup-1376rbwi/.
+- RVR-21 primary through octonary full EUR/Wine filters pass on e128-d127 with authenticated e100..e107 predecessors and guarded inputs; successful scratch removed. Evidence: target/validation/units/e128-compact-obj-regressions-1k41xocp/.
+- RVR-21 conditional lookup, packed lookup, descriptor banks, descriptor bank zero and property masks full EUR/Wine filters pass on e128-d127 with authenticated e95..e99 predecessors; guarded inputs pass and scratch is removed. Evidence: target/validation/units/e128-conditional-regressions-zbofhgeo/.
+- RVR-21 dynamic fragments, table graphics, clan alias, UI context and both disk/UI lifecycle EUR/Wine filters pass on e128; a prior-bank report verifies 61 identical banks and all 62 prior projections preserved. Guarded inputs pass and successful scratch is removed. Evidence: target/validation/units/e128-other-data-regressions-5gflnz6h/.
+- The selected new-selector and complete catalog filters also pass from the final reconciled source build: target/validation/units/e128-6c1e78-default-selectors-match-source-and-native-readers-qoyk6lw0/ and e128-compact-catalog-matches-source-and-native-readers-tyg9rxka/.
+- RVR-22 updated original 6c1e78 and five-loop catalog filters pass on e128 under EUR Wine. Minimal e118 and e110 predecessor catalogs match retained manifest hashes; 118-frame/five-native and 60-frame/48-native checks pass with guarded inputs. Evidence: target/validation/units/e128-historical-catalog-regressions-ixhjx1e0/.
+
+**Limitations**
+
+- The first native test failed because the launcher omitted the protected TinyCC DLL; the corrected rerun passed and diagnostics remain. Ordinary use, other callers, Linux, USA, native Windows and performance remain separate.
+
+Documentation: [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md), [rom_data_compact_catalog.md](docs/rom_data_compact_catalog.md).
+
+[Change record](docs/changes/2026-11-04-integrate-default-selectors-6c1e78.json)
 
 ## 2026-11-04 — Integrate alternate constructor compact catalog projections
 

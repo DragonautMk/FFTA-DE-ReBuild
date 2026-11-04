@@ -110,8 +110,8 @@ mod custom_lz;
 pub mod lz77;
 
 pub const SCHEMA: u32 = 1;
-pub const EXTRACTOR_REV: u32 = 127;
-pub const DECODER_REV: u32 = 126;
+pub const EXTRACTOR_REV: u32 = 128;
+pub const DECODER_REV: u32 = 127;
 pub const METADATA16_ID: &str = "gameplay.linked-metadata16";
 pub const METADATA16_FILE: &str = "linked-metadata16.json";
 pub const METADATA16_FORMAT: &str = "linked-metadata16-v1-json";

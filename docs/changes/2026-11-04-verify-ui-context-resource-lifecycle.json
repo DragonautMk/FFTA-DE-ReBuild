@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "verify-ui-context-resource-lifecycle",
+  "title": "Verify UI context owner lifecycle with unavailable data",
+  "kind": "added",
+  "platforms": [
+    "EUR Windows executable under Wine"
+  ],
+  "changes": [
+    "Add a focused current UI-context lifecycle test using an owned selected dataset copy and synthetic state files."
+  ],
+  "validation": [
+    "The e127-d126 Wine test confirms failed reattachment after the selected copy becomes unavailable, exact Load/Undo/Restart states, retained owner and 220 typed bytes after each operation; restoring the copy allows a fresh machine to reconstruct an owner and read all 220 bytes.",
+    "Current-source Windows release test compilation passes with selected source and executable hashes; guarded inputs pass and synthetic state files plus successful scratch are removed. Evidence: target/validation/units/rvr20-ui-context-build-ji43yrp5/ and target/validation/units/rvr20-ui-context-e127-h1n2fo7g/.",
+    "Consumed successful build scratch was retired after host open-file, lease and inventory checks; evidence and receipt remain in target/validation/units/rvr20-ui-context-build-ji43yrp5/."
+  ],
+  "limitations": [
+    "Synthetic scope does not establish all ordinary UI consumers, backup restoration, native Windows, Linux, USA or performance."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/ui_context_templates_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_ui.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

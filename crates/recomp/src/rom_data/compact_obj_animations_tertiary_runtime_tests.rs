@@ -16,7 +16,7 @@ fn european_tertiary_compact_obj_managed_native_reads() {
     assert_eq!(prior.resources.len(), 92);
     let mut source = Extraction::from_rom(&rom).unwrap();
     let dataset = root.join("offline dataset"); extract(&dataset, &mut source).unwrap();
-    assert_eq!((source.manifest.extractor_revision, source.manifest.decoder_revision, source.manifest.resources.len()), (127, 126, 100));
+    assert_eq!((source.manifest.extractor_revision, source.manifest.decoder_revision, source.manifest.resources.len()), (128, 127, 100));
     for resource in &prior.resources {
         assert_eq!(source.manifest.resources.iter().find(|r| r.id == resource.id), Some(resource));
         assert_eq!(fs::read(dataset.join(&resource.path)).unwrap(), fs::read(old.join(&resource.path)).unwrap());
@@ -73,5 +73,5 @@ fn european_tertiary_compact_obj_managed_native_reads() {
         assert_eq!(used,if index==0 {0} else {4});served+=used;
         native.bus.rom.copy_from_slice(&rom);assert_eq!(native.save_state().unwrap(),raw.save_state().unwrap(),"selector {index}");
     }
-    fs::write(root.join("result.json"),serde_json::to_vec_pretty(&serde_json::json!({"status":"PASS","resources":93,"previous_unchanged":92,"spans":5,"source_bytes":108,"native_prefixes":1,"selectors":[0,2,3],"typed_native_bytes":served,"gap_fallback":true,"tamper_transaction":true,"full_state_clock":true,"Linux":"pending","USA":"pending","nativeWindows":"pending","performance_measurements":false})).unwrap()).unwrap();
+    fs::write(root.join("result.json"),serde_json::to_vec_pretty(&serde_json::json!({"status":"PASS","resources":source.manifest.resources.len(),"previous_unchanged":prior.resources.len(),"spans":5,"source_bytes":108,"native_prefixes":1,"selectors":[0,2,3],"typed_native_bytes":served,"gap_fallback":true,"tamper_transaction":true,"full_state_clock":true,"Linux":"pending","USA":"pending","nativeWindows":"pending","performance_measurements":false})).unwrap()).unwrap();
 }

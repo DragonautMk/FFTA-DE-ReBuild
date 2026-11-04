@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "verify-e127-primary-compact-obj",
+  "title": "Verify the e127 primary compact OBJ regression",
+  "kind": "fixed",
+  "platforms": [
+    "EUR Windows executable under Wine"
+  ],
+  "changes": [
+    "Derive the primary compact OBJ validation report resource counts from the tested current and predecessor manifests, preserving existing report fields."
+  ],
+  "validation": [
+    "The complete RVR-02 e127-d126 Wine filter passes 2,028 owned bytes, mixed boundaries, coherent-tamper rejection, ten typed selector cases and raw selector 8 with full state and clock equality and 40 typed native bytes.",
+    "All 90 e100 predecessor records match e127 and each staged predecessor payload matches the authenticated e100 hash; report counts match both manifests (100 current, 90 prior). Runtime input guards passed and scratch was removed. Evidence: target/validation/units/rvr02-primary-e127-host-3buwaix0/.",
+    "The current source Windows release test compilation succeeded and the selected source and executable hashes were recorded; the containing build unit is FAIL because scratch inventory rejected Cargo-created hard links, after input guard checks passed. Diagnostics: target/validation/units/rvr02-primary-build-retry-zobcz2_w/."
+  ],
+  "limitations": [
+    "EUR Wine only; native Windows, Linux, USA, ordinary-use coverage and performance are not established. Two sandbox Wine setup attempts failed before starting the test; their owned leases were released after host process checks and diagnostics retained."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/compact_obj_animations_runtime_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}
