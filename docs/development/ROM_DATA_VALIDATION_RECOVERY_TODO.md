@@ -109,10 +109,12 @@ checks pass, and the record names the tested revision and precise scope.
 - [ ] **RVR-13 — Property masks:** run
   `european_conditional_property_masks_managed_native_reads`.
   [Test](../../crates/recomp/src/rom_data/conditional_property_masks_runtime_tests.rs).
-- [ ] **RVR-14 — Dynamic raw fragments:** inspect the changed assertions in
-  `european_dynamic_fragments_managed_reads`, then execute the affected filter.
-  Record any additional affected filter explicitly before selecting it.
-  [Tests](../../crates/recomp/src/rom_data/dynamic_raw_fragments_runtime_tests.rs).
+- [x] **RVR-14 — Dynamic raw fragments:** the full
+  `european_dynamic_fragments_managed_reads` filter passes in EUR/Wine with
+  e127-d126. It checks all 1,304 bytes, seven source spans and boundaries, a
+  raw/managed DMA state-clock pair, predecessor preservation and transactional
+  tamper rejection. The other filters were not selected by this recovery.
+  [Evidence](../changes/2026-11-04-verify-e127-dynamic-fragments.json).
 - [ ] **RVR-15 — Table-selected graphics:** run
   `european_table_graphics_managed_native_and_lifecycle` against the updated
   complete-set expectations. First reconcile its 94-file directory assertion

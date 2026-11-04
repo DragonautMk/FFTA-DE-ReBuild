@@ -300,6 +300,17 @@ ROM reference. A source-coherent altered JSON is rejected without replacing the
 attached owner or changing state. ROM, previous accepted dataset, build and
 implementation inputs retain their guarded hashes and timestamps.
 
+The same managed filter was later run under EUR Wine with e127-d126 and its
+100-resource manifest, using the retained 84-resource e93-d92 predecessor.
+It passes all 1,304 bytes, seven source spans and mixed boundaries, the DMA
+full-state/clock comparison and transactional rejection. ROM, predecessor,
+selected source and test executable remained protected; successful scratch was
+removed. Evidence: `target/validation/units/rvr14-dynamic-raw-e127-fn5b_rwk/`.
+The selected test source matches its retained build snapshot; six unrelated
+source files and two other test modules differ from the current workspace.
+This does not establish ordinary reachability or native Windows, Linux or USA
+behavior.
+
 The first Wine attempt identified a missing page for the final bank prefix;
 the corrected build and one retry pass. A separate first compilation found
 missing test arguments and a trait import, fixed before execution. The system

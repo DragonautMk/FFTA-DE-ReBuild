@@ -20480,3 +20480,10 @@ Two 24-row EUR callers select 0–7; 132 bank bytes and 594 conditional table by
 - Verified criteria: e127-d126 generation, 20 alias bytes and mixed boundaries, e94-d93 85-resource predecessor preservation, 42 selector-prefix cases with full state/clock equality and transactional coherent-tamper rejection. Input guards pass; successful scratch removed.
 - Evidence: docs/changes/2026-11-04-verify-e127-clan-alias-regression.json; target/validation/units/rvr16-clan-alias-e127-0mpw8bok/.
 - Limits: retained test artifact matches selected test source; six unrelated source files and two other test modules differ from current workspace. No native Windows, Linux, USA, new ordinary scene or performance claim.
+
+### RVR-14-DYNAMIC-RAW-E127
+
+- Outcome: completed for EUR/Wine managed regression filter.
+- Verified criteria: e127-d126 generation and 100-resource manifest; 1,304 typed bytes in seven source spans, mixed-width boundaries, adjacent owner, raw/managed DMA full state/clock and transactional coherent-tamper rejection. Prior e93-d92 dataset and ROM remain guarded; successful scratch removed.
+- Evidence: docs/changes/2026-11-04-verify-e127-dynamic-fragments.json; target/validation/units/rvr14-dynamic-raw-e127-fn5b_rwk/.
+- Limits: selected test source matches retained artifact; six unrelated source files and two other test modules differ from current workspace. Other filters, ordinary reachability, Linux, USA, native Windows and performance remain outside this result.

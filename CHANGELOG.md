@@ -376,6 +376,27 @@ Documentation: [rom_data_obj.md](docs/rom_data_obj.md).
 
 [Change record](docs/changes/2026-11-04-verify-e127-octonary-full-filter.json)
 
+## 2026-11-04 — Verify e127 dynamic raw fragment regression
+
+Type: docs. Platforms: EUR Windows executable under Wine.
+
+**Changes**
+
+- Complete RVR-14 by executing the updated managed dynamic raw fragments filter on e127-d126 with the retained e93-d92 predecessor.
+
+**Validation**
+
+- Full Wine filter passes 1304 typed bytes across seven spans, mixed-width boundaries, adjacent-owner composition, DMA full state/clock equality and transactional rejection of coherent tampering.
+- Generated e127 manifest contains 100 resources; guarded ROM, predecessor dataset, selected test source and executable remained unchanged. Successful scratch was removed.
+
+**Limitations**
+
+- Other dynamic fragment filters and ordinary gameplay reachability are not closed by this run. Selected test source matches the retained test snapshot; six unrelated source files and two other test modules differ from the current workspace. No native Windows, Linux, USA or performance claim.
+
+Documentation: [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md), [rom_data_ui_raw_transfers.md](docs/rom_data_ui_raw_transfers.md).
+
+[Change record](docs/changes/2026-11-04-verify-e127-dynamic-fragments.json)
+
 ## 2026-11-04 — Verify the e127 clan alias regression
 
 Type: docs. Platforms: EUR Windows executable under Wine.
