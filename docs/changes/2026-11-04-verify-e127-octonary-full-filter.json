@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "verify-e127-octonary-full-filter",
+  "title": "Verify the complete e127 compact OBJ runtime filter",
+  "kind": "docs",
+  "platforms": [
+    "EUR Windows executable under Wine"
+  ],
+  "changes": [
+    "Run the previously incomplete compact OBJ full runtime filter with the corrected selector oracle and e127-d126 expectations."
+  ],
+  "validation": [
+    "The complete filter passed under Wine: 102 owned bytes, mixed boundaries, transactional tamper rejection and interpreter/native full-state-clock equality for selectors 0, 1, 2 and 256; 14 typed native bytes.",
+    "All 97 prior resources matched; the test asserts 100 e127 resources and the retained manifest independently confirms 100. Guarded inputs were unchanged and successful scratch was removed."
+  ],
+  "limitations": [
+    "The test result JSON contains a stale hard-coded resources value of 98; use its assertion and retained manifest for the actual count. Test artifact matched the selected ROM-data source; six unrelated files changed since its snapshot.",
+    "The first sandbox Wine setup failed on a read-only server lock before the test; its two owned leases were released following an elevated host process check. No native Windows, Linux, USA, new ordinary scene or performance claim."
+  ],
+  "files": [
+    "docs/rom_data_obj.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

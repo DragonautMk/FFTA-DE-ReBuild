@@ -354,6 +354,28 @@ Documentation: [2026-11-03-migrate-european-compact-selector-tables.json](docs/c
 
 [Change record](docs/changes/2026-11-04-verify-european-compact-selector-cli.json)
 
+## 2026-11-04 — Verify the complete e127 compact OBJ runtime filter
+
+Type: docs. Platforms: EUR Windows executable under Wine.
+
+**Changes**
+
+- Run the previously incomplete compact OBJ full runtime filter with the corrected selector oracle and e127-d126 expectations.
+
+**Validation**
+
+- The complete filter passed under Wine: 102 owned bytes, mixed boundaries, transactional tamper rejection and interpreter/native full-state-clock equality for selectors 0, 1, 2 and 256; 14 typed native bytes.
+- All 97 prior resources matched; the test asserts 100 e127 resources and the retained manifest independently confirms 100. Guarded inputs were unchanged and successful scratch was removed.
+
+**Limitations**
+
+- The test result JSON contains a stale hard-coded resources value of 98; use its assertion and retained manifest for the actual count. Test artifact matched the selected ROM-data source; six unrelated files changed since its snapshot.
+- The first sandbox Wine setup failed on a read-only server lock before the test; its two owned leases were released following an elevated host process check. No native Windows, Linux, USA, new ordinary scene or performance claim.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md).
+
+[Change record](docs/changes/2026-11-04-verify-e127-octonary-full-filter.json)
+
 ## 2026-11-04 — Verify code and gameplay trace channel parity
 
 Type: docs. Platforms: Wine/Xvfb EUR interpreter.
@@ -1287,6 +1309,27 @@ Type: fixed. Platforms: Windows GNU build; Wine/Xvfb synthetic interpreter.
 Documentation: [debug_control.md](docs/debug_control.md).
 
 [Change record](docs/changes/2026-11-04-align-direct-controls-during-replay.json)
+
+## 2026-11-04 — Track skipped ROM data validation in a recovery checklist
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Add an English checklist with 37 open items and three recovered groups, distinguishing skipped current-revision test reruns, reporting defects, lifecycle and ordinary-use gaps, source prerequisites and explicitly deferred scope.
+- Link the checklist from the main ROM data TODO and reconcile its stale octonary full-filter status with the accepted e127 result; retain the separate e108 CLI evidence.
+
+**Validation**
+
+- Checked all checklist local file links and heading anchors, unique recovery IDs, and current-revision expectations in the test modules identified by the finite-loop change record.
+
+**Limitations**
+
+- Documentation only: no additional build, extraction, runtime test or benchmark. Open entries preserve earlier scoped acceptance and do not assert every gap was caused by lack of space.
+
+Documentation: [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md), [2026-11-03-extend-european-compact-catalog-from-finite-loops.json](docs/changes/2026-11-03-extend-european-compact-catalog-from-finite-loops.json), [2026-11-04-verify-e127-octonary-full-filter.json](docs/changes/2026-11-04-verify-e127-octonary-full-filter.json).
+
+[Change record](docs/changes/2026-11-04-add-rom-data-validation-recovery-checklist.json)
 
 ## 2026-11-04 — Add named bounded search triggers
 

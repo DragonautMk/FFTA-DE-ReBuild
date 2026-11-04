@@ -2002,6 +2002,21 @@ The retained-dataset/object continuation passes that selector's exact counter,
 serve 14 typed bytes. The aggregate input-boundary check also passes. The full
 filter was not rerun or reported as a full-filter PASS.
 
+A later EUR Wine run of the complete filter passed with the corrected oracle and
+current e127-d126 extraction expectations. It checked all 102 owned bytes,
+mirrored boundary reads, transactional rejection of coherent tampering, and
+full state/clock equivalence for selectors 0, 1, 2 and 256 (14 typed native
+bytes). All 97 resources of the retained e107 dataset matched the successor.
+The test asserts 100 resources and the retained e127 manifest confirms 100;
+its result JSON still contains the historical hard-coded value 98, so that
+field does not describe this run's manifest. Evidence: validation unit
+`target/validation/units/rom-data-e127-octonary-full-wxjgn5or/`. The test
+artifact matches the selected ROM-data test source; six unrelated source files
+changed after its original snapshot. The first sandbox attempt failed before
+the test on a read-only Wine server lock; its owned leases were released after
+a host process check, with diagnostics retained. Linux, USA, native Windows and
+ordinary-use coverage beyond the previously recorded scene remain open.
+
 Source and build evidence is under `target/rom-data-root-6cc124-20261103/`.
 Wine units are `target/validation/units/rom-data-6cc124-source-v6pw9mta`,
 `rom-data-6cc124-contract-pbkps4ta`, `rom-data-octonary-runtime-xcoaavjw` and

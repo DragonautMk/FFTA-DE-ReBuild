@@ -20438,3 +20438,17 @@ Two 24-row EUR callers select 0–7; 132 bank bytes and 594 conditional table by
 - Verified criteria: Cargo exited zero without warnings using the retained 845-file snapshot and isolated outputs; independent guarded validation confirmed Cargo success, artifact SHA256 and unchanged snapshot. Earlier accepted EUR Wine pairs were not rerun.
 - Evidence: docs/changes/2026-11-04-recover-rom-data-audit-cli-build.json; target/validation/units/rom-data-audit-cli-verify-61zo549_/evidence/result.json; target/validation/units/rom-data-recover-audit-cli-fd8jxksj/.
 - Limits: the original build unit is FAIL because cleanup refused Cargo-created hard links; it and its diagnostics remain retained. No native Windows or new runtime test, wider coverage or performance claim.
+
+### ROMDATA-04-E127-OCTONARY-FULL-FILTER
+
+- Outcome: completed; EUR Wine full runtime filter PASS.
+- Verified criteria: e127-d126 extraction retains all 97 e107 resources; 102 owned bytes and mirrored boundaries, transactional coherent-tamper rejection, four selector cases with full state/clock equality and 14 typed native bytes passed. The test asserts 100 resources; retained manifest confirms 100.
+- Evidence: docs/changes/2026-11-04-verify-e127-octonary-full-filter.json; target/validation/units/rom-data-e127-octonary-full-wxjgn5or/.
+- Limits: JSON result's hard-coded resources=98 is stale. The selected ROM-data source matched the test artifact; six unrelated files differed from its snapshot. Initial sandbox Wine attempt failed before launch on a read-only server lock; its owned leases were released after a host process check and diagnostics retained. No Linux, USA, native Windows, new ordinary-scene or performance claim.
+
+### ROMDATA-VALIDATION-RECOVERY-CHECKLIST
+
+- Outcome: completed; documentation-only recovery checklist.
+- Verified criteria: 37 open items and three recovered groups cover skipped revision reruns, reporting/lifecycle/ordinary-use gaps, source prerequisites and deferred platforms/metrics. Local links/anchors and unique RVR IDs pass; main TODO reconciles the accepted e127 octonary full filter while preserving e108 CLI scope.
+- Evidence: docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md; docs/changes/2026-11-04-add-rom-data-validation-recovery-checklist.json.
+- Limits: no new build, extraction, runtime test or benchmark; checklist incompleteness does not reopen earlier accepted scopes or attribute every gap to storage exhaustion.

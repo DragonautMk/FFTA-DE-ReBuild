@@ -7,6 +7,11 @@ inventory and initial contract are defined. Runtime migrations remain open.
 Scope: desktop workspace, Windows as the primary validation platform; Linux as
 an additional check. `AndroidPort/` requires separate work.
 
+The [validation recovery checklist](ROM_DATA_VALIDATION_RECOVERY_TODO.md) tracks
+skipped current-revision reruns, unproved scene/lifecycle criteria, recovered
+storage failures and explicitly deferred platform checks. Use it to select a
+bounded recovery without reopening accepted evidence.
+
 The [Godot frontend](GODOT_FRONTEND_TODO.md) is only an assessment with its TODO
 deferred until agreed extraction is complete. It is not a new execution step
 of this TODO and must not be developed during data migration.
@@ -1251,9 +1256,13 @@ Owned bytes, mixed boundaries, transactional rejection and original native/
 interpreter state-clock equality pass for selectors 0/1/2 plus a retained-input
 continuation for selector 256. That selector reads a raw zero offset returning
 to two owned count bytes; no guest cap or all-raw fallback is inferred. The
-initial full filter failed on the counter oracle and was not rerun. Production
-CLI create/reuse/startup also passes: 99 files match runtime, 98 identities and
-101 managed files remain unchanged. Neutral new-bank counters are zero;
+initial full filter failed on the counter oracle; a later complete e127-d126
+filter passed with the corrected oracle, 100 resources and 97 prior resources
+preserved. Its JSON summary still has a stale fixed resources=98 field; the
+assertion and retained manifest establish the actual count.
+[Full-filter recovery](../changes/2026-11-04-verify-e127-octonary-full-filter.json).
+The e108 production CLI create/reuse/startup also passes: 99 files match runtime,
+98 identities and 101 managed files remain unchanged. Neutral new-bank counters are zero;
 the later ordinary replay is recorded below. Linux/USA remain pending, with no
 measurements.
 **ROMDATA-04-OCTONARY-ORDINARY completed for one positive EUR/Wine replay:**
