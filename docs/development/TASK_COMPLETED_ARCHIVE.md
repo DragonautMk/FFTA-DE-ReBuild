@@ -20494,3 +20494,10 @@ Two 24-row EUR callers select 0–7; 132 bank bytes and 594 conditional table by
 - Verified criteria: exact manifest file set, 101 files/100 resources/e127-d126 report, e91 predecessor preservation, publication interruption, 14 attachment guards, 22 native state/clock cases, three transfer cases and Load/Undo with unavailable files. Independent unit verifies report, manifest and 11 protected inputs.
 - Evidence: docs/changes/2026-11-04-verify-e127-table-graphics.json; target/validation/units/rvr15-table-graphics-result-check-qey5s95l/; target/validation/units/rvr15-table-graphics-e127-retry2-iri_b8pe/.
 - Limits: Wine unit status FAIL after test PASS because cleanup refused test-created ffstate; work and build artifact retained for diagnostics. Two earlier attempts failed due to omitted runner fixtures and remain retained. No ordinary-use, native Windows, Linux, USA or performance claim; six unrelated snapshot files older; model effort unconfirmed.
+
+### RVR-09-CONDITIONAL-LOOKUP-E127
+
+- Outcome: completed for EUR/Wine full regression filter; RVR-01 remains partial.
+- Verified criteria: e127-d126, 296 bytes and boundaries, three native prefixes/six indices and state-clock equality, coherent tamper rejection; corrected report matches 100 current/85 prior. The retained e95 manifest and 85 current records/hashes authenticate the scratch predecessor copy. Protected inputs unchanged, successful test and build scratch removed.
+- Evidence: docs/changes/2026-11-04-verify-e127-conditional-lookup.json; target/validation/units/rvr09-conditional-e127-8sr2f8c_/; target/validation/units/rvr09-conditional-build-z_bxvxlj/retirement-result.json.
+- Limits: prior dataset reconstructed only in scratch from authenticated existing payloads, not original retired directory; six unrelated snapshot files older. No native Windows, Linux, USA, new ordinary scene or performance claim.

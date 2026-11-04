@@ -419,6 +419,28 @@ Documentation: [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_
 
 [Change record](docs/changes/2026-11-04-verify-e127-dynamic-fragments.json)
 
+## 2026-11-04 — Verify the e127 conditional lookup regression
+
+Type: fixed. Platforms: EUR Windows executable under Wine.
+
+**Changes**
+
+- Derive conditional four-byte lookup test report resource counts from current and predecessor manifests, and complete RVR-09.
+
+**Validation**
+
+- Isolated Windows release test cross-build and complete EUR Wine filter pass: 296 typed source bytes, mixed boundaries, three native prefixes for six indices, full state/clock equality and transactional rejection; 15 typed native bytes.
+- The retained e95 manifest and current e127 resource records match for all 85 predecessor resources; each staged payload hash was checked against e95 before use. Report matches 100 current and 85 previous resources; guarded inputs pass and successful test scratch is removed.
+- Completed build scratch was retired after a host process check, unit lease and unchanged inventory verification; build and test evidence remain.
+
+**Limitations**
+
+- The snapshot has six unrelated source files older than the current workspace. The predecessor payload was an authenticated temporary copy, not the retired original directory. No new ordinary scene, native Windows, Linux, USA or performance claim.
+
+Documentation: [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md), [rom_data_gameplay.md](docs/rom_data_gameplay.md).
+
+[Change record](docs/changes/2026-11-04-verify-e127-conditional-lookup.json)
+
 ## 2026-11-04 — Verify the e127 clan alias regression
 
 Type: docs. Platforms: EUR Windows executable under Wine.

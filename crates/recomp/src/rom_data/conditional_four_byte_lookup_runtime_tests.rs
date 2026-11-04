@@ -104,5 +104,5 @@ fn european_conditional_lookup_managed_native_reads() {
             assert_eq!(native.save_state().unwrap(),raw.save_state().unwrap(),"index {index} field {field}");
         }
     }
-    fs::write(root.join("result.json"),serde_json::to_vec_pretty(&serde_json::json!({"status":"PASS","resources":90,"previous_unchanged":85,"source_bytes":296,"native_prefixes":3,"indices":[0,1,73,74,255,4294967295u32],"typed_native_bytes":served,"full_state_clock":true,"tamper_transaction":true,"Linux":"pending","USA":"pending","nativeWindows":"pending","performance_measurements":false})).unwrap()).unwrap();
+    fs::write(root.join("result.json"),serde_json::to_vec_pretty(&serde_json::json!({"status":"PASS","resources":source.manifest.resources.len(),"previous_unchanged":prior.resources.len(),"source_bytes":296,"native_prefixes":3,"indices":[0,1,73,74,255,4294967295u32],"typed_native_bytes":served,"full_state_clock":true,"tamper_transaction":true,"Linux":"pending","USA":"pending","nativeWindows":"pending","performance_measurements":false})).unwrap()).unwrap();
 }

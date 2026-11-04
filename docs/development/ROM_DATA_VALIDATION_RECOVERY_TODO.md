@@ -55,9 +55,13 @@ The evidence does not attribute every unchecked item to lack of disk space.
     independent result/input check pass; its original unit is FAIL because
     retention rejected a test-created save state. Diagnostics remain retained.
     [Recovery](../changes/2026-11-04-verify-e127-table-graphics.json).
+  - [x] Correct the conditional four-byte lookup report and verify its full
+    e127 EUR/Wine filter against the authenticated e95 manifest and payloads.
+    The report matches 100 current and 85 prior resources.
+    [Recovery](../changes/2026-11-04-verify-e127-conditional-lookup.json).
   - [ ] Correct and validate the other affected reports. The source audit
     found fixed historical resource counts in the primary through septenary
-    compact OBJ tests, the four-byte and packed lookup, both descriptor-bank
+    compact OBJ tests, the packed lookup, both descriptor-bank
     tests and property masks. The original compact-catalog report has old
     aggregate counts.
 
@@ -98,9 +102,12 @@ checks pass, and the record names the tested revision and precise scope.
 - [ ] **RVR-08 — Septenary compact OBJ:** run
   `european_septenary_compact_obj_managed_native_reads`.
   [Test](../../crates/recomp/src/rom_data/compact_obj_animations_septenary_runtime_tests.rs).
-- [ ] **RVR-09 — Four-byte conditional lookup:** run
-  `european_conditional_lookup_managed_native_reads`.
-  [Test](../../crates/recomp/src/rom_data/conditional_four_byte_lookup_runtime_tests.rs).
+- [x] **RVR-09 — Four-byte conditional lookup:** the complete
+  `european_conditional_lookup_managed_native_reads` filter passes on e127
+  under EUR Wine. It checks all 296 bytes, three native prefixes, six indices,
+  state/clock equality and tamper rejection. The e95 predecessor copy was
+  authenticated against its retained manifest and removed with test scratch.
+  [Evidence](../changes/2026-11-04-verify-e127-conditional-lookup.json).
 - [ ] **RVR-10 — Packed conditional lookup:** run
   `european_conditional_packed_managed_native_reads`.
   [Test](../../crates/recomp/src/rom_data/conditional_packed_lookup_runtime_tests.rs).

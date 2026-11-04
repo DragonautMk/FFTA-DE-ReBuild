@@ -39,7 +39,7 @@ termination of another owner's process or changing another thread's goal state.
 - Verified: E127 100 resources/101 files, 63 banks; EUR Wine create/reuse, nibble reads/fallback, four native comparisons and 12-frame CLI PASS (zero catalog reads). Current: target/validation/units/rom-data-e127-nibble-current-evuagp74/work/resources/. Prior scoped proofs preserved.
 - Missing: unmigrated resources/consumers, missing ordinary-use evidence, ABI/global extent/indirect calls and mod phases ROMDATA-06/07; Linux/USA/native Windows/new32:9 remain distinct. EUR, reduced Wine scope, no performance/space measurements; originals and personal saves unchanged.
 - Selection: `ROMDATA-04-LOOP-COMPACT-CATALOG-ORDINARY` active/partial. EUR/Wine, Linux/USA pending, no metrics. Soil Evidence 6bac28/6c0614, Freezeblink 6babc4 and Stardust 6bb574 exact reads and paired Wine scenes PASS. Audit CLI compilation recovered after ENOSPC; emitted test passed. Missing: remaining banks and global coverage. Selection: `ROMDATA-02-04-6C1E78-DEFAULT-SELECTORS` partial. Caller branch also derives 4/6, while only conditional 3/5 are represented. Next: Wine source geometry and current-manifest conflict check; if coherent, extend catalog and validate. EUR/Wine only; no metrics. Model/effort unconfirmed.
-- Recovery selection: `RVR-01` active/partial. Octonary, UI-context and table-graphics reports recovered; RVR-14/15/16/17 selected EUR/Wine tests pass, RVR-15 independently verified after unit retention FAIL. Missing: other stale reports and filters. Next: select one and verify predecessor inputs.
+- Recovery selection: `RVR-01` active/partial. Octonary, UI-context, table-graphics and four-byte lookup reports recovered; RVR-09 and RVR-14..17 selected EUR/Wine tests pass. Missing: other stale reports and filters. Next: select one and verify predecessor inputs.
 - Resume: [validation recovery checklist](ROM_DATA_VALIDATION_RECOVERY_TODO.md) for skipped checks; [ROM_DATA_TODO](ROM_DATA_TODO.md), only the selected criterion's section (ROMDATA-01/02/03/04/05/06/07); [inventory](ROM_DATA_INVENTORY.md). Do not read the whole TODO. Children retain their IDs and limits:
   - `ROMDATA-04-PARAMETER-RECORDS27-ORDINARY`: source/model/runtime/CLI accepted; 59 records observed, full domain unproven; positive normal use and complete paired evidence missing. Eleven negative captures closed; archive legacy lines 17624..17672 and `docs/rom_data_gameplay.md`, ordinary sparse parameter record reachability section.
   - `ROMDATA-04-LOCALIZED-TABLE-GRAPHICS-ORDINARY`: 40 banks/8 tables source/model/runtime/CLI accepted; positive normal trigger and paired evidence missing; negative attempts remain closed. `docs/rom_data_ui_graphics.md`, ordinary table extension reachability section; archive 17844..17864.
@@ -203,9 +203,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: RVR-15 completed for selected test; RVR-01 and ROM-DATA-FULL-EUR remain partial.
-- Last verified result: e127 Wine test PASS; 101 manifest files, 100 resources, 14 attach guards, 22 native and three transfer cases, Load/Undo; independent input/result verification PASS.
-- Remaining work: other report corrections and checklist filters; ordinary use and deferred platforms remain open.
-- Errors or blockers: Wine validation unit FAIL on test-created ffstate during cleanup; work, diagnostics and build artifact retained. Two earlier fixture-omission failures retained; model effort unconfirmed.
-- Next action: select another unchecked recovery item and verify predecessor inputs before execution.
-- References: docs/changes/2026-11-04-verify-e127-table-graphics.json; target/validation/units/rvr15-table-graphics-result-check-qey5s95l/.
+- Task: RVR-09 completed; RVR-01 and ROM-DATA-FULL-EUR remain partial.
+- Last verified result: e127 EUR/Wine conditional lookup full filter PASS; 296 bytes, three native prefixes, six indices and report 100 current/85 prior.
+- Remaining work: other report corrections and checklist filters, lifecycle, ordinary-use and deferred platform criteria.
+- Errors or blockers: six unrelated source snapshot files older than current; no native Windows, Linux or USA claim.
+- Next action: select another unchecked recovery item and verify its inputs before execution.
+- References: docs/changes/2026-11-04-verify-e127-conditional-lookup.json; target/validation/units/rvr09-conditional-e127-8sr2f8c_/.

@@ -5662,6 +5662,16 @@ ordinary gameplay proof. Linux, USA and native Windows remain open.
 
 ## Managed conditional four-byte lookup
 
+The complete managed lookup filter later passed under EUR Wine with the
+e127-d126 generation. It checked 296 owned bytes and boundaries, three native
+prefixes for six indices, full state/clock equality and transactional tamper
+rejection. The corrected report derives 100 current and 85 previous resource
+counts from their manifests. The retired e95 predecessor was staged only in
+test scratch from current payloads whose records and hashes match the retained
+e95 manifest; protected inputs remained unchanged and successful scratch was
+removed. Evidence: `target/validation/units/rvr09-conditional-e127-8sr2f8c_/`.
+This does not add a new ordinary scene or native Windows, Linux or USA claim.
+
 The EUR e96-d95 dataset adds `gameplay.conditional-four-byte-lookup`, with
 74 authenticated two-field records and one 296-byte source binding. Strict
 activation checks the decoded model against the exact original source, even
