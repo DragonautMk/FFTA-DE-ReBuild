@@ -676,7 +676,7 @@ fn european_table_graphics_managed_native_and_lifecycle() {
             source.manifest.decoder_revision,
             source.manifest.resources.len()
         ),
-        (117, 116, 100)
+        (127, 126, 100)
     );
     extract(&dataset(), &mut source).unwrap();
     assert_eq!(fs::read_dir(dataset()).unwrap().count(), 94);

@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "integrate-european-compact-grid-6cac40",
+  "title": "Integrate European conditional compact grid",
+  "kind": "changed",
+  "platforms": [
+    "Windows executable on Wine; EUR"
+  ],
+  "changes": [
+    "Extend the v9 compact catalog with root 6cac40 and two 24-row conditional tables; leave unread fields on the original ROM path."
+  ],
+  "validation": [
+    "Protected EUR Wine source analysis PASS: two callers select 0\u20137, with 132 bank bytes and 594 conditional table bytes and no E122 resource overlap.",
+    "Windows GNU build PASS; Wine dataset create/reuse PASS with 99 other resources and 56 previous banks unchanged.",
+    "Focused Wine test PASS for 726 represented bytes and boundaries, original field reads on 48 rows, raw fallback, coherent rejection and nine native count comparisons with full state and clock.",
+    "Wine production startup PASS for 12 frames and 100 resource identities; catalog reads were zero."
+  ],
+  "limitations": [
+    "Other callers and selectors, ordinary use, Linux, USA and native Windows remain unverified. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/compact_obj_catalog.rs",
+    "crates/gba-core/src/rom_data/compact_obj_catalog/contracts.rs",
+    "crates/gba-core/src/rom_data/compact_obj_catalog/selector_tables.rs",
+    "crates/recomp/src/rom_data/clan_table_alias_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_octonary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_quaternary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_quinary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_secondary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_senary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_septenary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_tertiary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_catalog_table_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_catalog_tests.rs",
+    "crates/recomp/src/rom_data/conditional_descriptor_bank_zero_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_descriptor_banks_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_four_byte_lookup_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_packed_lookup_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_property_masks_runtime_tests.rs",
+    "crates/recomp/src/rom_data/dynamic_raw_fragments_runtime_tests.rs",
+    "crates/recomp/src/rom_data/table_graphics_runtime_tests.rs",
+    "crates/recomp/src/rom_data/ui_context_templates_tests.rs",
+    "docs/rom_data_compact_catalog.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-04-integrate-european-compact-effects-6bb574.json"
+  ]
+}

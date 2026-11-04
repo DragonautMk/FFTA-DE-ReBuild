@@ -20131,3 +20131,303 @@ Clarified e26/e27/e31/e32 metadata and managed packet introductory text. Numeric
 - Verified criteria: isolated EUR Wine/Xvfb GUI with simulated keyboard and mouse selected the saved typed recipe and original session; Start was refused without Details and created no run. Details then explicit Start completed exactly one frame and the checkpoint step. Window closed normally; protected inputs unchanged.
 - Evidence: docs/changes/2026-11-04-verify-typed-recipe-interactive-picker.json; target/validation/units/dbg2-recipe-picker-live-edamzmdj/unit-result.json and work/result.json.
 - Limits: one GUI path only; native Windows, physical input, broader picker scenarios and cross-restart recovery remain open. Earlier failed driver units retained; read-only consultant /root/sol_picker_input requested gpt-6.1-sol/xhigh, effective settings unconfirmed; primary model/effort unconfirmed. Private successful scratch kept as current proof.
+
+### DBG2-16-LIVE-HIT
+
+- Outcome: completed
+- Verified criteria: isolated EUR Wine/Xvfb interpreter hit a Thumb breakpoint at the observed PC after 40,948 steps, before the eligible instruction; the hit assertion passed, the following action advanced one frame, and checkpoint entries completed. Explicit resume did not repeat effects; protected inputs unchanged and GUI closed normally.
+- Evidence: docs/changes/2026-11-04-verify-recipe-breakpoint-hit.json; target/validation/units/dbg2-recipe-hit-live-eszzyqkh/unit-result.json and work/result.json.
+- Limits: one EUR interpreter hit; feature-gated watch, native Windows, physical input and other actions remain open. Private current-proof scratch retained.
+
+### DBG2-24-NAMED-SEARCH
+
+- Outcome: completed
+- Verified criteria: session-pinned PC/watch definitions are created disabled and explicitly managed or run through shared console/CLI; hit/miss reports retain definition hash and original request. Windows GNU build and 19 focused Wine tests PASS. Isolated EUR Wine/Xvfb interpreter hit a Thumb PC and missed a different PC in one step, with distinct identities; management preserved guest state, disabled run dispatched nothing, protected inputs unchanged and GUI closed normally.
+- Evidence: docs/changes/2026-11-04-add-named-bounded-search-triggers.json; target/validation/units/dbg2-trigger-registry-tests-p_nej2j7/unit-result.json; target/validation/units/dbg2-named-trigger-live-ona2kemq/unit-result.json and work/result.json.
+- Limits: feature-gated watch execution, hit counts, windows, combinations, capture/freeze, menu editor, native Windows and physical input remain open. The real run preceded removal/registry-only changes; 19 final tests cover those changes. Initial live driver falsely expected the consumed request file; retained failure. Current private proof retained. Primary model/effort not confirmed.
+
+### ROMDATA-02-04-E117-ALTERNATE-CATALOG
+
+- Outcome: completed
+- Verified criteria: EUR Wine E117 create/reuse retained 99 prior resource payloads and 41 banks; ten new banks, 12 conditional selectors and 1,818 source bytes tested with boundaries and 22 original/native count comparisons with full state and clock. Windows GNU build and 12-frame Wine CLI with 100 resource identities PASS; catalog reads zero.
+- Evidence: docs/changes/2026-11-04-verify-alternate-european-compact-catalog.json; target/rom-data-e116-alternate-census-20261104/{build-unit,current-dataset,native-unit,cli-unit}.json.
+- Limits: ordinary use, additional roots/selectors, Linux, USA and native Windows remain open; no performance measurements. Primary model/effort unconfirmed.
+
+### ROMDATA-02-04-E118-TIMER-CATALOG
+
+- Outcome: completed
+- Verified criteria: E118 v5 EUR bank 6c0614, six selectors, 42 frames, 19 lists, 61 objects and 44 timer rows. Windows GNU build and Wine create/reuse PASS, retaining 99 resource payloads and 51 prior banks. Wine test covers 730 bytes, boundaries, all 44 original selector/position reads, seven native count cases with full state/clock, and rejection; 12-frame CLI identifies 100 resources but observes zero catalog reads.
+- Evidence: docs/changes/2026-11-04-integrate-european-compact-timer-catalog.json; target/rom-data-e118-timer-20261104/{build-unit,current-dataset,native-unit,cli-unit}.json; target/rom-data-e117-residual-census-20261104/{flow-unit,geometry-unit}.json.
+- Limits: conditional source flow only; ordinary use, other callers/selectors, Linux, USA, native Windows and performance remain unverified. Primary model/effort unconfirmed.
+
+### DBG2-24-HIT-WINDOW
+
+- Outcome: completed
+- Verified criteria: named trigger editor supports bounded hit counts, relative frame windows, PC/watch plus readonly RAM equality, and pause/completed-frame capture/recent freeze actions. Console displays conditions, evaluation and observer limits; valid edits disable, invalid edits preserve the definition. Windows GNU builds, 47 default and 50 audit-feature Wine tests passed. Isolated EUR Wine/Xvfb two-hit/miss, guard/freeze, captured state hash and simulated-keyboard console edit passed; protected inputs unchanged and windows closed normally.
+- Evidence: docs/changes/2026-11-04-complete-interpreter-trigger-editor.json; target/validation/units/dbg2-trigger-editor-{tests-ux7smtm_,feature-tests-4exl0mpd}/unit-result.json; target/validation/units/{dbg2-window-trigger-live-hsviuvel,dbg2-trigger-actions-live-f7j1sw5z,dbg2-trigger-console-live-jruq510l}/unit-result.json.
+- Limits: DBG2-24 parent waits for partial DBG2-15. Feature-gated counted watch synthetic only; native Windows and physical input unverified. First live action run hit executable size limit; stripped private copy passed. A Wine lease conflict started no test. Private proofs and failed diagnostics retained; effective primary model/effort unconfirmed.
+
+### ROMDATA-02-04-E119-COMPACT-ROOT-6C1E78
+
+- Outcome: completed
+- Verified criteria: conditional EUR caller and two selector projections 3/5 for root 6c1e78: 56 frames, 13 lists, 36 objects and 392 source bytes. Original helper paths preserve the selector; E118 ownership has no overlap. Windows GNU build and Wine create/reuse PASS, retaining 99 prior resources and all 52 earlier banks. Focused Wine readers/boundaries, selector-branch execution, three native count cases and full state/clock PASS. Twelve-frame CLI matched 100 resource identities and observed zero catalog reads.
+- Evidence: docs/changes/2026-11-04-integrate-european-compact-root-6c1e78.json; target/rom-data-e118-residual-20261104/{candidate-unit,helper-proof-unit}.json; target/rom-data-e119-root-20261104/{build-unit,current-dataset,native-unit,cli-unit}.json.
+- Limits: conditional caller only; ordinary use, other callers/selectors, Linux, USA, native Windows and performance remain unverified. Primary model/effort unconfirmed. First helper assertion assumed wrong jump-table index; corrected proof PASS; Wine lease waits preserved other owners.
+
+### DBG2-24-CAPTURE-IDENTITY
+
+- Outcome: completed
+- Verified criteria: executing runtime rechecks the named enabled definition hash and exact action; captured state metadata carries that identity. Explicit retry retains the original run, request and deadline and uses the idempotent ledger. Windows GNU builds, 50 default and 53 audit-feature Wine tests PASS. In EUR Wine/Xvfb, named guard/freeze and captured-state hash passed; retry returned identical response without a second snapshot or state change. A separate 480x360 console displayed the live name/hash and cancelled its exact request. Protected inputs unchanged and GUIs closed.
+- Evidence: docs/changes/2026-11-04-authenticate-trigger-capture-and-retry.json; target/validation/units/{dbg2-trigger-retry-final-tests-n9jdk0va,dbg2-trigger-retry-feature-tests-8ack71yl,dbg2-trigger-identity-live-y5ywb_n6,dbg2-context-named-live-ttdp415n}/unit-result.json.
+- Limits: DBG2-24 parent waits on partial DBG2-15; feature-gated counted watch synthetic, native Windows/physical input unverified. One test launch encountered another owner's Wine lease and did not run. Private proofs retained.
+
+### ROMDATA-02-04-E120-COMPACT-SCHEDULE-6BAC28
+
+- Outcome: completed
+- Verified criteria: conditional EUR 12-row schedule and root 6bac28, selectors 0–8, nine frames/lists and 13 objects; 268 source bytes without E119 overlap. Windows GNU build and Wine create/reuse PASS, retaining 99 prior resource payloads and all 53 prior banks. Wine checks original row readers, bytes/boundaries and ten native count cases with full state/clock; 12-frame CLI matched 100 resources and observed zero catalog reads.
+- Evidence: docs/changes/2026-11-04-integrate-european-compact-schedule-6bac28.json; target/rom-data-e119-6bac28-20261104/{source-unit,flow-unit}.json; target/rom-data-e120-schedule-20261104/{build-unit,current-dataset,native-unit,cli-unit}.json.
+- Limits: conditional caller only; ordinary use, other callers/selectors, Linux, USA, native Windows and performance remain unverified. Primary model/effort unconfirmed.
+
+### DBG2-13-RECENT-CHANNEL-PARITY
+
+- Outcome: completed
+- Verified criteria: default-build Recent reads-on form accepts the same settings as console/CLI and warns reads are unavailable. Seven form defaults share typed actions; invalid Recent input rejects. Default and audit-feature Windows GNU/Wine tests passed. EUR Wine GUI menu/CLI/console each started identical reads-on/on-error-off settings, advanced one frame with unavailable reads and produced a report.
+- Evidence: docs/changes/2026-11-04-align-recent-form-channel-validation.json; target/validation/units/{dbg2-recent-parity-final-tests-990ww95f,dbg2-recent-feature-tests-07xu_w2g,dbg2-recent-parity-live-rokf27tr}/unit-result.json.
+- Limits: parent remains partial; native Windows and physical input unverified. Prior on-error-on GUI attempt froze Recent due to control-reply access error; failed diagnostics retained in target/validation/units/dbg2-recent-parity-live-xzm1m2oj/.
+
+### ROMDATA-02-04-E121-COMPACT-FLIGHT-BURST-6BABC4
+
+- Outcome: completed
+- Verified criteria: two conditional EUR table callers (30 and 11 rows), root 6babc4 and selectors 0–5; 428 source bytes without E120 overlap. Windows GNU build and Wine create/reuse PASS, retaining 99 prior resources and 54 prior banks. Wine checks original field readers for 41 rows, bytes/boundaries, seven native count cases with full state/clock and coherent rejection. Twelve-frame CLI matched 100 identities and observed zero catalog reads.
+- Evidence: docs/changes/2026-11-04-integrate-european-compact-flight-burst-6babc4.json; target/rom-data-e120-table-leads-20261104/candidate-unit.json; target/rom-data-e121-flight-20261104/{build-unit,current-dataset,native-unit,cli-unit}.json.
+- Limits: conditional callers only; ordinary use, other callers/selectors, Linux, USA, native Windows and performance remain unverified. Primary model/effort unconfirmed. Interrupted build's original snapshot and lease remain in build-s3rlnc2u/work with a host-checked recovery receipt.
+
+### DBG2-13-RECORDING-CHANNEL-PARITY
+
+- Outcome: completed
+- Verified criteria: paused active snapshot recordings allow direct tools to use shared operation guards. EUR Wine CLI, menu and console audio start/report PASS; menu validation PASS, instruction search and replay profile preparation refused. Windows GNU runtime/test builds and Wine workbench 7, audio 2, parser 1 tests PASS; protected inputs and GUI closure verified.
+- Evidence: docs/changes/2026-11-04-align-tool-controls-during-recording.json; target/validation/units/{dbg2-recording-parity-before-ulxtassb,dbg2-recording-parity-build-4pztzwou,dbg2-recording-parity-after-nblurdft,dbg2-recording-parity-tests-t4a5tumv}/unit-result.json.
+- Limits: parent remains partial; GUI used simulated input and EUR Wine, not native Windows or physical input. First setup used the wrong bridge and failed before recording; diagnostics retained in dbg2-recording-parity-before-2jy58ied.
+
+### DBG2-13-CODE-GAMEPLAY-START-PARITY
+
+- Outcome: completed
+- Verified criteria: EUR Wine/Xvfb CLI, menu and interactive console each started code and gameplay traces with identical default settings; each observed one completed frame. Six distinct reports saved through local control, six total frames advanced, protected inputs verified and GUI closed.
+- Evidence: docs/changes/2026-11-04-verify-code-gameplay-channel-parity.json; target/validation/units/dbg2-traces-channel-parity-e2w6il9k/unit-result.json.
+- Limits: report-action parity and nondefault settings remain open; simulated input, no native Windows or physical input. Parent DBG2-13 remains partial.
+
+### ROMDATA-02-04-E122-COMPACT-EFFECTS-6BB574
+
+- Outcome: completed
+- Verified criteria: one conditional EUR ten-row effect caller and root 6bb574, selectors 0–2; 52 bank bytes and 141 branch-read table bytes, with inactive fields raw. Windows GNU build and Wine create/reuse PASS, retaining 99 prior resources and 55 prior banks. Wine checks branch-specific original field readers for all rows, bytes/boundaries, raw fallback and four native count cases with full state/clock. Twelve-frame CLI matched 100 identities and observed zero catalog reads.
+- Evidence: docs/changes/2026-11-04-integrate-european-compact-effects-6bb574.json; target/rom-data-e121-6bb574-20261104/source-unit.json; target/rom-data-e122-effects-20261104/{build-unit,current-dataset,native-unit,cli-unit}.json.
+- Limits: conditional caller only; ordinary use, other callers/selectors, Linux, USA, native Windows and performance remain unverified. Primary model/effort unconfirmed.
+
+### DBG2-13-CODE-GAMEPLAY-REPORT-PARITY
+
+- Outcome: completed
+- Verified criteria: EUR Wine/Xvfb menu and interactive console each saved one-frame code/gameplay traces; saved JSON settings and frame counts match active trace, guest frame/clock/state unchanged. Separate CLI report proof, protected inputs and GUI closure PASS.
+- Evidence: docs/changes/2026-11-04-verify-code-gameplay-channel-parity.json; target/validation/units/{dbg2-traces-channel-parity-e2w6il9k,dbg2-trace-menu-report-68yqkc44,dbg2-trace-console-report-qyww_2ug}/unit-result.json.
+- Limits: nondefaults, errors, native Windows and physical input remain open. First combined report unit saved via menu but failed console navigation; menu-only PASS receipt replaced it. One console launch failed Wine lease before execution; retained diagnostics.
+
+### DBG2-13-STEP-INSPECT-PARITY
+
+- Outcome: completed
+- Verified criteria: three isolated EUR Wine/Xvfb sessions started from the same seed; CLI, menu and console each inspected 16 ROM bytes without guest changes and stepped one neutral frame. Origin, complete inspection and endpoint frame/clock/registers/keys/reason/state hash matched exactly. All units and independent six-input comparison PASS; protected inputs verified, GUIs closed.
+- Evidence: docs/changes/2026-11-04-verify-step-inspect-channel-parity.json; target/validation/units/dbg2-step-inspect-{cli-kh3r5uke,menu-z2rmm57b,console-s910rrlj,compare-gqewbgty}/unit-result.json.
+- Limits: default inputs, one EUR interpreter seed and simulated input; error cases, nondefaults, native Windows and physical input remain. Initial comparison used the scratch cwd and failed before reading inputs; retry PASS. Parent remains partial.
+
+### DBG2-13-MALFORMED-INPUT-PARITY
+
+- Outcome: completed
+- Verified criteria: EUR Wine/Xvfb parameter forms and parser reject zero-length inspect and zero-frame step with identical messages; CLI and interactive console return identical structured parse errors for those, leading-zero decimal, unprefixed address and unknown command. Direct local-control refuses zero bounds. Frame, clock, registers, keys and state hash unchanged; protected inputs and GUI closure PASS.
+- Evidence: docs/changes/2026-11-04-verify-step-inspect-channel-parity.json; target/validation/units/dbg2-invalid-channel-parity-aa49mkcm/unit-result.json.
+- Limits: selected cases, EUR interpreter and simulated input only; other error outcomes remain. First driver used unsupported Ctrl+A in append-only form, producing a different value; corrected Backspace run PASS. Parent remains partial.
+
+### ROMDATA-02-04-E123-GRID-6CAC40 — scoped EUR/Wine PASS (2026-11-04)
+
+Two 24-row EUR callers select 0–7; 132 bank bytes and 594 conditional table bytes are integrated in E123-d122. Windows GNU build, Wine dataset create/reuse, 48-row original readers and raw fallback, nine native count comparisons with full state/clock, coherent rejection and 12-frame CLI startup PASS. The 100 resource identities match; catalog reads are zero during that startup. Other callers, ordinary use, Linux, USA and native Windows remain open; no performance measurements. Evidence: `docs/changes/2026-11-04-integrate-european-compact-grid-6cac40.json`, `target/rom-data-e122-6cac40-20261104/`, `target/rom-data-e123-grid-20261104/`.
+
+### ROMDATA-02-04-E123-COMPACT-GRID-6CAC40
+
+- Outcome: completed
+- Verified criteria: Two 24-row EUR callers, selectors 0–7, 726 represented source bytes. Windows build, Wine create/reuse, original row reads and fallback, nine native count comparisons with full state and clock, coherent rejection and 12-frame CLI startup PASS. Catalog reads were zero during startup.
+- Evidence: docs/changes/2026-11-04-integrate-european-compact-grid-6cac40.json; target/rom-data-e123-grid-20261104/{build-unit,current-dataset,native-unit,cli-unit}.json.
+- Limits: Other callers, ordinary use, Linux, USA and native Windows remain open; no performance measurements. Primary model/effort unconfirmed.
+
+### DBG2-13-GRAPHICS-PARITY
+
+- Outcome: completed
+- Verified criteria: isolated EUR Wine/Xvfb CLI baseline and compare-last through CLI, menu and console produced four reports with identical guest frame/clock/state/registers/keys and raw hashes. Each comparison identified the prior report with zero raw-byte differences; protected inputs and GUI closure PASS.
+- Evidence: docs/changes/2026-11-04-verify-graphics-channel-parity.json; target/validation/units/dbg2-graphics-channel-parity-42ez22w1/unit-result.json.
+- Limits: frontend composition may differ with visible UI; native Windows, physical input, other graphics contexts and parent parity remain unverified. First unit lease-conflicted before execution; helper subsequently closed.
+
+### DBG2-13-ISSUE-REPORT-PARITY
+
+- Outcome: completed
+- Verified criteria: isolated EUR Wine/Xvfb CLI, menu and console created three distinct issue reports for the same selected pinned profile and empty symptom. Preflights compatible; profile hashes and full summaries matched; guest frame/clock/registers/keys/state unchanged, no replay, protected inputs and GUI closure PASS.
+- Evidence: docs/changes/2026-11-04-verify-issue-report-channel-parity.json; target/validation/units/dbg2-issue-channel-parity-48hom3dv/unit-result.json.
+- Limits: one profile, empty symptom, simulated input; invalid profiles, other symptoms and native Windows remain. First unit put the profile outside portable scanner allowlist and failed before selection; corrected copy passed. Parent remains partial.
+
+### DBG2-13-AUDIO-RECENT-REPORT-PARITY
+
+- Outcome: completed
+- Verified criteria: isolated EUR Wine/Xvfb menu and console each saved one-frame audio and Recent captures. Audio frame limit, Recent settings and report endpoint matched; saving preserved guest frame/clock/registers/keys/state. Four distinct reports, protected inputs and GUI closure PASS; CLI evidence was accepted separately.
+- Evidence: docs/changes/2026-11-04-verify-audio-recent-report-channel-parity.json; target/validation/units/dbg2-audio-recent-report-parity-1xb1jpyb/unit-result.json.
+- Limits: Recent on-error off, one EUR interpreter seed, simulated input; other settings, native Windows and parent parity remain unverified.
+
+### ROMDATA-02-04-E124-COMPACT-INITIAL-6C316C
+
+- Outcome: completed
+- Verified criteria: EUR caller initializes three records at indices 0–2; callback forwards indices to creator. Scoped 188-byte bank integrated in E124-d123. Windows build, Wine create/reuse, original callback header/index reads and fallback, four native count comparisons with full state/clock, coherent rejection and 12-frame CLI startup PASS. Catalog reads were zero during startup.
+- Evidence: docs/changes/2026-11-04-integrate-european-compact-initial-6c316c.json; target/rom-data-e123-6c316c-20261104/; target/rom-data-e124-initial-20261104/{build-unit,current-dataset,native-unit,cli-unit}.json.
+- Limits: mutable records, other consumers and selector domains, ordinary use, Linux, USA and native Windows remain open; no performance measurements. Primary model/effort unconfirmed.
+
+### DBG2-13-PAUSE-RESUME-PARITY
+
+- Outcome: completed
+- Verified criteria: isolated EUR Wine/Xvfb CLI, menu/F6 and console each resumed to advancing guest frames and returned paused with no remaining step budget. Final session paused, protected inputs and GUI closure PASS.
+- Evidence: docs/changes/2026-11-04-verify-resume-pause-channel-parity.json; target/validation/units/dbg2-resume-channel-parity-wgair6rr/unit-result.json.
+- Limits: free-running frame counts depend on timing; one EUR interpreter seed, simulated input; native Windows and physical input unverified. Initial lease conflict ran no test; next attempt passed CLI/menu but missed console due to wrong menu section; corrected full run PASS. Parent remains partial.
+
+### DBG2-13-FORM-BOUNDARY-PARITY
+
+- Outcome: completed
+- Verified criteria: Windows GNU test build and Wine matrix/all eight workbench tests PASS. Seven nondefault direct-form drafts yielded identical typed actions through menu, console and CLI; six out-of-range cases were refused across all three without filesystem artifacts.
+- Evidence: docs/changes/2026-11-04-verify-form-boundary-channel-parity.json; target/validation/units/{dbg2-form-bounds-build-_itjpp8v,dbg2-form-bounds-tests-s015b02h}/unit-result.json.
+- Limits: parser-level only, selected parameters/bounds; profile resolution, broader runtime outcomes, native Windows and physical input remain outside matrix. Parent remains partial.
+
+### DBG2-13-SEARCH-CHANNEL-PARITY
+
+- Outcome: completed
+- Verified criteria: same-seed EUR Wine/Xvfb CLI and interactive console reached the same Thumb breakpoint after 66720 steps with identical full search results and endpoint frame/clock/registers/keys/reason/state hash. Both produced identical default-build watch-feature refusal without state mutation. Two protected sessions and independent comparison PASS; GUIs closed.
+- Evidence: docs/changes/2026-11-04-verify-search-channel-parity.json; target/validation/units/dbg2-search-parity-{cli-iuk9vapy,console-39kc6g10,compare-qiiwm5k_}/unit-result.json.
+- Limits: watch refusal only; live audit-enabled watch, native Windows, physical input and other seeds unverified. Parent remains partial.
+
+### ROMDATA-02-04-E125-COMPACT-SECONDARY-6CB278
+
+- Outcome: completed
+- Verified criteria: EUR secondary task IDs 363–366 initialize lookup indices 0–3 and selectors 0–3. Scoped 1088-byte bank plus four lookup bytes integrated in E125-d124. Windows build, Wine create/reuse, original lookup reads and fallback, five native count comparisons with full state/clock, coherent rejection and 12-frame CLI startup PASS. Catalog reads were zero during startup.
+- Evidence: docs/changes/2026-11-04-integrate-european-compact-secondary-6cb278.json; target/rom-data-e124-6cb278-20261104/; target/rom-data-e125-secondary-20261104/{build-unit,current-dataset,native-unit,cli-unit}.json.
+- Limits: primary constructor ID aliases, mutable state, other consumers and selector domains, ordinary use, Linux, USA and native Windows remain open; no performance measurements. Sol `/root/sol_debug_diagnosis` requested gpt-6.1-sol/xhigh, resolved settings not independently confirmed; primary model/effort unconfirmed.
+
+### DBG2-13-REPLAY-DIRECT-CONTROL-PARITY
+
+- Outcome: completed
+- Verified criteria: synthetic menu-started replay reproduced old CLI inspect success versus menu refusal. Corrected direct controls share operation-specific guards: CLI/menu/console readonly inspection matched during replay, CLI/menu step refusal matched, parent guest unchanged. Windows GNU builds and Wine 8 workbench/34 control/10 command tests PASS; protected inputs and GUI closure verified.
+- Evidence: docs/changes/2026-11-04-align-direct-controls-during-replay.json; target/validation/units/{dbg2-replay-inspect-before-ijgqowcp,dbg2-replay-inspect-build-eaekegxq,dbg2-replay-inspect-after-6g27ee5r,dbg2-replay-inspect-tests-a4vwzp0y}/unit-result.json.
+- Limits: synthetic sleeping worker only; no gameplay replay equivalence, native Windows or physical input. Initial setup hit disk/lease limits; redundant runtime relocated with receipt in avj6k7zr and preserved in /tmp. A later proof missed console navigation; corrected full proof PASS. Parent remains partial pending audit.
+
+### DBG2-13-PENDING-CONTROL-GUARD
+
+- Outcome: completed
+- Verified criteria: direct menu Start respects a pending operational control request while Validate remains available. A remotely requested synthetic sleeping replay retained its exact request ID; menu inspection Start refused, targeted cancellation returned cancelled, and guest state remained unchanged. Windows GNU build, synthetic GUI proof and 8 workbench/34 control/10 command Wine tests PASS.
+- Evidence: docs/changes/2026-11-04-align-direct-controls-during-replay.json; target/validation/units/{dbg2-pending-control-build-v8ep3vmm,dbg2-pending-control-4fgxlwj9,dbg2-pending-control-tests-ychpydkd}/unit-result.json.
+- Limits: synthetic worker only; native Windows, physical input and full parent acceptance remain.
+
+### ROMDATA-02-04-E126-COMPACT-SCENE-6CCA
+
+- Outcome: completed
+- Verified criteria: Conditional clear and five-by-four loop scope three EUR banks and 20 sparse rows, 3870 bytes. E126-d125 Windows build, Wine create/reuse, all 20 original row readers and fallback, 11 sampled native count comparisons with full state/clock, coherent rejection and 12-frame CLI startup PASS. Catalog reads were zero during startup.
+- Evidence: docs/changes/2026-11-04-integrate-european-compact-scene-6cca.json; target/rom-data-e125-6cca-20261104/; target/rom-data-e126-scene-20261104/{build-unit,current-dataset,native-unit,cli-unit}.json.
+- Limits: Conditional original clear/loop, mutable state, other callers, ordinary use, Linux, USA and native Windows remain open; no performance measurements. Three outside-projection cases ran (one per bank); the retained result field reported 1 and was corrected in test source afterward without behavior change. Primary model/effort unconfirmed.
+
+### DBG2-13-HOST-WORKER-DIRECT-PARITY
+
+- Outcome: completed
+- Verified criteria: synthetic host worker reproduced CLI inspect success versus blocked menu Start. Corrected direct menu Start while the worker remains busy; CLI/menu/console inspection matched, worker stayed tracked and explicit cancellation succeeded without guest changes. Windows GNU menu/runtime builds and Wine 7 tool-form/8 workbench/34 control/10 command tests PASS; protected inputs and GUI closure verified.
+- Evidence: docs/changes/2026-11-04-allow-direct-controls-during-host-jobs.json; target/validation/units/{dbg2-host-busy-before-d1n15xjv,dbg2-host-busy-build-e_dji7n2,dbg2-host-busy-after-mwmasse7,dbg2-host-busy-tests-sgtt99fc}/unit-result.json.
+- Limits: synthetic waiting host worker only; background form validation and host/profile jobs remain serialized; native Windows and physical input unverified. Parent acceptance audit pending.
+
+### DBG2-13
+
+- Outcome: completed
+- Verified criteria: prerequisites DBG2-01/05/08 accepted; bounded command syntax, quoting/numbers, shared action dispatch, ID selection and jobs are implemented. Same-seed CLI/menu/console step/inspect, trace/report, graphics, issue, audio/Recent and pause/resume evidence passed; selected malformed/ambiguous/unknown inputs preserve guest state. Replay, cancellation, retry and feature-watch synthetic tests are linked in the change record. Direct controls preserve pending-request and host-worker ownership guards.
+- Evidence: docs/changes/2026-11-04-complete-debug-command-language-contract.json; docs/development/DEBUG_TOOLS_V2_TODO.md#p2--console-di-comandi-e-ricette-per-lassistente; target/validation/units/{dbg2-step-inspect-compare-gqewbgty,dbg2-invalid-channel-parity-aa49mkcm,dbg2-search-parity-compare-qiiwm5k_,dbg2-host-busy-after-mwmasse7,dbg2-host-busy-tests-sgtt99fc}/unit-result.json. Checklist, Atlas task reference, project memory and diff checks PASS.
+- Limits: EUR Wine/synthetic and selected inputs, not every parameter/platform combination. Native Windows, physical input and live audit-enabled watch hit remain DBG2-27 work; DBG2-14/15 and later tasks remain open.
+
+### ROMDATA-02-04-E127-COMPACT-NIBBLE-6CA580
+
+- Outcome: completed
+- Verified criteria: EUR dispatcher initializes a nibble passed to type-13 callback; selectors 0–6 form a 116-byte structurally decoded projection without E126 overlap. E127-d126 Windows build, Wine create/reuse, all 16 initial nibble calculations, original selector reads and fallback, four sampled native count comparisons with full state/clock, coherent rejection and 12-frame CLI startup PASS. Catalog reads were zero during startup.
+- Evidence: docs/changes/2026-11-04-integrate-european-compact-nibble-6ca580.json; target/rom-data-e126-6ca580-20261104/; target/rom-data-e127-nibble-20261104/{build-unit,current-dataset,native-unit,cli-unit}.json.
+- Limits: Selectors 7–15 exceed candidate structural guards; this is not a guest bound or invalidity claim. Mutable state, other callers, ordinary use, Linux, USA and native Windows remain open; no performance measurements. Primary model/effort unconfirmed.
+
+### ROMDATA-01-E127-E111-ROOT-REPRESENTATION
+
+- Outcome: completed
+- Verified criteria: All 29 retained E111 census candidate roots have a source-backed BankSpec projection by E127; each scoped increment was independently built and checked in EUR Wine. This reconciles declaration presence only.
+- Evidence: docs/rom_data_compact_catalog.md; docs/changes/2026-11-04-integrate-european-compact-nibble-6ca580.json; target/rom-data-e127-nibble-20261104/.
+- Limits: Not a global ROM census, complete selector/consumer extent or ordinary use; Linux, USA, native Windows and no performance measurements.
+
+### DBG2-14-IME-DISABLE
+
+- Outcome: completed IME lifecycle correction; parent DBG2-14 remains integrated_unverified. Disabled IME and console hide clear pending preedit while preserving the committed draft.
+- Evidence: docs/changes/2026-11-04-clear-disabled-ime-composition.json; target/validation/units/dbg2-ime-disabled-build-ku4f5tgw/unit-result.json; target/validation/units/dbg2-ime-disabled-tests-tmokwbex/command.log: Windows GNU build and 3 editor plus 10 command Wine tests PASS; project memory, handoff, both Atlas checks and diff checks PASS.
+- Limits: synthetic lifecycle only; real Wine IME, native Windows and physical input remain open under DBG2-14.
+
+### ROMDATA-04-LOOP-COMPACT-6BAC28-SOIL-EVIDENCE
+
+- Outcome: completed
+- Verified criteria: EUR source pins action49/task49/parent0xf089c/child0xf01e8/root6bac28; IN08 unit6 has the eligible learned ability. Normal input from retained confirmation selects Soil Evidence. Wine E127 480-frame raw/managed pair matches full state/clock, images, OAM, dispatch and five audio streams; aggregate catalog reads are positive. A separate feature-gated Wine watch observed the decoded machine reading represented address 0x086bac2a at frame8391 while the same full pair passed.
+- Evidence: docs/changes/2026-11-04-verify-european-soil-evidence-ordinary.json; target/rom-data-e127-loop-ordinary-20261104/; target/rom-data-e127-loop-watch-20261104/{build-unit,watch-unit}.json.
+- Limits: One initial ordinary invocation, no complete animation or global selector/consumer proof; Linux, USA and native Windows pending; no performance measurements. Primary model/effort unconfirmed.
+
+### DBG2-14-ITALIAN-KEY
+
+- Outcome: completed unidentified-key layout correction; DBG2-14 remains integrated_unverified. The console accepts platform text from unidentified physical keys subject to modifier, context and composition guards.
+- Evidence: docs/changes/2026-11-04-accept-layout-text-with-unidentified-keys.json; target/validation/units/dbg2-layout-fix-build-xsv9ss2t/unit-result.json; target/validation/units/dbg2-layout-fix-tests-ud3dngh3/command.log; target/validation/units/dbg2-italian-layout-before-launch-n0dr23fn/unit-result.json. Windows GNU builds, Wine unit tests, one Italian-layout è GUI input with exact guest preservation, memory, handoff, Atlas and diff checks PASS.
+- Limits: simulated Wine input, one key; other layouts, physical input, native Windows and real console IME remain open under DBG2-14. A failed copy on 50ed5wi2 exhausted disk temporarily; diagnostics retained.
+
+### ROMDATA-04-LOOP-COMPACT-6C0614-SOIL-EVIDENCE
+
+- Outcome: completed
+- Verified criteria: Task49 parent creates child0xf07ec after its bounded wait; the child reads compact bank6c0614. A feature-gated Wine watch observed represented address 0x086c0616 at frame8511 in the decoded machine; a 600-frame native raw/managed pair matched full state/clock, images, OAM, dispatch and five audio streams.
+- Evidence: docs/changes/2026-11-04-verify-european-soil-timer-bank.json; target/rom-data-e127-loop-timer-watch-20261104/{build-result,watch-unit}.json; failed retained build unit rom-data-e127-loop-timer-watch-build-s9o4jcmh.
+- Limits: Overall Cargo command failed while compiling its CLI due to ENOSPC; selected test executable was emitted, all 845 snapshot files verified, previous CLI unchanged, and Wine test PASS. One initial ordinary invocation, not complete animation/global coverage; Linux, USA and native Windows pending; no performance measurements. Primary model/effort unconfirmed.
+
+### DBG2-14-EMPTY-IME-COMMIT
+
+- Outcome: completed selection-preservation correction; DBG2-14 remains integrated_unverified. An empty IME commit clears preedit without deleting selected draft text.
+- Evidence: docs/changes/2026-11-04-preserve-selection-on-empty-ime-commit.json; target/validation/units/dbg2-empty-ime-commit-build-qt8u42bl/unit-result.json; target/validation/units/dbg2-empty-ime-commit-tests-eme3ear4/command.log. Windows GNU build, four editor/ten command/one panel Wine tests, memory, handoff, Atlas and diff checks PASS.
+- Limits: real console IME still blocked by late Wine result; native Windows remains unverified.
+
+### ROMDATA-04-LOOP-COMPACT-6BABC4-FREEZEBLINK
+
+- Outcome: completed
+- Verified criteria: EUR source pins action45/task45/parent0xee898/child0xee6f0/root6babc4; IN08 unit6 has the learned ability. Normal menu input selects Freezeblink and reaches confirmation. Feature-gated Wine watch observed represented address 0x086babc6 at frame8361; a 600-frame native raw/managed pair matched full state/clock, images, OAM, dispatch and five audio streams.
+- Evidence: docs/changes/2026-11-04-verify-european-freezeblink-bank.json; target/rom-data-e127-loop-ordinary-20261104/rosters-45-unit.json; target/rom-data-e127-loop-freeze-watch-20261104/watch-unit.json. An initial target navigation unit retained a shared-Wine lease conflict; a later attempt passed without disturbing its owner.
+- Limits: One invocation, not full animation/global coverage; Linux, USA and native Windows pending, no performance measurements. Used the verified test artifact from the partial audit build whose CLI hit ENOSPC; primary model/effort unconfirmed.
+
+### DBG2-14-WINE-LATE-IME
+
+- Outcome: completed Wine late-result correction; parent DBG2-14 remains integrated_unverified. A command-window subclass forwards an actual nonempty late result once through winit, without substituting preedit. Native Windows path is unchanged.
+- Evidence: docs/changes/2026-11-04-forward-late-wine-ime-results.json; target/validation/units/dbg2-wine-ime-shim-final-build-9mjddnzd/unit-result.json; target/validation/units/dbg2-wine-ime-shim-tests-hhtmw6gp/command.log; target/validation/units/dbg2-ime-shim-guards-np_m69tv/unit-result.json. Windows GNU builds, 17 Wine unit tests and Cangjie/Italian GUI with cancellation, repeated commits, F2, focus and guest preservation PASS; memory, handoff, Atlas and diff checks PASS.
+- Limits: one simulated Wine/Xvfb engine; physical input/native Windows and CJK visual rendering remain unverified. Earlier trace failures are retained.
+
+### LOCAL-ARTIFACT-CLEANUP-20261104
+
+- Outcome: completed
+- Verified criteria: removed the completed MENU-I18N-EN-IT isolated Cargo cache (3,933,757,440 file-block bytes) and, after the user's explicit exact-plan approval, 15 superseded EUR e111–e125 datasets (7,947,784,192 bytes). Total 11,881,541,632 bytes / 11.07 GiB, counting hard links once. Both receipts PASS, no pending paths or removal errors. Fresh exact inventories, completion evidence, unit leases and host process scans guarded retirement.
+- Evidence: docs/changes/2026-11-04-retire-completed-build-cache-and-superseded-datasets.json; docs/development/LOCAL_ARTIFACTS.md; target/local-artifact-cleanup-20261104/build-cache-applied.json and dataset-applied.json; exact plans, preservation inventories and 15 manifest preimages. Build cleanup preserved 158 private hashes/1,798 retained identities/sizes/times; dataset cleanup preserved 158 private hashes/393 retained identities/sizes/times, including e126/e127. Old source-ROM/profile/coverage identities checked against retained e127.
+- Limits: four host process-detail reads denied; no selected-unit consumer observed. Other sessions changed overall free space; only selected file blocks are attributed here. Initial automatic review refused the extended command; explicit user approval resolved dataset authorization before fresh checks/removal. Historical payloads need regeneration for exact reuse. Original/private data, evidence, e126/e127, canonical Cargo, Wine and failed/interrupted/live scopes retained. No tests, builds, extractions or benchmarks repeated. Older interrupted LOCAL-ARTIFACT-HYGIENE remains separate; no unrelated runtime work resumed.
+
+### ROMDATA-04-LOOP-COMPACT-6BB574-STARDUST
+
+- Outcome: completed
+- Verified criteria: EUR source pins action47/task47/parent0xef250/child0xef024/root6bb574; IN08 unit6 has the learned ability. Normal menu input selects Stardust and reaches confirmation. Feature-gated Wine watch observed represented address 0x086bb576 at frame8450; a 600-frame native raw/managed pair matched full state/clock, images, OAM, dispatch and five audio streams.
+- Evidence: docs/changes/2026-11-04-verify-european-stardust-bank.json; target/rom-data-e127-loop-ordinary-20261104/rosters-47-unit.json; target/rom-data-e127-loop-stardust-watch-20261104/watch-unit.json.
+- Limits: One invocation, not full animation/global coverage; Linux, USA and native Windows pending, no performance measurements. Used the verified test artifact from the partial audit build whose CLI hit ENOSPC; primary model/effort unconfirmed.
+
+### DBG2-14-CJK-FONT
+
+- Outcome: completed command-console CJK fallback rendering; parent DBG2-14 remains integrated_unverified. The bundled licensed face supplies glyphs missing in Inter for draft and preedit; notices accompany distribution paths.
+- Evidence: docs/changes/2026-11-04-render-cjk-command-composition.json; target/validation/units/dbg2-cjk-font-{build-he3qlx77,tests-hxglo6a8,gui-jqogyz5h}/unit-result.json; target/validation/units/dbg2-font-{pack-build-d4ocmsjt,notices-package-stage-x12a71gx}/unit-result.json. Windows GNU builds/tests, visually inspected Wine Cangjie preedit/draft and Italian key, guest preservation, synthetic package/notice staging, memory, handoff, Atlas and diff checks PASS.
+- Limits: bundled font is not complete Unicode; other scripts, native platforms and physical inputs remain unverified.
+
+### DBG2-14
+
+- Outcome: completed
+- Verified criteria: integrated command editor accepted within selected Wine scope; type, correct, recall and cancel with focus isolation, explicit submission, bounded Unicode/history/selection, clipboard/multiline guard, completion/help and controller keyboard. Wine GUI verified Cangjie commit/repeat/cancel/F2, focus and reopen, Italian layout, visible CJK preedit/draft, missing capability refused as incompatible/not-sent with no request/result change and exact guest state. DBG2-15 prerequisite satisfied.
+- Evidence: docs/changes/2026-11-04-complete-debug-command-editor.json; docs/changes/2026-11-04-forward-late-wine-ime-results.json; docs/changes/2026-11-04-render-cjk-command-composition.json; target/validation/units/{dbg2-ime-shim-guards-np_m69tv,dbg2-cjk-font-gui-jqogyz5h,dbg2-console-capability-hide-kzv22t1h}/unit-result.json. Windows GNU builds, Wine tests, package notice tests, memory, Atlas and diff checks PASS. First hide test acfo2dmh timed out on the X11 disappearance assumption; kzv22t1h passed reopening and draft checks.
+- Limits: selected simulated Wine/Xvfb cases and one IME/layout; physical hardware, native Windows/Linux, other IMEs and full Unicode glyph coverage remain DBG2-27. Sol consultation requested gpt-6.1-sol xhigh; effective model/effort unconfirmed.

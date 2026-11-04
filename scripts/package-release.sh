@@ -29,7 +29,7 @@ DMG_BG_LONG="${DMG_BG_LONG:-600}"
 
 mkdir -p "$OUTDIR" stage
 
-carry_licenses() { cp Licenses/LICENSE-MIT Licenses/LICENSE-APACHE "$1"/; cp Licenses/THIRD_PARTY_NOTICES.md "$1/THIRD-PARTY.md"; }
+carry_licenses() { cp Licenses/LICENSE-MIT Licenses/LICENSE-APACHE "$1"/; cp Licenses/THIRD_PARTY_NOTICES.md "$1/THIRD-PARTY.md"; mkdir -p "$1/fonts"; cp Licenses/fonts/Droid-NOTICE.txt Licenses/fonts/Droid-COPYRIGHT.txt "$1/fonts/"; }
 
 # Stage the bundled TinyCC fallback compiler beside the binaries, so a local
 # "build to play" works on a machine with no system C compiler. $TCC_DIR is a
@@ -178,6 +178,7 @@ package_macos_launcher() {
   mv "$app/Contents/MacOS/LICENSE-APACHE" "$app/Contents/Resources/"
   mv "$app/Contents/MacOS/LICENSE-CC0" "$app/Contents/Resources/"
   mv "$app/Contents/MacOS/THIRD-PARTY.md" "$app/Contents/Resources/"
+  mv "$app/Contents/MacOS/fonts" "$app/Contents/Resources/"
   mv "$app/Contents/MacOS/gamedb.sqlite" "$app/Contents/Resources/"
   mv "$app/Contents/MacOS/gamedb.sqlite.license" "$app/Contents/Resources/"
   mv "$app/Contents/MacOS/tcc" "$app/Contents/Resources/"
@@ -256,6 +257,7 @@ stage_linux_appdir() {
   mv "$appdir/usr/bin/LICENSE-APACHE" "$appdir/usr/share/doc/gba-recomp/"
   mv "$appdir/usr/bin/LICENSE-CC0" "$appdir/usr/share/doc/gba-recomp/"
   mv "$appdir/usr/bin/THIRD-PARTY.md" "$appdir/usr/share/doc/gba-recomp/"
+  mv "$appdir/usr/bin/fonts" "$appdir/usr/share/doc/gba-recomp/"
   mv "$appdir/usr/bin/gamedb.sqlite.license" "$appdir/usr/share/doc/gba-recomp/"
   write_png_icon "$appdir/usr/share/icons/hicolor/512x512/apps/${APP_ID}.png" 512
   write_launcher_desktop "$appdir/usr/share/applications/${APP_ID}.desktop" "gba-launcher"
@@ -348,6 +350,8 @@ modules:
       - install -Dm644 Licenses/LICENSE-APACHE /app/share/doc/gba-recomp/LICENSE-APACHE
       - install -Dm644 Licenses/LICENSE-CC0 /app/share/doc/gba-recomp/LICENSE-CC0
       - install -Dm644 THIRD-PARTY.md /app/share/doc/gba-recomp/THIRD-PARTY.md
+      - install -Dm644 fonts/Droid-NOTICE.txt /app/share/doc/gba-recomp/fonts/Droid-NOTICE.txt
+      - install -Dm644 fonts/Droid-COPYRIGHT.txt /app/share/doc/gba-recomp/fonts/Droid-COPYRIGHT.txt
       - install -Dm644 Licenses/gamedb.sqlite.license /app/share/doc/gba-recomp/gamedb.sqlite.license
 EOF
 }

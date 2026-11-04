@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "verify-audio-recent-report-channel-parity",
+  "title": "Verify audio and Recent report channel parity",
+  "kind": "docs",
+  "platforms": [
+    "Wine/Xvfb EUR interpreter"
+  ],
+  "changes": [
+    "Record menu and command-console report checks for audio and Recent windows alongside existing CLI evidence."
+  ],
+  "validation": [
+    "In an isolated EUR Wine/Xvfb session, the menu and interactive command console each saved one-frame audio and Recent captures. Audio reports retained the selected frame limit, Recent reports retained the active settings, and each report recorded the endpoint state; save left guest frame, clock, registers, keys and state hash unchanged. Recent used on-error off. All four reports were distinct, protected inputs verified and GUI closed normally."
+  ],
+  "limitations": [
+    "CLI report evidence was established separately. This covers one EUR interpreter seed, simulated input and Recent on-error off; native Windows, physical input, other settings and complete DBG2-13 parity remain unverified."
+  ],
+  "files": [
+    "docs/debug_audio.md",
+    "docs/debug_recent.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ],
+  "references": [
+    "docs/debug_audio.md",
+    "docs/debug_recent.md"
+  ]
+}

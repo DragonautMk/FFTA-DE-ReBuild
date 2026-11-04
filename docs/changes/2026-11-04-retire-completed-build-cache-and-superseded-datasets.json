@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "retire-completed-build-cache-and-superseded-datasets",
+  "title": "Retire a completed build cache and superseded EUR datasets",
+  "kind": "changed",
+  "platforms": [
+    "Local development artifacts"
+  ],
+  "changes": [
+    "Retired the completed menu-localization unit’s isolated Cargo build cache and 15 superseded e111–e125 EUR datasets; reclaimed 11,881,541,632 file-block bytes (11.07 GiB), counting hard links once.",
+    "Preserved original/private inputs, e126/e127 EUR datasets, results, logs, screenshots, source evidence, Wine prefixes and current canonical Cargo outputs. Retained 15 manifest preimages."
+  ],
+  "validation": [
+    "Both local cleanup receipts are PASS with no removal errors. Exact inventories and completed results were rechecked under unit leases; fresh host process scans found no selected-unit user.",
+    "Build-cache retirement preserved all 158 protected private-input hashes and 1,798 retained-file identities/sizes/times. Dataset retirement preserved the same 158 private-input hashes and 393 retained-file identities/sizes/times, including e126/e127.",
+    "Retired datasets matched the retained e127 source-ROM identity/profile and had coverage contained in its coverage set. Fifteen manifest backup hashes matched their preimages.",
+    "Task-handoff check, project-memory metadata-only check and scoped git diff --check passed. Final receipt/presence check confirmed all 16 authorized paths absent and both retained e126/e127 datasets present."
+  ],
+  "limitations": [
+    "Four host process-detail reads were denied; unrelated sessions changed overall disk free space. Only selected file-block counts are attributed to this cleanup.",
+    "Automatic approval review initially refused the extended command. The user then explicitly authorized the exact 15-dataset proposal; fresh checks preceded retirement. Exact historical payload reuse requires regeneration.",
+    "No builds, game tests, fixture extraction or performance measurements were repeated. All failed/interrupted/live units and the older interrupted hygiene task remain separate.",
+    "The full project-memory check reported missing change-record coverage for concurrent Droid font additions (DROID-COPYRIGHT.txt, DROID-NOTICE.txt and DroidSansFallback.ttf); these unrelated implementation files were preserved."
+  ],
+  "files": [
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ],
+  "references": [
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ]
+}

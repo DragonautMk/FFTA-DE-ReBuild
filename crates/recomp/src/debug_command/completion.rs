@@ -1,7 +1,7 @@
 //! Pure, bounded command completion. Suggestions never dispatch an action.
 use std::ops::Range;
 
-const COMMANDS:&[&str]=&["help","status","pause","resume","step","inspect","break","watch","cancel","graphics","ui-start","ui-report","audio-start","audio-report","code-start","code-report","gameplay-start","gameplay-report","recent-start","recent-freeze","recent-report","issue-report","profile","catalog","cheats","content","replay","jobs","retry","recipe"];
+const COMMANDS:&[&str]=&["help","status","pause","resume","step","inspect","break","watch","cancel","graphics","ui-start","ui-report","audio-start","audio-report","code-start","code-report","gameplay-start","gameplay-report","recent-start","recent-freeze","recent-report","issue-report","profile","catalog","cheats","content","replay","jobs","retry","recipe","trigger"];
 
 #[derive(Debug)]
 struct Token {range:Range<usize>,value:String,prefix:String}
@@ -73,8 +73,14 @@ fn quoted(value:&str)->String{
 fn values(flag:&str,command:&str)->Vec<String>{
     let choices:&[&str]=match (command,flag){
         ("step","--keys")=>&["0x3ff"],
-        ("watch","--width")=>&["1","2","4"],
+        ("watch","--width")|("break"|"watch","--when-width")=>&["1","2","4"],
+        ("break"|"watch","--when-address")=>&["0x02000000"],
+        ("break"|"watch","--when-value")=>&["0x0"],
         ("break"|"watch","--steps")=>&["100000"],
+        ("break"|"watch","--hits")=>&["1"],
+        ("break"|"watch","--on-hit")=>&["pause","capture","freeze"],
+        ("break"|"watch","--frame-start")=>&["0"],
+        ("break"|"watch","--frame-end")=>&["600"],
         ("recent-start","--reads"|"--on-error")=>&["on","off"],
         ("code-start","--mode")=>&["all","arm","thumb"],
         ("code-start","--kind")=>&["all","native","missing","system","hook","interpreter"],
@@ -87,7 +93,7 @@ fn values(flag:&str,command:&str)->Vec<String>{
     };choices.iter().map(|s|(*s).to_owned()).collect()
 }
 fn flags(command:&str)->&'static [&'static str]{match command{
-    "step"=>&["--keys"],"break"=>&["--steps"],"watch"=>&["--steps","--width","--value"],
+    "step"=>&["--keys"],"break"=>&["--steps","--hits","--frame-start","--frame-end","--when-address","--when-width","--when-value","--on-hit"],"watch"=>&["--steps","--width","--value","--hits","--frame-start","--frame-end","--when-address","--when-width","--when-value","--on-hit"],
     "graphics"=>&["--compare-last"],"audio-start"=>&["--frames","--streams"],
     "code-start"=>&["--frames","--events","--start","--end","--kind","--mode"],
     "gameplay-start"=>&["--frames","--events","--family","--context"],
@@ -113,13 +119,14 @@ pub(crate) fn hint(text:&str,language:input_config::Language)->&'static str {
         "content"=>"content refresh | content list [--offset N --limit 1..16 --generation N]",
         "replay"=>"replay run [plain|audit|capture|compare] · selected profile",
         "jobs"=>"jobs status | jobs cancel REQUEST-ID",
+        "trigger"=>"trigger list | save/edit NAME 'break|watch ...' | show/enable/disable/remove/run NAME | retry NAME RUN ID DEADLINE",
         "recipe"=>"recipe save NAME 'COMMAND'... | preview/prepare NAME | run/resume/cancel/checkpoint RUN",
         "retry"=>"retry RUN REQUEST-ID DEADLINE-UNIX-MS -- COMMAND · same request, no duplicates",
         "cancel"=>"cancel --request REQUEST-ID · cancel only the exact request",
         "step"=>"step N [--keys 0xMASK] · N 1..600; active-low mask",
         "inspect"=>"inspect 0xADDRESS LENGTH · 1..256 bytes, read-only",
-        "break"=>"break 0xPC arm|thumb [--steps N] · interpreter",
-        "watch"=>"watch read|write 0xSTART 0xEND [--steps N --width 1|2|4 --value 0xHEX]",
+        "break"=>"break 0xPC arm|thumb [--steps N --hits N --frame-start N --frame-end N] · interpreter",
+        "watch"=>"watch read|write 0xSTART 0xEND [--steps N --width 1|2|4 --value 0xHEX --hits N]",
         "graphics"=>"graphics [--compare-last] · explicit capture",
         "audio-start"=>"audio-start [--frames N --streams LIST]",
         "code-start"=>"code-start [--frames N --events N --start 0xHEX --end 0xHEX --kind KIND --mode MODE]",
@@ -143,6 +150,7 @@ pub(crate) fn complete(text:&str,cursor:usize,profiles:&[String],catalogs:&[Stri
     let mut options:Vec<String>=if before.is_empty(){COMMANDS.iter().map(|s|(*s).into()).collect()}else{match (c,before.len()){
         ("help",1)=>operations.to_vec(),("profile"|"catalog",1)=>vec!["select".into()],
         ("content",1)=>vec!["list".into(),"refresh".into()],
+        ("trigger",1)=>vec!["list".into(),"save".into(),"edit".into(),"show".into(),"enable".into(),"disable".into(),"remove".into(),"run".into(),"retry".into()],
         ("recipe",1)=>vec!["save".into(),"preview".into(),"prepare".into(),"checkpoint".into(),"run".into(),"resume".into(),"cancel".into()],
         ("cheats",1)=>vec!["select".into(),"refresh".into(),"list".into(),"show".into(),"capabilities".into(),"prepare".into(),"apply-once".into(),"arm".into(),"disarm".into(),"preset-save".into(),"preset-prepare".into(),"preset-arm".into()],
         ("cheats",2) if before[1]=="select"=>cheats.to_vec(),

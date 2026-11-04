@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "verify-issue-report-channel-parity",
+  "title": "Verify selected-profile issue report channel parity",
+  "kind": "docs",
+  "platforms": [
+    "Wine/Xvfb EUR interpreter"
+  ],
+  "changes": [
+    "Record three-channel issue-report parity using the same selected pinned replay profile."
+  ],
+  "validation": [
+    "In an isolated EUR Wine/Xvfb session, the local-control CLI, issue parameter form and interactive command console each created a distinct report for the same copied pinned profile and empty symptom. Each preflight was compatible, profile hashes and complete summaries matched, and guest frame, clock, registers, keys and state hash were unchanged. Report creation did not run replay; protected original inputs and normal GUI closure verified."
+  ],
+  "limitations": [
+    "One compatible EUR profile, empty symptom and simulated input only; invalid profiles, other symptoms, native Windows, physical input and full DBG2-13 parity remain unverified. First attempt placed the private profile outside the portable scanner allowlist and failed before selection; the corrected input-root run passed."
+  ],
+  "files": [
+    "docs/debug_issues.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ],
+  "references": [
+    "docs/debug_issues.md"
+  ]
+}

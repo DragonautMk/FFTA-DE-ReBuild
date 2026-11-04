@@ -48,6 +48,28 @@ request. `resume` returns to normal execution and current inputs. For a recorded
 variable sequence use [recording/replay](debug_recordings.md). An active recording
 in the copy can include steps and pauses: host pause time adds no recorded frames.
 
+For a paused EUR interpreter copy, a Wine/Xvfb comparison started three sessions
+from the same seed and used the local-control CLI, parameter forms and command
+console respectively to inspect 16 ROM bytes and step one neutral frame. The
+complete inspection result and the resulting frame, clock, registers and state
+hash were identical; inspection itself did not change guest state.
+Another isolated Wine/Xvfb check confirmed that zero-length inspection and a
+zero-frame step produce the same refusal in the parameter form and command
+parser. The interactive console returned the same JSON errors as `debug-command`
+for those cases, ambiguous numbers and an unknown command; guest state remained
+unchanged throughout.
+
+An isolated EUR Wine/Xvfb session also resumed and paused through local control,
+the menu and F6, and the command console. Each resume advanced frames and each
+pause returned to a stopped state with no remaining step budget. Frame counts in
+free-running checks depend on timing and are not compared for equality.
+
+The workbench parity tests also compare nondefault values and selected boundary
+refusals against the console and local-control parsers for step, inspect,
+audio, code, gameplay and Recent; graphics compare-last is included in the
+nondefault action comparison. These are parser tests, not additional runtime
+coverage for every combination of settings.
+
 Each command receives JSON with run/request identity, success/error,
 frame/clock/PC, reason, remaining budget, full-state hash and guest/host audio
 queue sizes. The hash is computed only on request and command completion,
@@ -61,6 +83,17 @@ and **cancel** use a second mailbox with separate lock/response: they remain
 available during a step or search without overwriting the pending result.
 No automatic retry. F6/Escape and Load/Undo/Restart can still interrupt the
 budget; during a separate replay status is readable, but pause/step/resume are refused.
+When a replay was started from the menu and no control request is pending,
+readonly inspection remains available through the menu, CLI and console. Direct
+form validation checks the parameters; execution uses the same operation-specific
+session guards as local control. Profile preparation and separate host-tool
+workflows retain their stricter idle-session requirement. While an operational
+control request is pending, a direct form can still validate its parameters but
+Start is refused until that request finishes or is cancelled by its exact ID.
+If a separate workbench host process is running, direct form Start remains
+available and uses the shared action guards; the host process remains tracked
+and cancellable. Background form validation and new host/profile jobs wait for
+the existing workbench worker to finish.
 
 The console and `debug-command` can discover and select content without opening
 the selector:
@@ -211,8 +244,13 @@ larger unexpected values are abbreviated. It does not submit the draft. A
 separate Wine/Xvfb keyboard check used a verified 480×360 Windows client,
 showed a long session label and ROM hash, and returned to submit the unchanged
 `status` draft. The guest state and protected inputs stayed unchanged. Long
-pending parameters and scrolling were covered by focused tests, not that GUI
-session; native Windows and physical input remain unverified.
+pending parameters and scrolling were covered by focused tests. A later Wine/Xvfb
+run verified a real pending bounded search in a 480×360 Win32 client: F2 showed
+the request ID, progress, PC/mode, hit count, frame window, RAM guard and action.
+A second live named-search check also displayed the complete trigger name and
+definition hash. Each exact request was then cancelled and the windows closed normally. Input was
+simulated and protected inputs stayed unchanged. Native Windows and physical
+input remain unverified.
 
 The first narrow replay used an older pinned worker and stopped at frame 45 with
 `Access denied`. The profile with the corrected worker differs only in runtime
@@ -345,7 +383,8 @@ refused before dispatch.
 
 Each `break` or `watch` search reserves its existing worst-case ceiling of 600
 completed frames against the shared 3,600-frame budget, even when its instruction
-limit is reached earlier. The search also keeps its 1..5,000,000 instruction
+limit is reached earlier. A capture-on-hit search additionally reserves one frame
+for its completed-frame snapshot. The search also keeps its 1..5,000,000 instruction
 limit and existing interpreter and feature guards. Legacy saved recipes without
 the new budget field remain readable; the runner recomputes their worst-case
 budget before sending any action. A search that completes without a hit is a
@@ -362,8 +401,13 @@ assertion requiring a hit stopped the following step, while an assertion accepti
 protected inputs stayed unchanged and the GUI closed normally. An initial
 supervisor overwrote its process variable after the functional check; its owned
 Xvfb and leases were recovered after host inspection and independent input
-hashes, and the corrected unit passed with an automatic receipt. A real hit,
-watchpoint with the required build feature and native Windows remain unverified.
+hashes, and the corrected unit passed with an automatic receipt. In a separate
+isolated EUR Wine/Xvfb session, a Thumb breakpoint reached the observed paused
+PC after 40,948 interpreter steps, before executing the matched instruction. An
+assertion accepted the hit, the following step advanced one frame, and explicit
+resume did not repeat either action. The checkpoint recorded both steps, the
+window closed normally and protected inputs stayed unchanged. Feature-gated
+watchpoints and native Windows remain unverified.
 
 A Windows GNU build and 31 focused Wine tests covered capture action order,
 report-response recovery without duplicate execution and existing recipe
@@ -697,6 +741,21 @@ use [DBG-12: graphics inspector](debug_graphics.md), from the menu or with
 <a id="ui-testo-e-input"></a>
 
 ## UI, text and input
+
+The command editor clears only pending composition when the IME is disabled or
+the console is hidden; an empty IME commit also preserves the draft and its
+selection. On Wine, the command window forwards an actual late IME result
+through the ordinary editor path; it never substitutes uncommitted preedit text.
+An isolated Cangjie test verified repeated commits, cancellation and focus
+changes. Native Windows and broader input-method coverage remain unverified.
+The console also refuses commands before dispatch when the session lacks a
+required capability; a Wine GUI test verified the copyable `not-sent` result.
+If the platform provides text for an unidentified physical key, the console
+accepts that text subject to the usual modifier, composition and context guards.
+An Italian-layout `è` key was verified in Wine without changing the guest state.
+The draft and composition lines use the bundled Droid Sans Fallback face when
+the primary font lacks a glyph. Cangjie `日` was visually checked in Wine;
+characters absent from both faces may still display a missing-glyph box.
 
 `debug-control ui-start SESSION` begins bounded collection;
 `ui-report SESSION` saves focus, font metrics and observed sequence in an offline

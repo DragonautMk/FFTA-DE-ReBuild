@@ -43,6 +43,12 @@ kind `all`, `native`, `missing`, `system`, `hook` or `interpreter`. Defaults mat
 the menu. Capture filters exclude events before dumping; browser search/filter
 acts only on the retained prefix.
 
+An isolated EUR Wine/Xvfb check started the default one-frame trace through the
+menu, local-control CLI and command console with identical observed settings.
+Each trace advanced one frame and was saved by a local-control report request.
+Separate checks saved one-frame traces from the menu and command console; the
+report settings matched the active trace and saving did not change guest state.
+
 <a id="leggere-il-passaggio"></a>
 
 ## Reading the sequence

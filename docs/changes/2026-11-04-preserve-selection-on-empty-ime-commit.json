@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "preserve-selection-on-empty-ime-commit",
+  "title": "Preserve selection on empty IME commit",
+  "kind": "fixed",
+  "platforms": [
+    "Windows GNU build and Wine unit tests"
+  ],
+  "changes": [
+    "Treat an empty IME commit as clearing pending composition without replacing the selected draft."
+  ],
+  "validation": [
+    "Windows GNU runtime and test builds passed; four editor, ten command and one panel Wine tests passed, including selection preservation."
+  ],
+  "limitations": [
+    "Wine sends a real IME result after the composition-end event in the observed Cangjie case; Winit discards that later result. Real console composition and native Windows remain unverified under DBG2-14."
+  ],
+  "files": [
+    "crates/recomp/src/debug_command/editor.rs",
+    "crates/menu/assets/debug_v2.tsv",
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ],
+  "references": [
+    "docs/debug_control.md"
+  ]
+}

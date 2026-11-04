@@ -87,11 +87,13 @@ requests in the window/range. When another collector already owns the observer,
 the game continues with explicit unavailability. Groups lost to caps are counted;
 they do not prove global non-use of resources or functions.
 
-In the parameter form, **Recent** with `--reads on` is refused during validation
-if the runtime lacks `rom-data-read-audit`; `--reads off` remains valid in both
-builds. The form test checks these cases separately without expecting an ordinary
-build to have optional hooks. Focused results are in the
-[test correction record](changes/2026-10-30-correct-recent-form-feature-expectations.json).
+The parameter form, console and local-control CLI accept the same `--reads`
+settings. On an ordinary build, the form warns during validation that ROM reads
+will be marked feature-unavailable; the remaining events are still collected.
+An audit-enabled build can collect those reads when the observer is available.
+An isolated EUR Wine/Xvfb check also saved one-frame windows through the menu
+and console with `--on-error off`; report settings and endpoint state matched
+the active windows, and saving did not change the guest.
 
 <a id="limiti-identità-e-conservazione"></a>
 

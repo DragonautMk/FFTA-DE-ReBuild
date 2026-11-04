@@ -2,9 +2,7 @@
 
 ## Operational status
 
-Updated 2026-11-03. User confirmed English-first project with optional Italian. Runtime/offline
-reports, guide reviews and portable/private exporter instructions are accepted
-within their recorded scopes; the cross-tree audit remains open.
+English-first project with optional Italian. Accepted report/guide/export scopes remain recorded; the cross-tree audit remains open.
 
 Read this file, then only relevant linked sections. Do not preload archives, CHANGELOG, PROJECT_STATE or large TODOs. Retired artifacts do not invalidate accepted evidence. Rules: [MEMORY_WORKFLOW](MEMORY_WORKFLOW.md#resume-and-repeat-decisions).
 
@@ -38,10 +36,10 @@ termination of another owner's process or changing another thread's goal state.
 
 - State: waiting
 - Outcome: partial
-- Verified: e116 100resources/101files,41banks/118selectors/10436B; source/native2cases/create-reuse/12frame Wine CLI accepted. Current: target/validation/units/rom-data-e116-root-current-udm_4e_m/work/resources/. E111–E115 retained; Roulette600/UI12/StarCross480 prior proofs preserved.
+- Verified: E127 100 resources/101 files, 63 banks; EUR Wine create/reuse, nibble reads/fallback, four native comparisons and 12-frame CLI PASS (zero catalog reads). Current: target/validation/units/rom-data-e127-nibble-current-evuagp74/work/resources/. Prior scoped proofs preserved.
 - Missing: unmigrated resources/consumers, missing ordinary-use evidence, ABI/global extent/indirect calls and mod phases ROMDATA-06/07; Linux/USA/native Windows/new32:9 remain distinct. EUR, reduced Wine scope, no performance/space measurements; originals and personal saves unchanged.
-- Selection: `ROMDATA-02-04-E117-ALTERNATE-CATALOG` waiting/integrated_unverified. Request: EUR/Wine only, no metrics. Source PASS; code and runners prepared, build/create/reuse/reader/CLI checks missing. Approval review usage limit persists until reported 12:52; next perform read-only source/contract reconciliation while waiting. Model settings unconfirmed.
-- Resume: [ROM_DATA_TODO](ROM_DATA_TODO.md), only the selected criterion's section (ROMDATA-01/02/03/04/05/06/07); [inventory](ROM_DATA_INVENTORY.md). Do not read the whole TODO. The following children retain their IDs and limits, with no new attempts selected here:
+- Selection: `ROMDATA-04-LOOP-COMPACT-CATALOG-ORDINARY` active/partial. EUR/Wine, Linux/USA pending, no metrics. Soil Evidence 6bac28/6c0614, Freezeblink 6babc4 and Stardust 6bb574 exact reads and paired Wine scenes PASS. Audit CLI build ENOSPC; emitted test passed. Missing: remaining banks and global coverage. Next: choose a source-backed remaining criterion; preserve live/failed units. Model/effort unconfirmed.
+- Resume: [ROM_DATA_TODO](ROM_DATA_TODO.md), only the selected criterion's section (ROMDATA-01/02/03/04/05/06/07); [inventory](ROM_DATA_INVENTORY.md). Do not read the whole TODO. Children retain their IDs and limits:
   - `ROMDATA-04-PARAMETER-RECORDS27-ORDINARY`: source/model/runtime/CLI accepted; 59 records observed, full domain unproven; positive normal use and complete paired evidence missing. Eleven negative captures closed; archive legacy lines 17624..17672 and `docs/rom_data_gameplay.md`, ordinary sparse parameter record reachability section.
   - `ROMDATA-04-LOCALIZED-TABLE-GRAPHICS-ORDINARY`: 40 banks/8 tables source/model/runtime/CLI accepted; positive normal trigger and paired evidence missing; negative attempts remain closed. `docs/rom_data_ui_graphics.md`, ordinary table extension reachability section; archive 17844..17864.
   - `ROMDATA-05-DYNAMIC-RAW-ORDINARY-REACHABILITY` and `ROMDATA-01-LOCALIZED-RAW-DYNAMIC-DOMAIN`: conditional fragments/paths accepted; global domain and ordinary invocation unproven. Unit320 negative closed; later state2/state4/selector-witnesses diagnosis closed without a scene. Archive 59..75 and 789..866; no blind navigation.
@@ -50,48 +48,33 @@ termination of another owner's process or changing another thread's goal state.
   - Compact OBJ e101..e108: conditional prefixes/model/runtime/CLI accepted. e101..e107 ordinary use remains open; record222/candidate-table and selector33 have only static conditions/bounded negatives. e108/6cc124 has one IN-19 Roulette 600-frame positive native pair; complete animation/ordinary selector-list domain remains unproved. Archive 11..65 and new ordinary-use record; no accepted replay repeated.
   - UI context templates e109: source selector/copy catalog and one ordinary20B copy accepted; complete UI extent/all consumers/all11 records in ordinary play remain unproved. docs/rom_data_ui.md. Do not repeat closed12-frame proof for context.
   - ROMDATA-04-COMPACT-CATALOG-ORDINARY: StarCross ordinary proof closed: IN08Douglas secondary9/mastered84, positive15830reads/19330B and480frame full native pair. Complete29-root/allselector/animation/consumer coverage remains open; counters aggregatecatalog. Prior303/310/312 human leads excluded. docs/rom_data_compact_catalog.md.
-  - `ROMDATA-04-LOOP-COMPACT-CATALOG-ORDINARY`: five-loop source/model/native/CLI accepted; ordinary producer/scene/pair missing.26residual census roots/global domains remain unproved. docs/rom_data_compact_catalog.md.
+  - `ROMDATA-04-LOOP-COMPACT-CATALOG-ORDINARY`: five-loop source/model/native/CLI accepted; Soil Evidence 6bac28/6c0614, Freezeblink 6babc4 and Stardust 6bb574 exact reads with paired Wine scenes PASS. Other banks, complete animation and global domains remain open. docs/rom_data_compact_catalog.md.
 
 ## Incomplete tasks and open criteria
 
-DBG2 audit of 2026-11-01: all eleven parents 13..23 remain unchecked;
-8 have partial/integrated work, 3 lack the requested implementation.
-The checks below predate this session and were inspected without rerunning.
+DBG2 audit of 2026-11-01 found eleven parents 13..23 unchecked;
+8 had partial/integrated work and 3 lacked the requested implementation.
+DBG2-13 and DBG2-14 have since completed; current open criteria follow.
 Original criteria and audit notes: [DEBUG_TOOLS_V2_TODO](DEBUG_TOOLS_V2_TODO.md#p2--console-di-comandi-e-ricette-per-lassistente).
 DBG2-01..12 remain complete within their scope. Read historical details only
 for a specific question: archive legacy lines 179..744 or the named record below.
 
-### DBG2-13
-
-- State: suspended
-- Outcome: partial
-- Verified: typed parser, catalog/profile selection, cancellation, retry, discovery and shared replay; UI trace start, duplicate refusal and report have matching menu/CLI/console outcome evidence. `docs/changes/2026-11-03-verify-ui-trace-channel-parity.json`.
-- Missing: full menu/CLI/console parity for validation, actions and results across other operations.
-- Resume: select a missing group without repeating accepted profile/replay or UI-trace paths.
-
-### DBG2-14
-
-- State: suspended
-- Outcome: integrated_unverified
-- Verified: Unicode editor, history/selection, completion, simulated XInput, focus/hide and clipboard; October 31 records. New maintained-cheat hints/completions pass Wine tests and synthetic console GUI; `2026-11-03-complete-maintained-cheat-console-hints.json`.
-- Missing: real IME composition/layout and GUI guards; native Windows/Linux/physical input unverified.
-- Resume: select a missing input criterion; do not repeat accepted clipboard, editor or completion checks.
-
 ### DBG2-15
 
-- State: suspended
+- State: active
 - Outcome: partial
-- Verified: context, retry, discovery, replay/cancel and live refresh; F2 wrapped context tested, idle narrow GUI checked. `docs/changes/2026-11-03-inspect-debug-command-context.json`.
-- Missing: full operation parity, live long-parameter GUI and comprehensive narrow-window presentation; native/physical input.
-- Resume: select missing criterion. Successful GUI units `dbg2-context-{gui-vnovoyb8,win32-gui-_eurj41o}` keep private scratch for review; retire exceptions safely after replacement. Do not repeat accepted replay.
+- Verified: context, retry, discovery, replay/cancel, live refresh and extended live search context at 480x360 with exact cancellation in EUR Wine. `2026-11-04-show-live-extended-search-context.json`.
+- Missing: full operation parity and comprehensive narrow-window presentation; native/physical input. DBG2-14 prerequisite accepted.
+- Selection: user requests task completion; audit supported action families and presentation against accepted DBG2-13/15 evidence and identify exact gaps.
+- Resume: complete remaining parity without repeating accepted replay or search context. Private proofs retained.
 
 ### DBG2-16
 
 - State: active
 - Outcome: partial
-- Verified: assertions, waits, catalog/captures, bounded searches, Start/cancel, interrupted recovery, safe restart refusal and one interactive recipe/session picker flow in EUR Wine. `2026-11-04-verify-typed-recipe-interactive-picker.json`.
-- Missing: other action types, live search hit/feature-gated watch, broader picker scenarios, cross-restart recovery and wider platforms; ambiguous queries not retried.
-- Resume: select an unverified criterion without repeating the accepted interactive flow; private and failed proof units retained.
+- Verified: assertions, waits, catalog/captures, bounded searches including an EUR Wine Thumb hit, Start/cancel, interrupted recovery, safe restart refusal and interactive recipe/session picker. `2026-11-04-verify-recipe-breakpoint-hit.json`.
+- Missing: other action types, feature-gated watch, broader picker scenarios, cross-restart recovery and wider platforms; ambiguous queries not retried.
+- Resume: select an unverified criterion without repeating accepted search or picker flows; private and failed proof units retained.
 
 ### DBG2-17
 
@@ -144,10 +127,10 @@ for a specific question: archive legacy lines 179..744 or the named record below
 ### DBG2-24
 
 - State: waiting
-- Outcome: not_started
-- Verified: preceding foundations accepted; no recorded closure of parent 24, outside audit 13..23.
-- Missing: named triggers; dependencies DBG2-05/15 and DBG-08/11.
-- Resume: only criterion DBG2-24 in TODO section P4 upon a relevant request; no development selected now.
+- Outcome: partial
+- Verified: named trigger editor, counts/windows, RAM guard, pause/capture/freeze, authenticated capture identity and idempotent retry; EUR Wine hit/miss, actions and GUI PASS. `2026-11-04-authenticate-trigger-capture-and-retry.json`.
+- Missing: shared DBG2-15 parent closure; native Windows, physical input and broader platform coverage remain under DBG2-27. Counted watch tested synthetically.
+- Resume: finish DBG2-15 prerequisite before parent closure; preserve accepted trigger evidence and private proofs.
 
 ### DBG2-25
 
@@ -207,6 +190,8 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Blockers, dependencies and shared resources
 
+- DBG2 IME tests touched personal `~/.local/share/ibus-table/tables/cangjie3-user.db`; user informed, do not alter it. Unit de2hg3tl lost an Xvfb handle: host status unknown; do not signal by guess.
+
 - A read-only coverage HTML character diff yielded with no retained handle on 2026-11-03; outcome/host status unknown. Do not restart or infer termination.
 
 - Async work: the collaboration inventory observed on 2026-11-01 showed only `/root`; ps visibility is limited to the sandbox namespace. Recent isolated Linux test builds completed; no Wine/runtime job was started or signaled. Host/other-thread state is unobservable: do not assert global inactivity. Historical results prove their children's closure, not today's host state. Before resuming, check handle/process, output and owner; no response or a lost handle does not establish failure.
@@ -217,9 +202,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: ROMDATA-02-04-E117-ALTERNATE-CATALOG waiting/integrated_unverified; EUR goal partial.
-- Last verified result: 10 roots/12 selectors/1818 bytes source PASS; static contracts match retained geometry and E116 union. E117 not built or runtime verified.
-- Remaining work: 22 residual census roots, ordinary use, global coverage, Linux/USA/native Windows and mod phases; E111–E115 retained.
-- Errors or blockers: host-coordinated E117 build was not executed; automatic approval review hit usage limit (reported retry 12:52). Model/effort unconfirmed.
-- Next action: after approval usage reset, run target/rom-data-e116-alternate-census-20261104/run-build-snapshot.py with host coordination, then Wine checks.
-- References: docs/rom_data_compact_catalog.md; target/rom-data-e116-alternate-census-20261104/{query-unit,geometry-unit}.json.
+- Task: ROM-DATA-FULL-EUR partial; E127 catalog and ordinary scenes.
+- Last verified result: 29 E111 candidate roots projected; Soil Evidence, Freezeblink and Stardust exact bank reads and paired Wine scenes pass.
+- Remaining work: other resources/consumers, ordinary banks, ABI/global extent and mod phases; Linux, USA and native Windows pending.
+- Errors or blockers: audit CLI build hit ENOSPC; emitted test passed. Memory check flags concurrent font/package files lacking records. Model/effort unconfirmed; no metrics.
+- Next action: select a source-backed remaining EUR criterion without repeating accepted checks.
+- References: docs/rom_data_compact_catalog.md; docs/changes/2026-11-04-verify-european-stardust-bank.json; target/rom-data-e127-loop-stardust-watch-20261104/.

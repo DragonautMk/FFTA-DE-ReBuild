@@ -26,6 +26,8 @@ mod artifact_lease;
 mod debug_control;
 mod debug_command;
 mod debug_command_panel;
+#[cfg(target_os="windows")]
+mod debug_command_wine_ime;
 mod debug_operations;
 mod debug_content;
 mod debug_cheats;

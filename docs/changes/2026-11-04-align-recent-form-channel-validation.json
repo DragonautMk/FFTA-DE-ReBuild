@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "align-recent-form-channel-validation",
+  "title": "Align recent-event form validation with command channels",
+  "kind": "fixed",
+  "platforms": [
+    "Windows cross-build; Wine/Xvfb EUR interpreter"
+  ],
+  "changes": [
+    "Accept Recent reads-on in the parameter form without optional ROM read-audit hooks, matching the shared console and local-control parser; warn that read observations are unavailable while other events remain collectable."
+  ],
+  "validation": [
+    "Default Windows cross-build and Wine workbench, Recent and parser tests passed; audit-enabled Windows cross-build and focused Wine tests passed.",
+    "Wine/Xvfb EUR three-channel GUI proof used reads-on and on-error-off; identical settings and one explicitly unavailable-read frame per channel, followed by successful reports and three total frames.",
+    "Default-build typed action matrix compared Step, Inspect, Audio, Code, Gameplay, Recent and Graphics form defaults against console and CLI; invalid Recent event count was rejected."
+  ],
+  "limitations": [
+    "GUI proof used simulated keyboard/mouse and an isolated EUR session under Wine; native Windows, physical input and full DBG2-13 operation parity are not covered.",
+    "A prior GUI attempt with on-error enabled froze Recent after a Windows control-reply access error; its failed diagnostics are retained and the follow-up proof used on-error off."
+  ],
+  "files": [
+    "crates/recomp/src/debug_workbench.rs",
+    "crates/recomp/src/debug_workbench/tests.rs",
+    "docs/debug_recent.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ],
+  "references": [
+    "docs/debug_recent.md"
+  ]
+}

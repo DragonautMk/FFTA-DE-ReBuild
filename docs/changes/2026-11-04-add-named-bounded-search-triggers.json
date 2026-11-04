@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "add-named-bounded-search-triggers",
+  "title": "Add named bounded search triggers",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU / Wine / Xvfb"
+  ],
+  "changes": [
+    "Add session-pinned named PC and bus search definitions with explicit save, list, show, enable, disable, remove and run commands. Definitions start disabled and management never executes a search.",
+    "Return hit or not-reached with the definition hash and original control response; preserve existing interpreter, watch-feature, conflict and resource limits."
+  ],
+  "validation": [
+    "Windows GNU runtime and test builds passed; 19 focused Wine tests passed for trigger safety, named synthetic hit/miss responses, removal, parser/completion and operation registry.",
+    "An isolated EUR Wine/Xvfb interpreter verified a named Thumb hit and one-step miss with distinct identities, no guest change during configuration, disabled refusal without dispatch, unchanged protected inputs and normal GUI close. This run preceded the later removal and metadata-only additions.",
+    "An initial live driver attempt reached both outcomes but incorrectly expected the consumed request file to remain; the corrected attempt passed and its failed diagnostics were retained."
+  ],
+  "limitations": [
+    "DBG2-24 remains partial: hit counts, frame windows, combined conditions, capture/event-freeze actions, menu editor, feature-gated watch execution, native Windows and physical input remain unverified or unimplemented."
+  ],
+  "files": [
+    "crates/recomp/src/debug_command.rs",
+    "crates/recomp/src/debug_command/completion.rs",
+    "crates/recomp/src/debug_command/recipe.rs",
+    "crates/recomp/src/debug_command/trigger.rs",
+    "crates/recomp/src/debug_operations.json",
+    "docs/development/MENU_ATLAS_INVENTORY.json"
+  ],
+  "references": [
+    "docs/debug_probes.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ]
+}

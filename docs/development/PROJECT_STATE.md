@@ -70,7 +70,7 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   sections), fixed shell and internal list/detail scrolling. Legacy handlers,
   confirmations, DS/content selectors and 9/99 slots remain in use; the readonly
   operation and 28-task references do not execute CLI strings or future tools.
-  DBG2-01..12 retain their current completed status; DBG2-13/14 are in progress.
+  DBG2-01..14 retain their completed status within their recorded scopes.
   `ff.percent` adds100..800% in20-point steps while preserving legacy
   `ff.speed`2/4/8. The rational frame batch clock preserves each complete guest
   frame/clock; fast audio uses fractional playback ratios. Menu-only shoulder
@@ -139,6 +139,7 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   verification remain unfinished.
 
 - The [integrated debug follow-up](DEBUG_TOOLS_V2_TODO.md) is in implementation.
+  DBG2-24 provides [named bounded searches](../debug_probes.md#named-searches--dbg2-24) via the command console and debug-command. Definitions default to disabled; explicit runs support bounded counts/windows, a RAM guard and pause/capture/freeze actions. Its shared DBG2-15 dependency remains partial.
   DBG2-01 adds the readonly [operation contract](../debug_operations.md):
   `debug-operations list/show [--json]` initially inventories65operations/242
   parameters (67/250 after DBG2-02), current/planned menu routes, prerequisites/effects/results/caps,
@@ -200,14 +201,13 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   synthetic load and off/on state/clock comparison pass. Restored snapshots with
   channel taps disabled use faithful host audio/pacing without rewriting state;
   short Wine queue observations pass, native/audible coverage remains open.
-  DBG2-13/14 work now has a partial typed command parser, local-control adapter
-  and initial command panel; its Wine synthetic step, focus-return and simulated
-  XInput keyboard checks pass. Quote-aware option/ID completion and cycling
-  have selected Wine GUI/model coverage. An isolated Wine clipboard check covers
-  copy/cut, Unicode multiline paste, rejection on submit and copied result JSON;
-  actual IME composition remains unverified. Wine also verifies CLI and console
-  selection of synthetic replay profiles by ID without starting a replay;
-  physical-controller checks and full equivalence remain open. See
+  DBG2-13 has an accepted typed command parser and shared local-control adapter;
+  DBG2-14's command panel is accepted in its Wine scope. Editor, history,
+  selection, multiline clipboard, completion, focus and simulated controller
+  checks pass. Wine verifies Cangjie composition and cancellation, Italian
+  layout, CJK rendering, hide/reopen and missing-capability refusal. Wine also
+  verifies CLI and console selection of synthetic replay profiles by ID without
+  starting a replay; physical-input and broader platform checks remain open. See
   [the command operations](../debug_operations.md).
   A bounded Wine search also verifies targeted cancellation and a client/server
   deadline; terminal local-control replies no longer list the completed job as
@@ -2091,9 +2091,22 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   canonical test build and disposable immutable-source CLI build are warning-free.
   Production create/reuse/startup pass with 100 resources/101 files. One e111
   generation remains; the e110 comparison and successful scratch are retired.
-  Ordinary use of the new five roots, 29 residual census roots and global/ROM/mod/
-  Linux/USA/native Windows criteria remain open. No benchmark or guest index cap.
+  Ordinary use of the new five roots and global/ROM/mod/Linux/USA/native Windows
+  criteria remain open. No benchmark or guest index cap.
   [Contract](../rom_data_compact_catalog.md#finite-loop-european-source-extension).
+- EUR e127-d126 expands the sparse catalog to 63 banks; every one of the 29
+  retained E111 census candidates now has a bounded projection. The last root,
+  6ca580, represents selectors 0–6; other nibble candidates retain the original
+  access path and are not declared invalid. EUR Wine source, create/reuse,
+  targeted native/reader and startup checks pass for the increments. A normal
+  Soil Evidence invocation also passes a 480-frame raw/managed state/clock,
+  render/OAM/dispatch/audio comparison; a separate feature-gated watch observes
+  represented 6bac28 and 6c0614 reads; Freezeblink and Stardust also reached
+  6babc4 and 6bb574 in matching 600-frame pairs. These tests used a valid
+  emitted test executable from a Cargo run whose CLI build failed for lack of
+  disk space. Other selectors/consumers, complete animations,
+  Linux, USA, native Windows and mod phases remain open; no benchmark.
+  [Contract](../rom_data_compact_catalog.md).
 - The desktop loads the full ROM into `MemMap.rom` at startup; ordinary guest
   ROM reads use that in-memory buffer. The [ROM data TODO](ROM_DATA_TODO.md)
   orders extraction/decoding, startup reuse and direct runtime consumption first,

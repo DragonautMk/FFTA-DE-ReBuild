@@ -2222,7 +2222,16 @@ impl PlayApp {
             crate::debug_control::Action::Find{settings}=>{
                 if !self.cheat_armed.is_empty(){return Err("Disarm maintained cheats before instruction search".into());}
                 if !self.paused || self.probe.is_some() || self.frame_control.remaining>0 || self.replay_job.is_some() || self.recording_active() {return Err("Search requires an idle paused copy without recording or replay".into());}
+                if settings.trigger.is_some(){let root=input_config::exe_dir().ok_or("Missing isolated root")?;crate::debug_command::trigger::verify_run(&root,settings)?;}
                 let search=crate::debug_probe::Search::start(settings.clone(),self.native.is_some())?;
+                match settings.on_hit {
+                    Some(crate::debug_probe::HitAction::Freeze) if self.recent.as_ref().is_none_or(|b|!b.enabled()) => return Err("Start recent events before requesting freeze on hit".into()),
+                    Some(crate::debug_probe::HitAction::Capture) => {
+                        if self.last_cheat_once.is_some(){return Err("Capture after cheat writes needs provenance support; restart the isolated copy first".into());}
+                        let root=input_config::exe_dir().ok_or("Missing isolated root")?;crate::debug_probe::capture_preflight(&root)?;
+                    },
+                    _=>{},
+                }
                 self.frame_control.stop("searching");self.probe_result=None;self.probe=Some(search);self.debug_audio_boundary();self.menu_dirty=true;return Ok(());
             },
             crate::debug_control::Action::Cancel{request_id}=>{
@@ -2279,10 +2288,32 @@ impl PlayApp {
         }
         if self.probe.as_ref().unwrap().result.is_some() {
             let probe=self.probe.take().unwrap();
-            let mut result=probe.result.clone().unwrap();result["settings"]=serde_json::to_value(&probe.settings).expect("search settings");self.probe_result=Some(result);
-            self.frame_control.stop(if self.probe_result.as_ref().unwrap()["outcome"]=="hit" {"search-hit"}else{"not-reached"});
-            // A partial-step stop keeps its guest audio buffers: they are guest
-            // state, drained at the next completed frame as ordinary playback.
+            let mut result=probe.result.clone().unwrap();result["settings"]=serde_json::to_value(&probe.settings).expect("search settings");
+            let hit=result["outcome"]=="hit";
+            self.frame_control.stop(if hit {"search-hit"}else{"not-reached"});
+            if let Some(action)=probe.settings.on_hit {
+                use crate::debug_probe::HitAction;
+                let outcome:Result<serde_json::Value,String>=if !hit {Ok(serde_json::json!({"kind":action,"outcome":"not-run"}))} else {match action {
+                    HitAction::Pause=>Ok(serde_json::json!({"kind":"pause","outcome":"completed"})),
+                    HitAction::Freeze=>match self.recent.as_mut().filter(|b|b.enabled()) {
+                        Some(buffer)=>{buffer.freeze(&self.machine,"trigger-hit");Ok(serde_json::json!({"kind":"freeze","outcome":"completed","boundary":"matched-search-stop"}))},
+                        None=>Err("Recent events stopped before the trigger hit".into()),
+                    },
+                    HitAction::Capture=>{
+                        let before=self.machine.bus.frames;
+                        let boundary=if completed {Ok(())} else {
+                            self.frame_control.keys=0x3ff;
+                            if self.run_one_frame() && self.machine.bus.frames.checked_sub(before)==Some(1) {Ok(())} else {Err("Could not finish the capture frame".into())}
+                        };
+                        boundary.and_then(|_|input_config::exe_dir().ok_or("Missing isolated root".to_owned()))
+                            .and_then(|root|crate::debug_probe::publish_capture(&root,&self.machine,&probe.settings,&result))
+                            .map(|capture|serde_json::json!({"kind":"capture","outcome":"completed","capture":capture,"advanced_to_boundary":!completed}))
+                    },
+                }};
+                result["post_action"]=match outcome {Ok(value)=>value,Err(error)=>serde_json::json!({"kind":action,"outcome":"failed","error":error,"frame":self.machine.bus.frames,"clock":self.machine.bus.clock})};
+            }
+            self.probe_result=Some(result);
+            // A partial-step stop keeps its guest audio buffers until a completed frame.
             self.menu.diagnosis_result(format!("{} | PC {:08X} | inspect via debug-control",self.frame_control.reason.to_uppercase(),self.machine.cpu.regs[15]));
             self.finish_control();
         }
@@ -2444,7 +2475,8 @@ impl PlayApp {
             let request=self.control_server.as_ref().unwrap().pending.as_ref().unwrap().clone();
             let _context=self.events.clock.context(request.event_context());
             let status=self.debug_status();
-            let error=if !["step-complete","search-hit","not-reached"].contains(&self.frame_control.reason) {Some(format!("Step stopped: {}",self.frame_control.reason))} else {status.as_ref().err().cloned()};
+            let post_error=if matches!(request.command,crate::debug_control::Action::Find{..}) {self.probe_result.as_ref().filter(|v|v["post_action"]["outcome"]=="failed").and_then(|v|v["post_action"]["error"].as_str()).map(str::to_owned)} else {None};
+            let error=if !["step-complete","search-hit","not-reached"].contains(&self.frame_control.reason) {Some(format!("Step stopped: {}",self.frame_control.reason))} else {post_error.or_else(||status.as_ref().err().cloned())};
             if self.events_enabled(){self.ui_event("control-complete",serde_json::json!({"command":request.command,"outcome":if error.is_some(){"refused"}else{"complete"},"error":error,"reason":self.frame_control.reason}));}
             if let Err(error)=self.control_server.as_mut().unwrap().finish(status.unwrap_or_default(),error){self.recent_error(&format!("Control completion reply: {error}"));eprintln!("debug control: {error}");}
         }
@@ -2472,12 +2504,22 @@ impl PlayApp {
             self.workbench.cancel_process()?;
             self.menu.tool_feedback(self.workbench.last.clone(),String::new(),true);return Ok(());
         }
-        if !self.paused || self.probe.is_some() || self.frame_control.remaining>0 || self.replay_job.is_some() || self.recording_active(){return Err("Tool draft actions require an idle paused copy without recording/replay/step/search.".into());}
+        let tool=self.menu.tool_values().0;
+        // Direct controls use the same parser and action-specific runtime
+        // checks as CLI requests. Profile and host-tool workflows retain their
+        // stricter idle-session requirement.
+        let direct_control=!tool.creates_profile() && !tool.library()
+            && matches!(request,ToolRequest::Validate|ToolRequest::Run);
+        if !direct_control && (!self.paused || self.probe.is_some() || self.frame_control.remaining>0 || self.replay_job.is_some()) {return Err("Tool draft actions require an idle paused copy without replay/step/search.".into());}
+        if direct_control && request==ToolRequest::Run && self.control_server.as_ref().is_some_and(|s|s.pending.is_some()) {return Err("A command is still pending; use query status or targeted cancel".into());}
         let rom=gba_core::ffta_rom::digest(&self.machine.bus.rom);
         let draft=self.workbench.draft(&self.menu,&self.content_picker,rom)?;
+        // Direct controls already enforce their own recording restrictions. In
+        // particular, audio capture is designed to accompany a recording.
+        if self.recording_active() && (draft.tool.creates_profile() || draft.tool.library()) {return Err("Stop recording before preparing profiles or running separate tools.".into());}
         if request==ToolRequest::Run && draft.tool.library() {return self.workbench.request(&mut self.menu,draft,request);}
         if request==ToolRequest::Run{
-            if self.workbench.busy(){return Err("A workbench host operation is still finishing".into());}
+            if self.workbench.busy() && !direct_control {return Err("A workbench host operation is still finishing".into());}
             if draft.tool.creates_profile(){
                 let path=self.workbench.prepared_for(draft.tool)?;
                 let rom=gba_core::ffta_rom::digest(&self.machine.bus.rom);
@@ -2490,7 +2532,7 @@ impl PlayApp {
                 let action=draft.control()?;self.debug_action(&action)?;
                 self.workbench.last=format!("Accepted by shared handler: {action:?}. Observers require explicit steps/resume and existing report action.");
             }
-            self.menu.tool_feedback(self.workbench.last.clone(),String::new(),false);return Ok(());
+            self.menu.tool_feedback(self.workbench.last.clone(),String::new(),self.workbench.busy());return Ok(());
         }
         self.workbench.request(&mut self.menu,draft,request)
     }

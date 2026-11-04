@@ -54,23 +54,99 @@ fn every_form_has_bounded_unique_fields_and_shared_control_validation() {
     d.values = defaults(Tool::Recent);
     for reads in ["off", "on"] {
         d.values.insert("--reads".into(), reads.into());
-        match d.control() {
-            Ok(Action::RecentStart { settings }) => {
-                assert!(reads == "off" || cfg!(feature = "rom-data-read-audit"));
-                assert_eq!(settings.reads, reads == "on");
-            }
-            Err(error) => {
-                assert_eq!(reads, "on", "{error}");
-                assert!(!cfg!(feature = "rom-data-read-audit"), "{error}");
-                assert!(error.contains("lacks rom-data-read-audit"), "{error}");
-            }
-            Ok(other) => panic!("Unexpected Recent action: {other:?}"),
+        let Action::RecentStart { settings } = d.control().unwrap() else { panic!("Expected recent settings") };
+        assert_eq!(settings.reads, reads == "on");
+        if reads == "on" && !cfg!(feature = "rom-data-read-audit") {
+            assert!(d.validate().unwrap().contains("feature-unavailable"));
         }
     }
     d.tool = Tool::Audio;
     d.values = defaults(Tool::Audio);
     d.values.insert("--streams".into(), "mixed,mixed".into());
     assert!(d.control().is_err());
+}
+#[test]
+fn common_menu_drafts_match_console_and_local_control_actions() {
+    let root=tempfile::tempdir().unwrap();
+    let cases=[
+        (Tool::Step,"step 1 --keys 0x3ff"),
+        (Tool::Inspect,"inspect 0x08000000 16"),
+        (Tool::Audio,"audio-start --frames 60 --streams mixed,psg,hle,fifo0,fifo1"),
+        (Tool::Code,"code-start --frames 1 --events 512 --start 0x0 --end 0xffffffff --kind all --mode all"),
+        (Tool::Gameplay,"gameplay-start --frames 1 --events 512 --family all"),
+        (Tool::Recent,"recent-start --events 1024 --reads on --start 0x0 --end 0x02000000 --on-error on"),
+        (Tool::Graphics,"graphics"),
+    ];
+    for (tool,text) in cases {
+        let draft=Draft{tool,values:defaults(tool),refs:BTreeMap::new(),rom:"a".repeat(64),config:root.path().into()};
+        let menu=draft.control().unwrap();
+        let crate::debug_command::Command::Control(console)=crate::debug_command::parse(text).unwrap() else{panic!("{tool:?}")};
+        let mut args=crate::debug_command::tokenize(text).unwrap();args.insert(1,"session".into());
+        let cli=crate::debug_control::parse(&args).unwrap().1;
+        assert_eq!(serde_json::to_value(&menu).unwrap(),serde_json::to_value(&console).unwrap(),"{tool:?}");
+        assert_eq!(serde_json::to_value(&menu).unwrap(),serde_json::to_value(&cli).unwrap(),"{tool:?}");
+    }
+    assert_eq!(fs::read_dir(root.path()).unwrap().count(),0);
+}
+#[test]
+fn nondefault_form_bounds_match_console_and_local_control() {
+    let root=tempfile::tempdir().unwrap();
+    let cases: &[(Tool,&[(&str,&str)],&str)] = &[
+        (Tool::Step,&[("frames","600"),("--keys","000")],"step 600 --keys 0x000"),
+        (Tool::Inspect,&[("address","02000000"),("length","256")],"inspect 0x02000000 256"),
+        (Tool::Audio,&[("--frames","180"),("--streams","mixed,psg")],"audio-start --frames 180 --streams mixed,psg"),
+        (Tool::Code,&[("--frames","60"),("--events","1"),("--start","08000000"),("--end","0a000000"),("--kind","interpreter"),("--mode","thumb")],"code-start --frames 60 --events 1 --start 0x08000000 --end 0x0a000000 --kind interpreter --mode thumb"),
+        (Tool::Gameplay,&[("--frames","60"),("--events","1"),("--family","unit"),("--context","02000000")],"gameplay-start --frames 60 --events 1 --family unit --context 0x02000000"),
+        (Tool::Recent,&[("--events","1"),("--reads","off"),("--start","10"),("--end","20"),("--on-error","off")],"recent-start --events 1 --reads off --start 0x10 --end 0x20 --on-error off"),
+        (Tool::Graphics,&[("--compare-last","on")],"graphics --compare-last"),
+    ];
+    for &(tool,changes,text) in cases {
+        let mut values=defaults(tool);
+        for &(key,value) in changes {values.insert(key.into(),value.into());}
+        let draft=Draft{tool,values:checked_values(tool,values).unwrap(),refs:BTreeMap::new(),rom:"a".repeat(64),config:root.path().into()};
+        let menu=draft.control().unwrap();
+        let crate::debug_command::Command::Control(console)=crate::debug_command::parse(text).unwrap() else {panic!("{tool:?}")};
+        let mut args=crate::debug_command::tokenize(text).unwrap();args.insert(1,"session".into());
+        let cli=crate::debug_control::parse(&args).unwrap().1;
+        assert_eq!(serde_json::to_value(&menu).unwrap(),serde_json::to_value(&console).unwrap(),"{tool:?}");
+        assert_eq!(serde_json::to_value(&menu).unwrap(),serde_json::to_value(&cli).unwrap(),"{tool:?}");
+    }
+    let invalid: &[(Tool,&str,&str,&str)] = &[
+        (Tool::Step,"frames","601","step 601"),
+        (Tool::Inspect,"length","257","inspect 0x08000000 257"),
+        (Tool::Audio,"--frames","181","audio-start --frames 181"),
+        (Tool::Code,"--events","0","code-start --events 0"),
+        (Tool::Gameplay,"--frames","61","gameplay-start --frames 61"),
+        (Tool::Recent,"--events","1025","recent-start --events 1025"),
+    ];
+    for &(tool,key,value,text) in invalid {
+        let mut values=defaults(tool);values.insert(key.into(),value.into());
+        let draft=Draft{tool,values:checked_values(tool,values).unwrap(),refs:BTreeMap::new(),rom:"a".repeat(64),config:root.path().into()};
+        assert!(draft.control().is_err(),"{tool:?}");
+        assert!(crate::debug_command::parse(text).is_err(),"{text}");
+        let mut args=crate::debug_command::tokenize(text).unwrap();args.insert(1,"session".into());
+        assert!(crate::debug_control::parse(&args).is_err(),"{text}");
+    }
+    assert_eq!(fs::read_dir(root.path()).unwrap().count(),0);
+}
+#[test]
+fn recent_form_console_and_cli_share_typed_validation() {
+    let t=tempfile::tempdir().unwrap();
+    let mut draft=Draft{tool:Tool::Recent,values:defaults(Tool::Recent),refs:BTreeMap::new(),rom:"a".repeat(64),config:t.path().into()};
+    for reads in ["on","off"] {
+        draft.values.insert("--reads".into(),reads.into());
+        let menu=draft.control().unwrap();
+        let args=vec!["recent-start","session","--events","1024","--reads",reads,"--start","0","--end","02000000","--on-error","on"].into_iter().map(str::to_owned).collect::<Vec<_>>();
+        let cli=crate::debug_control::parse(&args).unwrap().1;
+        let text=format!("recent-start --events 1024 --reads {reads} --start 0x0 --end 0x02000000 --on-error on");
+        let crate::debug_command::Command::Control(console)=crate::debug_command::parse(&text).unwrap() else {panic!()};
+        assert_eq!(serde_json::to_value(&menu).unwrap(),serde_json::to_value(&cli).unwrap());
+        assert_eq!(serde_json::to_value(&menu).unwrap(),serde_json::to_value(&console).unwrap());
+    }
+    draft.values.insert("--events".into(),"0".into());
+    assert!(draft.control().is_err());
+    assert!(crate::debug_command::parse("recent-start --events 0").is_err());
+    assert!(!t.path().join("debug-presets").exists());
 }
 #[test]
 fn presets_are_unique_bounded_tool_checked_and_do_not_restore_paths_or_execute() {

@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "align-tool-controls-during-recording",
+  "title": "Align direct debug tools during input recording",
+  "kind": "fixed",
+  "platforms": [
+    "Windows GNU build; Wine/Xvfb EUR interpreter"
+  ],
+  "changes": [
+    "Let direct workbench controls use their existing action-specific recording guards, allowing audio capture during an active paused snapshot recording as already supported by the shared handler. Preserve the workbench recording restriction for profile preparation and separate host tools."
+  ],
+  "validation": [
+    "An isolated EUR Wine snapshot recording confirmed that menu validation and audio start, local-control CLI audio start, and interactive command-console audio start each succeeded and produced reports; instruction search and replay-profile preparation were still refused. The simulated GUI closed normally and protected inputs remained unchanged.",
+    "Windows GNU runtime and test builds passed; focused Wine workbench (7), audio (2) and control parser (1) tests passed."
+  ],
+  "limitations": [
+    "Native Windows, physical input and full DBG2-13 parity remain unverified. The earlier unmodified GUI proof confirmed that local-control audio succeeded while the menu refused validation."
+  ],
+  "files": [
+    "crates/recomp/src/play.rs",
+    "docs/debug_audio.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ],
+  "references": [
+    "docs/debug_audio.md"
+  ]
+}

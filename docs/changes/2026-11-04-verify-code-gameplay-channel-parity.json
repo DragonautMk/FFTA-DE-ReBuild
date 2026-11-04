@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "verify-code-gameplay-channel-parity",
+  "title": "Verify code and gameplay trace channel parity",
+  "kind": "docs",
+  "platforms": [
+    "Wine/Xvfb EUR interpreter"
+  ],
+  "changes": [
+    "Record a bounded three-channel parity check for default code and gameplay trace settings, starts and report actions."
+  ],
+  "validation": [
+    "In an isolated EUR session, local-control CLI, workbench menu and interactive command console each started both traces with identical observed default settings. Each trace observed one completed frame and was saved through a local-control report request; six distinct HTML reports existed and six total frames advanced. Protected inputs and normal GUI closure were verified.",
+    "Separate EUR Wine/Xvfb sessions saved one-frame code and gameplay traces through the menu and interactive console. Each saved JSON retained the trace settings and frame count; report publication left guest frame, clock and state hash unchanged. Protected inputs and normal GUI closure were verified.",
+    "A first menu/report run completed both saves but its later console navigation failed; a menu-only run produced the required PASS receipt. One console attempt encountered an existing Wine lease and ran no test; the console-only retry passed."
+  ],
+  "limitations": [
+    "Nondefault settings, broader error outcomes, native Windows, physical input and full DBG2-13 parity remain unverified."
+  ],
+  "files": [
+    "docs/debug_code.md",
+    "docs/debug_gameplay.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ],
+  "references": [
+    "docs/debug_code.md",
+    "docs/debug_gameplay.md"
+  ]
+}

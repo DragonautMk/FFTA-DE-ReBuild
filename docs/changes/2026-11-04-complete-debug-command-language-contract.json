@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "complete-debug-command-language-contract",
+  "title": "Complete the shared debug command language contract",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU; Wine/Xvfb EUR and synthetic interpreter"
+  ],
+  "changes": [
+    "Accept DBG2-13 after reconciling its language, shared operations, ID selection, job controls, channel parity and malformed-input criteria; synchronize the Atlas task reference and durable project state."
+  ],
+  "validation": [
+    "The shared typed parser and action dispatch cover help/status, pause/step, inspection, PC/watch searches, captures/reports, profile/catalog selection and jobs. Same-seed CLI/menu/console inspection and step endpoints matched exactly; code/gameplay, audio, Recent, graphics and issue-report checks exercised the applicable channels. Replay, cancellation, retry and selected-profile outcomes have earlier linked evidence.",
+    "Wine parser and GUI checks rejected selected malformed, ambiguous, unknown and out-of-range inputs without guest mutation. Synthetic replay, pending-request and host-worker checks verified aligned direct controls and preserved ownership/cancellation. The latest Windows GNU builds and 7 menu/8 workbench/34 control/10 command Wine tests passed."
+  ],
+  "limitations": [
+    "Acceptance is for the DBG2-13 command-language contract, not every runtime/input/platform combination. Native Windows, physical input and a live audit-enabled watch hit remain part of DBG2-27; DBG2-14 and subsequent tasks remain open."
+  ],
+  "files": [
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/debug_control.md",
+    "docs/changes/2026-11-04-verify-step-inspect-channel-parity.json",
+    "docs/changes/2026-11-04-verify-code-gameplay-channel-parity.json",
+    "docs/changes/2026-11-04-verify-search-channel-parity.json",
+    "docs/changes/2026-11-04-allow-direct-controls-during-host-jobs.json"
+  ]
+}

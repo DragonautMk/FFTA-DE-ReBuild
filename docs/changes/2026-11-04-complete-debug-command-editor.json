@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "complete-debug-command-editor",
+  "title": "Complete debugger command editor in Wine",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU build and Wine"
+  ],
+  "changes": [
+    "Accept DBG2-14 within its selected scope: explicit command editing, history, completion, contextual help, clipboard, controller keyboard and isolated input handling."
+  ],
+  "validation": [
+    "Earlier Wine GUI/model evidence covers typing, correction, recall, cancellation, focus isolation, simulated controller and multiline clipboard. Current Wine GUI covers real IBus Cangjie composition, cancellation, repeated results, F2, focus/hide and Italian layout; missing capability produces incompatible/not-sent without changing request, result or guest state."
+  ],
+  "limitations": [
+    "Wine/Xvfb and simulated inputs exercise selected paths only; physical hardware, native Windows/Linux, other IMEs and complete Unicode font coverage remain DBG2-27 integration work."
+  ],
+  "files": [
+    "crates/menu/assets/debug_v2.tsv",
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

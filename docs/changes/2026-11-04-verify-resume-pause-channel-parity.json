@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "verify-resume-pause-channel-parity",
+  "title": "Verify resume and pause channel transitions",
+  "kind": "docs",
+  "platforms": [
+    "Wine/Xvfb EUR interpreter"
+  ],
+  "changes": [
+    "Record local-control, menu/F6 and console pause/resume transition checks."
+  ],
+  "validation": [
+    "An isolated EUR Wine/Xvfb session resumed and paused through direct local-control CLI, the menu followed by F6, and the interactive console. Each resume advanced guest frames and each pause returned paused with no remaining step budget. The final copy was paused, protected inputs verified and GUI closed normally."
+  ],
+  "limitations": [
+    "Free-running frame counts depend on timing and were not compared for equality. Simulated keyboard/mouse, one EUR interpreter seed, native Windows and physical input remain unverified. One attempt encountered a Wine lease before execution; another completed CLI/menu transitions but failed console navigation; the corrected full run passed."
+  ],
+  "files": [
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ],
+  "references": [
+    "docs/debug_control.md"
+  ]
+}

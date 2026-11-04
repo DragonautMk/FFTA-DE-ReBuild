@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "show-live-extended-search-context",
+  "title": "Show complete live search context",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU / Wine / Xvfb"
+  ],
+  "changes": [
+    "Include the bounded hit count, frame window, canonical RAM guard and on-hit action in the existing pending-search context.",
+    "Include the authenticated named trigger and full definition hash in pending search context."
+  ],
+  "validation": [
+    "Focused Windows GNU/Wine tests passed. In an isolated EUR Wine/Xvfb session, the interactive console at a verified 480x360 Win32 client displayed the live request identity, progress and all extended search settings; exact-ID cancellation completed and the GUI closed normally. Input was simulated and protected inputs stayed unchanged.",
+    "A second 480x360 Wine/Xvfb console showed the named trigger and complete definition hash during the search and cancelled its exact request; protected inputs stayed unchanged and the GUI closed normally."
+  ],
+  "limitations": [
+    "One live search and window size only; DBG2-15 operation parity, other long parameter cases, native Windows and physical input remain open."
+  ],
+  "files": [
+    "crates/recomp/src/debug_command/observation.rs"
+  ],
+  "references": [
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

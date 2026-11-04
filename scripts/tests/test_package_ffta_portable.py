@@ -78,6 +78,8 @@ class Portable(unittest.TestCase):
         self.assertIn('docs/extended_saves.md',payloads)
         self.assertNotIn('docs/development/TASK_HANDOFF.md',payloads)
         self.assertEqual(payloads['Licenses/README.md'],(self.root/'Licenses/README.md').read_bytes())
+        for notice in ('Droid-NOTICE.txt','Droid-COPYRIGHT.txt'):
+            self.assertEqual(payloads['Licenses/fonts/'+notice],(self.root/'Licenses/fonts'/notice).read_bytes())
         self.assertIn(b'checkout reference',payloads['docs/debug_tools.md'])
         self.assertIn(b'[bundled](debug_tools.md)',payloads['docs/debug_tools.md'])
         self.assertIn(b'/Data/\n',payloads['.gitignore'])

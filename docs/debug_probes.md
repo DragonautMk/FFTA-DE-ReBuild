@@ -87,6 +87,92 @@ if `--width` is omitted. The first matched access remains the one declared in
 the report. Direct host accesses to vectors, native fetches and code inside
 native blocks are not intercepted by this watchpoint.
 
+In two isolated EUR Wine/Xvfb sessions started from the same seed, local-control
+CLI and the interactive console reached the same Thumb breakpoint with identical
+search results and endpoint state. On the default build, both refused the same
+watch request with the same feature-unavailable error before changing guest state.
+This comparison does not establish a live watch hit in an audit-enabled build.
+
+<a id="named-searches--dbg2-24"></a>
+
+## Named searches — DBG2-24
+
+The in-game command console and `debug-command` manage multiple named searches
+in the isolated session. Saving a definition creates it disabled and does not
+run it; enabling also does not run it. For example:
+
+```text
+trigger save entry 'break 0x080003d6 thumb --steps 100000 --hits 2 --frame-start 0 --frame-end 5 --on-hit pause'
+trigger list
+trigger edit entry 'break 0x080003d6 thumb --steps 100000 --hits 3'
+trigger show entry
+trigger enable entry
+trigger run entry
+trigger retry entry RUN REQUEST-ID DEADLINE-UNIX-MS
+trigger disable entry
+trigger remove entry
+```
+
+Names use 1–48 ASCII letters, digits, hyphens or underscores. Save never
+overwrites; editing an existing definition atomically disables it until explicitly
+enabled again. Invalid edits leave the previous definition intact. At most 32 are
+stored under the session's `Data/config/debug-triggers/`. Each is bound to its
+session manifest, ROM and runtime pins. A changed manifest or a disabled
+trigger is refused. Disabling does not cancel a search already dispatched.
+
+`break` chooses PC and mode; `watch` chooses a read/write range and optional
+width/value. Both accept `--hits 1..10000` and a relative frame interval
+`--frame-start N --frame-end N`, with start inclusive and end exclusive within
+0..600 completed frames from search origin. The defaults are one hit and the
+full window; omitting these options preserves the earlier serialized format.
+A PC hit counts an eligible instruction entry; a watch hit counts a complete
+interpreter step containing a match, retaining its first matching bus access.
+Multiple matches within one HLE/DMA step count once. The full step is attributed
+to its starting frame, including when it crosses a frame boundary.
+
+For a simple conjunction, add all three options `--when-address 0xADDRESS
+--when-width 1|2|4 --when-value 0xVALUE`. The guard compares aligned canonical
+EWRAM/IWRAM backing bytes in little-endian order, sampled before the candidate
+interpreter step. It does not perform bus or I/O reads. The result reports the
+candidate and matching counts, last observed guard value, interval and stop
+reason. Other combinations are not implied.
+
+`--on-hit pause|capture|freeze` chooses the explicit action. Pause stops at the
+search boundary. Capture completes the current frame with neutral input when
+needed, then publishes `capture.ffstate` and `capture.json` under
+`Data/config/debug-trigger-captures/`; it may advance one additional frame beyond
+the search window. The metadata identifies the session, ROM, selected condition,
+hit, final boundary, authenticated trigger name/definition hash and state hash. This is a derived unvalidated snapshot,
+without the recording/input bundle provided by [DBG-08](debug_captures.md).
+Capture after cheat writes is refused until cheat provenance is supported.
+Freeze requires an active recent-event buffer and freezes it at the hit; the
+existing `recent-report` command saves it. On a miss no action runs. Failed
+actions are reported as failures, including any already completed frame.
+
+Run uses the same idle-paused, recording/replay, backend and observer checks as
+the underlying search. PC stops before an eligible instruction; watch stops after
+the complete interpreter step including HLE/DMA/hardware work. Watch requires
+`rom-data-read-audit` and an exclusive bus observer. Native instruction-level
+search is refused because block dispatch has coarser granularity. No background
+rearming or automatic retry occurs. An explicit `trigger retry` requires the
+original run, request ID and deadline and the unchanged enabled definition; it
+uses the existing idempotent request ledger. The named result includes a
+definition hash and the original request/result identity; `trigger show` presents the definition,
+boundaries and observer constraints. The console also displays the evaluated hit
+and action; Ctrl+Shift+C copies the complete JSON. New capabilities are checked
+before sending extended settings to an older runtime.
+
+Windows GNU/Wine focused tests cover legacy serialization, bounds, capability
+refusal, PC count/window, guarded reads, feature-gated watch counts, capture
+publication and command/recipe regressions. In isolated EUR Wine/Xvfb sessions,
+a Thumb trigger reached its second hit, a second trigger missed within its limit,
+a PC/RAM guard froze recent events, and a hit produced a one-frame-boundary
+snapshot matching the live state hash. No snapshot was created on a miss.
+Simulated keyboard input in the game console created, enabled, ran and disabled
+a named trigger. Protected inputs remained unchanged and the windows closed
+normally. These checks do not establish native Windows, physical-controller,
+other-ROM or full device-observer coverage.
+
 <a id="limiti-ripresa-e-interruzione"></a>
 
 ## Limits, resumption and interruption

@@ -329,7 +329,8 @@ impl ToolForm {
             MenuInput::Confirm => {
                 if self.focus >= self.fields.len() {
                     let r = REQUESTS[self.focus - self.fields.len()];
-                    if !self.busy || r == ToolRequest::Back || (self.tool.library() && r == ToolRequest::Prepare) {
+                    let direct_run = r == ToolRequest::Run && !self.tool.library() && !self.tool.creates_profile();
+                    if !self.busy || r == ToolRequest::Back || (self.tool.library() && r == ToolRequest::Prepare) || direct_run {
                         return Some(MenuAction::ToolRequest(r));
                     }
                     self.message = "A host operation is finishing; wait or return.".into();

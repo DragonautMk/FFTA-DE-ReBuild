@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "forward-late-wine-ime-results",
+  "title": "Forward late Wine IME results in command console",
+  "kind": "fixed",
+  "platforms": [
+    "Windows GNU build and Wine"
+  ],
+  "changes": [
+    "For the Wine command window, forward a nonempty IME result arriving after composition end through the existing Winit editor path once; preserve native Windows handling and discard no draft on cancellation."
+  ],
+  "validation": [
+    "Windows GNU runtime/test builds and Wine editor, panel, command and composition-state tests passed. Private IBus Cangjie GUI verified 日 and repeated 日日, cancellation with selection preserved, F2 during composition, focus change, Italian è input and unchanged guest state."
+  ],
+  "limitations": [
+    "Simulated Wine/Xvfb keyboard and one Cangjie engine; native Windows, physical inputs, other IMEs and capability guards remain under DBG2-14. Missing font glyphs need separate visual verification."
+  ],
+  "files": [
+    "crates/recomp/src/main.rs",
+    "crates/recomp/src/debug_command_wine_ime.rs",
+    "crates/recomp/src/debug_command_panel.rs",
+    "crates/menu/assets/debug_v2.tsv",
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ],
+  "references": [
+    "docs/debug_control.md"
+  ]
+}

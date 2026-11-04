@@ -265,3 +265,38 @@ The exact plan, preservation inventories, preimages and `PASS` receipt remain
 under `target/local-artifact-cleanup-20261103/`. Retired payloads are no longer
 available locally; historical acceptance remains valid within its original
 scope. This sweep does not close the older interrupted cleanup task.
+
+## 4 November build-cache and dataset cleanup
+
+The completed menu-localization unit's isolated `target/menu-i18n-en-it/build`
+Cargo cache was retired after checking its completion result, exact inventory,
+unit lease and host process users. The removal reclaimed 3,933,757,440 bytes
+of file blocks (3.66 GiB), counting hard-linked files once. All 158 protected
+private-input hashes and 1,798 retained-file identities, sizes and modification
+times remained unchanged. Logs, screenshots, results, source evidence and the
+unit's Wine prefix remain available. Current canonical Cargo outputs, shared
+Wine, ROM datasets and live/failed/interrupted work were excluded.
+
+The `PASS` receipt and exact build-only plan are under
+`target/local-artifact-cleanup-20261104/build-cache-applied.json` and
+`build-cache-plan.json`. Four host process-detail reads were denied; no selected
+unit consumer was observed. Other sessions were active, so changes in overall
+disk free space cannot all be attributed to this cleanup. No build, game test,
+fixture extraction or performance measurement was repeated.
+
+Automatic approval review initially refused the extended command because it
+included retained validation datasets under general cleanup authorization.
+The user then explicitly authorized the 15 e111–e125 EUR datasets listed in
+`target/local-artifact-cleanup-20261104/dataset-retirement-proposal.json`.
+After fresh inventory/activity checks and unit leases, these superseded payloads
+were retired, reclaiming another 7,947,784,192 file-block bytes (7.40 GiB).
+Their source-ROM identity, profile and coverage were checked against the retained
+e127 replacement; e126 was also retained for the current investigation. All
+158 protected private-input hashes and 393 retained-file identities, sizes and
+times were unchanged. Fifteen manifest preimages, unit results and logs remain.
+
+Both cleanup receipts are `PASS`; the dataset receipt is
+`target/local-artifact-cleanup-20261104/dataset-applied.json`. Combined retirement
+reclaimed 11,881,541,632 file-block bytes (11.07 GiB). Exact historical datasets
+would require regeneration for reuse. All failed/interrupted/live units were
+excluded. This cleanup does not close the older interrupted hygiene task.

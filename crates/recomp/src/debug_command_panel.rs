@@ -6,9 +6,37 @@ use input_config::Language;
 use menu::i18n::format as tr;
 
 type Job=JoinHandle<serde_json::Value>;
+fn insert_unidentified_text(editor:&mut Editor,text:Option<&str>,modifiers:ModifiersState,context_visible:bool)->Result<(),&'static str>{
+    if !context_visible && !modifiers.control_key() && !modifiers.alt_key() && !modifiers.super_key() && editor.preedit().is_empty(){
+        if let Some(text)=text{return editor.insert(text);}
+    }
+    Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn unidentified_physical_key_preserves_layout_text_and_input_guards() {
+        let mut editor=Editor::default();
+        insert_unidentified_text(&mut editor,Some("è"),ModifiersState::empty(),false).unwrap();
+        insert_unidentified_text(&mut editor,Some("É"),ModifiersState::SHIFT,false).unwrap();
+        assert_eq!(editor.text(),"èÉ");
+        for modifiers in [ModifiersState::CONTROL,ModifiersState::ALT,ModifiersState::SUPER] {
+            insert_unidentified_text(&mut editor,Some("x"),modifiers,false).unwrap();
+        }
+        insert_unidentified_text(&mut editor,Some("x"),ModifiersState::empty(),true).unwrap();
+        editor.set_preedit("候");
+        insert_unidentified_text(&mut editor,Some("x"),ModifiersState::empty(),false).unwrap();
+        assert_eq!(editor.text(),"èÉ");
+    }
+}
 pub(crate) enum ControllerEvent {None,Complete,Hide}
 pub(crate) struct Panel {
     window:Arc<Window>,
+    #[cfg(target_os="windows")]
+    wine_ime:Option<crate::debug_command_wine_ime::Shim>,
     _context:softbuffer::Context<Arc<Window>>,
     surface:softbuffer::Surface<Arc<Window>,Arc<Window>>,
     visible:bool,
@@ -44,8 +72,10 @@ impl Panel {
         let window=Arc::new(event_loop.create_window(Window::default_attributes().with_title(format!("FFTA — {}",language.text("Command console"))).with_inner_size(winit::dpi::LogicalSize::new(900.0,560.0)).with_min_inner_size(winit::dpi::LogicalSize::new(480.0,360.0))).map_err(|e|e.to_string())?);
         let context=softbuffer::Context::new(window.clone()).map_err(|e|e.to_string())?;
         let surface=softbuffer::Surface::new(&context,window.clone()).map_err(|e|e.to_string())?;
+        #[cfg(target_os="windows")]
+        let wine_ime=crate::debug_command_wine_ime::Shim::install(window.clone());
         window.set_ime_allowed(true);
-        Ok(Self{window,_context:context,surface,visible:true,focused:true,focus_handoff:Some(Instant::now()),hide_handoff:None,last_draw:Instant::now()-Duration::from_secs(1),last_observation:Instant::now()-Duration::from_secs(1),language,manifest,run:run.into(),manifest_sha256:manifest_sha256.into(),target,pending:language.text("No pending job").into(),parameters:language.text("Parameters: -").into(),context_visible:false,context_scroll:0,modifiers:ModifiersState::empty(),editor:Editor::default(),completion:Default::default(),controller:Controller::default(),clipboard:None,jobs:Vec::new(),lines:VecDeque::new(),last_result:String::new(),notice:language.text("Type a command; submission is explicit.").into(),root})
+        Ok(Self{window,#[cfg(target_os="windows")] wine_ime,_context:context,surface,visible:true,focused:true,focus_handoff:Some(Instant::now()),hide_handoff:None,last_draw:Instant::now()-Duration::from_secs(1),last_observation:Instant::now()-Duration::from_secs(1),language,manifest,run:run.into(),manifest_sha256:manifest_sha256.into(),target,pending:language.text("No pending job").into(),parameters:language.text("Parameters: -").into(),context_visible:false,context_scroll:0,modifiers:ModifiersState::empty(),editor:Editor::default(),completion:Default::default(),controller:Controller::default(),clipboard:None,jobs:Vec::new(),lines:VecDeque::new(),last_result:String::new(),notice:language.text("Type a command; submission is explicit.").into(),root})
     }
     pub fn owns(&self,id:winit::window::WindowId)->bool{self.window.id()==id}
     pub fn show(&mut self,language:Language){
@@ -55,7 +85,7 @@ impl Panel {
             self.window.set_title(&format!("FFTA — {}",language.text("Command console")));
         }
         self.visible=true;self.focused=true;self.controller.reset();self.hide_handoff=None;self.focus_handoff=Some(Instant::now());self.window.set_visible(true);self.window.set_ime_allowed(true);self.window.focus_window();self.last_draw=Instant::now()-Duration::from_secs(1);self.last_observation=Instant::now()-Duration::from_secs(1);}
-    pub fn hide(&mut self){self.visible=false;self.focused=false;self.context_visible=false;self.controller.reset();self.focus_handoff=None;self.hide_handoff=Some(Instant::now());self.window.set_ime_allowed(false);self.window.set_visible(false);}
+    pub fn hide(&mut self){self.visible=false;self.focused=false;self.context_visible=false;self.editor.set_preedit("");#[cfg(target_os="windows")] if let Some(ime)=self.wine_ime.as_mut(){ime.reset();}self.controller.reset();self.focus_handoff=None;self.hide_handoff=Some(Instant::now());self.window.set_ime_allowed(false);self.window.set_visible(false);}
     pub fn focused(&self)->bool{self.visible&&self.focused}
     pub fn wants_observation(&self)->bool{self.visible&&self.last_observation.elapsed()>=Duration::from_millis(250)}
     pub fn observe(&mut self,pending:&serde_json::Value,remaining:u32,search_remaining:Option<u64>){
@@ -113,10 +143,12 @@ impl Panel {
             WindowEvent::CloseRequested=>return true,
             WindowEvent::Focused(focused)=>{self.focused=*focused;self.controller.reset();if *focused{self.focus_handoff=None;}},
             WindowEvent::ModifiersChanged(m)=>self.modifiers=m.state(),
-            WindowEvent::Ime(winit::event::Ime::Preedit(text,_)) if !self.context_visible=>self.editor.set_preedit(text),
-            WindowEvent::Ime(winit::event::Ime::Commit(text)) if !self.context_visible=>{self.editor.set_preedit("");if let Err(e)=self.editor.insert(text){self.notice=e.into();}},
+            WindowEvent::Ime(ime) if !self.context_visible || matches!(ime,winit::event::Ime::Disabled)=>{if let Err(e)=self.editor.ime(ime){self.notice=e.into();}},
             WindowEvent::KeyboardInput{event,is_synthetic:false,..} if event.state==ElementState::Pressed=>{
-                let PhysicalKey::Code(code)=event.physical_key else{return false};
+                let PhysicalKey::Code(code)=event.physical_key else{
+                    if let Err(e)=insert_unidentified_text(&mut self.editor,event.text.as_deref(),self.modifiers,self.context_visible){self.notice=e.into();}
+                    self.last_draw=Instant::now()-Duration::from_secs(1);return false;
+                };
                 let control=self.modifiers.control_key();let shift=self.modifiers.shift_key();
                 if self.context_visible {
                     match code {
@@ -177,6 +209,7 @@ impl Panel {
                         let ids=operations.iter().filter_map(|o|o["id"].as_str()).collect::<Vec<_>>().join(" · ");
                         for chunk in ids.as_bytes().chunks(100){self.line(String::from_utf8_lossy(chunk).into_owned());}
                     }
+                    for line in debug_command::observation::result_lines(&value){self.line(line);}
                     self.notice=self.language.text("Result ready; Ctrl+Shift+C copies JSON.").into();
             }
             self.last_draw=Instant::now()-Duration::from_secs(1);

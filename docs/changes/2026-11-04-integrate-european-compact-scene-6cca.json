@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "integrate-european-compact-scene-6cca",
+  "title": "Integrate European bounded compact scene banks",
+  "kind": "changed",
+  "platforms": [
+    "Windows executable on Wine; EUR"
+  ],
+  "changes": [
+    "Extend the compact catalog with three conditional scene banks and 20 sparse selector rows; unread fields retain ROM fallback."
+  ],
+  "validation": [
+    "Protected EUR Wine source geometry establishes the conditional five-by-four loop and 3870 represented bytes without E125 overlap.",
+    "Windows GNU build PASS; Wine create/reuse PASS with 99 other resources and 59 previous banks unchanged.",
+    "Focused Wine test PASS for 3870 source bytes and boundaries, original readers for all 20 rows, raw fallback, coherent rejection and 11 sampled native count comparisons with full state and clock. The retained test receipt says one out-of-projection case per bank; three were run. The result-field count was corrected in test source after that run; no behavior changed.",
+    "Wine 12-frame production startup PASS with 100 resource identities; catalog reads were zero."
+  ],
+  "limitations": [
+    "Context clear and bounded loop are conditional; mutable state, other callers, ordinary use, Linux, USA and native Windows remain unverified. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/compact_obj_catalog.rs",
+    "crates/gba-core/src/rom_data/compact_obj_catalog/contracts.rs",
+    "crates/gba-core/src/rom_data/compact_obj_catalog/selector_tables.rs",
+    "crates/recomp/src/rom_data/clan_table_alias_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_octonary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_quaternary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_quinary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_secondary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_senary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_septenary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_tertiary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_catalog_table_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_catalog_tests.rs",
+    "crates/recomp/src/rom_data/conditional_descriptor_bank_zero_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_descriptor_banks_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_four_byte_lookup_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_packed_lookup_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_property_masks_runtime_tests.rs",
+    "crates/recomp/src/rom_data/dynamic_raw_fragments_runtime_tests.rs",
+    "crates/recomp/src/rom_data/table_graphics_runtime_tests.rs",
+    "crates/recomp/src/rom_data/ui_context_templates_tests.rs",
+    "docs/rom_data_compact_catalog.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-04-integrate-european-compact-secondary-6cb278.json"
+  ]
+}

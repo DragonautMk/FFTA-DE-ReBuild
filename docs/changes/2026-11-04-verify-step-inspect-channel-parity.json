@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "verify-step-inspect-channel-parity",
+  "title": "Verify step and inspection channel parity",
+  "kind": "docs",
+  "platforms": [
+    "Wine/Xvfb EUR interpreter"
+  ],
+  "changes": [
+    "Record same-seed three-channel parity for readonly inspection and a neutral one-frame step."
+  ],
+  "validation": [
+    "Three isolated sessions from the same pinned seed used local-control CLI, menu parameter forms and interactive command console respectively. Origin frame, clock, CPU registers and state hash matched; inspecting 16 ROM bytes preserved guest state. The complete inspection results and one-frame endpoint frame, clock, registers, keys, reason and state hash matched exactly.",
+    "All three validation units and a separate six-input comparison unit passed with protected input hashes; GUI sessions closed normally.",
+    "A separate EUR Wine/Xvfb session verified the same zero-length inspection and zero-frame step refusal text in parameter forms and the parser. The command console copied identical structured parse-error JSON to debug-command for those cases, leading-zero decimals, unprefixed addresses and an unknown command; direct local-control CLI also refused zero bounds. Guest frame, clock, registers, keys and state hash remained unchanged.",
+    "The first refusal driver incorrectly used Ctrl+A in the append-only form and tested a different value; the corrected Backspace-based run passed with protected inputs and normal GUI closure."
+  ],
+  "limitations": [
+    "This covers default arguments and a single EUR interpreter seed with simulated input; nondefault values, other error outcomes, native Windows and full DBG2-13 parity remain unverified. The first comparison helper used its scratch directory as the repository root and failed before reading inputs; its corrected retry passed."
+  ],
+  "files": [
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ],
+  "references": [
+    "docs/debug_control.md"
+  ]
+}

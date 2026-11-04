@@ -30,6 +30,10 @@ The installer copies payload/Licenses into the installed game directory.
 Android already groups its notices and corresponding TinyCC source inside
 assets/licenses/tinycc in the APK; they are not installation dialogs.
 
+The command console embeds Droid Sans Fallback for CJK glyphs. Its upstream
+notice and Debian copyright record are in `fonts/Droid-NOTICE.txt` and
+`fonts/Droid-COPYRIGHT.txt`.
+
 Keep the font notices in fonts/ and the applicable dependency notices with
 binary distributions too. A repository link alone is not a replacement for
 required accompanying notices. No ROM, BIOS, save or generated game library

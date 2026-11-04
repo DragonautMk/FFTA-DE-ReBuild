@@ -89,6 +89,11 @@ mod observer {
         pub fn hit(&self) -> Option<Access> {
             STATE.with(|s| s.borrow().as_ref().and_then(|s| s.hit.clone()))
         }
+        /// Consume the first matching access since the previous interpreter
+        /// step, allowing a bounded search to observe the next step.
+        pub fn take_hit(&self) -> Option<Access> {
+            STATE.with(|s| s.borrow_mut().as_mut().and_then(|s| s.hit.take()))
+        }
     }
     impl Drop for Capture {
         fn drop(&mut self) {

@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "verify-alternate-european-compact-catalog",
+  "title": "Verify alternate European compact catalog in Wine",
+  "kind": "changed",
+  "platforms": [
+    "Windows executable on Wine; EUR"
+  ],
+  "changes": [
+    "Validate the existing E117-d116 alternate constructor integration for ten conditional compact banks and twelve selectors."
+  ],
+  "validation": [
+    "Windows GNU build PASS; Wine dataset creation and reuse PASS with 99 other resources and 41 prior banks unchanged.",
+    "Focused Wine reader PASS: 1818 new bytes, typed boundaries and 22 original/native count comparisons with full state and clock.",
+    "Wine production startup PASS for 12 frames and 100 resource identities; catalog reads were zero."
+  ],
+  "limitations": [
+    "Ordinary use of the new roots, other callers and selectors, Linux, USA and native Windows remain unverified. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_compact_catalog.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-04-integrate-alternate-european-compact-catalog-unverified.json"
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "integrate-european-compact-flight-burst-6babc4",
+  "title": "Integrate European compact flight and burst tables",
+  "kind": "changed",
+  "platforms": [
+    "Windows executable on Wine; EUR"
+  ],
+  "changes": [
+    "Extend the v7 compact catalog with bank 6babc4 and the two bounded source tables feeding its selectors."
+  ],
+  "validation": [
+    "Wine source analysis establishes conditional 30-row and 11-row callers, selectors 0\u20135 and no E120 overlap; static union matches 188 spans and 14072 bytes.",
+    "Windows GNU build PASS; Wine dataset create/reuse PASS with 99 other resource payloads and 54 prior banks unchanged.",
+    "Focused Wine test PASS for 428 bytes and boundaries, original field readers on all 41 table rows, seven native count comparisons with full state and clock, and coherent rejection.",
+    "Wine production startup PASS for 12 frames and 100 resource identities; catalog reads were zero.",
+    "An interrupted build snapshot and lease were retained in its original unit after host checks; a subsequent coordinated build passed."
+  ],
+  "limitations": [
+    "Ordinary use, other callers and selectors, Linux, USA and native Windows remain unverified. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/compact_obj_catalog.rs",
+    "crates/gba-core/src/rom_data/compact_obj_catalog/contracts.rs",
+    "crates/gba-core/src/rom_data/compact_obj_catalog/selector_tables.rs",
+    "crates/recomp/src/rom_data/compact_obj_catalog_tests.rs",
+    "docs/rom_data_compact_catalog.md",
+    "crates/recomp/src/rom_data/clan_table_alias_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_octonary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_quaternary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_quinary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_secondary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_senary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_septenary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_tertiary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_catalog_table_tests.rs",
+    "crates/recomp/src/rom_data/conditional_descriptor_bank_zero_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_descriptor_banks_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_four_byte_lookup_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_packed_lookup_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_property_masks_runtime_tests.rs",
+    "crates/recomp/src/rom_data/dynamic_raw_fragments_runtime_tests.rs",
+    "crates/recomp/src/rom_data/table_graphics_runtime_tests.rs",
+    "crates/recomp/src/rom_data/ui_context_templates_tests.rs"
+  ],
+  "references": [
+    "docs/changes/2026-11-04-integrate-european-compact-schedule-6bac28.json"
+  ]
+}

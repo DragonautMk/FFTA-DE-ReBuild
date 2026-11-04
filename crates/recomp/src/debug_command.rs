@@ -5,6 +5,7 @@ pub(crate) mod controller;
 pub(crate) mod completion;
 pub(crate) mod observation;
 pub(crate) mod recipe;
+pub(crate) mod trigger;
 
 const MAX_BYTES: usize = 4096;
 const MAX_TOKENS: usize = 64;
@@ -17,6 +18,8 @@ pub(crate) enum Command {
     Select { slot: menu::ContentSlot, id: String },
     JobsStatus,
     Retry { run: String, id: String, deadline_unix_ms: u64, action: Action },
+    Trigger { verb:String, name:Option<String>, argument:Option<String> },
+    TriggerRetry { name:String, run:String, request:String, deadline_unix_ms:u64 },
     RecipeSave { name:String, commands:Vec<String> },
     RecipePreview { name:String },
     RecipePrepare { name:String },
@@ -70,8 +73,8 @@ fn numeric_syntax(t:&[String])->Result<(),String>{
         _=>{}
     }
     for pair in t.windows(2){match pair[0].as_str(){
-        "--keys"|"--start"|"--end"|"--context"|"--value"=>hex(&pair[1])?,
-        "--steps"|"--width"|"--events"|"--frames"|"--offset"|"--limit"|"--generation"=>decimal(&pair[1])?,_=>{}
+        "--keys"|"--start"|"--end"|"--context"|"--value"|"--when-address"|"--when-value"=>hex(&pair[1])?,
+        "--steps"|"--width"|"--when-width"|"--hits"|"--frame-start"|"--frame-end"|"--events"|"--frames"|"--offset"|"--limit"|"--generation"=>decimal(&pair[1])?,_=>{}
     }}
     Ok(())
 }
@@ -96,6 +99,14 @@ fn parse_tokens(t:&[String],allow_retry:bool)->Result<Command,String>{
         return Ok(Command::Retry{run,id:request,deadline_unix_ms,action});
     }
     match t {
+        [family,verb] if family=="trigger" && verb=="list"=>return Ok(Command::Trigger{verb:verb.clone(),name:None,argument:None}),
+        [family,verb,name,run,request,deadline] if family=="trigger" && verb=="retry"=>{
+            decimal(deadline)?;
+            return Ok(Command::TriggerRetry{name:id(name,48)?,run:id(run,100)?,request:id(request,100)?,deadline_unix_ms:deadline.parse().map_err(|_|"Invalid original deadline")?});
+        },
+        [family,verb,name,command] if family=="trigger" && ["save","edit"].contains(&verb.as_str())=>return Ok(Command::Trigger{verb:verb.clone(),name:Some(id(name,48)?),argument:Some(command.clone())}),
+        [family,verb,name] if family=="trigger" && ["show","enable","disable","remove","run"].contains(&verb.as_str())=>return Ok(Command::Trigger{verb:verb.clone(),name:Some(id(name,48)?),argument:None}),
+        [family,..] if family=="trigger"=>return Err("Use trigger list | save/edit NAME 'break|watch ...' | show/enable/disable/remove/run NAME | retry NAME RUN ID DEADLINE".into()),
         [family,verb,name,commands @ ..] if family=="recipe" && verb=="save" && !commands.is_empty()=>{
             return Ok(Command::RecipeSave{name:id(name,48)?,commands:commands.to_vec()});
         },
@@ -152,6 +163,8 @@ pub(crate) fn execute(root:&std::path::Path,input:&str)->serde_json::Value {
         Command::Help(None)=>return serde_json::json!({"schema":1,"kind":"ffta-debug-command-help","operations":crate::debug_operations::registry().operations}),
         Command::Help(Some(id))=>return serde_json::json!({"schema":1,"kind":"ffta-debug-command-help","operation":crate::debug_operations::get(&id)}),
         Command::JobsStatus=>crate::debug_control::execute_action_classified(root,Action::Status,120_000),
+        Command::Trigger{verb,name,argument}=>return trigger::execute(root,&verb,name.as_deref(),argument.as_deref()),
+        Command::TriggerRetry{name,run,request,deadline_unix_ms}=>return trigger::retry(root,&name,run,request,deadline_unix_ms),
         Command::RecipeSave{name,commands}=>return recipe::save_command(root,&name,&commands),
         Command::RecipePreview{name}=>return recipe::preview_command(root,&name),
         Command::RecipePrepare{name}=>return recipe::prepare_command(root,&name),
@@ -198,6 +211,19 @@ mod tests {
         let Command::Retry{action,..}=parse("retry run id 123 -- step 1 --keys 0x3ff").unwrap() else{panic!()};
         assert!(matches!(action,Action::Step{frames:1,keys:0x3ff}));
         for input in ["retry run id 0123 -- step 1","retry run id 123 step 1","retry run id 123 -- status","retry run id 123 -- jobs status","retry run id 123 -- help","retry run id 123 -- retry run id 123 -- step 1","retry run id 123 -- step 01","retry '' id 123 -- step 1"]{assert!(parse(input).is_err(),"{input}");}
+    }
+    #[test]
+    fn counted_search_options_validate_and_preserve_legacy_shape() {
+        let Command::Control(action) = parse("break 0x08000000 arm --hits 3 --frame-start 2 --frame-end 8 --steps 500").unwrap() else { panic!() };
+        let value = serde_json::to_value(action).unwrap();
+        assert_eq!(value["settings"]["window"], serde_json::json!({"start_frame":2,"end_frame":8,"hit_count":3}));
+        assert!(matches!(parse("watch write 0x02000000 0x02000004 --width 4 --hits 2 --frame-end 6"), Ok(Command::Control(Action::Find{..}))));
+        let Command::Control(legacy) = parse("break 0x08000000 arm --steps 1").unwrap() else { panic!() };
+        assert!(serde_json::to_value(legacy).unwrap()["settings"].get("window").is_none());
+        assert!(matches!(parse("break 0x08000000 arm --when-address 0x02000000 --when-width 4 --when-value 0x5b --on-hit capture"), Ok(Command::Control(Action::Find{..}))));
+        for invalid in ["break 0x08000000 arm --on-hit invalid", "break 0x08000000 arm --when-address 0x02000000", "break 0x08000000 arm --when-address 0x04000130 --when-width 2 --when-value 0x0", "break 0x08000000 arm --hits 0", "break 0x08000000 arm --hits 10001", "break 0x08000000 arm --frame-start 5 --frame-end 5", "break 0x08000000 arm --frame-end 601", "break 0x08000000 arm --hits 01", "break 0x08000000 arm --hits 1 --hits 2", "break 0x08000000 arm --width 4"] {
+            assert!(parse(invalid).is_err(), "{invalid}");
+        }
     }
     #[test]
     fn content_discovery_uses_bounded_typed_requests(){

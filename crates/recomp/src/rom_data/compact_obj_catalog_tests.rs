@@ -38,13 +38,13 @@ fn european_loop_compact_catalog_matches_new_source_and_native_readers() {
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (110, 109, 100));
     let current = read_dataset(&dataset).unwrap();
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (117, 116, 100));
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (127, 126, 100));
     assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
     // Read the accepted older JSON without applying the new complete bank-set
     // validator to its historical projection. Its protected file is unchanged.
     let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
     assert_eq!(old.banks.len(), 29);
-    assert_eq!(data.banks.iter().filter(|bank| !selected.contains(&bank.root)).count(), 46);
+    assert_eq!(data.banks.iter().filter(|bank| !selected.contains(&bank.root)).count(), model::BANK_SPECS.len() - selected.len());
     for bank in &old.banks { assert_eq!(data.banks.iter().find(|new| new.root == bank.root), Some(bank)); }
     assert_eq!(current.compact_obj_catalog.as_ref().unwrap(), data);
     let bytes = encode_compact_obj_catalog(data).unwrap();
@@ -180,13 +180,13 @@ fn european_6ca5f8_compact_catalog_matches_source_and_native_readers() {
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (112, 111, 100));
     let current = read_dataset(&dataset).unwrap();
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (117, 116, 100));
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (127, 126, 100));
     assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
     // Read the accepted older JSON without applying the new complete bank-set
     // validator to its historical projection. Its protected file is unchanged.
     let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
     assert_eq!(old.banks.len(), 37);
-    assert_eq!(data.banks.iter().filter(|bank| !selected.contains(&bank.root)).count(), 50);
+    assert_eq!(data.banks.iter().filter(|bank| !selected.contains(&bank.root)).count(), model::BANK_SPECS.len() - selected.len());
     for bank in &old.banks { assert_eq!(data.banks.iter().find(|new| new.root == bank.root), Some(bank)); }
     assert_eq!(current.compact_obj_catalog.as_ref().unwrap(), data);
     let bytes = encode_compact_obj_catalog(data).unwrap();
@@ -324,13 +324,13 @@ fn european_6c4910_compact_catalog_matches_source_and_native_readers() {
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (115, 114, 100));
     let current = read_dataset(&dataset).unwrap();
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (117, 116, 100));
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (127, 126, 100));
     assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
     // Read the accepted older JSON without applying the new complete bank-set
     // validator to its historical projection. Its protected file is unchanged.
     let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
     assert_eq!(old.banks.len(), 40);
-    assert_eq!(data.banks.iter().filter(|bank| !selected.contains(&bank.root)).count(), 50);
+    assert_eq!(data.banks.iter().filter(|bank| !selected.contains(&bank.root)).count(), model::BANK_SPECS.len() - selected.len());
     for bank in &old.banks { assert_eq!(data.banks.iter().find(|new| new.root == bank.root), Some(bank)); }
     assert_eq!(current.compact_obj_catalog.as_ref().unwrap(), data);
     let bytes = encode_compact_obj_catalog(data).unwrap();
@@ -465,13 +465,13 @@ fn european_alternate_compact_catalog_matches_source_and_native_readers() {
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (116, 115, 100));
     let current = read_dataset(&dataset).unwrap();
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (117, 116, 100));
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (127, 126, 100));
     assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
     // Read the accepted older JSON without applying the new complete bank-set
     // validator to its historical projection. Its protected file is unchanged.
     let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
     assert_eq!(old.banks.len(), 41);
-    assert_eq!(data.banks.iter().filter(|bank| !selected.contains(&bank.root)).count(), 41);
+    assert_eq!(data.banks.iter().filter(|bank| !selected.contains(&bank.root)).count(), model::BANK_SPECS.len() - selected.len());
     for bank in &old.banks { assert_eq!(data.banks.iter().find(|new| new.root == bank.root), Some(bank)); }
     assert_eq!(current.compact_obj_catalog.as_ref().unwrap(), data);
     let bytes = encode_compact_obj_catalog(data).unwrap();
@@ -583,6 +583,1643 @@ fn european_alternate_compact_catalog_matches_source_and_native_readers() {
 }
 
 #[test]
+#[ignore = "private EUR source/e119 current dataset/e118 baseline/native prefix; Wine only, Linux/USA pending"]
+fn european_6c1e78_compact_catalog_matches_source_and_native_readers() {
+    let root = PathBuf::from(std::env::var_os("FFTA_COMPACT_CATALOG_ROOT").unwrap());
+    assert!(!root.exists()); fs::create_dir_all(&root).unwrap();
+    let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    let dataset = PathBuf::from(std::env::var_os("FFTA_STATE_TEST_DATASET").unwrap());
+    let prior = PathBuf::from(std::env::var_os("FFTA_COMPACT_CATALOG_PRIOR").unwrap());
+    let selected = [0x6c1e78];
+    let catalog = model::Catalog::from_rom(&rom).unwrap();
+    let data = &catalog.decoded;
+    let banks: Vec<_> = data.banks.iter().filter(|bank| selected.contains(&bank.root)).collect();
+    assert_eq!(banks.len(), 1);
+    assert_eq!(banks.iter().map(|bank| bank.sequences.len()).sum::<usize>(), 2);
+    assert_eq!(banks.iter().flat_map(|bank| &bank.sequences).map(|entry| entry.sequence.frames.len()).sum::<usize>(), 56);
+    assert_eq!(banks.iter().map(|bank| bank.lists.len()).sum::<usize>(), 13);
+    assert_eq!(banks.iter().flat_map(|bank| &bank.lists).map(|entry| entry.list.objects.len()).sum::<usize>(), 36);
+    let new_spans: Vec<_> = model::BANK_SPECS.iter().filter(|spec| selected.contains(&spec.root))
+        .flat_map(|spec| spec.spans.iter().copied()).collect();
+    assert_eq!(new_spans.iter().map(|(a, z)| z - a).sum::<u32>(), 392);
+
+    let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
+    assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (118, 117, 100));
+    let current = read_dataset(&dataset).unwrap();
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (127, 126, 100));
+    assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
+    // Read the accepted older JSON without applying the new complete bank-set
+    // validator to its historical projection. Its protected file is unchanged.
+    let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
+    assert_eq!(old.banks.len(), 52);
+    assert_eq!(data.banks.iter().filter(|bank| !selected.contains(&bank.root)).count(), model::BANK_SPECS.len() - selected.len());
+    for bank in &old.banks { assert_eq!(data.banks.iter().find(|new| new.root == bank.root), Some(bank)); }
+    let mut previous_tables = data.selector_tables.clone().unwrap(); previous_tables.schedule = None; previous_tables.flight = None; previous_tables.burst = None; previous_tables.effects = None; previous_tables.grid_first = None; previous_tables.grid_second = None; previous_tables.script_lookup = None; previous_tables.scene = None;
+    assert_eq!(old.selector_tables.as_ref(), Some(&previous_tables));
+    assert_eq!(current.compact_obj_catalog.as_ref().unwrap(), data);
+    let bytes = encode_compact_obj_catalog(data).unwrap();
+    assert_eq!(parse_compact_obj_catalog(&bytes).unwrap(), *data);
+    let mut changed = data.clone();
+    changed.banks.iter_mut().find(|bank| bank.root == selected[0]).unwrap().sequences[0].relative_offset += 2;
+    assert!(changed.validate().is_err());
+
+    let mut machine = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut machine, &dataset).unwrap();
+    let initial = machine.save_state().unwrap();
+    let owner = machine.bus.rom_resources().unwrap().clone();
+    for &(start, end) in &new_spans { machine.bus.rom[start as usize..end as usize].fill(0xcd); }
+    let before = owner.compact_obj_catalog_stats().unwrap().source_bytes;
+    for &(start, end) in &new_spans { for at in start..end {
+        assert_eq!(data.byte_at(at), Some(rom[at as usize]));
+        assert_eq!(machine.bus.read8(0x0c000000 + at), rom[at as usize]);
+    } }
+    assert_eq!(owner.compact_obj_catalog_stats().unwrap().source_bytes - before, 392);
+    for &(start, end) in &new_spans { for edge in [start, end] { for delta in [-3i32, -1, 0, 1] {
+        let at = edge.wrapping_add_signed(delta) as usize;
+        let ptr = &mut machine as *mut Machine as *mut std::ffi::c_void;
+        assert_eq!((RT_API.read16)(ptr, 0x0a000000 + at as u32), u32::from(u16::from_le_bytes(rom[at..at + 2].try_into().unwrap())));
+        assert_eq!((RT_API.read32)(ptr, 0x08000000 + at as u32), u32::from_le_bytes(rom[at..at + 4].try_into().unwrap()));
+    } } }
+    machine.bus.rom.copy_from_slice(&rom);
+    assert_eq!(machine.save_state().unwrap(), initial);
+    let mut bad = read_dataset(&dataset).unwrap();
+    bad.compact_obj_catalog.as_mut().unwrap().banks.iter_mut().find(|bank| bank.root == selected[0]).unwrap()
+        .sequences[0].sequence.frames[0].duration ^= 1;
+    let bytes = encode_compact_obj_catalog(bad.compact_obj_catalog.as_ref().unwrap()).unwrap();
+    bad.manifest.resources[99].sha256 = gba_core::ffta_rom::digest(&bytes);
+    bad.compact_obj_catalog_bytes = Some(bytes);
+    assert!(RuntimeResources::from_base_files(&rom, bad.files()).is_err());
+    assert!(std::sync::Arc::ptr_eq(machine.bus.rom_resources().unwrap(), &owner));
+    assert_eq!(machine.save_state().unwrap(), initial);
+    drop(bad); drop(current); drop(machine);
+
+    let mut raw = crate::make_machine(rom.clone(), None);
+    // The original conditional branch derives selector 3 or 5 from this value.
+    for value in 0..=10 {
+        raw.cpu.regs = [0; 16]; raw.cpu.regs[0] = value; raw.cpu.regs[5] = 3;
+        prefix(&mut raw, 0x08109688, 0x0810969a);
+        assert_eq!(raw.cpu.regs[5], if [3, 5, 7].contains(&value) { 5 } else { 3 });
+    }
+    raw.bus.ffta_sprites.enabled = false;
+    let state = 0x02007f00;
+    for bank in &banks {
+        raw.bus.write32(state + 4, 0x08000000 + bank.list_root());
+        raw.bus.write32(state + 8, 0x08000000 + bank.sequence_root());
+        for entry in &bank.sequences {
+            let sequence = &entry.sequence;
+            raw.cpu.regs = [0; 16]; raw.cpu.regs[3] = u32::from(sequence.selector); raw.cpu.regs[4] = state;
+            prefix(&mut raw, 0x08010870, 0x08010884);
+            assert_eq!(raw.cpu.regs[3] as usize, sequence.frames.len());
+            for (phase, frame) in sequence.frames.iter().enumerate() {
+                raw.cpu.regs = [0; 16]; raw.cpu.regs[5] = u32::from(sequence.selector); raw.cpu.regs[3] = state; raw.cpu.regs[2] = phase as u32;
+                prefix(&mut raw, 0x08010e5a, 0x08010e70); assert_eq!(raw.cpu.regs[0], u32::from(frame.list));
+                raw.cpu.regs = [0; 16]; raw.cpu.regs[7] = u32::from(sequence.selector); raw.cpu.regs[4] = state; raw.cpu.regs[3] = phase as u32;
+                prefix(&mut raw, 0x08010cb2, 0x08010cc8); assert_eq!(raw.cpu.regs[1], u32::from(frame.duration));
+            }
+        }
+        for entry in &bank.lists {
+            raw.cpu.regs = [0; 16]; raw.cpu.regs[2] = u32::from(entry.index); raw.cpu.regs[3] = state;
+            prefix(&mut raw, 0x08010e9a, 0x08010eb2);
+            assert_eq!(raw.cpu.regs[1], 0x08000000 + entry.list.source_offset);
+        }
+    }
+
+    let object = PathBuf::from(std::env::var_os("FFTA_COMPACT_CATALOG_NATIVE").unwrap());
+    let (_library, table) = crate::load_native(&object).unwrap();
+    let mut native = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut native, &dataset).unwrap();
+    let owner = native.bus.rom_resources().unwrap().clone();
+    let initial = raw.save_state().unwrap();
+    let mut served = 0;
+    let mut native_cases = 0;
+    for bank in &banks { for selector in bank.sequences.iter().map(|entry| entry.sequence.selector).chain([0x100]) {
+        for machine in [&mut raw, &mut native] {
+            machine.load_state(&initial).unwrap(); machine.bus.ffta_sprites.enabled = false;
+            machine.bus.write32(state + 8, 0x08000000 + bank.sequence_root());
+            machine.cpu.regs = std::array::from_fn(|i| 0x11000000 + i as u32);
+            machine.cpu.regs[3] = u32::from(selector); machine.cpu.regs[4] = state;
+            machine.cpu.regs[13] = 0x03007c00; machine.cpu.regs[15] = 0x08010870; machine.cpu.cpsr = 0xbf;
+        }
+        for &(start, end) in &new_spans { native.bus.rom[start as usize..end as usize].fill(0xcd); }
+        let directory = bank.sequence_root() + u32::from(selector) * 2;
+        let relative = u16::from_le_bytes(rom[directory as usize..directory as usize + 2].try_into().unwrap());
+        let count_at = bank.sequence_root() + u32::from(relative);
+        let expected: u64 = [directory, count_at].into_iter().flat_map(|at| at..at + 2).map(|at| u64::from(data.byte_at(at).is_some())).sum();
+        prefix(&mut raw, 0x08010870, 0x08010884);
+        let before = owner.compact_obj_catalog_stats().unwrap().source_bytes;
+        let mut steps = 0;
+        while native.cpu.regs[15] != 0x08010884 {
+            assert!(steps < 32); native.bus.frame_ready = false;
+            table.get(native.cpu.regs[15] | 1).unwrap()(&RT_API, &mut native as *mut Machine as *mut std::ffi::c_void);
+            steps += 1;
+        }
+        let used = owner.compact_obj_catalog_stats().unwrap().source_bytes - before;
+        assert_eq!(used, expected, "bank {:x} selector {selector}", bank.root);
+        if selector != 0x100 { assert_eq!(used, 4); }
+        served += used; native_cases += 1;
+        native.bus.rom.copy_from_slice(&rom);
+        assert_eq!(native.save_state().unwrap(), raw.save_state().unwrap(), "bank {:x} selector {selector}", bank.root);
+    } }
+    assert_eq!(native_cases, 3);
+    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
+        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":52,
+        "new_banks":1, "new_selectors":2, "new_source_bytes":392, "new_frames":56, "new_lists":13, "new_objects":36,
+        "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":1,
+        "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
+        "coherent_rejection_in_memory":true, "dataset_copies_created":0, "old_reader_cases_repeated":false,
+        "ordinary_use":"not attempted", "Linux":"pending", "USA":"pending", "nativeWindows":"pending", "performance_measurements":false
+    })).unwrap()).unwrap();
+}
+
+#[test]
+#[ignore = "private EUR source/e120 current dataset/e119 baseline/native prefix; Wine only, Linux/USA pending"]
+fn european_6bac28_schedule_catalog_matches_source_and_native_readers() {
+    let root = PathBuf::from(std::env::var_os("FFTA_COMPACT_CATALOG_ROOT").unwrap());
+    assert!(!root.exists()); fs::create_dir_all(&root).unwrap();
+    let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    let dataset = PathBuf::from(std::env::var_os("FFTA_STATE_TEST_DATASET").unwrap());
+    let prior = PathBuf::from(std::env::var_os("FFTA_COMPACT_CATALOG_PRIOR").unwrap());
+    let selected = [0x6bac28];
+    let catalog = model::Catalog::from_rom(&rom).unwrap();
+    let data = &catalog.decoded;
+    let banks: Vec<_> = data.banks.iter().filter(|bank| selected.contains(&bank.root)).collect();
+    assert_eq!(banks.len(), 1);
+    assert_eq!(banks.iter().map(|bank| bank.sequences.len()).sum::<usize>(), 9);
+    assert_eq!(banks.iter().flat_map(|bank| &bank.sequences).map(|entry| entry.sequence.frames.len()).sum::<usize>(), 9);
+    assert_eq!(banks.iter().map(|bank| bank.lists.len()).sum::<usize>(), 9);
+    assert_eq!(banks.iter().flat_map(|bank| &bank.lists).map(|entry| entry.list.objects.len()).sum::<usize>(), 13);
+    let mut new_spans: Vec<_> = model::BANK_SPECS.iter().filter(|spec| selected.contains(&spec.root))
+        .flat_map(|spec| spec.spans.iter().copied()).collect();
+    assert_eq!(new_spans.iter().map(|(a, z)| z - a).sum::<u32>(), 172);
+    new_spans.push((0x39e0c4, 0x39e124));
+    assert_eq!(data.selector_tables.as_ref().unwrap().schedule.as_ref().unwrap().rows.len(), 12);
+
+    let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
+    assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (119, 118, 100));
+    let current = read_dataset(&dataset).unwrap();
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (127, 126, 100));
+    assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
+    // Read the accepted older JSON without applying the new complete bank-set
+    // validator to its historical projection. Its protected file is unchanged.
+    let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
+    assert_eq!(old.banks.len(), 53);
+    assert_eq!(data.banks.iter().filter(|bank| !selected.contains(&bank.root)).count(), model::BANK_SPECS.len() - selected.len());
+    for bank in &old.banks { assert_eq!(data.banks.iter().find(|new| new.root == bank.root), Some(bank)); }
+    let mut previous_tables = data.selector_tables.clone().unwrap(); previous_tables.schedule = None; previous_tables.flight = None; previous_tables.burst = None; previous_tables.effects = None; previous_tables.grid_first = None; previous_tables.grid_second = None; previous_tables.script_lookup = None; previous_tables.scene = None;
+    assert_eq!(old.selector_tables.as_ref(), Some(&previous_tables));
+    assert_eq!(current.compact_obj_catalog.as_ref().unwrap(), data);
+    let bytes = encode_compact_obj_catalog(data).unwrap();
+    assert_eq!(parse_compact_obj_catalog(&bytes).unwrap(), *data);
+    let mut changed = data.clone();
+    changed.banks.iter_mut().find(|bank| bank.root == selected[0]).unwrap().sequences[0].relative_offset += 2;
+    assert!(changed.validate().is_err());
+
+    let mut machine = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut machine, &dataset).unwrap();
+    let initial = machine.save_state().unwrap();
+    let owner = machine.bus.rom_resources().unwrap().clone();
+    for &(start, end) in &new_spans { machine.bus.rom[start as usize..end as usize].fill(0xcd); }
+    let before = owner.compact_obj_catalog_stats().unwrap().source_bytes;
+    for &(start, end) in &new_spans { for at in start..end {
+        assert_eq!(data.byte_at(at), Some(rom[at as usize]));
+        assert_eq!(machine.bus.read8(0x0c000000 + at), rom[at as usize]);
+    } }
+    assert_eq!(owner.compact_obj_catalog_stats().unwrap().source_bytes - before, 268);
+    for &(start, end) in &new_spans { for edge in [start, end] { for delta in [-3i32, -1, 0, 1] {
+        let at = edge.wrapping_add_signed(delta) as usize;
+        let ptr = &mut machine as *mut Machine as *mut std::ffi::c_void;
+        assert_eq!((RT_API.read16)(ptr, 0x0a000000 + at as u32), u32::from(u16::from_le_bytes(rom[at..at + 2].try_into().unwrap())));
+        assert_eq!((RT_API.read32)(ptr, 0x08000000 + at as u32), u32::from_le_bytes(rom[at..at + 4].try_into().unwrap()));
+    } } }
+    machine.bus.rom.copy_from_slice(&rom);
+    assert_eq!(machine.save_state().unwrap(), initial);
+    let mut bad = read_dataset(&dataset).unwrap();
+    bad.compact_obj_catalog.as_mut().unwrap().banks.iter_mut().find(|bank| bank.root == selected[0]).unwrap()
+        .sequences[0].sequence.frames[0].duration ^= 1;
+    let bytes = encode_compact_obj_catalog(bad.compact_obj_catalog.as_ref().unwrap()).unwrap();
+    bad.manifest.resources[99].sha256 = gba_core::ffta_rom::digest(&bytes);
+    bad.compact_obj_catalog_bytes = Some(bytes);
+    assert!(RuntimeResources::from_base_files(&rom, bad.files()).is_err());
+    assert!(std::sync::Arc::ptr_eq(machine.bus.rom_resources().unwrap(), &owner));
+    assert_eq!(machine.save_state().unwrap(), initial);
+    drop(bad); drop(current); drop(machine);
+
+    let mut raw = crate::make_machine(rom.clone(), None);
+    let mut typed = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut typed, &dataset).unwrap();
+    typed.bus.rom[0x39e0c4..0x39e124].fill(0xcd);
+    for row in 0..12u32 {
+        for (start, end) in [(0x080f0282, 0x080f0284), (0x080f029e, 0x080f02a4), (0x080f02ba, 0x080f02bc), (0x080f0230, 0x080f0238)] {
+            for machine in [&mut raw, &mut typed] {
+                machine.cpu.regs = [0; 16]; machine.cpu.regs[4] = 0x0839e0c4 + row * 8; machine.cpu.regs[3] = row * 8;
+                prefix(machine, start, end);
+            }
+            assert_eq!(&raw.cpu.regs[..4], &typed.cpu.regs[..4]);
+        }
+    }
+    drop(typed);
+    raw.bus.ffta_sprites.enabled = false;
+    let state = 0x02007f00;
+    for bank in &banks {
+        raw.bus.write32(state + 4, 0x08000000 + bank.list_root());
+        raw.bus.write32(state + 8, 0x08000000 + bank.sequence_root());
+        for entry in &bank.sequences {
+            let sequence = &entry.sequence;
+            raw.cpu.regs = [0; 16]; raw.cpu.regs[3] = u32::from(sequence.selector); raw.cpu.regs[4] = state;
+            prefix(&mut raw, 0x08010870, 0x08010884);
+            assert_eq!(raw.cpu.regs[3] as usize, sequence.frames.len());
+            for (phase, frame) in sequence.frames.iter().enumerate() {
+                raw.cpu.regs = [0; 16]; raw.cpu.regs[5] = u32::from(sequence.selector); raw.cpu.regs[3] = state; raw.cpu.regs[2] = phase as u32;
+                prefix(&mut raw, 0x08010e5a, 0x08010e70); assert_eq!(raw.cpu.regs[0], u32::from(frame.list));
+                raw.cpu.regs = [0; 16]; raw.cpu.regs[7] = u32::from(sequence.selector); raw.cpu.regs[4] = state; raw.cpu.regs[3] = phase as u32;
+                prefix(&mut raw, 0x08010cb2, 0x08010cc8); assert_eq!(raw.cpu.regs[1], u32::from(frame.duration));
+            }
+        }
+        for entry in &bank.lists {
+            raw.cpu.regs = [0; 16]; raw.cpu.regs[2] = u32::from(entry.index); raw.cpu.regs[3] = state;
+            prefix(&mut raw, 0x08010e9a, 0x08010eb2);
+            assert_eq!(raw.cpu.regs[1], 0x08000000 + entry.list.source_offset);
+        }
+    }
+
+    let object = PathBuf::from(std::env::var_os("FFTA_COMPACT_CATALOG_NATIVE").unwrap());
+    let (_library, table) = crate::load_native(&object).unwrap();
+    let mut native = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut native, &dataset).unwrap();
+    let owner = native.bus.rom_resources().unwrap().clone();
+    let initial = raw.save_state().unwrap();
+    let mut served = 0;
+    let mut native_cases = 0;
+    for bank in &banks { for selector in bank.sequences.iter().map(|entry| entry.sequence.selector).chain([0x100]) {
+        for machine in [&mut raw, &mut native] {
+            machine.load_state(&initial).unwrap(); machine.bus.ffta_sprites.enabled = false;
+            machine.bus.write32(state + 8, 0x08000000 + bank.sequence_root());
+            machine.cpu.regs = std::array::from_fn(|i| 0x11000000 + i as u32);
+            machine.cpu.regs[3] = u32::from(selector); machine.cpu.regs[4] = state;
+            machine.cpu.regs[13] = 0x03007c00; machine.cpu.regs[15] = 0x08010870; machine.cpu.cpsr = 0xbf;
+        }
+        for &(start, end) in &new_spans { native.bus.rom[start as usize..end as usize].fill(0xcd); }
+        let directory = bank.sequence_root() + u32::from(selector) * 2;
+        let relative = u16::from_le_bytes(rom[directory as usize..directory as usize + 2].try_into().unwrap());
+        let count_at = bank.sequence_root() + u32::from(relative);
+        let expected: u64 = [directory, count_at].into_iter().flat_map(|at| at..at + 2).map(|at| u64::from(data.byte_at(at).is_some())).sum();
+        prefix(&mut raw, 0x08010870, 0x08010884);
+        let before = owner.compact_obj_catalog_stats().unwrap().source_bytes;
+        let mut steps = 0;
+        while native.cpu.regs[15] != 0x08010884 {
+            assert!(steps < 32); native.bus.frame_ready = false;
+            table.get(native.cpu.regs[15] | 1).unwrap()(&RT_API, &mut native as *mut Machine as *mut std::ffi::c_void);
+            steps += 1;
+        }
+        let used = owner.compact_obj_catalog_stats().unwrap().source_bytes - before;
+        assert_eq!(used, expected, "bank {:x} selector {selector}", bank.root);
+        if selector != 0x100 { assert_eq!(used, 4); }
+        served += used; native_cases += 1;
+        native.bus.rom.copy_from_slice(&rom);
+        assert_eq!(native.save_state().unwrap(), raw.save_state().unwrap(), "bank {:x} selector {selector}", bank.root);
+    } }
+    assert_eq!(native_cases, 10);
+    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
+        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":53,
+        "new_banks":1, "new_selectors":9, "new_source_bytes":268, "new_frames":9, "new_lists":9, "new_objects":13, "table_rows":12,
+        "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":1,
+        "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
+        "coherent_rejection_in_memory":true, "dataset_copies_created":0, "old_reader_cases_repeated":false,
+        "ordinary_use":"not attempted", "Linux":"pending", "USA":"pending", "nativeWindows":"pending", "performance_measurements":false
+    })).unwrap()).unwrap();
+}
+
+#[test]
+#[ignore = "private EUR source/e121 current dataset/e120 baseline/native prefix; Wine only, Linux/USA pending"]
+fn european_6babc4_flight_burst_catalog_matches_source_and_native_readers() {
+    let root = PathBuf::from(std::env::var_os("FFTA_COMPACT_CATALOG_ROOT").unwrap());
+    assert!(!root.exists()); fs::create_dir_all(&root).unwrap();
+    let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    let dataset = PathBuf::from(std::env::var_os("FFTA_STATE_TEST_DATASET").unwrap());
+    let prior = PathBuf::from(std::env::var_os("FFTA_COMPACT_CATALOG_PRIOR").unwrap());
+    let selected = [0x6babc4];
+    let catalog = model::Catalog::from_rom(&rom).unwrap();
+    let data = &catalog.decoded;
+    let banks: Vec<_> = data.banks.iter().filter(|bank| selected.contains(&bank.root)).collect();
+    assert_eq!(banks.len(), 1);
+    assert_eq!(banks.iter().map(|bank| bank.sequences.len()).sum::<usize>(), 6);
+    assert_eq!(banks.iter().flat_map(|bank| &bank.sequences).map(|entry| entry.sequence.frames.len()).sum::<usize>(), 6);
+    assert_eq!(banks.iter().map(|bank| bank.lists.len()).sum::<usize>(), 6);
+    assert_eq!(banks.iter().flat_map(|bank| &bank.lists).map(|entry| entry.list.objects.len()).sum::<usize>(), 6);
+    let mut new_spans: Vec<_> = model::BANK_SPECS.iter().filter(|spec| selected.contains(&spec.root))
+        .flat_map(|spec| spec.spans.iter().copied()).collect();
+    assert_eq!(new_spans.iter().map(|(a, z)| z - a).sum::<u32>(), 100);
+    new_spans.extend([(0x39dc50, 0x39dd40), (0x39f6cc, 0x39f724)]);
+    assert_eq!(data.selector_tables.as_ref().unwrap().flight.as_ref().unwrap().rows.len(), 30);
+    assert_eq!(data.selector_tables.as_ref().unwrap().burst.as_ref().unwrap().rows.len(), 11);
+
+    let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
+    assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (120, 119, 100));
+    let current = read_dataset(&dataset).unwrap();
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (127, 126, 100));
+    assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
+    // Read the accepted older JSON without applying the new complete bank-set
+    // validator to its historical projection. Its protected file is unchanged.
+    let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
+    assert_eq!(old.banks.len(), 54);
+    assert_eq!(data.banks.iter().filter(|bank| !selected.contains(&bank.root)).count(), model::BANK_SPECS.len() - selected.len());
+    for bank in &old.banks { assert_eq!(data.banks.iter().find(|new| new.root == bank.root), Some(bank)); }
+    let mut previous_tables = data.selector_tables.clone().unwrap(); previous_tables.flight = None; previous_tables.burst = None; previous_tables.effects = None; previous_tables.grid_first = None; previous_tables.grid_second = None; previous_tables.script_lookup = None; previous_tables.scene = None;
+    assert_eq!(old.selector_tables.as_ref(), Some(&previous_tables));
+    assert_eq!(current.compact_obj_catalog.as_ref().unwrap(), data);
+    let bytes = encode_compact_obj_catalog(data).unwrap();
+    assert_eq!(parse_compact_obj_catalog(&bytes).unwrap(), *data);
+    let mut changed = data.clone();
+    changed.banks.iter_mut().find(|bank| bank.root == selected[0]).unwrap().sequences[0].relative_offset += 2;
+    assert!(changed.validate().is_err());
+
+    let mut machine = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut machine, &dataset).unwrap();
+    let initial = machine.save_state().unwrap();
+    let owner = machine.bus.rom_resources().unwrap().clone();
+    for &(start, end) in &new_spans { machine.bus.rom[start as usize..end as usize].fill(0xcd); }
+    let before = owner.compact_obj_catalog_stats().unwrap().source_bytes;
+    for &(start, end) in &new_spans { for at in start..end {
+        assert_eq!(data.byte_at(at), Some(rom[at as usize]));
+        assert_eq!(machine.bus.read8(0x0c000000 + at), rom[at as usize]);
+    } }
+    assert_eq!(owner.compact_obj_catalog_stats().unwrap().source_bytes - before, 428);
+    for &(start, end) in &new_spans { for edge in [start, end] { for delta in [-3i32, -1, 0, 1] {
+        let at = edge.wrapping_add_signed(delta) as usize;
+        let ptr = &mut machine as *mut Machine as *mut std::ffi::c_void;
+        assert_eq!((RT_API.read16)(ptr, 0x0a000000 + at as u32), u32::from(u16::from_le_bytes(rom[at..at + 2].try_into().unwrap())));
+        assert_eq!((RT_API.read32)(ptr, 0x08000000 + at as u32), u32::from_le_bytes(rom[at..at + 4].try_into().unwrap()));
+    } } }
+    machine.bus.rom.copy_from_slice(&rom);
+    assert_eq!(machine.save_state().unwrap(), initial);
+    let mut bad = read_dataset(&dataset).unwrap();
+    bad.compact_obj_catalog.as_mut().unwrap().banks.iter_mut().find(|bank| bank.root == selected[0]).unwrap()
+        .sequences[0].sequence.frames[0].duration ^= 1;
+    let bytes = encode_compact_obj_catalog(bad.compact_obj_catalog.as_ref().unwrap()).unwrap();
+    bad.manifest.resources[99].sha256 = gba_core::ffta_rom::digest(&bytes);
+    bad.compact_obj_catalog_bytes = Some(bytes);
+    assert!(RuntimeResources::from_base_files(&rom, bad.files()).is_err());
+    assert!(std::sync::Arc::ptr_eq(machine.bus.rom_resources().unwrap(), &owner));
+    assert_eq!(machine.save_state().unwrap(), initial);
+    drop(bad); drop(current); drop(machine);
+
+    let mut raw = crate::make_machine(rom.clone(), None);
+    let mut typed = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut typed, &dataset).unwrap();
+    typed.bus.rom[0x39dc50..0x39dd40].fill(0xcd);
+    typed.bus.rom[0x39f6cc..0x39f724].fill(0xcd);
+    for (base, rows, cases) in [(0x0839dc50, 30u32, &[(0x080ee740, 0x080ee742), (0x080ee756, 0x080ee760), (0x080ee7a0, 0x080ee7a2)][..]), (0x0839f6cc, 11u32, &[(0x080f5e38, 0x080f5e3a), (0x080f5e3e, 0x080f5e40), (0x080f5e44, 0x080f5e4e)][..])] {
+        for row in 0..rows { for &(start, end) in cases {
+            for machine in [&mut raw, &mut typed] {
+                machine.cpu.regs = [0; 16]; machine.cpu.regs[5] = base + row * 8; machine.cpu.regs[3] = base + row * 8;
+                prefix(machine, start, end);
+            }
+            assert_eq!(&raw.cpu.regs[..4], &typed.cpu.regs[..4]);
+        } }
+    }
+    drop(typed);
+    raw.bus.ffta_sprites.enabled = false;
+    let state = 0x02007f00;
+    for bank in &banks {
+        raw.bus.write32(state + 4, 0x08000000 + bank.list_root());
+        raw.bus.write32(state + 8, 0x08000000 + bank.sequence_root());
+        for entry in &bank.sequences {
+            let sequence = &entry.sequence;
+            raw.cpu.regs = [0; 16]; raw.cpu.regs[3] = u32::from(sequence.selector); raw.cpu.regs[4] = state;
+            prefix(&mut raw, 0x08010870, 0x08010884);
+            assert_eq!(raw.cpu.regs[3] as usize, sequence.frames.len());
+            for (phase, frame) in sequence.frames.iter().enumerate() {
+                raw.cpu.regs = [0; 16]; raw.cpu.regs[5] = u32::from(sequence.selector); raw.cpu.regs[3] = state; raw.cpu.regs[2] = phase as u32;
+                prefix(&mut raw, 0x08010e5a, 0x08010e70); assert_eq!(raw.cpu.regs[0], u32::from(frame.list));
+                raw.cpu.regs = [0; 16]; raw.cpu.regs[7] = u32::from(sequence.selector); raw.cpu.regs[4] = state; raw.cpu.regs[3] = phase as u32;
+                prefix(&mut raw, 0x08010cb2, 0x08010cc8); assert_eq!(raw.cpu.regs[1], u32::from(frame.duration));
+            }
+        }
+        for entry in &bank.lists {
+            raw.cpu.regs = [0; 16]; raw.cpu.regs[2] = u32::from(entry.index); raw.cpu.regs[3] = state;
+            prefix(&mut raw, 0x08010e9a, 0x08010eb2);
+            assert_eq!(raw.cpu.regs[1], 0x08000000 + entry.list.source_offset);
+        }
+    }
+
+    let object = PathBuf::from(std::env::var_os("FFTA_COMPACT_CATALOG_NATIVE").unwrap());
+    let (_library, table) = crate::load_native(&object).unwrap();
+    let mut native = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut native, &dataset).unwrap();
+    let owner = native.bus.rom_resources().unwrap().clone();
+    let initial = raw.save_state().unwrap();
+    let mut served = 0;
+    let mut native_cases = 0;
+    for bank in &banks { for selector in bank.sequences.iter().map(|entry| entry.sequence.selector).chain([0x100]) {
+        for machine in [&mut raw, &mut native] {
+            machine.load_state(&initial).unwrap(); machine.bus.ffta_sprites.enabled = false;
+            machine.bus.write32(state + 8, 0x08000000 + bank.sequence_root());
+            machine.cpu.regs = std::array::from_fn(|i| 0x11000000 + i as u32);
+            machine.cpu.regs[3] = u32::from(selector); machine.cpu.regs[4] = state;
+            machine.cpu.regs[13] = 0x03007c00; machine.cpu.regs[15] = 0x08010870; machine.cpu.cpsr = 0xbf;
+        }
+        for &(start, end) in &new_spans { native.bus.rom[start as usize..end as usize].fill(0xcd); }
+        let directory = bank.sequence_root() + u32::from(selector) * 2;
+        let relative = u16::from_le_bytes(rom[directory as usize..directory as usize + 2].try_into().unwrap());
+        let count_at = bank.sequence_root() + u32::from(relative);
+        let expected: u64 = [directory, count_at].into_iter().flat_map(|at| at..at + 2).map(|at| u64::from(data.byte_at(at).is_some())).sum();
+        prefix(&mut raw, 0x08010870, 0x08010884);
+        let before = owner.compact_obj_catalog_stats().unwrap().source_bytes;
+        let mut steps = 0;
+        while native.cpu.regs[15] != 0x08010884 {
+            assert!(steps < 32); native.bus.frame_ready = false;
+            table.get(native.cpu.regs[15] | 1).unwrap()(&RT_API, &mut native as *mut Machine as *mut std::ffi::c_void);
+            steps += 1;
+        }
+        let used = owner.compact_obj_catalog_stats().unwrap().source_bytes - before;
+        assert_eq!(used, expected, "bank {:x} selector {selector}", bank.root);
+        if selector != 0x100 { assert_eq!(used, 4); }
+        served += used; native_cases += 1;
+        native.bus.rom.copy_from_slice(&rom);
+        assert_eq!(native.save_state().unwrap(), raw.save_state().unwrap(), "bank {:x} selector {selector}", bank.root);
+    } }
+    assert_eq!(native_cases, 7);
+    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
+        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":54,
+        "new_banks":1, "new_selectors":6, "new_source_bytes":428, "new_frames":6, "new_lists":6, "new_objects":6, "table_rows":41,
+        "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":1,
+        "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
+        "coherent_rejection_in_memory":true, "dataset_copies_created":0, "old_reader_cases_repeated":false,
+        "ordinary_use":"not attempted", "Linux":"pending", "USA":"pending", "nativeWindows":"pending", "performance_measurements":false
+    })).unwrap()).unwrap();
+}
+
+#[test]
+#[ignore = "private EUR source/e122 current dataset/e121 baseline/native prefix; Wine only, Linux/USA pending"]
+fn european_6bb574_effect_catalog_matches_source_and_native_readers() {
+    let root = PathBuf::from(std::env::var_os("FFTA_COMPACT_CATALOG_ROOT").unwrap());
+    assert!(!root.exists()); fs::create_dir_all(&root).unwrap();
+    let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    let dataset = PathBuf::from(std::env::var_os("FFTA_STATE_TEST_DATASET").unwrap());
+    let prior = PathBuf::from(std::env::var_os("FFTA_COMPACT_CATALOG_PRIOR").unwrap());
+    let selected = [0x6bb574];
+    let catalog = model::Catalog::from_rom(&rom).unwrap();
+    let data = &catalog.decoded;
+    let banks: Vec<_> = data.banks.iter().filter(|bank| selected.contains(&bank.root)).collect();
+    assert_eq!(banks.len(), 1);
+    assert_eq!(banks.iter().map(|bank| bank.sequences.len()).sum::<usize>(), 3);
+    assert_eq!(banks.iter().flat_map(|bank| &bank.sequences).map(|entry| entry.sequence.frames.len()).sum::<usize>(), 3);
+    assert_eq!(banks.iter().map(|bank| bank.lists.len()).sum::<usize>(), 3);
+    assert_eq!(banks.iter().flat_map(|bank| &bank.lists).map(|entry| entry.list.objects.len()).sum::<usize>(), 3);
+    let mut new_spans: Vec<_> = model::BANK_SPECS.iter().filter(|spec| selected.contains(&spec.root))
+        .flat_map(|spec| spec.spans.iter().copied()).collect();
+    assert_eq!(new_spans.iter().map(|(a, z)| z - a).sum::<u32>(), 52);
+    new_spans.extend([(0x39defc, 0x39df4d), (0x39df4e, 0x39df50), (0x39df5c, 0x39df94), (0x39df98, 0x39df9a)]);
+    assert_eq!(data.selector_tables.as_ref().unwrap().effects.as_ref().unwrap().rows.len(), 10);
+
+    let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
+    assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (121, 120, 100));
+    let current = read_dataset(&dataset).unwrap();
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (127, 126, 100));
+    assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
+    // Read the accepted older JSON without applying the new complete bank-set
+    // validator to its historical projection. Its protected file is unchanged.
+    let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
+    assert_eq!(old.banks.len(), 55);
+    assert_eq!(data.banks.iter().filter(|bank| !selected.contains(&bank.root)).count(), model::BANK_SPECS.len() - selected.len());
+    for bank in &old.banks { assert_eq!(data.banks.iter().find(|new| new.root == bank.root), Some(bank)); }
+    let mut previous_tables = data.selector_tables.clone().unwrap(); previous_tables.effects = None; previous_tables.grid_first = None; previous_tables.grid_second = None; previous_tables.script_lookup = None; previous_tables.scene = None;
+    assert_eq!(old.selector_tables.as_ref(), Some(&previous_tables));
+    assert_eq!(current.compact_obj_catalog.as_ref().unwrap(), data);
+    let bytes = encode_compact_obj_catalog(data).unwrap();
+    assert_eq!(parse_compact_obj_catalog(&bytes).unwrap(), *data);
+    let mut changed = data.clone();
+    changed.banks.iter_mut().find(|bank| bank.root == selected[0]).unwrap().sequences[0].relative_offset += 2;
+    assert!(changed.validate().is_err());
+
+    let mut machine = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut machine, &dataset).unwrap();
+    let initial = machine.save_state().unwrap();
+    let owner = machine.bus.rom_resources().unwrap().clone();
+    for &(start, end) in &new_spans { machine.bus.rom[start as usize..end as usize].fill(0xcd); }
+    let before = owner.compact_obj_catalog_stats().unwrap().source_bytes;
+    for &(start, end) in &new_spans { for at in start..end {
+        assert_eq!(data.byte_at(at), Some(rom[at as usize]));
+        assert_eq!(machine.bus.read8(0x0c000000 + at), rom[at as usize]);
+    } }
+    assert_eq!(owner.compact_obj_catalog_stats().unwrap().source_bytes - before, 193);
+    for &(start, end) in &new_spans { for edge in [start, end] { for delta in [-3i32, -1, 0, 1] {
+        let at = edge.wrapping_add_signed(delta) as usize;
+        let ptr = &mut machine as *mut Machine as *mut std::ffi::c_void;
+        assert_eq!((RT_API.read16)(ptr, 0x0a000000 + at as u32), u32::from(u16::from_le_bytes(rom[at..at + 2].try_into().unwrap())));
+        assert_eq!((RT_API.read32)(ptr, 0x08000000 + at as u32), u32::from_le_bytes(rom[at..at + 4].try_into().unwrap()));
+    } } }
+    machine.bus.rom.copy_from_slice(&rom);
+    assert_eq!(machine.save_state().unwrap(), initial);
+    let mut bad = read_dataset(&dataset).unwrap();
+    bad.compact_obj_catalog.as_mut().unwrap().banks.iter_mut().find(|bank| bank.root == selected[0]).unwrap()
+        .sequences[0].sequence.frames[0].duration ^= 1;
+    let bytes = encode_compact_obj_catalog(bad.compact_obj_catalog.as_ref().unwrap()).unwrap();
+    bad.manifest.resources[99].sha256 = gba_core::ffta_rom::digest(&bytes);
+    bad.compact_obj_catalog_bytes = Some(bytes);
+    assert!(RuntimeResources::from_base_files(&rom, bad.files()).is_err());
+    assert!(std::sync::Arc::ptr_eq(machine.bus.rom_resources().unwrap(), &owner));
+    assert_eq!(machine.save_state().unwrap(), initial);
+    drop(bad); drop(current); drop(machine);
+
+    let mut raw = crate::make_machine(rom.clone(), None);
+    let mut typed = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut typed, &dataset).unwrap();
+    for &(a, z) in &new_spans { typed.bus.rom[a as usize..z as usize].fill(0xcd); }
+    let rows = &data.selector_tables.as_ref().unwrap().effects.as_ref().unwrap().rows;
+    for (row, entry) in rows.iter().enumerate() {
+        let mut cases = vec![(0x080ef096, 0x080ef098), (0x080ef09e, 0x080ef0a0)];
+        if entry.kind != 1 { cases.extend([(0x080ef0b4, 0x080ef0b6), (0x080ef0b6, 0x080ef0be), (0x080ef110, 0x080ef112)]); }
+        if entry.kind == 0 { cases.extend([(0x080ef108, 0x080ef110), (0x080ef11e, 0x080ef126), (0x080ef14a, 0x080ef14c)]); }
+        for (start, end) in cases {
+            for machine in [&mut raw, &mut typed] {
+                machine.cpu.regs = [0; 16]; machine.cpu.regs[6] = 0x0839defc + row as u32 * 16;
+                prefix(machine, start, end);
+            }
+            assert_eq!(&raw.cpu.regs[..4], &typed.cpu.regs[..4]);
+        }
+    }
+    for at in 0x39defc..0x39df9c {
+        if data.byte_at(at).is_none() { assert_eq!(typed.bus.read8(0x08000000 + at), rom[at as usize]); }
+    }
+    drop(typed);
+    raw.bus.ffta_sprites.enabled = false;
+    let state = 0x02007f00;
+    for bank in &banks {
+        raw.bus.write32(state + 4, 0x08000000 + bank.list_root());
+        raw.bus.write32(state + 8, 0x08000000 + bank.sequence_root());
+        for entry in &bank.sequences {
+            let sequence = &entry.sequence;
+            raw.cpu.regs = [0; 16]; raw.cpu.regs[3] = u32::from(sequence.selector); raw.cpu.regs[4] = state;
+            prefix(&mut raw, 0x08010870, 0x08010884);
+            assert_eq!(raw.cpu.regs[3] as usize, sequence.frames.len());
+            for (phase, frame) in sequence.frames.iter().enumerate() {
+                raw.cpu.regs = [0; 16]; raw.cpu.regs[5] = u32::from(sequence.selector); raw.cpu.regs[3] = state; raw.cpu.regs[2] = phase as u32;
+                prefix(&mut raw, 0x08010e5a, 0x08010e70); assert_eq!(raw.cpu.regs[0], u32::from(frame.list));
+                raw.cpu.regs = [0; 16]; raw.cpu.regs[7] = u32::from(sequence.selector); raw.cpu.regs[4] = state; raw.cpu.regs[3] = phase as u32;
+                prefix(&mut raw, 0x08010cb2, 0x08010cc8); assert_eq!(raw.cpu.regs[1], u32::from(frame.duration));
+            }
+        }
+        for entry in &bank.lists {
+            raw.cpu.regs = [0; 16]; raw.cpu.regs[2] = u32::from(entry.index); raw.cpu.regs[3] = state;
+            prefix(&mut raw, 0x08010e9a, 0x08010eb2);
+            assert_eq!(raw.cpu.regs[1], 0x08000000 + entry.list.source_offset);
+        }
+    }
+
+    let object = PathBuf::from(std::env::var_os("FFTA_COMPACT_CATALOG_NATIVE").unwrap());
+    let (_library, table) = crate::load_native(&object).unwrap();
+    let mut native = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut native, &dataset).unwrap();
+    let owner = native.bus.rom_resources().unwrap().clone();
+    let initial = raw.save_state().unwrap();
+    let mut served = 0;
+    let mut native_cases = 0;
+    for bank in &banks { for selector in bank.sequences.iter().map(|entry| entry.sequence.selector).chain([0x100]) {
+        for machine in [&mut raw, &mut native] {
+            machine.load_state(&initial).unwrap(); machine.bus.ffta_sprites.enabled = false;
+            machine.bus.write32(state + 8, 0x08000000 + bank.sequence_root());
+            machine.cpu.regs = std::array::from_fn(|i| 0x11000000 + i as u32);
+            machine.cpu.regs[3] = u32::from(selector); machine.cpu.regs[4] = state;
+            machine.cpu.regs[13] = 0x03007c00; machine.cpu.regs[15] = 0x08010870; machine.cpu.cpsr = 0xbf;
+        }
+        for &(start, end) in &new_spans { native.bus.rom[start as usize..end as usize].fill(0xcd); }
+        let directory = bank.sequence_root() + u32::from(selector) * 2;
+        let relative = u16::from_le_bytes(rom[directory as usize..directory as usize + 2].try_into().unwrap());
+        let count_at = bank.sequence_root() + u32::from(relative);
+        let expected: u64 = [directory, count_at].into_iter().flat_map(|at| at..at + 2).map(|at| u64::from(data.byte_at(at).is_some())).sum();
+        prefix(&mut raw, 0x08010870, 0x08010884);
+        let before = owner.compact_obj_catalog_stats().unwrap().source_bytes;
+        let mut steps = 0;
+        while native.cpu.regs[15] != 0x08010884 {
+            assert!(steps < 32); native.bus.frame_ready = false;
+            table.get(native.cpu.regs[15] | 1).unwrap()(&RT_API, &mut native as *mut Machine as *mut std::ffi::c_void);
+            steps += 1;
+        }
+        let used = owner.compact_obj_catalog_stats().unwrap().source_bytes - before;
+        assert_eq!(used, expected, "bank {:x} selector {selector}", bank.root);
+        if selector != 0x100 { assert_eq!(used, 4); }
+        served += used; native_cases += 1;
+        native.bus.rom.copy_from_slice(&rom);
+        assert_eq!(native.save_state().unwrap(), raw.save_state().unwrap(), "bank {:x} selector {selector}", bank.root);
+    } }
+    assert_eq!(native_cases, 4);
+    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
+        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":55,
+        "new_banks":1, "new_selectors":3, "new_source_bytes":193, "new_frames":3, "new_lists":3, "new_objects":3, "table_rows":10,
+        "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":1,
+        "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
+        "coherent_rejection_in_memory":true, "dataset_copies_created":0, "old_reader_cases_repeated":false,
+        "ordinary_use":"not attempted", "Linux":"pending", "USA":"pending", "nativeWindows":"pending", "performance_measurements":false
+    })).unwrap()).unwrap();
+}
+
+
+
+#[test]
+#[ignore = "private EUR source/e124 current dataset/e123 baseline/native prefix; Wine only, Linux/USA pending"]
+fn european_6c316c_initial_catalog_matches_source_and_native_readers() {
+    let root = PathBuf::from(std::env::var_os("FFTA_COMPACT_CATALOG_ROOT").unwrap());
+    assert!(!root.exists()); fs::create_dir_all(&root).unwrap();
+    let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    let dataset = PathBuf::from(std::env::var_os("FFTA_STATE_TEST_DATASET").unwrap());
+    let prior = PathBuf::from(std::env::var_os("FFTA_COMPACT_CATALOG_PRIOR").unwrap());
+    let selected = [0x6c316c];
+    let catalog = model::Catalog::from_rom(&rom).unwrap();
+    let data = &catalog.decoded;
+    let banks: Vec<_> = data.banks.iter().filter(|bank| selected.contains(&bank.root)).collect();
+    assert_eq!(banks.len(), 1);
+    assert_eq!(banks.iter().map(|bank| bank.sequences.len()).sum::<usize>(), 3);
+    assert_eq!(banks.iter().flat_map(|bank| &bank.sequences).map(|entry| entry.sequence.frames.len()).sum::<usize>(), 39);
+    assert_eq!(banks.iter().map(|bank| bank.lists.len()).sum::<usize>(), 10);
+    assert_eq!(banks.iter().flat_map(|bank| &bank.lists).map(|entry| entry.list.objects.len()).sum::<usize>(), 9);
+    let new_spans: Vec<_> = model::BANK_SPECS.iter().filter(|spec| selected.contains(&spec.root))
+        .flat_map(|spec| spec.spans.iter().copied()).collect();
+    assert_eq!(new_spans.iter().map(|(a, z)| z - a).sum::<u32>(), 188);
+
+
+    let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
+    assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (123, 122, 100));
+    let current = read_dataset(&dataset).unwrap();
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (127, 126, 100));
+    assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
+    // Read the accepted older JSON without applying the new complete bank-set
+    // validator to its historical projection. Its protected file is unchanged.
+    let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
+    assert_eq!(old.banks.len(), 57);
+    assert_eq!(data.banks.iter().filter(|bank| !selected.contains(&bank.root)).count(), model::BANK_SPECS.len() - selected.len());
+    for bank in &old.banks { assert_eq!(data.banks.iter().find(|new| new.root == bank.root), Some(bank)); }
+    let mut previous_tables = data.selector_tables.clone().unwrap(); previous_tables.script_lookup = None; previous_tables.scene = None;
+    assert_eq!(old.selector_tables.as_ref(), Some(&previous_tables));
+    assert_eq!(current.compact_obj_catalog.as_ref().unwrap(), data);
+    let bytes = encode_compact_obj_catalog(data).unwrap();
+    assert_eq!(parse_compact_obj_catalog(&bytes).unwrap(), *data);
+    let mut changed = data.clone();
+    changed.banks.iter_mut().find(|bank| bank.root == selected[0]).unwrap().sequences[0].relative_offset += 2;
+    assert!(changed.validate().is_err());
+
+    let mut machine = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut machine, &dataset).unwrap();
+    let initial = machine.save_state().unwrap();
+    let owner = machine.bus.rom_resources().unwrap().clone();
+    for &(start, end) in &new_spans { machine.bus.rom[start as usize..end as usize].fill(0xcd); }
+    let before = owner.compact_obj_catalog_stats().unwrap().source_bytes;
+    for &(start, end) in &new_spans { for at in start..end {
+        assert_eq!(data.byte_at(at), Some(rom[at as usize]));
+        assert_eq!(machine.bus.read8(0x0c000000 + at), rom[at as usize]);
+    } }
+    assert_eq!(owner.compact_obj_catalog_stats().unwrap().source_bytes - before, 188);
+    for &(start, end) in &new_spans { for edge in [start, end] { for delta in [-3i32, -1, 0, 1] {
+        let at = edge.wrapping_add_signed(delta) as usize;
+        let ptr = &mut machine as *mut Machine as *mut std::ffi::c_void;
+        assert_eq!((RT_API.read16)(ptr, 0x0a000000 + at as u32), u32::from(u16::from_le_bytes(rom[at..at + 2].try_into().unwrap())));
+        assert_eq!((RT_API.read32)(ptr, 0x08000000 + at as u32), u32::from_le_bytes(rom[at..at + 4].try_into().unwrap()));
+    } } }
+    machine.bus.rom.copy_from_slice(&rom);
+    assert_eq!(machine.save_state().unwrap(), initial);
+    let mut bad = read_dataset(&dataset).unwrap();
+    bad.compact_obj_catalog.as_mut().unwrap().banks.iter_mut().find(|bank| bank.root == selected[0]).unwrap()
+        .sequences[0].sequence.frames[0].duration ^= 1;
+    let bytes = encode_compact_obj_catalog(bad.compact_obj_catalog.as_ref().unwrap()).unwrap();
+    bad.manifest.resources[99].sha256 = gba_core::ffta_rom::digest(&bytes);
+    bad.compact_obj_catalog_bytes = Some(bytes);
+    assert!(RuntimeResources::from_base_files(&rom, bad.files()).is_err());
+    assert!(std::sync::Arc::ptr_eq(machine.bus.rom_resources().unwrap(), &owner));
+    assert_eq!(machine.save_state().unwrap(), initial);
+    drop(bad); drop(current); drop(machine);
+
+    let mut raw = crate::make_machine(rom.clone(), None);
+    let mut typed = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut typed, &dataset).unwrap();
+    for &(a, z) in &new_spans { typed.bus.rom[a as usize..z as usize].fill(0xcd); }
+    let record = 0x02007d00;
+    for selector in 0..3 {
+        for machine in [&mut raw, &mut typed] {
+            machine.bus.write32(record, 0x086c316c); machine.bus.write16(record + 4, selector);
+            machine.cpu.regs = [0; 16]; machine.cpu.regs[6] = record; machine.cpu.regs[13] = 0x03007c00;
+            prefix(machine, 0x080d89c6, 0x080d89e6);
+        }
+        assert_eq!(&raw.cpu.regs[..4], &typed.cpu.regs[..4]);
+        assert_eq!(raw.bus.read32(0x03007c28), typed.bus.read32(0x03007c28));
+        assert_eq!(raw.bus.read32(0x03007c2c), typed.bus.read32(0x03007c2c));
+        for machine in [&mut raw, &mut typed] { machine.cpu.regs[6] = record; prefix(machine, 0x080d8a10, 0x080d8a12); }
+        assert_eq!(raw.cpu.regs[2], typed.cpu.regs[2]);
+        assert_eq!(typed.cpu.regs[2], u32::from(selector));
+    }
+    drop(typed);
+    raw.bus.ffta_sprites.enabled = false;
+    let state = 0x02007f00;
+    for bank in &banks {
+        raw.bus.write32(state + 4, 0x08000000 + bank.list_root());
+        raw.bus.write32(state + 8, 0x08000000 + bank.sequence_root());
+        for entry in &bank.sequences {
+            let sequence = &entry.sequence;
+            raw.cpu.regs = [0; 16]; raw.cpu.regs[3] = u32::from(sequence.selector); raw.cpu.regs[4] = state;
+            prefix(&mut raw, 0x08010870, 0x08010884);
+            assert_eq!(raw.cpu.regs[3] as usize, sequence.frames.len());
+            for (phase, frame) in sequence.frames.iter().enumerate() {
+                raw.cpu.regs = [0; 16]; raw.cpu.regs[5] = u32::from(sequence.selector); raw.cpu.regs[3] = state; raw.cpu.regs[2] = phase as u32;
+                prefix(&mut raw, 0x08010e5a, 0x08010e70); assert_eq!(raw.cpu.regs[0], u32::from(frame.list));
+                raw.cpu.regs = [0; 16]; raw.cpu.regs[7] = u32::from(sequence.selector); raw.cpu.regs[4] = state; raw.cpu.regs[3] = phase as u32;
+                prefix(&mut raw, 0x08010cb2, 0x08010cc8); assert_eq!(raw.cpu.regs[1], u32::from(frame.duration));
+            }
+        }
+        for entry in &bank.lists {
+            raw.cpu.regs = [0; 16]; raw.cpu.regs[2] = u32::from(entry.index); raw.cpu.regs[3] = state;
+            prefix(&mut raw, 0x08010e9a, 0x08010eb2);
+            assert_eq!(raw.cpu.regs[1], 0x08000000 + entry.list.source_offset);
+        }
+    }
+
+    let object = PathBuf::from(std::env::var_os("FFTA_COMPACT_CATALOG_NATIVE").unwrap());
+    let (_library, table) = crate::load_native(&object).unwrap();
+    let mut native = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut native, &dataset).unwrap();
+    let owner = native.bus.rom_resources().unwrap().clone();
+    let initial = raw.save_state().unwrap();
+    let mut served = 0;
+    let mut native_cases = 0;
+    for bank in &banks { for selector in bank.sequences.iter().map(|entry| entry.sequence.selector).chain([0x100]) {
+        for machine in [&mut raw, &mut native] {
+            machine.load_state(&initial).unwrap(); machine.bus.ffta_sprites.enabled = false;
+            machine.bus.write32(state + 8, 0x08000000 + bank.sequence_root());
+            machine.cpu.regs = std::array::from_fn(|i| 0x11000000 + i as u32);
+            machine.cpu.regs[3] = u32::from(selector); machine.cpu.regs[4] = state;
+            machine.cpu.regs[13] = 0x03007c00; machine.cpu.regs[15] = 0x08010870; machine.cpu.cpsr = 0xbf;
+        }
+        for &(start, end) in &new_spans { native.bus.rom[start as usize..end as usize].fill(0xcd); }
+        let directory = bank.sequence_root() + u32::from(selector) * 2;
+        let relative = u16::from_le_bytes(rom[directory as usize..directory as usize + 2].try_into().unwrap());
+        let count_at = bank.sequence_root() + u32::from(relative);
+        let expected: u64 = [directory, count_at].into_iter().flat_map(|at| at..at + 2).map(|at| u64::from(data.byte_at(at).is_some())).sum();
+        prefix(&mut raw, 0x08010870, 0x08010884);
+        let before = owner.compact_obj_catalog_stats().unwrap().source_bytes;
+        let mut steps = 0;
+        while native.cpu.regs[15] != 0x08010884 {
+            assert!(steps < 32); native.bus.frame_ready = false;
+            table.get(native.cpu.regs[15] | 1).unwrap()(&RT_API, &mut native as *mut Machine as *mut std::ffi::c_void);
+            steps += 1;
+        }
+        let used = owner.compact_obj_catalog_stats().unwrap().source_bytes - before;
+        assert_eq!(used, expected, "bank {:x} selector {selector}", bank.root);
+        if selector != 0x100 { assert_eq!(used, 4); }
+        served += used; native_cases += 1;
+        native.bus.rom.copy_from_slice(&rom);
+        assert_eq!(native.save_state().unwrap(), raw.save_state().unwrap(), "bank {:x} selector {selector}", bank.root);
+    } }
+    assert_eq!(native_cases, 4);
+    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
+        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":57,
+        "new_banks":1, "new_selectors":3, "new_source_bytes":188, "new_frames":39, "new_lists":10, "new_objects":9, "initial_records":3,
+        "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":1,
+        "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
+        "coherent_rejection_in_memory":true, "dataset_copies_created":0, "old_reader_cases_repeated":false,
+        "ordinary_use":"not attempted", "Linux":"pending", "USA":"pending", "nativeWindows":"pending", "performance_measurements":false
+    })).unwrap()).unwrap();
+}
+
+
+
+
+#[test]
+#[ignore = "private EUR source/e127 current dataset/e126 baseline/native prefix; Wine only, Linux/USA pending"]
+fn european_6ca580_nibble_catalog_matches_source_and_native_readers() {
+    let root = PathBuf::from(std::env::var_os("FFTA_COMPACT_CATALOG_ROOT").unwrap());
+    assert!(!root.exists()); fs::create_dir_all(&root).unwrap();
+    let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    let dataset = PathBuf::from(std::env::var_os("FFTA_STATE_TEST_DATASET").unwrap());
+    let prior = PathBuf::from(std::env::var_os("FFTA_COMPACT_CATALOG_PRIOR").unwrap());
+    let selected = [0x6ca580];
+    let catalog = model::Catalog::from_rom(&rom).unwrap();
+    let data = &catalog.decoded;
+    let banks: Vec<_> = data.banks.iter().filter(|bank| selected.contains(&bank.root)).collect();
+    assert_eq!(banks.len(), 1);
+    assert_eq!(banks.iter().map(|bank| bank.sequences.len()).sum::<usize>(), 7);
+    assert_eq!(banks.iter().flat_map(|bank| &bank.sequences).map(|entry| entry.sequence.frames.len()).sum::<usize>(), 7);
+    assert_eq!(banks.iter().map(|bank| bank.lists.len()).sum::<usize>(), 7);
+    assert_eq!(banks.iter().flat_map(|bank| &bank.lists).map(|entry| entry.list.objects.len()).sum::<usize>(), 7);
+    let new_spans: Vec<_> = model::BANK_SPECS.iter().filter(|spec| selected.contains(&spec.root))
+        .flat_map(|spec| spec.spans.iter().copied()).collect();
+    assert_eq!(new_spans.iter().map(|(a, z)| z - a).sum::<u32>(), 116);
+
+
+    let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
+    assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (126, 125, 100));
+    let current = read_dataset(&dataset).unwrap();
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (127, 126, 100));
+    assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
+    // Read the accepted older JSON without applying the new complete bank-set
+    // validator to its historical projection. Its protected file is unchanged.
+    let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
+    assert_eq!(old.banks.len(), 62);
+    assert_eq!(data.banks.iter().filter(|bank| !selected.contains(&bank.root)).count(), model::BANK_SPECS.len() - selected.len());
+    for bank in &old.banks { assert_eq!(data.banks.iter().find(|new| new.root == bank.root), Some(bank)); }
+    let previous_tables = data.selector_tables.clone().unwrap();
+    assert_eq!(old.selector_tables.as_ref(), Some(&previous_tables));
+    assert_eq!(current.compact_obj_catalog.as_ref().unwrap(), data);
+    let bytes = encode_compact_obj_catalog(data).unwrap();
+    assert_eq!(parse_compact_obj_catalog(&bytes).unwrap(), *data);
+    let mut changed = data.clone();
+    changed.banks.iter_mut().find(|bank| bank.root == selected[0]).unwrap().sequences[0].relative_offset += 2;
+    assert!(changed.validate().is_err());
+
+    let mut machine = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut machine, &dataset).unwrap();
+    let initial = machine.save_state().unwrap();
+    let owner = machine.bus.rom_resources().unwrap().clone();
+    for &(start, end) in &new_spans { machine.bus.rom[start as usize..end as usize].fill(0xcd); }
+    let before = owner.compact_obj_catalog_stats().unwrap().source_bytes;
+    for &(start, end) in &new_spans { for at in start..end {
+        assert_eq!(data.byte_at(at), Some(rom[at as usize]));
+        assert_eq!(machine.bus.read8(0x0c000000 + at), rom[at as usize]);
+    } }
+    assert_eq!(owner.compact_obj_catalog_stats().unwrap().source_bytes - before, 116);
+    for &(start, end) in &new_spans { for edge in [start, end] { for delta in [-3i32, -1, 0, 1] {
+        let at = edge.wrapping_add_signed(delta) as usize;
+        let ptr = &mut machine as *mut Machine as *mut std::ffi::c_void;
+        assert_eq!((RT_API.read16)(ptr, 0x0a000000 + at as u32), u32::from(u16::from_le_bytes(rom[at..at + 2].try_into().unwrap())));
+        assert_eq!((RT_API.read32)(ptr, 0x08000000 + at as u32), u32::from_le_bytes(rom[at..at + 4].try_into().unwrap()));
+    } } }
+    machine.bus.rom.copy_from_slice(&rom);
+    assert_eq!(machine.save_state().unwrap(), initial);
+    let mut bad = read_dataset(&dataset).unwrap();
+    bad.compact_obj_catalog.as_mut().unwrap().banks.iter_mut().find(|bank| bank.root == selected[0]).unwrap()
+        .sequences[0].sequence.frames[0].duration ^= 1;
+    let bytes = encode_compact_obj_catalog(bad.compact_obj_catalog.as_ref().unwrap()).unwrap();
+    bad.manifest.resources[99].sha256 = gba_core::ffta_rom::digest(&bytes);
+    bad.compact_obj_catalog_bytes = Some(bytes);
+    assert!(RuntimeResources::from_base_files(&rom, bad.files()).is_err());
+    assert!(std::sync::Arc::ptr_eq(machine.bus.rom_resources().unwrap(), &owner));
+    assert_eq!(machine.save_state().unwrap(), initial);
+    drop(bad); drop(current); drop(machine);
+
+    let mut raw = crate::make_machine(rom.clone(), None);
+    let mut typed = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut typed, &dataset).unwrap();
+    for &(a, z) in &new_spans { typed.bus.rom[a as usize..z as usize].fill(0xcd); }
+    let record = 0x02007d00;
+    for selector in 0..16u32 {
+        for machine in [&mut raw, &mut typed] {
+            machine.cpu.regs = [0; 16]; machine.cpu.regs[5] = record; machine.cpu.regs[2] = (selector << 8) | 13;
+            prefix(machine, 0x080e5f3c, 0x080e5f46);
+            assert_eq!(machine.bus.read8(record + 2), selector as u8);
+            machine.cpu.regs = [0; 16]; machine.cpu.regs[5] = record;
+            prefix(machine, 0x080e53ac, 0x080e53b0);
+        }
+        assert_eq!(raw.cpu.regs[0], typed.cpu.regs[0]);
+        assert_eq!(raw.cpu.regs[1], typed.cpu.regs[1]);
+    }
+    assert_eq!(data.byte_at(0x6ca5f6), None);
+    assert_eq!(typed.bus.read8(0x086ca5f6), rom[0x6ca5f6]);
+    drop(typed);
+    raw.bus.ffta_sprites.enabled = false;
+    let state = 0x02007f00;
+    for bank in &banks {
+        raw.bus.write32(state + 4, 0x08000000 + bank.list_root());
+        raw.bus.write32(state + 8, 0x08000000 + bank.sequence_root());
+        for entry in &bank.sequences {
+            let sequence = &entry.sequence;
+            raw.cpu.regs = [0; 16]; raw.cpu.regs[3] = u32::from(sequence.selector); raw.cpu.regs[4] = state;
+            prefix(&mut raw, 0x08010870, 0x08010884);
+            assert_eq!(raw.cpu.regs[3] as usize, sequence.frames.len());
+            for (phase, frame) in sequence.frames.iter().enumerate() {
+                raw.cpu.regs = [0; 16]; raw.cpu.regs[5] = u32::from(sequence.selector); raw.cpu.regs[3] = state; raw.cpu.regs[2] = phase as u32;
+                prefix(&mut raw, 0x08010e5a, 0x08010e70); assert_eq!(raw.cpu.regs[0], u32::from(frame.list));
+                raw.cpu.regs = [0; 16]; raw.cpu.regs[7] = u32::from(sequence.selector); raw.cpu.regs[4] = state; raw.cpu.regs[3] = phase as u32;
+                prefix(&mut raw, 0x08010cb2, 0x08010cc8); assert_eq!(raw.cpu.regs[1], u32::from(frame.duration));
+            }
+        }
+        for entry in &bank.lists {
+            raw.cpu.regs = [0; 16]; raw.cpu.regs[2] = u32::from(entry.index); raw.cpu.regs[3] = state;
+            prefix(&mut raw, 0x08010e9a, 0x08010eb2);
+            assert_eq!(raw.cpu.regs[1], 0x08000000 + entry.list.source_offset);
+        }
+    }
+
+    let object = PathBuf::from(std::env::var_os("FFTA_COMPACT_CATALOG_NATIVE").unwrap());
+    let (_library, table) = crate::load_native(&object).unwrap();
+    let mut native = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut native, &dataset).unwrap();
+    let owner = native.bus.rom_resources().unwrap().clone();
+    let initial = raw.save_state().unwrap();
+    let mut served = 0;
+    let mut native_cases = 0;
+    for bank in &banks { for selector in [0u16, 3, 6, 0x100] {
+        for machine in [&mut raw, &mut native] {
+            machine.load_state(&initial).unwrap(); machine.bus.ffta_sprites.enabled = false;
+            machine.bus.write32(state + 8, 0x08000000 + bank.sequence_root());
+            machine.cpu.regs = std::array::from_fn(|i| 0x11000000 + i as u32);
+            machine.cpu.regs[3] = u32::from(selector); machine.cpu.regs[4] = state;
+            machine.cpu.regs[13] = 0x03007c00; machine.cpu.regs[15] = 0x08010870; machine.cpu.cpsr = 0xbf;
+        }
+        for &(start, end) in &new_spans { native.bus.rom[start as usize..end as usize].fill(0xcd); }
+        let directory = bank.sequence_root() + u32::from(selector) * 2;
+        let relative = u16::from_le_bytes(rom[directory as usize..directory as usize + 2].try_into().unwrap());
+        let count_at = bank.sequence_root() + u32::from(relative);
+        let expected: u64 = [directory, count_at].into_iter().flat_map(|at| at..at + 2).map(|at| u64::from(data.byte_at(at).is_some())).sum();
+        prefix(&mut raw, 0x08010870, 0x08010884);
+        let before = owner.compact_obj_catalog_stats().unwrap().source_bytes;
+        let mut steps = 0;
+        while native.cpu.regs[15] != 0x08010884 {
+            assert!(steps < 32); native.bus.frame_ready = false;
+            table.get(native.cpu.regs[15] | 1).unwrap()(&RT_API, &mut native as *mut Machine as *mut std::ffi::c_void);
+            steps += 1;
+        }
+        let used = owner.compact_obj_catalog_stats().unwrap().source_bytes - before;
+        assert_eq!(used, expected, "bank {:x} selector {selector}", bank.root);
+        if selector != 0x100 { assert_eq!(used, 4); }
+        served += used; native_cases += 1;
+        native.bus.rom.copy_from_slice(&rom);
+        assert_eq!(native.save_state().unwrap(), raw.save_state().unwrap(), "bank {:x} selector {selector}", bank.root);
+    } }
+    assert_eq!(native_cases, 4);
+    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
+        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":62,
+        "new_banks":1, "new_selectors":7, "new_source_bytes":116, "new_frames":7, "new_lists":7, "new_objects":7, "nibble_values":16,
+        "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":1,
+        "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
+        "coherent_rejection_in_memory":true, "dataset_copies_created":0, "old_reader_cases_repeated":false,
+        "ordinary_use":"not attempted", "Linux":"pending", "USA":"pending", "nativeWindows":"pending", "performance_measurements":false
+    })).unwrap()).unwrap();
+}
+
+
+
+#[test]
+#[ignore = "private EUR source/e125 current dataset/e124 baseline/native prefix; Wine only, Linux/USA pending"]
+fn european_6cb278_secondary_catalog_matches_source_and_native_readers() {
+    let root = PathBuf::from(std::env::var_os("FFTA_COMPACT_CATALOG_ROOT").unwrap());
+    assert!(!root.exists()); fs::create_dir_all(&root).unwrap();
+    let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    let dataset = PathBuf::from(std::env::var_os("FFTA_STATE_TEST_DATASET").unwrap());
+    let prior = PathBuf::from(std::env::var_os("FFTA_COMPACT_CATALOG_PRIOR").unwrap());
+    let selected = [0x6cb278];
+    let catalog = model::Catalog::from_rom(&rom).unwrap();
+    let data = &catalog.decoded;
+    let banks: Vec<_> = data.banks.iter().filter(|bank| selected.contains(&bank.root)).collect();
+    assert_eq!(banks.len(), 1);
+    assert_eq!(banks.iter().map(|bank| bank.sequences.len()).sum::<usize>(), 4);
+    assert_eq!(banks.iter().flat_map(|bank| &bank.sequences).map(|entry| entry.sequence.frames.len()).sum::<usize>(), 44);
+    assert_eq!(banks.iter().map(|bank| bank.lists.len()).sum::<usize>(), 14);
+    assert_eq!(banks.iter().flat_map(|bank| &bank.lists).map(|entry| entry.list.objects.len()).sum::<usize>(), 154);
+    let mut new_spans: Vec<_> = model::BANK_SPECS.iter().filter(|spec| selected.contains(&spec.root))
+        .flat_map(|spec| spec.spans.iter().copied()).collect();
+    assert_eq!(new_spans.iter().map(|(a, z)| z - a).sum::<u32>(), 1088);
+    new_spans.push((0x3ab98c, 0x3ab990));
+
+
+    let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
+    assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (124, 123, 100));
+    let current = read_dataset(&dataset).unwrap();
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (127, 126, 100));
+    assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
+    // Read the accepted older JSON without applying the new complete bank-set
+    // validator to its historical projection. Its protected file is unchanged.
+    let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
+    assert_eq!(old.banks.len(), 58);
+    assert_eq!(data.banks.iter().filter(|bank| !selected.contains(&bank.root)).count(), model::BANK_SPECS.len() - selected.len());
+    for bank in &old.banks { assert_eq!(data.banks.iter().find(|new| new.root == bank.root), Some(bank)); }
+    let mut previous_tables = data.selector_tables.clone().unwrap(); previous_tables.script_lookup = None; previous_tables.scene = None;
+    assert_eq!(old.selector_tables.as_ref(), Some(&previous_tables));
+    assert_eq!(current.compact_obj_catalog.as_ref().unwrap(), data);
+    let bytes = encode_compact_obj_catalog(data).unwrap();
+    assert_eq!(parse_compact_obj_catalog(&bytes).unwrap(), *data);
+    let mut changed = data.clone();
+    changed.banks.iter_mut().find(|bank| bank.root == selected[0]).unwrap().sequences[0].relative_offset += 2;
+    assert!(changed.validate().is_err());
+
+    let mut machine = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut machine, &dataset).unwrap();
+    let initial = machine.save_state().unwrap();
+    let owner = machine.bus.rom_resources().unwrap().clone();
+    for &(start, end) in &new_spans { machine.bus.rom[start as usize..end as usize].fill(0xcd); }
+    let before = owner.compact_obj_catalog_stats().unwrap().source_bytes;
+    for &(start, end) in &new_spans { for at in start..end {
+        assert_eq!(data.byte_at(at), Some(rom[at as usize]));
+        assert_eq!(machine.bus.read8(0x0c000000 + at), rom[at as usize]);
+    } }
+    assert_eq!(owner.compact_obj_catalog_stats().unwrap().source_bytes - before, 1092);
+    for &(start, end) in &new_spans { for edge in [start, end] { for delta in [-3i32, -1, 0, 1] {
+        let at = edge.wrapping_add_signed(delta) as usize;
+        let ptr = &mut machine as *mut Machine as *mut std::ffi::c_void;
+        assert_eq!((RT_API.read16)(ptr, 0x0a000000 + at as u32), u32::from(u16::from_le_bytes(rom[at..at + 2].try_into().unwrap())));
+        assert_eq!((RT_API.read32)(ptr, 0x08000000 + at as u32), u32::from_le_bytes(rom[at..at + 4].try_into().unwrap()));
+    } } }
+    machine.bus.rom.copy_from_slice(&rom);
+    assert_eq!(machine.save_state().unwrap(), initial);
+    let mut bad = read_dataset(&dataset).unwrap();
+    bad.compact_obj_catalog.as_mut().unwrap().banks.iter_mut().find(|bank| bank.root == selected[0]).unwrap()
+        .sequences[0].sequence.frames[0].duration ^= 1;
+    let bytes = encode_compact_obj_catalog(bad.compact_obj_catalog.as_ref().unwrap()).unwrap();
+    bad.manifest.resources[99].sha256 = gba_core::ffta_rom::digest(&bytes);
+    bad.compact_obj_catalog_bytes = Some(bytes);
+    assert!(RuntimeResources::from_base_files(&rom, bad.files()).is_err());
+    assert!(std::sync::Arc::ptr_eq(machine.bus.rom_resources().unwrap(), &owner));
+    assert_eq!(machine.save_state().unwrap(), initial);
+    drop(bad); drop(current); drop(machine);
+
+    let mut raw = crate::make_machine(rom.clone(), None);
+    let mut typed = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut typed, &dataset).unwrap();
+    for &(a, z) in &new_spans { typed.bus.rom[a as usize..z as usize].fill(0xcd); }
+    let record = 0x02007d00;
+    let rows = &data.selector_tables.as_ref().unwrap().script_lookup.as_ref().unwrap().rows;
+    for (index, &expected) in rows.iter().enumerate() {
+        for machine in [&mut raw, &mut typed] {
+            machine.bus.write8(record + 2, index as u8);
+            machine.cpu.regs = [0; 16]; machine.cpu.regs[5] = record;
+            prefix(machine, 0x0811eb86, 0x0811eb8e);
+        }
+        assert_eq!(raw.cpu.regs[1], u32::from(expected));
+        assert_eq!(raw.cpu.regs[1], typed.cpu.regs[1]);
+    }
+    assert_eq!(data.byte_at(0x3ab990), None);
+    assert_eq!(typed.bus.read8(0x083ab990), rom[0x3ab990]);
+    drop(typed);
+    raw.bus.ffta_sprites.enabled = false;
+    let state = 0x02007f00;
+    for bank in &banks {
+        raw.bus.write32(state + 4, 0x08000000 + bank.list_root());
+        raw.bus.write32(state + 8, 0x08000000 + bank.sequence_root());
+        for entry in &bank.sequences {
+            let sequence = &entry.sequence;
+            raw.cpu.regs = [0; 16]; raw.cpu.regs[3] = u32::from(sequence.selector); raw.cpu.regs[4] = state;
+            prefix(&mut raw, 0x08010870, 0x08010884);
+            assert_eq!(raw.cpu.regs[3] as usize, sequence.frames.len());
+            for (phase, frame) in sequence.frames.iter().enumerate() {
+                raw.cpu.regs = [0; 16]; raw.cpu.regs[5] = u32::from(sequence.selector); raw.cpu.regs[3] = state; raw.cpu.regs[2] = phase as u32;
+                prefix(&mut raw, 0x08010e5a, 0x08010e70); assert_eq!(raw.cpu.regs[0], u32::from(frame.list));
+                raw.cpu.regs = [0; 16]; raw.cpu.regs[7] = u32::from(sequence.selector); raw.cpu.regs[4] = state; raw.cpu.regs[3] = phase as u32;
+                prefix(&mut raw, 0x08010cb2, 0x08010cc8); assert_eq!(raw.cpu.regs[1], u32::from(frame.duration));
+            }
+        }
+        for entry in &bank.lists {
+            raw.cpu.regs = [0; 16]; raw.cpu.regs[2] = u32::from(entry.index); raw.cpu.regs[3] = state;
+            prefix(&mut raw, 0x08010e9a, 0x08010eb2);
+            assert_eq!(raw.cpu.regs[1], 0x08000000 + entry.list.source_offset);
+        }
+    }
+
+    let object = PathBuf::from(std::env::var_os("FFTA_COMPACT_CATALOG_NATIVE").unwrap());
+    let (_library, table) = crate::load_native(&object).unwrap();
+    let mut native = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut native, &dataset).unwrap();
+    let owner = native.bus.rom_resources().unwrap().clone();
+    let initial = raw.save_state().unwrap();
+    let mut served = 0;
+    let mut native_cases = 0;
+    for bank in &banks { for selector in bank.sequences.iter().map(|entry| entry.sequence.selector).chain([0x100]) {
+        for machine in [&mut raw, &mut native] {
+            machine.load_state(&initial).unwrap(); machine.bus.ffta_sprites.enabled = false;
+            machine.bus.write32(state + 8, 0x08000000 + bank.sequence_root());
+            machine.cpu.regs = std::array::from_fn(|i| 0x11000000 + i as u32);
+            machine.cpu.regs[3] = u32::from(selector); machine.cpu.regs[4] = state;
+            machine.cpu.regs[13] = 0x03007c00; machine.cpu.regs[15] = 0x08010870; machine.cpu.cpsr = 0xbf;
+        }
+        for &(start, end) in &new_spans { native.bus.rom[start as usize..end as usize].fill(0xcd); }
+        let directory = bank.sequence_root() + u32::from(selector) * 2;
+        let relative = u16::from_le_bytes(rom[directory as usize..directory as usize + 2].try_into().unwrap());
+        let count_at = bank.sequence_root() + u32::from(relative);
+        let expected: u64 = [directory, count_at].into_iter().flat_map(|at| at..at + 2).map(|at| u64::from(data.byte_at(at).is_some())).sum();
+        prefix(&mut raw, 0x08010870, 0x08010884);
+        let before = owner.compact_obj_catalog_stats().unwrap().source_bytes;
+        let mut steps = 0;
+        while native.cpu.regs[15] != 0x08010884 {
+            assert!(steps < 32); native.bus.frame_ready = false;
+            table.get(native.cpu.regs[15] | 1).unwrap()(&RT_API, &mut native as *mut Machine as *mut std::ffi::c_void);
+            steps += 1;
+        }
+        let used = owner.compact_obj_catalog_stats().unwrap().source_bytes - before;
+        assert_eq!(used, expected, "bank {:x} selector {selector}", bank.root);
+        if selector != 0x100 { assert_eq!(used, 4); }
+        served += used; native_cases += 1;
+        native.bus.rom.copy_from_slice(&rom);
+        assert_eq!(native.save_state().unwrap(), raw.save_state().unwrap(), "bank {:x} selector {selector}", bank.root);
+    } }
+    assert_eq!(native_cases, 5);
+    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
+        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":58,
+        "new_banks":1, "new_selectors":4, "new_source_bytes":1092, "new_frames":44, "new_lists":14, "new_objects":154, "initial_records":4,
+        "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":1,
+        "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
+        "coherent_rejection_in_memory":true, "dataset_copies_created":0, "old_reader_cases_repeated":false,
+        "ordinary_use":"not attempted", "Linux":"pending", "USA":"pending", "nativeWindows":"pending", "performance_measurements":false
+    })).unwrap()).unwrap();
+}
+
+
+
+#[test]
+#[ignore = "private EUR source/e126 current dataset/e125 baseline/native prefix; Wine only, Linux/USA pending"]
+fn european_6cca_scene_catalog_matches_source_and_native_readers() {
+    let root = PathBuf::from(std::env::var_os("FFTA_COMPACT_CATALOG_ROOT").unwrap());
+    assert!(!root.exists()); fs::create_dir_all(&root).unwrap();
+    let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    let dataset = PathBuf::from(std::env::var_os("FFTA_STATE_TEST_DATASET").unwrap());
+    let prior = PathBuf::from(std::env::var_os("FFTA_COMPACT_CATALOG_PRIOR").unwrap());
+    let selected = [0x6cca8c, 0x6ccae4, 0x6ccdec];
+    let catalog = model::Catalog::from_rom(&rom).unwrap();
+    let data = &catalog.decoded;
+    let banks: Vec<_> = data.banks.iter().filter(|bank| selected.contains(&bank.root)).collect();
+    assert_eq!(banks.len(), 3);
+    assert_eq!(banks.iter().map(|bank| bank.sequences.len()).sum::<usize>(), 27);
+    assert_eq!(banks.iter().flat_map(|bank| &bank.sequences).map(|entry| entry.sequence.frames.len()).sum::<usize>(), 72);
+    assert_eq!(banks.iter().map(|bank| bank.lists.len()).sum::<usize>(), 72);
+    assert_eq!(banks.iter().flat_map(|bank| &bank.lists).map(|entry| entry.list.objects.len()).sum::<usize>(), 533);
+    let mut new_spans: Vec<_> = model::BANK_SPECS.iter().filter(|spec| selected.contains(&spec.root))
+        .flat_map(|spec| spec.spans.iter().copied()).collect();
+    assert_eq!(new_spans.iter().map(|(a, z)| z - a).sum::<u32>(), 3750);
+    new_spans.extend((0..20).map(|index| (0x3ac944 + index * 8, 0x3ac94a + index * 8)));
+
+
+    let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
+    assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (125, 124, 100));
+    let current = read_dataset(&dataset).unwrap();
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (127, 126, 100));
+    assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
+    // Read the accepted older JSON without applying the new complete bank-set
+    // validator to its historical projection. Its protected file is unchanged.
+    let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
+    assert_eq!(old.banks.len(), 59);
+    assert_eq!(data.banks.iter().filter(|bank| !selected.contains(&bank.root)).count(), model::BANK_SPECS.len() - selected.len());
+    for bank in &old.banks { assert_eq!(data.banks.iter().find(|new| new.root == bank.root), Some(bank)); }
+    let mut previous_tables = data.selector_tables.clone().unwrap(); previous_tables.scene = None;
+    assert_eq!(old.selector_tables.as_ref(), Some(&previous_tables));
+    assert_eq!(current.compact_obj_catalog.as_ref().unwrap(), data);
+    let bytes = encode_compact_obj_catalog(data).unwrap();
+    assert_eq!(parse_compact_obj_catalog(&bytes).unwrap(), *data);
+    let mut changed = data.clone();
+    changed.banks.iter_mut().find(|bank| bank.root == selected[0]).unwrap().sequences[0].relative_offset += 2;
+    assert!(changed.validate().is_err());
+
+    let mut machine = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut machine, &dataset).unwrap();
+    let initial = machine.save_state().unwrap();
+    let owner = machine.bus.rom_resources().unwrap().clone();
+    for &(start, end) in &new_spans { machine.bus.rom[start as usize..end as usize].fill(0xcd); }
+    let before = owner.compact_obj_catalog_stats().unwrap().source_bytes;
+    for &(start, end) in &new_spans { for at in start..end {
+        assert_eq!(data.byte_at(at), Some(rom[at as usize]));
+        assert_eq!(machine.bus.read8(0x0c000000 + at), rom[at as usize]);
+    } }
+    assert_eq!(owner.compact_obj_catalog_stats().unwrap().source_bytes - before, 3870);
+    for &(start, end) in &new_spans { for edge in [start, end] { for delta in [-3i32, -1, 0, 1] {
+        let at = edge.wrapping_add_signed(delta) as usize;
+        let ptr = &mut machine as *mut Machine as *mut std::ffi::c_void;
+        assert_eq!((RT_API.read16)(ptr, 0x0a000000 + at as u32), u32::from(u16::from_le_bytes(rom[at..at + 2].try_into().unwrap())));
+        assert_eq!((RT_API.read32)(ptr, 0x08000000 + at as u32), u32::from_le_bytes(rom[at..at + 4].try_into().unwrap()));
+    } } }
+    machine.bus.rom.copy_from_slice(&rom);
+    assert_eq!(machine.save_state().unwrap(), initial);
+    let mut bad = read_dataset(&dataset).unwrap();
+    bad.compact_obj_catalog.as_mut().unwrap().banks.iter_mut().find(|bank| bank.root == selected[0]).unwrap()
+        .sequences[0].sequence.frames[0].duration ^= 1;
+    let bytes = encode_compact_obj_catalog(bad.compact_obj_catalog.as_ref().unwrap()).unwrap();
+    bad.manifest.resources[99].sha256 = gba_core::ffta_rom::digest(&bytes);
+    bad.compact_obj_catalog_bytes = Some(bytes);
+    assert!(RuntimeResources::from_base_files(&rom, bad.files()).is_err());
+    assert!(std::sync::Arc::ptr_eq(machine.bus.rom_resources().unwrap(), &owner));
+    assert_eq!(machine.save_state().unwrap(), initial);
+    drop(bad); drop(current); drop(machine);
+
+    let mut raw = crate::make_machine(rom.clone(), None);
+    let mut typed = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut typed, &dataset).unwrap();
+    for &(a, z) in &new_spans { typed.bus.rom[a as usize..z as usize].fill(0xcd); }
+    let rows = &data.selector_tables.as_ref().unwrap().scene.as_ref().unwrap().rows;
+    assert_eq!(rows.len(), 20);
+    for (index, row) in rows.iter().enumerate() {
+        let address = 0x083ac944 + index as u32 * 8;
+        for (start, end) in [(0x08123f20, 0x08123f2e), (0x08123f4c, 0x08123f5c)] {
+            for machine in [&mut raw, &mut typed] {
+                machine.cpu.regs = [0; 16]; machine.cpu.regs[5] = address; prefix(machine, start, end);
+            }
+            assert_eq!(&raw.cpu.regs[..4], &typed.cpu.regs[..4]);
+        }
+        assert_eq!(data.byte_at(0x3ac944 + index as u32 * 8), Some(row.first_selector));
+        for offset in [6, 7] {
+            let at = 0x3ac944 + index as u32 * 8 + offset;
+            assert_eq!(data.byte_at(at), None);
+            assert_eq!(typed.bus.read8(0x08000000 + at), rom[at as usize]);
+        }
+    }
+    drop(typed);
+    raw.bus.ffta_sprites.enabled = false;
+    let state = 0x02007f00;
+    for bank in &banks {
+        raw.bus.write32(state + 4, 0x08000000 + bank.list_root());
+        raw.bus.write32(state + 8, 0x08000000 + bank.sequence_root());
+        for entry in &bank.sequences {
+            let sequence = &entry.sequence;
+            raw.cpu.regs = [0; 16]; raw.cpu.regs[3] = u32::from(sequence.selector); raw.cpu.regs[4] = state;
+            prefix(&mut raw, 0x08010870, 0x08010884);
+            assert_eq!(raw.cpu.regs[3] as usize, sequence.frames.len());
+            for (phase, frame) in sequence.frames.iter().enumerate() {
+                raw.cpu.regs = [0; 16]; raw.cpu.regs[5] = u32::from(sequence.selector); raw.cpu.regs[3] = state; raw.cpu.regs[2] = phase as u32;
+                prefix(&mut raw, 0x08010e5a, 0x08010e70); assert_eq!(raw.cpu.regs[0], u32::from(frame.list));
+                raw.cpu.regs = [0; 16]; raw.cpu.regs[7] = u32::from(sequence.selector); raw.cpu.regs[4] = state; raw.cpu.regs[3] = phase as u32;
+                prefix(&mut raw, 0x08010cb2, 0x08010cc8); assert_eq!(raw.cpu.regs[1], u32::from(frame.duration));
+            }
+        }
+        for entry in &bank.lists {
+            raw.cpu.regs = [0; 16]; raw.cpu.regs[2] = u32::from(entry.index); raw.cpu.regs[3] = state;
+            prefix(&mut raw, 0x08010e9a, 0x08010eb2);
+            assert_eq!(raw.cpu.regs[1], 0x08000000 + entry.list.source_offset);
+        }
+    }
+
+    let object = PathBuf::from(std::env::var_os("FFTA_COMPACT_CATALOG_NATIVE").unwrap());
+    let (_library, table) = crate::load_native(&object).unwrap();
+    let mut native = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut native, &dataset).unwrap();
+    let owner = native.bus.rom_resources().unwrap().clone();
+    let initial = raw.save_state().unwrap();
+    let mut served = 0;
+    let mut native_cases = 0;
+    for bank in &banks {
+        let mut selectors: Vec<_> = [0, bank.sequences.len() / 2, bank.sequences.len() - 1].into_iter().map(|index| bank.sequences[index].sequence.selector).collect();
+        selectors.sort(); selectors.dedup(); selectors.push(0x100);
+        for selector in selectors {
+        for machine in [&mut raw, &mut native] {
+            machine.load_state(&initial).unwrap(); machine.bus.ffta_sprites.enabled = false;
+            machine.bus.write32(state + 8, 0x08000000 + bank.sequence_root());
+            machine.cpu.regs = std::array::from_fn(|i| 0x11000000 + i as u32);
+            machine.cpu.regs[3] = u32::from(selector); machine.cpu.regs[4] = state;
+            machine.cpu.regs[13] = 0x03007c00; machine.cpu.regs[15] = 0x08010870; machine.cpu.cpsr = 0xbf;
+        }
+        for &(start, end) in &new_spans { native.bus.rom[start as usize..end as usize].fill(0xcd); }
+        let directory = bank.sequence_root() + u32::from(selector) * 2;
+        let relative = u16::from_le_bytes(rom[directory as usize..directory as usize + 2].try_into().unwrap());
+        let count_at = bank.sequence_root() + u32::from(relative);
+        let expected: u64 = [directory, count_at].into_iter().flat_map(|at| at..at + 2).map(|at| u64::from(data.byte_at(at).is_some())).sum();
+        prefix(&mut raw, 0x08010870, 0x08010884);
+        let before = owner.compact_obj_catalog_stats().unwrap().source_bytes;
+        let mut steps = 0;
+        while native.cpu.regs[15] != 0x08010884 {
+            assert!(steps < 32); native.bus.frame_ready = false;
+            table.get(native.cpu.regs[15] | 1).unwrap()(&RT_API, &mut native as *mut Machine as *mut std::ffi::c_void);
+            steps += 1;
+        }
+        let used = owner.compact_obj_catalog_stats().unwrap().source_bytes - before;
+        assert_eq!(used, expected, "bank {:x} selector {selector}", bank.root);
+        if selector != 0x100 { assert_eq!(used, 4); }
+        served += used; native_cases += 1;
+        native.bus.rom.copy_from_slice(&rom);
+        assert_eq!(native.save_state().unwrap(), raw.save_state().unwrap(), "bank {:x} selector {selector}", bank.root);
+    } }
+    assert_eq!(native_cases, 11);
+    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
+        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":59,
+        "new_banks":3, "new_selectors":27, "new_source_bytes":3870, "new_frames":72, "new_lists":72, "new_objects":533, "initial_records":20,
+        "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":3,
+        "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
+        "coherent_rejection_in_memory":true, "dataset_copies_created":0, "old_reader_cases_repeated":false,
+        "ordinary_use":"not attempted", "Linux":"pending", "USA":"pending", "nativeWindows":"pending", "performance_measurements":false
+    })).unwrap()).unwrap();
+}
+
+
+#[test]
+#[ignore = "private EUR source/e123 current dataset/e122 baseline/native prefix; Wine only, Linux/USA pending"]
+fn european_6cac40_grid_catalog_matches_source_and_native_readers() {
+    let root = PathBuf::from(std::env::var_os("FFTA_COMPACT_CATALOG_ROOT").unwrap());
+    assert!(!root.exists()); fs::create_dir_all(&root).unwrap();
+    let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    let dataset = PathBuf::from(std::env::var_os("FFTA_STATE_TEST_DATASET").unwrap());
+    let prior = PathBuf::from(std::env::var_os("FFTA_COMPACT_CATALOG_PRIOR").unwrap());
+    let selected = [0x6cac40];
+    let catalog = model::Catalog::from_rom(&rom).unwrap();
+    let data = &catalog.decoded;
+    let banks: Vec<_> = data.banks.iter().filter(|bank| selected.contains(&bank.root)).collect();
+    assert_eq!(banks.len(), 1);
+    assert_eq!(banks.iter().map(|bank| bank.sequences.len()).sum::<usize>(), 8);
+    assert_eq!(banks.iter().flat_map(|bank| &bank.sequences).map(|entry| entry.sequence.frames.len()).sum::<usize>(), 8);
+    assert_eq!(banks.iter().map(|bank| bank.lists.len()).sum::<usize>(), 8);
+    assert_eq!(banks.iter().flat_map(|bank| &bank.lists).map(|entry| entry.list.objects.len()).sum::<usize>(), 8);
+    let mut new_spans: Vec<_> = model::BANK_SPECS.iter().filter(|spec| selected.contains(&spec.root))
+        .flat_map(|spec| spec.spans.iter().copied()).collect();
+    assert_eq!(new_spans.iter().map(|(a, z)| z - a).sum::<u32>(), 132);
+    for (start, bytes, _) in data.source_spans().unwrap() {
+        let end = start + bytes.len() as u32;
+        for base in [0x3a9abc, 0x3aae44] {
+            let a = start.max(base); let z = end.min(base + 24 * 16);
+            if a < z { new_spans.push((a, z)); }
+        }
+    }
+    assert_eq!(new_spans.iter().map(|(a, z)| z - a).sum::<u32>(), 726);
+    let tables = data.selector_tables.as_ref().unwrap();
+    assert_eq!(tables.grid_first.as_ref().unwrap().rows.len(), 24);
+    assert_eq!(tables.grid_second.as_ref().unwrap().rows.len(), 24);
+
+    let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
+    assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (122, 121, 100));
+    let current = read_dataset(&dataset).unwrap();
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (127, 126, 100));
+    assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
+    // Read the accepted older JSON without applying the new complete bank-set
+    // validator to its historical projection. Its protected file is unchanged.
+    let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
+    assert_eq!(old.banks.len(), 56);
+    assert_eq!(data.banks.iter().filter(|bank| !selected.contains(&bank.root)).count(), model::BANK_SPECS.len() - selected.len());
+    for bank in &old.banks { assert_eq!(data.banks.iter().find(|new| new.root == bank.root), Some(bank)); }
+    let mut previous_tables = data.selector_tables.clone().unwrap(); previous_tables.grid_first = None; previous_tables.grid_second = None; previous_tables.script_lookup = None; previous_tables.scene = None;
+    assert_eq!(old.selector_tables.as_ref(), Some(&previous_tables));
+    assert_eq!(current.compact_obj_catalog.as_ref().unwrap(), data);
+    let bytes = encode_compact_obj_catalog(data).unwrap();
+    assert_eq!(parse_compact_obj_catalog(&bytes).unwrap(), *data);
+    let mut changed = data.clone();
+    changed.banks.iter_mut().find(|bank| bank.root == selected[0]).unwrap().sequences[0].relative_offset += 2;
+    assert!(changed.validate().is_err());
+
+    let mut machine = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut machine, &dataset).unwrap();
+    let initial = machine.save_state().unwrap();
+    let owner = machine.bus.rom_resources().unwrap().clone();
+    for &(start, end) in &new_spans { machine.bus.rom[start as usize..end as usize].fill(0xcd); }
+    let before = owner.compact_obj_catalog_stats().unwrap().source_bytes;
+    for &(start, end) in &new_spans { for at in start..end {
+        assert_eq!(data.byte_at(at), Some(rom[at as usize]));
+        assert_eq!(machine.bus.read8(0x0c000000 + at), rom[at as usize]);
+    } }
+    assert_eq!(owner.compact_obj_catalog_stats().unwrap().source_bytes - before, 726);
+    for &(start, end) in &new_spans { for edge in [start, end] { for delta in [-3i32, -1, 0, 1] {
+        let at = edge.wrapping_add_signed(delta) as usize;
+        let ptr = &mut machine as *mut Machine as *mut std::ffi::c_void;
+        assert_eq!((RT_API.read16)(ptr, 0x0a000000 + at as u32), u32::from(u16::from_le_bytes(rom[at..at + 2].try_into().unwrap())));
+        assert_eq!((RT_API.read32)(ptr, 0x08000000 + at as u32), u32::from_le_bytes(rom[at..at + 4].try_into().unwrap()));
+    } } }
+    machine.bus.rom.copy_from_slice(&rom);
+    assert_eq!(machine.save_state().unwrap(), initial);
+    let mut bad = read_dataset(&dataset).unwrap();
+    bad.compact_obj_catalog.as_mut().unwrap().banks.iter_mut().find(|bank| bank.root == selected[0]).unwrap()
+        .sequences[0].sequence.frames[0].duration ^= 1;
+    let bytes = encode_compact_obj_catalog(bad.compact_obj_catalog.as_ref().unwrap()).unwrap();
+    bad.manifest.resources[99].sha256 = gba_core::ffta_rom::digest(&bytes);
+    bad.compact_obj_catalog_bytes = Some(bytes);
+    assert!(RuntimeResources::from_base_files(&rom, bad.files()).is_err());
+    assert!(std::sync::Arc::ptr_eq(machine.bus.rom_resources().unwrap(), &owner));
+    assert_eq!(machine.save_state().unwrap(), initial);
+    drop(bad); drop(current); drop(machine);
+
+    let mut raw = crate::make_machine(rom.clone(), None);
+    let mut typed = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut typed, &dataset).unwrap();
+    for &(a, z) in &new_spans { typed.bus.rom[a as usize..z as usize].fill(0xcd); }
+    for (base, head, word, flag, signed_flag) in [
+        (0x3a9abc, 0x0811a092, 0x0811a0f4, 0x0811a13e, 0x0811a144),
+        (0x3aae44, 0x0811b78a, 0x0811b7ec, 0x0811b836, 0x0811b83c),
+    ] {
+        let rows = if base == 0x3a9abc { &data.selector_tables.as_ref().unwrap().grid_first.as_ref().unwrap().rows } else { &data.selector_tables.as_ref().unwrap().grid_second.as_ref().unwrap().rows };
+        for (index, row) in rows.iter().enumerate() {
+            let address = 0x08000000 + base + index as u32 * 16;
+            for machine in [&mut raw, &mut typed] { machine.cpu.regs = [0; 16]; machine.cpu.regs[0] = address; prefix(machine, head, head + 10); }
+            assert_eq!(&raw.cpu.regs[..8], &typed.cpu.regs[..8]);
+            for machine in [&mut raw, &mut typed] { machine.cpu.regs = [0; 16]; machine.cpu.regs[10] = index as u32 * 16; prefix(machine, word, word + 8); }
+            assert_eq!(raw.cpu.regs[0], typed.cpu.regs[0]);
+            if row.flag.is_some() {
+                for machine in [&mut raw, &mut typed] { machine.cpu.regs = [0; 16]; machine.cpu.regs[1] = address; prefix(machine, flag, flag + 2); }
+                assert_eq!(raw.cpu.regs[0], typed.cpu.regs[0]);
+            }
+            if row.signed_flag.is_some() {
+                for machine in [&mut raw, &mut typed] { machine.cpu.regs = [0; 16]; machine.cpu.regs[1] = address; prefix(machine, signed_flag, signed_flag + 4); }
+                assert_eq!(raw.cpu.regs[0], typed.cpu.regs[0]);
+            }
+        }
+        for at in base..base + 24 * 16 { if data.byte_at(at).is_none() { assert_eq!(typed.bus.read8(0x08000000 + at), rom[at as usize]); } }
+    }
+    drop(typed);
+    raw.bus.ffta_sprites.enabled = false;
+    let state = 0x02007f00;
+    for bank in &banks {
+        raw.bus.write32(state + 4, 0x08000000 + bank.list_root());
+        raw.bus.write32(state + 8, 0x08000000 + bank.sequence_root());
+        for entry in &bank.sequences {
+            let sequence = &entry.sequence;
+            raw.cpu.regs = [0; 16]; raw.cpu.regs[3] = u32::from(sequence.selector); raw.cpu.regs[4] = state;
+            prefix(&mut raw, 0x08010870, 0x08010884);
+            assert_eq!(raw.cpu.regs[3] as usize, sequence.frames.len());
+            for (phase, frame) in sequence.frames.iter().enumerate() {
+                raw.cpu.regs = [0; 16]; raw.cpu.regs[5] = u32::from(sequence.selector); raw.cpu.regs[3] = state; raw.cpu.regs[2] = phase as u32;
+                prefix(&mut raw, 0x08010e5a, 0x08010e70); assert_eq!(raw.cpu.regs[0], u32::from(frame.list));
+                raw.cpu.regs = [0; 16]; raw.cpu.regs[7] = u32::from(sequence.selector); raw.cpu.regs[4] = state; raw.cpu.regs[3] = phase as u32;
+                prefix(&mut raw, 0x08010cb2, 0x08010cc8); assert_eq!(raw.cpu.regs[1], u32::from(frame.duration));
+            }
+        }
+        for entry in &bank.lists {
+            raw.cpu.regs = [0; 16]; raw.cpu.regs[2] = u32::from(entry.index); raw.cpu.regs[3] = state;
+            prefix(&mut raw, 0x08010e9a, 0x08010eb2);
+            assert_eq!(raw.cpu.regs[1], 0x08000000 + entry.list.source_offset);
+        }
+    }
+
+    let object = PathBuf::from(std::env::var_os("FFTA_COMPACT_CATALOG_NATIVE").unwrap());
+    let (_library, table) = crate::load_native(&object).unwrap();
+    let mut native = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut native, &dataset).unwrap();
+    let owner = native.bus.rom_resources().unwrap().clone();
+    let initial = raw.save_state().unwrap();
+    let mut served = 0;
+    let mut native_cases = 0;
+    for bank in &banks { for selector in bank.sequences.iter().map(|entry| entry.sequence.selector).chain([0x100]) {
+        for machine in [&mut raw, &mut native] {
+            machine.load_state(&initial).unwrap(); machine.bus.ffta_sprites.enabled = false;
+            machine.bus.write32(state + 8, 0x08000000 + bank.sequence_root());
+            machine.cpu.regs = std::array::from_fn(|i| 0x11000000 + i as u32);
+            machine.cpu.regs[3] = u32::from(selector); machine.cpu.regs[4] = state;
+            machine.cpu.regs[13] = 0x03007c00; machine.cpu.regs[15] = 0x08010870; machine.cpu.cpsr = 0xbf;
+        }
+        for &(start, end) in &new_spans { native.bus.rom[start as usize..end as usize].fill(0xcd); }
+        let directory = bank.sequence_root() + u32::from(selector) * 2;
+        let relative = u16::from_le_bytes(rom[directory as usize..directory as usize + 2].try_into().unwrap());
+        let count_at = bank.sequence_root() + u32::from(relative);
+        let expected: u64 = [directory, count_at].into_iter().flat_map(|at| at..at + 2).map(|at| u64::from(data.byte_at(at).is_some())).sum();
+        prefix(&mut raw, 0x08010870, 0x08010884);
+        let before = owner.compact_obj_catalog_stats().unwrap().source_bytes;
+        let mut steps = 0;
+        while native.cpu.regs[15] != 0x08010884 {
+            assert!(steps < 32); native.bus.frame_ready = false;
+            table.get(native.cpu.regs[15] | 1).unwrap()(&RT_API, &mut native as *mut Machine as *mut std::ffi::c_void);
+            steps += 1;
+        }
+        let used = owner.compact_obj_catalog_stats().unwrap().source_bytes - before;
+        assert_eq!(used, expected, "bank {:x} selector {selector}", bank.root);
+        if selector != 0x100 { assert_eq!(used, 4); }
+        served += used; native_cases += 1;
+        native.bus.rom.copy_from_slice(&rom);
+        assert_eq!(native.save_state().unwrap(), raw.save_state().unwrap(), "bank {:x} selector {selector}", bank.root);
+    } }
+    assert_eq!(native_cases, 9);
+    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
+        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":56,
+        "new_banks":1, "new_selectors":8, "new_source_bytes":726, "new_frames":8, "new_lists":8, "new_objects":8, "table_rows":48,
+        "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":1,
+        "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
+        "coherent_rejection_in_memory":true, "dataset_copies_created":0, "old_reader_cases_repeated":false,
+        "ordinary_use":"not attempted", "Linux":"pending", "USA":"pending", "nativeWindows":"pending", "performance_measurements":false
+    })).unwrap()).unwrap();
+}
+
+#[test]
+#[ignore = "private EUR source/e118 current dataset/e117 baseline/native prefix; Wine only, Linux/USA pending"]
+fn european_6c0614_timer_catalog_matches_source_and_native_readers() {
+    let root = PathBuf::from(std::env::var_os("FFTA_COMPACT_CATALOG_ROOT").unwrap());
+    assert!(!root.exists()); fs::create_dir_all(&root).unwrap();
+    let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    let dataset = PathBuf::from(std::env::var_os("FFTA_STATE_TEST_DATASET").unwrap());
+    let prior = PathBuf::from(std::env::var_os("FFTA_COMPACT_CATALOG_PRIOR").unwrap());
+    let selected = [0x6c0614];
+    let catalog = model::Catalog::from_rom(&rom).unwrap();
+    let data = &catalog.decoded;
+    let banks: Vec<_> = data.banks.iter().filter(|bank| selected.contains(&bank.root)).collect();
+    assert_eq!(banks.len(), 1);
+    assert_eq!(banks.iter().map(|bank| bank.sequences.len()).sum::<usize>(), 6);
+    assert_eq!(banks.iter().flat_map(|bank| &bank.sequences).map(|entry| entry.sequence.frames.len()).sum::<usize>(), 42);
+    assert_eq!(banks.iter().map(|bank| bank.lists.len()).sum::<usize>(), 19);
+    assert_eq!(banks.iter().flat_map(|bank| &bank.lists).map(|entry| entry.list.objects.len()).sum::<usize>(), 61);
+    let mut new_spans: Vec<_> = model::BANK_SPECS.iter().filter(|spec| selected.contains(&spec.root))
+        .flat_map(|spec| spec.spans.iter().copied()).collect();
+    assert_eq!(new_spans.iter().map(|(a, z)| z - a).sum::<u32>(), 554);
+    new_spans.push((0x39e164, 0x39e214));
+    assert_eq!(data.selector_tables.as_ref().unwrap().timer_positions.as_ref().unwrap().rows.len(), 44);
+
+    let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
+    assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (117, 116, 100));
+    let current = read_dataset(&dataset).unwrap();
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (127, 126, 100));
+    assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
+    // Read the accepted older JSON without applying the new complete bank-set
+    // validator to its historical projection. Its protected file is unchanged.
+    let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
+    assert_eq!(old.banks.len(), 51);
+    assert_eq!(data.banks.iter().filter(|bank| !selected.contains(&bank.root)).count(), model::BANK_SPECS.len() - selected.len());
+    for bank in &old.banks { assert_eq!(data.banks.iter().find(|new| new.root == bank.root), Some(bank)); }
+    let mut previous_tables = data.selector_tables.clone().unwrap();
+    previous_tables.timer_positions = None; previous_tables.schedule = None; previous_tables.flight = None; previous_tables.burst = None; previous_tables.effects = None; previous_tables.grid_first = None; previous_tables.grid_second = None; previous_tables.script_lookup = None; previous_tables.scene = None;
+    assert_eq!(old.selector_tables.as_ref(), Some(&previous_tables));
+    assert_eq!(current.compact_obj_catalog.as_ref().unwrap(), data);
+    let bytes = encode_compact_obj_catalog(data).unwrap();
+    assert_eq!(parse_compact_obj_catalog(&bytes).unwrap(), *data);
+    let mut changed = data.clone();
+    changed.banks.iter_mut().find(|bank| bank.root == selected[0]).unwrap().sequences[0].relative_offset += 2;
+    assert!(changed.validate().is_err());
+
+    let mut machine = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut machine, &dataset).unwrap();
+    let initial = machine.save_state().unwrap();
+    let owner = machine.bus.rom_resources().unwrap().clone();
+    for &(start, end) in &new_spans { machine.bus.rom[start as usize..end as usize].fill(0xcd); }
+    let before = owner.compact_obj_catalog_stats().unwrap().source_bytes;
+    for &(start, end) in &new_spans { for at in start..end {
+        assert_eq!(data.byte_at(at), Some(rom[at as usize]));
+        assert_eq!(machine.bus.read8(0x0c000000 + at), rom[at as usize]);
+    } }
+    assert_eq!(owner.compact_obj_catalog_stats().unwrap().source_bytes - before, 730);
+    for &(start, end) in &new_spans { for edge in [start, end] { for delta in [-3i32, -1, 0, 1] {
+        let at = edge.wrapping_add_signed(delta) as usize;
+        let ptr = &mut machine as *mut Machine as *mut std::ffi::c_void;
+        assert_eq!((RT_API.read16)(ptr, 0x0a000000 + at as u32), u32::from(u16::from_le_bytes(rom[at..at + 2].try_into().unwrap())));
+        assert_eq!((RT_API.read32)(ptr, 0x08000000 + at as u32), u32::from_le_bytes(rom[at..at + 4].try_into().unwrap()));
+    } } }
+    machine.bus.rom.copy_from_slice(&rom);
+    assert_eq!(machine.save_state().unwrap(), initial);
+    let mut bad = read_dataset(&dataset).unwrap();
+    bad.compact_obj_catalog.as_mut().unwrap().banks.iter_mut().find(|bank| bank.root == selected[0]).unwrap()
+        .sequences[0].sequence.frames[0].duration ^= 1;
+    let bytes = encode_compact_obj_catalog(bad.compact_obj_catalog.as_ref().unwrap()).unwrap();
+    bad.manifest.resources[99].sha256 = gba_core::ffta_rom::digest(&bytes);
+    bad.compact_obj_catalog_bytes = Some(bytes);
+    assert!(RuntimeResources::from_base_files(&rom, bad.files()).is_err());
+    assert!(std::sync::Arc::ptr_eq(machine.bus.rom_resources().unwrap(), &owner));
+    assert_eq!(machine.save_state().unwrap(), initial);
+    drop(bad); drop(current); drop(machine);
+
+    let mut raw = crate::make_machine(rom.clone(), None);
+    let mut typed = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut typed, &dataset).unwrap();
+    typed.bus.rom[0x39e164..0x39e214].fill(0xcd);
+    for row in 0..44u32 {
+        for m in [&mut raw, &mut typed] {
+            m.cpu.regs = [0; 16];
+            m.cpu.regs[4] = 0x0839e164 + row * 4;
+            m.cpu.cpsr = 0xbf;
+            prefix(m, 0x080f0820, 0x080f0826);
+        }
+        assert_eq!(&raw.cpu.regs[1..=3], &typed.cpu.regs[1..=3]);
+        for index in 0..3 { assert_eq!(typed.cpu.regs[index + 1], u32::from(rom[0x39e164 + row as usize * 4 + index + 1])); }
+    }
+    drop(typed);
+    raw.bus.ffta_sprites.enabled = false;
+    let state = 0x02007f00;
+    for bank in &banks {
+        raw.bus.write32(state + 4, 0x08000000 + bank.list_root());
+        raw.bus.write32(state + 8, 0x08000000 + bank.sequence_root());
+        for entry in &bank.sequences {
+            let sequence = &entry.sequence;
+            raw.cpu.regs = [0; 16]; raw.cpu.regs[3] = u32::from(sequence.selector); raw.cpu.regs[4] = state;
+            prefix(&mut raw, 0x08010870, 0x08010884);
+            assert_eq!(raw.cpu.regs[3] as usize, sequence.frames.len());
+            for (phase, frame) in sequence.frames.iter().enumerate() {
+                raw.cpu.regs = [0; 16]; raw.cpu.regs[5] = u32::from(sequence.selector); raw.cpu.regs[3] = state; raw.cpu.regs[2] = phase as u32;
+                prefix(&mut raw, 0x08010e5a, 0x08010e70); assert_eq!(raw.cpu.regs[0], u32::from(frame.list));
+                raw.cpu.regs = [0; 16]; raw.cpu.regs[7] = u32::from(sequence.selector); raw.cpu.regs[4] = state; raw.cpu.regs[3] = phase as u32;
+                prefix(&mut raw, 0x08010cb2, 0x08010cc8); assert_eq!(raw.cpu.regs[1], u32::from(frame.duration));
+            }
+        }
+        for entry in &bank.lists {
+            raw.cpu.regs = [0; 16]; raw.cpu.regs[2] = u32::from(entry.index); raw.cpu.regs[3] = state;
+            prefix(&mut raw, 0x08010e9a, 0x08010eb2);
+            assert_eq!(raw.cpu.regs[1], 0x08000000 + entry.list.source_offset);
+        }
+    }
+
+    let object = PathBuf::from(std::env::var_os("FFTA_COMPACT_CATALOG_NATIVE").unwrap());
+    let (_library, table) = crate::load_native(&object).unwrap();
+    let mut native = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut native, &dataset).unwrap();
+    let owner = native.bus.rom_resources().unwrap().clone();
+    let initial = raw.save_state().unwrap();
+    let mut served = 0;
+    let mut native_cases = 0;
+    for bank in &banks { for selector in bank.sequences.iter().map(|entry| entry.sequence.selector).chain([0x100]) {
+        for machine in [&mut raw, &mut native] {
+            machine.load_state(&initial).unwrap(); machine.bus.ffta_sprites.enabled = false;
+            machine.bus.write32(state + 8, 0x08000000 + bank.sequence_root());
+            machine.cpu.regs = std::array::from_fn(|i| 0x11000000 + i as u32);
+            machine.cpu.regs[3] = u32::from(selector); machine.cpu.regs[4] = state;
+            machine.cpu.regs[13] = 0x03007c00; machine.cpu.regs[15] = 0x08010870; machine.cpu.cpsr = 0xbf;
+        }
+        for &(start, end) in &new_spans { native.bus.rom[start as usize..end as usize].fill(0xcd); }
+        let directory = bank.sequence_root() + u32::from(selector) * 2;
+        let relative = u16::from_le_bytes(rom[directory as usize..directory as usize + 2].try_into().unwrap());
+        let count_at = bank.sequence_root() + u32::from(relative);
+        let expected: u64 = [directory, count_at].into_iter().flat_map(|at| at..at + 2).map(|at| u64::from(data.byte_at(at).is_some())).sum();
+        prefix(&mut raw, 0x08010870, 0x08010884);
+        let before = owner.compact_obj_catalog_stats().unwrap().source_bytes;
+        let mut steps = 0;
+        while native.cpu.regs[15] != 0x08010884 {
+            assert!(steps < 32); native.bus.frame_ready = false;
+            table.get(native.cpu.regs[15] | 1).unwrap()(&RT_API, &mut native as *mut Machine as *mut std::ffi::c_void);
+            steps += 1;
+        }
+        let used = owner.compact_obj_catalog_stats().unwrap().source_bytes - before;
+        assert_eq!(used, expected, "bank {:x} selector {selector}", bank.root);
+        if selector != 0x100 { assert_eq!(used, 4); }
+        served += used; native_cases += 1;
+        native.bus.rom.copy_from_slice(&rom);
+        assert_eq!(native.save_state().unwrap(), raw.save_state().unwrap(), "bank {:x} selector {selector}", bank.root);
+    } }
+    assert_eq!(native_cases, 7);
+    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
+        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":51,
+        "new_banks":1, "new_selectors":6, "new_source_bytes":730, "new_frames":42, "new_lists":19, "new_objects":61, "table_rows":44,
+        "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":1,
+        "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
+        "coherent_rejection_in_memory":true, "dataset_copies_created":0, "old_reader_cases_repeated":false,
+        "ordinary_use":"not attempted", "Linux":"pending", "USA":"pending", "nativeWindows":"pending", "performance_measurements":false
+    })).unwrap()).unwrap();
+}
+
+#[test]
 #[ignore = "private EUR source/e115 current dataset/e114 baseline/native prefix; Wine only, Linux/USA pending"]
 fn european_6c95d4_motion_catalog_matches_source_and_native_readers() {
     let root = PathBuf::from(std::env::var_os("FFTA_COMPACT_CATALOG_ROOT").unwrap());
@@ -608,16 +2245,16 @@ fn european_6c95d4_motion_catalog_matches_source_and_native_readers() {
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (114, 113, 100));
     let current = read_dataset(&dataset).unwrap();
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (117, 116, 100));
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (127, 126, 100));
     assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
     // Read the accepted older JSON without applying the new complete bank-set
     // validator to its historical projection. Its protected file is unchanged.
     let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
     assert_eq!(old.banks.len(), 39);
-    assert_eq!(data.banks.iter().filter(|bank| !selected.contains(&bank.root)).count(), 50);
+    assert_eq!(data.banks.iter().filter(|bank| !selected.contains(&bank.root)).count(), model::BANK_SPECS.len() - selected.len());
     for bank in &old.banks { assert_eq!(data.banks.iter().find(|new| new.root == bank.root), Some(bank)); }
     assert_eq!(current.compact_obj_catalog.as_ref().unwrap(), data);
-    let mut old_tables = data.selector_tables.clone().unwrap(); old_tables.motion_positions = None;
+    let mut old_tables = data.selector_tables.clone().unwrap(); old_tables.motion_positions = None; old_tables.timer_positions = None; old_tables.schedule = None; old_tables.flight = None; old_tables.burst = None; old_tables.effects = None; old_tables.grid_first = None; old_tables.grid_second = None; old_tables.script_lookup = None; old_tables.scene = None;
     assert_eq!(old.selector_tables.as_ref(), Some(&old_tables));
     let table = data.selector_tables.as_ref().unwrap().motion_positions.as_ref().unwrap();
     for (i, row) in table.rows.iter().enumerate() {
@@ -799,16 +2436,16 @@ fn european_6c992c_table_catalog_matches_source_and_native_readers() {
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (113, 112, 100));
     let current = read_dataset(&dataset).unwrap();
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (117, 116, 100));
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (127, 126, 100));
     assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
     // Read the accepted older JSON without applying the new complete bank-set
     // validator to its historical projection. Its protected file is unchanged.
     let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
     assert_eq!(old.banks.len(), 38);
-    assert_eq!(data.banks.iter().filter(|bank| !selected.contains(&bank.root)).count(), 50);
+    assert_eq!(data.banks.iter().filter(|bank| !selected.contains(&bank.root)).count(), model::BANK_SPECS.len() - selected.len());
     for bank in &old.banks { assert_eq!(data.banks.iter().find(|new| new.root == bank.root), Some(bank)); }
     assert_eq!(current.compact_obj_catalog.as_ref().unwrap(), data);
-    let mut old_tables = data.selector_tables.clone().unwrap(); old_tables.timed_positions = None; old_tables.motion_positions = None;
+    let mut old_tables = data.selector_tables.clone().unwrap(); old_tables.timed_positions = None; old_tables.motion_positions = None; old_tables.timer_positions = None; old_tables.schedule = None; old_tables.flight = None; old_tables.burst = None; old_tables.effects = None; old_tables.grid_first = None; old_tables.grid_second = None; old_tables.script_lookup = None; old_tables.scene = None;
     assert_eq!(old.selector_tables.as_ref(), Some(&old_tables));
     let table = data.selector_tables.as_ref().unwrap().timed_positions.as_ref().unwrap();
     for (i, row) in table.rows.iter().enumerate() {
@@ -970,14 +2607,14 @@ fn european_compact_catalog_matches_source_and_native_readers() {
     let catalog = model::Catalog::from_rom(&rom).unwrap();
     let data = &catalog.decoded;
     data.verify_source(&rom).unwrap();
-    assert_eq!(data.banks.len(), 51);
-    assert_eq!(data.banks.iter().map(|bank| bank.sequences.len()).sum::<usize>(), 130);
-    assert_eq!(data.banks.iter().flat_map(|bank| &bank.sequences).map(|entry| entry.sequence.frames.len()).sum::<usize>(), 601);
-    assert_eq!(data.banks.iter().map(|bank| bank.lists.len()).sum::<usize>(), 446);
-    assert_eq!(data.banks.iter().flat_map(|bank| &bank.lists).map(|entry| entry.list.objects.len()).sum::<usize>(), 1341);
+    assert_eq!(data.banks.len(), 63);
+    assert_eq!(data.banks.iter().map(|bank| bank.sequences.len()).sum::<usize>(), 205);
+    assert_eq!(data.banks.iter().flat_map(|bank| &bank.sequences).map(|entry| entry.sequence.frames.len()).sum::<usize>(), 887);
+    assert_eq!(data.banks.iter().map(|bank| bank.lists.len()).sum::<usize>(), 607);
+    assert_eq!(data.banks.iter().flat_map(|bank| &bank.lists).map(|entry| entry.list.objects.len()).sum::<usize>(), 2171);
     let spans = data.source_spans().unwrap();
-    assert_eq!(spans.len(), 172);
-    assert_eq!(spans.iter().map(|(_, bytes, _)| bytes.len()).sum::<usize>(), 12254);
+    assert_eq!(spans.len(), 330);
+    assert_eq!(spans.iter().map(|(_, bytes, _)| bytes.len()).sum::<usize>(), 20257);
     for &(start, end) in model::SOURCE_SPANS {
         for at in start..end { assert_eq!(data.byte_at(at), Some(rom[at as usize])); }
         for at in [start - 1, end] { assert_eq!(data.byte_at(at), None); }
@@ -992,7 +2629,7 @@ fn european_compact_catalog_matches_source_and_native_readers() {
     let old: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     let current = read_dataset(&dataset).unwrap();
     assert_eq!(old.resources.len(), 100);
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (117, 116, 100));
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (127, 126, 100));
     for entry in &old.resources[..99] { assert_eq!(current.manifest.resources.iter().find(|resource| resource.id == entry.id), Some(entry)); }
     assert_eq!(current.compact_obj_catalog.as_ref().unwrap(), data);
     assert_eq!(current.manifest.resources[99].id, COMPACT_OBJ_CATALOG_ID);
@@ -1002,7 +2639,7 @@ fn european_compact_catalog_matches_source_and_native_readers() {
     for &(start, end) in model::SOURCE_SPANS { machine.bus.rom[start as usize..end as usize].fill(0xcd); }
     let before = owner.compact_obj_catalog_stats().unwrap().source_bytes;
     for &(start, end) in model::SOURCE_SPANS { for at in start..end { assert_eq!(machine.bus.read8(0x0c000000 + at), rom[at as usize]); } }
-    assert_eq!(owner.compact_obj_catalog_stats().unwrap().source_bytes - before, 12254);
+    assert_eq!(owner.compact_obj_catalog_stats().unwrap().source_bytes - before, 14265);
     for &(start, end) in model::SOURCE_SPANS { for edge in [start, end] { for delta in [-3i32, -1, 0, 1] {
         let at = edge.wrapping_add_signed(delta) as usize; let ptr = &mut machine as *mut Machine as *mut std::ffi::c_void;
         assert_eq!((RT_API.read16)(ptr, 0x0a000000 + at as u32), u32::from(u16::from_le_bytes(rom[at..at + 2].try_into().unwrap())));
@@ -1066,10 +2703,10 @@ fn european_compact_catalog_matches_source_and_native_readers() {
         assert_eq!(native.save_state().unwrap(), raw.save_state().unwrap(), "bank {:x} selector {selector}", bank.root);
     } }
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "resources":100, "previous_unchanged":99, "banks":51, "selectors":130,
-        "source_bytes":12254, "spans":172, "frames":601, "lists":446, "objects":1341,
+        "status":"PASS", "resources":100, "previous_unchanged":99, "banks":56, "selectors":156,
+        "source_bytes":14265, "spans":194, "frames":717, "lists":496, "objects":1460,
         "native_count_cases":native_cases, "typed_native_bytes":served,
-        "out_of_projection_cases":51, "counter_oracle_from_actual_owned_intersections":true,
+        "out_of_projection_cases":56, "counter_oracle_from_actual_owned_intersections":true,
         "full_state_clock":true, "coherent_rejection_in_memory":true, "dataset_copies_created":0,
         "ordinary_use":"pending", "Linux":"pending", "USA":"pending", "nativeWindows":"pending", "performance_measurements":false
     })).unwrap()).unwrap();

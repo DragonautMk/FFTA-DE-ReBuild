@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "accept-layout-text-with-unidentified-keys",
+  "title": "Accept layout text from unidentified keys",
+  "kind": "fixed",
+  "platforms": [
+    "Windows GNU build and Wine"
+  ],
+  "changes": [
+    "Preserve text reported for an unidentified physical key in the command console, while keeping modifier, context and active-composition guards."
+  ],
+  "validation": [
+    "Windows GNU runtime and test builds passed; Wine tests cover unidentified layout text and guards. An isolated Italian-layout Wine GUI inserted è and preserved guest frame, clock, state, registers and input."
+  ],
+  "limitations": [
+    "This verifies one simulated Italian key under Wine; other layouts, physical inputs, native Windows and real IME in the console remain unverified under DBG2-14."
+  ],
+  "files": [
+    "crates/recomp/src/debug_command_panel.rs",
+    "crates/menu/assets/debug_v2.tsv",
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ],
+  "references": [
+    "docs/debug_control.md"
+  ]
+}

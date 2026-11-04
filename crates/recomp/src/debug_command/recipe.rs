@@ -72,9 +72,15 @@ fn validate_action(action:&Action)->Result<(),String>{
     if matches!(action,Action::Resume|Action::Cancel{..}){return Err("Recipes cannot contain unbounded resume or cancellation commands".into());}
     Ok(())
 }
+fn search_frame_cost(action:&Action)->u32 {
+    match action {
+        Action::Find{settings} => crate::debug_probe::MAX_SEARCH_FRAMES as u32 + u32::from(settings.on_hit == Some(crate::debug_probe::HitAction::Capture)),
+        _ => 0,
+    }
+}
 impl Recipe {
     fn validate_run_frame_budget(&self)->Result<(),String>{
-        let search=self.steps.iter().filter(|a|matches!(a,Action::Find{..})).count() as u32 * crate::debug_probe::MAX_SEARCH_FRAMES as u32;
+        let search=self.steps.iter().map(search_frame_cost).sum::<u32>();
         if self.limits.explicit_step_frames.saturating_add(search)>self.limits.max_frames{return Err("Combined step and search frame budget exceeds 3600; no action sent".into());}Ok(())
     }
     fn validate(&self)->Result<(),String>{
@@ -82,14 +88,14 @@ impl Recipe {
         if ![&self.manifest_sha256,&self.rom_sha256,&self.runtime_sha256].iter().all(|v|hash_valid(v)){return Err("Recipe requires exact lowercase SHA-256 pins".into());}
         if self.steps.is_empty() || self.steps.len()>MAX_STEPS || self.limits.steps!=self.steps.len() as u32 || self.limits.explicit_step_frames>MAX_FRAMES || self.limits.max_frames!=MAX_FRAMES || self.limits.duration_ms!=120_000 || self.limits.output_bytes!=1024*1024{return Err("Invalid recipe limits".into());}
         let (mut frames,mut search_frames)=(0u32,0u32);
-        for action in &self.steps {validate_action(action)?;match action{Action::Step{frames:n,..}=>frames=frames.checked_add(*n).ok_or("Frame limit overflow")?,Action::Find{..}=>search_frames=search_frames.checked_add(crate::debug_probe::MAX_SEARCH_FRAMES as u32).ok_or("Search frame budget overflow")?,_=>{}}}
+        for action in &self.steps {validate_action(action)?;match action{Action::Step{frames:n,..}=>frames=frames.checked_add(*n).ok_or("Frame limit overflow")?,Action::Find{..}=>search_frames=search_frames.checked_add(search_frame_cost(action)).ok_or("Search frame budget overflow")?,_=>{}}}
         if let Some(budget)=self.limits.search_frame_budget {if budget!=search_frames || frames.saturating_add(budget)>MAX_FRAMES{return Err("Invalid aggregate search frame budget".into());}}
         if self.steps.len()+self.assertions.len()+self.waits.len()>MAX_STEPS || self.assertions.iter().any(|a|a.after_step as usize>=self.steps.len()||!valid_pointer(&a.pointer)||!valid_scalar(&a.expected)) || self.assertions.windows(2).any(|w|w[0].after_step>w[1].after_step){return Err("Invalid recipe assertions".into());}
         if self.waits.iter().any(|w|w.after_step as usize>=self.steps.len()||!valid_wait(w)) || self.waits.windows(2).any(|w|w[0].after_step>=w[1].after_step){return Err("Invalid recipe waits".into());}
         if frames!=self.limits.explicit_step_frames{return Err("Recipe explicit frame count does not match its steps".into());}Ok(())
     }
 }
-fn manifest(root:&Path)->Result<(String,String,String),String>{
+pub(super) fn manifest(root:&Path)->Result<(String,String,String),String>{
     for path in [root.to_path_buf(),root.join("debug-session.json")] {crate::debug_session::regular(&path)?;}
     let bytes=crate::diagnostics::read(&root.join("debug-session.json"),1024*1024)?;
     let value:Value=serde_json::from_slice(&bytes).map_err(|e|e.to_string())?;
@@ -124,7 +130,7 @@ fn save(root:&Path,name:&str,commands:&[String])->Result<Recipe,String>{
     let mut steps=Vec::new();let mut assertions=Vec::new();let mut waits=Vec::new();
     for command in commands {if let Some(check)=assertion(command,steps.len())?{assertions.push(check);}else if let Some(condition)=wait(command,steps.len())?{waits.push(condition);}else{steps.push(action(command)?);}}
     let frames=steps.iter().try_fold(0u32,|sum,a|sum.checked_add(if let Action::Step{frames,..}=a{*frames}else{0}).ok_or("Frame limit overflow"))?;
-    let search_frames=steps.iter().filter(|a|matches!(a,Action::Find{..})).count() as u32 * crate::debug_probe::MAX_SEARCH_FRAMES as u32;
+    let search_frames=steps.iter().map(search_frame_cost).sum::<u32>();
     if frames.saturating_add(search_frames)>MAX_FRAMES{return Err("Combined step and search frame budget exceeds 3600".into());}
     let (manifest_sha256,rom_sha256,runtime_sha256)=manifest(root)?;
     let recipe=Recipe{schema:1,kind:"ffta-debug-command-recipe".into(),name:name.into(),manifest_sha256,rom_sha256,runtime_sha256,limits:Limits{steps:steps.len() as u32,explicit_step_frames:frames,max_frames:MAX_FRAMES,duration_ms:120_000,output_bytes:1024*1024,search_frame_budget:(search_frames>0).then_some(search_frames)},steps,assertions,waits};
@@ -256,6 +262,9 @@ mod tests {
         let t=fixture();let cmd="break 0x08000000 arm --steps 1".to_string();let value=save_command(t.path(),"search",&[cmd.clone(),"step 1".into()]);assert_eq!(value["ok"],true);assert_eq!(value["recipe"]["limits"]["search_frame_budget"],600);
         assert_eq!(save_command(t.path(),"too-many",&vec![cmd.clone();7])["ok"],false);
         assert_eq!(save_command(t.path(),"mixed",&[cmd.clone(),"step 600".into(),"step 600".into(),"step 600".into(),"step 600".into(),"step 600".into(),"step 1".into()])["ok"],false);
+        let capture="break 0x08000000 arm --steps 1 --on-hit capture".to_string();
+        let captured=save_command(t.path(),"capture-search",&[capture.clone()]);assert_eq!(captured["recipe"]["limits"]["search_frame_budget"],601);
+        assert_eq!(save_command(t.path(),"capture-over-budget",&vec![capture;6])["ok"],false);
         let file=t.path().join("Data/config/debug-command-recipes/recipe-search.json");let mut legacy=value["recipe"].clone();legacy["limits"].as_object_mut().unwrap().remove("search_frame_budget");fs::write(&file,serde_json::to_vec(&legacy).unwrap()).unwrap();let loaded=load(t.path(),"search").unwrap();assert!(loaded.limits.search_frame_budget.is_none());assert!(loaded.validate_run_frame_budget().is_ok());assert_eq!(serde_json::to_value(loaded).unwrap(),legacy);
         let mut too_many=legacy.clone();too_many["steps"]=json!(vec![legacy["steps"][0].clone();7]);too_many["limits"]["steps"]=json!(7);too_many["limits"]["explicit_step_frames"]=json!(0);fs::write(&file,serde_json::to_vec(&too_many).unwrap()).unwrap();let loaded=load(t.path(),"search").unwrap();assert!(loaded.validate_run_frame_budget().is_err());
     }

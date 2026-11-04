@@ -45,6 +45,15 @@ impl Editor {
     pub fn set_preedit(&mut self, text: &str) {
         self.preedit = text.chars().filter(|c| !c.is_control()).take(256).collect();
     }
+    pub fn ime(&mut self, event: &winit::event::Ime) -> Result<(), &'static str> {
+        use winit::event::Ime;
+        match event {
+            Ime::Enabled => Ok(()),
+            Ime::Preedit(text, _) => { self.set_preedit(text); Ok(()) },
+            Ime::Commit(text) => { self.set_preedit(""); if text.is_empty(){Ok(())}else{self.insert(text)} },
+            Ime::Disabled => { self.set_preedit(""); Ok(()) },
+        }
+    }
     fn clear_history_navigation(&mut self) {
         self.history_index = None;
         self.saved_draft.clear();
@@ -151,5 +160,22 @@ mod tests {
         e.history_previous();assert_eq!(e.text(),"step 1");e.history_next();assert_eq!(e.text(),"draft\npause");
         e.set_preedit("候補");assert_eq!(e.preedit(),"候補");e.clear();assert!(e.preedit().is_empty());
         e.history_previous();assert_eq!(e.text(),"step 1");
+    }
+    #[test]
+    fn ime_disable_clears_only_pending_composition_and_commit_inserts_once() {
+        use winit::event::Ime;
+        let mut e=Editor::default();e.insert("draft ").unwrap();
+        e.ime(&Ime::Enabled).unwrap();e.ime(&Ime::Preedit("候補".into(),Some((0,0)))).unwrap();
+        assert_eq!(e.text(),"draft ");assert_eq!(e.preedit(),"候補");
+        e.ime(&Ime::Disabled).unwrap();assert_eq!(e.text(),"draft ");assert!(e.preedit().is_empty());
+        e.ime(&Ime::Enabled).unwrap();e.ime(&Ime::Preedit("候".into(),None)).unwrap();
+        e.ime(&Ime::Commit("候補".into())).unwrap();assert_eq!(e.text(),"draft 候補");assert!(e.preedit().is_empty());
+    }
+    #[test]
+    fn empty_ime_commit_preserves_selected_draft() {
+        use winit::event::Ime;
+        let mut e=Editor::default();e.insert("draft").unwrap();e.select_all();
+        e.ime(&Ime::Preedit("候".into(),None)).unwrap();e.ime(&Ime::Commit(String::new())).unwrap();
+        assert_eq!(e.text(),"draft");assert_eq!(e.selected_text(),"draft");assert!(e.preedit().is_empty());
     }
 }

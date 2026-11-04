@@ -139,13 +139,37 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
     let mut audio = [0u64; 5];
     let mut source_mask = 0;
     let mut first_alternate_read = None;
+    #[cfg(feature = "rom-data-read-audit")]
+    let compact_watch_root = std::env::var("FFTA_STATE_TEST_COMPACT_WATCH_ROOT").ok()
+        .map(|value| u32::from_str_radix(value.trim_start_matches("0x"), 16).expect("compact watch root"))
+        .or_else(|| std::env::var_os("FFTA_STATE_TEST_REQUIRE_COMPACT_6BAC28").map(|_| 0x6bac28));
+    #[cfg(feature = "rom-data-read-audit")]
+    let compact_watch_span = compact_watch_root.map(|root| {
+        let spec = gba_core::rom_data::compact_obj_catalog::BANK_SPECS.iter().find(|spec| spec.root == root).expect("known compact watch root");
+        *spec.spans.first().expect("compact watch source span")
+    });
+    #[cfg(feature = "rom-data-read-audit")]
+    let mut compact_watch_hit = None;
+    #[cfg(not(feature = "rom-data-read-audit"))]
+    assert!(std::env::var_os("FFTA_STATE_TEST_REQUIRE_COMPACT_6BAC28").is_none() && std::env::var_os("FFTA_STATE_TEST_COMPACT_WATCH_ROOT").is_none(), "compact source watch requires rom-data-read-audit");
     for relative in 0..frames {
         let mut counts = [(0, 0); 2];
         for (index, machine) in [&mut legacy, &mut decoded].into_iter().enumerate() {
             machine.bus.keys = input.keys_at(relative);
             input.apply_mouse(&mut machine.bus, relative).unwrap();
             let pointer = machine as *mut gba_core::Machine as *mut std::ffi::c_void;
+            #[cfg(feature = "rom-data-read-audit")]
+            let compact_watch = if index == 1 && compact_watch_hit.is_none() && compact_watch_span.is_some() {
+                let (start, end) = compact_watch_span.unwrap();
+                Some(gba_core::debug_memory::Capture::start(gba_core::debug_memory::Watch {
+                    start: 0x08000000 + start, end: 0x08000000 + end, write: false, width: None, value: None,
+                }).unwrap())
+            } else { None };
             counts[index] = run_frame_native(machine, &table, pointer, FRAME_STEP_GUARD);
+            #[cfg(feature = "rom-data-read-audit")]
+            if let Some(watch) = compact_watch {
+                if let Some(hit) = watch.hit() { compact_watch_hit = Some((machine.bus.frames, hit)); }
+            }
             assert_eq!(machine.bus.frames, first + relative + 1, "incomplete frame");
             assert!(machine.bus.frame_ready);
         }
@@ -216,6 +240,13 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
         clear_audio(&mut decoded);
     }
     assert!(dispatch[0] > 0, "native dispatch must execute");
+    #[cfg(feature = "rom-data-read-audit")]
+    if let Some(root) = compact_watch_root {
+        let (frame, hit) = compact_watch_hit.expect("scene must read represented compact bank bytes");
+        let stats = decoded.bus.rom_resources().unwrap().compact_obj_catalog_stats().unwrap();
+        assert!(stats.source_bytes > 0, "decoded compact owner must serve source bytes");
+        eprintln!("ROM_DATA_COMPACT_BANK_WITNESS root={root:08x} frame={frame} address={:08x} width={} catalog_source_bytes={}", hit.address, hit.width, stats.source_bytes);
+    }
     assert!(
         audio.iter().all(|&count| count > 0),
         "all audio streams need actual samples: {audio:?}"

@@ -41,7 +41,8 @@ LICENSE_FILES = (
     'LICENSE', 'LICENSE-MIT', 'LICENSE-APACHE', 'LICENSE-CC0', 'CREDITS.md',
     'THIRD_PARTY_NOTICES.md', 'LICENSE-gamecontrollerdb.txt', 'gamedb.sqlite.license',
     'README.md', 'ANDROID.md', 'TinyCC/COPYING', 'TinyCC/LICENSE-ADAPTER-MIT.txt',
-    'fonts/Cinzel-OFL.txt', 'fonts/Inter-OFL.txt',
+    'fonts/Cinzel-OFL.txt', 'fonts/Inter-OFL.txt', 'fonts/Droid-NOTICE.txt',
+    'fonts/Droid-COPYRIGHT.txt',
 )
 DOC_FILES = tuple('docs/' + name + '.md' for name in BASE_DOCS + DEBUG_DOCS) + tuple(
     'docs/development/' + name + '.md' for name in DEVELOPMENT_DOCS)

@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "verify-european-stardust-bank",
+  "title": "Verify European Stardust compact bank",
+  "kind": "changed",
+  "platforms": [
+    "Windows executable on Wine; EUR"
+  ],
+  "changes": [
+    "Document an ordinary Stardust route to the represented 6bb574 compact bank."
+  ],
+  "validation": [
+    "Wine source and six existing EUR roster prefixes identify action47/task47, its 6bb574 child and an eligible IN08 unit; normal menu screenshots confirm Stardust and its confirmation.",
+    "A 600-frame native raw/managed full-state/clock/render/OAM/dispatch/five-audio pair passed in Wine; the feature-gated watch observed represented address 0x086bb576 at frame 8450.",
+    "The test artifact was emitted before the audit Cargo build failed on the CLI with ENOSPC; its 845-file source snapshot and artifact hash were verified and that build left the previous CLI unchanged."
+  ],
+  "limitations": [
+    "One invocation only; complete animation, other selectors and consumers, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-04-verify-european-freezeblink-bank.json"
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "authenticate-trigger-capture-and-retry",
+  "title": "Authenticate named trigger captures and retries",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU / Wine / Xvfb"
+  ],
+  "changes": [
+    "Bind named search dispatch and capture metadata to the exact enabled trigger name, session and definition hash; the executing runtime rechecks the action and refuses changed, disabled or forged definitions.",
+    "Add explicit named-trigger retry using the original run, request ID and deadline through the idempotent ledger; show the named identity in live pending context."
+  ],
+  "validation": [
+    "Windows GNU default and audit-feature builds passed; 50 default and 53 feature Wine tests passed, including altered action and definition refusal, old capability refusal, named retry deduplication and search/recipe regressions.",
+    "An isolated EUR Wine/Xvfb session verified a guard/freeze, a frame-boundary capture carrying the exact named definition hash, and a retry returning identical JSON without advancing state or creating another snapshot. A separate verified 480x360 Win32 console displayed the name, full hash and extended pending parameters and cancelled the exact request. Protected inputs stayed unchanged and GUIs closed normally.",
+    "A shared Wine lease was owned by another validation; the initial test launch started no test and was retried after release."
+  ],
+  "limitations": [
+    "DBG2-24 remains waiting for the partial DBG2-15 dependency. Audit-feature watch counting remains synthetic; native Windows, physical input and other ROMs were not tested. Private proof copies are retained."
+  ],
+  "files": [
+    "crates/recomp/src/debug_probe.rs",
+    "crates/recomp/src/debug_control.rs",
+    "crates/recomp/src/debug_command.rs",
+    "crates/recomp/src/debug_command/trigger.rs",
+    "crates/recomp/src/debug_command/completion.rs",
+    "crates/recomp/src/debug_command/observation.rs",
+    "crates/recomp/src/debug_operations.json",
+    "crates/recomp/src/play.rs",
+    "docs/development/MENU_ATLAS_INVENTORY.json"
+  ],
+  "references": [
+    "docs/debug_probes.md",
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

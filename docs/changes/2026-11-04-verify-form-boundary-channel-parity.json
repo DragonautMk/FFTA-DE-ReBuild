@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "verify-form-boundary-channel-parity",
+  "title": "Verify nondefault workbench parameter parity",
+  "kind": "docs",
+  "platforms": [
+    "Windows GNU build; Wine"
+  ],
+  "changes": [
+    "Add a cross-channel parser matrix for nondefault workbench values, valid bounds and selected out-of-range refusals."
+  ],
+  "validation": [
+    "Windows GNU test build passed; Wine passed the new matrix and all eight workbench tests. Seven direct forms produced identical typed actions across menu drafts, console and local-control parsers; six out-of-range cases were refused across all three, without filesystem artifacts."
+  ],
+  "limitations": [
+    "Parser-level checks do not execute every parameter combination. Issue-profile resolution, wider runtime outcomes, native Windows, physical input and complete DBG2-13 parity remain outside this matrix."
+  ],
+  "files": [
+    "crates/recomp/src/debug_workbench/tests.rs",
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ],
+  "references": [
+    "docs/debug_control.md"
+  ]
+}

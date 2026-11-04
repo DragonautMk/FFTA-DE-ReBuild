@@ -242,7 +242,7 @@ pub(crate) fn fields(tool: Tool) -> Vec<Field> {
                 "--reads",
                 "on",
                 &["on", "off"],
-                "Readonly ROM observer; requires available read-audit hooks.",
+                "Readonly ROM observer; without read-audit hooks the report marks reads unavailable.",
             ),
             text(
                 "--start",
@@ -379,12 +379,6 @@ impl Draft {
         if self.tool == Tool::Code {
             self.optional(Slot::Labels)?;
         }
-        if !cfg!(feature = "rom-data-read-audit")
-            && self.tool == Tool::Recent
-            && self.value("--reads") == "on"
-        {
-            return Err("Selected build lacks rom-data-read-audit; turn reads off or choose a supported runtime".into());
-        }
         Ok(action)
     }
     pub fn profile_args(&self, destination: &Path) -> Result<Vec<String>, String> {
@@ -496,7 +490,9 @@ impl Draft {
             self.profile(&destination, true)?;
             Ok(format!("Valid pinned input and parameters. CLI argv: {:?}. No profile created or replay started; worker runtime features/ABI still require execution preflight.",self.profile_args(&destination)?))
         } else {
-            Ok(format!("Validated by shared CLI parser: {:?}. Start is a separate action; current session/busy/model constraints remain checked by its handler.",self.control()?))
+            let action=self.control()?;
+            let note=if self.tool==Tool::Recent && self.value("--reads")=="on" && !cfg!(feature="rom-data-read-audit") {" ROM reads will be marked feature-unavailable; other events remain available."}else{""};
+            Ok(format!("Validated by shared CLI parser: {action:?}. Start is a separate action; current session/busy/model constraints remain checked by its handler.{note}"))
         }
     }
 }

@@ -22,6 +22,69 @@ Type: changed. Platforms: Windows GNU under Wine/Xvfb, isolated EUR session.
 
 [Change record](docs/changes/2026-11-04-verify-typed-recipe-interactive-picker.json)
 
+## 2026-11-04 — Verify step and inspection channel parity
+
+Type: docs. Platforms: Wine/Xvfb EUR interpreter.
+
+**Changes**
+
+- Record same-seed three-channel parity for readonly inspection and a neutral one-frame step.
+
+**Validation**
+
+- Three isolated sessions from the same pinned seed used local-control CLI, menu parameter forms and interactive command console respectively. Origin frame, clock, CPU registers and state hash matched; inspecting 16 ROM bytes preserved guest state. The complete inspection results and one-frame endpoint frame, clock, registers, keys, reason and state hash matched exactly.
+- All three validation units and a separate six-input comparison unit passed with protected input hashes; GUI sessions closed normally.
+- A separate EUR Wine/Xvfb session verified the same zero-length inspection and zero-frame step refusal text in parameter forms and the parser. The command console copied identical structured parse-error JSON to debug-command for those cases, leading-zero decimals, unprefixed addresses and an unknown command; direct local-control CLI also refused zero bounds. Guest frame, clock, registers, keys and state hash remained unchanged.
+- The first refusal driver incorrectly used Ctrl+A in the append-only form and tested a different value; the corrected Backspace-based run passed with protected inputs and normal GUI closure.
+
+**Limitations**
+
+- This covers default arguments and a single EUR interpreter seed with simulated input; nondefault values, other error outcomes, native Windows and full DBG2-13 parity remain unverified. The first comparison helper used its scratch directory as the repository root and failed before reading inputs; its corrected retry passed.
+
+Documentation: [debug_control.md](docs/debug_control.md).
+
+[Change record](docs/changes/2026-11-04-verify-step-inspect-channel-parity.json)
+
+## 2026-11-04 — Verify breakpoint and watch-refusal channel parity
+
+Type: docs. Platforms: Wine/Xvfb EUR interpreter.
+
+**Changes**
+
+- Record same-seed CLI and console breakpoint outcomes and default-build watchpoint refusal.
+
+**Validation**
+
+- Two isolated EUR Wine/Xvfb sessions started from the same seed. Local-control CLI and interactive console hit the same Thumb breakpoint after 66720 interpreter steps with identical complete search result and endpoint frame, clock, registers, keys, reason and state hash. Both returned the same watch-feature refusal without changing the origin. Both sessions and a separate protected-input comparison unit passed; GUIs closed normally.
+
+**Limitations**
+
+- Watch was refused on the default build; a live audit-enabled watch hit, native Windows, physical input, other seeds and complete DBG2-13 parity remain unverified.
+
+Documentation: [debug_probes.md](docs/debug_probes.md).
+
+[Change record](docs/changes/2026-11-04-verify-search-channel-parity.json)
+
+## 2026-11-04 — Verify resume and pause channel transitions
+
+Type: docs. Platforms: Wine/Xvfb EUR interpreter.
+
+**Changes**
+
+- Record local-control, menu/F6 and console pause/resume transition checks.
+
+**Validation**
+
+- An isolated EUR Wine/Xvfb session resumed and paused through direct local-control CLI, the menu followed by F6, and the interactive console. Each resume advanced guest frames and each pause returned paused with no remaining step budget. The final copy was paused, protected inputs verified and GUI closed normally.
+
+**Limitations**
+
+- Free-running frame counts depend on timing and were not compared for equality. Simulated keyboard/mouse, one EUR interpreter seed, native Windows and physical input remain unverified. One attempt encountered a Wine lease before execution; another completed CLI/menu transitions but failed console navigation; the corrected full run passed.
+
+Documentation: [debug_control.md](docs/debug_control.md).
+
+[Change record](docs/changes/2026-11-04-verify-resume-pause-channel-parity.json)
+
 ## 2026-11-04 — Verify recipe refusal after session restart
 
 Type: changed. Platforms: Windows GNU / Wine / Xvfb.
@@ -41,6 +104,24 @@ Type: changed. Platforms: Windows GNU / Wine / Xvfb.
 Documentation: [runner.rs](crates/recomp/src/debug_command/recipe/checkpoint/runner.rs).
 
 [Change record](docs/changes/2026-11-04-verify-recipe-session-restart-refusal.json)
+
+## 2026-11-04 — Verify a reached breakpoint in a typed recipe
+
+Type: changed. Platforms: Windows GNU under Wine/Xvfb, isolated EUR interpreter.
+
+**Changes**
+
+- Verify the bounded search hit path, hit assertion, following step and explicit resume in an actual isolated session.
+
+**Validation**
+
+- A Thumb PC breakpoint hit before the eligible instruction after 40948 interpreter steps; its hit assertion passed, the next step completed one frame and the checkpoint recorded both. A second resume preserved guest state, protected inputs stayed unchanged and the GUI closed normally.
+
+**Limitations**
+
+- One EUR Wine interpreter hit only; feature-gated watchpoint, native Windows and physical input remain unverified. The private session copy is retained as the current proof.
+
+[Change record](docs/changes/2026-11-04-verify-recipe-breakpoint-hit.json)
 
 ## 2026-11-04 — Verify recovery of a pending recipe step
 
@@ -83,6 +164,26 @@ Documentation: [runner.rs](crates/recomp/src/debug_command/recipe/checkpoint/run
 
 [Change record](docs/changes/2026-11-04-verify-multiple-capture-recipes-live.json)
 
+## 2026-11-04 — Verify selected-profile issue report channel parity
+
+Type: docs. Platforms: Wine/Xvfb EUR interpreter.
+
+**Changes**
+
+- Record three-channel issue-report parity using the same selected pinned replay profile.
+
+**Validation**
+
+- In an isolated EUR Wine/Xvfb session, the local-control CLI, issue parameter form and interactive command console each created a distinct report for the same copied pinned profile and empty symptom. Each preflight was compatible, profile hashes and complete summaries matched, and guest frame, clock, registers, keys and state hash were unchanged. Report creation did not run replay; protected original inputs and normal GUI closure verified.
+
+**Limitations**
+
+- One compatible EUR profile, empty symptom and simulated input only; invalid profiles, other symptoms, native Windows, physical input and full DBG2-13 parity remain unverified. First attempt placed the private profile outside the portable scanner allowlist and failed before selection; the corrected input-root run passed.
+
+Documentation: [debug_issues.md](docs/debug_issues.md).
+
+[Change record](docs/changes/2026-11-04-verify-issue-report-channel-parity.json)
+
 ## 2026-11-04 — Verify interrupted recipe recovery in a live session
 
 Type: changed. Platforms: Windows GNU / Wine / Xvfb.
@@ -103,6 +204,134 @@ Type: changed. Platforms: Windows GNU / Wine / Xvfb.
 Documentation: [runner.rs](crates/recomp/src/debug_command/recipe/checkpoint/runner.rs).
 
 [Change record](docs/changes/2026-11-04-verify-interrupted-recipe-in-live-session.json)
+
+## 2026-11-04 — Verify graphics capture channel parity
+
+Type: docs. Platforms: Wine/Xvfb EUR interpreter.
+
+**Changes**
+
+- Record a bounded three-channel graphics compare-last check with preserved guest and raw-buffer identity.
+
+**Validation**
+
+- An isolated EUR Wine/Xvfb session created a CLI baseline, then compare-last captures through local-control CLI, menu parameter form and interactive console. Four distinct reports retained identical guest frame, clock, state hash, registers and keys, and identical raw-buffer hashes; each comparison named the immediately previous report and reported zero raw-byte differences. Protected inputs and normal GUI closure verified.
+
+**Limitations**
+
+- Frontend composition depends on the visible interface and was not asserted identical. Native Windows, physical input, nondefault graphics contexts and complete DBG2-13 parity remain unverified. One attempted unit encountered an existing Wine lease before execution; no test was run in it.
+
+Documentation: [debug_graphics.md](docs/debug_graphics.md).
+
+[Change record](docs/changes/2026-11-04-verify-graphics-channel-parity.json)
+
+## 2026-11-04 — Verify nondefault workbench parameter parity
+
+Type: docs. Platforms: Windows GNU build; Wine.
+
+**Changes**
+
+- Add a cross-channel parser matrix for nondefault workbench values, valid bounds and selected out-of-range refusals.
+
+**Validation**
+
+- Windows GNU test build passed; Wine passed the new matrix and all eight workbench tests. Seven direct forms produced identical typed actions across menu drafts, console and local-control parsers; six out-of-range cases were refused across all three, without filesystem artifacts.
+
+**Limitations**
+
+- Parser-level checks do not execute every parameter combination. Issue-profile resolution, wider runtime outcomes, native Windows, physical input and complete DBG2-13 parity remain outside this matrix.
+
+Documentation: [debug_control.md](docs/debug_control.md).
+
+[Change record](docs/changes/2026-11-04-verify-form-boundary-channel-parity.json)
+
+## 2026-11-04 — Verify European Stardust compact bank
+
+Type: changed. Platforms: Windows executable on Wine; EUR.
+
+**Changes**
+
+- Document an ordinary Stardust route to the represented 6bb574 compact bank.
+
+**Validation**
+
+- Wine source and six existing EUR roster prefixes identify action47/task47, its 6bb574 child and an eligible IN08 unit; normal menu screenshots confirm Stardust and its confirmation.
+- A 600-frame native raw/managed full-state/clock/render/OAM/dispatch/five-audio pair passed in Wine; the feature-gated watch observed represented address 0x086bb576 at frame 8450.
+- The test artifact was emitted before the audit Cargo build failed on the CLI with ENOSPC; its 845-file source snapshot and artifact hash were verified and that build left the previous CLI unchanged.
+
+**Limitations**
+
+- One invocation only; complete animation, other selectors and consumers, Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [2026-11-04-verify-european-freezeblink-bank.json](docs/changes/2026-11-04-verify-european-freezeblink-bank.json).
+
+[Change record](docs/changes/2026-11-04-verify-european-stardust-bank.json)
+
+## 2026-11-04 — Verify European Soil Evidence timer bank
+
+Type: changed. Platforms: Windows executable on Wine; EUR.
+
+**Changes**
+
+- Extend the feature-gated scene test watch to select an authenticated compact bank root while preserving the existing 6bac28 option.
+
+**Validation**
+
+- Retained EUR Wine source and callback-reference windows identify the 6c0614 timer child as a later task49 producer.
+- The Windows test artifact was emitted and its 845-file source snapshot rechecked; the overall Cargo build failed compiling the CLI with ENOSPC, and the previous CLI remained unchanged.
+- The emitted test passed in Wine for a 600-frame native raw/managed full-state/clock/render/OAM/dispatch/five-audio pair, observing represented address 0x086c0616 at frame 8511.
+
+**Limitations**
+
+- One source-backed scene only; complete animation, other consumers, Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [2026-11-04-verify-european-soil-evidence-ordinary.json](docs/changes/2026-11-04-verify-european-soil-evidence-ordinary.json).
+
+[Change record](docs/changes/2026-11-04-verify-european-soil-timer-bank.json)
+
+## 2026-11-04 — Verify European Soil Evidence ordinary route
+
+Type: changed. Platforms: Windows executable on Wine; EUR.
+
+**Changes**
+
+- Add an optional feature-gated test watch for the represented 6bac28 bank during the existing raw/managed scene comparison.
+
+**Validation**
+
+- EUR Wine source and six retained roster reads identify action 49 and an eligible IN-08 unit; ordinary inputs select Soil Evidence without forcing game state.
+- EUR Wine 480-frame raw/managed comparison PASS for state, clock, images, OAM, dispatch and five audio streams, with positive aggregate catalog reads.
+- Windows audit-feature build PASS; a Wine watch on the decoded machine observed represented 6bac28 address 0x086bac2a at frame 8391, while the 480-frame raw/managed comparison passed again.
+
+**Limitations**
+
+- One source-backed ordinary invocation only; complete animation, other selectors and consumers, Linux, USA and native Windows remain unverified. No performance measurements.
+
+Documentation: [2026-11-04-integrate-european-compact-nibble-6ca580.json](docs/changes/2026-11-04-integrate-european-compact-nibble-6ca580.json).
+
+[Change record](docs/changes/2026-11-04-verify-european-soil-evidence-ordinary.json)
+
+## 2026-11-04 — Verify European Freezeblink compact bank
+
+Type: changed. Platforms: Windows executable on Wine; EUR.
+
+**Changes**
+
+- Document an ordinary Freezeblink route to the represented 6babc4 compact bank.
+
+**Validation**
+
+- Wine source and six existing EUR roster prefixes identify action45/task45, its 6babc4 child and an eligible IN08 unit; normal menu screenshots confirm Freezeblink and its confirmation.
+- A 600-frame native raw/managed full-state/clock/render/OAM/dispatch/five-audio pair passed in Wine; the feature-gated watch observed represented address 0x086babc6 at frame 8361.
+- The test artifact was emitted before the audit Cargo build failed on the CLI with ENOSPC; its 845-file source snapshot and artifact hash were verified and the previous CLI remained unchanged.
+
+**Limitations**
+
+- One invocation only; complete animation, other selectors and consumers, Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [2026-11-04-verify-european-soil-timer-bank.json](docs/changes/2026-11-04-verify-european-soil-timer-bank.json).
+
+[Change record](docs/changes/2026-11-04-verify-european-freezeblink-bank.json)
 
 ## 2026-11-04 — Verify European compact selector catalog startup
 
@@ -125,6 +354,28 @@ Documentation: [2026-11-03-migrate-european-compact-selector-tables.json](docs/c
 
 [Change record](docs/changes/2026-11-04-verify-european-compact-selector-cli.json)
 
+## 2026-11-04 — Verify code and gameplay trace channel parity
+
+Type: docs. Platforms: Wine/Xvfb EUR interpreter.
+
+**Changes**
+
+- Record a bounded three-channel parity check for default code and gameplay trace settings, starts and report actions.
+
+**Validation**
+
+- In an isolated EUR session, local-control CLI, workbench menu and interactive command console each started both traces with identical observed default settings. Each trace observed one completed frame and was saved through a local-control report request; six distinct HTML reports existed and six total frames advanced. Protected inputs and normal GUI closure were verified.
+- Separate EUR Wine/Xvfb sessions saved one-frame code and gameplay traces through the menu and interactive console. Each saved JSON retained the trace settings and frame count; report publication left guest frame, clock and state hash unchanged. Protected inputs and normal GUI closure were verified.
+- A first menu/report run completed both saves but its later console navigation failed; a menu-only run produced the required PASS receipt. One console attempt encountered an existing Wine lease and ran no test; the console-only retry passed.
+
+**Limitations**
+
+- Nondefault settings, broader error outcomes, native Windows, physical input and full DBG2-13 parity remain unverified.
+
+Documentation: [debug_code.md](docs/debug_code.md), [debug_gameplay.md](docs/debug_gameplay.md).
+
+[Change record](docs/changes/2026-11-04-verify-code-gameplay-channel-parity.json)
+
 ## 2026-11-04 — Verify cheat catalog recipe in an isolated session
 
 Type: changed. Platforms: Windows GNU / Wine / Xvfb.
@@ -144,6 +395,70 @@ Type: changed. Platforms: Windows GNU / Wine / Xvfb.
 Documentation: [runner.rs](crates/recomp/src/debug_command/recipe/checkpoint/runner.rs).
 
 [Change record](docs/changes/2026-11-04-verify-cheat-catalog-recipe-in-live-session.json)
+
+## 2026-11-04 — Verify audio and Recent report channel parity
+
+Type: docs. Platforms: Wine/Xvfb EUR interpreter.
+
+**Changes**
+
+- Record menu and command-console report checks for audio and Recent windows alongside existing CLI evidence.
+
+**Validation**
+
+- In an isolated EUR Wine/Xvfb session, the menu and interactive command console each saved one-frame audio and Recent captures. Audio reports retained the selected frame limit, Recent reports retained the active settings, and each report recorded the endpoint state; save left guest frame, clock, registers, keys and state hash unchanged. Recent used on-error off. All four reports were distinct, protected inputs verified and GUI closed normally.
+
+**Limitations**
+
+- CLI report evidence was established separately. This covers one EUR interpreter seed, simulated input and Recent on-error off; native Windows, physical input, other settings and complete DBG2-13 parity remain unverified.
+
+Documentation: [debug_audio.md](docs/debug_audio.md), [debug_recent.md](docs/debug_recent.md).
+
+[Change record](docs/changes/2026-11-04-verify-audio-recent-report-channel-parity.json)
+
+## 2026-11-04 — Verify alternate European compact catalog in Wine
+
+Type: changed. Platforms: Windows executable on Wine; EUR.
+
+**Changes**
+
+- Validate the existing E117-d116 alternate constructor integration for ten conditional compact banks and twelve selectors.
+
+**Validation**
+
+- Windows GNU build PASS; Wine dataset creation and reuse PASS with 99 other resources and 41 prior banks unchanged.
+- Focused Wine reader PASS: 1818 new bytes, typed boundaries and 22 original/native count comparisons with full state and clock.
+- Wine production startup PASS for 12 frames and 100 resource identities; catalog reads were zero.
+
+**Limitations**
+
+- Ordinary use of the new roots, other callers and selectors, Linux, USA and native Windows remain unverified. No performance measurements.
+
+Documentation: [2026-11-04-integrate-alternate-european-compact-catalog-unverified.json](docs/changes/2026-11-04-integrate-alternate-european-compact-catalog-unverified.json).
+
+[Change record](docs/changes/2026-11-04-verify-alternate-european-compact-catalog.json)
+
+## 2026-11-04 — Show complete live search context
+
+Type: changed. Platforms: Windows GNU / Wine / Xvfb.
+
+**Changes**
+
+- Include the bounded hit count, frame window, canonical RAM guard and on-hit action in the existing pending-search context.
+- Include the authenticated named trigger and full definition hash in pending search context.
+
+**Validation**
+
+- Focused Windows GNU/Wine tests passed. In an isolated EUR Wine/Xvfb session, the interactive console at a verified 480x360 Win32 client displayed the live request identity, progress and all extended search settings; exact-ID cancellation completed and the GUI closed normally. Input was simulated and protected inputs stayed unchanged.
+- A second 480x360 Wine/Xvfb console showed the named trigger and complete definition hash during the search and cancelled its exact request; protected inputs stayed unchanged and the GUI closed normally.
+
+**Limitations**
+
+- One live search and window size only; DBG2-15 operation parity, other long parameter cases, native Windows and physical input remain open.
+
+Documentation: [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-04-show-live-extended-search-context.json)
 
 ## 2026-11-04 — Run bounded diagnostic captures from recipes
 
@@ -213,6 +528,307 @@ Documentation: [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.m
 
 [Change record](docs/changes/2026-11-04-run-bounded-searches-in-recipes.json)
 
+## 2026-11-04 — Retire a completed build cache and superseded EUR datasets
+
+Type: changed. Platforms: Local development artifacts.
+
+**Changes**
+
+- Retired the completed menu-localization unit’s isolated Cargo build cache and 15 superseded e111–e125 EUR datasets; reclaimed 11,881,541,632 file-block bytes (11.07 GiB), counting hard links once.
+- Preserved original/private inputs, e126/e127 EUR datasets, results, logs, screenshots, source evidence, Wine prefixes and current canonical Cargo outputs. Retained 15 manifest preimages.
+
+**Validation**
+
+- Both local cleanup receipts are PASS with no removal errors. Exact inventories and completed results were rechecked under unit leases; fresh host process scans found no selected-unit user.
+- Build-cache retirement preserved all 158 protected private-input hashes and 1,798 retained-file identities/sizes/times. Dataset retirement preserved the same 158 private-input hashes and 393 retained-file identities/sizes/times, including e126/e127.
+- Retired datasets matched the retained e127 source-ROM identity/profile and had coverage contained in its coverage set. Fifteen manifest backup hashes matched their preimages.
+- Task-handoff check, project-memory metadata-only check and scoped git diff --check passed. Final receipt/presence check confirmed all 16 authorized paths absent and both retained e126/e127 datasets present.
+
+**Limitations**
+
+- Four host process-detail reads were denied; unrelated sessions changed overall disk free space. Only selected file-block counts are attributed to this cleanup.
+- Automatic approval review initially refused the extended command. The user then explicitly authorized the exact 15-dataset proposal; fresh checks preceded retirement. Exact historical payload reuse requires regeneration.
+- No builds, game tests, fixture extraction or performance measurements were repeated. All failed/interrupted/live units and the older interrupted hygiene task remain separate.
+- The full project-memory check reported missing change-record coverage for concurrent Droid font additions (DROID-COPYRIGHT.txt, DROID-NOTICE.txt and DroidSansFallback.ttf); these unrelated implementation files were preserved.
+
+Documentation: [LOCAL_ARTIFACTS.md](docs/development/LOCAL_ARTIFACTS.md).
+
+[Change record](docs/changes/2026-11-04-retire-completed-build-cache-and-superseded-datasets.json)
+
+## 2026-11-04 — Render CJK command composition and draft
+
+Type: fixed. Platforms: Windows GNU build and Wine.
+
+**Changes**
+
+- Render console draft and preedit glyphs absent from Inter with the bundled Droid Sans Fallback font, preserving the primary Latin appearance.
+- Carry the original Droid font notice and copyright record in portable, release and generated game packages.
+
+**Validation**
+
+- Windows GNU menu/runtime and packager builds passed; Wine tests distinguish CJK glyphs and preserve Latin rendering. A Cangjie GUI showed 日 in preedit and committed draft, accepted è and preserved guest state. Synthetic portable package tests and release notice staging passed.
+
+**Limitations**
+
+- Fallback covers characters present in the bundled font, not every Unicode glyph. Wine/Xvfb simulated input only; native Windows, physical input, broader IMEs and DBG2-14 capability guards remain unverified.
+
+Documentation: [debug_control.md](docs/debug_control.md).
+
+[Change record](docs/changes/2026-11-04-render-cjk-command-composition.json)
+
+## 2026-11-04 — Preserve selection on empty IME commit
+
+Type: fixed. Platforms: Windows GNU build and Wine unit tests.
+
+**Changes**
+
+- Treat an empty IME commit as clearing pending composition without replacing the selected draft.
+
+**Validation**
+
+- Windows GNU runtime and test builds passed; four editor, ten command and one panel Wine tests passed, including selection preservation.
+
+**Limitations**
+
+- Wine sends a real IME result after the composition-end event in the observed Cangjie case; Winit discards that later result. Real console composition and native Windows remain unverified under DBG2-14.
+
+Documentation: [debug_control.md](docs/debug_control.md).
+
+[Change record](docs/changes/2026-11-04-preserve-selection-on-empty-ime-commit.json)
+
+## 2026-11-04 — Integrate European compact timer table and bank
+
+Type: changed. Platforms: Windows executable on Wine; EUR.
+
+**Changes**
+
+- Extend the compact catalog to version 5 with the six-selector 6c0614 bank and the 44-row timer table; advance the extractor and decoder revisions.
+
+**Validation**
+
+- Wine source flow confirms bounded table accesses, original constructor call and no conflict with the E117 manifest; conditional bank geometry covers 554 bytes.
+- Read-only source union reconciliation matches all 174 declared spans and 12984 bytes.
+- Windows GNU build PASS; Wine dataset create/reuse PASS with 99 prior resource payloads and all 51 prior banks unchanged.
+- Focused Wine test PASS for 730 new bytes and boundaries, all 44 table rows, seven original/native count comparisons with full state and clock, and coherent rejection.
+- Wine production startup PASS for 12 frames and 100 runtime resource identities; catalog reads were zero.
+
+**Limitations**
+
+- Ordinary use of the new bank, additional callers/selectors, Linux, USA and native Windows remain unverified. No performance measurements.
+
+Documentation: [2026-11-04-inspect-european-residual-compact-census.json](docs/changes/2026-11-04-inspect-european-residual-compact-census.json).
+
+[Change record](docs/changes/2026-11-04-integrate-european-compact-timer-catalog.json)
+
+## 2026-11-04 — Integrate European secondary-script compact bank
+
+Type: changed. Platforms: Windows executable on Wine; EUR.
+
+**Changes**
+
+- Extend the compact catalog with root 6cb278 and four lookup bytes for initial secondary task IDs, retaining original ROM fallback elsewhere.
+
+**Validation**
+
+- Wine source windows and protected geometry establish the initial secondary IDs 363–366, selectors 0–3 and 1092 represented bytes without E124 overlap.
+- Windows GNU build PASS; Wine create/reuse PASS with 99 other resources and 58 prior banks unchanged.
+- Focused Wine test PASS for 1092 represented bytes and boundaries, original lookup reads and raw fallback, coherent rejection and five native count comparisons with full state and clock.
+- Wine 12-frame production startup PASS with 100 runtime identities; catalog reads were zero.
+
+**Limitations**
+
+- Primary constructor aliases, mutable state, other callers, ordinary use, Linux, USA and native Windows remain unverified. No performance measurements.
+
+Documentation: [2026-11-04-integrate-european-compact-initial-6c316c.json](docs/changes/2026-11-04-integrate-european-compact-initial-6c316c.json).
+
+[Change record](docs/changes/2026-11-04-integrate-european-compact-secondary-6cb278.json)
+
+## 2026-11-04 — Integrate European compact schedule and root 6bac28
+
+Type: changed. Platforms: Windows executable on Wine; EUR.
+
+**Changes**
+
+- Extend the v6 compact catalog with root 6bac28, its nine conditionally selected sequences and the twelve-row schedule table.
+
+**Validation**
+
+- Wine source and flow checks establish the bounded 12-row loop, source fields and no overlap with E119; static union matches 186 spans and 13644 bytes.
+- Windows GNU build PASS; Wine dataset create/reuse PASS with 99 other resource payloads and 53 prior banks unchanged.
+- Focused Wine test PASS for 268 bytes and boundaries, original field readers for 12 table rows, ten native count comparisons with full state and clock, and coherent rejection.
+- Wine production startup PASS for 12 frames and 100 resource identities; catalog reads were zero.
+
+**Limitations**
+
+- Ordinary use, other callers and selectors, Linux, USA and native Windows remain unverified. No performance measurements.
+
+Documentation: [2026-11-04-integrate-european-compact-root-6c1e78.json](docs/changes/2026-11-04-integrate-european-compact-root-6c1e78.json).
+
+[Change record](docs/changes/2026-11-04-integrate-european-compact-schedule-6bac28.json)
+
+## 2026-11-04 — Integrate European bounded compact scene banks
+
+Type: changed. Platforms: Windows executable on Wine; EUR.
+
+**Changes**
+
+- Extend the compact catalog with three conditional scene banks and 20 sparse selector rows; unread fields retain ROM fallback.
+
+**Validation**
+
+- Protected EUR Wine source geometry establishes the conditional five-by-four loop and 3870 represented bytes without E125 overlap.
+- Windows GNU build PASS; Wine create/reuse PASS with 99 other resources and 59 previous banks unchanged.
+- Focused Wine test PASS for 3870 source bytes and boundaries, original readers for all 20 rows, raw fallback, coherent rejection and 11 sampled native count comparisons with full state and clock. The retained test receipt says one out-of-projection case per bank; three were run. The result-field count was corrected in test source after that run; no behavior changed.
+- Wine 12-frame production startup PASS with 100 resource identities; catalog reads were zero.
+
+**Limitations**
+
+- Context clear and bounded loop are conditional; mutable state, other callers, ordinary use, Linux, USA and native Windows remain unverified. No performance measurements.
+
+Documentation: [2026-11-04-integrate-european-compact-secondary-6cb278.json](docs/changes/2026-11-04-integrate-european-compact-secondary-6cb278.json).
+
+[Change record](docs/changes/2026-11-04-integrate-european-compact-scene-6cca.json)
+
+## 2026-11-04 — Integrate European compact root 6c1e78
+
+Type: changed. Platforms: Windows executable on Wine; EUR.
+
+**Changes**
+
+- Extend the compact catalog with two conditionally derived selectors for European root 6c1e78 and advance extraction and decoder revisions.
+
+**Validation**
+
+- Wine source geometry and control-flow checks identify 392 source bytes without E118 overlap; both original helper paths preserve the selector register.
+- Read-only union reconciliation matches 183 declared spans and 13376 bytes.
+- Windows GNU build PASS; Wine dataset create/reuse PASS with 99 other resource payloads and 52 prior banks unchanged.
+- Focused Wine test PASS for 392 bytes and boundaries, selector branches, original frame/list reads, three native count cases with full state and clock, and coherent rejection.
+- Wine production startup PASS for 12 frames and 100 runtime resource identities; catalog reads were zero.
+
+**Limitations**
+
+- Ordinary use, other callers and selectors, Linux, USA and native Windows remain unverified. No performance measurements.
+
+Documentation: [2026-11-04-integrate-european-compact-timer-catalog.json](docs/changes/2026-11-04-integrate-european-compact-timer-catalog.json).
+
+[Change record](docs/changes/2026-11-04-integrate-european-compact-root-6c1e78.json)
+
+## 2026-11-04 — Integrate European compact nibble projection
+
+Type: changed. Platforms: Windows executable on Wine; EUR.
+
+**Changes**
+
+- Extend the compact catalog with the structurally decoded 0–6 selector projection of root 6ca580; unrepresented bytes retain ROM fallback.
+
+**Validation**
+
+- Protected EUR Wine source analysis traces the initialized nibble to the callback and identifies 116 represented bytes for selectors 0–6, with no E126 overlap.
+- Windows GNU build PASS; Wine create/reuse PASS with 99 other resources and 62 previous banks unchanged.
+- Focused Wine test PASS for 16 nibble values, 116 represented bytes and boundaries, raw fallback, coherent rejection and four sampled native count comparisons with full state and clock.
+- Wine 12-frame production startup PASS with 100 resource identities; catalog reads were zero.
+
+**Limitations**
+
+- Other nibble candidates exceed analysis guards, not guest bounds. Mutable state, other callers, ordinary use, Linux, USA and native Windows remain unverified. No performance measurements.
+
+Documentation: [2026-11-04-integrate-european-compact-scene-6cca.json](docs/changes/2026-11-04-integrate-european-compact-scene-6cca.json).
+
+[Change record](docs/changes/2026-11-04-integrate-european-compact-nibble-6ca580.json)
+
+## 2026-11-04 — Integrate European initially indexed compact bank
+
+Type: changed. Platforms: Windows executable on Wine; EUR.
+
+**Changes**
+
+- Extend the compact catalog with the initial 0–2 index projection of root 6c316c; unrepresented accesses retain original ROM fallback.
+
+**Validation**
+
+- Wine source windows trace the initial three index records through the callback; candidate geometry has 188 source bytes and no E123 overlap.
+- Windows GNU build PASS; Wine create/reuse PASS with 99 other resources and 57 previous banks unchanged.
+- Focused Wine test PASS for 188 source bytes and boundaries, original callback header/index reads, coherent rejection and four native count comparisons with full state and clock.
+- Wine 12-frame production startup PASS with 100 resource identities; catalog reads were zero.
+
+**Limitations**
+
+- Mutable records, other consumers, ordinary use, Linux, USA and native Windows remain unverified. No performance measurements.
+
+Documentation: [2026-11-04-integrate-european-compact-grid-6cac40.json](docs/changes/2026-11-04-integrate-european-compact-grid-6cac40.json).
+
+[Change record](docs/changes/2026-11-04-integrate-european-compact-initial-6c316c.json)
+
+## 2026-11-04 — Integrate European conditional compact grid
+
+Type: changed. Platforms: Windows executable on Wine; EUR.
+
+**Changes**
+
+- Extend the v9 compact catalog with root 6cac40 and two 24-row conditional tables; leave unread fields on the original ROM path.
+
+**Validation**
+
+- Protected EUR Wine source analysis PASS: two callers select 0–7, with 132 bank bytes and 594 conditional table bytes and no E122 resource overlap.
+- Windows GNU build PASS; Wine dataset create/reuse PASS with 99 other resources and 56 previous banks unchanged.
+- Focused Wine test PASS for 726 represented bytes and boundaries, original field reads on 48 rows, raw fallback, coherent rejection and nine native count comparisons with full state and clock.
+- Wine production startup PASS for 12 frames and 100 resource identities; catalog reads were zero.
+
+**Limitations**
+
+- Other callers and selectors, ordinary use, Linux, USA and native Windows remain unverified. No performance measurements.
+
+Documentation: [2026-11-04-integrate-european-compact-effects-6bb574.json](docs/changes/2026-11-04-integrate-european-compact-effects-6bb574.json).
+
+[Change record](docs/changes/2026-11-04-integrate-european-compact-grid-6cac40.json)
+
+## 2026-11-04 — Integrate European compact flight and burst tables
+
+Type: changed. Platforms: Windows executable on Wine; EUR.
+
+**Changes**
+
+- Extend the v7 compact catalog with bank 6babc4 and the two bounded source tables feeding its selectors.
+
+**Validation**
+
+- Wine source analysis establishes conditional 30-row and 11-row callers, selectors 0–5 and no E120 overlap; static union matches 188 spans and 14072 bytes.
+- Windows GNU build PASS; Wine dataset create/reuse PASS with 99 other resource payloads and 54 prior banks unchanged.
+- Focused Wine test PASS for 428 bytes and boundaries, original field readers on all 41 table rows, seven native count comparisons with full state and clock, and coherent rejection.
+- Wine production startup PASS for 12 frames and 100 resource identities; catalog reads were zero.
+- An interrupted build snapshot and lease were retained in its original unit after host checks; a subsequent coordinated build passed.
+
+**Limitations**
+
+- Ordinary use, other callers and selectors, Linux, USA and native Windows remain unverified. No performance measurements.
+
+Documentation: [2026-11-04-integrate-european-compact-schedule-6bac28.json](docs/changes/2026-11-04-integrate-european-compact-schedule-6bac28.json).
+
+[Change record](docs/changes/2026-11-04-integrate-european-compact-flight-burst-6babc4.json)
+
+## 2026-11-04 — Integrate European conditional compact effects
+
+Type: changed. Platforms: Windows executable on Wine; EUR.
+
+**Changes**
+
+- Extend the v8 compact catalog with root 6bb574 and the ten-row branch-specific effect table; retain inactive fields on the original ROM path.
+
+**Validation**
+
+- Wine source analysis establishes the bounded ten-row caller, selectors 0–2 and no E121 overlap; static union matches 194 spans and 14265 bytes.
+- Windows GNU build PASS; Wine dataset create/reuse PASS with 99 other resource payloads and 55 prior banks unchanged.
+- Focused Wine test PASS for 193 represented bytes and boundaries, type-specific original field reads for ten rows, raw fallback for inactive fields, four native count comparisons with full state and clock, and coherent rejection.
+- Wine production startup PASS for 12 frames and 100 resource identities; catalog reads were zero.
+
+**Limitations**
+
+- Ordinary use, other callers and selectors, Linux, USA and native Windows remain unverified. No performance measurements.
+
+Documentation: [2026-11-04-integrate-european-compact-flight-burst-6babc4.json](docs/changes/2026-11-04-integrate-european-compact-flight-burst-6babc4.json).
+
+[Change record](docs/changes/2026-11-04-integrate-european-compact-effects-6bb574.json)
+
 ## 2026-11-04 — Integrate alternate constructor compact catalog projections
 
 Type: changed. Platforms: Windows executable on Wine; EUR (validation pending).
@@ -234,6 +850,28 @@ Type: changed. Platforms: Windows executable on Wine; EUR (validation pending).
 Documentation: [2026-11-04-identify-alternate-european-compact-callers.json](docs/changes/2026-11-04-identify-alternate-european-compact-callers.json).
 
 [Change record](docs/changes/2026-11-04-integrate-alternate-european-compact-catalog-unverified.json)
+
+## 2026-11-04 — Reconcile European residual compact census
+
+Type: docs. Platforms: Windows executable on Wine; EUR.
+
+**Changes**
+
+- Compare the retained E111 candidates to current compact bank contracts and document source leads without claiming global coverage.
+
+**Validation**
+
+- Read-only comparison: 17 of 29 retained candidates have current BankSpec declarations; 12 do not.
+- Wine source windows identify a 44-row candidate table for root 6c0614 and a dynamic selector for root 6ca580; protected inputs unchanged.
+- Wine conditional geometry for root 6c0614: six selectors, 42 frames, 19 lists and 554 source bytes; no E117 manifest overlap.
+
+**Limitations**
+
+- Candidate flows, geometry and extraction are unverified; Linux, USA and native Windows remain pending. No performance measurements.
+
+Documentation: [2026-11-04-verify-alternate-european-compact-catalog.json](docs/changes/2026-11-04-verify-alternate-european-compact-catalog.json).
+
+[Change record](docs/changes/2026-11-04-inspect-european-residual-compact-census.json)
 
 ## 2026-11-04 — Identify a table-driven European compact animation root
 
@@ -328,6 +966,26 @@ Type: changed. Platforms: Windows executable on Wine; EUR.
 
 [Change record](docs/changes/2026-11-04-identify-alternate-european-compact-callers.json)
 
+## 2026-11-04 — Forward late Wine IME results in command console
+
+Type: fixed. Platforms: Windows GNU build and Wine.
+
+**Changes**
+
+- For the Wine command window, forward a nonempty IME result arriving after composition end through the existing Winit editor path once; preserve native Windows handling and discard no draft on cancellation.
+
+**Validation**
+
+- Windows GNU runtime/test builds and Wine editor, panel, command and composition-state tests passed. Private IBus Cangjie GUI verified 日 and repeated 日日, cancellation with selection preserved, F2 during composition, focus change, Italian è input and unchanged guest state.
+
+**Limitations**
+
+- Simulated Wine/Xvfb keyboard and one Cangjie engine; native Windows, physical inputs, other IMEs and capability guards remain under DBG2-14. Missing font glyphs need separate visual verification.
+
+Documentation: [debug_control.md](docs/debug_control.md).
+
+[Change record](docs/changes/2026-11-04-forward-late-wine-ime-results.json)
+
 ## 2026-11-04 — Consume a table-driven European compact animation root
 
 Type: changed. Platforms: Windows executable on Wine; EUR.
@@ -411,6 +1069,245 @@ Type: changed. Platforms: Windows executable on Wine; EUR.
 Documentation: [2026-11-04-identify-european-compact-loop-root.json](docs/changes/2026-11-04-identify-european-compact-loop-root.json).
 
 [Change record](docs/changes/2026-11-04-consume-european-compact-loop-6ca5f8.json)
+
+## 2026-11-04 — Complete interpreter trigger conditions and actions
+
+Type: added. Platforms: Windows GNU / Wine / Xvfb.
+
+**Changes**
+
+- Extend named and direct PC/watch searches with bounded hit counts, relative frame windows, side-effect-free canonical RAM equality guards and pause, derived capture or recent-event freeze actions.
+- Add atomic editing that disables changed definitions, display evaluated conditions and observer limits in the console, negotiate protocol capabilities and reserve an extra recipe frame for capture.
+
+**Validation**
+
+- Windows GNU default and audit-feature builds passed; 47 default and 50 feature Wine tests covered legacy serialization, guarded PC/watch behavior, capability refusals, capture publication, editing, console summaries and recipe budgets.
+- Isolated EUR Wine/Xvfb sessions verified a second Thumb hit and a miss, PC plus RAM guard, freeze preflight and hit, a completed-frame snapshot matching live state, and no snapshot on miss. A simulated-keyboard GUI session created, ran, disabled and edited a trigger; screenshots were inspected. Protected inputs stayed unchanged and windows closed normally.
+- The first action validation used an over-256-MiB debug executable and recent-event preflight refused it; the corrected isolated run used a stripped private copy. An earlier test found another owner on the shared Wine lease and did not run.
+
+**Limitations**
+
+- DBG2-24 parent closure waits for the still-partial shared DBG2-15 dependency. Feature-gated counted watch was tested synthetically; native Windows, physical input, other ROMs and broader observer/platform coverage remain unverified.
+
+Documentation: [debug_probes.md](docs/debug_probes.md), [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-04-complete-interpreter-trigger-editor.json)
+
+## 2026-11-04 — Complete the shared debug command language contract
+
+Type: changed. Platforms: Windows GNU; Wine/Xvfb EUR and synthetic interpreter.
+
+**Changes**
+
+- Accept DBG2-13 after reconciling its language, shared operations, ID selection, job controls, channel parity and malformed-input criteria; synchronize the Atlas task reference and durable project state.
+
+**Validation**
+
+- The shared typed parser and action dispatch cover help/status, pause/step, inspection, PC/watch searches, captures/reports, profile/catalog selection and jobs. Same-seed CLI/menu/console inspection and step endpoints matched exactly; code/gameplay, audio, Recent, graphics and issue-report checks exercised the applicable channels. Replay, cancellation, retry and selected-profile outcomes have earlier linked evidence.
+- Wine parser and GUI checks rejected selected malformed, ambiguous, unknown and out-of-range inputs without guest mutation. Synthetic replay, pending-request and host-worker checks verified aligned direct controls and preserved ownership/cancellation. The latest Windows GNU builds and 7 menu/8 workbench/34 control/10 command Wine tests passed.
+
+**Limitations**
+
+- Acceptance is for the DBG2-13 command-language contract, not every runtime/input/platform combination. Native Windows, physical input and a live audit-enabled watch hit remain part of DBG2-27; DBG2-14 and subsequent tasks remain open.
+
+Documentation: [debug_control.md](docs/debug_control.md), [2026-11-04-verify-step-inspect-channel-parity.json](docs/changes/2026-11-04-verify-step-inspect-channel-parity.json), [2026-11-04-verify-code-gameplay-channel-parity.json](docs/changes/2026-11-04-verify-code-gameplay-channel-parity.json), [2026-11-04-verify-search-channel-parity.json](docs/changes/2026-11-04-verify-search-channel-parity.json), [2026-11-04-allow-direct-controls-during-host-jobs.json](docs/changes/2026-11-04-allow-direct-controls-during-host-jobs.json).
+
+[Change record](docs/changes/2026-11-04-complete-debug-command-language-contract.json)
+
+## 2026-11-04 — Complete debugger command editor in Wine
+
+Type: changed. Platforms: Windows GNU build and Wine.
+
+**Changes**
+
+- Accept DBG2-14 within its selected scope: explicit command editing, history, completion, contextual help, clipboard, controller keyboard and isolated input handling.
+
+**Validation**
+
+- Earlier Wine GUI/model evidence covers typing, correction, recall, cancellation, focus isolation, simulated controller and multiline clipboard. Current Wine GUI covers real IBus Cangjie composition, cancellation, repeated results, F2, focus/hide and Italian layout; missing capability produces incompatible/not-sent without changing request, result or guest state.
+
+**Limitations**
+
+- Wine/Xvfb and simulated inputs exercise selected paths only; physical hardware, native Windows/Linux, other IMEs and complete Unicode font coverage remain DBG2-27 integration work.
+
+Documentation: [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-04-complete-debug-command-editor.json)
+
+## 2026-11-04 — Clear pending composition when IME closes
+
+Type: fixed. Platforms: Windows GNU build and Wine unit tests.
+
+**Changes**
+
+- Clear only pending command-editor composition when the input method is disabled or the console is hidden; keep committed draft text.
+
+**Validation**
+
+- Windows GNU runtime and test builds passed; Wine ran three editor and ten command tests, including disabled and committed composition transitions.
+
+**Limitations**
+
+- Real IME behavior in the Wine console, native Windows and physical input remain unverified under DBG2-14. A separately isolated native GTK Cangjie candidate passed; the isolated Wine console produced Latin text.
+
+Documentation: [debug_control.md](docs/debug_control.md).
+
+[Change record](docs/changes/2026-11-04-clear-disabled-ime-composition.json)
+
+## 2026-11-04 — Authenticate named trigger captures and retries
+
+Type: changed. Platforms: Windows GNU / Wine / Xvfb.
+
+**Changes**
+
+- Bind named search dispatch and capture metadata to the exact enabled trigger name, session and definition hash; the executing runtime rechecks the action and refuses changed, disabled or forged definitions.
+- Add explicit named-trigger retry using the original run, request ID and deadline through the idempotent ledger; show the named identity in live pending context.
+
+**Validation**
+
+- Windows GNU default and audit-feature builds passed; 50 default and 53 feature Wine tests passed, including altered action and definition refusal, old capability refusal, named retry deduplication and search/recipe regressions.
+- An isolated EUR Wine/Xvfb session verified a guard/freeze, a frame-boundary capture carrying the exact named definition hash, and a retry returning identical JSON without advancing state or creating another snapshot. A separate verified 480x360 Win32 console displayed the name, full hash and extended pending parameters and cancelled the exact request. Protected inputs stayed unchanged and GUIs closed normally.
+- A shared Wine lease was owned by another validation; the initial test launch started no test and was retried after release.
+
+**Limitations**
+
+- DBG2-24 remains waiting for the partial DBG2-15 dependency. Audit-feature watch counting remains synthetic; native Windows, physical input and other ROMs were not tested. Private proof copies are retained.
+
+Documentation: [debug_probes.md](docs/debug_probes.md), [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-04-authenticate-trigger-capture-and-retry.json)
+
+## 2026-11-04 — Allow direct controls during workbench host jobs
+
+Type: fixed. Platforms: Windows GNU build; Wine/Xvfb synthetic interpreter.
+
+**Changes**
+
+- Allow direct menu Start to use the shared action handler while a separate workbench host worker remains active. Preserve the worker busy indicator and cancellation; profile and host-tool starts and background validation remain serialized.
+
+**Validation**
+
+- A synthetic long-running host worker reproduced the former menu-only block while CLI inspection succeeded. With the fix, CLI, menu and interactive console produced the same readonly inspection while the host worker stayed tracked; explicit cancellation stopped the worker and guest state remained unchanged. Protected inputs and normal GUI closure verified.
+- Windows GNU menu/runtime test builds and runtime build passed; Wine passed 7 tool-form, 8 workbench, 34 local-control and 10 command tests. The generated Atlas task reference was synchronized with the checklist.
+
+**Limitations**
+
+- The host worker was a synthetic waiting process; this does not establish behavior of every host tool, native Windows, physical input or full DBG2-13 parity.
+
+Documentation: [debug_control.md](docs/debug_control.md).
+
+[Change record](docs/changes/2026-11-04-allow-direct-controls-during-host-jobs.json)
+
+## 2026-11-04 — Align direct debug tools during input recording
+
+Type: fixed. Platforms: Windows GNU build; Wine/Xvfb EUR interpreter.
+
+**Changes**
+
+- Let direct workbench controls use their existing action-specific recording guards, allowing audio capture during an active paused snapshot recording as already supported by the shared handler. Preserve the workbench recording restriction for profile preparation and separate host tools.
+
+**Validation**
+
+- An isolated EUR Wine snapshot recording confirmed that menu validation and audio start, local-control CLI audio start, and interactive command-console audio start each succeeded and produced reports; instruction search and replay-profile preparation were still refused. The simulated GUI closed normally and protected inputs remained unchanged.
+- Windows GNU runtime and test builds passed; focused Wine workbench (7), audio (2) and control parser (1) tests passed.
+
+**Limitations**
+
+- Native Windows, physical input and full DBG2-13 parity remain unverified. The earlier unmodified GUI proof confirmed that local-control audio succeeded while the menu refused validation.
+
+Documentation: [debug_audio.md](docs/debug_audio.md).
+
+[Change record](docs/changes/2026-11-04-align-tool-controls-during-recording.json)
+
+## 2026-11-04 — Align recent-event form validation with command channels
+
+Type: fixed. Platforms: Windows cross-build; Wine/Xvfb EUR interpreter.
+
+**Changes**
+
+- Accept Recent reads-on in the parameter form without optional ROM read-audit hooks, matching the shared console and local-control parser; warn that read observations are unavailable while other events remain collectable.
+
+**Validation**
+
+- Default Windows cross-build and Wine workbench, Recent and parser tests passed; audit-enabled Windows cross-build and focused Wine tests passed.
+- Wine/Xvfb EUR three-channel GUI proof used reads-on and on-error-off; identical settings and one explicitly unavailable-read frame per channel, followed by successful reports and three total frames.
+- Default-build typed action matrix compared Step, Inspect, Audio, Code, Gameplay, Recent and Graphics form defaults against console and CLI; invalid Recent event count was rejected.
+
+**Limitations**
+
+- GUI proof used simulated keyboard/mouse and an isolated EUR session under Wine; native Windows, physical input and full DBG2-13 operation parity are not covered.
+- A prior GUI attempt with on-error enabled froze Recent after a Windows control-reply access error; its failed diagnostics are retained and the follow-up proof used on-error off.
+
+Documentation: [debug_recent.md](docs/debug_recent.md).
+
+[Change record](docs/changes/2026-11-04-align-recent-form-channel-validation.json)
+
+## 2026-11-04 — Align direct control guards during replay
+
+Type: fixed. Platforms: Windows GNU build; Wine/Xvfb synthetic interpreter.
+
+**Changes**
+
+- Route direct workbench Validate and Run requests through the shared parser and operation-specific runtime guards instead of a blanket idle guard. Profile preparation and separate host tools retain their stricter idle-session checks.
+- Keep direct menu Start from bypassing an operational local-control request already pending, while allowing parameter validation.
+
+**Validation**
+
+- A menu-started synthetic sleeping replay reproduced CLI readonly inspection succeeding while the old menu refused validation. With the fix, CLI, menu and interactive console returned the same inspection during that replay; menu and CLI refused a frame step with the same shared replay error and guest state remained unchanged. Protected inputs were unchanged and the GUI closed normally.
+- Windows GNU runtime and test builds passed; Wine passed 8 workbench, 34 local-control and 10 command tests.
+- Regenerated the read-only Atlas task reference from the current checklist; the 28-task synchronization check passed.
+- A remotely requested synthetic sleeping replay remained pending while the menu validated inspection and refused Start with the pending-request error; exact-ID cancellation completed the original request as cancelled without changing guest state. A subsequent Windows GNU build and Wine workbench/control/command tests passed.
+
+**Limitations**
+
+- The worker only waits and does not execute guest code; no gameplay replay equivalence, native Windows or physical input is claimed. One setup failed before launch due to disk space and a concurrent Wine lease; its redundant runtime copy was hash-verified and relocated with a receipt. A subsequent proof verified menu behavior but missed console navigation; the corrected full proof passed.
+
+Documentation: [debug_control.md](docs/debug_control.md).
+
+[Change record](docs/changes/2026-11-04-align-direct-controls-during-replay.json)
+
+## 2026-11-04 — Add named bounded search triggers
+
+Type: added. Platforms: Windows GNU / Wine / Xvfb.
+
+**Changes**
+
+- Add session-pinned named PC and bus search definitions with explicit save, list, show, enable, disable, remove and run commands. Definitions start disabled and management never executes a search.
+- Return hit or not-reached with the definition hash and original control response; preserve existing interpreter, watch-feature, conflict and resource limits.
+
+**Validation**
+
+- Windows GNU runtime and test builds passed; 19 focused Wine tests passed for trigger safety, named synthetic hit/miss responses, removal, parser/completion and operation registry.
+- An isolated EUR Wine/Xvfb interpreter verified a named Thumb hit and one-step miss with distinct identities, no guest change during configuration, disabled refusal without dispatch, unchanged protected inputs and normal GUI close. This run preceded the later removal and metadata-only additions.
+- An initial live driver attempt reached both outcomes but incorrectly expected the consumed request file to remain; the corrected attempt passed and its failed diagnostics were retained.
+
+**Limitations**
+
+- DBG2-24 remains partial: hit counts, frame windows, combined conditions, capture/event-freeze actions, menu editor, feature-gated watch execution, native Windows and physical input remain unverified or unimplemented.
+
+Documentation: [debug_probes.md](docs/debug_probes.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-04-add-named-bounded-search-triggers.json)
+
+## 2026-11-04 — Accept layout text from unidentified keys
+
+Type: fixed. Platforms: Windows GNU build and Wine.
+
+**Changes**
+
+- Preserve text reported for an unidentified physical key in the command console, while keeping modifier, context and active-composition guards.
+
+**Validation**
+
+- Windows GNU runtime and test builds passed; Wine tests cover unidentified layout text and guards. An isolated Italian-layout Wine GUI inserted è and preserved guest frame, clock, state, registers and input.
+
+**Limitations**
+
+- This verifies one simulated Italian key under Wine; other layouts, physical inputs, native Windows and real IME in the console remain unverified under DBG2-14.
+
+Documentation: [debug_control.md](docs/debug_control.md).
+
+[Change record](docs/changes/2026-11-04-accept-layout-text-with-unidentified-keys.json)
 
 ## 2026-11-03 — Verify UI trace outcomes across control channels
 

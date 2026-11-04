@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "integrate-european-compact-timer-catalog",
+  "title": "Integrate European compact timer table and bank",
+  "kind": "changed",
+  "platforms": [
+    "Windows executable on Wine; EUR"
+  ],
+  "changes": [
+    "Extend the compact catalog to version 5 with the six-selector 6c0614 bank and the 44-row timer table; advance the extractor and decoder revisions."
+  ],
+  "validation": [
+    "Wine source flow confirms bounded table accesses, original constructor call and no conflict with the E117 manifest; conditional bank geometry covers 554 bytes.",
+    "Read-only source union reconciliation matches all 174 declared spans and 12984 bytes.",
+    "Windows GNU build PASS; Wine dataset create/reuse PASS with 99 prior resource payloads and all 51 prior banks unchanged.",
+    "Focused Wine test PASS for 730 new bytes and boundaries, all 44 table rows, seven original/native count comparisons with full state and clock, and coherent rejection.",
+    "Wine production startup PASS for 12 frames and 100 runtime resource identities; catalog reads were zero."
+  ],
+  "limitations": [
+    "Ordinary use of the new bank, additional callers/selectors, Linux, USA and native Windows remain unverified. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/compact_obj_catalog.rs",
+    "crates/gba-core/src/rom_data/compact_obj_catalog/contracts.rs",
+    "crates/gba-core/src/rom_data/compact_obj_catalog/selector_tables.rs",
+    "crates/recomp/src/rom_data/compact_obj_catalog_tests.rs",
+    "docs/rom_data_compact_catalog.md",
+    "crates/recomp/src/rom_data/clan_table_alias_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_octonary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_quaternary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_quinary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_secondary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_senary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_septenary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_tertiary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_catalog_table_tests.rs",
+    "crates/recomp/src/rom_data/conditional_descriptor_bank_zero_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_descriptor_banks_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_four_byte_lookup_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_packed_lookup_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_property_masks_runtime_tests.rs",
+    "crates/recomp/src/rom_data/dynamic_raw_fragments_runtime_tests.rs",
+    "crates/recomp/src/rom_data/table_graphics_runtime_tests.rs",
+    "crates/recomp/src/rom_data/ui_context_templates_tests.rs"
+  ],
+  "references": [
+    "docs/changes/2026-11-04-inspect-european-residual-compact-census.json"
+  ]
+}

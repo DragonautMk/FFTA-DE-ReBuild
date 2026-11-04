@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "verify-graphics-channel-parity",
+  "title": "Verify graphics capture channel parity",
+  "kind": "docs",
+  "platforms": [
+    "Wine/Xvfb EUR interpreter"
+  ],
+  "changes": [
+    "Record a bounded three-channel graphics compare-last check with preserved guest and raw-buffer identity."
+  ],
+  "validation": [
+    "An isolated EUR Wine/Xvfb session created a CLI baseline, then compare-last captures through local-control CLI, menu parameter form and interactive console. Four distinct reports retained identical guest frame, clock, state hash, registers and keys, and identical raw-buffer hashes; each comparison named the immediately previous report and reported zero raw-byte differences. Protected inputs and normal GUI closure verified."
+  ],
+  "limitations": [
+    "Frontend composition depends on the visible interface and was not asserted identical. Native Windows, physical input, nondefault graphics contexts and complete DBG2-13 parity remain unverified. One attempted unit encountered an existing Wine lease before execution; no test was run in it."
+  ],
+  "files": [
+    "docs/debug_graphics.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ],
+  "references": [
+    "docs/debug_graphics.md"
+  ]
+}

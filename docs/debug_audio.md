@@ -51,10 +51,15 @@ Open the copy paused, then use another terminal:
 
 `--frames` accepts **1–180**; `--streams` accepts a selection without duplicates
 from `mixed,psg,hle,fifo0,fifo1`. Menu and CLI share the collector and writer.
-Status returns `audio_diagnostic` and the `audio_report` path. To capture
-reproducible input, first start a [snapshot recording](debug_recordings.md),
-stop it explicitly and close the copy before verification. Observed active-low
+Status returns `audio_diagnostic` and the `audio_report` path. Audio capture
+can be started from the parameter form, CLI or console while an isolated
+[snapshot recording](debug_recordings.md) is active and paused. Stop the
+recording explicitly and close the copy before verification. Observed active-low
 keys are also reported per frame. Audio collection alone does not certify replay.
+
+An isolated EUR Wine/Xvfb check saved one-frame audio captures through the menu
+and command console. The reports retained the selected frame limit and endpoint
+state; saving did not change the guest. CLI report creation was checked separately.
 
 Start and Save require a paused copy without a step/probe budget or active
 replay. Unsaved collection is not replaced, and a separate replay cannot start

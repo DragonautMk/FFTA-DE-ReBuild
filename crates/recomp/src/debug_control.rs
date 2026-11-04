@@ -262,7 +262,7 @@ impl Server {
     fn ready(&self,active:bool)->Value{
         json!({"schema":1,"kind":"ffta-debug-control","run":self.run,"active":active,
             "pid":std::process::id(),"session":self.session,
-            "capabilities":["query-status","targeted-cancel","request-deadline","idempotent-request-v1","content-discovery-v1","replay-job-v1","cheat-catalog-v1","cheat-capabilities-v1","cheat-once-v1","cheat-maintain-v1","cheat-presets-v1"]})
+            "capabilities":["query-status","targeted-cancel","request-deadline","idempotent-request-v1","content-discovery-v1","replay-job-v1","cheat-catalog-v1","cheat-capabilities-v1","cheat-once-v1","cheat-maintain-v1","cheat-presets-v1","probe-window-v1","probe-guard-v1","probe-actions-v1","probe-trigger-v1"]})
     }
     pub fn pending_status(&self)->Value{
         self.pending.as_ref().map_or(Value::Null,|r|json!({"request_id":r.id,"operation_id":r.command.operation_id(),"command":r.command,"deadline_unix_ms":r.deadline_unix_ms}))
@@ -403,6 +403,40 @@ pub(crate) fn parse(args: &[String]) -> Result<(PathBuf, Action), String> {
             .map_err(|_| "Expected a hexadecimal address/value".to_owned())
     };
     let provenance = |s:&str| -> Result<u16,String> {if s.is_empty() || !s.bytes().all(|b|b.is_ascii_digit()) || (s.len()>1 && s.starts_with('0')){return Err("Invalid provenance index".into());}s.parse().map_err(|_|"Invalid provenance index".into())};
+    let search_options = |options: &[String], watch: bool| -> Result<(u64, Option<u8>, Option<u32>, Option<crate::debug_probe::Window>, Option<crate::debug_probe::RamGuard>, Option<crate::debug_probe::HitAction>), String> {
+        let (mut steps, mut width, mut value) = (100_000, None, None);
+        let (mut start, mut end, mut hits) = (None, None, None);
+        let (mut guard_address, mut guard_width, mut guard_value) = (None, None, None);
+        let mut on_hit = None;
+        let mut seen = std::collections::BTreeSet::new();
+        let mut it = options.iter();
+        while let Some(flag) = it.next() {
+            if !seen.insert(flag) { return Err("Duplicate search option".into()); }
+            let v = it.next().ok_or("Search option needs a value")?;
+            match flag.as_str() {
+                "--steps" => steps = v.parse().map_err(|_| "Invalid step limit")?,
+                "--width" if watch => width = Some(v.parse().map_err(|_| "Invalid width")?),
+                "--value" if watch => value = Some(hex(v)?),
+                "--frame-start" => start = Some(v.parse().map_err(|_| "Invalid start frame")?),
+                "--frame-end" => end = Some(v.parse().map_err(|_| "Invalid end frame")?),
+                "--hits" => hits = Some(v.parse().map_err(|_| "Invalid hit count")?),
+                "--when-address" => guard_address = Some(hex(v)?),
+                "--when-width" => guard_width = Some(v.parse().map_err(|_| "Invalid guard width")?),
+                "--when-value" => guard_value = Some(hex(v)?),
+                "--on-hit" => on_hit = Some(match v.as_str() { "pause" => crate::debug_probe::HitAction::Pause, "capture" => crate::debug_probe::HitAction::Capture, "freeze" => crate::debug_probe::HitAction::Freeze, _ => return Err("Choose pause, capture or freeze".into()) }),
+                _ => return Err("Unknown search option".into()),
+            }
+        }
+        let window = if start.is_some() || end.is_some() || hits.is_some() {
+            Some(crate::debug_probe::Window { start_frame: start.unwrap_or(0), end_frame: end.unwrap_or(crate::debug_probe::MAX_SEARCH_FRAMES), hit_count: hits.unwrap_or(1) })
+        } else { None };
+        let guard = match (guard_address, guard_width, guard_value) {
+            (None, None, None) => None,
+            (Some(address), Some(width), Some(value)) => Some(crate::debug_probe::RamGuard { address, width, value }),
+            _ => return Err("Guard needs --when-address, --when-width and --when-value".into()),
+        };
+        Ok((steps, width, value, window, guard, on_hit))
+    };
     let action = match args[0].as_str() {
         "cheat-select" if args.len()==3=>Action::SelectId{slot:SelectionSlot::CheatCatalog,id:args[2].clone()},
         "cheat-refresh" if args.len()==2=>Action::CheatRefresh,
@@ -480,66 +514,15 @@ pub(crate) fn parse(args: &[String]) -> Result<(PathBuf, Action), String> {
                 .parse()
                 .map_err(|_| "Length must be decimal1..256")?,
         },
-        "break" if args.len() == 4 || args.len() == 6 => {
-            let thumb = match args[3].as_str() {
-                "arm" => false,
-                "thumb" => true,
-                _ => return Err("Choose arm or thumb".into()),
-            };
-            let steps = if args.len() == 6 && args[4] == "--steps" {
-                args[5].parse().map_err(|_| "Invalid step limit")?
-            } else if args.len() == 4 {
-                100000
-            } else {
-                return Err("Use --steps N".into());
-            };
-            Action::Find {
-                settings: crate::debug_probe::Settings {
-                    condition: crate::debug_probe::Condition::Pc {
-                        address: hex(&args[2])?,
-                        thumb,
-                    },
-                    steps,
-                },
-            }
+        "break" if args.len() >= 4 => {
+            let thumb = match args[3].as_str() { "arm" => false, "thumb" => true, _ => return Err("Choose arm or thumb".into()) };
+            let (steps, _, _, window, guard, on_hit) = search_options(&args[4..], false)?;
+            Action::Find { settings: crate::debug_probe::Settings { condition: crate::debug_probe::Condition::Pc { address: hex(&args[2])?, thumb }, steps, window, guard, on_hit, trigger: None } }
         }
         "watch" if args.len() >= 5 => {
-            let write = match args[2].as_str() {
-                "read" => false,
-                "write" => true,
-                _ => return Err("Choose read or write".into()),
-            };
-            let mut steps = 100000;
-            let mut width = None;
-            let mut value = None;
-            let mut seen = std::collections::BTreeSet::new();
-            let mut it = args[5..].iter();
-            while let Some(flag) = it.next() {
-                if !seen.insert(flag) {
-                    return Err("Duplicate watch option".into());
-                }
-                let v = it.next().ok_or("Watch option needs value")?;
-                match flag.as_str() {
-                    "--steps" => steps = v.parse().map_err(|_| "Invalid step limit")?,
-                    "--width" => width = Some(v.parse().map_err(|_| "Invalid width")?),
-                    "--value" => value = Some(hex(v)?),
-                    _ => return Err("Use --steps N --width1/2/4 --value HEX".into()),
-                }
-            }
-            Action::Find {
-                settings: crate::debug_probe::Settings {
-                    condition: crate::debug_probe::Condition::Access {
-                        watch: gba_core::debug_memory::Watch {
-                            start: hex(&args[3])?,
-                            end: hex(&args[4])?,
-                            write,
-                            width,
-                            value,
-                        },
-                    },
-                    steps,
-                },
-            }
+            let write = match args[2].as_str() { "read" => false, "write" => true, _ => return Err("Choose read or write".into()) };
+            let (steps, width, value, window, guard, on_hit) = search_options(&args[5..], true)?;
+            Action::Find { settings: crate::debug_probe::Settings { condition: crate::debug_probe::Condition::Access { watch: gba_core::debug_memory::Watch { start: hex(&args[3])?, end: hex(&args[4])?, write, width, value } }, steps, window, guard, on_hit, trigger: None } }
         }
         "status" if args.len() == 2 => Action::Status,
         "pause" if args.len() == 2 => Action::Pause,
@@ -723,6 +706,18 @@ fn execute_action_inner_interruptible(root:&Path,action:Action,timeout:u64,retry
     if ready["capabilities"].as_array().is_none_or(|c|!c.contains(&json!("targeted-cancel"))){
         return Err(ClientFailure::new("incompatible","This channel does not support query/cancel/deadline; use the current runtime","not-sent"));
     }
+    if matches!(&action,Action::Find{settings} if settings.trigger.is_some()) && ready["capabilities"].as_array().is_none_or(|c|!c.contains(&json!("probe-trigger-v1"))){
+        return Err(ClientFailure::new("incompatible","This session does not authenticate named triggers","not-sent"));
+    }
+    if matches!(&action,Action::Find{settings} if settings.on_hit.is_some()) && ready["capabilities"].as_array().is_none_or(|c|!c.contains(&json!("probe-actions-v1"))){
+        return Err(ClientFailure::new("incompatible","This session does not support search hit actions","not-sent"));
+    }
+    if matches!(&action,Action::Find{settings} if settings.guard.is_some()) && ready["capabilities"].as_array().is_none_or(|c|!c.contains(&json!("probe-guard-v1"))){
+        return Err(ClientFailure::new("incompatible","This session does not support combined search guards","not-sent"));
+    }
+    if matches!(&action,Action::Find{settings} if settings.window.is_some()) && ready["capabilities"].as_array().is_none_or(|c|!c.contains(&json!("probe-window-v1"))){
+        return Err(ClientFailure::new("incompatible","This session does not support counted or windowed searches","not-sent"));
+    }
     if matches!(action,Action::ContentRefresh|Action::ContentList{..}) && ready["capabilities"].as_array().is_none_or(|c|!c.contains(&json!("content-discovery-v1"))){
         return Err(ClientFailure::new("incompatible","This session does not support content discovery; use the current runtime","not-sent"));
     }
@@ -835,6 +830,27 @@ mod tests {
         assert!(parse_retry(&a(&["retry","case","--run","r","--request","i","--deadline-unix-ms","1","--","status"])).is_err());
         let t=tempfile::tempdir().unwrap();let s=synthetic_server(t.path());let wrong=RetryIdentity{run:"other".into(),id:"id".into(),deadline_unix_ms:123};
         assert!(exchange_with_retry(&s.dir,&s.ready(true),Action::Pause,false,20,Some(&wrong)).is_err());assert!(!s.dir.join("request.json").exists());
+    }
+    #[test]
+    fn windowed_search_refuses_an_old_server_before_publication() {
+        let t = tempfile::tempdir().unwrap(); let s = synthetic_server(t.path());
+        let mut ready = s.ready(true); ready["capabilities"] = json!(["targeted-cancel"]); put(&s.dir, "ready.json", &ready).unwrap();
+        let action = Action::Find { settings: crate::debug_probe::Settings { condition: crate::debug_probe::Condition::Pc { address: 0x08000000, thumb: false }, steps: 1, window: Some(crate::debug_probe::Window { start_frame: 0, end_frame: 2, hit_count: 2 }), guard: None, on_hit: None, trigger: None } };
+        let failure = execute_action_classified(t.path(), action, 20).unwrap_err();
+        assert_eq!(failure.outcome, "incompatible"); assert_eq!(failure.delivery, "not-sent"); assert!(!s.dir.join("request.json").exists());
+    }
+    #[test]
+    fn combined_guard_and_hit_actions_refuse_old_servers_without_publication() {
+        let t = tempfile::tempdir().unwrap(); let s = synthetic_server(t.path());
+        let mut ready = s.ready(true); ready["capabilities"] = json!(["targeted-cancel", "probe-window-v1"]); put(&s.dir, "ready.json", &ready).unwrap();
+        let settings = || crate::debug_probe::Settings { condition: crate::debug_probe::Condition::Pc { address: 0x08000000, thumb: false }, steps: 1, window: None, guard: None, on_hit: None, trigger: None };
+        let mut guarded = settings(); guarded.guard = Some(crate::debug_probe::RamGuard { address: 0x02000000, width: 1, value: 0 });
+        let mut capture = settings(); capture.on_hit = Some(crate::debug_probe::HitAction::Capture);
+        let mut named = settings(); named.trigger = Some(crate::debug_probe::TriggerIdentity { name: "test".into(), sha256: "a".repeat(64) });
+        for action in [Action::Find { settings: guarded }, Action::Find { settings: capture }, Action::Find { settings: named }] {
+            let failure = execute_action_classified(t.path(), action, 20).unwrap_err();
+            assert_eq!(failure.outcome, "incompatible"); assert_eq!(failure.delivery, "not-sent"); assert!(!s.dir.join("request.json").exists());
+        }
     }
     #[test]
     fn content_discovery_refuses_old_server_without_publishing(){

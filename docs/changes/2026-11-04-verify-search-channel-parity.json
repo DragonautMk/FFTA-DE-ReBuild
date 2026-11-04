@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "verify-search-channel-parity",
+  "title": "Verify breakpoint and watch-refusal channel parity",
+  "kind": "docs",
+  "platforms": [
+    "Wine/Xvfb EUR interpreter"
+  ],
+  "changes": [
+    "Record same-seed CLI and console breakpoint outcomes and default-build watchpoint refusal."
+  ],
+  "validation": [
+    "Two isolated EUR Wine/Xvfb sessions started from the same seed. Local-control CLI and interactive console hit the same Thumb breakpoint after 66720 interpreter steps with identical complete search result and endpoint frame, clock, registers, keys, reason and state hash. Both returned the same watch-feature refusal without changing the origin. Both sessions and a separate protected-input comparison unit passed; GUIs closed normally."
+  ],
+  "limitations": [
+    "Watch was refused on the default build; a live audit-enabled watch hit, native Windows, physical input, other seeds and complete DBG2-13 parity remain unverified."
+  ],
+  "files": [
+    "docs/debug_probes.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ],
+  "references": [
+    "docs/debug_probes.md"
+  ]
+}

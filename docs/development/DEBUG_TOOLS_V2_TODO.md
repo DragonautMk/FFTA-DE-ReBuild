@@ -280,7 +280,7 @@ No other development was selected. On resumption read only the individual ID in
 
 ## P2 — Command console and recipes for the assistant
 
-- [ ] **DBG2-13 — Command language over shared handlers.**
+- [x] **DBG2-13 — Command language over shared handlers.**
   Define stable syntax, tokenization/quoting, numbers/addresses and argument
   schema. Connect help, status, pause/step, inspect, break/watch, captures/
   reports, profile/catalog selection and jobs to DBG2-01 contracts. Provide
@@ -296,10 +296,42 @@ No other development was selected. On resumption read only the individual ID in
   [Profile selection](../changes/2026-10-31-prepare-debug-content-id-selection.json)
   includes the later positive CLI/panel test; [shared replay](../changes/2026-10-31-connect-shared-replay-commands.json)
   includes JSON copied from the console. UI trace start, duplicate-start refusal
-  and report now have matching menu/CLI/console outcome evidence. Full parity
-  across other operations remains missing; these paths do not need reimplementation.
+  and report now have matching menu/CLI/console outcome evidence. At that audit,
+  full parity across other operations was missing; those paths did not need reimplementation.
+  Recent reads-on now shares validation across the three channels; the ordinary
+  build warns that ROM reads are unavailable while retaining other events. The
+  EUR Wine three-channel test used on-error off and observed one unavailable-read
+  frame per channel. During an active snapshot recording, the menu now allows
+  direct controls to use their shared recording guards: EUR Wine verified audio
+  start/report through menu, CLI and console, plus continued refusal of search
+  and replay-profile preparation. EUR Wine also verified default code and
+  gameplay trace settings/start through all three channels, with one frame and
+  a CLI-requested report each. Separate menu and console report actions saved
+  matching trace settings without changing guest state. For default inspection
+  and a neutral one-frame step, all three channels produced identical results
+  from the same EUR seed under Wine. Zero-length/zero-frame form refusals match
+  the parser, and console/CLI reject ambiguous or unknown commands without guest
+  changes. EUR Wine graphics compare-last also matches raw data and preserves
+  guest state across CLI, menu and console. Issue reports from a selected pinned
+  profile have matching summaries across the three channels. Audio and Recent
+  reports have separate menu, console and CLI evidence. CLI, menu/F6 and console
+  pause/resume transitions are verified under EUR Wine. Focused parser tests also
+  compare nondefault direct-form actions and selected boundary refusals across
+  the three channels. CLI and console reach the same PC breakpoint from the same
+  EUR seed and agree on the default-build watch-feature refusal. A synthetic menu-started replay exposed and
+  corrected a broad form guard: readonly inspection now agrees across channels
+  while a frame step is still refused by the shared replay guard. A pending
+  remote request also prevents a new menu Start; validation remains available.
+  A separate synthetic host worker no longer blocks direct menu Start, and stays
+  tracked and cancellable while the same inspection runs through all channels.
 
-- [ ] **DBG2-14 — Integrated editor, completion and contextual help.**
+  **Acceptance 2026-11-04 — complete for the command-language contract.** The
+  shared parser and handlers connect the requested operations and ID selection;
+  the channel checks above cover matching actions, results and selected invalid
+  inputs. Native Windows, physical input and a live audit-enabled watch hit remain
+  integration-matrix work under DBG2-27; they are not claimed by these checks.
+
+- [x] **DBG2-14 — Integrated editor, completion and contextual help.**
   Provide a “Command console” panel with explicit submission, history,
   cursor/selection, copy/paste, completion of names/arguments/IDs and contextual
   help. Support Unicode text, keyboard layouts and input composition; controller
@@ -309,15 +341,18 @@ No other development was selected. On resumption read only the individual ID in
   has focus, keys do not reach the guest or activate global shortcuts.
   **Depends on:** DBG2-13.
 
-  **Audit 2026-11-01 — integrated, verification incomplete.** [Panel/editor](../../crates/recomp/src/debug_command_panel.rs),
+  **Accepted 2026-11-04 — selected Wine scope.** [Panel/editor](../../crates/recomp/src/debug_command_panel.rs),
   [completion](../../crates/recomp/src/debug_command/completion.rs) and the
   controller keyboard are integrated. [Editor/clipboard](../changes/2026-10-31-begin-debug-command-console.json),
   [controller](../changes/2026-10-31-add-debug-command-controller-keyboard.json) and
   [completion](../changes/2026-10-31-add-debug-command-context-completion.json)
   have Wine/Xvfb evidence; multiline input does not submit, and focus protects
-  guest/menu. Real IME composition/layout and composition/capability guards in
-  the GUI remain; physical hardware/native Windows/Linux are untested. Do not
-  repeat the accepted clipboard check.
+  guest/menu. Wine GUI checks cover Cangjie preedit and repeated commits,
+  cancellation, F2, focus and hide/reopen, Italian `è`, visible CJK glyphs,
+  and a missing capability refused before dispatch with guest state unchanged.
+  Empty commits preserve selections; late Wine results are forwarded once.
+  Physical input, native Windows/Linux, other IMEs and complete Unicode font
+  coverage remain separate integration-matrix work under DBG2-27.
 
 - [ ] **DBG2-15 — Structured responses, jobs and assistant access.**
   Show ROM/session target and resolved parameters, request ID, progress, short
@@ -349,8 +384,9 @@ No other development was selected. On resumption read only the individual ID in
   F2 context view wraps the session and ROM identity; bounded long parameters
   and scrolling have focused tests. A slow refresh over 2,048 inert files allowed
   listing the old index, refused wrong-ID cancellation and discarded the exact
-  cancelled scan. Full operation parity and comprehensive narrow-window
-  presentation remain.
+  cancelled scan. A later 480×360 Win32/Wine GUI check displayed the full
+  live extended search context, including a named trigger identity, and cancelled
+  the exact requests. Full operation parity and comprehensive narrow-window presentation remain.
 
 - [ ] **DBG2-16 — Repeatable recipes and bounded batches.**
   Save a sequence of typed commands from the console, selectable in Scripts and
@@ -394,10 +430,11 @@ No other development was selected. On resumption read only the individual ID in
   recovery coverage; an isolated EUR run verified content refresh/list and an
   invalid selection stopping the next step. A separate EUR session selected a
   synthetic cheat catalog and read its list, detail and capability report in
-  one recipe without changing guest state. UI/audio/code/gameplay/graphics
-  bounded searches enforce the aggregate worst-case frame budget; an EUR Wine
-  miss/strong assertion flow passed. A real hit and feature-gated watch remain
-  unverified. Capture actions have synthetic coverage; isolated EUR Wine recipes produced
+  one recipe without changing guest state. Bounded searches enforce the aggregate
+  worst-case frame budget. Isolated EUR Wine runs verified both a miss that stops
+  on a hit assertion and a Thumb hit followed by one frame without duplication
+  on resume. Feature-gated watch remains unverified. Capture actions have
+  synthetic coverage; isolated EUR Wine recipes produced
   one UI, audio, code, gameplay and graphics report each without duplication
   on resume. Wider scenarios and platform coverage remain. Do not duplicate the
   runner.
@@ -582,6 +619,22 @@ No other development was selected. On resumption read only the individual ID in
   one reached and one unreached trigger respect limits, identity and safe
   boundary, with an evaluated condition explainable in the report.
   **Depends on:** DBG2-05/15, DBG-08/11.
+
+  **Implemented and verified within the interpreter/console scope.** Named
+  PC/watch definitions support explicit save, edit, list, show, enable, disable,
+  remove and run; edits disarm the changed definition. Hit counts, relative
+  frame windows and an optional canonical-RAM equality guard are bounded and
+  reported. On hit, pause, a completed-frame derived snapshot or freezing an
+  active recent-event buffer are explicit actions. The executing runtime
+  authenticates the enabled named definition; derived captures retain its name
+  and hash, and explicit retry uses the original idempotent request identity.
+  The console shows condition, limits, evaluated result, execution boundary and
+  observer constraints.
+  Windows GNU/Wine tests and isolated EUR Wine/Xvfb sessions cover a two-hit
+  trigger, a miss, guard/freeze, frame-boundary capture and interactive editing.
+  Feature-gated watch counting is tested synthetically. The shared DBG2-15
+  dependency remains partial, so parent closure waits for that dependency;
+  native Windows, physical input and broader platform checks remain in DBG2-27.
 
 - [ ] **DBG2-25 — Pinned observations and differences.**
   Permit pins for registers, read-only memory windows and already decoded

@@ -37,6 +37,11 @@ exposes the latest path. The action requires pause, without pending budgets,
 probes or replays; it observes guest state without changing it. The report belongs
 to the selected profile, which may differ from the copy used to open the menu.
 
+In an isolated EUR Wine/Xvfb check, local-control CLI, the issue parameter form
+and the command console each created a report for the same selected, pinned
+profile with an empty symptom. Their summaries matched, preflight was compatible,
+and guest state remained unchanged. Creating these reports did not run replay.
+
 <a id="leggere-e-riprodurre"></a>
 
 ## Read and reproduce

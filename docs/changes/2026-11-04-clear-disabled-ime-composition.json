@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "clear-disabled-ime-composition",
+  "title": "Clear pending composition when IME closes",
+  "kind": "fixed",
+  "platforms": [
+    "Windows GNU build and Wine unit tests"
+  ],
+  "changes": [
+    "Clear only pending command-editor composition when the input method is disabled or the console is hidden; keep committed draft text."
+  ],
+  "validation": [
+    "Windows GNU runtime and test builds passed; Wine ran three editor and ten command tests, including disabled and committed composition transitions."
+  ],
+  "limitations": [
+    "Real IME behavior in the Wine console, native Windows and physical input remain unverified under DBG2-14. A separately isolated native GTK Cangjie candidate passed; the isolated Wine console produced Latin text."
+  ],
+  "files": [
+    "crates/recomp/src/debug_command/editor.rs",
+    "crates/recomp/src/debug_command_panel.rs",
+    "crates/menu/assets/debug_v2.tsv",
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ],
+  "references": [
+    "docs/debug_control.md"
+  ]
+}

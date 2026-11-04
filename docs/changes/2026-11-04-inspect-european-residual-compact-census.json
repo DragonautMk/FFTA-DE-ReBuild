@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "inspect-european-residual-compact-census",
+  "title": "Reconcile European residual compact census",
+  "kind": "docs",
+  "platforms": [
+    "Windows executable on Wine; EUR"
+  ],
+  "changes": [
+    "Compare the retained E111 candidates to current compact bank contracts and document source leads without claiming global coverage."
+  ],
+  "validation": [
+    "Read-only comparison: 17 of 29 retained candidates have current BankSpec declarations; 12 do not.",
+    "Wine source windows identify a 44-row candidate table for root 6c0614 and a dynamic selector for root 6ca580; protected inputs unchanged.",
+    "Wine conditional geometry for root 6c0614: six selectors, 42 frames, 19 lists and 554 source bytes; no E117 manifest overlap."
+  ],
+  "limitations": [
+    "Candidate flows, geometry and extraction are unverified; Linux, USA and native Windows remain pending. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_compact_catalog.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-04-verify-alternate-european-compact-catalog.json"
+  ]
+}

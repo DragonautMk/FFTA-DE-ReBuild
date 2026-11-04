@@ -339,25 +339,222 @@ geometry is 1,818 bytes, 120 frames, 95 lists and 185 objects. The windows
 have been reviewed as conditional call paths; other callers and selectors are
 not bounded by this query. Two already-owned roots are excluded from this set.
 Wine evidence: `target/rom-data-e116-alternate-census-20261104/` and unit
-`rom-data-e116-alternate-geometry-1k042bio`. Extraction, runtime consumption,
-ordinary use, Linux and USA remain pending.
+`rom-data-e116-alternate-geometry-1k042bio`. Other callers and selectors remain pending.
 
-The ten-root E117-d116 integration is implemented but **not yet verified**.
-Its catalog contracts and focused Wine test are prepared; compilation, dataset
-creation/reuse, reader comparisons and production startup still need to run.
-A read-only reconciliation matched the ten bank contracts to retained geometry
-and confirmed that the 172 source spans exactly merge E116 with the new
-projections, including adjacent boundaries. This does not verify execution.
-The prior accepted E116 dataset remains the current verified generation. The
-host-coordinated build was not executed because automatic approval review hit
-its usage limit. Linux and USA validation remain pending; no performance or
-space measurements were made.
+The E117-d116 integration extracts and serves these ten conditional banks.
+Windows cross-build and EUR Wine creation/reuse pass; 99 other resource payloads
+and the 41 prior banks remain unchanged. The focused Wine reader test compares
+1,818 source bytes and boundaries, including 22 original/native count cases
+with full state and clock. A 12-frame production Wine startup matches all 100
+resource identities but records zero catalog reads; ordinary use of these roots
+is not established. Receipts are under
+`target/rom-data-e116-alternate-census-20261104/` and the managed E117 dataset
+is retained in `rom-data-e117-alternate-current-5mvjt67m`. Other callers and
+selectors, ordinary use, Linux, USA and native Windows remain unverified; no
+performance measurements were made.
+
+The retained E111 list has 29 candidate roots. Comparing its root addresses
+with E117 `BankSpec` declarations found 17 represented and 12 without a
+matching declared bank: `6babc4`, `6bac28`, `6bb574`, `6c0614`, `6c1e78`,
+`6c316c`, `6ca580`, `6cac40`, `6cb278`, `6cca8c`, `6ccae4`, `6ccdec`.
+This comparison does not establish full selector or consumer coverage for any
+represented root and is not a global census.
+
+A EUR Wine source window for candidate `6c0614` shows a bounded 44-row,
+four-byte-stride table at `39e164`; byte 1 supplies the selector at the call
+site and contains values 0–5 in those rows. The candidate at `6ca580` receives
+its selector from a mutable structure; no bound is established. For `6c0614`,
+a Wine source geometry check identifies 42 frames, 19 lists and 554 source bytes
+with no conflict against the E117 manifest. Evidence:
+`target/rom-data-e117-residual-census-20261104/geometry-unit.json` and
+`target/validation/units/rom-data-e117-residual-source-aztqb7xo/evidence/`.
+The original source window confirms that the bounded timer loop supplies those
+fields to the compact constructor; the E117 manifest has no table or bank
+overlap. E118-d117 extracts and serves this bank and all 44 table rows as v5
+catalog fields. A Windows cross-build and EUR Wine create/reuse pass with 99
+other resources and the previous 51 banks unchanged. Focused Wine checks cover
+730 new bytes, boundaries, the original selector/coordinate prefix for all 44
+rows and seven native count comparisons with full state and clock. A 12-frame
+Wine CLI startup matches all 100 resource identities but records zero catalog
+reads; ordinary use is not established. The E111 census now has 11 roots without
+a declared bank; the other selectors and consumers remain unbounded.
+Source evidence is in `target/rom-data-e117-residual-census-20261104/`;
+E118 receipts are in `target/rom-data-e118-timer-20261104/`. Linux, USA and
+native Windows remain unverified; no performance measurements were made.
+
+A conditional EUR caller at `0x0810965a` derives selector 3 or 5 for root
+`0x6c1e78`; its two helper paths preserve the selected register, including the
+`0x15` jump-table case. Source geometry covers 56 frames, 13 lists and 392
+bytes without E118 overlap. E119-d118 extracts and serves the bank. Windows
+cross-build and EUR Wine create/reuse pass, preserving 99 other resource payloads
+and all 52 prior banks. A focused Wine check covers all 392 new bytes, boundary
+reads, both selector paths, original frame/list readers and three native count
+comparisons with full state and clock. A 12-frame CLI startup matched all 100
+resource identities but made zero catalog reads, leaving ordinary use unproved.
+Other callers and selector values are not bounded. Source receipts are under
+`target/rom-data-e118-residual-20261104/` and E119 checks under
+`target/rom-data-e119-root-20261104/`. Linux, USA and native Windows remain
+unverified; no performance measurements were made.
+
+A conditional EUR caller at `0x080f01e8` uses a 12-row table at `0x39e0c4`
+and root `0x6bac28`; the loop starts at zero and the table supplies selectors
+0–8. Its represented bank covers 172 source bytes; the full table contributes
+96 bytes with no E119 overlap. E120-d119 extracts and serves both as v6 fields.
+Windows cross-build and EUR Wine create/reuse pass, retaining the 53 previous
+banks and 99 other resources. Focused Wine checks cover 268 new bytes and
+boundaries, the original field-reading instructions for all 12 rows, and ten
+native count comparisons with full state and clock. A 12-frame Wine CLI startup
+matched all 100 resource identities but recorded zero catalog reads; ordinary
+use remains unproved. Other callers and selectors remain unbounded. Source
+receipts are under `target/rom-data-e119-6bac28-20261104/` and execution checks
+under `target/rom-data-e120-schedule-20261104/`. Linux, USA and native Windows
+remain unverified; no performance measurements were made.
+
+Two conditional EUR callers use root `0x6babc4` with 30-row and 11-row tables
+at `0x39dc50` and `0x39f6cc`. Their bounded selectors are 0–5, and the bank
+and table projections cover 428 source bytes without E120 overlap. E121-d120
+extracts and serves both tables and the bank as v7 fields. Windows cross-build
+and EUR Wine create/reuse pass, preserving 99 other resources and all 54 prior
+banks. Focused Wine checks cover the 428 bytes and boundaries, original field
+readers on all 41 table rows and seven native count comparisons with full state
+and clock. A 12-frame Wine CLI startup matched all 100 resource identities but
+recorded zero catalog reads; ordinary use remains unproved. Other callers and
+selectors remain unbounded. Source receipts are under
+`target/rom-data-e120-table-leads-20261104/` and execution checks under
+`target/rom-data-e121-flight-20261104/`. Linux, USA and native Windows remain
+unverified; no performance measurements were made.
+
+A conditional EUR caller at `0x080ef024` visits ten type-dependent rows at
+`0x39defc` and uses root `0x6bb574` for selectors 0–2. The bank projection
+covers 52 bytes; 141 table bytes are read on the observed branches. E122-d121
+extracts and serves the bank and sparse typed rows as v8 fields, leaving
+branch-inactive bytes raw. Windows cross-build and EUR Wine create/reuse pass,
+retaining 99 other resources and all 55 prior banks. Focused Wine checks cover
+193 represented bytes and boundaries, the original field readers for all ten
+rows and all three row types, raw fallback for inactive fields, and four native
+count cases with full state and clock. A 12-frame Wine CLI startup matched all
+100 resource identities but recorded zero catalog reads; ordinary use remains
+unproved. Other callers and selector values remain unbounded. Source evidence
+is under `target/rom-data-e121-6bb574-20261104/` and execution checks under
+`target/rom-data-e122-effects-20261104/`. Linux, USA and native Windows remain
+unverified; no performance measurements were made.
+
+Two EUR callers at `0x0811a024` and `0x0811b75c` each traverse 24 rows
+and calculate selectors 0–7 for root `0x6cac40`. A protected Wine source
+analysis bounds this caller-specific projection to 132 bank bytes and 594
+conditionally read table bytes, with no E122 resource overlap. E123-d122
+extracts and serves those fields while leaving unread row bytes on the raw ROM
+path. The Windows build and EUR Wine create/reuse pass, preserving 99 other
+resources and all 56 previous banks. Focused Wine checks cover 726 represented
+bytes and boundaries, the original field readers for all 48 rows, raw fallback
+for unread fields, coherent rejection and nine native count comparisons with
+full state and clock. A 12-frame Wine startup matched all 100 resource
+identities but recorded zero catalog reads. This does not bound other
+callers, establish ordinary gameplay use, or verify Linux, USA or native
+Windows. No performance measurements were made. Source evidence:
+`target/rom-data-e122-6cac40-20261104/`; execution checks:
+`target/rom-data-e123-grid-20261104/`.
+
+The EUR caller at `0x080e255c` initializes three records pointing to root
+`0x6c316c` with indices 0–2; callback `0x080d88fc` forwards each index through
+`0x08011434` to the object creator. Wine source geometry for these initial
+indices identifies 188 represented bytes with no E123 overlap. E124-d123
+extracts and serves the scoped bank. The Windows GNU build and EUR Wine
+create/reuse pass, preserving 99 other resources and all 57 previous banks.
+Focused Wine checks cover 188 bytes and boundaries, original callback header
+and index reads, coherent rejection and four native count comparisons with
+full state and clock. A 12-frame Wine startup matched all 100 runtime identities
+but recorded zero catalog reads. The records are mutable and other consumers are not bounded; unwitnessed
+accesses retain raw fallback. Ordinary gameplay use, Linux, USA and native
+Windows remain unverified, and no performance measurements were made.
+Evidence: `target/rom-data-e123-6c316c-20261104/`; execution checks:
+`target/rom-data-e124-initial-20261104/`.
+
+The first four script task descriptors select callback `0x0811eaa8`. In the
+secondary constructor, IDs 363–366 are copied to the callback template; their
+low bytes yield initial indices 0–3 into the lookup at `0x3ab98c`. The four
+lookup bytes select 0–3 in root `0x6cb278`; Wine source analysis identifies
+1088 bank bytes and no E124 overlap. E125-d124 code represents this initial
+secondary-path projection. Windows GNU build and EUR Wine create/reuse pass,
+preserving 99 other resources and all 58 previous banks. Focused Wine checks
+cover 1092 represented bytes and boundaries, original lookup reads and raw
+fallback, coherent rejection and five native count comparisons with full state
+and clock. A 12-frame Wine startup matched all 100 resource identities but
+recorded zero catalog reads. The primary constructor aliases these descriptors with different IDs and can
+produce another index. Mutable state and other invocations remain unbounded;
+raw fallback remains available. Ordinary gameplay, Linux, USA and native
+Windows remain unverified; no performance measurements were made. Evidence:
+`target/rom-data-e124-6cb278-20261104/`; execution checks:
+`target/rom-data-e125-secondary-20261104/`.
+
+A EUR parent task uses the documented clear helper on its context and then
+runs a five-by-four loop. Its bounded initial path passes outer indices 0–4 to
+root `0x6cca8c` and fields of 20 rows at `0x3ac944` to roots `0x6ccae4` and
+`0x6ccdec`; row bytes 6–7 remain raw. Wine source geometry found no E125
+resource overlap. E126-d125 code represents these three bank projections and
+20 sparse rows. Windows GNU build and EUR Wine create/reuse pass, preserving
+99 other resources and all 59 previous banks. Focused Wine checks cover 3870
+source bytes and boundaries, the original field readers for all 20 rows, raw
+fallback, coherent rejection and 11 sampled native count comparisons with full
+state and clock. A 12-frame Wine startup matched all 100 runtime identities
+but recorded zero catalog reads. This is conditional on the original context
+clear and loop, and does not bound mutable or other
+call paths. Ordinary gameplay, Linux, USA and native Windows remain unverified;
+no performance measurements were made. Evidence:
+`target/rom-data-e125-6cca-20261104/`; execution checks:
+`target/rom-data-e126-scene-20261104/`.
+
+For EUR root `0x6ca580`, the dispatcher initializes the selector from a
+four-bit field and passes it through a type-13 callback. Wine source analysis
+found selectors 0–6 structurally decodable as a 116-byte compact projection
+without E126 overlap. Candidates 7–15 exceed this analysis' structural guards;
+that does not make those guest accesses invalid, and unrepresented bytes retain
+ROM fallback. E127-d126 extracts and serves the seven-selector projection.
+Windows GNU build and EUR Wine create/reuse pass, preserving 99 other resources
+and all 62 previous banks. Focused Wine checks cover the 16 nibble values, 116
+represented bytes and boundaries, raw fallback, coherent rejection and four
+sampled native count comparisons with full state and clock. A 12-frame Wine
+startup matched all 100 resource identities but recorded zero catalog reads.
+Other callers, mutable state, ordinary
+gameplay, Linux, USA and native Windows remain unverified. No performance
+measurements were made. Evidence: `target/rom-data-e126-6ca580-20261104/`;
+execution checks: `target/rom-data-e127-nibble-20261104/`.
 
 Source evidence: `target/rom-data-e111-next-sources-20261103/`,
 `source-contract-result.json`, and Wine source unit
 `rom-data-table-compact-source-9sx6eqy3`. Ordinary use, complete banks/global
-reachability, the remaining 26 census roots, Linux/USA/native Windows and the
+reachability, the remaining census roots, Linux/USA/native Windows and the
 ROM/mod phases remain open. No benchmark or space measurement is performed.
+
+## European Soil Evidence ordinary route
+
+The retained IN-08 unit 6 is a human with secondary Illusionist job 9 and the
+learned flag for descriptor slot 87. Action 49 maps through task callback
+`0x080f089c` and child `0x080f01e8` to compact root `0x6bac28`. Starting from
+the retained Star Cross confirmation, ordinary inputs returned to the skill
+menu, selected Soil Evidence and reached its confirmation. An E127 EUR Wine
+pair over 480 frames passed full state/clock, framebuffer, OAM, dispatch and
+five audio-stream comparisons; the native CLI observed positive aggregate
+catalog reads. The aggregate counter alone cannot prove which bank was read. A separate
+feature-gated Wine watch on the decoded machine observed a read of represented
+address `0x086bac2a` at frame 8391, within root `0x6bac28`; the same 480-frame
+raw/managed comparison passed. This is one ordinary invocation, not full
+animation or global selector/consumer coverage. Other banks, Linux, USA and
+native Windows remain open; no performance measurements were made. Evidence:
+`target/rom-data-e127-loop-ordinary-20261104/` and
+`target/rom-data-e127-loop-watch-20261104/`.
+
+The same task49 parent later creates child `0x080f07ec`, whose timer loop uses
+root `0x6c0614`. Retained EUR Wine source windows identify this connection.
+A feature-gated Wine watch observed represented address `0x086c0616` at frame
+8511; the native raw/managed comparison passed for all 600 frames with full
+state/clock, images, OAM, dispatch and five audio streams. The selected test
+executable was emitted and its 845-file source snapshot verified, although the
+overall Cargo command failed while compiling the CLI because the filesystem
+ran out of space; the prior CLI remained unchanged. Other callers, complete
+animation, Linux, USA and native Windows remain open; no performance
+measurements were made. Evidence: `target/rom-data-e127-loop-ordinary-20261104/`
+and `target/rom-data-e127-loop-timer-watch-20261104/`.
 
 ## Ordinary European Star Cross use
 
@@ -448,3 +645,37 @@ Linux, USA, native Windows, additional selectors/roots, global extent, broader
 ordinary use and remaining ROM/mod phases are open. No benchmark was run. Game data,
 personal saves, recordings and generated native game code stay out of commits
 and packages.
+
+## European Freezeblink ordinary route
+
+The retained IN-08 unit 6 also has learned human descriptor slot 83, mapped
+through action 45 to task45 callback `0x080ee898`, child `0x080ee6f0` and
+compact root `0x6babc4`. Ordinary menu input selected Freezeblink and reached
+its confirmation. In Wine, a feature-gated watch observed represented address
+`0x086babc6` at frame 8361; the 600-frame native raw/managed pair matched full
+state/clock, images, OAM, dispatch and five audio streams. This uses the same
+verified test executable emitted before the audit Cargo build failed on its CLI
+with ENOSPC; the preceding CLI stayed unchanged. This single invocation does not
+establish complete animation, selector or consumer coverage. Linux, USA and
+native Windows remain unverified. No performance measurements were made.
+Evidence: `target/rom-data-e127-loop-ordinary-20261104/rosters-45-unit.json`,
+`target/rom-data-compact-catalog-ordinary-20261103/task45-select.png`,
+`target/rom-data-compact-catalog-ordinary-20261103/task45-target.png` and
+`target/rom-data-e127-loop-freeze-watch-20261104/watch-unit.json`.
+
+## European Stardust ordinary route
+
+The retained IN-08 unit 6 has learned human descriptor slot 85. Its action 47
+maps through task47 callback `0x080ef250` and child `0x080ef024` to compact
+root `0x6bb574`. Ordinary menu input selected Stardust and reached confirmation.
+In Wine, a feature-gated watch observed represented address `0x086bb576` at
+frame 8450; the 600-frame native raw/managed pair matched full state/clock,
+images, OAM, dispatch and five audio streams. The verified test executable was
+emitted before the audit Cargo build failed on its CLI with ENOSPC; the earlier
+CLI was unchanged by that build. One invocation does not establish complete
+animation, selector or consumer coverage. Linux, USA and native Windows remain
+unverified. No performance measurements were made. Evidence:
+`target/rom-data-e127-loop-ordinary-20261104/rosters-47-unit.json`,
+`target/rom-data-compact-catalog-ordinary-20261103/task47-select.png`,
+`target/rom-data-compact-catalog-ordinary-20261103/task47-target.png` and
+`target/rom-data-e127-loop-stardust-watch-20261104/watch-unit.json`.

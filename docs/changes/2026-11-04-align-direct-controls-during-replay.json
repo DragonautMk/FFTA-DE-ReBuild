@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "align-direct-controls-during-replay",
+  "title": "Align direct control guards during replay",
+  "kind": "fixed",
+  "platforms": [
+    "Windows GNU build; Wine/Xvfb synthetic interpreter"
+  ],
+  "changes": [
+    "Route direct workbench Validate and Run requests through the shared parser and operation-specific runtime guards instead of a blanket idle guard. Profile preparation and separate host tools retain their stricter idle-session checks.",
+    "Keep direct menu Start from bypassing an operational local-control request already pending, while allowing parameter validation."
+  ],
+  "validation": [
+    "A menu-started synthetic sleeping replay reproduced CLI readonly inspection succeeding while the old menu refused validation. With the fix, CLI, menu and interactive console returned the same inspection during that replay; menu and CLI refused a frame step with the same shared replay error and guest state remained unchanged. Protected inputs were unchanged and the GUI closed normally.",
+    "Windows GNU runtime and test builds passed; Wine passed 8 workbench, 34 local-control and 10 command tests.",
+    "Regenerated the read-only Atlas task reference from the current checklist; the 28-task synchronization check passed.",
+    "A remotely requested synthetic sleeping replay remained pending while the menu validated inspection and refused Start with the pending-request error; exact-ID cancellation completed the original request as cancelled without changing guest state. A subsequent Windows GNU build and Wine workbench/control/command tests passed."
+  ],
+  "limitations": [
+    "The worker only waits and does not execute guest code; no gameplay replay equivalence, native Windows or physical input is claimed. One setup failed before launch due to disk space and a concurrent Wine lease; its redundant runtime copy was hash-verified and relocated with a receipt. A subsequent proof verified menu behavior but missed console navigation; the corrected full proof passed."
+  ],
+  "files": [
+    "crates/recomp/src/play.rs",
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/debug_control.md"
+  ]
+}

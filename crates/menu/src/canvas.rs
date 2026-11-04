@@ -5,6 +5,25 @@ use tiny_skia::{Paint, PathBuilder, Pixmap, Stroke, Transform};
 thread_local! {
     static PANEL_ALPHA: std::cell::Cell<u8> = const { std::cell::Cell::new(255) };
 }
+
+#[cfg(test)]
+mod tests {
+    use super::Canvas;
+
+    fn rendered(text:&str,fallback:bool)->Vec<[u8;4]>{
+        let mut pixels=vec![[0,0,0,255];80*40];
+        let mut canvas=Canvas::new(&pixels,80,40);
+        if fallback {canvas.text_with_fallback(2.0,2.0,text,[255,255,255],20.0,76.0);}
+        else {canvas.text(2.0,2.0,text,[255,255,255],20.0,false,76.0);}
+        canvas.finish(&mut pixels);pixels
+    }
+    #[test]
+    fn command_fallback_draws_distinct_cjk_glyphs_and_preserves_latin(){
+        assert_eq!(rendered("Status è",true),rendered("Status è",false));
+        assert_ne!(rendered("日",true),rendered("日",false));
+        assert_ne!(rendered("日",true),rendered("候",true));
+    }
+}
 pub(super) fn panel_alpha() -> u8 { PANEL_ALPHA.with(|value| value.get()) }
 pub(super) fn with_panel_alpha(alpha: u8, draw: impl FnOnce()) {
     struct Restore(u8);
@@ -172,20 +191,35 @@ impl Canvas {
         lines
     }
     pub fn text(&mut self, x: f32, y: f32, s: &str, c: [u8; 3], size: f32, title: bool, max: f32) {
-        let font = Self::typeface(title);
-        let scaled = font.as_scaled(size);
+        self.text_impl(x,y,s,c,size,title,max,false);
+    }
+    /// Render command input with a bundled CJK fallback when the primary face
+    /// has no glyph. This keeps composed text legible without OS font setup.
+    pub fn text_with_fallback(&mut self, x:f32, y:f32, s:&str, c:[u8;3], size:f32, max:f32) {
+        self.text_impl(x,y,s,c,size,false,max,true);
+    }
+    fn text_impl(&mut self, x:f32, y:f32, s:&str, c:[u8;3], size:f32, title:bool, max:f32, fallback:bool) {
+        let primary = Self::typeface(title);
+        static FALLBACK: OnceLock<FontRef<'static>> = OnceLock::new();
+        let fallback_font = fallback.then(|| FALLBACK.get_or_init(|| FontRef::try_from_slice(include_bytes!("../assets/fonts/DroidSansFallback.ttf")).unwrap()));
+        let baseline=y+primary.as_scaled(size).ascent();
         let mut pen = x;
         let mut last = None;
         for ch in s.chars() {
-            let id = font.glyph_id(ch);
-            if let Some(prev) = last {
-                pen += scaled.kern(prev, id);
+            let primary_id=primary.glyph_id(ch);
+            let alternate=fallback_font.filter(|font|primary_id.0==0 && font.glyph_id(ch).0!=0);
+            let font=alternate.unwrap_or(primary);
+            let using_fallback=alternate.is_some();
+            let scaled=font.as_scaled(size);
+            let id=font.glyph_id(ch);
+            if let Some((prev,previous_fallback)) = last {
+                if previous_fallback==using_fallback {pen += scaled.kern(prev,id);}
             }
             let adv = scaled.h_advance(id);
             if pen + adv > x + max {
                 break;
             }
-            let glyph = id.with_scale_and_position(size, ab_glyph::point(pen, y + scaled.ascent()));
+            let glyph = id.with_scale_and_position(size, ab_glyph::point(pen, baseline));
             if let Some(outline) = font.outline_glyph(glyph) {
                 let bounds = outline.px_bounds();
                 let w = self.pix.width() as i32;
@@ -204,10 +238,10 @@ impl Canvas {
                 });
             }
             pen += adv;
-            last = Some(id);
+            last = Some((id,using_fallback));
         }
         super::diagnostics::observe(
-            font,
+            primary,
             x,
             y,
             s,

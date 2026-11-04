@@ -2459,6 +2459,24 @@
       "reference": "readonly"
     },
     {
+      "id": "trigger.manage",
+      "handler": "execute",
+      "cli": "recomp debug-command SESSION \"trigger list | save/edit NAME 'break|watch ...' | show/enable/disable/remove NAME | retry NAME RUN ID DEADLINE\"",
+      "current": "Debug / Consoles and scripts / Command console",
+      "destination": "Debug / Consoles and scripts / Command console",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "trigger.run",
+      "handler": "execute / run",
+      "cli": "recomp debug-command SESSION \"trigger run NAME\"",
+      "current": "Debug / Consoles and scripts / Command console",
+      "destination": "Debug / Consoles and scripts / Command console",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
       "id": "recipe.save",
       "handler": "save_command",
       "cli": "recomp debug-command SESSION \"recipe save NAME 'COMMAND'...\"",

@@ -57,8 +57,8 @@ pub fn draw(view: &Display<'_>, pixels: &mut [[u8; 4]], width: usize, height: us
     canvas.text(12.0,32.0,view.target,[181,204,205],12.0,false,available);
     canvas.text(12.0,48.0,view.pending,[218,226,226],12.0,false,available);
     canvas.text(12.0,64.0,view.parameters,[165,183,187],12.0,false,available);
-    canvas.text(12.0,82.0,view.draft,[231,210,147],14.0,false,available);
-    canvas.text(12.0,99.0,view.preedit,[181,204,205],12.0,false,available);
+    canvas.text_with_fallback(12.0,82.0,view.draft,[231,210,147],14.0,available);
+    canvas.text_with_fallback(12.0,99.0,view.preedit,[181,204,205],12.0,available);
     let hint=wrap_hint(view.hint,((available/7.0) as usize).max(20));
     canvas.text(12.0,115.0,&hint[0],[165,183,187],12.0,false,available);
     canvas.text(12.0,130.0,&hint[1],[165,183,187],12.0,false,available);

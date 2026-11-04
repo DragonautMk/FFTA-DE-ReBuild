@@ -5622,6 +5622,38 @@
       "external_dialog": null
     },
     {
+      "id":"trigger.manage",
+      "title":"Manage named bounded search definitions",
+      "source":"crates/recomp/src/debug_command/trigger.rs",
+      "handler":"execute",
+      "cli":"recomp debug-command SESSION \"trigger list | save/edit NAME 'break|watch ...' | show/enable/disable/remove NAME | retry NAME RUN ID DEADLINE\"",
+      "parameters":[{"name":"NAME","value_type":"text","constraint":"1..48 ASCII letters, digits, hyphens or underscores; save does not overwrite.","current_menu":"selected","default":null},{"name":"COMMAND","value_type":"text","constraint":"One quoted bounded break or watch command on save.","current_menu":"selected","default":null}],
+      "selection":["Original isolated session manifest and ROM/runtime pins"],
+      "menu":{"current":"Debug / Consoles and scripts / Command console","destination":"Debug / Consoles and scripts / Command console","implemented":true},
+      "allowed_state":"Compatible isolated session with unchanged manifest; no active search required for management.",
+      "effects":"Save or edit a disabled definition, or explicitly enable, disable, inspect, list or remove it; management does not execute a search.",
+      "result":"Session-pinned definition or a refusal.",
+      "limits":"At most 32 definitions; PC and bus searches support bounded hit counts, relative frame windows and optional canonical RAM equality guards.",
+      "open_work":["DBG2-24: broader trigger combinations and platform coverage remain open"],
+      "external_dialog":null
+    },
+    {
+      "id":"trigger.run",
+      "title":"Run an enabled named bounded search",
+      "source":"crates/recomp/src/debug_command/trigger.rs",
+      "handler":"execute / run",
+      "cli":"recomp debug-command SESSION \"trigger run NAME\"",
+      "parameters":[{"name":"NAME","value_type":"text","constraint":"Enabled definition bound to the original isolated session.","current_menu":"selected","default":null}],
+      "selection":["Enabled session-pinned trigger"],
+      "menu":{"current":"Debug / Consoles and scripts / Command console","destination":"Debug / Consoles and scripts / Command console","implemented":true},
+      "allowed_state":"Idle paused isolated interpreter; existing search observer and backend guards apply.",
+      "effects":"Explicitly dispatch one bounded search; a disabled trigger is refused before dispatch. On hit, pause, capture a derived frame-boundary state, or freeze an active recent-event buffer.",
+      "result":"Named hit or not-reached result with definition SHA-256 and original server response, or explicit failure/unconfirmed outcome.",
+      "limits":"Existing 600-frame and instruction limits apply to searching; capture may finish one additional frame. Watch requires the audit feature; retries are explicit and reuse the original ledger identity.",
+      "open_work":["DBG2-24: broader combinations and native/platform coverage remain open"],
+      "external_dialog":null
+    },
+    {
       "id": "recipe.save",
       "title": "Save an inert typed command recipe",
       "source": "crates/recomp/src/debug_command/recipe.rs",

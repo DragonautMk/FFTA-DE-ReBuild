@@ -40,6 +40,12 @@ actor or task indicated by registers. Browser filters act on the collected prefi
 `status.gameplay_trace` exposes settings, frames, events, bytes, exclusions and stop;
 `gameplay_report` identifies the latest HTML.
 
+An isolated EUR Wine/Xvfb check started the default one-frame trace through the
+menu, local-control CLI and command console with identical observed settings.
+Each trace advanced one frame and was saved by a local-control report request.
+Separate checks saved one-frame traces from the menu and command console; the
+report settings matched the active trace and saving did not change guest state.
+
 Start and Save require a paused copy without probes, pending steps or replay. Another
 Start or separate replay requires Save first. State restore freezes the trace; origin
 and current state may belong to different timelines. Closing without Save loses the

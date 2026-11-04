@@ -143,7 +143,7 @@ impl Bank {
 pub struct CompactObjCatalog {
     pub banks: Vec<Bank>,
     // Historical v1 evidence can still be decoded for bank identity comparison.
-    // Current v4 validation requires all five source-authenticated tables.
+    // Current v11 validation requires all fourteen source-authenticated tables.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub selector_tables: Option<selector_tables::SelectorTables>,
 }
@@ -159,12 +159,27 @@ impl CompactObjCatalog {
             (0x6cbaf8, tables.horizontal.rows.iter().map(|row| u16::from(row.selector)).collect()),
             (0x6c992c, tables.timed_positions.as_ref().unwrap().rows.iter().map(|row| u16::from(row.selector)).collect()),
             (0x6c95d4, tables.motion_positions.as_ref().unwrap().rows.iter().map(|row| u16::from(row.selector)).collect()),
+            (0x6c0614, tables.timer_positions.as_ref().unwrap().rows.iter().map(|row| u16::from(row.selector)).collect()),
+            (0x6bac28, tables.schedule.as_ref().unwrap().rows.iter().map(|row| u16::from(row.selector)).collect()),
+            (0x6cb278, tables.script_lookup.as_ref().unwrap().rows.iter().map(|&value| u16::from(value)).collect()),
+            (0x6ccae4, tables.scene.as_ref().unwrap().rows.iter().map(|row| u16::from(row.first_selector)).collect()),
+            (0x6ccdec, tables.scene.as_ref().unwrap().rows.iter().map(|row| u16::from(row.second_selector) + 1).collect()),
         ] {
             let spec = BANK_SPECS.iter().find(|spec| spec.root == root).ok_or("Unbound compact selector table")?;
             if values.into_iter().collect::<Vec<_>>().as_slice() != spec.selectors {
                 return Err("Compact selector table differs from bank projection".into());
             }
         }
+        let effect_selectors: std::collections::BTreeSet<_> = tables.effects.as_ref().unwrap().rows.iter().filter_map(|row| row.selector.map(u16::from)).collect();
+        let effect_spec = BANK_SPECS.iter().find(|spec| spec.root == 0x6bb574).ok_or("Unbound effect selector table")?;
+        if effect_selectors.into_iter().collect::<Vec<_>>().as_slice() != effect_spec.selectors { return Err("Effect selectors differ from bank projection".into()); }
+        let grid_selectors: std::collections::BTreeSet<_> = tables.grid_first.as_ref().unwrap().rows.iter().chain(&tables.grid_second.as_ref().unwrap().rows).map(|row| row.selector()).collect();
+        let grid_spec = BANK_SPECS.iter().find(|spec| spec.root == 0x6cac40).ok_or("Unbound grid selector tables")?;
+        if grid_selectors.into_iter().collect::<Vec<_>>().as_slice() != grid_spec.selectors { return Err("Grid selectors differ from bank projection".into()); }
+        let mut selected: std::collections::BTreeSet<_> = tables.flight.as_ref().unwrap().rows.iter().map(|row| u16::from(row.selector)).collect();
+        selected.extend(tables.burst.as_ref().unwrap().rows.iter().map(|row| u16::from(row.selector)));
+        let spec = BANK_SPECS.iter().find(|spec| spec.root == 0x6babc4).ok_or("Unbound compact selector tables")?;
+        if selected.into_iter().collect::<Vec<_>>().as_slice() != spec.selectors { return Err("Compact selector tables differ from bank projection".into()); }
         for (bank, spec) in self.banks.iter().zip(BANK_SPECS) {
             bank.validate_fields(spec)?;
             let spans = merge_pieces(bank.source_pieces()?)?;

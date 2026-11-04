@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "complete-interpreter-trigger-editor",
+  "title": "Complete interpreter trigger conditions and actions",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU / Wine / Xvfb"
+  ],
+  "changes": [
+    "Extend named and direct PC/watch searches with bounded hit counts, relative frame windows, side-effect-free canonical RAM equality guards and pause, derived capture or recent-event freeze actions.",
+    "Add atomic editing that disables changed definitions, display evaluated conditions and observer limits in the console, negotiate protocol capabilities and reserve an extra recipe frame for capture."
+  ],
+  "validation": [
+    "Windows GNU default and audit-feature builds passed; 47 default and 50 feature Wine tests covered legacy serialization, guarded PC/watch behavior, capability refusals, capture publication, editing, console summaries and recipe budgets.",
+    "Isolated EUR Wine/Xvfb sessions verified a second Thumb hit and a miss, PC plus RAM guard, freeze preflight and hit, a completed-frame snapshot matching live state, and no snapshot on miss. A simulated-keyboard GUI session created, ran, disabled and edited a trigger; screenshots were inspected. Protected inputs stayed unchanged and windows closed normally.",
+    "The first action validation used an over-256-MiB debug executable and recent-event preflight refused it; the corrected isolated run used a stripped private copy. An earlier test found another owner on the shared Wine lease and did not run."
+  ],
+  "limitations": [
+    "DBG2-24 parent closure waits for the still-partial shared DBG2-15 dependency. Feature-gated counted watch was tested synthetically; native Windows, physical input, other ROMs and broader observer/platform coverage remain unverified."
+  ],
+  "files": [
+    "crates/gba-core/src/debug_memory.rs",
+    "crates/recomp/src/debug_probe.rs",
+    "crates/recomp/src/debug_control.rs",
+    "crates/recomp/src/debug_command.rs",
+    "crates/recomp/src/debug_command/completion.rs",
+    "crates/recomp/src/debug_command/observation.rs",
+    "crates/recomp/src/debug_command/recipe.rs",
+    "crates/recomp/src/debug_command/trigger.rs",
+    "crates/recomp/src/debug_command_panel.rs",
+    "crates/recomp/src/debug_operations.json",
+    "crates/recomp/src/play.rs",
+    "docs/development/MENU_ATLAS_INVENTORY.json"
+  ],
+  "references": [
+    "docs/debug_probes.md",
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ]
+}

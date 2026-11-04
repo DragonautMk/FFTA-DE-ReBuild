@@ -79,6 +79,19 @@ fn held_busy_requests_refuse_but_back_and_edit_cancellation_remain_available() {
     assert_eq!(f.fields[0].value, "12");
 }
 #[test]
+fn busy_host_worker_allows_only_direct_control_start() {
+    let mut f=ToolForm::default();
+    for tool in [DebugTool::Step,DebugTool::Inspect,DebugTool::Audio,DebugTool::Code,DebugTool::Gameplay,DebugTool::Recent,DebugTool::Graphics,DebugTool::Issue] {
+        f.set(tool,fields(),String::new());f.busy=true;f.focus=f.fields.len()+4;
+        assert_eq!(f.handle(MenuInput::Confirm),Some(MenuAction::ToolRequest(ToolRequest::Run)),"{tool:?}");
+        f.focus=f.fields.len();assert!(f.handle(MenuInput::Confirm).is_none(),"{tool:?}");
+    }
+    for tool in [DebugTool::Replay,DebugTool::Homepage] {
+        f.set(tool,fields(),String::new());f.busy=true;f.focus=f.fields.len()+4;
+        assert!(f.handle(MenuInput::Confirm).is_none(),"{tool:?}");
+    }
+}
+#[test]
 fn mouse_text_keyboard_and_measured_layout_cover_small_and_large_clients() {
     let mut f = ToolForm::default();
     f.set(DebugTool::Issue, fields(), "long message ".repeat(100));

@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "render-cjk-command-composition",
+  "title": "Render CJK command composition and draft",
+  "kind": "fixed",
+  "platforms": [
+    "Windows GNU build and Wine"
+  ],
+  "changes": [
+    "Render console draft and preedit glyphs absent from Inter with the bundled Droid Sans Fallback font, preserving the primary Latin appearance.",
+    "Carry the original Droid font notice and copyright record in portable, release and generated game packages."
+  ],
+  "validation": [
+    "Windows GNU menu/runtime and packager builds passed; Wine tests distinguish CJK glyphs and preserve Latin rendering. A Cangjie GUI showed 日 in preedit and committed draft, accepted è and preserved guest state. Synthetic portable package tests and release notice staging passed."
+  ],
+  "limitations": [
+    "Fallback covers characters present in the bundled font, not every Unicode glyph. Wine/Xvfb simulated input only; native Windows, physical input, broader IMEs and DBG2-14 capability guards remain unverified."
+  ],
+  "files": [
+    "crates/menu/src/canvas.rs",
+    "crates/menu/src/command_console.rs",
+    "crates/menu/assets/fonts/DroidSansFallback.ttf",
+    "Licenses/fonts/Droid-NOTICE.txt",
+    "Licenses/fonts/Droid-COPYRIGHT.txt",
+    "Licenses/README.md",
+    "crates/pack/src/main.rs",
+    "scripts/package_ffta_portable.py",
+    "scripts/tests/test_package_ffta_portable.py",
+    "scripts/package-release.sh",
+    "crates/menu/assets/debug_v2.tsv",
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ],
+  "references": [
+    "docs/debug_control.md"
+  ]
+}

@@ -465,6 +465,16 @@ next to the executable:\n\n  1. your cartridge image (.gba), sha256 {rom}\n\
         include_str!("../../../Licenses/LICENSE-APACHE"),
     )
     .map_err(|e| e.to_string())?;
+    std::fs::write(
+        pkg.join("Droid-NOTICE.txt"),
+        include_str!("../../../Licenses/fonts/Droid-NOTICE.txt"),
+    )
+    .map_err(|e| e.to_string())?;
+    std::fs::write(
+        pkg.join("Droid-COPYRIGHT.txt"),
+        include_str!("../../../Licenses/fonts/Droid-COPYRIGHT.txt"),
+    )
+    .map_err(|e| e.to_string())?;
 
     match host {
         Platform::Macos => {

@@ -18,6 +18,12 @@ snapshot, guest patch or register change. Complete state is checked before and
 after; the copy must be stopped without pending steps, search or replay. The audit
 feature is unnecessary. The normal runtime does not expose this channel.
 
+In an isolated EUR Wine/Xvfb session, a baseline capture followed by
+`--compare-last` through the local-control CLI, parameter form and command
+console retained identical guest state and raw-buffer hashes. Each comparison
+identified the immediately preceding report and found no raw-byte differences.
+The frontend composition can differ with the visible interface.
+
 <a id="output-salvati-e-proiezioni"></a>
 
 ## Saved output and projections

@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "allow-direct-controls-during-host-jobs",
+  "title": "Allow direct controls during workbench host jobs",
+  "kind": "fixed",
+  "platforms": [
+    "Windows GNU build; Wine/Xvfb synthetic interpreter"
+  ],
+  "changes": [
+    "Allow direct menu Start to use the shared action handler while a separate workbench host worker remains active. Preserve the worker busy indicator and cancellation; profile and host-tool starts and background validation remain serialized."
+  ],
+  "validation": [
+    "A synthetic long-running host worker reproduced the former menu-only block while CLI inspection succeeded. With the fix, CLI, menu and interactive console produced the same readonly inspection while the host worker stayed tracked; explicit cancellation stopped the worker and guest state remained unchanged. Protected inputs and normal GUI closure verified.",
+    "Windows GNU menu/runtime test builds and runtime build passed; Wine passed 7 tool-form, 8 workbench, 34 local-control and 10 command tests. The generated Atlas task reference was synchronized with the checklist."
+  ],
+  "limitations": [
+    "The host worker was a synthetic waiting process; this does not establish behavior of every host tool, native Windows, physical input or full DBG2-13 parity."
+  ],
+  "files": [
+    "crates/menu/src/debug_tool.rs",
+    "crates/menu/src/debug_tool/tests.rs",
+    "crates/recomp/src/play.rs",
+    "crates/menu/assets/debug_v2.tsv",
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ],
+  "references": [
+    "docs/debug_control.md"
+  ]
+}

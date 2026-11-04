@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "verify-european-soil-evidence-ordinary",
+  "title": "Verify European Soil Evidence ordinary route",
+  "kind": "changed",
+  "platforms": [
+    "Windows executable on Wine; EUR"
+  ],
+  "changes": [
+    "Add an optional feature-gated test watch for the represented 6bac28 bank during the existing raw/managed scene comparison."
+  ],
+  "validation": [
+    "EUR Wine source and six retained roster reads identify action 49 and an eligible IN-08 unit; ordinary inputs select Soil Evidence without forcing game state.",
+    "EUR Wine 480-frame raw/managed comparison PASS for state, clock, images, OAM, dispatch and five audio streams, with positive aggregate catalog reads.",
+    "Windows audit-feature build PASS; a Wine watch on the decoded machine observed represented 6bac28 address 0x086bac2a at frame 8391, while the 480-frame raw/managed comparison passed again."
+  ],
+  "limitations": [
+    "One source-backed ordinary invocation only; complete animation, other selectors and consumers, Linux, USA and native Windows remain unverified. No performance measurements."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_compact_catalog.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-04-integrate-european-compact-nibble-6ca580.json"
+  ]
+}

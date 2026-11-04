@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "verify-recipe-breakpoint-hit",
+  "title": "Verify a reached breakpoint in a typed recipe",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU under Wine/Xvfb, isolated EUR interpreter"
+  ],
+  "changes": [
+    "Verify the bounded search hit path, hit assertion, following step and explicit resume in an actual isolated session."
+  ],
+  "validation": [
+    "A Thumb PC breakpoint hit before the eligible instruction after 40948 interpreter steps; its hit assertion passed, the next step completed one frame and the checkpoint recorded both. A second resume preserved guest state, protected inputs stayed unchanged and the GUI closed normally."
+  ],
+  "limitations": [
+    "One EUR Wine interpreter hit only; feature-gated watchpoint, native Windows and physical input remain unverified. The private session copy is retained as the current proof."
+  ],
+  "files": [
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ],
+  "references": []
+}
