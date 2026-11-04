@@ -20501,3 +20501,10 @@ Two 24-row EUR callers select 0–7; 132 bank bytes and 594 conditional table by
 - Verified criteria: e127-d126, 296 bytes and boundaries, three native prefixes/six indices and state-clock equality, coherent tamper rejection; corrected report matches 100 current/85 prior. The retained e95 manifest and 85 current records/hashes authenticate the scratch predecessor copy. Protected inputs unchanged, successful test and build scratch removed.
 - Evidence: docs/changes/2026-11-04-verify-e127-conditional-lookup.json; target/validation/units/rvr09-conditional-e127-8sr2f8c_/; target/validation/units/rvr09-conditional-build-z_bxvxlj/retirement-result.json.
 - Limits: prior dataset reconstructed only in scratch from authenticated existing payloads, not original retired directory; six unrelated snapshot files older. No native Windows, Linux, USA, new ordinary scene or performance claim.
+
+### RVR-10-PACKED-LOOKUP-E127
+
+- Outcome: completed for EUR/Wine full regression filter; RVR-01 remains partial.
+- Verified criteria: e127-d126, 132 bytes and boundaries, metadata14 alias, two native prefixes with state-clock equality and coherent tamper rejection; corrected report matches 100 current/86 prior. Retained e96 manifest and 86 matching records/hashes authenticate the scratch predecessor. Protected inputs unchanged; successful test and build scratch removed.
+- Evidence: docs/changes/2026-11-04-verify-e127-packed-lookup.json; target/validation/units/rvr10-packed-e127-74y398c2/; target/validation/units/rvr10-packed-build-u97r3hgw/retirement-result.json.
+- Limits: predecessor reconstructed only in scratch from authenticated existing payloads, not original retired directory; six unrelated snapshot files older. No native Windows, Linux, USA, new ordinary scene or performance claim.

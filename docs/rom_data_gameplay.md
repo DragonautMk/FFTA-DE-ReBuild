@@ -5803,6 +5803,16 @@ measurement was made.
 
 ## Managed conditional packed lookup
 
+The full managed packed-lookup filter later passed under EUR Wine with e127-d126.
+It checks 132 source bytes and boundaries, composition with the metadata14
+alias, two native prefixes, full state/clock equality and transactional tamper
+rejection. The corrected report derives 100 current and 86 prior resources
+from their manifests. The e96 predecessor was staged in scratch from current
+payloads authenticated by its retained manifest; guarded inputs remained
+unchanged and scratch was removed. Evidence:
+`target/validation/units/rvr10-packed-e127-74y398c2/`. This is not a new
+ordinary scene or native Windows, Linux or USA validation.
+
 The EUR e97-d96 dataset adds `gameplay.conditional-packed-lookup`, with 33
 authenticated four-byte records at indices 1–33. Strict activation compares
 the parsed data against the exact original source even if a modified file and

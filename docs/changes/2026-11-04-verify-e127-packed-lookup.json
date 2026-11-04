@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "verify-e127-packed-lookup",
+  "title": "Verify the e127 packed lookup regression",
+  "kind": "fixed",
+  "platforms": [
+    "EUR Windows executable under Wine"
+  ],
+  "changes": [
+    "Derive packed conditional lookup test report resource counts from current and predecessor manifests, and complete RVR-10."
+  ],
+  "validation": [
+    "Isolated Windows release test cross-build and complete EUR Wine filter pass: 132 typed source bytes, mixed boundaries, metadata14 alias composition, two native prefixes and full state/clock equality with transactional tamper rejection.",
+    "All 86 e96 predecessor records match e127 and each staged payload hash was checked against the retained e96 manifest. Report matches 100 current and 86 previous resources; guarded inputs pass and successful scratch is removed.",
+    "Completed build scratch was retired after host process inspection, unit lease and unchanged inventory verification; build and test evidence remain."
+  ],
+  "limitations": [
+    "The isolated snapshot has six unrelated source files older than the current workspace. The predecessor payload was an authenticated temporary copy, not the retired original directory. No new ordinary scene, native Windows, Linux, USA or performance claim."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/conditional_packed_lookup_runtime_tests.rs",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_gameplay.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_gameplay.md"
+  ]
+}

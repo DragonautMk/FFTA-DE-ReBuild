@@ -376,6 +376,28 @@ Documentation: [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_
 
 [Change record](docs/changes/2026-11-04-verify-e127-table-graphics.json)
 
+## 2026-11-04 — Verify the e127 packed lookup regression
+
+Type: fixed. Platforms: EUR Windows executable under Wine.
+
+**Changes**
+
+- Derive packed conditional lookup test report resource counts from current and predecessor manifests, and complete RVR-10.
+
+**Validation**
+
+- Isolated Windows release test cross-build and complete EUR Wine filter pass: 132 typed source bytes, mixed boundaries, metadata14 alias composition, two native prefixes and full state/clock equality with transactional tamper rejection.
+- All 86 e96 predecessor records match e127 and each staged payload hash was checked against the retained e96 manifest. Report matches 100 current and 86 previous resources; guarded inputs pass and successful scratch is removed.
+- Completed build scratch was retired after host process inspection, unit lease and unchanged inventory verification; build and test evidence remain.
+
+**Limitations**
+
+- The isolated snapshot has six unrelated source files older than the current workspace. The predecessor payload was an authenticated temporary copy, not the retired original directory. No new ordinary scene, native Windows, Linux, USA or performance claim.
+
+Documentation: [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md), [rom_data_gameplay.md](docs/rom_data_gameplay.md).
+
+[Change record](docs/changes/2026-11-04-verify-e127-packed-lookup.json)
+
 ## 2026-11-04 — Verify the complete e127 compact OBJ runtime filter
 
 Type: docs. Platforms: EUR Windows executable under Wine.

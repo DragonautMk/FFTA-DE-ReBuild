@@ -59,10 +59,13 @@ The evidence does not attribute every unchecked item to lack of disk space.
     e127 EUR/Wine filter against the authenticated e95 manifest and payloads.
     The report matches 100 current and 85 prior resources.
     [Recovery](../changes/2026-11-04-verify-e127-conditional-lookup.json).
+  - [x] Correct the packed lookup report and verify its e127 EUR/Wine filter
+    against authenticated e96 inputs. It reports 100 current/86 prior resources.
+    [Recovery](../changes/2026-11-04-verify-e127-packed-lookup.json).
   - [ ] Correct and validate the other affected reports. The source audit
     found fixed historical resource counts in the primary through septenary
-    compact OBJ tests, the packed lookup, both descriptor-bank
-    tests and property masks. The original compact-catalog report has old
+    compact OBJ tests, both descriptor-bank tests and property masks. The
+    original compact-catalog report has old
     aggregate counts.
 
 ## 2. Run the older tests whose revision expectations changed
@@ -108,9 +111,12 @@ checks pass, and the record names the tested revision and precise scope.
   state/clock equality and tamper rejection. The e95 predecessor copy was
   authenticated against its retained manifest and removed with test scratch.
   [Evidence](../changes/2026-11-04-verify-e127-conditional-lookup.json).
-- [ ] **RVR-10 — Packed conditional lookup:** run
-  `european_conditional_packed_managed_native_reads`.
-  [Test](../../crates/recomp/src/rom_data/conditional_packed_lookup_runtime_tests.rs).
+- [x] **RVR-10 — Packed conditional lookup:** the full
+  `european_conditional_packed_managed_native_reads` filter passes on e127
+  under EUR Wine. It checks 132 bytes, boundaries, metadata14 alias composition,
+  two native prefixes, full state/clock equality and tamper rejection. Its e96
+  predecessor copy was authenticated and removed with test scratch.
+  [Evidence](../changes/2026-11-04-verify-e127-packed-lookup.json).
 - [ ] **RVR-11 — Conditional descriptor banks:** run
   `european_conditional_descriptor_banks_managed_native_reads`.
   [Test](../../crates/recomp/src/rom_data/conditional_descriptor_banks_runtime_tests.rs).
