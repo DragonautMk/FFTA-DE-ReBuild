@@ -20473,3 +20473,10 @@ Two 24-row EUR callers select 0–7; 132 bank bytes and 594 conditional table by
 - Verified criteria: full e127-d126 filter passes 256 category inputs, eleven copy and eleven coordinate native prefixes, coherent in-memory tamper rejection, full state/clock equality and 308 typed native bytes. Corrected JSON matches 100 current and 98 prior manifest resources; input preservation passes. Completed build scratch retired after host observation, owned lease and unchanged inventory check.
 - Evidence: docs/changes/2026-11-04-prepare-ui-context-validation.json; target/validation/units/rvr17-ui-context-wine-bezw4jap/; target/validation/units/rvr17-ui-context-build-y66vk3dh/retirement-result.json.
 - Limits: no native Windows, Linux, USA, new ordinary scene, disk-reload matrix or performance claim. Isolated source snapshot differs in six unrelated current files; original process inspection review timed out before explicit user authorization and successful host check.
+
+### RVR-16-CLAN-ALIAS-E127
+
+- Outcome: completed for EUR/Wine full regression filter.
+- Verified criteria: e127-d126 generation, 20 alias bytes and mixed boundaries, e94-d93 85-resource predecessor preservation, 42 selector-prefix cases with full state/clock equality and transactional coherent-tamper rejection. Input guards pass; successful scratch removed.
+- Evidence: docs/changes/2026-11-04-verify-e127-clan-alias-regression.json; target/validation/units/rvr16-clan-alias-e127-0mpw8bok/.
+- Limits: retained test artifact matches selected test source; six unrelated source files and two other test modules differ from current workspace. No native Windows, Linux, USA, new ordinary scene or performance claim.

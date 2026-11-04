@@ -409,6 +409,17 @@ prefixes, production CLI registration and one ordinary Bank entry; the full
 helper ABI, other paths, Linux, USA and native Windows remain open. No performance
 measurement was performed.
 
+The full managed clan alias filter was subsequently rerun with e127-d126 under
+EUR Wine. It verifies preservation of the 85-resource e94-d93 predecessor,
+all 20 alias bytes and mixed boundaries, 42 selector-prefix cases with full
+state/clock equality, and transactional rejection of coherent tampering. Its
+generated manifest has 100 resources. Guarded ROM, predecessor and test inputs
+remained unchanged. Evidence: `target/validation/units/rvr16-clan-alias-e127-0mpw8bok/`.
+The retained test artifact matches this test's source snapshot; six unrelated
+source files and two other test modules differ from the current workspace.
+This is targeted EUR/Wine evidence, not a new ordinary scene or native Windows,
+Linux or USA validation.
+
 ## Translated clan alias selector prefixes
 
 A separate Wine check compiled the six original selector prefixes and compared

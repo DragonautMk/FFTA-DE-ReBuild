@@ -119,9 +119,11 @@ checks pass, and the record names the tested revision and precise scope.
   with the current e127 generation, recorded as 101 files, and derive the
   result summary from the actual manifest and file set.
   [Test](../../crates/recomp/src/rom_data/table_graphics_runtime_tests.rs).
-- [ ] **RVR-16 — Clan table alias:** run
-  `european_clan_alias_managed_reads`.
-  [Test](../../crates/recomp/src/rom_data/clan_table_alias_runtime_tests.rs).
+- [x] **RVR-16 — Clan table alias:** the full
+  `european_clan_alias_managed_reads` filter passes with e127-d126 under EUR
+  Wine. It preserves the e94-d93 predecessor resources, checks 20 alias bytes,
+  42 selector cases with full state/clock equality and transactional rejection.
+  [Evidence](../changes/2026-11-04-verify-e127-clan-alias-regression.json).
 - [x] **RVR-17 — UI context templates:** the full
   `european_ui_context_templates_match_source_and_native_readers` filter passes
   in EUR/Wine with e127-d126: all 256 category inputs, eleven copy and eleven

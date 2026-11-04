@@ -376,6 +376,27 @@ Documentation: [rom_data_obj.md](docs/rom_data_obj.md).
 
 [Change record](docs/changes/2026-11-04-verify-e127-octonary-full-filter.json)
 
+## 2026-11-04 — Verify the e127 clan alias regression
+
+Type: docs. Platforms: EUR Windows executable under Wine.
+
+**Changes**
+
+- Complete RVR-16 by executing the previously unrerun clan alias runtime filter against e127-d126.
+
+**Validation**
+
+- Full EUR Wine filter passes 20 alias bytes, mixed boundaries, 42 selector prefix cases with full state and clock equality, and transactional rejection of coherent edits.
+- The e94-d93 predecessor has 85 resources; its unchanged records and payloads pass the test comparison. The generated e127 manifest contains 100 resources. Guarded ROM, predecessor, test executable and source are unchanged; successful scratch was removed.
+
+**Limitations**
+
+- Selected test source matches the retained test artifact snapshot; six unrelated source files and two other test modules differ from the current workspace. No native Windows, Linux, USA, new ordinary-scene or performance claim.
+
+Documentation: [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-04-verify-e127-clan-alias-regression.json)
+
 ## 2026-11-04 — Verify code and gameplay trace channel parity
 
 Type: docs. Platforms: Wine/Xvfb EUR interpreter.

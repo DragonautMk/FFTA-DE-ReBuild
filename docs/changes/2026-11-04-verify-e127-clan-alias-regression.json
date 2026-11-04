@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "verify-e127-clan-alias-regression",
+  "title": "Verify the e127 clan alias regression",
+  "kind": "docs",
+  "platforms": [
+    "EUR Windows executable under Wine"
+  ],
+  "changes": [
+    "Complete RVR-16 by executing the previously unrerun clan alias runtime filter against e127-d126."
+  ],
+  "validation": [
+    "Full EUR Wine filter passes 20 alias bytes, mixed boundaries, 42 selector prefix cases with full state and clock equality, and transactional rejection of coherent edits.",
+    "The e94-d93 predecessor has 85 resources; its unchanged records and payloads pass the test comparison. The generated e127 manifest contains 100 resources. Guarded ROM, predecessor, test executable and source are unchanged; successful scratch was removed."
+  ],
+  "limitations": [
+    "Selected test source matches the retained test artifact snapshot; six unrelated source files and two other test modules differ from the current workspace. No native Windows, Linux, USA, new ordinary-scene or performance claim."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_ui_graphics.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}
