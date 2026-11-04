@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "run-diagnostic-captures-in-recipes",
+  "title": "Run bounded diagnostic captures from recipes",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU / Wine / Xvfb"
+  ],
+  "changes": [
+    "Allow the existing bounded UI, audio, code, gameplay and graphics capture/report actions in typed recipes, preserving handler preflight, ordered terminal results and request-ledger recovery.",
+    "Document that report-specific resource limits and outputs are separate from the bounded recipe checkpoint and that cancellation does not erase an existing capture."
+  ],
+  "validation": [
+    "Windows GNU runtime/test build and 31 focused Wine tests passed, including capture action ordering, lost-report response recovery without duplicate execution and existing recipe/control contracts.",
+    "An isolated EUR Wine/Xvfb interpreter run using a stripped built runtime executed UI start, one frame, UI report and status in a recipe; exactly one report was produced, a second resume left the guest unchanged, protected inputs were unchanged and the window closed normally."
+  ],
+  "limitations": [
+    "Only UI capture was tested end-to-end through a real session; other newly enabled capture types used a synthetic server. Interactive picker, native Windows, physical input, session restart and other action types remain open. The UI proof retains private session inputs as a named current proof."
+  ],
+  "files": [
+    "crates/recomp/src/debug_command/recipe.rs",
+    "crates/recomp/src/debug_command/recipe/checkpoint/runner.rs",
+    "crates/recomp/src/debug_tools.rs",
+    "crates/recomp/src/debug_operations.json",
+    "docs/development/MENU_ATLAS_INVENTORY.json"
+  ],
+  "references": [
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

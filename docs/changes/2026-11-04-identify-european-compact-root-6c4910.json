@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "identify-european-compact-root-6c4910",
+  "title": "Identify a European compact root through the alternate constructor",
+  "kind": "changed",
+  "platforms": [
+    "Windows executable on Wine; EUR"
+  ],
+  "changes": [
+    "Record selector zero and the bounded projection for compact root 0x6c4910 through the alternate constructor path."
+  ],
+  "validation": [
+    "Wine source query checked the caller, constructor and retained initializer/reader instructions against the EUR ROM; selector zero covers 162 nonoverlapping bytes, eight frames and six lists including an empty list."
+  ],
+  "limitations": [
+    "Source evidence only: extraction, runtime use, ordinary reachability, other selectors, Linux, USA and native Windows remain open. The two-byte gap stays raw; no performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_compact_catalog.md"
+  ],
+  "references": []
+}

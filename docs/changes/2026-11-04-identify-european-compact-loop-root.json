@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "identify-european-compact-loop-root",
+  "title": "Identify a European compact animation loop",
+  "kind": "changed",
+  "platforms": [
+    "Windows executable on Wine; EUR"
+  ],
+  "changes": [
+    "Record the conditional selector loop and bounded source projection for compact OBJ root 0x6ca5f8 as a candidate for later extraction and runtime consumption."
+  ],
+  "validation": [
+    "Wine source query authenticated the original 0..2 loop, constructor call and 174-byte nonoverlapping source projection; three sequences contain 37 frames and nine lists contain eight objects, including one empty list. Prior constructor preservation evidence was reused."
+  ],
+  "limitations": [
+    "Source analysis only; extraction, runtime consumption, ordinary reachability, other producers, Linux, USA and native Windows remain open. No performance or space measurements."
+  ],
+  "files": [
+    "docs/rom_data_compact_catalog.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-04-verify-european-compact-selector-cli.json"
+  ]
+}

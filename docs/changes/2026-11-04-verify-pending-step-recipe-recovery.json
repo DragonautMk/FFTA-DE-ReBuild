@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "verify-pending-step-recipe-recovery",
+  "title": "Verify recovery of a pending recipe step",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU / Wine / Xvfb"
+  ],
+  "changes": [
+    "Document real-session recovery after terminating a recipe client while its mutating frame step was pending."
+  ],
+  "validation": [
+    "In an isolated EUR Wine/Xvfb interpreter, a status query confirmed the 60-frame request and its exact ID pending before the owned client was terminated. Explicit resume kept the ID, completed exactly 60 frames and the following one-frame step, and a second resume preserved frame, clock, registers, keys and state hash. Protected inputs were unchanged and the GUI closed normally.",
+    "An initial 600-frame attempt exceeded the fixed 120-second deadline and returned unconfirmed; a separate 60-frame launch encountered another owner’s Wine lease and started no test. Both diagnostics were retained; the passing run followed lease release."
+  ],
+  "limitations": [
+    "This covers one interrupted client and live control run, not a runtime/session restart, native Windows, physical input or broader action types. Private session copies are retained as the current pending-step proof pending replacement."
+  ],
+  "files": [
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ],
+  "references": [
+    "crates/recomp/src/debug_command/recipe/checkpoint/runner.rs"
+  ]
+}

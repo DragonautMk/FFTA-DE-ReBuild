@@ -242,8 +242,9 @@ Quote each command, assertion or wait as a separate argument. The shared command
 parser converts each command to a typed action before any file is created. A
 recipe has at most 16 entries in total across commands, assertions and waits, with at
 least one command,
-at most 3,600 explicit `step` frames, with a 120-second execution deadline and
-1 MiB checkpoint/output limit. Unbounded guest `resume`, cancellation, retry,
+a combined budget of at most 3,600 frames for explicit `step` commands and
+worst-case bounded searches, with a 120-second execution deadline and 1 MiB
+checkpoint/output limit. Unbounded guest `resume`, cancellation, retry,
 help and nested recipe commands are rejected. Saving never executes a step.
 Names use 1–48 ASCII letters, digits, hyphens or underscores. At most 32 files
 are stored in the selected session's `Data/config/debug-command-recipes/`;
@@ -320,9 +321,80 @@ process is alive. At most 32 checkpoints are retained in the session's
 `Data/config/debug-command-runs/` directory. Preparation does not dispatch;
 `run` is a separate explicit action.
 
-The current runner accepts only `status`, `inspect` and bounded `step`; it
-rejects a recipe containing another action before sending any step. It checks
-session input pins, persists the original deadline and each request ID before
+The runner accepts `status`, `inspect`, bounded `step`, `content refresh`,
+`content list`, `profile select`, `catalog select`, `cheats select`, `cheats
+refresh`, `cheats list`, `cheats show`, `cheats capabilities`, `ui-start`,
+`ui-report`, `graphics`, `audio-start`, `audio-report`, `code-start`,
+`code-report`, `gameplay-start`, `gameplay-report`, and bounded `break`/`watch`
+searches. Discovery and selection
+wait for their terminal responses before the next entry. These
+operations keep their existing idle-session, catalog-generation and validation
+guards. Other actions are rejected before sending any step. For example:
+
+```text
+recipe save indexed 'content refresh' 'content list --limit 4' 'status'
+recipe save ui-case 'ui-start' 'step 1' 'ui-report'
+```
+
+Capture start/report actions retain their own time, frame, event, report-size
+and output-directory limits; the recipe's 1 MiB limit applies to its checkpoint
+and responses, not the separately saved reports. Cancellation does not discard
+an already started capture. External controls can affect a capture while the
+recipe is running. Unsupported actions, including unbounded resume, are still
+refused before dispatch.
+
+Each `break` or `watch` search reserves its existing worst-case ceiling of 600
+completed frames against the shared 3,600-frame budget, even when its instruction
+limit is reached earlier. The search also keeps its 1..5,000,000 instruction
+limit and existing interpreter and feature guards. Legacy saved recipes without
+the new budget field remain readable; the runner recomputes their worst-case
+budget before sending any action. A search that completes without a hit is a
+successful bounded search result, so use an assertion such as
+`assert /status/probe/outcome text:hit` when a hit is required before continuing.
+A search can stop inside a guest frame and an unconfirmed result retains its
+request identity for ledger recovery.
+
+Windows GNU build and 33 focused Wine tests passed, including aggregate budget,
+legacy identity and assertion-on-miss checks. In an isolated EUR Wine/Xvfb
+interpreter session, a one-instruction search returned `not-reached`: an
+assertion requiring a hit stopped the following step, while an assertion accepting
+`not-reached` allowed one frame. Explicit resumes did not duplicate actions;
+protected inputs stayed unchanged and the GUI closed normally. An initial
+supervisor overwrote its process variable after the functional check; its owned
+Xvfb and leases were recovered after host inspection and independent input
+hashes, and the corrected unit passed with an automatic receipt. A real hit,
+watchpoint with the required build feature and native Windows remain unverified.
+
+A Windows GNU build and 31 focused Wine tests covered capture action order,
+report-response recovery without duplicate execution and existing recipe
+contracts. An isolated EUR Wine/Xvfb interpreter run executed `ui-start`, one
+frame and `ui-report`, producing one complete UI report; a second resume did not
+change guest state or create another report. The window closed normally and
+protected inputs stayed unchanged. That run used a stripped copy of the built
+runtime. A subsequent isolated EUR Wine/Xvfb run exercised audio, code,
+gameplay and graphics in separate recipes. Each produced one report with the
+expected kind and no duplicate on explicit resume; the first three each advanced
+one frame, graphics advanced none, and repeated resumes preserved guest state.
+Protected inputs stayed unchanged and the window closed normally. These runs
+validate one interpreter session, not capture fidelity or physical audio.
+
+A Windows GNU build and 29 focused Wine tests covered catalog action ordering,
+selection refusal, recovery of a lost selection response with the original
+identity and refusal to retry an ambiguous catalog read. A separate EUR
+Wine/Xvfb interpreter run refreshed content and listed four entries in order;
+an invalid selection stopped the next step, and explicit resume left guest state
+unchanged. The GUI closed normally and protected inputs stayed unchanged. The
+first test wrapper expected a nonexistent response `limit` field and was
+corrected to inspect the returned entries; its failed diagnostics were retained.
+A further isolated EUR Wine/Xvfb run selected a discovered synthetic cheat
+catalog and then refreshed, listed, showed CH-0001 and read its capability
+report through one recipe. The selection ID, source hash and snapshot generation
+matched across results; the detail and capability digests matched their returned
+content. A second resume and guest state were unchanged, protected inputs stayed
+unchanged and the GUI closed normally. This verifies the channel workflow, not
+cheat behavior or device equivalence.
+
+The runner checks session input pins, persists the original deadline and each request ID before
 sending, and journals terminal results in order. A retry of an unresolved
 ledger-protected step keeps the same ID, action and deadline; completed steps
 are skipped. A pending read query has no server retry ledger, so an ambiguous
@@ -366,9 +438,9 @@ pending, the client stops waiting and reports `cancellation-pending`; the
 checkpoint and original request identity are retained for explicit recovery.
 The typed recipe's own limits
 apply; the readonly adapter's runtime and timeout fields apply only to its
-separate format. Focused synthetic Wine tests exercised Details, Start, cancellation and explicit resume. A menu rendering test checked that a long preview retains its tail and scrolls at a narrow size; an actual interactive picker and native Windows remain unverified.
+separate format. Focused synthetic Wine tests exercised Details, Start, cancellation and explicit resume. A menu rendering test checked that a long preview retains its tail and scrolls at a narrow size. An isolated EUR Wine/Xvfb session with simulated keyboard and mouse selected a saved one-frame recipe and its original session through the interactive picker. Start was refused before Details without creating a run; after Details, Start completed one frame and the checkpoint recorded the step as completed. Protected inputs stayed unchanged and the window closed normally. This verifies one interactive path, not native Windows or physical input.
 
-Additional action types, interactive picker verification and the full
+Additional action types, wider picker scenarios and the full
 short/interrupted acceptance matrix remain missing. Windows GNU builds
 and 19 focused Wine tests passed for authoring, validation, parser, completion and
 operation metadata. A synthetic session without ROM or control mailbox also
@@ -395,6 +467,40 @@ between-step interruption and lost-response checks used the synthetic server.
 Its log contains two `Access denied` control messages despite the successful
 terminal result; the exact denied operation is unconfirmed. The successful
 unit retains its private test copies as a named current-proof exception.
+
+A later isolated EUR interpreter session under Wine/Xvfb completed one frame,
+entered a bounded status wait, and had its own client process terminated. An
+external one-frame step satisfied the wait; explicit resume retained the first
+request ID, completed the following step and left the guest paused. Observed
+frame offsets were 0, 1, 2, 3 and 3 after a second resume; the second resume also
+left state hash, clock, keys and registers unchanged. The session closed normally
+and protected inputs stayed unchanged. This covers an interrupted client during
+a wait, not a crash during a pending mutating action or a session restart. Its
+private test copy is retained as the current interrupted-proof exception.
+
+A second isolated EUR Wine/Xvfb run terminated its own client after the server
+reported a 60-frame step pending. The checkpoint retained that request ID and
+kept the following step planned. Explicit resume recovered the same request,
+completed exactly 60 frames and then one more; another resume left frame,
+clock, registers, keys and state hash unchanged. The window closed normally and
+protected inputs stayed unchanged. An initial 600-frame attempt exceeded the
+120-second deadline in this interpreter and returned `unconfirmed`; its
+checkpoint and diagnostics were retained. A separate 60-frame launch encountered
+another owner's Wine lease and started no test; the successful run followed its
+release. This does not establish automatic recovery after restarting the session itself.
+
+A separate EUR Wine/Xvfb test closed and reopened the isolated session while a
+checkpoint retained a completed action followed by an outstanding wait. The
+new control run had a different identity: inspecting the old checkpoint remained
+possible, but resume was refused before dispatch. Checkpoint bytes, the command
+channel and the reopened guest state stayed unchanged; both session windows
+closed normally and protected inputs remained unchanged. Continuing an old run
+in a new session is intentionally refused; this is not cross-restart recovery.
+
+Two initial attempts exited before opening the session because the test bridge
+inherited validation variables forbidden by the isolated-session guard. The
+bridge was corrected; the same D-Bus warning also appears in the earlier passing
+run and did not identify the cause. Both failed diagnostics were retained.
 
 ## Requests, cancellation and deadlines — DBG-20
 

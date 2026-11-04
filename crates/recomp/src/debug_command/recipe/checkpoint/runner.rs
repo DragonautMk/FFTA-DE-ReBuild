@@ -20,7 +20,13 @@ fn publish(dir:&Path,checkpoint:&Checkpoint,recipe:&Recipe)->Result<(),String>{
     file.write_all(&bytes).and_then(|_|file.as_file().sync_all()).map_err(|e|e.to_string())?;
     file.persist(dir.join("checkpoint.json")).map_err(|e|e.error.to_string())?;Ok(())
 }
-fn supported(action:&Action)->bool{matches!(action,Action::Status|Action::Inspect{..}|Action::Step{..})}
+fn supported(action:&Action)->bool{matches!(action,
+    Action::Status|Action::Inspect{..}|Action::Step{..}|Action::Find{..}|
+    Action::ContentRefresh|Action::ContentList{..}|Action::SelectId{..}|
+    Action::CheatRefresh|Action::CheatList{..}|Action::CheatShow{..}|Action::CheatCapabilities{..}|
+    Action::AudioStart{..}|Action::AudioReport|Action::CodeStart{..}|Action::CodeReport|
+    Action::GameplayStart{..}|Action::GameplayReport|Action::UiStart|Action::UiReport|Action::Graphics{..}
+)}
 fn result(checkpoint:&Checkpoint,outcome:&str,message:&str)->Value{
     let ok=matches!(outcome,"completed"|"cancelled"|"cancellation-pending");
     json!({"schema":1,"kind":"ffta-debug-command-recipe-run","ok":ok,"outcome":outcome,"message":message,"error":if ok{None}else{Some(message)},"checkpoint":checkpoint})
@@ -37,7 +43,8 @@ pub(super) fn drive_with_cancel(root:&Path,id:&str,resume:bool,local_cancel:Opti
     let (mut checkpoint,active)=inspect(root,id)?;
     if !active{return Err("Readiness does not match the original control run".into());}
     let recipe=load(root,&checkpoint.recipe_name)?;
-    if recipe.steps.iter().any(|a|!supported(a)){return Err("This runner currently supports only status, inspect and bounded step; no action sent".into());}
+    recipe.validate_run_frame_budget()?;
+    if recipe.steps.iter().any(|a|!supported(a)){return Err("unsupported action in recipe; no action sent. Use status, inspect, bounded step, catalog discovery/selection/queries, bounded capture/report commands or bounded searches".into());}
     {
         let _gate=lock(&dir,".transition.lock")?;
         let cancel=dir.join("cancel.json");
@@ -210,7 +217,7 @@ mod tests {
     fn ambiguous_read_query_and_unsupported_steps_never_dispatch(){
         let (t,server,id)=fixture(&["status"]);let dir=run_dir(t.path(),&id).unwrap();let (mut c,_)=inspect(t.path(),&id).unwrap();let recipe=load(t.path(),"demo").unwrap();let deadline=now()+30_000;c.deadline_unix_ms=Some(deadline);c.steps[0].state="pending".into();c.steps[0].deadline_unix_ms=Some(deadline);publish(&dir,&c,&recipe).unwrap();
         assert_eq!(drive(t.path(),&id,true).unwrap()["outcome"],"unconfirmed");assert!(!t.path().join("Data/config/debug-control/query.json").exists());drop(server);
-        let (t,server,id)=fixture(&["replay run"]);assert!(drive(t.path(),&id,false).unwrap_err().contains("supports only"));assert!(!t.path().join("Data/config/debug-control/request.json").exists());drop(server);
+        let (t,server,id)=fixture(&["replay run"]);assert!(drive(t.path(),&id,false).unwrap_err().contains("unsupported action"));assert!(!t.path().join("Data/config/debug-control/request.json").exists());drop(server);
     }
     #[test]
     fn cancellation_with_unresolved_step_is_not_reported_as_completed(){
@@ -272,6 +279,48 @@ mod tests {
         let _=server.reply(&request,json!({"paused":true,"frame":1,"remaining":0}),None);
         let stop=Arc::new(AtomicBool::new(false));let count=Arc::new(AtomicUsize::new(0));let worker=serve(server,t.path().to_owned(),id.clone(),false,stop.clone(),count.clone());
         let done=drive(t.path(),&id,true).unwrap();assert_eq!(done["outcome"],"completed");assert_eq!(count.load(Ordering::SeqCst),1);stop.store(true,Ordering::SeqCst);worker.join().unwrap();
+    }
+
+    #[test]
+    fn catalog_actions_are_ordered_and_a_failed_selection_stops_the_recipe(){
+        let commands=["content refresh","content list --limit 2","profile select chosen","cheats refresh","cheats list --limit 2","cheats show CH-0001","cheats capabilities CH-0001","step 1"];
+        let (t,mut server,id)=fixture(&commands);let stop=Arc::new(AtomicBool::new(false));let seen=Arc::new(std::sync::Mutex::new(Vec::new()));let worker_stop=stop.clone();let worker_seen=seen.clone();
+        let worker=thread::spawn(move||{while !worker_stop.load(Ordering::SeqCst){for query in [true,false]{let request=match if query{server.poll_query()}else{server.poll()}{Ok(v)=>v,Err(_)=>continue};if let Some(request)=request{worker_seen.lock().unwrap().push(format!("{:?}",request.command));let _=server.reply(&request,json!({"paused":true}),None);}}thread::sleep(Duration::from_millis(2));}});
+        let result=drive(t.path(),&id,false).unwrap();assert_eq!(result["outcome"],"completed");let actions=seen.lock().unwrap();assert_eq!(actions.len(),8);for (actual,expected) in actions.iter().zip(["ContentRefresh","ContentList","SelectId","CheatRefresh","CheatList","CheatShow","CheatCapabilities","Step"]){assert!(actual.starts_with(expected),"{actual}");}drop(actions);
+        assert!(result["checkpoint"]["steps"].as_array().unwrap().iter().all(|s|s["state"]=="completed"));assert_eq!(drive(t.path(),&id,true).unwrap()["outcome"],"completed");assert_eq!(seen.lock().unwrap().len(),8);stop.store(true,Ordering::SeqCst);worker.join().unwrap();
+        let (t,mut server,id)=fixture(&["profile select missing","step 1"]);let stop=Arc::new(AtomicBool::new(false));let count=Arc::new(AtomicUsize::new(0));let end=stop.clone();let n=count.clone();let worker=thread::spawn(move||{while !end.load(Ordering::SeqCst){if let Ok(Some(request))=server.poll(){n.fetch_add(1,Ordering::SeqCst);let _=server.reply(&request,json!({"paused":true}),Some("Selection unavailable".into()));}thread::sleep(Duration::from_millis(2));}});
+        let failed=drive(t.path(),&id,false).unwrap();assert_eq!(failed["outcome"],"failed");assert_eq!(failed["checkpoint"]["steps"][1]["state"],"planned");assert_eq!(drive(t.path(),&id,true).unwrap()["outcome"],"failed");assert_eq!(count.load(Ordering::SeqCst),1);stop.store(true,Ordering::SeqCst);worker.join().unwrap();
+    }
+    #[test]
+    fn lost_catalog_selection_recovers_without_reapplying_and_ambiguous_catalog_read_stops(){
+        let (t,server,id)=fixture(&["profile select chosen","step 1"]);let stop=Arc::new(AtomicBool::new(false));let count=Arc::new(AtomicUsize::new(0));let worker=serve(server,t.path().to_owned(),id.clone(),false,stop.clone(),count.clone());
+        let dir=run_dir(t.path(),&id).unwrap();let (mut c,_)=inspect(t.path(),&id).unwrap();let recipe=load(t.path(),"demo").unwrap();let deadline=now()+30_000;c.deadline_unix_ms=Some(deadline);c.steps[0].state="pending".into();c.steps[0].deadline_unix_ms=Some(deadline);publish(&dir,&c,&recipe).unwrap();
+        assert_eq!(crate::debug_control::planned_action_classified(t.path(),recipe.steps[0].clone(),10_000,c.session_run.clone(),c.steps[0].request_id.clone(),deadline).unwrap()["ok"],true);assert_eq!(count.load(Ordering::SeqCst),1);
+        assert_eq!(drive(t.path(),&id,true).unwrap()["outcome"],"completed");assert_eq!(count.load(Ordering::SeqCst),2);stop.store(true,Ordering::SeqCst);worker.join().unwrap();
+        let (t,server,id)=fixture(&["content list","step 1"]);let dir=run_dir(t.path(),&id).unwrap();let (mut c,_)=inspect(t.path(),&id).unwrap();let recipe=load(t.path(),"demo").unwrap();let deadline=now()+30_000;c.deadline_unix_ms=Some(deadline);c.steps[0].state="pending".into();c.steps[0].deadline_unix_ms=Some(deadline);publish(&dir,&c,&recipe).unwrap();assert_eq!(drive(t.path(),&id,true).unwrap()["outcome"],"unconfirmed");assert!(!t.path().join("Data/config/debug-control/query.json").exists());drop(server);
+    }
+
+    #[test]
+    fn bounded_capture_actions_complete_in_order_and_duplicate_report_does_not_run(){
+        let commands=["ui-start","step 1","ui-report","graphics","audio-start --frames 1 --streams mixed","audio-report","code-start --frames 1 --events 2","code-report","gameplay-start --frames 1 --events 2","gameplay-report"];
+        let (t,mut server,id)=fixture(&commands);let stop=Arc::new(AtomicBool::new(false));let seen=Arc::new(std::sync::Mutex::new(Vec::new()));let end=stop.clone();let calls=seen.clone();
+        let worker=thread::spawn(move||{while !end.load(Ordering::SeqCst){if let Ok(Some(request))=server.poll(){calls.lock().unwrap().push(format!("{:?}",request.command));let _=server.reply(&request,json!({"paused":true}),None);}thread::sleep(Duration::from_millis(2));}});
+        let result=drive(t.path(),&id,false).unwrap();assert_eq!(result["outcome"],"completed");let actions=seen.lock().unwrap();assert_eq!(actions.len(),10);for (actual,expected) in actions.iter().zip(["UiStart","Step","UiReport","Graphics","AudioStart","AudioReport","CodeStart","CodeReport","GameplayStart","GameplayReport"]){assert!(actual.starts_with(expected),"{actual}");}drop(actions);
+        assert_eq!(drive(t.path(),&id,true).unwrap()["outcome"],"completed");assert_eq!(seen.lock().unwrap().len(),10);stop.store(true,Ordering::SeqCst);worker.join().unwrap();
+    }
+    #[test]
+    fn lost_capture_report_response_is_recovered_with_original_identity(){
+        let (t,server,id)=fixture(&["ui-report","step 1"]);let stop=Arc::new(AtomicBool::new(false));let count=Arc::new(AtomicUsize::new(0));let worker=serve(server,t.path().to_owned(),id.clone(),false,stop.clone(),count.clone());
+        let dir=run_dir(t.path(),&id).unwrap();let (mut c,_)=inspect(t.path(),&id).unwrap();let recipe=load(t.path(),"demo").unwrap();let deadline=now()+30_000;c.deadline_unix_ms=Some(deadline);c.steps[0].state="pending".into();c.steps[0].deadline_unix_ms=Some(deadline);publish(&dir,&c,&recipe).unwrap();
+        assert_eq!(crate::debug_control::planned_action_classified(t.path(),recipe.steps[0].clone(),10_000,c.session_run.clone(),c.steps[0].request_id.clone(),deadline).unwrap()["ok"],true);assert_eq!(count.load(Ordering::SeqCst),1);
+        assert_eq!(drive(t.path(),&id,true).unwrap()["outcome"],"completed");assert_eq!(count.load(Ordering::SeqCst),2);stop.store(true,Ordering::SeqCst);worker.join().unwrap();
+    }
+
+    #[test]
+    fn search_not_reached_can_be_asserted_and_stops_following_steps(){
+        let (t,mut server,id)=fixture(&["break 0x08000000 arm --steps 1","assert /status/probe/outcome text:hit","step 1"]);let stop=Arc::new(AtomicBool::new(false));let count=Arc::new(AtomicUsize::new(0));let end=stop.clone();let n=count.clone();
+        let worker=thread::spawn(move||{while !end.load(Ordering::SeqCst){if let Ok(Some(request))=server.poll(){n.fetch_add(1,Ordering::SeqCst);let _=server.reply(&request,json!({"paused":true,"probe":{"outcome":"not-reached","steps":1,"completed_frames":0}}),None);}thread::sleep(Duration::from_millis(2));}});
+        let result=drive(t.path(),&id,false).unwrap();assert_eq!(result["outcome"],"assertion-failed");assert_eq!(result["checkpoint"]["steps"][1]["state"],"planned");assert_eq!(drive(t.path(),&id,true).unwrap()["outcome"],"assertion-failed");assert_eq!(count.load(Ordering::SeqCst),1);stop.store(true,Ordering::SeqCst);worker.join().unwrap();
     }
 
 }

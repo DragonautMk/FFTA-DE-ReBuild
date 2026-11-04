@@ -7,6 +7,8 @@ use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 use std::path::Path;
 
+pub(crate) const MAX_SEARCH_FRAMES:u64=600;
+
 #[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(tag = "kind", rename_all = "kebab-case", deny_unknown_fields)]
 pub(crate) enum Condition {
@@ -89,7 +91,7 @@ impl Search {
                     return false;
                 }
             }
-            if self.steps >= self.settings.steps || self.frames >= 600 {
+            if self.steps >= self.settings.steps || self.frames >= MAX_SEARCH_FRAMES {
                 self.result = Some(
                     json!({"outcome":"not-reached","boundary":"after-interpreter-step-or-origin","steps":self.steps,"completed_frames":self.frames}),
                 );

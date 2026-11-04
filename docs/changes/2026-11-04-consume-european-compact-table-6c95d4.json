@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "consume-european-compact-table-6c95d4",
+  "title": "Consume a second table-driven European compact root",
+  "kind": "changed",
+  "platforms": [
+    "Windows executable on Wine; EUR"
+  ],
+  "changes": [
+    "Extend the decoded compact OBJ catalog with root 0x6c95d4 and its guarded motion-position table; preserve adjacent source spans and unread bytes, and advance schema and dataset revisions."
+  ],
+  "validation": [
+    "Windows CLI and test harness compiled. Wine create/reuse preserved 39 earlier banks and 99 other resources. Targeted test checked 572 represented bytes, raw fallback, original threshold and selector-copy paths, 33 frame pairs, 33 list pointers and four native count comparisons with full state and clock.",
+    "Wine production CLI advanced 12 frames with all 100 runtime resource identities matching and guarded inputs unchanged; the aggregate catalog counter was zero."
+  ],
+  "limitations": [
+    "Ordinary use, other producers, wider ROM coverage, Linux, USA, native Windows and mod phases remain unverified. No performance or space measurements."
+  ],
+  "files": [
+    "docs/rom_data_compact_catalog.md",
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/compact_obj_catalog.rs",
+    "crates/gba-core/src/rom_data/compact_obj_catalog/contracts.rs",
+    "crates/gba-core/src/rom_data/compact_obj_catalog/selector_tables.rs",
+    "crates/recomp/src/rom_data/clan_table_alias_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_octonary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_quaternary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_quinary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_secondary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_senary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_septenary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_tertiary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_catalog_table_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_catalog_tests.rs",
+    "crates/recomp/src/rom_data/conditional_descriptor_bank_zero_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_descriptor_banks_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_four_byte_lookup_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_packed_lookup_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_property_masks_runtime_tests.rs",
+    "crates/recomp/src/rom_data/dynamic_raw_fragments_runtime_tests.rs",
+    "crates/recomp/src/rom_data/table_graphics_runtime_tests.rs",
+    "crates/recomp/src/rom_data/ui_context_templates_tests.rs"
+  ],
+  "references": [
+    "docs/changes/2026-11-04-identify-european-compact-table-6c95d4.json"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "verify-multiple-capture-recipes-live",
+  "title": "Verify diagnostic capture recipes in an isolated session",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU / Wine / Xvfb"
+  ],
+  "changes": [
+    "Document end-to-end audio, code, gameplay and graphics recipe execution in an isolated EUR interpreter session."
+  ],
+  "validation": [
+    "Each of four recipes produced one report with the expected kind; audio, code and gameplay each advanced one frame, graphics advanced none, and explicit second resumes neither duplicated reports nor changed state. Protected inputs stayed unchanged and the GUI closed normally. A stripped copy of the previously built runtime was used."
+  ],
+  "limitations": [
+    "This covers one isolated EUR interpreter session and checks report production, not capture fidelity, physical audio, native Windows, physical controls or other scenes. Private session copies remain as a named current proof pending replacement."
+  ],
+  "files": [
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ],
+  "references": [
+    "crates/recomp/src/debug_command/recipe/checkpoint/runner.rs"
+  ]
+}

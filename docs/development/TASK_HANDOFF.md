@@ -36,11 +36,11 @@ termination of another owner's process or changing another thread's goal state.
 
 ### ROM-DATA-FULL-EUR
 
-- State: suspended
+- State: waiting
 - Outcome: partial
-- Verified: e111100resources/101files,34banks/81selectors/7624B; five-loop source/native48cases/CLI accepted. Current: target/validation/units/rom-data-loop-compact-current-o_yv6xep/work/resources/. Proof: target/rom-data-compact-residual-sources-20261103/combined-result.json. E110 retired; Roulette600/UI12/StarCross480 proofs and limits preserved.
+- Verified: e116 100resources/101files,41banks/118selectors/10436B; source/native2cases/create-reuse/12frame Wine CLI accepted. Current: target/validation/units/rom-data-e116-root-current-udm_4e_m/work/resources/. E111–E115 retained; Roulette600/UI12/StarCross480 prior proofs preserved.
 - Missing: unmigrated resources/consumers, missing ordinary-use evidence, ABI/global extent/indirect calls and mod phases ROMDATA-06/07; Linux/USA/native Windows/new32:9 remain distinct. EUR, reduced Wine scope, no performance/space measurements; originals and personal saves unchanged.
-- Selection: `ROMDATA-02-04-E112-TABLE-COMPACT-CATALOG` suspended/integrated_unverified. Latest advanced-save reply resolved by closed ordinary proofs; goal paused. E112 build/create-reuse/native96cases PASS. Missing: short CLI startup/e111 comparison retirement. No new execution selected; memory reconciliation only.
+- Selection: `ROMDATA-02-04-E117-ALTERNATE-CATALOG` waiting/integrated_unverified. Request: EUR/Wine only, no metrics. Source PASS; code and runners prepared, build/create/reuse/reader/CLI checks missing. Approval review usage limit persists until reported 12:52; next perform read-only source/contract reconciliation while waiting. Model settings unconfirmed.
 - Resume: [ROM_DATA_TODO](ROM_DATA_TODO.md), only the selected criterion's section (ROMDATA-01/02/03/04/05/06/07); [inventory](ROM_DATA_INVENTORY.md). Do not read the whole TODO. The following children retain their IDs and limits, with no new attempts selected here:
   - `ROMDATA-04-PARAMETER-RECORDS27-ORDINARY`: source/model/runtime/CLI accepted; 59 records observed, full domain unproven; positive normal use and complete paired evidence missing. Eleven negative captures closed; archive legacy lines 17624..17672 and `docs/rom_data_gameplay.md`, ordinary sparse parameter record reachability section.
   - `ROMDATA-04-LOCALIZED-TABLE-GRAPHICS-ORDINARY`: 40 banks/8 tables source/model/runtime/CLI accepted; positive normal trigger and paired evidence missing; negative attempts remain closed. `docs/rom_data_ui_graphics.md`, ordinary table extension reachability section; archive 17844..17864.
@@ -89,10 +89,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 - State: active
 - Outcome: partial
-- Verified: assertions and EUR 1-frame stop/no-repeat; bounded waits and reviewed tool Start/cancellation pass synthetic Wine tests. `2026-11-03-start-reviewed-recipes-in-tools.json`.
-- Missing: other actions, interactive picker/real GUI, real interrupted recovery and real-session waits; ambiguous queries not retried.
-- Selection: user goal debugtools v2 / DBG2-16-REAL-INTERRUPTION; prior synthetic recovery and short EUR run accepted. Missing: real interrupted client recovery.
-- Resume: prepare bounded isolated Windows/Wine proof; preserve input pins and existing jobs. Failed build units retained; project-memory check flags other active ROM changes.
+- Verified: assertions, waits, catalog/captures, bounded searches, Start/cancel, interrupted recovery, safe restart refusal and one interactive recipe/session picker flow in EUR Wine. `2026-11-04-verify-typed-recipe-interactive-picker.json`.
+- Missing: other action types, live search hit/feature-gated watch, broader picker scenarios, cross-restart recovery and wider platforms; ambiguous queries not retried.
+- Resume: select an unverified criterion without repeating the accepted interactive flow; private and failed proof units retained.
 
 ### DBG2-17
 
@@ -218,9 +217,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: ROMDATA-02-04-E112-TABLE-COMPACT-CATALOG suspended/integrated_unverified; EUR goal paused/partial.
-- Last verified result: e112 source/model/build/create-reuse PASS; native hw7pz62y PASS25bank+71table/skip cases, full state-clock.34unknown bytes raw;99resources/prior34banks preserved; successful scratch removed.
-- Remaining work: short CLI startup, e111 comparison retirement/acceptance/memory closure;26residual/global/ordinary/Linux/USA/mod.
-- Errors or blockers: first filter ran0tests; corrected without rebuild, failed logs retained. Handle6774 unavailable; terminal receipts prove PASS. Model settings unconfirmed; preserve DBG2 work.
-- Next action: paused; native result/docs recorded, project-memory/handoff/diff checks PASS. On explicit resume inspect pins/ownership, then short CLI; no source/build/native/ordinary repeats.
-- References: target/rom-data-e111-next-sources-20261103/{native-unit,native-filter-correction,current-dataset,build-unit}.json; native unit rom-data-table-compact-native-hw7pz62y.
+- Task: ROMDATA-02-04-E117-ALTERNATE-CATALOG waiting/integrated_unverified; EUR goal partial.
+- Last verified result: 10 roots/12 selectors/1818 bytes source PASS; static contracts match retained geometry and E116 union. E117 not built or runtime verified.
+- Remaining work: 22 residual census roots, ordinary use, global coverage, Linux/USA/native Windows and mod phases; E111–E115 retained.
+- Errors or blockers: host-coordinated E117 build was not executed; automatic approval review hit usage limit (reported retry 12:52). Model/effort unconfirmed.
+- Next action: after approval usage reset, run target/rom-data-e116-alternate-census-20261104/run-build-snapshot.py with host coordination, then Wine checks.
+- References: docs/rom_data_compact_catalog.md; target/rom-data-e116-alternate-census-20261104/{query-unit,geometry-unit}.json.

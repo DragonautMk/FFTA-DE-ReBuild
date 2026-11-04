@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "verify-typed-recipe-interactive-picker",
+  "title": "Verify typed recipe picker and explicit start",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU under Wine/Xvfb, isolated EUR session"
+  ],
+  "changes": [
+    "Verify interactive selection of a saved recipe and its original isolated session and require Details before Start."
+  ],
+  "validation": [
+    "A simulated keyboard and mouse selected both entries; Start before Details was refused without a run, then Details and Start completed exactly one frame and a completed checkpoint step. The GUI closed normally and protected inputs remained unchanged.",
+    "The earlier retained driver attempts failed before this path completed; a focused Sol xhigh read-only consultation identified physical Enter and virtual Clear routing."
+  ],
+  "limitations": [
+    "One EUR Wine/Xvfb path only; native Windows, physical input, wider picker scenarios and cross-restart recovery remain unverified."
+  ],
+  "files": [
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ],
+  "references": []
+}

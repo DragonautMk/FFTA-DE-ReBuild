@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "verify-interrupted-recipe-in-live-session",
+  "title": "Verify interrupted recipe recovery in a live session",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU / Wine / Xvfb"
+  ],
+  "changes": [
+    "Document a real interrupted recipe client and bounded status-wait recovery in an isolated EUR interpreter session."
+  ],
+  "validation": [
+    "Windows GNU runtime build passed. The owned client was terminated during its wait after one completed frame; an external frame satisfied the wait, explicit resume completed the next step with the same original request identity, and a second resume left guest state unchanged. Frame offsets were 0, 1, 2, 3, 3; the session closed normally and protected inputs were unchanged.",
+    "Two initial test-bridge launches exited before GUI because they inherited FFTA_VALIDATION variables forbidden by the isolated-session guard; their diagnostics remain. A Sol/xhigh read-only source consultation identified the bridge environment mismatch; the D-Bus warning also appeared in an earlier passing run."
+  ],
+  "limitations": [
+    "This proves interruption of the client during a status wait in one EUR Wine/Xvfb interpreter session, not a crash during a pending mutating request, session restart, native Windows or physical input. The successful unit keeps private session inputs as a named current-proof exception pending replacement."
+  ],
+  "files": [
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ],
+  "references": [
+    "crates/recomp/src/debug_command/recipe/checkpoint/runner.rs"
+  ]
+}

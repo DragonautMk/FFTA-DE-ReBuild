@@ -366,21 +366,41 @@ No other development was selected. On resumption read only the individual ID in
   and [declared library](../changes/2026-10-30-add-declared-debug-script-library.json)
   already have bounded read-only status/inspect recipes (DBG2-06 foundation).
   The [console parser](../../crates/recomp/src/debug_command.rs) keeps multiline
-  input as a draft and does not execute batches with assertions, waits or
-  checkpoints. The console now saves and previews inert typed
-  sequences pinned to the session manifest; it does not execute them. Scripts
-  and tools can select and review them but refuse Start. A prepared inert
-  checkpoint retains per-step IDs and action hashes. A limited console runner
-  now handles status/inspect/step, journals results, stops between steps and
+  input as a draft; saved typed recipes are separate, session-pinned sequences.
+  The console can save, preview, prepare and run them; Scripts and tools can
+  review and explicitly start them. A prepared checkpoint retains per-step IDs
+  and action hashes. A limited console runner
+  now handles status/inspect/step, catalog discovery/selection/queries and
+  bounded UI/audio/code/gameplay/graphics capture/report actions and bounded
+  breakpoint/watch searches with a combined frame budget,
+  journals results, stops between steps and
   retries an unresolved ledger-protected request with its original identity.
   Synthetic cancellation/recovery and a short EUR run passed. Bounded scalar
   assertions on terminal responses stop the sequence on mismatch. Bounded status
   waits pass focused synthetic Wine tests. Scripts and tools Start now connects
   the reviewed selection to the same runner, with synthetic Wine tests for
-  preview, cancellation and explicit resume. Other actions, interactive picker
-  coverage and the complete interrupted acceptance
-  matrix remain missing. Do not
-  duplicate the existing host runner.
+  preview, cancellation and explicit resume. An isolated EUR Wine/Xvfb run
+  also terminated its client during a wait and resumed without repeating the
+  completed action. A separate EUR session terminated the client while a
+  60-frame step was pending and resumed with the same ID and exact frame count.
+  Closing and reopening the session makes the old checkpoint inspectable but
+  refuses resume without dispatch; cross-restart recovery is not implemented.
+  A separate isolated EUR Wine/Xvfb GUI run selected the recipe and session
+  through the picker, refused Start before Details, then completed one frame
+  after preview and recorded the completed step. Input was simulated and
+  protected inputs stayed unchanged. Other actions, broader picker scenarios,
+  wider interrupted acceptance, native Windows and physical input remain open.
+  Catalog discovery/selection/query recipe support has synthetic ordering and
+  recovery coverage; an isolated EUR run verified content refresh/list and an
+  invalid selection stopping the next step. A separate EUR session selected a
+  synthetic cheat catalog and read its list, detail and capability report in
+  one recipe without changing guest state. UI/audio/code/gameplay/graphics
+  bounded searches enforce the aggregate worst-case frame budget; an EUR Wine
+  miss/strong assertion flow passed. A real hit and feature-gated watch remain
+  unverified. Capture actions have synthetic coverage; isolated EUR Wine recipes produced
+  one UI, audio, code, gameplay and graphics report each without duplication
+  on resume. Wider scenarios and platform coverage remain. Do not duplicate the
+  runner.
 
 <a id="p3--menu-cheat-utile-alla-preparazione-del-debug"></a>
 

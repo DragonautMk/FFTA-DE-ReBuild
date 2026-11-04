@@ -143,7 +143,7 @@ impl Bank {
 pub struct CompactObjCatalog {
     pub banks: Vec<Bank>,
     // Historical v1 evidence can still be decoded for bank identity comparison.
-    // Current v2 validation requires all three source-authenticated tables.
+    // Current v4 validation requires all five source-authenticated tables.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub selector_tables: Option<selector_tables::SelectorTables>,
 }
@@ -157,6 +157,8 @@ impl CompactObjCatalog {
             (0x6c58b8, tables.motion.rows.iter().map(|row| u16::from(row.selector)).collect::<std::collections::BTreeSet<_>>()),
             (0x6c6e6c, tables.positions.rows.iter().map(|row| u16::from(row.selector)).collect()),
             (0x6cbaf8, tables.horizontal.rows.iter().map(|row| u16::from(row.selector)).collect()),
+            (0x6c992c, tables.timed_positions.as_ref().unwrap().rows.iter().map(|row| u16::from(row.selector)).collect()),
+            (0x6c95d4, tables.motion_positions.as_ref().unwrap().rows.iter().map(|row| u16::from(row.selector)).collect()),
         ] {
             let spec = BANK_SPECS.iter().find(|spec| spec.root == root).ok_or("Unbound compact selector table")?;
             if values.into_iter().collect::<Vec<_>>().as_slice() != spec.selectors {

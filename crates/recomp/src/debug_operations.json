@@ -5636,7 +5636,7 @@
       "allowed_state":"Selected isolated session with configuration directory and valid declared pins.",
       "effects":"Atomically create an inert typed recipe file; no command is executed.",
       "result":"Typed ordered actions, session pins and declared limits.",
-      "limits":"16 steps, 3600 explicit step frames, 64 KiB per recipe, 32 files; runner currently supports status, inspect and step only.",
+      "limits":"16 steps, 3600 combined step and worst-case search frames, 64 KiB per recipe, 32 files; runner supports status, inspect, step, catalog discovery/selection/queries bounded captures/reports and bounded searches.",
       "open_work":["DBG2-16: broader actions and real interrupted recovery remain missing"],
       "external_dialog":null
     },
@@ -5672,7 +5672,7 @@
       "allowed_state":"Matching readiness metadata declaring an active control session with idempotent-request-v1.",
       "effects":"Persist unique per-step planned identities and hashes; do not dispatch any request.",
       "result":"Inert checkpoint and recipe run ID.",
-      "limits":"32 retained recipe runs and 16 steps. Run is separate and currently supports status, inspect and step only.",
+      "limits":"32 retained recipe runs and 16 steps. Run is separate and supports status, inspect, step, catalog discovery/selection/queries bounded captures/reports and bounded searches.",
       "open_work":["DBG2-16: broader actions and real interrupted recovery remain missing"],
       "external_dialog":null
     },
@@ -5704,9 +5704,9 @@
       "selection":["Original session run and prepared checkpoint; Scripts and tools also requires an unchanged reviewed recipe and session"],
       "menu":{"current":"Debug / Consoles and scripts / Command console; Scripts and tools / Debug command recipe","destination":"Debug / Consoles and scripts / Command console; Scripts and tools / Debug command recipe","implemented":true},
       "allowed_state":"Matching original session run and authenticated session inputs; each action enforces its own state guards.",
-      "effects":"Persist deadline and request identity before each dispatch; execute only status, inspect and bounded step in order.",
+      "effects":"Persist deadline and request identity before each dispatch; execute status, inspect, bounded step, catalog discovery/selection/queries bounded captures/reports and bounded searches in order.",
       "result":"Completed, cancelled, assertion-failed, wait-timeout, failed, timeout or unconfirmed checkpoint with bounded results.",
-      "limits":"16 steps, 3600 explicit step frames, 120-second execution deadline and bounded output; read query with ambiguous result is not retried.",
+      "limits":"16 steps, 3600 combined step and worst-case search frames, 120-second execution deadline and bounded output; read query with ambiguous result is not retried.",
       "open_work":["DBG2-16: additional action types and real interrupted recovery remain missing"],
       "external_dialog":null
     },

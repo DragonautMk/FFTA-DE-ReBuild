@@ -19998,3 +19998,136 @@ Clarified e26/e27/e31/e32 metadata and managed packet introductory text. Numeric
 - Verified criteria: reviewed typed recipe Start uses pinned checkpoint runner, checks unchanged selection, cooperatively cancels or reports an unresolved reserved action, and explicitly resumes without automatically repeating the completed action. Full bounded preview and controller scrolling have synthetic menu rendering coverage.
 - Evidence: docs/changes/2026-11-03-start-reviewed-recipes-in-tools.json; target/validation/units/dbg2-recipe-tool-tests-2uy46oul/unit-result.json; target/validation/units/dbg2-recipe-tool-menu-tests-g2_z9z0e/unit-result.json.
 - Limits: synthetic server and menu rendering under Wine; actual picker/GUI, real interrupted process recovery, physical controller and native Windows remain open under DBG2-16. Test build snapshot excluded another owner's in-progress ROM table test module. Primary model/effort not independently confirmed.
+
+### ROMDATA-02-04-E112-TABLE-COMPACT-CATALOG
+
+- Outcome: completed
+- Verified criteria: scoped e112 table/catalog source and model, Wine native reader comparisons, create/reuse and 12-frame production CLI startup with 100 matching resource identities; guarded inputs unchanged.
+- Evidence: docs/changes/2026-11-03-migrate-european-compact-selector-tables.json; docs/changes/2026-11-04-verify-european-compact-selector-cli.json; target/rom-data-e111-next-sources-20261103/{native-unit,cli-unit}.json.
+- Limits: zero catalog reads during startup; new-root ordinary use, broader domains, Linux, USA, native Windows and mod support remain open. E111 dataset retained; no performance or space measurements.
+
+### DBG2-16-REAL-INTERRUPTION
+
+- Outcome: completed
+- Verified criteria: real EUR Wine/Xvfb interpreter recipe client terminated while waiting after completed step; original request identity retained, external frame triggered wait, subsequent step completed and second resume preserved state; GUI closed normally, protected inputs unchanged.
+- Evidence: docs/changes/2026-11-04-verify-interrupted-recipe-in-live-session.json; target/validation/units/dbg2-recipe-interrupted-live-iyhggbai/unit-result.json and evidence/result.json.
+- Limits: interrupted wait only, not a pending mutating action or session restart; native Windows and physical input untested. Private scratch retained as current proof. Two failed bridge launches retained; Sol/xhigh /root/sol_recipe_wine_dbus identified inherited validation variables as likely cause, D-Bus warning was nondiscriminating. Primary model/effort unknown.
+
+### ROMDATA-01-E112-RESIDUAL-COMPACT-SOURCES
+
+- Outcome: completed
+- Verified criteria: EUR root 0x6ca5f8 finite 0..2 selector loop and 174-byte nonoverlapping source projection; three sequences, 37 frames, nine lists including one empty list; Wine CLI original disassembly and preserved constructor pins.
+- Evidence: docs/changes/2026-11-04-identify-european-compact-loop-root.json; target/rom-data-e112-residual-20261104/source-unit.json; Wine unit rom-data-e112-residual-source-4_pxywch. Sol consultation requested gpt-6.1-sol/xhigh via /root/sol_residual_diagnosis; effective setting not exposed.
+- Limits: conditional source only; migration, all producers, ordinary use, Linux, USA, native Windows and mods remain open. No performance or space metrics.
+
+### DBG2-16-CATALOG-ACTIONS
+
+- Outcome: completed
+- Verified criteria: bounded catalog discovery, selection and queries in recipes; terminal ordering, first-error stop, same-ID selection recovery and no automatic retry of ambiguous queries. EUR Wine/Xvfb content refresh/list and invalid selection stop preserved guest and protected inputs.
+- Evidence: docs/changes/2026-11-04-run-catalog-actions-in-recipes.json; target/validation/units/dbg2-catalog-recipe-tests-m6yy7cda/unit-result.json; target/validation/units/dbg2-catalog-recipe-live-y69juali/unit-result.json.
+- Limits: real successful selection and cheat actions not exercised; native Windows and physical input untested. First live wrapper wrongly expected a limit field; corrected and failed unit retained. Primary model/effort unknown.
+
+### ROMDATA-02-04-E113-LOOP-6CA5F8
+
+- Outcome: completed
+- Verified criteria: conditional EUR source projection, extraction and typed runtime for three selectors and 174 bytes including an empty list; Wine build/create/reuse, focused reader/native state-clock comparisons and 12-frame production CLI startup pass, with 99 other resources and 37 previous banks unchanged.
+- Evidence: docs/changes/2026-11-04-consume-european-compact-loop-6ca5f8.json; target/rom-data-e112-residual-20261104/{source-unit,build-unit,current-dataset,native-unit,cli-unit}.json.
+- Limits: no ordinary-use or global producer claim; Linux, USA, native Windows and mod phases remain open. No performance or space measurements. E111/E112 retained; first Wine prepare encountered an occupied foreign lease before execution.
+
+### DBG2-16-LIVE-CHEAT-SELECTION
+
+- Outcome: completed
+- Verified criteria: one isolated EUR Wine/Xvfb interpreter recipe selected a discovered synthetic cheat catalog, refreshed it and retrieved list, CH-0001 detail and capabilities in order. Selection, source and snapshot identities and both response digests matched; explicit resume, guest state and protected inputs stayed unchanged; GUI closed normally.
+- Evidence: docs/changes/2026-11-04-verify-cheat-catalog-recipe-in-live-session.json; target/validation/units/dbg2-cheat-recipe-live-bz2i4qj8/unit-result.json and evidence/result.json.
+- Limits: one synthetic catalog/read-only flow; no cheat execution, device equivalence, native Windows or physical input. Private session copies retained as current-proof exception.
+
+### ROMDATA-01-E113-TABLE-6C992C
+
+- Outcome: completed
+- Verified criteria: EUR producer bounds, threshold, selector and coordinate reads, constructor target and nonoverlapping source projection for root 0x6c992c and 20-row table on Wine; eight selectors, 200 bank and 120 table bytes, empty list 1 and adjacent bank boundary.
+- Evidence: docs/changes/2026-11-04-identify-european-compact-table-root.json; target/rom-data-e113-table-root-20261104/query-unit.json; Wine unit rom-data-e113-table-query-0glvcpsh. First query fnydjt0c had an incorrect empty-list index and was corrected.
+- Limits: conditional source only, 40 unread table bytes remain raw; extraction, runtime, ordinary use, all producers, Linux, USA, native Windows and mods remain open. No performance measurements.
+
+### DBG2-16-LIVE-PENDING-INTERRUPTION
+
+- Outcome: completed
+- Verified criteria: EUR Wine/Xvfb interpreter server reported the original 60-frame step ID pending before the owned client was terminated; explicit resume recovered the same ID, completed 60 plus 1 frames, and a second resume preserved machine state. Protected inputs unchanged and GUI closed normally.
+- Evidence: docs/changes/2026-11-04-verify-pending-step-recipe-recovery.json; target/validation/units/dbg2-pending-step-live-626n8s9n/unit-result.json and evidence/result.json.
+- Limits: same control run only; session restart, native Windows and physical input untested. A 600-frame attempt timed out/unconfirmed and a separate run encountered a foreign Wine lease; both diagnostics retained. Private session copies retained as current proof.
+
+### ROMDATA-02-04-E114-TABLE-6C992C
+
+- Outcome: completed
+- Verified criteria: EUR bank/table extraction and typed runtime for eight selectors, 320 represented bytes, empty list 1, adjacent bank boundary and raw fallback; Wine build, create/reuse, focused state-clock reader/native checks and 12-frame CLI startup pass. 38 earlier banks and 99 other resources unchanged.
+- Evidence: docs/changes/2026-11-04-consume-european-compact-table-6c992c.json; target/rom-data-e113-table-root-20261104/{query-unit,build-unit,current-dataset,native-unit,cli-unit}.json.
+- Limits: conditional source paths only; ordinary use and other producers, global domains, Linux, USA, native Windows and mod phases remain open. No performance or space measurements.
+
+### DBG2-16-CAPTURE-ACTIONS
+
+- Outcome: completed
+- Verified criteria: typed recipes execute bounded UI, audio, code, gameplay and graphics capture/report handlers in order with existing guards and ledger recovery; 31 focused Wine tests PASS. EUR Wine/Xvfb UI start, one frame and report produced exactly one report and did not repeat on resume; protected inputs unchanged and GUI closed normally.
+- Evidence: docs/changes/2026-11-04-run-diagnostic-captures-in-recipes.json; target/validation/units/dbg2-capture-recipe-tests-ix6ulfti/unit-result.json; target/validation/units/dbg2-capture-recipe-live-n4zohwf2/unit-result.json.
+- Limits: only UI report exercised live through recipe, using a stripped runtime copy; other capture types synthetic, native Windows/physical input untested. Private session retained as current proof.
+
+### ROMDATA-01-E114-ROOT-6C95D4
+
+- Outcome: completed
+- Verified criteria: EUR guarded 16-row table selector 0..2, original helper preservation and constructor, nonoverlapping 412-byte bank and 160 known table bytes authenticated on Wine.
+- Evidence: docs/changes/2026-11-04-identify-european-compact-table-6c95d4.json; target/rom-data-e114-root-20261104/{unit,upstream-unit,query-unit}.json.
+- Limits: conditional source only; 32 unread table bytes raw; extraction/runtime, ordinary use, other producers, Linux, USA, native Windows and mods remain open. No performance measurements.
+
+### DBG2-16-LIVE-CAPTURE-REPORTS
+
+- Outcome: completed
+- Verified criteria: isolated EUR Wine/Xvfb interpreter recipes produced one audio, code, gameplay and graphics report each; their expected operation order and report kinds matched. Audio/code/gameplay each advanced one frame, graphics none; explicit second resumes produced no duplicates or state changes. Protected inputs unchanged and GUI closed normally.
+- Evidence: docs/changes/2026-11-04-verify-multiple-capture-recipes-live.json; target/validation/units/dbg2-multicapture-recipe-live-52bqp6u1/unit-result.json and evidence/result.json.
+- Limits: one interpreter session and report production only; no capture fidelity, physical audio/controller, native Windows or wider scene claims. Private inputs retained as current-proof exception.
+
+### ROMDATA-02-04-E115-TABLE-6C95D4
+
+- Outcome: completed
+- Verified criteria: EUR bank/table extraction and typed runtime for 572 represented bytes, source boundaries and raw fallback; Wine build, create/reuse, focused original reader and native state-clock comparisons, and 12-frame CLI startup pass; 39 prior banks and 99 other resources unchanged.
+- Evidence: docs/changes/2026-11-04-consume-european-compact-table-6c95d4.json; target/rom-data-e114-root-20261104/{query-unit,build-unit,current-dataset,native-unit,cli-unit}.json.
+- Limits: conditional source paths only; ordinary use, other producers, global domains, Linux, USA, native Windows and mods remain open. No performance or space measurements.
+
+### DBG2-16-BOUNDED-SEARCH
+
+- Outcome: completed
+- Verified criteria: recipes run bounded breakpoint/watch searches with each search's worst-case 600-frame allowance included in the 3600 combined budget, preserve legacy serialization and refuse over-budget execution. 33 focused Wine tests and real EUR interpreter miss/assertion flow PASS; protected inputs unchanged and GUI closed normally.
+- Evidence: docs/changes/2026-11-04-run-bounded-searches-in-recipes.json; target/validation/units/dbg2-search-recipe-tests-h2aul7gd/unit-result.json; target/validation/units/dbg2-search-recipe-live-413q3fz2/unit-result.json.
+- Limits: real hit and feature-gated watch, native Windows and physical input unverified. First supervisor lost process reference; host-checked owned leases recovered and corrected run passed. Private/incomplete units retained; primary model/effort unknown.
+
+### ROMDATA-01-E115-ROOT-6C4910
+
+- Outcome: completed
+- Verified criteria: EUR selector-zero caller through alternate constructor and retained initializer/count-reader chain; Wine source query authenticates 162 nonoverlapping bytes, eight frames and six lists including empty list 5.
+- Evidence: docs/changes/2026-11-04-identify-european-compact-root-6c4910.json; target/rom-data-e115-root-20261104/{unit,constructor-unit,query-unit}.json. Sol consultation /root/sol_residual_diagnosis requested gpt-6.1-sol/xhigh; effective settings unavailable.
+- Limits: conditional source only; other selectors/producers, extraction/runtime, ordinary use, Linux, USA, native Windows and mods remain open; two-byte gap raw. No performance measurements.
+
+### ROMDATA-02-04-E116-ROOT-6C4910
+
+- Outcome: completed
+- Verified criteria: EUR selector-zero bank extraction and typed runtime for 162 bytes, empty list and raw gap; Wine build, create/reuse, focused original reader/native state-clock and 12-frame CLI checks pass; 40 earlier banks and 99 other resources unchanged.
+- Evidence: docs/changes/2026-11-04-consume-european-compact-root-6c4910.json; target/rom-data-e115-root-20261104/{query-unit,build-unit,current-dataset,native-unit,cli-unit}.json.
+- Limits: conditional source only; ordinary use and other selectors/producers, global domains, Linux, USA, native Windows and mods remain open. No performance or space measurements.
+
+### DBG2-16-SESSION-RESTART
+
+- Outcome: completed
+- Verified criteria: after normal close and reopen of isolated EUR Wine/Xvfb interpreter session, an old checkpoint remained inspectable while resume was refused for a different control-run identity before dispatch. Checkpoint and command-channel bytes, new guest state and protected inputs unchanged; both GUIs closed normally.
+- Evidence: docs/changes/2026-11-04-verify-recipe-session-restart-refusal.json; target/validation/units/dbg2-recipe-restart-live-_a2sfmte/unit-result.json and evidence/result.json.
+- Limits: safe refusal only, not cross-restart recovery or runtime crash; native Windows and physical input untested. Private session retained as current-proof exception.
+
+### ROMDATA-01-E116-ALTERNATE-CONSTRUCTOR-CENSUS
+
+- Outcome: completed
+- Verified criteria: Wine bounded query and reviewed original caller windows identify ten unowned roots with 12 explicit selectors and 1,818 nonoverlapping source bytes; two existing owners excluded.
+- Evidence: docs/changes/2026-11-04-identify-alternate-european-compact-callers.json; target/rom-data-e116-alternate-census-20261104/{query-unit,geometry-unit}.json.
+- Limits: conditional sources only; extraction/runtime, ordinary use, other selectors/producers, Linux, USA, native Windows and mods remain open. No performance measurements.
+
+### DBG2-16-REAL-PICKER
+
+- Outcome: completed
+- Verified criteria: isolated EUR Wine/Xvfb GUI with simulated keyboard and mouse selected the saved typed recipe and original session; Start was refused without Details and created no run. Details then explicit Start completed exactly one frame and the checkpoint step. Window closed normally; protected inputs unchanged.
+- Evidence: docs/changes/2026-11-04-verify-typed-recipe-interactive-picker.json; target/validation/units/dbg2-recipe-picker-live-edamzmdj/unit-result.json and work/result.json.
+- Limits: one GUI path only; native Windows, physical input, broader picker scenarios and cross-restart recovery remain open. Earlier failed driver units retained; read-only consultant /root/sol_picker_input requested gpt-6.1-sol/xhigh, effective settings unconfirmed; primary model/effort unconfirmed. Private successful scratch kept as current proof.

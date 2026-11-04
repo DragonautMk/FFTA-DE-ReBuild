@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "verify-european-compact-selector-cli",
+  "title": "Verify European compact selector catalog startup",
+  "kind": "changed",
+  "platforms": [
+    "Windows executable on Wine; EUR"
+  ],
+  "changes": [
+    "Verify the existing e112 compact selector catalog integration through production CLI startup and document its scope."
+  ],
+  "validation": [
+    "Wine startup completed 12 frames; all 100 runtime resource identities matched the manifest, and guarded inputs and dataset remained unchanged. Existing create/reuse and 96 conditional reader comparisons were not repeated.",
+    "The first sandboxed Wine attempt could not create the Wine runtime directory; its diagnostics were retained and its owned leases were recovered after host process inspection. The subsequent Wine unit passed."
+  ],
+  "limitations": [
+    "Catalog reads were zero: ordinary use of the three new roots and tables, global coverage, Linux, USA, native Windows and mods remain unverified. No performance or space measurements; the e111 comparison remains retained."
+  ],
+  "files": [
+    "docs/rom_data_compact_catalog.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-03-migrate-european-compact-selector-tables.json"
+  ]
+}

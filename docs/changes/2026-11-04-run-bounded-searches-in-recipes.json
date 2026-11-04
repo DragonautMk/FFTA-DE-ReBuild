@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "run-bounded-searches-in-recipes",
+  "title": "Run bounded searches in command recipes",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU / Wine / Xvfb"
+  ],
+  "changes": [
+    "Allow existing bounded breakpoint and watch searches in recipes and reserve their worst-case 600 completed frames against the combined 3600-frame budget.",
+    "Keep legacy recipe serialization readable and enforce the derived aggregate frame budget before dispatch, including for older files without the new search budget field."
+  ],
+  "validation": [
+    "Windows GNU runtime/test build and 33 focused Wine tests passed, including combined budget limits, legacy identity, search assertion stop and existing recipe/control contracts.",
+    "An isolated EUR Wine/Xvfb interpreter ran one-instruction not-reached searches: an assertion requiring a hit stopped the next action, while accepting the miss allowed one frame; explicit resumes did not duplicate actions, protected inputs stayed unchanged and the GUI closed normally.",
+    "An initial supervisor lost its process variable after a successful functional check and could not write a terminal receipt. Its Xvfb and exact owned leases were recovered after host process checks and independent protected-input hashes; the corrected unit passed with a complete receipt."
+  ],
+  "limitations": [
+    "The real-session proof covers a miss, not a hit or a feature-gated watchpoint; native Windows, physical input, session restart and other recipe actions remain open. Private session copies and the incomplete first unit are retained."
+  ],
+  "files": [
+    "crates/recomp/src/debug_probe.rs",
+    "crates/recomp/src/debug_command/recipe.rs",
+    "crates/recomp/src/debug_command/recipe/checkpoint/runner.rs",
+    "crates/recomp/src/debug_tools.rs",
+    "crates/recomp/src/debug_operations.json",
+    "docs/development/MENU_ATLAS_INVENTORY.json"
+  ],
+  "references": [
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

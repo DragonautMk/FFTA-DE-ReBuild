@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "run-catalog-actions-in-recipes",
+  "title": "Run catalog discovery and selection in command recipes",
+  "kind": "added",
+  "platforms": [
+    "Windows GNU / Wine / Xvfb"
+  ],
+  "changes": [
+    "Allow bounded content and cheat discovery, content selection by ID, and catalog queries in typed recipes, waiting for each existing terminal result before the next action.",
+    "Preserve ledger-protected request identities for selection and refresh; stop on failures and leave ambiguous read queries unconfirmed rather than retrying them."
+  ],
+  "validation": [
+    "Windows GNU runtime and test build passed; 29 focused Wine tests covered catalog ordering, selection refusal, lost-response recovery with the same identity, ambiguous-read refusal and existing recipe contracts.",
+    "In an isolated EUR Wine/Xvfb interpreter session, content refresh and a four-entry list completed in order; an invalid selection prevented the next step, explicit resume remained stopped, and guest state and protected inputs were unchanged. The GUI closed normally.",
+    "The first real-session wrapper incorrectly expected a limit field absent from the result and was corrected to check returned entries and generation; failed diagnostics were retained."
+  ],
+  "limitations": [
+    "Successful selection and cheat catalog operations have synthetic rather than real-session recipe coverage. Other action types, interactive picker, pending-mutating-action crash and native Windows remain open; the real-session unit retains private inputs as a named current proof."
+  ],
+  "files": [
+    "crates/recomp/src/debug_command/recipe.rs",
+    "crates/recomp/src/debug_command/recipe/checkpoint/runner.rs",
+    "crates/recomp/src/debug_tools.rs",
+    "crates/recomp/src/debug_operations.json",
+    "docs/development/MENU_ATLAS_INVENTORY.json"
+  ],
+  "references": [
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

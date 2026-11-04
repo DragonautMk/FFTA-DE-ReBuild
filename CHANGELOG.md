@@ -3,6 +3,415 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-04 — Verify typed recipe picker and explicit start
+
+Type: changed. Platforms: Windows GNU under Wine/Xvfb, isolated EUR session.
+
+**Changes**
+
+- Verify interactive selection of a saved recipe and its original isolated session and require Details before Start.
+
+**Validation**
+
+- A simulated keyboard and mouse selected both entries; Start before Details was refused without a run, then Details and Start completed exactly one frame and a completed checkpoint step. The GUI closed normally and protected inputs remained unchanged.
+- The earlier retained driver attempts failed before this path completed; a focused Sol xhigh read-only consultation identified physical Enter and virtual Clear routing.
+
+**Limitations**
+
+- One EUR Wine/Xvfb path only; native Windows, physical input, wider picker scenarios and cross-restart recovery remain unverified.
+
+[Change record](docs/changes/2026-11-04-verify-typed-recipe-interactive-picker.json)
+
+## 2026-11-04 — Verify recipe refusal after session restart
+
+Type: changed. Platforms: Windows GNU / Wine / Xvfb.
+
+**Changes**
+
+- Document that a checkpoint from an earlier control run remains inspectable but cannot dispatch into a reopened session.
+
+**Validation**
+
+- In an isolated EUR interpreter session, an owned recipe client was stopped during a wait after a completed step, the GUI closed normally, and the session reopened with a different control-run identity. The old checkpoint remained readable; resume was refused, checkpoint bytes and command-channel files stayed unchanged, the new guest state was unchanged, and both GUIs closed normally. Protected inputs stayed unchanged.
+
+**Limitations**
+
+- This verifies safe refusal across a normal close/reopen, not automatic cross-restart recovery or a runtime crash. Native Windows and physical input were not tested. Private session copies remain as a named current proof pending replacement.
+
+Documentation: [runner.rs](crates/recomp/src/debug_command/recipe/checkpoint/runner.rs).
+
+[Change record](docs/changes/2026-11-04-verify-recipe-session-restart-refusal.json)
+
+## 2026-11-04 — Verify recovery of a pending recipe step
+
+Type: changed. Platforms: Windows GNU / Wine / Xvfb.
+
+**Changes**
+
+- Document real-session recovery after terminating a recipe client while its mutating frame step was pending.
+
+**Validation**
+
+- In an isolated EUR Wine/Xvfb interpreter, a status query confirmed the 60-frame request and its exact ID pending before the owned client was terminated. Explicit resume kept the ID, completed exactly 60 frames and the following one-frame step, and a second resume preserved frame, clock, registers, keys and state hash. Protected inputs were unchanged and the GUI closed normally.
+- An initial 600-frame attempt exceeded the fixed 120-second deadline and returned unconfirmed; a separate 60-frame launch encountered another owner’s Wine lease and started no test. Both diagnostics were retained; the passing run followed lease release.
+
+**Limitations**
+
+- This covers one interrupted client and live control run, not a runtime/session restart, native Windows, physical input or broader action types. Private session copies are retained as the current pending-step proof pending replacement.
+
+Documentation: [runner.rs](crates/recomp/src/debug_command/recipe/checkpoint/runner.rs).
+
+[Change record](docs/changes/2026-11-04-verify-pending-step-recipe-recovery.json)
+
+## 2026-11-04 — Verify diagnostic capture recipes in an isolated session
+
+Type: changed. Platforms: Windows GNU / Wine / Xvfb.
+
+**Changes**
+
+- Document end-to-end audio, code, gameplay and graphics recipe execution in an isolated EUR interpreter session.
+
+**Validation**
+
+- Each of four recipes produced one report with the expected kind; audio, code and gameplay each advanced one frame, graphics advanced none, and explicit second resumes neither duplicated reports nor changed state. Protected inputs stayed unchanged and the GUI closed normally. A stripped copy of the previously built runtime was used.
+
+**Limitations**
+
+- This covers one isolated EUR interpreter session and checks report production, not capture fidelity, physical audio, native Windows, physical controls or other scenes. Private session copies remain as a named current proof pending replacement.
+
+Documentation: [runner.rs](crates/recomp/src/debug_command/recipe/checkpoint/runner.rs).
+
+[Change record](docs/changes/2026-11-04-verify-multiple-capture-recipes-live.json)
+
+## 2026-11-04 — Verify interrupted recipe recovery in a live session
+
+Type: changed. Platforms: Windows GNU / Wine / Xvfb.
+
+**Changes**
+
+- Document a real interrupted recipe client and bounded status-wait recovery in an isolated EUR interpreter session.
+
+**Validation**
+
+- Windows GNU runtime build passed. The owned client was terminated during its wait after one completed frame; an external frame satisfied the wait, explicit resume completed the next step with the same original request identity, and a second resume left guest state unchanged. Frame offsets were 0, 1, 2, 3, 3; the session closed normally and protected inputs were unchanged.
+- Two initial test-bridge launches exited before GUI because they inherited FFTA_VALIDATION variables forbidden by the isolated-session guard; their diagnostics remain. A Sol/xhigh read-only source consultation identified the bridge environment mismatch; the D-Bus warning also appeared in an earlier passing run.
+
+**Limitations**
+
+- This proves interruption of the client during a status wait in one EUR Wine/Xvfb interpreter session, not a crash during a pending mutating request, session restart, native Windows or physical input. The successful unit keeps private session inputs as a named current-proof exception pending replacement.
+
+Documentation: [runner.rs](crates/recomp/src/debug_command/recipe/checkpoint/runner.rs).
+
+[Change record](docs/changes/2026-11-04-verify-interrupted-recipe-in-live-session.json)
+
+## 2026-11-04 — Verify European compact selector catalog startup
+
+Type: changed. Platforms: Windows executable on Wine; EUR.
+
+**Changes**
+
+- Verify the existing e112 compact selector catalog integration through production CLI startup and document its scope.
+
+**Validation**
+
+- Wine startup completed 12 frames; all 100 runtime resource identities matched the manifest, and guarded inputs and dataset remained unchanged. Existing create/reuse and 96 conditional reader comparisons were not repeated.
+- The first sandboxed Wine attempt could not create the Wine runtime directory; its diagnostics were retained and its owned leases were recovered after host process inspection. The subsequent Wine unit passed.
+
+**Limitations**
+
+- Catalog reads were zero: ordinary use of the three new roots and tables, global coverage, Linux, USA, native Windows and mods remain unverified. No performance or space measurements; the e111 comparison remains retained.
+
+Documentation: [2026-11-03-migrate-european-compact-selector-tables.json](docs/changes/2026-11-03-migrate-european-compact-selector-tables.json).
+
+[Change record](docs/changes/2026-11-04-verify-european-compact-selector-cli.json)
+
+## 2026-11-04 — Verify cheat catalog recipe in an isolated session
+
+Type: changed. Platforms: Windows GNU / Wine / Xvfb.
+
+**Changes**
+
+- Document successful selection and read-only cheat catalog operations through a typed recipe in a real isolated session.
+
+**Validation**
+
+- An isolated EUR Wine/Xvfb interpreter selected a discovered synthetic cheat catalog, refreshed its snapshot and listed, inspected and retrieved capabilities for CH-0001 through one six-step recipe. Selection ID, source hash, snapshot generation and returned detail/capability digests matched; a second resume and guest state were unchanged, protected inputs stayed unchanged, and the GUI closed normally.
+
+**Limitations**
+
+- This verifies one synthetic catalog and read-only channel flow; it does not verify cheat effects, hardware/device behavior, other catalog content, native Windows or physical input. The successful unit retains private session inputs as a named current proof pending replacement.
+
+Documentation: [runner.rs](crates/recomp/src/debug_command/recipe/checkpoint/runner.rs).
+
+[Change record](docs/changes/2026-11-04-verify-cheat-catalog-recipe-in-live-session.json)
+
+## 2026-11-04 — Run bounded diagnostic captures from recipes
+
+Type: added. Platforms: Windows GNU / Wine / Xvfb.
+
+**Changes**
+
+- Allow the existing bounded UI, audio, code, gameplay and graphics capture/report actions in typed recipes, preserving handler preflight, ordered terminal results and request-ledger recovery.
+- Document that report-specific resource limits and outputs are separate from the bounded recipe checkpoint and that cancellation does not erase an existing capture.
+
+**Validation**
+
+- Windows GNU runtime/test build and 31 focused Wine tests passed, including capture action ordering, lost-report response recovery without duplicate execution and existing recipe/control contracts.
+- An isolated EUR Wine/Xvfb interpreter run using a stripped built runtime executed UI start, one frame, UI report and status in a recipe; exactly one report was produced, a second resume left the guest unchanged, protected inputs were unchanged and the window closed normally.
+
+**Limitations**
+
+- Only UI capture was tested end-to-end through a real session; other newly enabled capture types used a synthetic server. Interactive picker, native Windows, physical input, session restart and other action types remain open. The UI proof retains private session inputs as a named current proof.
+
+Documentation: [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-04-run-diagnostic-captures-in-recipes.json)
+
+## 2026-11-04 — Run catalog discovery and selection in command recipes
+
+Type: added. Platforms: Windows GNU / Wine / Xvfb.
+
+**Changes**
+
+- Allow bounded content and cheat discovery, content selection by ID, and catalog queries in typed recipes, waiting for each existing terminal result before the next action.
+- Preserve ledger-protected request identities for selection and refresh; stop on failures and leave ambiguous read queries unconfirmed rather than retrying them.
+
+**Validation**
+
+- Windows GNU runtime and test build passed; 29 focused Wine tests covered catalog ordering, selection refusal, lost-response recovery with the same identity, ambiguous-read refusal and existing recipe contracts.
+- In an isolated EUR Wine/Xvfb interpreter session, content refresh and a four-entry list completed in order; an invalid selection prevented the next step, explicit resume remained stopped, and guest state and protected inputs were unchanged. The GUI closed normally.
+- The first real-session wrapper incorrectly expected a limit field absent from the result and was corrected to check returned entries and generation; failed diagnostics were retained.
+
+**Limitations**
+
+- Successful selection and cheat catalog operations have synthetic rather than real-session recipe coverage. Other action types, interactive picker, pending-mutating-action crash and native Windows remain open; the real-session unit retains private inputs as a named current proof.
+
+Documentation: [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-04-run-catalog-actions-in-recipes.json)
+
+## 2026-11-04 — Run bounded searches in command recipes
+
+Type: added. Platforms: Windows GNU / Wine / Xvfb.
+
+**Changes**
+
+- Allow existing bounded breakpoint and watch searches in recipes and reserve their worst-case 600 completed frames against the combined 3600-frame budget.
+- Keep legacy recipe serialization readable and enforce the derived aggregate frame budget before dispatch, including for older files without the new search budget field.
+
+**Validation**
+
+- Windows GNU runtime/test build and 33 focused Wine tests passed, including combined budget limits, legacy identity, search assertion stop and existing recipe/control contracts.
+- An isolated EUR Wine/Xvfb interpreter ran one-instruction not-reached searches: an assertion requiring a hit stopped the next action, while accepting the miss allowed one frame; explicit resumes did not duplicate actions, protected inputs stayed unchanged and the GUI closed normally.
+- An initial supervisor lost its process variable after a successful functional check and could not write a terminal receipt. Its Xvfb and exact owned leases were recovered after host process checks and independent protected-input hashes; the corrected unit passed with a complete receipt.
+
+**Limitations**
+
+- The real-session proof covers a miss, not a hit or a feature-gated watchpoint; native Windows, physical input, session restart and other recipe actions remain open. Private session copies and the incomplete first unit are retained.
+
+Documentation: [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-04-run-bounded-searches-in-recipes.json)
+
+## 2026-11-04 — Integrate alternate constructor compact catalog projections
+
+Type: changed. Platforms: Windows executable on Wine; EUR (validation pending).
+
+**Changes**
+
+- Add ten source-authenticated alternate constructor banks and 12 conditional selectors to the compact catalog; update the extraction revision and prepare a targeted validation.
+
+**Validation**
+
+- Prior Wine source census and reviewed disassembly establish 1,818 nonoverlapping source bytes; this evidence predates integration and does not validate the new implementation.
+- The host-coordinated build was not executed: automatic approval review reported a usage limit.
+- Read-only source reconciliation matched all ten bank contracts to retained geometry and verified that the 172-span union is exactly the E116 manifest plus the ten new projections, including adjacent boundaries; no build or runtime validation.
+
+**Limitations**
+
+- Integration is unverified: Windows build, Wine dataset creation and reuse, focused reader comparisons, CLI startup, ordinary use, Linux and USA remain pending. No performance or space measurements.
+
+Documentation: [2026-11-04-identify-alternate-european-compact-callers.json](docs/changes/2026-11-04-identify-alternate-european-compact-callers.json).
+
+[Change record](docs/changes/2026-11-04-integrate-alternate-european-compact-catalog-unverified.json)
+
+## 2026-11-04 — Identify a table-driven European compact animation root
+
+Type: changed. Platforms: Windows executable on Wine; EUR.
+
+**Changes**
+
+- Record a bounded 20-row table and root 0x6c992c as a candidate for decoded extraction and runtime consumption.
+
+**Validation**
+
+- Wine source query verified the original guard, threshold and constructor arguments, eight selector values, 200 bank bytes and 120 read table bytes without existing ownership overlaps. The adjacent existing bank boundary and empty list 1 were identified.
+- A first query incorrectly assumed list 8 was empty; source inspection corrected the assumption and the next Wine query passed. Failed diagnostics were retained.
+
+**Limitations**
+
+- Source analysis only: extraction, runtime use, ordinary reachability, other producers, Linux, USA and native Windows remain open. Forty unread table bytes stay raw; no performance or space measurement.
+
+[Change record](docs/changes/2026-11-04-identify-european-compact-table-root.json)
+
+## 2026-11-04 — Identify a second table-driven European compact root
+
+Type: changed. Platforms: Windows executable on Wine; EUR.
+
+**Changes**
+
+- Record the guarded 16-row table and compact root 0x6c95d4 as a candidate for decoded extraction and runtime consumption.
+
+**Validation**
+
+- Wine source disassembly and opcode checks authenticate selector provenance, helper preservation and constructor; three selectors cover 412 bank bytes and 160 nonoverlapping table bytes.
+
+**Limitations**
+
+- Source analysis only; extraction, runtime use, ordinary reachability, all producers, Linux, USA and native Windows remain open. Thirty-two unread table bytes remain raw. No performance or space measurements.
+
+[Change record](docs/changes/2026-11-04-identify-european-compact-table-6c95d4.json)
+
+## 2026-11-04 — Identify a European compact root through the alternate constructor
+
+Type: changed. Platforms: Windows executable on Wine; EUR.
+
+**Changes**
+
+- Record selector zero and the bounded projection for compact root 0x6c4910 through the alternate constructor path.
+
+**Validation**
+
+- Wine source query checked the caller, constructor and retained initializer/reader instructions against the EUR ROM; selector zero covers 162 nonoverlapping bytes, eight frames and six lists including an empty list.
+
+**Limitations**
+
+- Source evidence only: extraction, runtime use, ordinary reachability, other selectors, Linux, USA and native Windows remain open. The two-byte gap stays raw; no performance measurements.
+
+[Change record](docs/changes/2026-11-04-identify-european-compact-root-6c4910.json)
+
+## 2026-11-04 — Identify a European compact animation loop
+
+Type: changed. Platforms: Windows executable on Wine; EUR.
+
+**Changes**
+
+- Record the conditional selector loop and bounded source projection for compact OBJ root 0x6ca5f8 as a candidate for later extraction and runtime consumption.
+
+**Validation**
+
+- Wine source query authenticated the original 0..2 loop, constructor call and 174-byte nonoverlapping source projection; three sequences contain 37 frames and nine lists contain eight objects, including one empty list. Prior constructor preservation evidence was reused.
+
+**Limitations**
+
+- Source analysis only; extraction, runtime consumption, ordinary reachability, other producers, Linux, USA and native Windows remain open. No performance or space measurements.
+
+Documentation: [2026-11-04-verify-european-compact-selector-cli.json](docs/changes/2026-11-04-verify-european-compact-selector-cli.json).
+
+[Change record](docs/changes/2026-11-04-identify-european-compact-loop-root.json)
+
+## 2026-11-04 — Identify alternate constructor compact callers
+
+Type: changed. Platforms: Windows executable on Wine; EUR.
+
+**Changes**
+
+- Identify ten unowned compact OBJ roots with explicit selectors passed to the previously authenticated alternate constructor.
+
+**Validation**
+
+- Wine bounded source query and reviewed original disassemblies identify 12 selector values and 1,818 nonoverlapping source bytes; existing owners excluded.
+
+**Limitations**
+
+- Conditional source only: extraction, runtime, other callers and selectors, ordinary reachability, Linux, USA and native Windows remain open. No performance or space measurements.
+
+[Change record](docs/changes/2026-11-04-identify-alternate-european-compact-callers.json)
+
+## 2026-11-04 — Consume a table-driven European compact animation root
+
+Type: changed. Platforms: Windows executable on Wine; EUR.
+
+**Changes**
+
+- Extend the decoded compact OBJ catalog with root 0x6c992c and its bounded selector/position table, preserving the adjacent bank boundary, empty list and unread bytes; advance the schema and dataset revisions.
+
+**Validation**
+
+- Windows CLI and test harness compiled. Wine create/reuse preserved 38 earlier banks and 99 other resources; targeted test checked 320 represented bytes, raw fallbacks, threshold paths, original reader prefixes and nine native count cases with full state and clock.
+- Production CLI advanced 12 frames on Wine with all 100 runtime resource identities matching and protected inputs unchanged; catalog reads were zero.
+
+**Limitations**
+
+- Ordinary use and other producers, broader ROM coverage, Linux, USA, native Windows and mod phases remain unverified. No performance or space measurements.
+
+Documentation: [2026-11-04-identify-european-compact-table-root.json](docs/changes/2026-11-04-identify-european-compact-table-root.json).
+
+[Change record](docs/changes/2026-11-04-consume-european-compact-table-6c992c.json)
+
+## 2026-11-04 — Consume a second table-driven European compact root
+
+Type: changed. Platforms: Windows executable on Wine; EUR.
+
+**Changes**
+
+- Extend the decoded compact OBJ catalog with root 0x6c95d4 and its guarded motion-position table; preserve adjacent source spans and unread bytes, and advance schema and dataset revisions.
+
+**Validation**
+
+- Windows CLI and test harness compiled. Wine create/reuse preserved 39 earlier banks and 99 other resources. Targeted test checked 572 represented bytes, raw fallback, original threshold and selector-copy paths, 33 frame pairs, 33 list pointers and four native count comparisons with full state and clock.
+- Wine production CLI advanced 12 frames with all 100 runtime resource identities matching and guarded inputs unchanged; the aggregate catalog counter was zero.
+
+**Limitations**
+
+- Ordinary use, other producers, wider ROM coverage, Linux, USA, native Windows and mod phases remain unverified. No performance or space measurements.
+
+Documentation: [2026-11-04-identify-european-compact-table-6c95d4.json](docs/changes/2026-11-04-identify-european-compact-table-6c95d4.json).
+
+[Change record](docs/changes/2026-11-04-consume-european-compact-table-6c95d4.json)
+
+## 2026-11-04 — Consume a European compact root via the alternate constructor
+
+Type: changed. Platforms: Windows executable on Wine; EUR.
+
+**Changes**
+
+- Extend the decoded compact OBJ catalog with selector zero at root 0x6c4910, preserving the empty list and unowned gap; advance dataset revisions.
+
+**Validation**
+
+- Windows CLI and test harness compiled; Wine create/reuse preserved 40 earlier banks and 99 other resources. The focused Wine test verified 162 represented bytes, raw boundaries, eight frame pairs, six list pointers and two native count cases with full state and clock.
+- Wine production CLI advanced 12 frames with all 100 resource identities matching and guarded inputs unchanged; aggregate catalog reads were zero.
+
+**Limitations**
+
+- Ordinary use, other selectors and producers, wider ROM coverage, Linux, USA, native Windows and mods remain unverified. No performance or space measurements.
+
+Documentation: [2026-11-04-identify-european-compact-root-6c4910.json](docs/changes/2026-11-04-identify-european-compact-root-6c4910.json).
+
+[Change record](docs/changes/2026-11-04-consume-european-compact-root-6c4910.json)
+
+## 2026-11-04 — Consume an additional European compact animation loop
+
+Type: changed. Platforms: Windows executable on Wine; EUR.
+
+**Changes**
+
+- Extend the decoded compact OBJ catalog with root 0x6ca5f8, preserving its three conditional selectors and empty ninth list; advance extractor and decoder revisions.
+
+**Validation**
+
+- Windows CLI and test harness compile; Wine create/reuse keeps 99 other resources and 37 previous banks unchanged. Targeted Wine test checks all 174 represented bytes, mixed boundaries, coherent-edit rejection, 37 frame pairs, nine list pointers, four full-state/clock native count comparisons and an empty list.
+- A 12-frame production CLI startup on Wine matched all 100 runtime resource identities and protected inputs remained unchanged; the catalog counter was zero in this window.
+
+**Limitations**
+
+- Ordinary use and other producers of this root, wider ROM coverage, Linux, USA, native Windows and mod phases remain unverified. No performance or space measurements.
+
+Documentation: [2026-11-04-identify-european-compact-loop-root.json](docs/changes/2026-11-04-identify-european-compact-loop-root.json).
+
+[Change record](docs/changes/2026-11-04-consume-european-compact-loop-6ca5f8.json)
+
 ## 2026-11-03 — Verify UI trace outcomes across control channels
 
 Type: changed. Platforms: Windows GNU / Wine.

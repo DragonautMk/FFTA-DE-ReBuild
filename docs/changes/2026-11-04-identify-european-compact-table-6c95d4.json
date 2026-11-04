@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "identify-european-compact-table-6c95d4",
+  "title": "Identify a second table-driven European compact root",
+  "kind": "changed",
+  "platforms": [
+    "Windows executable on Wine; EUR"
+  ],
+  "changes": [
+    "Record the guarded 16-row table and compact root 0x6c95d4 as a candidate for decoded extraction and runtime consumption."
+  ],
+  "validation": [
+    "Wine source disassembly and opcode checks authenticate selector provenance, helper preservation and constructor; three selectors cover 412 bank bytes and 160 nonoverlapping table bytes."
+  ],
+  "limitations": [
+    "Source analysis only; extraction, runtime use, ordinary reachability, all producers, Linux, USA and native Windows remain open. Thirty-two unread table bytes remain raw. No performance or space measurements."
+  ],
+  "files": [
+    "docs/rom_data_compact_catalog.md"
+  ],
+  "references": []
+}

@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "identify-european-compact-table-root",
+  "title": "Identify a table-driven European compact animation root",
+  "kind": "changed",
+  "platforms": [
+    "Windows executable on Wine; EUR"
+  ],
+  "changes": [
+    "Record a bounded 20-row table and root 0x6c992c as a candidate for decoded extraction and runtime consumption."
+  ],
+  "validation": [
+    "Wine source query verified the original guard, threshold and constructor arguments, eight selector values, 200 bank bytes and 120 read table bytes without existing ownership overlaps. The adjacent existing bank boundary and empty list 1 were identified.",
+    "A first query incorrectly assumed list 8 was empty; source inspection corrected the assumption and the next Wine query passed. Failed diagnostics were retained."
+  ],
+  "limitations": [
+    "Source analysis only: extraction, runtime use, ordinary reachability, other producers, Linux, USA and native Windows remain open. Forty unread table bytes stay raw; no performance or space measurement."
+  ],
+  "files": [
+    "docs/rom_data_compact_catalog.md"
+  ],
+  "references": []
+}

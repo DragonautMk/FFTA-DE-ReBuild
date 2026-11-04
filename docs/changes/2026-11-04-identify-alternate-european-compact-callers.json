@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "identify-alternate-european-compact-callers",
+  "title": "Identify alternate constructor compact callers",
+  "kind": "changed",
+  "platforms": [
+    "Windows executable on Wine; EUR"
+  ],
+  "changes": [
+    "Identify ten unowned compact OBJ roots with explicit selectors passed to the previously authenticated alternate constructor."
+  ],
+  "validation": [
+    "Wine bounded source query and reviewed original disassemblies identify 12 selector values and 1,818 nonoverlapping source bytes; existing owners excluded."
+  ],
+  "limitations": [
+    "Conditional source only: extraction, runtime, other callers and selectors, ordinary reachability, Linux, USA and native Windows remain open. No performance or space measurements."
+  ],
+  "files": [
+    "docs/rom_data_compact_catalog.md"
+  ],
+  "references": []
+}

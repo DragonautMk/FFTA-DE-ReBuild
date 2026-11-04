@@ -247,12 +247,112 @@ Successful native scratch is removed automatically; no dataset copy is created.
 Evidence is `target/rom-data-e111-next-sources-20261103/native-unit.json` and
 Wine unit `rom-data-table-compact-native-hw7pz62y`.
 
-The goal is paused before the short production startup check. The accepted e111
-generation remains the named comparison for the provisional e112 successor;
-retirement follows its remaining acceptance check. Ordinary use of the three
-new roots/tables, full catalog/consumer coverage, the other 26 census roots,
-Linux, USA, native Windows and mod support remain unverified. No performance
-or space measurements are performed.
+The production Windows CLI passed a 12-frame EUR startup on Wine using the e112
+generation. All 100 runtime resource identities matched the manifest and the
+protected inputs and generation remained unchanged. Catalog usage was zero, so
+this establishes registration and startup only; ordinary use of the three new
+roots/tables remains unverified. The e111 comparison is retained; no retirement
+was attempted. Full catalog/consumer coverage, the other 26 census roots, Linux,
+USA, native Windows and mod support remain unverified. No performance or space
+measurements were performed. Evidence: `target/rom-data-e111-next-sources-20261103/cli-unit.json`;
+Wine unit `rom-data-table-compact-cli-tycqx900`.
+A later EUR source query identifies one additional conditional producer for root
+`0x6ca5f8`. Its original loop initializes selector 0, calls the previously
+verified constructor, increments an unsigned byte and repeats through selector
+2. The Wine disassembly and opcode checks establish this loop, not all possible
+producers or ordinary reachability. Its independent projection covers 174
+unowned source bytes, three sequences with 13/12/12 frames and nine lists with
+eight objects; list 8 is empty. The e113-d112 generation now extracts the bank
+and serves those fields at runtime; the catalog has 38 banks, 106 selectors,
+400 frames, 303 lists, 1,096 objects and 9,382 represented bytes. Its creation
+and no-write reuse preserve the preceding 37 banks and 99 other resources.
+
+A focused Wine check poisons duplicate ROM bytes, checks reconstruction and
+mixed boundaries, preserves the empty list, rejects a coherent edit, and checks
+the original reader prefixes for three counts, 37 frame pairs and nine list
+pointers. Four original/native count comparisons, including one outside selector,
+match complete state and clock. A 12-frame production CLI startup matches all
+100 resource identities; catalog reads were zero, so ordinary use of this root
+is still unproven. Source, build, generation, native and CLI evidence is under
+`target/rom-data-e112-residual-20261104/`; Linux, USA and native Windows remain
+pending. No performance or space measurements were performed.
+
+A further conditional producer uses compact root `0x6c992c` and a 20-row
+selector table at `0x3a86d0`. The original bounds check admits row indices
+0–19; a halfword threshold gates each constructor call. The selector byte in
+those rows takes values 0–7. The authenticated source projection covers a
+200-byte bank with 40 frames and nine lists (list 1 is empty), plus six read
+bytes per table row. The other 40 row bytes remain unowned. The new bank ends
+exactly where an existing bank begins, which must be preserved when merging
+source spans. E114-d113 now extracts the bank and table in the v3 catalog
+and serves their known fields at runtime. Creation and no-write reuse preserve
+38 earlier banks and 99 other resources; the complete catalog has 39 banks,
+114 selectors, 440 frames, 312 lists, 1,104 objects and 9,702 represented bytes.
+
+Wine validation checks the 320 new bytes, mixed boundaries, raw fallback for
+40 unread row bytes, empty list 1, original reader prefixes and both threshold
+paths. Nine native count comparisons match full state and clock, including an
+outside selector. A 12-frame production startup matches 100 resource identities;
+zero catalog reads mean ordinary use is not proved. Source, build, dataset,
+native and CLI receipts are under `target/rom-data-e113-table-root-20261104/`.
+The first source query incorrectly expected list 8 to be empty; the corrected
+query checks list 1. Other producers, Linux, USA and native Windows remain
+unverified. No performance or space measurements were performed.
+
+Another conditional EUR producer uses root `0x6c95d4` and a 16-row,
+12-byte table at `0x3a8610`. Its guarded table selector has values 0–2;
+two original helper calls preserve the copied selector before the constructor.
+Source analysis identifies 412 bank bytes, 160 read table bytes and 32 unread
+row bytes. The bank has 33 frames, 33 lists and 33 objects. The table ends at
+the prior timed-position table; owned spans must merge only at actual adjacency.
+E115-d114 extracts these fields into the v4 catalog and serves them at runtime,
+leaving the 32 unread bytes raw. Its 40 banks cover 117 selectors, 473 frames,
+345 lists, 1,137 objects and 10,274 represented bytes. Wine create/reuse retains
+39 earlier banks and 99 other resources. A focused Wine test checks all 572 new
+bytes, raw fallback, boundary reads, original guarded table paths, 33 frame pairs,
+33 list pointers and four native count cases with matching full state and clock.
+A 12-frame production CLI startup matched all 100 resource identities; zero
+catalog reads leave ordinary use unproved. Source, build, dataset and test
+receipts are under `target/rom-data-e114-root-20261104/`. Other producers, Linux,
+USA and native Windows remain unverified; no performance or space measurements.
+
+A conditional EUR caller at `0x080e22a8` passes selector 0 and root
+`0x6c4910` to the alternate `0x080d9990` constructor. Retained original
+initializer and reader instructions authenticate its compact sequence path.
+The source projection has eight frames, six lists and 19 objects, including
+empty list 5, in 162 bytes; the two-byte gap remains raw. This is not a global
+selector bound. E116-d115 now extracts and serves this projection. Wine creation/reuse
+preserves 40 earlier banks and 99 other resources. A focused test checks 162
+source bytes, raw-gap boundaries, the empty list, eight original frame pairs,
+six list pointers and two original/native count cases with full state and clock.
+A 12-frame Wine CLI startup matches all 100 identities but has zero catalog
+reads, so ordinary use remains unproved. The complete catalog has 41 banks,
+118 selectors, 481 frames, 351 lists, 1,156 objects and 10,436 represented bytes.
+Evidence is under `target/rom-data-e115-root-20261104/`; other selectors and
+producers, Linux, USA and native Windows remain unverified. No performance or
+space measurements were performed.
+
+A bounded follow-up query for the authenticated alternate constructor finds
+ten previously unowned EUR roots with 12 explicit selector values. Their caller
+windows load the literal roots and set selectors before direct calls; source
+geometry is 1,818 bytes, 120 frames, 95 lists and 185 objects. The windows
+have been reviewed as conditional call paths; other callers and selectors are
+not bounded by this query. Two already-owned roots are excluded from this set.
+Wine evidence: `target/rom-data-e116-alternate-census-20261104/` and unit
+`rom-data-e116-alternate-geometry-1k042bio`. Extraction, runtime consumption,
+ordinary use, Linux and USA remain pending.
+
+The ten-root E117-d116 integration is implemented but **not yet verified**.
+Its catalog contracts and focused Wine test are prepared; compilation, dataset
+creation/reuse, reader comparisons and production startup still need to run.
+A read-only reconciliation matched the ten bank contracts to retained geometry
+and confirmed that the 172 source spans exactly merge E116 with the new
+projections, including adjacent boundaries. This does not verify execution.
+The prior accepted E116 dataset remains the current verified generation. The
+host-coordinated build was not executed because automatic approval review hit
+its usage limit. Linux and USA validation remain pending; no performance or
+space measurements were made.
+
 Source evidence: `target/rom-data-e111-next-sources-20261103/`,
 `source-contract-result.json`, and Wine source unit
 `rom-data-table-compact-source-9sx6eqy3`. Ordinary use, complete banks/global

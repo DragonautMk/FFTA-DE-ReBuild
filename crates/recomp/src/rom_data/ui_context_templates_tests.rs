@@ -47,7 +47,7 @@ fn european_ui_context_templates_match_source_and_native_readers() {
     let old: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     let current = read_dataset(&dataset).unwrap();
     assert_eq!(old.resources.len(), 98);
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (112, 111, 100));
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (117, 116, 100));
     for resource in &old.resources {
         assert_eq!(current.manifest.resources.iter().find(|entry| entry.id == resource.id), Some(resource));
     }
