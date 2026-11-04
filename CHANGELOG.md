@@ -576,6 +576,28 @@ Documentation: [debug_control.md](docs/debug_control.md).
 
 [Change record](docs/changes/2026-11-04-render-cjk-command-composition.json)
 
+## 2026-11-04 — Recover ROM data audit CLI build
+
+Type: docs. Platforms: Windows cross-build on Linux.
+
+**Changes**
+
+- Recover the ROM-data audit CLI compilation previously stopped by ENOSPC using its retained source snapshot and isolated build outputs.
+
+**Validation**
+
+- Cargo release build with rom-data-read-audit completed without warnings; independent guarded verification confirmed successful Cargo finish, executable hash and all 845 source hashes.
+- Earlier EUR Wine timer, Freezeblink and Stardust scene comparisons were already accepted and were not repeated; earlier slot-job and seventh OBJ quota failures were recovered in their own records.
+
+**Limitations**
+
+- The build validation unit reported FAIL during scratch cleanup because Cargo created hard links; the build itself exited zero and separate verification passed. Failed unit and outputs remain retained.
+- This is a cross-build, not a native Windows or new runtime test; broader ROM data coverage and deferred performance measurements remain open.
+
+Documentation: [rom_data_compact_catalog.md](docs/rom_data_compact_catalog.md).
+
+[Change record](docs/changes/2026-11-04-recover-rom-data-audit-cli-build.json)
+
 ## 2026-11-04 — Preserve selection on empty IME commit
 
 Type: fixed. Platforms: Windows GNU build and Wine unit tests.

@@ -556,6 +556,16 @@ animation, Linux, USA and native Windows remain open; no performance
 measurements were made. Evidence: `target/rom-data-e127-loop-ordinary-20261104/`
 and `target/rom-data-e127-loop-timer-watch-20261104/`.
 
+The previously failed audit CLI build was retried against the retained, verified
+845-file snapshot in an isolated Windows cross-build. The CLI compiled without
+warnings, and a separate guarded verification checked Cargo's successful finish,
+artifact hash and unchanged snapshot. The build unit itself remains marked FAIL
+because its cleanup refused Cargo-created hard links; its diagnostics and output
+are retained. This closes the missing compilation only: the existing Wine scene
+results were not repeated, and the wider coverage limits above remain. Evidence:
+`target/validation/units/rom-data-audit-cli-verify-61zo549_/evidence/result.json`
+and `target/validation/units/rom-data-recover-audit-cli-fd8jxksj/`.
+
 ## Ordinary European Star Cross use
 
 Original metadata28 action 46 selects primary task 46, whose descriptor at

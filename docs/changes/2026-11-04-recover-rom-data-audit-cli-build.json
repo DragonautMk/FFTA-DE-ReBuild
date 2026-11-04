@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "recover-rom-data-audit-cli-build",
+  "title": "Recover ROM data audit CLI build",
+  "kind": "docs",
+  "platforms": [
+    "Windows cross-build on Linux"
+  ],
+  "changes": [
+    "Recover the ROM-data audit CLI compilation previously stopped by ENOSPC using its retained source snapshot and isolated build outputs."
+  ],
+  "validation": [
+    "Cargo release build with rom-data-read-audit completed without warnings; independent guarded verification confirmed successful Cargo finish, executable hash and all 845 source hashes.",
+    "Earlier EUR Wine timer, Freezeblink and Stardust scene comparisons were already accepted and were not repeated; earlier slot-job and seventh OBJ quota failures were recovered in their own records."
+  ],
+  "limitations": [
+    "The build validation unit reported FAIL during scratch cleanup because Cargo created hard links; the build itself exited zero and separate verification passed. Failed unit and outputs remain retained.",
+    "This is a cross-build, not a native Windows or new runtime test; broader ROM data coverage and deferred performance measurements remain open."
+  ],
+  "files": [
+    "docs/rom_data_compact_catalog.md"
+  ],
+  "references": [
+    "docs/rom_data_compact_catalog.md"
+  ]
+}

@@ -20431,3 +20431,10 @@ Two 24-row EUR callers select 0–7; 132 bank bytes and 594 conditional table by
 - Verified criteria: integrated command editor accepted within selected Wine scope; type, correct, recall and cancel with focus isolation, explicit submission, bounded Unicode/history/selection, clipboard/multiline guard, completion/help and controller keyboard. Wine GUI verified Cangjie commit/repeat/cancel/F2, focus and reopen, Italian layout, visible CJK preedit/draft, missing capability refused as incompatible/not-sent with no request/result change and exact guest state. DBG2-15 prerequisite satisfied.
 - Evidence: docs/changes/2026-11-04-complete-debug-command-editor.json; docs/changes/2026-11-04-forward-late-wine-ime-results.json; docs/changes/2026-11-04-render-cjk-command-composition.json; target/validation/units/{dbg2-ime-shim-guards-np_m69tv,dbg2-cjk-font-gui-jqogyz5h,dbg2-console-capability-hide-kzv22t1h}/unit-result.json. Windows GNU builds, Wine tests, package notice tests, memory, Atlas and diff checks PASS. First hide test acfo2dmh timed out on the X11 disappearance assumption; kzv22t1h passed reopening and draft checks.
 - Limits: selected simulated Wine/Xvfb cases and one IME/layout; physical hardware, native Windows/Linux, other IMEs and full Unicode glyph coverage remain DBG2-27. Sol consultation requested gpt-6.1-sol xhigh; effective model/effort unconfirmed.
+
+### ROMDATA-04-LOOP-AUDIT-BUILD-ENOSPC
+
+- Outcome: completed; Windows audit CLI cross-build PASS.
+- Verified criteria: Cargo exited zero without warnings using the retained 845-file snapshot and isolated outputs; independent guarded validation confirmed Cargo success, artifact SHA256 and unchanged snapshot. Earlier accepted EUR Wine pairs were not rerun.
+- Evidence: docs/changes/2026-11-04-recover-rom-data-audit-cli-build.json; target/validation/units/rom-data-audit-cli-verify-61zo549_/evidence/result.json; target/validation/units/rom-data-recover-audit-cli-fd8jxksj/.
+- Limits: the original build unit is FAIL because cleanup refused Cargo-created hard links; it and its diagnostics remain retained. No native Windows or new runtime test, wider coverage or performance claim.
