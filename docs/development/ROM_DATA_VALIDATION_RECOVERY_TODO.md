@@ -50,12 +50,16 @@ The evidence does not attribute every unchecked item to lack of disk space.
   - [x] Correct the UI-context report counts and verify its complete e127
     EUR/Wine filter. The corrected report matches the manifests (100 current,
     98 prior). [Recovery](../changes/2026-11-04-prepare-ui-context-validation.json).
+  - [x] Correct table-graphics revision/resource/file reporting and compare
+    the complete generated file set with its manifest. The Wine test and an
+    independent result/input check pass; its original unit is FAIL because
+    retention rejected a test-created save state. Diagnostics remain retained.
+    [Recovery](../changes/2026-11-04-verify-e127-table-graphics.json).
   - [ ] Correct and validate the other affected reports. The source audit
     found fixed historical resource counts in the primary through septenary
     compact OBJ tests, the four-byte and packed lookup, both descriptor-bank
-    tests and property masks. Table graphics also has old
-    revision, file and resource summaries; reconcile its assertion described
-    in RVR-15. The original compact-catalog report has old aggregate counts.
+    tests and property masks. The original compact-catalog report has old
+    aggregate counts.
 
 ## 2. Run the older tests whose revision expectations changed
 
@@ -115,12 +119,12 @@ checks pass, and the record names the tested revision and precise scope.
   raw/managed DMA state-clock pair, predecessor preservation and transactional
   tamper rejection. The other filters were not selected by this recovery.
   [Evidence](../changes/2026-11-04-verify-e127-dynamic-fragments.json).
-- [ ] **RVR-15 — Table-selected graphics:** run
-  `european_table_graphics_managed_native_and_lifecycle` against the updated
-  complete-set expectations. First reconcile its 94-file directory assertion
-  with the current e127 generation, recorded as 101 files, and derive the
-  result summary from the actual manifest and file set.
-  [Test](../../crates/recomp/src/rom_data/table_graphics_runtime_tests.rs).
+- [x] **RVR-15 — Table-selected graphics:** the complete
+  `european_table_graphics_managed_native_and_lifecycle` test passes on e127
+  under EUR Wine; independent verification confirms the corrected manifest
+  report and protected inputs. The original unit is FAIL because its cleanup
+  guard retained a test-created save state. The failed unit and diagnostics are
+  preserved. [Evidence](../changes/2026-11-04-verify-e127-table-graphics.json).
 - [x] **RVR-16 — Clan table alias:** the full
   `european_clan_alias_managed_reads` filter passes with e127-d126 under EUR
   Wine. It preserves the e94-d93 predecessor resources, checks 20 alias bytes,

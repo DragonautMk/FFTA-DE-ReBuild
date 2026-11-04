@@ -679,7 +679,13 @@ fn european_table_graphics_managed_native_and_lifecycle() {
         (127, 126, 100)
     );
     extract(&dataset(), &mut source).unwrap();
-    assert_eq!(fs::read_dir(dataset()).unwrap().count(), 94);
+    let mut expected_files: BTreeSet<_> = source.manifest.resources.iter()
+        .map(|resource| PathBuf::from(&resource.path)).collect();
+    assert_eq!(expected_files.len(), source.manifest.resources.len());
+    assert!(expected_files.insert(PathBuf::from(MANIFEST_FILE)));
+    let actual_files: BTreeSet<_> = fs::read_dir(dataset()).unwrap()
+        .map(|entry| PathBuf::from(entry.unwrap().file_name())).collect();
+    assert_eq!(actual_files, expected_files);
     assert_eq!(&source.manifest.coverage[..prior.coverage.len()], prior.coverage);
     let slot = source
         .manifest
@@ -824,13 +830,15 @@ fn european_table_graphics_managed_native_and_lifecycle() {
     let native = native_prefixes(&rom);
     eprintln!("ROM_DATA_TABLE_GRAPHICS_STAGE native22/fullstate-clock/source53667poisoned PASS");
     let bus = bus_lifecycle(&rom);
-    let result = serde_json::json!({"status":"PASS","revision":[1,92,91],"files":84,"resources":83,"other82_records_files_exact":true,"old16banks_twoinline_sharedOBJ_exact":true,"additional_source_bytes":53667,"additional_runtime_spans":80,"attach_guards":14,"fullset_guards":2,"newfile_interruption":true,"native":native,"bus_lifecycle":bus,"dataset_sha256":owner.dataset_sha256(),"manifest_sha256":gba_core::ffta_rom::digest(&manifest),"ui_graphics_JSON_sha256":gba_core::ffta_rom::digest(&bytes),"actualCLI":"pending","ordinary_positive":"pending","Linux":"pending","USA":"pending","nativeWindows":"pending","new32_9":"pending","performance_measurements":false});
+    let result = serde_json::json!({"status":"PASS","revision":[source.manifest.schema,source.manifest.extractor_revision,source.manifest.decoder_revision],"files":actual_files.len(),"resources":source.manifest.resources.len(),"other82_records_files_exact":true,"old16banks_twoinline_sharedOBJ_exact":true,"additional_source_bytes":53667,"additional_runtime_spans":80,"attach_guards":14,"fullset_guards":2,"newfile_interruption":true,"native":native,"bus_lifecycle":bus,"dataset_sha256":owner.dataset_sha256(),"manifest_sha256":gba_core::ffta_rom::digest(&manifest),"ui_graphics_JSON_sha256":gba_core::ffta_rom::digest(&bytes),"actualCLI":"pending","ordinary_positive":"pending","Linux":"pending","USA":"pending","nativeWindows":"pending","new32_9":"pending","performance_measurements":false});
     fs::write(
         root.join("result.json"),
         serde_json::to_vec_pretty(&result).unwrap(),
     )
     .unwrap();
     eprintln!(
-        "ROM_DATA_TABLE_GRAPHICS_RUNTIME e92-d91/files84/resources83/attach14/fullset2/native22/DMA3 PASS"
+        "ROM_DATA_TABLE_GRAPHICS_RUNTIME e{}-d{}/files{}/resources{}/attach14/fullset2/native22/DMA3 PASS",
+        source.manifest.extractor_revision, source.manifest.decoder_revision,
+        actual_files.len(), source.manifest.resources.len()
     );
 }

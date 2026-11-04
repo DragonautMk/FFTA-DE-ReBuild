@@ -20487,3 +20487,10 @@ Two 24-row EUR callers select 0–7; 132 bank bytes and 594 conditional table by
 - Verified criteria: e127-d126 generation and 100-resource manifest; 1,304 typed bytes in seven source spans, mixed-width boundaries, adjacent owner, raw/managed DMA full state/clock and transactional coherent-tamper rejection. Prior e93-d92 dataset and ROM remain guarded; successful scratch removed.
 - Evidence: docs/changes/2026-11-04-verify-e127-dynamic-fragments.json; target/validation/units/rvr14-dynamic-raw-e127-fn5b_rwk/.
 - Limits: selected test source matches retained artifact; six unrelated source files and two other test modules differ from current workspace. Other filters, ordinary reachability, Linux, USA, native Windows and performance remain outside this result.
+
+### RVR-15-TABLE-GRAPHICS-E127
+
+- Outcome: selected EUR/Wine full test PASS and independently verified; RVR-01 remains partial.
+- Verified criteria: exact manifest file set, 101 files/100 resources/e127-d126 report, e91 predecessor preservation, publication interruption, 14 attachment guards, 22 native state/clock cases, three transfer cases and Load/Undo with unavailable files. Independent unit verifies report, manifest and 11 protected inputs.
+- Evidence: docs/changes/2026-11-04-verify-e127-table-graphics.json; target/validation/units/rvr15-table-graphics-result-check-qey5s95l/; target/validation/units/rvr15-table-graphics-e127-retry2-iri_b8pe/.
+- Limits: Wine unit status FAIL after test PASS because cleanup refused test-created ffstate; work and build artifact retained for diagnostics. Two earlier attempts failed due to omitted runner fixtures and remain retained. No ordinary-use, native Windows, Linux, USA or performance claim; six unrelated snapshot files older; model effort unconfirmed.

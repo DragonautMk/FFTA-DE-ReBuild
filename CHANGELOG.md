@@ -354,6 +354,28 @@ Documentation: [2026-11-03-migrate-european-compact-selector-tables.json](docs/c
 
 [Change record](docs/changes/2026-11-04-verify-european-compact-selector-cli.json)
 
+## 2026-11-04 — Verify e127 table graphics and its manifest report
+
+Type: fixed. Platforms: EUR Windows executable under Wine.
+
+**Changes**
+
+- Replace the obsolete table-graphics file-count assertion with exact manifest file-set equality and derive revision, file and resource report values from the tested generation.
+
+**Validation**
+
+- The complete Wine test passes e127-d126 with 100 resources and 101 files, prior resource preservation, publication interruption, 14 attachment guards, 22 full-state/clock native cases, three transfer cases and Load/Undo with unavailable files.
+- A separate passing validation unit rechecked the full test result, manifest counts and all 11 original protected input snapshots. The result schema remains intact.
+
+**Limitations**
+
+- The original test unit is FAIL after the successful test because scratch contains a test-created ffstate rejected by the cleanup guard; its files and diagnostics remain retained. The first two test attempts failed because the runner omitted reference fixtures; both are retained.
+- The isolated snapshot predates six unrelated workspace sources. Ordinary table-extension reachability, Linux, USA and native Windows remain outside this evidence. No performance measurement.
+
+Documentation: [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md), [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md).
+
+[Change record](docs/changes/2026-11-04-verify-e127-table-graphics.json)
+
 ## 2026-11-04 — Verify the complete e127 compact OBJ runtime filter
 
 Type: docs. Platforms: EUR Windows executable under Wine.

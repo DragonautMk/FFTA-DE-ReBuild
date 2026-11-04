@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "slug": "verify-e127-table-graphics",
+  "title": "Verify e127 table graphics and its manifest report",
+  "kind": "fixed",
+  "platforms": [
+    "EUR Windows executable under Wine"
+  ],
+  "changes": [
+    "Replace the obsolete table-graphics file-count assertion with exact manifest file-set equality and derive revision, file and resource report values from the tested generation."
+  ],
+  "validation": [
+    "The complete Wine test passes e127-d126 with 100 resources and 101 files, prior resource preservation, publication interruption, 14 attachment guards, 22 full-state/clock native cases, three transfer cases and Load/Undo with unavailable files.",
+    "A separate passing validation unit rechecked the full test result, manifest counts and all 11 original protected input snapshots. The result schema remains intact."
+  ],
+  "limitations": [
+    "The original test unit is FAIL after the successful test because scratch contains a test-created ffstate rejected by the cleanup guard; its files and diagnostics remain retained. The first two test attempts failed because the runner omitted reference fixtures; both are retained.",
+    "The isolated snapshot predates six unrelated workspace sources. Ordinary table-extension reachability, Linux, USA and native Windows remain outside this evidence. No performance measurement."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/table_graphics_runtime_tests.rs",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_ui_graphics.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_ui_graphics.md"
+  ]
+}

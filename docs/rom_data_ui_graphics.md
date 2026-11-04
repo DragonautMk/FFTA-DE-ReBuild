@@ -93,6 +93,18 @@ platforms remain open; no game checkpoint or navigation is added by this unit.
 
 ## Managed table-selected graphics and runtime consumption
 
+The e127-d126 regression test verifies the exact generated manifest file set
+and reports its actual revision, 100 resources and 101 files. In EUR Wine the
+complete test passed publication/interruption, 14 attachment guards, 22 native
+state/clock cases and three transfer comparisons, including Load/Undo with the
+resource files unavailable. A separate guarded unit confirmed its result and
+inputs. The original validation unit remains FAIL because its cleanup guard
+found the test-created `.ffstate`; its work and diagnostics are retained.
+Evidence: `target/validation/units/rvr15-table-graphics-e127-retry2-iri_b8pe/`
+and `target/validation/units/rvr15-table-graphics-result-check-qey5s95l/`.
+This is targeted Wine evidence; ordinary table-extension reachability and
+native Windows, Linux and USA coverage remain open.
+
 `ROMDATA-03-04-LOCALIZED-TABLE-GRAPHICS-RUNTIME` enables the new table Catalog
 inside the existing `graphics.ui-custom-banks` resource at index15. EUR is now
 schema1/extractor92/decoder91. The dataset still has84 files/83 resource IDs;
