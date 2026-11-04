@@ -640,6 +640,32 @@ Documentation: [debug_control.md](docs/debug_control.md).
 
 [Change record](docs/changes/2026-11-04-preserve-selection-on-empty-ime-commit.json)
 
+## 2026-11-04 — Verify e127 UI context validation
+
+Type: changed. Platforms: EUR Windows executable under Wine.
+
+**Changes**
+
+- Derive the UI context test report current and prior resource counts from the tested manifests while retaining its JSON keys.
+- Complete RVR-17 by running the retained Windows test artifact under Wine and checking its report against both manifests.
+
+**Validation**
+
+- An isolated Windows release test cross-build passes with no compiler warning messages; 845 snapshot files and both selected ROM-data source hashes are recorded.
+- An independent read-only check verifies all 98 e108 resource records match e127 and the current files match their recorded hashes; guarded input preservation and scratch cleanup pass.
+- The test report key set matches the preimage, and the prepared Wine runner passes Python syntax compilation.
+- Full EUR/Wine filter passes all 256 category inputs, eleven copy and eleven coordinate native prefixes, coherent-edit rejection and full state/clock equality; 308 typed native bytes. Report matches the e127 and e108 manifest counts: 100 current, 98 prior.
+- After host process inspection, the completed build work inventory matched its retained preimage and its named scratch was retired under the unit lease; build, test and retirement receipts remain.
+
+**Limitations**
+
+- The previous automatic host process-inspection review timed out twice; explicit user authorization and a subsequent host process check allowed the coordinated Wine run. This is Wine evidence, not native Windows.
+- The isolated snapshot has six unrelated source files older than the current workspace. No benchmarks, new gameplay scenes or disk failed-reload matrix were run; broader ordinary UI coverage remains open.
+
+Documentation: [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md), [rom_data_ui.md](docs/rom_data_ui.md).
+
+[Change record](docs/changes/2026-11-04-prepare-ui-context-validation.json)
+
 ## 2026-11-04 — Integrate European compact timer table and bank
 
 Type: changed. Platforms: Windows executable on Wine; EUR.

@@ -37,8 +37,8 @@ The evidence does not attribute every unchecked item to lack of disk space.
 
 - [ ] **RVR-01 — Resource counts:** replace stale hard-coded resource/revision
   summaries in the affected private tests with values from the actual tested
-  manifest. The full octonary e127 test asserts 100 resources, but its JSON
-  still reports 98. Audit the other checklist filters for the same discrepancy.
+  manifest. The earlier full octonary e127 report said 98; its correction is
+  recorded below. Audit the other checklist filters for the same discrepancy.
   Close when the changed reports agree with the manifest and their relevant
   reruns pass. Preserve old evidence verbatim.
   [Observed discrepancy](../changes/2026-11-04-verify-e127-octonary-full-filter.json),
@@ -47,10 +47,13 @@ The evidence does not attribute every unchecked item to lack of disk space.
     rerun its full EUR/Wine filter. Its report and generated e127 manifest
     both say 100, all 97 prior resources match, and the report retains its
     existing fields. [Recovery](../changes/2026-11-04-fix-octonary-validation-report.json).
+  - [x] Correct the UI-context report counts and verify its complete e127
+    EUR/Wine filter. The corrected report matches the manifests (100 current,
+    98 prior). [Recovery](../changes/2026-11-04-prepare-ui-context-validation.json).
   - [ ] Correct and validate the other affected reports. The source audit
     found fixed historical resource counts in the primary through septenary
     compact OBJ tests, the four-byte and packed lookup, both descriptor-bank
-    tests, property masks and UI context tests. Table graphics also has old
+    tests and property masks. Table graphics also has old
     revision, file and resource summaries; reconcile its assertion described
     in RVR-15. The original compact-catalog report has old aggregate counts.
 
@@ -119,10 +122,13 @@ checks pass, and the record names the tested revision and precise scope.
 - [ ] **RVR-16 — Clan table alias:** run
   `european_clan_alias_managed_reads`.
   [Test](../../crates/recomp/src/rom_data/clan_table_alias_runtime_tests.rs).
-- [ ] **RVR-17 — UI context templates:** run
-  `european_ui_context_templates_match_source_and_native_readers` with the
-  updated generation expectations.
-  [Test](../../crates/recomp/src/rom_data/ui_context_templates_tests.rs).
+- [x] **RVR-17 — UI context templates:** the full
+  `european_ui_context_templates_match_source_and_native_readers` filter passes
+  in EUR/Wine with e127-d126: all 256 category inputs, eleven copy and eleven
+  coordinate prefixes, 308 typed native bytes and full state/clock equality.
+  Coherent edits are rejected in memory; 98 prior resource records match. The
+  corrected report matches both manifests (100 current, 98 prior).
+  [Evidence and limits](../changes/2026-11-04-prepare-ui-context-validation.json).
 - [ ] **RVR-18 — Original compact-catalog projection:** reconcile the original
   `european_compact_catalog_matches_source_and_native_readers` assumptions
   with the extended catalog, then run the affected original projection checks.

@@ -20459,3 +20459,17 @@ Two 24-row EUR callers select 0–7; 132 bank bytes and 594 conditional table by
 - Verified criteria: octonary runtime report derives current/prior counts from manifests; isolated Windows release test cross-build and full EUR/Wine filter PASS. Generated manifest and report both show 100 resources; 97 prior resources preserved; existing JSON keys retained.
 - Evidence: docs/changes/2026-11-04-fix-octonary-validation-report.json; target/validation/units/rvr01-octonary-build-retry-f45ooxrq/; target/validation/units/rvr01-octonary-wine-dbiu_zv9/.
 - Limits: earlier wrapper failed on a field accidentally omitted in the first edit; the field was restored and the corrected retry passed. Failed diagnostics retained. Other fixed counts and table-graphics file assertion remain open. Snapshot differs from unrelated current sources; no Linux, USA, native Windows, new gameplay or performance claim. Terra effort unconfirmed.
+
+### RVR-17-MANIFEST-E108-E127
+
+- Outcome: completed for a read-only comparison; RVR-17 remains partial.
+- Verified criteria: all 98 e108 resource records match e127 and all 98 corresponding e127 files match their recorded SHA256 hashes; protected inputs unchanged.
+- Evidence: docs/changes/2026-11-04-prepare-ui-context-validation.json; target/validation/units/rvr17-ui-context-manifest-y05qphpk/evidence/result.json.
+- Limits: no runtime execution or GUI scene; the e127 Wine filter and corrected report remain pending.
+
+### RVR-17-UI-CONTEXT-E127
+
+- Outcome: completed for EUR/Wine full filter; RVR-01 remains partial.
+- Verified criteria: full e127-d126 filter passes 256 category inputs, eleven copy and eleven coordinate native prefixes, coherent in-memory tamper rejection, full state/clock equality and 308 typed native bytes. Corrected JSON matches 100 current and 98 prior manifest resources; input preservation passes. Completed build scratch retired after host observation, owned lease and unchanged inventory check.
+- Evidence: docs/changes/2026-11-04-prepare-ui-context-validation.json; target/validation/units/rvr17-ui-context-wine-bezw4jap/; target/validation/units/rvr17-ui-context-build-y66vk3dh/retirement-result.json.
+- Limits: no native Windows, Linux, USA, new ordinary scene, disk-reload matrix or performance claim. Isolated source snapshot differs in six unrelated current files; original process inspection review timed out before explicit user authorization and successful host check.

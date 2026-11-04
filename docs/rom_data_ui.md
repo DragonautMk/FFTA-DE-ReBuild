@@ -308,6 +308,16 @@ not all templates' ordinary use or complete constructor execution. Creating
 a rejected owner in memory leaves the existing machine/owner unchanged; this
 check does not claim a new disk-based failed-reload/lifecycle matrix.
 
+For the later e127-d126 validation, the test report derives current and prior
+resource counts from the corresponding manifests. The full EUR/Wine filter
+passes: all 256 categories, eleven copy and eleven coordinate native prefixes,
+308 typed native bytes and state/clock equality. Coherent edits are rejected in
+memory. The report matches its manifests (100 current resources, 98 prior), and
+a separate check verifies all 98 prior records and current file hashes.
+Evidence: `target/validation/units/rvr17-ui-context-wine-bezw4jap/` and
+[recovery record](changes/2026-11-04-prepare-ui-context-validation.json).
+This does not establish every template's ordinary use or a disk reload matrix.
+
 A production CLI replay of the existing ordinary IN-19 EUR Roulette Do it
 seed advances guest 11960..11972. The new owner serves five reads/20 bytes:
 two coordinate, two count, one flag and fifteen opaque bytes. All 99 runtime

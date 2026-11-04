@@ -46,6 +46,7 @@ fn european_ui_context_templates_match_source_and_native_readers() {
 
     let old: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     let current = read_dataset(&dataset).unwrap();
+    let resource_count = current.manifest.resources.len();
     assert_eq!(old.resources.len(), 98);
     assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (127, 126, 100));
     for resource in &old.resources {
@@ -168,7 +169,7 @@ fn european_ui_context_templates_match_source_and_native_readers() {
         }
     }
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "resources":99, "previous_unchanged":98, "source_bytes":220,
+        "status":"PASS", "resources":resource_count, "previous_unchanged":old.resources.len(), "source_bytes":220,
         "records":11, "selector_categories":256, "native_copy_cases":11,
         "native_coordinate_cases":11, "typed_native_bytes":served,
         "coherent_edit_rejected_in_memory":true, "full_state_clock":true,
