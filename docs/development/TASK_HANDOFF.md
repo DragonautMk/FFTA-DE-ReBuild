@@ -82,6 +82,7 @@ for a specific question: archive legacy lines 179..744 or the named record below
 - Outcome: partial
 - Verified: readonly catalog/import/menu, bounded source index/CLI, and source-capability local query with generation, chunk/hash and CLI parity; `2026-11-03-index-cheat-source-capabilities.json`, `2026-11-03-expose-source-capability-local-control.json`.
 - Missing: complete device/ROM and behavioral verification; source plans are assumptions. A menu-created debug copy retains the current backend; supported cheat activation still requires an interpreter copy.
+- Selection `CHEAT-DISTRIBUTION`: partial. Six used EUR entries and shared master trace to GH; validation was source-informed. Alternative repository has a license notice but cites upstream and covers USA/GameShark. Review: `CHEAT_DISTRIBUTION_PROVENANCE.md`. Missing: rights basis or independently authored, validated distributable replacements. Next: research a game-state operation without copying source payload; retain provenance and all guards.
 - Resume: `docs/cheats.md`; do not repeat accepted index or channel checks.
 
 ### DBG2-18
@@ -201,9 +202,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 - Godot: planned assessment complete, implementation deferred, not a current dependency. AndroidPort is separate; originals/ROM/BIOS/private catalogs/saves/recordings stay out of commits/packages.
 
 ## Final handover
-- Task: data validation recovery; parameter ordinary-use route partial. Local app catalog installation and bounded conditional slide completed.
+- Task: user requests redistributable cheats; source audit partial. Data validation recovery remains partial.
 - Last verified result: selected Linux app loads 341 entries; original runtime backed up and saves/config preserved. Linux X11 and Wine GUI catalog sessions, CH-0341 frame effect and 33 tests per platform passed.
-- Remaining work: recovery later phases, positive ordinary read and full pair; cheat activation needs a paused isolated interpreter and unsupported formats remain unavailable.
+- Remaining work: establish redistribution basis or design and validate a project-authored alternative; no replacement or legal clearance yet. Recovery later phases, positive ordinary read and full pair remain open.
 - Errors or blockers: app save/recording provenance guard unchanged; original device semantics unproved. Menu-created copies retain the current backend.
-- Next action: reauthenticate rebuilt Windows runtime with cheat-session-catalog-win-release-build-p3xzbi6x, then continue Remedi dialogue from 328r3omo and observe new windows.
-- References: docs/cheats.md; docs/debug_sessions.md; docs/rom_data_gameplay.md; docs/changes/2026-11-05-persist-local-cheat-catalog-and-conditional-slide.json; target/validation/units/cheat-session-catalog-linux-gui-x11-fm296mnd/.
+- Next action: investigate a project-authored game-state operation without copying external payload; preserve honest source provenance. Recovery: reauthenticate Windows runtime with cheat-session-catalog-win-release-build-p3xzbi6x before Remedi 328r3omo.
+- References: docs/development/CHEAT_DISTRIBUTION_PROVENANCE.md; docs/cheats.md; docs/rom_data_gameplay.md; docs/changes/2026-11-05-audit-used-cheat-distribution-provenance.json.

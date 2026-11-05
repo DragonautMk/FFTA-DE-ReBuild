@@ -6,6 +6,9 @@ all derived Markdown/JSON are excluded from Git: the supplied third-party
 compilations include an explicit copyright notice and their redistribution
 permissions have not been established. This documentation contains no cheat
 payloads and does not assign a license to the source material.
+The [distribution provenance review](development/CHEAT_DISTRIBUTION_PROVENANCE.md)
+distinguishes the EUR entries actually used, source-informed validation and
+the outstanding routes to a distributable replacement.
 
 The [integrated-debug follow-up checklist](development/DEBUG_TOOLS_V2_TODO.md)
 tracks a local cheat menu using these stable CH identifiers, with EUR candidates,

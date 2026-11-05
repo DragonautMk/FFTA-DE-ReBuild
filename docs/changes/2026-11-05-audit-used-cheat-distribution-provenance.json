@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "audit-used-cheat-distribution-provenance",
+  "title": "Document provenance of the EUR cheats used in validation",
+  "kind": "docs",
+  "platforms": [
+    "All"
+  ],
+  "changes": [
+    "Audit the recorded sources and bounded observations for six EUR cheats used in research; distinguish source-informed decoding and testing from independent discovery.",
+    "Document licensing-evidence and independently authored game-state operation routes for a future redistributable replacement without including third-party payloads."
+  ],
+  "validation": [
+    "Compared six local catalog provenance records and their shared master with existing retained observations and the source index. Reviewed the cited source home page, the alternative repository notice and FFTA section, and relevant EU directives."
+  ],
+  "limitations": [
+    "No redistribution grant has been established for the used entries, and no replacement cheat, public catalog, legal clearance or device-equivalence claim is delivered."
+  ],
+  "files": [
+    "docs/development/CHEAT_DISTRIBUTION_PROVENANCE.md",
+    "docs/cheats.md"
+  ],
+  "references": [
+    "docs/development/CHEAT_DISTRIBUTION_PROVENANCE.md",
+    "docs/cheats.md"
+  ]
+}

@@ -951,6 +951,27 @@ Documentation: [rom_data_obj.md](docs/rom_data_obj.md).
 
 [Change record](docs/changes/2026-11-05-bound-conditional-marker-menu-candidates.json)
 
+## 2026-11-05 — Document provenance of the EUR cheats used in validation
+
+Type: docs. Platforms: All.
+
+**Changes**
+
+- Audit the recorded sources and bounded observations for six EUR cheats used in research; distinguish source-informed decoding and testing from independent discovery.
+- Document licensing-evidence and independently authored game-state operation routes for a future redistributable replacement without including third-party payloads.
+
+**Validation**
+
+- Compared six local catalog provenance records and their shared master with existing retained observations and the source index. Reviewed the cited source home page, the alternative repository notice and FFTA section, and relevant EU directives.
+
+**Limitations**
+
+- No redistribution grant has been established for the used entries, and no replacement cheat, public catalog, legal clearance or device-equivalence claim is delivered.
+
+Documentation: [CHEAT_DISTRIBUTION_PROVENANCE.md](docs/development/CHEAT_DISTRIBUTION_PROVENANCE.md), [cheats.md](docs/cheats.md).
+
+[Change record](docs/changes/2026-11-05-audit-used-cheat-distribution-provenance.json)
+
 ## 2026-11-04 — Verify UI context owner lifecycle with unavailable data
 
 Type: added. Platforms: EUR Windows executable under Wine.
