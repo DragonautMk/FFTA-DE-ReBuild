@@ -198,6 +198,21 @@ pub(crate) fn create(destination: &Path, source: Source<'_>) -> Result<PathBuf, 
     if let Some(dataset) = source.dataset { crate::rom_data::diagnosis::inspect(source.rom, dataset)?; }
     let library = if source.interp { None } else { Some(recomp_core::tcc_memory::library_path().ok_or("Bundled TinyCC is required for a movable native session; use --interp or install tcc/libtcc beside the source runtime")?) };
     let executable = crate::diagnostics::read(source.executable, 256 * 1024 * 1024)?;
+    let catalog = if let Some(dir) = source.executable.parent() {
+        let path = dir.join("cheats").join("catalogo.json");
+        if path.try_exists().map_err(|e| format!("Cheat catalog: {e}"))? {
+            let checked = crate::debug_cheats::Catalog::load(&path)?;
+            let bytes = crate::diagnostics::read(&path, 4 * 1024 * 1024)?;
+            if gba_core::ffta_rom::digest(&bytes) != checked.source_sha256 {
+                return Err("Cheat catalog changed while creating the debug session".into());
+            }
+            Some(bytes)
+        } else {
+            None
+        }
+    } else {
+        None
+    };
     let root = std::path::absolute(destination).map_err(|e| e.to_string())?;
     fs::create_dir_all(root.parent().ok_or("Session needs a parent directory")?).map_err(|e| e.to_string())?;
     fs::create_dir(&root).map_err(|e| e.to_string())?;
@@ -220,6 +235,7 @@ pub(crate) fn create(destination: &Path, source: Source<'_>) -> Result<PathBuf, 
     #[cfg(unix)] { use std::os::unix::fs::PermissionsExt; fs::set_permissions(root.join(exe_name()), fs::Permissions::from_mode(0o755)).map_err(|e| e.to_string())?; }
     put("portable.txt", b"Isolated local debug session\n", true)?;
     put("ffta.gba", source.rom, true)?;
+    if let Some(catalog) = &catalog { put("cheats/catalogo.json", catalog, true)?; }
     if let Some(bios) = source.bios { put("gba_bios.bin", bios, true)?; }
     if let Some(save) = source.save { put("Data/saves/ffta.sav", save, false)?; }
     if let Some(state) = source.state {

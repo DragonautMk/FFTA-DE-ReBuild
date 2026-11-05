@@ -98,6 +98,43 @@ fn source_changes_do_not_retarget_the_session_and_seed_tampering_is_detected() {
 }
 
 #[test]
+fn local_cheat_catalog_is_copied_pinned_and_moves_with_the_session() {
+    let f = Fixture::new();
+    let source_dir = f.dir.path().join("cheats");
+    fs::create_dir(&source_dir).unwrap();
+    let source_catalog = source_dir.join("catalogo.json");
+    let catalog = serde_json::to_vec(&serde_json::json!({"schema": 1, "entries": [{
+        "id": "CH-0001", "format": "codebreaker", "region": "EUR",
+        "section": "Synthetic", "title": "Example", "status": "unverified",
+        "codes": [], "notes": [], "aliases": [], "provenance": []
+    }]})).unwrap();
+    fs::write(&source_catalog, &catalog).unwrap();
+    let root = create(&f.root(), f.source()).unwrap();
+    let saved = root.join("cheats/catalogo.json");
+    assert_eq!(fs::read(&saved).unwrap(), catalog);
+    assert_eq!(read_manifest(&root).unwrap().pins["cheats/catalogo.json"], gba_core::ffta_rom::digest(&catalog));
+    fs::write(&source_catalog, b"changed original").unwrap();
+    let moved = f.dir.path().join("moved case");
+    fs::rename(&root, &moved).unwrap();
+    assert!(open(&moved).is_ok());
+    assert_eq!(fs::read(moved.join("cheats/catalogo.json")).unwrap(), catalog);
+    fs::write(moved.join("cheats/catalogo.json"), b"changed copy").unwrap();
+    assert!(read_manifest(&moved).unwrap_err().contains("input changed"));
+}
+
+#[test]
+fn invalid_local_cheat_catalog_refuses_session_before_creating_destination() {
+    let f = Fixture::new();
+    let source_dir = f.dir.path().join("cheats");
+    fs::create_dir(&source_dir).unwrap();
+    let catalog = source_dir.join("catalogo.json");
+    fs::write(&catalog, b"not a catalog").unwrap();
+    assert!(create(&f.root(), f.source()).is_err());
+    assert!(!f.root().exists());
+    assert_eq!(fs::read(catalog).unwrap(), b"not a catalog");
+}
+
+#[test]
 fn linked_mutable_save_and_manifest_path_escape_are_rejected_before_launch() {
     let f=Fixture::new();let root=create(&f.root(),f.source()).unwrap();
     let save=root.join("Data/saves/ffta.sav");fs::remove_file(&save).unwrap();

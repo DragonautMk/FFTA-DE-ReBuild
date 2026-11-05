@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "persist-local-cheat-catalog-and-conditional-slide",
+  "title": "Make the local cheat catalog available in the app",
+  "kind": "changed",
+  "platforms": [
+    "Linux x86_64",
+    "Windows GNU under Wine"
+  ],
+  "changes": [
+    "Copy and pin a validated local cheat catalog in newly created isolated debug sessions; install the user-supplied catalog beside the selected portable runtime.",
+    "Allow an equality or inequality condition to guard one complete bounded CodeBreaker slide, retaining preflight and interpreter restrictions."
+  ],
+  "validation": [
+    "33 targeted tests passed on Linux and 33 on Windows GNU under Wine, including catalog pinning and conditional-slide atomicity.",
+    "Isolated Linux X11 and Windows Wine GUI sessions opened the inherited 341-entry catalog. In Linux the shared control channel prepared, armed and disarmed CH-0341 and observed its eight expected writes over one interpreter frame.",
+    "The selected Linux portable runtime was replaced after preserving its previous binary; the installed CLI found 341 catalog entries without an explicit path and verified the source master checksum. Existing save and configuration inputs were protected."
+  ],
+  "limitations": [
+    "The user-supplied catalog remains private and is not included in public packages. Other installations must be provisioned separately.",
+    "Activation requires a paused isolated interpreter, correct ROM/source/master and a reviewed preview; unsupported plans including GameShark and Action Replay remain unavailable. Physical device timing, native Windows and Wayland were not verified.",
+    "Cheat recording and save provenance remains guarded and DBG2-23 is not complete."
+  ],
+  "files": [
+    "crates/recomp/src/debug_cheat_decoder.rs",
+    "crates/recomp/src/debug_session.rs",
+    "crates/recomp/src/debug_session/tests.rs",
+    "docs/cheats.md",
+    "docs/debug_sessions.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/rom_data_gameplay.md"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/debug_sessions.md"
+  ]
+}

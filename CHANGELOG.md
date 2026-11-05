@@ -511,6 +511,31 @@ Documentation: [rom_data_obj.md](docs/rom_data_obj.md).
 
 [Change record](docs/changes/2026-11-05-prepare-adjacent-obj-coordinate-prefix.json)
 
+## 2026-11-05 — Make the local cheat catalog available in the app
+
+Type: changed. Platforms: Linux x86_64, Windows GNU under Wine.
+
+**Changes**
+
+- Copy and pin a validated local cheat catalog in newly created isolated debug sessions; install the user-supplied catalog beside the selected portable runtime.
+- Allow an equality or inequality condition to guard one complete bounded CodeBreaker slide, retaining preflight and interpreter restrictions.
+
+**Validation**
+
+- 33 targeted tests passed on Linux and 33 on Windows GNU under Wine, including catalog pinning and conditional-slide atomicity.
+- Isolated Linux X11 and Windows Wine GUI sessions opened the inherited 341-entry catalog. In Linux the shared control channel prepared, armed and disarmed CH-0341 and observed its eight expected writes over one interpreter frame.
+- The selected Linux portable runtime was replaced after preserving its previous binary; the installed CLI found 341 catalog entries without an explicit path and verified the source master checksum. Existing save and configuration inputs were protected.
+
+**Limitations**
+
+- The user-supplied catalog remains private and is not included in public packages. Other installations must be provisioned separately.
+- Activation requires a paused isolated interpreter, correct ROM/source/master and a reviewed preview; unsupported plans including GameShark and Action Replay remain unavailable. Physical device timing, native Windows and Wayland were not verified.
+- Cheat recording and save provenance remains guarded and DBG2-23 is not complete.
+
+Documentation: [cheats.md](docs/cheats.md), [debug_sessions.md](docs/debug_sessions.md).
+
+[Change record](docs/changes/2026-11-05-persist-local-cheat-catalog-and-conditional-slide.json)
+
 ## 2026-11-05 — Observe the first Royal Valley mission menu
 
 Type: docs. Platforms: EUR Windows CLI under Wine.
@@ -523,6 +548,7 @@ Type: docs. Platforms: EUR Windows CLI under Wine.
 - Compare the isolated CH-0329 frame-boundary interpretation against an identical-input control during the first battle transition.
 - Trace the candidate cheat halfword to a live bit field in the first battle transition and identify selected source operations without assuming a victory condition.
 - Decode the alternative CH-0341 source with the independent mGBA-derived oracle and correlate one candidate record against a visible unit display.
+- Create an explicitly cheat-derived private research checkpoint with source, input, frame, clock and per-active-frame write provenance, without changing the product save guard.
 
 **Validation**
 
@@ -541,6 +567,16 @@ Type: docs. Platforms: EUR Windows CLI under Wine.
 - A separate replay reproduces the 1,400-frame experimental image, then ten recorded A inputs advance the dialogue to a visible MISSION CLEARED and a black transition. The first battle clears under this cheat interpretation; no later phase or altered state export is established. Evidence: target/validation/units/e130-ch0341-dialogue-continuation-98imcbve/.
 - A further reproduction matches the previous black-transition image and advances 1,500 neutral frames to Babus dialogue on the Royal Valley map; the later battle is not yet observed. Evidence: target/validation/units/e130-ch0341-transition-continuation-3zmx9owi/.
 - Reproducing the cheat-assisted route with the cheat disabled after frame 1,400 and six recorded A inputs advances Babus dialogue; no later battle or altered state export. Evidence: target/validation/units/e130-ch0341-babus-dialogue-ru_rvm7u/.
+- A protected-source replay reproduces the Babus endpoint image and packages the derived machine state, frame image, helper source and 133-frame write trace in a SHA-256-verified private envelope. Helper roundtrip load preserves frame and clock; raw temporary state removed. Evidence: target/validation/units/e130-ch0341-research-checkpoint-vl7_be9p/.
+- A separate guarded replay verifies the parent envelope, matches its image, advances six normal A inputs with no additional cheat and packages its endpoint with inherited provenance. Transient raw states were removed. Evidence: target/validation/units/e130-ch0341-envelope-dialogue-h1mqf3s4/.
+- A second six-A guarded continuation advances the visible post-victory conversation and retains a parent-hash-linked cheat-derived checkpoint without further writes. Evidence: target/validation/units/e130-ch0341-babus-dialogue-next-xwyjrubj/.
+- A third six-A continuation advances the visible conversation to Marche saying to go on; a linked cheat-derived checkpoint is retained with no further cheat writes. Evidence: target/validation/units/e130-ch0341-babus-dialogue-third-qyeib9xo/.
+- One A and 600 neutral frames from the private dialogue envelope reach a darkened interior transition, with inherited cheat provenance and no further writes; helper does not measure parameter reads. Evidence: target/validation/units/e130-ch0341-post-babus-transition-ez1rwhwi/.
+- Production E130 EUR Wine observes the same 606-frame post-Babus input from a verified cheat-derived envelope: zero parameter reads and records, with the helper endpoint image matching. This is not a full state pair. Evidence: target/validation/units/e130-ch0341-interior-managed-cli-w86jlv7k/.
+- Another 600 neutral frames from the cheat-derived interior checkpoint reach a visible Remedi dialogue without further cheat writes; the helper does not measure parameter reads. Evidence: target/validation/units/e130-ch0341-interior-neutral-1eosf4pk/.
+- The corresponding 600-frame E130 EUR Wine CLI observation reaches the same Remedi image with zero parameter reads and records from the cheat-derived ancestor. Evidence: target/validation/units/e130-ch0341-remedi-neutral-cli-tv6s85m8/.
+- Six A inputs advance the visible Remedi/Marche dialogue from the private envelope; no further cheat and no helper counters. Evidence: target/validation/units/e130-ch0341-remedi-dialogue-328r3omo/.
+- Production E130 EUR Wine observes the same 756-frame Remedi dialogue with zero parameter reads and records and matching helper image; this is a bounded cheat-derived result, not a whole-state pair. Evidence: target/validation/units/e130-ch0341-remedi-dialogue-cli-rv_nf881/.
 
 **Limitations**
 
@@ -552,6 +588,7 @@ Type: docs. Platforms: EUR Windows CLI under Wine.
 - The halfword bit operations do not establish which condition ends the battle or whether CH-0329 is effective at a different timing.
 - CH-0341 conditional-slide device semantics, unit-slot ownership, gameplay effect and victory remain unverified; it was not applied.
 - The observed CH-0341 divergence is not yet a verified victory or later phase, and the host-frame implementation does not validate original device semantics.
+- The research envelope is cheat-derived and private; it does not implement product replay provenance or remove the existing save/recording guard.
 
 Documentation: [rom_data_gameplay.md](docs/rom_data_gameplay.md).
 

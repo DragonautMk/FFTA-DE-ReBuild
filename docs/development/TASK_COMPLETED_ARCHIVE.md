@@ -21240,3 +21240,47 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 ### ROMDATA-04-ROYAL-VALLEY-CH0341-BABUS-DIALOGUE
 
 - Outcome: completed bounded continuation; six normal A inputs advance Babus dialogue after first-battle cheat, disabled after frame 1400. No later battle or altered state export. Evidence: target/validation/units/e130-ch0341-babus-dialogue-ru_rvm7u/.
+
+### ROMDATA-04-ROYAL-VALLEY-CH0341-RESEARCH-CHECKPOINT
+
+- Outcome: completed private cheat-derived checkpoint envelope; hashes, source/input/frame/clock and per-active-frame write trace retained, prior endpoint image matches and payload reload preserves frame/clock. Product save/recording guard remains unchanged; ordinary full-route reachability unproved. Evidence: target/validation/units/e130-ch0341-research-checkpoint-vl7_be9p/.
+
+### ROMDATA-04-ROYAL-VALLEY-CH0341-ENVELOPE-CONTINUATION
+
+- Outcome: completed private research checkpoint continuation; verified parent hash/members, matched its image and advanced six normal A presses, retaining linked cheat-derived envelope with no further cheat writes. Product guard unchanged. Evidence: target/validation/units/e130-ch0341-envelope-dialogue-h1mqf3s4/.
+
+### ROMDATA-04-ROYAL-VALLEY-CH0341-SECOND-ENVELOPE
+
+- Outcome: completed scoped continuation; six normal A inputs advance the post-victory dialogue and a parent-linked cheat-derived envelope is retained; no additional cheat. Evidence: target/validation/units/e130-ch0341-babus-dialogue-next-xwyjrubj/.
+
+### ROMDATA-04-ROYAL-VALLEY-CH0341-THIRD-ENVELOPE
+
+- Outcome: completed scoped dialogue continuation; six normal A inputs reach Marche saying to go onward, with linked cheat-derived checkpoint and no additional cheat. Evidence: target/validation/units/e130-ch0341-babus-dialogue-third-qyeib9xo/.
+
+### ROMDATA-04-ROYAL-VALLEY-CH0341-INTERIOR-TRANSITION
+
+- Outcome: completed scoped cheat-derived continuation; one normal A plus 600 neutral frames reach dark interior transition with linked checkpoint; no managed counters. Evidence: target/validation/units/e130-ch0341-post-babus-transition-ez1rwhwi/.
+
+### ROMDATA-04-ROYAL-VALLEY-CH0341-INTERIOR-CLI-NEGATIVE
+
+- Outcome: completed bounded managed observation from cheat-derived checkpoint; 606 frames report zero parameter reads and match helper endpoint image. Not a complete state pair or cheat-free route. Evidence: target/validation/units/e130-ch0341-interior-managed-cli-w86jlv7k/.
+
+### ROMDATA-04-ROYAL-VALLEY-CH0341-REMEDI-DIALOGUE
+
+- Outcome: completed scoped cheat-derived neutral continuation; 600 frames reach visible Remedi dialogue without further cheat, no helper counters. Evidence: target/validation/units/e130-ch0341-interior-neutral-1eosf4pk/.
+
+### ROMDATA-04-ROYAL-VALLEY-CH0341-REMEDI-NEUTRAL-CLI
+
+- Outcome: completed bounded managed observation from cheat-derived checkpoint; 600 neutral frames yield zero parameter reads and matching Remedi endpoint image. Not a complete state pair or cheat-free route. Evidence: target/validation/units/e130-ch0341-remedi-neutral-cli-tv6s85m8/.
+
+### ROMDATA-04-ROYAL-VALLEY-CH0341-REMEDI-DIALOGUE-INPUT
+
+- Outcome: completed scoped cheat-derived dialogue continuation; six normal A inputs advance Remedi/Marche conversation and retain linked checkpoint; helper counters absent. Evidence: target/validation/units/e130-ch0341-remedi-dialogue-328r3omo/.
+
+### ROMDATA-04-ROYAL-VALLEY-CH0341-REMEDI-DIALOGUE-CLI
+
+- Outcome: completed bounded managed observation from private cheat-derived checkpoint; six A presses over 756 frames yield zero parameter reads and matching endpoint image. Not a full state pair or cheat-free route. Evidence: target/validation/units/e130-ch0341-remedi-dialogue-cli-rv_nf881/.
+
+### CHEAT-LOCAL-APP-CATALOG-AND-CONDITIONAL-SLIDE
+
+- Outcome: completed bounded installation and support. The user-supplied 341-entry catalog is installed in the selected Linux portable app; the updated runtime has a preserved predecessor and protected saves/config. New debug copies validate, copy and pin the catalog. Bounded conditional slides are accepted and atomically preflighted. Linux and Wine each passed 33 targeted tests; Linux X11 and Wine GUI opened the inherited catalog, and a shared-control interpreter frame showed CH-0341's eight expected writes. The catalog is private, unsupported formats remain unavailable, the menu retains the source backend, and physical device/native Windows/Wayland equivalence is unproved. Evidence: docs/changes/2026-11-05-persist-local-cheat-catalog-and-conditional-slide.json; target/validation/units/cheat-session-catalog-linux-gui-x11-fm296mnd/; target/validation/units/cheat-user-linux-updated-cli-engiiekl/.

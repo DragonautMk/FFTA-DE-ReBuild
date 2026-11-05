@@ -38,7 +38,7 @@ termination of another owner's process or changing another thread's goal state.
 - Outcome: partial
 - Verified: E130 101 resources/102 files, 63 compact banks; managed and translated layered initializer and CLI create/reuse/verify PASS under EUR Wine. Current: target/validation/units/e130-layered-obj-cli-current-rbr9ukkp/work/resources/. E129 retained for comparison with its accepted 38 regressions, marker and startup proofs.
 - Missing: unmigrated resources/consumers, missing ordinary-use evidence, ABI/global extent/indirect calls and mod phases ROMDATA-06/07; Linux/USA/native Windows/new32:9 remain distinct. EUR, reduced Wine scope, no performance/space measurements; originals and personal saves unchanged.
-- Selection: `ROMDATA-04-PARAMETER-RECORDS27-ORDINARY` partial. CH-0341 host-frame setup clears first battle; after six A inputs Babus dialogue continues, cheat disabled after frame 1400 (ru_rvm7u). Next: advance the visible dialogue with bounded inputs, retaining provenance; later phase and positive pair remain open.
+- Selection: `ROMDATA-04-PARAMETER-RECORDS27-ORDINARY` partial. User asked about cheat persistence: CH-0341 catalog and write trace retained; private research checkpoints have explicit cheat provenance. Remedi six-A window reports zero reads and matches CLI image (rv_nf881). Next: reauthenticate the rebuilt Windows runtime using cheat-session-catalog-win-release-build-p3xzbi6x, then continue Remedi dialogue from 328r3omo and measure new windows; positive pair remains open.
 - Resume: [validation recovery checklist](ROM_DATA_VALIDATION_RECOVERY_TODO.md) for skipped checks; [ROM_DATA_TODO](ROM_DATA_TODO.md), only the selected criterion's section (ROMDATA-01/02/03/04/05/06/07); [inventory](ROM_DATA_INVENTORY.md). Do not read the whole TODO. Children retain their IDs and limits:
   - `ROMDATA-04-PARAMETER-RECORDS27-ORDINARY`: source/model/runtime/CLI accepted, ordinary positive and pair open. User confirms Ambervale; recorded movement and post-save A windows are negative (inl3r0yl/l_97lwxn), not global absence. `docs/rom_data_gameplay.md`.
   - Localized table graphics: scoped ordinary trigger and pair accepted; aggregate counters do not identify the three groups, and all-bank/all-group/consumer coverage remains open. `docs/rom_data_ui_graphics.md`, ordinary table extension section.
@@ -78,10 +78,10 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ### DBG2-17
 
-- State: suspended
+- State: active
 - Outcome: partial
 - Verified: readonly catalog/import/menu, bounded source index/CLI, and source-capability local query with generation, chunk/hash and CLI parity; `2026-11-03-index-cheat-source-capabilities.json`, `2026-11-03-expose-source-capability-local-control.json`.
-- Missing: complete device/ROM and behavioral verification; source plans are assumptions.
+- Missing: complete device/ROM and behavioral verification; source plans are assumptions. A menu-created debug copy retains the current backend; supported cheat activation still requires an interpreter copy.
 - Resume: `docs/cheats.md`; do not repeat accepted index or channel checks.
 
 ### DBG2-18
@@ -201,9 +201,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 - Godot: planned assessment complete, implementation deferred, not a current dependency. AndroidPort is separate; originals/ROM/BIOS/private catalogs/saves/recordings stay out of commits/packages.
 
 ## Final handover
-- Task: data validation recovery; parameter ordinary-use route partial.
-- Last verified result: cheat-assisted first battle cleared; six normal A inputs advance Babus dialogue with cheat disabled.
-- Remaining work: later battle phases, positive ordinary read and full pair; other recovery criteria open.
-- Errors or blockers: no altered state exported; original device semantics unproved; originals guarded.
-- Next action: continue the visible Babus dialogue with bounded normal input.
-- References: docs/rom_data_gameplay.md; target/validation/units/e130-ch0341-babus-dialogue-ru_rvm7u/; docs/changes/2026-11-05-observe-royal-valley-parameter-menu.json.
+- Task: data validation recovery; parameter ordinary-use route partial. Local app catalog installation and bounded conditional slide completed.
+- Last verified result: selected Linux app loads 341 entries; original runtime backed up and saves/config preserved. Linux X11 and Wine GUI catalog sessions, CH-0341 frame effect and 33 tests per platform passed.
+- Remaining work: recovery later phases, positive ordinary read and full pair; cheat activation needs a paused isolated interpreter and unsupported formats remain unavailable.
+- Errors or blockers: app save/recording provenance guard unchanged; original device semantics unproved. Menu-created copies retain the current backend.
+- Next action: reauthenticate rebuilt Windows runtime with cheat-session-catalog-win-release-build-p3xzbi6x, then continue Remedi dialogue from 328r3omo and observe new windows.
+- References: docs/cheats.md; docs/debug_sessions.md; docs/rom_data_gameplay.md; docs/changes/2026-11-05-persist-local-cheat-catalog-and-conditional-slide.json; target/validation/units/cheat-session-catalog-linux-gui-x11-fm296mnd/.

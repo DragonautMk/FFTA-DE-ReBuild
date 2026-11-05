@@ -130,6 +130,26 @@ before the original record. Long individual records are marked as abbreviated
 in the view and remain available in full through `debug-cheats show`. Decoding
 and controlled application remain partial, with the one-shot scope below.
 
+For a local build or an extracted portable app, the user's existing catalog can
+be kept at `cheats/catalogo.json` beside the application executable. The Debug
+/ Cheat catalog page finds it automatically, and the file stays available on
+later launches. The catalog is user-supplied local data; it is not embedded in
+the executable or included in public packages. For another app folder, copy the
+catalog into that folder's `cheats/` directory without replacing a different
+existing catalog. New isolated debug sessions copy and pin this catalog in their
+own folder; existing sessions are unchanged. In the menu, the persistent Debug page can be unlocked with
+↑ ↑ ↓ ↓ ← ← → →. Select a catalog entry, open **Manage cheat**, choose its
+source, prepare a preview and explicitly apply or arm a supported plan.
+
+The EUR CH-0341 source uses conditional slides, which the bounded interpreter
+plan now accepts. In isolated native Linux/X11 and Windows Wine sessions, the
+catalog opened automatically after session creation; the shared control channel
+prepared, armed and disarmed that entry, and its expected writes occurred over
+one controlled frame. The separate frame-boundary research path also reached
+the first battle's Mission Cleared screen. These results do not verify the
+original device hook or other game situations. Unsupported formats and sources
+remain identified as such in the catalog.
+
 In isolated Wine/Xvfb tests, keyboard navigation selected a synthetic source,
 reviewed its preview, armed and disarmed it, applied it once and disabled all.
 Attempts to arm without a selected source or reviewed preview were refused.
@@ -154,12 +174,12 @@ plan as authorization to write guest memory.
 
 The initial subset recognizes byte/halfword assignment (3/8), halfword OR,
 AND and add (2/6/E), halfword equality/inequality conditions (7/A) guarding
-one following simple operation, and a halfword slide (4) with its continuation.
+one following operation, including a halfword slide (4) with its continuation.
 Halfwords use little endian in the guest; slide count and increments are
 reported explicitly. Addresses must be width-aligned; slide count is limited to
 1..1024 and all its addresses must fit the encoded address range. An invalid
 line, placeholder, unsupported opcode, encryption control, master, incomplete
-continuation, nested condition or conditional slide rejects the entire block
+continuation or nested condition rejects the entire block
 without a partial plan. This intentionally does not cover every device or
 CodeBreaker opcode; even a syntactically successful block may be encrypted.
 GameShark/Action Replay remain unsupported. This assumed-plaintext inspection

@@ -559,12 +559,6 @@ pub(crate) fn inspect(lines: &[String]) -> Result<Plan, String> {
                 ));
             }
             let next = action(lines, &mut index)?;
-            if matches!(next, Operation::Slide { .. }) {
-                return Err(format!(
-                    "Conditional slide semantics unsupported at line {}",
-                    start + 1
-                ));
-            }
             operations.push(Operation::Conditional {
                 address,
                 width: 2,
@@ -790,13 +784,49 @@ mod tests {
         assert_eq!(plan.operations.len(), 2);
     }
     #[test]
+    fn conditional_slide_guards_the_whole_bounded_operation() {
+        use gba_core::Bus;
+        let plan = decode(&[
+            "72000000 1234",
+            "42000020 0010",
+            "00030004 0002",
+            "32000040 0077",
+        ])
+        .unwrap();
+        assert_eq!(plan.operations.len(), 2);
+        assert!(matches!(&plan.operations[0], Operation::Conditional { next, .. }
+            if matches!(**next, Operation::Slide { count: 4, .. })));
+        assert_eq!(plan.footprint().unwrap().max_writes(), 5);
+
+        let mut machine = gba_core::Machine::new(vec![]);
+        assert_eq!(plan.apply_once(&mut machine.bus).unwrap(), 1);
+        assert_eq!(machine.bus.read16(0x02000020), 0);
+        assert_eq!(machine.bus.read8(0x02000040), 0x77);
+
+        machine.bus.write16(0x02000000, 0x1234);
+        assert_eq!(plan.apply_once(&mut machine.bus).unwrap(), 5);
+        for i in 0..4 {
+            assert_eq!(machine.bus.read16(0x02000020 + i * 2), 0x10 + i as u16 * 3);
+        }
+
+        let oversized = decode(&[
+            "82000010 1234",
+            "72000000 1234",
+            "42000020 0000",
+            "00000101 0002",
+        ])
+        .unwrap();
+        let before = machine.save_state().unwrap();
+        assert!(oversized.apply_once(&mut machine.bus).is_err());
+        assert_eq!(machine.save_state().unwrap(), before);
+    }
+    #[test]
     fn malformed_incomplete_encrypted_unknown_and_ambiguous_blocks_are_atomic_errors() {
         for lines in [
             vec![],
             vec!["32000000 0001", "garbage"],
             vec!["42000000 0001"],
             vec!["72000000 0000"],
-            vec!["72000000 0000", "42000000 0001", "00000001 0002"],
             vec!["72000000 0000", "72000002 0000"],
             vec!["92000000 0000"],
             vec!["12000000 0000"],

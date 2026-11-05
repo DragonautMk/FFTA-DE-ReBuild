@@ -5495,10 +5495,11 @@ reaches it, or that its mode-2 instruction is taken. The user notes three
 final-battle phases and authorizes a victory cheat if needed. A readonly E130
 EUR Wine CLI inspection of the existing source-bound cheat catalog reports
 CH-0329 (Clear Mission) as a conditional KEYINPUT read and EWRAM halfword
-write; the linked source master checksum matches the actual EUR ROM. CH-0341
-(Win After 1st Attack) is rejected by the current decoder because conditional
-slide semantics are unsupported. Neither candidate has been applied or
-verified in this battle. An external [code listing](https://almarsguides.com/Retro/Walkthroughs/GBA/Games/FinalFantasyTacticsAdvance/CodeBreaker/Europe/)
+write; the linked source master checksum matches the actual EUR ROM. At that
+inspection CH-0341 (Win After 1st Attack) was rejected because the decoder did
+not yet support a conditional slide. Neither candidate had been applied in
+that observation. The later bounded decoder support and actual application are
+documented in [the cheat guide](cheats.md). An external [code listing](https://almarsguides.com/Retro/Walkthroughs/GBA/Games/FinalFantasyTacticsAdvance/CodeBreaker/Europe/)
 describes Select+Up at Engage for Clear Mission, but this is an unverified
 source instruction, not proof of this ROM's behavior or effect on the final
 sequence. Evidence: `target/validation/units/e130-victory-cheat-inspect-
@@ -5613,6 +5614,53 @@ cheat after frame 1,400, and advances six recorded A presses. The endpoint
 remains in Babus's dialogue; no later battle or state export is established.
 The setup still has 133 active cheat frames and 1,064 writes, all before the
 dialogue (`e130-ch0341-babus-dialogue-ru_rvm7u/`).
+
+A later private research helper reproduces that endpoint, matches its image,
+and stores a cheat-derived checkpoint in an owned ZIP envelope. The envelope
+contains the machine payload, source and catalog identities, decoded plan,
+input schedule, frame/clock, helper source and a per-active-frame write trace;
+all members are SHA-256 checked. A fresh machine loads the payload and reports
+the same saved frame and clock. The raw temporary state was removed after
+packaging, and the envelope is explicitly marked cheat-derived. This local
+research mechanism does not change the product's save/recording guard or
+implement DBG2-23 provenance, and the derived setup is not evidence of a
+cheat-free route. Source ROM and original saves were protected. Evidence:
+`target/validation/units/e130-ch0341-research-checkpoint-vl7_be9p/`.
+A separate continuation validates every envelope member and source identity,
+loads the payload in the private replay helper, and reproduces the saved
+endpoint image. Six normal A presses advance Babus and Marche's dialogue;
+no further cheat runs. The endpoint and input plan are stored in a new
+cheat-derived envelope linked by its parent hash; transient raw states were
+removed. This tests the private research mechanism, not product replay
+provenance (`e130-ch0341-envelope-dialogue-h1mqf3s4/`).
+A second guarded six-A continuation advances the same conversation, again
+without additional cheat writes and with a parent-hash-linked private
+checkpoint (`e130-ch0341-babus-dialogue-next-xwyjrubj/`).
+A third six-A continuation reaches Marche’s indication to go onward, retaining
+another linked private checkpoint (`e130-ch0341-babus-dialogue-third-qyeib9xo/`).
+One normal A and 600 neutral frames from that checkpoint reach a darkened
+interior transition; its linked cheat-derived checkpoint is retained. No
+parameter counters were measured in this helper (`e130-ch0341-post-babus-
+transition-ez1rwhwi/`).
+The production E130 EUR Wine CLI separately observes the same 606-frame
+input from its validated cheat-derived ancestor: parameter reads and records
+used are zero, and the endpoint image matches the helper. This is a bounded
+negative, not a complete machine-state pair or cheat-free reachability proof
+(`e130-ch0341-interior-managed-cli-w86jlv7k/`).
+A further 600 neutral frames from the linked transition checkpoint reach a
+visible Remedi dialogue; the helper does not measure parameter reads
+(`e130-ch0341-interior-neutral-1eosf4pk/`). The checkpoint remains
+cheat-derived and no additional cheat was applied.
+The corresponding production E130 EUR Wine CLI window reports zero parameter
+reads and records, with a matching endpoint image; it is a bounded negative
+from a cheat-derived ancestor (`e130-ch0341-remedi-neutral-cli-tv6s85m8/`).
+Six normal A presses advance the Remedi/Marche dialogue and retain a linked
+private checkpoint; the helper does not measure reads
+(`e130-ch0341-remedi-dialogue-328r3omo/`).
+The same 756-frame dialogue input observed by the production E130 EUR Wine
+CLI reports zero parameter reads and records; the endpoint image matches the
+helper. This is a bounded result from a cheat-derived ancestor, not a whole
+state pair (`e130-ch0341-remedi-dialogue-cli-rv_nf881/`).
 
 A later guarded source join checks all 512 physical mission records and their
 referenced event keys against these five direct mode-2 candidates. None of the

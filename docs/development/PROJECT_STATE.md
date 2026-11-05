@@ -42,10 +42,14 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   a bounded isolated RAM before/after and fresh-seed restoration proof. CH-0324
   reached Item Shop in one controlled EUR interpreter scenario against a
   same-input control. CH-0334 changed displayed funds during one controlled
-  EUR shop purchase; other listed cheat effects and device hooks remain unverified.
-  Bounded source-bound plans may be armed for interpreter frame boundaries;
+  EUR shop purchase. A conditional-slide plan for CH-0341 was also armed in a
+  bounded EUR interpreter frame: its expected eight writes were observed.
+  Other listed effects and device hooks remain unverified. Bounded source-bound
+  plans, including validated conditional slides, may be armed for interpreter frame boundaries;
   conflicting footprints are refused and disarm stops future writes without
-  restoring memory. Broader backends and provenance-aware replay remain open.
+  restoring memory. A user-supplied catalog beside the runtime is copied and
+  pinned in newly created isolated sessions. Broader backends and
+  provenance-aware replay remain open.
 
 - The explicitly requested [private debug-assets export](../private_debug_assets.md)
   builds a separate ignored Windows portable ZIP from the user's selected local

@@ -35,6 +35,25 @@ automatically to the personal game. Start debug session and Switch ROM are
 blocked in the copy: close it before changing cases. Creation is refused
 during input recording.
 
+When a valid user catalog is present at `cheats/catalogo.json` beside the
+source runtime, session creation copies it into the private session at the
+same relative path. The catalog is pinned in the session manifest and the
+Debug / Cheat catalog page can discover it without another import. A malformed
+or changing catalog prevents creation with an error; an absent catalog leaves
+the usual empty state. Existing sessions are not silently modified. Cheat
+activation retains its interpreter and preview requirements described in
+[the cheat guide](cheats.md).
+
+The menu-created copy retains the current game's backend. When the game is
+using the native backend, create an interpreter copy with `debug-session
+create ... --interp --open` to activate supported cheats; opening the catalog
+alone does not switch the backend.
+
+Targeted Linux and Windows Wine tests cover the copy, pin, relocation and
+tamper checks. Separate isolated Linux/X11 and Windows Wine GUI sessions opened
+the inherited catalog and exercised a supported cheat through the shared
+control channel. Native Windows and Wayland remain untested for this change.
+
 Menu-created sessions are under `Data/debug-sessions/` in portable mode, or
 `debug-sessions/` under the installed configuration directory. The log shows
 the full folder path. After eight folders, the menu asks you to reopen a
@@ -98,7 +117,7 @@ even if the command starts from another working directory. Do not change files
 or links while the session is open.
 
 The `debug-session.json` manifest identifies the case and retains hashes for
-ROM, BIOS, executable, seed, dataset and TinyCC. Saves, configuration and cache
+ROM, BIOS, executable, seed, dataset, optional cheat catalog and TinyCC. Saves, configuration and cache
 are mutable. `session.lock` prevents two simultaneous openings of the same copy;
 `last-result.json` retains the latest startup/exit outcome. The
 [diagnosis](debug_diagnostics.md) report is in the copy's configuration directory.
