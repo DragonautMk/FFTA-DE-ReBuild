@@ -185,7 +185,6 @@ fn columns_and_readonly_reference_lists_keep_shared_pointer_rectangles() {
     }
     m.atlas_section(Domain::Debug,0);m.atlas_reference_tab();
     let tasks=super::references::planned();assert_eq!(tasks.len(),28);
-    assert_eq!(tasks.iter().filter(|t|t.done).count(),12);
     assert_eq!(tasks.first().unwrap().id,"DBG2-01");assert_eq!(tasks.last().unwrap().id,"DBG2-28");
     assert_eq!(m.atlas_reference_items().len(),28);
     assert_eq!(m.handle(MenuInput::Confirm,&mut av),None);
@@ -196,16 +195,24 @@ fn columns_and_readonly_reference_lists_keep_shared_pointer_rectangles() {
 fn planned_reference_follows_the_checklist_and_localizes_its_status() {
     let mut m=Menu::unlocked_for_test(true,true);
     m.atlas_section(Domain::Debug,0);m.atlas_reference_tab();
+    let tasks=super::references::planned();
     let en=m.atlas_reference_items();
-    assert!(en[9].0.starts_with("DBG2-10 · Runtime and tool events"));
-    assert!(en[9].1.contains("Completed in the current checklist"));
-    assert!(en[12].1.contains("Planned · unavailable"));
-    assert!(en[12].1.contains("Checklist reference; this view does not execute operations."));
+    assert_eq!(en.len(),tasks.len());
     m.language.set(input_config::Language::parse("it"));
     let it=m.atlas_reference_items();
-    assert!(it[9].1.contains("Completata nella checklist corrente"));
-    assert!(it[12].1.contains("Pianificata · non disponibile"));
-    assert_eq!(en[12].0,it[12].0);
+    assert_eq!(it.len(),tasks.len());
+    for (task,(english,italian)) in tasks.iter().zip(en.iter().zip(&it)) {
+        assert!(english.0.starts_with(&format!("{} · ",task.id)));
+        assert_eq!(english.0,italian.0);
+        let (en_status,it_status)=if task.done {
+            ("Completed in the current checklist","Completata nella checklist corrente")
+        } else {
+            ("Planned · unavailable","Pianificata · non disponibile")
+        };
+        assert_eq!(english.1.lines().nth(1),Some(en_status),"{} has the wrong English status",task.id);
+        assert_eq!(italian.1.lines().nth(1),Some(it_status),"{} has the wrong Italian status",task.id);
+        assert!(english.1.contains("Checklist reference; this view does not execute operations."));
+    }
 }
 
 #[test]

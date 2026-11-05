@@ -751,6 +751,28 @@ Documentation: [rom_data_ui_raw_transfers.md](docs/rom_data_ui_raw_transfers.md)
 
 [Change record](docs/changes/2026-11-05-inspect-dynamic-fragment-retained-contexts.json)
 
+## 2026-11-05 — Keep Atlas checklist tests aligned with task status
+
+Type: fixed. Platforms: Linux x86_64 Docker.
+
+**Changes**
+
+- Replace stale completed-task counts and positional status assumptions with checks of each task ID and its English and Italian status; allow the checklist to evolve without fixing its completed count.
+
+**Validation**
+
+- The generated Atlas task table matched the source checklist using scripts/menu_atlas_tasks.py --check. The targeted Linux release Atlas tests passed: 12 passed and one optional image export ignored.
+- The Linux Docker portable build and complete serial suite passed: 851 tests passed, 397 ignored; the menu suite passed 128 tests with one ignored. The exported archive was inspected for the runtime and for absence of ROM, save and snapshot payloads.
+- An earlier focused run and Docker run passed their tests but retained diagnostics because the protected test source changed during execution; the final focused run and Docker build use the final source.
+
+**Limitations**
+
+- This fixes test expectations and documentation only; native Windows, physical input and game runtime behavior were not newly tested. The current Linux build artifact remains in the managed validation unit for delivery.
+
+Documentation: [menu_clan_atlas.md](docs/menu_clan_atlas.md).
+
+[Change record](docs/changes/2026-11-05-fix-atlas-checklist-status-tests.json)
+
 ## 2026-11-05 — Export representative and extended private debug assets
 
 Type: fixed. Platforms: Python exporter on Linux; Windows portable payload; existing Linux catalog CLI.

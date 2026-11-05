@@ -177,6 +177,11 @@ python3 scripts/menu_atlas_inventory.py --check
 
 ## Migration validation
 
+The read-only planned-task reference is generated from the current checklist.
+`python3 scripts/menu_atlas_tasks.py --check` checks that the generated table
+matches it. Menu tests check each reference ID and its completed or planned
+status in English and Italian without fixing the number of completed tasks.
+
 Windows GNU/Wine baseline: 29 input-config tests and 72 menu tests passed before
 changes, on commit `945966c`; the specification cited earlier commit `999d0a6`.
 The map therefore includes the already present DBG2-01…09 backends.

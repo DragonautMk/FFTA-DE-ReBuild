@@ -202,9 +202,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 - Godot: planned assessment complete, implementation deferred, not a current dependency. AndroidPort is separate; originals/ROM/BIOS/private catalogs/saves/recordings stay out of commits/packages.
 
 ## Final handover
-- Task: redistributable win operation and cheat usability; recovery remains partial.
-- Last verified result: Linux app updated; favorites persist per catalog, menu-created interpreter copy inherits matching favorites; Linux X11 GUI, Linux and Wine focused tests pass.
-- Remaining work: no independently established win operation or rights grant; native-source-to-interpreter GUI, normal native cheat backend and recovery criteria remain unverified.
+- Task: Linux build test repair completed; redistributable win operation and recovery remain partial.
+- Last verified result: checklist/TSV match; 12 focused Atlas tests and full Linux Docker suite (851 passed) succeeded. Portable archive retained in the final validation unit.
+- Remaining work: no independently established win operation or rights grant; native-source-to-interpreter GUI and recovery criteria remain unverified.
 - Errors or blockers: CH-0341 originated at GH; no third-party cheat payload published. App save/recording provenance guard unchanged.
-- Next action: investigate a project-authored win operation without copying external payload; retain source provenance. For recovery, reauthenticate rebuilt Windows runtime before Remedi 328r3omo.
-- References: docs/development/CHEAT_DISTRIBUTION_PROVENANCE.md; docs/cheats.md; docs/debug_sessions.md; docs/changes/2026-11-05-persist-cheat-favorites-and-interpreter-copy.json; target/validation/units/cheat-usability-linux-gui-bqei2hms/.
+- Next action: resume CHEAT-DISTRIBUTION. Reauthenticate Windows runtime before recovery Remedi 328r3omo.
+- References: docs/changes/2026-11-05-fix-atlas-checklist-status-tests.json; target/validation/units/menu-atlas-linux-docker-final-7j3cce7b/; docs/development/CHEAT_DISTRIBUTION_PROVENANCE.md.

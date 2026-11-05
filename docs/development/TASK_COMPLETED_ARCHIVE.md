@@ -21288,3 +21288,10 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 ### CHEAT-USABILITY-FAVORITES-AND-INTERPRETER-COPY
 
 - Outcome: completed bounded usability increment. Favorites persist by catalog hash and the menu creates an isolated interpreter copy with matching default-catalog favorite snapshot. Linux X11 GUI verified persistence after restart, Favorites filter and copy creation from an interpreter game; Linux focused tests and Windows GNU/Wine favorites/session tests passed. Installed Linux portable runtime with prior binary backed up and original saves/config protected. Native-source conversion, other backends and public win operation remain unverified. Evidence: docs/changes/2026-11-05-persist-cheat-favorites-and-interpreter-copy.json; target/validation/units/cheat-usability-linux-gui-bqei2hms/; target/validation/units/cheat-usability-win-wine-tests-host-w8nocjrc/.
+
+### MENU-ATLAS-CHECKLIST-TESTS
+
+- Outcome: completed
+- Verified criteria: fixed obsolete count and positional assertions; task IDs and statuses checked in English/Italian. Table matches checklist; 12 focused Linux tests and full Docker suite (851 passed, 397 ignored; menu 128 passed/1 ignored) passed. Verified portable archive retained.
+- Evidence: docs/changes/2026-11-05-fix-atlas-checklist-status-tests.json; target/validation/units/menu-atlas-linux-focused-final-wp5cpme2/; target/validation/units/menu-atlas-linux-docker-final-7j3cce7b/.
+- Limits: earlier focused and Docker units passed tests but retained diagnostics after protected source changed during execution. No game runtime or native Windows behavior newly asserted.

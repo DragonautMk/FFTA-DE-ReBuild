@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "fix-atlas-checklist-status-tests",
+  "title": "Keep Atlas checklist tests aligned with task status",
+  "kind": "fixed",
+  "platforms": [
+    "Linux x86_64 Docker"
+  ],
+  "changes": [
+    "Replace stale completed-task counts and positional status assumptions with checks of each task ID and its English and Italian status; allow the checklist to evolve without fixing its completed count."
+  ],
+  "validation": [
+    "The generated Atlas task table matched the source checklist using scripts/menu_atlas_tasks.py --check. The targeted Linux release Atlas tests passed: 12 passed and one optional image export ignored.",
+    "The Linux Docker portable build and complete serial suite passed: 851 tests passed, 397 ignored; the menu suite passed 128 tests with one ignored. The exported archive was inspected for the runtime and for absence of ROM, save and snapshot payloads.",
+    "An earlier focused run and Docker run passed their tests but retained diagnostics because the protected test source changed during execution; the final focused run and Docker build use the final source."
+  ],
+  "limitations": [
+    "This fixes test expectations and documentation only; native Windows, physical input and game runtime behavior were not newly tested. The current Linux build artifact remains in the managed validation unit for delivery."
+  ],
+  "files": [
+    "crates/menu/src/clan_atlas/tests.rs",
+    "docs/menu_clan_atlas.md"
+  ],
+  "references": [
+    "docs/menu_clan_atlas.md"
+  ]
+}
