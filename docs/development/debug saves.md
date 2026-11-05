@@ -1,7 +1,8 @@
 # TODO — Debug saves
 
-Updated October 26, 2026. Stable numbering **DS-01…DS-26**, in the same order as
-the original list. Each entry includes its short name.
+Scene-validation inventory updated October 26, 2026; user-source catalog updated
+November 5, 2026. Stable numbering **DS-01…DS-26**, in the same order as the
+original list. Each entry includes its short name.
 
 For tools to catalog, record and replay these cases, see the
 [debug tools TODO](DEBUG_TOOLS_TODO.md): **DBG** IDs identify tools; **DS** IDs
@@ -97,6 +98,26 @@ and payload checksums, version 1, ROM identity and exact paths are in the local
 manifest `target/debug-saves-audit/source-manifest.json`. The old inventory of
 49 payloads includes synthetic states/rejected experiments: these are not new
 ordinary cases and are not automatically promoted to evidence.
+
+### User-supplied EUR save before the final battle
+
+On November 5, the user supplied root `ffta.sav` and confirmed successful use
+with the European ROM. The reported scene is **before the final battle; moving
+starts it**. Its 64 KiB payload is byte-identical to existing IN-04/USA, so the
+catalog reuses source ID IN-04 with a separate **`IN-04/EUR`** regional entry.
+The original is preserved as
+`debug_saves/user-supplied/IN-04-EUR-pre-final-battle.sav`, with an adjacent
+provenance JSON and English usage notes. The root copy was removed only after
+verifying the preserved master and working copy.
+
+Use **Game saves Slot 4** in the EUR collection
+(`debug_saves/ready/EUR/ffta-slot-04.sav`), or open catalog entry `IN-04/EUR`
+in an isolated copy. This is a cartridge save, separate from Save states Slot 4.
+The internal game file and exact movement route were not specified. Compatibility
+and scene description are attributed to the user; this cataloging task did not
+boot or play the game. DS-26 remains partial, with the additional source linked
+in its catalog metadata. Existing USA results, checkpoints and case counts remain
+unchanged. Integrity and read-only CLI catalog checks passed.
 
 <a id="nuovi-file-in-01in-28"></a>
 
@@ -546,6 +567,11 @@ Remaining scope: These narrative sequences and transitions are valid; they are n
 Request: Boss, final battle or game ending, if progress is already close to these points.
 
 Source: IN-05 USA File No.2; slot 26 at Cid's turn in Decision Time, variants before entry and at deployment.
+
+Additional source: **IN-04/EUR**, user-supplied standard Game saves Slot 4.
+The user reports successful EUR use and that moving starts the final battle;
+the internal game file, route and event were not independently replayed. See
+the user-supplied save section above for the preserved master and provenance.
 
 Evidence: Postgame mission **Decision Time** is already accepted. Details indicate Sprohm and the person responsible for corruption; entry, long dialogue with Cid and judges, three-member party and actual battle reached. This is a concrete advanced point beyond the author's description alone. GEN-30 allows normal re-entry from Sprohm.
 

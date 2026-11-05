@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "catalog-user-pre-final-battle-eur-save",
+  "title": "Organize the user-supplied EUR save before the final battle",
+  "kind": "changed",
+  "platforms": [
+    "Local private save collection; existing Linux read-only catalog CLI"
+  ],
+  "changes": [
+    "Preserved the root ffta.sav under a descriptive ignored user-supplied master name, with English provenance and usage notes; removed the root copy only after verifying the master and EUR working copy.",
+    "Recognized the 64 KiB payload as identical to existing IN-04/USA and reused source ID IN-04 for the separate IN-04/EUR catalog entry and standard Game saves Slot 4. Linked it as an additional DS-26 source without altering existing checkpoints, statuses or case counts.",
+    "Recorded the user-confirmed successful European-ROM test and the user description that movement starts the final battle. Preserved the distinction between cartridge slots and snapshot slots."
+  ],
+  "validation": [
+    "Managed validation unit user-pre-final-save-catalog-9p8m2nf_ PASS with protected collection/master/native executable guards and automatic scratch removal. Original, descriptive master, EUR working copy and existing IN-04/USA share the same SHA-256.",
+    "All 136 existing artifact hashes and prior input/case/count/other section data preserved, apart from the explicit DS-26 additional-source metadata. Existing native CLI lists all 93 catalog entries and uniquely selects IN-04/EUR with verified integrity, availability and slot 4; both commands exit 0.",
+    "Final file-presence/root-clear, distinct regional keys, ignored private paths and git diff --check PASS. Full project-memory and task-handoff checks PASS."
+  ],
+  "limitations": [
+    "No boot, movement, battle, victory or ending replayed. EUR compatibility and scene reachability are user-reported; the internal game file and exact route were not specified. DS-26 remains partial.",
+    "Save bytes, private catalog/provenance and local evidence remain ignored and outside commits/packages. No export ZIP regeneration, build, extraction, gameplay or performance work selected."
+  ],
+  "files": [
+    "docs/debug_catalog.md",
+    "docs/development/debug saves.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/debug_catalog.md",
+    "docs/development/debug saves.md"
+  ]
+}

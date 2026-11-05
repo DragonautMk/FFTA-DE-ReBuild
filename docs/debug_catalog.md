@@ -30,6 +30,14 @@ content selector explains what to select. Use **Choose / reload catalog** to
 select a catalog; external file and folder dialogs require an explicit action.
 Copying a collection requires including the files referenced by the JSON.
 
+The local **`IN-04/EUR`** entry is the user-supplied cartridge save described as
+before the final battle, with movement starting it. The user confirmed EUR
+compatibility. Select it in the catalog, or use **Game saves Slot 4** in the EUR
+collection (`EUR/ffta-slot-04.sav`). Its unchanged master and provenance are in
+`debug_saves/user-supplied/`. It shares bytes with IN-04/USA; the scene has not
+been independently replayed, and DS-26 retains its partial status. Cartridge
+save slots and snapshot slots are separate.
+
 The [private debug asset export](private_debug_assets.md) also builds an accessible
 projection of the collection's loaded checkpoints and EUR base, preserving the
 original catalog separately. Its `DEBUG-ASSETS.html` index links additional

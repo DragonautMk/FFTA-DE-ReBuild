@@ -202,9 +202,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: LOCAL-SPACE-CLEANUP-20261105 completed.
-- Last verified result: PASS cleanup retired 3,771 compiler intermediates from six successful isolated builds, reclaiming 5,599,150,080 bytes (5.21 GiB); 250 protected hashes and 13,115 retained-file identities/sizes/times unchanged.
-- Remaining work: none within this bounded cleanup; older interrupted LOCAL-ARTIFACT-HYGIENE remains separate. Compiler dependencies may rebuild later.
-- Errors or blockers: no removal errors; three host process-detail reads denied, no selected-unit consumer observed. Private inputs/exports, datasets, runtime artifacts, sources, evidence and other work preserved.
-- Next action: none for this cleanup; full project-memory, handoff, scoped whitespace and final presence checks PASS. No unrelated runtime work selected.
-- References: docs/changes/2026-11-05-retire-isolated-compiler-intermediates.json; docs/development/LOCAL_ARTIFACTS.md; target/local-artifact-cleanup-20261105/applied.json.
+- Task: USER-PRE-FINAL-SAVE-CATALOG completed.
+- Last verified result: original preserved under debug_saves/user-supplied/IN-04-EUR-pre-final-battle.sav; exact EUR working copy and IN-04/EUR catalog entry at Game saves slot4. Managed integrity/native catalog checks PASS; 136 prior artifacts unchanged.
+- Remaining work: none for cataloging; DS-26 remains partial and the final-battle trigger is user-reported, with EUR compatibility confirmed by the user.
+- Errors or blockers: none; no game execution, source-data edits or prior-slot overwrites. Root ffta.sav removed after verified preservation.
+- Next action: use IN-04/EUR or EUR Game saves slot4 on a copy; no unrelated runtime task selected.
+- References: docs/changes/2026-11-05-catalog-user-pre-final-battle-eur-save.json; docs/development/debug saves.md; target/validation/units/user-pre-final-save-catalog-9p8m2nf_/; target/user-pre-final-save-catalog-20261105/.

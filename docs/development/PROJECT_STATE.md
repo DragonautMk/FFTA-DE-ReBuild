@@ -3138,6 +3138,10 @@ coverage refreshes its archived sources. The host checkout is unaffected.
   ignored names; the local catalog records relocation, ROM/BIOS and proof scope.
   DS20 now has a verified EUR failed-dispatch return at slot20, with a nearer
   precursor at EUR65.
+  User-supplied IN-04/EUR is available as standard Game saves slot4; its
+  unchanged master/provenance live under ignored `debug_saves/user-supplied/`.
+  It shares IN-04/USA bytes. EUR compatibility and the pre-final-battle movement
+  trigger are user-reported; integrity/catalog checks pass, DS26 remains partial.
   Derived standards use GEN IDs:30/31 for map progress,33 for an ordinary
   Save Now suspended battle verified through Resume Battle. Retained masters
   live outside the working family in ignored `debug_saves/generated/`.
