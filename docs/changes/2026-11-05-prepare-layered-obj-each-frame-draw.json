@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "prepare-layered-obj-each-frame-draw",
+  "title": "Verify each modeled layered OBJ frame",
+  "kind": "changed",
+  "platforms": [
+    "EUR Windows GNU under Wine"
+  ],
+  "changes": [
+    "Compare original draw variant 0 for each of the 559 modeled sequence frames with raw and managed resources."
+  ],
+  "validation": [
+    "All 559 selected-frame full-state interpreter comparisons pass across 34 sequences, with poisoned managed spans, 24,992 managed bytes read and 556 observed OBJ buffer writes. Protected inputs passed and scratch was removed: target/validation/units/e130-layered-frames-build-u0ng_k53/ and e130-layered-frames-wine-mxh9xa9b/."
+  ],
+  "limitations": [
+    "Frame selection was injected, one layer at a time; natural timing, simultaneous layers, every-frame variants 1/2, translated each-frame execution and ordinary gameplay remain open. Linux, USA and native Windows are separate. No performance measurement."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/layered_obj_runtime_tests.rs",
+    "docs/rom_data_obj.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

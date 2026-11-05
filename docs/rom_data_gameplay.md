@@ -5313,6 +5313,149 @@ uses event58/parameter0/program163. Further guesses in that mission-info or
 intro route are stopped. This direct join does not rule out indirect script
 links or mode0 reads when the live override is zero.
 
+A later guarded scan checks aligned EWRAM contexts for all five mode-2
+programs in 345 distinct authenticated EUR payloads. None contains a matching
+program pointer, valid instruction cursor and original task callback in the
+checked representation. This is a bounded saved-value result; it does not
+exclude other task layouts, later scheduling, indirect entry or ordinary
+execution. Evidence: `target/validation/units/`
+`e129-parameter-mode2-contexts-17fibtc2/`.
+
+Authenticated key 98 links program 95 to English text bank 32; its stored
+dialogue includes Mewt and references to the world and wishes. Event row 216
+names key 98 and parameter index 116, and program 95 contains opcode 80/mode 2
+at `ba587a`. The user-supplied IN-04/EUR cartridge save is reported to be
+before the final battle, with movement starting it. This is a scene lead, not
+proof that the save reaches that script or that the parameter is read. Source
+and save guards passed without executing the game:
+`target/validation/units/e129-parameter-final-script-link-rt1l_msv/`.
+At its normal source entry, program 95 begins with opcode 83 and operand 98.
+The authenticated command directory maps that opcode to the original backward
+event-key lookup, whose only row for key 98 is row 216. Its mode-2 instruction
+occurs later in source order. This connects the entry to the candidate parameter
+conditionally; intervening control flow, task scheduling and the user's route
+still require observation. Evidence: `e129-prefinal-self-event-um4woe5u/`.
+An initial EUR boot from a protected save copy reached the language screen and
+then the Square Enix splash after 1,022 frames. The execution unit passed, but
+its result text incorrectly claimed that file selection had been reached; a
+separate guarded visual classification corrects that claim. No game file or
+final scene was selected in this window. Evidence:
+`target/validation/units/e129-prefinal-file-select-pitocqyj/` and
+`e129-prefinal-boot-classification-8gj5atae/`. The private boot checkpoints
+remain retained for the continuation.
+A further 600 neutral frames reached an animated opening sequence, rather than
+the file menu; the checkpoint and guarded output remain available in
+`target/validation/units/e129-prefinal-neutral-boot-hc018h_n/`.
+Start followed by 120 neutral frames then reached the visible title screen;
+the file menu remains ahead. Evidence: `e129-prefinal-start-boot-vwgrgaqt/`.
+The next Start/neutral step reaches the title menu with Saved Game highlighted;
+no game file has yet been selected (`e129-prefinal-title-start-qyb35ep8/`).
+Selecting it opens the submenu with Load highlighted and Resume Battle as a
+separate choice (`e129-prefinal-saved-game-62i8an2r/`).
+Load shows two internal files with the same visible summary; File No. 2 is
+highlighted. The screen alone does not establish which file contains the
+user-reported scene (`e129-prefinal-load-menu-wrln03gg/`).
+Each internal file was then loaded from an independent copy. Both endpoints
+show the same world-map image; this does not prove equal internal game state
+or identify the next movement. No map movement was attempted. Evidence:
+`e129-prefinal-load-both-tetl2uln/`.
+At these two boundaries the source-pinned world-event view has pending field
+zero; the saved current event is 140/key 168 with parameter zero and override
+353. Their EWRAM differs in 1,584 bytes. These saved values do not establish
+task liveness or rule out a later transition to key 98, and EWRAM is not a
+complete machine-state comparison. Guarded read-only evidence:
+`e129-prefinal-world-values-zl8jq8cu/`.
+The previously recorded USA Ambervale path ended on the map after declining a
+save prompt; its retained screenshots do not show a subsequent location-entry
+action. The user's EUR scene report and a walkthrough's Ambervale finale lead
+justify checking that distinct action on a protected EUR copy. The recorded
+Area List input reaches the visible list from File No. 2; no location has been
+selected in this continuation (`e129-prefinal-area-list-7l7q0jaw/`). The
+walkthrough is a lead, not evidence that this save has the required state:
+[FFTA campaign walkthrough](https://jokingjoystick.com/guide/games/final-fantasy-tactics-advance/).
+The recorded list-scroll input highlights Ambervale on that EUR copy; no map
+travel or location entry has yet occurred (`e129-prefinal-list-bottom-d7z1mluu/`).
+Selecting Ambervale and following the recorded travel inputs reaches a Save
+Game prompt on the EUR copy; no save was confirmed and no location-entry
+action was attempted in that unit (`e129-prefinal-amber-travel-e6f35beg/`).
+The recorded No response returns the copy to the map with Ambervale visibly
+selected; this matches the stopping point of the older USA observation
+(`e129-prefinal-decline-save-2sd3z1gq/`).
+One A press followed by 180 neutral frames at that selected node leaves the
+copy on the visible world map. This bounded observation used the old private
+replay helper, which does not report managed parameter reads; it does not
+exclude other inputs, later transitions or a different internal file. Evidence:
+`e129-prefinal-enter-amber-w0g_06jd/`.
+The other internal file followed the same recorded route on a separate copy.
+Its Area List, Ambervale selection, travel prompt and post-decline images each
+matched the corresponding File No. 2 image before the next input was applied.
+That visual agreement does not prove equal game state; entry was still pending
+at this checkpoint (`e129-prefinal-file1-route-ug1_n7do/`).
+From the File No. 1 checkpoint, the production E129 EUR Wine CLI observed the
+same A/180-frame window: the final image remains on the map and all parameter
+resource counters are zero. This is a negative for that input window, not a
+proof about the other file, another route or later frames. Protected inputs
+passed (`e129-prefinal-file1-managed-cnn46jxx/`); no pair was run.
+The separate File No. 2 checkpoint produces the same final image and zero
+parameter-resource counters for the same bounded input under the E129 CLI
+(`e129-prefinal-file2-managed-ezg_8pwv/`). This does not establish whole-state
+equality or exclude another route, a different input or later execution.
+A separate lead concerns leaving Ambervale: the user described movement as the
+trigger, and the cited walkthrough places the final sequence after departure.
+From the retained File No. 2 map checkpoint, the recorded menu input opens Area
+List with Bervenia Palace highlighted; no departure occurred in this step
+(`e129-prefinal-departure-list-8xpzle5k/`). The game conditions for that
+walkthrough route remain unverified for this save.
+Selecting that list entry places the cursor on Bervenia Palace while the clan
+remains at Ambervale; movement is still pending
+(`e129-prefinal-departure-target-38au96zf/`).
+An E129 CLI observation of A followed by 180 neutral frames shows the clan in
+transit and reports zero parameter reads so far. The window ends before arrival
+and therefore cannot decide the departure lead
+(`e129-prefinal-departure-managed-a453zcur/`).
+The same input extended to 906 frames reaches Bervenia Palace with zero
+parameter-resource reads and no visible final battle. The prefix was replayed
+only because the CLI does not export its endpoint state. This closes the
+bounded departure observation, not the user-reported route or other game
+conditions (`e129-prefinal-departure-extended-inl3r0yl/`).
+The user subsequently clarified that both internal files seemed valid and the
+route went right. In separate E129 CLI observations from the initially loaded
+maps, six frames of Right plus 180 neutral frames leave both copies on the map
+with matching final images and zero parameter reads. This short press does not
+establish the effect of holding Right or confirming a destination. No earlier
+RIVER save is currently available according to the user. Evidence:
+`e129-prefinal-right-both-uzn93ifp/`.
+Holding Right for 60 frames and waiting 180 neutral frames on File No. 2 moves
+the map cursor toward the right edge without a visible battle or parameter
+reads (`e129-prefinal-right-long-7spjoc_j/`). This is only one input duration;
+it does not identify whether an intermediate destination needs confirmation.
+A separate uninstrumented replay sampled the continuous rightward input every
+six frames: the visible cursor moves horizontally toward the map edge, with no
+scene transition in those 60 frames. It does not report resource reads or prove
+which destination the user intended (`e129-prefinal-right-steps-imvk_t8x/`).
+The user later clarified that the destination is the location to the right.
+Ambervale is on that side of the map. Since the cited walkthrough describes a
+pre-finale save, a separate protected File No. 2 copy accepted the earlier
+Save Game prompt and reached the internal save-slot screen; no slot was
+confirmed in that step (`e129-prefinal-accept-save-e5pp971x/`). The original
+cartridge save remains guarded.
+Selecting File No. 2 on the isolated copy opens an overwrite confirmation with
+No highlighted; no overwrite was confirmed in that observation
+(`e129-prefinal-save-slot-kwjql3jz/`).
+After selecting Yes on that isolated copy, the slot list reappears with File
+No. 2's displayed time advanced by a minute. The observation did not export
+or independently verify the emulated cartridge bytes; both original save
+files were guarded (`e129-prefinal-save-confirm-vqi01771/`).
+Exiting the slot screen returns to the visible Ambervale map without an
+immediate final scene (`e129-prefinal-save-exit-bi3ydyny/`); no managed
+parameter-read observation was made in that helper run.
+One A press followed by 180 neutral frames from that post-save checkpoint
+also leaves the E129 CLI on the visible Ambervale map and reports zero
+parameter-resource reads (`e129-prefinal-postsave-managed-l_97lwxn/`). This
+does not exclude other paths and later execution. The user subsequently
+confirmed that Ambervale is the intended location; the remaining trigger is
+still unobserved.
+
 A later guarded source join checks all 512 physical mission records and their
 referenced event keys against these five direct mode-2 candidates. None of the
 512 references has candidate key 56, 68, 77, 96 or 98. Their conditional primary
@@ -5349,6 +5492,18 @@ Start/A capture tested a different graphics family and did not measure this
 parameter resource. A prior checkpoint or proven return to the instruction is
 needed before selecting a new parameter probe. Evidence:
 `target/validation/units/e128-parameter-river-script-cursor-9aarc8ce/`.
+The authenticated program tail further narrows the direct continuation: at
+offset 28, opcode 21 stores a 30-unit wait in the context and returns `114h`;
+at offset 30, opcode 23 with argument 4 calls other routines and returns
+`11dh`. Each directory advance is two bytes, and the interpreter repeats its
+loop only on return `110h`. The enclosing scheduler maps `11dh` to return 3.
+Neither encoded tail instruction is a relative branch back to offset 22. This
+is a conditional source path, not proof that the saved context is live or that
+an external routine cannot later restart or replace the script. No guest
+instructions ran. Evidence: `target/validation/units/`
+`e129-parameter-158-tail-contract-pgg1_zpq/`,
+`e129-parameter-158-tail-source-e9ohc13n/` and
+`e129-parameter-158-return-source-846u23xv/`.
 A guarded follow-up inspects all nine saved-value candidates: one has a matching
 program 158 context, at cursor 28; the other eight have none in the scanned
 EWRAM representation. A wider, separate read of 370 retained ROM-data snapshot
@@ -5360,6 +5515,25 @@ branches back. Evidence: `target/validation/units/`
 `e128-parameter-mode0-context-candidates-syolhe_k/` and
 `e128-parameter-prior-script-contexts-xypp8e8t/`.
 
+A separate source-pinned scan examines the other 34 archived programs with
+35 opcode-80/mode-0 instructions in the same 279 readable EUR payloads. It
+finds twelve matching aligned EWRAM contexts with the original task callback;
+all are program 163 after its mode-0 instruction, with event parameter zero
+and a nonzero override. None satisfies the saved-value candidate conditions
+of a target at or after the cursor, zero override and nonzero event parameter.
+This does not prove task liveness, linear control flow, event association or
+absence in other checkpoints and representations. No guest instructions ran.
+Evidence: `target/validation/units/`
+`e129-parameter-other-mode0-contexts-fiwafu0k/`.
+Another 66 valid EUR payloads, disjoint by SHA-256 from that sample, were
+checked against all 35 programs containing 36 mode-0 instructions. Twenty
+matching aligned task-callback contexts were found: one program 158 context
+at cursor 28 and nineteen program 163 contexts at cursors 29 or 91. All are
+after their respective mode-0 instructions, so none meets the same
+saved-value candidate conditions. This remains a bounded snapshot result,
+with the same liveness, control-flow and representation limits. Evidence:
+`e129-parameter-disjoint-mode0-contexts-sbzc98kz/`.
+
 A second source-bound join of physical mission references to archive programs
 with an encoded mode-0 instruction finds 20 mission indices with nonzero event
 parameters: 15 and 104–122. None of the same 279 readable snapshot payloads
@@ -5370,6 +5544,13 @@ syntax error before source reads; its corrected guarded check passed. Evidence:
 `target/validation/units/e128-parameter-all-mode0-mission-candidates-xvqpelh1/`
 and `e128-parameter-all-mode0-mission-candidates-fixed-4skuahmi/`. No guest
 instructions ran and no closed negative capture was repeated.
+
+The 66 disjoint EUR payloads subsequently used for the script-context scan
+were also joined to the same 20 source candidates. None has a matching saved
+selected-mission value. Together the two joins cover 345 distinct payloads;
+this is a bound on saved values, not on event entry, later selection or other
+representations. Guarded evidence passed with scratch removed:
+`target/validation/units/e129-parameter-disjoint-mission-join-dcqvuonz/`.
 
 An authenticated original code window at `0803589c..080358c8` clears the
 halfword at `02003c28`, reads a halfword at offset `a4` from the object reached

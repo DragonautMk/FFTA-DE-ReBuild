@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "verify-layered-obj-translated-initializers",
+  "title": "Verify translated layered OBJ initializers",
+  "kind": "changed",
+  "platforms": [
+    "EUR Windows GNU under Wine"
+  ],
+  "changes": [
+    "Add a bounded translated-original initializer proof for all 16 layered OBJ source pairs."
+  ],
+  "validation": [
+    "The Wine test traces 104 original instruction addresses and compares 16 translated-managed full-state executions with the interpreter while source spans are poisoned; 386 managed bytes were observed. Protected inputs passed and successful scratch was removed: target/validation/units/e130-layered-obj-native-build-k_5aznm3/ and e130-layered-obj-native-wine-fbu857s4/."
+  ],
+  "limitations": [
+    "This proves the selected initializer paths, not the full draw routine, all lifecycle paths, affected regressions or ordinary gameplay. Linux, USA and native Windows are separate. No performance measurement."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/layered_obj_runtime_tests.rs",
+    "docs/rom_data_obj.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

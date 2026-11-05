@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "prepare-layered-obj-natural-multilayer",
+  "title": "Verify natural layered OBJ looping",
+  "kind": "changed",
+  "platforms": [
+    "EUR Windows GNU under Wine"
+  ],
+  "changes": [
+    "Compare source-derived original multi-layer looping in draw variant 0 with raw and managed resources."
+  ],
+  "validation": [
+    "All 559 frames across 34 layers and 16 banks were reached in 3,457 original draw calls after initialized frame/tick zero in loop mode 0. Full state matches after each call with poisoned managed spans; 450,420 managed bytes were read. Protected inputs passed and scratch was removed: target/validation/units/e130-layered-timing-build-it0g5dm0/ and e130-layered-timing-wine-pjteb7le/."
+  ],
+  "limitations": [
+    "Other loop modes, every-frame draw variants 1/2, other consumers and ordinary gameplay remain open. A later translated full-cycle proof passed. Linux, USA and native Windows are separate. No performance measurement."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/layered_obj_runtime_tests.rs",
+    "docs/rom_data_obj.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

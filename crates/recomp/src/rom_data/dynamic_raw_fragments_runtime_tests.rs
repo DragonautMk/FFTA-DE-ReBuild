@@ -39,11 +39,11 @@ fn european_dynamic_fragments_managed_reads() {
     let mut source = Extraction::from_rom(&rom).unwrap();
     let dataset = root.join("offline dataset");
     extract(&dataset, &mut source).unwrap();
-    assert_eq!((source.manifest.extractor_revision, source.manifest.decoder_revision, source.manifest.resources.len()), (128, 127, 100));
+    assert_eq!((source.manifest.extractor_revision, source.manifest.decoder_revision, source.manifest.resources.len()), (130, 129, 101));
     for resource in &prior.resources {
         if resource.id != UI_CUSTOM_GRAPHICS_ID {
-            assert_eq!(source.manifest.resources.iter().find(|entry| entry.id == resource.id), Some(resource));
-            assert_eq!(fs::read(dataset.join(&resource.path)).unwrap(), fs::read(old.join(&resource.path)).unwrap());
+            let current = source.manifest.resources.iter().find(|entry| entry.id == resource.id).unwrap();
+            super::conditional_marker_runtime_tests::assert_previous_resource_files(current, resource, &dataset, &old);
         }
     }
     let entry = &source.manifest.resources[84];

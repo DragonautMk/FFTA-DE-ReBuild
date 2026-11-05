@@ -289,6 +289,19 @@ IWRAM bank at `03000030`/count `03000020`; mode 1 uses the distinct 48-entry ban
 at `03002c58`/count `03002c50`. These are original code entry points and RAM
 contracts, not copied instructions or host replacements.
 
+A later source-pinned inspection resolves part of the previously truncated
+caller `0808ada8`. It iterates 28-byte entries from the same `03000e30` task
+pool as `0813f7c8`; task types 0 and 1 select `0808adf8`. Its 54-byte
+pre-call selection sequence is identical to `0813f814`, and both the mode-1
+draw calls and the separately checked mode-0 branch use the same original
+draw targets (`08001d28` and `08001f6c`, respectively). These comparisons
+authenticate only the selected instruction paths and pointer arithmetic. They
+do not identify the live task's producer or a new ROM root, prove execution
+of the new caller, cover the other task types, or extend the earlier oracle's
+runtime scope. Guarded source evidence:
+`target/validation/units/e129-obj-8ada8-contract-7npoftlr/` and
+`e129-obj-8ada8-bothdraws-c644dhie/`.
+
 Three sequence records are empty. Their source headers and original constructor
 results are retained. Their declared direct-root callers exclude these entries,
 as classified below; indirect or changed live task selection remains unverified. The extractor
@@ -2389,14 +2402,28 @@ full OBJ domain.
 
 `obj_lists::conditional_markers` models the two exact lists, low-byte selector,
 source boundaries and original instruction/pointer contract. It is a standalone
-source model: it is **not included in the published E128 catalog** and adds no
-runtime owner. Its two focused Windows GNU tests pass under Wine with the exact
+source model: it is **not included in the published E128 catalog**. Its two
+focused Windows GNU tests pass under Wine with the exact
 EUR ROM. They cover source identity and JSON roundtrip, malformed shapes and
 counts, boundary reads, coherent edits and low-byte selection. Six isolated
 calls execute the original writer for selectors 0, 1, 255, 256, 257 and
 `ffffffffh`; selected pointers and coordinates agree with the model, with full
 EWRAM and out-of-stack IWRAM guards, callee registers and stack preserved.
 The test does not execute the original draw or establish an ordinary scene.
+
+A separate focused Windows GNU test under Wine now executes the original
+`0802f3c0 → 08001d28 → 08001500` slot-consumer path on an isolated machine.
+For each of the two authenticated marker lists it compares the resulting full
+OBJ buffer and cursor against the decoded model. It also checks one clipped
+object and the disabled-context, zero-count and null-pointer guards, with full
+EWRAM and out-of-stack IWRAM, callee-register, stack and video-memory guards.
+The six cases passed; the test uses synthetic call setup, not an ordinary
+scene, published resource or translated native path. The first Wine launch
+failed before the test because `wine` was supplied twice; its diagnostics are
+retained. The corrected guarded build and Wine run pass, with scratch removed:
+`target/validation/units/e128-obj-marker-consumer-build-ozg_6sdh/`,
+`e128-obj-marker-consumer-wine-_ppq79yq/` (failed preflight), and
+`e128-obj-marker-consumer-wine-6n_m9dtb/`.
 
 A source-pinned read of 345 retained EUR snapshots found 322 with a nonzero
 candidate count, but none with the context and table pointers within the
@@ -2410,5 +2437,252 @@ and Wine run passed. Evidence: `target/validation/units/`
 `e128-obj-markers-windows-build-6xd93dig/` (invalid identity),
 `e128-obj-markers-writer-oracle-build-dilgys1i/` and
 `e128-obj-markers-writer-oracle-wine-2enqulxu/`. Publication, native/managed
-reads, an ordinary scene and its full pair, the remaining OBJ sources and
-Linux/USA/native Windows are open. No performance measurements were made.
+reads and scene coverage were still open at that point. No performance
+measurements were made.
+
+An additional source-pinned projection examined the menu path
+`08024582 → 080245bc → 08024cb4 → 08030900 → 0802f3c0` in the same 345
+retained EUR snapshots. Among the 212 with an in-range helper context, none
+projected the low-byte selection value 3 that the examined branch maps to
+dispatcher state `14h`. This checks saved values only: it executes no guest
+instructions and establishes neither callback liveness nor an ordinary
+invocation. The bounded negative is recorded in
+`target/validation/units/e128-obj-menu-selection3-scan-srzyew__/`; guarded
+inputs passed and successful scratch was removed. Another source-backed scene
+is still needed for ordinary use and a raw/managed pair.
+
+The original also has a distinct call chain `080bc7d4 → 08031014`, with a
+branch at `080310c8` calling `0802f6c4`, which can call the same marker writer
+at `0802f794`. These call edges are pinned to the authenticated EUR source,
+but do not establish that the branch runs, that the slot is subsequently
+drawn, or that it is reachable in an ordinary scene. Evidence:
+`target/validation/units/e128-obj-alternate-caller-source-etu_1bt7/` and
+`e128-obj-marker-dispatch-windows-q3881w3t/`.
+
+The enclosing function `080bbc9c` receives its own context from its caller;
+the branch at `080bc7d4` is gated by bit `40h` at that context's offset
+`25dh`. The alternate dispatcher reads the pointer at `0200f444`, and its
+context byte at offset 4 selects state 3 for `080310c8 → 0802f6c4`. After
+that branch, the dispatcher returns zero; the enclosing call takes its shared
+return path. This bounded path alone does not invoke the previously identified
+`0802f3c0` draw or prove what later callbacks do. Source pins and disassembly:
+`e128-obj-alternate-branch-pins-ocuhsgdt/`,
+`e128-obj-alternate-owner-windows-6bt_swir/` and
+`e128-obj-alternate-dispatch-windows-mqzkctkp/` under
+`target/validation/units/`.
+
+A separate projection of the same 345 authenticated saved snapshots found no
+`0200f444` pointers with even the five-byte dispatcher context in the checked
+EWRAM/IWRAM ranges. Therefore it cannot determine whether state 3 was present;
+it is not a negative ordinary-scene result. The corrected scan and guarded
+inputs passed (`e128-obj-alternate-state3-corrected-pk4596ev/`). Its initial
+predecessor (`e128-obj-alternate-state3-scan-t1d4d356/`) required a larger
+context than necessary and cannot decide the dispatcher state. Neither scan
+executes guest instructions or establishes task liveness.
+
+A source-pinned saved-value search for a nearby menu state finds seven of 345
+retained EUR payloads whose checked mode-1 context has selection value 3 in
+its six-entry mapping. Two also contain an aligned word matching original
+callback `0802a01d`: the retained DS-20 cancelled checkpoint and the next
+menu-transition checkpoint. Their saved selection indices are respectively 0
+and `ffffh`; the earlier selection-3 scan remains negative. The original menu
+initializer writes mapping entry 3 at context offset `482h`. The mapping and
+callback-shaped words do not establish a live task, a user-facing menu label,
+a valid navigation step or a marker read. Evidence:
+`target/validation/units/e129-marker-nearby-menu-scan-6a2p3u2z/` and
+`e129-marker-menu-callback-source-4f37a7vx/`.
+
+A 60-frame neutral EUR Wine continuation from a protected copy of the DS-20
+candidate ended on the battle field with no menu visible and no logged reads
+from either marker source. This bounds only that continuation, not later menu
+navigation or other scenes. The original execution exited successfully, but
+its validation unit retained the private state copy and reported FAIL at the
+scratch-retirement check. A separate guarded evidence check confirmed the
+original inputs and output, then retired its own scratch:
+`target/validation/units/e129-marker-neutral-evidence-05tn0cak/`. The original
+diagnostic unit is `e129-marker-ds20-neutral-5vt1t8_n/`.
+
+E129-d128 adds the two authenticated lists to the existing static OBJ catalog;
+the original RAM-slot selector and draw remain guest behavior. A focused EUR
+Wine managed test compares E129 with the authenticated E128 dataset: all 99
+other resource records and files match, and the previous OBJ lists and source
+records remain intact. It passes create/reuse/repair, coherent-tamper rejection
+without replacing the attached owner, widths and mirror boundaries, and two
+raw/managed interpreter comparisons through the original slot consumer with
+complete machine state and guest clock equality. Each new root has a positive
+managed-source read with its underlying ROM bytes poisoned. Evidence:
+`target/validation/units/e129-obj-marker-managed-build-gkplvamk/` and
+`e129-obj-marker-managed-wine-h5vlixfw/`. A separate guarded Wine test traces
+and translates the original consumer instructions: both exact roots produce
+positive managed reads with poisoned underlying ROM bytes, and each complete
+state and guest clock matches the original interpreter. Its 332 traced
+instruction addresses and 20 managed source bytes are bounded test evidence,
+not ordinary-use counts. Evidence: `e129-obj-marker-native-build-b1u0vaes/`
+and `e129-obj-marker-native-wine-i804d9nc/`. Protected inputs passed and
+successful scratch was removed. The production CLI also creates, reuses and
+verifies E129 under Wine; 99 other resources and the preceding OBJ projection
+match E128, and reuse leaves file hashes and modification times unchanged.
+Evidence: `e129-obj-marker-cli-build-0ie35_4i/` and
+`e129-obj-marker-current-95626ztl/`; the current generation is retained for
+remaining regression filters. The affected E129 matrix passes 38 EUR/Wine
+filters covering compact and conditional resources, lifecycle, the full
+catalog and authenticated historical projections. Evidence:
+`e129-compact-conditional-regressions-os53p1p4/`,
+`e129-other-data-regressions-15_31kjd/`,
+`e129-full-catalog-regressions-sudbvp19/`,
+`e129-historical-catalog-regressions-b2a5h4ij/` and
+`e129-historical-remaining-regressions-3sj3anrl/`. An ordinary marker scene
+with its full pair remains open: a separate 12-frame production CLI startup
+loads all 100 E129 resource identities but observes neither marker source
+(`e129-obj-marker-startup-yy29ytz1/`). Other OBJ sources and Linux/USA/native
+Windows remain open. No performance measurement was made.
+
+## Conditional layered OBJ animation source at 3ae1a4
+
+The original initializer `08141a24` indexes 28-byte records at `083ae1a4`
+and passes their first two words to `08142590`. Sixteen aligned direct BL
+sites supply the distinct immediate indices 0..15 under their respective live
+conditions. The initializer preserves the object-bank pointer and sequence-bank
+pointer in a 144-byte live structure. Its first sequence offset determines the
+number of layers; its per-layer sequence views and counters remain live RAM.
+The caller at `08142664` selects a frame's OBJ list through the corresponding
+relative-indexed object bank and calls the original drawing paths. These are
+conditional source paths; they do not prove a global index limit, all indirect
+callers or ordinary execution.
+
+The 16 authenticated pairs have 566 structurally indexed lists containing
+2,365 objects and 34 nonempty layer sequences containing 559 frames. Every
+recorded frame selector resolves within its pair's declared list prefix. The
+descriptor table and indexed records occupy 633 nonoverlapping source spans,
+20,474 bytes total, with no overlap against the 100 E129 manifest owners.
+This excludes gaps and makes no claim about other rows or adjacent assets.
+The direct-call census, original instruction pins, relative offsets, bounds,
+selector links, ROM identity and E129 manifest preimage passed the guarded
+static check (`target/validation/units/e129-obj-142664-catalog-l_8m855o/`).
+Model, original-code execution, publication, managed/native reads, lifecycle,
+CLI and ordinary-use checks remain open; no guest instructions or performance
+measurements were run in this discovery.
+
+`layered_obj_animations` reuses the existing OBJ bank structures, retains the
+20 remaining bytes of each descriptor unchanged, and verifies exact EUR source
+and the declared bank shapes. Its Windows GNU test under Wine reconstructs all
+633 spans, checks strict JSON roundtrip and malformed/coherent-edit rejection,
+and compares all 16 original `08142590` initializer calls against the modeled
+task fields with EWRAM guards. The original uses `r12` as scratch. Two earlier
+test attempts failed on incorrect test assumptions about that register and an
+empty list; their diagnostics remain retained. The corrected full filter passes:
+`target/validation/units/e130-layered-obj-model-wine-guards-3b5b_3e5/`.
+This establishes the bounded source model and initializer, not the full draw
+routine, runtime attachment, CLI, ordinary use, Linux, USA or native Windows.
+
+A test-only staged runtime owner composes typed descriptor and bank reads with
+prior owners and raw gaps. A Windows GNU test under Wine poisons all 633 source
+spans and verifies all 20,474 owned bytes, four-byte span-boundary composition,
+all 566 host-list lookups and a rejected source-binding edit. Evidence:
+`target/validation/units/e130-layered-obj-staged-wine-o8ryattt/`; guarded inputs
+passed and scratch was removed. At that checkpoint the owner was not attached to a dataset. E130 now publishes
+and attaches it. The EUR Wine integration test confirms 101 resources and 102
+files, exact preservation of all 100 E129 resources, create/reuse/repair,
+transactional rejection of a coherently edited file, all 20,474 poisoned
+source bytes and full-state interpreter comparisons for all 16 original
+initializer cases. Guarded evidence: `target/validation/units/e130-layered-obj-managed-wine-sgpd5u9k/`;
+successful scratch was removed. The production Windows CLI also creates, reuses and verifies E130 under Wine;
+reuse preserves file hashes and timestamps and all 100 preceding resources
+remain byte-identical (`target/validation/units/e130-layered-obj-cli-current-rbr9ukkp/`).
+A translated-native EUR Wine proof traces 104 original initializer instruction
+addresses, executes all 16 cases against poisoned managed source bytes and
+compares each full state with the interpreter; 386 managed source bytes were
+served. Guarded evidence: `target/validation/units/e130-layered-obj-native-wine-fbu857s4/`.
+This covers the initializer, not the full draw path. Remaining lifecycle paths
+and ordinary use remain open. The 38 affected E130 EUR Wine regression filters
+pass, including 13 compact/conditional, seven data/lifecycle, two complete
+catalog and 16 historical catalog comparisons; prior projections are
+authenticated. Evidence: `docs/changes/2026-11-05-verify-e130-historical-regression-matrix.json`.
+
+The original `08142664` draw consumer was also run under EUR Wine in the
+interpreter for all 16 modeled pairs and draw variants 0, 1 and 2. All 48
+raw/managed full-state comparisons pass with managed spans poisoned; 5,228
+managed bytes were read and 16 cases wrote the observed OBJ buffer. Evidence:
+`target/validation/units/e130-layered-draw-wine-ys8ni2e3/`. This bounded
+initial-frame comparison does not establish complete animation or ordinary use;
+the translated-native draw proof covers the same 48 initial-frame cases, tracing
+658 original instruction addresses and reading 5,228 managed bytes. Full-state
+comparisons pass under EUR Wine (`target/validation/units/e130-layered-draw-native-wine-_2fxv8ek/`).
+
+A separate EUR Wine interpreter test selects each of the 559 modeled frames
+across 34 sequences, one layer at a time, and runs original draw variant 0.
+All raw/managed full-state comparisons pass with poisoned managed spans; 556
+cases wrote the observed OBJ buffer and 24,992 managed bytes were read.
+Protected inputs passed and scratch was removed:
+`target/validation/units/e130-layered-frames-wine-mxh9xa9b/`. Frame selection
+was injected for this bounded test; natural timing, simultaneous layers,
+other variants at every frame and ordinary gameplay remain unproved.
+
+A subsequent EUR Wine interpreter test initializes each bank, sets loop mode 0
+and starts all modeled layers at frame/tick zero. The original draw consumer
+advances them together for a source-derived cycle bound: all 559 frames in 34
+layers were visited across 3,457 draw calls. Raw and managed full state matched
+after every call with poisoned source spans; 450,420 managed bytes were read.
+Protected inputs passed and scratch was removed:
+`target/validation/units/e130-layered-timing-wine-pjteb7le/`. This bounded
+variant-0 looping test is not a gameplay scene and does not cover other loop
+modes or establish global source coverage. The same 3,457 calls also pass as
+translated-original managed execution against the interpreter, tracing 465
+instruction addresses and reading 450,420 managed bytes; guarded evidence is
+`target/validation/units/e130-layered-timing-native-wine-xrs5e3ig/`.
+
+## Adjacent conditional structure initializer
+
+A guarded EUR source check follows one caller through `08140e1e` and
+`08140e32`: the first invokes `08143454` with a source pointer at `083ae164`,
+and that initializer requests a four-halfword BIOS copy into the RAM context at
+offset `10h`. The second invokes `08142810`; three conditional sites inside
+it call `081436b4`, which initializes local structures. The eight-byte source
+range has no overlap with the 101 E130 manifest resources. Six code/source
+windows and six call targets are authenticated; inputs were protected and
+successful scratch removed (`target/validation/units/e130-adjacent-obj-caller-source-0br8d84x/`).
+This is one conditional source path, not a direct OBJ-list-root proof, a full
+record extent, proof of task liveness or ordinary use. Other callers and later
+consumers remain open. No guest instructions or performance tests ran.
+
+The existing per-family and aggregate dataset-budget boundary filter also passes
+with the E130 test build under EUR Wine
+(`target/validation/units/e130-dataset-budget-boundary-1u4t4few/`). This
+filter does not by itself exercise the new layered file limit. A separate
+production CLI check verifies that a 4,194,305-byte layered file is rejected
+by the 4,194,304-byte size guard in an isolated E130 dataset copy
+(`target/validation/units/e130-layered-size-guard-qo1s_181/`).
+
+A guarded aligned Thumb direct-call census now identifies six callsites to
+`08143454`. Their PC-relative source arguments select six distinct eight-byte
+spans at offsets `3ae12c`, `3ae134`, `3ae13c`, `3ae144`, `3ae14c` and
+`3ae164`; all are disjoint from E130 manifest sources. Exact source identity,
+caller windows, literal addresses, call targets and the six ranges passed;
+protected inputs passed and scratch was removed
+(`target/validation/units/e130-adjacent-six-callers-14_adkr1/`). This census
+only covers aligned direct Thumb calls: indirect callers, data semantics,
+downstream consumers, other records and ordinary use remain unproved. No
+guest execution or performance measurement ran.
+
+The conditional constructor `081436b4` reads the copied context through its
+second argument. For its first output halfword, it reads the signed halfword at
+offset 4, calls `08002868` and `08146314`, then adds the result to the
+halfword at offset 0 and writes the result at local offset 2. It repeats the
+pattern with source offsets 6 and 2, writing local offset 4. Three calls from
+`08142810`, both generator calls and both arithmetic-helper calls were pinned
+to the exact EUR ROM. Guarded evidence:
+`target/validation/units/e130-adjacent-record-readers-6qh7d5_9/`. The helper
+was not independently executed in this check, and the conditional path does not
+prove record semantics, liveness, all consumers or ordinary use. No guest
+instructions or performance measurement ran.
+
+A focused EUR Wine interpreter proof executes the original `081436b4` prefix
+through its two coordinate stores for the six source-pinned records and four
+initial generator states (24 cases). In those cases both stored halfwords
+match the source base plus the positive generator output remainder by the
+corresponding signed, positive source field, and the generator advances twice.
+Protected ROM and source inputs passed; successful scratch was removed:
+`target/validation/units/e130-adjacent-coordinate-wine-ufvf4ubn/`. This is
+a bounded prefix test: it does not establish behavior for zero/negative
+divisors, the full constructor, translated execution, task liveness or
+ordinary gameplay. No performance measurement was made.

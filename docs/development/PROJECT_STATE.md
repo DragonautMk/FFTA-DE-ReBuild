@@ -2141,6 +2141,22 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   coverage, callers and deferred platforms remain
   open. No benchmark.
   [Contract](../rom_data_compact_catalog.md).
+- EUR e129-d128 adds conditional RAM-slot marker lists `395172` and `39517a`
+  to the static OBJ catalog. A focused Wine managed test preserves the E128
+  predecessor projection and other resources, and checks publication lifecycle,
+  tamper rejection and original-interpreter and translated-native reads. The
+  38 affected EUR/Wine regression filters and a 12-frame production CLI
+  startup pass; the latter does not observe either marker. Ordinary-scene
+  checks remain open.
+  [Evidence](../rom_data_obj.md#conditional-ram-slot-markers-source-model).
+- EUR E130-d129 publishes 16 conditional layered OBJ/sequence pairs through
+  descriptor table `3ae1a4`, disjoint from E129 owners. Source verification,
+  CLI create/reuse/verify, managed reads and 16 original initializer cases pass
+  under Wine, including 48 initial-frame raw/managed original-draw comparisons
+  in interpreter and translated execution, plus all modeled frames during
+  loop-mode-0 multilayer execution. Other modes, ordinary use and deferred
+  platforms remain open.
+  [Contract](../rom_data_obj.md#conditional-layered-obj-animation-source-at-3ae1a4).
 - The desktop loads the full ROM into `MemMap.rom` at startup; ordinary guest
   ROM reads use that in-memory buffer. The [ROM data TODO](ROM_DATA_TODO.md)
   orders extraction/decoding, startup reuse and direct runtime consumption first,

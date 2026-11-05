@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "bound-conditional-marker-menu-candidates",
+  "title": "Bound conditional marker menu candidates",
+  "kind": "docs",
+  "platforms": [
+    "EUR retained snapshots and original source"
+  ],
+  "changes": [
+    "Record a source-pinned bounded search for a menu selection leading to the conditional marker draw dispatcher.",
+    "Identify an alternate original caller chain to the same marker writer for further investigation.",
+    "Trace the alternate dispatcher gate, state-three branch and enclosing return without treating saved values as live execution.",
+    "Bound a neutral continuation of the saved DS-20 candidate without assuming a live menu."
+  ],
+  "validation": [
+    "All 345 retained snapshots were checked; 212 had an in-range helper context and none projected selection value 3. Original source pins and protected inputs passed; successful scratch was removed. Evidence: target/validation/units/e128-obj-menu-selection3-scan-srzyew__/.",
+    "Authenticated EUR source pins the alternate 080bc7d4 to 08031014 and 080310c8 to 0802f6c4 call edges, plus the writer edge. Guarded source units PASS: target/validation/units/e128-obj-alternate-caller-source-etu_1bt7/ and e128-obj-marker-dispatch-windows-q3881w3t/.",
+    "Authenticated source pins the alternate caller-context gate, dispatcher state 3, writer edge and enclosing return; guarded unit e128-obj-alternate-branch-pins-ocuhsgdt passes. Corrected saved-state scan e128-obj-alternate-state3-corrected-pk4596ev found zero pointers with even a five-byte in-range dispatcher context in 345 retained EUR snapshots, so cannot decide whether state 3 was present. The earlier t1d4d356 scan required an unnecessarily large context and is insufficient for that decision. Both units guarded their inputs and removed successful scratch.",
+    "A source-pinned scan of 345 saved EUR payloads found seven mode-1 mappings containing value 3; two also contain a word matching the original menu callback. Saved indices are 0 and ffff; this alone does not prove liveness or an input transition. Evidence: target/validation/units/e129-marker-nearby-menu-scan-6a2p3u2z/ and e129-marker-menu-callback-source-4f37a7vx/.",
+    "The copied DS-20 state ran 60 neutral frames under EUR Wine: the final image shows the battle field without a menu, and neither marker source was logged. Execution exited zero but its unit failed scratch retirement because a private copy remained; separate guarded evidence check e129-marker-neutral-evidence-05tn0cak passed and removed its scratch. The diagnostic original e129-marker-ds20-neutral-5vt1t8_n remains retained."
+  ],
+  "limitations": [
+    "Saved values alone do not establish callback liveness, ordinary reachability or a raw/managed pair. The neutral continuation does not exclude other paths or later navigation; no performance measurement.",
+    "The alternate call chain has no established ordinary invocation or subsequent draw.",
+    "The alternate dispatcher does not itself call the identified draw on this bounded path; later callbacks and ordinary reachability remain unproved."
+  ],
+  "files": [
+    "docs/rom_data_obj.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

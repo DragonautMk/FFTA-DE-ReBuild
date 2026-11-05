@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "classify-alternate-obj-task-reader",
+  "title": "Classify an alternate OBJ task reader",
+  "kind": "docs",
+  "platforms": [
+    "EUR original source"
+  ],
+  "changes": [
+    "Identify the selected task branches of the previously truncated 0808ada8 draw caller as a reader of the existing 28-byte task pool."
+  ],
+  "validation": [
+    "Guarded original-ROM comparisons pin task-pool literals, type-zero and type-one switch targets, identical pre-call selection bytes, both draw targets, and the 28-byte loop stride; evidence: target/validation/units/e129-obj-8ada8-contract-7npoftlr/ and e129-obj-8ada8-bothdraws-c644dhie/."
+  ],
+  "limitations": [
+    "No new ROM root, producer, global task domain, other branch, live execution or new runtime acceptance is established. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_obj.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

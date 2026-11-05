@@ -44,6 +44,66 @@ Documentation: [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md).
 
 [Change record](docs/changes/2026-11-05-verify-ordinary-localized-ui-table-entry.json)
 
+## 2026-11-05 — Verify translated layered OBJ initializers
+
+Type: changed. Platforms: EUR Windows GNU under Wine.
+
+**Changes**
+
+- Add a bounded translated-original initializer proof for all 16 layered OBJ source pairs.
+
+**Validation**
+
+- The Wine test traces 104 original instruction addresses and compares 16 translated-managed full-state executions with the interpreter while source spans are poisoned; 386 managed bytes were observed. Protected inputs passed and successful scratch was removed: target/validation/units/e130-layered-obj-native-build-k_5aznm3/ and e130-layered-obj-native-wine-fbu857s4/.
+
+**Limitations**
+
+- This proves the selected initializer paths, not the full draw routine, all lifecycle paths, affected regressions or ordinary gameplay. Linux, USA and native Windows are separate. No performance measurement.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md).
+
+[Change record](docs/changes/2026-11-05-verify-layered-obj-translated-initializers.json)
+
+## 2026-11-05 — Verify translated original layered OBJ draw
+
+Type: changed. Platforms: EUR Windows GNU under Wine.
+
+**Changes**
+
+- Compare translated original layered OBJ draw and its reached callees against interpreter execution for all 16 pairs and three draw variants.
+
+**Validation**
+
+- All 48 initial-frame full-state comparisons pass with poisoned managed spans; 658 original instruction addresses were traced, 5,228 managed bytes read and 16 cases wrote the observed OBJ buffer. Guarded inputs passed and scratch was removed: target/validation/units/e130-layered-draw-native-build-fyqdwpi1/ and e130-layered-draw-native-wine-_2fxv8ek/.
+
+**Limitations**
+
+- This does not establish complete animation, every drawing condition or ordinary gameplay. Linux, USA and native Windows remain separate. No performance measurement.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md).
+
+[Change record](docs/changes/2026-11-05-verify-layered-obj-original-draw-translated.json)
+
+## 2026-11-05 — Verify original layered OBJ draw in the interpreter
+
+Type: changed. Platforms: EUR Windows GNU under Wine.
+
+**Changes**
+
+- Add a bounded raw/managed comparison of the original layered OBJ draw consumer for 16 modeled pairs and all three draw variants.
+
+**Validation**
+
+- All 48 original interpreter comparisons pass with poisoned managed spans, 5,228 managed bytes read, 16 writes to the observed OBJ buffer and equal full state. Guarded inputs passed and scratch was removed: target/validation/units/e130-layered-draw-build-mykzdamw/ and e130-layered-draw-wine-ys8ni2e3/.
+
+**Limitations**
+
+- The initial-frame comparison does not establish complete animation or ordinary use. A later translated-native proof passed; Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md).
+
+[Change record](docs/changes/2026-11-05-verify-layered-obj-original-draw-interpreter.json)
+
 ## 2026-11-05 — Verify Roulette selectors and extended animation window
 
 Type: docs. Platforms: EUR Windows executable under Wine.
@@ -64,6 +124,108 @@ Type: docs. Platforms: EUR Windows executable under Wine.
 Documentation: [rom_data_obj.md](docs/rom_data_obj.md).
 
 [Change record](docs/changes/2026-11-05-verify-extended-roulette-selectors.json)
+
+## 2026-11-05 — Complete the E130 affected regression matrix
+
+Type: changed. Platforms: EUR Windows GNU under Wine.
+
+**Changes**
+
+- Complete the 38-filter E130 affected regression matrix, including fourteen remaining historical catalog comparisons.
+
+**Validation**
+
+- Fourteen historical full filters pass against manifest-authenticated prior projections, with native reader cases and preserved previous OBJ projections: target/validation/units/e130-historical-remaining-regressions-akj7bhxa/. Together with the 13 compact/conditional, seven data/lifecycle, two full-catalog and two historical filters, all 38 selected E130 regressions pass. Protected inputs passed and successful scratch was removed.
+
+**Limitations**
+
+- These results do not prove full layered OBJ draw paths or ordinary gameplay. Linux, USA and native Windows remain separate. No performance measurements.
+
+Documentation: [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md), [rom_data_obj.md](docs/rom_data_obj.md).
+
+[Change record](docs/changes/2026-11-05-verify-e130-historical-regression-matrix.json)
+
+## 2026-11-05 — Verify two historical E130 catalog comparisons
+
+Type: changed. Platforms: EUR Windows GNU under Wine.
+
+**Changes**
+
+- Verify two E130 historical compact-catalog filters against authenticated E110 and E118 projections.
+
+**Validation**
+
+- Both selected full filters pass, including 48 and five native reader cases and preservation of previous OBJ projections. Protected inputs passed and scratch was removed: target/validation/units/e130-historical-catalog-regressions-j0tn8ul1/.
+
+**Limitations**
+
+- Fourteen other historical E130 catalog filters remain open under RVR-24. Linux, USA and native Windows are separate. No performance measurement.
+
+Documentation: [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-05-verify-e130-historical-catalog-pairs.json)
+
+## 2026-11-05 — Verify the E130 complete compact catalog
+
+Type: changed. Platforms: EUR Windows GNU under Wine.
+
+**Changes**
+
+- Verify E130 default selectors and the complete compact catalog against the authenticated E127 predecessor.
+
+**Validation**
+
+- Both full selected filters pass with the prior OBJ projection preserved, full-state native-reader checks and guarded inputs. Successful scratch was removed: target/validation/units/e130-full-catalog-regressions-7dxiq2ou/.
+
+**Limitations**
+
+- Sixteen historical E130 catalog filters remain open under RVR-24. Linux, USA and native Windows are separate. No performance measurement.
+
+Documentation: [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-05-verify-e130-full-compact-catalog.json)
+
+## 2026-11-05 — Verify E130 dataset budget boundaries
+
+Type: changed. Platforms: Windows GNU under Wine.
+
+**Changes**
+
+- Verify the existing aggregate and per-family dataset budget boundary test after adding the E130 resource argument.
+
+**Validation**
+
+- The focused existing test passes under Wine with isolated temporary storage and protected build inputs; successful scratch was removed: target/validation/units/e130-dataset-budget-boundary-1u4t4few/.
+- A separate production CLI verification rejects an isolated layered file at 4,194,305 bytes with the 4,194,304-byte guard message. The ROM, dataset and build inputs stayed protected; successful scratch was removed: target/validation/units/e130-layered-size-guard-qo1s_181/.
+
+**Limitations**
+
+- The CLI test covers an oversized file in a copied E130 dataset; it is not an exhaustive filesystem-race test. No performance measurement.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md).
+
+[Change record](docs/changes/2026-11-05-verify-e130-dataset-budget-boundary.json)
+
+## 2026-11-05 — Verify conditional marker slot consumer
+
+Type: added. Platforms: EUR original source; Windows executable under Wine.
+
+**Changes**
+
+- Add an isolated original slot-consumer test for both authenticated conditional OBJ marker lists, including clipping and disabled-context, zero-count and null-pointer guards.
+
+**Validation**
+
+- Windows GNU release test build and exact filtered Wine execution pass: six cases compare complete predicted OBJ buffer and cursor, full EWRAM and out-of-stack IWRAM, callee registers, stack and video memory. ROM, source and test executable guards passed and successful scratch was removed. Evidence: target/validation/units/e128-obj-marker-consumer-build-ozg_6sdh/ and e128-obj-marker-consumer-wine-6n_m9dtb/.
+- The first Wine launch supplied wine twice and failed before executing the test; diagnostics are retained in e128-obj-marker-consumer-wine-_ppq79yq/.
+
+**Limitations**
+
+- Synthetic isolated interpreter call only: no publication, translated native or managed reads, ordinary scene or paired comparison. Other consumers, Linux, USA and native Windows remain open; no performance measurements.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md).
+
+[Change record](docs/changes/2026-11-05-verify-conditional-marker-slot-consumer.json)
 
 ## 2026-11-05 — Verify an ordinary compact OBJ selector 6 scene
 
@@ -138,6 +300,46 @@ Documentation: [rom_data_compact_catalog.md](docs/rom_data_compact_catalog.md).
 
 [Change record](docs/changes/2026-11-05-trace-loop-alpha-producer.json)
 
+## 2026-11-05 — Trace adjacent copied context field readers
+
+Type: changed. Platforms: EUR source inspection.
+
+**Changes**
+
+- Document the original conditional constructor reads of all four copied context halfwords and their calls to generator and arithmetic helpers.
+
+**Validation**
+
+- Exact EUR source identity, four code windows, field-read instructions and seven original call targets passed; guarded ROM was unchanged and scratch was removed: target/validation/units/e130-adjacent-record-readers-6qh7d5_9/.
+
+**Limitations**
+
+- The helper was not independently executed; field semantics, task liveness, other consumers and ordinary gameplay remain unproved. No guest instructions or performance measurement ran.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md).
+
+[Change record](docs/changes/2026-11-05-trace-adjacent-copied-context-readers.json)
+
+## 2026-11-05 — Stage a layered OBJ runtime owner
+
+Type: added. Platforms: EUR Windows GNU under Wine.
+
+**Changes**
+
+- Prepare a test-only typed runtime owner for layered OBJ descriptor, sequence and list reads, preserving prior-owner and raw-gap composition.
+
+**Validation**
+
+- The focused Wine test poisons all 633 source spans and verifies all 20,474 typed bytes, four-byte boundary/prior-owner composition, all 566 host-list lookups and a rejected source-binding edit. Evidence: target/validation/units/e130-layered-obj-staged-build-_4ml_mrq/ and e130-layered-obj-staged-wine-o8ryattt/. Protected inputs passed and successful scratch was removed.
+
+**Limitations**
+
+- The owner remains compiled only for tests and is not attached to extraction, runtime or CLI. Native reads, lifecycle and ordinary use remain unverified; Linux, USA and native Windows are separate. No performance measurement.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md).
+
+[Change record](docs/changes/2026-11-05-stage-layered-obj-runtime-owner.json)
+
 ## 2026-11-05 — Recover space from isolated validation compiler intermediates
 
 Type: changed. Platforms: Local development artifacts on Linux.
@@ -162,6 +364,175 @@ Documentation: [LOCAL_ARTIFACTS.md](docs/development/LOCAL_ARTIFACTS.md).
 
 [Change record](docs/changes/2026-11-05-retire-isolated-compiler-intermediates.json)
 
+## 2026-11-05 — Publish conditional RAM-slot OBJ markers
+
+Type: added. Platforms: EUR original source; Windows executable under Wine.
+
+**Changes**
+
+- Publish the two authenticated RAM-slot marker lists in the existing static OBJ catalog and advance the extraction and decoder revisions to e129-d128.
+- Update revision-sensitive recovery tests to distinguish unchanged resource files from the preserved previous static OBJ projection.
+
+**Validation**
+
+- Focused EUR Wine test passes E128 predecessor preservation for all 99 other resource files and records and the previous OBJ projection; create/reuse/repair, coherent-tamper transaction, both exact-root managed source reads through the original slot consumer with full state/clock equality, and mixed boundaries/widths/mirrors. Inputs passed and successful scratch was removed. Evidence: target/validation/units/e129-obj-marker-managed-build-gkplvamk/ and e129-obj-marker-managed-wine-h5vlixfw/.
+- A separate EUR Wine TinyCC translation of 332 traced original consumer instruction addresses passes full state/clock comparisons for both roots; per-root managed usage is positive with poisoned underlying ROM and totals 20 source bytes. Protected inputs passed and scratch was removed. Evidence: target/validation/units/e129-obj-marker-native-build-b1u0vaes/ and e129-obj-marker-native-wine-i804d9nc/.
+- RVR-23 partial: primary through octonary compact OBJ and five conditional lookup full filters pass on e129 under EUR Wine with authenticated e95–e107 predecessors; unchanged resources and previous OBJ projection are checked separately. Evidence: target/validation/units/e129-affected-regression-build-964gjrch/ and e129-compact-conditional-regressions-os53p1p4/.
+- Production CLI create/reuse/verify passes in EUR Wine with E129: 100 resources/101 files, 99 other resources and previous OBJ projection preserved, reuse hashes and times unchanged. Current generation retained for pending RVR-23. Evidence: target/validation/units/e129-obj-marker-cli-build-0ie35_4i/ and e129-obj-marker-current-95626ztl/.
+- RVR-23 partial: dynamic fragments, table graphics, clan alias, UI context, failed catalog replacement, UI Load/Undo/Restart and prior-bank report pass on E129 under EUR Wine. Sixty-one prior banks are identical and all 62 previous projections are preserved. Evidence: target/validation/units/e129-other-data-regressions-15_31kjd/.
+- RVR-23 completes 38 affected EUR/Wine filters: eight compact, five conditional, seven data/lifecycle, full catalog and default selectors, plus sixteen historical catalog filters with authenticated predecessor projections. Evidence: e129-full-catalog-regressions-sudbvp19/, e129-historical-catalog-regressions-b2a5h4ij/ and e129-historical-remaining-regressions-3sj3anrl/ under target/validation/units/; earlier group evidence is recorded above.
+- Production CLI E129 startup passes 12 retained-input frames in EUR Wine and loads all 100 expected runtime resource identities; neither new marker root was observed. Guarded inputs passed and successful scratch was removed. Evidence: target/validation/units/e129-obj-marker-startup-yy29ytz1/.
+
+**Limitations**
+
+- Positive ordinary use and its pair remain open, as do other OBJ sources and Linux/USA/native Windows. No performance test.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md).
+
+[Change record](docs/changes/2026-11-05-publish-conditional-ram-slot-obj-markers.json)
+
+## 2026-11-05 — Verify translated natural layered OBJ looping
+
+Type: changed. Platforms: EUR Windows GNU under Wine.
+
+**Changes**
+
+- Compare translated-original multi-layer loop execution with the interpreter for all modeled banks in loop mode 0 and draw variant 0.
+
+**Validation**
+
+- All 3,457 full-state comparisons pass across 16 banks, with all 559 frames in 34 layers visited; 465 original instruction addresses traced and 450,420 managed bytes read with poisoned spans. Protected inputs passed and scratch was removed: target/validation/units/e130-layered-timing-native-build-mneujrtq/ and e130-layered-timing-native-wine-xrs5e3ig/.
+
+**Limitations**
+
+- Other loop modes and draw variants, other consumers and ordinary gameplay remain open. Linux, USA and native Windows are separate. No performance measurement.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md).
+
+[Change record](docs/changes/2026-11-05-prepare-layered-obj-translated-natural-loop.json)
+
+## 2026-11-05 — Verify natural layered OBJ looping
+
+Type: changed. Platforms: EUR Windows GNU under Wine.
+
+**Changes**
+
+- Compare source-derived original multi-layer looping in draw variant 0 with raw and managed resources.
+
+**Validation**
+
+- All 559 frames across 34 layers and 16 banks were reached in 3,457 original draw calls after initialized frame/tick zero in loop mode 0. Full state matches after each call with poisoned managed spans; 450,420 managed bytes were read. Protected inputs passed and scratch was removed: target/validation/units/e130-layered-timing-build-it0g5dm0/ and e130-layered-timing-wine-pjteb7le/.
+
+**Limitations**
+
+- Other loop modes, every-frame draw variants 1/2, other consumers and ordinary gameplay remain open. A later translated full-cycle proof passed. Linux, USA and native Windows are separate. No performance measurement.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md).
+
+[Change record](docs/changes/2026-11-05-prepare-layered-obj-natural-multilayer.json)
+
+## 2026-11-05 — Verify each modeled layered OBJ frame
+
+Type: changed. Platforms: EUR Windows GNU under Wine.
+
+**Changes**
+
+- Compare original draw variant 0 for each of the 559 modeled sequence frames with raw and managed resources.
+
+**Validation**
+
+- All 559 selected-frame full-state interpreter comparisons pass across 34 sequences, with poisoned managed spans, 24,992 managed bytes read and 556 observed OBJ buffer writes. Protected inputs passed and scratch was removed: target/validation/units/e130-layered-frames-build-u0ng_k53/ and e130-layered-frames-wine-mxh9xa9b/.
+
+**Limitations**
+
+- Frame selection was injected, one layer at a time; natural timing, simultaneous layers, every-frame variants 1/2, translated each-frame execution and ordinary gameplay remain open. Linux, USA and native Windows are separate. No performance measurement.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md).
+
+[Change record](docs/changes/2026-11-05-prepare-layered-obj-each-frame-draw.json)
+
+## 2026-11-05 — Verify E130 data and lifecycle regressions
+
+Type: changed. Platforms: EUR Windows GNU under Wine.
+
+**Changes**
+
+- Update E130 revision and resource-count expectations in the remaining data, UI and compact-catalog tests while preserving authenticated predecessor comparisons.
+
+**Validation**
+
+- All seven selected E130 full filters pass: dynamic fragments, table graphics, clan aliases, UI context, catalog and UI lifecycle, and previous-bank report. Protected inputs passed and scratch was removed: target/validation/units/e130-affected-regression-build-07tgrhjg/ and e130-other-data-regressions-nxuuzuy5/.
+
+**Limitations**
+
+- Other full and historical catalog E130 regressions remain open under RVR-24. Linux, USA and native Windows are separate. No performance measurement.
+
+Documentation: [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-05-prepare-e130-data-lifecycle-regressions.json)
+
+## 2026-11-05 — Verify E130 compact and conditional regressions
+
+Type: changed. Platforms: EUR Windows GNU under Wine.
+
+**Changes**
+
+- Update the expected extraction revision and resource count in 13 compact and conditional full-filter tests for E130 while retaining their authenticated predecessor comparisons.
+
+**Validation**
+
+- All 13 selected full compact/conditional filters pass with their authenticated E95–E107 predecessor manifests and matching prior typed-native byte counts; the older OBJ projection remains preserved. Protected inputs passed and successful scratch was removed. Evidence: target/validation/units/e130-affected-regression-build-4n667_0a/ and e130-compact-conditional-regressions-j5dq5xid/.
+
+**Limitations**
+
+- Other affected E130 data, lifecycle and catalog regressions remain open under RVR-24. Linux, USA and native Windows are separate. No performance measurement.
+
+Documentation: [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-05-prepare-e130-compact-conditional-regressions.json)
+
+## 2026-11-05 — Verify adjacent OBJ coordinate constructor prefix
+
+Type: changed. Platforms: EUR Windows GNU under Wine.
+
+**Changes**
+
+- Verify the original adjacent constructor coordinate prefix against six authenticated source records and four generator states.
+
+**Validation**
+
+- All 24 original interpreter prefix cases produce the expected two coordinate halfwords and two generator advances. Protected inputs passed and scratch was removed: target/validation/units/e130-adjacent-coordinate-build-l5lqlad6/ and e130-adjacent-coordinate-wine-ufvf4ubn/.
+
+**Limitations**
+
+- This checks the prefix with positive source divisors, not zero/negative divisors, the complete constructor, translated execution, liveness or ordinary gameplay. Linux, USA and native Windows remain separate. No performance measurement.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md).
+
+[Change record](docs/changes/2026-11-05-prepare-adjacent-obj-coordinate-prefix.json)
+
+## 2026-11-05 — Model conditional layered OBJ source pairs
+
+Type: added. Platforms: EUR Windows GNU under Wine.
+
+**Changes**
+
+- Add a strict source-authenticated model for sixteen conditional layered OBJ/sequence pairs, retaining opaque descriptor bytes and original bank structures.
+
+**Validation**
+
+- The corrected complete Wine filter verifies all 633 source spans/20,474 bytes, JSON roundtrip, six malformed cases, coherent-edit/source rejection and all 16 original 08142590 initializer cases with EWRAM guards. Evidence: target/validation/units/e130-layered-obj-guard-build-kgdzhcvt/ and e130-layered-obj-model-wine-guards-3b5b_3e5/. Protected inputs passed and successful scratch was removed.
+- The retained first build badn5dd7 lacked a Bus trait import; Wine attempts n8dw99_c and p47ajr46 exposed test-only r12 preservation and empty-list assumptions. Corrected test passes in the final full filter.
+
+**Limitations**
+
+- The model is not attached to extraction or runtime; native reads, lifecycle, CLI, the complete draw routine and ordinary use remain open. Linux, USA and native Windows are not established.
+- The primary model and reasoning effort could not be independently confirmed during the source-supported test corrections; no consultation was needed. No performance measurement.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md).
+
+[Change record](docs/changes/2026-11-05-model-layered-obj-source-pairs.json)
+
 ## 2026-11-05 — Model conditional RAM-slot OBJ markers
 
 Type: added. Platforms: EUR original source; Windows executable under Wine.
@@ -182,6 +553,29 @@ Type: added. Platforms: EUR original source; Windows executable under Wine.
 Documentation: [rom_data_obj.md](docs/rom_data_obj.md).
 
 [Change record](docs/changes/2026-11-05-model-conditional-ram-slot-obj-markers.json)
+
+## 2026-11-05 — Integrate layered OBJ resources and verify managed initializers
+
+Type: added. Platforms: EUR Windows GNU under Wine.
+
+**Changes**
+
+- Publish E130 layered OBJ source with authenticated extraction, frontend persistence, typed runtime attachment and resource counters.
+- Extend dataset budget test calls for the new resource.
+
+**Validation**
+
+- The Windows GNU focused test build passed; the EUR Wine integration test checks 101 resources and 102 files, all 100 E129 resources unchanged, create/reuse/repair, all 633 poisoned spans (20,474 bytes), 16 original initializer full-state interpreter pairs and transactional coherent-tamper rejection. Protected inputs passed and scratch was removed: target/validation/units/e130-layered-obj-managed-build-final-n53v96ij/ and e130-layered-obj-managed-wine-sgpd5u9k/.
+- An earlier production build passed; its file guard rejected the result after a test-only source edit. An initial Wine launch could not open the host runtime lock from the sandbox; its own prefix lease was released only after host-visible ownership checks. Failed diagnostics remain retained. Two intermediate test builds failed on missing size arguments and a correction typo.
+- The production Windows CLI creates, reuses and verifies E130 under Wine; all 100 previous resources match, and reuse leaves hashes and timestamps unchanged. Guarded evidence: target/validation/units/e130-layered-obj-cli-build-final-l8obzzjw/ and e130-layered-obj-cli-current-rbr9ukkp/. The current generation is retained for pending regression filters.
+
+**Limitations**
+
+- The initializer translated-native cases were subsequently verified; the full draw path, remaining lifecycle scenarios, affected regressions and ordinary gameplay remain unverified. Linux, USA and native Windows are separate.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md).
+
+[Change record](docs/changes/2026-11-05-integrate-layered-obj-resource-unverified.json)
 
 ## 2026-11-05 — Inspect retained sparse parameter trigger candidates
 
@@ -278,6 +672,86 @@ Documentation: [private_debug_assets.md](docs/private_debug_assets.md), [debug_c
 
 [Change record](docs/changes/2026-11-05-export-standard-and-extended-debug-assets.json)
 
+## 2026-11-05 — Discover conditional layered OBJ source pairs
+
+Type: docs. Platforms: EUR original source.
+
+**Changes**
+
+- Document sixteen source-pinned descriptor-selected OBJ and sequence pairs for the previously unresolved 08142664 draw consumer.
+
+**Validation**
+
+- Guarded ROM inspection pins sixteen immediate direct callers, initializer and consumer instructions, 566 object-list slots, 34 nonempty sequences, 559 frame links, and 633 disjoint source spans with no overlap against the authenticated E129 manifest. Evidence: target/validation/units/e129-obj-142664-catalog-l_8m855o/.
+
+**Limitations**
+
+- The bounded inventory does not prove all indirect callers, global bounds, live execution, model, runtime publication or ordinary use; no performance measurement.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md).
+
+[Change record](docs/changes/2026-11-05-discover-layered-obj-source-pairs.json)
+
+## 2026-11-05 — Classify six adjacent initializer source arguments
+
+Type: changed. Platforms: EUR source inspection.
+
+**Changes**
+
+- Identify six direct Thumb calls to the adjacent initializer and their six distinct eight-byte source arguments without claiming a complete data table or OBJ-list root.
+
+**Validation**
+
+- The aligned direct-call census, exact EUR identity, six caller windows, literal arguments, target and six disjoint source ranges pass against the 101-resource E130 manifest. Protected ROM and dataset passed and scratch was removed: target/validation/units/e130-adjacent-six-callers-14_adkr1/.
+
+**Limitations**
+
+- Indirect calls, record semantics, downstream consumers, additional records, task liveness and ordinary gameplay remain unproved. No guest execution or performance measurement ran.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md).
+
+[Change record](docs/changes/2026-11-05-classify-six-adjacent-initializer-callers.json)
+
+## 2026-11-05 — Classify an alternate OBJ task reader
+
+Type: docs. Platforms: EUR original source.
+
+**Changes**
+
+- Identify the selected task branches of the previously truncated 0808ada8 draw caller as a reader of the existing 28-byte task pool.
+
+**Validation**
+
+- Guarded original-ROM comparisons pin task-pool literals, type-zero and type-one switch targets, identical pre-call selection bytes, both draw targets, and the 28-byte loop stride; evidence: target/validation/units/e129-obj-8ada8-contract-7npoftlr/ and e129-obj-8ada8-bothdraws-c644dhie/.
+
+**Limitations**
+
+- No new ROM root, producer, global task domain, other branch, live execution or new runtime acceptance is established. No performance measurement.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md).
+
+[Change record](docs/changes/2026-11-05-classify-alternate-obj-task-reader.json)
+
+## 2026-11-05 — Classify one adjacent OBJ structure initialization path
+
+Type: changed. Platforms: EUR source inspection.
+
+**Changes**
+
+- Document the source-pinned 08140e1e/08140e32 path copying eight bytes into a RAM context before initializing local structures, without treating it as a proven OBJ-list root.
+
+**Validation**
+
+- Six instruction/source windows and six call targets match the exact EUR source; the eight-byte range has no overlap with the 101-resource E130 manifest. Protected ROM and dataset passed and scratch was removed: target/validation/units/e130-adjacent-obj-caller-source-0br8d84x/.
+
+**Limitations**
+
+- Only one conditional caller is characterized; complete record extent, other callers, downstream consumers, task liveness and ordinary use are unproved. No guest instructions or performance measurements ran.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md).
+
+[Change record](docs/changes/2026-11-05-classify-adjacent-obj-structure-initializer.json)
+
 ## 2026-11-05 — Organize the user-supplied EUR save before the final battle
 
 Type: changed. Platforms: Local private save collection; existing Linux read-only catalog CLI.
@@ -302,6 +776,97 @@ Type: changed. Platforms: Local private save collection; existing Linux read-onl
 Documentation: [debug_catalog.md](docs/debug_catalog.md), [debug saves.md](docs/development/debug saves.md).
 
 [Change record](docs/changes/2026-11-05-catalog-user-pre-final-battle-eur-save.json)
+
+## 2026-11-05 — Bound the retained parameter script tail
+
+Type: docs. Platforms: EUR original source and retained checkpoint.
+
+**Changes**
+
+- Record the source-pinned program 158 tail after the retained cursor and correct the recovery checklist status for the completed E129 regression matrix.
+- Bound saved contexts for the other source-backed mode-0 programs without assuming task liveness.
+- Identify an authenticated mode-2 script and a separately user-reported final-battle save as a scene lead.
+
+**Validation**
+
+- Authenticated ROM, E129 script resources and retained RIVER state pin opcode 21 at offset 28, opcode 23 at offset 30, two-byte advances, callback return codes and enclosing scheduler result. Inputs passed and successful scratch was removed. Evidence: target/validation/units/e129-parameter-158-tail-contract-pgg1_zpq/, e129-parameter-158-tail-source-e9ohc13n/ and e129-parameter-158-return-source-846u23xv/.
+- A guarded source-pinned scan of 279 distinct EUR payloads covers 34 other programs and 35 mode-0 instructions. Twelve task-callback contexts are found, all after the program 163 instruction, with parameter zero and nonzero override; none meets the stated saved-value candidate conditions. Evidence: target/validation/units/e129-parameter-other-mode0-contexts-fiwafu0k/.
+- An additional 66 valid EUR payloads disjoint by hash were checked against all 35 programs containing 36 mode-0 instructions; 20 matching task-callback contexts were all after their target and yielded no saved-value candidates. Evidence: target/validation/units/e129-parameter-disjoint-mode0-contexts-sbzc98kz/.
+- A separate guarded mode-2 scan checked five source-pinned programs in 345 distinct authenticated EUR payloads and found no matching aligned EWRAM program/cursor/task-callback context. Evidence: target/validation/units/e129-parameter-mode2-contexts-17fibtc2/.
+- A guarded join of 66 further distinct EUR payloads to the 20 prior source-pinned mode-0 mission candidates found no matching saved selected-mission value. The two bounded joins cover 345 payloads. Evidence: target/validation/units/e129-parameter-disjoint-mission-join-dcqvuonz/.
+- Guarded source join links event row 216 and key 98 to program 95, its mode-2 instruction and text bank 32; the supplied and working EUR saves match. No guest execution establishes that the save reaches the script. Evidence: target/validation/units/e129-parameter-final-script-link-rt1l_msv/.
+- An EUR Wine helper booted a protected save copy for 1,022 frames. Its result incorrectly claims file selection: guarded visual classification e129-prefinal-boot-classification-8gj5atae confirms the final image is still the splash. The execution unit e129-prefinal-file-select-pitocqyj passed and retains private continuation checkpoints.
+- A further 600 neutral frames reached the animated opening, with the next private checkpoint retained. Evidence: target/validation/units/e129-prefinal-neutral-boot-hc018h_n/.
+- The established Start/neutral boot step reaches the visible title screen; file selection remains ahead. Evidence: target/validation/units/e129-prefinal-start-boot-vwgrgaqt/.
+- The next Start/neutral step reaches the title menu with Saved Game highlighted. Evidence: target/validation/units/e129-prefinal-title-start-qyb35ep8/.
+- Saved Game opens a submenu with Load highlighted; no game file selected. Evidence: target/validation/units/e129-prefinal-saved-game-62i8an2r/.
+- Load displays two internal files with matching visible summaries and File No. 2 highlighted; the user did not specify which file. Evidence: target/validation/units/e129-prefinal-load-menu-wrln03gg/.
+- Each internal save file loaded from an independent EUR Wine copy to the same visually inspected world-map image; this does not prove internal state equality or identify movement. Evidence: target/validation/units/e129-prefinal-load-both-tetl2uln/.
+- A source-pinned read of the two loaded map checkpoints finds pending event field zero and current event 140/key 168/parameter 0 with override 353 in both; their EWRAM differs in 1,584 bytes. No future transition or whole-state equality is inferred. Evidence: target/validation/units/e129-prefinal-world-values-zl8jq8cu/.
+- Original instruction bytes, command-directory callback and cached source pins establish that program 95 starts with opcode 83/key 98, whose backward event lookup has one matching row, 216; the target mode-2 instruction is later in source order. Evidence: target/validation/units/e129-prefinal-self-event-um4woe5u/.
+- The prior USA Ambervale screenshots end at the map after the save prompt, without the separate location-entry action. A new EUR File No. 2 continuation follows its recorded Area List input and reaches the visible list; no location selected yet. Evidence: target/validation/units/e129-prefinal-area-list-7l7q0jaw/.
+- The recorded Area List scroll highlights Ambervale in the EUR copy; no map travel or entry yet. Evidence: target/validation/units/e129-prefinal-list-bottom-d7z1mluu/.
+- Recorded Ambervale selection and travel from the EUR list reach a Save Game prompt; neither saving nor location entry was performed. Evidence: target/validation/units/e129-prefinal-amber-travel-e6f35beg/.
+- The recorded No response returns the EUR copy to the world map with Ambervale selected; the distinct location-entry action remains untested. Evidence: target/validation/units/e129-prefinal-decline-save-2sd3z1gq/.
+- One A press and 180 neutral frames at the selected Ambervale node leave the EUR File2 copy visibly on the world map. The older replay helper has no managed read counters; other paths and the other internal file remain open. Evidence: target/validation/units/e129-prefinal-enter-amber-w0g_06jd/.
+- The recorded route on a separate File1 copy matched the File2 image at each Area List, Ambervale selection, prompt and post-decline boundary before proceeding; no state equivalence is inferred. Evidence: target/validation/units/e129-prefinal-file1-route-ug1_n7do/.
+- Production E129 EUR Wine CLI observes File1 A/180 neutral at Ambervale: final image remains on the map and all parameter-resource counters are zero. This bounds only that window. Evidence: target/validation/units/e129-prefinal-file1-managed-cnn46jxx/.
+- The distinct File2 Ambervale A/180 window also produces the same final image with zero parameter-resource counters in production E129 EUR Wine. The negative does not exclude other routes or later execution. Evidence: target/validation/units/e129-prefinal-file2-managed-ezg_8pwv/.
+- The separate departure lead opens Area List from the File2 Ambervale map checkpoint with Bervenia Palace highlighted; no departure yet. The user reports movement and the cited walkthrough describes departure, but the save conditions remain unverified. Evidence: target/validation/units/e129-prefinal-departure-list-8xpzle5k/.
+- The recorded list selection places the cursor at Bervenia Palace while the clan remains at Ambervale; no departure yet. Evidence: target/validation/units/e129-prefinal-departure-target-38au96zf/.
+- A 186-frame production E129 departure observation ends in transit with zero parameter reads; it does not determine the arrival or final-event lead. Evidence: target/validation/units/e129-prefinal-departure-managed-a453zcur/.
+- Extending the departure input to 906 E129 CLI frames reaches Bervenia Palace without a visible final battle or parameter reads. The prefix replay was necessary because runc cannot export an endpoint state. Evidence: target/validation/units/e129-prefinal-departure-extended-inl3r0yl/.
+- The user indicated that both internal files seemed valid and the route went right. On separate E129 CLI copies, six Right frames plus 180 neutral end on matching map images with zero parameter reads; holding or confirming a destination remains distinct. Evidence: target/validation/units/e129-prefinal-right-both-uzn93ifp/.
+- Holding Right for 60 frames on File2 followed by 180 neutral frames moves the map cursor toward the right edge with zero E129 parameter reads and no visible battle. Evidence: target/validation/units/e129-prefinal-right-long-7spjoc_j/.
+- A separate uninstrumented replay samples continuous Right every six frames: the visible cursor moves horizontally to the map edge without a scene transition. It cannot identify the intended destination or measure parameter reads. Evidence: target/validation/units/e129-prefinal-right-steps-imvk_t8x/.
+- After the user clarified the destination is the location to the right, a separate protected EUR File2 copy accepted the Ambervale Save Game prompt and reached internal slot selection; no slot was confirmed in this step. Evidence: target/validation/units/e129-prefinal-accept-save-e5pp971x/.
+- Selecting File2 on the isolated save copy opens the overwrite confirmation with No highlighted; no overwrite was confirmed in this step. Evidence: target/validation/units/e129-prefinal-save-slot-kwjql3jz/.
+- Confirming Yes only in the isolated copy returns to the slot list with File2 displayed time advanced by one minute. Emulated cartridge bytes were not independently exported; original master and working saves were guarded. Evidence: target/validation/units/e129-prefinal-save-confirm-vqi01771/.
+- Exiting the isolated save-slot screen returns to the visible Ambervale map without an immediate final scene; the private helper does not report managed reads. Evidence: target/validation/units/e129-prefinal-save-exit-bi3ydyny/.
+- After the isolated save path, one A press and 180 neutral frames also leave the E129 CLI on the visible Ambervale map with zero parameter-resource reads; this does not establish which location the user intended. Evidence: target/validation/units/e129-prefinal-postsave-managed-l_97lwxn/.
+- The user confirmed Ambervale is the intended location; the exact final-scene trigger remains unobserved in the recorded windows.
+
+**Limitations**
+
+- Source analysis and a bounded initial boot only: no proven final-scene route, ordinary positive read or paired scene; no performance measurement.
+- The other-program scan does not prove linear flow, current-event association, task liveness or absence in other checkpoints and memory representations.
+- The mode-2 result is limited to saved EWRAM contexts and does not exclude later scheduling, indirect entry or other task layouts.
+- The saved mission values do not establish event entry or availability, later selection, or the only possible task representation.
+- The final-battle save is a user-reported lead, not an established route or ordinary parameter read.
+- The external Ambervale walkthrough and the user-reported scene are route leads; the save-to-script connection remains unverified.
+
+Documentation: [rom_data_gameplay.md](docs/rom_data_gameplay.md).
+
+[Change record](docs/changes/2026-11-05-bound-parameter-program158-tail.json)
+
+## 2026-11-05 — Bound conditional marker menu candidates
+
+Type: docs. Platforms: EUR retained snapshots and original source.
+
+**Changes**
+
+- Record a source-pinned bounded search for a menu selection leading to the conditional marker draw dispatcher.
+- Identify an alternate original caller chain to the same marker writer for further investigation.
+- Trace the alternate dispatcher gate, state-three branch and enclosing return without treating saved values as live execution.
+- Bound a neutral continuation of the saved DS-20 candidate without assuming a live menu.
+
+**Validation**
+
+- All 345 retained snapshots were checked; 212 had an in-range helper context and none projected selection value 3. Original source pins and protected inputs passed; successful scratch was removed. Evidence: target/validation/units/e128-obj-menu-selection3-scan-srzyew__/.
+- Authenticated EUR source pins the alternate 080bc7d4 to 08031014 and 080310c8 to 0802f6c4 call edges, plus the writer edge. Guarded source units PASS: target/validation/units/e128-obj-alternate-caller-source-etu_1bt7/ and e128-obj-marker-dispatch-windows-q3881w3t/.
+- Authenticated source pins the alternate caller-context gate, dispatcher state 3, writer edge and enclosing return; guarded unit e128-obj-alternate-branch-pins-ocuhsgdt passes. Corrected saved-state scan e128-obj-alternate-state3-corrected-pk4596ev found zero pointers with even a five-byte in-range dispatcher context in 345 retained EUR snapshots, so cannot decide whether state 3 was present. The earlier t1d4d356 scan required an unnecessarily large context and is insufficient for that decision. Both units guarded their inputs and removed successful scratch.
+- A source-pinned scan of 345 saved EUR payloads found seven mode-1 mappings containing value 3; two also contain a word matching the original menu callback. Saved indices are 0 and ffff; this alone does not prove liveness or an input transition. Evidence: target/validation/units/e129-marker-nearby-menu-scan-6a2p3u2z/ and e129-marker-menu-callback-source-4f37a7vx/.
+- The copied DS-20 state ran 60 neutral frames under EUR Wine: the final image shows the battle field without a menu, and neither marker source was logged. Execution exited zero but its unit failed scratch retirement because a private copy remained; separate guarded evidence check e129-marker-neutral-evidence-05tn0cak passed and removed its scratch. The diagnostic original e129-marker-ds20-neutral-5vt1t8_n remains retained.
+
+**Limitations**
+
+- Saved values alone do not establish callback liveness, ordinary reachability or a raw/managed pair. The neutral continuation does not exclude other paths or later navigation; no performance measurement.
+- The alternate call chain has no established ordinary invocation or subsequent draw.
+- The alternate dispatcher does not itself call the identified draw on this bounded path; later callbacks and ordinary reachability remain unproved.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md).
+
+[Change record](docs/changes/2026-11-05-bound-conditional-marker-menu-candidates.json)
 
 ## 2026-11-04 — Verify UI context owner lifecycle with unavailable data
 

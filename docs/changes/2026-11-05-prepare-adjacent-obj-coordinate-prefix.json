@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "prepare-adjacent-obj-coordinate-prefix",
+  "title": "Verify adjacent OBJ coordinate constructor prefix",
+  "kind": "changed",
+  "platforms": [
+    "EUR Windows GNU under Wine"
+  ],
+  "changes": [
+    "Verify the original adjacent constructor coordinate prefix against six authenticated source records and four generator states."
+  ],
+  "validation": [
+    "All 24 original interpreter prefix cases produce the expected two coordinate halfwords and two generator advances. Protected inputs passed and scratch was removed: target/validation/units/e130-adjacent-coordinate-build-l5lqlad6/ and e130-adjacent-coordinate-wine-ufvf4ubn/."
+  ],
+  "limitations": [
+    "This checks the prefix with positive source divisors, not zero/negative divisors, the complete constructor, translated execution, liveness or ordinary gameplay. Linux, USA and native Windows remain separate. No performance measurement."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data/layered_obj_animations/tests.rs",
+    "docs/rom_data_obj.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

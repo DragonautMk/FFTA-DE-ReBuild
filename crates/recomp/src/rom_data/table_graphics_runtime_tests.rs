@@ -676,7 +676,7 @@ fn european_table_graphics_managed_native_and_lifecycle() {
             source.manifest.decoder_revision,
             source.manifest.resources.len()
         ),
-        (128, 127, 100)
+        (130, 129, 101)
     );
     extract(&dataset(), &mut source).unwrap();
     let mut expected_files: BTreeSet<_> = source.manifest.resources.iter()
@@ -697,11 +697,7 @@ fn european_table_graphics_managed_native_and_lifecycle() {
     for (new, prior_entry) in source.manifest.resources.iter().zip(&prior.resources) {
         assert_eq!(new.id, prior_entry.id);
         if new.id != UI_CUSTOM_GRAPHICS_ID {
-            assert_eq!(new, prior_entry);
-            assert_eq!(
-                fs::read(dataset().join(&new.path)).unwrap(),
-                fs::read(old.join(&prior_entry.path)).unwrap()
-            );
+            super::conditional_marker_runtime_tests::assert_previous_resource_files(new, prior_entry, &dataset(), &old);
         }
     }
     let entry = &source.manifest.resources[slot];
@@ -830,7 +826,7 @@ fn european_table_graphics_managed_native_and_lifecycle() {
     let native = native_prefixes(&rom);
     eprintln!("ROM_DATA_TABLE_GRAPHICS_STAGE native22/fullstate-clock/source53667poisoned PASS");
     let bus = bus_lifecycle(&rom);
-    let result = serde_json::json!({"status":"PASS","revision":[source.manifest.schema,source.manifest.extractor_revision,source.manifest.decoder_revision],"files":actual_files.len(),"resources":source.manifest.resources.len(),"other82_records_files_exact":true,"old16banks_twoinline_sharedOBJ_exact":true,"additional_source_bytes":53667,"additional_runtime_spans":80,"attach_guards":14,"fullset_guards":2,"newfile_interruption":true,"native":native,"bus_lifecycle":bus,"dataset_sha256":owner.dataset_sha256(),"manifest_sha256":gba_core::ffta_rom::digest(&manifest),"ui_graphics_JSON_sha256":gba_core::ffta_rom::digest(&bytes),"actualCLI":"pending","ordinary_positive":"pending","Linux":"pending","USA":"pending","nativeWindows":"pending","new32_9":"pending","performance_measurements":false});
+    let result = serde_json::json!({"status":"PASS","revision":[source.manifest.schema,source.manifest.extractor_revision,source.manifest.decoder_revision],"files":actual_files.len(),"resources":source.manifest.resources.len(),"other81_records_files_exact":true,"previous_obj_projection_preserved":true,"old16banks_twoinline_sharedOBJ_exact":true,"additional_source_bytes":53667,"additional_runtime_spans":80,"attach_guards":14,"fullset_guards":2,"newfile_interruption":true,"native":native,"bus_lifecycle":bus,"dataset_sha256":owner.dataset_sha256(),"manifest_sha256":gba_core::ffta_rom::digest(&manifest),"ui_graphics_JSON_sha256":gba_core::ffta_rom::digest(&bytes),"actualCLI":"pending","ordinary_positive":"pending","Linux":"pending","USA":"pending","nativeWindows":"pending","new32_9":"pending","performance_measurements":false});
     fs::write(
         root.join("result.json"),
         serde_json::to_vec_pretty(&result).unwrap(),

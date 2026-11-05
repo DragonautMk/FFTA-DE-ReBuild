@@ -1,0 +1,68 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "bound-parameter-program158-tail",
+  "title": "Bound the retained parameter script tail",
+  "kind": "docs",
+  "platforms": [
+    "EUR original source and retained checkpoint"
+  ],
+  "changes": [
+    "Record the source-pinned program 158 tail after the retained cursor and correct the recovery checklist status for the completed E129 regression matrix.",
+    "Bound saved contexts for the other source-backed mode-0 programs without assuming task liveness.",
+    "Identify an authenticated mode-2 script and a separately user-reported final-battle save as a scene lead."
+  ],
+  "validation": [
+    "Authenticated ROM, E129 script resources and retained RIVER state pin opcode 21 at offset 28, opcode 23 at offset 30, two-byte advances, callback return codes and enclosing scheduler result. Inputs passed and successful scratch was removed. Evidence: target/validation/units/e129-parameter-158-tail-contract-pgg1_zpq/, e129-parameter-158-tail-source-e9ohc13n/ and e129-parameter-158-return-source-846u23xv/.",
+    "A guarded source-pinned scan of 279 distinct EUR payloads covers 34 other programs and 35 mode-0 instructions. Twelve task-callback contexts are found, all after the program 163 instruction, with parameter zero and nonzero override; none meets the stated saved-value candidate conditions. Evidence: target/validation/units/e129-parameter-other-mode0-contexts-fiwafu0k/.",
+    "An additional 66 valid EUR payloads disjoint by hash were checked against all 35 programs containing 36 mode-0 instructions; 20 matching task-callback contexts were all after their target and yielded no saved-value candidates. Evidence: target/validation/units/e129-parameter-disjoint-mode0-contexts-sbzc98kz/.",
+    "A separate guarded mode-2 scan checked five source-pinned programs in 345 distinct authenticated EUR payloads and found no matching aligned EWRAM program/cursor/task-callback context. Evidence: target/validation/units/e129-parameter-mode2-contexts-17fibtc2/.",
+    "A guarded join of 66 further distinct EUR payloads to the 20 prior source-pinned mode-0 mission candidates found no matching saved selected-mission value. The two bounded joins cover 345 payloads. Evidence: target/validation/units/e129-parameter-disjoint-mission-join-dcqvuonz/.",
+    "Guarded source join links event row 216 and key 98 to program 95, its mode-2 instruction and text bank 32; the supplied and working EUR saves match. No guest execution establishes that the save reaches the script. Evidence: target/validation/units/e129-parameter-final-script-link-rt1l_msv/.",
+    "An EUR Wine helper booted a protected save copy for 1,022 frames. Its result incorrectly claims file selection: guarded visual classification e129-prefinal-boot-classification-8gj5atae confirms the final image is still the splash. The execution unit e129-prefinal-file-select-pitocqyj passed and retains private continuation checkpoints.",
+    "A further 600 neutral frames reached the animated opening, with the next private checkpoint retained. Evidence: target/validation/units/e129-prefinal-neutral-boot-hc018h_n/.",
+    "The established Start/neutral boot step reaches the visible title screen; file selection remains ahead. Evidence: target/validation/units/e129-prefinal-start-boot-vwgrgaqt/.",
+    "The next Start/neutral step reaches the title menu with Saved Game highlighted. Evidence: target/validation/units/e129-prefinal-title-start-qyb35ep8/.",
+    "Saved Game opens a submenu with Load highlighted; no game file selected. Evidence: target/validation/units/e129-prefinal-saved-game-62i8an2r/.",
+    "Load displays two internal files with matching visible summaries and File No. 2 highlighted; the user did not specify which file. Evidence: target/validation/units/e129-prefinal-load-menu-wrln03gg/.",
+    "Each internal save file loaded from an independent EUR Wine copy to the same visually inspected world-map image; this does not prove internal state equality or identify movement. Evidence: target/validation/units/e129-prefinal-load-both-tetl2uln/.",
+    "A source-pinned read of the two loaded map checkpoints finds pending event field zero and current event 140/key 168/parameter 0 with override 353 in both; their EWRAM differs in 1,584 bytes. No future transition or whole-state equality is inferred. Evidence: target/validation/units/e129-prefinal-world-values-zl8jq8cu/.",
+    "Original instruction bytes, command-directory callback and cached source pins establish that program 95 starts with opcode 83/key 98, whose backward event lookup has one matching row, 216; the target mode-2 instruction is later in source order. Evidence: target/validation/units/e129-prefinal-self-event-um4woe5u/.",
+    "The prior USA Ambervale screenshots end at the map after the save prompt, without the separate location-entry action. A new EUR File No. 2 continuation follows its recorded Area List input and reaches the visible list; no location selected yet. Evidence: target/validation/units/e129-prefinal-area-list-7l7q0jaw/.",
+    "The recorded Area List scroll highlights Ambervale in the EUR copy; no map travel or entry yet. Evidence: target/validation/units/e129-prefinal-list-bottom-d7z1mluu/.",
+    "Recorded Ambervale selection and travel from the EUR list reach a Save Game prompt; neither saving nor location entry was performed. Evidence: target/validation/units/e129-prefinal-amber-travel-e6f35beg/.",
+    "The recorded No response returns the EUR copy to the world map with Ambervale selected; the distinct location-entry action remains untested. Evidence: target/validation/units/e129-prefinal-decline-save-2sd3z1gq/.",
+    "One A press and 180 neutral frames at the selected Ambervale node leave the EUR File2 copy visibly on the world map. The older replay helper has no managed read counters; other paths and the other internal file remain open. Evidence: target/validation/units/e129-prefinal-enter-amber-w0g_06jd/.",
+    "The recorded route on a separate File1 copy matched the File2 image at each Area List, Ambervale selection, prompt and post-decline boundary before proceeding; no state equivalence is inferred. Evidence: target/validation/units/e129-prefinal-file1-route-ug1_n7do/.",
+    "Production E129 EUR Wine CLI observes File1 A/180 neutral at Ambervale: final image remains on the map and all parameter-resource counters are zero. This bounds only that window. Evidence: target/validation/units/e129-prefinal-file1-managed-cnn46jxx/.",
+    "The distinct File2 Ambervale A/180 window also produces the same final image with zero parameter-resource counters in production E129 EUR Wine. The negative does not exclude other routes or later execution. Evidence: target/validation/units/e129-prefinal-file2-managed-ezg_8pwv/.",
+    "The separate departure lead opens Area List from the File2 Ambervale map checkpoint with Bervenia Palace highlighted; no departure yet. The user reports movement and the cited walkthrough describes departure, but the save conditions remain unverified. Evidence: target/validation/units/e129-prefinal-departure-list-8xpzle5k/.",
+    "The recorded list selection places the cursor at Bervenia Palace while the clan remains at Ambervale; no departure yet. Evidence: target/validation/units/e129-prefinal-departure-target-38au96zf/.",
+    "A 186-frame production E129 departure observation ends in transit with zero parameter reads; it does not determine the arrival or final-event lead. Evidence: target/validation/units/e129-prefinal-departure-managed-a453zcur/.",
+    "Extending the departure input to 906 E129 CLI frames reaches Bervenia Palace without a visible final battle or parameter reads. The prefix replay was necessary because runc cannot export an endpoint state. Evidence: target/validation/units/e129-prefinal-departure-extended-inl3r0yl/.",
+    "The user indicated that both internal files seemed valid and the route went right. On separate E129 CLI copies, six Right frames plus 180 neutral end on matching map images with zero parameter reads; holding or confirming a destination remains distinct. Evidence: target/validation/units/e129-prefinal-right-both-uzn93ifp/.",
+    "Holding Right for 60 frames on File2 followed by 180 neutral frames moves the map cursor toward the right edge with zero E129 parameter reads and no visible battle. Evidence: target/validation/units/e129-prefinal-right-long-7spjoc_j/.",
+    "A separate uninstrumented replay samples continuous Right every six frames: the visible cursor moves horizontally to the map edge without a scene transition. It cannot identify the intended destination or measure parameter reads. Evidence: target/validation/units/e129-prefinal-right-steps-imvk_t8x/.",
+    "After the user clarified the destination is the location to the right, a separate protected EUR File2 copy accepted the Ambervale Save Game prompt and reached internal slot selection; no slot was confirmed in this step. Evidence: target/validation/units/e129-prefinal-accept-save-e5pp971x/.",
+    "Selecting File2 on the isolated save copy opens the overwrite confirmation with No highlighted; no overwrite was confirmed in this step. Evidence: target/validation/units/e129-prefinal-save-slot-kwjql3jz/.",
+    "Confirming Yes only in the isolated copy returns to the slot list with File2 displayed time advanced by one minute. Emulated cartridge bytes were not independently exported; original master and working saves were guarded. Evidence: target/validation/units/e129-prefinal-save-confirm-vqi01771/.",
+    "Exiting the isolated save-slot screen returns to the visible Ambervale map without an immediate final scene; the private helper does not report managed reads. Evidence: target/validation/units/e129-prefinal-save-exit-bi3ydyny/.",
+    "After the isolated save path, one A press and 180 neutral frames also leave the E129 CLI on the visible Ambervale map with zero parameter-resource reads; this does not establish which location the user intended. Evidence: target/validation/units/e129-prefinal-postsave-managed-l_97lwxn/.",
+    "The user confirmed Ambervale is the intended location; the exact final-scene trigger remains unobserved in the recorded windows."
+  ],
+  "limitations": [
+    "Source analysis and a bounded initial boot only: no proven final-scene route, ordinary positive read or paired scene; no performance measurement.",
+    "The other-program scan does not prove linear flow, current-event association, task liveness or absence in other checkpoints and memory representations.",
+    "The mode-2 result is limited to saved EWRAM contexts and does not exclude later scheduling, indirect entry or other task layouts.",
+    "The saved mission values do not establish event entry or availability, later selection, or the only possible task representation.",
+    "The final-battle save is a user-reported lead, not an established route or ordinary parameter read.",
+    "The external Ambervale walkthrough and the user-reported scene are route leads; the save-to-script connection remains unverified."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md"
+  ]
+}

@@ -44,7 +44,7 @@ fn european_ui_context_unavailable_copy_load_undo_restart() {
         fs::copy(entry.path(), copy.join(entry.file_name())).unwrap();
     }
     let dataset = read_dataset(&copy).unwrap();
-    assert_eq!((dataset.manifest.extractor_revision, dataset.manifest.decoder_revision), (128, 127));
+    assert_eq!((dataset.manifest.extractor_revision, dataset.manifest.decoder_revision), (130, 129));
     assert!(dataset.ui_context_templates.is_some());
     drop(dataset);
     let mut machine = crate::make_machine(rom.clone(), None);
@@ -90,7 +90,7 @@ fn european_ui_context_unavailable_copy_load_undo_restart() {
     drop(slots);
     fs::remove_dir_all(private).unwrap();
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "revision":[128,127], "unavailable_copy_rejected":true,
+        "status":"PASS", "revision":[130,129], "unavailable_copy_rejected":true,
         "load_undo_restart_full_state_exact":true, "owner_retained":true,
         "typed_bytes_per_stage":220, "restored_copy_owner_reconstructed":true,
         "synthetic_state_files_removed":true, "Linux":"pending", "USA":"pending",
@@ -131,9 +131,10 @@ fn european_ui_context_templates_match_source_and_native_readers() {
     let current = read_dataset(&dataset).unwrap();
     let resource_count = current.manifest.resources.len();
     assert_eq!(old.resources.len(), 98);
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (130, 129, 101));
     for resource in &old.resources {
-        assert_eq!(current.manifest.resources.iter().find(|entry| entry.id == resource.id), Some(resource));
+        let updated = current.manifest.resources.iter().find(|entry| entry.id == resource.id).unwrap();
+        super::conditional_marker_runtime_tests::assert_previous_resource_metadata(updated, resource);
     }
     assert_eq!(current.manifest.resources[98].id, UI_CONTEXT_TEMPLATES_ID);
     assert_eq!(current.ui_context_templates.as_ref().unwrap(), data);
@@ -252,7 +253,7 @@ fn european_ui_context_templates_match_source_and_native_readers() {
         }
     }
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "resources":resource_count, "previous_unchanged":old.resources.len(), "source_bytes":220,
+        "status":"PASS", "resources":resource_count, "previous_unchanged":old.resources.len()-1,"previous_obj_projection_preserved":true, "source_bytes":220,
         "records":11, "selector_categories":256, "native_copy_cases":11,
         "native_coordinate_cases":11, "typed_native_bytes":served,
         "coherent_edit_rejected_in_memory":true, "full_state_clock":true,

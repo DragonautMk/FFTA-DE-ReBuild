@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "classify-adjacent-obj-structure-initializer",
+  "title": "Classify one adjacent OBJ structure initialization path",
+  "kind": "changed",
+  "platforms": [
+    "EUR source inspection"
+  ],
+  "changes": [
+    "Document the source-pinned 08140e1e/08140e32 path copying eight bytes into a RAM context before initializing local structures, without treating it as a proven OBJ-list root."
+  ],
+  "validation": [
+    "Six instruction/source windows and six call targets match the exact EUR source; the eight-byte range has no overlap with the 101-resource E130 manifest. Protected ROM and dataset passed and scratch was removed: target/validation/units/e130-adjacent-obj-caller-source-0br8d84x/."
+  ],
+  "limitations": [
+    "Only one conditional caller is characterized; complete record extent, other callers, downstream consumers, task liveness and ordinary use are unproved. No guest instructions or performance measurements ran."
+  ],
+  "files": [
+    "docs/rom_data_obj.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

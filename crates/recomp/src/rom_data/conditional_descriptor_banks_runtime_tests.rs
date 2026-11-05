@@ -12,8 +12,8 @@ fn european_conditional_descriptor_banks_managed_native_reads() {
     let rom=fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();let old=PathBuf::from(std::env::var_os("FFTA_STATE_TEST_DATASET").unwrap());
     let prior:Manifest=toml::from_str(&fs::read_to_string(old.join(MANIFEST_FILE)).unwrap()).unwrap();
     let mut source=Extraction::from_rom(&rom).unwrap();let dataset=root.join("offline dataset");extract(&dataset,&mut source).unwrap();
-    assert_eq!((source.manifest.extractor_revision,source.manifest.decoder_revision,source.manifest.resources.len()),(128, 127, 100));assert_eq!(prior.resources.len(),87);
-    for r in &prior.resources {assert_eq!(source.manifest.resources.iter().find(|e|e.id==r.id),Some(r));assert_eq!(fs::read(dataset.join(&r.path)).unwrap(),fs::read(old.join(&r.path)).unwrap());}
+    assert_eq!((source.manifest.extractor_revision,source.manifest.decoder_revision,source.manifest.resources.len()),(130, 129, 101));assert_eq!(prior.resources.len(),87);
+    for r in &prior.resources {let current=source.manifest.resources.iter().find(|e|e.id==r.id).unwrap();super::conditional_marker_runtime_tests::assert_previous_resource_files(current,r,&dataset,&old);}
     let entry=&source.manifest.resources[87];assert_eq!(entry.id,CONDITIONAL_DESCRIPTOR_BANKS_ID);assert_eq!(entry.sources.len(),3);
     for (s,(offset,length,_,_)) in entry.sources.iter().zip(SOURCE_SPANS) {assert_eq!((s.offset,s.length),(offset,length));}
     let bytes=fs::read(dataset.join(CONDITIONAL_DESCRIPTOR_BANKS_FILE)).unwrap();assert_eq!(parse_conditional_descriptor_banks(&bytes).unwrap(),source.conditional_descriptor_banks.as_ref().unwrap().decoded);
@@ -51,5 +51,5 @@ fn european_conditional_descriptor_banks_managed_native_reads() {
         let expected=if prefix==0 {if bank!=0 {4} else {0}} else if selected {if prefix==4 {1} else {2}} else {0};
         assert_eq!(used,expected,"bank {bank} row {row} prefix {prefix}");served+=used;native.bus.rom.copy_from_slice(&rom);assert_eq!(native.save_state().unwrap(),raw.save_state().unwrap(),"bank {bank} row {row} prefix {prefix}");
     }}
-    fs::write(root.join("result.json"),serde_json::to_vec_pretty(&serde_json::json!({"status":"PASS","resources":source.manifest.resources.len(),"previous_unchanged":prior.resources.len(),"source_bytes":5564,"native_prefixes":5,"cases_per_prefix":8,"typed_native_bytes":served,"pointer0_typed_bank0_row0_and_gap_raw":true,"full_state_clock":true,"tamper_transaction":true,"Linux":"pending","USA":"pending","nativeWindows":"pending","performance_measurements":false})).unwrap()).unwrap();
+    fs::write(root.join("result.json"),serde_json::to_vec_pretty(&serde_json::json!({"status":"PASS","resources":source.manifest.resources.len(),"previous_unchanged":prior.resources.len()-1,"previous_obj_projection_preserved":true,"source_bytes":5564,"native_prefixes":5,"cases_per_prefix":8,"typed_native_bytes":served,"pointer0_typed_bank0_row0_and_gap_raw":true,"full_state_clock":true,"tamper_transaction":true,"Linux":"pending","USA":"pending","nativeWindows":"pending","performance_measurements":false})).unwrap()).unwrap();
 }

@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "prepare-e130-compact-conditional-regressions",
+  "title": "Verify E130 compact and conditional regressions",
+  "kind": "changed",
+  "platforms": [
+    "EUR Windows GNU under Wine"
+  ],
+  "changes": [
+    "Update the expected extraction revision and resource count in 13 compact and conditional full-filter tests for E130 while retaining their authenticated predecessor comparisons."
+  ],
+  "validation": [
+    "All 13 selected full compact/conditional filters pass with their authenticated E95\u2013E107 predecessor manifests and matching prior typed-native byte counts; the older OBJ projection remains preserved. Protected inputs passed and successful scratch was removed. Evidence: target/validation/units/e130-affected-regression-build-4n667_0a/ and e130-compact-conditional-regressions-j5dq5xid/."
+  ],
+  "limitations": [
+    "Other affected E130 data, lifecycle and catalog regressions remain open under RVR-24. Linux, USA and native Windows are separate. No performance measurement."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/compact_obj_animations_octonary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_quaternary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_quinary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_secondary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_senary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_septenary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_tertiary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_descriptor_bank_zero_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_descriptor_banks_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_four_byte_lookup_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_packed_lookup_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_property_masks_runtime_tests.rs",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

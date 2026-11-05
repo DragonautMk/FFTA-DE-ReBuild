@@ -20689,3 +20689,514 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: organized root ffta.sav as an unchanged descriptive master under ignored debug_saves/user-supplied/, with provenance/English instructions and an exact EUR Game saves slot4 working copy. Payload matches existing IN-04/USA, so source IN-04 is reused for unique regional key IN-04/EUR. User reports successful European-ROM use and movement starting the final battle; catalog attributes both statements and links the source to DS-26. No existing slot overwritten; root cleared after exact preservation.
 - Evidence: docs/changes/2026-11-05-catalog-user-pre-final-battle-eur-save.json; docs/debug_catalog.md; docs/development/debug saves.md; target/user-pre-final-save-catalog-20261105/organization-result.json and catalog preimage; target/validation/units/user-pre-final-save-catalog-9p8m2nf_/unit-result.json and evidence/result.json. Managed unit PASS, protected inputs unchanged, scratch automatically retired; all136 old artifact hashes and prior input/case/count data retained apart from explicit additional-source metadata. Existing Linux CLI lists93 entries and selects exactly IN-04/EUR with verified integrity/availability/slot4, exit0. Private paths remain ignored.
 - Limits: cataloging/integrity scope only; no boot/gameplay, exact route, internal game File No.1/No.2, victory or ending verification. DS-26 remains partial and old USA evidence retains its scope. No build/extraction/performance or export regeneration; original game data remain private/outside commits and packages.
+
+
+### ROMDATA-01-OBJ-MENU-SELECTION3-SAVED-VALUES
+
+- Outcome: completed bounded negative. Source-pinned projection of 345 authenticated EUR snapshots found 212 in-range helper contexts and no low-byte selection 3 for the examined menu branch. Managed inputs passed; successful scratch removed.
+- Evidence: docs/changes/2026-11-05-bound-conditional-marker-menu-candidates.json; docs/rom_data_obj.md; target/validation/units/e128-obj-menu-selection3-scan-srzyew__/.
+- Limits: no guest execution or callback liveness, ordinary invocation or paired validation; other contexts and branches remain open.
+
+
+### ROMDATA-01-OBJ-ALTERNATE-STATE3-SOURCE-BOUND
+
+- Outcome: completed bounded investigation. Authenticated EUR source pins caller-context bit40 gate, 31014 state3 writer branch and enclosing zero-return path; no identified draw in that bounded path. Corrected 345-snapshot scan had zero readable five-byte dispatcher contexts, so cannot decide state3; earlier scan used an unnecessarily large context.
+- Evidence: docs/rom_data_obj.md; docs/changes/2026-11-05-bound-conditional-marker-menu-candidates.json; target/validation/units/e128-obj-alternate-branch-pins-ocuhsgdt/ and e128-obj-alternate-state3-corrected-pk4596ev/. Guarded units PASS and scratch removed.
+- Limits: no liveness, scene, draw execution or paired validation. Later callbacks and other contexts remain open.
+
+
+### ROMDATA-01-OBJ-CONDITIONAL-MARKER-SLOT-DRAW
+
+- Outcome: completed isolated original draw comparison for both authenticated lists. EUR Wine GNU test executes 0802f3c0→08001d28→08001500, checks full modeled OBJ buffer/cursor, clipping, three guards, EWRAM, out-of-stack IWRAM, callee/stack and video memory.
+- Evidence: docs/changes/2026-11-05-verify-conditional-marker-slot-consumer.json; target/validation/units/e128-obj-marker-consumer-build-ozg_6sdh/ and e128-obj-marker-consumer-wine-6n_m9dtb/. First Wine unit _ppq79yq failed before test due duplicate wine; retained, corrected run PASS. Protected inputs passed and successful scratch removed.
+- Limits: synthetic interpreter call, no published owner, translated native/managed reads, ordinary scene or pair; no performance. Broader OBJ work remains partial.
+
+
+### ROMDATA-01-OBJ-CONDITIONAL-MARKER-E129-MANAGED
+
+- Outcome: completed scoped managed publication. E129/d128 publishes both marker lists in existing OBJ catalog; EUR Wine compares all 99 unrelated resources and previous OBJ projection to E128, verifies create/reuse/repair and coherent-tamper rejection, and passes two original-interpreter raw/managed full-state/clock pairs, widths, boundaries and mirrors. Protected inputs pass; successful scratch removed.
+- Evidence: target/validation/units/e129-obj-marker-managed-build-gkplvamk/ and e129-obj-marker-managed-wine-h5vlixfw/; crates/recomp/src/rom_data/conditional_marker_runtime_tests.rs.
+- Limits: no translated-native or ordinary scene; E129 revision-dependent regressions and broader checklist remain open. No performance test.
+
+
+### ROMDATA-01-OBJ-CONDITIONAL-MARKER-E129-NATIVE
+
+- Outcome: completed scoped translated original-consumer validation. EUR Wine compiles 332 traced instruction addresses and passes two raw-interpreter/managed-native full state/clock pairs; both exact roots have positive managed reads with poisoned ROM (20 source bytes total).
+- Evidence: docs/changes/2026-11-05-publish-conditional-ram-slot-obj-markers.json; target/validation/units/e129-obj-marker-native-build-b1u0vaes/ and e129-obj-marker-native-wine-i804d9nc/. Protected inputs pass; successful scratch removed.
+- Limits: synthetic call only; ordinary scene and pair, E129 affected regressions, other sources and deferred platforms remain open. No performance test.
+
+
+### RVR-23-E129-COMPACT-CONDITIONAL-FILTERS
+
+- Outcome: completed scoped regression. Thirteen full EUR Wine filters (primary–octonary compact OBJ, conditional lookup/packed/descriptor/bank-zero/masks) pass on e129-d128 against authenticated e95..e107 predecessors. Reports distinguish unchanged resources from the preserved previous OBJ projection.
+- Evidence: target/validation/units/e129-affected-regression-build-964gjrch/ and e129-compact-conditional-regressions-os53p1p4/; protected inputs pass and scratch removed.
+- Limits: other revision-sensitive regressions, ordinary marker scene and deferred platforms remain open. No performance test.
+
+
+### ROMDATA-01-OBJ-CONDITIONAL-MARKER-E129-CLI
+
+- Outcome: completed scoped EUR Wine production CLI create/reuse/verify. E129 has 100 resources/101 files; 99 unrelated resources and previous OBJ projection match guarded E128, and reuse leaves file hashes/times unchanged.
+- Evidence: target/validation/units/e129-obj-marker-cli-build-0ie35_4i/ and e129-obj-marker-current-95626ztl/. Current generation retained as input to RVR-23; ROM and predecessor guards PASS.
+- Limits: no gameplay or ordinary scene; remaining E129 regressions and deferred platforms open. No performance test.
+
+
+### RVR-23-E129-OTHER-DATA-FILTERS
+
+- Outcome: completed scoped EUR Wine regressions for dynamic fragments, table graphics, clan alias, UI context, failed catalog replacement, UI Load/Undo/Restart lifecycle and prior-bank report. E129 checks distinguish 98/other exact predecessor resources from preserved OBJ projection as applicable; 61 identical old banks and 62 preserved projections.
+- Evidence: target/validation/units/e129-other-data-regressions-15_31kjd/ and e129-affected-regression-build-964gjrch/; protected inputs pass and successful scratch removed.
+- Limits: full catalog/default-selector and historical filters remain open; ordinary marker scene and deferred platforms remain open. No performance test.
+
+
+### RVR-23-E129-FULL-CATALOG
+
+- Outcome: completed scoped EUR Wine full compact catalog and default-selector filters against e127. Complete catalog covers 63 banks, 207 selectors and 270 native cases; selector test covers 22 branches and three native cases. Reports identify 98 unchanged other resources and the preserved OBJ projection.
+- Evidence: target/validation/units/e129-affected-regression-build-tlzdl_a7/ and e129-full-catalog-regressions-sudbvp19/; guarded inputs passed, successful scratch removed.
+- Limits: two historical catalog filters, ordinary marker scene and deferred platforms remain open. No performance test.
+
+
+### RVR-23-E129-HISTORICAL-E110-E118
+
+- Outcome: completed scoped EUR Wine historical loop and 6c1e78 catalog filters. Minimal reconstructed e110/e118 catalogs match their protected manifest hashes; E129 tests pass 48 and five native cases, respectively, with previous OBJ projection retained.
+- Evidence: target/validation/units/e129-historical-catalog-regressions-b2a5h4ij/ and e129-affected-regression-build-tlzdl_a7/. Protected inputs pass, successful scratch removed.
+- Limits: other updated historical filters, ordinary marker scene and deferred platforms remain open. No performance test.
+
+
+### RVR-23 — e129 affected regressions
+
+- Outcome: completed 38 EUR/Wine revision-sensitive filters: 13 compact/conditional, seven data/lifecycle, two full-catalog/default-selector and sixteen historical catalog filters. Authenticated predecessor resources and OBJ projections preserved; historical minimal catalogs match retained manifest hashes.
+- Evidence: docs/changes/2026-11-05-publish-conditional-ram-slot-obj-markers.json; target/validation/units/e129-compact-conditional-regressions-os53p1p4/, e129-other-data-regressions-15_31kjd/, e129-full-catalog-regressions-sudbvp19/, e129-historical-catalog-regressions-b2a5h4ij/ and e129-historical-remaining-regressions-3sj3anrl/. Guarded inputs pass and scratch removed.
+- Limits: ordinary marker scene and pair, wider source domain, Linux, USA, native Windows and performance remain separate.
+
+
+### ROMDATA-01-OBJ-CONDITIONAL-MARKER-E129-STARTUP
+
+- Outcome: completed scoped production CLI EUR Wine 12-frame startup. All 100 resource identities match E129; neither marker source observed in frames 7857–7869.
+- Evidence: target/validation/units/e129-obj-marker-startup-yy29ytz1/; guarded inputs pass and scratch removed.
+- Limits: this window does not establish ordinary marker use or an ordinary pair. Other sources and deferred platforms remain open; no performance test.
+
+
+### ROMDATA-04-PARAMETER-PROGRAM158-TAIL
+
+- Outcome: completed bounded conditional source trace. After retained cursor28, opcode21 sets a 30-unit wait and advances to 30; opcode23/4 calls other routines, advances and returns 11dh, mapped by the enclosing scheduler to return3. Neither tail opcode is a relative branch to target22.
+- Evidence: docs/changes/2026-11-05-bound-parameter-program158-tail.json; target/validation/units/e129-parameter-158-tail-contract-pgg1_zpq/ and e129-parameter-158-return-source-846u23xv/. Protected inputs pass, scratch removed.
+- Limits: no guest execution, context liveness, external reentry exclusion or ordinary pair. Parent remains open.
+
+
+### ROMDATA-04-PARAMETER-OTHER-MODE0-279
+
+- Outcome: completed bounded saved-value search. Thirty-four other authenticated mode0 programs were checked in 279 readable EUR payloads; twelve original task-callback contexts all point to program163 after target23, parameter0 and nonzero override, with no candidate under the selected criteria.
+- Evidence: docs/changes/2026-11-05-bound-parameter-program158-tail.json; target/validation/units/e129-parameter-other-mode0-contexts-fiwafu0k/. Inputs guarded and scratch removed.
+- Limits: no liveness, linear-flow, event association or other checkpoint/representation exclusion; ordinary proof remains open.
+
+
+### ROMDATA-04-PARAMETER-MODE0-DISJOINT-66
+
+- Outcome: completed bounded saved-value search of 66 valid EUR payloads disjoint from the prior 279. All 35 mode0 programs checked; 20 task-callback contexts (one program158, nineteen program163) are after their target instructions. No saved-value candidate under the selected conditions.
+- Evidence: docs/changes/2026-11-05-bound-parameter-program158-tail.json; target/validation/units/e129-parameter-disjoint-mode0-contexts-sbzc98kz/. Guarded inputs passed and scratch removed.
+- Limits: no scheduling, linear-flow, external reentry or other representations excluded. Ordinary proof remains open.
+
+
+### ROMDATA-04-PARAMETER-MODE2-CONTEXTS-345
+
+- Outcome: completed bounded saved-value search. Five authenticated mode2 script programs have no matching aligned EWRAM program/cursor/original task-callback context in 345 distinct valid EUR payloads.
+- Evidence: docs/changes/2026-11-05-bound-parameter-program158-tail.json; target/validation/units/e129-parameter-mode2-contexts-17fibtc2/. Protected inputs passed, scratch removed.
+- Limits: no exclusion of later scheduling, indirect entry or other task representations; ordinary positive and pair remain open.
+
+
+### ROMDATA-01-MARKER-NEARBY-MENU-CANDIDATES
+
+- Outcome: completed bounded source/snapshot search. Seven of 345 retained EUR payloads have a mode1 mapping containing selection3; two contain an aligned original menu-callback-shaped word and indices0/ffff. This changes the next action to a bounded neutral observation of the retained DS-20 candidate.
+- Evidence: docs/rom_data_obj.md; docs/changes/2026-11-05-bound-conditional-marker-menu-candidates.json; target/validation/units/e129-marker-nearby-menu-scan-6a2p3u2z/ and e129-marker-menu-callback-source-4f37a7vx/. Guarded inputs pass, scratch removed.
+- Limits: no task liveness, UI label, valid input transition or ordinary draw established.
+
+
+### ROMDATA-01-MARKER-DS20-NEUTRAL
+
+- Outcome: completed bounded negative observation: 60 neutral EUR Wine frames from a copied DS-20 state ended on the battle field without a visible menu or logged 395172/39517a source reads.
+- Evidence: target/validation/units/e129-marker-neutral-evidence-05tn0cak/ independently verifies protected inputs and execution output, PASS with scratch removed. Original e129-marker-ds20-neutral-5vt1t8_n/ exited zero but its runner reported FAIL and retained work due to a private state copy.
+- Limits: this does not exclude later navigation or other scenes; ordinary positive and raw/managed pair remain open. No performance measurement.
+
+
+### ROMDATA-04-PARAMETER-DISJOINT-MISSION-JOIN
+
+- Outcome: completed bounded saved-value join. None of 66 disjoint authenticated EUR payloads has a selected-mission value matching the 20 previously established mode-0 source candidates; together with the prior join, 345 distinct payloads checked.
+- Evidence: target/validation/units/e129-parameter-disjoint-mission-join-dcqvuonz/; protected inputs PASS and successful scratch removed.
+- Limits: no inference of event entry, liveness, availability, later selection or other representations; ordinary positive read and pair remain open. No guest execution or performance measurement.
+
+
+### ROMDATA-04-PARAMETER-FINAL-SCRIPT-LINK
+
+- Outcome: completed bounded source/save join. EUR event216 links key98, parameter116 and conditional header60 to program95 with one mode2 instruction; the key also selects a text bank with Mewt/world references. The user-reported pre-final IN-04/EUR save is a scene lead only.
+- Evidence: target/validation/units/e129-parameter-final-script-link-rt1l_msv/; E129 resources and ROM pins, save copies and other guarded inputs PASS; successful scratch removed.
+- Limits: no execution, proven save-to-script route, positive read or pair; no performance measurement.
+
+
+### ROMDATA-04-PREFINAL-INITIAL-BOOT
+
+- Outcome: bounded EUR Wine boot execution PASS on a protected IN-04/EUR copy, showing the language screen and, at frame 1022, the Square Enix splash. The original result incorrectly claimed file selection; classification 8gj5atae corrects that field.
+- Evidence: target/validation/units/e129-prefinal-file-select-pitocqyj/ and e129-prefinal-boot-classification-8gj5atae/. Protected inputs PASS; private boot checkpoints retained for the next continuation.
+- Limits: no game file, final scene, ordinary parameter read or pair observed. No performance measurement.
+
+
+### ROMDATA-04-PREFINAL-NEUTRAL-BOOT
+
+- Outcome: 600 neutral EUR Wine frames from the protected initial splash checkpoint reached the animated opening; output image inspected.
+- Evidence: target/validation/units/e129-prefinal-neutral-boot-hc018h_n/; guards PASS, private checkpoint retained for continuation.
+- Limits: no file selection, event reachability, parameter read or pair; no performance measurement.
+
+
+### ROMDATA-04-PREFINAL-TITLE-BOOT
+
+- Outcome: Start and 120 neutral EUR Wine frames from the retained opening checkpoint reached the visually confirmed title screen.
+- Evidence: target/validation/units/e129-prefinal-start-boot-vwgrgaqt/; guards PASS and private checkpoint retained.
+- Limits: no file selection, final event, positive parameter read or pair; no performance measurement.
+
+
+### ROMDATA-04-PREFINAL-TITLE-MENU
+
+- Outcome: Start and neutral EUR Wine frames from the retained title reached the visually confirmed title menu with Saved Game highlighted.
+- Evidence: target/validation/units/e129-prefinal-title-start-qyb35ep8/; guards PASS and private checkpoint retained.
+- Limits: no internal file selected, final event, parameter read or pair; no performance measurement.
+
+
+### ROMDATA-04-PREFINAL-SAVED-GAME-MENU
+
+- Outcome: EUR Wine ordinary A input opened the Saved Game submenu with Load highlighted and Resume Battle separate; screen inspected.
+- Evidence: target/validation/units/e129-prefinal-saved-game-62i8an2r/; guards PASS and private checkpoint retained.
+- Limits: no internal file selected, event, parameter read or pair; no performance measurement.
+
+
+### ROMDATA-04-PREFINAL-FILE-SELECTION
+
+- Outcome: EUR Wine Load screen shows File No.1 and No.2 with matching visible summaries, and No.2 highlighted. The screen does not identify the user-reported final scene.
+- Evidence: target/validation/units/e129-prefinal-load-menu-wrln03gg/; guards PASS and private checkpoint retained.
+- Limits: no internal file loaded, final event, parameter read or pair; no performance measurement.
+
+
+### ROMDATA-04-PREFINAL-LOAD-BOTH
+
+- Outcome: each internal file loaded by normal input from a separate protected copy; both produced the same visually inspected world-map image. This is not proof of equal internal state.
+- Evidence: target/validation/units/e129-prefinal-load-both-tetl2uln/; guards PASS and private checkpoints retained.
+- Limits: no movement, identified final event, parameter read or pair; no performance measurement.
+
+
+### ROMDATA-04-PREFINAL-WORLD-VALUES
+
+- Outcome: source-pinned read of both loaded map checkpoints finds pending field0 and current event140/key168/parameter0 with override353; EWRAM differs by 1584 bytes.
+- Evidence: target/validation/units/e129-prefinal-world-values-zl8jq8cu/; protected inputs PASS, successful scratch removed.
+- Limits: saved boundary values do not establish task liveness, future event selection or whole-machine equality. No guest execution, parameter read, pair or performance measurement.
+
+
+### ROMDATA-04-PREFINAL-SELF-EVENT
+
+- Outcome: authenticated program95 begins with opcode83/key98, whose original callback backward-searches to the unique event216/parameter116; the mode2 instruction follows later in source order.
+- Evidence: target/validation/units/e129-prefinal-self-event-um4woe5u/; original bytes, command-directory callback, cached instruction pins and guarded resources PASS, scratch removed.
+- Limits: no claim about intervening control flow, live scheduling, save-to-script route, ordinary read or pair. No guest execution or performance measurement.
+
+
+### ROMDATA-04-PREFINAL-AREA-LIST
+
+- Outcome: EUR Wine File2 followed the prior recorded map-menu inputs and reached the visually confirmed Area List. Earlier USA Ambervale screenshots ended before the separate location-entry action; user report and external guide provide a new reason to inspect EUR entry.
+- Evidence: target/validation/units/e129-prefinal-area-list-7l7q0jaw/; guarded inputs PASS and private continuation checkpoint retained.
+- Limits: no Ambervale selection, final event, parameter read or pair yet. No performance measurement.
+
+
+### ROMDATA-04-PREFINAL-AMBER-LIST
+
+- Outcome: EUR Wine recorded scroll from the Area List reached the visually confirmed Ambervale entry.
+- Evidence: target/validation/units/e129-prefinal-list-bottom-d7z1mluu/; guarded inputs PASS and private checkpoint retained.
+- Limits: no map travel, location entry, final event, parameter read or pair. No performance measurement.
+
+
+### ROMDATA-04-PREFINAL-AMBER-TRAVEL
+
+- Outcome: recorded EUR File2 Ambervale selection and travel reach a visible Save Game prompt. No save or location entry was attempted.
+- Evidence: target/validation/units/e129-prefinal-amber-travel-e6f35beg/; protected inputs PASS and private checkpoint retained.
+- Limits: final event, parameter read and pair remain open. No performance measurement.
+
+
+### ROMDATA-04-PREFINAL-AMBER-ARRIVAL
+
+- Outcome: recorded No response to the EUR travel save prompt returned to the world map with Ambervale visibly selected; no save was confirmed.
+- Evidence: target/validation/units/e129-prefinal-decline-save-2sd3z1gq/; protected inputs PASS and private checkpoint retained.
+- Limits: location entry, final event, ordinary parameter read and pair remain open. No performance measurement.
+
+
+### ROMDATA-04-PREFINAL-AMBER-ENTER-FILE2
+
+- Outcome: one A press and 180 neutral EUR Wine frames at selected Ambervale leave File2 visibly on the world map.
+- Evidence: target/validation/units/e129-prefinal-enter-amber-w0g_06jd/; guarded inputs PASS and private checkpoint retained.
+- Limits: old replay helper does not measure parameter reads; other inputs and File1 remain untested. No proof of global absence, pair or performance measurement.
+
+
+### ROMDATA-04-PREFINAL-AMBER-FILE1-ROUTE
+
+- Outcome: EUR Wine File1 followed the documented Ambervale route on a separate copy. Each intermediate Area List, destination, travel prompt and post-decline image matched File2 before the next input; no game-state equivalence inferred.
+- Evidence: target/validation/units/e129-prefinal-file1-route-ug1_n7do/; guarded inputs PASS, private checkpoint retained.
+- Limits: File1 entry, final event, parameter read and pair remain open; no performance measurement.
+
+
+### ROMDATA-04-PREFINAL-AMBER-FILE1-MANAGED
+
+- Outcome: E129 production CLI EUR Wine File1 A plus 180 neutral frames at Ambervale ends on the world map and reports zero parameter-record reads or records used.
+- Evidence: target/validation/units/e129-prefinal-file1-managed-cnn46jxx/; guarded inputs PASS; private input copy retained.
+- Limits: this does not exclude other routes, File2 or later execution. No raw/managed pair or performance measurement.
+
+
+### ROMDATA-04-PREFINAL-AMBER-FILE2-MANAGED
+
+- Outcome: E129 production CLI EUR Wine File2 A plus 180 neutral frames at Ambervale ends on the same visible map image and reports zero parameter-record reads or records used.
+- Evidence: target/validation/units/e129-prefinal-file2-managed-ezg_8pwv/; guarded inputs PASS; private input retained.
+- Limits: does not exclude other routes or later execution, or establish full state equality with File1. No raw/managed pair or performance measurement.
+
+
+### ROMDATA-04-PREFINAL-DEPARTURE-LIST
+
+- Outcome: EUR File2 normal recorded menu input opens Area List at Ambervale with Bervenia Palace highlighted. No departure yet. User report and external walkthrough motivate a distinct departure observation.
+- Evidence: target/validation/units/e129-prefinal-departure-list-8xpzle5k/; protected inputs PASS, private checkpoint retained.
+- Limits: saved game conditions, final event, parameter reads and pair remain unverified. No performance measurement.
+
+
+### ROMDATA-04-PREFINAL-DEPARTURE-TARGET
+
+- Outcome: selecting Bervenia Palace from Area List returns to the EUR File2 map with that cursor target while the clan remains at Ambervale. No departure was attempted.
+- Evidence: target/validation/units/e129-prefinal-departure-target-38au96zf/; guarded inputs PASS and private checkpoint retained.
+- Limits: whether this save enters the final sequence remains unknown; no parameter read, pair or performance measurement.
+
+
+### ROMDATA-04-PREFINAL-DEPARTURE-PREFIX
+
+- Outcome: production E129 EUR Wine File2 departure toward Bervenia is visibly in transit at frame186 and reports zero parameter-resource reads.
+- Evidence: target/validation/units/e129-prefinal-departure-managed-a453zcur/; protected inputs PASS and private input retained.
+- Limits: travel has not reached its outcome; later event/reads and the raw/managed pair remain open. No performance measurement.
+
+
+### ROMDATA-04-PREFINAL-DEPARTURE-EXTENDED
+
+- Outcome: production E129 EUR Wine File2 departure toward Bervenia reaches the destination after 906 frames with zero parameter reads and no visible final battle. The prefix was replayed only because runc has no endpoint-state export.
+- Evidence: target/validation/units/e129-prefinal-departure-extended-inl3r0yl/; protected inputs PASS and private input retained.
+- Limits: other input/routes, File1 departure and game conditions are not excluded; no raw/managed pair or performance measurement.
+
+
+### ROMDATA-01-OBJ-8ADA8-TASK-CONSUMER
+
+- Outcome: bounded EUR source classification: selected type0/1 branches at 0808ada8 traverse the same 28-byte task pool and use byte-identical list-selection/branch prefixes and draw targets as the existing 0813f814 family. No new ROM root inferred.
+- Evidence: docs/changes/2026-11-05-classify-alternate-obj-task-reader.json; target/validation/units/e129-obj-8ada8-contract-7npoftlr/ and e129-obj-8ada8-bothdraws-c644dhie/. ROM and other guards PASS; successful scratch removed.
+- Limits: selected source paths only; task writers, remaining types, live execution, ordinary scene and global domain remain open. No performance measurement.
+
+
+### ROMDATA-01-LAYERED-OBJ-3AE1A4-SOURCE
+
+- Outcome: bounded EUR source discovery complete. Sixteen direct immediate producer indices select descriptor records and OBJ/sequence pairs for 08142664; 566 indexed lists, 2365 objects, 34 layer sequences and 559 frames occupy 633 spans/20474 bytes, disjoint from the authenticated E129 owners.
+- Evidence: docs/changes/2026-11-05-discover-layered-obj-source-pairs.json; target/validation/units/e129-obj-142664-catalog-l_8m855o/ and e129-obj-142664-{source-1j02_md4,callers-__wo0sgb,producers-_s27my25,initializers-qccclg00}/. Guarded inputs PASS, scratch removed.
+- Limits: conditional source inventory only; no global bound, indirect coverage, model, guest execution, publication, ordinary use or performance measurement.
+
+
+### ROMDATA-02-LAYERED-OBJ-3AE1A4-SELECTION
+
+- Outcome: model selection interrupted before implementation by user route clarification; source discovery remains accepted.
+- Evidence: docs/changes/2026-11-05-discover-layered-obj-source-pairs.json; target/validation/units/e129-obj-142664-catalog-l_8m855o/. No model files were changed.
+- Limits: model, original-code proof, runtime/CLI and ordinary use remain open; resume after the clarified parameter route.
+
+
+### ROMDATA-04-PREFINAL-RIGHT-SHORT
+
+- Outcome: user-specified Right for six frames plus 180 neutral from each independently loaded EUR file ends on matching visible map images, with zero E129 parameter reads.
+- Evidence: target/validation/units/e129-prefinal-right-both-uzn93ifp/; guarded inputs PASS and private copies retained.
+- Limits: short press does not decide a held-right route or destination confirmation; event216, positive read and pair remain open. No performance measurement.
+
+
+### ROMDATA-04-PREFINAL-RIGHT-LONG
+
+- Outcome: user-specified Right held 60 frames plus 180 neutral on EUR File2 moves the map cursor toward the edge, without visible battle or E129 parameter reads.
+- Evidence: target/validation/units/e129-prefinal-right-long-7spjoc_j/; protected inputs PASS and private copy retained.
+- Limits: intermediate nodes, confirmation, other durations/files and later transitions remain open. No pair or performance measurement.
+
+
+### ROMDATA-04-PREFINAL-RIGHT-STEPS
+
+- Outcome: uninstrumented EUR File2 replay samples the user-indicated continuous Right input at six-frame intervals; the visible cursor moves horizontally to the map edge without a scene transition in 60 frames.
+- Evidence: target/validation/units/e129-prefinal-right-steps-imvk_t8x/; guarded inputs PASS and private checkpoints retained.
+- Limits: no managed read counts, intended destination, event216 or pair established. No performance measurement.
+
+
+### ROMDATA-04-PREFINAL-ACCEPT-SAVE-PROMPT
+
+- Outcome: after user clarified the destination to the right, the protected EUR File2 Ambervale copy accepted Save Game and reached the internal slot-selection screen with File2 highlighted. No slot confirmed.
+- Evidence: target/validation/units/e129-prefinal-accept-save-e5pp971x/; original save and other guarded inputs PASS, private checkpoint retained.
+- Limits: scene and parameter read not established; no pair or performance measurement.
+
+
+### ROMDATA-04-PREFINAL-SAVE-SLOT
+
+- Outcome: isolated EUR File2 save-slot selection reaches a visible overwrite confirmation with No highlighted; no overwrite confirmed.
+- Evidence: target/validation/units/e129-prefinal-save-slot-kwjql3jz/; original save and guarded inputs PASS, private checkpoint retained.
+- Limits: final scene, parameter reads and pair remain open. No performance measurement.
+
+
+### ROMDATA-04-PREFINAL-SAVE-CONFIRM
+
+- Outcome: Yes confirmed on an isolated EUR File2 copy returns to the save-slot list with displayed time advanced by one minute. Emulated cartridge bytes were not independently exported.
+- Evidence: target/validation/units/e129-prefinal-save-confirm-vqi01771/; original master and working saves and other inputs PASS, private checkpoint retained.
+- Limits: final scene, parameter reads and pair remain open. No performance measurement.
+
+
+### ROMDATA-04-PREFINAL-SAVE-EXIT
+
+- Outcome: B on the isolated post-save slot list returns to the visible Ambervale map without an immediate final scene.
+- Evidence: target/validation/units/e129-prefinal-save-exit-bi3ydyny/; original save files and guarded inputs PASS; private checkpoint retained.
+- Limits: no managed read measurement, final event or pair in this helper run. No performance measurement.
+
+
+### ROMDATA-04-PREFINAL-POSTSAVE-MANAGED
+
+- Outcome: production E129 EUR Wine File2 A plus 180 neutral frames after the isolated save path remains on the Ambervale map and reports zero parameter reads.
+- Evidence: target/validation/units/e129-prefinal-postsave-managed-l_97lwxn/; original master and working saves and other guards PASS, private input retained.
+- Limits: whether Ambervale is the user-intended location, other paths, event216 and paired comparison remain open. No performance measurement.
+
+
+### ROMDATA-02-LAYERED-OBJ-3AE1A4-MODEL
+
+- Outcome: bounded EUR source-authenticated strict model and original initializer proof complete. All 633 spans/20474 bytes reconstruct; JSON, malformed/coherent-edit/source guards and 16 original initializer comparisons with EWRAM guards pass under Wine. Descriptor opaque bytes remain exact and guest task state is unchanged.
+- Evidence: docs/changes/2026-11-05-model-layered-obj-source-pairs.json; target/validation/units/e130-layered-obj-guard-build-kgdzhcvt/ and e130-layered-obj-model-wine-guards-3b5b_3e5/. Inputs guarded, successful scratch removed.
+- Limits: first build and two test failures are retained with test-only fixes; primary model/effort unconfirmed. Full draw, extraction/runtime/CLI, ordinary use and other platforms remain open; no performance measurement.
+
+
+### ROMDATA-03-LAYERED-OBJ-STAGED-OWNER
+
+- Outcome: bounded EUR Wine test-only owner proof complete: all 633 poisoned source spans/20474 bytes, 4-byte boundary/prior composition, 566 host-list lookups and rejection of altered source binding pass. No dataset attachment or runtime revision change.
+- Evidence: docs/changes/2026-11-05-stage-layered-obj-runtime-owner.json; target/validation/units/e130-layered-obj-staged-build-_4ml_mrq/ and e130-layered-obj-staged-wine-o8ryattt/. Guarded inputs PASS and scratch removed.
+- Limits: extraction, attached/native/lifecycle, CLI and ordinary use remain open; Linux/USA/native Windows deferred. No performance measurement.
+
+
+### ROMDATA-03-LAYERED-OBJ-MANAGED-PUBLICATION
+
+- Outcome: E130 EUR Wine managed publication/initializer child complete: 101 resources, 102 files; all 100 E129 resources unchanged; create/reuse/repair and coherent-tamper transaction pass; 633 poisoned spans/20474 bytes and 16 full-state original initializer pairs pass.
+- Evidence: docs/changes/2026-11-05-integrate-layered-obj-resource-unverified.json; target/validation/units/e130-layered-obj-managed-build-final-n53v96ij/ and e130-layered-obj-managed-wine-sgpd5u9k/. Inputs guarded and scratch removed.
+- Limits: production CLI, translated-native, remaining lifecycle, regressions and ordinary scene remain open; Linux/USA/native Windows deferred. Earlier sandbox and build failures retained. No performance measurement.
+
+
+### ROMDATA-03-LAYERED-OBJ-PRODUCTION-CLI
+
+- Outcome: EUR Wine production CLI creates, reuses and verifies E130 (101 resources/102 files); all 100 E129 resources match and reuse leaves hashes/timestamps unchanged.
+- Evidence: target/validation/units/e130-layered-obj-cli-build-final-l8obzzjw/ and e130-layered-obj-cli-current-rbr9ukkp/; guarded inputs PASS; generation retained for pending RVR-24 filters.
+- Limits: translated-native, remaining lifecycle, affected regressions and ordinary use remain open; Linux/USA/native Windows deferred. No performance measurement.
+
+
+### ROMDATA-03-LAYERED-OBJ-TRANSLATED-INITIALIZERS
+
+- Outcome: EUR Wine translated-original initializer proof complete for 16 cases; 104 traced instruction addresses, 386 managed source bytes and full-state interpreter comparisons pass with poisoned spans.
+- Evidence: docs/changes/2026-11-05-verify-layered-obj-translated-initializers.json; target/validation/units/e130-layered-obj-native-build-k_5aznm3/ and e130-layered-obj-native-wine-fbu857s4/. Inputs guarded, scratch removed.
+- Limits: full draw, other lifecycle paths, E130 regressions and ordinary use remain open; Linux/USA/native Windows deferred. No performance measurement.
+
+
+### RVR-24-COMPACT-CONDITIONAL-13
+
+- Outcome: all 13 E130 EUR Wine compact and conditional full regression filters pass with authenticated E95–E107 predecessor manifests; typed-native byte counts and old OBJ projections match.
+- Evidence: docs/changes/2026-11-05-prepare-e130-compact-conditional-regressions.json; target/validation/units/e130-affected-regression-build-4n667_0a/ and e130-compact-conditional-regressions-j5dq5xid/. Inputs guarded, scratch removed.
+- Limits: other E130 data/lifecycle/catalog filters, full draw and ordinary use remain open; Linux/USA/native Windows deferred. No performance measurement.
+
+
+### RVR-24-DATA-LIFECYCLE-7
+
+- Outcome: seven EUR Wine E130 full filters pass: dynamic fragments, table graphics, clan aliases, UI context, catalog and UI lifecycle, and previous-bank report.
+- Evidence: docs/changes/2026-11-05-prepare-e130-data-lifecycle-regressions.json; target/validation/units/e130-affected-regression-build-07tgrhjg/ and e130-other-data-regressions-nxuuzuy5/. Inputs guarded, scratch removed.
+- Limits: remaining full/historical catalog filters, full draw and ordinary use remain open; Linux/USA/native Windows deferred. No performance measurement.
+
+
+### RVR-24-FULL-CATALOG-2
+
+- Outcome: both E130 EUR Wine default selector and complete compact catalog full filters pass against authenticated e127, with full-state native checks and preserved prior OBJ projection.
+- Evidence: docs/changes/2026-11-05-verify-e130-full-compact-catalog.json; target/validation/units/e130-full-catalog-regressions-7dxiq2ou/. Inputs guarded, scratch removed.
+- Limits: 16 historical catalog filters, full draw and ordinary use remain open; Linux/USA/native Windows deferred. No performance measurement.
+
+
+### RVR-24-HISTORICAL-CATALOG-2
+
+- Outcome: both E130 EUR Wine historical compact catalog full filters pass with authenticated e110/e118 projections, 48 and five native cases, and the previous OBJ projection preserved.
+- Evidence: docs/changes/2026-11-05-verify-e130-historical-catalog-pairs.json; target/validation/units/e130-historical-catalog-regressions-j0tn8ul1/. Inputs guarded, scratch removed.
+- Limits: 14 historical catalog filters, full draw and ordinary use remain open; Linux/USA/native Windows deferred. No performance measurement.
+
+
+### RVR-24-E130-AFFECTED-REGRESSIONS
+
+- Outcome: all 38 E130 EUR Wine affected full filters pass: 13 compact/conditional, seven data/lifecycle, two complete catalog/default selector and 16 historical catalog comparisons. Historical projections authenticate against retained manifests and previous OBJ projections remain preserved.
+- Evidence: docs/changes/2026-11-05-verify-e130-historical-regression-matrix.json; target/validation/units/e130-compact-conditional-regressions-j5dq5xid/, e130-other-data-regressions-nxuuzuy5/, e130-full-catalog-regressions-7dxiq2ou/, e130-historical-catalog-regressions-j0tn8ul1/ and e130-historical-remaining-regressions-akj7bhxa/. Inputs guarded, scratch removed.
+- Limits: full layered draw and ordinary use remain open; Linux/USA/native Windows deferred. No performance measurement.
+
+
+### ROMDATA-03-LAYERED-OBJ-DRAW-INTERPRETER
+
+- Outcome: 48 EUR Wine original 08142664 interpreter raw/managed initial-frame pairs pass across 16 source pairs and three draw variants; 5228 managed bytes read and 16 cases wrote the observed OBJ buffer.
+- Evidence: docs/changes/2026-11-05-verify-layered-obj-original-draw-interpreter.json; target/validation/units/e130-layered-draw-build-mykzdamw/ and e130-layered-draw-wine-ys8ni2e3/. Inputs guarded, scratch removed.
+- Limits: translated draw, complete animation and ordinary use remain open; Linux/USA/native Windows deferred. No performance measurement.
+
+
+### ROMDATA-03-LAYERED-OBJ-DRAW-TRANSLATED
+
+- Outcome: 48 EUR Wine translated-original 08142664 draw initial-frame raw/managed full-state pairs pass across 16 source pairs and three variants; 658 original instruction addresses, 5228 managed source bytes and 16 observed OBJ buffer writes.
+- Evidence: docs/changes/2026-11-05-verify-layered-obj-original-draw-translated.json; target/validation/units/e130-layered-draw-native-build-fyqdwpi1/ and e130-layered-draw-native-wine-_2fxv8ek/. Inputs guarded, scratch removed.
+- Limits: complete animation, all drawing conditions and ordinary use remain open; Linux/USA/native Windows deferred. No performance measurement.
+
+
+### ROMDATA-03-LAYERED-OBJ-FRAMES-INTERPRETER
+
+- Outcome: all 559 modeled frames across 34 sequences pass EUR Wine original draw variant 0 raw/managed full-state comparisons, injected one layer at a time; 24992 managed bytes read and 556 cases wrote the observed OBJ buffer.
+- Evidence: docs/changes/2026-11-05-prepare-layered-obj-each-frame-draw.json; target/validation/units/e130-layered-frames-build-u0ng_k53/ and e130-layered-frames-wine-mxh9xa9b/. Inputs guarded, scratch removed.
+- Limits: natural timing, simultaneous layers, every-frame variants 1/2, translated each-frame execution and ordinary gameplay remain open; Linux/USA/native Windows deferred. No performance measurement.
+
+
+### ROMDATA-03-LAYERED-OBJ-NATURAL-LOOP-INTERPRETER
+
+- Outcome: EUR Wine original draw variant 0, loop mode 0 multi-layer execution passes 3457 raw/managed full-state comparisons across 16 banks; all 559 frames in 34 layers visited, with 450420 managed bytes read. Initial frame/tick values were set to zero.
+- Evidence: docs/changes/2026-11-05-prepare-layered-obj-natural-multilayer.json; target/validation/units/e130-layered-timing-build-it0g5dm0/ and e130-layered-timing-wine-pjteb7le/. Inputs guarded, scratch removed.
+- Limits: other modes/variants, translated cycles, other consumers and ordinary gameplay remain open; Linux/USA/native Windows deferred. No performance measurement.
+
+
+### ROMDATA-03-LAYERED-OBJ-NATURAL-LOOP-TRANSLATED
+
+- Outcome: EUR Wine translated-original loop mode 0/draw variant 0 passes 3457 full-state comparisons, visiting all 559 frames across 34 layers/16 banks; 465 instruction addresses traced and 450420 managed bytes read.
+- Evidence: docs/changes/2026-11-05-prepare-layered-obj-translated-natural-loop.json; target/validation/units/e130-layered-timing-native-build-mneujrtq/ and e130-layered-timing-native-wine-xrs5e3ig/. Inputs guarded, scratch removed.
+- Limits: other modes/variants, consumers and ordinary gameplay remain open; Linux/USA/native Windows deferred. No performance measurement.
+
+
+### ROMDATA-01-OBJ-ADJACENT-CALLER
+
+- Outcome: bounded EUR source classification complete for the conditional 08140e1e/08140e32 path: a four-halfword copy from 3ae164 into a RAM context precedes local structure initialization; the source range is disjoint from E130 owners. This does not establish a direct OBJ-list root.
+- Evidence: docs/changes/2026-11-05-classify-adjacent-obj-structure-initializer.json; target/validation/units/e130-adjacent-obj-caller-source-0br8d84x/. Inputs guarded, scratch removed.
+- Limits: complete record extent, other callers, later consumers, liveness and ordinary use remain open. No guest execution or performance measurement.
+
+
+### RVR-24-E130-BUDGET-BOUNDARY
+
+- Outcome: E130 existing per-family and aggregate dataset-budget boundary filter passes under Wine using isolated temporary storage.
+- Evidence: docs/changes/2026-11-05-verify-e130-dataset-budget-boundary.json; target/validation/units/e130-dataset-budget-boundary-1u4t4few/. Inputs guarded, scratch removed.
+- Limits: this filter did not directly exercise the new layered file limit. No performance measurement.
+
+
+### RVR-24-E130-LAYERED-SIZE-GUARD
+
+- Outcome: production E130 Windows CLI under Wine rejects an isolated 4194305-byte layered resource with its 4194304-byte guard message.
+- Evidence: docs/changes/2026-11-05-verify-e130-dataset-budget-boundary.json; target/validation/units/e130-layered-size-guard-qo1s_181/. ROM, source dataset and build inputs guarded, scratch removed.
+- Limits: an oversized copied file is tested, not all filesystem race scenarios. No performance measurement.
+
+
+### ROMDATA-01-OBJ-ADJACENT-CALLERS
+
+- Outcome: EUR aligned direct Thumb census identifies six calls to 08143454 and six distinct eight-byte source arguments, all disjoint from E130 owners; caller windows, literal pointers and targets authenticated.
+- Evidence: docs/changes/2026-11-05-classify-six-adjacent-initializer-callers.json; target/validation/units/e130-adjacent-six-callers-14_adkr1/. Inputs guarded, scratch removed.
+- Limits: indirect callers, complete record extent and semantics, downstream consumers, liveness and ordinary gameplay remain open. No guest execution or performance measurement.
+
+
+### ROMDATA-01-OBJ-ADJACENT-RECORD-READERS
+
+- Outcome: EUR source-pinned conditional 081436b4 reads copied halfwords 0/2 and signed halfwords 4/6, invokes the generator and arithmetic helper twice, and writes two local halfwords; seven call targets authenticated.
+- Evidence: docs/changes/2026-11-05-trace-adjacent-copied-context-readers.json; target/validation/units/e130-adjacent-record-readers-6qh7d5_9/. Input guarded, scratch removed.
+- Limits: helper not independently executed, complete semantics, indirect callers, liveness, other consumers and ordinary gameplay remain open. No guest execution or performance measurement.
+
+
+### ROMDATA-01-OBJ-ADJACENT-HELPER
+
+- Outcome: bounded EUR Wine original 081436b4 coordinate prefix passes 24 cases across six source records and four generator seeds; both coordinate stores and two generator advances match the independent calculation.
+- Evidence: docs/changes/2026-11-05-prepare-adjacent-obj-coordinate-prefix.json; target/validation/units/e130-adjacent-coordinate-build-l5lqlad6/ and e130-adjacent-coordinate-wine-ufvf4ubn/. Inputs guarded, scratch removed.
+- Limits: only positive source divisors and the selected prefix; full constructor, translated path, task liveness, other consumers and ordinary gameplay remain open. No performance measurement.

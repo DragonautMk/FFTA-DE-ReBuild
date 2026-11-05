@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "model-layered-obj-source-pairs",
+  "title": "Model conditional layered OBJ source pairs",
+  "kind": "added",
+  "platforms": [
+    "EUR Windows GNU under Wine"
+  ],
+  "changes": [
+    "Add a strict source-authenticated model for sixteen conditional layered OBJ/sequence pairs, retaining opaque descriptor bytes and original bank structures."
+  ],
+  "validation": [
+    "The corrected complete Wine filter verifies all 633 source spans/20,474 bytes, JSON roundtrip, six malformed cases, coherent-edit/source rejection and all 16 original 08142590 initializer cases with EWRAM guards. Evidence: target/validation/units/e130-layered-obj-guard-build-kgdzhcvt/ and e130-layered-obj-model-wine-guards-3b5b_3e5/. Protected inputs passed and successful scratch was removed.",
+    "The retained first build badn5dd7 lacked a Bus trait import; Wine attempts n8dw99_c and p47ajr46 exposed test-only r12 preservation and empty-list assumptions. Corrected test passes in the final full filter."
+  ],
+  "limitations": [
+    "The model is not attached to extraction or runtime; native reads, lifecycle, CLI, the complete draw routine and ordinary use remain open. Linux, USA and native Windows are not established.",
+    "The primary model and reasoning effort could not be independently confirmed during the source-supported test corrections; no consultation was needed. No performance measurement."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/layered_obj_animations.rs",
+    "crates/gba-core/src/rom_data/layered_obj_animations/tests.rs",
+    "docs/rom_data_obj.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

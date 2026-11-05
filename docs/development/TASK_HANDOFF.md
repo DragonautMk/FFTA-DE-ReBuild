@@ -34,13 +34,13 @@ termination of another owner's process or changing another thread's goal state.
 
 ### ROM-DATA-FULL-EUR
 
-- State: waiting
+- State: active
 - Outcome: partial
-- Verified: E128 100 resources/101 files, 63 banks; 6c1e78 selectors 3/4/5/6, EUR Wine create/reuse, selected native reads, full catalog and 12-frame CLI PASS (zero catalog reads). Current: target/validation/units/e128-default-selectors-current-8vj19j2r/work/resources/. E127 retained as comparison; prior scoped proofs preserved.
+- Verified: E130 101 resources/102 files, 63 compact banks; managed and translated layered initializer and CLI create/reuse/verify PASS under EUR Wine. Current: target/validation/units/e130-layered-obj-cli-current-rbr9ukkp/work/resources/. E129 retained for comparison with its accepted 38 regressions, marker and startup proofs.
 - Missing: unmigrated resources/consumers, missing ordinary-use evidence, ABI/global extent/indirect calls and mod phases ROMDATA-06/07; Linux/USA/native Windows/new32:9 remain distinct. EUR, reduced Wine scope, no performance/space measurements; originals and personal saves unchanged.
-- Selection: latest request data validation recovery; `ROMDATA-01-OBJ-REMAINING-DRAW-ROOTS` partial. 02f370 writes conditional ROM lists 395172/39517a, consumed via 02f414→01d28→01500; E128 source spans do not overlap. Standalone model, six original writer calls and two Wine tests PASS; no published owner or ordinary scene. First build 6xd93dig was stale (PASS invalid for identity); corrected writer-oracle unit 2enqulxu passes. Missing: integration, original draw/native and ordinary pair. Next: inspect integration and source-backed scene before selecting a new extraction revision; do not replay closed proofs. `docs/rom_data_obj.md`. Dynamic-fragment positive read/pair remains open.
+- Selection after continuation: data validation recovery; `ROMDATA-04-PARAMETER-RECORDS27-ORDINARY` partial. Post-save departure reached Royal Valley battle; Mission pages 1–5 were visited. Managed CLI observations 8uyoaj0w/j5xi9tdq report zero parameter reads, with matching interpreter endpoint images. User notes three final-battle phases and authorizes a victory cheat if needed; positive ordinary read and full pair remain missing. Next: inspect source-backed mission/formatter context and assess whether a later phase is relevant before choosing an isolated cheat. `docs/rom_data_gameplay.md`.
 - Resume: [validation recovery checklist](ROM_DATA_VALIDATION_RECOVERY_TODO.md) for skipped checks; [ROM_DATA_TODO](ROM_DATA_TODO.md), only the selected criterion's section (ROMDATA-01/02/03/04/05/06/07); [inventory](ROM_DATA_INVENTORY.md). Do not read the whole TODO. Children retain their IDs and limits:
-  - `ROMDATA-04-PARAMETER-RECORDS27-ORDINARY`: source/model/runtime/CLI accepted; 59 records observed, eleven negatives closed; full domain/positive normal pair open. New 279-payload cursor/mission scans yield no selected earlier candidate; indirect paths and saved-value limits remain. `docs/rom_data_gameplay.md` ordinary sparse parameter section.
+  - `ROMDATA-04-PARAMETER-RECORDS27-ORDINARY`: source/model/runtime/CLI accepted, ordinary positive and pair open. User confirms Ambervale; recorded movement and post-save A windows are negative (inl3r0yl/l_97lwxn), not global absence. `docs/rom_data_gameplay.md`.
   - Localized table graphics: scoped ordinary trigger and pair accepted; aggregate counters do not identify the three groups, and all-bank/all-group/consumer coverage remains open. `docs/rom_data_ui_graphics.md`, ordinary table extension section.
   - `ROMDATA-05-DYNAMIC-RAW-ORDINARY-REACHABILITY` and `ROMDATA-01-LOCALIZED-RAW-DYNAMIC-DOMAIN`: conditional fragments/paths accepted; global domain and ordinary invocation unproven. Unit320 negative closed; later state2/state4/selector-witnesses diagnosis closed without a scene. Archive 59..75 and 789..866; no blind navigation.
   - `ROMDATA-01-OBJ-REMAINING-DRAW-ROOTS`, `ROMDATA-01-OBJ-REMAINING-CONSTRUCTOR-SOURCES`, `ROMDATA-01-OBJ-GRAPHICS-PAYLOADS`: authenticated increments accepted; global inventory/remaining consumers open. Do not repeat the broad experiment with 61 truncations. Archive 2853..2874, then only the selected family's record.
@@ -201,10 +201,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 - Godot: planned assessment complete, implementation deferred, not a current dependency. AndroidPort is separate; originals/ROM/BIOS/private catalogs/saves/recordings stay out of commits/packages.
 
 ## Final handover
-
-- Task: USER-PRE-FINAL-SAVE-CATALOG completed.
-- Last verified result: original preserved under debug_saves/user-supplied/IN-04-EUR-pre-final-battle.sav; exact EUR working copy and IN-04/EUR catalog entry at Game saves slot4. Managed integrity/native catalog checks PASS; 136 prior artifacts unchanged.
-- Remaining work: none for cataloging; DS-26 remains partial and the final-battle trigger is user-reported, with EUR compatibility confirmed by the user.
-- Errors or blockers: none; no game execution, source-data edits or prior-slot overwrites. Root ffta.sav removed after verified preservation.
-- Next action: use IN-04/EUR or EUR Game saves slot4 on a copy; no unrelated runtime task selected.
-- References: docs/changes/2026-11-05-catalog-user-pre-final-battle-eur-save.json; docs/development/debug saves.md; target/validation/units/user-pre-final-save-catalog-9p8m2nf_/; target/user-pre-final-save-catalog-20261105/.
+- Task: data validation recovery; parameter ordinary-use route partial.
+- Last verified result: 24 EUR Wine original constructor prefix cases pass for six source records and four generator states.
+- Remaining work: full constructor, translated path, indirect callers, other consumers and ordinary use; deferred platforms remain separate.
+- Errors or blockers: earlier sandbox Wine lock and test-build failures retained; own prefix lease released after host-visible checks.
+- Next action: continue the visible Cid dialogue from aclqlvyt and observe parameter reads.
+- References: docs/rom_data_obj.md; docs/changes/2026-11-05-integrate-layered-obj-resource-unverified.json; target/validation/units/e130-layered-obj-native-wine-fbu857s4/; docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md.

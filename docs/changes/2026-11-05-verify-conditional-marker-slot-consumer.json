@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "verify-conditional-marker-slot-consumer",
+  "title": "Verify conditional marker slot consumer",
+  "kind": "added",
+  "platforms": [
+    "EUR original source; Windows executable under Wine"
+  ],
+  "changes": [
+    "Add an isolated original slot-consumer test for both authenticated conditional OBJ marker lists, including clipping and disabled-context, zero-count and null-pointer guards."
+  ],
+  "validation": [
+    "Windows GNU release test build and exact filtered Wine execution pass: six cases compare complete predicted OBJ buffer and cursor, full EWRAM and out-of-stack IWRAM, callee registers, stack and video memory. ROM, source and test executable guards passed and successful scratch was removed. Evidence: target/validation/units/e128-obj-marker-consumer-build-ozg_6sdh/ and e128-obj-marker-consumer-wine-6n_m9dtb/.",
+    "The first Wine launch supplied wine twice and failed before executing the test; diagnostics are retained in e128-obj-marker-consumer-wine-_ppq79yq/."
+  ],
+  "limitations": [
+    "Synthetic isolated interpreter call only: no publication, translated native or managed reads, ordinary scene or paired comparison. Other consumers, Linux, USA and native Windows remain open; no performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data/obj_lists/conditional_markers.rs",
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

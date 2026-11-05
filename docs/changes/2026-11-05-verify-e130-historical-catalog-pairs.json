@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "verify-e130-historical-catalog-pairs",
+  "title": "Verify two historical E130 catalog comparisons",
+  "kind": "changed",
+  "platforms": [
+    "EUR Windows GNU under Wine"
+  ],
+  "changes": [
+    "Verify two E130 historical compact-catalog filters against authenticated E110 and E118 projections."
+  ],
+  "validation": [
+    "Both selected full filters pass, including 48 and five native reader cases and preservation of previous OBJ projections. Protected inputs passed and scratch was removed: target/validation/units/e130-historical-catalog-regressions-j0tn8ul1/."
+  ],
+  "limitations": [
+    "Fourteen other historical E130 catalog filters remain open under RVR-24. Linux, USA and native Windows are separate. No performance measurement."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/compact_obj_catalog_tests.rs",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

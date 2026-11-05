@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "verify-e130-dataset-budget-boundary",
+  "title": "Verify E130 dataset budget boundaries",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU under Wine"
+  ],
+  "changes": [
+    "Verify the existing aggregate and per-family dataset budget boundary test after adding the E130 resource argument."
+  ],
+  "validation": [
+    "The focused existing test passes under Wine with isolated temporary storage and protected build inputs; successful scratch was removed: target/validation/units/e130-dataset-budget-boundary-1u4t4few/.",
+    "A separate production CLI verification rejects an isolated layered file at 4,194,305 bytes with the 4,194,304-byte guard message. The ROM, dataset and build inputs stayed protected; successful scratch was removed: target/validation/units/e130-layered-size-guard-qo1s_181/."
+  ],
+  "limitations": [
+    "The CLI test covers an oversized file in a copied E130 dataset; it is not an exhaustive filesystem-race test. No performance measurement."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data.rs",
+    "docs/rom_data_obj.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

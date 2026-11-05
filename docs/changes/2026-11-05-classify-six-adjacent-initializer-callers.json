@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "classify-six-adjacent-initializer-callers",
+  "title": "Classify six adjacent initializer source arguments",
+  "kind": "changed",
+  "platforms": [
+    "EUR source inspection"
+  ],
+  "changes": [
+    "Identify six direct Thumb calls to the adjacent initializer and their six distinct eight-byte source arguments without claiming a complete data table or OBJ-list root."
+  ],
+  "validation": [
+    "The aligned direct-call census, exact EUR identity, six caller windows, literal arguments, target and six disjoint source ranges pass against the 101-resource E130 manifest. Protected ROM and dataset passed and scratch was removed: target/validation/units/e130-adjacent-six-callers-14_adkr1/."
+  ],
+  "limitations": [
+    "Indirect calls, record semantics, downstream consumers, additional records, task liveness and ordinary gameplay remain unproved. No guest execution or performance measurement ran."
+  ],
+  "files": [
+    "docs/rom_data_obj.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

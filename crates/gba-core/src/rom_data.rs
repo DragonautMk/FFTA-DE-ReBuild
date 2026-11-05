@@ -8,6 +8,7 @@ mod runtime;
 pub mod read_audit;
 pub use runtime::{AlternatePaletteStats, BackgroundStats, GraphicsStats, PacketRead, PacketStats, PaletteRead, PaletteStats, ResourceStats, RuntimeResources, TransferStats, TextStats, TextCatalogStats, FontKeyboardStats, ObjListStats, ObjAnimationStats};
 pub use runtime::{CompactObjStats, SecondaryCompactObjStats, TertiaryCompactObjStats};
+pub use runtime::LayeredObjStats;
 pub mod bg_descriptors;
 pub mod bg_packets;
 pub mod bg_packet_data;
@@ -32,6 +33,7 @@ pub mod compact_obj_animations_octonary;
 pub mod ui_context_templates;
 pub mod compact_obj_catalog;
 pub mod word_task_obj_animations;
+pub mod layered_obj_animations;
 pub mod obj_graphics;
 pub mod ui_palettes;
 pub mod ui_graphics;
@@ -110,8 +112,8 @@ mod custom_lz;
 pub mod lz77;
 
 pub const SCHEMA: u32 = 1;
-pub const EXTRACTOR_REV: u32 = 128;
-pub const DECODER_REV: u32 = 127;
+pub const EXTRACTOR_REV: u32 = 130;
+pub const DECODER_REV: u32 = 129;
 pub const METADATA16_ID: &str = "gameplay.linked-metadata16";
 pub const METADATA16_FILE: &str = "linked-metadata16.json";
 pub const METADATA16_FORMAT: &str = "linked-metadata16-v1-json";
@@ -368,6 +370,10 @@ pub const COMPACT_OBJ_CATALOG_ID: &str = "graphics.conditional-compact-obj-catal
 pub const COMPACT_OBJ_CATALOG_FILE: &str = "compact-obj-catalog.json";
 pub const COMPACT_OBJ_CATALOG_FORMAT: &str = "compact-obj-catalog-v11-json";
 pub const MAX_COMPACT_OBJ_CATALOG_FILE_BYTES: u64 = 2 * 1024 * 1024;
+pub const LAYERED_OBJ_ANIMATIONS_ID: &str = "graphics.layered-obj-animations";
+pub const LAYERED_OBJ_ANIMATIONS_FILE: &str = "layered-obj-animations.json";
+pub const LAYERED_OBJ_ANIMATIONS_FORMAT: &str = "layered-obj-animations-v1-json";
+pub const MAX_LAYERED_OBJ_ANIMATIONS_FILE_BYTES: u64 = 4 * 1024 * 1024;
 pub const INDEXED_GRAPHICS_ID: &str = "graphics.indexed-archives";
 pub const INDEXED_GRAPHICS_FILE: &str = "indexed-graphics.json";
 pub const INDEXED_GRAPHICS_FORMAT: &str = "indexed-graphics-v1-json";
@@ -708,6 +714,7 @@ pub struct Extraction {
     pub octonary_compact_obj_animations: Option<compact_obj_animations_octonary::Catalog>,
     pub ui_context_templates: Option<ui_context_templates::Catalog>,
     pub compact_obj_catalog: Option<compact_obj_catalog::Catalog>,
+    pub layered_obj_animations: Option<layered_obj_animations::Catalog>,
     pub map_raster_palettes: Option<map_raster_palettes::Catalog>,
     pub auxiliary_scripts: Option<auxiliary_scripts::Catalog>,
     pub text_catalogs: Option<text_catalogs::Catalog>,
@@ -814,6 +821,7 @@ pub struct BaseFiles<'a> {
     pub octonary_compact_obj_animations: Option<(&'a compact_obj_animations_octonary::CompactAnimationsOctonary, &'a [u8])>,
     pub ui_context_templates: Option<(&'a ui_context_templates::UiContextTemplates, &'a [u8])>,
     pub compact_obj_catalog: Option<(&'a compact_obj_catalog::CompactObjCatalog, &'a [u8])>,
+    pub layered_obj_animations: Option<(&'a layered_obj_animations::LayeredObjAnimations, &'a [u8])>,
     pub map_raster_palettes: Option<(&'a map_raster_palettes::MapRasterPalettes, &'a [u8])>,
     pub auxiliary_commands: Option<(&'a auxiliary_scripts::AuxiliaryCommands, &'a [u8])>,
     pub auxiliary_archive: Option<(&'a auxiliary_scripts::AuxiliaryArchive, &'a [u8])>,
@@ -1480,6 +1488,10 @@ impl Extraction {
             result.manifest.coverage.push(COMPACT_OBJ_CATALOG_ID.into());
             result.manifest.resources.push(Resource {id:COMPACT_OBJ_CATALOG_ID.into(),path:COMPACT_OBJ_CATALOG_FILE.into(),format:COMPACT_OBJ_CATALOG_FORMAT.into(),sha256:String::new(),dependencies:vec![],sources:metadata.sources.clone()});
             result.compact_obj_catalog = Some(metadata);
+            let metadata = layered_obj_animations::Catalog::from_rom(rom)?;
+            result.manifest.coverage.push(LAYERED_OBJ_ANIMATIONS_ID.into());
+            result.manifest.resources.push(Resource { id: LAYERED_OBJ_ANIMATIONS_ID.into(), path: LAYERED_OBJ_ANIMATIONS_FILE.into(), format: LAYERED_OBJ_ANIMATIONS_FORMAT.into(), sha256: String::new(), dependencies: vec![], sources: metadata.sources.clone() });
+            result.layered_obj_animations = Some(metadata);
         } else {
             result.manifest.extractor_revision = 8;
             result.manifest.decoder_revision = 7;
@@ -1614,6 +1626,7 @@ impl Extraction {
             octonary_compact_obj_animations: None,
             ui_context_templates: None,
             compact_obj_catalog: None,
+            layered_obj_animations: None,
             map_raster_palettes: None,
             auxiliary_scripts: None,
             font_bank: None,
@@ -1749,6 +1762,7 @@ impl Extraction {
             || self.septenary_compact_obj_animations.is_some() != self.octonary_compact_obj_animations.is_some()
             || self.octonary_compact_obj_animations.is_some() != self.ui_context_templates.is_some()
             || self.ui_context_templates.is_some() != self.compact_obj_catalog.is_some()
+            || self.compact_obj_catalog.is_some() != self.layered_obj_animations.is_some()
             || self.constructor_obj_animation.is_some() && self.obj_lists.is_none()
             || self.map_raster_palettes.is_some() && self.auxiliary_scripts.is_none()
             || self.auxiliary_scripts.is_some() && self.script_coordinates.is_none()
@@ -2506,6 +2520,15 @@ impl Extraction {
             (Some(_),Some((_,bytes)))=>{if bytes.len() as u64>MAX_COMPACT_OBJ_CATALOG_FILE_BYTES {return Err("Compact OBJ catalog file exceeds input guard".into());}total=total.saturating_add(bytes.len());expected.resources[99].sha256=ffta_rom::digest(bytes);}
             (None,None)=>{},_=>return Err("Missing or unexpected compact_obj_catalog".into()),
         }
+        match (&self.layered_obj_animations, files.layered_obj_animations) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_LAYERED_OBJ_ANIMATIONS_FILE_BYTES { return Err("Layered OBJ animations file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[100].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected layered_obj_animations".into()),
+        }
         match (&self.map_raster_palettes, files.map_raster_palettes) {
             (Some(_), Some((_, bytes))) => {
                 if bytes.len() as u64 > MAX_MAP_RASTER_PALETTES_FILE_BYTES { return Err("MapRasterPalettes file exceeds input guard".into()); }
@@ -3008,6 +3031,10 @@ impl Extraction {
             decoded.validate()?;
             if decoded!=&expected.decoded {return Err("Decoded compact_obj_catalog differs from authenticated source".into());}
         }
+        if let (Some(expected), Some((decoded, _))) = (&self.layered_obj_animations, files.layered_obj_animations) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded layered_obj_animations differs from authenticated source".into()); }
+        }
         if let (Some(expected),Some((decoded,_))) = (&self.map_raster_palettes, files.map_raster_palettes) {
             let descriptors=files.background.ok_or("Missing raster palette descriptor dependency")?.0;
             decoded.validate_dependencies(descriptors)?;
@@ -3119,6 +3146,7 @@ impl Extraction {
             + usize::from(self.octonary_compact_obj_animations.is_some())
             + usize::from(self.ui_context_templates.is_some())
             + usize::from(self.compact_obj_catalog.is_some())
+            + usize::from(self.layered_obj_animations.is_some())
             + usize::from(self.map_raster_palettes.is_some())
             + 2 * usize::from(self.auxiliary_scripts.is_some())
     }
@@ -3273,6 +3301,7 @@ mod tests {
             octonary_compact_obj_animations: None,
             ui_context_templates: None,
             compact_obj_catalog: None,
+            layered_obj_animations: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -3380,6 +3409,7 @@ mod tests {
             octonary_compact_obj_animations: None,
             ui_context_templates: None,
             compact_obj_catalog: None,
+            layered_obj_animations: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -3497,6 +3527,7 @@ mod tests {
             octonary_compact_obj_animations: None,
             ui_context_templates: None,
             compact_obj_catalog: None,
+            layered_obj_animations: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -3603,6 +3634,7 @@ mod tests {
             octonary_compact_obj_animations: None,
             ui_context_templates: None,
             compact_obj_catalog: None,
+            layered_obj_animations: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,

@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "discover-layered-obj-source-pairs",
+  "title": "Discover conditional layered OBJ source pairs",
+  "kind": "docs",
+  "platforms": [
+    "EUR original source"
+  ],
+  "changes": [
+    "Document sixteen source-pinned descriptor-selected OBJ and sequence pairs for the previously unresolved 08142664 draw consumer."
+  ],
+  "validation": [
+    "Guarded ROM inspection pins sixteen immediate direct callers, initializer and consumer instructions, 566 object-list slots, 34 nonempty sequences, 559 frame links, and 633 disjoint source spans with no overlap against the authenticated E129 manifest. Evidence: target/validation/units/e129-obj-142664-catalog-l_8m855o/."
+  ],
+  "limitations": [
+    "The bounded inventory does not prove all indirect callers, global bounds, live execution, model, runtime publication or ordinary use; no performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

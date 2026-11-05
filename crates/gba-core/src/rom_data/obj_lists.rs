@@ -262,6 +262,11 @@ impl Catalog {
         let animation = constructor_animation::Catalog::from_rom(rom)?;
         lists.extend(animation.lists.lists);
         sources.extend(animation.sources.into_iter().filter(|s| s.role == "static-obj-list"));
+        // These two indirect roots are selected through RAM slots by the
+        // original writer; they are not direct RootReferences.
+        let markers = conditional_markers::Catalog::from_rom(rom)?;
+        lists.extend(markers.decoded.lists);
+        sources.extend(markers.sources);
         lists.sort_by_key(|list| list.source_offset);
         sources.sort_by_key(|source| source.offset);
         let decoded = Lists { lists };

@@ -15,14 +15,13 @@ fn european_clan_alias_managed_reads() {
     let mut source = Extraction::from_rom(&rom).unwrap();
     let dataset = root.join("offline dataset");
     extract(&dataset, &mut source).unwrap();
-    assert_eq!((source.manifest.extractor_revision, source.manifest.decoder_revision, source.manifest.resources.len()), (128, 127, 100));
+    assert_eq!((source.manifest.extractor_revision, source.manifest.decoder_revision, source.manifest.resources.len()), (130, 129, 101));
     assert_eq!(&source.manifest.coverage[..prior.coverage.len()], prior.coverage);
     let slot = source.manifest.resources.iter().position(|r| r.id == UI_CUSTOM_GRAPHICS_ID).unwrap();
     for (now, previous) in source.manifest.resources.iter().zip(&prior.resources) {
         assert_eq!(now.id, previous.id);
         if now.id != UI_CUSTOM_GRAPHICS_ID {
-            assert_eq!(now, previous);
-            assert_eq!(fs::read(dataset.join(&now.path)).unwrap(), fs::read(old.join(&previous.path)).unwrap());
+            super::conditional_marker_runtime_tests::assert_previous_resource_files(now, previous, &dataset, &old);
         }
     }
     let entry = &source.manifest.resources[slot];

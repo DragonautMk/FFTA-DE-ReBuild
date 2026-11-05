@@ -28,7 +28,7 @@ pub(super) fn prefix(machine: &mut Machine, start: u32, end: u32) {
 }
 
 #[test]
-#[ignore = "private EUR e128 current/e127 prior and native reader; Wine only"]
+#[ignore = "private EUR e130 current/e127 prior and native reader; Wine only"]
 fn european_6c1e78_default_selectors_match_source_and_native_readers() {
     let root = PathBuf::from(std::env::var_os("FFTA_COMPACT_CATALOG_ROOT").unwrap());
     assert!(!root.exists()); fs::create_dir_all(&root).unwrap();
@@ -39,8 +39,8 @@ fn european_6c1e78_default_selectors_match_source_and_native_readers() {
     assert_eq!((prior_manifest.extractor_revision, prior_manifest.decoder_revision, prior_manifest.resources.len()), (127, 126, 100));
     let prior: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior_dir.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
     let current = read_dataset(&current_dir).unwrap();
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
-    assert_eq!(current.manifest.resources[..99], prior_manifest.resources[..99]);
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (130, 129, 101));
+    for (updated, previous) in current.manifest.resources[..99].iter().zip(&prior_manifest.resources[..99]) { super::conditional_marker_runtime_tests::assert_previous_resource_metadata(updated, previous); }
     let data = current.compact_obj_catalog.as_ref().unwrap();
     data.verify_source(&rom).unwrap();
     assert_eq!(data.banks.len(), 63);
@@ -108,8 +108,8 @@ fn european_6c1e78_default_selectors_match_source_and_native_readers() {
         native.bus.rom.copy_from_slice(&rom); assert_eq!(native.save_state().unwrap(), raw.save_state().unwrap());
     }
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "revision":[128,127], "resources":current.manifest.resources.len(),
-        "unchanged_other_resources":99, "preserved_banks":prior.banks.len(), "bank_source_bytes":524,
+        "status":"PASS", "revision":[130,129], "resources":current.manifest.resources.len(),
+        "unchanged_other_resources":98, "previous_obj_projection_preserved":true, "preserved_banks":prior.banks.len(), "bank_source_bytes":524,
         "selectors":[3,4,5,6], "new_selectors":[4,6], "branch_cases":22,
         "native_count_cases":3, "typed_native_bytes":served, "full_state_clock":true,
         "coherent_rejection_in_memory":true, "Linux":"pending", "USA":"pending",
@@ -141,9 +141,9 @@ fn european_loop_compact_catalog_matches_new_source_and_native_readers() {
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (110, 109, 100));
     let current = read_dataset(&dataset).unwrap();
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (130, 129, 101));
     let current_resources = current.manifest.resources.len();
-    assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
+    for (updated, previous) in current.manifest.resources[..99].iter().zip(&old_manifest.resources[..99]) { super::conditional_marker_runtime_tests::assert_previous_resource_metadata(updated, previous); }
     // Read the accepted older JSON without applying the new complete bank-set
     // validator to its historical projection. Its protected file is unchanged.
     let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
@@ -250,7 +250,7 @@ fn european_loop_compact_catalog_matches_new_source_and_native_readers() {
     } }
     assert_eq!(native_cases, 48);
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "resources":current_resources, "previous_resources_unchanged":old_manifest.resources[..99].len(), "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
+        "status":"PASS", "resources":current_resources, "previous_resources_unchanged":old_manifest.resources[..99].len()-1, "previous_obj_projection_preserved":true, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
         "new_banks":banks.len(), "new_selectors":banks.iter().map(|bank| bank.sequences.len()).sum::<usize>(),
         "new_source_bytes":new_spans.iter().map(|(a, z)| z - a).sum::<u32>(),
         "new_frames":banks.iter().flat_map(|bank| &bank.sequences).map(|entry| entry.sequence.frames.len()).sum::<usize>(),
@@ -288,8 +288,8 @@ fn european_6ca5f8_compact_catalog_matches_source_and_native_readers() {
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (112, 111, 100));
     let current = read_dataset(&dataset).unwrap();
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
-    assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (130, 129, 101));
+    for (updated, previous) in current.manifest.resources[..99].iter().zip(&old_manifest.resources[..99]) { super::conditional_marker_runtime_tests::assert_previous_resource_metadata(updated, previous); }
     // Read the accepted older JSON without applying the new complete bank-set
     // validator to its historical projection. Its protected file is unchanged.
     let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
@@ -396,7 +396,7 @@ fn european_6ca5f8_compact_catalog_matches_source_and_native_readers() {
     } }
     assert_eq!(native_cases, 4);
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
+        "status":"PASS", "resources":101, "previous_resources_unchanged":98, "previous_obj_projection_preserved":true, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
         "new_banks":1, "new_selectors":3, "new_source_bytes":174, "new_frames":37, "new_lists":9, "new_objects":8,
         "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":1,
         "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
@@ -432,8 +432,8 @@ fn european_6c4910_compact_catalog_matches_source_and_native_readers() {
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (115, 114, 100));
     let current = read_dataset(&dataset).unwrap();
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
-    assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (130, 129, 101));
+    for (updated, previous) in current.manifest.resources[..99].iter().zip(&old_manifest.resources[..99]) { super::conditional_marker_runtime_tests::assert_previous_resource_metadata(updated, previous); }
     // Read the accepted older JSON without applying the new complete bank-set
     // validator to its historical projection. Its protected file is unchanged.
     let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
@@ -540,7 +540,7 @@ fn european_6c4910_compact_catalog_matches_source_and_native_readers() {
     } }
     assert_eq!(native_cases, 2);
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
+        "status":"PASS", "resources":101, "previous_resources_unchanged":98, "previous_obj_projection_preserved":true, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
         "new_banks":1, "new_selectors":1, "new_source_bytes":162, "new_frames":8, "new_lists":6, "new_objects":19,
         "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":1,
         "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
@@ -573,8 +573,8 @@ fn european_alternate_compact_catalog_matches_source_and_native_readers() {
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (116, 115, 100));
     let current = read_dataset(&dataset).unwrap();
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
-    assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (130, 129, 101));
+    for (updated, previous) in current.manifest.resources[..99].iter().zip(&old_manifest.resources[..99]) { super::conditional_marker_runtime_tests::assert_previous_resource_metadata(updated, previous); }
     // Read the accepted older JSON without applying the new complete bank-set
     // validator to its historical projection. Its protected file is unchanged.
     let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
@@ -681,7 +681,7 @@ fn european_alternate_compact_catalog_matches_source_and_native_readers() {
     } }
     assert_eq!(native_cases, 22);
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
+        "status":"PASS", "resources":101, "previous_resources_unchanged":98, "previous_obj_projection_preserved":true, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
         "new_banks":10, "new_selectors":12, "new_source_bytes":1818, "new_frames":120, "new_lists":95, "new_objects":185,
         "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":10,
         "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
@@ -714,8 +714,8 @@ fn european_6c1e78_compact_catalog_matches_source_and_native_readers() {
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (118, 117, 100));
     let current = read_dataset(&dataset).unwrap();
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
-    assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (130, 129, 101));
+    for (updated, previous) in current.manifest.resources[..99].iter().zip(&old_manifest.resources[..99]) { super::conditional_marker_runtime_tests::assert_previous_resource_metadata(updated, previous); }
     // Read the accepted older JSON without applying the new complete bank-set
     // validator to its historical projection. Its protected file is unchanged.
     let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
@@ -830,7 +830,7 @@ fn european_6c1e78_compact_catalog_matches_source_and_native_readers() {
     } }
     assert_eq!(native_cases, 5);
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
+        "status":"PASS", "resources":101, "previous_resources_unchanged":98, "previous_obj_projection_preserved":true, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
         "new_banks":1, "new_selectors":4, "new_source_bytes":524, "new_frames":118, "new_lists":13, "new_objects":36,
         "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":1,
         "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
@@ -865,8 +865,8 @@ fn european_6bac28_schedule_catalog_matches_source_and_native_readers() {
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (119, 118, 100));
     let current = read_dataset(&dataset).unwrap();
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
-    assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (130, 129, 101));
+    for (updated, previous) in current.manifest.resources[..99].iter().zip(&old_manifest.resources[..99]) { super::conditional_marker_runtime_tests::assert_previous_resource_metadata(updated, previous); }
     // Read the accepted older JSON without applying the new complete bank-set
     // validator to its historical projection. Its protected file is unchanged.
     let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
@@ -988,7 +988,7 @@ fn european_6bac28_schedule_catalog_matches_source_and_native_readers() {
     } }
     assert_eq!(native_cases, 10);
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
+        "status":"PASS", "resources":101, "previous_resources_unchanged":98, "previous_obj_projection_preserved":true, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
         "new_banks":1, "new_selectors":9, "new_source_bytes":268, "new_frames":9, "new_lists":9, "new_objects":13, "table_rows":12,
         "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":1,
         "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
@@ -1024,8 +1024,8 @@ fn european_6babc4_flight_burst_catalog_matches_source_and_native_readers() {
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (120, 119, 100));
     let current = read_dataset(&dataset).unwrap();
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
-    assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (130, 129, 101));
+    for (updated, previous) in current.manifest.resources[..99].iter().zip(&old_manifest.resources[..99]) { super::conditional_marker_runtime_tests::assert_previous_resource_metadata(updated, previous); }
     // Read the accepted older JSON without applying the new complete bank-set
     // validator to its historical projection. Its protected file is unchanged.
     let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
@@ -1148,7 +1148,7 @@ fn european_6babc4_flight_burst_catalog_matches_source_and_native_readers() {
     } }
     assert_eq!(native_cases, 7);
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
+        "status":"PASS", "resources":101, "previous_resources_unchanged":98, "previous_obj_projection_preserved":true, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
         "new_banks":1, "new_selectors":6, "new_source_bytes":428, "new_frames":6, "new_lists":6, "new_objects":6, "table_rows":41,
         "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":1,
         "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
@@ -1183,8 +1183,8 @@ fn european_6bb574_effect_catalog_matches_source_and_native_readers() {
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (121, 120, 100));
     let current = read_dataset(&dataset).unwrap();
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
-    assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (130, 129, 101));
+    for (updated, previous) in current.manifest.resources[..99].iter().zip(&old_manifest.resources[..99]) { super::conditional_marker_runtime_tests::assert_previous_resource_metadata(updated, previous); }
     // Read the accepted older JSON without applying the new complete bank-set
     // validator to its historical projection. Its protected file is unchanged.
     let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
@@ -1313,7 +1313,7 @@ fn european_6bb574_effect_catalog_matches_source_and_native_readers() {
     } }
     assert_eq!(native_cases, 4);
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
+        "status":"PASS", "resources":101, "previous_resources_unchanged":98, "previous_obj_projection_preserved":true, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
         "new_banks":1, "new_selectors":3, "new_source_bytes":193, "new_frames":3, "new_lists":3, "new_objects":3, "table_rows":10,
         "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":1,
         "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
@@ -1349,8 +1349,8 @@ fn european_6c316c_initial_catalog_matches_source_and_native_readers() {
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (123, 122, 100));
     let current = read_dataset(&dataset).unwrap();
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
-    assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (130, 129, 101));
+    for (updated, previous) in current.manifest.resources[..99].iter().zip(&old_manifest.resources[..99]) { super::conditional_marker_runtime_tests::assert_previous_resource_metadata(updated, previous); }
     // Read the accepted older JSON without applying the new complete bank-set
     // validator to its historical projection. Its protected file is unchanged.
     let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
@@ -1477,7 +1477,7 @@ fn european_6c316c_initial_catalog_matches_source_and_native_readers() {
     } }
     assert_eq!(native_cases, 4);
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
+        "status":"PASS", "resources":101, "previous_resources_unchanged":98, "previous_obj_projection_preserved":true, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
         "new_banks":1, "new_selectors":3, "new_source_bytes":188, "new_frames":39, "new_lists":10, "new_objects":9, "initial_records":3,
         "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":1,
         "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
@@ -1514,8 +1514,8 @@ fn european_6ca580_nibble_catalog_matches_source_and_native_readers() {
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (126, 125, 100));
     let current = read_dataset(&dataset).unwrap();
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
-    assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (130, 129, 101));
+    for (updated, previous) in current.manifest.resources[..99].iter().zip(&old_manifest.resources[..99]) { super::conditional_marker_runtime_tests::assert_previous_resource_metadata(updated, previous); }
     // Read the accepted older JSON without applying the new complete bank-set
     // validator to its historical projection. Its protected file is unchanged.
     let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
@@ -1642,7 +1642,7 @@ fn european_6ca580_nibble_catalog_matches_source_and_native_readers() {
     } }
     assert_eq!(native_cases, 4);
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
+        "status":"PASS", "resources":101, "previous_resources_unchanged":98, "previous_obj_projection_preserved":true, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
         "new_banks":1, "new_selectors":7, "new_source_bytes":116, "new_frames":7, "new_lists":7, "new_objects":7, "nibble_values":16,
         "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":1,
         "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
@@ -1679,8 +1679,8 @@ fn european_6cb278_secondary_catalog_matches_source_and_native_readers() {
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (124, 123, 100));
     let current = read_dataset(&dataset).unwrap();
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
-    assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (130, 129, 101));
+    for (updated, previous) in current.manifest.resources[..99].iter().zip(&old_manifest.resources[..99]) { super::conditional_marker_runtime_tests::assert_previous_resource_metadata(updated, previous); }
     // Read the accepted older JSON without applying the new complete bank-set
     // validator to its historical projection. Its protected file is unchanged.
     let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
@@ -1806,7 +1806,7 @@ fn european_6cb278_secondary_catalog_matches_source_and_native_readers() {
     } }
     assert_eq!(native_cases, 5);
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
+        "status":"PASS", "resources":101, "previous_resources_unchanged":98, "previous_obj_projection_preserved":true, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
         "new_banks":1, "new_selectors":4, "new_source_bytes":1092, "new_frames":44, "new_lists":14, "new_objects":154, "initial_records":4,
         "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":1,
         "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
@@ -1843,8 +1843,8 @@ fn european_6cca_scene_catalog_matches_source_and_native_readers() {
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (125, 124, 100));
     let current = read_dataset(&dataset).unwrap();
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
-    assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (130, 129, 101));
+    for (updated, previous) in current.manifest.resources[..99].iter().zip(&old_manifest.resources[..99]) { super::conditional_marker_runtime_tests::assert_previous_resource_metadata(updated, previous); }
     // Read the accepted older JSON without applying the new complete bank-set
     // validator to its historical projection. Its protected file is unchanged.
     let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
@@ -1977,7 +1977,7 @@ fn european_6cca_scene_catalog_matches_source_and_native_readers() {
     } }
     assert_eq!(native_cases, 11);
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
+        "status":"PASS", "resources":101, "previous_resources_unchanged":98, "previous_obj_projection_preserved":true, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
         "new_banks":3, "new_selectors":27, "new_source_bytes":3870, "new_frames":72, "new_lists":72, "new_objects":533, "initial_records":20,
         "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":3,
         "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
@@ -2022,8 +2022,8 @@ fn european_6cac40_grid_catalog_matches_source_and_native_readers() {
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (122, 121, 100));
     let current = read_dataset(&dataset).unwrap();
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
-    assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (130, 129, 101));
+    for (updated, previous) in current.manifest.resources[..99].iter().zip(&old_manifest.resources[..99]) { super::conditional_marker_runtime_tests::assert_previous_resource_metadata(updated, previous); }
     // Read the accepted older JSON without applying the new complete bank-set
     // validator to its historical projection. Its protected file is unchanged.
     let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
@@ -2158,7 +2158,7 @@ fn european_6cac40_grid_catalog_matches_source_and_native_readers() {
     } }
     assert_eq!(native_cases, 9);
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
+        "status":"PASS", "resources":101, "previous_resources_unchanged":98, "previous_obj_projection_preserved":true, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
         "new_banks":1, "new_selectors":8, "new_source_bytes":726, "new_frames":8, "new_lists":8, "new_objects":8, "table_rows":48,
         "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":1,
         "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
@@ -2193,8 +2193,8 @@ fn european_6c0614_timer_catalog_matches_source_and_native_readers() {
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (117, 116, 100));
     let current = read_dataset(&dataset).unwrap();
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
-    assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (130, 129, 101));
+    for (updated, previous) in current.manifest.resources[..99].iter().zip(&old_manifest.resources[..99]) { super::conditional_marker_runtime_tests::assert_previous_resource_metadata(updated, previous); }
     // Read the accepted older JSON without applying the new complete bank-set
     // validator to its historical projection. Its protected file is unchanged.
     let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
@@ -2318,7 +2318,7 @@ fn european_6c0614_timer_catalog_matches_source_and_native_readers() {
     } }
     assert_eq!(native_cases, 7);
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
+        "status":"PASS", "resources":101, "previous_resources_unchanged":98, "previous_obj_projection_preserved":true, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
         "new_banks":1, "new_selectors":6, "new_source_bytes":730, "new_frames":42, "new_lists":19, "new_objects":61, "table_rows":44,
         "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":1,
         "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
@@ -2353,8 +2353,8 @@ fn european_6c95d4_motion_catalog_matches_source_and_native_readers() {
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (114, 113, 100));
     let current = read_dataset(&dataset).unwrap();
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
-    assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (130, 129, 101));
+    for (updated, previous) in current.manifest.resources[..99].iter().zip(&old_manifest.resources[..99]) { super::conditional_marker_runtime_tests::assert_previous_resource_metadata(updated, previous); }
     // Read the accepted older JSON without applying the new complete bank-set
     // validator to its historical projection. Its protected file is unchanged.
     let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
@@ -2508,7 +2508,7 @@ fn european_6c95d4_motion_catalog_matches_source_and_native_readers() {
     } }
     assert_eq!(native_cases, 4);
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
+        "status":"PASS", "resources":101, "previous_resources_unchanged":98, "previous_obj_projection_preserved":true, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
         "new_banks":1, "new_selectors":3, "new_source_bytes":572, "new_frames":33, "new_lists":33, "new_objects":33,
         "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":1,
         "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
@@ -2544,8 +2544,8 @@ fn european_6c992c_table_catalog_matches_source_and_native_readers() {
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (113, 112, 100));
     let current = read_dataset(&dataset).unwrap();
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
-    assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (130, 129, 101));
+    for (updated, previous) in current.manifest.resources[..99].iter().zip(&old_manifest.resources[..99]) { super::conditional_marker_runtime_tests::assert_previous_resource_metadata(updated, previous); }
     // Read the accepted older JSON without applying the new complete bank-set
     // validator to its historical projection. Its protected file is unchanged.
     let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
@@ -2695,7 +2695,7 @@ fn european_6c992c_table_catalog_matches_source_and_native_readers() {
     } }
     assert_eq!(native_cases, 9);
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "resources":100, "previous_resources_unchanged":99, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
+        "status":"PASS", "resources":101, "previous_resources_unchanged":98, "previous_obj_projection_preserved":true, "previous_banks_unchanged":old.banks.iter().filter(|bank| data.banks.iter().find(|new| new.root == bank.root) == Some(*bank)).count(), "previous_banks_preserved":old.banks.len(),
         "new_banks":1, "new_selectors":8, "new_source_bytes":320, "new_frames":40, "new_lists":9, "new_objects":8,
         "native_count_cases":native_cases, "typed_native_bytes":served, "out_of_projection_cases":1,
         "counter_oracle_from_actual_owned_intersections":true, "full_state_clock":true,
@@ -2737,9 +2737,9 @@ fn european_compact_catalog_matches_source_and_native_readers() {
     let old: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     let current = read_dataset(&dataset).unwrap();
     assert_eq!(old.resources.len(), 100);
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (130, 129, 101));
     let current_resources = current.manifest.resources.len();
-    for entry in &old.resources[..99] { assert_eq!(current.manifest.resources.iter().find(|resource| resource.id == entry.id), Some(entry)); }
+    for entry in &old.resources[..99] { let updated = current.manifest.resources.iter().find(|resource| resource.id == entry.id).unwrap(); super::conditional_marker_runtime_tests::assert_previous_resource_metadata(updated, entry); }
     assert_eq!(current.compact_obj_catalog.as_ref().unwrap(), data);
     assert_eq!(current.manifest.resources[99].id, COMPACT_OBJ_CATALOG_ID);
     let mut machine = crate::make_machine(rom.clone(), None);
@@ -2814,7 +2814,7 @@ fn european_compact_catalog_matches_source_and_native_readers() {
         assert_eq!(native.save_state().unwrap(), raw.save_state().unwrap(), "bank {:x} selector {selector}", bank.root);
     } }
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "resources":current_resources, "previous_unchanged":old.resources[..99].len(),
+        "status":"PASS", "resources":current_resources, "previous_unchanged":old.resources[..99].len()-1, "previous_obj_projection_preserved":true,
         "banks":data.banks.len(), "selectors":data.banks.iter().map(|bank| bank.sequences.len()).sum::<usize>(),
         "source_bytes":spans.iter().map(|(_, bytes, _)| bytes.len()).sum::<usize>(), "spans":spans.len(),
         "frames":data.banks.iter().flat_map(|bank| &bank.sequences).map(|entry| entry.sequence.frames.len()).sum::<usize>(),
@@ -2843,7 +2843,7 @@ fn european_compact_catalog_failed_disk_replacement_preserves_owner() {
         fs::copy(entry.path(), replacement.join(entry.file_name())).unwrap();
     }
     let original = read_dataset(&replacement).unwrap();
-    assert_eq!((original.manifest.extractor_revision, original.manifest.decoder_revision), (128, 127));
+    assert_eq!((original.manifest.extractor_revision, original.manifest.decoder_revision), (130, 129));
     let index = original.manifest.resources.iter().position(|resource| resource.id == COMPACT_OBJ_CATALOG_ID).unwrap();
     let manifest_bytes = fs::read(replacement.join(MANIFEST_FILE)).unwrap();
     let catalog_bytes = fs::read(replacement.join(COMPACT_OBJ_CATALOG_FILE)).unwrap();
@@ -2896,7 +2896,7 @@ fn european_compact_catalog_failed_disk_replacement_preserves_owner() {
     assert_eq!(fresh.bus.read8(0x08000000 + offset as u32), rom[offset]);
     assert_eq!(fresh_owner.compact_obj_catalog_stats().unwrap().source_bytes, before + 1);
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "revision":[128,127], "missing_catalog_rejected":true,
+        "status":"PASS", "revision":[130,129], "missing_catalog_rejected":true,
         "coherent_disk_edit_parsed_and_rejected":true, "active_owner_unchanged":true,
         "machine_state_unchanged":true, "active_owner_reads":true,
         "committed_generation_reattached_and_read":true, "Linux":"pending",

@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "verify-e130-full-compact-catalog",
+  "title": "Verify the E130 complete compact catalog",
+  "kind": "changed",
+  "platforms": [
+    "EUR Windows GNU under Wine"
+  ],
+  "changes": [
+    "Verify E130 default selectors and the complete compact catalog against the authenticated E127 predecessor."
+  ],
+  "validation": [
+    "Both full selected filters pass with the prior OBJ projection preserved, full-state native-reader checks and guarded inputs. Successful scratch was removed: target/validation/units/e130-full-catalog-regressions-7dxiq2ou/."
+  ],
+  "limitations": [
+    "Sixteen historical E130 catalog filters remain open under RVR-24. Linux, USA and native Windows are separate. No performance measurement."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/compact_obj_catalog_tests.rs",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

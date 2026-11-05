@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "verify-e130-historical-regression-matrix",
+  "title": "Complete the E130 affected regression matrix",
+  "kind": "changed",
+  "platforms": [
+    "EUR Windows GNU under Wine"
+  ],
+  "changes": [
+    "Complete the 38-filter E130 affected regression matrix, including fourteen remaining historical catalog comparisons."
+  ],
+  "validation": [
+    "Fourteen historical full filters pass against manifest-authenticated prior projections, with native reader cases and preserved previous OBJ projections: target/validation/units/e130-historical-remaining-regressions-akj7bhxa/. Together with the 13 compact/conditional, seven data/lifecycle, two full-catalog and two historical filters, all 38 selected E130 regressions pass. Protected inputs passed and successful scratch was removed."
+  ],
+  "limitations": [
+    "These results do not prove full layered OBJ draw paths or ordinary gameplay. Linux, USA and native Windows remain separate. No performance measurements."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/compact_obj_catalog_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_catalog_table_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_obj.md"
+  ]
+}

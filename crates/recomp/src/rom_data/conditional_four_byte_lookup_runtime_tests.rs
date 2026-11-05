@@ -17,11 +17,11 @@ fn european_conditional_lookup_managed_native_reads() {
     let mut source = Extraction::from_rom(&rom).unwrap();
     let dataset = root.join("offline dataset");
     extract(&dataset, &mut source).unwrap();
-    assert_eq!((source.manifest.extractor_revision, source.manifest.decoder_revision, source.manifest.resources.len()), (128, 127, 100));
+    assert_eq!((source.manifest.extractor_revision, source.manifest.decoder_revision, source.manifest.resources.len()), (130, 129, 101));
     assert_eq!(prior.resources.len(), 85);
     for resource in &prior.resources {
-        assert_eq!(source.manifest.resources.iter().find(|entry| entry.id == resource.id), Some(resource));
-        assert_eq!(fs::read(dataset.join(&resource.path)).unwrap(), fs::read(old.join(&resource.path)).unwrap());
+        let current = source.manifest.resources.iter().find(|r| r.id == resource.id).unwrap();
+        super::conditional_marker_runtime_tests::assert_previous_resource_files(current, resource, &dataset, &old);
     }
     let entry = &source.manifest.resources[85];
     assert_eq!(entry.id, CONDITIONAL_FOUR_BYTE_LOOKUP_ID);
@@ -104,5 +104,5 @@ fn european_conditional_lookup_managed_native_reads() {
             assert_eq!(native.save_state().unwrap(),raw.save_state().unwrap(),"index {index} field {field}");
         }
     }
-    fs::write(root.join("result.json"),serde_json::to_vec_pretty(&serde_json::json!({"status":"PASS","resources":source.manifest.resources.len(),"previous_unchanged":prior.resources.len(),"source_bytes":296,"native_prefixes":3,"indices":[0,1,73,74,255,4294967295u32],"typed_native_bytes":served,"full_state_clock":true,"tamper_transaction":true,"Linux":"pending","USA":"pending","nativeWindows":"pending","performance_measurements":false})).unwrap()).unwrap();
+    fs::write(root.join("result.json"),serde_json::to_vec_pretty(&serde_json::json!({"status":"PASS","resources":source.manifest.resources.len(),"previous_unchanged":prior.resources.len()-1,"previous_obj_projection_preserved":true,"source_bytes":296,"native_prefixes":3,"indices":[0,1,73,74,255,4294967295u32],"typed_native_bytes":served,"full_state_clock":true,"tamper_transaction":true,"Linux":"pending","USA":"pending","nativeWindows":"pending","performance_measurements":false})).unwrap()).unwrap();
 }

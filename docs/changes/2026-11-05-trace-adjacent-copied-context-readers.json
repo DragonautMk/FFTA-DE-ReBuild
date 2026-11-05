@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "trace-adjacent-copied-context-readers",
+  "title": "Trace adjacent copied context field readers",
+  "kind": "changed",
+  "platforms": [
+    "EUR source inspection"
+  ],
+  "changes": [
+    "Document the original conditional constructor reads of all four copied context halfwords and their calls to generator and arithmetic helpers."
+  ],
+  "validation": [
+    "Exact EUR source identity, four code windows, field-read instructions and seven original call targets passed; guarded ROM was unchanged and scratch was removed: target/validation/units/e130-adjacent-record-readers-6qh7d5_9/."
+  ],
+  "limitations": [
+    "The helper was not independently executed; field semantics, task liveness, other consumers and ordinary gameplay remain unproved. No guest instructions or performance measurement ran."
+  ],
+  "files": [
+    "docs/rom_data_obj.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

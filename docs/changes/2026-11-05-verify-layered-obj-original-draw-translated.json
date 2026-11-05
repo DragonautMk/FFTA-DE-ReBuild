@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "verify-layered-obj-original-draw-translated",
+  "title": "Verify translated original layered OBJ draw",
+  "kind": "changed",
+  "platforms": [
+    "EUR Windows GNU under Wine"
+  ],
+  "changes": [
+    "Compare translated original layered OBJ draw and its reached callees against interpreter execution for all 16 pairs and three draw variants."
+  ],
+  "validation": [
+    "All 48 initial-frame full-state comparisons pass with poisoned managed spans; 658 original instruction addresses were traced, 5,228 managed bytes read and 16 cases wrote the observed OBJ buffer. Guarded inputs passed and scratch was removed: target/validation/units/e130-layered-draw-native-build-fyqdwpi1/ and e130-layered-draw-native-wine-_2fxv8ek/."
+  ],
+  "limitations": [
+    "This does not establish complete animation, every drawing condition or ordinary gameplay. Linux, USA and native Windows remain separate. No performance measurement."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/layered_obj_runtime_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

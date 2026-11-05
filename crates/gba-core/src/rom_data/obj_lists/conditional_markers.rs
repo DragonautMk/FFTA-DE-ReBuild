@@ -295,4 +295,104 @@ mod tests {
             assert_eq!(machine.bus.iwram, iwram, "writer IWRAM footprint");
         }
     }
+
+    #[test]
+    #[ignore = "requires the private exact EUR ROM"]
+    fn original_slot_consumer_draws_the_selected_markers() {
+        let rom = std::fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+        let catalog = Catalog::from_rom(&rom).unwrap();
+        let dimensions = crate::rom_data::ObjDimensions::decode(&rom[0x14ced8..0x14cf08])
+            .expect("original object dimensions");
+        const CONTEXT: u32 = 0x0202_0000;
+        const STACK: u32 = 0x0300_7c00;
+        const RETURN: u32 = 0x0800_0300;
+        const CURSOR: usize = 0x2c50;
+        const BUFFER: usize = 0x2c58;
+        // Exercise both source lists, a clipped item, and the three original
+        // guards, without fabricating an ordinary game state.
+        for (selector, x, y, enabled, count, pointer_present) in [
+            (0, 100i16, 80i16, true, 1, true),
+            (1, 100, 80, true, 1, true),
+            (1, -1024, 80, true, 1, true),
+            (0, 100, 80, false, 1, true),
+            (1, 100, 80, true, 0, true),
+            (0, 100, 80, true, 1, false),
+        ] {
+            let list = catalog.decoded.select(selector).unwrap();
+            let mut machine = Machine::new(rom.clone());
+            machine.bus.write32(0x0200_f444, CONTEXT);
+            machine.bus.write8(CONTEXT + 0xe, u8::from(enabled));
+            machine.bus.write8(0x0200_3c32, count);
+            machine.bus.write16(CONTEXT + 0x47c, x as u16);
+            machine.bus.write16(CONTEXT + 0x47e, y as u16);
+            machine.bus.write32(
+                CONTEXT + 0x480,
+                if pointer_present {
+                    0x0800_0000 + list.source_offset
+                } else {
+                    0
+                },
+            );
+            machine.bus.iwram[BUFFER..BUFFER + 0x180].fill(0x5a);
+            let ewram = machine.bus.ewram.clone();
+            let mut expected_iwram = machine.bus.iwram.clone();
+            let mut drawn = false;
+            if enabled && count != 0 && pointer_present {
+                let object = &list.objects[0];
+                let dim = dimensions.get(object.shape, object.size).unwrap();
+                let x = i32::from(x) + i32::from(object.x);
+                let y = i32::from(y) + i32::from(object.y);
+                if !(x < 0 && x + i32::from(dim.width) < 0
+                    || x > 239 && x + i32::from(dim.width) > 239
+                    || y < 0 && y + i32::from(dim.height) < 0
+                    || y > 159 && y + i32::from(dim.height) > 159)
+                {
+                    let [a0, a1, a2] = object.attributes();
+                    let attributes = [
+                        (a0 & 0xff00) | (y as u16 & 255),
+                        (a1 & !511) | (x as u16 & 511),
+                        a2,
+                    ];
+                    for (index, value) in attributes.into_iter().enumerate() {
+                        let offset = BUFFER + index * 2;
+                        expected_iwram[offset..offset + 2].copy_from_slice(&value.to_le_bytes());
+                    }
+                    expected_iwram[CURSOR..CURSOR + 4].copy_from_slice(&1u32.to_le_bytes());
+                    drawn = true;
+                }
+            }
+            let video = (
+                machine.bus.vram.clone(),
+                machine.bus.oam.clone(),
+                machine.bus.palette.clone(),
+            );
+            machine.cpu.regs = std::array::from_fn(|i| 0x1100_0000 + i as u32);
+            machine.cpu.regs[13] = STACK;
+            machine.cpu.regs[14] = RETURN | 1;
+            machine.cpu.regs[15] = 0x0802_f3c0;
+            machine.cpu.cpsr = 0xbf;
+            let callee = machine.cpu.regs[4..12].to_vec();
+            let mut returned = false;
+            for _ in 0..20_000 {
+                machine.bus.frame_ready = false;
+                machine.step();
+                if machine.cpu.regs[15] == RETURN {
+                    returned = true;
+                    break;
+                }
+            }
+            assert!(returned, "original slot consumer did not return");
+            assert_eq!(machine.cpu.regs[13], STACK);
+            assert_eq!(&machine.cpu.regs[4..12], callee.as_slice());
+            assert_eq!(machine.bus.ewram, ewram, "consumer EWRAM footprint");
+            expected_iwram[0x7a00..0x7c00].fill(0);
+            machine.bus.iwram[0x7a00..0x7c00].fill(0);
+            assert_eq!(machine.bus.iwram, expected_iwram, "consumer IWRAM/output");
+            assert_eq!(
+                (machine.bus.vram, machine.bus.oam, machine.bus.palette),
+                video
+            );
+            assert_eq!(drawn, enabled && count != 0 && pointer_present && x >= 0);
+        }
+    }
 }

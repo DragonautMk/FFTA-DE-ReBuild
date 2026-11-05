@@ -83,7 +83,19 @@ The evidence does not attribute every unchecked item to lack of disk space.
 
 The e128-d127 integration of selectors 4/6 changes the current extraction
 revision and catalog projection. The accepted e127 results below remain valid
-for e127.
+for e127. The later conditional marker integration changes the current
+revision and static OBJ catalog again; the accepted e128 results remain valid
+for e128.
+
+- [x] **RVR-23 — e129 affected regressions:** 38 EUR/Wine filters pass: eight
+  compact OBJ, five conditional lookup, seven data/lifecycle, full catalog and
+  default selectors, and sixteen historical catalog filters. Predecessor
+  projections are authenticated against retained manifests; reports separate
+  unchanged resources from the preserved previous OBJ projection. Inputs pass
+  and successful scratch is removed. Ordinary marker use and deferred platforms
+  remain separate. [Evidence](../changes/2026-11-05-publish-conditional-ram-slot-obj-markers.json).
+
+- [x] **RVR-24 — e130 affected regressions:** 38 EUR/Wine full filters pass: 13 compact/conditional, seven data/lifecycle, two complete catalog/default selector and 16 historical catalog comparisons. Historical projections are authenticated against retained manifests; prior OBJ projections remain preserved. Protected inputs pass and successful scratch is removed. Ordinary use and deferred platforms remain separate. [Evidence](../changes/2026-11-05-verify-e130-historical-regression-matrix.json).
 
 - [x] **RVR-21 — e128 affected regressions:** primary through octonary full
   filters pass with authenticated e100..e107 predecessors; RVR-09..13 pass with
@@ -274,8 +286,17 @@ complete animation. Rejected leads and closed negative locators remain closed.
 - [ ] **ROMDATA-01-OBJ-REMAINING-DRAW-ROOTS / CONSTRUCTOR-SOURCES /
   GRAPHICS-PAYLOADS:** select individual authenticated missing consumers or
   payloads. Conditional RAM-slot lists `395172`/`39517a` now have source and
-  original-writer model evidence; publication, draw and ordinary use remain
-  open. Do not reopen the broad experiment with 61 truncations.
+  original-writer model evidence, plus an isolated original slot-consumer draw
+  comparison for both lists. E129-d128 publishes them, with guarded EUR/Wine
+  lifecycle and original-interpreter and translated-native managed-read
+  checks. The affected E129 regression matrix passes under RVR-23; ordinary
+  use remains open. A distinct source-pinned discovery identifies 16 layered
+  OBJ/sequence pairs through descriptor table `3ae1a4`; a strict source model
+  and 16 original initializers pass under Wine. E130 managed publication and
+  source reads, initializers, initial-frame interpreter/translated draw and the
+  affected regression matrix pass; complete animation and ordinary evidence
+  remain open. Do not reopen the broad experiment with 61
+  truncations. [Source contract](../rom_data_obj.md#conditional-layered-obj-animation-source-at-3ae1a4).
   [Current selections and limits](TASK_HANDOFF.md#rom-data-full-eur).
 
 ## 6. Keep explicitly deferred scope visible

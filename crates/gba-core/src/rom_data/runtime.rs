@@ -250,6 +250,9 @@ mod world_nodes;
 use world_nodes::WorldNodesResources;
 pub use world_nodes::WorldNodesStats;
 mod word_task_obj_animations;
+mod layered_obj_animations;
+use layered_obj_animations::LayeredObjResources;
+pub use layered_obj_animations::LayeredObjStats;
 use word_task_obj_animations::WordTaskObjResources;
 pub type WordTaskObjStats = ObjAnimationStats;
 mod map_raster_palettes;
@@ -414,6 +417,7 @@ pub struct RuntimeResources {
     octonary_compact_obj_animations: Option<Box<OctonaryCompactObjResources>>,
     ui_context_templates: Option<Box<UiContextTemplateResources>>,
     compact_obj_catalog: Option<Box<CompactObjCatalogResources>>,
+    layered_obj_animations: Option<Box<LayeredObjResources>>,
     map_raster_palettes: Option<Box<MapRasterPaletteResources>>,
     auxiliary_scripts: Option<Box<AuxiliaryScriptResources>>,
 }
@@ -434,6 +438,7 @@ impl RuntimeResources {
     pub fn octonary_compact_obj_animations_stats(&self) -> Option<OctonaryCompactObjStats> { self.octonary_compact_obj_animations.as_ref().map(|r| r.stats()) }
     pub fn ui_context_templates_stats(&self) -> Option<UiContextTemplateStats> { self.ui_context_templates.as_ref().map(|r| r.stats()) }
     pub fn compact_obj_catalog_stats(&self) -> Option<CompactObjCatalogStats> { self.compact_obj_catalog.as_ref().map(|r| r.stats()) }
+    pub fn layered_obj_animations_stats(&self) -> Option<LayeredObjStats> { self.layered_obj_animations.as_ref().map(|r| r.stats()) }
     /// The frontend supplies structures parsed from the very bytes whose file
     /// digest is in the manifest. Reauthenticate the base against the actual
     /// selected image; no editable/mod resource can enter through this API.
@@ -788,6 +793,9 @@ impl RuntimeResources {
         if let Some((data,_))=files.compact_obj_catalog {
             resources.compact_obj_catalog=Some(Box::new(CompactObjCatalogResources::new(data.clone(),&source.compact_obj_catalog.as_ref().unwrap().sources)?));
         }
+        if let Some((data, _)) = files.layered_obj_animations {
+            resources.layered_obj_animations = Some(Box::new(LayeredObjResources::new(data.clone(), &source.layered_obj_animations.as_ref().unwrap().sources)?));
+        }
         if let Some((data,_))= files.map_raster_palettes {
             resources.map_raster_palettes = Some(Box::new(MapRasterPaletteResources::new(data.clone(), &source.map_raster_palettes.as_ref().unwrap().sources)?));
         }
@@ -913,6 +921,7 @@ impl RuntimeResources {
             octonary_compact_obj_animations: None,
             ui_context_templates: None,
             compact_obj_catalog: None,
+            layered_obj_animations: None,
             map_raster_palettes: None,
             auxiliary_scripts: None,
         }
@@ -1039,6 +1048,7 @@ impl RuntimeResources {
             + self.octonary_compact_obj_animations.as_ref().map_or(0, |i| i.resident_bytes())
             + self.ui_context_templates.as_ref().map_or(0, |i| i.resident_bytes())
             + self.compact_obj_catalog.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.layered_obj_animations.as_ref().map_or(0, |i| i.resident_bytes())
             + self.map_raster_palettes.as_ref().map_or(0, |i| i.resident_bytes())
             + self.auxiliary_scripts.as_ref().map_or(0, |i| i.resident_bytes())
     }
@@ -1213,6 +1223,7 @@ impl RuntimeResources {
         self.obj_lists.as_ref().and_then(|l| l.host_list(address & 0x1ffffff))
             .or_else(|| self.obj_animations.as_ref()?.host_list(address & 0x1ffffff))
             .or_else(|| self.word_task_obj_animations.as_ref()?.host_list(address & 0x1ffffff))
+            .or_else(|| self.layered_obj_animations.as_ref()?.host_list(address & 0x1ffffff))
     }
 
     pub fn font_keyboard_stats(&self) -> Option<FontKeyboardStats> { self.font_keyboard.as_ref().map(|f| f.stats()) }
@@ -1552,7 +1563,8 @@ impl RuntimeResources {
             let prior = match &self.septenary_compact_obj_animations {Some(data)=>data.guest_read(index,rom,prior),None=>prior};
             let prior = match &self.octonary_compact_obj_animations {Some(data)=>data.guest_read(index,rom,prior),None=>prior};
             let prior = match &self.ui_context_templates {Some(data)=>data.guest_read(index,rom,prior),None=>prior};
-            return match &self.compact_obj_catalog {Some(data)=>data.guest_read(index,rom,prior),None=>prior};
+            let prior = match &self.compact_obj_catalog {Some(data)=>data.guest_read(index,rom,prior),None=>prior};
+            return match &self.layered_obj_animations {Some(data)=>data.guest_read(index,rom,prior),None=>prior};
         };
         self.bus_reads.fetch_add(1, Ordering::Relaxed);
         let source_bit = if matches!(base, 0x149510 | 0x14ced8) {
@@ -1735,6 +1747,7 @@ impl crate::MemMap {
             || OctonaryCompactObjResources::source_page(index)
             || UiContextTemplateResources::source_page(index)
             || CompactObjCatalogResources::source_page(index)
+            || LayeredObjResources::source_page(index)
             || ObjGraphicsResources::source_page(index)
             || UiPaletteResources::source_page(index)
             || UiGraphicsResources::source_page(index)

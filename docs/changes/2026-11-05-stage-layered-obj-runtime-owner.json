@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "stage-layered-obj-runtime-owner",
+  "title": "Stage a layered OBJ runtime owner",
+  "kind": "added",
+  "platforms": [
+    "EUR Windows GNU under Wine"
+  ],
+  "changes": [
+    "Prepare a test-only typed runtime owner for layered OBJ descriptor, sequence and list reads, preserving prior-owner and raw-gap composition."
+  ],
+  "validation": [
+    "The focused Wine test poisons all 633 source spans and verifies all 20,474 typed bytes, four-byte boundary/prior-owner composition, all 566 host-list lookups and a rejected source-binding edit. Evidence: target/validation/units/e130-layered-obj-staged-build-_4ml_mrq/ and e130-layered-obj-staged-wine-o8ryattt/. Protected inputs passed and successful scratch was removed."
+  ],
+  "limitations": [
+    "The owner remains compiled only for tests and is not attached to extraction, runtime or CLI. Native reads, lifecycle and ordinary use remain unverified; Linux, USA and native Windows are separate. No performance measurement."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/layered_obj_animations.rs",
+    "crates/gba-core/src/rom_data/runtime/layered_obj_animations/tests.rs",
+    "docs/rom_data_obj.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

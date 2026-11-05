@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "verify-layered-obj-original-draw-interpreter",
+  "title": "Verify original layered OBJ draw in the interpreter",
+  "kind": "changed",
+  "platforms": [
+    "EUR Windows GNU under Wine"
+  ],
+  "changes": [
+    "Add a bounded raw/managed comparison of the original layered OBJ draw consumer for 16 modeled pairs and all three draw variants."
+  ],
+  "validation": [
+    "All 48 original interpreter comparisons pass with poisoned managed spans, 5,228 managed bytes read, 16 writes to the observed OBJ buffer and equal full state. Guarded inputs passed and scratch was removed: target/validation/units/e130-layered-draw-build-mykzdamw/ and e130-layered-draw-wine-ys8ni2e3/."
+  ],
+  "limitations": [
+    "The initial-frame comparison does not establish complete animation or ordinary use. A later translated-native proof passed; Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/layered_obj_runtime_tests.rs",
+    "docs/rom_data_obj.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

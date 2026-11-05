@@ -14,9 +14,9 @@ fn european_conditional_packed_managed_native_reads() {
     let old=PathBuf::from(std::env::var_os("FFTA_STATE_TEST_DATASET").unwrap());
     let prior:Manifest=toml::from_str(&fs::read_to_string(old.join(MANIFEST_FILE)).unwrap()).unwrap();
     let mut source=Extraction::from_rom(&rom).unwrap();let dataset=root.join("offline dataset");extract(&dataset,&mut source).unwrap();
-    assert_eq!((source.manifest.extractor_revision,source.manifest.decoder_revision,source.manifest.resources.len()),(128, 127, 100));
+    assert_eq!((source.manifest.extractor_revision,source.manifest.decoder_revision,source.manifest.resources.len()),(130, 129, 101));
     assert_eq!(prior.resources.len(),86);
-    for r in &prior.resources {assert_eq!(source.manifest.resources.iter().find(|e|e.id==r.id),Some(r));assert_eq!(fs::read(dataset.join(&r.path)).unwrap(),fs::read(old.join(&r.path)).unwrap());}
+    for r in &prior.resources {let current=source.manifest.resources.iter().find(|e|e.id==r.id).unwrap();super::conditional_marker_runtime_tests::assert_previous_resource_files(current,r,&dataset,&old);}
     let entry=&source.manifest.resources[86];assert_eq!(entry.id,CONDITIONAL_PACKED_LOOKUP_ID);
     assert_eq!((entry.sources.len(),entry.sources[0].offset,entry.sources[0].length),(1,SOURCE_OFFSET,132));
     let bytes=fs::read(dataset.join(CONDITIONAL_PACKED_LOOKUP_FILE)).unwrap();
@@ -63,5 +63,5 @@ fn european_conditional_packed_managed_native_reads() {
         served+=used;native.bus.rom.copy_from_slice(&rom);
         assert_eq!(native.save_state().unwrap(),raw.save_state().unwrap(),"index {index} prefix {prefix}");
     }}
-    fs::write(root.join("result.json"),serde_json::to_vec_pretty(&serde_json::json!({"status":"PASS","resources":source.manifest.resources.len(),"previous_unchanged":prior.resources.len(),"source_bytes":132,"native_prefixes":2,"descriptor_indices":[0,1,33,251],"typed_native_bytes":served,"metadata14_alias":true,"full_state_clock":true,"tamper_transaction":true,"Linux":"pending","USA":"pending","nativeWindows":"pending","performance_measurements":false})).unwrap()).unwrap();
+    fs::write(root.join("result.json"),serde_json::to_vec_pretty(&serde_json::json!({"status":"PASS","resources":source.manifest.resources.len(),"previous_unchanged":prior.resources.len()-1,"previous_obj_projection_preserved":true,"source_bytes":132,"native_prefixes":2,"descriptor_indices":[0,1,33,251],"typed_native_bytes":served,"metadata14_alias":true,"full_state_clock":true,"tamper_transaction":true,"Linux":"pending","USA":"pending","nativeWindows":"pending","performance_measurements":false})).unwrap()).unwrap();
 }

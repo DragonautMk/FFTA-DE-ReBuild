@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "publish-conditional-ram-slot-obj-markers",
+  "title": "Publish conditional RAM-slot OBJ markers",
+  "kind": "added",
+  "platforms": [
+    "EUR original source; Windows executable under Wine"
+  ],
+  "changes": [
+    "Publish the two authenticated RAM-slot marker lists in the existing static OBJ catalog and advance the extraction and decoder revisions to e129-d128.",
+    "Update revision-sensitive recovery tests to distinguish unchanged resource files from the preserved previous static OBJ projection."
+  ],
+  "validation": [
+    "Focused EUR Wine test passes E128 predecessor preservation for all 99 other resource files and records and the previous OBJ projection; create/reuse/repair, coherent-tamper transaction, both exact-root managed source reads through the original slot consumer with full state/clock equality, and mixed boundaries/widths/mirrors. Inputs passed and successful scratch was removed. Evidence: target/validation/units/e129-obj-marker-managed-build-gkplvamk/ and e129-obj-marker-managed-wine-h5vlixfw/.",
+    "A separate EUR Wine TinyCC translation of 332 traced original consumer instruction addresses passes full state/clock comparisons for both roots; per-root managed usage is positive with poisoned underlying ROM and totals 20 source bytes. Protected inputs passed and scratch was removed. Evidence: target/validation/units/e129-obj-marker-native-build-b1u0vaes/ and e129-obj-marker-native-wine-i804d9nc/.",
+    "RVR-23 partial: primary through octonary compact OBJ and five conditional lookup full filters pass on e129 under EUR Wine with authenticated e95\u2013e107 predecessors; unchanged resources and previous OBJ projection are checked separately. Evidence: target/validation/units/e129-affected-regression-build-964gjrch/ and e129-compact-conditional-regressions-os53p1p4/.",
+    "Production CLI create/reuse/verify passes in EUR Wine with E129: 100 resources/101 files, 99 other resources and previous OBJ projection preserved, reuse hashes and times unchanged. Current generation retained for pending RVR-23. Evidence: target/validation/units/e129-obj-marker-cli-build-0ie35_4i/ and e129-obj-marker-current-95626ztl/.",
+    "RVR-23 partial: dynamic fragments, table graphics, clan alias, UI context, failed catalog replacement, UI Load/Undo/Restart and prior-bank report pass on E129 under EUR Wine. Sixty-one prior banks are identical and all 62 previous projections are preserved. Evidence: target/validation/units/e129-other-data-regressions-15_31kjd/.",
+    "RVR-23 completes 38 affected EUR/Wine filters: eight compact, five conditional, seven data/lifecycle, full catalog and default selectors, plus sixteen historical catalog filters with authenticated predecessor projections. Evidence: e129-full-catalog-regressions-sudbvp19/, e129-historical-catalog-regressions-b2a5h4ij/ and e129-historical-remaining-regressions-3sj3anrl/ under target/validation/units/; earlier group evidence is recorded above.",
+    "Production CLI E129 startup passes 12 retained-input frames in EUR Wine and loads all 100 expected runtime resource identities; neither new marker root was observed. Guarded inputs passed and successful scratch was removed. Evidence: target/validation/units/e129-obj-marker-startup-yy29ytz1/."
+  ],
+  "limitations": [
+    "Positive ordinary use and its pair remain open, as do other OBJ sources and Linux/USA/native Windows. No performance test."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/obj_lists.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/conditional_marker_runtime_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "crates/recomp/src/rom_data/clan_table_alias_runtime_tests.rs",
+    "crates/recomp/src/rom_data/dynamic_raw_fragments_runtime_tests.rs",
+    "crates/recomp/src/rom_data/table_graphics_runtime_tests.rs",
+    "crates/recomp/src/rom_data/ui_context_templates_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_catalog_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_catalog_table_tests.rs",
+    "crates/recomp/src/rom_data/conditional_four_byte_lookup_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_packed_lookup_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_descriptor_banks_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_descriptor_bank_zero_runtime_tests.rs",
+    "crates/recomp/src/rom_data/conditional_property_masks_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_quinary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_secondary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_senary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_tertiary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_quaternary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_octonary_runtime_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_animations_septenary_runtime_tests.rs",
+    "crates/gba-core/src/rom_data/obj_lists/conditional_markers.rs"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

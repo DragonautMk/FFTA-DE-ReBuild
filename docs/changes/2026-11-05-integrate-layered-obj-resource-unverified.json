@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "integrate-layered-obj-resource-unverified",
+  "title": "Integrate layered OBJ resources and verify managed initializers",
+  "kind": "added",
+  "platforms": [
+    "EUR Windows GNU under Wine"
+  ],
+  "changes": [
+    "Publish E130 layered OBJ source with authenticated extraction, frontend persistence, typed runtime attachment and resource counters.",
+    "Extend dataset budget test calls for the new resource."
+  ],
+  "validation": [
+    "The Windows GNU focused test build passed; the EUR Wine integration test checks 101 resources and 102 files, all 100 E129 resources unchanged, create/reuse/repair, all 633 poisoned spans (20,474 bytes), 16 original initializer full-state interpreter pairs and transactional coherent-tamper rejection. Protected inputs passed and scratch was removed: target/validation/units/e130-layered-obj-managed-build-final-n53v96ij/ and e130-layered-obj-managed-wine-sgpd5u9k/.",
+    "An earlier production build passed; its file guard rejected the result after a test-only source edit. An initial Wine launch could not open the host runtime lock from the sandbox; its own prefix lease was released only after host-visible ownership checks. Failed diagnostics remain retained. Two intermediate test builds failed on missing size arguments and a correction typo.",
+    "The production Windows CLI creates, reuses and verifies E130 under Wine; all 100 previous resources match, and reuse leaves hashes and timestamps unchanged. Guarded evidence: target/validation/units/e130-layered-obj-cli-build-final-l8obzzjw/ and e130-layered-obj-cli-current-rbr9ukkp/. The current generation is retained for pending regression filters."
+  ],
+  "limitations": [
+    "The initializer translated-native cases were subsequently verified; the full draw path, remaining lifecycle scenarios, affected regressions and ordinary gameplay remain unverified. Linux, USA and native Windows are separate."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/layered_obj_animations.rs",
+    "crates/recomp/src/rom_data.rs",
+    "docs/rom_data_obj.md",
+    "crates/recomp/src/rom_data/layered_obj_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "prepare-e130-data-lifecycle-regressions",
+  "title": "Verify E130 data and lifecycle regressions",
+  "kind": "changed",
+  "platforms": [
+    "EUR Windows GNU under Wine"
+  ],
+  "changes": [
+    "Update E130 revision and resource-count expectations in the remaining data, UI and compact-catalog tests while preserving authenticated predecessor comparisons."
+  ],
+  "validation": [
+    "All seven selected E130 full filters pass: dynamic fragments, table graphics, clan aliases, UI context, catalog and UI lifecycle, and previous-bank report. Protected inputs passed and scratch was removed: target/validation/units/e130-affected-regression-build-07tgrhjg/ and e130-other-data-regressions-nxuuzuy5/."
+  ],
+  "limitations": [
+    "Other full and historical catalog E130 regressions remain open under RVR-24. Linux, USA and native Windows are separate. No performance measurement."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/dynamic_raw_fragments_runtime_tests.rs",
+    "crates/recomp/src/rom_data/clan_table_alias_runtime_tests.rs",
+    "crates/recomp/src/rom_data/table_graphics_runtime_tests.rs",
+    "crates/recomp/src/rom_data/ui_context_templates_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_catalog_tests.rs",
+    "crates/recomp/src/rom_data/compact_obj_catalog_table_tests.rs",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

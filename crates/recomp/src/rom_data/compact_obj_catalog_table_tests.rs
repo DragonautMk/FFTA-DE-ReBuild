@@ -48,8 +48,8 @@ fn european_table_compact_catalog_matches_new_fields_and_native_readers() {
     let old_manifest: Manifest = toml::from_str(&fs::read_to_string(prior.join(MANIFEST_FILE)).unwrap()).unwrap();
     let current = read_dataset(&dataset).unwrap();
     assert_eq!((old_manifest.extractor_revision, old_manifest.decoder_revision, old_manifest.resources.len()), (111, 110, 100));
-    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (128, 127, 100));
-    assert_eq!(current.manifest.resources[..99], old_manifest.resources[..99]);
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision, current.manifest.resources.len()), (130, 129, 101));
+    for (updated, previous) in current.manifest.resources[..99].iter().zip(&old_manifest.resources[..99]) { super::conditional_marker_runtime_tests::assert_previous_resource_metadata(updated, previous); }
     assert_eq!(current.manifest.resources[99].format, "compact-obj-catalog-v11-json");
     assert_eq!(old_manifest.resources[99].format, "compact-obj-catalog-v1-json");
     let old: model::CompactObjCatalog = serde_json::from_slice(&fs::read(prior.join(COMPACT_OBJ_CATALOG_FILE)).unwrap()).unwrap();
@@ -198,7 +198,7 @@ fn european_table_compact_catalog_matches_new_fields_and_native_readers() {
     }
     assert_eq!((table_cases, table_bytes), (71, 248));
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "resources":100, "format":"compact-obj-catalog-v2-json", "previous_resources_unchanged":99, "previous_banks_unchanged":34,
+        "status":"PASS", "resources":101, "format":"compact-obj-catalog-v11-json", "previous_resources_unchanged":98, "previous_obj_projection_preserved":true, "previous_banks_unchanged":34,
         "new_banks":3, "new_selectors":22, "new_bank_bytes":1366, "new_table_bytes":218, "new_source_bytes":1584, "unknown_padding_raw":34,
         "native_count_cases":count_cases, "typed_count_bytes":count_bytes, "native_table_cases":table_cases, "typed_table_bytes":table_bytes,
         "table_skip_cases":4, "full_state_clock":true, "coherent_rejection_in_memory":true, "dataset_copies_created":0,

@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "prepare-layered-obj-translated-natural-loop",
+  "title": "Verify translated natural layered OBJ looping",
+  "kind": "changed",
+  "platforms": [
+    "EUR Windows GNU under Wine"
+  ],
+  "changes": [
+    "Compare translated-original multi-layer loop execution with the interpreter for all modeled banks in loop mode 0 and draw variant 0."
+  ],
+  "validation": [
+    "All 3,457 full-state comparisons pass across 16 banks, with all 559 frames in 34 layers visited; 465 original instruction addresses traced and 450,420 managed bytes read with poisoned spans. Protected inputs passed and scratch was removed: target/validation/units/e130-layered-timing-native-build-mneujrtq/ and e130-layered-timing-native-wine-xrs5e3ig/."
+  ],
+  "limitations": [
+    "Other loop modes and draw variants, other consumers and ordinary gameplay remain open. Linux, USA and native Windows are separate. No performance measurement."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/layered_obj_runtime_tests.rs",
+    "docs/rom_data_obj.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}
