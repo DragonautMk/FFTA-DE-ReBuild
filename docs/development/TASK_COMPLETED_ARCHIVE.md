@@ -21200,3 +21200,43 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Outcome: bounded EUR Wine original 081436b4 coordinate prefix passes 24 cases across six source records and four generator seeds; both coordinate stores and two generator advances match the independent calculation.
 - Evidence: docs/changes/2026-11-05-prepare-adjacent-obj-coordinate-prefix.json; target/validation/units/e130-adjacent-coordinate-build-l5lqlad6/ and e130-adjacent-coordinate-wine-ufvf4ubn/. Inputs guarded, scratch removed.
 - Limits: only positive source divisors and the selected prefix; full constructor, translated path, task liveness, other consumers and ordinary gameplay remain open. No performance measurement.
+
+### ROMDATA-04-PARAMETER-ROYAL-VALLEY-MENU-NEGATIVE
+
+- Outcome: completed bounded negative; post-save departure reached Royal Valley battle and Mission pages 1–5. E130 EUR Wine observed zero parameter reads in the recorded opening and page traversal windows. The positive ordinary read and full pair remain open; no cheat was used. Evidence: docs/changes/2026-11-05-observe-royal-valley-parameter-menu.json.
+
+### ROMDATA-04-ROYAL-VALLEY-VICTORY-CANDIDATE-INSPECTION
+
+- Outcome: completed readonly static inspection; CH-0329 source-bound EUR checksum matches, with conditional KEYINPUT read and EWRAM write. CH-0341 is rejected for unsupported conditional slide. Neither is runtime verified. Evidence: target/validation/units/e130-victory-cheat-inspect-7069a4oq/.
+
+### ROMDATA-04-ROYAL-VALLEY-CHEAT-GET-READY-NEGATIVE
+
+- Outcome: completed bounded comparison; CH-0329 frame-boundary conditional applied 100 times at GET READY, then 600 neutral frames. Four images match the same-input control; final image remains in battle. No altered state exported; other timing and original hook remain unproved. Evidence: target/validation/units/e130-cheat-get-ready-compare-ydn836j6/.
+
+### ROMDATA-04-ROYAL-VALLEY-F424-TRACE
+
+- Outcome: completed scoped source/ordinary trace; 0200f424 is a bit field at 0200f390+94. Selected source operations clear bit1, set bit0 and then replace bit0 with bit2. Victory meaning and broader accesses remain open. Original trace command exited zero but cleanup retained a private copy and FAILed; independent guarded verification passed without replay. Evidence: target/validation/units/e130-f424-trace-verify-retry-455wigtv/ and e130-f424-source-windows-ejx3rhi3/.
+
+### ROMDATA-04-ROYAL-VALLEY-CH0341-SOURCE-CORRELATION
+
+- Outcome: completed scoped static decode and saved-value correlation; independent source-seed decode yields conditions 4/260 and an eight-cell zero slide. One candidate row matches visible Laetitia HP/MP; four saved condition values 0/3 do not activate either condition. Device semantics, slot ownership and runtime effect remain unproved. Evidence: target/validation/units/e130-ch0341-oracle-decode-h3h17z_r/, e130-ch0341-battle-snapshot-values-nth8f3ss/ and e130-ch0341-visible-hp-correlation-ie6cc3x5/.
+
+### ROMDATA-04-ROYAL-VALLEY-CH0341-CONDITION-TRACE
+
+- Outcome: completed bounded ordinary trace; candidate condition moves 3→4 at guest frame 15560 and 4→5 at 15812 during the initial enemy action. No cheat applied; device semantics and effect remain unproved. Evidence: target/validation/units/e130-f59e-enemy-turn-trace-5sk95az7/.
+
+### ROMDATA-04-ROYAL-VALLEY-CH0341-OBSERVED-DIVERGENCE
+
+- Outcome: completed bounded control comparison; source-decoded host-frame conditional slide performs 1,064 writes over 133 frames and produces a dialogue divergence. Victory, later phases and original device semantics remain unproved; no altered state exported. Evidence: target/validation/units/e130-ch0341-first-attack-compare-rbnqpyx5/.
+
+### ROMDATA-04-ROYAL-VALLEY-CH0341-FIRST-BATTLE-CLEARED
+
+- Outcome: completed scoped cheat-assisted first battle; reproduced host-frame CH-0341 setup and dialogue reach visible MISSION CLEARED and black transition. No altered state exported; later phases and normal full-route/device equivalence unproved. Evidence: target/validation/units/e130-ch0341-dialogue-continuation-98imcbve/.
+
+### ROMDATA-04-ROYAL-VALLEY-CH0341-POSTCLEAR-TRANSITION
+
+- Outcome: completed bounded cheat-assisted transition; reproduced black endpoint and 1,500 neutral frames reach Babus dialogue. Later battle remains unobserved; no altered state exported. Evidence: target/validation/units/e130-ch0341-transition-continuation-3zmx9owi/.
+
+### ROMDATA-04-ROYAL-VALLEY-CH0341-BABUS-DIALOGUE
+
+- Outcome: completed bounded continuation; six normal A inputs advance Babus dialogue after first-battle cheat, disabled after frame 1400. No later battle or altered state export. Evidence: target/validation/units/e130-ch0341-babus-dialogue-ru_rvm7u/.

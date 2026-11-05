@@ -511,6 +511,52 @@ Documentation: [rom_data_obj.md](docs/rom_data_obj.md).
 
 [Change record](docs/changes/2026-11-05-prepare-adjacent-obj-coordinate-prefix.json)
 
+## 2026-11-05 — Observe the first Royal Valley mission menu
+
+Type: docs. Platforms: EUR Windows CLI under Wine.
+
+**Changes**
+
+- Record the post-save Ambervale departure route to Royal Valley and the selected parameter-resource observations.
+- Document the bounded first-phase Mission pages 1–5 result and retain the ordinary positive and paired comparison as open.
+- Inspect two existing EUR victory-cheat candidates without executing them and record the later-finale text lead.
+- Compare the isolated CH-0329 frame-boundary interpretation against an identical-input control during the first battle transition.
+- Trace the candidate cheat halfword to a live bit field in the first battle transition and identify selected source operations without assuming a victory condition.
+- Decode the alternative CH-0341 source with the independent mGBA-derived oracle and correlate one candidate record against a visible unit display.
+
+**Validation**
+
+- After the isolated save path, recorded departure and dialogue reach Royal Valley deployment and battle; both original save files were protected. The emulated save bytes were not independently exported.
+- Production E130 EUR Wine reports zero parameter reads in the selected departure, dialogue, deployment, battle and Mission menu windows listed in docs/rom_data_gameplay.md. Opening Mission takes 372 frames; pages 1–5 take 504 frames. Receipts: target/validation/units/e130-royal-mission-cli-8uyoaj0w/ and e130-royal-mission-pages-cli-j5xi9tdq/.
+- Visual inspection identifies Royal Valley page 1/5 and each subsequent page; final images match corresponding interpreter-helper observations. Matching images do not prove complete machine-state equivalence.
+- The user describes three final-battle phases and authorizes an isolated victory cheat if needed. No cheat was used in these observations.
+- Readonly source-bound E130 EUR Wine CLI inspection of CH-0329 reports a conditional KEYINPUT/EWRAM plan with matching actual-ROM source-master checksum; CH-0341 is rejected because conditional slide semantics are unsupported. No guest code or cheat ran. Evidence: target/validation/units/e130-victory-cheat-inspect-7069a4oq/.
+- EUR Windows interpreter under Wine: 100 frames Select+Up followed by 600 neutral from the same checkpoint; experimental run performs 100 conditional EWRAM halfword writes and control performs none. Four sampled endpoint images match, and the final image remains in battle. No altered state was exported. Evidence: target/validation/units/e130-cheat-get-ready-compare-ydn836j6/.
+- Battle transition samples show the objective, GET READY and first turn; they do not establish the exact presence or timing of an ENGAGE prompt. Evidence: target/validation/units/e130-royal-engage-sample-r5jrgox9/ and e130-royal-engage-sample2-fw3664__/.
+- An ordinary 540-frame EUR Wine interpreter trace observes three halfword changes at 08096652, 081293de and 081255e4, plus selected immediate-offset readers; static source windows resolve the field as 0200f390+94 and identify bit operations. Scope excludes register-offset, block and DMA accesses. Evidence: target/validation/units/e130-f424-trace-verify-retry-455wigtv/ and e130-f424-source-windows-ejx3rhi3/.
+- The completed trace unit exited zero and passed protected-input checks but retained a private input and reports FAIL under cleanup policy; a separate guarded verifier passed without rerunning the game. Failed build and first verifier units remain retained.
+- Readonly oracle decodes CH-0341 as two condition/slide pairs targeting eight strided halfwords; four battle snapshots have condition 0 or 3. At a separate Laetitia checkpoint, candidate row 2 matches the visible HP 169/169 and MP 166/166. Evidence: e130-ch0341-oracle-decode-h3h17z_r/, e130-ch0341-battle-snapshot-values-nth8f3ss/ and e130-ch0341-visible-hp-correlation-ie6cc3x5/ under target/validation/units/.
+- A separate 1,800-frame ordinary EUR Wine trace sees the candidate condition change 0→3→4→5→6→3 during the initial enemy action; 4 is entered at guest frame 15560 and left at 15812. Immediate-offset CPU access scope only; no cheat ran. Evidence: target/validation/units/e130-f59e-enemy-turn-trace-5sk95az7/.
+- Two isolated 2,400-frame neutral EUR Wine interpreter runs compare the CH-0341 frame-boundary condition/slide interpretation against no writes. The candidate applies 1,064 halfword writes over 133 active frames and reaches a visible dialogue absent in the control at the same sampled point; the endpoint remains there. No altered state was exported. Evidence: target/validation/units/e130-ch0341-first-attack-compare-rbnqpyx5/.
+- A separate replay reproduces the 1,400-frame experimental image, then ten recorded A inputs advance the dialogue to a visible MISSION CLEARED and a black transition. The first battle clears under this cheat interpretation; no later phase or altered state export is established. Evidence: target/validation/units/e130-ch0341-dialogue-continuation-98imcbve/.
+- A further reproduction matches the previous black-transition image and advances 1,500 neutral frames to Babus dialogue on the Royal Valley map; the later battle is not yet observed. Evidence: target/validation/units/e130-ch0341-transition-continuation-3zmx9owi/.
+- Reproducing the cheat-assisted route with the cheat disabled after frame 1,400 and six recorded A inputs advances Babus dialogue; no later battle or altered state export. Evidence: target/validation/units/e130-ch0341-babus-dialogue-ru_rvm7u/.
+
+**Limitations**
+
+- Only selected windows were instrumented; their zero counters do not establish global absence or cover later phases.
+- Program 95 execution, positive ordinary parameter consumption and the complete raw/managed state, clock, image, OAM and audio pair remain unproved.
+- Wine execution is not native Windows validation.
+- The cheat source, device hook, actual gameplay effect and later-finale script reachability remain unverified; any cheat-assisted setup requires explicit provenance.
+- The bounded cheat comparison does not verify original device timing, behavior at other windows, complete state equivalence or a later phase.
+- The halfword bit operations do not establish which condition ends the battle or whether CH-0329 is effective at a different timing.
+- CH-0341 conditional-slide device semantics, unit-slot ownership, gameplay effect and victory remain unverified; it was not applied.
+- The observed CH-0341 divergence is not yet a verified victory or later phase, and the host-frame implementation does not validate original device semantics.
+
+Documentation: [rom_data_gameplay.md](docs/rom_data_gameplay.md).
+
+[Change record](docs/changes/2026-11-05-observe-royal-valley-parameter-menu.json)
+
 ## 2026-11-05 — Model conditional layered OBJ source pairs
 
 Type: added. Platforms: EUR Windows GNU under Wine.

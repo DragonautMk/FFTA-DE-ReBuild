@@ -5453,8 +5453,166 @@ One A press followed by 180 neutral frames from that post-save checkpoint
 also leaves the E129 CLI on the visible Ambervale map and reports zero
 parameter-resource reads (`e129-prefinal-postsave-managed-l_97lwxn/`). This
 does not exclude other paths and later execution. The user subsequently
-confirmed that Ambervale is the intended location; the remaining trigger is
-still unobserved.
+confirmed that Ambervale is the intended location.
+
+A different [walkthrough](https://gamefaqs.gamespot.com/gba/560436-final-fantasy-tactics-advance/faqs/25637)
+describes saving at Ambervale and then attempting to leave. From the protected
+post-save checkpoint, the recorded Area List selection and departure toward
+Bervenia reach an interior sequence, dialogue, deployment and the Royal Valley
+battle. The prior departure had followed a declined save and is a distinct
+observation. The visible mission objective is to defeat Llednar. The user notes
+that the final battle has three phases; only the first has been reached here.
+Original cartridge save files were guarded; the emulated save bytes were not
+independently exported.
+
+Production E130 EUR Wine observations report zero parameter reads in the
+recorded departure and 540-frame interior windows (`e130-postsave-departure-cli-
+sy3u_w_7/`, `e130-postsave-scene-cli-0wn913u1/`), in selected dialogue and
+deployment windows (`e130-royal-dialogue-cli-49x7kldv/`,
+`e130-royal-dialogue-d-cli-lv2qc1z1/`, `e130-royal-card-cli-lehd4bi7/`,
+`e130-royal-deploy-cli-uizyhsi_/`), and in a battle start, neutral wait and
+separate Llednar dialogue window (`e130-royal-begin-cli-powx7tex/`,
+`e130-royal-battle-wait-cli-_2b3dmip/`,
+`e130-royal-battle-dialogue-cli-vmkkg4y0/`). These are selected windows, not
+continuous coverage of the entire route. Replay-helper checkpoints show the
+same endpoint images for the matched observations; image equality alone is
+not a complete state, timing, OAM or audio comparison.
+
+Following the user’s mission-menu lead, System → Mission opens Royal Valley
+page 1/5. Four Right presses traverse pages 2–5. Production E130 EUR Wine
+reports zero parameter reads and zero records used for opening the menu (372
+frames) and traversing the pages (504 frames); the corresponding helper
+endpoint images match (`target/validation/units/e130-royal-mission-cli-
+8uyoaj0w/`, `e130-royal-mission-pages-cli-j5xi9tdq/`,
+`e130-royal-mission-pages-knfopfdx/`). This bounds those inputs only; the
+source link to program 95, later phases, a positive ordinary read and the
+full raw/managed pair remain unproved. No cheat was used in these observations.
+
+The English text bank linked to candidate key 98 contains dialogue about the
+world returning and Remedi having disappeared. This supports a later-finale
+lead but does not establish when program 95 executes, that this saved game
+reaches it, or that its mode-2 instruction is taken. The user notes three
+final-battle phases and authorizes a victory cheat if needed. A readonly E130
+EUR Wine CLI inspection of the existing source-bound cheat catalog reports
+CH-0329 (Clear Mission) as a conditional KEYINPUT read and EWRAM halfword
+write; the linked source master checksum matches the actual EUR ROM. CH-0341
+(Win After 1st Attack) is rejected by the current decoder because conditional
+slide semantics are unsupported. Neither candidate has been applied or
+verified in this battle. An external [code listing](https://almarsguides.com/Retro/Walkthroughs/GBA/Games/FinalFantasyTacticsAdvance/CodeBreaker/Europe/)
+describes Select+Up at Engage for Clear Mission, but this is an unverified
+source instruction, not proof of this ROM's behavior or effect on the final
+sequence. Evidence: `target/validation/units/e130-victory-cheat-inspect-
+7069a4oq/`. A cheat-assisted setup would need explicit provenance and cannot
+by itself establish an ordinary playthrough.
+
+A follow-up sampled the first Royal Valley battle transition at ten-frame
+intervals for 180 frames and then at twenty-frame intervals for another 360
+frames. The inspected images show the boss objective, GET READY and the first
+turn, but do not establish the exact timing or presence of an ENGAGE prompt.
+From a retained ordinary checkpoint shortly before GET READY, a standalone
+Windows interpreter helper ran two copies with identical input: Select+Up for
+100 frames and neutral for 600. In the experimental copy only, the decoded
+CH-0329 conditional was applied at each frame boundary while the input matched;
+its EWRAM halfword changed from `0004` to `0b14` on the first of 100 writes.
+No altered state was exported. Four sampled images (after 100, 200, 400 and
+700 frames) match the control, and the last visibly remains in battle. This
+is a bounded negative for that frame-boundary interpretation and window, not
+proof that the original device hook or another timing fails, or that complete
+machine state matches. The helper, trace and source checkpoint are retained
+under private validation units; original ROM and saves were protected.
+Evidence: `target/validation/units/e130-royal-engage-sample-r5jrgox9/`,
+`e130-royal-engage-sample2-fw3664__/`,
+`e130-cheat-get-ready-compare-ydn836j6/`. Two direct Rust compilation attempts
+failed to resolve the prebuilt core; the isolated Cargo build succeeded after
+a workspace-manifest correction (`e130-cheat-observer-cargo-retry-nvow9m0z/`).
+The sampling launcher also had one corrected protected-path typo before unit
+creation. No later phase, positive parameter use or pair has been demonstrated.
+
+A separate 540-frame ordinary interpreter trace from the earlier battle-start
+checkpoint identifies immediate-offset Thumb accesses overlapping the cheat's
+halfword at `0200f424`. The original source windows load base `0200f390` and
+add `94`; the halfword is treated as a bit field by the observed code. Three
+executed Thumb stores changed it `0002 → 0000` at `08096652`, `0000 → 0001`
+at `081293de`, and `0001 → 0004` at `081255e4`. The corresponding static
+windows respectively clear bit 1, set bit 0, and clear bit 0 while setting
+bit 2. Other observed readers test bit 0, bit 1 or bit 7. These source-backed
+operations do not identify a victory condition, validate the cheat or prove
+the complete set of readers and writers. The trace covers immediate-offset
+CPU operations only, excluding register-offset/block transfers and DMA.
+
+The trace command exited successfully and its original protected-input checks
+passed, but the validation unit retained its private source copy and reports
+FAIL at its cleanup policy. A separate read-only verifier rechecked all eight
+protected input snapshots, the exact trace and the terminal receipt without
+replaying the game; it passed (`e130-f424-trace-verify-retry-455wigtv/`).
+Static disassembly and literal resolution passed separately
+(`e130-f424-source-windows-ejx3rhi3/`). The initial source-trace build had a
+corrected syntax error, and the first receipt-verification attempt lacked the
+script import path. All failed units remain retained.
+
+The local mGBA-derived CodeBreaker decryptor independently decodes the six
+CH-0341 source lines as two equality conditions on `0200f59e`, comparing 4
+and 260 respectively, followed in each case by an eight-halfword slide from
+`02002fdc` at stride `0108`, writing zero. This is decryption under the
+selected source seed, not validation of conditional-slide device semantics.
+Four retained first-battle snapshots have condition values 0 or 3, so neither
+condition is met at those saved boundaries. Their eight candidate halfwords
+are 225, 162, 169, 194, 194, 191, 0 and 50; saved values do not prove live
+use or unit ownership. At a separate Laetitia display checkpoint, the third
+candidate and its next three halfwords are 169, 169, 166, 166; the visually
+inspected UI shows HP 169/169 and MP 166/166. This is a strong correlation,
+not proof that all eight cells are enemy HP or that a write yields a victory.
+No CH-0341 cheat was applied. Guarded read-only evidence:
+`e130-ch0341-oracle-decode-h3h17z_r/`,
+`e130-ch0341-battle-snapshot-values-nth8f3ss/`, and
+`e130-ch0341-visible-hp-correlation-ie6cc3x5/` under `target/validation/units/`.
+
+A separate 1,800-frame, neutral-input EUR Wine interpreter trace from the
+first battle-start checkpoint observes the candidate condition halfword change
+from 0 to 3 at guest frame 14953, 3 to 4 at 15560, 4 to 5 at 15812, 5 to 6
+at 15844 and 6 to 3 at 15855. Each recorded change came from a Thumb byte
+store; the observation spans the initial enemy action. The value 4 is thus
+observed between those stores, not merely inferred from a saved endpoint.
+This trace does not apply the cheat or establish device semantics, and covers
+only immediate-offset CPU accesses, not register-offset/block or DMA paths.
+All protected inputs passed; evidence:
+`target/validation/units/e130-f59e-enemy-turn-trace-5sk95az7/`.
+
+Two isolated interpreter runs then start from the same protected checkpoint
+with 2,400 neutral frames. The experimental run applies the independently
+decoded eight-halfword zero slide at each frame boundary when the condition is
+4 or 260; the control performs no writes. The first application occurs at
+guest frame 15561, with the eight preceding values 225, 162, 169, 194, 194,
+191, 0 and 50. It is active for 133 frames and performs 1,064 writes. After
+1,400 frames the experimental image shows a dialogue that the control does
+not show at that point; the 2,400-frame experimental endpoint is still at
+that dialogue. This is an observable divergence, not yet a verified victory
+or later phase. The host-frame implementation is an explicit interpretation,
+not verification of the original device hook or conditional-slide behavior.
+No altered state was exported, and original saves and ROM were protected. The
+first helper build failed on a Rust borrow check; its corrected build passed.
+Evidence: `target/validation/units/e130-ch0341-first-attack-compare-rbnqpyx5/`
+and `e130-ch0341-observer-build-retry-4ukbop_g/`.
+
+A distinct replay reproduces the experimental setup, with the 1,400-frame
+image exactly matching the prior experimental image. Ten A presses separated
+by neutral frames advance the displayed dialogue; subsequent sampled images
+show **MISSION CLEARED** and then a black transition at frame 2,660. This
+verifies that the first Royal Valley battle cleared under this host-frame
+cheat interpretation, not that the unmodified route or original device
+produces the same outcome. The later phase has not yet been observed. No
+altered state was exported; inputs and writes remain in the private helper
+and log. Evidence: `e130-ch0341-dialogue-continuation-98imcbve/`.
+
+A further reproduction matches that black-transition image and runs 1,500
+neutral frames. It reaches and remains at Babus's dialogue on the Royal
+Valley map; no later battle is established yet. Evidence:
+`e130-ch0341-transition-continuation-3zmx9owi/`. No altered state was exported.
+A further reproduction matches the prior Babus image, disables the experimental
+cheat after frame 1,400, and advances six recorded A presses. The endpoint
+remains in Babus's dialogue; no later battle or state export is established.
+The setup still has 133 active cheat frames and 1,064 writes, all before the
+dialogue (`e130-ch0341-babus-dialogue-ru_rvm7u/`).
 
 A later guarded source join checks all 512 physical mission records and their
 referenced event keys against these five direct mode-2 candidates. None of the

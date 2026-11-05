@@ -233,7 +233,10 @@ complete animation. Rejected leads and closed negative locators remain closed.
 
 - [ ] **ROMDATA-04-PARAMETER-RECORDS27-ORDINARY:** establish positive ordinary
   consumption and its paired comparison. Preserve the 59 observed records and
-  eleven closed negative captures; the full domain remains unproved.
+  eleven closed negative captures; the full domain remains unproved. The
+  post-save Royal Valley first-phase Mission pages 1–5 are another bounded
+  zero-read observation, not the required positive pair; later phases remain
+  untested.
   [Gap](../rom_data_gameplay.md#ordinary-sparse-parameter-record-reachability-remains-partial).
 - [x] **ROMDATA-04-LOCALIZED-TABLE-GRAPHICS-ORDINARY:** White Flowers entry
   reads three aggregated groups and passes a 700-frame EUR Wine raw/managed

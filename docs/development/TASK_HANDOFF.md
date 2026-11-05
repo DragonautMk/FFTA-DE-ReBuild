@@ -38,7 +38,7 @@ termination of another owner's process or changing another thread's goal state.
 - Outcome: partial
 - Verified: E130 101 resources/102 files, 63 compact banks; managed and translated layered initializer and CLI create/reuse/verify PASS under EUR Wine. Current: target/validation/units/e130-layered-obj-cli-current-rbr9ukkp/work/resources/. E129 retained for comparison with its accepted 38 regressions, marker and startup proofs.
 - Missing: unmigrated resources/consumers, missing ordinary-use evidence, ABI/global extent/indirect calls and mod phases ROMDATA-06/07; Linux/USA/native Windows/new32:9 remain distinct. EUR, reduced Wine scope, no performance/space measurements; originals and personal saves unchanged.
-- Selection after continuation: data validation recovery; `ROMDATA-04-PARAMETER-RECORDS27-ORDINARY` partial. Post-save departure reached Royal Valley battle; Mission pages 1–5 were visited. Managed CLI observations 8uyoaj0w/j5xi9tdq report zero parameter reads, with matching interpreter endpoint images. User notes three final-battle phases and authorizes a victory cheat if needed; positive ordinary read and full pair remain missing. Next: inspect source-backed mission/formatter context and assess whether a later phase is relevant before choosing an isolated cheat. `docs/rom_data_gameplay.md`.
+- Selection: `ROMDATA-04-PARAMETER-RECORDS27-ORDINARY` partial. CH-0341 host-frame setup clears first battle; after six A inputs Babus dialogue continues, cheat disabled after frame 1400 (ru_rvm7u). Next: advance the visible dialogue with bounded inputs, retaining provenance; later phase and positive pair remain open.
 - Resume: [validation recovery checklist](ROM_DATA_VALIDATION_RECOVERY_TODO.md) for skipped checks; [ROM_DATA_TODO](ROM_DATA_TODO.md), only the selected criterion's section (ROMDATA-01/02/03/04/05/06/07); [inventory](ROM_DATA_INVENTORY.md). Do not read the whole TODO. Children retain their IDs and limits:
   - `ROMDATA-04-PARAMETER-RECORDS27-ORDINARY`: source/model/runtime/CLI accepted, ordinary positive and pair open. User confirms Ambervale; recorded movement and post-save A windows are negative (inl3r0yl/l_97lwxn), not global absence. `docs/rom_data_gameplay.md`.
   - Localized table graphics: scoped ordinary trigger and pair accepted; aggregate counters do not identify the three groups, and all-bank/all-group/consumer coverage remains open. `docs/rom_data_ui_graphics.md`, ordinary table extension section.
@@ -202,8 +202,8 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 - Task: data validation recovery; parameter ordinary-use route partial.
-- Last verified result: 24 EUR Wine original constructor prefix cases pass for six source records and four generator states.
-- Remaining work: full constructor, translated path, indirect callers, other consumers and ordinary use; deferred platforms remain separate.
-- Errors or blockers: earlier sandbox Wine lock and test-build failures retained; own prefix lease released after host-visible checks.
-- Next action: continue the visible Cid dialogue from aclqlvyt and observe parameter reads.
-- References: docs/rom_data_obj.md; docs/changes/2026-11-05-integrate-layered-obj-resource-unverified.json; target/validation/units/e130-layered-obj-native-wine-fbu857s4/; docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md.
+- Last verified result: cheat-assisted first battle cleared; six normal A inputs advance Babus dialogue with cheat disabled.
+- Remaining work: later battle phases, positive ordinary read and full pair; other recovery criteria open.
+- Errors or blockers: no altered state exported; original device semantics unproved; originals guarded.
+- Next action: continue the visible Babus dialogue with bounded normal input.
+- References: docs/rom_data_gameplay.md; target/validation/units/e130-ch0341-babus-dialogue-ru_rvm7u/; docs/changes/2026-11-05-observe-royal-valley-parameter-menu.json.
