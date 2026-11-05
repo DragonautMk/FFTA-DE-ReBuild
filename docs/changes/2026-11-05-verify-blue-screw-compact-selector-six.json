@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "verify-blue-screw-compact-selector-six",
+  "title": "Verify an ordinary compact OBJ selector 6 scene",
+  "kind": "docs",
+  "platforms": [
+    "EUR Windows executable under Wine"
+  ],
+  "changes": [
+    "Extend ordinary compact catalog coverage with a distinct IN-08 Blue Screw action observing bank 6c1e78 selector 6, alongside the accepted Red Spring selector 5."
+  ],
+  "validation": [
+    "Normal input from the retained IN-08 Pandora menu reached Blue Screw confirmation at guest frame 7673. The e128 snapshot-only selector-offset watch observed the represented two-byte read at 0x086c218c on frame 8048; the 600-frame native raw/managed pair matched complete state, clock, central/wide images, OAM, dispatch and five audio streams at every frame. Inputs were guarded and successful runtime scratch removed. Evidence: target/validation/units/e128-pandora-blue-blue-screw-target-lvshesyo/ and e128-blue-screw-selector-pair-2v9x4fr7/."
+  ],
+  "limitations": [
+    "Catalog counters aggregate banks; the exact watched selector offset identifies this bank and selector. The full animation, selectors 3 and 4, other callers, the conditional Alpha lead, Linux, USA, native Windows and performance remain separate."
+  ],
+  "files": [
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_compact_catalog.md"
+  ]
+}

@@ -195,10 +195,31 @@ Both probes preserve all83 resource ID/hash pairs,86 managed paths, original
 checkpoints/inputs/ROM/cache/TinyCC and canonical executable. Only normal keys
 on copies are used. No observer build, positive guard, full pair, longer-bound
 retry, RNG resampling or old combat route recreation follows either negative.
-Source/model/runtime/registration acceptance stays closed. Positive ordinary
-use/full scene equivalence remains open until a concrete constructor/context
-is identified; blind gameplay discovery is stopped. Private diagnostics stay
-under `target/rom-data-localized-table-graphics-ordinary/`.
+Source/model/runtime/registration acceptance stays closed. These two earlier
+bounds did not establish positive ordinary use or full scene equivalence. Blind
+gameplay discovery was stopped. Private diagnostics stay under
+`target/rom-data-localized-table-graphics-ordinary/`.
+
+A later source-guided selection uses the retained EUR White Flowers entry before
+battle initialization. Original task registration references callback `08024491`;
+its state-zero branch calls the `0802c8c4` initializer associated with root
+`71e6d0`. This source link motivates the scene but does not identify which groups
+were read. From the recorded Giza Plains mission menu, the existing normal A
+input runs frames 19409–20109. The e128 production CLI reports 2,627 table
+reads, 2,755 source bytes, 1,118 decoded literal bytes, 12 selector bytes,
+three banks and three groups. These are aggregate counters; exact group or bank
+identities are not attributed by this measurement.
+
+A separate e128 native raw/managed pair using the same protected checkpoint,
+input and dataset passes all 700 frames: full serialized state and clock,
+central and wide images, OAM, dispatch and five audio streams match at each
+frame. The positive CLI and pair are separate executions; the pair itself did
+not instrument group identities. Both guarded validation units passed and
+retired successful scratch. Evidence:
+`target/validation/units/e128-localized-ui-white-flowers-entry-7ewe6mwj/` and
+`e128-localized-ui-white-flowers-pair-2rcuaiy1/`. This closes the scoped ordinary
+trigger and paired proof, not all 40 banks, eight groups, selectors, consumers,
+Linux, USA or native Windows.
 
 EUR schema1/extractor21/decoder20 introduced fixed `ui-graphics.json`, resource
 `graphics.ui-custom-banks`, format `ui-custom-banks-v1-json`. The declared

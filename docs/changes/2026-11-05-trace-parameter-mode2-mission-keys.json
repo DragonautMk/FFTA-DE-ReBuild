@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "trace-parameter-mode2-mission-keys",
+  "title": "Trace sparse parameter mode-2 and mode-0 candidates",
+  "kind": "docs",
+  "platforms": [
+    "EUR source and retained checkpoints"
+  ],
+  "changes": [
+    "Compare five source-backed parameter mode-2 event keys with all physical mission event references and retained checkpoint header values.",
+    "Join mode-0 script instructions and retained checkpoint event values without inferring live execution."
+  ],
+  "validation": [
+    "A guarded source join authenticates 512 mission references against ROM bytes and finds none using keys 56, 68, 77, 96 or 98. Sixteen previously recorded checkpoint values do not match conditional primary headers 47, 51, 54, 59 or 60. The first helper stopped on an incorrect working-directory assumption before source reads; the corrected read-only unit passed. Evidence: target/validation/units/e128-parameter-mode2-mission-join-corrected-g_7vvb92/ and e128-parameter-mode2-mission-join-210xnxgf/.",
+    "A guarded source/checkpoint join checks 36 encoded mode-0 instructions and 18 distinct EUR payloads. Nine contain nonzero event parameters, zero override and key 168 pointing conditionally to program 158; their formatter gate is zero. An initial scan used wrong gate/mode offsets and is rejected; a corrected scan and final input-guarded scan pass. Evidence: target/validation/units/e128-parameter-mode0-retained-scan-1txwwau7/, e128-parameter-mode0-retained-scan-corrected-dh_8wdma/ and e128-parameter-mode0-retained-scan-guarded-8cnnyb8v/.",
+    "A source-pinned read of the retained RIVER deployment context finds program 158 cursor 28, after the mode-0 instruction at relative 22; target/validation/units/e128-parameter-river-script-cursor-9aarc8ce/. This order alone does not exclude a branch back."
+  ],
+  "limitations": [
+    "This direct join does not exclude indirect scripts, different override/mode routes or other checkpoints; values alone do not prove the active encounter. Positive ordinary use and paired comparison remain open; no guest execution or performance measurements.",
+    "Saved event and formatter values and a script archive link do not prove program liveness or a reachable transition; no positive runtime invocation is claimed."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md"
+  ]
+}

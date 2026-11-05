@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "verify-extended-roulette-selectors",
+  "title": "Verify Roulette selectors and extended animation window",
+  "kind": "docs",
+  "platforms": [
+    "EUR Windows executable under Wine"
+  ],
+  "changes": [
+    "Extend the scoped ordinary octonary recovery proof with direct selector 0 and 1 observations and a 1,200-frame paired Roulette window."
+  ],
+  "validation": [
+    "A snapshot-only selector-offset watch on the authenticated IN-19 Roulette seed observes octonary selector 0 at 0x086cc154 on frame 12251 and passes a 600-frame e128 Wine raw/managed pair. Evidence: target/validation/units/e128-6cc124-selector-watch-pair-vkj66o3u/.",
+    "A second snapshot watch restricted to selector offsets 1 and 2 observes selector 1 at 0x086cc156 on frame 12276. The e128 Wine native raw/managed pair passes 1,200 frames through 13160 with full state, guest clock, central/wide images, OAM, dispatch and all five audio streams equal every frame; 5,831 owner source bytes served. Guarded inputs pass and successful runtime scratch is removed. Evidence: target/validation/units/e128-6cc124-late-selector-pair-nqbg2k88/."
+  ],
+  "limitations": [
+    "The snapshot-only tests reuse the generic catalog watch trigger and its legacy root label; the watched offsets and counters are octonary-specific. Selector 2, all lists/frames, action completion, other consumers, Linux, USA, native Windows and performance remain separate."
+  ],
+  "files": [
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

@@ -20641,3 +20641,28 @@ Two 24-row EUR callers select 0–7; 132 bank bytes and 594 conditional table by
 - Verified criteria: IN-08 Action transition observes UI template 2 at 08394e6c on frame 7504, with 5 typed reads/20 bytes; 64-frame EUR Wine native raw/managed pair matches full state/clock/images/OAM/dispatch/five audio. Previous IN-19 native address inventory identifies distinct template 5.
 - Evidence: docs/changes/2026-11-04-verify-second-ordinary-ui-context.json; target/validation/units/e128-ui-context-action-watch-pair-jkiu_u9u/; target/validation/units/e128-ui-context-ordinary-distinct-iybjczy_/.
 - Limits: other records/consumers, complete UI extent, Linux, USA, native Windows and performance remain separate. First evidence join failed before guest execution and corrected retry passed.
+
+### ROMDATA-04-COMPACT-OBJ-E101-E107-6C6928-SELECTOR2
+
+- Outcome: completed
+- Verified criteria: IN-08 normal Kent/Ball scene, e128 EUR Wine senary owner 13244 reads/16235 bytes, exact selector 2 offset 086c6b84 at frame 8388; 600-frame native raw/managed state/clock/central-wide images/OAM/dispatch/five-audio pair PASS.
+- Evidence: docs/changes/2026-11-05-verify-ordinary-senary-selector-two.json; target/validation/units/e128-6c6928-ball-cli-r92x_wcl/; target/validation/units/e128-6c6928-ball-selector-pair-ekg5hpou/.
+- Limits: audit snapshot repurposes catalog watch trigger and old root label for senary address and counters; conditional selector 6 not claimed. Other selectors/banks, complete animation, consumers, Linux, USA, native Windows and performance remain separate.
+
+### ROMDATA-04-OCTONARY-6CC124-EXTENDED
+
+- Outcome: completed
+- Verified criteria: IN-19 Roulette e128 EUR Wine selector 0 offset 086cc154 read at frame 12251, selector 1 offset 086cc156 at frame 12276; extended 1200-frame native raw/managed pair PASS through frame 13160, complete state/clock/images/OAM/dispatch/five audio equal.
+- Evidence: docs/changes/2026-11-05-verify-extended-roulette-selectors.json; target/validation/units/e128-6cc124-selector-watch-pair-vkj66o3u/; target/validation/units/e128-6cc124-late-selector-pair-nqbg2k88/.
+- Limits: snapshot audit repurposes catalog watch trigger/legacy root label for octonary offsets/counters. Selector 2, all lists/frames, action completion, other consumers, Linux, USA, native Windows and performance remain separate.
+
+### ROMDATA-04-LOOP-COMPACT-CATALOG-BLUE-SCREW
+
+- Outcome: completed
+- Verified criteria: distinct IN08 Pandora Blue Screw scene, 6c1e78 selector6 offset 086c218c at frame8048 and 600-frame e128 EUR Wine native raw/managed pair with full state/clock/images/OAM/dispatch/five audio equal.
+- Evidence: docs/changes/2026-11-05-verify-blue-screw-compact-selector-six.json; target/validation/units/e128-pandora-blue-blue-screw-target-lvshesyo/; target/validation/units/e128-blue-screw-selector-pair-2v9x4fr7/.
+- Limits: aggregate catalog counters; selector3/4, other banks/callers, Alpha/6c4c50, complete animations, Linux, USA, native Windows and performance remain separate. Broader parent remains partial.
+
+### ROMDATA-04-LOCALIZED-TABLE-GRAPHICS-ORDINARY — scoped completion 2026-11-05
+
+EUR White Flowers ordinary entry frames 19409–20109: separate e128 production CLI reports 2627 reads, 2755 source bytes, 1118 decoded literal bytes, 12 selector bytes, three aggregate banks/groups. An independent raw/managed native pair using the same guarded state and input passes 700 complete state/clock, central/wide image, OAM, dispatch and five-audio-stream comparisons. Both validation units pass and successful scratch is removed. Exact group identities and all-bank/all-group/consumer, Linux/USA/native Windows and mod coverage remain open; no performance measurement. Evidence: docs/rom_data_ui_graphics.md ordinary table-extension section; target/validation/units/e128-localized-ui-white-flowers-entry-7ewe6mwj/ and e128-localized-ui-white-flowers-pair-2rcuaiy1/. The two earlier negative ordinary bounds remain closed.

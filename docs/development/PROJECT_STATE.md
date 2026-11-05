@@ -2047,6 +2047,16 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   guest semantics; a host-only overlay does not itself change the guest ABI.
 - Desktop packaging covers Windows and Linux. The release profile uses thin
   LTO and 16 codegen units; the Cargo manifest is authoritative.
+- EUR localized table graphics have a normal White Flowers battle-entry proof:
+  e128 Wine CLI reports three aggregate groups in 700 frames and the same
+  checkpoint/input passes a separate raw/managed state/clock/image/OAM/dispatch/
+  audio pair. Exact group identities, all 40 banks/eight groups and other
+  platforms remain open. [Evidence](../rom_data_ui_graphics.md#ordinary-table-extension-reachability-remains-partial).
+- EUR e106-d105 senary compact OBJ bank `6c6928` has an ordinary IN-08
+  Kent/Ball proof: e128 EUR Wine observes selector 2 and passes a 600-frame
+  native raw/managed state/clock/image/OAM/dispatch/audio pair. Other selectors,
+  complete animation, consumers and Linux/USA/native Windows remain open.
+  [Evidence](../rom_data_obj.md#ordinary-european-senary-selector-2).
 - EUR e108-d107 additionally owns the caller-witnessed compact OBJ bank at
   `6cc124..6cc18a`: 102 bytes, 21 frames, five lists/four objects. All 97 prior
   resources remain identical. Reduced Wine source/model and combined managed/
@@ -2058,7 +2068,9 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   A normal IN-19 EUR Marche Blue Magic/Roulette confirmation in Mage Tourney
   now proves 4,744 new-bank reads/5,831 bytes and native raw/managed equivalence
   across 600 frames, 11960..12560 (full state/clock/render/OAM/dispatch/audio).
-  Full animation and ordinary selector/list completeness, Linux/USA/native
+  Later e128 Wine watches observe selectors 0 and 1; an extended 1,200-frame
+  raw/managed pair passes through frame 13160. Selector 2 and full animation
+  remain unproved. Ordinary selector/list completeness, Linux/USA/native
   Windows remain unverified; no benchmark or new extraction/build.
 - EUR e109-d108 additionally owns eleven category-selected UI context templates
   at `394e44..394f20` (220 bytes), with typed coordinates, allocation count,
@@ -2111,9 +2123,10 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
 - EUR e128-d127 extends bank `6c1e78` to conditional selectors 3/4/5/6,
   preserving the prior bank projection and 99 other resources. EUR Wine
   create/reuse/startup, selected readers, complete catalog and affected recovery
-  regression checks pass. An IN-08 Red Spring scene observes selector 5 and
-  passes a 600-frame Wine raw/managed state/clock/image/OAM/dispatch/audio pair.
-  Other selectors, animation coverage, callers and deferred platforms remain
+  regression checks pass. IN-08 Red Spring and Blue Screw scenes observe
+  selectors 5 and 6 respectively; each passes a 600-frame Wine raw/managed
+  state/clock/image/OAM/dispatch/audio pair. Other selectors, animation
+  coverage, callers and deferred platforms remain
   open. No benchmark.
   [Contract](../rom_data_compact_catalog.md).
 - The desktop loads the full ROM into `MemMap.rom` at startup; ordinary guest

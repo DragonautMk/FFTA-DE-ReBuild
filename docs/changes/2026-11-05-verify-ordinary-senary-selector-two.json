@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "verify-ordinary-senary-selector-two",
+  "title": "Verify ordinary senary compact OBJ selector 2",
+  "kind": "docs",
+  "platforms": [
+    "EUR Windows executable under Wine"
+  ],
+  "changes": [
+    "Close the scoped compact OBJ ordinary recovery criterion with an IN-08 Kent Ball scene that observes senary bank 6c6928 selector 2."
+  ],
+  "validation": [
+    "Guarded EUR source and read-only roster query linked bank 5 slot 47, action 214 and task 211 to a conditional senary constructor; normal inputs selected Kent and reached Ball against Velasquez. The e128 production CLI served 13,244 reads and 16,235 bytes over 600 frames. Evidence: target/validation/units/e128-6c6928-source-candidates-4r4llwvo/ and e128-6c6928-ball-cli-r92x_wcl/.",
+    "A snapshot-only address watch observed selector-offset 0x086c6b84 on frame 8388, identifying selector 2 of bank 6c6928; the 600-frame EUR Wine native raw/managed pair matched full state, guest clock, central/wide images, OAM, dispatch and all five audio streams at every frame. Inputs and dataset were guarded; runtime scratch removed. Evidence: target/validation/units/e128-6c6928-ball-selector-pair-ekg5hpou/."
+  ],
+  "limitations": [
+    "The snapshot-only watch reuses the catalog test trigger and its old root label; its actual address range and counters are senary-specific. Source indicated a conditional selector-6 path but the observed selector is 2; no execution of selector 6 is claimed. Complete animation, other banks/selectors/consumers, Linux, USA, native Windows and performance remain separate."
+  ],
+  "files": [
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

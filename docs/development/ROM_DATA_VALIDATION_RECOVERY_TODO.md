@@ -223,18 +223,20 @@ complete animation. Rejected leads and closed negative locators remain closed.
   consumption and its paired comparison. Preserve the 59 observed records and
   eleven closed negative captures; the full domain remains unproved.
   [Gap](../rom_data_gameplay.md#ordinary-sparse-parameter-record-reachability-remains-partial).
-- [ ] **ROMDATA-04-LOCALIZED-TABLE-GRAPHICS-ORDINARY:** establish an ordinary
-  trigger for the additional 40 banks/eight tables and its paired evidence.
-  [Gap](../rom_data_ui_graphics.md#ordinary-table-extension-reachability-remains-partial).
+- [x] **ROMDATA-04-LOCALIZED-TABLE-GRAPHICS-ORDINARY:** White Flowers entry
+  reads three aggregated groups and passes a 700-frame EUR Wine raw/managed
+  pair. The separate CLI does not identify exact groups; all 40 banks, eight
+  tables and consumers are not claimed as ordinary coverage.
+  [Evidence](../rom_data_ui_graphics.md#ordinary-table-extension-reachability-remains-partial).
 - [ ] **ROMDATA-05-DYNAMIC-RAW-ORDINARY-REACHABILITY:** identify a source-backed
   ordinary invocation before attempting a new scene. Keep conditional fragment
   acceptance and global-domain uncertainty separate; do not repeat Unit320 or
   the closed state2/state4/selector-witness attempts.
   [Current operational scope](TASK_HANDOFF.md#rom-data-full-eur).
-- [ ] **ROMDATA-04, compact OBJ e101–e107:** select one remaining bank with a
-  justified ordinary caller and complete its positive paired scene. Record the
-  exact bank/selector; conditional reader tests do not close ordinary use.
-  [Contracts](../rom_data_obj.md).
+- [x] **ROMDATA-04, compact OBJ e101–e107:** IN-08 Kent's Ball scene observes
+  senary bank `6c6928` selector 2 and passes a 600-frame EUR Wine raw/managed
+  pair. Other selectors, banks, consumers and full animations remain open.
+  [Evidence](../rom_data_obj.md#ordinary-european-senary-selector-2).
 - [x] **ROMDATA-04, UI context templates:** extend ordinary coverage beyond the
   prior template 5 copy: IN-08 Action observes template 2 and passes a 64-frame
   EUR Wine raw/managed pair. Other records and consumers remain open.
@@ -244,13 +246,16 @@ complete animation. Rejected leads and closed negative locators remain closed.
   The accepted 480-frame Star Cross proof remains intact; other banks, selectors,
   animations and consumers remain open.
   [Evidence and limits](../rom_data_compact_catalog.md#european-6c1e78-ordinary-route-candidates).
-- [ ] **ROMDATA-04-LOOP-COMPACT-CATALOG-ORDINARY:** verify a remaining root or
-  animation window beyond Soil Evidence, Freezeblink and Stardust. Preserve
-  their accepted exact-root watches and paired scenes.
+- [x] **ROMDATA-04-LOOP-COMPACT-CATALOG-ORDINARY:** a distinct IN-08 Blue Screw
+  scene observes `6c1e78` selector 6 and passes a 600-frame EUR Wine pair,
+  extending the previously accepted selector 5 and Soil Evidence, Freezeblink
+  and Stardust scenes. Other roots, selectors and complete animations remain
+  open; the conditional `6c4c50` Alpha lead still lacks a suitable EUR scene.
   [Evidence and limits](../rom_data_compact_catalog.md#european-soil-evidence-ordinary-route).
-- [ ] **ROMDATA-04, octonary 6cc124:** extend ordinary selector/list or animation
-  coverage beyond the accepted IN-19 Roulette 600-frame case.
-  [Existing scope](../rom_data_obj.md#ordinary-roulette-producer-and-eur-validation).
+- [x] **ROMDATA-04, octonary 6cc124:** observe Roulette selectors 0 and 1 and
+  extend the EUR Wine raw/managed comparison to 1,200 frames. Selector 2,
+  complete animation and other consumers remain open.
+  [Evidence](../rom_data_obj.md#ordinary-roulette-producer-and-eur-validation).
 
 ## 5. Resolve prerequisites before selecting further proofs
 

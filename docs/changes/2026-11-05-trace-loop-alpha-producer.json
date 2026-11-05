@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "trace-loop-alpha-producer",
+  "title": "Trace a conditional loop catalog producer",
+  "kind": "docs",
+  "platforms": [
+    "EUR source and retained checkpoints; Windows disassembler under Wine"
+  ],
+  "changes": [
+    "Document the source-pinned Alpha action 328 and conditional task 323/child chain for loop bank 6c4c50, correcting an unrelated adjacent task lead."
+  ],
+  "validation": [
+    "Guarded original source windows and exact ROM/dataset pins verify descriptor bank 22 slot 6, task 323 callback, conditional child creation and the child state-0x0100 loop; source-derived glyph pixels read Alpha. Six authenticated EUR clan rosters were queried read-only without guest execution, and none contained species 22 among their 24 slots. Evidence: target/validation/units/e128-6c4c50-caller-source-louifozx/, e128-6c4c50-caller-xref-y29q60ah/, e128-6c4c50-corrected-producer-0ccxi4aj/ and e128-6c4c50-action-label-uummv8dq/.",
+    "Guarded original importer and zero-routing property pins plus authenticated EUR data identify 20 physical unit templates in 12 encounter headers whose conditional path resolves bank 22; rows are 88 or 108 and header map arguments 38, 69 or 162. The first query had two incorrectly transcribed opcode pins and failed before guest execution; corrected retry passed. Evidence: target/validation/units/e128-6c4c50-unit-property-n2ooa0l5/, e128-6c4c50-property-case-l24jm8aw/, e128-6c4c50-encounter-candidates-_ubh8_yr/ and failed e128-6c4c50-encounter-candidates-gnyhzazn/.",
+    "A protected read-only check of ten retained EUR checkpoints found no candidate header index in the source-documented U16(02002170) field; no guest instructions were run. Evidence: target/validation/units/e128-6c4c50-live-header-scan-cbg06mc9/.",
+    "A guarded join validates all 256 bounded event rows and 512 mission event fields against the EUR ROM: candidate headers 440, 60 and 59 have direct-primary rows 159, 216 and 217; mission 379 references row 159. Ten saved selected-mission values did not equal 379. Evidence: target/validation/units/e128-6c4c50-mission-event-join-vam1bdgo/ and e128-6c4c50-live-mission-scan-4uzvf8x7/.",
+    "Six additional distinct cataloged EUR snapshots were protected, authenticated and inspected without guest execution; none contained a candidate saved header or selected mission 379. Duplicate payloads were skipped. Evidence: target/validation/units/e128-6c4c50-catalog-checkpoints-auseo9z5/.",
+    "Source-backed IN-08 region 29 placement and original name glyphs identify Ambervale at world (216,72). A bounded normal-input route reached the visible label and clan node. Subsequent A observations at 8 and 120 frames retained the map image, without establishing a finale trigger. Evidence: target/validation/units/e128-alpha-in08-world-location-bcnaexe8/, e128-alpha-ambervale-hitbox-1ctdmhrx/, e128-alpha-ambervale-travel-cktf_hxy/, e128-alpha-ambervale-enter-2whyqug9/ and e128-alpha-ambervale-prompt-immediate-5gyadesd/."
+  ],
+  "limitations": [
+    "Source control flow remains conditional; the bounded clan roster scan does not exclude enemies, other checkpoints or indirect callers. No ordinary Alpha scene, represented root read or paired proof was established. Linux, USA, native Windows and performance remain separate.",
+    "The header-linked template classification is conditional on the original zero-routing path; it does not identify missions, enable Alpha, prove a live enemy or bound other routing branches.",
+    "A saved default-map header index alone does not establish the active encounter or rule out other paths.",
+    "Static mission/event/header/script references and saved selected-mission values do not establish a playable mission, live encounter, Alpha availability or absence in other scenes.",
+    "The Ambervale capture does not establish or exclude a UI prompt in another layer or another route; no Alpha execution, root read or paired scene was observed."
+  ],
+  "files": [
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_compact_catalog.md"
+  ]
+}

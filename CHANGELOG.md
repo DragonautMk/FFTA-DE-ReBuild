@@ -3,6 +3,141 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-05 — Verify ordinary senary compact OBJ selector 2
+
+Type: docs. Platforms: EUR Windows executable under Wine.
+
+**Changes**
+
+- Close the scoped compact OBJ ordinary recovery criterion with an IN-08 Kent Ball scene that observes senary bank 6c6928 selector 2.
+
+**Validation**
+
+- Guarded EUR source and read-only roster query linked bank 5 slot 47, action 214 and task 211 to a conditional senary constructor; normal inputs selected Kent and reached Ball against Velasquez. The e128 production CLI served 13,244 reads and 16,235 bytes over 600 frames. Evidence: target/validation/units/e128-6c6928-source-candidates-4r4llwvo/ and e128-6c6928-ball-cli-r92x_wcl/.
+- A snapshot-only address watch observed selector-offset 0x086c6b84 on frame 8388, identifying selector 2 of bank 6c6928; the 600-frame EUR Wine native raw/managed pair matched full state, guest clock, central/wide images, OAM, dispatch and all five audio streams at every frame. Inputs and dataset were guarded; runtime scratch removed. Evidence: target/validation/units/e128-6c6928-ball-selector-pair-ekg5hpou/.
+
+**Limitations**
+
+- The snapshot-only watch reuses the catalog test trigger and its old root label; its actual address range and counters are senary-specific. Source indicated a conditional selector-6 path but the observed selector is 2; no execution of selector 6 is claimed. Complete animation, other banks/selectors/consumers, Linux, USA, native Windows and performance remain separate.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md).
+
+[Change record](docs/changes/2026-11-05-verify-ordinary-senary-selector-two.json)
+
+## 2026-11-05 — Verify ordinary localized UI graphics on battle entry
+
+Type: docs. Platforms: EUR Windows executable under Wine.
+
+**Changes**
+
+- Close the scoped ordinary-use and paired-scene recovery criterion using the existing White Flowers entry and record the aggregate-group limit.
+
+**Validation**
+
+- A source-guided 700-frame normal-input EUR entry at frames 19409–20109 reports 2627 reads, 2755 source bytes, 1118 decoded literal bytes, 12 selector bytes and three aggregate banks/groups in the e128 production CLI. A separate pair from the same guarded checkpoint and input matches serialized state, clock, central/wide images, OAM, dispatch and five audio streams every frame. Validation receipts: target/validation/units/e128-localized-ui-white-flowers-entry-7ewe6mwj/ and e128-localized-ui-white-flowers-pair-2rcuaiy1/.
+
+**Limitations**
+
+- The CLI counters do not identify individual banks/groups and the pair does not independently instrument those identities. All 40 banks, eight groups, consumers, Linux, USA and native Windows remain unproved; no performance measurements.
+
+Documentation: [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md).
+
+[Change record](docs/changes/2026-11-05-verify-ordinary-localized-ui-table-entry.json)
+
+## 2026-11-05 — Verify Roulette selectors and extended animation window
+
+Type: docs. Platforms: EUR Windows executable under Wine.
+
+**Changes**
+
+- Extend the scoped ordinary octonary recovery proof with direct selector 0 and 1 observations and a 1,200-frame paired Roulette window.
+
+**Validation**
+
+- A snapshot-only selector-offset watch on the authenticated IN-19 Roulette seed observes octonary selector 0 at 0x086cc154 on frame 12251 and passes a 600-frame e128 Wine raw/managed pair. Evidence: target/validation/units/e128-6cc124-selector-watch-pair-vkj66o3u/.
+- A second snapshot watch restricted to selector offsets 1 and 2 observes selector 1 at 0x086cc156 on frame 12276. The e128 Wine native raw/managed pair passes 1,200 frames through 13160 with full state, guest clock, central/wide images, OAM, dispatch and all five audio streams equal every frame; 5,831 owner source bytes served. Guarded inputs pass and successful runtime scratch is removed. Evidence: target/validation/units/e128-6cc124-late-selector-pair-nqbg2k88/.
+
+**Limitations**
+
+- The snapshot-only tests reuse the generic catalog watch trigger and its legacy root label; the watched offsets and counters are octonary-specific. Selector 2, all lists/frames, action completion, other consumers, Linux, USA, native Windows and performance remain separate.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md).
+
+[Change record](docs/changes/2026-11-05-verify-extended-roulette-selectors.json)
+
+## 2026-11-05 — Verify an ordinary compact OBJ selector 6 scene
+
+Type: docs. Platforms: EUR Windows executable under Wine.
+
+**Changes**
+
+- Extend ordinary compact catalog coverage with a distinct IN-08 Blue Screw action observing bank 6c1e78 selector 6, alongside the accepted Red Spring selector 5.
+
+**Validation**
+
+- Normal input from the retained IN-08 Pandora menu reached Blue Screw confirmation at guest frame 7673. The e128 snapshot-only selector-offset watch observed the represented two-byte read at 0x086c218c on frame 8048; the 600-frame native raw/managed pair matched complete state, clock, central/wide images, OAM, dispatch and five audio streams at every frame. Inputs were guarded and successful runtime scratch removed. Evidence: target/validation/units/e128-pandora-blue-blue-screw-target-lvshesyo/ and e128-blue-screw-selector-pair-2v9x4fr7/.
+
+**Limitations**
+
+- Catalog counters aggregate banks; the exact watched selector offset identifies this bank and selector. The full animation, selectors 3 and 4, other callers, the conditional Alpha lead, Linux, USA, native Windows and performance remain separate.
+
+Documentation: [rom_data_compact_catalog.md](docs/rom_data_compact_catalog.md).
+
+[Change record](docs/changes/2026-11-05-verify-blue-screw-compact-selector-six.json)
+
+## 2026-11-05 — Trace sparse parameter mode-2 and mode-0 candidates
+
+Type: docs. Platforms: EUR source and retained checkpoints.
+
+**Changes**
+
+- Compare five source-backed parameter mode-2 event keys with all physical mission event references and retained checkpoint header values.
+- Join mode-0 script instructions and retained checkpoint event values without inferring live execution.
+
+**Validation**
+
+- A guarded source join authenticates 512 mission references against ROM bytes and finds none using keys 56, 68, 77, 96 or 98. Sixteen previously recorded checkpoint values do not match conditional primary headers 47, 51, 54, 59 or 60. The first helper stopped on an incorrect working-directory assumption before source reads; the corrected read-only unit passed. Evidence: target/validation/units/e128-parameter-mode2-mission-join-corrected-g_7vvb92/ and e128-parameter-mode2-mission-join-210xnxgf/.
+- A guarded source/checkpoint join checks 36 encoded mode-0 instructions and 18 distinct EUR payloads. Nine contain nonzero event parameters, zero override and key 168 pointing conditionally to program 158; their formatter gate is zero. An initial scan used wrong gate/mode offsets and is rejected; a corrected scan and final input-guarded scan pass. Evidence: target/validation/units/e128-parameter-mode0-retained-scan-1txwwau7/, e128-parameter-mode0-retained-scan-corrected-dh_8wdma/ and e128-parameter-mode0-retained-scan-guarded-8cnnyb8v/.
+- A source-pinned read of the retained RIVER deployment context finds program 158 cursor 28, after the mode-0 instruction at relative 22; target/validation/units/e128-parameter-river-script-cursor-9aarc8ce/. This order alone does not exclude a branch back.
+
+**Limitations**
+
+- This direct join does not exclude indirect scripts, different override/mode routes or other checkpoints; values alone do not prove the active encounter. Positive ordinary use and paired comparison remain open; no guest execution or performance measurements.
+- Saved event and formatter values and a script archive link do not prove program liveness or a reachable transition; no positive runtime invocation is claimed.
+
+Documentation: [rom_data_gameplay.md](docs/rom_data_gameplay.md).
+
+[Change record](docs/changes/2026-11-05-trace-parameter-mode2-mission-keys.json)
+
+## 2026-11-05 — Trace a conditional loop catalog producer
+
+Type: docs. Platforms: EUR source and retained checkpoints; Windows disassembler under Wine.
+
+**Changes**
+
+- Document the source-pinned Alpha action 328 and conditional task 323/child chain for loop bank 6c4c50, correcting an unrelated adjacent task lead.
+
+**Validation**
+
+- Guarded original source windows and exact ROM/dataset pins verify descriptor bank 22 slot 6, task 323 callback, conditional child creation and the child state-0x0100 loop; source-derived glyph pixels read Alpha. Six authenticated EUR clan rosters were queried read-only without guest execution, and none contained species 22 among their 24 slots. Evidence: target/validation/units/e128-6c4c50-caller-source-louifozx/, e128-6c4c50-caller-xref-y29q60ah/, e128-6c4c50-corrected-producer-0ccxi4aj/ and e128-6c4c50-action-label-uummv8dq/.
+- Guarded original importer and zero-routing property pins plus authenticated EUR data identify 20 physical unit templates in 12 encounter headers whose conditional path resolves bank 22; rows are 88 or 108 and header map arguments 38, 69 or 162. The first query had two incorrectly transcribed opcode pins and failed before guest execution; corrected retry passed. Evidence: target/validation/units/e128-6c4c50-unit-property-n2ooa0l5/, e128-6c4c50-property-case-l24jm8aw/, e128-6c4c50-encounter-candidates-_ubh8_yr/ and failed e128-6c4c50-encounter-candidates-gnyhzazn/.
+- A protected read-only check of ten retained EUR checkpoints found no candidate header index in the source-documented U16(02002170) field; no guest instructions were run. Evidence: target/validation/units/e128-6c4c50-live-header-scan-cbg06mc9/.
+- A guarded join validates all 256 bounded event rows and 512 mission event fields against the EUR ROM: candidate headers 440, 60 and 59 have direct-primary rows 159, 216 and 217; mission 379 references row 159. Ten saved selected-mission values did not equal 379. Evidence: target/validation/units/e128-6c4c50-mission-event-join-vam1bdgo/ and e128-6c4c50-live-mission-scan-4uzvf8x7/.
+- Six additional distinct cataloged EUR snapshots were protected, authenticated and inspected without guest execution; none contained a candidate saved header or selected mission 379. Duplicate payloads were skipped. Evidence: target/validation/units/e128-6c4c50-catalog-checkpoints-auseo9z5/.
+- Source-backed IN-08 region 29 placement and original name glyphs identify Ambervale at world (216,72). A bounded normal-input route reached the visible label and clan node. Subsequent A observations at 8 and 120 frames retained the map image, without establishing a finale trigger. Evidence: target/validation/units/e128-alpha-in08-world-location-bcnaexe8/, e128-alpha-ambervale-hitbox-1ctdmhrx/, e128-alpha-ambervale-travel-cktf_hxy/, e128-alpha-ambervale-enter-2whyqug9/ and e128-alpha-ambervale-prompt-immediate-5gyadesd/.
+
+**Limitations**
+
+- Source control flow remains conditional; the bounded clan roster scan does not exclude enemies, other checkpoints or indirect callers. No ordinary Alpha scene, represented root read or paired proof was established. Linux, USA, native Windows and performance remain separate.
+- The header-linked template classification is conditional on the original zero-routing path; it does not identify missions, enable Alpha, prove a live enemy or bound other routing branches.
+- A saved default-map header index alone does not establish the active encounter or rule out other paths.
+- Static mission/event/header/script references and saved selected-mission values do not establish a playable mission, live encounter, Alpha availability or absence in other scenes.
+- The Ambervale capture does not establish or exclude a UI prompt in another layer or another route; no Alpha execution, root read or paired scene was observed.
+
+Documentation: [rom_data_compact_catalog.md](docs/rom_data_compact_catalog.md).
+
+[Change record](docs/changes/2026-11-05-trace-loop-alpha-producer.json)
+
 ## 2026-11-04 — Verify UI context owner lifecycle with unavailable data
 
 Type: added. Platforms: EUR Windows executable under Wine.

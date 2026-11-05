@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "verify-ordinary-localized-ui-table-entry",
+  "title": "Verify ordinary localized UI graphics on battle entry",
+  "kind": "docs",
+  "platforms": [
+    "EUR Windows executable under Wine"
+  ],
+  "changes": [
+    "Close the scoped ordinary-use and paired-scene recovery criterion using the existing White Flowers entry and record the aggregate-group limit."
+  ],
+  "validation": [
+    "A source-guided 700-frame normal-input EUR entry at frames 19409–20109 reports 2627 reads, 2755 source bytes, 1118 decoded literal bytes, 12 selector bytes and three aggregate banks/groups in the e128 production CLI. A separate pair from the same guarded checkpoint and input matches serialized state, clock, central/wide images, OAM, dispatch and five audio streams every frame. Validation receipts: target/validation/units/e128-localized-ui-white-flowers-entry-7ewe6mwj/ and e128-localized-ui-white-flowers-pair-2rcuaiy1/."
+  ],
+  "limitations": [
+    "The CLI counters do not identify individual banks/groups and the pair does not independently instrument those identities. All 40 banks, eight groups, consumers, Linux, USA and native Windows remain unproved; no performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_ui_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_graphics.md"
+  ]
+}

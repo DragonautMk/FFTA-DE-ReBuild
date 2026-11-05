@@ -1944,6 +1944,37 @@ The new bank's counters were zero in that frame, so ordinary use remains
 unverified. Linux, USA and native Windows remain pending; no performance
 measurement was made.
 
+### Ordinary European senary selector 2
+
+The EUR source tables map descriptor bank 5 slot 47 to action 214 and primary
+task 211, whose callback `0x0810559c` contains a conditional selector-6
+constructor call for `0x6c6928`. The caller is gated by its state and context;
+this static link does not prove that this selector-6 path ran. A guarded,
+read-only query of six retained EUR rosters found IN-08 slot 9 with species 5,
+secondary job row 40 and the learned bit for slot 47. Source row 40 covers
+slots 44–54. No guest instructions were executed in that query.
+
+Starting from the previously authenticated IN-08 deployment selector, normal
+inputs selected Kent using the observed roster pointer, deployed and moved him,
+then selected Action → Stunt → Ball and the visible Velasquez target. The game
+showed the action confirmation. From guest frame 8177, a 600-frame e128 Wine
+production CLI run served 13,244 senary reads and 16,235 source bytes. A
+source-matched Windows test, with its watch adjusted only in a disposable
+source snapshot, observed a two-byte selector-offset read at `0x086c6b84`
+on frame 8388. The directory base is `0x086c6b80`, so this proves selector 2,
+not selector 6. The watch's legacy trigger and log root label still say
+`6c1e78`; the modified watched range and owner counters are senary-specific.
+The full 600-frame native raw/managed comparison matched complete serialized
+state, guest clock, central/wide images, OAM, dispatch and five audio streams
+at every frame. Inputs and the e128 dataset were guarded; successful runtime
+scratch was removed.
+
+Evidence: `target/validation/units/e128-6c6928-source-candidates-4r4llwvo/`,
+`e128-6c6928-ball-doit-1021xi3r/`, `e128-6c6928-ball-cli-r92x_wcl/` and
+`e128-6c6928-ball-selector-pair-ekg5hpou/`. This is one observed ordinary
+selector and window; selector 6, complete animation, other consumers and
+Linux, USA and native Windows remain unverified. No performance measurement.
+
 ## Conditional compact OBJ animation source at 6be570
 
 The septenary bank full e127-d126 EUR/Wine regression passes 20 bytes, boundary and tamper checks and two full state/clock selector comparisons with four typed native bytes. Its report matches 100 current and 96 authenticated e106 resources. Ordinary use, other platforms and performance remain separate. [Recovery record](changes/2026-11-04-recover-compact-obj-report-counts.json).
@@ -2142,6 +2173,24 @@ The endpoint image still shows the Roulette animation: action completion,
 all three selectors in ordinary play and all 21 frames/lists are not inferred
 from aggregate usage. This closes a scoped ordinary positive consumption and
 equivalence criterion, rather than the complete animation or global family.
+
+A later e128 EUR Wine audit reuses that authenticated ordinary seed and input
+for a new selector observation. A snapshot-only watch on the octonary sequence
+directory records selector 0 at `0x086cc154` on frame 12251 in a 600-frame
+pair. A separate watch restricted to selectors 1–2 records selector 1 at
+`0x086cc156` on frame 12276; its extended 1,200-frame raw/managed pair matches
+complete state and guest clock, central/wide images, OAM, dispatch and all five
+audio streams through frame 13160. The audit variant reuses the generic
+catalog watch trigger and its legacy `6c1e78` log label; its watched addresses
+and source-byte counters belong to the octonary owner. The 5,831 source-byte
+count covers the complete extended window, not distinct bytes. Inputs and the
+current e128 dataset were guarded; successful runtime scratch was removed.
+
+Evidence: `target/validation/units/e128-6cc124-selector-watch-pair-vkj66o3u/`
+and `e128-6cc124-late-selector-pair-nqbg2k88/`. These observations establish
+selectors 0 and 1 and the extended paired window, but not selector 2, every
+list/frame, action completion or complete ordinary coverage. Linux, USA and
+native Windows remain unverified; no performance measurements were made.
 
 `rom-data-octonary-ordinary-pair-cxaqwj0g` retains CLI/pair logs, explicit PASS
 results and the endpoint image; its successful scratch was automatically

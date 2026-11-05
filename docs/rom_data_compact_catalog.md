@@ -155,6 +155,62 @@ selected body has another branch. Reviewed helpers preserve the induction
 registers; the previously accepted constructor saves/restores r4–r7. Conditional
 loop entry is not a proof of global or ordinary reachability.
 
+A later source-pinned lead for root `0x6c4c50` corrects an adjacency
+assumption: primary task 322/action 327 has a separate callback and does not
+establish this loop. Descriptor bank 22 slot 6 instead maps to action 328 and
+task 323, callback `0x0811c23c`. Under its conditional state `0x0102` and
+context gates, that callback can create child `0x0811c0a0`; the child's state
+`0x0100` enters the three-selector loop at `0x0811c0fe`. Source-derived action
+name glyphs visually read **Alpha**. A guarded read-only scan found no species
+22 unit among the 24 clan slots in six retained EUR checkpoints. That limited
+negative does not exclude enemies, other scenes, indirect dispatch or other
+callers. No ordinary Alpha execution or exact root read is established.
+Evidence: `target/validation/units/e128-6c4c50-caller-source-louifozx/`,
+`e128-6c4c50-caller-xref-y29q60ah/`,
+`e128-6c4c50-corrected-producer-0ccxi4aj/` and
+`e128-6c4c50-action-label-uummv8dq/`. No guest instructions or performance
+measurements were used in these source/checkpoint checks.
+
+A guarded importer/data join then followed the original unit-property path for
+zero-routing metadata52 rows. Among the 2,850 header-linked templates, 20
+physical records in 12 headers resolve through that specific path to bank 22;
+the corresponding metadata52 rows are 88 or 108. The candidate headers carry
+map arguments 38, 69 or 162. This does not establish mission identity, an
+available Alpha action, a live enemy, other routing branches or a usable scene.
+The first query had two transcription errors in its opcode pins and failed
+before guest execution; the corrected query passes. Evidence:
+`target/validation/units/e128-6c4c50-unit-property-n2ooa0l5/`,
+`e128-6c4c50-property-case-l24jm8aw/`,
+`e128-6c4c50-encounter-candidates-_ubh8_yr/` and failed diagnostic
+`e128-6c4c50-encounter-candidates-gnyhzazn/`. A separate protected read-only
+scan of ten retained EUR checkpoints found none with a matching `U16(02002170)`
+header index. The field has a documented original default-map reader, but its
+saved value alone does not establish the active encounter or exclude other
+paths. A source-authenticated join of the 256 bounded event rows links candidate
+headers 440, 60 and 59 to direct-primary rows 159, 216 and 217 respectively;
+mission record 379 references row 159. Its event key 124 and conditional script
+program 120 references are not evidence of a playable mission or Alpha use.
+None of the ten snapshots had selected mission index 379. A further six
+distinct cataloged EUR checkpoints likewise contained neither a candidate
+header index nor selected mission 379; duplicate payloads were skipped. These
+saved values are bounded leads, not absence or availability claims. Evidence:
+`target/validation/units/e128-6c4c50-live-header-scan-cbg06mc9/`,
+`e128-6c4c50-live-mission-scan-4uzvf8x7/`,
+`e128-6c4c50-mission-event-join-vam1bdgo/` and
+`e128-6c4c50-catalog-checkpoints-auseo9z5/`.
+
+The retained IN-08 world snapshot has a source-backed placed region 29 at
+world `(216,72)`; original name glyphs visually read Ambervale. A bounded
+normal-input route reached the visible Ambervale label and moved the clan to
+that node. A further A input, observed at 8 and 120 frames, left the captured
+central image on the map; no finale or Alpha action was established. This does
+not rule out a prompt in another layer or another route. No guest fields, RNG
+or original saves were edited. Evidence:
+`target/validation/units/e128-alpha-in08-world-location-bcnaexe8/`,
+`e128-alpha-ambervale-hitbox-1ctdmhrx/`, `e128-alpha-ambervale-travel-cktf_hxy/`,
+`e128-alpha-ambervale-enter-2whyqug9/` and
+`e128-alpha-ambervale-prompt-immediate-5gyadesd/`.
+
 Independent geometry for the 43 selectors gives 60 frames, 44 referenced lists,
 81 objects and 974 bytes in seven union spans. No selected byte overlaps another
 new bank or any current e110 owner. The projection SHA256 is
@@ -565,7 +621,7 @@ ROM/mod phases remain open. No benchmark or space measurement is performed.
 A guarded EUR source join links bank 5 descriptors 55–62 to actions 243–250,
 primary task IDs 239–246 and the shared callback `0x08109440`. The callback
 branches to its `0x6c1e78` constructor path only under state `0x0103` and
-further conditions; the join does not demonstrate that path executing. The
+further conditions; the source join alone does not demonstrate execution. The
 original panel source indexes descriptor-bank pointers by unit byte +6, while
 the secondary producer passes unit byte +8 directly as the physical metadata52
 row. Original ROM bytes and the e128 dataset agree that rows 41, 42 and 43
@@ -593,8 +649,21 @@ initial 300-frame window did not reach the selector read; failed diagnostics
 are retained. Evidence: `target/validation/units/`
 `e128-6c1e78-redspring-watch-pair-yj07anhh/`,
 `e128-6c1e78-selector-watch-600-2emk682f/` and
-`e128-6c1e78-selector-watch-pair-03yu4i2w/`. Complete animation, other
-selectors and all consumers remain unverified.
+`e128-6c1e78-selector-watch-pair-03yu4i2w/`. Complete animation and all
+consumers remain unverified.
+A distinct ordinary input from the retained Pandora menu selects Blue Screw
+and reaches its `Do it` confirmation at guest frame 7673. A source-matched
+snapshot-only audit of selector-offset addresses observed the represented
+halfword at `0x086c218c` on frame 8048, identifying selector 6. The e128 EUR
+Wine native raw/managed comparison passed all 600 frames, with complete state,
+guest clock, central/wide images, OAM, dispatch and five audio streams equal
+at each frame. Catalog source-byte counters total 12,953 across the scene and
+are aggregate rather than per-bank counts. Inputs were guarded and successful
+runtime scratch removed. Evidence:
+`target/validation/units/e128-pandora-blue-blue-screw-target-lvshesyo/` and
+`e128-blue-screw-selector-pair-2v9x4fr7/`. Selectors 5 and 6 are observed in
+separate scenes; selectors 3/4, all callers and complete animations remain open.
+
 The retained branch is `target/validation/units/`
 `e128-6c1e78-redspring-slot13-rwsxgiz7/`; the prefix/selection evidence is in
 `e128-6c1e78-deployment-branch-2_ca0kz8/`. The first launch failed before

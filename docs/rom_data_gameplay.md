@@ -5313,6 +5313,43 @@ uses event58/parameter0/program163. Further guesses in that mission-info or
 intro route are stopped. This direct join does not rule out indirect script
 links or mode0 reads when the live override is zero.
 
+A later guarded source join checks all 512 physical mission records and their
+referenced event keys against these five direct mode-2 candidates. None of the
+512 references has candidate key 56, 68, 77, 96 or 98. Their conditional primary
+headers are 47, 51, 54, 59 and 60; none appears in the previously measured
+header values of 16 retained EUR checkpoint observations. The source and saved
+values are not proof of current encounter activity or unavailability. Indirect
+script links, other entry paths and mode-0/override behavior remain open. The
+first local helper used the validation work directory as its repository root
+and stopped before reading source data; the corrected guarded read-only check
+passes. Successful scratch was removed; the failed diagnostic remains. Evidence:
+`target/validation/units/e128-parameter-mode2-mission-join-corrected-g_7vvb92/`
+and `e128-parameter-mode2-mission-join-210xnxgf/`. No guest instructions ran.
+
+A distinct mode-0 source/checkpoint join authenticates 36 encoded opcode-80
+mode-0 instructions and examines 18 distinct retained EUR state payloads.
+Nine states contain a zero override, a nonzero event parameter and event key 168,
+whose archive projection points to program 158 containing a mode-0 instruction.
+Their formatter gate is zero. These are saved values and a conditional source
+association, not proof that program 158 is currently live, that the event is
+active or that the formatter executes. A source-specific scene transition is
+still needed before a positive-use attempt. The initial scan read the formatter
+bytes at incorrect offsets; its gate/mode results are rejected. A corrected
+scan used the authenticated `020020d0` base; a final guarded scan additionally
+protected the DS-20 input and pins the mode-byte instruction. All used read-only
+source/checkpoint access, not gameplay. Evidence:
+`target/validation/units/e128-parameter-mode0-retained-scan-1txwwau7/`,
+`e128-parameter-mode0-retained-scan-corrected-dh_8wdma/` and
+`e128-parameter-mode0-retained-scan-guarded-8cnnyb8v/`.
+A source-pinned read of a separately retained RIVER deployment context places
+program 158's mode-0 instruction at relative offset 22 and its saved cursor at
+28. This checkpoint is therefore after the instruction in linear source order;
+that alone does not exclude a branch back. The earlier accepted 618-frame
+Start/A capture tested a different graphics family and did not measure this
+parameter resource. A prior checkpoint or proven return to the instruction is
+needed before selecting a new parameter probe. Evidence:
+`target/validation/units/e128-parameter-river-script-cursor-9aarc8ce/`.
+
 Nine further normal captures reuse the same observer without rebuilding. A180
 from the authenticated IN13 Sprohm checkpoint opens the town information menu
 (3020→3200), B32 closes it, and five source-guided cursor steps reach the
