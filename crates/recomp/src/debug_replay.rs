@@ -378,6 +378,7 @@ fn create_inner(
             interp: native.is_none(),
             dataset: dataset.as_deref(),
             executable: runtime,
+            cheat_favorites: None,
         },
     )?;
     put(&root, "input.input", &data.input)?;

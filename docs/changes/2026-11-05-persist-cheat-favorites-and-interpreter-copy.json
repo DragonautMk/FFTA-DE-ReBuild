@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "persist-cheat-favorites-and-interpreter-copy",
+  "title": "Persist cheat favorites and offer an interpreter debug copy",
+  "kind": "added",
+  "platforms": [
+    "Linux X11",
+    "Windows GNU under Wine"
+  ],
+  "changes": [
+    "Persist favorite cheat IDs by catalog hash in local configuration, preserving externally changed or malformed files and keeping different catalog versions separate.",
+    "Add a menu action that snapshots the paused game into an isolated interpreter session; copy matching default-catalog favorites into the new private session."
+  ],
+  "validation": [
+    "Linux release menu action test, two favorites tests and nine debug session tests passed. Two favorites and nine session tests passed in the Windows GNU build under Wine.",
+    "Linux X11 GUI reopened the catalog after restart with the same favorite, displayed the Favorites filter with one entry, and created an interpreter session carrying the catalog and favorite snapshot. The source game in this GUI proof was already an interpreter.",
+    "Updated the selected Linux portable runtime after preserving its previous binary; protected original saves and configuration remained unchanged, and the installed runtime found all 341 local entries without an explicit catalog path.",
+    "The initial Linux build lacked ALSA pkg-config, the standalone menu test lacked Wayland pkg-config, and a sandbox-only Wine attempt retained its owned lease. The build used the existing sysroot and unified workspace dependencies; the owned Wine lease was released only after checking host prefix processes, and the host Wine retry passed."
+  ],
+  "limitations": [
+    "The requested publicly distributable win operation remains unfinished: CH-0341 was sourced externally and only the first final-battle phase was observed. No copied cheat payload is newly published.",
+    "Cheat application remains limited to a paused isolated interpreter and supported source plans; native-source-to-interpreter GUI transfer, device-hook equivalence, native Windows and Wayland were not verified.",
+    "Favorites use the catalog hash. A menu-created copy receives the matching default catalog favorites at creation, but later changes stay in the isolated copy and are not synchronized back."
+  ],
+  "files": [
+    "crates/input-config/languages/en.json",
+    "crates/input-config/languages/it.json",
+    "crates/menu/src/clan_atlas.rs",
+    "crates/menu/src/lib.rs",
+    "crates/recomp/src/content_picker/tests.rs",
+    "crates/recomp/src/debug_catalog.rs",
+    "crates/recomp/src/debug_cheat_favorites.rs",
+    "crates/recomp/src/debug_operations.rs",
+    "crates/recomp/src/debug_replay.rs",
+    "crates/recomp/src/debug_replay/tests.rs",
+    "crates/recomp/src/debug_session.rs",
+    "crates/recomp/src/debug_session/tests.rs",
+    "crates/recomp/src/main.rs",
+    "crates/recomp/src/play.rs",
+    "docs/cheats.md",
+    "docs/debug_sessions.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/debug_sessions.md",
+    "docs/development/CHEAT_DISTRIBUTION_PROVENANCE.md"
+  ]
+}

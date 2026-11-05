@@ -48,7 +48,9 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   plans, including validated conditional slides, may be armed for interpreter frame boundaries;
   conflicting footprints are refused and disarm stops future writes without
   restoring memory. A user-supplied catalog beside the runtime is copied and
-  pinned in newly created isolated sessions. Broader backends and
+  pinned in newly created isolated sessions. Catalog-scoped cheat favorites
+  persist in local config; the menu can create an isolated interpreter copy
+  and seed it with the selected default catalog's favorites. Broader backends and
   provenance-aware replay remain open.
 
 - The explicitly requested [private debug-assets export](../private_debug_assets.md)

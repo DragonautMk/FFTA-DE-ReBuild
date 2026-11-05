@@ -536,6 +536,32 @@ Documentation: [cheats.md](docs/cheats.md), [debug_sessions.md](docs/debug_sessi
 
 [Change record](docs/changes/2026-11-05-persist-local-cheat-catalog-and-conditional-slide.json)
 
+## 2026-11-05 — Persist cheat favorites and offer an interpreter debug copy
+
+Type: added. Platforms: Linux X11, Windows GNU under Wine.
+
+**Changes**
+
+- Persist favorite cheat IDs by catalog hash in local configuration, preserving externally changed or malformed files and keeping different catalog versions separate.
+- Add a menu action that snapshots the paused game into an isolated interpreter session; copy matching default-catalog favorites into the new private session.
+
+**Validation**
+
+- Linux release menu action test, two favorites tests and nine debug session tests passed. Two favorites and nine session tests passed in the Windows GNU build under Wine.
+- Linux X11 GUI reopened the catalog after restart with the same favorite, displayed the Favorites filter with one entry, and created an interpreter session carrying the catalog and favorite snapshot. The source game in this GUI proof was already an interpreter.
+- Updated the selected Linux portable runtime after preserving its previous binary; protected original saves and configuration remained unchanged, and the installed runtime found all 341 local entries without an explicit catalog path.
+- The initial Linux build lacked ALSA pkg-config, the standalone menu test lacked Wayland pkg-config, and a sandbox-only Wine attempt retained its owned lease. The build used the existing sysroot and unified workspace dependencies; the owned Wine lease was released only after checking host prefix processes, and the host Wine retry passed.
+
+**Limitations**
+
+- The requested publicly distributable win operation remains unfinished: CH-0341 was sourced externally and only the first final-battle phase was observed. No copied cheat payload is newly published.
+- Cheat application remains limited to a paused isolated interpreter and supported source plans; native-source-to-interpreter GUI transfer, device-hook equivalence, native Windows and Wayland were not verified.
+- Favorites use the catalog hash. A menu-created copy receives the matching default catalog favorites at creation, but later changes stay in the isolated copy and are not synchronized back.
+
+Documentation: [cheats.md](docs/cheats.md), [debug_sessions.md](docs/debug_sessions.md), [CHEAT_DISTRIBUTION_PROVENANCE.md](docs/development/CHEAT_DISTRIBUTION_PROVENANCE.md).
+
+[Change record](docs/changes/2026-11-05-persist-cheat-favorites-and-interpreter-copy.json)
+
 ## 2026-11-05 — Observe the first Royal Valley mission menu
 
 Type: docs. Platforms: EUR Windows CLI under Wine.

@@ -147,7 +147,7 @@ impl Catalog {
         let region=match gba_core::ffta_rom::version(rom) {Some(gba_core::ffta_rom::Version::Europe)=>"EUR",Some(gba_core::ffta_rom::Version::Usa)=>"USA",None=>""};
         if entry.region!=region {return Err("Catalog region does not match selected ROM".into());}
         let root=crate::debug_session::create(destination,crate::debug_session::Source{rom,bios,save:machine.bus.save_data(),state:snapshot.then_some(bytes.as_slice()),
-            av,input,interp,dataset,executable:&std::env::current_exe().map_err(|e|e.to_string())?})?;
+            av,input,interp,dataset,executable:&std::env::current_exe().map_err(|e|e.to_string())?,cheat_favorites:None})?;
         std::fs::write(root.join("catalog-entry.json"),serde_json::to_vec_pretty(entry).map_err(|e|e.to_string())?).map_err(|e|e.to_string())?;
         // A portable, one-entry view reuses the existing seed/save: no third payload copy.
         std::fs::write(root.join("debug-catalog.json"),serde_json::to_vec_pretty(&portable_view(entry,snapshot)).map_err(|e|e.to_string())?).map_err(|e|e.to_string())?;

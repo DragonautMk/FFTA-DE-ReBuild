@@ -31,6 +31,7 @@ mod debug_command_wine_ime;
 mod debug_operations;
 mod debug_content;
 mod debug_cheats;
+mod debug_cheat_favorites;
 mod debug_cheat_decoder;
 mod debug_cheat_armed;
 mod debug_cheat_preset;

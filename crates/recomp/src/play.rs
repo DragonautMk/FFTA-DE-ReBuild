@@ -533,6 +533,8 @@ struct PlayApp {
     cheat_preview: Option<serde_json::Value>,
     last_cheat_once: Option<serde_json::Value>,
     cheat_armed: crate::debug_cheat_armed::ArmedSet,
+    cheat_favorites: Option<crate::debug_cheat_favorites::Favorites>,
+    cheat_favorites_error: String,
     replay_preparation_seen:usize,
     replay_message: String,
     game_saves: crate::game_saves::GameSaves,
@@ -1763,7 +1765,7 @@ impl PlayApp {
         }
     }
 
-    fn start_debug_session(&mut self) {
+    fn start_debug_session(&mut self, force_interpreter: bool) {
         self.lifecycle_emit(crate::debug_lifecycle::Family::Session,"copy-requested",None,serde_json::json!({"scope":"Existing isolated-copy handler; no secondary guest executor"}));
         if self.recording_active() {
             self.lifecycle_emit(crate::debug_lifecycle::Family::Session,"copy-refused",None,serde_json::json!({"outcome":"refused","reason":"Input recording active"}));
@@ -1771,15 +1773,21 @@ impl PlayApp {
             return;
         }
         let result = (|| -> Result<(), String> {
+            self.save_cheat_favorites()?;
             let state = self.machine.save_state()?;
             let exe = std::env::current_exe().map_err(|e| e.to_string())?;
+            let default_catalog=exe.parent().map(|p|p.join("cheats/catalogo.json"));
+            let favorites=match (self.cheat_favorites.as_ref(),default_catalog.as_ref().and_then(|p|crate::debug_cheats::Catalog::load(p).ok())) {
+                (Some(f),Some(c)) if f.catalog()==c.source_sha256=>Some(f.snapshot()?),
+                _=>None,
+            };
             let destination = crate::debug_session::default_destination()?;
             let root = crate::debug_session::create(&destination, crate::debug_session::Source {
                 rom: &self.machine.bus.rom,
                 bios: self.machine.bus.real_bios.then_some(self.machine.bus.bios.as_slice()),
                 save: self.machine.bus.save_data(), state: Some(&state),
-                av: self.av.clone(), input: self.icfg.clone(), interp: self.native.is_none(),
-                dataset: self.diagnosis.dataset.as_deref(), executable: &exe,
+                av: self.av.clone(), input: self.icfg.clone(), interp: force_interpreter || self.native.is_none(),
+                dataset: self.diagnosis.dataset.as_deref(), executable: &exe, cheat_favorites: favorites.as_deref(),
             })?;
             crate::debug_session::launch(&root)?;
             eprintln!("Isolated debug session: {}", root.display());
@@ -2702,6 +2710,11 @@ impl PlayApp {
         Ok((armed,serde_json::json!({"token":token,"body":body,"scope":"Preset preview only; no guest writes or device-hook verification"})))
     }
 
+    fn save_cheat_favorites(&mut self) -> Result<(),String> {
+        if let Some(favorites)=self.cheat_favorites.as_mut(){favorites.save(self.menu.cheat_favorites())?;}
+        Ok(())
+    }
+
     fn open_cheat_catalog(&mut self) {
         let rom=gba_core::ffta_rom::digest(&self.machine.bus.rom);
         let result=(||->Result<Option<crate::debug_cheats::Catalog>,String>{
@@ -2717,7 +2730,13 @@ impl PlayApp {
             Ok(Some(catalog))
         })();
         match result {
-            Ok(Some(catalog))=>{let mut entries=catalog.menu_entries(Some(&rom),self.av.menu_language);for entry in &mut entries{if self.cheat_armed.contains(&entry.id,&catalog.source_sha256){entry.status=self.av.menu_language.text("Cheat armed").into();if let Some(filter)=entry.cheat_filter.as_mut(){filter.armed=true;}}}let message=self.menu_text("{count} entries · {active} armed · compatibility unverified",&[("count",entries.len().to_string()),("active",self.cheat_armed.len().to_string())]);self.menu.open_cheats(entries,message);},
+            Ok(Some(catalog))=>{
+                let changed=self.cheat_favorites.as_ref().is_none_or(|f|f.catalog()!=catalog.source_sha256);
+                let restored=if changed {(||->Result<_,String>{self.save_cheat_favorites()?;let config=input_config::config_root().ok_or("No configuration root for cheat favorites")?;crate::debug_cheat_favorites::Favorites::load(&config,&catalog.source_sha256)})()} else {Err(String::new())};
+                let mut entries=catalog.menu_entries(Some(&rom),self.av.menu_language);for entry in &mut entries{if self.cheat_armed.contains(&entry.id,&catalog.source_sha256){entry.status=self.av.menu_language.text("Cheat armed").into();if let Some(filter)=entry.cheat_filter.as_mut(){filter.armed=true;}}}
+                let message=self.menu_text("{count} entries · {active} armed · compatibility unverified",&[("count",entries.len().to_string()),("active",self.cheat_armed.len().to_string())]);self.menu.open_cheats(entries,message);
+                if changed {match restored {Ok(f)=>{if let Err(e)=self.menu.restore_cheat_favorites(f.saved()){self.menu.diagnosis_result(e);}self.cheat_favorites=Some(f);self.cheat_favorites_error.clear();},Err(e)=>{let _=self.menu.restore_cheat_favorites(Vec::new());self.cheat_favorites=None;self.cheat_favorites_error=e.clone();self.menu.diagnosis_result(format!("Cheat favorites unavailable; changes are not saved: {e}"));}}}
+            },
             Ok(None)=>{let message=self.menu_text("No catalog. Choose Import catalog.",&[]);self.menu.open_cheats(Vec::new(),message);},
             Err(error)=>{let message=self.menu_text("Catalog unavailable: {error}. Import a valid source.",&[("error",error)]);self.menu.open_cheats(Vec::new(),message);},
         }
@@ -3827,7 +3846,10 @@ impl PlayApp {
         self.poll_replay();
         if self.paused&&!self.content_picker.initialized(){let rom=gba_core::ffta_rom::digest(&self.machine.bus.rom);if let Err(e)=self.content_picker.initialize(&mut self.menu,rom){self.menu.diagnosis_result(e);}}
         self.menu_dirty |= self.content_picker.poll(&mut self.menu);
-        if self.paused{self.menu_dirty|=self.content_picker.persist_tick(&mut self.menu);}
+        if self.paused{
+            self.menu_dirty|=self.content_picker.persist_tick(&mut self.menu);
+            if let Err(e)=self.save_cheat_favorites(){if self.cheat_favorites_error!=e{self.cheat_favorites_error=e.clone();self.menu.diagnosis_result(format!("Cheat favorites not saved: {e}"));self.menu_dirty=true;}}
+        }
         let workbench_was_busy=self.workbench.busy();
         if let Some(path)=self.workbench.poll(&mut self.menu){
             let rom=gba_core::ffta_rom::digest(&self.machine.bus.rom);
@@ -4242,7 +4264,8 @@ impl PlayApp {
                     menu::MenuAction::StartInputRecording => self.start_input_recording(),
                     menu::MenuAction::StopInputRecording => { self.stop_input_recording("user stopped", true); },
                     menu::MenuAction::CopyDiagnosis => self.copy_diagnosis(),
-                    menu::MenuAction::StartDebugSession => self.start_debug_session(),
+                    menu::MenuAction::StartDebugSession => self.start_debug_session(false),
+                    menu::MenuAction::StartInterpreterDebugSession => self.start_debug_session(true),
                     menu::MenuAction::CloseDebugSession => {self.lifecycle_emit(crate::debug_lifecycle::Family::Session,"close-requested",None,serde_json::json!({"source":"close-debug-copy","scope":"No implicit collector export"}));quit=true;},
                     menu::MenuAction::RestoreBackup(id) => self.restore_save_backup(id),
                     menu::MenuAction::SwitchGameSave(slot) => self.switch_game_save(slot),
@@ -4644,6 +4667,7 @@ impl ApplicationHandler for PlayApp {
         self.lifecycle_emit(crate::debug_lifecycle::Family::Session,"frontend-exiting",None,serde_json::json!({"frame":self.machine.bus.frames,"clock":self.machine.bus.clock,"error":self.error.as_ref().map(|e|e.chars().take(1024).collect::<String>()),"scope":"Only already-active in-memory collectors; no implicit export"}));
         if self.replay_job.is_some(){self.lifecycle_finish(crate::debug_lifecycle::Family::Replay,serde_json::json!({"outcome":"interrupted","scope":"Existing supervisor drops/kills its worker on session exit"}));}
         self.content_picker.persist_now(&self.menu);
+        if let Err(e)=self.save_cheat_favorites(){eprintln!("Cheat favorites not saved: {e}");}
         drop(self.replay_job.take());
         self.interrupt_probe();
         drop(self.control_server.take());
@@ -5129,6 +5153,8 @@ Place your own dump as gba_bios.bin next to the executable:\n  {}",
         cheat_preview: None,
         last_cheat_once: None,
         cheat_armed: crate::debug_cheat_armed::ArmedSet::default(),
+        cheat_favorites: None,
+        cheat_favorites_error: String::new(),
         replay_preparation_seen:0,
         replay_message: String::new(),
         machine,

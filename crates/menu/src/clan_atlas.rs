@@ -338,6 +338,7 @@ pub(super) fn debug_rows(section: usize) -> &'static [Row] {
     match section {
         0 => &[
             Row::StartDebugSession,
+            Row::StartInterpreterDebugSession,
             Row::CloseDebugSession,
             Row::ContentPicker,
             Row::ToolInputsMenu,
@@ -408,7 +409,7 @@ pub(super) fn debug_rows(section: usize) -> &'static [Row] {
             Row::CliReference,
             Row::Back,
         ],
-        6 => &[Row::CheatCatalog, Row::CliReference, Row::Back],
+        6 => &[Row::CheatCatalog, Row::StartInterpreterDebugSession, Row::CliReference, Row::Back],
         _ => &[
             Row::CopyDiagnosis,
             Row::CreateIssueReport,

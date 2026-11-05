@@ -19,7 +19,7 @@ impl Fixture {
     fn source(&self) -> Source<'_> {
         let mut av = input_config::AvConfig::default(); av.debug_game_save_slot = 99;
         Source { rom: &self.rom, bios: None, save: Some(&self.save), state: Some(&self.state),
-            av, input: input_config::InputConfig::default(), interp: true, dataset: None, executable: &self.executable }
+            av, input: input_config::InputConfig::default(), interp: true, dataset: None, executable: &self.executable, cheat_favorites: None }
     }
     fn root(&self) -> PathBuf { self.dir.path().join("isolated case") }
     fn originals(&self) -> Vec<Vec<u8>> {
@@ -120,6 +120,24 @@ fn local_cheat_catalog_is_copied_pinned_and_moves_with_the_session() {
     assert_eq!(fs::read(moved.join("cheats/catalogo.json")).unwrap(), catalog);
     fs::write(moved.join("cheats/catalogo.json"), b"changed copy").unwrap();
     assert!(read_manifest(&moved).unwrap_err().contains("input changed"));
+}
+
+#[test]
+fn interpreter_session_copies_favorites_only_for_the_matching_catalog() {
+    let f=Fixture::new();let source_dir=f.dir.path().join("cheats");fs::create_dir(&source_dir).unwrap();
+    let catalog=serde_json::to_vec(&serde_json::json!({"schema":1,"entries":[]})).unwrap();
+    fs::write(source_dir.join("catalogo.json"),&catalog).unwrap();
+    let hash=gba_core::ffta_rom::digest(&catalog);
+    let bytes=serde_json::to_vec(&serde_json::json!({"schema":1,"catalog_sha256":hash,"favorites":["CH-0001"]})).unwrap();
+    let mut source=f.source();source.cheat_favorites=Some(&bytes);
+    let root=create(&f.root(),source).unwrap();
+    let path=root.join(format!("Data/config/cheat-favorites/{hash}.json"));
+    assert_eq!(fs::read(&path).unwrap(),bytes);
+    assert!(!read_manifest(&root).unwrap().pins.contains_key(&format!("Data/config/cheat-favorites/{hash}.json")));
+    fs::write(&path,b"updated private preference").unwrap();assert!(read_manifest(&root).is_ok());
+    let wrong=serde_json::to_vec(&serde_json::json!({"schema":1,"catalog_sha256":"a".repeat(64),"favorites":[]})).unwrap();
+    let destination=f.dir.path().join("mismatch");let mut source=f.source();source.cheat_favorites=Some(&wrong);
+    assert!(create(&destination,source).is_err());assert!(!destination.exists());
 }
 
 #[test]

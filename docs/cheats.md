@@ -133,6 +133,15 @@ before the original record. Long individual records are marked as abbreviated
 in the view and remain available in full through `debug-cheats show`. Decoding
 and controlled application remain partial, with the one-shot scope below.
 
+To keep a cheat in the favorites list, highlight it and choose **Favorite**;
+choose **Unfavorite** to remove it. Set **Collection** to **Favorites** to
+show only favorites, and clear any other filters that hide the desired item.
+Favorites are stored locally by catalog hash; a different or modified catalog
+has a separate list. A menu-created interpreter copy receives a snapshot of
+the current favorites when the selected catalog is the default catalog; later
+changes in that isolated copy do not update the original app automatically.
+An invalid or externally modified favorites file is preserved and reported.
+
 For a local build or an extracted portable app, the user's existing catalog can
 be kept at `cheats/catalogo.json` beside the application executable. The Debug
 / Cheat catalog page finds it automatically, and the file stays available on

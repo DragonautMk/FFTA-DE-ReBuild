@@ -44,10 +44,14 @@ the usual empty state. Existing sessions are not silently modified. Cheat
 activation retains its interpreter and preview requirements described in
 [the cheat guide](cheats.md).
 
-The menu-created copy retains the current game's backend. When the game is
-using the native backend, create an interpreter copy with `debug-session
-create ... --interp --open` to activate supported cheats; opening the catalog
-alone does not switch the backend.
+**Debug → Cheat → Start interpreter debug copy** captures the current paused
+game state and opens an isolated interpreter copy suitable for supported cheat
+activation. The ordinary **Start debug session** action retains the current
+game's backend. Opening the catalog alone does not switch the backend. When the
+default catalog is selected, the menu-created copy also receives a snapshot of
+its favorites; later preference changes stay in that copy.
+Creating either kind of copy requires a development runtime; full-recomp
+packages with a distribution manifest cannot be converted by this tool.
 
 Targeted Linux and Windows Wine tests cover the copy, pin, relocation and
 tamper checks. Separate isolated Linux/X11 and Windows Wine GUI sessions opened

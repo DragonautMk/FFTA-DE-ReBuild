@@ -19,6 +19,7 @@ pub(crate) struct Source<'a> {
     pub interp: bool,
     pub dataset: Option<&'a Path>,
     pub executable: &'a Path,
+    pub cheat_favorites: Option<&'a [u8]>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -213,6 +214,10 @@ pub(crate) fn create(destination: &Path, source: Source<'_>) -> Result<PathBuf, 
     } else {
         None
     };
+    if let Some(favorites)=source.cheat_favorites {
+        let catalog=catalog.as_ref().ok_or("Cheat favorites require a copied catalog")?;
+        crate::debug_cheat_favorites::Favorites::validate_snapshot(favorites,&gba_core::ffta_rom::digest(catalog))?;
+    }
     let root = std::path::absolute(destination).map_err(|e| e.to_string())?;
     fs::create_dir_all(root.parent().ok_or("Session needs a parent directory")?).map_err(|e| e.to_string())?;
     fs::create_dir(&root).map_err(|e| e.to_string())?;
@@ -236,6 +241,10 @@ pub(crate) fn create(destination: &Path, source: Source<'_>) -> Result<PathBuf, 
     put("portable.txt", b"Isolated local debug session\n", true)?;
     put("ffta.gba", source.rom, true)?;
     if let Some(catalog) = &catalog { put("cheats/catalogo.json", catalog, true)?; }
+    if let Some(favorites)=source.cheat_favorites {
+        let hash=gba_core::ffta_rom::digest(catalog.as_ref().unwrap());
+        put(&format!("Data/config/cheat-favorites/{hash}.json"),favorites,false)?;
+    }
     if let Some(bios) = source.bios { put("gba_bios.bin", bios, true)?; }
     if let Some(save) = source.save { put("Data/saves/ffta.sav", save, false)?; }
     if let Some(state) = source.state {
@@ -357,7 +366,7 @@ fn create_cmd(args: &[String]) -> Result<(), String> {
     let dataset = report["dataset"]["directory"].as_str().map(PathBuf::from);
     let root = create(&destination, Source { rom:&rom, bios:bios.as_deref(), save:save.as_deref(), state:state.as_deref(),
         av:input_config::AvConfig::load(), input:input_config::InputConfig::load(), interp:request.interp,
-        dataset:dataset.as_deref(), executable:&std::env::current_exe().map_err(|e| e.to_string())? })?;
+        dataset:dataset.as_deref(), executable:&std::env::current_exe().map_err(|e| e.to_string())?, cheat_favorites:None })?;
     println!("{}", serde_json::json!({"schema":1,"kind":"ffta-debug-session-created","root":root,"opened":open}));
     if open { let status = launch(&root)?.wait().map_err(|e| e.to_string())?; if !status.success() { return Err(format!("Debug session failed: {status}")); } }
     Ok(())

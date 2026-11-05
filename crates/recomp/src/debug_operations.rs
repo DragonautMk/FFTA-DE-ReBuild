@@ -133,7 +133,7 @@ pub(crate) fn menu_operation(action: &menu::MenuAction) -> Option<&'static str> 
         ContentPreview { .. } => "content.preview",
         ContentCancel => "content.cancel",
         CopyDiagnosis => "diagnose",
-        StartDebugSession => "session.create",
+        StartDebugSession | StartInterpreterDebugSession => "session.create",
         CloseDebugSession => "session.close",
         OpenDebugCatalog => "catalog.list",
         OpenCheatCatalog | CheatReload => "cheats.open",

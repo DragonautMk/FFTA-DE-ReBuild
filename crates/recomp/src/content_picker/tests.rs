@@ -179,6 +179,7 @@ pub(crate) fn write_synthetic_menu_fixture() {
             interp: true,
             dataset: None,
             executable: &executable,
+            cheat_favorites: None,
         },
     )
     .unwrap();

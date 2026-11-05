@@ -112,6 +112,7 @@ impl Fixture {
                 interp: true,
                 dataset: None,
                 executable: &std::env::current_exe().unwrap(),
+                cheat_favorites: None,
             },
         )
         .unwrap();

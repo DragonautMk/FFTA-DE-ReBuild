@@ -248,6 +248,7 @@
     "Stop input recording": "Ferma registrazione input",
     "Copy diagnosis": "Copia diagnosi",
     "Start debug session": "Avvia sessione debug",
+    "Start interpreter debug copy": "Avvia copia debug con interprete",
     "Close debug session": "Chiudi sessione debug",
     "Content selector": "Selettore contenuti",
     "Debug catalog": "Catalogo debug",
