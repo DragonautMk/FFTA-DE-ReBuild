@@ -19,7 +19,15 @@ tools stay directly in `scripts/`. For example,
 historical filename; `package-release.sh` runs on all three CI host platforms.
 The private debug-assets exporter (`export_debug_assets.py`, with Bash and
 PowerShell wrappers) creates a separate, local Windows portable ZIP with the
-selected debug collection. Its input selection, privacy and prerequisites are
+selected debug collection plus automatic workspace asset discovery, a searchable
+local index and paged EUR/USA save catalogs. Extra local roots can be included
+with `--scan-root`. Numbered micro-snapshot sequences retain representative
+first/last points by default; `--all-snapshots` exports every intermediate and
+`--keep-snapshot PATH` preserves individual exceptions. The separate
+`export_debug_assets_extended.py` entry point (with matching Bash/PowerShell
+wrappers) always includes all intermediate snapshots and names its ZIP
+`debug-assets-extended-EUR`. Both editions leave all source states on disk.
+Its scope, explicit exclusions, privacy and prerequisites are
 documented in [private debug asset export](../docs/private_debug_assets.md).
 
 The root `build-all.ps1` remains the Windows all-platform build entry point.

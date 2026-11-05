@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "inspect-parameter-ordinary-checkpoint-contexts",
+  "title": "Inspect retained sparse parameter trigger candidates",
+  "kind": "docs",
+  "platforms": [
+    "EUR source and retained checkpoints"
+  ],
+  "changes": [
+    "Narrow ordinary sparse-parameter recovery with program context and mission-source joins over retained snapshots.",
+    "Trace a zero-override event starter and record the limits of the retained pending-field search."
+  ],
+  "validation": [
+    "Guarded read-only scans inspect nine prior candidates and 370 retained snapshot paths, with 279 distinct readable EUR payloads. All 27 program 158 contexts have cursor 28 after the mode-0 instruction at offset 22. A separate source join finds 20 physical mission candidates with a nonzero parameter and a mode-0 program; none matches the saved selected-mission value in those 279 payloads. The first broader join failed at Python syntax parsing before source reads; its corrected check passed. Evidence: target/validation/units/e128-parameter-mode0-context-candidates-syolhe_k/, e128-parameter-prior-script-contexts-xypp8e8t/, e128-parameter-all-mode0-mission-candidates-xvqpelh1/ and e128-parameter-all-mode0-mission-candidates-fixed-4skuahmi/.",
+    "Pinned original code clears 02003c28 and uses offset a4 from the object at 03002810 for an event-starter path. A guarded read of 279 retained EUR payloads finds 88 plausible root/view pointers and one nonzero field, event 58 parameter 0, with no key168/nonzero-parameter candidate. Evidence: target/validation/units/e128-parameter-pending-world-event-lc91avw3/."
+  ],
+  "limitations": [
+    "Context pointers and saved mission values do not prove scheduling, availability, absence of indirect paths or branch returns. The positive ordinary read and paired comparison remain open; no guest execution or performance measurements.",
+    "An unrestricted 256-entry stride-264 RAM scan lacked proof of row ownership and is rejected as a scene selector; its diagnostic remains at target/validation/units/e128-parameter-mode0-physical-quest-rows-_x9xnsnq/. Plausible root/view pointers do not establish live task identity or event availability."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md"
+  ]
+}

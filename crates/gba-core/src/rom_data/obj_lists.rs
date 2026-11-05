@@ -8,6 +8,7 @@ mod roots;
 pub use roots::REFERENCES;
 pub mod observed;
 pub mod constructor_animation;
+pub mod conditional_markers;
 
 #[derive(Clone, Copy, Debug)]
 pub struct RootReference {

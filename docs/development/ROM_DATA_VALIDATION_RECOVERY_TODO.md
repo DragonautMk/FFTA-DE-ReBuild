@@ -229,9 +229,10 @@ complete animation. Rejected leads and closed negative locators remain closed.
   tables and consumers are not claimed as ordinary coverage.
   [Evidence](../rom_data_ui_graphics.md#ordinary-table-extension-reachability-remains-partial).
 - [ ] **ROMDATA-05-DYNAMIC-RAW-ORDINARY-REACHABILITY:** identify a source-backed
-  ordinary invocation before attempting a new scene. Keep conditional fragment
-  acceptance and global-domain uncertainty separate; do not repeat Unit320 or
-  the closed state2/state4/selector-witness attempts.
+  ordinary invocation before attempting a new scene. IN-08 Link selections
+  activate the gate, but two 240-frame observations have zero fragment reads;
+  a positive read and paired scene remain open. Keep conditional acceptance and
+  global-domain uncertainty separate; do not repeat closed negative routes.
   [Current operational scope](TASK_HANDOFF.md#rom-data-full-eur).
 - [x] **ROMDATA-04, compact OBJ e101–e107:** IN-08 Kent's Ball scene observes
   senary bank `6c6928` selector 2 and passes a 600-frame EUR Wine raw/managed
@@ -272,7 +273,9 @@ complete animation. Rejected leads and closed negative locators remain closed.
   dynamic domains and consumers before making a global coverage claim.
 - [ ] **ROMDATA-01-OBJ-REMAINING-DRAW-ROOTS / CONSTRUCTOR-SOURCES /
   GRAPHICS-PAYLOADS:** select individual authenticated missing consumers or
-  payloads. Do not reopen the broad experiment with 61 truncations.
+  payloads. Conditional RAM-slot lists `395172`/`39517a` now have source and
+  original-writer model evidence; publication, draw and ordinary use remain
+  open. Do not reopen the broad experiment with 61 truncations.
   [Current selections and limits](TASK_HANDOFF.md#rom-data-full-eur).
 
 ## 6. Keep explicitly deferred scope visible

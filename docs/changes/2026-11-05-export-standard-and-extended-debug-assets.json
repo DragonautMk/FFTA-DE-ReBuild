@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "export-standard-and-extended-debug-assets",
+  "title": "Export representative and extended private debug assets",
+  "kind": "fixed",
+  "platforms": [
+    "Python exporter on Linux; Windows portable payload; existing Linux catalog CLI"
+  ],
+  "changes": [
+    "Discover available workspace saves, snapshots, inputs/imports, recordings, diagnostic reports, images, raw graphics/audio and supporting files; preserve source aliases, complete inventories, SHA-256 checks and relative report/recording attachments.",
+    "Expose the 31 previously hidden loaded checkpoints and EUR base in the exported catalog while retaining the original source catalog. Build bounded EUR/USA discovery catalogs and a searchable local index, merging raw/preview copies of the same core state.",
+    "Select first/last points of numeric capture sequences by default, preserving original collections, independent slots, descriptive checkpoints, source-manifest inputs and reproduction/report dependencies. Inventory each omitted intermediate and retained representative; no source save is deleted.",
+    "Add separate Python, Bash and PowerShell extended entry points that always include intermediate snapshots and generate distinctly named extended ZIPs. Keep all-snapshots and explicit keep-snapshot overrides.",
+    "Skip active/interrupted leased scopes with explicit exclusions, never following links or stopping other jobs. Refuse changed copied sources and existing destinations before publishing verified private archives."
+  ],
+  "validation": [
+    "15 public synthetic exporter checks PASS across the main suite and the separately executed Node UI test; covers aliases, >1024 catalog entries, selection/full modes, preserved slots and dependencies, explicit keeps, lease exclusions, originals/no-overwrite, corrupt/disguised ROM ZIPs and source-change refusal. Units debug-assets-editions-tests-0_4ucf89 and debug-assets-index-ui-d7e5tsgm.",
+    "Real standard and extended exports PASS all payload hashes/CRC, catalog paths and identities, portable manifests and protected-source checks. Standard has 784 discovery entries and omits 1657 intermediate source paths; extended has 2394 entries and contains every omitted path with identical bytes. All 1657 original omitted snapshots remain on disk with exact SHA-256. Evidence: target/validation/units/debug-assets-standard-extended-346hs8wu/.",
+    "Existing Linux runtime CLI verified all 5 standard and 12 extended catalogs (908 and 2518 entries including the original projection); all referenced entries available. Extended check also confirms all31 loaded keys/EUR base and actual generated-index JavaScript syntax. Units debug-assets-standard-native-catalogs-tp13xnhk and debug-assets-extended-native-catalogs-o03vwr58; no guest execution.",
+    "Bash wrapper syntax and extended help invocation PASS. An earlier export refused a concurrently changed unit receipt; diagnostics retained and leased-scope exclusion added. A terminal tool handle did not end the actual two-edition job: its retained terminal unit receipt is PASS with automatic scratch retirement; no duplicate export was started."
+  ],
+  "limitations": [
+    "Scene selection is a filename/provenance heuristic, not proof that intermediate scenes are equivalent or that every scene is covered. Explicit keeps and the extended script preserve access; original state contents and recorded gameplay acceptance are unchanged.",
+    "Both editions cover available recognized workspace assets, with explicit exclusions for ROM/BIOS, extracted datasets, generated/native code, caches, Wine profiles, links, prior exports and leased live/interrupted scopes. External asset roots require explicit scan-root selection. Missing retired files are not reconstructed.",
+    "Windows PE payload identities are checked, but Wine CLI startup was blocked by read-only /run filesystem and poll-hup initialization errors. Failed diagnostics retained; only the two matching leases created by that failed session were released after terminal failure evidence, with an ownership receipt. No source, prefix or diagnostics removed. Native Windows, PowerShell execution, GUI and per-save gameplay compatibility remain unverified.",
+    "Private archives remain ignored local artifacts; source data and original micro-snapshots remain available to the system. Other concurrent ROM/development work is preserved."
+  ],
+  "files": [
+    "scripts/export_debug_assets.py",
+    "scripts/debug_asset_inventory.py",
+    "scripts/export_debug_assets_extended.py",
+    "scripts/linux/export_debug_assets_extended.sh",
+    "scripts/windows/export_debug_assets_extended.ps1",
+    "scripts/tests/test_export_debug_assets.py",
+    "README.md",
+    "scripts/README.md",
+    "docs/private_debug_assets.md",
+    "docs/debug_catalog.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/private_debug_assets.md",
+    "docs/debug_catalog.md"
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "inspect-dynamic-fragment-retained-contexts",
+  "title": "Inspect retained dynamic fragment task contexts",
+  "kind": "docs",
+  "platforms": [
+    "EUR source and retained checkpoints"
+  ],
+  "changes": [
+    "Expand the source-pinned saved-state search for an ordinary dynamic-fragment trigger without repeating accepted negative scenes.",
+    "Trace the actual menu selection values and retain the failed diagnostic and bounded zero-read observations.",
+    "Identify the conditional Link menu entry and observe gate activation in normal Team Up and Trade Units selections, while preserving the missing positive resource proof.",
+    "Pin a conditional dispatcher route and inspect bounded alternate gate-setter sources without replaying negative scenes."
+  ],
+  "validation": [
+    "A guarded read-only scan of 605 retained paths finds 345 distinct checksum-valid EUR payloads; 72 distinct payloads are invalid or non-EUR for this parser and other paths are duplicates. All 345 have flag40 and gate13 clear and neither current nor pending selector 7–9; no 0200f450 value is an in-range EWRAM task pointer. Original source pins and protected inputs pass. Evidence: target/validation/units/e128-dynamic-retained-state-context-1z_0p0ni/.",
+    "Pinned source connects selection 2 to flag40, world state20 and script key162. An isolated Wine trace samples r4=3 for the prior Area List recording; the first Clan trace fails its hit guard, and a corrected observer samples r4=1, flag40/gate13 clear at all 240 frame boundaries and zero dynamic reads. A separate e128 CLI reaches the visible Clan menu and reports zero dynamic reads. Inputs were guarded. Evidence: target/validation/units/e128-dynamic-world-state20-source-vcsy0wyf/, e128-dynamic-world-menu-branch-trace-_bkkdyf5/, e128-dynamic-clan-branch-trace-xlx9oirq/ (failed), e128-dynamic-clan-flag-trace-kdtitdxe/ and e128-dynamic-clan-cli-observation-mx0nssxb/.",
+    "Source-pinned packed flag 559 is set in 63 of 345 distinct valid EUR payloads. Normal IN-08 input reaches Link, samples selection 2 and activates flag40. Separate 240-frame Team Up and Trade Units traces reach callback 08064678 and gate13=1, current selector1, and each reports zero dynamic-fragment owner reads; the Team Up endpoint shows ACCESS and after 600 uninstrumented neutral frames shows Link broken. Protected inputs pass. Evidence: target/validation/units/e128-dynamic-menu-flag559-sl3la67j/, e128-dynamic-in08-link-trace-ng__2ehq/, e128-dynamic-teamup-trace-379yt0al/, e128-dynamic-teamup-wait-jvegqsbs/ and e128-dynamic-trade-units-trace-3sc2vj6d/. A path-typo endpoint preflight failed before guest execution.",
+    "A guarded source/snapshot join connects Link registration callback 0809a594 and root 0200f4a8 to dispatcher state26 and the selector8/9 initializer. Five authenticated Link boundaries contain dispatcher state8 and zero context argument; gate13 is set at the Team Up ACCESS boundary and clear at the later Link broken boundary. No guest instructions ran. Evidence: target/validation/units/e128-dynamic-link-ui-dispatch-source-rvmgtvib/.",
+    "A guarded scan of the same 345 authenticated EUR payloads finds 240 root values in the tested EWRAM range and no saved context fields with dispatcher states24, 25 or 26; the remaining 105 root values lie outside the tested range. No guest instructions ran. Evidence: target/validation/units/e128-dynamic-dispatch-retained-states-_9tifc06/.",
+    "Authenticated original code pins state1 context acquisition and state4 conditional queuing of state23, followed by state24 and a conditional route to state26. A ROM-wide aligned BL-pattern scan finds 51 setter candidates; of 27 adjacent immediate index/value pairs, six use index13, one with value1 at 0806467e and five with value0. Evidence: target/validation/units/e128-dynamic-state26-source-path-kmcl952k/.",
+    "The modeled EUR main archive has 207 programs/35048 source-authenticated instructions and no setter opcode27; the auxiliary archive has 133 programs/913 instructions and no setter opcode3. A source-pinned scan of 512 mission records/2048 inline fields finds no encoded key 060d. Protected ROM, catalogs and inputs pass; no guest instructions ran. Evidence: target/validation/units/e128-dynamic-main-script-setter-j7bx5tqe/, e128-dynamic-aux-script-setter-e3wmfre7/ and e128-dynamic-mission-setter-scan-w64t0936/.",
+    "Source-pinned 080d0330 has indices14–18 for its in-range switch; the observed direct caller supplies r6=0839797c or 00004bfc on the out-of-range path, neither becoming13 under setter u16 narrowing. The intermediate helper saves and restores r6. Aligned direct-BL scan finds one direct caller and exact Thumb-pointer scan finds none. Eight other source-pinned normal-entry sites use indices1/2/4, 12, 20–275 or 27–50. Evidence: target/validation/units/e128-dynamic-selector-index-domain-l8in_mf0/, e128-dynamic-callee-preserves-r6-tmshu7g4/ and e128-dynamic-other-setter-domains-o5w42x52/.",
+    "Pinned Link task state5 tests bit1 of 020157e6 before the branch writing state6. Four authenticated Link checkpoints have a zero status byte; Team Up ACCESS has task state5/gate13=1 and the later Link-broken endpoint has state52/gate13=0. Evidence: target/validation/units/e128-dynamic-link-state5-status-y6ruykyg/.",
+    "Source pins the separate 080c9230 state machine: state11 sets bit1 at 020157e6. In two authenticated Team Up checkpoints that machine is in states4 and13 respectively; status stays zero at those boundaries, gate13 is 1 then 0. State4 contains conditional IWRAM tests and a counter branch to state13. Evidence: target/validation/units/e128-dynamic-link-bit-producer-b4opp9l0/ and e128-dynamic-transport-state2-queue-r0k83gsd/.",
+    "Pinned original 08003f80 reads 04000128 and conditionally updates IWRAM counters tested by transport state4. Two authenticated Team Up boundaries retain IO byte33h, with counters 0/12 then 0/0. Hash-verified frozen Windows observer MemMap byte dispatch uses the ordinary backing-store arms for offset128; its executable hash matches its receipt. No guest instructions ran. Evidence: target/validation/units/e128-dynamic-link-serial-path-hi825gpr/."
+  ],
+  "limitations": [
+    "Saved values do not prove task scheduling or rule out later transitions, alternate pointer regions, other checkpoints or ordinary use. A source-backed gate trigger is observed, but positive resource use and a paired scene remain open; no guest instructions or performance measurement.",
+    "Dispatch and frame sampling can miss within-block or within-frame changes. The earlier Clan and Area List observations do not establish global absence; no full pair or performance measurement.",
+    "One single-peer Team Up attempt ends with Link broken; its cause and connected-peer behavior are unproved. The neutral continuation did not instrument resource reads.",
+    "The five saved boundaries are not continuous execution observations and do not prove state26 unreachable; a normal transition to that state remains unproved.",
+    "An in-range root does not establish a live task; out-of-range pointers, later transitions and other checkpoints remain unproved.",
+    "The conditional dispatcher path is not a demonstrated live transition. Aligned BL candidates can include data and the 24 non-pair candidates, indirect calls, other programs and direct memory writes remain unclassified; bounded archive and mission scans do not prove exclusive gate activation.",
+    "Setter index classifications follow the pinned caller and normal-entry paths only; indirect or interior entry, self-modification, and arbitrary writes remain unproved.",
+    "The four Link snapshots are not a continuous trace, a diagnosis of link failure, or proof that another peer is necessary.",
+    "The state-machine snapshots do not establish the intervening execution, a link-failure cause, or the need for a peer.",
+    "The inspected bus arms and two saved boundaries do not establish complete link behavior, peer presence or a causal explanation for Link broken."
+  ],
+  "files": [
+    "docs/rom_data_ui_raw_transfers.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_raw_transfers.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

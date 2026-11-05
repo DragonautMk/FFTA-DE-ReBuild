@@ -2,7 +2,8 @@
 """Create an explicitly private, standalone Windows debug-asset export.
 
 The ordinary release packager remains private-data-free. This command only reads
-its selected sources and publishes a new ZIP; it never edits a source collection.
+its source collections and discovered workspace assets and publishes a new ZIP;
+it never edits a source collection.
 """
 import argparse
 import hashlib
@@ -14,6 +15,7 @@ import stat
 import tempfile
 import zipfile
 from datetime import datetime
+import debug_asset_inventory as inventory
 
 ROOT = Path(__file__).resolve().parents[1]
 PREFIX = 'FFTARecomp-debug-EUR'
@@ -65,8 +67,9 @@ def check_catalog(ready):
     if catalog.get('schema') != 1 or not isinstance(catalog.get('cases'), list):
         raise ValueError('Expected the schema-1 local debug-save catalog')
     entries = [cp for case in catalog['cases'] for cp in case.get('checkpoints', [])]
-    for name in ('variant_slots', 'variants', 'generated_standard_saves', 'factory_standard_saves'):
+    for name in ('variant_slots', 'variants', 'generated_standard_saves', 'factory_standard_saves', 'loaded_checkpoints'):
         entries.extend(catalog.get(name, []))
+    if isinstance(catalog.get('eur_base'), dict): entries.append(catalog['eur_base'])
     entries.extend(x['ready'] for x in catalog.get('inputs', []) if isinstance(x.get('ready'), dict))
     checked = {}
     for item in entries:
@@ -89,7 +92,7 @@ def check_catalog(ready):
 
 def reject_rom(path):
     suffix=path.suffix.lower()
-    if suffix in ('.gba','.agb') or path.name.lower() in ('gba_bios.bin','bios.bin'):
+    if suffix in ('.gba','.agb','.bios') or path.name.lower() in ('gba_bios.bin','bios.bin'):
         raise ValueError(f'ROM/BIOS is not a debug asset: {path}')
     with regular(path).open('rb') as f:
         header=f.read(192)
@@ -98,9 +101,16 @@ def reject_rom(path):
     if suffix=='.zip':
         with zipfile.ZipFile(path) as nested:
             for info in nested.infolist():
+                safe_relative(info.filename.rstrip('/'))
+                if stat.S_ISLNK(info.external_attr >> 16):
+                    raise ValueError(f'Linked entry inside source ZIP: {path.name}/{info.filename}')
                 name=info.filename.lower()
-                if name.endswith(('.gba','.agb','gba_bios.bin','bios.bin')):
+                if name.endswith(('.gba','.agb','.bios','gba_bios.bin','bios.bin')):
                     raise ValueError(f'ROM/BIOS inside source ZIP: {path.name}/{info.filename}')
+                if not info.is_dir():
+                    with nested.open(info) as f: header=f.read(192)
+                    if len(header)>=192 and header[0xB2]==0x96 and header[0xAC:0xB0] in (b'AFXE',b'AFXP'):
+                        raise ValueError(f'Game ROM inside source ZIP: {path.name}/{info.filename}')
 
 
 def pe64(path):
@@ -123,6 +133,8 @@ def export(args):
     original_files = list(tree(assets)); legacy_files = list(tree(legacy))
     for path, _ in original_files + legacy_files: reject_rom(path)
     catalog = check_catalog(ready)
+    source_catalog = json.loads((ready / 'catalog.json').read_text(encoding='utf-8'))
+    projected_catalog = inventory.complete_catalog(source_catalog)
     if not (ready / 'EUR' / 'ffta.sav').is_file():
         raise ValueError('EUR collection needs ffta.sav')
     eur_hashes = list((ready / 'EUR' / 'SaveStates').iterdir())
@@ -159,11 +171,11 @@ def export(args):
             reject_rom(path)
             if digest(path)!=item.get('sha256'):raise ValueError(f'Original source checksum mismatch: {label}')
             original_sources.append((label,path,name,item['sha256']))
-    out = args.output
+    out = args.output.absolute()
     if out.exists() or out.is_symlink():
         raise ValueError(f'Output already exists: {out}')
     out.parent.mkdir(parents=True, exist_ok=True)
-    entries = {}; names_casefold = set()
+    entries = {}; names_casefold = set(); source_archives = {}; source_guards = {}
     def reserve(name):
         name = safe_relative(name)
         folded = name.casefold()
@@ -180,7 +192,13 @@ def export(args):
                 target.write(block); h.update(block); count += len(block)
         entries[name] = {'sha256': h.hexdigest(), 'bytes': count, 'source': provenance}
     def add_file(z, name, path, provenance):
-        with regular(path).open('rb') as f: add_stream(z, name, f, provenance)
+        path = Path(path).absolute()
+        before = inventory.stamp(regular(path))
+        with path.open('rb') as f: add_stream(z, name, f, provenance)
+        if inventory.stamp(path) != before:
+            raise ValueError(f'Source changed during export: {path}')
+        source_guards.setdefault(path, before)
+        source_archives.setdefault(path, name)
     def add_bytes(z, name, data, provenance):
         import io
         add_stream(z, name, io.BytesIO(data), provenance)
@@ -238,7 +256,11 @@ def export(args):
                     dest='Data/config/debug-catalog/'+rel[len('ready/'):]
                 else:
                     dest='DebugAssets/originali/'+rel
-                add_file(z,dest,path,'debug_saves/'+rel)
+                if rel == 'ready/catalog.json':
+                    add_file(z,'DebugAssets/original-catalog.json',path,'unchanged source catalog')
+                    add_bytes(z,dest,(json.dumps(projected_catalog,ensure_ascii=False,indent=2)+'\n').encode(),'derived accessible catalog; original retained')
+                else:
+                    add_file(z,dest,path,'debug_saves/'+rel)
             for name, expected_hash in catalog.items():
                 if entries['Data/config/debug-catalog/'+name]['sha256'] != expected_hash:
                     raise ValueError(f'Catalog source changed during export: {name}')
@@ -260,6 +282,101 @@ def export(args):
                     add_file(z,'Data/config/recordings/'+directory.name+'/'+rel,path,'accepted recording/'+directory.name+'/'+rel)
             if all(p.is_file() for p in pair):
                 for path in pair:add_file(z,'DebugAssets/replay-F-09/'+path.name,path,'F-09 replay/'+path.name)
+            roots = [ROOT] + list(args.scan_root)
+            print('Discovering workspace debug assets (including experimental and incomplete material)...',flush=True)
+            rows, exclusions, guards = inventory.scan(roots, ROOT, reject_rom, digest,
+                excluded_paths=[out, temp, *args.exclude_scan])
+            discovered_snapshot_paths = sum(r['kind']=='snapshot' for r in rows)
+            report_roots = sorted({r['path'].parent for r in rows if r['path'].suffix.lower()=='.html'},key=lambda p:(len(p.parts),str(p)))
+            selected_roots = []
+            for root in report_roots:
+                if any(root.is_relative_to(parent) for parent in selected_roots): continue
+                selected_roots.append(root)
+            dependency_dirs = {r['path'].parent for r in rows if r['path'].name in {'recording.json','replay.json','capture.json'}}
+            protected = set(source_archives)
+            protected.update(r['path'] for r in rows if r['kind']=='snapshot' and (
+                r['path'].parent in dependency_dirs or any(r['path'].is_relative_to(root) for root in selected_roots)))
+            rows, snapshot_omissions = inventory.select_snapshots(rows, protected=protected,
+                keep=getattr(args,'keep_snapshot',[]),all_snapshots=getattr(args,'all_snapshots',False))
+            retained_paths = {r['path'] for r in rows} | set(source_archives)
+            guards = {p:s for p,s in guards.items() if p in retained_paths}
+            print(f'Selected {len(rows):,} source files; omitted {len(snapshot_omissions):,} intermediate snapshots; copying payloads...',flush=True)
+            # Reuse existing archive bytes and equal payloads; retain all source aliases.
+            payloads = {meta['sha256']: name for name, meta in entries.items()}
+            # Keep report-relative images, JSON, raw dumps and nested attachments usable.
+            bundle_files = {}; report_bundles = []
+            for root in selected_roots:
+                contents = [r for r in rows if r['path'].is_relative_to(root)]
+                identity = hashlib.sha256(''.join(r['sha256']+r['path'].relative_to(root).as_posix() for r in sorted(contents,key=lambda r:r['path'])).encode()).hexdigest()
+                folder = 'DebugAssets/reports/'+identity
+                report_bundles.append({'source':str(root.relative_to(ROOT)) if root.is_relative_to(ROOT) else root.name,'directory':folder,'files':len(contents)})
+                for r in contents:
+                    dest = folder+'/'+r['path'].relative_to(root).as_posix()
+                    bundle_files[r['path']] = dest
+                    if dest not in entries: add_file(z,dest,r['path'],r['source'])
+                    if entries[dest]['sha256'] != r['sha256']: raise ValueError(f'Report changed: {r["source"]}')
+            recording_files = {}
+            by_path = {r['path']: r for r in rows}
+            recording_groups = []
+            for row in rows:
+                if row['path'].name != 'recording.json': continue
+                try: data = json.loads(row['path'].read_text(encoding='utf-8'))
+                except (ValueError, UnicodeError): continue
+                if not isinstance(data, dict) or data.get('kind') != 'ffta-input-recording': continue
+                parent = row['path'].parent
+                siblings = [r for p,r in by_path.items() if p.parent == parent]
+                identity = hashlib.sha256(''.join(r['sha256']+r['path'].name for r in sorted(siblings,key=lambda r:r['path'].name)).encode()).hexdigest()
+                folder = 'DebugAssets/recordings/' + identity
+                problems = []
+                for filename,key in [('start.ffstate','start_sha256'),('end.ffstate','end_sha256'),('input.input','input_sha256')]:
+                    r = by_path.get(parent / filename)
+                    if r is None or r['sha256'] != data.get(key): problems.append(filename)
+                recording_groups.append({'source': row['source'], 'directory': folder,
+                    'status': data.get('status','unknown'), 'identity_check': 'mismatch/missing: '+', '.join(problems) if problems else 'verified'})
+                for r in siblings:
+                    dest = folder+'/'+r['path'].name
+                    recording_files[r['path']] = dest
+                    if dest not in entries: add_file(z,dest,r['path'],r['source'])
+                    if entries[dest]['sha256'] != r['sha256']: raise ValueError(f'Recording changed: {r["source"]}')
+            for row in rows:
+                path = row['path']; sha = row['sha256']
+                dest = recording_files.get(path) or bundle_files.get(path) or source_archives.get(path) or payloads.get(sha)
+                if dest is None:
+                    dest = 'DebugAssets/library/'+sha[:2]+'/'+sha+path.suffix.lower()
+                    add_file(z,dest,path,row['source'])
+                if entries[dest]['sha256'] != sha: raise ValueError(f'Asset changed: {row["source"]}')
+                row['archive'] = dest; payloads.setdefault(sha,dest)
+            known_saves = {}
+            for path, sha in catalog.items():
+                if path.endswith('.sav') and path.split('/')[0] in ('EUR','USA'):
+                    known_saves.setdefault(sha,set()).add(path.split('/')[0])
+            pages = inventory.catalog_pages(rows, source_catalog.get('rom_sha256',{}), known_saves)
+            for name,data in pages.items():
+                encoded=(json.dumps(data,ensure_ascii=False,indent=2)+'\n').encode()
+                if len(encoded)>4*1024*1024: raise ValueError(f'Catalog exceeds runtime limit: {name}')
+                add_bytes(z,name,encoded,'generated discovery catalog')
+            summary={'source_files':len(rows),'unique_payloads':len({r['archive'] for r in rows}),
+                'snapshots':sum(r['kind']=='snapshot' for r in rows),'cartridge_saves':sum(r['kind']=='cartridge-save' for r in rows),
+                'inputs':sum(r['kind']=='input' for r in rows),'recording_directories':len(recording_groups),
+                'report_bundles':len(report_bundles),
+                'discovered_snapshot_paths':discovered_snapshot_paths,
+                'omitted_intermediate_snapshots':len(snapshot_omissions),
+                'catalogs':len(pages),'catalogued_source_files':sum('catalog' in r for r in rows),
+                'raw_only_or_invalid_saves':sum(r['kind'] in ('snapshot','cartridge-save') and 'catalog' not in r for r in rows)}
+            export_inventory={'schema':1,'kind':'ffta-private-debug-asset-inventory',
+                'summary':summary,'scan_roots':[str(p) for p in roots],
+                'policy':'All available workspace saves/snapshots/inputs/imports and diagnostic text, reports, images/audio; content aliases retained. No ROM/BIOS, extracted ROM datasets, native/generated code, builds, caches, Wine profiles, prior exports or external linked folders. Extra roots require --scan-root.',
+                'files':[{k:v for k,v in r.items() if k!='path'} for r in rows],
+                'snapshot_selection':{'mode':'all' if getattr(args,'all_snapshots',False) else 'representative',
+                    'policy':'Preserve collection masters, original sources, reproduction boundaries, independent slots, recording/report dependencies and explicit keeps. Numbered capture sequences retain first/last; intermediate steps are omitted without deleting originals. This filename/provenance heuristic does not prove scene equivalence.',
+                    'omitted':snapshot_omissions},
+                'recordings':recording_groups,'reports':report_bundles,'exclusions':exclusions}
+            add_bytes(z,'DEBUG-ASSETS-INVENTORY.json',(json.dumps(export_inventory,ensure_ascii=False,indent=2)+'\n').encode(),'complete discovery inventory and omissions')
+            add_bytes(z,'DEBUG-ASSETS.html',inventory.index_html(rows,pages,exclusions,export_inventory['snapshot_selection']),'searchable local asset index')
+            for path,before in guards.items():
+                if path in source_guards and source_guards[path] != before:
+                    raise ValueError(f'Source changed between collection and discovery: {path}')
+                source_guards[path]=before
             add_bytes(z,'Data/config/av.cfg',b'debug = true\ndebug.extended_saves = true\n','debug portable defaults')
             instructions = ("""FFTARecomp - private debug assets (Windows x86-64)
 
@@ -269,6 +386,10 @@ def export(args):
    the EUR working copies (slots and SaveStates). The complete catalog is under
    Debug > Sessions and cases > Debug catalog. Use Open isolated case to open a case;
    use Import to free snapshot slot to import a snapshot in an isolated copy.
+   Loaded checkpoints and the EUR base are now included in that catalog.
+   Open DEBUG-ASSETS.html for exported assets, source paths and extra catalogs.
+   Choose/reload a DEBUG-CATALOG-EUR/USA-*.json file from the menu to use those saves.
+   Set Region, Recorded status, Kind and DS case filters to All when browsing.
 4. Catalog masters are in Data/config/debug-catalog; other originals and previous
    cases are in DebugAssets. The entire existing USA collection is included in
    the catalog, but this export has not verified USA compatibility.
@@ -279,13 +400,21 @@ Private ZIP: contains saves and generated data. Do not publish or commit it.
 The base package and binaries come from the inputs selected for the script.
 Includes verified original sources, selected complete recordings and the
 F-09 replay when available.
-Contains no ROM, BIOS, cache or target datasets. Recordings are bound to their
+Includes discovered target debug assets and incomplete/experimental material.
+By default, numbered micro-snapshot sequences keep first/last points and protected
+catalog/replay/report checkpoints. --all-snapshots retains every intermediate;
+--keep-snapshot PATH preserves an explicitly selected checkpoint.
+without promoting it to validated gameplay. DEBUG-ASSETS-INVENTORY.json records
+all source aliases, recording completeness, invalid/unidentified saves and exclusions.
+Contains no ROM, BIOS, cache or extracted ROM datasets. Recordings are bound to their
 original identities: check recording.json before using them.
 """).encode('utf-8')
             add_bytes(z,'LEGGIMI-DEBUG.txt',instructions,'generated instructions')
             output_manifest={'schema':1,'kind':'ffta-private-debug-assets','region_default':'EUR',
+                'edition':'extended' if getattr(args,'all_snapshots',False) else 'standard',
                 'usa':'existing collection; not validated by this export','rom_included':False,
                 'catalog_verified_files':len(catalog),'verified_original_sources':len(original_sources),'complete_recordings':len(recordings),'f09_replay_included':all(p.is_file() for p in pair),'eur_rom_sha256':eur_hashes[0].name,
+                'discovery':summary,
                 'source_base_sha256':digest(base),'files':entries}
             add_bytes(z,'DEBUG-ASSETS-MANIFEST.json',(json.dumps(output_manifest,ensure_ascii=False,indent=2)+'\n').encode(),'generated export manifest')
         # Verify CRC and every copied byte before publishing; refuse an existing destination.
@@ -298,13 +427,16 @@ original identities: check recording.json before using them.
                         h.update(block);count+=len(block)
                 if h.hexdigest()!=metadata['sha256'] or count!=metadata['bytes']:
                     raise ValueError(f'ZIP validation failed: {name}')
+        for path,before in source_guards.items():
+            if inventory.stamp(path)!=before: raise ValueError(f'Source changed before publication; retry with stable inputs: {path}')
         os.link(temp,out)  # atomic no-overwrite publish, same filesystem
         print(f'Created {out} ({out.stat().st_size:,} bytes); {len(entries)} files; catalog: {len(catalog)} verified files.')
+        print('Discovery: '+json.dumps(summary,sort_keys=True))
     finally:
         temp.unlink(missing_ok=True)
 
 
-def main():
+def main(argv=None, *, extended=False):
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--base',type=Path,default=ROOT/'dist/debug-tools/FFTARecomp-windows-debug-tools.zip',help='existing Windows portable debug-tools ZIP')
     p.add_argument('--runtime',type=Path,default=ROOT/'target/x86_64-pc-windows-gnu/release/recomp.exe')
@@ -314,8 +446,15 @@ def main():
     p.add_argument('--source-manifest',type=Path,default=ROOT/'target/debug-saves-audit/source-manifest.json')
     p.add_argument('--recordings',type=Path,default=ROOT/'target/debug-tools-recording/final recording case/Data/config/recordings')
     p.add_argument('--replay',type=Path,default=ROOT/'target/desktop-perf/ai-turn-replay')
-    p.add_argument('--output',type=Path,default=ROOT/'dist/debug-assets'/('FFTARecomp-debug-assets-EUR-'+datetime.now().strftime('%Y%m%d-%H%M%S')+'.zip'))
-    args=p.parse_args()
+    p.add_argument('--output',type=Path,help='new ZIP destination (default: dist/debug-assets with edition and timestamp)')
+    p.add_argument('--scan-root',type=Path,action='append',default=[],help='additional local asset root; repeatable (workspace is always scanned)')
+    p.add_argument('--exclude-scan',type=Path,action='append',default=[],help='explicit discovery exclusion, recorded in inventory; repeatable')
+    p.add_argument('--all-snapshots',action='store_true',default=extended,help='include consecutive intermediate snapshots (always enabled by the extended script)')
+    p.add_argument('--keep-snapshot',type=Path,action='append',default=[],help='preserve an additional discovered snapshot in representative mode; repeatable')
+    args=p.parse_args(argv)
+    if args.output is None:
+        edition = 'extended-' if args.all_snapshots else ''
+        args.output = ROOT/'dist/debug-assets'/('FFTARecomp-debug-assets-'+edition+'EUR-'+datetime.now().strftime('%Y%m%d-%H%M%S')+'.zip')
     try: export(args)
     except (OSError,ValueError,KeyError,zipfile.BadZipFile,json.JSONDecodeError) as exc:
         p.exit(1,f'Export failed: {exc}\n')

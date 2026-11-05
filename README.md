@@ -414,5 +414,12 @@ bash scripts/linux/export_debug_assets.sh
 
 The script prints a new ZIP under `dist/debug-assets/`. Extract it into the
 project root, open `FFTARecomp-debug-EUR/` and select your own EUR ROM on first
-launch. The ZIP contains private saves, snapshots and selected recordings; keep
-it local. Prerequisites, selection and contents: [private debug asset export](docs/private_debug_assets.md).
+launch. Open `DEBUG-ASSETS.html` in the extracted folder to search all discovered
+workspace debug saves, snapshots, inputs, recordings and reports, including later
+`target/` assets. Consecutive micro-snapshots are reduced to representative points;
+use `bash scripts/linux/export_debug_assets_extended.sh` or
+`.\scripts\windows\export_debug_assets_extended.ps1` for the separately named
+extended ZIP with every intermediate. Neither edition deletes source states.
+Additional numbered EUR/USA
+catalogs expose the selected saves without the menu's slot limit. Keep this private ZIP local. Prerequisites,
+exclusions and contents: [private debug asset export](docs/private_debug_assets.md).

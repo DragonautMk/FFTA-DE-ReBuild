@@ -300,3 +300,26 @@ Both cleanup receipts are `PASS`; the dataset receipt is
 reclaimed 11,881,541,632 file-block bytes (11.07 GiB). Exact historical datasets
 would require regeneration for reuse. All failed/interrupted/live units were
 excluded. This cleanup does not close the older interrupted hygiene task.
+
+## 5 November compiler-intermediate cleanup
+
+The reviewed plan retired 3,771 `.rlib`, `.rmeta`, `.o`, `.a` and `.d`
+compiler intermediates from six successful isolated validation builds, reclaiming
+5,599,150,080 file-block bytes (5.21 GiB), counting hard links once and excluding
+blocks still linked outside the selected files. Every executable, dynamic
+library, source snapshot, result and other retained file remains in place.
+Original ROM/BIOS, saves, checkpoints, recordings, private exports, current and
+historical datasets, canonical Cargo outputs, Wine prefixes and
+failed/interrupted units were excluded from removal. Future compilation may
+rebuild dependencies; existing runtime artifacts remain available.
+
+The exact plan, host preflight, protected hashes, retained-file inventory and
+`PASS` receipt are under `target/local-artifact-cleanup-20261105/`. Unit leases,
+fresh host process scans and exact inventory checks guarded removal. All 250
+protected input/export/executable hashes and 13,115 retained file identities,
+sizes and modification times remained unchanged. No selected-unit consumer was
+observed; three host process-detail reads were denied. Free space increased
+from 7,818,182,656 to 13,406,445,568 bytes during the operation; selected
+file-block counts identify the cleanup's contribution independently of other
+disk activity. No build, gameplay test, fixture extraction or performance
+measurement was repeated. The older interrupted hygiene task remains separate.

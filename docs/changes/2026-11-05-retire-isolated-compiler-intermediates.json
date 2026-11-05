@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "retire-isolated-compiler-intermediates",
+  "title": "Recover space from isolated validation compiler intermediates",
+  "kind": "changed",
+  "platforms": [
+    "Local development artifacts on Linux"
+  ],
+  "changes": [
+    "Retired 3,771 compiler intermediates (.rlib/.rmeta/.o/.a/.d) in six PASS isolated validation builds, reclaiming 5,599,150,080 file-block bytes (5.21 GiB), accounting for hard links.",
+    "Preserved executables, dynamic libraries, source snapshots, results, original/private inputs and exports, all datasets, canonical Cargo outputs, Wine prefixes and failed/interrupted work. Recorded exact inventory, host checks and per-unit retirement receipts."
+  ],
+  "validation": [
+    "Applied receipt PASS: all 250 protected input/export/executable hashes and 13,115 retained file identities, sizes and modification times unchanged; all 3,771 planned intermediate files removed.",
+    "Fresh host process scans found no selected-unit consumer; exact inventories and successful unit-result hashes rechecked while holding all six activity leases. Evidence: target/local-artifact-cleanup-20261105/.",
+    "Full project-memory check, task-handoff check and scoped git diff --check PASS. Final receipt/presence verification confirms all planned files absent, other cache files and six retirement receipts present, and only this cleanup session's leases released."
+  ],
+  "limitations": [
+    "Three host process-detail reads were denied. Other disk activity can affect overall free space; only reviewed file-block counts are attributed to this cleanup.",
+    "The next compilation may rebuild dependencies. No builds, gameplay tests, extraction or performance measurements repeated; the older interrupted LOCAL-ARTIFACT-HYGIENE remains separate."
+  ],
+  "files": [
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ],
+  "references": [
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ]
+}

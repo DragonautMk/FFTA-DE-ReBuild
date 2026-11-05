@@ -2373,3 +2373,42 @@ generation remains; the e110 comparison is retired with evidence. Complete
 ordinary/global/indirect coverage, Linux/USA/native Windows and scheduler behavior
 remain open; no guest cap or benchmark is introduced. See the
 [catalog contract and validation](rom_data_compact_catalog.md).
+
+## Conditional RAM-slot markers: source model
+
+Original writer `0802f370` stores one of two ROM list pointers in an
+8-byte slot at context offset `47c + 8 * index`. It tests the low byte of its
+second argument: zero selects `0839517a`, and nonzero selects `08395172`.
+The bounded consumer `0802f3c0` loads that slot and passes the pointer via
+`0802f414 → 08001d28 → 08001500`. Three original call sites supply zero or one
+as the writer's second argument; their conditions remain guest behavior. Each
+list has one object and occupies eight bytes. All 51,015 source spans of the
+100-resource EUR E128 manifest were independently authenticated against the
+ROM; neither list overlaps them. This does not classify other writers or the
+full OBJ domain.
+
+`obj_lists::conditional_markers` models the two exact lists, low-byte selector,
+source boundaries and original instruction/pointer contract. It is a standalone
+source model: it is **not included in the published E128 catalog** and adds no
+runtime owner. Its two focused Windows GNU tests pass under Wine with the exact
+EUR ROM. They cover source identity and JSON roundtrip, malformed shapes and
+counts, boundary reads, coherent edits and low-byte selection. Six isolated
+calls execute the original writer for selectors 0, 1, 255, 256, 257 and
+`ffffffffh`; selected pointers and coordinates agree with the model, with full
+EWRAM and out-of-stack IWRAM guards, callee registers and stack preserved.
+The test does not execute the original draw or establish an ordinary scene.
+
+A source-pinned read of 345 retained EUR snapshots found 322 with a nonzero
+candidate count, but none with the context and table pointers within the
+checked EWRAM/IWRAM ranges. Saved values do not prove task liveness or exclude
+other representations. No ordinary input or runtime pair was run. The first
+Windows build receipt reported PASS but returned a stale executable without the
+new module and is rejected as source-identity evidence; a later guarded build
+and Wine run passed. Evidence: `target/validation/units/`
+`e128-obj-02f414-retained-roots-v3y2mdwt/`,
+`e128-obj-02f414-source-roots-f4o7fxwq/`,
+`e128-obj-markers-windows-build-6xd93dig/` (invalid identity),
+`e128-obj-markers-writer-oracle-build-dilgys1i/` and
+`e128-obj-markers-writer-oracle-wine-2enqulxu/`. Publication, native/managed
+reads, an ordinary scene and its full pair, the remaining OBJ sources and
+Linux/USA/native Windows are open. No performance measurements were made.

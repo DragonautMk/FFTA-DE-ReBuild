@@ -30,6 +30,19 @@ content selector explains what to select. Use **Choose / reload catalog** to
 select a catalog; external file and folder dialogs require an explicit action.
 Copying a collection requires including the files referenced by the JSON.
 
+The [private debug asset export](private_debug_assets.md) also builds an accessible
+projection of the collection's loaded checkpoints and EUR base, preserving the
+original catalog separately. Its `DEBUG-ASSETS.html` index links additional
+root-level `DEBUG-CATALOG-EUR/USA-*.json` pages for discovered workspace assets.
+Use **Choose / reload catalog** to select a page, then clear the filters to All.
+Each page stays within the existing catalog limits. Discovery and envelope
+integrity do not establish gameplay validation; raw invalid/unidentified files
+remain available through the index with their limitations.
+Default export omits intermediate numbered micro-snapshots while preserving
+collection masters and recording/report inputs. Use `--all-snapshots` for the
+integral collection. Raw/preview copies of the same core share one discovered
+catalog item, and the index initially shows distinct saves with source aliases.
+
 Up/Down selects a row. Left/Right or Confirm changes the filter or entry:
 
 - **Region** starts with the active ROM; All includes other regions. Cases

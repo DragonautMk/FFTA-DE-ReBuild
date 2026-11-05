@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-05",
+  "slug": "model-conditional-ram-slot-obj-markers",
+  "title": "Model conditional RAM-slot OBJ markers",
+  "kind": "added",
+  "platforms": [
+    "EUR original source; Windows executable under Wine"
+  ],
+  "changes": [
+    "Model two exact one-object OBJ lists selected by the low byte of an original writer and passed through a RAM slot to the original draw; leave E128 publication unchanged."
+  ],
+  "validation": [
+    "Source pins and 51015 authenticated E128 manifest spans establish the bounded writer-to-consumer path and no declared source overlap; 345 retained saved boundaries provide no in-range live context. Two focused Windows GNU tests pass under Wine, including six original writer calls with pointer, coordinate, full EWRAM, out-of-stack IWRAM and callee-register guards. Protected ROM and sources pass.",
+    "An initial Wine-build receipt returned a stale executable and is rejected for source identity; the corrected guarded build and writer oracle pass. Evidence: target/validation/units/e128-obj-02f414-source-roots-f4o7fxwq/, e128-obj-02f414-retained-roots-v3y2mdwt/, e128-obj-markers-writer-oracle-build-dilgys1i/ and e128-obj-markers-writer-oracle-wine-2enqulxu/."
+  ],
+  "limitations": [
+    "Standalone source model only: no published owner, runtime consumption, original draw execution or ordinary scene and full pair. Other OBJ roots, writers, Linux, USA and native Windows remain open; no performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data/obj_lists.rs",
+    "crates/gba-core/src/rom_data/obj_lists/conditional_markers.rs",
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

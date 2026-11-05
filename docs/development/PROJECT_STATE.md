@@ -49,10 +49,22 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
 
 - The explicitly requested [private debug-assets export](../private_debug_assets.md)
   builds a separate ignored Windows portable ZIP from the user's selected local
-  catalog/saves/snapshots, verified source manifest and completed recordings.
-  EUR working slots are installed in its own Data directory; USA material is
-  retained as pre-existing and unverified. ROM/BIOS and unrelated target trees
-  are excluded. Ordinary release packages remain private-data-free.
+  catalog/saves/snapshots, verified source manifest and automatic workspace
+  discovery of later saves, inputs, recordings and diagnostic support files.
+  A searchable local index retains all source aliases; bounded root-level
+  EUR/USA catalogs expose discovered compatible states without the slot limit.
+  Default selection reduces numbered capture sequences to first/last points,
+  preserving catalog masters, descriptive checkpoints and reproduction/report
+  dependencies. Omissions are recorded; integral export and explicit kept
+  intermediates remain available. Raw/preview core aliases share a catalog item.
+  Separate standard/extended entry points produce distinctly named private ZIPs;
+  extended includes all consecutive states. Both preserve original files on disk.
+  The exported original collection also exposes loaded checkpoints and the EUR
+  base while preserving the source catalog. Incomplete/experimental material and
+  unidentified or damaged saves remain explicitly unvalidated/raw assets.
+  ROM/BIOS, extracted datasets, generated/native code, caches, Wine profiles and
+  prior exports remain excluded and omissions are inventoried; external roots
+  require explicit selection. Ordinary release packages remain private-data-free.
 
 - [Local artifact retention](LOCAL_ARTIFACTS.md#bounded-retention-policy) treats
   old datasets and isolated Wine prefixes as reviewable generated artifacts,

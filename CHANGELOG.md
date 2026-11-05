@@ -138,6 +138,146 @@ Documentation: [rom_data_compact_catalog.md](docs/rom_data_compact_catalog.md).
 
 [Change record](docs/changes/2026-11-05-trace-loop-alpha-producer.json)
 
+## 2026-11-05 — Recover space from isolated validation compiler intermediates
+
+Type: changed. Platforms: Local development artifacts on Linux.
+
+**Changes**
+
+- Retired 3,771 compiler intermediates (.rlib/.rmeta/.o/.a/.d) in six PASS isolated validation builds, reclaiming 5,599,150,080 file-block bytes (5.21 GiB), accounting for hard links.
+- Preserved executables, dynamic libraries, source snapshots, results, original/private inputs and exports, all datasets, canonical Cargo outputs, Wine prefixes and failed/interrupted work. Recorded exact inventory, host checks and per-unit retirement receipts.
+
+**Validation**
+
+- Applied receipt PASS: all 250 protected input/export/executable hashes and 13,115 retained file identities, sizes and modification times unchanged; all 3,771 planned intermediate files removed.
+- Fresh host process scans found no selected-unit consumer; exact inventories and successful unit-result hashes rechecked while holding all six activity leases. Evidence: target/local-artifact-cleanup-20261105/.
+- Full project-memory check, task-handoff check and scoped git diff --check PASS. Final receipt/presence verification confirms all planned files absent, other cache files and six retirement receipts present, and only this cleanup session's leases released.
+
+**Limitations**
+
+- Three host process-detail reads were denied. Other disk activity can affect overall free space; only reviewed file-block counts are attributed to this cleanup.
+- The next compilation may rebuild dependencies. No builds, gameplay tests, extraction or performance measurements repeated; the older interrupted LOCAL-ARTIFACT-HYGIENE remains separate.
+
+Documentation: [LOCAL_ARTIFACTS.md](docs/development/LOCAL_ARTIFACTS.md).
+
+[Change record](docs/changes/2026-11-05-retire-isolated-compiler-intermediates.json)
+
+## 2026-11-05 — Model conditional RAM-slot OBJ markers
+
+Type: added. Platforms: EUR original source; Windows executable under Wine.
+
+**Changes**
+
+- Model two exact one-object OBJ lists selected by the low byte of an original writer and passed through a RAM slot to the original draw; leave E128 publication unchanged.
+
+**Validation**
+
+- Source pins and 51015 authenticated E128 manifest spans establish the bounded writer-to-consumer path and no declared source overlap; 345 retained saved boundaries provide no in-range live context. Two focused Windows GNU tests pass under Wine, including six original writer calls with pointer, coordinate, full EWRAM, out-of-stack IWRAM and callee-register guards. Protected ROM and sources pass.
+- An initial Wine-build receipt returned a stale executable and is rejected for source identity; the corrected guarded build and writer oracle pass. Evidence: target/validation/units/e128-obj-02f414-source-roots-f4o7fxwq/, e128-obj-02f414-retained-roots-v3y2mdwt/, e128-obj-markers-writer-oracle-build-dilgys1i/ and e128-obj-markers-writer-oracle-wine-2enqulxu/.
+
+**Limitations**
+
+- Standalone source model only: no published owner, runtime consumption, original draw execution or ordinary scene and full pair. Other OBJ roots, writers, Linux, USA and native Windows remain open; no performance measurements.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md).
+
+[Change record](docs/changes/2026-11-05-model-conditional-ram-slot-obj-markers.json)
+
+## 2026-11-05 — Inspect retained sparse parameter trigger candidates
+
+Type: docs. Platforms: EUR source and retained checkpoints.
+
+**Changes**
+
+- Narrow ordinary sparse-parameter recovery with program context and mission-source joins over retained snapshots.
+- Trace a zero-override event starter and record the limits of the retained pending-field search.
+
+**Validation**
+
+- Guarded read-only scans inspect nine prior candidates and 370 retained snapshot paths, with 279 distinct readable EUR payloads. All 27 program 158 contexts have cursor 28 after the mode-0 instruction at offset 22. A separate source join finds 20 physical mission candidates with a nonzero parameter and a mode-0 program; none matches the saved selected-mission value in those 279 payloads. The first broader join failed at Python syntax parsing before source reads; its corrected check passed. Evidence: target/validation/units/e128-parameter-mode0-context-candidates-syolhe_k/, e128-parameter-prior-script-contexts-xypp8e8t/, e128-parameter-all-mode0-mission-candidates-xvqpelh1/ and e128-parameter-all-mode0-mission-candidates-fixed-4skuahmi/.
+- Pinned original code clears 02003c28 and uses offset a4 from the object at 03002810 for an event-starter path. A guarded read of 279 retained EUR payloads finds 88 plausible root/view pointers and one nonzero field, event 58 parameter 0, with no key168/nonzero-parameter candidate. Evidence: target/validation/units/e128-parameter-pending-world-event-lc91avw3/.
+
+**Limitations**
+
+- Context pointers and saved mission values do not prove scheduling, availability, absence of indirect paths or branch returns. The positive ordinary read and paired comparison remain open; no guest execution or performance measurements.
+- An unrestricted 256-entry stride-264 RAM scan lacked proof of row ownership and is rejected as a scene selector; its diagnostic remains at target/validation/units/e128-parameter-mode0-physical-quest-rows-_x9xnsnq/. Plausible root/view pointers do not establish live task identity or event availability.
+
+Documentation: [rom_data_gameplay.md](docs/rom_data_gameplay.md).
+
+[Change record](docs/changes/2026-11-05-inspect-parameter-ordinary-checkpoint-contexts.json)
+
+## 2026-11-05 — Inspect retained dynamic fragment task contexts
+
+Type: docs. Platforms: EUR source and retained checkpoints.
+
+**Changes**
+
+- Expand the source-pinned saved-state search for an ordinary dynamic-fragment trigger without repeating accepted negative scenes.
+- Trace the actual menu selection values and retain the failed diagnostic and bounded zero-read observations.
+- Identify the conditional Link menu entry and observe gate activation in normal Team Up and Trade Units selections, while preserving the missing positive resource proof.
+- Pin a conditional dispatcher route and inspect bounded alternate gate-setter sources without replaying negative scenes.
+
+**Validation**
+
+- A guarded read-only scan of 605 retained paths finds 345 distinct checksum-valid EUR payloads; 72 distinct payloads are invalid or non-EUR for this parser and other paths are duplicates. All 345 have flag40 and gate13 clear and neither current nor pending selector 7–9; no 0200f450 value is an in-range EWRAM task pointer. Original source pins and protected inputs pass. Evidence: target/validation/units/e128-dynamic-retained-state-context-1z_0p0ni/.
+- Pinned source connects selection 2 to flag40, world state20 and script key162. An isolated Wine trace samples r4=3 for the prior Area List recording; the first Clan trace fails its hit guard, and a corrected observer samples r4=1, flag40/gate13 clear at all 240 frame boundaries and zero dynamic reads. A separate e128 CLI reaches the visible Clan menu and reports zero dynamic reads. Inputs were guarded. Evidence: target/validation/units/e128-dynamic-world-state20-source-vcsy0wyf/, e128-dynamic-world-menu-branch-trace-_bkkdyf5/, e128-dynamic-clan-branch-trace-xlx9oirq/ (failed), e128-dynamic-clan-flag-trace-kdtitdxe/ and e128-dynamic-clan-cli-observation-mx0nssxb/.
+- Source-pinned packed flag 559 is set in 63 of 345 distinct valid EUR payloads. Normal IN-08 input reaches Link, samples selection 2 and activates flag40. Separate 240-frame Team Up and Trade Units traces reach callback 08064678 and gate13=1, current selector1, and each reports zero dynamic-fragment owner reads; the Team Up endpoint shows ACCESS and after 600 uninstrumented neutral frames shows Link broken. Protected inputs pass. Evidence: target/validation/units/e128-dynamic-menu-flag559-sl3la67j/, e128-dynamic-in08-link-trace-ng__2ehq/, e128-dynamic-teamup-trace-379yt0al/, e128-dynamic-teamup-wait-jvegqsbs/ and e128-dynamic-trade-units-trace-3sc2vj6d/. A path-typo endpoint preflight failed before guest execution.
+- A guarded source/snapshot join connects Link registration callback 0809a594 and root 0200f4a8 to dispatcher state26 and the selector8/9 initializer. Five authenticated Link boundaries contain dispatcher state8 and zero context argument; gate13 is set at the Team Up ACCESS boundary and clear at the later Link broken boundary. No guest instructions ran. Evidence: target/validation/units/e128-dynamic-link-ui-dispatch-source-rvmgtvib/.
+- A guarded scan of the same 345 authenticated EUR payloads finds 240 root values in the tested EWRAM range and no saved context fields with dispatcher states24, 25 or 26; the remaining 105 root values lie outside the tested range. No guest instructions ran. Evidence: target/validation/units/e128-dynamic-dispatch-retained-states-_9tifc06/.
+- Authenticated original code pins state1 context acquisition and state4 conditional queuing of state23, followed by state24 and a conditional route to state26. A ROM-wide aligned BL-pattern scan finds 51 setter candidates; of 27 adjacent immediate index/value pairs, six use index13, one with value1 at 0806467e and five with value0. Evidence: target/validation/units/e128-dynamic-state26-source-path-kmcl952k/.
+- The modeled EUR main archive has 207 programs/35048 source-authenticated instructions and no setter opcode27; the auxiliary archive has 133 programs/913 instructions and no setter opcode3. A source-pinned scan of 512 mission records/2048 inline fields finds no encoded key 060d. Protected ROM, catalogs and inputs pass; no guest instructions ran. Evidence: target/validation/units/e128-dynamic-main-script-setter-j7bx5tqe/, e128-dynamic-aux-script-setter-e3wmfre7/ and e128-dynamic-mission-setter-scan-w64t0936/.
+- Source-pinned 080d0330 has indices14–18 for its in-range switch; the observed direct caller supplies r6=0839797c or 00004bfc on the out-of-range path, neither becoming13 under setter u16 narrowing. The intermediate helper saves and restores r6. Aligned direct-BL scan finds one direct caller and exact Thumb-pointer scan finds none. Eight other source-pinned normal-entry sites use indices1/2/4, 12, 20–275 or 27–50. Evidence: target/validation/units/e128-dynamic-selector-index-domain-l8in_mf0/, e128-dynamic-callee-preserves-r6-tmshu7g4/ and e128-dynamic-other-setter-domains-o5w42x52/.
+- Pinned Link task state5 tests bit1 of 020157e6 before the branch writing state6. Four authenticated Link checkpoints have a zero status byte; Team Up ACCESS has task state5/gate13=1 and the later Link-broken endpoint has state52/gate13=0. Evidence: target/validation/units/e128-dynamic-link-state5-status-y6ruykyg/.
+- Source pins the separate 080c9230 state machine: state11 sets bit1 at 020157e6. In two authenticated Team Up checkpoints that machine is in states4 and13 respectively; status stays zero at those boundaries, gate13 is 1 then 0. State4 contains conditional IWRAM tests and a counter branch to state13. Evidence: target/validation/units/e128-dynamic-link-bit-producer-b4opp9l0/ and e128-dynamic-transport-state2-queue-r0k83gsd/.
+- Pinned original 08003f80 reads 04000128 and conditionally updates IWRAM counters tested by transport state4. Two authenticated Team Up boundaries retain IO byte33h, with counters 0/12 then 0/0. Hash-verified frozen Windows observer MemMap byte dispatch uses the ordinary backing-store arms for offset128; its executable hash matches its receipt. No guest instructions ran. Evidence: target/validation/units/e128-dynamic-link-serial-path-hi825gpr/.
+
+**Limitations**
+
+- Saved values do not prove task scheduling or rule out later transitions, alternate pointer regions, other checkpoints or ordinary use. A source-backed gate trigger is observed, but positive resource use and a paired scene remain open; no guest instructions or performance measurement.
+- Dispatch and frame sampling can miss within-block or within-frame changes. The earlier Clan and Area List observations do not establish global absence; no full pair or performance measurement.
+- One single-peer Team Up attempt ends with Link broken; its cause and connected-peer behavior are unproved. The neutral continuation did not instrument resource reads.
+- The five saved boundaries are not continuous execution observations and do not prove state26 unreachable; a normal transition to that state remains unproved.
+- An in-range root does not establish a live task; out-of-range pointers, later transitions and other checkpoints remain unproved.
+- The conditional dispatcher path is not a demonstrated live transition. Aligned BL candidates can include data and the 24 non-pair candidates, indirect calls, other programs and direct memory writes remain unclassified; bounded archive and mission scans do not prove exclusive gate activation.
+- Setter index classifications follow the pinned caller and normal-entry paths only; indirect or interior entry, self-modification, and arbitrary writes remain unproved.
+- The four Link snapshots are not a continuous trace, a diagnosis of link failure, or proof that another peer is necessary.
+- The state-machine snapshots do not establish the intervening execution, a link-failure cause, or the need for a peer.
+- The inspected bus arms and two saved boundaries do not establish complete link behavior, peer presence or a causal explanation for Link broken.
+
+Documentation: [rom_data_ui_raw_transfers.md](docs/rom_data_ui_raw_transfers.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-05-inspect-dynamic-fragment-retained-contexts.json)
+
+## 2026-11-05 — Export representative and extended private debug assets
+
+Type: fixed. Platforms: Python exporter on Linux; Windows portable payload; existing Linux catalog CLI.
+
+**Changes**
+
+- Discover available workspace saves, snapshots, inputs/imports, recordings, diagnostic reports, images, raw graphics/audio and supporting files; preserve source aliases, complete inventories, SHA-256 checks and relative report/recording attachments.
+- Expose the 31 previously hidden loaded checkpoints and EUR base in the exported catalog while retaining the original source catalog. Build bounded EUR/USA discovery catalogs and a searchable local index, merging raw/preview copies of the same core state.
+- Select first/last points of numeric capture sequences by default, preserving original collections, independent slots, descriptive checkpoints, source-manifest inputs and reproduction/report dependencies. Inventory each omitted intermediate and retained representative; no source save is deleted.
+- Add separate Python, Bash and PowerShell extended entry points that always include intermediate snapshots and generate distinctly named extended ZIPs. Keep all-snapshots and explicit keep-snapshot overrides.
+- Skip active/interrupted leased scopes with explicit exclusions, never following links or stopping other jobs. Refuse changed copied sources and existing destinations before publishing verified private archives.
+
+**Validation**
+
+- 15 public synthetic exporter checks PASS across the main suite and the separately executed Node UI test; covers aliases, >1024 catalog entries, selection/full modes, preserved slots and dependencies, explicit keeps, lease exclusions, originals/no-overwrite, corrupt/disguised ROM ZIPs and source-change refusal. Units debug-assets-editions-tests-0_4ucf89 and debug-assets-index-ui-d7e5tsgm.
+- Real standard and extended exports PASS all payload hashes/CRC, catalog paths and identities, portable manifests and protected-source checks. Standard has 784 discovery entries and omits 1657 intermediate source paths; extended has 2394 entries and contains every omitted path with identical bytes. All 1657 original omitted snapshots remain on disk with exact SHA-256. Evidence: target/validation/units/debug-assets-standard-extended-346hs8wu/.
+- Existing Linux runtime CLI verified all 5 standard and 12 extended catalogs (908 and 2518 entries including the original projection); all referenced entries available. Extended check also confirms all31 loaded keys/EUR base and actual generated-index JavaScript syntax. Units debug-assets-standard-native-catalogs-tp13xnhk and debug-assets-extended-native-catalogs-o03vwr58; no guest execution.
+- Bash wrapper syntax and extended help invocation PASS. An earlier export refused a concurrently changed unit receipt; diagnostics retained and leased-scope exclusion added. A terminal tool handle did not end the actual two-edition job: its retained terminal unit receipt is PASS with automatic scratch retirement; no duplicate export was started.
+
+**Limitations**
+
+- Scene selection is a filename/provenance heuristic, not proof that intermediate scenes are equivalent or that every scene is covered. Explicit keeps and the extended script preserve access; original state contents and recorded gameplay acceptance are unchanged.
+- Both editions cover available recognized workspace assets, with explicit exclusions for ROM/BIOS, extracted datasets, generated/native code, caches, Wine profiles, links, prior exports and leased live/interrupted scopes. External asset roots require explicit scan-root selection. Missing retired files are not reconstructed.
+- Windows PE payload identities are checked, but Wine CLI startup was blocked by read-only /run filesystem and poll-hup initialization errors. Failed diagnostics retained; only the two matching leases created by that failed session were released after terminal failure evidence, with an ownership receipt. No source, prefix or diagnostics removed. Native Windows, PowerShell execution, GUI and per-save gameplay compatibility remain unverified.
+- Private archives remain ignored local artifacts; source data and original micro-snapshots remain available to the system. Other concurrent ROM/development work is preserved.
+
+Documentation: [private_debug_assets.md](docs/private_debug_assets.md), [debug_catalog.md](docs/debug_catalog.md).
+
+[Change record](docs/changes/2026-11-05-export-standard-and-extended-debug-assets.json)
+
 ## 2026-11-04 — Verify UI context owner lifecycle with unavailable data
 
 Type: added. Platforms: EUR Windows executable under Wine.

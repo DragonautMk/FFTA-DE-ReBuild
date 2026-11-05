@@ -5349,6 +5349,45 @@ Start/A capture tested a different graphics family and did not measure this
 parameter resource. A prior checkpoint or proven return to the instruction is
 needed before selecting a new parameter probe. Evidence:
 `target/validation/units/e128-parameter-river-script-cursor-9aarc8ce/`.
+A guarded follow-up inspects all nine saved-value candidates: one has a matching
+program 158 context, at cursor 28; the other eight have none in the scanned
+EWRAM representation. A wider, separate read of 370 retained ROM-data snapshot
+paths contains 279 distinct readable EUR payloads (two distinct inputs are
+non-EUR or invalid). It finds 27 matching contexts, all at cursor 28, and no
+matching pre-offset-22 context with zero override and nonzero event parameter.
+These counts do not prove scheduling, exclude other representations or rule out
+branches back. Evidence: `target/validation/units/`
+`e128-parameter-mode0-context-candidates-syolhe_k/` and
+`e128-parameter-prior-script-contexts-xypp8e8t/`.
+
+A second source-bound join of physical mission references to archive programs
+with an encoded mode-0 instruction finds 20 mission indices with nonzero event
+parameters: 15 and 104–122. None of the same 279 readable snapshot payloads
+has one of these indices in its saved selected-mission field. Mission values,
+archive links and instruction presence do not establish availability, execution
+or the necessary zero override. The first broader join stopped at a Python
+syntax error before source reads; its corrected guarded check passed. Evidence:
+`target/validation/units/e128-parameter-all-mode0-mission-candidates-xvqpelh1/`
+and `e128-parameter-all-mode0-mission-candidates-fixed-4skuahmi/`. No guest
+instructions ran and no closed negative capture was repeated.
+
+An authenticated original code window at `0803589c..080358c8` clears the
+halfword at `02003c28`, reads a halfword at offset `a4` from the object reached
+through `03002810`, and passes its indexed event row to `0800a12c`; that helper
+forwards to the event starter. A guarded read of the same 279 distinct EUR
+payloads finds 88 in-range root/view pointer pairs and one nonzero candidate
+field, White Flowers event 58 with parameter 0. No field value matches key 168
+with a nonzero parameter. A matching pointer or field is not proof of the
+correct live task, branch execution or event availability. Evidence:
+`target/validation/units/e128-parameter-pending-world-event-lc91avw3/`.
+
+An additional exploratory scan treated 256 stride-264 RAM locations as quest
+records. The original reader authenticates its access for selected indices, but
+the unrestricted physical range and row ownership were not established. Its
+matches are rejected as scene leads and must not be used to infer a mission or
+resume navigation. The guarded diagnostic is retained at
+`target/validation/units/e128-parameter-mode0-physical-quest-rows-_x9xnsnq/`.
+No guest instructions or save changes occurred in either check.
 
 Nine further normal captures reuse the same observer without rebuilding. A180
 from the authenticated IN13 Sprohm checkpoint opens the town information menu

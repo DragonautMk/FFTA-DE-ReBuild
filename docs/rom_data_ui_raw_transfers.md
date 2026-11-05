@@ -493,3 +493,180 @@ inside blocks, and the bus audit excludes folded constants and unselected direct
 host reads. Ordinary positive dynamic use and its full state/clock comparison,
 the global selector domain, and Linux/USA/native Windows checks remain open.
 No performance measurement was performed.
+
+A later guarded read-only scan extends the saved-state sample beyond the 14
+previous catalog entries. Of 605 retained paths, 345 distinct payloads pass the
+EUR ROM identity and state checksum/parser checks; 72 distinct payloads are
+non-EUR or invalid for this parser, and remaining paths duplicate payloads.
+All 345 have flag `02001f78` bit 0 and gate `0200203d` clear, and no current or
+pending dynamic selector 7–9. The word at `0200f450` does not resolve to an
+in-range EWRAM task pointer in this sample. This is a saved-value bound, not a
+claim that the task cannot be scheduled later, that other pointer regions are
+invalid, or that no ordinary use exists. Both older recorded negative scenes
+remain closed and were not replayed. Source pins and the protected inputs pass;
+successful scratch was retired. Evidence:
+`target/validation/units/e128-dynamic-retained-state-context-1z_0p0ni/`.
+
+A subsequent source-pinned trace resolves why the recorded Area List observation
+cannot establish the `selection == 2` branch. At dispatch entry `080454e8`,
+that recording has `r4 = 3` at guest frame 4620. Original code compares that
+register with 2; only the matching path sets flag 40 and requests world state
+20, whose table entry queues script key 162. Entry samples cannot expose every
+instruction inside a native block. A separate retained one-Down/A Clan input
+reaches the visible Clan menu at frame 4759. The first trace's positive-hit
+guard failed because none of its selected dispatch entries was sampled; it is
+retained as a failed diagnostic. A corrected isolated observer includes the
+preceding comparison: it samples `r4 = 1` at `080454c4` on frame 4620, sees
+flag40 and gate13 clear at every frame boundary, and reports zero dynamic
+owner reads. A separate production CLI run of the same 240-frame input also
+reports zero dynamic reads and retains the final image. These two menu items
+therefore do not identify a normal input that produces selection 2. Frame or
+native-block sampling cannot exclude transitions within a frame or block, and
+zero owner reads are a bounded result, not a global absence claim. No full
+pair was run. Evidence: `target/validation/units/`
+`e128-dynamic-world-state20-source-vcsy0wyf/`,
+`e128-dynamic-world-menu-branch-trace-_bkkdyf5/`,
+`e128-dynamic-clan-branch-trace-xlx9oirq/` (failed guard),
+`e128-dynamic-clan-flag-trace-kdtitdxe/` and
+`e128-dynamic-clan-cli-observation-mx0nssxb/`. Inputs and accepted previous
+proofs were guarded; test builds are isolated and kept for follow-up.
+
+
+The entry producing selection 2 is conditionally available when packed flag
+`559h` is set (`0200201b` bit 1). In the same authenticated saved-state sample,
+63 of 345 distinct valid EUR payloads have that flag set; this does not by
+itself prove that their menus are live. Normal input from the IN-08 checkpoint
+opened the entry labelled **Link**. Its 240-frame observation samples `r4 = 2`,
+sets flag 40, requests world state 20 and script key 162, and reaches the Link
+task, with zero dynamic-fragment reads in that window.
+
+From the visible Link menu, separate normal-input selections of **Team Up**
+and **Trade Units** each reach callback `08064678`: gate 13 becomes 1 and the
+current selector is 1 at subsequent sampled frame boundaries. Both 240-frame
+observations report zero dynamic-fragment owner reads. The Team Up screen
+then shows an ACCESS search; after 600 further neutral frames it displays
+“Link broken. Returning to world map.” This single attempt establishes neither
+the cause of the connection failure nor the behavior with a connected peer.
+The uninstrumented neutral continuation is not a read-count observation.
+
+The gate activation is a source-backed ordinary task invocation, but not yet
+ordinary consumption of selectors 7–9. A positive resource read and its
+raw/managed pair remain open, as do the global domain and deferred platforms.
+Entry and frame sampling can miss changes within blocks or frames. No
+performance measurements were made. Evidence: `target/validation/units/`
+`e128-dynamic-menu-flag559-sl3la67j/`,
+`e128-dynamic-in08-menu-selection-asumwnjo/`,
+`e128-dynamic-in08-link-trace-ng__2ehq/`,
+`e128-dynamic-in08-link-endpoint-jc327675/`,
+`e128-dynamic-link-dialogue-oa45m74y/`,
+`e128-dynamic-link-menu-ksa30jun/`, `e128-dynamic-teamup-trace-379yt0al/`,
+`e128-dynamic-teamup-endpoint-kyxi8tfx/`, `e128-dynamic-teamup-wait-jvegqsbs/`,
+`e128-dynamic-trade-units-selection-bg0cq6nj/` and
+`e128-dynamic-trade-units-trace-3sc2vj6d/`. A prior Link endpoint preflight
+failed on a path typo before guest execution and is retained separately.
+
+A guarded source/snapshot join connects the Link registration to another
+original callback, `0809a594`, whose dispatcher reads the context pointer at
+`0200f4a8`. Its state 26 reaches `08096b72 → 080c4ce4 → 080c3be4`, which can
+request selector 8 or 9. Five saved Link boundaries, including the Team Up
+ACCESS endpoint and its later failure screen, contain dispatcher state 8 and a
+zero context argument at offset 4; the ACCESS endpoint has gate 13 set and the
+later boundary has it clear. These are saved boundary values, not a continuous
+trace or proof that state 26 cannot be reached. The ordinary transition to that
+state remains unproved. All source pins and protected checkpoints passed; no
+guest instructions ran. Evidence:
+`target/validation/units/e128-dynamic-link-ui-dispatch-source-rvmgtvib/`.
+
+A further guarded scan checks that source-pinned dispatcher root in the same
+345 distinct authenticated EUR payloads. In 240 the root value falls within
+the tested EWRAM range; none of those saved context fields contains state 24,
+25 or 26. The other 105 root values fall outside that range. An in-range value
+does not prove a live task or even that the bytes are currently a dispatcher
+context; out-of-range values do not exclude other valid regions. These saved
+values do not exclude later transitions or any unsampled checkpoint. No guest
+instructions ran. Evidence:
+`target/validation/units/e128-dynamic-dispatch-retained-states-_9tifc06/`.
+
+A source-pinned path narrows one way to reach dispatcher state 26. In state 1
+the original code obtains the context at offset 4 through `080a2f68`; state 4
+can queue state 23 only after `08095c10` returns nonzero and `080cbbf0` reports
+bit `1000h` set in the pointed object's halfword at offset `28h`. State 23
+sets state 24, and a further conditional path in state 24 queues state 26 and
+state 76. The queued states and helper results do not prove a normal scene,
+their timing or a completed call to the fragment setter.
+
+To look for other ways to enable gate 13, an aligned Thumb BL-pattern scan
+found 51 candidate calls to setter `080ccf18` in the EUR ROM. Of these, 27
+have consecutive immediate index/value loads immediately before the call. Six
+of those pairs name index 13: one supplies value 1 at `0806467e`, and five
+supply 0. The 24 other patterns, indirect calls, alternate entry points and
+direct memory stores are not excluded by this comparison. The scan can include
+data that resembles code; it is not a whole-program control-flow proof.
+
+Two source-authenticated script directories have callbacks that could pass a
+data-supplied index to that setter. The declared main EUR archive has 207
+programs and 35,048 instructions, none using main opcode 27; the declared
+auxiliary archive has 133 programs and 913 instructions, none using auxiliary
+opcode 3. A separate source-pinned read of the two mission-record consumers
+finds no encoded key `060dh` among the four inline fields of each of the 512
+physical EUR mission records. These bounded results do not exclude other
+programs, runtime-generated data or indirect calls, and no guest instructions
+ran. Protected inputs passed and successful scratch was removed. Evidence:
+`target/validation/units/e128-dynamic-state26-source-path-kmcl952k/`,
+`e128-dynamic-aux-script-setter-e3wmfre7/`,
+`e128-dynamic-main-script-setter-j7bx5tqe/` and
+`e128-dynamic-mission-setter-scan-w64t0936/`.
+
+For the source-pinned direct caller of `080d0330`, the five in-range table
+branches select indices 14–18. Its out-of-range branch retains the caller's
+`r6`; the inspected direct caller supplies either `0839797c` or `00004bfc`,
+and the setter narrows that index to 16 bits. Neither case selects index 13.
+The helper called along the way saves and restores `r6`. An aligned BL scan
+found the one inspected direct call and an exact-byte scan found no Thumb
+pointer to the function; neither excludes other indirect entry mechanisms.
+Eight further source-pinned normal-entry sites use indices 1/2/4, 12, 20–275
+or 27–50, depending on the caller. Those bounds depend on the inspected entry
+paths and do not prove the values on alternate entries or corrupted control
+flow. No guest instructions ran. Evidence:
+`target/validation/units/e128-dynamic-selector-index-domain-l8in_mf0/`,
+`e128-dynamic-callee-preserves-r6-tmshu7g4/` and
+`e128-dynamic-other-setter-domains-o5w42x52/`.
+
+The Link task's state 5 calls `080cac2c`; a nonzero result tests bit 1 of
+`020157e6` and takes the branch that writes state 6. Four authenticated saved
+boundaries all have this status byte zero: the two pre-selection Link screens
+have task states 52 and 2, the Team Up ACCESS endpoint has state 5 with gate 13
+set, and the later Link-broken endpoint has state 52 with that gate clear.
+This is not a continuous trace, a diagnosis of the failure, or a proof that a
+peer is necessary. It identifies a source-backed condition for investigating a
+distinct continuation. Evidence:
+`target/validation/units/e128-dynamic-link-state5-status-y6ruykyg/`.
+
+Original `080cabf8` passes object `02015738` to the separate state machine at
+`080c9230`; its state 11 sets bit 1 at object offset `ae`, the bit tested by
+Link task state 5. One pinned state-2 path queues state 11 after a separate
+bit-4 condition, but queued states and intervening conditions remain active.
+At the saved Team Up ACCESS endpoint that state machine has state 4, status
+byte 0, and gate 13 set; at the later Link-broken endpoint it has state 13,
+status 0 and gate 13 clear. The state-4 source tests three IWRAM fields and
+has a conditional counter branch that can select state 13. These are two
+boundary values, not a continuous trace or a diagnosis of why Link failed.
+Source and protected checkpoints passed; no guest instructions ran. Evidence:
+`target/validation/units/e128-dynamic-link-bit-producer-b4opp9l0/` and
+`e128-dynamic-transport-state2-queue-r0k83gsd/`.
+
+Original `08003f80` reads `04000128` and, on a conditional path, updates the
+IWRAM counters at `030029c0` and `030029c2` that transport state 4 tests;
+`08004e74` also reads that register. In the two Team Up checkpoints, byte
+`04000128` is `33h`; the ACCESS boundary has counter values 0 and 12, while
+the later Link-broken boundary has both zero. These are boundary values, not
+a continuous trace or a diagnosis of the link failure.
+
+The hash-verified source frozen for the earlier Windows observer routes byte
+accesses to offset `128h` through the ordinary I/O backing-store arms in
+`MemMap::io_read8` and `io_write8`; the observer executable hash also matches
+its build receipt. This observation is limited to those byte dispatch arms and
+does not establish all link behavior, the presence or absence of a peer, or a
+causal explanation for the observed result. Protected sources, executable and
+checkpoints passed; no guest instructions ran. Evidence:
+`target/validation/units/e128-dynamic-link-serial-path-hi825gpr/`.
