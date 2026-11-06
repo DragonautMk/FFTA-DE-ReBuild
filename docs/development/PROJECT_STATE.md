@@ -584,6 +584,15 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   40managedfiles/oldcache and one400ordinary Winefullstate-image-audio pair pass
   819newB(366opcode/262operand/191clock),185source instruction records including
   lookahead;0command/extended/generic-host. No hostsequencer/wholeABI claim.
+  A separate e131-d130 resource now projects ten additional extended callback
+  words (slots0..7/10..11), leaving 8/9 and the producer grammar unchanged.
+  EUR Wine publication/reuse and 14 interpreter/translated prefix comparisons
+  pass, including mixed-owner host reads and transactional tamper refusal. A
+  separate Wine check covers guest widths/mirrors, both owner boundaries and
+  two DMA3/two CpuSet full-state-clock pairs with poisoned source bytes.
+  Actual CLI create/reuse/verify and one-frame Wine startup pass; new-slot reads
+  are zero. Full callback effects, ordinary producers and global selector bounds
+  remain open.
   Seven further driver tables370b20..370d04/484Bnow have a strict typed source
   model and oneWineoracle:180PCMkeys/12u32bases/12samplecounts/132CGBkeys/
   12i16bases/60noise/16volume codes.1138neworiginal probes pass unsignedmulhi/
@@ -1836,6 +1845,14 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   Production CLI create/reuse/startup and a bounded headgear scene differential
   also pass on Wine, with positive typed mask reads. See
   [mask evidence](../rom_data_gameplay.md#conditional-property-selected-mask-table).
+  EUR e132-d131 additionally projects 31 item-derived four-byte records at
+  6e84e0, bound to the actual item owner. Wine source/model and 194 translated
+  full-state-clock prefixes pass, including raw and previous-owner fallback.
+  Actual Wine CLI create/reuse/verify and one-frame zero-use startup pass. A
+  stocked IN-08 Trade Items scene has positive CLI reads and a 600-frame Wine
+  native raw/managed pair. Wine Load/Undo, backup restore and restart retain the
+  owner after copied files become unavailable. Earlier save ancestry, global
+  live-u16 domain, other coverage and Linux/USA/native Windows remain open. [Evidence](../rom_data_gameplay.md#conditional-item-derived-four-byte-parameters).
 
 
 
@@ -2106,9 +2123,10 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   now proves 4,744 new-bank reads/5,831 bytes and native raw/managed equivalence
   across 600 frames, 11960..12560 (full state/clock/render/OAM/dispatch/audio).
   Later e128 Wine watches observe selectors 0 and 1; an extended 1,200-frame
-  raw/managed pair passes through frame 13160. Selector 2 and full animation
-  remain unproved. Ordinary selector/list completeness, Linux/USA/native
-  Windows remain unverified; no benchmark or new extraction/build.
+  raw/managed pair passes through frame 13160. A separate interpreter watch on
+  the same normal-input route observes selector 2 at frame 12492; the native
+  pair's aggregate counter does not attribute that address. Full animation,
+  global consumers and Linux/USA/native Windows remain unverified; no metrics.
 - EUR e109-d108 additionally owns eleven category-selected UI context templates
   at `394e44..394f20` (220 bytes), with typed coordinates, allocation count,
   flags and preserved opaque bytes. All 98 previous resources/file bytes remain

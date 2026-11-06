@@ -208,6 +208,30 @@ families and Linux/USA remain open. [Contract](../rom_data_gameplay.md).
 
 ## ROMDATA-02 — Extractors and decoders
 
+**ROMDATA-02/03/04-GAMEPLAY-6E84E0 scoped EUR progress.** The 31 four-byte
+records selected by authenticated item byte18 are modeled and attached with an
+item-owner dependency; E132 managed Wine publication and 194 original prefix
+comparisons pass. Live-u16 indices outside the projection preserve existing
+owners/raw behavior. Actual Wine CLI create/reuse/verify and one-frame startup
+pass with zero new-owner reads. A stocked IN-08 EUR Trade Items scene then
+passes a 600-frame Wine native raw/managed state/clock/image/OAM/dispatch/audio
+pair with positive byte01 and value02 reads. A separate Wine lifecycle check
+verifies E132 owner retention across Load/Undo, backup restore and restart.
+Earlier source-save ancestry, global selector extent, further scenes, Linux and USA remain open. No
+performance measurements.
+[Contract](../rom_data_gameplay.md#conditional-item-derived-four-byte-parameters).
+
+**ROMDATA-02/03/04-AUDIO-EXTENDED-DISPATCH completed for the conditional
+EUR fragment.** A separate typed resource owns ten callback words for selectors
+0..7 and 10..11; existing selectors 8/9 and the sequence grammar remain intact.
+Wine original-prefix, managed/interpreter/translated full-state, mixed-boundary
+and transactional checks pass; a later Wine check covers guest widths/mirrors
+and mixed-owner DMA3/CpuSet transfers. E131 CLI create/reuse/verify and one-frame startup
+pass; that startup has zero reads of the new fragment. The guest selector is not
+bounded by this projection; full handler behavior, ordinary production and table
+extent remain open. Linux/USA/native Windows remain pending; no performance
+measurements. [Contract and evidence](../rom_data_audio.md#conditional-extra-extended-dispatch-words).
+
 **ROMDATA-01-TEXT-REMAINING-CATALOGS / ROMDATA-02-TEXT-CATALOG-DATA completed
 for the declared EUR reader block:** 9 pointer catalogs/45 tables/16100 strings,
 29 relative selectors/145 archives/17035 programs. Flags, commands/operands,

@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-06",
+  "slug": "observe-roulette-continuation",
+  "title": "Observe Roulette selector 2 in ordinary play",
+  "kind": "changed",
+  "platforms": [
+    "Windows executable on Wine; EUR"
+  ],
+  "changes": [
+    "Document an EUR normal-input Roulette selector-2 observation and the limits of its relation to an existing native pair."
+  ],
+  "validation": [
+    "The protected IN-19 ordinary confirmation was replayed with A then neutral input to frames 13160 and 13760; retained images show Marche’s command menu and MP 87/107 at both endpoints (e130-octonary-extended-11apid85).",
+    "A separate selector-2 halfword read watch reports no hit from frame 12275 through frame 12321 (e130-octonary-selector2-watch-v1q7z9vy); its search budget is bounded.",
+    "Consecutive Wine interpreter watches from frame 12275 hit selector 2 at frame 12492: width-2 read 0x086cc158, value 0x22, Thumb PC 0x08010878. The same original seed and input have a separately accepted 1200-frame native raw/managed pair through frame 13160 (e130-octonary-contiguous-watch-9jcp645n; e128-6cc124-late-selector-pair-nqbg2k88)."
+  ],
+  "limitations": [
+    "The selector-2 address is an interpreter witness; the native pair counter is aggregate and does not identify that address. Full animation/list coverage, other consumers, Linux, USA and native Windows remain pending. No performance measurements.",
+    "The previously accepted 1200-frame pair was not repeated; its input prefix was replayed only to obtain a previously unretained later checkpoint.",
+    "The initial bounded watch stopped at frame 12321 and its session closed; the continuous search repeated that prefix solely to maintain a gap-free watch."
+  ],
+  "files": [
+    "docs/rom_data_obj.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-06-inspect-normal-final-battle-actions.json"
+  ]
+}

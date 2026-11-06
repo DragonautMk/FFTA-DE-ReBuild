@@ -6876,3 +6876,115 @@ matches its post-E130 build receipt, but its full source snapshot is unavailable
 No cheats were added in this continuation; the supplied save's earlier ancestry
 is unknown, so a fully cheat-free source-save claim remains unproved. Linux, USA
 and native Windows remain unverified; no performance measurements were made.
+
+## Conditional item-derived four-byte parameters
+
+Five original EUR reader literals use root `0x086e84e0` and a four-byte
+stride. Three reader chains take their index from byte `0x18` of an item in the
+authenticated 376-record item catalog. Those item fields contain exactly indices
+0 through 30, justifying a conditional 31-record, 124-byte projection at
+`0x6e84e0..0x6e855c`. It is disjoint from the E131 owners. The biased trade
+base `0x6e84fc` is inside the projection, but its separately owned records
+begin at `0x6e85bc`; no new guest selector restriction follows.
+
+The lossless records preserve byte 00, byte 01 and the little-endian halfword
+at 02. Original readers consume byte 00 with a 31 offset, byte 01 with a
+`0x2af` offset, and the halfword with a 200 multiplier. Two formatter paths use
+the full live `u16` at `0x020020de` without a local bound; values outside the
+conditional projection retain previous-owner or raw-ROM behavior. The model
+checks its dependency on the actual typed item records and authenticates the
+source ROM, source span and reader instructions.
+
+A Wine model test passes 190 original reader prefixes, including full-u16
+outside indices 256 and 65535. A separate E132 managed Wine test passes 194
+raw/interpreter versus translated-managed full-state/clock prefixes, including
+raw fallback for indices 31/256 and existing-owner composition for 55/65535.
+All 31 projected records are read, coherent tampering is rejected without
+replacing the active owner, and all 102 E131 resource files remain identical.
+Evidence: `e131-6e84e0-source-contract-5824yqku/`,
+`e131-6e84e0-model-wine-704fz9n3/`, and
+`e132-6e84e0-runtime-wine-q_6h2m4p/` under `target/validation/units/`.
+The production EUR Wine CLI creates, reuses and verifies E132 with 103
+resources/104 files, retains the 102 E131 resource files and starts one managed
+frame without reading this new owner (`e132-6e84e0-cli-wine-_al2e8me/`). The
+one-frame startup does not establish ordinary reachability. Whole caller ABI,
+global formatter-index domain, Linux, USA and native Windows remain open; no
+performance measurements were made.
+
+A later 600-frame EUR Wine observation reuses the retained normal Shop-to-Buy
+input solely to observe the new E132 counter. The endpoint shows the Bronze Helm
+purchase confirmation, but the new owner reports zero reads and no records in
+that window (`e132-6e84e0-shop-ordinary-ca62vnkk/`). This is a bounded negative,
+not evidence that ordinary use is impossible or a full-state pair for the new
+resource. The original state, input, ROM and E132 dataset were protected.
+
+Static EUR callback tracing narrows an ordinary-use lead without establishing
+production use. The shop state dispatcher routes state `0x18` to installation
+of callback `0x0806fb09`; that callback has a state `0x15` path containing a
+new-owner reader. A separate menu callback routes cursor index 2 to state
+`0x18` only in the four-entry variant; in the three-entry variant that index
+routes to `0x28`. This is a conditional source path, not proof that all
+selections reach the reader. The retained normal-input prefix shows the
+three-entry **Buy / Sell / Leave** menu at frame 235, so it does not identify a
+usable four-entry scene. The frame-210 and frame-340 captures show the shop
+interior and Buy inventory respectively; all three prefixes report zero new
+owner reads. No new game input was introduced. Evidence under
+`target/validation/units/`: `e132-6e84e0-dispatcher-candidates-3tiuvo_3/`,
+`e132-6e84e0-dispatcher-window-vjo29ugi/`,
+`e132-6e84e0-state-p_845270/`, `e132-6e84e0-shop-root-cbitrkgd/`,
+`e132-6e84e0-shop-choices-09zvat6w/`, and
+`e132-6e84e0-shop-menu-o2glsvir/`, `e132-6e84e0-shop-menu2-mk5srw4e/`,
+and `e132-6e84e0-shop-menu3-npkk8ypf/`.
+At that point, the four-entry menu label and its ordinary execution were not
+yet observed; the IN-08 continuation below supplies a scoped positive case.
+
+The user-supplied advanced EUR cartridge save is byte-identical to the earlier
+USA source. With isolated normal inputs, EUR File No. 2 reaches Sprohm and
+shows **Buy / Sell / Trade Items / Leave**; the menu checkpoint is
+`e132-trade-eur-menu-jtn43ivm/` and its earlier route units are retained.
+A subsequent EUR Wine CLI diagnostic selects Trade Items and ends at “All out
+today, come back later”, with zero new-owner reads. The CLI exited zero and
+the runner checked its protected inputs, but the validation unit itself is
+**FAIL**, because a generated `.input` remained in disposable scratch; its
+work and output are retained at `e132-trade-eur-observe-z6roe6x6/`. This is a
+bounded diagnostic, not a passing scene pair or proof of ordinary owner use.
+Static EUR disassembly at `e132-trade-check-zkbmyo_f/` shows that function
+`0x080d022c` counts nonzero halfwords in five slots at `0x02001f30..0x02001f3a`.
+At that checkpoint, a stocked scene and its full native/raw pair remained open;
+the later IN-08 observation below supplies a separate positive case.
+
+A source-linked stock screen inspected six EUR snapshot payloads without guest
+execution (`e132-trade-screen-9cm6nns2/`). All five stock slots were zero in
+those snapshots, but IN-08 had event flags `0x3a` and `0x31a` set, and `0x3d`
+clear. The EUR shop state `0x50` tests `0x3d` first, then calls the stock
+producer at `0x080d01e8` when both `0x3a` and `0x31a` are set, clearing
+`0x3a` afterwards. The scoped direct-BL and aligned-pointer scan found one
+candidate caller, `0x0806b2d8` (`e132-trade-producer-candidates-c3t6hmo8/`);
+this does not exclude indirect or unaligned references. The read-only snapshot
+screen checks wrapper preview and core hashes plus the postcard CPU/EWRAM prefix,
+not full machine deserialization or BIOS binding.
+
+From the existing EUR IN-08 state, ordinary map inputs reached Sprohm. The
+shop announced new trade items, and the four-entry menu selected Trade Items.
+The actual production Wine CLI then displayed five items and recorded 10 new
+owner bus reads, including five byte01 and ten value02 bytes across a nonzero
+record mask during 600 frames (`e132-in08-observe-zhv66qtp/`). This proves a
+scoped positive CLI observation; the save's earlier ancestry is unknown.
+A 600-frame Wine native raw-versus-managed pair from the same state and input
+passes full serialized state and clock, images, OAM, dispatch, and five audio
+streams; the new scene gate confirms 10 owner reads, five byte01 bytes and ten
+value02 bytes (`e132-in08-positive-pair-s1u33fng/`). The byte00 field was not
+read in this scene. Linux, USA, native Windows, global caller coverage and
+verified pre-save cheat-free ancestry remain open.
+
+A separate EUR Wine lifecycle test copies the E132 dataset into an isolated
+temporary directory, activates it and then makes those copied files unavailable.
+A failed reactivation leaves the existing owner and machine state intact. Slot
+load/Undo, cartridge-backup restore and restart retain the same owner; typed
+reads before and after the lifecycle still return the authenticated bytes when
+the corresponding ROM bytes in the temporary machine are altered. The ROM is
+restored in memory before save identity checks, and the real ROM and dataset
+are protected. Evidence: `e132-lifecycle-wine-6k2_x7_1/`. The first test
+`e132-lifecycle-wine-4mny_y1a/` failed because it left the temporary ROM altered
+during backup identity verification; diagnostics are retained. This is a
+targeted lifecycle proof, not full save/rollback or platform coverage.

@@ -251,6 +251,15 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
         audio.iter().all(|&count| count > 0),
         "all audio streams need actual samples: {audio:?}"
     );
+    if std::env::var_os("FFTA_STATE_TEST_REQUIRE_CONDITIONAL_ITEM_PARAMETERS").is_some() {
+        let parameters = decoded.bus.rom_resources().unwrap().conditional_item_parameters_stats()
+            .expect("decoded EUR conditional item parameters");
+        assert!(parameters.bus_reads > 0 && parameters.byte01 > 0 && parameters.value02_bytes > 0
+            && parameters.record_mask != 0,
+            "the scene must consume item-derived parameter bytes and halfwords");
+        eprintln!("ROM_DATA_CONDITIONAL_ITEM_PARAMETERS_SCENE frames={frames} bus_reads={} source_bytes={} byte00={} byte01={} value02_bytes={} record_mask={}",
+            parameters.bus_reads, parameters.source_bytes, parameters.byte00, parameters.byte01, parameters.value02_bytes, parameters.record_mask);
+    }
     if std::env::var_os("FFTA_STATE_TEST_REQUIRE_CONDITIONAL_LOOKUP").is_some() {
         let lookup = decoded.bus.rom_resources().unwrap().conditional_four_byte_lookup_stats()
             .expect("decoded EUR conditional lookup");

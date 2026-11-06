@@ -119,6 +119,12 @@ pub use audio_tones::AudioTonesStats;
 mod audio_sequences;
 use audio_sequences::AudioSequencesResources;
 pub use audio_sequences::AudioSequencesStats;
+mod audio_extended_dispatch;
+use audio_extended_dispatch::AudioExtendedDispatchResources;
+pub use audio_extended_dispatch::AudioExtendedDispatchStats;
+mod conditional_item_parameters;
+use conditional_item_parameters::ConditionalItemParametersResources;
+pub use conditional_item_parameters::ConditionalItemParametersStats;
 mod audio_driver;
 use audio_driver::AudioDriverResources;
 pub use audio_driver::AudioDriverStats;
@@ -357,6 +363,8 @@ pub struct RuntimeResources {
     audio_directory: Option<Box<AudioDirectoryResources>>,
     audio_tones: Option<Box<AudioTonesResources>>,
     audio_sequences: Option<Box<AudioSequencesResources>>,
+    audio_extended_dispatch: Option<Box<AudioExtendedDispatchResources>>,
+    conditional_item_parameters: Option<Box<ConditionalItemParametersResources>>,
     audio_driver: Option<Box<AudioDriverResources>>,
     palette_effect_dispatch: Option<Box<PaletteEffectDispatchResources>>,
     palette_programs: Option<Box<PaletteProgramResources>>,
@@ -613,6 +621,12 @@ impl RuntimeResources {
         if let Some((data,_))= files.audio_sequences {
             resources.audio_sequences = Some(Box::new(AudioSequencesResources::new(data.clone(), &source.audio_sequences.as_ref().unwrap().sources, files.audio_directory.ok_or("Missing typed audio directory owner")?.0, files.audio_tones.ok_or("Missing typed audio tones owner")?.0)?));
         }
+        if let Some((data, _)) = files.audio_extended_dispatch {
+            resources.audio_extended_dispatch = Some(Box::new(AudioExtendedDispatchResources::new(data.clone(), &source.audio_extended_dispatch.as_ref().unwrap().sources)?));
+        }
+        if let Some((data, _)) = files.conditional_item_parameters {
+            resources.conditional_item_parameters = Some(Box::new(ConditionalItemParametersResources::new(data.clone(), &source.conditional_item_parameters.as_ref().unwrap().sources, files.items.ok_or("Missing conditional item parameter item owner")?.0)?));
+        }
         if let Some((data,_))= files.audio_driver {
             resources.audio_driver = Some(Box::new(AudioDriverResources::new(data.clone(), &source.audio_driver.as_ref().unwrap().sources, files.audio_sequences.ok_or("Missing typed audio sequence owner")?.0)?));
         }
@@ -861,6 +875,8 @@ impl RuntimeResources {
             audio_directory: None,
             audio_tones: None,
             audio_sequences: None,
+            audio_extended_dispatch: None,
+            conditional_item_parameters: None,
             audio_driver: None,
             palette_effect_dispatch: None,
             palette_programs: None,
@@ -988,6 +1004,8 @@ impl RuntimeResources {
             + self.audio_directory.as_ref().map_or(0, |i| i.resident_bytes())
             + self.audio_tones.as_ref().map_or(0, |i| i.resident_bytes())
             + self.audio_sequences.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.audio_extended_dispatch.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.conditional_item_parameters.as_ref().map_or(0, |i| i.resident_bytes())
             + self.audio_driver.as_ref().map_or(0, |i| i.resident_bytes())
             + self.palette_effect_dispatch.as_ref().map_or(0, |i| i.resident_bytes())
             + self.palette_programs.as_ref().map_or(0, |i| i.resident_bytes())
@@ -1140,6 +1158,8 @@ impl RuntimeResources {
     pub fn audio_directory_stats(&self) -> Option<AudioDirectoryStats> {self.audio_directory.as_ref().map(|m|m.stats())}
     pub fn audio_tones_stats(&self) -> Option<AudioTonesStats> {self.audio_tones.as_ref().map(|m|m.stats())}
     pub fn audio_sequences_stats(&self) -> Option<AudioSequencesStats> {self.audio_sequences.as_ref().map(|m|m.stats())}
+    pub fn audio_extended_dispatch_stats(&self) -> Option<AudioExtendedDispatchStats> {self.audio_extended_dispatch.as_ref().map(|m|m.stats())}
+    pub fn conditional_item_parameters_stats(&self) -> Option<ConditionalItemParametersStats> {self.conditional_item_parameters.as_ref().map(|m|m.stats())}
     pub fn audio_driver_stats(&self) -> Option<AudioDriverStats> {self.audio_driver.as_ref().map(|m|m.stats())}
     pub fn palette_effect_dispatch_stats(&self) -> Option<PaletteEffectDispatchStats> {self.palette_effect_dispatch.as_ref().map(|m|m.stats())}
     pub fn palette_programs_stats(&self) -> Option<PaletteProgramStats> {self.palette_programs.as_ref().map(|m|m.stats())}
@@ -1194,6 +1214,7 @@ impl RuntimeResources {
         let prior=self.audio_directory.as_ref().and_then(|d|d.host_read(index,rom,None));
         let prior = match &self.audio_tones{Some(t)=>t.host_read(index,rom,prior),None=>prior};
         let prior = match &self.audio_sequences{Some(t)=>t.host_read(index,rom,prior),None=>prior};
+        let prior = match &self.audio_extended_dispatch{Some(t)=>t.host_read(index,rom,prior),None=>prior};
         match &self.audio_driver{Some(t)=>t.host_read(index,rom,prior),None=>prior}
     }
     pub fn item_link_stats(&self) -> Option<ItemLinkStats> {self.item_links.as_ref().map(|l|l.stats())}
@@ -1394,6 +1415,14 @@ impl RuntimeResources {
                 None => prior,
             };
             let prior = match &self.audio_sequences {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.audio_extended_dispatch {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.conditional_item_parameters {
                 Some(data) => data.guest_read(index, rom, prior),
                 None => prior,
             };
@@ -1772,6 +1801,8 @@ impl crate::MemMap {
             || AudioDirectoryResources::source_page(index)
             || AudioTonesResources::source_page(index)
             || AudioSequencesResources::source_page(index)
+            || AudioExtendedDispatchResources::source_page(index)
+            || ConditionalItemParametersResources::source_page(index)
             || AudioDriverResources::source_page(index)
             || PaletteEffectDispatchResources::source_page(index)
             || PaletteProgramResources::source_page(index)

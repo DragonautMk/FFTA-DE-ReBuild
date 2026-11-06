@@ -2201,9 +2201,37 @@ current e128 dataset were guarded; successful runtime scratch was removed.
 
 Evidence: `target/validation/units/e128-6cc124-selector-watch-pair-vkj66o3u/`
 and `e128-6cc124-late-selector-pair-nqbg2k88/`. These observations establish
-selectors 0 and 1 and the extended paired window, but not selector 2, every
-list/frame, action completion or complete ordinary coverage. Linux, USA and
+selectors 0 and 1 and the extended paired window, but do not alone establish
+selector 2, every list/frame, action completion or complete ordinary coverage. Linux, USA and
 native Windows remain unverified; no performance measurements were made.
+
+A later Wine interpreter continuation from the same protected IN-19 confirmation
+replays the original A input and remains neutral through frame 13760. At both
+frames 13160 and 13760 the retained images show Marche's command menu with MP
+87/107, rather than the previously shown animation (`e130-octonary-extended-
+11apid85/`). This is a visual observation and does not itself identify a selector,
+prove every animation frame, or compare complete states. The first 1,200 frames
+were necessary to produce the previously unretained endpoint; no gameplay state
+or RNG was forced. The accepted 1,200-frame pair was not rerun.
+
+A separate interpreter watch begins from the normal-input frame 12275 checkpoint
+and targets only the selector-2 halfword `0x086cc158..0x086cc15a`, with width 2.
+The first bounded search reports no hit through frame 12321 (`e130-octonary-
+selector2-watch-v1q7z9vy/`), which does not exclude later access. The previous
+selectors-1–2 watch stopped at its first hit, selector 1, and thus cannot exclude
+selector 2 within the paired window. The original handler's selector-2 path is
+conditional on its busy helper and countdown; no direct key condition is shown
+at that path. A continuous follow-up repeats the bounded prefix only because
+the first debug session had closed, then continues without gaps: it reads that
+halfword at frame **12492**, value `0x22`, Thumb PC `0x08010878`
+(`e130-octonary-contiguous-watch-9jcp645n/`). The value points to the sequence
+at `0x086cc176`. This is an interpreter address witness; the existing native
+raw/managed pair covers the same seed, input and frame window but its aggregate
+counter does not identify selector 2. Each watch stops at an interpreter-step
+boundary and the next starts from the same paused state. All three selectors
+now have ordinary EUR observations, but the full frame/list domain, other
+consumers and native address attribution remain unproved. Linux, USA and native
+Windows remain pending; no performance measurements were made.
 
 `rom-data-octonary-ordinary-pair-cxaqwj0g` retains CLI/pair logs, explicit PASS
 results and the endpoint image; its successful scratch was automatically

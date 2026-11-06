@@ -21414,3 +21414,63 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Outcome: completed scoped interpreter witness. After eight-frame A prefix, the Wine interpreter watch hits record117 header 0x0871dfb7, value124, at Thumb 0x080d25fc and guest frame45107; native pair aggregate does not establish its address. No new cheat, supplied source-save ancestry unknown.
 - Evidence: docs/changes/2026-11-06-inspect-normal-final-battle-actions.json; target/validation/units/e130-normal-watch-case-bjtp5frl/, e130-normal-read-watch-4bo1a6k1/. Initial watch swm8jjxe used the pair test's frame index rather than debugger initial frame and is retained.
 - Limits: global coverage and fully cheat-free source unproved; Linux, USA and native Windows pending, no metrics. Primary and Sol model/effort effective settings unconfirmed.
+
+### ROMDATA-04-OCTONARY-SELECTOR2-ORDINARY
+
+- Outcome: completed scoped EUR interpreter witness. Normal IN-19 Roulette A/neutral replay returns to Marche menu at frames13160/13760. A continuous Wine interpreter watch from frame12275 hits selector2 halfword 0x086cc158, value0x22, Thumb 0x08010878, frame12492. Paused search chunks are contiguous. Existing e128 native raw/managed 1200-frame pair has same source/input/window but aggregate counters cannot attribute the selector2 address.
+- Evidence: docs/changes/2026-11-06-observe-roulette-continuation.json; target/validation/units/e130-octonary-extended-11apid85/, e130-octonary-watch-start-tldia223/, e130-octonary-contiguous-watch-9jcp645n/, e128-6cc124-late-selector-pair-nqbg2k88/. Initial bounded watch v1q7z9vy missed through frame12321; prefix repeated only to continue with no gap after its session closed.
+- Limits: no complete animation or global consumer claim; native selector2 address not independently traced. Linux, USA, native Windows pending; no performance measurement. Sol /root/sol_parameter_record consulted on discriminator with gpt-6.1-sol xhigh requested; effective settings and primary model/effort unconfirmed.
+
+### ROMDATA-02-AUDIO-EXTENDED-DISPATCH-MODEL
+
+- Outcome: completed conditional source/model EUR/Wine. Separate strict model reconstructs slot0..7 and10..11 in two ranges, 40 bytes; original prefix confirms ten entries plus slot8/9 and out-of-projection12/255, preserving unbounded u8 semantics and existing sequence grammar. No callback executed, full table extent/ordinary use unproved.
+- Evidence: target/validation/units/e131-audio-extended-model-build-z5x8g8ja/, audio-extended-model-wine-1_xw96mj/; crates/gba-core/src/rom_data/audio_extended_dispatch.rs. First build rp1bq4a5 used wrong working directory for toolchain and failed; corrected build PASS.
+- Limits: model not yet published/consumed; Linux/USA/native Windows pending; no performance measurement. Sol /root/sol_parameter_record requested gpt-6.1-sol xhigh, effective and primary settings unconfirmed.
+
+### ROMDATA-03-04-AUDIO-EXTENDED-DISPATCH
+
+- Outcome: completed conditional EUR resource integration. E131-d130 adds a separate 40-byte owner for dispatch slots0..7/10..11; existing slots8/9 and sequence grammar unchanged. One Wine unit passes create/reuse, previous 101 files identical, fourteen raw/interpreter/translated full-state-clock prefixes, mixed host boundaries and coherent-tamper transaction. Actual Wine CLI create/reuse/verify and one-frame startup PASS; new owner usage zero.
+- Evidence: docs/changes/2026-11-06-migrate-audio-extended-dispatch.json; target/validation/units/e131-audio-extended-runtime-wine-8f6706a7/, e131-audio-extended-cli-wine-0wep0_sw/. Superseded successful runtime scratch retired only after matching E131 CLI manifest; receipt 8f6706a7/retirement-result.json.
+- Limits: no callback execution, ordinary production or guest selector bound; Linux/USA/native Windows pending; no performance measurement. Production CLI build k5fgtttc exited0 but unit refused Cargo hardlinks, retained; CLI unit rechecked all recorded protected preimages and executable hash. Frontend build y8up2_w5 missed an existing test argument; corrected few0o7d6 PASS. Sol /root/sol_parameter_record requested gpt-6.1-sol xhigh; effective and primary settings unconfirmed.
+
+### ROMDATA-05-AUDIO-EXTENDED-TRANSFER
+
+- Outcome: completed scoped EUR/Wine transfer check. With both adjacent audio owners poisoned in raw ROM, 168 guest width/mirror/BIOS-mode cases and two DMA3 plus two CpuSet cross-owner transfers pass; typed source counts and copied bytes match, full state/clock equals raw; one outside-fragment byte follows raw fallback. The previous 14 prefix comparisons were not rerun.
+- Evidence: docs/changes/2026-11-06-migrate-audio-extended-dispatch.json; target/validation/units/e131-audio-extended-runtime-frontend-build-29r34nfm/, e131-audio-extended-transfer-wine-g18oeqjo/.
+- Limits: no callback execution, ordinary production or complete guest selector domain; Linux/USA/native Windows pending; no performance measurement; model/effort unconfirmed.
+
+### ROMDATA-01-GAMEPLAY-6E84E0-CONDITIONAL
+
+- Outcome: conditional EUR source contract accepted. Three original consumer chains derive stride4 index from item byte18; 376 authenticated item records yield exactly0..30. Candidate31 records at 6e84e0..6e855c/124B are disjoint from E131; byte00, byte01 and u16LE02 have separate original readers. Formatter uses full live u16 with no cap; biased trade base 6e84fc is not an owner boundary.
+- Evidence: target/validation/units/e131-6e84e0-readers-0ow8aij0/, e131-6e84e0-consumers-6gi96ao9/, e131-6e84e0-source-contract-5824yqku/; source SHA dd66a69439e7ea175c547855069043dda9f36f09b6825756afc78323da64a843.
+- Limits: conditional on actual item owner, not a complete guest index domain or ordinary use. Sol /root/sol_parameter_record requested gpt-6.1-sol xhigh, effective and primary settings unconfirmed. Linux/USA/native Windows pending; no performance measurements.
+
+### ROMDATA-02-GAMEPLAY-6E84E0-MODEL
+
+- Outcome: conditional EUR source model accepted. Typed byte00/byte01/u16LE02 records reconstruct all31 rows/124B; item owner dependency, coherent tamper, source and shape checks pass. One Wine test covers190 original formatter/item-chain prefixes, including u16 indices256/65535 outside projection; no guest index cap or whole caller ABI claim.
+- Evidence: target/validation/units/e131-6e84e0-model-build-nnnjdis4/, e131-6e84e0-model-wine-704fz9n3/; crates/gba-core/src/rom_data/conditional_item_parameters.rs.
+- Limits: managed/runtime/ordinary/global domain pending; Linux/USA/native Windows pending; no performance measurements. Primary/Sol effective settings unconfirmed.
+
+### ROMDATA-03-04-GAMEPLAY-6E84E0-MANAGED
+
+- Outcome: completed conditional EUR integration. E132-d131 adds 31 item-dependent four-byte records with actual parsed item-owner dependency. One Wine unit passes create/reuse, all102 prior files identical, 194 raw/interpreter vs translated full-state-clock prefixes, all31 record counters, outside raw31/256 and prior-owner55/65535, and coherent tamper transaction. Production Wine CLI creates/reuses/verifies 103 resources/104 files and starts one frame; new owner reports zero reads.
+- Evidence: docs/changes/2026-11-06-consume-european-item-derived-parameters.json; target/validation/units/e132-6e84e0-runtime-wine-q_6h2m4p/, e132-6e84e0-cli-wine-_al2e8me/, e132-6e84e0-production-cli-build-spoq44y4/. Superseded successful runtime/build scratch retired only after matching E132 manifest/binary; both retirement-result.json retained.
+- Limits: conditional item projection, no global u16 bound, whole caller ABI or ordinary use. Linux/USA/native Windows pending; no performance measurements. Sol /root/sol_parameter_record requested gpt-6.1-sol xhigh, effective and primary model/effort unconfirmed.
+
+### ROMDATA-04-GAMEPLAY-6E84E0-SHOP-LOCATOR
+
+- Outcome: scoped EUR Wine locator complete; Shop→Buy 600 frames reads zero new-owner bytes. Static menu callback maps index2 to shop state18 only in the four-entry variant, which installs dispatcher 0806fb08; state15 has an owner reader. The retained input at frame235 shows three entries Buy/Sell/Leave, whose index2 follows state28. This does not prove ordinary use or absence elsewhere.
+- Evidence: docs/rom_data_gameplay.md#conditional-item-derived-four-byte-parameters; target/validation/units/e132-6e84e0-shop-ordinary-ca62vnkk/, e132-6e84e0-shop-menu3-npkk8ypf/, e132-6e84e0-shop-root-cbitrkgd/, e132-6e84e0-shop-choices-09zvat6w/. Originals and state protected; no new input.
+- Limits: four-entry scene and label, dispatcher execution, ordinary reads and global domain open; Linux/USA/native Windows pending; no performance measurement. Sol xhigh requested; effective and primary settings unconfirmed.
+
+### ROMDATA-04-GAMEPLAY-6E84E0-ORDINARY
+
+- Outcome: completed scoped EUR IN08 normal-input Trade Items scene. Source state screen found event flags3a/31a set and 3d clear; source state50 calls producer 080d01e8 at 0806b2d8 under those conditions. An alternate path reached Sprohm after Cyril encountered a rival. The stocked scene shows five items; production Wine CLI reports ten owner reads. The 600-frame Wine native raw/managed pair matches serialized state/clock, images, OAM, dispatch and five audio streams, with byte01=5/value02=10 and nonzero record mask.
+- Evidence: docs/rom_data_gameplay.md#conditional-item-derived-four-byte-parameters; target/validation/units/e132-trade-screen-9cm6nns2/, e132-trade-producer-candidates-c3t6hmo8/, e132-in08-next2-y2fluknj/, e132-in08-observe-zhv66qtp/, e132-in08-pair-frontend-build-iz0duasf/, e132-in08-positive-pair-s1u33fng/. Guarded inputs unchanged.
+- Limits: earlier IN08 save ancestry unknown; no byte00 scene read, global u16 domain, complete consumers or other scene coverage. Linux/USA/native Windows pending; no performance measurements. An IN04 empty-stock diagnostic unit z6roe6x6 has command exit0/guards intact but unit FAIL because a generated input remained in disposable scratch; retained. Earlier start unit cje338um failed a wrong checkpoint path, corrected and retained. Sol /root/sol_parameter_record requested gpt-6.1-sol xhigh; effective/primary settings unconfirmed.
+
+### ROMDATA-05-GAMEPLAY-6E84E0-LIFECYCLE
+
+- Outcome: completed scoped EUR/Wine lifecycle. Copy E132 files to isolated scratch, activate, remove copied-file availability and verify failed reactivation is transactional. Slots Load/Undo, cartridge backup restore and restart retain the same owner; before/after typed reads match original bytes with the temporary machine ROM span altered. Restore the ROM in memory for identity-sensitive operations; real inputs protected.
+- Evidence: target/validation/units/e132-lifecycle-frontend-build-3cwx6rjv/, e132-lifecycle-wine-6k2_x7_1/; docs/rom_data_gameplay.md#conditional-item-derived-four-byte-parameters.
+- Limits: earlier test 4mny_y1a failed when its temporary ROM was left altered during backup identity validation; corrected and retained. Not complete lifecycle matrix, all resources or platforms; Linux/USA/native Windows pending, no performance measurements. Primary model/effort unconfirmed.

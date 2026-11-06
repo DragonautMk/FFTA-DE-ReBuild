@@ -36,16 +36,16 @@ termination of another owner's process or changing another thread's goal state.
 
 - State: active
 - Outcome: partial
-- Verified: E130 101 resources/102 files, 63 compact banks; managed and translated layered initializer and CLI create/reuse/verify PASS under EUR Wine. Current: target/validation/units/e130-layered-obj-cli-current-rbr9ukkp/work/resources/. E129 retained for comparison with its accepted 38 regressions, marker and startup proofs.
+- Verified: E132 103 resources/104 files, 63 compact banks; EUR Wine managed/native prefixes and CLI create/reuse/verify/startup PASS. Current: target/validation/units/e132-6e84e0-cli-wine-_al2e8me/work/resources/. E131 retained for comparison.
 - Missing: unmigrated resources/consumers, missing ordinary-use evidence, ABI/global extent/indirect calls and mod phases ROMDATA-06/07; Linux/USA/native Windows/new32:9 remain distinct. EUR, reduced Wine scope, no performance/space measurements; originals and personal saves unchanged.
-- Selection: `ROMDATA-04-PARAMETER-RECORDS27-ORDINARY` partial. Normal-input EUR Wine one-read pair PASS (863o0cng), record117 interpreter watch (4bo1a6k1). No new cheat; save ancestry unknown. Missing: cheat-free provenance/global coverage. Next: select another concrete EUR criterion; do not repeat pair. Sol xhigh requested, effective unknown. No metrics.
+- Selection: `ROMDATA-05-GAMEPLAY-6E84E0-LIFECYCLE` scoped EUR Wine PASS (6k2_x7_1); E132 owner retains typed data across Load/Undo, backup and restart with copied files unavailable. Full lifecycle/platform matrix remains open. Next select a distinct unfinished ROMDATA criterion; do not repeat this test.
 - Resume: [validation recovery checklist](ROM_DATA_VALIDATION_RECOVERY_TODO.md) for skipped checks; [ROM_DATA_TODO](ROM_DATA_TODO.md), only the selected criterion's section (ROMDATA-01/02/03/04/05/06/07); [inventory](ROM_DATA_INVENTORY.md). Do not read the whole TODO. Children retain their IDs and limits:
   - `ROMDATA-04-PARAMETER-RECORDS27-ORDINARY`: source/model/runtime/CLI accepted; normal-input positive/full pair pass from save of unknown ancestry, cheat-free ordinary proof open. User confirms Ambervale; recorded movement and post-save A windows are negative (inl3r0yl/l_97lwxn), not global absence. `docs/rom_data_gameplay.md`.
   - Localized table graphics: scoped ordinary trigger and pair accepted; aggregate counters do not identify the three groups, and all-bank/all-group/consumer coverage remains open. `docs/rom_data_ui_graphics.md`, ordinary table extension section.
   - `ROMDATA-05-DYNAMIC-RAW-ORDINARY-REACHABILITY` and `ROMDATA-01-LOCALIZED-RAW-DYNAMIC-DOMAIN`: conditional fragments/paths accepted; global domain and ordinary invocation unproven. Unit320 negative closed; later state2/state4/selector-witnesses diagnosis closed without a scene. Archive 59..75 and 789..866; no blind navigation.
   - `ROMDATA-01-OBJ-REMAINING-DRAW-ROOTS`, `ROMDATA-01-OBJ-REMAINING-CONSTRUCTOR-SOURCES`, `ROMDATA-01-OBJ-GRAPHICS-PAYLOADS`: authenticated increments accepted; global inventory/remaining consumers open. Do not repeat the broad experiment with 61 truncations. Archive 2853..2874, then only the selected family's record.
   - `ROMDATA-05-OBJ-VALIDATION`: local equivalence/costs, GUI, archive and USA initializer have later accepted outcomes; native Windows gates, further catalogs/scenes and normal enablement remain. Archive 3945..4087. Old artificial RSS/space constraints and `ROMDATA-05-BG-SCENES-COSTS` do not authorize further measurements: superseded by EUR/no-metrics steering.
-  - Compact OBJ e101..e108: conditional prefixes/model/runtime/CLI accepted; e106/6c6928 selector2 has one ordinary 600-frame pair. Other e101..e107 ordinary use remains open; record222/candidate-table and selector33 have only static conditions/bounded negatives. e108/6cc124 IN-19 Roulette selectors0/1 observed with 1200-frame pair; selector2 and complete animation/ordinary selector-list domain remain unproved. Archive 11..65 and new ordinary-use record; no accepted replay repeated.
+  - Compact OBJ e101..e108: conditional prefixes/model/runtime/CLI accepted; e106/6c6928 selector2 has one ordinary 600-frame pair. Other e101..e107 ordinary use remains open; record222/candidate-table and selector33 have only static conditions/bounded negatives. e108/6cc124 IN-19 Roulette selectors0/1 native and selector2 interpreter observed; 1200-frame pair passes. Complete animation/ordinary selector-list domain remain unproved. Archive 11..65 and new ordinary-use record; no accepted replay repeated.
   - UI context templates e109: source selector/copy catalog and ordinary templates 5 and 2 accepted with paired Wine scenes; complete UI extent/all consumers/all11 records remain unproved. docs/rom_data_ui.md. Do not repeat accepted pairs.
   - ROMDATA-04-COMPACT-CATALOG-ORDINARY: Star Cross and IN-08 Red Spring selector 5 scoped proofs accepted. Complete29-root/allselector/animation/consumer coverage remains open; catalog counters aggregate banks. Prior303/310/312 human leads excluded. docs/rom_data_compact_catalog.md.
   - `ROMDATA-04-LOOP-COMPACT-CATALOG-ORDINARY`: five-loop source/model/native/CLI accepted; Soil Evidence 6bac28/6c0614, Freezeblink 6babc4, Stardust 6bb574 and Blue Screw 6c1e78 selector6 exact reads with paired Wine scenes PASS. Other banks, complete animation and global domains remain open. docs/rom_data_compact_catalog.md.
@@ -204,9 +204,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 - Godot: planned assessment complete, implementation deferred, not a current dependency. AndroidPort is separate; originals/ROM/BIOS/private catalogs/saves/recordings stay out of commits/packages.
 
 ## Final handover
-- Task: ROMDATA-04-PARAMETER-RECORDS27-ORDINARY partial.
-- Last verified result: EUR Wine normal-input 608-frame raw/managed pair PASS and interpreter watch record117; source-save earlier ancestry unknown.
-- Remaining work: fully cheat-free provenance, global extent and other ROMDATA criteria; Linux/USA pending.
-- Errors or blockers: MinGW dlltool absent; pair binary source snapshot incomplete; model/effort unconfirmed. Sandbox Wine and initial debugger frame failed; corrected runs PASS.
-- Next action: select a different concrete unverified EUR criterion without repeating accepted pair.
-- References: docs/rom_data_gameplay.md; docs/changes/2026-11-06-inspect-normal-final-battle-actions.json.
+- Task: ROM-DATA-FULL-EUR partial; E132 lifecycle scoped accepted.
+- Last verified result: E132 Wine lifecycle PASS; IN08 scene pair PASS.
+- Remaining work: full lifecycle matrix, other ordinary coverage, global u16 domain and other ROMDATA criteria; Linux/USA pending.
+- Errors or blockers: guest u16 domain unknown; model/effort unconfirmed.
+- Next action: choose a distinct unfinished EUR ROMDATA criterion; do not repeat the E132 lifecycle test.
+- References: docs/rom_data_gameplay.md#conditional-item-derived-four-byte-parameters.

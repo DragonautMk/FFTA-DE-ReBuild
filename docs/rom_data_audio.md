@@ -766,3 +766,52 @@ or live job remains. Evidence under `target/rom-data-audio-driver/`:
 Other wrapper roots/LUTs/unselected assets and graphics/text/maps/gameplay,
 GUI/archive/mod criteria and new Linux/USA/native Windows checks remain open.
 No performance or space measurement was taken.
+
+## Conditional extra extended-dispatch words
+
+The original CD dispatcher at `08149e8a..08149e9a` reads an unsigned selector
+byte, advances the track cursor, and loads a callback from `08370d38 + 4*selector`.
+It contains no selector bound. A separate EUR model preserves the ten physical
+words for selectors 0..7 and 10..11 (`370d38..370d58` and `370d60..370d68`),
+leaving selectors 8/9 in the existing sequence resource. Slot 0 and slot 3
+remain distinct entries even though their callback values coincide. Following
+`ffffffff` words are not treated as a terminator or guest range limit.
+
+This is a conditional projection, not a new grammar for audio sequence
+instructions. In particular, the slot-1 handler reads four operand bytes, so
+the existing producer-bounded two-byte `Extended` representation must not be
+applied to it. The original dispatcher, mutable guest state and callback code
+remain responsible for execution.
+
+One targeted Wine interpreter test passes strict model/source binding, two
+physical ranges totaling 40 bytes, malformed/coherent edits and 14 original
+lookup prefixes. The latter exercise ten projected selectors, the existing
+selectors 8/9 and outside selectors 12/255, stopping before the indirect call;
+they do not establish callback behavior or ordinary reachability. Evidence:
+`audio-extended-model-wine-1_xw96mj/` under `target/validation/units/`.
+EUR e131-d130 adds a separate `audio.m4a-extended-dispatch` resource while
+retaining the existing sequence file and its selectors 8/9 unchanged. The
+managed Wine integration test publishes and reuses the dataset, compares all
+101 previous resources byte-for-byte, and passes 14 full-state/clock prefix
+comparisons between raw interpreter, managed interpreter and translated managed
+execution. Both shared host-read boundaries and rejection of a coherently
+modified file without replacing active resources pass. The original callbacks
+were not executed; the test does not prove ordinary production of these slots
+or complete table extent. Evidence: `e131-audio-extended-runtime-wine-8f6706a7/`.
+A subsequent focused Wine test poisons both the new fragment and the existing
+slots 8/9, then checks 168 boundary/mirror/BIOS-mode cases with guest 8-, 16-
+and 32-bit reads. Two DMA3 and two CpuSet copies cross the owner boundaries;
+the typed byte counts, copied bytes, complete state and guest clock match the
+raw-ROM path. A selected outside byte still falls back to ROM. This does not
+execute the selected callbacks or establish ordinary use. Evidence:
+`e131-audio-extended-transfer-wine-g18oeqjo/`.
+
+The actual EUR Wine CLI creates, reuses and verifies e131-d130, with 102
+resources/103 files and all 101 prior resource files byte-identical. Its
+one-frame managed startup registers the new owner but records zero reads, so
+this is not an ordinary-use proof (`e131-audio-extended-cli-wine-0wep0_sw/`).
+The isolated CLI build exited successfully, although its original validation
+unit rejected Cargo hard links in scratch; a separate unit checked its recorded
+input preimages, binary hash and execution. The failed unit remains retained.
+Linux, USA and native Windows remain pending; no performance measurements were
+made.

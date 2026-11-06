@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "date": "2026-11-06",
+  "slug": "consume-european-item-derived-parameters",
+  "title": "Consume conditional item-derived parameters",
+  "kind": "changed",
+  "platforms": [
+    "Windows executable on Wine; EUR"
+  ],
+  "changes": [
+    "Add an item-dependent typed projection of 31 four-byte EUR records and serve its bytes through managed guest reads without imposing a guest index cap."
+  ],
+  "validation": [
+    "The protected item source and five original reader literals establish the conditional 31-record domain and no E131 overlap (e131-6e84e0-source-contract-5824yqku).",
+    "One EUR Wine model test passes 190 original reader prefixes including full-u16 outside cases 256 and 65535 (e131-6e84e0-model-wine-704fz9n3).",
+    "One EUR Wine managed E132 test passes 194 raw/interpreter versus translated-managed full-state/clock prefixes, raw and prior-owner outside paths, coherent-tamper transaction and all 102 prior file comparisons (e132-6e84e0-runtime-wine-q_6h2m4p).",
+    "The production EUR Wine CLI creates, reuses and verifies E132 (103 resources/104 files), retains 102 previous resource files, and registers the new owner at one-frame startup with zero reads (e132-6e84e0-cli-wine-_al2e8me).",
+    "The retained EUR Shop-to-Buy input was observed once with the new E132 CLI: 600 frames end at a visible purchase confirmation and report zero new-owner reads, a bounded negative rather than a full-state pair (e132-6e84e0-shop-ordinary-ca62vnkk).",
+    "EUR Wine static callback tracing links shop state 0x18 to dispatcher 0806fb08 and its state 0x15 reader path. A retained-input capture at frame 235 shows the three-entry Buy/Sell/Leave variant, whose cursor index 2 does not select state 0x18; four-entry use is unobserved (e132-6e84e0-shop-choices-09zvat6w, e132-6e84e0-shop-root-cbitrkgd, e132-6e84e0-shop-menu3-npkk8ypf).",
+    "Normal-input EUR Wine interpreter route from the user-supplied advanced save reaches Sprohm four-entry Trade Items menu (e132-trade-eur-menu-jtn43ivm). A 600-frame managed CLI diagnostic ends at out-of-stock dialogue with zero owner reads; CLI exit zero and protected inputs unchanged, but its unit FAIL retained scratch after a generated .input was detected (e132-trade-eur-observe-z6roe6x6). Static EUR source counts five halfwords at 02001f30 (e132-trade-check-zkbmyo_f).",
+    "A source-guided EUR IN08 Sprohm Trade Items scene with ordinary inputs displays five items; the production Wine CLI records 10 new-owner reads, byte01 and value02 bytes and a nonzero record mask over 600 frames (e132-in08-observe-zhv66qtp). Earlier save ancestry remains unknown.",
+    "The same EUR IN08 scene passes one 600-frame Wine native raw/managed full-state/clock, image, OAM, dispatch and five-audio-stream pair. Its dedicated gate confirms 10 owner reads, five byte01 bytes and ten value02 bytes (e132-in08-positive-pair-s1u33fng).",
+    "One isolated EUR Wine test verifies failed reactivation transaction, Load/Undo, backup restore and restart with copied dataset files unavailable and the E132 owner retained. Reads before and after use typed bytes even when corresponding local ROM bytes are altered; ROM identity is restored during lifecycle operations (e132-lifecycle-wine-6k2_x7_1). The first test 4mny_y1a incorrectly kept altered ROM during backup verification and failed; diagnostics retained."
+  ],
+  "limitations": [
+    "Complete ordinary and caller coverage, the source save\u2019s earlier ancestry, the whole caller ABI and the full live-u16 selector domain remain unproved; the CLI startup is a zero-use smoke check. Linux, USA and native Windows remain pending. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/conditional_item_parameters.rs",
+    "crates/gba-core/src/rom_data/conditional_item_parameters/tests.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/conditional_item_parameters.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/conditional_item_parameters_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "crates/recomp/src/rom_data/validation_tests.rs"
+  ],
+  "references": []
+}

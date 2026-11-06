@@ -48,6 +48,30 @@ Documentation: [TASK_HANDOFF.md](docs/development/TASK_HANDOFF.md).
 
 [Change record](docs/changes/2026-11-06-record-user-second-phase-cheat-observation.json)
 
+## 2026-11-06 — Observe Roulette selector 2 in ordinary play
+
+Type: changed. Platforms: Windows executable on Wine; EUR.
+
+**Changes**
+
+- Document an EUR normal-input Roulette selector-2 observation and the limits of its relation to an existing native pair.
+
+**Validation**
+
+- The protected IN-19 ordinary confirmation was replayed with A then neutral input to frames 13160 and 13760; retained images show Marche’s command menu and MP 87/107 at both endpoints (e130-octonary-extended-11apid85).
+- A separate selector-2 halfword read watch reports no hit from frame 12275 through frame 12321 (e130-octonary-selector2-watch-v1q7z9vy); its search budget is bounded.
+- Consecutive Wine interpreter watches from frame 12275 hit selector 2 at frame 12492: width-2 read 0x086cc158, value 0x22, Thumb PC 0x08010878. The same original seed and input have a separately accepted 1200-frame native raw/managed pair through frame 13160 (e130-octonary-contiguous-watch-9jcp645n; e128-6cc124-late-selector-pair-nqbg2k88).
+
+**Limitations**
+
+- The selector-2 address is an interpreter witness; the native pair counter is aggregate and does not identify that address. Full animation/list coverage, other consumers, Linux, USA and native Windows remain pending. No performance measurements.
+- The previously accepted 1200-frame pair was not repeated; its input prefix was replayed only to obtain a previously unretained later checkpoint.
+- The initial bounded watch stopped at frame 12321 and its session closed; the continuous search repeated that prefix solely to maintain a gap-free watch.
+
+Documentation: [2026-11-06-inspect-normal-final-battle-actions.json](docs/changes/2026-11-06-inspect-normal-final-battle-actions.json).
+
+[Change record](docs/changes/2026-11-06-observe-roulette-continuation.json)
+
 ## 2026-11-06 — Observe next cheat-derived Remedi dialogue
 
 Type: changed. Platforms: Windows executable on Wine; EUR.
@@ -84,6 +108,30 @@ Type: changed. Platforms: Windows executable on Wine; EUR.
 Documentation: [2026-11-04-integrate-default-selectors-6c1e78.json](docs/changes/2026-11-04-integrate-default-selectors-6c1e78.json).
 
 [Change record](docs/changes/2026-11-06-observe-next-cheat-derived-remedi-dialogue.json)
+
+## 2026-11-06 — Consume additional M4A extended dispatch words
+
+Type: changed. Platforms: Windows executable on Wine; EUR.
+
+**Changes**
+
+- Publish a separate EUR M4A resource for ten extra dispatch words and serve its typed bytes to guest/native and host reads, preserving the existing audio sequence grammar and unbounded raw fallback.
+
+**Validation**
+
+- One focused EUR Wine interpreter test verifies the 40-byte source fragments, structural guards and fourteen original dispatcher prefixes through the callback-word load without executing callbacks (audio-extended-model-wine-1_xw96mj).
+- EUR Wine managed e131-d130 create/reuse and 14 raw/interpreter/translated full-state prefix comparisons pass, as do both mixed-owner host boundaries and transactional coherent-tamper refusal; all 101 prior resources remain byte-identical (e131-audio-extended-runtime-wine-8f6706a7).
+- The production EUR Wine CLI creates, reuses and verifies e131-d130 (102 resources/103 files), retains all 101 previous resource files, and registers the new owner on a one-frame startup; that frame reports zero new-slot reads (e131-audio-extended-cli-wine-0wep0_sw).
+- A separate EUR Wine test poisons both adjacent owners and passes 168 width/mirror/BIOS-mode cases, two DMA3 and two CpuSet full-state/clock comparisons, and a raw outside-fragment fallback (e131-audio-extended-transfer-wine-g18oeqjo).
+
+**Limitations**
+
+- Global selector extent, selected handler effects and ordinary production of the new slots remain unproved; the CLI startup is a one-frame zero-use smoke check. Linux, USA and native Windows are pending; no performance measurements.
+- Initial build rp1bq4a5 had an incorrect local toolchain path; the corrected Windows GNU model build z5x8g8ja and core build z31ma2ym passed.
+- The first frontend test build y8up2_w5 omitted the new dataset-budget parameter in an existing test; corrected build few0o7d6 passed.
+- The isolated production build command exited successfully but its validation unit k5fgtttc rejected Cargo hard links in work. Its input preimages and executable hash were rechecked and protected by the separate passing Wine CLI unit; the failed unit remains retained.
+
+[Change record](docs/changes/2026-11-06-migrate-audio-extended-dispatch.json)
 
 ## 2026-11-06 — Observe a parameter record after normal final-battle inputs
 
@@ -139,6 +187,33 @@ Type: changed. Platforms: Linux / X11 (virtual display).
 Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
 
 [Change record](docs/changes/2026-11-06-improve-cheat-catalog-controls.json)
+
+## 2026-11-06 — Consume conditional item-derived parameters
+
+Type: changed. Platforms: Windows executable on Wine; EUR.
+
+**Changes**
+
+- Add an item-dependent typed projection of 31 four-byte EUR records and serve its bytes through managed guest reads without imposing a guest index cap.
+
+**Validation**
+
+- The protected item source and five original reader literals establish the conditional 31-record domain and no E131 overlap (e131-6e84e0-source-contract-5824yqku).
+- One EUR Wine model test passes 190 original reader prefixes including full-u16 outside cases 256 and 65535 (e131-6e84e0-model-wine-704fz9n3).
+- One EUR Wine managed E132 test passes 194 raw/interpreter versus translated-managed full-state/clock prefixes, raw and prior-owner outside paths, coherent-tamper transaction and all 102 prior file comparisons (e132-6e84e0-runtime-wine-q_6h2m4p).
+- The production EUR Wine CLI creates, reuses and verifies E132 (103 resources/104 files), retains 102 previous resource files, and registers the new owner at one-frame startup with zero reads (e132-6e84e0-cli-wine-_al2e8me).
+- The retained EUR Shop-to-Buy input was observed once with the new E132 CLI: 600 frames end at a visible purchase confirmation and report zero new-owner reads, a bounded negative rather than a full-state pair (e132-6e84e0-shop-ordinary-ca62vnkk).
+- EUR Wine static callback tracing links shop state 0x18 to dispatcher 0806fb08 and its state 0x15 reader path. A retained-input capture at frame 235 shows the three-entry Buy/Sell/Leave variant, whose cursor index 2 does not select state 0x18; four-entry use is unobserved (e132-6e84e0-shop-choices-09zvat6w, e132-6e84e0-shop-root-cbitrkgd, e132-6e84e0-shop-menu3-npkk8ypf).
+- Normal-input EUR Wine interpreter route from the user-supplied advanced save reaches Sprohm four-entry Trade Items menu (e132-trade-eur-menu-jtn43ivm). A 600-frame managed CLI diagnostic ends at out-of-stock dialogue with zero owner reads; CLI exit zero and protected inputs unchanged, but its unit FAIL retained scratch after a generated .input was detected (e132-trade-eur-observe-z6roe6x6). Static EUR source counts five halfwords at 02001f30 (e132-trade-check-zkbmyo_f).
+- A source-guided EUR IN08 Sprohm Trade Items scene with ordinary inputs displays five items; the production Wine CLI records 10 new-owner reads, byte01 and value02 bytes and a nonzero record mask over 600 frames (e132-in08-observe-zhv66qtp). Earlier save ancestry remains unknown.
+- The same EUR IN08 scene passes one 600-frame Wine native raw/managed full-state/clock, image, OAM, dispatch and five-audio-stream pair. Its dedicated gate confirms 10 owner reads, five byte01 bytes and ten value02 bytes (e132-in08-positive-pair-s1u33fng).
+- One isolated EUR Wine test verifies failed reactivation transaction, Load/Undo, backup restore and restart with copied dataset files unavailable and the E132 owner retained. Reads before and after use typed bytes even when corresponding local ROM bytes are altered; ROM identity is restored during lifecycle operations (e132-lifecycle-wine-6k2_x7_1). The first test 4mny_y1a incorrectly kept altered ROM during backup verification and failed; diagnostics retained.
+
+**Limitations**
+
+- Complete ordinary and caller coverage, the source save’s earlier ancestry, the whole caller ABI and the full live-u16 selector domain remain unproved; the CLI startup is a zero-use smoke check. Linux, USA and native Windows remain pending. No performance measurements.
+
+[Change record](docs/changes/2026-11-06-consume-european-item-derived-parameters.json)
 
 ## 2026-11-06 — Make cheat browsing compact and repeatable
 

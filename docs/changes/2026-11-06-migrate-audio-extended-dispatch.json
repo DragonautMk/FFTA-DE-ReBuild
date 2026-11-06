@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-11-06",
+  "slug": "migrate-audio-extended-dispatch",
+  "title": "Consume additional M4A extended dispatch words",
+  "kind": "changed",
+  "platforms": [
+    "Windows executable on Wine; EUR"
+  ],
+  "changes": [
+    "Publish a separate EUR M4A resource for ten extra dispatch words and serve its typed bytes to guest/native and host reads, preserving the existing audio sequence grammar and unbounded raw fallback."
+  ],
+  "validation": [
+    "One focused EUR Wine interpreter test verifies the 40-byte source fragments, structural guards and fourteen original dispatcher prefixes through the callback-word load without executing callbacks (audio-extended-model-wine-1_xw96mj).",
+    "EUR Wine managed e131-d130 create/reuse and 14 raw/interpreter/translated full-state prefix comparisons pass, as do both mixed-owner host boundaries and transactional coherent-tamper refusal; all 101 prior resources remain byte-identical (e131-audio-extended-runtime-wine-8f6706a7).",
+    "The production EUR Wine CLI creates, reuses and verifies e131-d130 (102 resources/103 files), retains all 101 previous resource files, and registers the new owner on a one-frame startup; that frame reports zero new-slot reads (e131-audio-extended-cli-wine-0wep0_sw).",
+    "A separate EUR Wine test poisons both adjacent owners and passes 168 width/mirror/BIOS-mode cases, two DMA3 and two CpuSet full-state/clock comparisons, and a raw outside-fragment fallback (e131-audio-extended-transfer-wine-g18oeqjo)."
+  ],
+  "limitations": [
+    "Global selector extent, selected handler effects and ordinary production of the new slots remain unproved; the CLI startup is a one-frame zero-use smoke check. Linux, USA and native Windows are pending; no performance measurements.",
+    "Initial build rp1bq4a5 had an incorrect local toolchain path; the corrected Windows GNU model build z5x8g8ja and core build z31ma2ym passed.",
+    "The first frontend test build y8up2_w5 omitted the new dataset-budget parameter in an existing test; corrected build few0o7d6 passed.",
+    "The isolated production build command exited successfully but its validation unit k5fgtttc rejected Cargo hard links in work. Its input preimages and executable hash were rechecked and protected by the separate passing Wine CLI unit; the failed unit remains retained."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/audio_extended_dispatch.rs",
+    "crates/gba-core/src/rom_data/audio_extended_dispatch/tests.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/audio_extended_dispatch.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/audio_extended_dispatch_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "docs/rom_data_audio.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ],
+  "references": []
+}
