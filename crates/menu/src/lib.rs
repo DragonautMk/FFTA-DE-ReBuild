@@ -955,7 +955,7 @@ impl Menu {
         self.cheats.set("Cheat catalog".into(),entries,message,0);
     }
     pub fn cheat_active(&self)->bool{self.page==Page::CheatCatalog}
-    pub fn cheat_highlight(&self)->Option<&str>{self.cheats.highlighted_id()}
+    pub fn cheat_highlight(&self)->Option<&str>{self.cheats.cheat_managed_id().or_else(||self.cheats.highlighted_id())}
     pub fn cheat_favorites(&self)->Vec<String>{self.cheats.history().favorites}
     pub fn restore_cheat_favorites(&mut self, favorites:Vec<String>)->Result<(),String>{
         let view=self.cheats.preferences();let mut history=self.cheats.history();history.favorites=favorites;

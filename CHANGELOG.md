@@ -28,6 +28,31 @@ Documentation: [cheats.md](docs/cheats.md), [save_states.md](docs/save_states.md
 
 [Change record](docs/changes/2026-11-06-save-cheat-derived-snapshots.json)
 
+## 2026-11-06 — Make cheat activation and favorites easier to find
+
+Type: changed. Platforms: Linux / X11 (virtual display).
+
+**Changes**
+
+- Add an explicit favorites collection shortcut, contextual Activate or Disarm action, visible armed indicator and shorter localized filter labels without bypassing source selection or preview validation.
+- Guide source selection and preview review; advance controller focus to the next step, summarize operation counts, maximum writes and conditions, and translate immediate feedback.
+- Keep the managed cheat identity stable if activating it changes which entries remain visible under a filter.
+
+**Validation**
+
+- Final Linux release passed 130 menu tests with one ignored and built successfully; English and Italian catalogs each have 686 entries.
+- On isolated Linux X11, used the local EUR catalog and CH-0341 to favorite and filter an entry, explicitly select its source, review the preview, arm, return and disarm directly. Captured and inspected Italian screens; protected original ROM, save, checkpoint and catalog.
+- Installed the verified runtime in the user Linux portable copy with a guarded backup and updated manifest.
+
+**Limitations**
+
+- The original source/master and state-bound preview checks remain in force; activation is still limited to supported isolated interpreter plans and does not establish game or device equivalence.
+- Final GUI validation used Xvfb and keyboard/pointer, not physical controllers, Wayland or native Windows. Initial GUI automation selected the wrong atlas navigation and retained its diagnostic unit.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-06-improve-cheat-catalog-controls.json)
+
 ## 2026-11-05 — Verify ordinary senary compact OBJ selector 2
 
 Type: docs. Platforms: EUR Windows executable under Wine.

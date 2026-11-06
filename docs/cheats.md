@@ -114,8 +114,16 @@ runtime preflight and does not establish device or gameplay compatibility.
 In a synthetic Windows GNU/Wine GUI test, the armed filter changed from zero
 to one entry and back after disarm; candidate, declared-region, attention and
 not-armed filters were also checked without advancing the guest.
-**Manage cheat** opens explicit source selection and separate **Prepare
-preview**, **Apply once**, **Arm**, **Disarm** and **Disarm all** actions.
+Highlight an entry and choose **Activate...** (or confirm the list entry) to
+open its management screen. It shows the cheat name and guides you through
+**Select source**, **Prepare preview** and **Arm** or **Apply once**. After
+reviewing and closing the preview, the controller focus moves to **Arm**; the
+user must still confirm the action. A currently armed entry is marked in the
+list and its contextual button becomes **Disarm**, stopping future writes.
+The management screen also offers **Disarm all** and presets.
+The preview summarizes the operation count, maximum writes per application
+and whether the plan contains conditions; the detailed operations remain
+scrollable below. These source-plan conditions do not establish game behavior.
 Choose a source and review the operations and potential read/write ranges before
 explicitly applying or arming; the shared identity, state, checksum and overlap
 guards still apply. Disarm stops future writes without restoring memory.
@@ -135,8 +143,10 @@ in the view and remain available in full through `debug-cheats show`. Decoding
 and controlled application remain partial, with the one-shot scope below.
 
 To keep a cheat in the favorites list, highlight it and choose **Favorite**;
-choose **Unfavorite** to remove it. Set **Collection** to **Favorites** to
-show only favorites, and clear any other filters that hide the desired item.
+choose **Unfavorite** to remove it. **Show favorites** switches directly to
+favorites, and **Show all** returns to the full collection. The collection
+filter also remains available; search, type and state filters still apply.
+Clear those filters if they hide a favorite.
 Favorites are stored locally by catalog hash; a different or modified catalog
 has a separate list. A menu-created interpreter copy receives a snapshot of
 the current favorites when the selected catalog is the default catalog; later
@@ -151,7 +161,7 @@ the executable or included in public packages. For another app folder, copy the
 catalog into that folder's `cheats/` directory without replacing a different
 existing catalog. New isolated debug sessions copy and pin this catalog in their
 own folder; existing sessions are unchanged. In the menu, the persistent Debug page can be unlocked with
-↑ ↑ ↓ ↓ ← ← → →. Select a catalog entry, open **Manage cheat**, choose its
+↑ ↑ ↓ ↓ ← ← → →. Select a catalog entry, choose **Activate...**, select its
 source, prepare a preview and explicitly apply or arm a supported plan.
 
 The EUR CH-0341 source uses conditional slides, which the bounded interpreter

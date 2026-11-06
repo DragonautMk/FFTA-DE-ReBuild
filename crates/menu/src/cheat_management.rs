@@ -15,6 +15,8 @@ pub enum Request { Prepare, ApplyOnce, Arm, Disarm, DisarmAll, PresetSave, Prese
 
 #[derive(Default)]
 pub(super) struct State {
+    pub id: String,
+    pub title: String,
     pub sources: Vec<Source>,
     pub cursor: usize,
     pub selected: Option<usize>,
@@ -30,7 +32,9 @@ pub(super) struct State {
 }
 
 impl State {
-    pub fn new(sources: Vec<Source>, presets: Vec<String>) -> Self { Self { sources, presets, ..Self::default() } }
+    pub fn new(id: String, title: String, armed: bool, sources: Vec<Source>, presets: Vec<String>) -> Self {
+        Self { id, title, sources, presets, focus: if armed { 4 } else { 0 }, ..Self::default() }
+    }
     pub fn selected_source(&self) -> Option<&Source> { self.selected.and_then(|index| self.sources.get(index)) }
     pub fn handle(&mut self, input: MenuInput) -> Option<Request> {
         if self.focus == 0 {
@@ -53,6 +57,7 @@ impl State {
                 MenuInput::Right => self.focus = 1,
                 MenuInput::Confirm if !self.sources.is_empty() => {
                     self.selected = Some(self.cursor); self.preview.clear(); self.preview_token.clear(); self.feedback.clear();
+                    self.focus = 1;
                 }
                 _ => {}
             }
@@ -86,13 +91,13 @@ mod tests {
 
     #[test]
     fn selection_is_explicit_and_changing_source_clears_preview() {
-        let mut state = State::new(vec![Source { index: 2, name: "one".into(), master: "CH-0002".into(), assessment: "candidate".into() }, Source { index: 5, name: "two".into(), master: "CH-0003".into(), assessment: "unresolved".into() }], vec![]);
+        let mut state = State::new("CH-0001".into(), "Example".into(), false, vec![Source { index: 2, name: "one".into(), master: "CH-0002".into(), assessment: "candidate".into() }, Source { index: 5, name: "two".into(), master: "CH-0003".into(), assessment: "unresolved".into() }], vec![]);
         assert!(state.selected_source().is_none());
         state.handle(MenuInput::Right); assert_eq!(state.handle(MenuInput::Confirm), Some(Request::Prepare));
         assert!(state.selected_source().is_none());
         state.handle(MenuInput::Left); state.handle(MenuInput::Down); state.handle(MenuInput::Confirm);
         assert_eq!(state.selected_source().unwrap().index, 5);
-        state.preview = "old preview".into(); state.handle(MenuInput::Up); state.handle(MenuInput::Confirm);
+        state.preview = "old preview".into(); state.handle(MenuInput::Left); state.handle(MenuInput::Up); state.handle(MenuInput::Confirm);
         assert_eq!(state.selected_source().unwrap().index, 2); assert!(state.preview.is_empty());
     }
 }

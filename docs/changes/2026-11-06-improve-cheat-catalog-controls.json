@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-11-06",
+  "slug": "improve-cheat-catalog-controls",
+  "title": "Make cheat activation and favorites easier to find",
+  "kind": "changed",
+  "platforms": [
+    "Linux / X11 (virtual display)"
+  ],
+  "changes": [
+    "Add an explicit favorites collection shortcut, contextual Activate or Disarm action, visible armed indicator and shorter localized filter labels without bypassing source selection or preview validation.",
+    "Guide source selection and preview review; advance controller focus to the next step, summarize operation counts, maximum writes and conditions, and translate immediate feedback.",
+    "Keep the managed cheat identity stable if activating it changes which entries remain visible under a filter."
+  ],
+  "validation": [
+    "Final Linux release passed 130 menu tests with one ignored and built successfully; English and Italian catalogs each have 686 entries.",
+    "On isolated Linux X11, used the local EUR catalog and CH-0341 to favorite and filter an entry, explicitly select its source, review the preview, arm, return and disarm directly. Captured and inspected Italian screens; protected original ROM, save, checkpoint and catalog.",
+    "Installed the verified runtime in the user Linux portable copy with a guarded backup and updated manifest."
+  ],
+  "limitations": [
+    "The original source/master and state-bound preview checks remain in force; activation is still limited to supported isolated interpreter plans and does not establish game or device equivalence.",
+    "Final GUI validation used Xvfb and keyboard/pointer, not physical controllers, Wayland or native Windows. Initial GUI automation selected the wrong atlas navigation and retained its diagnostic unit."
+  ],
+  "files": [
+    "crates/input-config/languages/en.json",
+    "crates/input-config/languages/it.json",
+    "crates/menu/src/cheat_management.rs",
+    "crates/menu/src/content_selector.rs",
+    "crates/menu/src/content_selector/tests.rs",
+    "crates/menu/src/lib.rs",
+    "crates/recomp/src/play.rs"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

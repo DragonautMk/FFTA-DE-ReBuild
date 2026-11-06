@@ -65,14 +65,15 @@ const ACTIONS: [&str; 7] = [
     "Add folder...",
     "Back / cancel",
 ];
-const CHEAT_ACTIONS: [&str; 7] = [
+const CHEAT_ACTIONS: [&str; 8] = [
     "Details",
     "Favorite",
-    "Manage cheat",
+    "Activate...",
     "Reload",
     "Import catalog...",
     "Disarm all",
     "Back",
+    "Show favorites",
 ];
 const KEYS: [&str; 4] = [
     "abcdefghijklmnopqrstuvwxyz0123456789",
@@ -91,7 +92,7 @@ pub(super) struct Geometry {
     pub controls: [Rect; 4],
     pub list: Rect,
     pub details: Rect,
-    pub actions: [Rect; 7],
+    pub actions: [Rect; 8],
     pub row: usize,
     pub visible: usize,
     pub scale: f32,
@@ -201,7 +202,19 @@ pub(super) struct Selector {
     preset_name_edit: bool,
 }
 impl Selector {
-    pub fn open_cheat_management(&mut self,sources:Vec<super::CheatSource>,presets:Vec<String>){self.detail_mode=false;self.manage=Some(super::cheat_management::State::new(sources,presets));}
+    pub fn open_cheat_management(&mut self,sources:Vec<super::CheatSource>,presets:Vec<String>){
+        if let Some(i)=self.selected(){
+            let entry=&self.entries[i];
+            let armed=entry.cheat_filter.as_ref().is_some_and(|f|f.armed);
+            self.detail_mode=false;
+            self.manage=Some(super::cheat_management::State::new(entry.id.clone(),entry.name.clone(),armed,sources,presets));
+        }
+    }
+    pub fn cheat_managed_id(&self)->Option<&str>{self.manage.as_ref().map(|s|s.id.as_str())}
+    fn cheat_armed(&self)->bool{self.selected().and_then(|i|self.entries[i].cheat_filter.as_ref()).is_some_and(|f|f.armed)}
+    fn cheat_action_label(&self,index:usize)->&'static str{
+        match index {2 if self.cheat_armed()=>"Disarm",2=>"Activate...",7 if self.collection==1=>"Show all",_=>CHEAT_ACTIONS[index]}
+    }
     pub fn cheat_selected_source(&self)->Option<&super::CheatSource>{self.manage.as_ref()?.selected_source()}
     pub fn cheat_preview_reviewed(&self)->bool{self.manage.as_ref().is_some_and(|state|!state.preview.is_empty())&&!self.detail_mode}
     pub fn cheat_preset_name(&self)->Option<&str>{self.manage.as_ref().map(|s|s.preset_name.as_str())}
@@ -524,6 +537,7 @@ impl Selector {
             1..=4 => {
                 self.choice_edit=Some(self.choice_index());
             }
+            5 if self.cheat_mode => return self.selected().map(|_|MenuAction::CheatManage),
             5 => self.focus = 6,
             6 => {
                 if self.cheat_mode {if self.selected().is_some(){self.detail_mode=true;}else{self.message="No catalog: choose Import catalog.".into();}return None;}
@@ -558,7 +572,7 @@ impl Selector {
                 }
             }
             8 => {
-                if self.cheat_mode{return self.selected().map(|_|MenuAction::CheatManage);}
+                if self.cheat_mode{return self.selected().map(|_|if self.cheat_armed(){MenuAction::CheatRequest(super::CheatRequest::Disarm)}else{MenuAction::CheatManage});}
                 self.detail_mode = true;
                 if !self.busy {
                     if let Some(index) = self.selected() {
@@ -573,6 +587,11 @@ impl Selector {
             10 if !self.busy => return Some(if self.cheat_mode{MenuAction::CheatChoose}else{MenuAction::ContentBrowseFile}),
             11 if !self.busy => return Some(if self.cheat_mode{MenuAction::CheatRequest(super::CheatRequest::DisarmAll)}else{MenuAction::ContentAddFolder}),
             12 => return Some(MenuAction::ContentCancel),
+            13 if self.cheat_mode => {
+                let keep=self.highlighted_id().map(str::to_owned);
+                self.collection=if self.collection==1{0}else{1};
+                self.rebuild(keep.as_deref());
+            }
             _ => {}
         }
         None
@@ -584,11 +603,12 @@ impl Selector {
             self.finish_search(false);
         }
         self.detail_mode = false;
-        self.focus = (self.focus + if back { 12 } else { 1 }) % 13;
+        let count=if self.cheat_mode{14}else{13};
+        self.focus = (self.focus + if back { count-1 } else { 1 }) % count;
     }
     pub fn handle(&mut self, input: MenuInput) -> Option<MenuAction> {
         if self.manage.is_some() && !self.editing {
-            if self.detail_mode {match input{MenuInput::Cancel|MenuInput::Confirm=>self.detail_mode=false,MenuInput::Up|MenuInput::Left=>self.detail_scroll.set(self.detail_scroll.get().saturating_sub(1)),_=>self.detail_scroll.set((self.detail_scroll.get()+1).min(8192))};return None;}
+            if self.detail_mode {match input{MenuInput::Cancel|MenuInput::Confirm=>{self.detail_mode=false;if let Some(m)=self.manage.as_mut(){if !m.preset_mode{m.focus=3;}}},MenuInput::Up|MenuInput::Left=>self.detail_scroll.set(self.detail_scroll.get().saturating_sub(1)),_=>self.detail_scroll.set((self.detail_scroll.get()+1).min(8192))};return None;}
             if input==MenuInput::Cancel{self.manage=None;self.focus=5;return None;}
             if input==MenuInput::Confirm && self.manage.as_ref().is_some_and(|s|s.preset_mode && s.focus==5) {
                 let name=self.manage.as_ref().unwrap().preset_name.clone();self.start_search();self.query=name;self.preset_name_edit=true;return None;
@@ -649,8 +669,8 @@ impl Selector {
             MenuInput::Down if self.focus == 5 && self.cursor + 1 < self.visible.len() => {
                 self.move_cursor(self.cursor + 1)
             }
-            MenuInput::Up | MenuInput::Left => self.focus = (self.focus + 12) % 13,
-            MenuInput::Down | MenuInput::Right => self.focus = (self.focus + 1) % 13,
+            MenuInput::Up | MenuInput::Left => {let count=if self.cheat_mode{14}else{13};self.focus = (self.focus + count-1) % count;},
+            MenuInput::Down | MenuInput::Right => {let count=if self.cheat_mode{14}else{13};self.focus = (self.focus + 1) % count;},
         }
         None
     }
@@ -737,7 +757,7 @@ impl Selector {
             }
             return;
         }
-        for i in 0..7 {
+        for i in 0..if self.cheat_mode{8}else{7} {
             if inside(g.actions[i], x, y) {
                 self.focus = i + 6;
                 return;
@@ -799,7 +819,7 @@ impl Selector {
         }
         if inside(g.search, x, y)
             || g.controls.iter().any(|r| inside(*r, x, y))
-            || g.actions.iter().any(|r| inside(*r, x, y))
+            || g.actions.iter().take(if self.cheat_mode{8}else{7}).any(|r| inside(*r, x, y))
         {
             self.hover(x, y, w, h);
             return self.confirm();
@@ -842,7 +862,7 @@ impl Selector {
                     || "Empty list".into(),
                     |i| format!("{} | {}", self.entries[i].name, self.entries[i].id),
                 ),
-                i => if self.cheat_mode{CHEAT_ACTIONS[i-6]}else{ACTIONS[i-6]}.into(),
+                i => if self.cheat_mode{self.cheat_action_label(i-6)}else{ACTIONS[i-6]}.into(),
             }
         }
     }
@@ -959,12 +979,18 @@ pub(super) fn draw(s: &Selector, px: &mut [[u8; 4]], w: usize, h: usize, languag
         c.finish(px);return;
     }
     if let Some(m)=s.manage.as_ref().filter(|_|!s.editing) {
-        c.text((x+10) as f32,(y+5) as f32,locale.tr(if m.preset_mode{"CHEAT PRESETS"}else{"CHEAT MANAGEMENT"}),ink,size*1.1,true,pw.saturating_sub(20) as f32);
-        for (i,label) in (if m.preset_mode{["Previous preset","Next preset","Select preset"]}else{["Previous source","Next source","Select source"]}).iter().enumerate(){button(&mut c,g.controls[i],locale.tr(label),i==2&&m.focus==0,size);}
-        let source=if m.preset_mode{m.presets.get(m.preset_cursor).cloned().unwrap_or_else(||locale.tr("No preset").to_owned())}else{m.sources.get(m.cursor).map_or_else(||locale.tr("No source").to_owned(),|v|format!("{} · {} · {} · {}",v.index,v.name,v.master,v.assessment))};
+        let title=if m.preset_mode{locale.tr("CHEAT PRESETS").to_owned()}else{format!("{} · {}",locale.tr("CHEAT MANAGEMENT"),m.title)};
+        c.text((x+10) as f32,(y+5) as f32,&title,ink,size*1.1,true,pw.saturating_sub(20) as f32);
+        for (i,label) in (if m.preset_mode{["Previous preset","Next preset","Select preset"]}else{["Previous source (short)","Next source (short)","Select source"]}).iter().enumerate(){button(&mut c,g.controls[i],locale.tr(label),i==2&&m.focus==0,size);}
+        let source=if m.preset_mode{m.presets.get(m.preset_cursor).cloned().unwrap_or_else(||locale.tr("No preset").to_owned())}else{m.sources.get(m.cursor).map_or_else(||locale.tr("No source").to_owned(),|v|format!("{} · {} · {} · {}",v.index,v.name,v.master,locale.tr(match v.assessment.as_str(){"manual-once-subset"=>"Preview available","decoded-outside-once-limits"=>"Outside supported limits","not-evaluated"=>"Not assessed",_=>"Source needs review"})))};
         let selection=if m.preset_mode{format!("{}: {} · {}: {}",locale.tr("Selected preset"),m.preset_selected.as_deref().unwrap_or("-"),locale.tr("Preset name"),m.preset_name)}else{m.selected_source().map_or_else(||locale.tr("No source selected").to_owned(),|v|format!("{} · {}",locale.tr("Selected source"),v.index))};
         c.text((x+10) as f32,(g.controls[0][1]+g.row+3) as f32,&source,ink,size,false,pw.saturating_sub(20) as f32);
         c.text((x+10) as f32,(g.controls[0][1]+g.row*2+3) as f32,&format!("{} · {}",selection,locale.tr(&m.feedback)),ink,size,false,pw.saturating_sub(20) as f32);
+        if !m.preset_mode {
+            let active=s.entries.iter().find(|entry|entry.id==m.id).and_then(|entry|entry.cheat_filter.as_ref()).is_some_and(|filter|filter.armed);
+            let hint=if active{"Active: disable to stop future writes"}else if m.selected_source().is_none(){"1. Select a source"}else if m.preview.is_empty(){"2. Prepare and review the preview"}else{"3. Activate or apply once"};
+            c.text((x+10) as f32,(g.controls[0][1]+g.row*3+3) as f32,locale.tr(hint),ink,size,false,pw.saturating_sub(20) as f32);
+        }
         for (i,label) in (if m.preset_mode{["Save preset","Prepare preset","Arm preset","Disarm all","Edit preset name","Back to sources"]}else{["Prepare preview","Apply once","Arm","Disarm","Disarm all","Presets"]}).iter().enumerate(){button(&mut c,g.actions[i],locale.tr(label),m.focus==i+1,size);}
         button(&mut c,g.actions[6],locale.tr("Back"),false,size);
         c.finish(px);return;
@@ -1007,7 +1033,8 @@ pub(super) fn draw(s: &Selector, px: &mut [[u8; 4]], w: usize, h: usize, languag
     ];
     if !s.editor_only {
         for i in 0..4 {
-            button(&mut c, g.controls[i], locale.tr(labels[i]), s.focus == i + 1, size);
+            let label=if s.cheat_mode && i==3{super::i18n::format(language,"List: {collection}",&[("collection",locale.tr(if indices[i]==0{"All (short)"}else{labels[i]}).into())])}else{locale.tr(labels[i]).into()};
+            button(&mut c, g.controls[i], &label, s.focus == i + 1, size);
         }
     }
     if s.editing {
@@ -1039,7 +1066,7 @@ pub(super) fn draw(s: &Selector, px: &mut [[u8; 4]], w: usize, h: usize, languag
             c.text(
                 g.list[0] as f32 + 7.,
                 g.list[1] as f32 + g.row as f32,
-                locale.tr("Refresh or add a file/folder."),
+                locale.tr(if s.cheat_mode{"Check search and filters, or import a catalog."}else{"Refresh or add a file/folder."}),
                 ink,
                 size,
                 false,
@@ -1048,17 +1075,10 @@ pub(super) fn draw(s: &Selector, px: &mut [[u8; 4]], w: usize, h: usize, languag
         }
         for (n, i) in s.visible.iter().skip(first).take(g.visible).enumerate() {
             let e = &s.entries[*i];
-            let label = format!(
-                "{}{}  [{}] {}",
-                if s.favorites.contains(&e.id) {
-                    "* "
-                } else {
-                    ""
-                },
-                e.name,
-                e.kind,
-                e.id.get(8..16).unwrap_or(&e.id)
-            );
+            let label = if s.cheat_mode {
+                format!("{}{}{}  [{}]",if s.favorites.contains(&e.id){"* "}else{""},
+                    if e.cheat_filter.as_ref().is_some_and(|f|f.armed){format!("[{}] ",locale.tr("Cheat armed"))}else{String::new()},e.name,e.kind)
+            } else { format!("{}{}  [{}] {}",if s.favorites.contains(&e.id){"* "}else{""},e.name,e.kind,e.id.get(8..16).unwrap_or(&e.id)) };
             button(
                 &mut c,
                 [
@@ -1117,14 +1137,14 @@ pub(super) fn draw(s: &Selector, px: &mut [[u8; 4]], w: usize, h: usize, languag
                 }
             }
         }
-        for i in 0..7 {
+        for i in 0..if s.cheat_mode{8}else{7} {
             let label = if i == 1
                 && s.selected()
                     .is_some_and(|n| s.favorites.contains(&s.entries[n].id))
             {
                 locale.tr("Unfavorite")
             } else {
-                if s.cheat_mode {CHEAT_ACTIONS[i]}else{ACTIONS[i]}
+                if s.cheat_mode {s.cheat_action_label(i)}else{ACTIONS[i]}
             };
             button(
                 &mut c,

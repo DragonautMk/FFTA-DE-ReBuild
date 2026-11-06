@@ -105,9 +105,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 - State: active
 - Outcome: partial
-- Verified: source/preview/arm/disarm, filters and named group save/select/preview/arm via page and commands. `docs/changes/2026-11-03-manage-cheat-presets-in-page.json`.
+- Verified: source/preview/arm/disarm, filters and named presets. CHEAT-INTERFACE adds favorites shortcut, contextual disarm and guided source/preview with stable managed identity; 130 Linux menu tests and CH-0341 X11 GUI passed, portable runtime installed.
 - Missing: validated values/ranges and broader game/device behavior.
-- Resume: select a missing criterion; do not repeat the accepted preset-page flow.
+- Resume: select a missing criterion; do not repeat the accepted preset or interface flow. `docs/changes/2026-11-06-improve-cheat-catalog-controls.json`.
 
 ### DBG2-22
 
@@ -202,9 +202,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 - Godot: planned assessment complete, implementation deferred, not a current dependency. AndroidPort is separate; originals/ROM/BIOS/private catalogs/saves/recordings stay out of commits/packages.
 
 ## Final handover
-- Task: DBG2-23-SNAPSHOT completed; DBG2-23 and recovery remain partial.
-- Last verified result: 26 focused Linux tests, active-cheat X11 GUI snapshot and CLI startup recording refusal PASS; verified runtime installed in Linux portable app.
-- Remaining work: exact cheat recording/replay and incompatible-set contract; later final-battle phases and ordinary recovery criteria remain unverified.
-- Errors or blockers: legacy snapshot ancestry unknown; sandbox Xvfb bind failed, host Xvfb passed. Existing debug copies retain old pinned runtimes.
-- Next action: on user follow-up use a new debug copy; otherwise resume only requested open criteria.
-- References: docs/changes/2026-11-06-save-cheat-derived-snapshots.json; target/validation/units/cheat-snapshot-gui-host-ddrwctih/; target/validation/units/cheat-snapshot-cli-cd2x0od5/.
+- Task: CHEAT-INTERFACE completed under partial DBG2-20.
+- Last verified result: 130 Linux menu tests and real CH-0341 X11 favorites/source/preview/arm/disarm GUI flow passed; runtime installed in Linux portable app.
+- Remaining work: DBG2-20 values/ranges and device/game verification; earlier recovery criteria remain open.
+- Errors or blockers: earlier GUI automation navigated the wrong atlas section; failed unit retained. Existing debug copies retain old pinned executables.
+- Next action: reopen the app and create a new debug copy to use the new interface; resume other work only as requested.
+- References: docs/changes/2026-11-06-improve-cheat-catalog-controls.json; target/validation/units/cheat-interface-final-jo6if8xe/; target/validation/units/cheat-interface-gui-final-uqbzm4xm/.

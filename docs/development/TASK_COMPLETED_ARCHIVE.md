@@ -21302,3 +21302,10 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: implemented conservative bounded SL2 snapshot ancestry, retained through restores and new debug copies without rearming; 26 Linux tests, real maintained-cheat X11 GUI snapshot save and CLI startup recording refusal passed. User's Linux portable runtime installed with guarded backups and updated manifest.
 - Evidence: docs/changes/2026-11-06-save-cheat-derived-snapshots.json; target/validation/units/cheat-snapshot-final-8du0aarg/; target/validation/units/cheat-snapshot-gui-host-ddrwctih/; target/validation/units/cheat-snapshot-cli-cd2x0od5/.
 - Limits: provenance is conservative, bounded and not replay evidence; raw/SL1 ancestry unknown. Full DBG2-23 replay and later battle phases remain open. Initial sandbox Xvfb attempt failed to bind and retained diagnostics. Consultant /root/sol_debug_diagnosis requested gpt-6.1-sol/xhigh; effective settings unconfirmed.
+
+### CHEAT-INTERFACE
+
+- Outcome: completed
+- Verified criteria: favorites shortcut, clear activation/disarm state, guided explicit source and preview flow, localized summary and stable managed identity across filters. 130 Linux menu tests (1 ignored), 686 English/Italian strings and real CH-0341 X11 GUI flow passed. Verified runtime installed in the Linux portable copy with backups and updated manifest.
+- Evidence: docs/changes/2026-11-06-improve-cheat-catalog-controls.json; target/validation/units/cheat-interface-final-jo6if8xe/; target/validation/units/cheat-interface-gui-final-uqbzm4xm/.
+- Limits: Xvfb/keyboard/pointer only; physical controller, Wayland and native Windows unverified. Device and game-effect compatibility remain open; initial GUI navigation attempt retained diagnostics.

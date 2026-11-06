@@ -6,8 +6,8 @@ fn cheat_action_labels_use_english_keys_and_preserve_italian_presentation() {
     selector.cheat_mode = true;
     let italian = input_config::Language::parse("it");
     let expected = [
-        "Dettagli", "Preferito", "Gestisci cheat", "Ricarica",
-        "Importa catalogo...", "Disattiva tutti", "Indietro",
+        "Dettagli", "Preferito", "Attiva...", "Ricarica",
+        "Importa catalogo...", "Disattiva tutti", "Indietro", "Mostra preferiti",
     ];
     for (index, (&key, &translation)) in CHEAT_ACTIONS.iter().zip(&expected).enumerate() {
         selector.focus = index + 6;
@@ -75,8 +75,42 @@ fn management_requires_explicit_source_and_dispatches_separate_requests(){
     s.handle(MenuInput::Left);s.handle(MenuInput::Confirm);assert_eq!(s.cheat_selected_source().unwrap().index,0);
     s.handle(MenuInput::Right);assert_eq!(s.handle(MenuInput::Confirm),Some(MenuAction::CheatRequest(super::super::CheatRequest::Prepare)));
     s.cheat_management_feedback("Review".into(),Some("plan and footprint".into()));assert!(s.detail_mode);assert!(!s.cheat_preview_reviewed());s.handle(MenuInput::Cancel);assert!(!s.detail_mode);assert!(s.cheat_preview_reviewed());
-    s.handle(MenuInput::Down);s.handle(MenuInput::Down);assert_eq!(s.handle(MenuInput::Confirm),Some(MenuAction::CheatRequest(super::super::CheatRequest::Arm)));
+    assert_eq!(s.handle(MenuInput::Confirm),Some(MenuAction::CheatRequest(super::super::CheatRequest::Arm)));
     s.handle(MenuInput::Cancel);assert!(!s.cheat_management_active());
+}
+
+#[test]
+fn cheat_favorites_and_contextual_actions_work_with_mouse_and_controller() {
+    let mut s=Selector::default();s.cheat_mode=true;
+    s.set("Cheats".into(),vec![
+        ContentEntry{id:"CH-0001".into(),name:"CH-0001 · First".into(),cheat_filter:Some(CheatFilter::default()),..Default::default()},
+        ContentEntry{id:"CH-0002".into(),name:"CH-0002 · Second".into(),cheat_filter:Some(CheatFilter{armed:true,..Default::default()}),..Default::default()},
+    ],String::new(),0);
+    s.focus=7;s.handle(MenuInput::Confirm); // Favorite first entry.
+    let g=geometry(940,620);let button=g.actions[7];
+    assert_eq!(s.click(button[0]+2,button[1]+2,940,620,true),None);
+    assert_eq!(s.collection,1);assert_eq!(s.visible.len(),1);assert_eq!(s.focus_label(),"Show all");
+    s.handle(MenuInput::Confirm);assert_eq!(s.collection,0);assert_eq!(s.visible.len(),2);
+    s.focus=5;assert_eq!(s.handle(MenuInput::Confirm),Some(MenuAction::CheatManage));
+    s.cursor=1;s.focus=8;
+    assert_eq!(s.focus_label(),"Disarm");
+    assert_eq!(s.handle(MenuInput::Confirm),Some(MenuAction::CheatRequest(super::super::CheatRequest::Disarm)));
+}
+
+#[test]
+fn managed_cheat_identity_survives_filter_hiding_it_after_activation() {
+    let mut s=Selector::default();s.cheat_mode=true;
+    let entry=|id:&str,armed|ContentEntry{id:id.into(),name:id.into(),cheat_filter:Some(CheatFilter{armed,..Default::default()}),..Default::default()};
+    s.set("Cheats".into(),vec![entry("CH-0001",false),entry("CH-0002",false)],String::new(),0);
+    s.filter=5;s.rebuild(None);
+    s.open_cheat_management(vec![],vec![]);
+    s.set("Cheats".into(),vec![entry("CH-0001",true),entry("CH-0002",false)],String::new(),0);
+    assert_eq!(s.highlighted_id(),Some("CH-0002"));
+    assert_eq!(s.cheat_managed_id(),Some("CH-0001"));
+    let mut pixels=vec![[0,0,0,255];940*620];
+    let runs=diagnostics::capture(||draw(&s,&mut pixels,940,620,input_config::Language::parse("it"))).unwrap().runs;
+    assert!(runs.iter().any(|run|run.text.contains("CH-0001")));
+    assert!(runs.iter().any(|run|run.text.contains("Attivo: disattiva")));
 }
 
 #[test]

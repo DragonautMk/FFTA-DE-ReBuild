@@ -2034,7 +2034,7 @@ impl PlayApp {
             crate::debug_control::Action::CheatPrepare{id,provenance,master,generation}=>{
                 action.validate()?;self.cheat_preview=None;
                 let (_,preview)=self.prepare_cheat_once(id,*provenance,master,generation)?;
-                self.cheat_preview=Some(preview);self.menu.diagnosis_result("Cheat preview prepared; inspect its plan and token before applying once.".into());self.menu_dirty=true;return Ok(());
+                self.cheat_preview=Some(preview);self.menu.diagnosis_result(self.menu_text("Preview prepared. Review it before activating.",&[]));self.menu_dirty=true;return Ok(());
             },
             crate::debug_control::Action::CheatApply{id,provenance,master,generation,preview}=>{
                 action.validate()?;
@@ -2061,14 +2061,14 @@ impl PlayApp {
                 let identity=serde_json::json!({"provenance_index":provenance,"master_id":master,"generation":generation,"source_sha256":details["source_sha256"],"rom_sha256":details["rom_sha256"],"entry_lines_sha256":details["entry_lines_sha256"],"master_lines_sha256":details["master_lines_sha256"]});
                 self.cheat_armed.arm(id,plan,identity)?;self.cheat_preview=None;
                 if self.menu.cheat_active(){self.open_cheat_catalog();}
-                self.menu.diagnosis_result("Cheat armed for the next interpreter frame; disarm stops future writes.".into());self.menu_dirty=true;return Ok(());
+                self.menu.diagnosis_result(self.menu_text("Cheat active for future frames. Disarm stops future writes.",&[]));self.menu_dirty=true;return Ok(());
             },
             crate::debug_control::Action::CheatDisarm{id}=>{
                 action.validate()?;
                 if !self.paused || self.probe.is_some() || self.frame_control.remaining>0 || self.replay_job.is_some(){return Err("Disarm requires an idle paused copy".into());}
                 if let Some(id)=id{self.cheat_armed.disarm(id)?;}else{self.cheat_armed.clear();}
                 if self.menu.cheat_active(){self.open_cheat_catalog();}
-                self.cheat_preview=None;self.menu.diagnosis_result("Cheat disarmed; earlier writes remain until separately restored.".into());self.menu_dirty=true;return Ok(());
+                self.cheat_preview=None;self.menu.diagnosis_result(self.menu_text("Cheat disarmed; earlier writes remain.",&[]));self.menu_dirty=true;return Ok(());
             },
             crate::debug_control::Action::CheatPresetSave{name}=>{
                 action.validate()?;
@@ -2800,7 +2800,15 @@ impl PlayApp {
         };
         self.debug_action(&action)?;
         if request==R::PresetSave{let config=input_config::config_root().ok_or("No selected configuration root")?;self.menu.cheat_set_presets(crate::debug_cheat_preset::list(&config)?);}
-        let preview=if request==R::Prepare{let value=self.cheat_preview.as_ref().ok_or("Preview unavailable")?;let details=&value["body"]["details"];Some(format!("{}\n{}\n{}\n{}\n{}\n{}",self.av.menu_language.text("Operations"),serde_json::to_string_pretty(&details["plan"]["operations"]).map_err(|e|e.to_string())?,self.av.menu_language.text("Potential reads and writes"),serde_json::to_string_pretty(&details["footprint"]).map_err(|e|e.to_string())?,self.av.menu_language.text("Source and verification"),serde_json::to_string_pretty(details).map_err(|e|e.to_string())?))}else if request==R::PresetPrepare{Some(serde_json::to_string_pretty(&self.cheat_preview.as_ref().ok_or("Preview unavailable")?["body"]).map_err(|e|e.to_string())?)}else{None};
+        let preview=if request==R::Prepare{
+            let value=self.cheat_preview.as_ref().ok_or("Preview unavailable")?;
+            let details=&value["body"]["details"];
+            let operations=details["plan"]["operations"].as_array().ok_or("Preview operations unavailable")?;
+            let writes=details["footprint"]["max_writes"].as_u64().ok_or("Preview write limit unavailable")?;
+            let summary=self.menu_text("Operations: {count} · Maximum writes per application: {writes}",&[("count",operations.len().to_string()),("writes",writes.to_string())]);
+            let conditional=if operations.iter().any(|op|op["kind"]=="conditional"){self.av.menu_language.text("This plan includes conditions checked when it runs.")}else{""};
+            Some(format!("{}\n{}\n{}\n\n{}\n{}\n{}\n{}\n{}\n{}",self.av.menu_language.text("Review these operations. Activate runs them on future frames; Apply once runs them immediately."),summary,conditional,self.av.menu_language.text("Operations"),serde_json::to_string_pretty(operations).map_err(|e|e.to_string())?,self.av.menu_language.text("Potential reads and writes"),serde_json::to_string_pretty(&details["footprint"]).map_err(|e|e.to_string())?,self.av.menu_language.text("Source and verification"),serde_json::to_string_pretty(details).map_err(|e|e.to_string())?))
+        }else if request==R::PresetPrepare{Some(serde_json::to_string_pretty(&self.cheat_preview.as_ref().ok_or("Preview unavailable")?["body"]).map_err(|e|e.to_string())?)}else{None};
         let token=if request==R::PresetPrepare{self.cheat_preview.as_ref().and_then(|v|v["token"].as_str()).map(str::to_owned)}else{None};
         self.menu.cheat_management_feedback(match request{R::Prepare|R::PresetPrepare=>"Review the plan, then return to choose an action",R::ApplyOnce=>"Applied once",R::Arm|R::PresetArm=>"Armed for future frames",R::PresetSave=>"Preset saved",R::Disarm|R::DisarmAll=>"Disarmed; earlier writes remain"}.into(),preview);if let Some(token)=token{self.menu.cheat_set_preview_token(token);}self.menu_dirty=true;Ok(())
     }

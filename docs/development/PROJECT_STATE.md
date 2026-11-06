@@ -49,8 +49,9 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   conflicting footprints are refused and disarm stops future writes without
   restoring memory. A user-supplied catalog beside the runtime is copied and
   pinned in newly created isolated sessions. Catalog-scoped cheat favorites
-  persist in local config; the menu can create an isolated interpreter copy
-  and seed it with the selected default catalog's favorites. Desktop snapshots
+  persist in local config; the menu offers a favorites shortcut, contextual
+  activation/disarm and a guided source/preview flow. It can create an isolated
+  interpreter copy and seed it with the selected default catalog's favorites. Desktop snapshots
   with observed cheat ancestry carry a bounded SL2 record; loading disarms and
   conservatively retains ancestry across restoration and debug copies. Legacy
   snapshot ancestry is unknown. Recording/replay provenance and broader backends
