@@ -45,7 +45,10 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   EUR shop purchase. A conditional-slide plan for CH-0341 was also armed in a
   bounded EUR interpreter frame: its expected eight writes were observed. The
   user later reported success in final-battle phase two and after “Energiga”;
-  no instrumented trace or third-phase result was supplied.
+  no instrumented trace was supplied. The user subsequently supplied private
+  cheat-derived snapshots labeled phase two, phase three and the victory scene;
+  their files and isolated-case creation passed integrity checks without a
+  gameplay replay. See [debug catalog](../debug_catalog.md).
   Other listed effects and device hooks remain unverified. Bounded source-bound
   plans, including validated conditional slides, may be armed for interpreter frame boundaries;
   conflicting footprints are refused and disarm stops future writes without

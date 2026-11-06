@@ -78,6 +78,17 @@ Game data stay out of Git and packages. See [Extended saves](../extended_saves.m
 
 ## Available sources
 
+The user supplied three EUR final-battle snapshots on 2026-11-06. Their
+reported scenes are the beginnings of phases two and three, and the victory
+scene leading to the credits (source slots 2, 3 and 4 respectively). Exact
+private copies, the source-session manifest, checksums and a standalone
+`catalog.json` are under `debug_saves/user-supplied/royal-valley-final-2026-11-06/`.
+They retain their SL2 cheat ancestry; do not promote them to ordinary-play
+evidence. A full load against the matching EUR ROM/HLE BIOS and isolated case
+creation passed for all three without executing gameplay. The screenshot
+previews were inspected, but the reported phase labels were not independently
+replayed. Existing DS numbers and status remain unchanged.
+
 - **F-01 — Cartridge progress**: `saves/saves.zip` → `saves/ffta.sav`, working
   copy `target/desktop-perf/user-fixture/ffta.sav`. Equality verified.
 - **F-02 — Supplied battle**: slot 1 in the same ZIP, verified copy at

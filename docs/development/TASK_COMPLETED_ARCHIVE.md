@@ -21323,3 +21323,10 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: recorded the user's report of CH-0341 success in the second final-battle phase and after Energiga, separately from the existing controlled first-phase test. No new runtime experiment was performed.
 - Evidence: docs/changes/2026-11-06-record-user-second-phase-cheat-observation.json; docs/cheats.md; docs/rom_data_gameplay.md.
 - Limits: actor, target, precise timing, side effects and third-phase behavior were not supplied; report does not establish cheat-free progression or original hardware semantics.
+
+### USER-FINAL-SNAPSHOTS
+
+- Outcome: completed
+- Verified criteria: user's EUR slots 2/3/4 copied privately with source provenance, hashes and standalone catalog; matching ROM full loads and isolated interpreter case creation passed without gameplay. Originals protected and unchanged.
+- Evidence: docs/changes/2026-11-06-archive-user-final-battle-snapshots.json; target/validation/units/user-final-snapshots-archive-cce3qpx3/.
+- Limits: scene names are user-reported; previews inspected, scenes not replayed. Snapshots have cheat ancestry and do not demonstrate ordinary progression.

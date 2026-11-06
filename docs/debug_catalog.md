@@ -38,6 +38,16 @@ collection (`EUR/ffta-slot-04.sav`). Its unchanged master and provenance are in
 been independently replayed, and DS-26 retains its partial status. Cartridge
 save slots and snapshot slots are separate.
 
+The user's three EUR final-battle snapshots are retained separately in the
+ignored local `debug_saves/user-supplied/royal-valley-final-2026-11-06/`
+directory, with a private `catalog.json` and provenance record. The entries
+`USER-FINAL-EUR-SLOT-2`, `-3` and `-4` describe, respectively, the reported
+starts of phases two and three and the victory scene before the credits. Select
+that catalog explicitly to open an isolated case, or use the same keys with
+`debug-catalog open`. Full ROM/BIOS state loading and isolated case creation
+were checked without running the game. The scene descriptions are the user's;
+the snapshots retain cheat ancestry and are not ordinary-play evidence.
+
 The [private debug asset export](private_debug_assets.md) also builds an accessible
 projection of the collection's loaded checkpoints and EUR base, preserving the
 original catalog separately. Its `DEBUG-ASSETS.html` index links additional

@@ -97,6 +97,27 @@ Documentation: [cheats.md](docs/cheats.md), [menu_clan_atlas.md](docs/menu_clan_
 
 [Change record](docs/changes/2026-11-06-compact-cheat-navigation.json)
 
+## 2026-11-06 — Archive user-supplied final-battle snapshots
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Privately preserve exact copies of the user-provided EUR phase-two, phase-three and victory-scene snapshots, with source manifest, checksums, cheat ancestry and a standalone reusable debug catalog.
+
+**Validation**
+
+- All three SL2 envelopes, previews and payload checksums passed; full loads against the matching EUR ROM and HLE BIOS passed without executing gameplay. The private catalog listed three verified entries and each created an isolated interpreter case with an exact seed.
+- The source session manifest, ROM, three snapshots, cartridge input and validation runtime were protected; the user originals were unchanged. Screenshot previews were inspected.
+
+**Limitations**
+
+- Scene labels are user-reported; they were not independently replayed. Snapshots are cheat-derived and do not establish ordinary progression, trigger conditions or device-hook equivalence.
+
+Documentation: [cheats.md](docs/cheats.md).
+
+[Change record](docs/changes/2026-11-06-archive-user-final-battle-snapshots.json)
+
 ## 2026-11-05 — Verify ordinary senary compact OBJ selector 2
 
 Type: docs. Platforms: EUR Windows executable under Wine.

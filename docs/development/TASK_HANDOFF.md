@@ -116,7 +116,7 @@ for a specific question: archive legacy lines 179..744 or the named record below
 - Verified: CH-0340 EXP and CH-0320 Steal: Ability each accepted in a EUR Party scene with paired control and exact restoration. CH-0330 plan conditional; source has no notes. DS-13 is USA, not EUR.
 - User report: CH-0341 worked in final-battle phase two and after Energiga; no instrumented trace or details of actor, target, timing and side effects. Controlled proof remains phase one.
 - Missing: CH-0341 third phase, exact conditions and side effects; CH-0330 suitable EUR scene, other group entries, actual level-up and device-hook equivalence.
-- Resume: use a suitable user-provided phase-three checkpoint or a relevant EUR reward checkpoint; no blind scene navigation. `docs/cheats.md`.
+- Resume: user-provided phase-three and victory snapshots are privately archived and structurally validated, not replayed; use on relevant request. `docs/debug_catalog.md`.
 
 ### DBG2-23
 
@@ -180,7 +180,8 @@ for a specific question: archive legacy lines 179..744 or the named record below
 - Outcome: partial
 - Verified: accepted imports/copies/boot/scenes remain accepted; old inventory of 6 valid/9 partial/11 uncovered is not the current global state. Later increments and user DS-20 closed; a GUI interruption does not prove normal-close.
 - Missing: only scene subcases still uncovered/partial in the current catalog; IN05 File2, IN19 EUR wrapper and IN18 conversion remain unaccepted leads to reconcile before acting.
-- Resume: only upon a relevant request; docs/development/debug saves.md and local catalog, record 2026-10-23-audit-imported-debug-saves, archive 2551..2573 and 2643..2736. Do not recreate fixtures/imports or explore scenes now.
+- User archive: EUR slots 2/3/4 privately retained as reported phase two, phase three and victory scenes; all load and create isolated cases without execution. `docs/changes/2026-11-06-archive-user-final-battle-snapshots.json`.
+- Resume: select remaining subcases only on request; do not explore scenes.
 
 ### LOCAL-ARTIFACT-HYGIENE
 
@@ -203,9 +204,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 - Godot: planned assessment complete, implementation deferred, not a current dependency. AndroidPort is separate; originals/ROM/BIOS/private catalogs/saves/recordings stay out of commits/packages.
 
 ## Final handover
-- Task: CH0341-USER-REPORT documented; DBG2-22 remains partial.
-- Last verified result: user reports CH-0341 works in final-battle phase two and after Energiga; prior controlled evidence covers phase one.
-- Remaining work: third phase, precise conditions and side effects; no instrumented phase-two trace was provided.
-- Errors or blockers: none; report does not establish cheat-free progression.
-- Next action: use a suitable user-provided phase-three checkpoint when available; otherwise follow the latest user request.
-- References: docs/cheats.md; docs/rom_data_gameplay.md; docs/changes/2026-11-06-record-user-second-phase-cheat-observation.json.
+- Task: USER-FINAL-SNAPSHOTS completed under DEBUG-SAVES-EXPANSION.
+- Last verified result: three user-supplied EUR states privately archived, cataloged and loaded; isolated interpreter cases prepared without gameplay.
+- Remaining work: user-reported phase labels and third-phase cheat behavior remain unverified by replay; parent tasks remain partial.
+- Errors or blockers: none for this archival.
+- Next action: use private catalog when a relevant debug task is requested.
+- References: docs/debug_catalog.md; docs/changes/2026-11-06-archive-user-final-battle-snapshots.json.
