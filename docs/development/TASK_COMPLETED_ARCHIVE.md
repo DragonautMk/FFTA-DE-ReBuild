@@ -21316,3 +21316,10 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: enlarged cheat list, two-row actions and contextual shortcut legend; keyboard shortcuts preserve validation; up/down repeats with safe edge-only confirmation/cancellation. 133 Linux menu tests (1 ignored), one repeat-timer test and real CH-0341 X11 keyboard/mouse GUI passed. Verified runtime installed in Linux portable copy with backup and updated manifest.
 - Evidence: docs/changes/2026-11-06-compact-cheat-navigation.json; target/validation/units/cheat-compact-tests-4cp4dcgm/; target/validation/units/cheat-compact-gui-u74cki34/.
 - Limits: GUI used synthesized keyboard/mouse on Xvfb; physical controller, Wayland and native Windows unverified. Other DBG2-20 and recovery criteria remain partial.
+
+### CH0341-USER-REPORT
+
+- Outcome: completed
+- Verified criteria: recorded the user's report of CH-0341 success in the second final-battle phase and after Energiga, separately from the existing controlled first-phase test. No new runtime experiment was performed.
+- Evidence: docs/changes/2026-11-06-record-user-second-phase-cheat-observation.json; docs/cheats.md; docs/rom_data_gameplay.md.
+- Limits: actor, target, precise timing, side effects and third-phase behavior were not supplied; report does not establish cheat-free progression or original hardware semantics.

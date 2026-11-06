@@ -28,6 +28,26 @@ Documentation: [cheats.md](docs/cheats.md), [save_states.md](docs/save_states.md
 
 [Change record](docs/changes/2026-11-06-save-cheat-derived-snapshots.json)
 
+## 2026-11-06 — Record user observation of victory cheat in second phase
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Record the user report that CH-0341 worked in the second final-battle phase and after Energiga, separately from the existing controlled first-phase evidence.
+
+**Validation**
+
+- Documentation checked against the user report and retained first-phase evidence; no new runtime experiment was performed.
+
+**Limitations**
+
+- Actor, target, exact trigger, side effects and third-phase behavior were not specified; the report does not establish ordinary progression or device-hook equivalence.
+
+Documentation: [TASK_HANDOFF.md](docs/development/TASK_HANDOFF.md).
+
+[Change record](docs/changes/2026-11-06-record-user-second-phase-cheat-observation.json)
+
 ## 2026-11-06 — Make cheat activation and favorites easier to find
 
 Type: changed. Platforms: Linux / X11 (virtual display).

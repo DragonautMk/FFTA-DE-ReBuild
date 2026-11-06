@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-06",
+  "slug": "record-user-second-phase-cheat-observation",
+  "title": "Record user observation of victory cheat in second phase",
+  "kind": "docs",
+  "platforms": [],
+  "changes": [
+    "Record the user report that CH-0341 worked in the second final-battle phase and after Energiga, separately from the existing controlled first-phase evidence."
+  ],
+  "validation": [
+    "Documentation checked against the user report and retained first-phase evidence; no new runtime experiment was performed."
+  ],
+  "limitations": [
+    "Actor, target, exact trigger, side effects and third-phase behavior were not specified; the report does not establish ordinary progression or device-hook equivalence."
+  ],
+  "files": [
+    "docs/cheats.md",
+    "docs/rom_data_gameplay.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

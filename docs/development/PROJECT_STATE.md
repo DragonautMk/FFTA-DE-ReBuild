@@ -43,7 +43,9 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   reached Item Shop in one controlled EUR interpreter scenario against a
   same-input control. CH-0334 changed displayed funds during one controlled
   EUR shop purchase. A conditional-slide plan for CH-0341 was also armed in a
-  bounded EUR interpreter frame: its expected eight writes were observed.
+  bounded EUR interpreter frame: its expected eight writes were observed. The
+  user later reported success in final-battle phase two and after “Energiga”;
+  no instrumented trace or third-phase result was supplied.
   Other listed effects and device hooks remain unverified. Bounded source-bound
   plans, including validated conditional slides, may be armed for interpreter frame boundaries;
   conflicting footprints are refused and disarm stops future writes without

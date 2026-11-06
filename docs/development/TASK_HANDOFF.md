@@ -113,9 +113,10 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 - State: suspended
 - Outcome: partial
-- Verified: CH-0340 EXP and CH-0320 Steal: Ability each accepted in a EUR Party scene with paired control and exact restoration. CH-0330 plan conditional; source has no notes. Documented battle-reward checkpoint DS-13 is USA, not EUR; no suitable EUR reward scene identified.
-- Missing: CH-0330 suitable EUR scene, before/after and side effects; other group entries, actual level-up and device-hook equivalence.
-- Resume: identify a relevant EUR reward checkpoint before testing CH-0330; no blind scene navigation. `docs/changes/2026-11-03-verify-eur-ability-mastery.json`.
+- Verified: CH-0340 EXP and CH-0320 Steal: Ability each accepted in a EUR Party scene with paired control and exact restoration. CH-0330 plan conditional; source has no notes. DS-13 is USA, not EUR.
+- User report: CH-0341 worked in final-battle phase two and after Energiga; no instrumented trace or details of actor, target, timing and side effects. Controlled proof remains phase one.
+- Missing: CH-0341 third phase, exact conditions and side effects; CH-0330 suitable EUR scene, other group entries, actual level-up and device-hook equivalence.
+- Resume: use a suitable user-provided phase-three checkpoint or a relevant EUR reward checkpoint; no blind scene navigation. `docs/cheats.md`.
 
 ### DBG2-23
 
@@ -202,9 +203,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 - Godot: planned assessment complete, implementation deferred, not a current dependency. AndroidPort is separate; originals/ROM/BIOS/private catalogs/saves/recordings stay out of commits/packages.
 
 ## Final handover
-- Task: CHEAT-COMPACT-NAV completed under partial DBG2-20.
-- Last verified result: compact layout, keyboard shortcuts and held Up/Down passed 133 Linux menu tests, repeat-timer test and real-catalog X11 GUI; runtime installed in Linux portable app.
-- Remaining work: DBG2-20 values/ranges and device/game verification; earlier recovery criteria remain open.
-- Errors or blockers: physical controllers, Wayland and native Windows not tested; existing debug copies retain old executables.
-- Next action: reopen the app and create a new debug copy for the updated menu; resume other work only as requested.
-- References: docs/changes/2026-11-06-compact-cheat-navigation.json; target/validation/units/cheat-compact-tests-4cp4dcgm/; target/validation/units/cheat-compact-gui-u74cki34/.
+- Task: CH0341-USER-REPORT documented; DBG2-22 remains partial.
+- Last verified result: user reports CH-0341 works in final-battle phase two and after Energiga; prior controlled evidence covers phase one.
+- Remaining work: third phase, precise conditions and side effects; no instrumented phase-two trace was provided.
+- Errors or blockers: none; report does not establish cheat-free progression.
+- Next action: use a suitable user-provided phase-three checkpoint when available; otherwise follow the latest user request.
+- References: docs/cheats.md; docs/rom_data_gameplay.md; docs/changes/2026-11-06-record-user-second-phase-cheat-observation.json.

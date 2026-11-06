@@ -182,6 +182,12 @@ the first battle's Mission Cleared screen. These results do not verify the
 original device hook or other game situations. Unsupported formats and sources
 remain identified as such in the catalog.
 
+On 2026-11-06 the user reported that CH-0341 also worked in the second phase
+of the final battle and that it worked after the action “Energiga”. This is a
+user observation, not an instrumented replay: the actor, target, exact trigger
+and side effects were not specified. The third phase and original device-hook
+equivalence remain unverified.
+
 In isolated Wine/Xvfb tests, keyboard navigation selected a synthetic source,
 reviewed its preview, armed and disarmed it, applied it once and disabled all.
 Attempts to arm without a selected source or reviewed preview were refused.

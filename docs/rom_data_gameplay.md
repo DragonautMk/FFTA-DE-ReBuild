@@ -5605,6 +5605,13 @@ produces the same outcome. The later phase has not yet been observed. No
 altered state was exported; inputs and writes remain in the private helper
 and log. Evidence: `e130-ch0341-dialogue-continuation-98imcbve/`.
 
+On 2026-11-06 the user separately reported that CH-0341 worked in the second
+phase of the final battle and after the action “Energiga”. The user did not
+provide an instrumented trace or specify the actor, target, exact trigger or
+side effects; the third phase is still unverified. This report extends the
+observed use beyond the above first-phase controlled test without establishing
+ordinary, cheat-free progression or the original device-hook semantics.
+
 A further reproduction matches that black-transition image and runs 1,500
 neutral frames. It reaches and remains at Babus's dialogue on the Royal
 Valley map; no later battle is established yet. Evidence:
