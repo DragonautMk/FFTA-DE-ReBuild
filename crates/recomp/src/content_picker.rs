@@ -581,7 +581,7 @@ impl Picker {
             }
             let bytes = crate::diagnostics::read(
                 &path,
-                gba_core::save_state::MAX_STATE_BYTES as u64 + 240 * 160 * 4 + 48,
+                crate::save_state::MAX_FILE_BYTES as u64,
             )?;
             if checked
                 .sha256

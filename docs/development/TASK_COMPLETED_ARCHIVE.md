@@ -21295,3 +21295,10 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: fixed obsolete count and positional assertions; task IDs and statuses checked in English/Italian. Table matches checklist; 12 focused Linux tests and full Docker suite (851 passed, 397 ignored; menu 128 passed/1 ignored) passed. Verified portable archive retained.
 - Evidence: docs/changes/2026-11-05-fix-atlas-checklist-status-tests.json; target/validation/units/menu-atlas-linux-focused-final-wp5cpme2/; target/validation/units/menu-atlas-linux-docker-final-7j3cce7b/.
 - Limits: earlier focused and Docker units passed tests but retained diagnostics after protected source changed during execution. No game runtime or native Windows behavior newly asserted.
+
+### DBG2-23-SNAPSHOT
+
+- Outcome: completed
+- Verified criteria: implemented conservative bounded SL2 snapshot ancestry, retained through restores and new debug copies without rearming; 26 Linux tests, real maintained-cheat X11 GUI snapshot save and CLI startup recording refusal passed. User's Linux portable runtime installed with guarded backups and updated manifest.
+- Evidence: docs/changes/2026-11-06-save-cheat-derived-snapshots.json; target/validation/units/cheat-snapshot-final-8du0aarg/; target/validation/units/cheat-snapshot-gui-host-ddrwctih/; target/validation/units/cheat-snapshot-cli-cd2x0od5/.
+- Limits: provenance is conservative, bounded and not replay evidence; raw/SL1 ancestry unknown. Full DBG2-23 replay and later battle phases remain open. Initial sandbox Xvfb attempt failed to bind and retained diagnostics. Consultant /root/sol_debug_diagnosis requested gpt-6.1-sol/xhigh; effective settings unconfirmed.

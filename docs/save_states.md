@@ -86,8 +86,9 @@ The preview and machine snapshot are committed together with a temporary file
 and atomic replacement. An unexpected occupied slot is protected against an
 unconfirmed write, even if it appeared after the menu read its status.
 
-Files persist across restarts. The slot picker reads only their preview prefix;
-it does not decode complete machines just to show a thumbnail.
+Files persist across restarts. For SL1 files the slot picker reads only the
+preview prefix; for SL2 it also checks the complete file and ancestry checksum.
+It does not decode complete machines just to show a thumbnail.
 
 ## Existing checkpoints and compatibility
 
@@ -103,6 +104,22 @@ version 1, bound to exact ROM/BIOS SHA-256 hashes and protected by its checksum.
 Bad/truncated previews, damaged state data, wrong ROM/BIOS and incompatible
 versions are rejected before changing the live machine. A valid thumbnail alone
 does not establish that its machine data can be loaded.
+
+After cheat use, the desktop writes an `FFTA-SL2` envelope with bounded cheat
+ancestry in the same atomic file. It includes observed source and plan hashes,
+ordered set identities and summarized frame/clock information, but no raw cheat
+codes. A checksum binds the ancestry to the machine snapshot. It is an integrity
+check, not proof of authorship or of an exact replay. History is bounded and
+marks omitted entries; it may include earlier changes later restored away.
+Recording, full event-by-event replay and parameter tracking remain unsupported.
+
+Loading such a snapshot disarms cheats and keeps its ancestry in the current
+session. The ancestry is also retained conservatively across Undo, restart and
+new debug copies, because cartridge data can survive those operations. Existing
+raw and SL1 files remain readable, but their ancestry was not recorded and is
+not evidence that cheats were absent. Older application versions cannot read
+SL2. Input recordings remain blocked after observed cheat use; an SL2 file can
+be shared as a private checkpoint without sharing the local cheat catalog.
 
 Compatible builds can share files with matching ROM/BIOS and formats. Changes
 to incompatible machine layouts or execution semantics require incrementing

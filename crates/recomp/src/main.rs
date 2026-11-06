@@ -34,6 +34,7 @@ mod debug_cheats;
 mod debug_cheat_favorites;
 mod debug_cheat_decoder;
 mod debug_cheat_armed;
+mod cheat_provenance;
 mod debug_cheat_preset;
 mod content_picker;
 mod debug_inputs;
@@ -3440,7 +3441,10 @@ fn cmd_runc(args: &[String]) -> Result<(), String> {
         eprintln!("hle: {}", arm_audio_hle(&mut m, None));
     }
     if let Some(path) = state {
-        save_state::load(&mut m, Path::new(&path))?;
+        let ancestry = save_state::load_with_history(&mut m, Path::new(&path))?;
+        if !ancestry.is_empty() {
+            eprintln!("FFTA_REPLAY_STATE_CHEAT_ANCESTRY: this snapshot has observed cheat ancestry; outputs are not ordinary-play evidence");
+        }
         println!("FFTA_REPLAY_STATE frame={} machine_sha256={}",
             m.bus.frames, gba_core::ffta_rom::digest(&m.save_state()?));
     }

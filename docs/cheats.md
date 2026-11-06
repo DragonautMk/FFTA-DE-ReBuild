@@ -13,8 +13,9 @@ the outstanding routes to a distributable replacement.
 The [integrated-debug follow-up checklist](development/DEBUG_TOOLS_V2_TODO.md)
 tracks a local cheat menu using these stable CH identifiers, with EUR candidates,
 format validation, isolated application and replay provenance. Read-only
-browsing and a limited manual one-shot are implemented as described below;
-maintained activation and replay provenance remain open.
+browsing, a limited manual one-shot and bounded maintained interpreter plans
+are implemented as described below; device equivalence and replay provenance
+remain open.
 
 ## Organization
 
@@ -292,9 +293,10 @@ order, without installing the original device hook or maintaining a toggle.
 This is an explicit manual experiment, not verification of the code's intended
 game effect; restoring a checkpoint remains a separate action. Broader memory
 semantics and provenance-aware recording remain unfinished.
-Until cheat provenance is supported, starting an input recording or saving a
-new state after a one-shot is refused for the lifetime of that isolated process;
-existing checkpoints may still be loaded.
+Snapshot slots can be saved after a one-shot. Such snapshots carry a bounded,
+conservative record of observed cheat ancestry; see [save states](save_states.md).
+Input recordings after cheat use remain refused because they do not yet retain
+the provenance needed for replay.
 
 For maintained use, prepare the same state-bound preview, then issue `cheats
 arm CH-0001 0 CH-0002 GENERATION TOKEN`. Arm itself writes nothing. The frozen
@@ -304,9 +306,10 @@ future applications; `cheats disarm all` clears the set. These operations are
 also available as `debug-control cheat-arm` and `cheat-disarm`. Status reports
 the armed identities and footprints; the read-only catalog displays an armed
 indicator. A disarm does not undo earlier writes. Loading or restoring a state
-clears the armed set; saving while armed, recording while armed or after cheat
-writes, instruction search and starting a separate replay while armed are
-refused. Manual one-shot is refused until the set is disarmed.
+clears the armed set. Saving while armed records that fact in the snapshot;
+loading never rearms the set. Recording while armed or after cheat use,
+instruction search and starting a separate replay while armed are refused.
+Manual one-shot is refused until the set is disarmed.
 
 At most eight source-bound plans and 256 potential writes per frame can be
 armed. Read/write and write/write overlaps are refused before changing the set,

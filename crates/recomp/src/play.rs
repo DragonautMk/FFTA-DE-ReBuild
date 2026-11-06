@@ -532,6 +532,7 @@ struct PlayApp {
     cheat_snapshot: Option<crate::debug_cheats::Snapshot>,
     cheat_preview: Option<serde_json::Value>,
     last_cheat_once: Option<serde_json::Value>,
+    cheat_history: crate::cheat_provenance::History,
     cheat_armed: crate::debug_cheat_armed::ArmedSet,
     cheat_favorites: Option<crate::debug_cheat_favorites::Favorites>,
     cheat_favorites_error: String,
@@ -1774,7 +1775,11 @@ impl PlayApp {
         }
         let result = (|| -> Result<(), String> {
             self.save_cheat_favorites()?;
-            let state = self.machine.save_state()?;
+            let history = self.snapshot_cheat_history();
+            let state = if history.is_empty() { self.machine.save_state()? } else {
+                let preview = self.state_preview();
+                crate::save_state::encode(&self.machine, &preview, &history)?
+            };
             let exe = std::env::current_exe().map_err(|e| e.to_string())?;
             let default_catalog=exe.parent().map(|p|p.join("cheats/catalogo.json"));
             let favorites=match (self.cheat_favorites.as_ref(),default_catalog.as_ref().and_then(|p|crate::debug_cheats::Catalog::load(p).ok())) {
@@ -1800,6 +1805,14 @@ impl PlayApp {
         });
         self.menu_dirty = true;
         self.next_frame = Instant::now();
+    }
+
+    fn snapshot_cheat_history(&self) -> crate::cheat_provenance::History {
+        let mut history = self.cheat_history.clone();
+        if !self.cheat_armed.is_empty() {
+            history.record("armed-at-snapshot", self.cheat_armed.provenance(), self.machine.bus.frames, self.machine.bus.clock, 0);
+        }
+        history
     }
 
     fn lifecycle_emit(&mut self,family:crate::debug_lifecycle::Family,phase:&str,context:Option<crate::debug_events::Correlation>,details:serde_json::Value) {
@@ -2029,7 +2042,13 @@ impl PlayApp {
                 if self.cheat_preview.as_ref().and_then(|v|v["token"].as_str())!=Some(preview.as_str()){return Err("Prepare this exact one-shot preview first".into());}
                 let (plan,current)=self.prepare_cheat_once(id,*provenance,master,generation)?;
                 if current["token"].as_str()!=Some(preview.as_str()){return Err("Cheat preview, source, ROM or paused state changed; prepare again".into());}
+                let details=&current["body"]["details"];
+                let identity=serde_json::json!({"id":id,"provenance_index":provenance,"master_id":master,
+                    "source_sha256":details["source_sha256"],"rom_sha256":details["rom_sha256"],
+                    "entry_lines_sha256":details["entry_lines_sha256"],"master_lines_sha256":details["master_lines_sha256"],
+                    "plan_sha256":gba_core::ffta_rom::digest(&serde_json::to_vec(&plan).map_err(|e|e.to_string())?),"decoder":"codebreaker-subset-v1"});
                 let before=(self.machine.bus.frames,self.machine.bus.clock);let count=plan.apply_once(&mut self.machine.bus)?;
+                self.cheat_history.record("once",identity,before.0,before.1,count);
                 self.cheat_preview=None;self.last_cheat_once=Some(serde_json::json!({"id":id,"preview":preview,"writes":count,"frame":before.0,"clock":before.1,"scope":"Manual paused one-shot, no hardware hook or maintained toggle"}));
                 self.menu.diagnosis_result(format!("Applied {count} writes once in the isolated paused copy."));self.menu_dirty=true;return Ok(());
             },
@@ -2235,7 +2254,7 @@ impl PlayApp {
                 match settings.on_hit {
                     Some(crate::debug_probe::HitAction::Freeze) if self.recent.as_ref().is_none_or(|b|!b.enabled()) => return Err("Start recent events before requesting freeze on hit".into()),
                     Some(crate::debug_probe::HitAction::Capture) => {
-                        if self.last_cheat_once.is_some(){return Err("Capture after cheat writes needs provenance support; restart the isolated copy first".into());}
+                        if !self.cheat_history.is_empty(){return Err("Capture after cheat use needs recording provenance support".into());}
                         let root=input_config::exe_dir().ok_or("Missing isolated root")?;crate::debug_probe::capture_preflight(&root)?;
                     },
                     _=>{},
@@ -2357,6 +2376,7 @@ impl PlayApp {
         value["cheat_snapshot"]=self.current_cheat_snapshot().ok().map(|s|serde_json::json!({"generation":s.generation,"source_sha256":s.source_sha256,"rom_sha256":s.rom_sha256,"scope":"Immutable snapshot verified at explicit refresh"})).unwrap_or(serde_json::Value::Null);
         value["cheat_preview"]=self.cheat_preview.clone().unwrap_or(serde_json::Value::Null);value["cheat_once"]=self.last_cheat_once.clone().unwrap_or(serde_json::Value::Null);
         value["cheat_armed"]=self.cheat_armed.status();
+        value["cheat_ancestry"]=serde_json::json!({"history":self.cheat_history,"scope":"Conservative observed ancestry; not an exact replay timeline"});
         value["runtime_lifecycles"]=self.lifecycle.status();
         value["request_ledger"]=self.control_server.as_ref().map_or(serde_json::Value::Null,|s|s.retry_status());
         value["event_console"]=self.event_console.borrow().status();
@@ -2640,7 +2660,7 @@ impl PlayApp {
             if self.probe.is_some() {return Err("Finish or interrupt the search before recording.".into());}
             if !self.debug_session { return Err("Open an isolated debug copy before recording.".into()); }
             if !self.cheat_armed.is_empty(){return Err("Disarm maintained cheats before recording.".into());}
-            if self.last_cheat_once.is_some(){return Err("Recording after cheat writes needs provenance support; restart the isolated copy first.".into());}
+            if !self.cheat_history.is_empty(){return Err("Recording after cheat use needs recording provenance support.".into());}
             if self.replay_job.is_some() {return Err("Finish or cancel the replay before recording.".into());}
             if self.recording_active() { return Err("An input recording is already active.".into()); }
             self.sync_view();
@@ -3154,7 +3174,6 @@ impl PlayApp {
     fn state_operation(&mut self, saving: bool, slot: u8, overwrite: bool) {
         let operation=if saving{"save"}else{"load"};let before=(self.machine.bus.frames,self.machine.bus.clock);
         self.lifecycle_emit(crate::debug_lifecycle::Family::State,"requested",None,serde_json::json!({"operation":operation,"slot":slot,"overwrite":overwrite}));
-        if saving && (!self.cheat_armed.is_empty() || self.last_cheat_once.is_some()){self.menu.state_result("Saving with or after cheats needs provenance support; restart the isolated copy first.".into());self.menu_dirty=true;return;}
         if !saving && self.recording_active() {
             let message = if self.capture.is_some() {
                 if self.stop_input_recording("Load requested; retry after recording stopped", true) {
@@ -3168,13 +3187,15 @@ impl PlayApp {
         }
         let result = if saving {
             let preview = self.state_preview();
+            let history = self.snapshot_cheat_history();
             self.state_slots
-                .save(&self.machine, slot, &preview, overwrite)
+                .save_with_history(&self.machine, slot, &preview, overwrite, &history).map(|_| None)
         } else {
-            self.state_slots.load(&mut self.machine, slot)
+            self.state_slots.load_with_history(&mut self.machine, slot).map(Some)
         };
         let message = match result {
-            Ok(()) => {
+            Ok(history) => {
+                if let Some(history) = history { self.cheat_history.include(&history); }
                 self.lifecycle_emit(crate::debug_lifecycle::Family::State,"completed",None,serde_json::json!({"operation":operation,"slot":slot,"outcome":"completed","before":{"frame":before.0,"clock":before.1},"after":{"frame":self.machine.bus.frames,"clock":self.machine.bus.clock}}));
                 if !saving {
                     self.after_state_restore();
@@ -3323,7 +3344,10 @@ impl PlayApp {
         }
         if !self.cheat_armed.is_empty(){
             match self.cheat_armed.apply(&mut self.machine.bus){
-                Ok(writes)=>self.last_cheat_once=Some(serde_json::json!({"writes":writes,"frame":self.machine.bus.frames,"clock":self.machine.bus.clock,"scope":"Maintained set applied before interpreter frame; no original hardware hook"})),
+                Ok(writes)=>{
+                    self.cheat_history.record("maintained",self.cheat_armed.provenance(),self.machine.bus.frames,self.machine.bus.clock,writes);
+                    self.last_cheat_once=Some(serde_json::json!({"writes":writes,"frame":self.machine.bus.frames,"clock":self.machine.bus.clock,"scope":"Maintained set applied before interpreter frame; no original hardware hook"}));
+                },
                 Err(error)=>{self.error=Some(format!("Maintained cheat preflight failed: {error}"));return false;}
             }
         }
@@ -5121,10 +5145,10 @@ Place your own dump as gba_bios.bin next to the executable:\n  {}",
     if icfg.mouse_keyboard {machine.bus.ffta_battle_mouse.set_enabled(true);}
     let boot_state = machine.save_state()?;
     let debug_start_state = session.and_then(|s| s.state());
-    if let Some(state) = &debug_start_state { crate::save_state::load(&mut machine, state)?; }
+    let mut cheat_history: crate::cheat_provenance::History = if let Some(state) = &debug_start_state { crate::save_state::load_with_history(&mut machine, state)? } else { Default::default() };
     let benchmark_zoom = benchmark.as_ref().map_or(0, |b| b.zoom);
     if benchmark_zoom > zoom_max { return Err("benchmark zoom exceeds the selected aspect's limit".into()); }
-    if let Some(benchmark) = benchmark.as_mut() { benchmark.restore(&mut machine)?; }
+    if let Some(benchmark) = benchmark.as_mut() { cheat_history.include(&benchmark.restore(&mut machine)?); }
     // Restored snapshots retain their exact serialized tap flag. Route only
     // host audio around unavailable per-channel taps without rewriting state.
     streams.lock().unwrap().taps_unavailable = !machine.bus.tap_channels;
@@ -5152,6 +5176,7 @@ Place your own dump as gba_bios.bin next to the executable:\n  {}",
         cheat_snapshot: None,
         cheat_preview: None,
         last_cheat_once: None,
+        cheat_history,
         cheat_armed: crate::debug_cheat_armed::ArmedSet::default(),
         cheat_favorites: None,
         cheat_favorites_error: String::new(),

@@ -13,9 +13,11 @@ pub const PREVIEW_W: usize = 240;
 pub const PREVIEW_H: usize = 160;
 const PREVIEW_BYTES: usize = PREVIEW_W * PREVIEW_H * 4;
 const SLOT_MAGIC: &[u8; 8] = b"FFTA-SL1";
+const TAGGED_MAGIC: &[u8; 8] = b"FFTA-SL2";
+const MAX_METADATA_BYTES: usize = 256 * 1024;
 const HEADER: usize = 8 + 8 + 32;
 const PREFIX: usize = HEADER + PREVIEW_BYTES;
-const MAX_FILE_BYTES: usize = PREFIX + MAX_STATE_BYTES;
+pub(crate) const MAX_FILE_BYTES: usize = PREFIX + MAX_STATE_BYTES + 36 + MAX_METADATA_BYTES;
 
 pub struct Slots {
     directory: PathBuf,
@@ -78,7 +80,7 @@ impl Slots {
     }
 
     pub fn info(&self, slot: u8) -> SlotInfo {
-        let read = || -> Result<Option<Vec<[u8; 4]>>, String> {
+        let read = || -> Result<Option<(Vec<[u8; 4]>, bool)>, String> {
             let path = self.path(slot)?;
             let mut file = match File::open(&path) {
                 Ok(f) => f,
@@ -91,8 +93,11 @@ impl Slots {
             let mut magic = [0; 8];
             file.read_exact(&mut magic).map_err(|e| e.to_string())?;
             if &magic == b"FFTA-ST\0" {
-                return Ok(Some(Vec::new()));
+                return Ok(Some((Vec::new(), false)));
             } // Older, preview-less checkpoint.
+            if &magic == TAGGED_MAGIC {
+                return preview(&read_file(&path).map_err(|e| e.to_string())?).map(|p|Some((p, true)));
+            }
             if &magic != SLOT_MAGIC {
                 return Err("Unrecognized state format".into());
             }
@@ -104,12 +109,12 @@ impl Slots {
             if file.metadata().map_err(|e| e.to_string())?.len() != (PREFIX + state_len) as u64 {
                 return Err("Incomplete state file".into());
             }
-            Ok(Some(
+            Ok(Some((
                 prefix[HEADER..]
                     .chunks_exact(4)
                     .map(|p| p.try_into().unwrap())
-                    .collect(),
-            ))
+                    .collect(), false,
+            )))
         };
         match read() {
             Ok(None) => SlotInfo {
@@ -117,10 +122,12 @@ impl Slots {
                 preview: Vec::new(),
                 status: "Empty".into(),
             },
-            Ok(Some(preview)) => SlotInfo {
+            Ok(Some((preview, tagged))) => SlotInfo {
                 occupied: true,
                 status: if preview.is_empty() {
                     "Saved - no preview"
+                } else if tagged {
+                    "Saved - cheat ancestry"
                 } else {
                     "Saved"
                 }
@@ -142,23 +149,20 @@ impl Slots {
         preview: &[[u8; 4]],
         overwrite: bool,
     ) -> Result<(), String> {
+        self.save_with_history(machine, slot, preview, overwrite, &Default::default())
+    }
+
+    pub(crate) fn save_with_history(
+        &mut self, machine: &Machine, slot: u8, preview: &[[u8; 4]], overwrite: bool,
+        history: &crate::cheat_provenance::History,
+    ) -> Result<(), String> {
         let path = self.path(slot)?;
-        if preview.len() != PREVIEW_W * PREVIEW_H {
-            return Err("Invalid state preview size".into());
-        }
-        let state = machine.save_state()?;
-        let pixels: Vec<u8> = preview.iter().flat_map(|p| p.iter().copied()).collect();
+        let bytes = encode(machine, preview, history)?;
         let previous = match read_file(&path) {
             Ok(bytes) => Some(bytes),
             Err(e) if e.kind() == std::io::ErrorKind::NotFound => None,
             Err(e) => return Err(format!("Cannot preserve previous slot: {e}")),
         };
-        let mut bytes = Vec::with_capacity(PREFIX + state.len());
-        bytes.extend_from_slice(SLOT_MAGIC);
-        bytes.extend_from_slice(&(state.len() as u64).to_le_bytes());
-        bytes.extend_from_slice(&Sha256::digest(&pixels));
-        bytes.extend_from_slice(&pixels);
-        bytes.extend_from_slice(&state);
         std::fs::create_dir_all(&self.directory).map_err(|e| e.to_string())?;
         atomic_write(&path, &bytes, overwrite)?;
         // Only a successful operation replaces the single undo entry.
@@ -183,11 +187,16 @@ impl Slots {
     }
 
     pub fn load(&mut self, machine: &mut Machine, slot: u8) -> Result<(), String> {
+        self.load_with_history(machine, slot).map(|_| ())
+    }
+
+    pub(crate) fn load_with_history(&mut self, machine: &mut Machine, slot: u8) -> Result<crate::cheat_provenance::History, String> {
         let path = self.path(slot)?;
         let previous = machine.save_state()?;
-        load(machine, &path)?;
+        let bytes = read_file(&path).map_err(|e| e.to_string())?;
+        let history = load_bytes_with_history(machine, &bytes)?;
         self.undo = Some(Undo::Load { slot, previous });
-        Ok(())
+        Ok(history)
     }
 
     pub fn undo_description(&self) -> Option<(&'static str, u8)> {
@@ -270,7 +279,7 @@ fn atomic_write(path: &Path, bytes: &[u8], overwrite: bool) -> Result<(), String
 }
 
 fn validate_prefix(data: &[u8]) -> Result<usize, String> {
-    if data.len() < PREFIX || &data[..8] != SLOT_MAGIC {
+    if data.len() < PREFIX || (&data[..8] != SLOT_MAGIC && &data[..8] != TAGGED_MAGIC) {
         return Err("Invalid state preview header".into());
     }
     let len = u64::from_le_bytes(data[8..16].try_into().unwrap());
@@ -283,13 +292,60 @@ fn validate_prefix(data: &[u8]) -> Result<usize, String> {
     Ok(len as usize)
 }
 
+/// SL2 stores bounded cheat ancestry with the snapshot in one atomic file.
+pub(crate) fn encode(machine: &Machine, preview: &[[u8; 4]], history: &crate::cheat_provenance::History) -> Result<Vec<u8>, String> {
+    if preview.len() != PREVIEW_W * PREVIEW_H { return Err("Invalid state preview size".into()); }
+    let state = machine.save_state()?;
+    let pixels: Vec<u8> = preview.iter().flat_map(|p| p.iter().copied()).collect();
+    let mut bytes = Vec::with_capacity(PREFIX + state.len());
+    bytes.extend_from_slice(if history.is_empty() { SLOT_MAGIC } else { TAGGED_MAGIC });
+    bytes.extend_from_slice(&(state.len() as u64).to_le_bytes());
+    bytes.extend_from_slice(&Sha256::digest(&pixels));
+    bytes.extend_from_slice(&pixels);
+    bytes.extend_from_slice(&state);
+    if !history.is_empty() {
+        history.validate()?;
+        let metadata = serde_json::to_vec(history).map_err(|e| e.to_string())?;
+        if metadata.len() > MAX_METADATA_BYTES { return Err("Cheat ancestry exceeds the size limit".into()); }
+        bytes.extend_from_slice(&(metadata.len() as u32).to_le_bytes());
+        let mut hash = Sha256::new(); hash.update(&state); hash.update(&metadata);
+        bytes.extend_from_slice(&hash.finalize());
+        bytes.extend_from_slice(&metadata);
+    }
+    Ok(bytes)
+}
+
+fn parts(bytes: &[u8]) -> Result<(&[u8], crate::cheat_provenance::History), String> {
+    if bytes.len() > MAX_FILE_BYTES { return Err("State exceeds the size limit".into()); }
+    if !bytes.starts_with(SLOT_MAGIC) && !bytes.starts_with(TAGGED_MAGIC) {
+        return Ok((bytes, Default::default()));
+    }
+    let len = validate_prefix(bytes)?;
+    let end = PREFIX.checked_add(len).ok_or("Invalid state size")?;
+    if bytes.len() < end { return Err("Incomplete state file".into()); }
+    let history = if bytes.starts_with(TAGGED_MAGIC) {
+        let tail = &bytes[end..];
+        if tail.len() < 36 { return Err("Missing cheat ancestry".into()); }
+        let n = u32::from_le_bytes(tail[..4].try_into().unwrap()) as usize;
+        if n > MAX_METADATA_BYTES || tail.len() != 36 + n { return Err("Invalid cheat ancestry length".into()); }
+        let mut hash = Sha256::new(); hash.update(&bytes[PREFIX..end]); hash.update(&tail[36..]);
+        if tail[4..36] != hash.finalize()[..] { return Err("Cheat ancestry checksum mismatch".into()); }
+        let history: crate::cheat_provenance::History = serde_json::from_slice(&tail[36..]).map_err(|e| format!("Invalid cheat ancestry: {e}"))?;
+        history.validate()?;
+        history
+    } else {
+        if bytes.len() != end { return Err("Incomplete state file".into()); }
+        Default::default()
+    };
+    Ok((&bytes[PREFIX..end], history))
+}
+
 /// Check envelope integrity without loading a machine or reading guest I/O.
 pub(crate) fn preview(bytes: &[u8]) -> Result<Vec<[u8;4]>, String> {
-    let (core, preview) = if bytes.starts_with(SLOT_MAGIC) {
-        let length = validate_prefix(bytes)?;
-        if bytes.len() != PREFIX + length { return Err("Incomplete state file".into()); }
-        (&bytes[PREFIX..], bytes[HEADER..PREFIX].chunks_exact(4).map(|p|p.try_into().unwrap()).collect())
-    } else { (bytes, Vec::new()) };
+    let (core, _) = parts(bytes)?;
+    let preview = if bytes.starts_with(SLOT_MAGIC) || bytes.starts_with(TAGGED_MAGIC) {
+        bytes[HEADER..PREFIX].chunks_exact(4).map(|p|p.try_into().unwrap()).collect()
+    } else { Vec::new() };
     if core.len() < 108 || core.len() > MAX_STATE_BYTES || &core[..8] != b"FFTA-ST\0"
         || u32::from_le_bytes(core[8..12].try_into().unwrap()) != 1 {
         return Err("Invalid or incompatible snapshot header".into());
@@ -302,7 +358,7 @@ pub(crate) fn preview(bytes: &[u8]) -> Result<Vec<[u8;4]>, String> {
 /// The eventual load still checks BIOS, decoded fields and live compatibility.
 pub(crate) fn reference_identity(bytes:&[u8],rom:Option<&str>)->Result<(),String>{
     preview(bytes)?;
-    let core=if bytes.starts_with(SLOT_MAGIC){&bytes[PREFIX..]}else{bytes};
+    let (core, _) = parts(bytes)?;
     let actual=core[12..44].iter().map(|b|format!("{b:02x}")).collect::<String>();
     if rom.is_some_and(|r|r!=actual){return Err("Snapshot belongs to a different ROM".into());}
     Ok(())
@@ -315,16 +371,20 @@ pub(crate) fn load(machine: &mut Machine, path: &Path) -> Result<(), String> {
 }
 
 pub(crate) fn load_bytes(machine: &mut Machine, bytes: &[u8]) -> Result<(), String> {
-    if bytes.len() > MAX_FILE_BYTES { return Err("State exceeds the size limit".into()); }
-    if bytes.starts_with(SLOT_MAGIC) {
-        let len = validate_prefix(&bytes)?;
-        if bytes.len() != PREFIX + len {
-            return Err("Incomplete state file".into());
-        }
-        machine.load_state(&bytes[PREFIX..])
-    } else {
-        machine.load_state(&bytes) // Preserve compatibility with the original raw state files.
-    }
+    let history = load_bytes_with_history(machine, bytes)?;
+    if !history.is_empty() { eprintln!("Snapshot has observed cheat ancestry; do not treat results as ordinary-play evidence"); }
+    Ok(())
+}
+
+pub(crate) fn load_bytes_with_history(machine: &mut Machine, bytes: &[u8]) -> Result<crate::cheat_provenance::History, String> {
+    let (core, history) = parts(bytes)?;
+    machine.load_state(core)?;
+    Ok(history)
+}
+
+pub(crate) fn load_with_history(machine: &mut Machine, path: &Path) -> Result<crate::cheat_provenance::History, String> {
+    let bytes = read_file(path).map_err(|e| e.to_string())?;
+    load_bytes_with_history(machine, &bytes)
 }
 
 #[cfg(test)]
@@ -332,6 +392,55 @@ mod tests {
     use super::*;
     fn preview() -> Vec<[u8; 4]> {
         vec![[12, 34, 56, 255]; PREVIEW_W * PREVIEW_H]
+    }
+
+    #[test]
+    fn cheat_snapshot_roundtrip_integrity_load_and_undo() {
+        let dir = tempfile::tempdir().unwrap();
+        let mut machine = Machine::new(vec![0; 256]);
+        let mut slots = Slots::new(&dir.path().join("test.sav"), &machine.bus.rom);
+        let mut history = crate::cheat_provenance::History::default();
+        history.record("once", serde_json::json!({"id":"synthetic","plan_sha256":"test"}), 12, 34, 1);
+        machine.cpu.regs[4] = 42;
+        slots.save_with_history(&machine, 1, &preview(), false, &history).unwrap();
+        let bytes = read_file(&slots.path(1).unwrap()).unwrap();
+        assert!(bytes.starts_with(TAGGED_MAGIC));
+        assert_eq!(super::preview(&bytes).unwrap(), preview());
+        assert!(slots.info(1).status.contains("cheat"));
+        reference_identity(&bytes, Some(&gba_core::ffta_rom::digest(&machine.bus.rom))).unwrap();
+        machine.cpu.regs[4] = 77;
+        let loaded = slots.load_with_history(&mut machine, 1).unwrap();
+        assert_eq!(machine.cpu.regs[4], 42);
+        assert_eq!(loaded.events, history.events);
+        assert_eq!(slots.undo(&mut machine).unwrap(), UndoEffect::Load(1));
+        assert_eq!(machine.cpu.regs[4], 77);
+        let before = machine.save_state().unwrap();
+        for offset in [16, PREFIX, bytes.len()-1] {
+            let mut damaged = bytes.clone(); damaged[offset] ^= 1;
+            assert!(load_bytes_with_history(&mut machine, &damaged).is_err());
+            assert_eq!(machine.save_state().unwrap(), before);
+        }
+        let mut extra = bytes.clone(); extra.push(0);
+        assert!(load_bytes_with_history(&mut machine, &extra).is_err());
+        assert_eq!(machine.save_state().unwrap(), before);
+        let state_len = u64::from_le_bytes(bytes[8..16].try_into().unwrap()) as usize;
+        let tail = PREFIX + state_len;
+        let mut unsupported = bytes.clone();
+        let mut metadata: serde_json::Value = serde_json::from_slice(&unsupported[tail + 36..]).unwrap();
+        metadata["schema"] = serde_json::json!(2);
+        let metadata = serde_json::to_vec(&metadata).unwrap();
+        unsupported.truncate(tail);
+        unsupported.extend_from_slice(&(metadata.len() as u32).to_le_bytes());
+        let mut hash = Sha256::new(); hash.update(&unsupported[PREFIX..tail]); hash.update(&metadata);
+        unsupported.extend_from_slice(&hash.finalize()); unsupported.extend_from_slice(&metadata);
+        assert!(load_bytes_with_history(&mut machine, &unsupported).is_err());
+        assert_eq!(machine.save_state().unwrap(), before);
+        let mut other = Machine::new(vec![1; 256]); let original = other.save_state().unwrap();
+        assert!(load_bytes_with_history(&mut other, &bytes).is_err());
+        assert_eq!(other.save_state().unwrap(), original);
+        slots.save_with_history(&machine, 1, &preview(), true, &history).unwrap();
+        assert_eq!(slots.undo(&mut machine).unwrap(), UndoEffect::Save(1));
+        assert_eq!(read_file(&slots.path(1).unwrap()).unwrap(), bytes);
     }
 
     #[test]

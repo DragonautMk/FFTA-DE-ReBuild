@@ -99,7 +99,7 @@ fn preflight(slot: ContentSlot, path: &Path, rom: Option<&str>) -> Result<(), St
         Snapshot => {
             let b = crate::diagnostics::read(
                 path,
-                gba_core::save_state::MAX_STATE_BYTES as u64 + 240 * 160 * 4 + 48,
+                crate::save_state::MAX_FILE_BYTES as u64,
             )?;
             crate::save_state::reference_identity(&b, rom)?;
         }

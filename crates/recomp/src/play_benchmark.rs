@@ -104,15 +104,15 @@ impl Benchmark {
         })
     }
 
-    pub fn restore(&mut self, machine: &mut Machine) -> Result<(), String> {
-        crate::save_state::load(machine, &self.state)?;
+    pub fn restore(&mut self, machine: &mut Machine) -> Result<crate::cheat_provenance::History, String> {
+        let history = crate::save_state::load_with_history(machine, &self.state)?;
         self.first = machine.bus.frames;
         self.first
             .checked_add(self.frames)
             .ok_or("benchmark frame range overflow")?;
         println!("FFTA_GUI_BENCH_START scene={} first={} frames={} warmup={} zoom={} verify={} mode=unpaced_audio_discard initial_state={}",
             self.scene, self.first, self.frames, self.warmup, self.zoom, self.verify, gba_core::ffta_rom::digest(&machine.save_state()?));
-        Ok(())
+        Ok(history)
     }
 
     pub fn measuring(&self) -> bool {

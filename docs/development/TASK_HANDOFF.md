@@ -120,10 +120,10 @@ for a specific question: archive legacy lines 179..744 or the named record below
 ### DBG2-23
 
 - State: waiting
-- Outcome: not_started
-- Verified: play.rs refuses new recordings/saves after one-shot pending provenance; debug_recording.rs/debug_replay.rs do not implement the requested cheat contract.
-- Missing: set/hash/parameters/order/frame/decoder in checkpoints/reports, Load/Undo/reset/ROM semantics, state-clock replay and incompatible-set refusal.
-- Resume: after DBG2-19/21; refusal guard is protection, not completed provenance/replay support.
+- Outcome: partial
+- Verified: DBG2-23-SNAPSHOT adds bounded conservative SL2 cheat ancestry and safe copy/load/Undo semantics; Linux tests, active-cheat GUI save and recording refusal PASS. Runtime installed in user's Linux portable copy. Legacy ancestry unknown.
+- Missing: exact per-application set/hash/parameters/order/frame/decoder in profiles/recordings/reports, complete reset/ROM semantics, state-clock replay and incompatible-set refusal.
+- Resume: after DBG2-19/21, implement exact recording/replay contract; do not repeat the accepted snapshot tests.
 
 ### DBG2-24
 
@@ -202,9 +202,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 - Godot: planned assessment complete, implementation deferred, not a current dependency. AndroidPort is separate; originals/ROM/BIOS/private catalogs/saves/recordings stay out of commits/packages.
 
 ## Final handover
-- Task: Linux build test repair completed; redistributable win operation and recovery remain partial.
-- Last verified result: checklist/TSV match; 12 focused Atlas tests and full Linux Docker suite (851 passed) succeeded. Portable archive retained in the final validation unit.
-- Remaining work: no independently established win operation or rights grant; native-source-to-interpreter GUI and recovery criteria remain unverified.
-- Errors or blockers: CH-0341 originated at GH; no third-party cheat payload published. App save/recording provenance guard unchanged.
-- Next action: resume CHEAT-DISTRIBUTION. Reauthenticate Windows runtime before recovery Remedi 328r3omo.
-- References: docs/changes/2026-11-05-fix-atlas-checklist-status-tests.json; target/validation/units/menu-atlas-linux-docker-final-7j3cce7b/; docs/development/CHEAT_DISTRIBUTION_PROVENANCE.md.
+- Task: DBG2-23-SNAPSHOT completed; DBG2-23 and recovery remain partial.
+- Last verified result: 26 focused Linux tests, active-cheat X11 GUI snapshot and CLI startup recording refusal PASS; verified runtime installed in Linux portable app.
+- Remaining work: exact cheat recording/replay and incompatible-set contract; later final-battle phases and ordinary recovery criteria remain unverified.
+- Errors or blockers: legacy snapshot ancestry unknown; sandbox Xvfb bind failed, host Xvfb passed. Existing debug copies retain old pinned runtimes.
+- Next action: on user follow-up use a new debug copy; otherwise resume only requested open criteria.
+- References: docs/changes/2026-11-06-save-cheat-derived-snapshots.json; target/validation/units/cheat-snapshot-gui-host-ddrwctih/; target/validation/units/cheat-snapshot-cli-cd2x0od5/.

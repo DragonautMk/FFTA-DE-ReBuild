@@ -61,6 +61,27 @@ fn load_undo_restart_backup_autosave_and_exit_targets_stay_in_the_copy() {
 }
 
 #[test]
+fn debug_copy_preserves_cheat_ancestry_in_its_seed_and_slot() {
+    let f = Fixture::new();
+    let mut machine = crate::make_machine(f.rom.clone(), None);
+    machine.load_state(&f.state).unwrap();
+    let mut history = crate::cheat_provenance::History::default();
+    history.record("maintained", serde_json::json!([{"id":"synthetic"}]), 17, 100, 1);
+    let tagged = crate::save_state::encode(&machine, &vec![[0, 0, 0, 255]; 240 * 160], &history).unwrap();
+    let mut source = f.source(); source.state = Some(&tagged);
+    let root = create(&f.root(), source).unwrap();
+    let session = open(&root).unwrap();
+    assert_eq!(fs::read(session.state().unwrap()).unwrap(), tagged);
+    let mut restored = crate::make_machine(f.rom.clone(), None);
+    let loaded = crate::save_state::load_with_history(&mut restored, &session.state().unwrap()).unwrap();
+    assert_eq!(loaded.events, history.events);
+    assert_eq!(restored.bus.frames, 17);
+    let mut slots = crate::save_state::Slots::new(&root.join("Data/saves/ffta.sav"), &f.rom);
+    let loaded = slots.load_with_history(&mut restored, 1).unwrap();
+    assert_eq!(loaded.events, history.events);
+}
+
+#[test]
 fn move_and_reopen_preserve_relative_inputs_and_exclusive_session_ownership() {
     let f = Fixture::new(); let root = create(&f.root(), f.source()).unwrap();
     let active = open(&root).unwrap(); assert!(open(&root).is_err());

@@ -3,6 +3,31 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-06 — Preserve cheat ancestry in desktop snapshots
+
+Type: fixed. Platforms: Linux / X11 (virtual display).
+
+**Changes**
+
+- Save cheat-derived desktop snapshots in a new bounded SL2 envelope with a checksum binding core state and conservative source/plan ancestry, retaining SL1/raw compatibility and never rearming cheats on load.
+- Carry conservative ancestry through slot loads, Undo, restart, debug-copy seeds and startup; keep recording/capture guards and expose cheat ancestry in status and the slot label without distributing source codes.
+- Share snapshot size limits across content/session selectors; identify cheat ancestry in native command output and preserve it in benchmark startup.
+
+**Validation**
+
+- Linux release: 11 snapshot, 2 ancestry, 10 debug-session and 3 armed-set tests passed; the optimized executable built successfully with two dead-code method warnings.
+- A controlled X11/Xvfb GUI test armed CH-0341 on an existing EUR checkpoint, stepped one frame, saved slot 2, and checked SL2 ancestry and checksum; original ROM, save, checkpoint and catalog were protected.
+- A separate isolated CLI check created and inspected a session from an SL2 checkpoint and confirmed cheat-derived startup recording was refused. The verified runtime was installed in the user portable copy with the previous runtime and manifest backed up; installed version and manifest hash matched.
+
+**Limitations**
+
+- Ancestry is conservative and bounded, may include restored-away events and is not an exact per-application replay timeline; legacy raw/SL1 provenance is unknown. Recording and deterministic cheat replay remain unsupported.
+- Xvfb host test used a synthetic ancestry seed and a locally supplied catalog; device-hook equivalence, Windows, physical controllers and later final-battle phases were not tested. An initial sandbox Xvfb attempt could not bind its socket and retained diagnostics.
+
+Documentation: [cheats.md](docs/cheats.md), [save_states.md](docs/save_states.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-06-save-cheat-derived-snapshots.json)
+
 ## 2026-11-05 — Verify ordinary senary compact OBJ selector 2
 
 Type: docs. Platforms: EUR Windows executable under Wine.

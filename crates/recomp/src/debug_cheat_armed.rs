@@ -11,6 +11,7 @@ struct Armed {
     plan: Plan,
     footprint: Footprint,
     identity: Value,
+    plan_sha256: String,
 }
 
 #[derive(Default)]
@@ -34,7 +35,8 @@ impl ArmedSet {
         if self.entries.iter().any(|entry| entry.footprint.conflicts(&footprint)) {
             return Err("Cheat read/write footprint overlaps an armed cheat".into());
         }
-        self.entries.push(Armed { id: id.into(), plan, footprint, identity });
+        let plan_sha256 = gba_core::ffta_rom::digest(&serde_json::to_vec(&plan).map_err(|e|e.to_string())?);
+        self.entries.push(Armed { id: id.into(), plan, footprint, identity, plan_sha256 });
         Ok(())
     }
 
@@ -72,6 +74,12 @@ impl ArmedSet {
     pub(crate) fn status(&self) -> Value {
         json!({"active":!self.is_empty(),"entries":self.entries.iter().map(|entry|json!({"id":entry.id,"identity":entry.identity,"footprint":entry.footprint})).collect::<Vec<_>>(),
             "timing":"Before each interpreter frame after input latch","scope":"Frozen source-bound plans; disarming stops future writes and does not restore prior bytes"})
+    }
+
+    /// Source identities in execution order; no code lines or decoded values.
+    pub(crate) fn provenance(&self) -> Value {
+        json!(self.entries.iter().map(|entry|json!({"id":entry.id,"identity":entry.identity,
+            "plan_sha256":entry.plan_sha256,"decoder":"codebreaker-subset-v1"})).collect::<Vec<_>>())
     }
 
     pub(crate) fn apply<B: gba_core::Bus>(&self, bus: &mut B) -> Result<usize, String> {

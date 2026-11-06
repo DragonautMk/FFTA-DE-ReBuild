@@ -362,7 +362,7 @@ fn create_cmd(args: &[String]) -> Result<(), String> {
     let bios = bios_path.as_ref().map(|p| crate::diagnostics::read(p, input_config::BIOS_SIZE as u64)).transpose()?;
     let save_path = request.save.or_else(|| report["cartridge_save"]["path"].as_str().map(PathBuf::from));
     let save = save_path.as_ref().filter(|p| p.exists()).map(|p| crate::diagnostics::read(p, 128 * 1024)).transpose()?;
-    let state = request.state.as_ref().map(|p| crate::diagnostics::read(p, gba_core::save_state::MAX_STATE_BYTES as u64 + 160 * 240 * 4 + 48)).transpose()?;
+    let state = request.state.as_ref().map(|p| crate::diagnostics::read(p, crate::save_state::MAX_FILE_BYTES as u64)).transpose()?;
     let dataset = report["dataset"]["directory"].as_str().map(PathBuf::from);
     let root = create(&destination, Source { rom:&rom, bios:bios.as_deref(), save:save.as_deref(), state:state.as_deref(),
         av:input_config::AvConfig::load(), input:input_config::InputConfig::load(), interp:request.interp,

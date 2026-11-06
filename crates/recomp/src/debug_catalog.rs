@@ -2,7 +2,7 @@
 use serde::Serialize;
 use serde_json::{json,Value};
 use std::{collections::{BTreeMap,BTreeSet}, path::{Component,Path,PathBuf}};
-const MAX_STATE: u64 = gba_core::save_state::MAX_STATE_BYTES as u64 + 240*160*4 + 48;
+const MAX_STATE: u64 = crate::save_state::MAX_FILE_BYTES as u64;
 
 #[derive(Clone,Serialize)]
 pub(crate) struct Entry {
