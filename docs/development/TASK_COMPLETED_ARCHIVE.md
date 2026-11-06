@@ -21330,3 +21330,87 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: user's EUR slots 2/3/4 copied privately with source provenance, hashes and standalone catalog; matching ROM full loads and isolated interpreter case creation passed without gameplay. Originals protected and unchanged.
 - Evidence: docs/changes/2026-11-06-archive-user-final-battle-snapshots.json; target/validation/units/user-final-snapshots-archive-cce3qpx3/.
 - Limits: scene names are user-reported; previews inspected, scenes not replayed. Snapshots have cheat ancestry and do not demonstrate ordinary progression.
+
+### ROMDATA-04-ROYAL-VALLEY-CH0341-REMEDI-NEXT-CLI
+
+- Outcome: completed bounded negative; parent remains partial. Six normal A inputs advance the cheat-derived Remedi dialogue with no further cheat. E130 EUR Wine CLI observes zero parameter reads and records over 756 frames; interpreter and CLI endpoint images match at 240px. Source checkpoint, ROM and saves were protected; no full state-pair or cheat-free claim.
+- Evidence: docs/changes/2026-11-06-observe-next-cheat-derived-remedi-dialogue.json; target/validation/units/e130-ch0341-remedi-next-corrected-sf_82ei4/. Initial Windows-path failure and 16:9/240px image mismatch retained in e130-ch0341-remedi-next-2noigxqj and -8ar_sj07; the latter helper output was reused.
+- Limits: Linux, USA and native Windows pending; no performance measurements; model/effort unconfirmed.
+
+### ROMDATA-04-ROYAL-VALLEY-CH0341-REMEDI-NEXT2-CLI
+
+- Outcome: completed bounded negative; parent remains partial. Six normal A inputs advance the linked cheat-derived Remedi dialogue without further cheat; E130 EUR Wine reports zero parameter reads and records over 756 frames and matches interpreter endpoint image. Protected ROM, saves and checkpoint unchanged; not a full state pair or cheat-free claim.
+- Evidence: docs/changes/2026-11-06-observe-next-cheat-derived-remedi-dialogue.json; target/validation/units/e130-ch0341-remedi-next2-9bktbfkt/.
+- Limits: Linux, USA and native Windows pending; no performance measurements; model/effort unconfirmed.
+
+### ROMDATA-04-ROYAL-VALLEY-CH0341-REMEDI-NEXT3-CLI
+
+- Outcome: completed bounded negative; parent remains partial. Six normal A inputs advance linked cheat-derived dialogue to a scene transition without further cheat; E130 EUR Wine observes zero parameter reads and records over 756 frames and matches interpreter endpoint image. Protected inputs unchanged; not a full state pair or cheat-free claim.
+- Evidence: docs/changes/2026-11-06-observe-next-cheat-derived-remedi-dialogue.json; target/validation/units/e130-ch0341-remedi-next3-j51vbt5o/.
+- Limits: Linux, USA and native Windows pending; no performance measurements; model/effort unconfirmed.
+
+### ROMDATA-04-ROYAL-VALLEY-CH0341-REMEDI-NEXT-NEUTRAL-CLI
+
+- Outcome: completed bounded negative; parent remains partial. A 600-frame neutral continuation from the linked cheat-derived transition reaches dialogue without further cheat; E130 EUR Wine reports zero parameter reads and records and matches the interpreter endpoint image. Protected inputs unchanged; not a full state pair or cheat-free claim.
+- Evidence: docs/changes/2026-11-06-observe-next-cheat-derived-remedi-dialogue.json; target/validation/units/e130-ch0341-remedi-neutral-4wdu4xf_/.
+- Limits: Linux, USA and native Windows pending; no performance measurements; model/effort unconfirmed.
+
+### ROMDATA-04-ROYAL-VALLEY-CH0341-REMEDI-NEXT4-CLI
+
+- Outcome: completed bounded negative; parent remains partial. Six normal A inputs advance linked cheat-derived dialogue to transition without further cheat; E130 EUR Wine reports zero parameter reads and records over 756 frames, matching interpreter endpoint image. Protected inputs unchanged; not a full state pair or cheat-free claim.
+- Evidence: docs/changes/2026-11-06-observe-next-cheat-derived-remedi-dialogue.json; target/validation/units/e130-ch0341-remedi-next4-lo0j5s2d/.
+- Limits: Linux, USA and native Windows pending; no performance measurements; model/effort unconfirmed.
+
+### ROMDATA-04-ROYAL-VALLEY-CH0341-REMEDI-NEXT-NEUTRAL2-CLI
+
+- Outcome: completed bounded negative; parent remains partial. A 600-frame neutral continuation from the linked cheat-derived transition reaches dialogue without further cheat; E130 EUR Wine reports zero parameter reads and records and matches interpreter endpoint image. Protected inputs unchanged; not a full state pair or cheat-free claim.
+- Evidence: docs/changes/2026-11-06-observe-next-cheat-derived-remedi-dialogue.json; target/validation/units/e130-ch0341-remedi-neutral2-94brol1g/.
+- Limits: Linux, USA and native Windows pending; no performance measurements; model/effort unconfirmed.
+
+### ROMDATA-04-ROYAL-VALLEY-CH0341-REMEDI-NEXT5-CLI
+
+- Outcome: completed bounded negative; parent remains partial. Six normal A inputs advance linked cheat-derived dialogue without further cheat; E130 EUR Wine reports zero parameter reads and records over 756 frames and matches interpreter endpoint image. Protected inputs unchanged; not a full state pair or cheat-free claim.
+- Evidence: docs/changes/2026-11-06-observe-next-cheat-derived-remedi-dialogue.json; target/validation/units/e130-ch0341-remedi-next5-ui6j0xrz/.
+- Limits: Linux, USA and native Windows pending; no performance measurements; model/effort unconfirmed.
+
+### ROMDATA-04-ROYAL-VALLEY-CH0341-REMEDI-NEXT6-CLI
+
+- Outcome: completed bounded negative; parent remains partial. Six normal A inputs advance linked cheat-derived dialogue to a battle deployment screen without further cheat; E130 EUR Wine reports zero parameter reads and records over 756 frames and matches interpreter endpoint image. Protected inputs unchanged; not a full state pair or cheat-free claim.
+- Evidence: docs/changes/2026-11-06-observe-next-cheat-derived-remedi-dialogue.json; target/validation/units/e130-ch0341-remedi-next6-ux997ti6/.
+- Limits: Linux, USA and native Windows pending; no performance measurements; model/effort unconfirmed.
+
+### ROMDATA-04-ROYAL-VALLEY-CH0341-FINAL-DEPLOYMENT-CLI
+
+- Outcome: completed bounded negative; parent remains partial. Normal Start from linked cheat-derived deployment reaches Begin battle confirmation; E130 EUR Wine reports zero parameter reads and records over 608 frames, matching interpreter endpoint image. No further cheat; protected inputs unchanged; not a full state pair or cheat-free claim.
+- Evidence: docs/changes/2026-11-06-observe-next-cheat-derived-remedi-dialogue.json; target/validation/units/e130-ch0341-final-deployment-rwq263vh/.
+- Limits: Linux, USA and native Windows pending; no performance measurements; model/effort unconfirmed.
+
+### ROMDATA-04-ROYAL-VALLEY-CH0341-FINAL-CONFIRM-POSITIVE
+
+- Outcome: completed positive cheat-derived observation; parent ordinary criterion remains partial. Normal A on visible Begin battle/Yes followed by 600 neutral frames reaches the battle; E130 EUR Wine reports one parameter header byte read and one record used; interpreter endpoint image matches. No further cheat; protected inputs unchanged.
+- Evidence: docs/changes/2026-11-06-observe-next-cheat-derived-remedi-dialogue.json; target/validation/units/e130-ch0341-final-confirm-n_gtb4e5/; source checkpoint e130-ch0341-final-deployment-rwq263vh.
+- Limits: inherited cheat ancestry; no complete state pair or unmodified-play proof; Linux, USA and native Windows pending; no performance measurements; model/effort unconfirmed.
+
+### ROMDATA-04-ROYAL-VALLEY-CH0341-FINAL-CONFIRM-PAIR
+
+- Outcome: completed scoped cheat-derived positive full pair; parent ordinary criterion remains partial. E130 EUR Wine 608-frame native raw/managed comparison passes state/clock, images, OAM, dispatch and five audio streams; independently observes one parameter header byte and one record. Protected inputs unchanged.
+- Evidence: docs/changes/2026-11-06-observe-next-cheat-derived-remedi-dialogue.json; target/validation/units/e130-parameter-positive-pair-qxc7cb30/; source observation e130-ch0341-final-confirm-n_gtb4e5.
+- Limits: inherited cheat ancestry; not an unmodified ordinary route or global coverage. Prebuilt test hash matches its post-E130 build receipt but its complete source snapshot is unavailable. Fresh Windows test build failed due to absent MinGW dlltool; failures xxuugo6q/gkvigvnj retained. Linux, USA and native Windows pending; no performance measurements; model/effort unconfirmed.
+
+### ROMDATA-04-ROYAL-VALLEY-CH0341-PARAMETER-117-WATCH
+
+- Outcome: completed scoped interpreter access witness; parent ordinary criterion remains partial. Wine read-only source/checkpoint analysis pins event217 to candidate record117; first eight confirmation frames have zero parameter reads. In a private interpreter copy of the cheat-derived checkpoint, identical A prefix and a neutral bounded watch hit guest 0x0871dfb7, value124, at Thumb 0x080d25fc, guest frame28885. The native 608-frame pair separately counts one header read but does not expose its address.
+- Evidence: docs/changes/2026-11-06-observe-next-cheat-derived-remedi-dialogue.json; target/validation/units/e130-parameter-positive-event-context-89kcbs4a/, e130-parameter-positive-first8-zy8no8eu/, e130-parameter-read-watch-corrected-xzrt0lna/. First watch 9gkxncyh used unsupported legacy timeout option and issued no search; corrected syntax passed.
+- Limits: inherited cheat ancestry and one interpreter invocation, not cheat-free reachability or native address attribution. Sol consultation /root/sol_parameter_record requested gpt-6.1-sol xhigh; effective settings and primary model/effort unconfirmed. Linux, USA and native Windows pending; no performance measurements.
+
+### ROMDATA-04-ROYAL-VALLEY-NORMAL-INPUT-PARAMETER-PAIR
+
+- Outcome: completed scoped normal-input positive/full pair; parent remains partial. From a supplied EUR save, ordinary inputs with no new cheat defeat Llednar and reach the next battle confirmation. A plus 600 neutral frames yields one parameter header read and one record, with CLI/interpreter endpoint image equal; the 608-frame Wine native raw/managed pair passes state, clock, images, OAM, dispatch and five audio streams.
+- Evidence: docs/changes/2026-11-06-inspect-normal-final-battle-actions.json; target/validation/units/e130-clean-battle2-start-kko2z_mf/, e130-normal-final-confirm-68sozvmg/, e130-normal-positive-pair-863o0cng/.
+- Limits: source-save earlier cheat ancestry unknown; no global coverage. Prebuilt test matches post-E130 receipt, full source snapshot unavailable. Linux, USA and native Windows pending; no performance measurement. Failed sandbox Wine attempt pee8yu_k retained; owned leases released after host wineserver wait.
+
+### ROMDATA-04-ROYAL-VALLEY-NORMAL-INPUT-PARAMETER-117-WATCH
+
+- Outcome: completed scoped interpreter witness. After eight-frame A prefix, the Wine interpreter watch hits record117 header 0x0871dfb7, value124, at Thumb 0x080d25fc and guest frame45107; native pair aggregate does not establish its address. No new cheat, supplied source-save ancestry unknown.
+- Evidence: docs/changes/2026-11-06-inspect-normal-final-battle-actions.json; target/validation/units/e130-normal-watch-case-bjtp5frl/, e130-normal-read-watch-4bo1a6k1/. Initial watch swm8jjxe used the pair test's frame index rather than debugger initial frame and is retained.
+- Limits: global coverage and fully cheat-free source unproved; Linux, USA and native Windows pending, no metrics. Primary and Sol model/effort effective settings unconfirmed.

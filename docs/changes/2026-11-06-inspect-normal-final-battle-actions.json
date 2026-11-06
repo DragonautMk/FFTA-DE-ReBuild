@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-06",
+  "slug": "inspect-normal-final-battle-actions",
+  "title": "Observe a parameter record after normal final-battle inputs",
+  "kind": "changed",
+  "platforms": [
+    "Windows executable on Wine; EUR"
+  ],
+  "changes": [
+    "Document an EUR normal-input final-battle route reaching a positive managed parameter-record read and a full raw/managed Wine comparison."
+  ],
+  "validation": [
+    "Wine replay from the retained first-battle checkpoint opens Action, Black Magic and Firaga targeting with original ROM and save inputs protected; no cheat or forced state changes were applied during this continuation.",
+    "The replay helper did not observe parameter-record counters.",
+    "Normal inputs cast Firaga at Stin, move Marche, and reach Montblanc's command menu; no parameter counters were observed.",
+    "After returning to Montblanc's retained turn checkpoint, normal inputs move him and cast Firaga at Stin; a level-up animation and subsequent enemy actions were observed. Parameter counters were not measured.",
+    "On Marche's next turn, ordinary movement and Fight target the game-identified Llednar; the endpoint shows his dialogue, without proof of clearance or parameter use.",
+    "Normal inputs advance after Llednar's dialogue to Remedi's palace dialogue, with no new cheat or forced state changes; parameter reads were not observed by the helper.",
+    "Normal dialogue and Start reach second-battle confirmation; an eight-frame A and 600 neutral frames yield one managed parameter header read and one record, with the endpoint matching the interpreter (e130-normal-final-confirm-68sozvmg).",
+    "The 608-frame native raw/managed Wine pair passes state, clock, images, OAM, dispatch and five audio streams while independently counting one parameter header read and one record (e130-normal-positive-pair-863o0cng).",
+    "A separate Wine interpreter watch after the eight-frame A prefix reads record 117 header 0x0871dfb7, value 124, at Thumb 0x080d25fc and frame 45107 (e130-normal-read-watch-4bo1a6k1); aggregate native pair counters do not establish the address."
+  ],
+  "limitations": [
+    "The source save’s earlier cheat history is unknown; global record, consumer and event coverage remain unverified. The paired test executable matches its post-E130 build receipt but its complete source snapshot is unavailable. Linux, USA and native Windows remain pending; no performance measurements.",
+    "Two initial dialogue continuations repeated inputs already covered by an advanced retained checkpoint; the subsequent navigation began from that checkpoint.",
+    "The first Wine run was blocked by a read-only runtime directory; its owned leases were recovered after a successful host wineserver wait and Wine validation resumed. A first watch attempt used the pair test frame index, one above the debugger start, and was retained as a failure."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-06-observe-next-cheat-derived-remedi-dialogue.json"
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "date": "2026-11-06",
+  "slug": "observe-next-cheat-derived-remedi-dialogue",
+  "title": "Observe next cheat-derived Remedi dialogue",
+  "kind": "changed",
+  "platforms": [
+    "Windows executable on Wine; EUR"
+  ],
+  "changes": [
+    "Document the next bounded parameter-record observation during Remedi dialogue, preserving inherited cheat provenance."
+  ],
+  "validation": [
+    "A protected cheat-derived checkpoint was authenticated and continued by six ordinary A presses with no further cheat.",
+    "The E130 Wine CLI observed zero parameter-record reads and records over the 756-frame continuation and matched the interpreter endpoint image at 240-pixel width.",
+    "The CLI executable matched its recorded successful build hash; ROM-data source files matched the prior E130 build receipt.",
+    "A second linked six-A EUR Wine continuation also reported zero parameter reads and records over 756 frames, with a matching endpoint image and no further cheat.",
+    "A third linked six-A EUR Wine continuation reports zero parameter reads and records, matching endpoint images, and a scene transition without further cheat.",
+    "A linked 600-frame neutral EUR Wine continuation reached new dialogue, with zero parameter reads or records, matching endpoint images and no further cheat.",
+    "Six further A inputs reach another transition; EUR Wine again reports zero parameter reads and records with matching endpoint images.",
+    "A further 600 neutral frames reach dialogue with zero parameter reads and records and matching endpoint images.",
+    "A fifth linked six-A dialogue window reports zero parameter reads and records with matching endpoint images.",
+    "A sixth six-A window reaches a battle deployment screen, with zero parameter reads and records and matching endpoint images.",
+    "Normal Start and 600 neutral frames reach the Begin battle confirmation with zero parameter reads and records and matching endpoint images.",
+    "Confirming Yes followed by 600 neutral frames produces one parameter header read and one record used; Wine CLI and interpreter endpoint images match.",
+    "A 608-frame EUR Wine native raw/managed pair passes full state/clock, images, OAM, dispatch and five audio streams while independently observing one parameter header read and record.",
+    "Wine source and endpoint inspection associates event 217 with candidate parameter 117; the first eight confirmation frames have zero parameter reads. This does not identify the positive read.",
+    "A separate isolated Wine interpreter watch observes record 117 header 0x0871dfb7, value 124, at instruction 0x080d25fc and guest frame 28885; the native aggregate counter does not identify its address."
+  ],
+  "limitations": [
+    "This is a bounded negative, not a full machine-state pair, unmodified playthrough or proof that later dialogue does not use the resource. Linux, USA and native Windows remain pending; no performance measurements.",
+    "An initial Windows-path failure occurred before guest execution. A second attempt had mismatched widescreen settings; its interpreter continuation was reused in the corrected CLI check.",
+    "The prebuilt test matches its post-E130 build receipt, whose full source snapshot is unavailable. A fresh test build could not find the MinGW dlltool; failed diagnostics are retained.",
+    "The first watch attempt used an unsupported legacy timeout option and never issued its search; the corrected case passed."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-04-integrate-default-selectors-6c1e78.json"
+  ]
+}

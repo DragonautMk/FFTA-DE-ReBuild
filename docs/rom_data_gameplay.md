@@ -5668,6 +5668,64 @@ The same 756-frame dialogue input observed by the production E130 EUR Wine
 CLI reports zero parameter reads and records; the endpoint image matches the
 helper. This is a bounded result from a cheat-derived ancestor, not a whole
 state pair (`e130-ch0341-remedi-dialogue-cli-rv_nf881/`).
+A further six normal A presses continue from that linked checkpoint without
+new cheat writes. The production E130 EUR Wine CLI reports zero parameter
+reads and records over 756 frames and matches the interpreter endpoint image.
+This is a bounded negative from the same cheat-derived ancestry, not a full
+state comparison. An initial runner failed before guest execution due to an
+incorrect Windows path. A second execution used mismatched widescreen settings
+and failed image comparison; its interpreter continuation was retained and
+reused for the corrected 240-pixel CLI comparison. The prior execution and
+both diagnostics remain retained. Evidence: `target/validation/units/`
+`e130-ch0341-remedi-next-2noigxqj/`, `e130-ch0341-remedi-next-8ar_sj07/`
+and `e130-ch0341-remedi-next-corrected-sf_82ei4/`. A second linked six-A
+continuation likewise reports zero reads and records over 756 frames, with a
+matching endpoint image and no further cheat writes
+(`e130-ch0341-remedi-next2-9bktbfkt/`). A third linked six-A window also
+reports zero reads and records, with matching endpoint images and no further
+cheat; its endpoint shows a scene transition
+(`e130-ch0341-remedi-next3-j51vbt5o/`). A subsequent 600 neutral frames
+reach a new dialogue and again yield zero parameter reads and records, with
+matching endpoint images and no further cheat
+(`e130-ch0341-remedi-neutral-4wdu4xf_/`). Six further A inputs advance the
+new dialogue to another transition; the E130 Wine CLI reports zero parameter
+reads and records, with matching endpoint images and no further cheat
+(`e130-ch0341-remedi-next4-lo0j5s2d/`). A further 600 neutral frames reach
+dialogue, also with zero reads and records and matching endpoint images
+(`e130-ch0341-remedi-neutral2-94brol1g/`). Six additional dialogue inputs
+also produce no parameter reads or records, with matching endpoint images
+(`e130-ch0341-remedi-next5-ui6j0xrz/`). Six further A inputs reach a battle
+deployment screen; the Wine CLI again reports zero parameter reads and records
+and its endpoint image matches (`e130-ch0341-remedi-next6-ux997ti6/`). A normal Start input followed by 600
+neutral frames reaches the visible Begin battle confirmation, with zero
+parameter reads and records and matching endpoint images
+(`e130-ch0341-final-deployment-rwq263vh/`). Confirming Yes and continuing
+600 neutral frames produces a positive observation: the E130 Wine CLI reports
+one parameter-record header byte read and one record used. The endpoint image
+matches the interpreter. This checkpoint retains its inherited cheat ancestry;
+the positive observation does not by itself establish an unmodified playthrough
+(`e130-ch0341-final-confirm-n_gtb4e5/`). A separate 608-frame native
+raw/managed pair of the same input passes full state/clock, images, OAM,
+dispatch and five audio streams, and independently observes the same single
+header read and record. The prebuilt Windows test executable matches its build
+receipt and was built after E130; that receipt does not preserve a complete
+source snapshot. A fresh test build could not find the MinGW `dlltool` in the
+current environment. A separate Wine check finds no parameter read during the
+first eight frames of the confirmation. Authenticated saved endpoints both
+show event ordinal 217; the ROM row associates that ordinal with parameter
+index 117; endpoint values alone do not identify the read. A separate bounded
+Wine interpreter watch on an isolated copy applies the same eight-frame A prefix
+and observes byte `0x0871dfb7` (record 117 header, value 124) at instruction
+`0x080d25fc` and guest frame 28885. The native pair independently records one
+header read but does not report its address. The matched pair and interpreter
+watch remain cheat-derived and do not prove an unmodified ordinary route. Evidence: `target/validation/units/`
+`e130-parameter-positive-pair-qxc7cb30/`,
+`e130-parameter-positive-first8-zy8no8eu/`,
+`e130-parameter-positive-event-context-89kcbs4a/`,
+`e130-parameter-read-watch-corrected-xzrt0lna/`, and failed build units
+`e130-parameter-positive-scene-build-xxuugo6q/` and
+`e130-parameter-positive-scene-build-gkvigvnj/`. Linux, USA and native Windows
+remain unverified; no performance measurements were made.
 
 A later guarded source join checks all 512 physical mission records and their
 referenced event keys against these five direct mode-2 candidates. None of the
@@ -6761,3 +6819,60 @@ existing native cache, so this does not establish general native/interpreter
 equivalence. Evidence is in `target/rom-data-6df4d4-bank0-field4-pair/`.
 Linux, USA and native Windows remain to verify. No performance measurements
 were made.
+
+## Normal-input continuation toward the final-battle event
+
+From the retained user-supplied IN-04/EUR route, no cheat or forced memory,
+RNG or task changes were applied by this continuation. A previously retained
+first-battle checkpoint (`e130-royal-battle-dialogue3-wkwtlqfi/`) has Marche's
+turn open. Normal Down/A inputs select Action, then Black Magic and Firaga; the
+target-selection screen opens. A single Left input and other cursor probes
+identify Stin and Laetitia; a Firaga preview on Laetitia also highlights Marche,
+so the continuation instead targets Stin. Normal confirmation executes the spell,
+reducing Marche's displayed MP from 85 to 61. Marche moves two tiles left and
+finishes the turn; Montblanc's command menu appears. A first targeting inspection
+found Stin outside reach, so the continuation returns to the retained turn
+checkpoint, moves Montblanc, and casts Firaga at Stin; the observed forecast was
+216 damage at 95% and a level-up animation followed. After the turn, 1,200 neutral
+frames show the opposing side acting. Marche's second turn moves adjacent to
+the game-identified Llednar and executes Fight; the following screenshot shows
+Llednar's dialogue. Normal dialogue inputs and neutral frames then reach Remedi's
+palace dialogue, which says that Llednar is gone. No further cheat or state forcing
+was applied to the continued copy. The navigation helper did not report parameter counters. Screenshots and
+checkpoints are retained under `e130-battle-llednar-attack-8zstmxnt/`,
+`e130-battle-aftermath-next4-ujsqpdiv/` and
+`e130-battle-palace-neutral2-wnffngyj/`. The supplied save's earlier cheat
+history remains unknown. The retained screenshots and checkpoints identify the selected inputs but this
+helper does not report parameter counters (`e130-battle-stin-cast-z26ex8v8/`,
+`e130-battle-turn-confirm-93t0v5_d/`, `e130-battle-mont-stin-cast-_13w5jvt/`,
+`e130-battle-enemy-next-9hz_v10v/`, `e130-battle-llednar-attack-8zstmxnt/`, as well as
+`e130-battle-action-menu-micqao95/`, `e130-battle-action-open-650u5d7_/`,
+`e130-battle-magic-menu-8m0w3stj/`, `e130-battle-magic-open-__i3t415/`,
+`e130-battle-firaga-menu-s_uaqo4k/`, `e130-battle-firaga-target-q5owbxlp/`,
+`e130-battle-firaga-left-aol8a27l/` under `target/validation/units/`). The
+private replay helper did not observe parameter-resource counters in these
+windows; the source save's earlier cheat history is not established by its
+provenance. Two initial dialogue continuations inadvertently repeated inputs
+from older retained checkpoints (`e130-unmodified-battle-dialogue-un8z1c9r/`,
+`e130-unmodified-battle-next-zb3l_zu9/`); later navigation starts from the
+more advanced retained checkpoint.
+
+Continuing with ordinary dialogue and Start reaches the second-battle Begin
+battle confirmation (`e130-clean-battle2-start-kko2z_mf/`). Eight frames of A
+and 600 neutral frames produce one E130 parameter header-byte read and one
+record used; the Wine managed CLI endpoint image matches the interpreter
+(`e130-normal-final-confirm-68sozvmg/`). The 608-frame native raw/managed Wine
+pair independently passes state, clock, images, OAM, dispatch and five audio
+streams with the same aggregate one-read/one-record observation
+(`e130-normal-positive-pair-863o0cng/`). Those aggregate counters do not identify
+the address or prove global record/consumer coverage. A separate Wine interpreter
+watch, after the same eight-frame A prefix, hits record 117 header address
+`0x0871dfb7` (value 124) at Thumb `0x080d25fc`, frame 45107
+(`e130-normal-read-watch-4bo1a6k1/`); it does not attribute the native pair
+counter to an address. The initial watch attempt used the pair test frame
+index, one above the debugger start, and is retained as a failed diagnostic
+(`e130-normal-read-watch-swm8jjxe/`). The pair executable
+matches its post-E130 build receipt, but its full source snapshot is unavailable.
+No cheats were added in this continuation; the supplied save's earlier ancestry
+is unknown, so a fully cheat-free source-save claim remains unproved. Linux, USA
+and native Windows remain unverified; no performance measurements were made.

@@ -38,9 +38,9 @@ termination of another owner's process or changing another thread's goal state.
 - Outcome: partial
 - Verified: E130 101 resources/102 files, 63 compact banks; managed and translated layered initializer and CLI create/reuse/verify PASS under EUR Wine. Current: target/validation/units/e130-layered-obj-cli-current-rbr9ukkp/work/resources/. E129 retained for comparison with its accepted 38 regressions, marker and startup proofs.
 - Missing: unmigrated resources/consumers, missing ordinary-use evidence, ABI/global extent/indirect calls and mod phases ROMDATA-06/07; Linux/USA/native Windows/new32:9 remain distinct. EUR, reduced Wine scope, no performance/space measurements; originals and personal saves unchanged.
-- Selection: `ROMDATA-04-PARAMETER-RECORDS27-ORDINARY` partial. User asked about cheat persistence: CH-0341 catalog and write trace retained; private research checkpoints have explicit cheat provenance. Remedi six-A window reports zero reads and matches CLI image (rv_nf881). Next: reauthenticate the rebuilt Windows runtime using cheat-session-catalog-win-release-build-p3xzbi6x, then continue Remedi dialogue from 328r3omo and measure new windows; positive pair remains open.
+- Selection: `ROMDATA-04-PARAMETER-RECORDS27-ORDINARY` partial. Normal-input EUR Wine one-read pair PASS (863o0cng), record117 interpreter watch (4bo1a6k1). No new cheat; save ancestry unknown. Missing: cheat-free provenance/global coverage. Next: select another concrete EUR criterion; do not repeat pair. Sol xhigh requested, effective unknown. No metrics.
 - Resume: [validation recovery checklist](ROM_DATA_VALIDATION_RECOVERY_TODO.md) for skipped checks; [ROM_DATA_TODO](ROM_DATA_TODO.md), only the selected criterion's section (ROMDATA-01/02/03/04/05/06/07); [inventory](ROM_DATA_INVENTORY.md). Do not read the whole TODO. Children retain their IDs and limits:
-  - `ROMDATA-04-PARAMETER-RECORDS27-ORDINARY`: source/model/runtime/CLI accepted, ordinary positive and pair open. User confirms Ambervale; recorded movement and post-save A windows are negative (inl3r0yl/l_97lwxn), not global absence. `docs/rom_data_gameplay.md`.
+  - `ROMDATA-04-PARAMETER-RECORDS27-ORDINARY`: source/model/runtime/CLI accepted; normal-input positive/full pair pass from save of unknown ancestry, cheat-free ordinary proof open. User confirms Ambervale; recorded movement and post-save A windows are negative (inl3r0yl/l_97lwxn), not global absence. `docs/rom_data_gameplay.md`.
   - Localized table graphics: scoped ordinary trigger and pair accepted; aggregate counters do not identify the three groups, and all-bank/all-group/consumer coverage remains open. `docs/rom_data_ui_graphics.md`, ordinary table extension section.
   - `ROMDATA-05-DYNAMIC-RAW-ORDINARY-REACHABILITY` and `ROMDATA-01-LOCALIZED-RAW-DYNAMIC-DOMAIN`: conditional fragments/paths accepted; global domain and ordinary invocation unproven. Unit320 negative closed; later state2/state4/selector-witnesses diagnosis closed without a scene. Archive 59..75 and 789..866; no blind navigation.
   - `ROMDATA-01-OBJ-REMAINING-DRAW-ROOTS`, `ROMDATA-01-OBJ-REMAINING-CONSTRUCTOR-SOURCES`, `ROMDATA-01-OBJ-GRAPHICS-PAYLOADS`: authenticated increments accepted; global inventory/remaining consumers open. Do not repeat the broad experiment with 61 truncations. Archive 2853..2874, then only the selected family's record.
@@ -204,9 +204,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 - Godot: planned assessment complete, implementation deferred, not a current dependency. AndroidPort is separate; originals/ROM/BIOS/private catalogs/saves/recordings stay out of commits/packages.
 
 ## Final handover
-- Task: USER-FINAL-SNAPSHOTS completed under DEBUG-SAVES-EXPANSION.
-- Last verified result: three user-supplied EUR states privately archived, cataloged and loaded; isolated interpreter cases prepared without gameplay.
-- Remaining work: user-reported phase labels and third-phase cheat behavior remain unverified by replay; parent tasks remain partial.
-- Errors or blockers: none for this archival.
-- Next action: use private catalog when a relevant debug task is requested.
-- References: docs/debug_catalog.md; docs/changes/2026-11-06-archive-user-final-battle-snapshots.json.
+- Task: ROMDATA-04-PARAMETER-RECORDS27-ORDINARY partial.
+- Last verified result: EUR Wine normal-input 608-frame raw/managed pair PASS and interpreter watch record117; source-save earlier ancestry unknown.
+- Remaining work: fully cheat-free provenance, global extent and other ROMDATA criteria; Linux/USA pending.
+- Errors or blockers: MinGW dlltool absent; pair binary source snapshot incomplete; model/effort unconfirmed. Sandbox Wine and initial debugger frame failed; corrected runs PASS.
+- Next action: select a different concrete unverified EUR criterion without repeating accepted pair.
+- References: docs/rom_data_gameplay.md; docs/changes/2026-11-06-inspect-normal-final-battle-actions.json.

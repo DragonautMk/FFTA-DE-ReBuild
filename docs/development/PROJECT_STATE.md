@@ -1621,8 +1621,16 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   [Ordinaryreachabilitypartial](../rom_data_gameplay.md#ordinary-sparse-parameter-record-reachability-remains-partial)
   now has589source8f0c02b7 passive15stats/5lineguard/inversepreimages/coreunchanged.
   Eleven authorized normal captures now have all15counts0, including SprohmInfo,
-  source-guided Nubswood navigation/travel and CyrilPub entry; no positive suffix/
-  CLI/fullpair. Six additional selected bank gates are not liveness proof.
+  source-guided Nubswood navigation/travel and CyrilPub entry; no cheat-free
+  positive suffix/CLI/full pair. A later cheat-derived EUR battle confirmation
+  has one parameter header read and a 608-frame Wine raw/managed full pair;
+  an interpreter watch identifies record 117 at `080d25fc` on that route. A
+  separate normal-input continuation from the supplied EUR save, with no new
+  cheat but unknown earlier save ancestry, reaches the same battle confirmation:
+  Wine observes one header read and passes a 608-frame raw/managed full pair;
+  an independent interpreter watch identifies record 117 at `080d25fc`.
+  The prebuilt pair test has incomplete source-build provenance. Six additional
+  selected bank gates are not liveness proof.
   One existingCLI neutral render inspection exit0 saves/adopts no state; readonly
   saved classic/wide/nativeUI projections show no readable Pub menu. Stop blind
   Pub/world navigation, no RNG resampling or inferred mission IDs.9sourcewindows/

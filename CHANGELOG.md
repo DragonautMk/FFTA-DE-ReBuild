@@ -48,6 +48,73 @@ Documentation: [TASK_HANDOFF.md](docs/development/TASK_HANDOFF.md).
 
 [Change record](docs/changes/2026-11-06-record-user-second-phase-cheat-observation.json)
 
+## 2026-11-06 — Observe next cheat-derived Remedi dialogue
+
+Type: changed. Platforms: Windows executable on Wine; EUR.
+
+**Changes**
+
+- Document the next bounded parameter-record observation during Remedi dialogue, preserving inherited cheat provenance.
+
+**Validation**
+
+- A protected cheat-derived checkpoint was authenticated and continued by six ordinary A presses with no further cheat.
+- The E130 Wine CLI observed zero parameter-record reads and records over the 756-frame continuation and matched the interpreter endpoint image at 240-pixel width.
+- The CLI executable matched its recorded successful build hash; ROM-data source files matched the prior E130 build receipt.
+- A second linked six-A EUR Wine continuation also reported zero parameter reads and records over 756 frames, with a matching endpoint image and no further cheat.
+- A third linked six-A EUR Wine continuation reports zero parameter reads and records, matching endpoint images, and a scene transition without further cheat.
+- A linked 600-frame neutral EUR Wine continuation reached new dialogue, with zero parameter reads or records, matching endpoint images and no further cheat.
+- Six further A inputs reach another transition; EUR Wine again reports zero parameter reads and records with matching endpoint images.
+- A further 600 neutral frames reach dialogue with zero parameter reads and records and matching endpoint images.
+- A fifth linked six-A dialogue window reports zero parameter reads and records with matching endpoint images.
+- A sixth six-A window reaches a battle deployment screen, with zero parameter reads and records and matching endpoint images.
+- Normal Start and 600 neutral frames reach the Begin battle confirmation with zero parameter reads and records and matching endpoint images.
+- Confirming Yes followed by 600 neutral frames produces one parameter header read and one record used; Wine CLI and interpreter endpoint images match.
+- A 608-frame EUR Wine native raw/managed pair passes full state/clock, images, OAM, dispatch and five audio streams while independently observing one parameter header read and record.
+- Wine source and endpoint inspection associates event 217 with candidate parameter 117; the first eight confirmation frames have zero parameter reads. This does not identify the positive read.
+- A separate isolated Wine interpreter watch observes record 117 header 0x0871dfb7, value 124, at instruction 0x080d25fc and guest frame 28885; the native aggregate counter does not identify its address.
+
+**Limitations**
+
+- This is a bounded negative, not a full machine-state pair, unmodified playthrough or proof that later dialogue does not use the resource. Linux, USA and native Windows remain pending; no performance measurements.
+- An initial Windows-path failure occurred before guest execution. A second attempt had mismatched widescreen settings; its interpreter continuation was reused in the corrected CLI check.
+- The prebuilt test matches its post-E130 build receipt, whose full source snapshot is unavailable. A fresh test build could not find the MinGW dlltool; failed diagnostics are retained.
+- The first watch attempt used an unsupported legacy timeout option and never issued its search; the corrected case passed.
+
+Documentation: [2026-11-04-integrate-default-selectors-6c1e78.json](docs/changes/2026-11-04-integrate-default-selectors-6c1e78.json).
+
+[Change record](docs/changes/2026-11-06-observe-next-cheat-derived-remedi-dialogue.json)
+
+## 2026-11-06 — Observe a parameter record after normal final-battle inputs
+
+Type: changed. Platforms: Windows executable on Wine; EUR.
+
+**Changes**
+
+- Document an EUR normal-input final-battle route reaching a positive managed parameter-record read and a full raw/managed Wine comparison.
+
+**Validation**
+
+- Wine replay from the retained first-battle checkpoint opens Action, Black Magic and Firaga targeting with original ROM and save inputs protected; no cheat or forced state changes were applied during this continuation.
+- The replay helper did not observe parameter-record counters.
+- Normal inputs cast Firaga at Stin, move Marche, and reach Montblanc's command menu; no parameter counters were observed.
+- After returning to Montblanc's retained turn checkpoint, normal inputs move him and cast Firaga at Stin; a level-up animation and subsequent enemy actions were observed. Parameter counters were not measured.
+- On Marche's next turn, ordinary movement and Fight target the game-identified Llednar; the endpoint shows his dialogue, without proof of clearance or parameter use.
+- Normal inputs advance after Llednar's dialogue to Remedi's palace dialogue, with no new cheat or forced state changes; parameter reads were not observed by the helper.
+- Normal dialogue and Start reach second-battle confirmation; an eight-frame A and 600 neutral frames yield one managed parameter header read and one record, with the endpoint matching the interpreter (e130-normal-final-confirm-68sozvmg).
+- The 608-frame native raw/managed Wine pair passes state, clock, images, OAM, dispatch and five audio streams while independently counting one parameter header read and one record (e130-normal-positive-pair-863o0cng).
+- A separate Wine interpreter watch after the eight-frame A prefix reads record 117 header 0x0871dfb7, value 124, at Thumb 0x080d25fc and frame 45107 (e130-normal-read-watch-4bo1a6k1); aggregate native pair counters do not establish the address.
+
+**Limitations**
+
+- The source save’s earlier cheat history is unknown; global record, consumer and event coverage remain unverified. The paired test executable matches its post-E130 build receipt but its complete source snapshot is unavailable. Linux, USA and native Windows remain pending; no performance measurements.
+- Two initial dialogue continuations repeated inputs already covered by an advanced retained checkpoint; the subsequent navigation began from that checkpoint.
+- The first Wine run was blocked by a read-only runtime directory; its owned leases were recovered after a successful host wineserver wait and Wine validation resumed. A first watch attempt used the pair test frame index, one above the debugger start, and was retained as a failure.
+
+Documentation: [2026-11-06-observe-next-cheat-derived-remedi-dialogue.json](docs/changes/2026-11-06-observe-next-cheat-derived-remedi-dialogue.json).
+
+[Change record](docs/changes/2026-11-06-inspect-normal-final-battle-actions.json)
+
 ## 2026-11-06 — Make cheat activation and favorites easier to find
 
 Type: changed. Platforms: Linux / X11 (virtual display).
