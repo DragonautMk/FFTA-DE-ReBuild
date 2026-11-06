@@ -105,9 +105,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 - State: active
 - Outcome: partial
-- Verified: source/preview/arm/disarm, filters and named presets. CHEAT-INTERFACE adds favorites shortcut, contextual disarm and guided source/preview with stable managed identity; 130 Linux menu tests and CH-0341 X11 GUI passed, portable runtime installed.
+- Verified: source/preview/arm/disarm, filters, named presets and guided CHEAT-INTERFACE. CHEAT-COMPACT-NAV adds compact catalog, keyboard shortcuts and held vertical repeat; 133 Linux menu tests and CH-0341 X11 GUI passed, portable runtime installed.
 - Missing: validated values/ranges and broader game/device behavior.
-- Resume: select a missing criterion; do not repeat the accepted preset or interface flow. `docs/changes/2026-11-06-improve-cheat-catalog-controls.json`.
+- Resume: select a missing criterion; do not repeat accepted preset/interface/navigation proofs. `docs/changes/2026-11-06-compact-cheat-navigation.json`.
 
 ### DBG2-22
 
@@ -202,9 +202,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 - Godot: planned assessment complete, implementation deferred, not a current dependency. AndroidPort is separate; originals/ROM/BIOS/private catalogs/saves/recordings stay out of commits/packages.
 
 ## Final handover
-- Task: CHEAT-INTERFACE completed under partial DBG2-20.
-- Last verified result: 130 Linux menu tests and real CH-0341 X11 favorites/source/preview/arm/disarm GUI flow passed; runtime installed in Linux portable app.
+- Task: CHEAT-COMPACT-NAV completed under partial DBG2-20.
+- Last verified result: compact layout, keyboard shortcuts and held Up/Down passed 133 Linux menu tests, repeat-timer test and real-catalog X11 GUI; runtime installed in Linux portable app.
 - Remaining work: DBG2-20 values/ranges and device/game verification; earlier recovery criteria remain open.
-- Errors or blockers: earlier GUI automation navigated the wrong atlas section; failed unit retained. Existing debug copies retain old pinned executables.
-- Next action: reopen the app and create a new debug copy to use the new interface; resume other work only as requested.
-- References: docs/changes/2026-11-06-improve-cheat-catalog-controls.json; target/validation/units/cheat-interface-final-jo6if8xe/; target/validation/units/cheat-interface-gui-final-uqbzm4xm/.
+- Errors or blockers: physical controllers, Wayland and native Windows not tested; existing debug copies retain old executables.
+- Next action: reopen the app and create a new debug copy for the updated menu; resume other work only as requested.
+- References: docs/changes/2026-11-06-compact-cheat-navigation.json; target/validation/units/cheat-compact-tests-4cp4dcgm/; target/validation/units/cheat-compact-gui-u74cki34/.

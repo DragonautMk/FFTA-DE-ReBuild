@@ -53,6 +53,30 @@ Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/develo
 
 [Change record](docs/changes/2026-11-06-improve-cheat-catalog-controls.json)
 
+## 2026-11-06 — Make cheat browsing compact and repeatable
+
+Type: changed. Platforms: Linux / X11 (virtual display).
+
+**Changes**
+
+- Expand the cheat catalog area, compact actions into two rows and display contextual keyboard shortcuts beneath it; keep drawing, pointer hit testing and accessibility focus on shared geometry.
+- Add Ctrl+D details, Ctrl+P favorite, Ctrl+G favorites and Ctrl+Enter management/disarm, alongside existing Ctrl+F search; block these shortcuts inside editors and previews and retain source/preview validation.
+- Repeat held up/down navigation with a 350 ms initial delay and 90 ms interval for keyboard and controller inputs; confirmation and cancellation remain rising-edge events, with repeat disabled during binding capture.
+
+**Validation**
+
+- Linux release: 133 menu tests passed with one ignored; focused repeat-timer test passed. Both English and Italian locale catalogs passed consistency checks.
+- Isolated Linux X11 GUI verified held Up/Down in the main menu and cheat list, Ctrl+F/D/P/G/Enter, pointer actions and the explicit CH-0341 source/preview/arm/disarm flow; original ROM, save, checkpoint and catalog were protected. Captured and inspected the enlarged catalog and shortcut legend.
+- Installed the verified Linux runtime into the portable application with guarded backup and an updated manifest.
+
+**Limitations**
+
+- GUI checks used Xvfb and synthesized keyboard/mouse; physical controllers, Wayland and native Windows were not tested. Device/game-effect verification and broader DBG2-20 criteria remain open.
+
+Documentation: [cheats.md](docs/cheats.md), [menu_clan_atlas.md](docs/menu_clan_atlas.md).
+
+[Change record](docs/changes/2026-11-06-compact-cheat-navigation.json)
+
 ## 2026-11-05 — Verify ordinary senary compact OBJ selector 2
 
 Type: docs. Platforms: EUR Windows executable under Wine.

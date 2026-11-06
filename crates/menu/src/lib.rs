@@ -40,7 +40,7 @@ mod controls;
 mod debug_unlock;
 pub use debug_tool::{DebugTool,ToolRequest,ToolField,ToolFieldKind};
 pub use tool_inputs::ContentSlot;
-pub use content_selector::{CheatFilter,ContentEntry,ContentViewPreferences,ContentHistory};
+pub use content_selector::{CheatFilter,CheatShortcut,ContentEntry,ContentViewPreferences,ContentHistory};
 pub use cheat_management::{Source as CheatSource, Request as CheatRequest};
 pub use debug_catalog::CatalogEntry;
 pub use save_backups::BackupInfo;
@@ -911,7 +911,7 @@ impl Menu {
             return diagnostics::Focus{page:format!("{:?}",self.page),selected:index as usize,label:self.tr_format("Device: {device}",&[("device",self.tr(INPUT_TAB_LABELS[index as usize]).into())]),capture:None,panel:[b.x,b.y,b.w,b.h],first_visible:0,dropdown:None,selected_bounds:Some([r.x,r.y,r.w,r.h])};
         }
         if self.tool_active() || self.content_active() || self.cheat_active(){
-            let b=clan_atlas::geometry(w,h).body;
+            let b=clan_atlas::page_geometry(self.page,w,h).body;
             let mut focus=if self.tool_active(){self.tool.focus(b.w,b.h)}else if self.cheat_active(){self.cheats.focus(b.w,b.h)}else{self.content.focus(b.w,b.h)};
             if let Some(capture)=focus.capture.as_mut() {
                 if matches!(capture.as_str(), "Choice: arrows adjust · OK applies · Cancel discards" | "Filter choice: arrows · OK applies · Cancel discards") {
@@ -955,6 +955,10 @@ impl Menu {
         self.cheats.set("Cheat catalog".into(),entries,message,0);
     }
     pub fn cheat_active(&self)->bool{self.page==Page::CheatCatalog}
+    pub fn cheat_shortcuts_available(&self)->bool{self.cheat_active() && self.cheats.cheat_shortcuts_available()}
+    pub fn cheat_shortcut(&mut self,shortcut:CheatShortcut)->Option<MenuAction>{
+        if self.cheat_shortcuts_available(){self.cheats.cheat_shortcut(shortcut)}else{None}
+    }
     pub fn cheat_highlight(&self)->Option<&str>{self.cheats.cheat_managed_id().or_else(||self.cheats.highlighted_id())}
     pub fn cheat_favorites(&self)->Vec<String>{self.cheats.history().favorites}
     pub fn restore_cheat_favorites(&mut self, favorites:Vec<String>)->Result<(),String>{
@@ -1053,7 +1057,7 @@ impl Menu {
     }
     fn page_layout(&self, w: usize, h: usize) -> Layout {
         if clan_atlas::specialty(self.page) {
-            let b=clan_atlas::geometry(w,h).body;
+            let b=clan_atlas::page_geometry(self.page,w,h).body;
             let mut l=self.content_layout(b.w,b.h);l.panel_x+=b.x;l.panel_y+=b.y;l.rows_y+=b.y;l
         } else {clan_atlas::list_layout(self,w,h)}
     }
@@ -1469,7 +1473,7 @@ impl Menu {
     /// Pointer moved: highlight the row under it (ignored while a key
     /// capture is pending). `(x, y)` are frame pixels, `w`/`h` the frame size.
     pub fn hover(&mut self, x: usize, y: usize, w: usize, h: usize) {
-        let g=clan_atlas::geometry(w,h);
+        let g=clan_atlas::page_geometry(self.page,w,h);
         self.atlas.information_hover=self.capture.is_none()&&g.information.hit(x,y);
         if self.dropdown.is_some(){if let Some(dd)=self.dropdown.as_mut(){if let Some(i)=theme::dropdown_hit(dd,x,y,w,h){dd.index=i;}}return;}
         if self.capture.is_some(){return;}
@@ -1513,7 +1517,7 @@ impl Menu {
         av: &mut AvConfig,
     ) -> Option<MenuAction> {
         self.cancel_debug_unlock();
-        let g=clan_atlas::geometry(w,h);
+        let g=clan_atlas::page_geometry(self.page,w,h);
         if let Some(dd) = self.dropdown.as_ref() {
             let hit = theme::dropdown_hit(dd, x, y, w, h);
             if left {

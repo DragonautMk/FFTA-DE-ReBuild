@@ -1,4 +1,15 @@
 use super::*;
+
+#[test]
+fn cheat_page_expands_content_without_covering_the_key_legend() {
+    for (w,h) in [(854,480),(1280,720),(1920,1080)] {
+        let regular=geometry(w,h);
+        let cheat=page_geometry(Page::CheatCatalog,w,h);
+        assert!(cheat.body.h>regular.body.h);
+        assert!(cheat.body.y+cheat.body.h<=cheat.shortcuts.y);
+        assert!(cheat.shortcuts.y+cheat.shortcuts.h<=cheat.feedback.y);
+    }
+}
 use crate::{AvConfig, MenuAction, MenuInput};
 #[test]
 fn shell_is_bounded_and_fixed_for_all_supported_viewports() {

@@ -21309,3 +21309,10 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: favorites shortcut, clear activation/disarm state, guided explicit source and preview flow, localized summary and stable managed identity across filters. 130 Linux menu tests (1 ignored), 686 English/Italian strings and real CH-0341 X11 GUI flow passed. Verified runtime installed in the Linux portable copy with backups and updated manifest.
 - Evidence: docs/changes/2026-11-06-improve-cheat-catalog-controls.json; target/validation/units/cheat-interface-final-jo6if8xe/; target/validation/units/cheat-interface-gui-final-uqbzm4xm/.
 - Limits: Xvfb/keyboard/pointer only; physical controller, Wayland and native Windows unverified. Device and game-effect compatibility remain open; initial GUI navigation attempt retained diagnostics.
+
+### CHEAT-COMPACT-NAV
+
+- Outcome: completed
+- Verified criteria: enlarged cheat list, two-row actions and contextual shortcut legend; keyboard shortcuts preserve validation; up/down repeats with safe edge-only confirmation/cancellation. 133 Linux menu tests (1 ignored), one repeat-timer test and real CH-0341 X11 keyboard/mouse GUI passed. Verified runtime installed in Linux portable copy with backup and updated manifest.
+- Evidence: docs/changes/2026-11-06-compact-cheat-navigation.json; target/validation/units/cheat-compact-tests-4cp4dcgm/; target/validation/units/cheat-compact-gui-u74cki34/.
+- Limits: GUI used synthesized keyboard/mouse on Xvfb; physical controller, Wayland and native Windows unverified. Other DBG2-20 and recovery criteria remain partial.

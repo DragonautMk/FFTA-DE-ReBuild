@@ -101,6 +101,9 @@ tabs are also available. In references, ↑/↓ scrolls the list and ←/→ scr
 details; the wheel acts on the pointed area. Escape returns to the calling
 context or resumes from Overview. Holding Escape cancels only once: repeat
 events cannot close a dropdown and then resume the game.
+Holding Up or Down repeats navigation after a short delay on keyboard and
+controller; releasing or reversing the direction resets the timer. Confirm
+and Cancel still require a fresh press, and binding capture blocks navigation.
 
 **Details**, F1 or R3 opens a read-only view with full values, bindings, dates,
 messages and metadata for the selected context. Text scrolls internally; returning

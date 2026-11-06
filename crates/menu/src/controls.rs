@@ -25,6 +25,12 @@ impl Menu {
     }
 
     pub(super) fn control_hints(&self) -> [String; 2] {
+        if self.cheat_shortcuts_available() && !self.hints_gamepad() {
+            return [
+                self.tr("Up/Down scroll · Enter manage · Esc back · Ctrl+F search").into(),
+                self.tr("Ctrl+D details · Ctrl+P favorite · Ctrl+G favorites · Ctrl+Enter manage/disarm").into(),
+            ];
+        }
         if self.hints_gamepad() {
             let pad = |token| self.hint_button(token, "");
             [

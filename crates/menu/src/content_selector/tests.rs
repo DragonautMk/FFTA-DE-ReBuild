@@ -87,7 +87,7 @@ fn cheat_favorites_and_contextual_actions_work_with_mouse_and_controller() {
         ContentEntry{id:"CH-0002".into(),name:"CH-0002 · Second".into(),cheat_filter:Some(CheatFilter{armed:true,..Default::default()}),..Default::default()},
     ],String::new(),0);
     s.focus=7;s.handle(MenuInput::Confirm); // Favorite first entry.
-    let g=geometry(940,620);let button=g.actions[7];
+    let g=s.layout(940,620);let button=g.actions[7];
     assert_eq!(s.click(button[0]+2,button[1]+2,940,620,true),None);
     assert_eq!(s.collection,1);assert_eq!(s.visible.len(),1);assert_eq!(s.focus_label(),"Show all");
     s.handle(MenuInput::Confirm);assert_eq!(s.collection,0);assert_eq!(s.visible.len(),2);
@@ -95,6 +95,34 @@ fn cheat_favorites_and_contextual_actions_work_with_mouse_and_controller() {
     s.cursor=1;s.focus=8;
     assert_eq!(s.focus_label(),"Disarm");
     assert_eq!(s.handle(MenuInput::Confirm),Some(MenuAction::CheatRequest(super::super::CheatRequest::Disarm)));
+}
+
+#[test]
+fn cheat_shortcuts_use_existing_actions_and_are_disabled_in_editors() {
+    let mut s=Selector::default();s.cheat_mode=true;
+    s.set("Cheats".into(),vec![ContentEntry{id:"CH-0001".into(),name:"Example".into(),cheat_filter:Some(CheatFilter::default()),..Default::default()}],String::new(),0);
+    assert!(s.cheat_shortcuts_available());
+    assert_eq!(s.cheat_shortcut(CheatShortcut::Favorite),None);
+    assert!(s.favorites.contains("CH-0001"));
+    assert_eq!(s.cheat_shortcut(CheatShortcut::Favorites),None);assert_eq!(s.collection,1);
+    assert_eq!(s.cheat_shortcut(CheatShortcut::Activate),Some(MenuAction::CheatManage));
+    s.cheat_shortcut(CheatShortcut::Details);assert!(s.detail_mode);
+    assert!(!s.cheat_shortcuts_available());
+    assert_eq!(s.cheat_shortcut(CheatShortcut::Favorite),None);assert!(s.favorites.contains("CH-0001"));
+    s.detail_mode=false;s.start_search();assert!(!s.cheat_shortcuts_available());
+}
+
+#[test]
+fn cheat_catalog_uses_two_action_rows_and_gives_the_list_more_space() {
+    let mut s=Selector::default();s.cheat_mode=true;
+    for (w,h) in [(627,241),(940,360),(1280,480)] {
+        let normal=geometry(w,h);let compact=s.layout(w,h);
+        assert!(compact.visible>normal.visible,"{w}x{h}");
+        assert_eq!(compact.actions[0][1],compact.actions[3][1]);
+        assert_eq!(compact.actions[4][1],compact.actions[7][1]);
+        assert!(compact.list[1]+compact.list[3]<=compact.actions[0][1]);
+        for r in compact.actions {assert!(r[0]+r[2]<=w && r[1]+r[3]<=h);}
+    }
 }
 
 #[test]

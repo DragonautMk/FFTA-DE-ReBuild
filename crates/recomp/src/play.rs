@@ -174,6 +174,28 @@ impl MenuTapFilter {
     }
 }
 
+/// Repeat only vertical navigation; confirmation and cancellation remain edges.
+#[derive(Default)]
+struct MenuDirectionRepeat {
+    direction: i8,
+    next: Option<Instant>,
+}
+impl MenuDirectionRepeat {
+    fn poll(&mut self, up: bool, down: bool, enabled: bool, now: Instant) -> (bool, bool) {
+        let direction = if enabled { i8::from(down) - i8::from(up) } else { 0 };
+        if direction == 0 { self.direction = 0; self.next = None; return (false, false); }
+        if direction != self.direction {
+            self.direction = direction;
+            self.next = Some(now + Duration::from_millis(350));
+            return (false, false);
+        }
+        if self.next.is_some_and(|next| now >= next) {
+            self.next = Some(now + Duration::from_millis(90));
+            (direction < 0, direction > 0)
+        } else { (false, false) }
+    }
+}
+
 use gba_core::{Bus as _, Machine};
 
 /// Current render width (240 + 2 * extra columns). The core renders only
@@ -645,6 +667,7 @@ struct PlayApp {
     cursor_visible: bool,
     suppress: u16,
     nav_prev: NavEdges,
+    nav_repeat: MenuDirectionRepeat,
 
     // Perf + audio watchdog.
     show_stats: bool,
@@ -3703,7 +3726,7 @@ impl PlayApp {
             WindowEvent::CloseRequested => event_loop.exit(),
             // Lost focus: a key held during alt-tab might never deliver its
             // release, so drop the held set defensively (no stuck inputs).
-            WindowEvent::Focused(false) => {self.held.clear();self.game_keys=0x3ff;self.game_mouse.cancel();if !self.event_console_panel.as_ref().is_some_and(|p|p.focus_handoff()) && !self.command_console_panel.as_ref().is_some_and(|p|p.focus_handoff()){self.machine.bus.ffta_battle_mouse.cancel();}},
+                WindowEvent::Focused(false) => {self.held.clear();self.nav_repeat.poll(false,false,false,Instant::now());self.game_keys=0x3ff;self.game_mouse.cancel();if !self.event_console_panel.as_ref().is_some_and(|p|p.focus_handoff()) && !self.command_console_panel.as_ref().is_some_and(|p|p.focus_handoff()){self.machine.bus.ffta_battle_mouse.cancel();}},
             WindowEvent::KeyboardInput {
                 event:
                     KeyEvent {
@@ -3737,6 +3760,19 @@ impl PlayApp {
                         self.held.remove(&code);self.pending_key=None;return;
                     }
                     if repeat {self.host_consumed("Host panel ignores repeated navigation");return;}
+                    if !menu_key_member && self.menu.cheat_shortcuts_available() && (self.held.contains(&KeyCode::ControlLeft)||self.held.contains(&KeyCode::ControlRight)) {
+                        let shortcut=match code {KeyCode::KeyD=>Some(menu::CheatShortcut::Details),KeyCode::KeyP=>Some(menu::CheatShortcut::Favorite),KeyCode::KeyG=>Some(menu::CheatShortcut::Favorites),KeyCode::Enter|KeyCode::NumpadEnter=>Some(menu::CheatShortcut::Activate),_=>None};
+                        if let Some(shortcut)=shortcut {
+                            self.host_consumed("Cheat catalog shortcut");
+                            let action=self.menu.cheat_shortcut(shortcut);
+                            match action {
+                                Some(menu::MenuAction::CheatManage)=>if let Err(error)=self.open_cheat_management(){self.menu.cheat_management_feedback(error,None);},
+                                Some(menu::MenuAction::CheatRequest(request))=>if let Err(error)=self.cheat_menu_request(request){self.menu.cheat_management_feedback(error,None);},
+                                _=>{},
+                            }
+                            self.held.remove(&code);self.pending_key=None;self.menu_dirty=true;self.observe_menu("cheat-shortcut");return;
+                        }
+                    }
                     if code==KeyCode::Tab && !menu_key_member {self.host_consumed("Host panel tab navigation");if self.held.contains(&KeyCode::ControlLeft)||self.held.contains(&KeyCode::ControlRight){self.menu.focus_next();}else{self.menu.content_tab(false);}return;}
                     if code==KeyCode::Escape {self.host_consumed("Host panel cancel");let action=self.menu.handle(menu::MenuInput::Cancel,&mut self.av);self.inline_action(action);if action==Some(menu::MenuAction::ToolRequest(menu::ToolRequest::Back)){self.workbench.remember(&self.menu);self.workbench.cancel_view();}self.content_picker.leave_view(&self.menu);self.observe_menu("keyboard-cancel");if let Some(action)=action{self.host_action_returned(action);}self.held.clear();return;}
                     if code==KeyCode::KeyF && (self.held.contains(&KeyCode::ControlLeft)||self.held.contains(&KeyCode::ControlRight)){self.host_consumed("Host panel search shortcut");self.menu.content_start_search();self.held.clear();return;}
@@ -3936,6 +3972,7 @@ impl PlayApp {
         if let Some(window)=self.window.as_ref(){window.set_ime_allowed(self.paused && self.menu.content_text_focus());}
         if self.paused && self.menu.content_text_focus(){self.held.clear();self.pending_key=None;}
         if self.modal_input.blocked(){
+            self.nav_repeat.poll(false,false,false,Instant::now());
             self.held.clear();self.pending_key=None;self.pending_pad=None;self.mouse_queue.clear();
             self.menu_key_latch=Default::default();self.menu_pad_latch=Default::default();self.menu_shortcut_held=false;
             let (_,nav)=self.gather_input();let neutral=!(nav.up||nav.down||nav.left||nav.right||nav.confirm||nav.cancel||nav.open);
@@ -3996,6 +4033,7 @@ impl PlayApp {
             // through to the overlay redraw; the same press must not also be
             // fed to the menu as a Cancel.
             if !self.paused {
+                self.nav_repeat.poll(false,false,false,Instant::now());
                 self.suppress = !keys & 0x3FF;
                 self.nav_prev = nav;
                 return;
@@ -4129,9 +4167,10 @@ impl PlayApp {
             if was_capturing&&self.menu.capturing().is_none()&&self.events_enabled(){self.ui_event("binding-capture-result",serde_json::json!({"binding":format!("{binding_before:?}"),"keyboard_token":captured.map(|k|format!("{k:?}")),"pad_token":captured_pad,"outcome":if captured==Some(KeyCode::Escape){"cancelled"}else{"finished"},"input_config":self.icfg.serialize()}));}
             self.observe_menu("binding-capture");
             drop(capture_context);
+            let (repeat_up,repeat_down)=self.nav_repeat.poll(nav.up,nav.down,!was_capturing && !self.menu_shortcut_held,Instant::now());
             let events = [
-                (nav.up && !self.nav_prev.up, menu::MenuInput::Up),
-                (nav.down && !self.nav_prev.down, menu::MenuInput::Down),
+                ((nav.up && !self.nav_prev.up) || repeat_up, menu::MenuInput::Up),
+                ((nav.down && !self.nav_prev.down) || repeat_down, menu::MenuInput::Down),
                 (nav.left && !self.nav_prev.left, menu::MenuInput::Left),
                 (nav.right && !self.nav_prev.right, menu::MenuInput::Right),
                 (
@@ -4470,6 +4509,7 @@ impl PlayApp {
             std::thread::sleep(Duration::from_millis(16));
             return;
         }
+        if !self.paused { self.nav_repeat.poll(false,false,false,Instant::now()); }
         self.nav_prev = nav;
 
         self.game_keys=keys;
@@ -5281,6 +5321,7 @@ Place your own dump as gba_bios.bin next to the executable:\n  {}",
         cursor_visible: true,
         suppress: 0,
         nav_prev: NavEdges::default(),
+        nav_repeat: MenuDirectionRepeat::default(),
         show_stats,
         fps: crate::fps::Meter::new(Instant::now()),
         profile: {
@@ -5510,6 +5551,23 @@ mod gamepad_capture_simulation {
         assert!(!filter.accept_at("menu:confirm", start + Duration::from_millis(19)));
         assert!(filter.accept_at("menu:down", start + Duration::from_millis(19)));
         assert!(filter.accept_at("menu:confirm", start + Duration::from_millis(20)));
+    }
+
+    #[test]
+    fn held_vertical_navigation_repeats_after_delay_and_resets_on_release_or_capture() {
+        let start=Instant::now();let mut repeat=super::MenuDirectionRepeat::default();
+        let at=|ms|start+Duration::from_millis(ms);
+        assert_eq!(repeat.poll(false,true,true,at(0)),(false,false));
+        assert_eq!(repeat.poll(false,true,true,at(349)),(false,false));
+        assert_eq!(repeat.poll(false,true,true,at(350)),(false,true));
+        assert_eq!(repeat.poll(false,true,true,at(439)),(false,false));
+        assert_eq!(repeat.poll(false,true,true,at(440)),(false,true));
+        assert_eq!(repeat.poll(true,true,true,at(500)),(false,false));
+        assert_eq!(repeat.poll(true,false,true,at(510)),(false,false));
+        assert_eq!(repeat.poll(true,false,true,at(860)),(true,false));
+        assert_eq!(repeat.poll(true,false,false,at(950)),(false,false));
+        assert_eq!(repeat.poll(true,false,true,at(1300)),(false,false));
+        assert_eq!(repeat.poll(false,false,true,at(1600)),(false,false));
     }
 
     #[cfg(windows)]

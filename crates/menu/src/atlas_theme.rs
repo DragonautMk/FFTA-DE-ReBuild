@@ -207,7 +207,7 @@ pub(super) fn draw(
         }
         p[3] = 255;
     }
-    let g = atlas::geometry(w, h);
+    let g = atlas::page_geometry(menu.page,w,h);
     let s = g.scale_milli as f32 / 1000.;
     let fs = (13. * s).max(10.);
     let mut c = Canvas::new(px, w, h);
@@ -377,7 +377,7 @@ pub(super) fn draw(
     let hints=menu.control_hints();
     c.text(
         (g.shortcuts.x + 10) as f32,
-        (g.shortcuts.y + 8) as f32,
+        (g.shortcuts.y + if menu.cheat_active(){2}else{8}) as f32,
         &hints[0],
         TEXT,
         fs * 0.9,
@@ -386,7 +386,7 @@ pub(super) fn draw(
     );
     c.text(
         (g.shortcuts.x + 10) as f32,
-        (g.shortcuts.y + (30. * s) as usize) as f32,
+        (g.shortcuts.y + if menu.cheat_active(){(16. * s) as usize}else{(30. * s) as usize}) as f32,
         &hints[1],
         MUTED,
         fs * 0.9,

@@ -230,6 +230,18 @@ pub fn geometry(w: usize, h: usize) -> Geometry {
         scale_milli: (scale * 1000.) as usize,
     }
 }
+
+/// Give the cheat catalog more room while retaining a two-line key legend.
+pub(super) fn page_geometry(page: Page, w: usize, h: usize) -> Geometry {
+    let mut g=geometry(w,h);
+    if page==Page::CheatCatalog {
+        let reclaim=g.shortcuts.h.saturating_sub((g.scale_milli*32/1000).max(18));
+        g.body.h=g.body.h.saturating_add(reclaim);
+        g.shortcuts.y=g.shortcuts.y.saturating_add(reclaim);
+        g.shortcuts.h=g.shortcuts.h.saturating_sub(reclaim);
+    }
+    g
+}
 #[derive(Clone)]
 pub(super) struct Saved {
     pub page: Page,

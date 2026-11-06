@@ -24,6 +24,9 @@ pub struct CheatFilter {
     pub declared_match: bool,
     pub plan_candidate: bool,
 }
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum CheatShortcut { Details, Favorite, Favorites, Activate }
 /// Pure host view state. Restoration never confirms or executes an item.
 #[derive(Clone, Default, Debug, PartialEq, Eq)]
 pub struct ContentViewPreferences {
@@ -202,6 +205,29 @@ pub(super) struct Selector {
     preset_name_edit: bool,
 }
 impl Selector {
+    fn layout(&self,w:usize,h:usize)->Geometry {
+        let mut g=geometry(w,h);
+        if self.cheat_mode && self.manage.is_none() && !self.editing && !self.detail_mode && w>=440 && h>=150 {
+            let gap=(3.*g.scale).max(2.) as usize;
+            let shift=g.row+gap;
+            let top=g.actions[0][1].saturating_add(shift);
+            g.list[3]=top.saturating_sub(g.list[1]+gap);
+            g.details[3]=g.list[3];
+            g.visible=(g.list[3]/g.row).max(1);
+            let left=g.actions[0][0];let right=g.panel[0]+g.panel[2]-(left-g.panel[0]);
+            let width=right.saturating_sub(left+3*gap)/4;
+            g.actions=std::array::from_fn(|i|[left+(i%4)*(width+gap),top+(i/4)*(g.row+gap),width,g.row]);
+        }
+        g
+    }
+    pub fn cheat_shortcuts_available(&self)->bool{
+        self.cheat_mode && self.manage.is_none() && !self.detail_mode && !self.editing && !self.choice_focus() && !self.busy
+    }
+    pub fn cheat_shortcut(&mut self,shortcut:CheatShortcut)->Option<MenuAction>{
+        if !self.cheat_shortcuts_available(){return None;}
+        self.focus=match shortcut{CheatShortcut::Details=>6,CheatShortcut::Favorite=>7,CheatShortcut::Activate=>8,CheatShortcut::Favorites=>13};
+        self.confirm()
+    }
     pub fn open_cheat_management(&mut self,sources:Vec<super::CheatSource>,presets:Vec<String>){
         if let Some(i)=self.selected(){
             let entry=&self.entries[i];
@@ -723,7 +749,7 @@ impl Selector {
     pub fn hover(&mut self, x: usize, y: usize, w: usize, h: usize) {
         if self.manage.is_some() && !self.editing{return;}
         if self.choice_focus(){return;}
-        let g = geometry(w, h);
+        let g = self.layout(w, h);
         if self.editing {
             for i in 0..42 {
                 if inside(self.key_rect(g, i), x, y) {
@@ -776,7 +802,7 @@ impl Selector {
         if !left {
             return self.handle(MenuInput::Cancel);
         }
-        let g = geometry(w, h);
+        let g = self.layout(w, h);
         if self.manage.is_some() && !self.editing {
             if self.detail_mode{return if y>=g.panel[1]+g.panel[3].saturating_sub(g.row){self.handle(MenuInput::Cancel)}else{None};}
             if inside(g.controls[0],x,y){self.manage.as_mut().unwrap().focus=0;return self.handle(MenuInput::Up);}
@@ -867,7 +893,7 @@ impl Selector {
         }
     }
     pub fn focus(&self, w: usize, h: usize) -> diagnostics::Focus {
-        let g = geometry(w, h);
+        let g = self.layout(w, h);
         let first = self.first_visible(g);
         let label = self.focus_label();
         let bounds = if self.cheat_mode && self.detail_mode {
@@ -952,7 +978,7 @@ pub(super) fn draw(s: &Selector, px: &mut [[u8; 4]], w: usize, h: usize, languag
             *v = (*v as u16 / 4) as u8;
         }
     }
-    let mut g = geometry(w, h);
+    let mut g = s.layout(w, h);
     let [x, y, pw, ph] = g.panel;
     if s.editor_only{g.search[2]=pw.saturating_sub((g.search[0]-x)*2);}
     let mut c = Canvas::new(px, w, h);

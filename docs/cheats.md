@@ -147,6 +147,15 @@ choose **Unfavorite** to remove it. **Show favorites** switches directly to
 favorites, and **Show all** returns to the full collection. The collection
 filter also remains available; search, type and state filters still apply.
 Clear those filters if they hide a favorite.
+
+The catalog uses a compact two-row action bar and shows the keyboard shortcuts
+underneath. In the list view, **Ctrl+F** searches, **Ctrl+D** opens details,
+**Ctrl+P** toggles the highlighted favorite, **Ctrl+G** switches the favorites
+filter, and **Ctrl+Enter** opens activation management or disarms an active
+entry. These shortcuts do not bypass source selection or preview confirmation
+and are disabled while editing or reviewing a dialog. Holding Up or Down repeats
+navigation after a short delay; confirmation and cancellation do not repeat.
+Controller directions use the same repeat timing.
 Favorites are stored locally by catalog hash; a different or modified catalog
 has a separate list. A menu-created interpreter copy receives a snapshot of
 the current favorites when the selected catalog is the default catalog; later
