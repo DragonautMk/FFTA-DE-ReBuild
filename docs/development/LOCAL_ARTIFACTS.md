@@ -323,3 +323,38 @@ from 7,818,182,656 to 13,406,445,568 bytes during the operation; selected
 file-block counts identify the cleanup's contribution independently of other
 disk activity. No build, gameplay test, fixture extraction or performance
 measurement was repeated. The older interrupted hygiene task remains separate.
+
+## 7 November completed Wine-prefix cleanup
+
+Retired seven completed isolated Wine test prefixes from the audit, session,
+comparison, workbench and selector units, plus one rebuildable Rust archive from
+the old isolated debug-tools Cargo cache. Removed file blocks total
+8,987,373,568 bytes (8.37 GiB). The 42 retained Wine configuration copies occupy
+23,523,328 file-block bytes, leaving 8,963,850,240 bytes (8.35 GiB) before small
+plan, log and receipt metadata. Overall free-space changes also reflect other
+disk activity and are not attributed entirely to this cleanup.
+
+Every nonconfiguration prefix file matched the retained generated Wine
+reference. Exact inventories included all links; hardened removal unlinked them
+without touching their destinations. Unit leases, fresh host process scans and
+completion/inventory rechecks guarded the seven removals. No selected consumer
+was observed; four host process-detail reads were denied. All 520 protected
+hashes and 4,229 retained file identities, sizes and modification times remained
+unchanged. Current E132/E131 datasets, shared Wine, source preimages, results,
+private saves/checkpoints/recordings and exports remain available.
+
+The disk reached zero writable space before plan creation. A bounded plan and
+receipt in `/tmp`, both existing Cargo output locks and a host process check
+guarded retirement of one 70,402,048-byte intermediate, allowing normal
+directory-lease coordination to resume. Those bootstrap records were then
+preserved in the project. No runtime or executable was removed in that step.
+
+Plans, configuration preimages and both `PASS` receipts are under
+`target/local-artifact-cleanup-20261107/`. Final validation unit
+`target/validation/units/local-space-cleanup-20261107-0dxs5vzo/` passed all
+presence checks and 1,749 retained reference hashes, with guarded inputs unchanged
+and automatic scratch removal. Its first invocation refused the linked reference
+tree before creating a unit; the corrected invocation protected individual
+ordinary files. No build, gameplay, extraction or performance test was repeated.
+Historical acceptance remains valid; exact former prefixes require restoration
+or recreation. The older interrupted hygiene task remains separate.

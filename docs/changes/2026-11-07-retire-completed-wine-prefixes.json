@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-07",
+  "slug": "retire-completed-wine-prefixes",
+  "title": "Recover disk space from completed isolated Wine test environments",
+  "kind": "changed",
+  "platforms": [
+    "Local development artifacts on Linux"
+  ],
+  "changes": [
+    "Retired seven explicitly reviewed completed Wine test prefixes and one rebuildable Rust archive from the old isolated debug-tools Cargo cache. Removed 8,987,373,568 file-block bytes; after 23,523,328 bytes of retained Wine configurations, recovered 8,963,850,240 bytes (8.35 GiB) before small receipt metadata.",
+    "Preserved all 42 configuration preimages, the generated Wine reference, current E132/E131 datasets, shared Wine, executable copies outside prefixes, source preimages, results and private saves/checkpoints/recordings/exports. Retired only inventoried links, preserving their external destinations."
+  ],
+  "validation": [
+    "Both bootstrap and prefix cleanup receipts PASS. Fresh host process scans found no selected consumer; unit leases and exact inventory/completion checks guarded seven removals. The disk-full bootstrap used both existing native Cargo locks and an exact single-file preimage plan in /tmp, subsequently preserved under target/local-artifact-cleanup-20261107/.",
+    "All 520 protected hashes and 4,229 retained-file identities/sizes/times unchanged; 42 configuration backup hashes verified. Every nonconfiguration prefix file matched a retained generated Wine reference.",
+    "Final managed unit local-space-cleanup-20261107-0dxs5vzo PASS: all planned paths absent, five per-unit retirement receipts present, owned leases released, current E132/E131 present, all 42 preimages and 1,749 reference hashes match. Protected inputs unchanged and scratch automatically removed.",
+    "Full project-memory check, task-handoff check, git diff --check and final receipt/presence/owned-lease/scratch checks PASS. All eight planned removal paths remain absent."
+  ],
+  "limitations": [
+    "Four host process-detail reads were denied. Other disk activity changed total free space, including a fall from 353 MiB to zero before cleanup preparation; only reviewed file blocks are attributed to this task.",
+    "Initial plan-directory creation failed at zero writable space. An initial final-verification input guard refused the linked reference tree before unit creation; the corrected run guarded individual ordinary reference files. Refusal evidence retained; neither condition invalidates the passing removal receipts.",
+    "Exact former Wine prefixes require restoration/recreation; a future build may regenerate the retired Rust archive. No builds, guest execution, extraction or performance measurements repeated. Older interrupted LOCAL-ARTIFACT-HYGIENE remains separate."
+  ],
+  "files": [
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ],
+  "references": [
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ]
+}

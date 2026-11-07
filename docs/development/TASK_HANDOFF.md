@@ -204,9 +204,10 @@ for a specific question: archive legacy lines 179..744 or the named record below
 - Godot: planned assessment complete, implementation deferred, not a current dependency. AndroidPort is separate; originals/ROM/BIOS/private catalogs/saves/recordings stay out of commits/packages.
 
 ## Final handover
-- Task: ROM-DATA-FULL-EUR partial; E132 lifecycle scoped accepted.
-- Last verified result: E132 Wine lifecycle PASS; IN08 scene pair PASS.
-- Remaining work: full lifecycle matrix, other ordinary coverage, global u16 domain and other ROMDATA criteria; Linux/USA pending.
-- Errors or blockers: guest u16 domain unknown; model/effort unconfirmed.
-- Next action: choose a distinct unfinished EUR ROMDATA criterion; do not repeat the E132 lifecycle test.
-- References: docs/rom_data_gameplay.md#conditional-item-derived-four-byte-parameters.
+
+- Task: LOCAL-SPACE-CLEANUP-20261107 completed.
+- Last verified result: seven completed Wine prefixes and one Rust intermediate retired; 8.35 GiB before receipt metadata recovered. Both receipts and final managed validation PASS; protected inputs/configurations preserved.
+- Remaining work: none for this cleanup; older interrupted hygiene task remains separate.
+- Errors or blockers: disk-full bootstrap and linked-tree guard refusal recovered; four host detail reads denied. No removal errors.
+- Next action: none for cleanup; memory/handoff/whitespace checks PASS. No runtime work selected.
+- References: docs/changes/2026-11-07-retire-completed-wine-prefixes.json; target/local-artifact-cleanup-20261107/; validation unit local-space-cleanup-20261107-0dxs5vzo.
