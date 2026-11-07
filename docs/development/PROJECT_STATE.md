@@ -98,6 +98,12 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   check requires 5 GiB free plus declared peak growth (default 1 GiB); smaller
   budgets need a recorded exception. This is not a runtime quota or an automatic
   historical cleanup policy.
+  Retained outputs now default to verified Zstandard cold archives; current
+  inputs opt out with `--keep-hot REASON`. Declared archived inputs are restored
+  at their original paths under a coordinated lease and retired after PASS;
+  `scripts/cold_storage.py` also wraps legacy consumers and exposes explicit
+  inspection/recovery. Historical packing requires reviewed completion and host
+  activity evidence. Native Windows archival remains a separate validation gate.
 
 - The desktop [Clan Atlas menu](../menu_clan_atlas.md) uses the existing native
   Canvas/tiny-skia fonts and the FFTA DE-ReBuild emblem with a permanent left sidebar (eight Game/eight Debug

@@ -29,6 +29,35 @@ Documentation: [LOCAL_ARTIFACTS.md](docs/development/LOCAL_ARTIFACTS.md).
 
 [Change record](docs/changes/2026-11-07-retire-completed-wine-prefixes.json)
 
+## 2026-11-07 — Compress retained validation artifacts and restore declared inputs on demand
+
+Type: added. Platforms: Linux host Python and Zstandard; Windows/Wine artifact preservation.
+
+**Changes**
+
+- Add cold_storage.py with streamed verified tar.zst archives, a readable catalog/evidence, original-path restoration, coordinated consumers, explicit historical plan/pack, verification, retirement and interrupted-publication recovery. Preserve content hashes, modes, ownership, nanosecond times, internal hard links, symbolic links and user extended attributes; refuse private files, external hard links, privileged/ACL attributes and conflicting paths.
+- Successful eligible retained validation outputs default to cold storage; --keep-hot REASON keeps current inputs directly available. Declared --protect inputs restore before use and unchanged restored copies retire after PASS. A standalone run --input wrapper supports legacy consumers. Failures retain diagnostics and timeouts retain protective leases.
+- Archive 382 reviewed historical paths: 29.333 GiB of original file blocks became 7.006 GiB of compressed payloads plus 97.371 MiB of catalog/evidence metadata, reclaiming 23871709184 file-block bytes (22.232 GiB / 23.872 GB) before small external review receipts and directory metadata. Historical result receipts remain unchanged.
+- Keep current E132/E131 inputs, canonical builds, shared Wine, the current packaged Linux application, private originals and failed/suspended scopes directly available. Record skipped failure evidence rather than treating another positive result as closure.
+- Update project instructions, scripts guide, durable state and CI. Routine compression/restoration consults the catalog and existing evidence, using integrity checks without rerunning suites, builds, gameplay or benchmarks, as requested by the user.
+
+**Validation**
+
+- Final managed unit cold-storage-final-verification-z8k2a8bt PASS: 20 validation lifecycle tests and 20 archive tests, all 382 catalog/payload hashes and absent archived sources verified, actual E130 dataset and Wine prefix restored/read/re-retired, hot-resource presence confirmed, protected archive/source inputs unchanged and verification scratch removed.
+- Application receipt target/cold-storage-migration-20261107/applied.json PASS: exact inventory and completion hashes, scope leases, fresh host-visible checks before packing and retirement, every archive verified before original retirement, no application errors or skipped changed/busy sources. All 6426 private-file identity/size/mtime guards unchanged.
+- Wine restoration preserved colon-named links, registry content and user.DOSATTRIB; external link destinations were not traversed. Synthetic cases cover corruption, source changes, conflicting destinations, external links, private files, concurrent leases, interruption recovery, stale reviews, default archival, legacy CLI consumption and explicitly reduced space budgets.
+- Exact applied tool preimage retained under the migration tooling directory and verified against cold-storage-pre-application-p1e6c4fs source guards. Final maintained code additionally syncs catalog-directory publication/restored metadata and propagates explicit smaller runner archive-space floors; final checks used that version.
+
+**Limitations**
+
+- Three host process-detail reads were inaccessible; no global host inactivity is claimed. Reported savings use reviewed file blocks rather than total free-disk variation. Private preservation checks outside selected artifacts used identity, size and mtime, not a new global content-hash sweep.
+- The store lease serializes archive consumers/operations; space admission is not a filesystem quota. Native Windows archival and restore were not validated. Linux Wine links/user attributes are not promised portable to Windows. No game build, gameplay or extraction was repeated.
+- Arbitrary unwrapped commands cannot read compressed paths. Use declared --protect inputs or cold_storage.py run/restore; the validation ordinary-input guard still refuses linked trees, which use the standalone wrapper. Changed restored copies remain available and require explicit treatment as new artifacts; stale leases are never reclaimed automatically.
+
+Documentation: [LOCAL_ARTIFACTS.md](docs/development/LOCAL_ARTIFACTS.md), [README.md](scripts/README.md).
+
+[Change record](docs/changes/2026-11-07-enable-validation-cold-storage.json)
+
 ## 2026-11-07 — Bound validation retention and refuse insufficient launch space
 
 Type: changed. Platforms: Linux Python tooling; Windows/Wine workflow policy.
@@ -57,6 +86,30 @@ Type: changed. Platforms: Linux Python tooling; Windows/Wine workflow policy.
 Documentation: [LOCAL_ARTIFACTS.md](docs/development/LOCAL_ARTIFACTS.md), [README.md](scripts/README.md).
 
 [Change record](docs/changes/2026-11-07-bound-validation-storage.json)
+
+## 2026-11-07 — Measure compressed validation archives and define on-demand restoration scope
+
+Type: docs. Platforms: Linux ext4 host; Zstandard 1.5.7.
+
+**Changes**
+
+- Document a measured cold-archive proposal: keep current inputs available, compress completed retained artifacts individually, resolve declared archived inputs through coordinated restoration and retire bounded restored copies after use. Production archival and automatic restoration remain unimplemented.
+- Record the existing ext4 filesystem constraint and the required catalog, hash verification, staging, publication, uncompressed-space checks, consumer leases and interrupted-restore handling before historical trees can be replaced.
+
+**Validation**
+
+- Managed unit target/validation/units/cold-storage-assessment-_br49tbe PASS: seven complete files in four categories, tar.zst levels 3 and 6, all eight group/level content round trips match SHA256. Original source content, size, mode and mtime remain unchanged; runner input guards pass and temporary archives/restored copies were automatically removed.
+- Combined sample: 369.848 MiB original, 47.303 MiB at level 3 (87.210% smaller), 43.009 MiB at level 6 (88.371% smaller). Compression took 0.807/2.064 seconds and extraction plus writes 0.542/0.533 seconds, excluding hash verification.
+- Retained compression-result.json, command log, input guards and supplemental evidence under the managed unit. Exact measurement harness and sample selection match their protected-before hashes.
+
+**Limitations**
+
+- Nonrandom sample of three dataset JSON files, one Cargo archive, one executable and two Wine DLLs; it does not establish total-target savings or migration eligibility. Single local runs with possibly warm caches are not general performance guarantees.
+- No historical input replaced or removed, no production archive manager or automatic resolver installed, and no active tree compressed. The regular-file experiment does not verify full directory metadata, hard/symbolic links, full Wine prefixes, native Windows restoration, corruption recovery or concurrent consumers.
+
+Documentation: [LOCAL_ARTIFACTS.md](docs/development/LOCAL_ARTIFACTS.md).
+
+[Change record](docs/changes/2026-11-07-assess-validation-cold-storage.json)
 
 ## 2026-11-06 — Preserve cheat ancestry in desktop snapshots
 

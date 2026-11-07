@@ -36,6 +36,7 @@ class ValidationUnitTests(unittest.TestCase):
         args = argparse.Namespace(name='synthetic', result=['result.json'], evidence=[],
                                   protect=[str(self.source)], env=[], wine=False, wineserver=None,
                                   timeout=30, keep_work=None, keep_path=[], keep_reason=None,
+                                  keep_hot='Synthetic lifecycle fixture; archive behavior has separate tests',
                                   min_free_gib=5, reserve_gib=1, space_exception=None,
                                   command=[sys.executable, '-c', code])
         for key, value in changes.items():

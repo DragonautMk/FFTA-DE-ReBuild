@@ -112,7 +112,17 @@ Keep one current dataset per ROM/profile and a previous version only for a named
 comparison. Additional extraction is needed only when the selected check or
 changed extraction inputs require it. Prefer `--keep-path REL --keep-reason`
 for the exact dataset, checkpoint or pinned executable needed later; successful
-unselected scratch is removed in place. Reserve `--keep-work` for whole-unit
+unselected scratch is removed. Eligible retained outputs are archived by default
+with verified Zstandard payloads under `target/cold-storage`. Use `--keep-hot REASON`
+for the current dataset or other frequently used retained outputs. Declare inputs
+with `--protect`: the runner restores archived paths under a lease and retires
+unchanged restored copies after PASS. For legacy commands use
+`scripts/cold_storage.py run --input PATH -- COMMAND`; for inspection use its
+`list`, `restore` and `verify` commands. Check this catalog before treating a missing
+historical payload as lost or rebuilding it. Manual restoration stays available
+until explicit retirement; modified/failed inputs are preserved. No automatic
+stale-lease recovery. Historical packing requires an exact reviewed inventory,
+unchanged completion evidence and host-visible activity checks. Reserve `--keep-work` for whole-unit
 diagnosis, with a consumer and retirement condition. Keep source preimages outside
 scratch. Declare peak new disk use with `--reserve-gib` (include build, extraction
 copies and logs). The runner requires a 5 GiB free-space floor plus that budget
@@ -120,6 +130,11 @@ copies and logs). The runner requires a 5 GiB free-space floor plus that budget
 routine bypass. This is a launch check, not a running filesystem quota. Reuse
 canonical Cargo outputs; an isolated build must select only its needed executable
 for retention, not its entire compiler cache.
+For routine compression, restoration and archive consultation, use the catalog,
+integrity checks and existing completion receipts. Do not rerun test suites,
+gameplay, builds or compression benchmarks merely to archive or read completed
+artifacts. New regression tests belong to archive implementation changes or a
+specific unresolved fault, not to each storage-maintenance operation.
 For older successful managed/native units, after recording preservation/results,
 run `python3 scripts/local_artifacts.py complete target/<unit> --apply`; this
 older helper removes only `interrupted` and `moved resources` copies. Review

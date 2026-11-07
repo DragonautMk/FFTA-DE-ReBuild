@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "date": "2026-11-07",
+  "slug": "enable-validation-cold-storage",
+  "title": "Compress retained validation artifacts and restore declared inputs on demand",
+  "kind": "added",
+  "platforms": [
+    "Linux host Python and Zstandard; Windows/Wine artifact preservation"
+  ],
+  "changes": [
+    "Add cold_storage.py with streamed verified tar.zst archives, a readable catalog/evidence, original-path restoration, coordinated consumers, explicit historical plan/pack, verification, retirement and interrupted-publication recovery. Preserve content hashes, modes, ownership, nanosecond times, internal hard links, symbolic links and user extended attributes; refuse private files, external hard links, privileged/ACL attributes and conflicting paths.",
+    "Successful eligible retained validation outputs default to cold storage; --keep-hot REASON keeps current inputs directly available. Declared --protect inputs restore before use and unchanged restored copies retire after PASS. A standalone run --input wrapper supports legacy consumers. Failures retain diagnostics and timeouts retain protective leases.",
+    "Archive 382 reviewed historical paths: 29.333 GiB of original file blocks became 7.006 GiB of compressed payloads plus 97.371 MiB of catalog/evidence metadata, reclaiming 23871709184 file-block bytes (22.232 GiB / 23.872 GB) before small external review receipts and directory metadata. Historical result receipts remain unchanged.",
+    "Keep current E132/E131 inputs, canonical builds, shared Wine, the current packaged Linux application, private originals and failed/suspended scopes directly available. Record skipped failure evidence rather than treating another positive result as closure.",
+    "Update project instructions, scripts guide, durable state and CI. Routine compression/restoration consults the catalog and existing evidence, using integrity checks without rerunning suites, builds, gameplay or benchmarks, as requested by the user."
+  ],
+  "validation": [
+    "Final managed unit cold-storage-final-verification-z8k2a8bt PASS: 20 validation lifecycle tests and 20 archive tests, all 382 catalog/payload hashes and absent archived sources verified, actual E130 dataset and Wine prefix restored/read/re-retired, hot-resource presence confirmed, protected archive/source inputs unchanged and verification scratch removed.",
+    "Application receipt target/cold-storage-migration-20261107/applied.json PASS: exact inventory and completion hashes, scope leases, fresh host-visible checks before packing and retirement, every archive verified before original retirement, no application errors or skipped changed/busy sources. All 6426 private-file identity/size/mtime guards unchanged.",
+    "Wine restoration preserved colon-named links, registry content and user.DOSATTRIB; external link destinations were not traversed. Synthetic cases cover corruption, source changes, conflicting destinations, external links, private files, concurrent leases, interruption recovery, stale reviews, default archival, legacy CLI consumption and explicitly reduced space budgets.",
+    "Exact applied tool preimage retained under the migration tooling directory and verified against cold-storage-pre-application-p1e6c4fs source guards. Final maintained code additionally syncs catalog-directory publication/restored metadata and propagates explicit smaller runner archive-space floors; final checks used that version."
+  ],
+  "limitations": [
+    "Three host process-detail reads were inaccessible; no global host inactivity is claimed. Reported savings use reviewed file blocks rather than total free-disk variation. Private preservation checks outside selected artifacts used identity, size and mtime, not a new global content-hash sweep.",
+    "The store lease serializes archive consumers/operations; space admission is not a filesystem quota. Native Windows archival and restore were not validated. Linux Wine links/user attributes are not promised portable to Windows. No game build, gameplay or extraction was repeated.",
+    "Arbitrary unwrapped commands cannot read compressed paths. Use declared --protect inputs or cold_storage.py run/restore; the validation ordinary-input guard still refuses linked trees, which use the standalone wrapper. Changed restored copies remain available and require explicit treatment as new artifacts; stale leases are never reclaimed automatically."
+  ],
+  "files": [
+    "scripts/cold_storage.py",
+    "scripts/tests/test_cold_storage.py",
+    "scripts/validation_unit.py",
+    "scripts/tests/test_validation_unit.py",
+    ".github/workflows/project-memory.yml",
+    "AGENTS.md",
+    "scripts/README.md",
+    "docs/development/LOCAL_ARTIFACTS.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md",
+    "docs/development/TASK_COMPLETED_ARCHIVE.md"
+  ],
+  "references": [
+    "docs/development/LOCAL_ARTIFACTS.md",
+    "scripts/README.md"
+  ]
+}

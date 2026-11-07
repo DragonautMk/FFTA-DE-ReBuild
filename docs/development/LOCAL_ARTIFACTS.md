@@ -110,9 +110,10 @@ Failures keep their work and evidence.
 ### Retain selected outputs instead of the whole unit
 
 Use repeatable `--keep-path REL` with `--keep-reason 'consumer and retirement
-condition'` to keep an exact file or subtree after PASS. Paths stay under the
-same `work/` directory, preserving manifest and consumer references; unselected
-siblings are removed. For example, append these options before `--` when a
+condition'` to keep an exact file or subtree after PASS. Selected outputs preserve their original logical paths; unselected siblings
+are removed. Eligible retained outputs are then compressed by default. The
+runner restores declared `--protect` inputs to those paths before use. Add
+`--keep-hot REASON` for the current dataset or other frequently used output. For example, append these options before `--` when a
 harness creates the current dataset and a pinned executable:
 
 ```sh
@@ -182,6 +183,130 @@ Evidence and limitations: [workflow change record](../changes/2026-11-07-bound-v
 This lifecycle applies to new units, not a background sweep of historical
 artifacts. Existing completed scopes still use the reviewed cleanup procedures
 below; failed/interrupted work is never selected merely to meet a disk quota.
+
+### Verified cold archives and on-demand restoration
+
+Eligible retained outputs from successful new units now become `.tar.zst`
+archives under `target/cold-storage/` by default. Install the **zstd CLI** on the
+host; the implementation uses level 3 with one worker. `--keep-hot REASON` keeps
+current or frequently used outputs available directly. Canonical Cargo output
+roots and the shared validation Wine prefix cannot be archived by this tool.
+Private input extensions, foreign ownership, external hard links, privileged/ACL
+attributes, special files and live nested leases are refused; skipped retained
+outputs remain available with a reason in the validation receipt.
+
+The store records each original path, file hashes, modes, owner/group IDs,
+nanosecond modification times, internal hard links, symbolic-link targets and
+supported `user.*` extended attributes (including Wine DOS attributes). Small
+manifests and result/summary files are copied to readable `evidence/` beside the
+archive. The existing `cleanup: kept` receipt token means the payload is retained;
+`retention_storage` distinguishes cold, hot and mixed storage. Historical result
+receipts are never rewritten to pretend a test was rerun.
+
+The validation runner resolves archived **declared `--protect` inputs** before
+hashing or launching the test. It restores the original paths under an exclusive
+store lease, checks space for their uncompressed size plus the test budget,
+and retires unchanged restored copies after PASS. A failure keeps the restored
+diagnostics; a timeout keeps protective leases because descendants may still
+exist. All consumers of an evictable archived path must coordinate through the
+runner or the standalone wrapper. The exclusive store lease serializes archive
+consumers and operations; it is not a filesystem quota or a background service.
+
+For legacy commands and read-only inspection:
+
+```sh
+python3 scripts/cold_storage.py list
+python3 scripts/cold_storage.py run --input target/completed-check/resources -- COMMAND
+python3 scripts/cold_storage.py restore target/completed-check/resources
+python3 scripts/cold_storage.py verify target/completed-check/resources
+python3 scripts/cold_storage.py retire target/completed-check/resources
+```
+
+`run` restores its selected inputs for a foreground command and retires unchanged
+copies on success. Manual `restore` deliberately leaves the files available.
+Modified copies are preserved and cannot silently replace their original archive;
+retain them as new artifacts before retiring the old generation. Validation's
+ordinary `--protect` guard still refuses symlinked trees: use the standalone
+wrapper or explicit restoration for historical Wine trees containing links.
+Archive extraction itself validates links without following their destinations.
+
+Historical adoption is explicit, rather than a sweep based on age or file size:
+
+```sh
+python3 scripts/cold_storage.py plan target/completed-check/resources \
+  --scope target/completed-check --completion target/completed-check/result.json \
+  --output target/completed-check/cold-review.json
+python3 scripts/cold_storage.py pack target/completed-check/resources \
+  --review target/completed-check/cold-review.json \
+  --reason 'Completed comparison retained for occasional reproduction'
+```
+
+A review binds the exact inventory to completion evidence outside the payload.
+`pack` rechecks both, leases the parent activity scope, and checks host-visible
+process commands, environments, working directories, open files and mappings
+before compression and before retirement. It refuses a sandbox-only PID view;
+unreadable process details remain recorded limitations, not proof of global
+inactivity. Current, failed, live and suspended scopes must be excluded by the
+reviewer. A later positive report for another scope does not close an earlier
+failed test or establish that its prefix is disposable.
+
+Publication streams directly to a temporary compressed archive, verifies all
+members and hashes, durably publishes the archive/catalog, and rechecks the
+source before retiring it. No full intermediate tar is written. Restoration uses
+staging and refuses conflicting paths; it never calls `extractall` or follows
+archived symlinks. Enough free space for the uncompressed payload is required
+before extraction. The catalog must not be moved independently of its payloads.
+
+`recover PATH` handles interrupted retirement/restoration while preserving the
+verified archive. Changed retirement residue and conflicting destinations block
+recovery. Incomplete `preparing` archives retain their original sources and
+require inspection; the tool does not guess whether an unfinished archive is
+usable. Never delete a stale store/unit lease without inspecting its recorded
+owner and descendants. Ordinary terminal failures release only their own leases.
+
+The host implementation and regression tests are validated on Linux. Archives
+with Wine colon-named links or Linux extended attributes are not promised to
+restore on native Windows. Compression is an application workflow on this ext4
+workspace; ext4 does not provide transparent file compression
+([kernel documentation](https://www.kernel.org/doc/html/latest/filesystems/ext4/inodes.html)).
+Arbitrary unwrapped commands cannot read a compressed directory by its former
+path. Inspect the catalog before regenerating a supposedly missing fixture.
+
+The initial 7 November 2026 feasibility sample contained seven complete files:
+three generated JSON files, one Cargo archive, one executable and two Wine DLLs.
+Zstandard 1.5.7 reduced 369.85 MiB to 47.30 MiB at level 3 (87.21%) or 43.01 MiB
+at level 6 (88.37%). All eight group/level content round trips matched SHA256;
+originals were unchanged and temporary archives/extractions were removed. This
+nonrandom sample does not estimate whole-target savings. Single local timings
+with potentially warm caches were about 0.81/2.06 seconds for compression and
+0.54 seconds for extraction, excluding hash checks.
+Evidence: `target/validation/units/cold-storage-assessment-_br49tbe/` and the
+[assessment record](../changes/2026-11-07-assess-validation-cold-storage.json).
+Production tooling and historical rollout have their own validation and receipts.
+
+Routine archival and consultation use catalog lookup, content-integrity checks
+and existing completion evidence. They do not require rerunning test suites,
+builds, gameplay or compression benchmarks. Regression testing is for changes
+to the archive implementation or a specific unresolved fault.
+
+The 7 November rollout archived **382 reviewed paths**: 29.33 GiB of original
+regular-file blocks became 7.01 GiB of compressed payloads plus 97.37 MiB of
+catalog/evidence metadata. This reclaimed **23,871,709,184 file-block bytes
+(22.23 GiB / 23.87 GB)**, before small external review receipts and filesystem
+directory metadata. All 6,426 inventoried private-file identities, sizes and
+modification times remained unchanged. Current E132/E131 inputs, canonical
+builds, shared Wine, the current packaged application and failed/suspended
+scopes were retained directly. The observed disk-free figure also reflects
+unrelated writers and is not used to attribute savings.
+
+Every archive was verified before its source was retired. Final checks verified
+all 382 payload/catalog hashes and actual dataset/Wine restoration at the
+original paths, followed by re-retirement; no game was executed. Three host
+process-detail reads were inaccessible and remain an explicit limitation.
+Reviewed plans, exclusions, source/tool provenance and the application receipt
+are under `target/cold-storage-migration-20261107/`. The final managed evidence
+is `target/validation/units/cold-storage-final-verification-z8k2a8bt/`.
+See the [implementation record](../changes/2026-11-07-enable-validation-cold-storage.json).
 
 ### Wine test prefixes
 

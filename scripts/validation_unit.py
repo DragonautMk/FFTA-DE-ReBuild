@@ -19,10 +19,11 @@ import sys
 import tempfile
 
 from artifact_coordinator import Lease, NAME, ordinary
+import cold_storage
 from local_artifacts import ensure_untracked
 
 ROOT = Path(__file__).resolve().parents[1]
-PRIVATE = {'.gba', '.bios', '.sav', '.ffstate', '.input', '.rec', '.recording'}
+PRIVATE = cold_storage.PRIVATE
 PREFIX_MARKER = '.ffta-validation-prefix.json'
 PREFIX_OWNER = {'schema': 1, 'kind': 'ffta-validation-wine-prefix'}
 GIB = 1024 ** 3
@@ -186,6 +187,39 @@ def managed_prefix(base):
 
 def run_unit(args, *, root=ROOT):
     root = root.resolve()
+    check_space(root, args)
+    keep_hot = getattr(args, 'keep_hot', None)
+    if keep_hot is not None and not keep_hot.strip():
+        raise ValueError('--keep-hot requires a concrete reason')
+    if (args.keep_work or args.keep_path) and not keep_hot:
+        cold_storage.codec()
+    inputs = cold_storage.Inputs(root, [Path(os.path.abspath(p)) for p in args.protect],
+                                 floor=int((args.min_free_gib + args.reserve_gib) * GIB),
+                                 archive_floor=int(args.min_free_gib * GIB))
+    unit = None
+    try:
+        inputs.open()
+        unit = _run_unit(args, root=root, inputs=inputs)
+        inputs.close(success=True)
+        receipt = unit / 'unit-result.json'
+        report = json.loads(receipt.read_text())
+        report['cold_inputs_retired'] = [data['source'] for _, data in inputs.restored]
+        write_json(receipt, report)
+        print(f'PASS; scratch {report["cleanup"]}; storage {report["retention_storage"]}; receipt: {receipt}', flush=True)
+        return unit
+    except BaseException as error:
+        inputs.close(success=False)
+        if unit:
+            receipt = unit / 'unit-result.json'
+            report = json.loads(receipt.read_text())
+            report['status'] = 'FAIL'
+            report['errors'].append(f'Archived input retirement failed: {error}')
+            write_json(receipt, report)
+        raise
+
+
+def _run_unit(args, *, root, inputs):
+    root = root.resolve()
     if not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9._-]{0,95}', args.name):
         raise ValueError('Unit name must be a short filename, starting with a letter or digit')
     results = [relative_path(p) for p in args.result]
@@ -196,7 +230,6 @@ def run_unit(args, *, root=ROOT):
     if (bool(keep_paths) != (args.keep_reason is not None)
             or args.keep_reason is not None and not args.keep_reason.strip()):
         raise ValueError('--keep-path and a nonempty --keep-reason must be supplied together')
-    check_space(root, args)
     protected = [Path(os.path.abspath(p)) for p in args.protect]
     before = {str(p): snapshot(p, hashes=True, read_only=True) for p in protected}
     command = args.command[1:] if args.command[:1] == ['--'] else args.command
@@ -225,7 +258,10 @@ def run_unit(args, *, root=ROOT):
               'protected': list(before), 'evidence': [],
               'keep_reason': args.keep_work or args.keep_reason,
               'retention_mode': 'all' if args.keep_work else 'selected' if keep_paths else 'none',
-              'kept_paths': [str(p) for p in keep_paths]}
+              'kept_paths': [str(p) for p in keep_paths],
+              'keep_hot_reason': getattr(args, 'keep_hot', None),
+              'cold_inputs': [data['source'] for _, data in inputs.selected],
+              'cold_archives': [], 'cold_skipped': []}
     write_json(unit / 'protected-before.json', before)
     print(f'Validation unit: {unit}', flush=True)
     leases = contextlib.ExitStack()
@@ -267,12 +303,14 @@ def run_unit(args, *, root=ROOT):
             # A timed-out/interrupting command may have descendants. Keep both
             # work and protective leases unless foreground completion is known.
             safe_to_release = False
+            inputs.safe_to_release = False
             child = subprocess.run(command, cwd=work, env=env, stdout=log, stderr=log,
                                    timeout=args.timeout)
             if args.wine:
                 subprocess.run([wineserver, '-w'], env=env, stdout=log, stderr=log,
                                timeout=120, check=True)
             safe_to_release = True
+            inputs.safe_to_release = True
         report['exit_code'] = child.returncode
         if child.returncode:
             raise ValueError(f'Validation command exited {child.returncode}')
@@ -322,6 +360,15 @@ def run_unit(args, *, root=ROOT):
             retire_work(work, inventory, keep_paths)
         report.update(status='PASS', cleanup='kept' if args.keep_work or keep_paths else 'removed',
                       work_bytes_retained=inventory_bytes(inventory, None if args.keep_work else keep_paths))
+        if (args.keep_work or keep_paths) and not getattr(args, 'keep_hot', None):
+            proof = {'kind': 'foreground-validation', 'unit': str(unit.relative_to(root)),
+                     'status': 'PASS', 'exit_code': child.returncode,
+                     'results': report['evidence']}
+            report['cold_archives'], report['cold_skipped'] = inputs.archive_outputs(
+                work, reason=report['keep_reason'], proof=proof)
+        report['retention_storage'] = ('mixed' if report['cold_archives'] and work.exists()
+                                       else 'cold' if report['cold_archives']
+                                       else 'hot' if work.exists() else 'none')
     except BaseException as error:
         report.update(status='FAIL',
                       cleanup='incomplete' if report['cleanup'] == 'removing' else 'retained',
@@ -340,7 +387,6 @@ def run_unit(args, *, root=ROOT):
             raise
         finally:
             write_json(receipt_path, report)
-    print(f'PASS; scratch {report["cleanup"]}; receipt: {receipt_path}', flush=True)
     return unit
 
 
@@ -355,6 +401,8 @@ def main():
     p.add_argument('--wine', action='store_true', help='run through Wine with the shared leased prefix')
     p.add_argument('--wineserver', help='matching wineserver executable if absent from PATH')
     p.add_argument('--timeout', type=float, default=900, help='foreground timeout in seconds')
+    p.add_argument('--keep-hot', metavar='REASON',
+                   help='keep retained outputs directly available instead of default cold archival')
     p.add_argument('--keep-work', metavar='REASON', help='explicit current-input or diagnostic exception')
     p.add_argument('--keep-path', action='append', default=[], metavar='REL',
                    help='retain only this work file/subtree in place after PASS (repeatable)')

@@ -205,9 +205,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: VALIDATION-STORAGE-WORKFLOW completed; new retention and launch-space controls verified.
-- Last verified result: 165.5 GiB inventory; 20 Linux lifecycle tests PASS; verification scratch removed; memory checks PASS.
-- Remaining work: no implementation criterion; historical retirement and hard filesystem quotas are separate scopes.
-- Errors or blockers: none; no historical payload removed or runtime task resumed.
-- Next action: apply the bounded runner to new tests; review dependencies before any historical cleanup.
-- References: docs/changes/2026-11-07-bound-validation-storage.json; docs/development/LOCAL_ARTIFACTS.md.
+- Task: VALIDATION-COLD-STORAGE completed; compression and on-demand consultation implemented and applied.
+- Last verified result: 382 archives, 22.23 GiB recovered; real dataset/Wine restoration PASS; 6,426 private-file stat guards unchanged.
+- Remaining work: no selected criterion; current/private/failed/unattested scopes remain directly available.
+- Errors or blockers: no application errors; three host process-detail denials recorded as limits.
+- Next action: use the catalog, --protect or the legacy wrapper when needed; routine storage work does not rerun suites/builds/gameplay.
+- References: docs/changes/2026-11-07-enable-validation-cold-storage.json; target/cold-storage-migration-20261107/applied.json.

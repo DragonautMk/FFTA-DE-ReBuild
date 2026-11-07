@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-07",
+  "slug": "assess-validation-cold-storage",
+  "title": "Measure compressed validation archives and define on-demand restoration scope",
+  "kind": "docs",
+  "platforms": [
+    "Linux ext4 host; Zstandard 1.5.7"
+  ],
+  "changes": [
+    "Document a measured cold-archive proposal: keep current inputs available, compress completed retained artifacts individually, resolve declared archived inputs through coordinated restoration and retire bounded restored copies after use. Production archival and automatic restoration remain unimplemented.",
+    "Record the existing ext4 filesystem constraint and the required catalog, hash verification, staging, publication, uncompressed-space checks, consumer leases and interrupted-restore handling before historical trees can be replaced."
+  ],
+  "validation": [
+    "Managed unit target/validation/units/cold-storage-assessment-_br49tbe PASS: seven complete files in four categories, tar.zst levels 3 and 6, all eight group/level content round trips match SHA256. Original source content, size, mode and mtime remain unchanged; runner input guards pass and temporary archives/restored copies were automatically removed.",
+    "Combined sample: 369.848 MiB original, 47.303 MiB at level 3 (87.210% smaller), 43.009 MiB at level 6 (88.371% smaller). Compression took 0.807/2.064 seconds and extraction plus writes 0.542/0.533 seconds, excluding hash verification.",
+    "Retained compression-result.json, command log, input guards and supplemental evidence under the managed unit. Exact measurement harness and sample selection match their protected-before hashes."
+  ],
+  "limitations": [
+    "Nonrandom sample of three dataset JSON files, one Cargo archive, one executable and two Wine DLLs; it does not establish total-target savings or migration eligibility. Single local runs with possibly warm caches are not general performance guarantees.",
+    "No historical input replaced or removed, no production archive manager or automatic resolver installed, and no active tree compressed. The regular-file experiment does not verify full directory metadata, hard/symbolic links, full Wine prefixes, native Windows restoration, corruption recovery or concurrent consumers."
+  ],
+  "files": [
+    "docs/development/LOCAL_ARTIFACTS.md",
+    "docs/development/TASK_HANDOFF.md",
+    "docs/development/TASK_COMPLETED_ARCHIVE.md"
+  ],
+  "references": [
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ]
+}
