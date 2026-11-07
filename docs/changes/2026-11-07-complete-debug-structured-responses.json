@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-07",
+  "slug": "complete-debug-structured-responses",
+  "title": "Complete debug structured responses in Wine",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU build and Wine/Xvfb"
+  ],
+  "changes": [
+    "Accept DBG2-15 after verifying structured results, bounded narrow-window presentation, shared command routing and assistant job procedures."
+  ],
+  "validation": [
+    "Earlier Wine evidence covers content discovery and ID selection, two equal-endpoint 102-frame replay procedures, exact-ID cancellation, incompatible identities and deduplicated retry. The current action-contract matrix checks matching CLI and console actions; GUI checks confirm copied inspection JSON, scrollable results and live replay progress at 480x360 with the paused guest unchanged.",
+    "Regenerated the Atlas inventory to include the already existing interpreter-debug-session action; Atlas task and inventory checks pass."
+  ],
+  "limitations": [
+    "Acceptance is for selected simulated Wine/Xvfb paths. The observed replay count lags the worker; no real-time bound is claimed. Native Windows/Linux, physical inputs and broader runtime combinations remain DBG2-27 integration work."
+  ],
+  "files": [
+    "crates/menu/assets/debug_v2.tsv",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/MENU_ATLAS_INVENTORY.json"
+  ],
+  "references": [
+    "docs/debug_control.md",
+    "docs/changes/2026-11-07-summarize-debug-console-results.json"
+  ]
+}

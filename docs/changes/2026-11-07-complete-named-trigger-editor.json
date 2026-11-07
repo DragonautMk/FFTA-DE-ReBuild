@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-07",
+  "slug": "complete-named-trigger-editor",
+  "title": "Complete named trigger editor in Wine",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU / Wine / Xvfb"
+  ],
+  "changes": [
+    "Accept DBG2-24 in the interpreter and console scope after its DBG2-15 dependency was completed and the existing trigger criteria were reconciled."
+  ],
+  "validation": [
+    "Reviewed eleven retained PASS receipts covering named hit and miss, bounded conditions, actions, capture identity and retry, plus interactive console editing; no prior proof was rerun."
+  ],
+  "limitations": [
+    "Feature-gated counted watch is tested synthetically; native Windows, physical input, other ROMs and broader observer/platform checks remain DBG2-27."
+  ],
+  "files": [
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/debug_probes.md",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/changes/2026-11-04-complete-interpreter-trigger-editor.json",
+    "docs/changes/2026-11-04-authenticate-trigger-capture-and-retry.json",
+    "docs/changes/2026-11-07-complete-debug-structured-responses.json"
+  ]
+}

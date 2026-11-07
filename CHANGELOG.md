@@ -3,6 +3,28 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-07 — Summarize debug console results and replay progress
+
+Type: changed. Platforms: Windows GNU build and Wine/Xvfb.
+
+**Changes**
+
+- Show bounded operation-specific summaries, current replay-frame observations and confirmed selections while preventing stale result details from being attributed to failed or unrelated commands.
+- Wrap recent result lines and expose them in the scrollable command context at narrow window sizes; preserve complete copyable JSON and English/Italian messages.
+
+**Validation**
+
+- Windows GNU runtime and test builds passed; Wine ran 36 input-config tests, 3 menu tests, 5 observation tests and an action-contract matrix comparing console and CLI parameters across supported families.
+- At a verified 480x360 Wine client, inspection summary and scrollable context matched the copied JSON with guest state unchanged. A reused 102-frame replay showed intermediate 11/102 and 52/102 before reaching 102/102; the worker simultaneously reported 63/102 and 84/102. Exact-ID and retry procedure evidence remains in the existing records.
+
+**Limitations**
+
+- The UI shows the latest sampled progress, which can lag the worker; no real-time bound is claimed. Simulated Wine/Xvfb input and selected operation results only; native Windows/Linux and physical inputs remain unverified.
+
+Documentation: [debug_control.md](docs/debug_control.md).
+
+[Change record](docs/changes/2026-11-07-summarize-debug-console-results.json)
+
 ## 2026-11-07 — Recover disk space from completed isolated Wine test environments
 
 Type: changed. Platforms: Local development artifacts on Linux.
@@ -84,6 +106,47 @@ Type: added. Platforms: Linux Docker Engine (amd64 host verified).
 Documentation: [docker.md](docs/docker.md), [LOCAL_ARTIFACTS.md](docs/development/LOCAL_ARTIFACTS.md).
 
 [Change record](docs/changes/2026-11-07-dockerize-validation-cold-storage.json)
+
+## 2026-11-07 — Complete named trigger editor in Wine
+
+Type: changed. Platforms: Windows GNU / Wine / Xvfb.
+
+**Changes**
+
+- Accept DBG2-24 in the interpreter and console scope after its DBG2-15 dependency was completed and the existing trigger criteria were reconciled.
+
+**Validation**
+
+- Reviewed eleven retained PASS receipts covering named hit and miss, bounded conditions, actions, capture identity and retry, plus interactive console editing; no prior proof was rerun.
+
+**Limitations**
+
+- Feature-gated counted watch is tested synthetically; native Windows, physical input, other ROMs and broader observer/platform checks remain DBG2-27.
+
+Documentation: [2026-11-04-complete-interpreter-trigger-editor.json](docs/changes/2026-11-04-complete-interpreter-trigger-editor.json), [2026-11-04-authenticate-trigger-capture-and-retry.json](docs/changes/2026-11-04-authenticate-trigger-capture-and-retry.json), [2026-11-07-complete-debug-structured-responses.json](docs/changes/2026-11-07-complete-debug-structured-responses.json).
+
+[Change record](docs/changes/2026-11-07-complete-named-trigger-editor.json)
+
+## 2026-11-07 — Complete debug structured responses in Wine
+
+Type: changed. Platforms: Windows GNU build and Wine/Xvfb.
+
+**Changes**
+
+- Accept DBG2-15 after verifying structured results, bounded narrow-window presentation, shared command routing and assistant job procedures.
+
+**Validation**
+
+- Earlier Wine evidence covers content discovery and ID selection, two equal-endpoint 102-frame replay procedures, exact-ID cancellation, incompatible identities and deduplicated retry. The current action-contract matrix checks matching CLI and console actions; GUI checks confirm copied inspection JSON, scrollable results and live replay progress at 480x360 with the paused guest unchanged.
+- Regenerated the Atlas inventory to include the already existing interpreter-debug-session action; Atlas task and inventory checks pass.
+
+**Limitations**
+
+- Acceptance is for selected simulated Wine/Xvfb paths. The observed replay count lags the worker; no real-time bound is claimed. Native Windows/Linux, physical inputs and broader runtime combinations remain DBG2-27 integration work.
+
+Documentation: [debug_control.md](docs/debug_control.md), [2026-11-07-summarize-debug-console-results.json](docs/changes/2026-11-07-summarize-debug-console-results.json).
+
+[Change record](docs/changes/2026-11-07-complete-debug-structured-responses.json)
 
 ## 2026-11-07 — Bound validation retention and refuse insufficient launch space
 

@@ -66,6 +66,7 @@
     "CheatRequest",
     "OpenCheatCatalog",
     "OpenCommandConsole",
+    "StartInterpreterDebugSession",
     "ToggleEventConsole",
     "ToggleFastForward"
   ],

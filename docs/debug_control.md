@@ -237,7 +237,8 @@ paused parent and protected inputs stayed unchanged. This is one narrow view,
 not proof that every long label or parameter fits.
 
 Press **F2** in the Command console to inspect the session label, full ROM
-hash, run and pending request context in a wrapped, scrollable read-only view.
+hash, run, pending request context and recent result lines in a wrapped,
+scrollable read-only view.
 Use Up/Down or Page Up/Down to scroll, then F2 or Esc to return to the draft.
 The view preserves the protocol's bounded request and content identifiers;
 larger unexpected values are abbreviated. It does not submit the draft. A
@@ -251,6 +252,15 @@ A second live named-search check also displayed the complete trigger name and
 definition hash. Each exact request was then cancelled and the windows closed normally. Input was
 simulated and protected inputs stayed unchanged. Native Windows and physical
 input remain unverified.
+
+The command panel shows bounded summaries for inspections, discovered content,
+cheat previews and state, search results, replay results and saved reports.
+Summaries are selected by operation; a failed command does not present retained
+data from a previous success as its own result. Full responses remain available
+as copied JSON. Replay progress shows the latest frontend observation, not a
+real-time guarantee. In a 480×360 Wine/Xvfb test the panel showed 11/102 and
+52/102 while the same worker reported 63/102 and 84/102, respectively; the
+worker then completed 102/102 and the paused parent state stayed unchanged.
 
 The first narrow replay used an older pinned worker and stopped at frame 45 with
 `Access denied`. The profile with the corrected worker differs only in runtime

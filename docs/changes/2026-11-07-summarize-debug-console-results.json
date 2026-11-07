@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-11-07",
+  "slug": "summarize-debug-console-results",
+  "title": "Summarize debug console results and replay progress",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU build and Wine/Xvfb"
+  ],
+  "changes": [
+    "Show bounded operation-specific summaries, current replay-frame observations and confirmed selections while preventing stale result details from being attributed to failed or unrelated commands.",
+    "Wrap recent result lines and expose them in the scrollable command context at narrow window sizes; preserve complete copyable JSON and English/Italian messages."
+  ],
+  "validation": [
+    "Windows GNU runtime and test builds passed; Wine ran 36 input-config tests, 3 menu tests, 5 observation tests and an action-contract matrix comparing console and CLI parameters across supported families.",
+    "At a verified 480x360 Wine client, inspection summary and scrollable context matched the copied JSON with guest state unchanged. A reused 102-frame replay showed intermediate 11/102 and 52/102 before reaching 102/102; the worker simultaneously reported 63/102 and 84/102. Exact-ID and retry procedure evidence remains in the existing records."
+  ],
+  "limitations": [
+    "The UI shows the latest sampled progress, which can lag the worker; no real-time bound is claimed. Simulated Wine/Xvfb input and selected operation results only; native Windows/Linux and physical inputs remain unverified."
+  ],
+  "files": [
+    "crates/input-config/languages/en.json",
+    "crates/input-config/languages/it.json",
+    "crates/menu/src/canvas.rs",
+    "crates/menu/src/command_console.rs",
+    "crates/recomp/src/debug_command.rs",
+    "crates/recomp/src/debug_command/observation.rs",
+    "crates/recomp/src/debug_command_panel.rs",
+    "crates/recomp/src/play.rs",
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ],
+  "references": [
+    "docs/debug_control.md"
+  ]
+}

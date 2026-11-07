@@ -160,10 +160,21 @@ impl Canvas {
             })
         }
     }
+    fn fallback_typeface()->&'static FontRef<'static>{
+        static FALLBACK:OnceLock<FontRef<'static>>=OnceLock::new();
+        FALLBACK.get_or_init(||FontRef::try_from_slice(include_bytes!("../assets/fonts/DroidSansFallback.ttf")).unwrap())
+    }
     /// Wrap with the same face, variation, kerning and advances as text().
     pub fn wrap_text(text: &str, size: f32, max: f32) -> Vec<String> {
-        let font = Self::typeface(false);
-        let scaled = font.as_scaled(size);
+        Self::wrap_text_impl(text,size,max,false)
+    }
+    /// Use the same fallback glyph metrics as text_with_fallback().
+    pub fn wrap_text_with_fallback(text:&str,size:f32,max:f32)->Vec<String>{
+        Self::wrap_text_impl(text,size,max,true)
+    }
+    fn wrap_text_impl(text:&str,size:f32,max:f32,fallback:bool)->Vec<String>{
+        let primary=Self::typeface(false);
+        let fallback_font=fallback.then(Self::fallback_typeface);
         let mut lines = Vec::new();
         let mut line = String::new();
         let mut width = 0.;
@@ -175,17 +186,20 @@ impl Canvas {
                 last = None;
                 continue;
             }
-            let id = font.glyph_id(ch);
-            let kern = last.map_or(0., |prev| scaled.kern(prev, id));
+            let primary_id=primary.glyph_id(ch);
+            let alternate=fallback_font.filter(|font|primary_id.0==0 && font.glyph_id(ch).0!=0);
+            let font=alternate.unwrap_or(primary);let using_fallback=alternate.is_some();let scaled=font.as_scaled(size);
+            let id=font.glyph_id(ch);
+            let kern = last.map_or(0., |(prev,previous_fallback)| if previous_fallback==using_fallback{scaled.kern(prev,id)}else{0.});
             let advance = scaled.h_advance(id);
             if !line.is_empty() && width + kern + advance > max {
                 lines.push(std::mem::take(&mut line));
                 width = 0.;
                 last = None;
             }
-            width += last.map_or(0., |prev| scaled.kern(prev, id)) + advance;
+            width += last.map_or(0., |(prev,previous_fallback)| if previous_fallback==using_fallback{scaled.kern(prev,id)}else{0.}) + advance;
             line.push(ch);
-            last = Some(id);
+            last = Some((id,using_fallback));
         }
         lines.push(line);
         lines
@@ -200,8 +214,7 @@ impl Canvas {
     }
     fn text_impl(&mut self, x:f32, y:f32, s:&str, c:[u8;3], size:f32, title:bool, max:f32, fallback:bool) {
         let primary = Self::typeface(title);
-        static FALLBACK: OnceLock<FontRef<'static>> = OnceLock::new();
-        let fallback_font = fallback.then(|| FALLBACK.get_or_init(|| FontRef::try_from_slice(include_bytes!("../assets/fonts/DroidSansFallback.ttf")).unwrap()));
+        let fallback_font = fallback.then(Self::fallback_typeface);
         let baseline=y+primary.as_scaled(size).ascent();
         let mut pen = x;
         let mut last = None;

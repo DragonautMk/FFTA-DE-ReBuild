@@ -189,6 +189,49 @@ pub(crate) fn cmd(args:&[String])->Result<(),String>{
 mod tests {
     use super::*;
     #[test]
+    fn console_and_control_cli_share_the_supported_action_contract(){
+        let hash="a".repeat(64);let preview="b".repeat(64);
+        let mut cases=vec![
+            ("status".into(),"status".into(),"control.status"),
+            ("jobs status".into(),"status".into(),"control.status"),
+            ("jobs cancel job-1".into(),"cancel --request job-1".into(),"control.cancel"),
+            ("pause".into(),"pause".into(),"control.pause"),("resume".into(),"resume".into(),"control.resume"),
+            ("step 2 --keys 0x3ff".into(),"step 2 --keys 0x3ff".into(),"control.step"),
+            ("inspect 0x08000000 16".into(),"inspect 0x08000000 16".into(),"control.inspect"),
+            ("break 0x08000000 thumb --steps 100".into(),"break 0x08000000 thumb --steps 100".into(),"control.break"),
+            ("watch read 0x02000000 0x02000004 --width 2".into(),"watch read 0x02000000 0x02000004 --width 2".into(),"control.watch"),
+            ("content refresh".into(),"content-refresh".into(),"content.scan"),
+            ("content list --offset 2 --limit 1 --generation 3".into(),"content-list --offset 2 --limit 1 --generation 3".into(),"content.list"),
+            ("cheats refresh".into(),"cheat-refresh".into(),"cheats.refresh"),
+            ("cheats list --offset 2 --limit 1".into(),"cheat-list --offset 2 --limit 1".into(),"cheats.list"),
+            ("cheats show CH-0001 --offset 4".into(),"cheat-show CH-0001 --offset 4".into(),"cheats.show"),
+            ("cheats capabilities CH-0001 --offset 4".into(),"cheat-capabilities CH-0001 --offset 4".into(),"cheats.capabilities"),
+            ("cheats disarm all".into(),"cheat-disarm all".into(),"cheats.disarm"),
+            ("cheats preset-save test".into(),"cheat-preset-save test".into(),"cheats.preset-save"),
+            ("cheats preset-prepare test".into(),"cheat-preset-prepare test".into(),"cheats.preset-prepare"),
+            ("graphics --compare-last".into(),"graphics --compare-last".into(),"control.graphics"),
+            ("ui-start".into(),"ui-start".into(),"control.ui-start"),("ui-report".into(),"ui-report".into(),"control.ui-report"),
+            ("audio-start".into(),"audio-start".into(),"control.audio-start"),("audio-report".into(),"audio-report".into(),"control.audio-report"),
+            ("code-start".into(),"code-start".into(),"control.code-start"),("code-report".into(),"code-report".into(),"control.code-report"),
+            ("gameplay-start".into(),"gameplay-start".into(),"control.gameplay-start"),("gameplay-report".into(),"gameplay-report".into(),"control.gameplay-report"),
+            ("recent-start".into(),"recent-start".into(),"control.recent-start"),("recent-freeze".into(),"recent-freeze".into(),"control.recent-freeze"),("recent-report".into(),"recent-report".into(),"control.recent-report"),
+            ("issue-report --symptom example".into(),"issue-report --symptom example".into(),"control.issue-report"),
+        ];
+        for (verb,cli,id) in [("prepare","cheat-prepare","cheats.prepare-once"),("apply-once","cheat-apply","cheats.apply-once"),("arm","cheat-arm","cheats.arm")] {
+            let suffix=if verb=="prepare"{String::new()}else{format!(" {preview}")};
+            cases.push((format!("cheats {verb} CH-0001 0 CH-0002 {hash}{suffix}"),format!("{cli} CH-0001 0 CH-0002 {hash}{suffix}"),id));
+        }
+        cases.push((format!("cheats preset-arm test {preview}"),format!("cheat-preset-arm test {preview}"),"cheats.preset-arm"));
+        for (mode,id) in [("plain","replay.run"),("audit","audit.run"),("capture","capture.run"),("compare","compare.run")]{cases.push((format!("replay run {mode}"),format!("replay-run --mode {mode}"),id));}
+        for (command,cli,operation) in cases {
+            let action=match parse(&command).unwrap_or_else(|e|panic!("{command}: {e}")){Command::Control(action)=>action,Command::JobsStatus=>Action::Status,_=>panic!("Unexpected command: {command}")};
+            let mut words=cli.split_whitespace();let mut args=vec![words.next().unwrap().to_owned(),"<current-session>".into()];args.extend(words.map(str::to_owned));
+            let (_,direct)=crate::debug_control::parse(&args).unwrap_or_else(|e|panic!("{cli}: {e}"));
+            assert_eq!(action.operation_id(),operation,"{command}");assert!(crate::debug_operations::get(operation).is_some(),"{operation}");
+            assert_eq!(serde_json::to_value(action).unwrap(),serde_json::to_value(direct).unwrap(),"{command}");
+        }
+    }
+    #[test]
     fn quotes_are_bounded_and_never_execute_or_expand() {
         assert_eq!(tokenize("issue-report --symptom \"é and \\\"quoted\\\"\"").unwrap(),vec!["issue-report","--symptom","é and \"quoted\""]);
         assert_eq!(tokenize("'$(not executed)' \\").unwrap(),vec!["$(not executed)","\\"]);

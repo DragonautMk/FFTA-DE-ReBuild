@@ -354,7 +354,7 @@ No other development was selected. On resumption read only the individual ID in
   Physical input, native Windows/Linux, other IMEs and complete Unicode font
   coverage remain separate integration-matrix work under DBG2-27.
 
-- [ ] **DBG2-15 — Structured responses, jobs and assistant access.**
+- [x] **DBG2-15 — Structured responses, jobs and assistant access.**
   Show ROM/session target and resolved parameters, request ID, progress, short
   result and copyable JSON. Reuse DBG-20 local channel for command/capability
   listing, selection by ID, execution, status and cancellation of the same
@@ -365,7 +365,7 @@ No other development was selected. On resumption read only the individual ID in
   wrong identity and cancellation of another ID are refused. Retrying a lost
   response does not duplicate execution. **Depends on:** DBG2-02/13/14, DBG-20.
 
-  **Audit 2026-11-01 — partial.** [Local control](../../crates/recomp/src/debug_control.rs)
+  **Accepted 2026-11-07 — selected Wine scope.** [Local control](../../crates/recomp/src/debug_control.rs)
   and [panel observation](../../crates/recomp/src/debug_command/observation.rs)
   expose request/run/target, parameters/progress and outcomes. Records:
   [job context](../changes/2026-10-31-show-debug-command-job-context.json),
@@ -386,7 +386,14 @@ No other development was selected. On resumption read only the individual ID in
   listing the old index, refused wrong-ID cancellation and discarded the exact
   cancelled scan. A later 480×360 Win32/Wine GUI check displayed the full
   live extended search context, including a named trigger identity, and cancelled
-  the exact requests. Full operation parity and comprehensive narrow-window presentation remain.
+  the exact requests. The console now provides operation-specific bounded
+  summaries, wrapped recent results in the F2 view, and observed replay-frame
+  progress. A 480×360 Wine GUI verified inspection, copied full JSON, scrolling,
+  and intermediate replay progress; the displayed count can lag the worker.
+  A targeted action-contract matrix compares the console and local-control CLI.
+  This accepts the structured response and assistant procedure contract;
+  native Windows/Linux, physical input, other runtime combinations and a
+  real-time progress guarantee remain separate integration-matrix work.
 
 - [ ] **DBG2-16 — Repeatable recipes and bounded batches.**
   Save a sequence of typed commands from the console, selectable in Scripts and
@@ -611,7 +618,7 @@ No other development was selected. On resumption read only the individual ID in
 
 ## P4 — Further improvements and completion
 
-- [ ] **DBG2-24 — Named trigger and breakpoint editor.**
+- [x] **DBG2-24 — Named trigger and breakpoint editor.**
   Manage multiple saved break/watch/capture definitions from menu/console:
   name, enabled, PC/mode, range/value, hit count, frame window and supported
   action (pause, capture, event freeze). Allow declared simple combinations;
@@ -632,9 +639,9 @@ No other development was selected. On resumption read only the individual ID in
   observer constraints.
   Windows GNU/Wine tests and isolated EUR Wine/Xvfb sessions cover a two-hit
   trigger, a miss, guard/freeze, frame-boundary capture and interactive editing.
-  Feature-gated watch counting is tested synthetically. The shared DBG2-15
-  dependency remains partial, so parent closure waits for that dependency;
-  native Windows, physical input and broader platform checks remain in DBG2-27.
+  Feature-gated watch counting is tested synthetically. Accepted in the recorded
+  interpreter/Wine scope after DBG2-15 completion; native Windows, physical
+  input and broader platform checks remain in DBG2-27.
 
 - [ ] **DBG2-25 — Pinned observations and differences.**
   Permit pins for registers, read-only memory windows and already decoded

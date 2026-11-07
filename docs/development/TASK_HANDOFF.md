@@ -36,7 +36,7 @@ termination of another owner's process or changing another thread's goal state.
 
 - State: active
 - Outcome: partial
-- Verified: E132 103 resources/104 files, 63 compact banks; EUR Wine managed/native prefixes and CLI create/reuse/verify/startup PASS. Current: target/validation/units/e132-6e84e0-cli-wine-_al2e8me/work/resources/. E131 retained for comparison.
+- Verified: E132 103 resources/104 files, 63 compact banks; EUR Wine managed/native prefixes and CLI create/reuse/verify/startup PASS. Current: target/validation/units/e132-6e84e0-cli-wine-\_al2e8me/work/resources/. E131 retained for comparison.
 - Missing: unmigrated resources/consumers, missing ordinary-use evidence, ABI/global extent/indirect calls and mod phases ROMDATA-06/07; Linux/USA/native Windows/new32:9 remain distinct. EUR, reduced Wine scope, no performance/space measurements; originals and personal saves unchanged.
 - Selection: `ROMDATA-05-GAMEPLAY-6E84E0-LIFECYCLE` scoped EUR Wine PASS (6k2_x7_1); E132 owner retains typed data across Load/Undo, backup and restart with copied files unavailable. Full lifecycle/platform matrix remains open. Next select a distinct unfinished ROMDATA criterion; do not repeat this test.
 - Resume: [validation recovery checklist](ROM_DATA_VALIDATION_RECOVERY_TODO.md) for skipped checks; [ROM_DATA_TODO](ROM_DATA_TODO.md), only the selected criterion's section (ROMDATA-01/02/03/04/05/06/07); [inventory](ROM_DATA_INVENTORY.md). Do not read the whole TODO. Children retain their IDs and limits:
@@ -54,24 +54,16 @@ termination of another owner's process or changing another thread's goal state.
 
 DBG2 audit of 2026-11-01 found eleven parents 13..23 unchecked;
 8 had partial/integrated work and 3 lacked the requested implementation.
-DBG2-13 and DBG2-14 have since completed; current open criteria follow.
+DBG2-13 through DBG2-15 have since completed; current open criteria follow.
 Original criteria and audit notes: [DEBUG_TOOLS_V2_TODO](DEBUG_TOOLS_V2_TODO.md#p2--console-di-comandi-e-ricette-per-lassistente).
 DBG2-01..12 remain complete within their scope. Read historical details only
 for a specific question: archive legacy lines 179..744 or the named record below.
-
-### DBG2-15
-
-- State: active
-- Outcome: partial
-- Verified: context, retry, discovery, replay/cancel, live refresh and extended live search context at 480x360 with exact cancellation in EUR Wine. `2026-11-04-show-live-extended-search-context.json`.
-- Missing: full operation parity and comprehensive narrow-window presentation; native/physical input. DBG2-14 prerequisite accepted.
-- Selection: user requests task completion; audit supported action families and presentation against accepted DBG2-13/15 evidence and identify exact gaps.
-- Resume: complete remaining parity without repeating accepted replay or search context. Private proofs retained.
 
 ### DBG2-16
 
 - State: active
 - Outcome: partial
+- Selection: user requests completion of Debug Tools V2; existing client-interruption recovery and recipe flows passed, but a new session currently refuses the old checkpoint. Missing: safe cross-restart recovery and remaining parent criteria. Next: inspect session identity, ledger and state guarantees before implementing a complete recovery contract.
 - Verified: assertions, waits, catalog/captures, bounded searches including an EUR Wine Thumb hit, Start/cancel, interrupted recovery, safe restart refusal and interactive recipe/session picker. `2026-11-04-verify-recipe-breakpoint-hit.json`.
 - Missing: other action types, feature-gated watch, broader picker scenarios, cross-restart recovery and wider platforms; ambiguous queries not retried.
 - Resume: select an unverified criterion without repeating accepted search or picker flows; private and failed proof units retained.
@@ -125,14 +117,6 @@ for a specific question: archive legacy lines 179..744 or the named record below
 - Verified: DBG2-23-SNAPSHOT adds bounded conservative SL2 cheat ancestry and safe copy/load/Undo semantics; Linux tests, active-cheat GUI save and recording refusal PASS. Runtime installed in user's Linux portable copy. Legacy ancestry unknown.
 - Missing: exact per-application set/hash/parameters/order/frame/decoder in profiles/recordings/reports, complete reset/ROM semantics, state-clock replay and incompatible-set refusal.
 - Resume: after DBG2-19/21, implement exact recording/replay contract; do not repeat the accepted snapshot tests.
-
-### DBG2-24
-
-- State: waiting
-- Outcome: partial
-- Verified: named trigger editor, counts/windows, RAM guard, pause/capture/freeze, authenticated capture identity and idempotent retry; EUR Wine hit/miss, actions and GUI PASS. `2026-11-04-authenticate-trigger-capture-and-retry.json`.
-- Missing: shared DBG2-15 parent closure; native Windows, physical input and broader platform coverage remain under DBG2-27. Counted watch tested synthetically.
-- Resume: finish DBG2-15 prerequisite before parent closure; preserve accepted trigger evidence and private proofs.
 
 ### DBG2-25
 
@@ -205,9 +189,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: VALIDATION-COLD-STORAGE-AUTOMATIC completed; idle historical retention, indexed discovery and progress reporting applied.
-- Last verified result: 1010 paths archived without errors; 16.96 GB recovered by the Docker batch; per-archive integrity checks passed.
-- Remaining work: no selected criterion; current/shared/private/failed/suspended scopes remain available.
-- Errors or blockers: none in this batch; unreadable host process details remain recorded limits.
-- Next action: reuse cold_storage_docker.sh batch --apply; receipt-only selection is available with --completed-only. No runtime work selected.
-- References: docs/changes/2026-11-07-automate-idle-historical-compression.json; target/cold-storage-batches/20261107-111843-b9e16c2e/batch.json.
+- Task: DBG2-16 selected after DBG2-24 completed in the recorded interpreter/Wine scope.
+- Last verified result: eleven retained PASS receipts cover trigger hit/miss, bounded conditions, actions, identity, retry and interactive editing; DBG2-15 is accepted.
+- Remaining work: other open Debug Tools V2 tasks; counted watch was synthetic and broader platform/input validation remains DBG2-27.
+- Errors or blockers: effective debugging model/effort unconfirmed; prior GUI cleanup completed after identity verification.
+- Next action: inspect recipe checkpoint, session identity and ledger guarantees for safe cross-restart recovery.
+- References: docs/changes/2026-11-07-complete-named-trigger-editor.json; docs/changes/2026-11-04-authenticate-trigger-capture-and-retry.json.

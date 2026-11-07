@@ -122,7 +122,7 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   sections), fixed shell and internal list/detail scrolling. Legacy handlers,
   confirmations, DS/content selectors and 9/99 slots remain in use; the readonly
   operation and 28-task references do not execute CLI strings or future tools.
-  DBG2-01..14 retain their completed status within their recorded scopes.
+  DBG2-01..15 retain their completed status within their recorded scopes.
   `ff.percent` adds100..800% in20-point steps while preserving legacy
   `ff.speed`2/4/8. The rational frame batch clock preserves each complete guest
   frame/clock; fast audio uses fractional playback ratios. Menu-only shoulder
@@ -191,7 +191,7 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   verification remain unfinished.
 
 - The [integrated debug follow-up](DEBUG_TOOLS_V2_TODO.md) is in implementation.
-  DBG2-24 provides [named bounded searches](../debug_probes.md#named-searches--dbg2-24) via the command console and debug-command. Definitions default to disabled; explicit runs support bounded counts/windows, a RAM guard and pause/capture/freeze actions. Its shared DBG2-15 dependency remains partial.
+  DBG2-24 provides [named bounded searches](../debug_probes.md#named-searches--dbg2-24) via the command console and debug-command. Definitions default to disabled; explicit runs support bounded counts/windows, a RAM guard and pause/capture/freeze actions. DBG2-24 is accepted in the recorded interpreter/Wine scope; broader platform and input validation remains DBG2-27.
   DBG2-01 adds the readonly [operation contract](../debug_operations.md):
   `debug-operations list/show [--json]` initially inventories65operations/242
   parameters (67/250 after DBG2-02), current/planned menu routes, prerequisites/effects/results/caps,
@@ -278,7 +278,9 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   Wine synthetic profiles verify routing and retry, while a deliberately slow
   synthetic child verifies supervisor cancellation and deadline handling. A
   separate Wine panel submission verifies replay and copied terminal JSON.
-  Broader DBG2-15 result presentation and assistant procedures remain open.
+  DBG2-15's structured results and assistant procedures are accepted in the
+  recorded Wine scope; the narrow console wraps recent results and shows sampled
+  replay progress, which may lag the worker.
   The broader checklist specifies built-in selection of existing
   inputs/profiles/scripts with external file dialogs only from explicit buttons,
   editable tool parameters, optional live event and textual command consoles,

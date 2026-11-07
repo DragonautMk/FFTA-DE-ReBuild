@@ -4730,7 +4730,8 @@ impl ApplicationHandler for PlayApp {
         if self.command_console_panel.as_ref().is_some_and(|p|p.wants_observation()){
             let pending=self.control_server.as_ref().map_or(serde_json::Value::Null,|s|s.pending_status());
             let remaining=self.frame_control.remaining;let search_remaining=self.probe.as_ref().map(|p|p.remaining());
-            self.command_console_panel.as_mut().unwrap().observe(&pending,remaining,search_remaining);
+            let replay_progress=self.replay_job.as_ref().and_then(|job|job.progress()).map(|report|(report.completed,report.frames));
+            self.command_console_panel.as_mut().unwrap().observe(&pending,remaining,search_remaining,replay_progress);
         }
         if let Some(panel)=self.command_console_panel.as_mut(){panel.tick();if let Err(error)=panel.draw_if_due(){eprintln!("command console: {error}");}}
     }

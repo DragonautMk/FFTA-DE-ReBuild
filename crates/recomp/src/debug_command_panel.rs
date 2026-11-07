@@ -88,8 +88,8 @@ impl Panel {
     pub fn hide(&mut self){self.visible=false;self.focused=false;self.context_visible=false;self.editor.set_preedit("");#[cfg(target_os="windows")] if let Some(ime)=self.wine_ime.as_mut(){ime.reset();}self.controller.reset();self.focus_handoff=None;self.hide_handoff=Some(Instant::now());self.window.set_ime_allowed(false);self.window.set_visible(false);}
     pub fn focused(&self)->bool{self.visible&&self.focused}
     pub fn wants_observation(&self)->bool{self.visible&&self.last_observation.elapsed()>=Duration::from_millis(250)}
-    pub fn observe(&mut self,pending:&serde_json::Value,remaining:u32,search_remaining:Option<u64>){
-        self.last_observation=Instant::now();let (job,parameters)=debug_command::observation::pending(pending,remaining,search_remaining,self.language);
+    pub fn observe(&mut self,pending:&serde_json::Value,remaining:u32,search_remaining:Option<u64>,replay_progress:Option<(u64,u64)>){
+        self.last_observation=Instant::now();let (job,parameters)=debug_command::observation::pending(pending,remaining,search_remaining,replay_progress,self.language);
         if self.pending!=job||self.parameters!=parameters{self.pending=job;self.parameters=parameters;self.last_draw=Instant::now()-Duration::from_secs(1);}
     }
     pub fn focus_handoff(&self)->bool{self.focus_handoff.is_some_and(|t|t.elapsed()<Duration::from_secs(2))}
@@ -195,10 +195,10 @@ impl Panel {
             let (command,job)=self.jobs.remove(i);let value=job.join().unwrap_or_else(|_|serde_json::json!({"schema":1,"kind":"ffta-debug-command","ok":false,"outcome":"worker-error","error":"Worker failed","delivery":"unknown"}));
             {
                     self.last_result=serde_json::to_string_pretty(&value).unwrap_or_default();
-                    let summary=value.get("outcome").and_then(|v|v.as_str()).unwrap_or("ok");self.line(format!("{command} → {summary}"));
+                    let summary=value.get("outcome").and_then(|v|v.as_str()).unwrap_or(if value["ok"]==false{"error"}else{"ok"});self.line(format!("{command} → {summary}"));
                     if let Some(id)=value.get("id").and_then(|v|v.as_str()){self.line(tr(self.language,"Request: {id}",&[("id",id.into())]));}
                     if let Some(error)=value.get("error").and_then(|v|v.as_str()){self.line(tr(self.language,"Error: {error}",&[("error",error.into())]));}
-                    if let Some(status)=value.get("status"){
+                    if let Some(status)=value.get("status").filter(|status|status.is_object()){
                         self.line(tr(self.language,"frame {frame} · clock {clock} · paused {paused} · request {request}",&[("frame",status["frame"].to_string()),("clock",status["clock"].to_string()),("paused",status["paused"].to_string()),("request",status["pending_control"]["request_id"].to_string())]));
                     }
                     if let Some(op)=value.get("operation"){
@@ -209,7 +209,7 @@ impl Panel {
                         let ids=operations.iter().filter_map(|o|o["id"].as_str()).collect::<Vec<_>>().join(" · ");
                         for chunk in ids.as_bytes().chunks(100){self.line(String::from_utf8_lossy(chunk).into_owned());}
                     }
-                    for line in debug_command::observation::result_lines(&value){self.line(line);}
+                    for line in debug_command::observation::result_lines(&value,&command,self.language){self.line(line);}
                     self.notice=self.language.text("Result ready; Ctrl+Shift+C copies JSON.").into();
             }
             self.last_draw=Instant::now()-Duration::from_secs(1);
@@ -223,10 +223,10 @@ impl Panel {
         let draft=format!("> {}",self.editor.display());
         let preedit=tr(self.language,"{preedit}  ·  requests in progress: {count}",&[("preedit",self.editor.preedit().into()),("count",self.jobs.len().to_string())]);
         let keyboard_height=if self.controller.visible(){((height as f32*0.43).clamp(105.0,240.0)) as usize}else{0};
-        let count=height.saturating_sub(204+keyboard_height)/17;let lines:Vec<String>=self.lines.iter().rev().take(count).cloned().collect::<Vec<_>>().into_iter().rev().collect();
+        let count=height.saturating_sub(204+keyboard_height)/17;let results:Vec<String>=self.lines.iter().cloned().collect();let lines:Vec<String>=results.iter().rev().take(count).cloned().collect::<Vec<_>>().into_iter().rev().collect();
         let labels=self.controller.localized_labels(self.language);let keyboard=self.controller.visible().then_some(menu::command_console::Keyboard{labels:&labels,selected:self.controller.selected()});
         let hint=debug_command::completion::hint(self.editor.text(),self.language);
-        if self.context_visible {self.context_scroll=menu::command_console::context_lines(&self.target,&self.pending,&self.parameters,width,height,self.context_scroll).1;menu::command_console::draw_context(self.language,&self.target,&self.pending,&self.parameters,self.context_scroll,&mut rgba,width,height);}
+        if self.context_visible {self.context_scroll=menu::command_console::context_lines(self.language,&self.target,&self.pending,&self.parameters,&results,width,height,self.context_scroll).1;menu::command_console::draw_context(self.language,&self.target,&self.pending,&self.parameters,&results,self.context_scroll,&mut rgba,width,height);}
         else {menu::command_console::draw(&menu::command_console::Display{language:self.language,target:&self.target,pending:&self.pending,parameters:&self.parameters,draft:&draft,preedit:&preedit,hint,notice:&self.notice,lines:&lines,keyboard},&mut rgba,width,height);}
         self.surface.resize(w,h).map_err(|e|e.to_string())?;let mut buffer=self.surface.buffer_mut().map_err(|e|e.to_string())?;
         for(out,p)in buffer.iter_mut().zip(rgba){*out=(u32::from(p[0])<<16)|(u32::from(p[1])<<8)|u32::from(p[2]);}buffer.present().map_err(|e|e.to_string())

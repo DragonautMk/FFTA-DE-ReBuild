@@ -162,7 +162,8 @@ boundaries and observer constraints. The console also displays the evaluated hit
 and action; Ctrl+Shift+C copies the complete JSON. New capabilities are checked
 before sending extended settings to an older runtime.
 
-Windows GNU/Wine focused tests cover legacy serialization, bounds, capability
+DBG2-24 is accepted in the recorded interpreter/Wine scope. Windows GNU/Wine
+focused tests cover legacy serialization, bounds, capability
 refusal, PC count/window, guarded reads, feature-gated watch counts, capture
 publication and command/recipe regressions. In isolated EUR Wine/Xvfb sessions,
 a Thumb trigger reached its second hit, a second trigger missed within its limit,

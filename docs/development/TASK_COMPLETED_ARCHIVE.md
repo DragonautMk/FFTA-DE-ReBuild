@@ -21531,3 +21531,17 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Evidence: docs/changes/2026-11-07-automate-idle-historical-compression.json; target/cold-storage-batches/20261107-111843-b9e16c2e/batch.json PASS. Docker batch selected and archived 1010 paths, reclaiming 16958410752 bytes (15.79 GiB / 16.96 GB) with no errors; packing verified contents before retirement. Python syntax parsing passed.
 - Limits: no suites, game builds, gameplay, benchmarks or repeated restore checks. Storage retention does not close test acceptance. Savings exclude external receipts and directory metadata. Host process-detail denials remain limitations; native Windows remains unverified.
 - Next action: reuse the same Docker batch command for future eligible work; no manual receipt triage required for the idle-history policy.
+
+### DBG2-15
+
+- Outcome: completed
+- Verified criteria: structured target/request/parameter/progress and bounded results with copyable JSON; shared CLI/console action contract, discovery and content selection; status/exact cancellation, distinct outcomes and idempotent retry. Earlier EUR Wine evidence exercised discovery, two equal-endpoint replays, wrong-ID refusal and original-response retry. Current 480x360 Wine GUI verified inspection summary, scrolling and copied JSON; live replay showed 11/102 and 52/102 while the same active worker reported 63/102 and 84/102, then passed 102/102 with parent guest state unchanged. The display reports sampled progress, not a real-time value.
+- Evidence: docs/changes/2026-11-07-complete-debug-structured-responses.json; docs/changes/2026-11-07-summarize-debug-console-results.json; target/validation/units/{dbg2-15-result-complete-tests-czjyms2x,dbg2-15-action-contract-tests-1j7zuqm3,dbg2-15-result-final-gui-ffi6e1gz,dbg2-15-replay-progress-sequence-0diwkwz1}/unit-result.json; the last unit's cleanup-receipt.json records verified termination of its owned Xvfb after a helper cleanup error. Windows GNU builds, Wine tests, project memory, handoff, Atlas and diff checks PASS. The first replay observation 1_7s4l7_ missed intermediate progress; retained diagnostic and subsequent timed sequence resolved it.
+- Limits: simulated Wine/Xvfb inputs and selected runtime cases; native Windows/Linux, physical input, broader operation combinations and hard progress freshness remain DBG2-27. Sol /root/sol_dbg2_replay_progress was requested as gpt-6.1-sol xhigh; effective consultant and primary model/effort unconfirmed. Successful units retained exact private scratch copies per runner policy; failed work and restored inputs remain preserved.
+
+### DBG2-24
+
+- Outcome: completed
+- Verified criteria: named trigger definitions and editing, bounded count/window and guard, pause/capture/freeze, reached and unreached results, safe boundary, evaluated condition and authenticated identity; existing DBG2-05/15 and DBG-08/11 dependencies are accepted. Eleven retained trigger test and EUR Wine/Xvfb GUI receipts report PASS; no accepted proof was rerun.
+- Evidence: docs/changes/2026-11-07-complete-named-trigger-editor.json; docs/changes/2026-11-04-complete-interpreter-trigger-editor.json; docs/changes/2026-11-04-authenticate-trigger-capture-and-retry.json; target/validation/units/dbg2-trigger-identity-live-y5ywb_n6/unit-result.json.
+- Limits: interpreter/Wine scope; feature-gated counted watch was tested synthetically, while native Windows, physical input, other ROMs and broader platform/observer coverage remain DBG2-27.
