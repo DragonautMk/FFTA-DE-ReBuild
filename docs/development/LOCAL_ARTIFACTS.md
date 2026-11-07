@@ -56,6 +56,10 @@ Keep only these durable outputs from a successful unit:
 - Canonical Cargo outputs and shared compiler caches. Resolve test binaries
   from Cargo's artifact output; avoid copying another executable into every
   unit unless preserving that exact binary is an acceptance requirement.
+  An explicitly needed isolated build belongs in `work`; select only the
+  executable needed by the next consumer with `--keep-path`, so its compiler
+  cache does not become permanent. A build and its immediate test can share
+  one foreground harness and retire together after PASS.
 - One runner-owned Wine prefix, leased across all participating units. Per-test
   saves/configuration still need explicit isolation. Prefix contents are not
   a per-version snapshot. Use a separate prefix only for a named clean-profile
@@ -82,8 +86,11 @@ the actual ROM, dataset, state, recording and other read-only inputs with
 repeatable `--protect` options. Complete file sets, identities, hashes and
 modification times are checked after the command, before retirement.
 Read-only input guards permit hard-linked files, as used by canonical Cargo
-executables; they never unlink those inputs. Scratch and lease paths retain
-their strict shared-file checks. Symlinks and junctions remain refused.
+executables; they never unlink those inputs. Owned scratch accepts Cargo's
+internal hard links only when the inventory contains every name for each inode
+(matching its link count). A link outside scratch still blocks retirement.
+The complete inventory, including link counts, is rechecked before removal.
+Symlinks, junctions and nested activity leases remain refused.
 
 With `--wine`, the runner owns `target/validation/wine-prefix`, refuses adoption
 of an unmarked legacy prefix and holds its lease through `wineserver -w`. Use
@@ -93,15 +100,84 @@ uncoordinated Wine process against it. Existing personal/shared prefixes are
 neither adopted nor removed. On native Windows omit `--wine` and use native
 path placeholders. Native Linux validation remains a separate gate.
 
-Nonzero exit, missing/negative results, changed protected inputs, linked or
-shared scratch paths, private input extensions and tracked scratch content
+Nonzero exit, missing/negative results, changed protected inputs, external
+shared scratch paths, unselected private input extensions and tracked scratch content
 prevent retirement. A timeout or interruption retains protective leases too,
 because descendants may still be alive; inspect the recorded owner and process
 before manual recovery. There is no automatic stale-lease reclamation.
-`--keep-work 'named current-input or diagnostic reason'` is an explicit retention
-exception; record its consumer and retire it after replacement. It must not
-become a default flag on each revision. Source preimages and personal inputs
-belong outside disposable scratch. Failures keep their work and evidence.
+Failures keep their work and evidence.
+
+### Retain selected outputs instead of the whole unit
+
+Use repeatable `--keep-path REL` with `--keep-reason 'consumer and retirement
+condition'` to keep an exact file or subtree after PASS. Paths stay under the
+same `work/` directory, preserving manifest and consumer references; unselected
+siblings are removed. For example, append these options before `--` when a
+harness creates the current dataset and a pinned executable:
+
+```sh
+--keep-path resources --keep-path cargo-target/release/ffta-cli.exe \
+--keep-reason 'Current EUR dataset and CLI until the next accepted generation'
+```
+
+Select the actual executable path reported by the build. Keep each executable's
+required runtime files too. The cleanup receipt retains the existing `kept`
+token and adds `retention_mode: selected`, `kept_paths` and unique-inode logical
+byte totals before/after retention; these are not allocated disk-block savings.
+Missing selections fail without cleanup. A generated checkpoint can be selected
+explicitly, but any private file outside the selection blocks all retirement.
+Original personal inputs and source preimages still belong outside scratch.
+
+`--keep-work 'consumer and retirement condition'` remains a whole-unit diagnostic
+exception and cannot be combined with selective retention. It must not become a
+default flag on each revision. Neither form automatically retires an older unit;
+review its dependents and close the retention exception after replacement.
+
+### Check space before starting
+
+The runner checks free space before input hashing/unit creation and again just
+before launching the child. Defaults require **6 GiB free**: a **5 GiB floor**
+plus **1 GiB expected peak growth**. Set `--reserve-gib N` for the actual new
+build outputs, dataset copies, logs and evidence expected at peak. Reusing a
+canonical build or current dataset can make that budget much smaller than a
+fresh isolated build. A refusal starts no child and deletes nothing.
+
+`--min-free-gib N` adjusts the floor. Reducing either default requires a concrete
+`--space-exception REASON`, recorded in a successful launch's receipt with the
+observed free space and requested budget. Use this only for a measured bounded
+check, not as the usual response to a disk-full condition. First review retained
+completed units and dependencies, then retire eligible artifacts separately.
+
+This is an admission check, **not a reservation or filesystem quota**. Concurrent
+processes or growth beyond the estimate can still fill the disk. The runner does
+not kill processes, silently discard failures or sweep historical work to meet
+the budget. A hard cap would require a separately managed filesystem/quota and
+coordination with all writers, including Cargo and Wine outside unit scratch.
+
+### Storage assessment and follow-up
+
+The read-only 7 November 2026 inventory counted about **165.5 GiB** of allocated
+regular-file blocks in `target/`, deduplicating hard links and never following
+symlinks. Approximate categories were 39.7 GiB standalone binaries/native caches,
+33.3 GiB Wine environments, 25.1 GiB dataset trees, 23.6 GiB isolated Cargo caches,
+13.8 GiB canonical Cargo outputs, and 30.0 GiB other data/evidence/compiler files
+and private inputs. Categories describe storage, not cleanup eligibility; private
+files inside a classified tree inherit that tree's category. Directory metadata,
+filesystem reflink sharing and concurrent mutations are not resolved by this scan.
+
+Among 1,196 runner receipts, 354 successful units kept their whole work and 170
+failed units retained diagnostics, accounting for about 17.5 GiB and 15.9 GiB of
+work respectively. Two receipts still said running; no host inactivity was
+inferred. At least three large Cargo units had child exit zero but failed the
+old blanket hard-link guard. The revised runner prevents that specific failure
+for newly owned scratch; it does not rewrite those historical outcomes.
+
+Next historical cleanup should review superseded successful datasets and pinned
+binaries against current consumers, then isolate evidence needed to close failed
+units. Completed private Wine prefixes require the separate ownership/process
+review below. Preserve current E132 and the named E131 comparison, personal data
+and active/suspended work. No amount above is a promise of safe reclaimable space.
+Evidence and limitations: [workflow change record](../changes/2026-11-07-bound-validation-storage.json).
 
 This lifecycle applies to new units, not a background sweep of historical
 artifacts. Existing completed scopes still use the reviewed cleanup procedures

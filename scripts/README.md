@@ -138,6 +138,11 @@ Its owned scratch is automatically removed after foreground completion, PASS
 results and input preservation checks; logs, manifests and results survive.
 Wine units share one leased prefix. Keep a current reusable dataset and only
 explicitly needed comparison inputs rather than full copies per build.
+Use `--keep-path REL --keep-reason 'consumer and retirement condition'` to retain
+only selected outputs in place. Declare expected peak growth with `--reserve-gib`;
+launch requires a 5 GiB free-space floor plus this budget (1 GiB by default).
+Lower budgets require an explicit `--space-exception` reason. The check is not a
+filesystem quota and never removes historical artifacts to make space.
 See the [bounded lifecycle](../docs/development/LOCAL_ARTIFACTS.md#default-lifecycle-for-new-validation)
 for commands, output placeholders, failure retention and explicit keep reasons.
 Older successful units still use `scripts/local_artifacts.py complete` to

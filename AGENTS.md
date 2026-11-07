@@ -110,8 +110,16 @@ units keep their diagnostics. Reuse its coordinated Wine prefix and canonical
 Cargo outputs instead of creating a prefix and copying executables per version.
 Keep one current dataset per ROM/profile and a previous version only for a named
 comparison. Additional extraction is needed only when the selected check or
-changed extraction inputs require it. Record a reason for `--keep-work`; retire
-that exception after replacement. Keep source preimages outside scratch.
+changed extraction inputs require it. Prefer `--keep-path REL --keep-reason`
+for the exact dataset, checkpoint or pinned executable needed later; successful
+unselected scratch is removed in place. Reserve `--keep-work` for whole-unit
+diagnosis, with a consumer and retirement condition. Keep source preimages outside
+scratch. Declare peak new disk use with `--reserve-gib` (include build, extraction
+copies and logs). The runner requires a 5 GiB free-space floor plus that budget
+(1 GiB by default); lower budgets require a recorded `--space-exception`, not a
+routine bypass. This is a launch check, not a running filesystem quota. Reuse
+canonical Cargo outputs; an isolated build must select only its needed executable
+for retention, not its entire compiler cache.
 For older successful managed/native units, after recording preservation/results,
 run `python3 scripts/local_artifacts.py complete target/<unit> --apply`; this
 older helper removes only `interrupted` and `moved resources` copies. Review

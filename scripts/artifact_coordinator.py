@@ -15,7 +15,7 @@ PROTOCOL = 'directory-v1'
 
 
 def ordinary(path, *, directory=False, allow_hardlinks=False):
-    """Check ordinary paths; shared files are allowed only for read-only guards."""
+    """Check ordinary paths; hard links require read-only use or an ownership guard."""
     path = Path(os.path.abspath(path))
     for parent in reversed(path.parents):
         s = parent.lstat()

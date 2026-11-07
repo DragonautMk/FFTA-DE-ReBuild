@@ -9,6 +9,7 @@ import argparse
 import contextlib
 import hashlib
 import json
+import math
 import os
 from pathlib import Path, PurePosixPath
 import re
@@ -24,6 +25,9 @@ ROOT = Path(__file__).resolve().parents[1]
 PRIVATE = {'.gba', '.bios', '.sav', '.ffstate', '.input', '.rec', '.recording'}
 PREFIX_MARKER = '.ffta-validation-prefix.json'
 PREFIX_OWNER = {'schema': 1, 'kind': 'ffta-validation-wine-prefix'}
+GIB = 1024 ** 3
+DEFAULT_MIN_FREE_GIB = 5
+DEFAULT_RESERVE_GIB = 1
 
 
 def write_json(path, value):
@@ -47,11 +51,16 @@ def digest(path):
     return h.hexdigest()
 
 
-def snapshot(path, *, hashes=False, disposable=False, read_only=False):
+def retained(rel, paths):
+    return any(rel == keep or keep in rel.parents for keep in paths)
+
+
+def snapshot(path, *, hashes=False, disposable=False, read_only=False,
+             owned=False, keep_paths=()):
     """Guard complete trees, including empty directories; refuse links/junctions."""
     path = Path(os.path.abspath(path))
     is_dir = path.is_dir()
-    ordinary(path, directory=is_dir, allow_hardlinks=read_only)
+    ordinary(path, directory=is_dir, allow_hardlinks=read_only or owned)
     entries = [path]
     if is_dir:
         for parent, dirs, files in os.walk(path, followlinks=False):
@@ -63,16 +72,88 @@ def snapshot(path, *, hashes=False, disposable=False, read_only=False):
     result = {}
     for p in entries:
         directory = p.is_dir()
-        st = ordinary(p, directory=directory, allow_hardlinks=read_only)
-        if disposable and not directory and p.suffix.lower() in PRIVATE:
+        st = ordinary(p, directory=directory, allow_hardlinks=read_only or owned)
+        rel = p.relative_to(path)
+        if (disposable and not directory and p.suffix.lower() in PRIVATE
+                and not retained(rel, keep_paths)):
             raise ValueError(f'Private input in scratch; retained for review: {p}')
         row = {'directory': directory, 'identity': [st.st_dev, st.st_ino]}
         if not directory:
             row.update(size=st.st_size, mtime_ns=st.st_mtime_ns)
+            if owned:
+                row['links'] = st.st_nlink
             if hashes:
                 row['sha256'] = digest(p)
-        result[str(p.relative_to(path))] = row
+        result[str(rel)] = row
+    if owned:
+        # Cargo links build-script executables inside its own output tree.
+        # Accept them only when every name for that inode is in owned scratch.
+        counts = {}
+        for row in result.values():
+            if not row['directory']:
+                key = tuple(row['identity'])
+                counts[key] = counts.get(key, 0) + 1
+        for rel, row in result.items():
+            if not row['directory'] and counts[tuple(row['identity'])] != row['links']:
+                raise ValueError(f'Nonordinary/shared path refused (external hard link): {path / rel}')
     return result
+
+
+def check_space(root, args):
+    """Admission check, not a reservation or a quota on a running child."""
+    floor = args.min_free_gib
+    reserve = args.reserve_gib
+    if (not all(math.isfinite(n) and n >= 0 for n in (floor, reserve))
+            or not math.isfinite((floor + reserve) * GIB)):
+        raise ValueError('Space budgets must be finite, nonnegative GiB values')
+    reason = (args.space_exception or '').strip()
+    if (floor < DEFAULT_MIN_FREE_GIB or reserve < DEFAULT_RESERVE_GIB) and not reason:
+        raise ValueError('Lower space budgets require --space-exception with a concrete reason')
+    target = root / 'target'
+    location = target if target.exists() else root
+    ordinary(location, directory=True)
+    free = shutil.disk_usage(location).free
+    required = math.ceil((floor + reserve) * GIB)
+    if free < required:
+        raise ValueError(f'Insufficient free space: {free / GIB:.2f} GiB available; '
+                         f'{required / GIB:.2f} GiB required '
+                         '(free-space floor plus expected growth). Review retained artifacts '
+                         'or declare a justified smaller budget; no cleanup was attempted')
+    return {'free_bytes': free, 'required_bytes': required, 'min_free_gib': floor,
+            'reserve_gib': reserve, 'exception_reason': reason or None}
+
+
+def inventory_bytes(inventory, keep_paths=None):
+    seen = set()
+    size = 0
+    for rel, row in inventory.items():
+        key = tuple(row['identity'])
+        if (not row['directory'] and key not in seen
+                and (keep_paths is None or retained(Path(rel), keep_paths))):
+            size += row['size']
+            seen.add(key)
+    return size
+
+
+def retire_work(work, inventory, keep_paths):
+    if not keep_paths:
+        shutil.rmtree(work)
+        return
+    # Keep selected paths in place so dataset manifests and consumers keep
+    # their original locations. Ancestors survive; unselected siblings do not.
+    for name, row in sorted(inventory.items(), key=lambda item: len(Path(item[0]).parts),
+                            reverse=True):
+        rel = Path(name)
+        if rel == Path('.') or retained(rel, keep_paths):
+            continue
+        if row['directory'] and any(rel in keep.parents for keep in keep_paths):
+            continue
+        p = work / rel
+        ordinary(p, directory=row['directory'], allow_hardlinks=True)
+        if row['directory']:
+            p.rmdir()
+        else:
+            p.unlink()
 
 
 def relative_path(value):
@@ -109,6 +190,13 @@ def run_unit(args, *, root=ROOT):
         raise ValueError('Unit name must be a short filename, starting with a letter or digit')
     results = [relative_path(p) for p in args.result]
     evidence = [relative_path(p) for p in args.evidence]
+    keep_paths = [relative_path(p) for p in args.keep_path]
+    if args.keep_work is not None and (not args.keep_work.strip() or keep_paths or args.keep_reason):
+        raise ValueError('--keep-work needs a reason and cannot be combined with selective retention')
+    if (bool(keep_paths) != (args.keep_reason is not None)
+            or args.keep_reason is not None and not args.keep_reason.strip()):
+        raise ValueError('--keep-path and a nonempty --keep-reason must be supplied together')
+    check_space(root, args)
     protected = [Path(os.path.abspath(p)) for p in args.protect]
     before = {str(p): snapshot(p, hashes=True, read_only=True) for p in protected}
     command = args.command[1:] if args.command[:1] == ['--'] else args.command
@@ -134,7 +222,10 @@ def run_unit(args, *, root=ROOT):
     receipt_path = unit / 'unit-result.json'
     report = {'schema': 1, 'kind': 'ffta-validation-unit', 'status': 'running',
               'work': str(work), 'cleanup': 'not_started', 'errors': [],
-              'protected': list(before), 'evidence': [], 'keep_reason': args.keep_work}
+              'protected': list(before), 'evidence': [],
+              'keep_reason': args.keep_work or args.keep_reason,
+              'retention_mode': 'all' if args.keep_work else 'selected' if keep_paths else 'none',
+              'kept_paths': [str(p) for p in keep_paths]}
     write_json(unit / 'protected-before.json', before)
     print(f'Validation unit: {unit}', flush=True)
     leases = contextlib.ExitStack()
@@ -170,6 +261,7 @@ def run_unit(args, *, root=ROOT):
         env['FFTA_VALIDATION_UNIT'] = wine_path(unit) if args.wine else str(unit)
         command = (['wine'] if args.wine else []) + [expand(p) for p in command]
         report['command'] = command
+        report['space_check'] = check_space(root, args)
         write_json(receipt_path, report)
         with (unit / 'command.log').open('wb') as log:
             # A timed-out/interrupting command may have descendants. Keep both
@@ -189,10 +281,15 @@ def run_unit(args, *, root=ROOT):
                 raise ValueError(f'Protected input changed: {p}')
         for rel in results:
             p = work / rel
-            ordinary(p)
+            ordinary(p, allow_hardlinks=True)
             if json.loads(p.read_text(encoding='utf-8')).get('status') != 'PASS':
                 raise ValueError(f'Result must explicitly report status PASS: {rel}')
-        inventory = snapshot(work, hashes=True, disposable=not args.keep_work)
+        inventory = snapshot(work, hashes=True, disposable=not args.keep_work,
+                             owned=True, keep_paths=keep_paths)
+        for rel in keep_paths:
+            if str(rel) not in inventory:
+                raise ValueError(f'Selected retention path is missing: {rel}')
+        report['work_bytes_before'] = inventory_bytes(inventory)
         # Manifests and small result identities survive retirement automatically.
         selected = set(results + evidence)
         selected.update(Path(rel) for rel, row in inventory.items()
@@ -201,7 +298,7 @@ def run_unit(args, *, root=ROOT):
                          Path(rel).name.endswith(('result.json', 'summary.json'))))
         for rel in sorted(selected):
             source = work / rel
-            ordinary(source)
+            ordinary(source, allow_hardlinks=True)
             if source.stat().st_size > 16 * 1024 * 1024:
                 raise ValueError(f'Evidence exceeds 16 MiB; keep work explicitly: {rel}')
             dest = unit / 'evidence' / rel
@@ -217,12 +314,14 @@ def run_unit(args, *, root=ROOT):
         if not args.keep_work:
             # Recheck the entire owned tree immediately before removal. No
             # legacy unit or external dataset is selected by this runner.
-            if snapshot(work, hashes=True, disposable=True) != inventory:
+            if snapshot(work, hashes=True, disposable=True, owned=True,
+                        keep_paths=keep_paths) != inventory:
                 raise ValueError('Scratch changed before retirement')
             report['cleanup'] = 'removing'
             write_json(receipt_path, report)
-            shutil.rmtree(work)
-        report.update(status='PASS', cleanup='kept' if args.keep_work else 'removed')
+            retire_work(work, inventory, keep_paths)
+        report.update(status='PASS', cleanup='kept' if args.keep_work or keep_paths else 'removed',
+                      work_bytes_retained=inventory_bytes(inventory, None if args.keep_work else keep_paths))
     except BaseException as error:
         report.update(status='FAIL',
                       cleanup='incomplete' if report['cleanup'] == 'removing' else 'retained',
@@ -257,13 +356,22 @@ def main():
     p.add_argument('--wineserver', help='matching wineserver executable if absent from PATH')
     p.add_argument('--timeout', type=float, default=900, help='foreground timeout in seconds')
     p.add_argument('--keep-work', metavar='REASON', help='explicit current-input or diagnostic exception')
+    p.add_argument('--keep-path', action='append', default=[], metavar='REL',
+                   help='retain only this work file/subtree in place after PASS (repeatable)')
+    p.add_argument('--keep-reason', metavar='REASON', help='consumer and lifetime of --keep-path outputs')
+    p.add_argument('--min-free-gib', type=float, default=DEFAULT_MIN_FREE_GIB,
+                   help='free-space floor after expected growth (default: 5 GiB)')
+    p.add_argument('--reserve-gib', type=float, default=DEFAULT_RESERVE_GIB,
+                   help='expected peak growth, including builds, datasets and logs (default: 1 GiB)')
+    p.add_argument('--space-exception', metavar='REASON',
+                   help='record why a bounded check can use a lower space budget')
     p.add_argument('command', nargs=argparse.REMAINDER)
     args = p.parse_args()
     try:
         run_unit(args)
         return 0
     except (OSError, ValueError, subprocess.SubprocessError) as error:
-        print(f'Validation retained for review: {error}', file=sys.stderr)
+        print(f'Validation refused or retained for review: {error}', file=sys.stderr)
         return 1
 
 

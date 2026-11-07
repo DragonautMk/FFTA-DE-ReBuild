@@ -205,9 +205,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: LOCAL-SPACE-CLEANUP-20261107 completed.
-- Last verified result: seven completed Wine prefixes and one Rust intermediate retired; 8.35 GiB before receipt metadata recovered. Both receipts and final managed validation PASS; protected inputs/configurations preserved.
-- Remaining work: none for this cleanup; older interrupted hygiene task remains separate.
-- Errors or blockers: disk-full bootstrap and linked-tree guard refusal recovered; four host detail reads denied. No removal errors.
-- Next action: none for cleanup; memory/handoff/whitespace checks PASS. No runtime work selected.
-- References: docs/changes/2026-11-07-retire-completed-wine-prefixes.json; target/local-artifact-cleanup-20261107/; validation unit local-space-cleanup-20261107-0dxs5vzo.
+- Task: VALIDATION-STORAGE-WORKFLOW completed; new retention and launch-space controls verified.
+- Last verified result: 165.5 GiB inventory; 20 Linux lifecycle tests PASS; verification scratch removed; memory checks PASS.
+- Remaining work: no implementation criterion; historical retirement and hard filesystem quotas are separate scopes.
+- Errors or blockers: none; no historical payload removed or runtime task resumed.
+- Next action: apply the bounded runner to new tests; review dependencies before any historical cleanup.
+- References: docs/changes/2026-11-07-bound-validation-storage.json; docs/development/LOCAL_ARTIFACTS.md.

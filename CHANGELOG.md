@@ -29,6 +29,35 @@ Documentation: [LOCAL_ARTIFACTS.md](docs/development/LOCAL_ARTIFACTS.md).
 
 [Change record](docs/changes/2026-11-07-retire-completed-wine-prefixes.json)
 
+## 2026-11-07 — Bound validation retention and refuse insufficient launch space
+
+Type: changed. Platforms: Linux Python tooling; Windows/Wine workflow policy.
+
+**Changes**
+
+- Read-only target inventory found 177681743872 allocated regular-file bytes (165.5 GiB). Whole-work retention accounts for about 17.5 GiB in 354 successful units and 15.9 GiB in 170 failed units. Categories describe storage, not deletion eligibility.
+- Add repeatable --keep-path with --keep-reason: preserve only selected outputs in place after PASS, retire unselected scratch and retain evidence. Receipts preserve cleanup tokens and add retention mode, selected paths and unique-inode logical byte totals.
+- Allow Cargo hard links only when every inode name is inside owned scratch. Recheck the complete inventory before removal. External links, symlinks, junctions, nested leases, tracked content, changed inputs and unselected private files continue to block cleanup.
+- Check free space before hashing/unit creation and again before launch: default 5 GiB floor plus 1 GiB expected growth. --reserve-gib declares peak growth; smaller defaults require a recorded --space-exception. No historical cleanup or process termination is performed.
+- Update project instructions, lifecycle guidance and durable state; prefer selected outputs, shared Wine and canonical Cargo builds. Add lifecycle regression tests to project tooling CI.
+
+**Validation**
+
+- Final managed unit target/validation/units/validation-storage-final-er4f2gwj: 20 lifecycle tests PASS on Linux, protected source/audit preimages unchanged, real Git guard passed and scratch removed. Receipt, command log, storage-inventory.json and inventory-script.py evidence are retained there.
+- Regressions cover selective dataset/checkpoint/executable retention, internal/external hard links including a new external alias before cleanup, unexpected private saves, missing selections, invalid options, insufficient-space refusal before hashing/launch and recorded budget exceptions; existing failure, timeout, input and lease guards pass.
+- Read-only checks of rvr02-primary-build-retry-zobcz2_w, e131-audio-extended-production-cli-build-k5fgtttc and rom-data-recover-audit-cli-fd8jxksj confirm child exit zero, old hard-link cleanup failure and both inode names inside each work tree. Historical receipts remain unchanged.
+- Full project-memory check, bounded handoff check and git diff --check PASS; 20 final lifecycle tests PASS and owned verification scratch removed.
+
+**Limitations**
+
+- Admission checks are not reservations or filesystem quotas: concurrent writers, underestimated growth and commands bypassing the runner can still exhaust storage.
+- Historical target payloads were inventoried, not removed. Failed/live/suspended work, private inputs, current E132 and the named E131 comparison are preserved; no global host inactivity is inferred. Existing units require separate dependency and ownership review.
+- Synthetic Linux Python validation only; no game build, extraction, replay, native Windows or new Wine validation. AndroidPort is unchanged. Inventory excludes directory metadata and does not resolve reflink sharing or concurrent mutations; receipt byte totals are logical sizes, not allocated savings.
+
+Documentation: [LOCAL_ARTIFACTS.md](docs/development/LOCAL_ARTIFACTS.md), [README.md](scripts/README.md).
+
+[Change record](docs/changes/2026-11-07-bound-validation-storage.json)
+
 ## 2026-11-06 — Preserve cheat ancestry in desktop snapshots
 
 Type: fixed. Platforms: Linux / X11 (virtual display).

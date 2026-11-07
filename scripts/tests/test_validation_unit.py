@@ -26,12 +26,18 @@ class ValidationUnitTests(unittest.TestCase):
         patch = mock.patch.object(validation, 'ensure_untracked')
         self.git = patch.start()
         self.addCleanup(patch.stop)
+        space_patch = mock.patch.object(validation.shutil, 'disk_usage',
+                                       return_value=argparse.Namespace(free=20 * validation.GIB))
+        self.space = space_patch.start()
+        self.addCleanup(space_patch.stop)
 
     def args(self, code=None, **changes):
         code = code or "from pathlib import Path; Path('result.json').write_text('{\"status\":\"PASS\"}'); Path('dataset').mkdir(); Path('dataset/manifest.toml').write_text('revision=1'); Path('dataset/resource.json').write_text('generated payload')"
         args = argparse.Namespace(name='synthetic', result=['result.json'], evidence=[],
                                   protect=[str(self.source)], env=[], wine=False, wineserver=None,
-                                  timeout=30, keep_work=None, command=[sys.executable, '-c', code])
+                                  timeout=30, keep_work=None, keep_path=[], keep_reason=None,
+                                  min_free_gib=5, reserve_gib=1, space_exception=None,
+                                  command=[sys.executable, '-c', code])
         for key, value in changes.items():
             setattr(args, key, value)
         return args
@@ -106,6 +112,104 @@ class ValidationUnitTests(unittest.TestCase):
         self.assertTrue((unit / 'evidence/dataset/resource.json').exists())
         self.assertEqual(self.receipt()['cleanup'], 'kept')
         self.assertEqual(self.receipt()['keep_reason'], 'current comparison dataset')
+        self.assertEqual(self.receipt()['retention_mode'], 'all')
+
+    def test_internal_cargo_hardlinks_do_not_turn_success_into_retained_failure(self):
+        args = self.args()
+        args.command[-1] += '; import os; Path("build").mkdir(); Path("build/script.exe").write_bytes(b"compiler output"); os.link("build/script.exe", "build/script-alias.exe")'
+        unit = validation.run_unit(args, root=self.root)
+        self.assertFalse((unit / 'work').exists())
+        inventory = json.loads((unit / 'work-inventory.json').read_text())
+        self.assertEqual(inventory['build/script.exe']['links'], 2)
+        expected = sum(row.get('size', 0) for row in inventory.values()) - len(b'compiler output')
+        self.assertEqual(self.receipt()['work_bytes_before'], expected)
+        self.assertEqual(self.receipt()['work_bytes_retained'], 0)
+
+    def test_selected_retention_preserves_paths_and_removes_unselected_siblings(self):
+        args = self.args(keep_path=['dataset', 'states/checkpoint.ffstate', 'build/test.exe'],
+                         keep_reason='current dataset, private checkpoint and pinned test; next comparison')
+        args.command[-1] += '; import os; Path("states").mkdir(); Path("states/checkpoint.ffstate").write_bytes(b"checkpoint"); Path("states/cache.bin").write_bytes(b"scratch"); Path("empty").mkdir(); Path("build").mkdir(); Path("build/test.exe").write_bytes(b"test binary"); os.link("build/test.exe", "build/build-script.exe"); os.link("result.json", "alias-result.json")'
+        unit = validation.run_unit(args, root=self.root)
+        work = unit / 'work'
+        self.assertEqual((work / 'states/checkpoint.ffstate').read_bytes(), b'checkpoint')
+        self.assertEqual((work / 'dataset/resource.json').read_text(), 'generated payload')
+        self.assertEqual((work / 'build/test.exe').stat().st_nlink, 1)
+        for rel in ['result.json', 'alias-result.json', 'states/cache.bin', 'empty', 'build/build-script.exe']:
+            self.assertFalse((work / rel).exists(), rel)
+        self.assertTrue((unit / 'evidence/alias-result.json').is_file())
+        self.assertEqual(self.receipt()['cleanup'], 'kept')
+        self.assertEqual(self.receipt()['retention_mode'], 'selected')
+        self.assertEqual(self.receipt()['kept_paths'], args.keep_path)
+        self.assertEqual(self.receipt()['work_bytes_retained'],
+                         sum(p.stat().st_size for p in work.rglob('*') if p.is_file()))
+
+    def test_selective_retention_still_refuses_unselected_private_files(self):
+        args = self.args(keep_path=['dataset'], keep_reason='current dataset')
+        args.command[-1] += '; Path("unexpected.sav").write_bytes(b"save")'
+        with self.assertRaisesRegex(ValueError, 'Private input in scratch'):
+            validation.run_unit(args, root=self.root)
+        self.assertEqual((self.units()[0] / 'work/unexpected.sav').read_bytes(), b'save')
+        self.assertTrue((self.units()[0] / 'work/result.json').exists())
+
+    def test_missing_retained_path_preserves_whole_unit(self):
+        with self.assertRaisesRegex(ValueError, 'Selected retention path is missing'):
+            validation.run_unit(self.args(keep_path=['missing.exe'], keep_reason='selected binary'),
+                                root=self.root)
+        self.assertTrue((self.units()[0] / 'work/dataset/resource.json').exists())
+
+    def test_retention_options_require_unambiguous_reason(self):
+        for changes in [{'keep_path': ['dataset']}, {'keep_reason': 'unused'}, {'keep_reason': '  '},
+                        {'keep_path': ['dataset'], 'keep_reason': '  '}, {'keep_work': '  '},
+                        {'keep_work': 'all', 'keep_path': ['dataset'], 'keep_reason': 'some'}]:
+            with self.subTest(changes=changes), self.assertRaises(ValueError):
+                validation.run_unit(self.args(**changes), root=self.root)
+        self.assertFalse((self.root / 'target').exists())
+
+    def test_new_external_hardlink_before_cleanup_prevents_removal(self):
+        def add_external_link(work, root):
+            os.link(work / 'dataset/resource.json', root / 'external-link.json')
+        self.git.side_effect = add_external_link
+        with self.assertRaisesRegex(ValueError, 'external hard link'):
+            validation.run_unit(self.args(keep_path=['dataset'], keep_reason='current dataset'),
+                                root=self.root)
+        self.assertTrue((self.units()[0] / 'work/result.json').exists())
+        self.assertEqual((self.root / 'external-link.json').read_text(), 'generated payload')
+
+    def test_low_space_refuses_before_input_hashing_unit_creation_and_launch(self):
+        self.space.return_value.free = 6 * validation.GIB - 1
+        with mock.patch.object(validation, 'snapshot') as snapshot, \
+                mock.patch.object(validation.subprocess, 'run') as launch:
+            with self.assertRaisesRegex(ValueError, 'Insufficient free space'):
+                validation.run_unit(self.args(), root=self.root)
+            snapshot.assert_not_called()
+            launch.assert_not_called()
+        self.assertFalse((self.root / 'target').exists())
+
+    def test_space_is_rechecked_immediately_before_launch(self):
+        self.space.side_effect = [argparse.Namespace(free=20 * validation.GIB),
+                                  argparse.Namespace(free=0)]
+        with mock.patch.object(validation.subprocess, 'run') as launch:
+            with self.assertRaisesRegex(ValueError, 'Insufficient free space'):
+                validation.run_unit(self.args(), root=self.root)
+            launch.assert_not_called()
+        self.assertEqual(self.receipt()['status'], 'FAIL')
+        self.assertFalse((self.units()[0] / NAME).exists())
+
+    def test_space_budgets_and_recorded_small_check_exception(self):
+        for changes in [{'min_free_gib': -1}, {'reserve_gib': float('nan')},
+                        {'reserve_gib': float('inf')}, {'reserve_gib': 1e308}, {'reserve_gib': 0.1},
+                        {'min_free_gib': 0, 'space_exception': '  '}]:
+            with self.subTest(changes=changes), self.assertRaises(ValueError):
+                validation.run_unit(self.args(**changes), root=self.root)
+        self.space.return_value.free = validation.GIB
+        unit = validation.run_unit(self.args(min_free_gib=0.5, reserve_gib=0.1,
+                                            space_exception='synthetic files below 1 MiB; no build'),
+                                   root=self.root)
+        self.assertFalse((unit / 'work').exists())
+        self.assertEqual(self.receipt()['space_check']['exception_reason'],
+                         'synthetic files below 1 MiB; no build')
+        self.assertEqual(self.receipt()['space_check']['required_bytes'],
+                         validation.math.ceil(0.6 * validation.GIB))
 
     def test_tracked_scratch_and_nested_leases_are_refused(self):
         self.git.side_effect = ValueError('tracked content refused')

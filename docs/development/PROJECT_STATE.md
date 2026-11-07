@@ -93,6 +93,11 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   failure diagnostics and one coordinated Wine prefix. Keep one current dataset
   per ROM/profile and only explicitly needed comparison baselines; avoid full
   per-build payload snapshots. Legacy cleanup remains a separate reviewed action.
+  Selective `--keep-path` retention keeps only named outputs in place; internal
+  scratch hard links are accepted only when every inode name is owned. A launch
+  check requires 5 GiB free plus declared peak growth (default 1 GiB); smaller
+  budgets need a recorded exception. This is not a runtime quota or an automatic
+  historical cleanup policy.
 
 - The desktop [Clan Atlas menu](../menu_clan_atlas.md) uses the existing native
   Canvas/tiny-skia fonts and the FFTA DE-ReBuild emblem with a permanent left sidebar (eight Game/eight Debug
