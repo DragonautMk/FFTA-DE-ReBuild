@@ -172,7 +172,7 @@ def apply_candidate(store, item, receipt_dir):
 
     unchanged()
     with Lease(scope, 'cold-storage-batch-source'):
-        idle = cold.host_activity(scope)
+        idle = cold.host_activity(scope, root=store.root)
         rows = cold.scan(source, hashes=False)
         if cold.inventory_digest(rows) != item['stat_inventory_sha256']:
             raise ValueError('Source changed since batch discovery')
@@ -183,7 +183,7 @@ def apply_candidate(store, item, receipt_dir):
 
         def recheck():
             unchanged()
-            return cold.host_activity(scope)
+            return cold.host_activity(scope, root=store.root)
 
         unchanged()
         return store.pack(source, reason='Completed artifact automatically retained in cold storage',

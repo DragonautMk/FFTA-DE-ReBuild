@@ -29,6 +29,8 @@ PRIVATE = {'.gba', '.bios', '.sav', '.ffstate', '.input', '.rec', '.recording', 
 KIND = 'ffta-cold-storage'
 GIB = 1024 ** 3
 BLOCK = 1024 ** 2
+# Set only by the container entry point after authenticating its host driver.
+HOST_DRIVER_PID = None
 
 
 def digest(path):
@@ -538,22 +540,22 @@ def inventory_digest(rows):
     return hashlib.sha256(json.dumps(rows, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
 
 
-def host_activity(source):
+def host_activity(source, *, root=ROOT):
     """Bounded legacy-source check; never infer host inactivity from sandbox ps."""
     if os.name != 'posix' or not Path('/proc/1/comm').exists() or Path('/proc/1/comm').read_text().strip() != 'systemd':
         raise ValueError('Historical archival requires the host PID namespace; sandbox process visibility is insufficient')
     excluded = {os.getpid()}
-    pid = os.getppid()
-    while pid and pid not in excluded:
-        excluded.add(pid)
-        try:
-            status = Path(f'/proc/{pid}/status').read_text()
-            pid = int(next(line.split()[1] for line in status.splitlines() if line.startswith('PPid:')))
-        except (OSError, StopIteration):
-            break
+    for pid in (os.getppid(), HOST_DRIVER_PID):
+        while pid and pid not in excluded:
+            excluded.add(pid)
+            try:
+                status = Path(f'/proc/{pid}/status').read_text()
+                pid = int(next(line.split()[1] for line in status.splitlines() if line.startswith('PPid:')))
+            except (OSError, StopIteration):
+                break
     needles = [str(source)]
-    if source.is_relative_to(ROOT):
-        needles.append(source.relative_to(ROOT).as_posix())
+    if source.is_relative_to(root):
+        needles.append(source.relative_to(root).as_posix())
     busy, denied = [], []
     def match(value):
         return any(needle in value.replace(chr(92), '/') for needle in needles)
@@ -617,7 +619,7 @@ def prepare_review(store, path, completions, scope):
     return {'status': 'PASS', 'source': rel, 'scope': scope.relative_to(store.root).as_posix(),
             'inventory_sha256': inventory_digest(rows), 'logical_bytes': size(rows),
             'allocated_bytes': size(rows, 'allocated'), 'completion': evidence,
-            'idle': host_activity(scope)}
+            'idle': host_activity(scope, root=store.root)}
 
 
 def apply_review(store, review, reason):
@@ -634,9 +636,9 @@ def apply_review(store, review, reason):
         if p == source or source in p.parents or completion(p) != evidence['sha256']:
             raise ValueError('Completion evidence changed or would be archived')
     with Lease(scope, 'cold-storage-historical-source'):
-        idle = host_activity(scope)
+        idle = host_activity(scope, root=store.root)
         proof = dict(review, idle=idle)
-        return store.pack(source, reason=reason, proof=proof, before_retire=lambda: host_activity(scope))
+        return store.pack(source, reason=reason, proof=proof, before_retire=lambda: host_activity(scope, root=store.root))
 
 
 class Inputs:
@@ -773,7 +775,7 @@ def main():
                 if args.action == 'restore': store.restore(entry, data)
                 elif args.action == 'retire':
                     scope = data.get('proof', {}).get('scope', data.get('proof', {}).get('unit', data['source']))
-                    host_activity(store.root / relative(scope)); store.retire(entry, data)
+                    host_activity(store.root / relative(scope), root=store.root); store.retire(entry, data)
                 elif args.action == 'recover': store.recover(entry, data)
                 else: read_archive(entry / 'payload.tar.zst', store.load(entry, data))
                 print(f'PASS {args.action}: {data["source"]}')

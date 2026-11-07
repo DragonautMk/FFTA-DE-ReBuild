@@ -236,6 +236,21 @@ For automatic historical adoption, run one batch command:
 python3 scripts/cold_storage.py batch --apply
 ```
 
+With local Linux Docker Engine, Python/Git/Zstandard can run in a dedicated
+container instead:
+
+```sh
+bash scripts/linux/cold_storage_docker.sh batch --apply
+```
+
+The image is built on first use and reused until its packaged sources change.
+The launcher preserves host paths and UID/GID, mounts only `target` writable,
+and validates host process visibility before opening the store. It shares the
+native catalog and leases. Docker Desktop, remote and rootless daemons are not
+supported for this host-aware operation. See the
+[Docker guide](../docker.md#compress-local-validation-artifacts-linux) for
+mounts, AppArmor behavior, platform limits and other CLI commands.
+
 The batch scans completed managed work and legacy scopes with recognized
 successful result receipts, selects eligible files and directories of at least
 1 MiB, and compresses them sequentially through the same verified store. It

@@ -1,0 +1,9 @@
+# This Dockerfile-specific allowlist excludes target, Git and all private data.
+**
+!Dockerfile.cold-storage
+!scripts/
+!scripts/cold_storage.py
+!scripts/cold_storage_batch.py
+!scripts/cold_storage_container.py
+!scripts/artifact_coordinator.py
+!scripts/local_artifacts.py

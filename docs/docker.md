@@ -103,6 +103,54 @@ Enter before exiting, so a terminal opened by a file manager keeps the error
 visible. Noninteractive runs return the original failure code without waiting;
 failed builds do not report a successful export.
 
+## Compress local validation artifacts (Linux)
+
+The cold-storage CLI has a separate small image containing Python, Git and
+Zstandard. Run it from the host with local Linux Docker Engine:
+
+```bash
+bash scripts/linux/cold_storage_docker.sh batch          # preview
+bash scripts/linux/cold_storage_docker.sh batch --apply  # compress eligible artifacts
+bash scripts/linux/cold_storage_docker.sh list
+bash scripts/linux/cold_storage_docker.sh restore target/completed-check/resources
+```
+
+The launcher builds `ffta-cold-storage:local` on first use and reuses it while
+the Dockerfile and packaged scripts are unchanged. Base/package layers remain
+cached when only the scripts change. Initial image creation needs network access;
+archive operations run with networking disabled. No Rust, Wine, project test
+suite or game build is invoked. All cold-storage subcommands are forwarded;
+commands executed through `run` must be available in this Python/Git/Zstandard
+image. Use the native wrapper for consumers needing other host tools.
+
+`Dockerfile.cold-storage.dockerignore` allows only the five Python tools into
+the build context, following Docker's
+[Dockerfile-specific ignore-file rules](https://docs.docker.com/build/concepts/context/#filename-and-location).
+The checkout, Git data, `target`, ROMs and personal saves never enter image layers.
+At runtime the checkout is mounted read-only at its original absolute path,
+with a separate writable `target` mount. The caller's UID, GID and supplementary
+groups preserve ownership. Relative CLI paths start at the checkout root;
+optional leading `--root CHECKOUT` selects another local checkout.
+
+Historical compression checks live consumers before retiring originals. The
+container therefore uses Docker's
+[host PID namespace](https://docs.docker.com/reference/cli/docker/container/run/#pid)
+and disables UID remapping. Startup verifies the PID namespace and reads the
+identified host Docker driver's process details before opening the store.
+Only that coordinator and its ancestors are excluded from activity checks;
+independent host processes holding files open still block compression.
+On AppArmor hosts, this container uses `apparmor=unconfined` to permit reading
+host process details across profiles. It still runs as the caller, drops all
+Linux capabilities, retains default seccomp, forbids privilege escalation, has
+a read-only root filesystem and mounts no Docker socket. It is not privileged.
+
+This launcher requires a local systemd-based Linux host. Remote daemons,
+rootless Docker and Docker Desktop are refused: their process/identity view
+cannot establish the required local host checks. Existing unreadable process
+details remain recorded limitations. The same archive catalog, leases,
+exclusions and original-path restore workflow apply to native and container use.
+See [local artifact retention](development/LOCAL_ARTIFACTS.md#verified-cold-archives-and-on-demand-restoration).
+
 ## Extract decoded ROM data
 
 Extraction has dedicated entry points that require only Docker on the host:

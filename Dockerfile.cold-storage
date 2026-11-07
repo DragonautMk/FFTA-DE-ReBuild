@@ -1,0 +1,12 @@
+# Dependency-only layers stay shared when the small Python tools change.
+FROM debian:bookworm-slim@sha256:734a72b3d6142a71993b4bc580ca01d8ca687f77a2c422d96a961d3376b179bc
+RUN apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        python3 git zstd \
+    && rm -rf /var/lib/apt/lists/*
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
+WORKDIR /opt/ffta
+COPY scripts/cold_storage.py scripts/cold_storage_batch.py \
+     scripts/cold_storage_container.py scripts/artifact_coordinator.py \
+     scripts/local_artifacts.py /opt/ffta/scripts/
+ENTRYPOINT ["python3", "/opt/ffta/scripts/cold_storage_container.py"]

@@ -158,6 +158,12 @@ minimum is 1 MiB. Per-run receipts under `target/cold-storage-batches/` record
 progress, exclusions and savings; reruns skip cataloged paths. Current/private,
 failed/suspended and explicitly hot scopes remain available. This command only
 performs storage maintenance and does not rerun validation commands.
+On a local Linux Docker Engine host, use
+`bash scripts/linux/cold_storage_docker.sh batch --apply` to run the same CLI
+with containerized Python/Git/Zstandard. The launcher builds/reuses its image,
+preserves ownership and host process checks, and shares the existing catalog.
+See the [Docker guide](../docs/docker.md#compress-local-validation-artifacts-linux)
+for supported hosts and runtime permissions.
 See the [bounded lifecycle](../docs/development/LOCAL_ARTIFACTS.md#default-lifecycle-for-new-validation)
 for commands, output placeholders, failure retention and explicit keep reasons.
 Older successful units still use `scripts/local_artifacts.py complete` to

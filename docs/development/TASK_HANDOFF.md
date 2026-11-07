@@ -205,9 +205,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: VALIDATION-COLD-STORAGE-BATCH completed; automatic remaining-artifact compression implemented and applied.
-- Last verified result: 272 additional archives, 9.38 GB recovered; all catalog manifests and 6,426 private-file stat guards PASS.
-- Remaining work: no selected criterion; current/private/failed/suspended/unattested paths stay available.
-- Errors or blockers: no batch errors; three host process-detail denials remain recorded limits.
-- Next action: use cold_storage.py batch --apply for further eligible compression and the existing declared-input restore workflow; no suites/builds/gameplay.
-- References: docs/changes/2026-11-07-automate-remaining-target-compression.json; target/cold-storage-batches/20261107-113755-51f0fa64/.
+- Task: VALIDATION-COLD-STORAGE-DOCKER completed; dedicated image and Linux launcher available.
+- Last verified result: image built; owned archive lifecycle and host open-file refusal PASS in cold-storage-docker-ibrlnxya; scratch removed.
+- Remaining work: no selected criterion; other Docker/host platforms remain unsupported or unverified.
+- Errors or blockers: no final errors; initial harness-path and minimal-Python dependency failures were corrected and recorded.
+- Next action: use bash scripts/linux/cold_storage_docker.sh batch --apply for requested compression; no historical sweep selected now.
+- References: docs/changes/2026-11-07-dockerize-validation-cold-storage.json; docs/docker.md; target/validation/units/cold-storage-docker-ibrlnxya/.

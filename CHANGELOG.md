@@ -58,6 +58,33 @@ Documentation: [LOCAL_ARTIFACTS.md](docs/development/LOCAL_ARTIFACTS.md), [READM
 
 [Change record](docs/changes/2026-11-07-enable-validation-cold-storage.json)
 
+## 2026-11-07 — Run validation cold storage through a dedicated Linux Docker container
+
+Type: added. Platforms: Linux Docker Engine (amd64 host verified).
+
+**Changes**
+
+- Add a pinned Debian image containing Python, Git, Zstandard and the five cold-storage tools, with a Dockerfile-specific context allowlist excluding checkout data, Git, target, ROMs and saves.
+- Add scripts/linux/cold_storage_docker.sh with automatic source-fingerprinted image reuse, the existing CLI arguments, optional alternate checkout, matching UID/GID/groups, original absolute paths, read-only checkout and writable target mount. Runtime networking is disabled and no Docker socket is mounted.
+- Preserve host activity checks using the local host PID namespace, matching user identity and an authenticated host Docker coordinator. Startup refuses hidden coordinator details; source matching uses the selected checkout root rather than the image location. Independent host file consumers still prevent retirement.
+- Document local systemd Linux support, unsupported remote/rootless/Desktop daemons, per-container AppArmor opt-out for host process reads, dropped capabilities, default seccomp, no privilege escalation and read-only container root.
+
+**Validation**
+
+- Managed unit target/validation/units/cold-storage-docker-ibrlnxya/unit-result.json PASS: one 2.17 MB owned fixture under a space-containing checkout, host open-file consumer refused, automatic batch archive then restore and retirement completed; SHA256, mode, nanosecond mtime, UID/GID, internal hard links, symlink target and user xattr preserved. Successful scratch removed; source guards unchanged.
+- Docker Engine 29.3.0 built ffta-cold-storage:local; final image ID sha256:47d50e1f60a72446ec8b19e8ef70424f77f6bd4f855e3f45cfda27da1467171d, reported image size 73783995 bytes. Subsequent commands reused the image. Bash/Python syntax checks passed.
+- No project test suite, game build, gameplay, benchmark or recompression of historical archives was performed. Existing archive format, selection rules and catalog paths were retained.
+
+**Limitations**
+
+- Only local systemd Linux Docker Engine was verified. Docker Desktop, rootless and remote daemons are explicitly unsupported; native Windows archival remains unverified. Commands consumed through the container run wrapper need their dependencies inside the image.
+- AppArmor hosts use apparmor=unconfined for this container so the unprivileged caller can inspect host process details; namespace and coordinator-read guards fail closed before store access. Other unreadable process details remain recorded limitations, not proof of global inactivity.
+- Two preliminary attempts remain as diagnostic receipts: j4ed1i4e failed before Docker because the temporary harness used its scratch cwd as the checkout; 9miq_7ue found that Debian python3-minimal lacked json. The harness path was corrected and the final image installs the full python3 package.
+
+Documentation: [docker.md](docs/docker.md), [LOCAL_ARTIFACTS.md](docs/development/LOCAL_ARTIFACTS.md).
+
+[Change record](docs/changes/2026-11-07-dockerize-validation-cold-storage.json)
+
 ## 2026-11-07 — Bound validation retention and refuse insufficient launch space
 
 Type: changed. Platforms: Linux Python tooling; Windows/Wine workflow policy.

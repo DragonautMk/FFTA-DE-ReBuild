@@ -107,6 +107,9 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   completed artifacts automatically, records exclusions/progress and skips
   cataloged paths on reruns; it does not rerun validation commands. Current,
   private, failed/suspended and explicitly hot scopes remain available.
+  `scripts/linux/cold_storage_docker.sh` packages the same CLI for local Linux
+  Docker Engine, preserving host PID visibility, identity, paths and the shared
+  catalog; Docker Desktop, remote and rootless daemons are excluded.
   Native Windows archival remains a separate validation gate.
 
 - The desktop [Clan Atlas menu](../menu_clan_atlas.md) uses the existing native
