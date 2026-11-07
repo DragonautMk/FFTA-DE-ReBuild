@@ -205,9 +205,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: VALIDATION-COLD-STORAGE-DOCKER completed; dedicated image and Linux launcher available.
-- Last verified result: image built; owned archive lifecycle and host open-file refusal PASS in cold-storage-docker-ibrlnxya; scratch removed.
-- Remaining work: no selected criterion; other Docker/host platforms remain unsupported or unverified.
-- Errors or blockers: no final errors; initial harness-path and minimal-Python dependency failures were corrected and recorded.
-- Next action: use bash scripts/linux/cold_storage_docker.sh batch --apply for requested compression; no historical sweep selected now.
-- References: docs/changes/2026-11-07-dockerize-validation-cold-storage.json; docs/docker.md; target/validation/units/cold-storage-docker-ibrlnxya/.
+- Task: VALIDATION-COLD-STORAGE-AUTOMATIC completed; idle historical retention, indexed discovery and progress reporting applied.
+- Last verified result: 1010 paths archived without errors; 16.96 GB recovered by the Docker batch; per-archive integrity checks passed.
+- Remaining work: no selected criterion; current/shared/private/failed/suspended scopes remain available.
+- Errors or blockers: none in this batch; unreadable host process details remain recorded limits.
+- Next action: reuse cold_storage_docker.sh batch --apply; receipt-only selection is available with --completed-only. No runtime work selected.
+- References: docs/changes/2026-11-07-automate-idle-historical-compression.json; target/cold-storage-batches/20261107-111843-b9e16c2e/batch.json.

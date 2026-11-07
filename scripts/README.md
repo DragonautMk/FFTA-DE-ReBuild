@@ -158,6 +158,10 @@ minimum is 1 MiB. Per-run receipts under `target/cold-storage-batches/` record
 progress, exclusions and savings; reruns skip cataloged paths. Current/private,
 failed/suspended and explicitly hot scopes remain available. This command only
 performs storage maintenance and does not rerun validation commands.
+Legacy artifacts without recognized successful receipts also qualify after
+24 hours without mtime/ctime changes and fresh host-consumer checks. Their test
+outcome is not inferred; explicit failures remain excluded. `--completed-only`
+disables this fallback. Discovery prints progress about every five seconds.
 On a local Linux Docker Engine host, use
 `bash scripts/linux/cold_storage_docker.sh batch --apply` to run the same CLI
 with containerized Python/Git/Zstandard. The launcher builds/reuses its image,

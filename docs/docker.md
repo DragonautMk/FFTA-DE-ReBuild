@@ -115,6 +115,12 @@ bash scripts/linux/cold_storage_docker.sh list
 bash scripts/linux/cold_storage_docker.sh restore target/completed-check/resources
 ```
 
+Batch discovery prints progress and automatically includes idle historical
+legacy artifacts lacking recognized success receipts, with a 24-hour quiet
+period and fresh host-consumer checks. It preserves explicit failures and
+current/private/shared resources. Add `--completed-only` for receipt-only
+selection. No historical test outcome is promoted to PASS by compression.
+
 The launcher builds `ffta-cold-storage:local` on first use and reuses it while
 the Dockerfile and packaged scripts are unchanged. Base/package layers remain
 cached when only the scripts change. Initial image creation needs network access;

@@ -711,6 +711,7 @@ def main():
     sub.add_parser('list')
     batch = sub.add_parser('batch', help='discover and compress completed historical artifacts automatically')
     batch.add_argument('--apply', action='store_true', help='compress eligible paths; default is a preview')
+    batch.add_argument('--completed-only', action='store_true', help='require recognized successful receipts; skip idle-history fallback')
     batch.add_argument('--min-mib', type=int, default=1, help='minimum allocated MiB per archive (default: 1)')
     batch.add_argument('--exclude', action='append', default=[], help='additional repository-relative path glob to preserve')
     for name in ['restore', 'retire', 'verify', 'recover']:

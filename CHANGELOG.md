@@ -142,6 +142,31 @@ Documentation: [LOCAL_ARTIFACTS.md](docs/development/LOCAL_ARTIFACTS.md), [READM
 
 [Change record](docs/changes/2026-11-07-automate-remaining-target-compression.json)
 
+## 2026-11-07 — Automatically archive idle historical artifacts without success-receipt bookkeeping
+
+Type: changed. Platforms: Linux host, Local Linux Docker Engine.
+
+**Changes**
+
+- Extend default batch discovery to legacy historical artifacts lacking recognized success receipts. Require 24 hours without member mtime/ctime changes, fresh host activity checks, source/scope leases and unchanged outcome metadata. Missing or malformed success receipts do not claim completion; explicit failures and unfinished states remain excluded.
+- Preserve current/shared/private/suspended resources, source preimages, managed failed work and existing cataloged paths. Add --completed-only to retain receipt-only selection. Store idle-history as the retention basis with test outcome explicitly not inferred.
+- Index catalog paths and ancestors instead of walking the full catalog for each file. Print discovery progress and update its receipt approximately every five seconds during traversal; reuse the same Docker command.
+- Apply the extended batch to 1010 paths; reclaim 16958410752 file-block bytes (15.79 GiB / 16.96 GB), excluding external receipts and directory metadata.
+
+**Validation**
+
+- Python syntax parsing passed. Actual Docker discovery selected 1010 paths totaling 21.86 GiB from 2068 scopes, with visible progress; no project test suites, gameplay or benchmarks run.
+- target/cold-storage-batches/20261107-111843-b9e16c2e/batch.json: PASS, all 1010 selected paths archived with no errors. Existing packing verified every archive before original retirement; no additional test suites or restoration exercises.
+
+**Limitations**
+
+- Idle historical storage does not establish test success or close unfinished acceptance. A quiet period alone does not establish inactivity; fresh host checks and existing integrity/lease protections remain required.
+- Failed/suspended/current/private/shared scopes remain directly available. Host process-detail denials remain recorded limits; no global inactivity is claimed. Native Windows remains unverified.
+
+Documentation: [LOCAL_ARTIFACTS.md](docs/development/LOCAL_ARTIFACTS.md), [docker.md](docs/docker.md).
+
+[Change record](docs/changes/2026-11-07-automate-idle-historical-compression.json)
+
 ## 2026-11-07 — Measure compressed validation archives and define on-demand restoration scope
 
 Type: docs. Platforms: Linux ext4 host; Zstandard 1.5.7.

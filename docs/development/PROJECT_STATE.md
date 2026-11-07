@@ -107,6 +107,11 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   completed artifacts automatically, records exclusions/progress and skips
   cataloged paths on reruns; it does not rerun validation commands. Current,
   private, failed/suspended and explicitly hot scopes remain available.
+  Legacy artifacts without recognized success receipts can use automatic
+  idle-history retention after 24 hours without mtime/ctime changes, with fresh
+  host checks and preserved outcome metadata. This does not close failed or
+  unfinished acceptance; `--completed-only` disables the fallback. Discovery
+  reports progress and indexes the archive catalog.
   `scripts/linux/cold_storage_docker.sh` packages the same CLI for local Linux
   Docker Engine, preserving host PID visibility, identity, paths and the shared
   catalog; Docker Desktop, remote and rootless daemons are excluded.

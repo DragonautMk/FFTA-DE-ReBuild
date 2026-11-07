@@ -252,7 +252,19 @@ supported for this host-aware operation. See the
 mounts, AppArmor behavior, platform limits and other CLI commands.
 
 The batch scans completed managed work and legacy scopes with recognized
-successful result receipts, selects eligible files and directories of at least
+successful result receipts. It also selects idle historical legacy artifacts
+without recognized success receipts: every selected member must have unchanged
+mtime and ctime for at least 24 hours, and host consumer checks must pass.
+This is reversible storage retention, not a declaration of test completion.
+Missing or malformed success receipts no longer exclude an entire historical
+scope; explicit failures, unfinished states, leases and protected scopes still do.
+Outcome metadata stays readable and hash-bound, and is rechecked before retirement.
+Use `--completed-only` to retain the former receipt-only selection policy.
+
+The scanner prints progress and updates its receipt approximately every five
+seconds while traversing paths. Catalog membership uses indexed lookups to
+avoid repeatedly walking the whole catalog for every file. It selects eligible
+files and directories of at least
 1 MiB, and compresses them sequentially through the same verified store. It
 does not launch tests, builds, gameplay or benchmarks. Omit `--apply` for a
 preview; `--min-mib N` changes the minimum and repeatable `--exclude 'target/GLOB'`
@@ -266,7 +278,8 @@ remaining work. Interrupted publications stop the batch for explicit recovery;
 busy or changed sources remain available. Current E132/E131, current packaged
 application, canonical/shared outputs, explicit `--keep-hot` work, private
 inputs, source preimages and known suspended scopes remain excluded. Conflicting
-failure receipts or unrecognized completion formats require separate review.
+failure receipts require separate review; unrecognized completion formats may
+use the idle-history policy without changing their original outcome.
 The current exceptions are maintained in `scripts/cold_storage_batch.py`.
 
 Legacy successful exit-code lists and Windows result records are recognized
