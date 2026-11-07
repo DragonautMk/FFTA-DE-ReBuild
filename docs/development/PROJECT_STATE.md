@@ -103,7 +103,11 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   at their original paths under a coordinated lease and retired after PASS;
   `scripts/cold_storage.py` also wraps legacy consumers and exposes explicit
   inspection/recovery. Historical packing requires reviewed completion and host
-  activity evidence. Native Windows archival remains a separate validation gate.
+  activity evidence. `cold_storage.py batch --apply` discovers remaining eligible
+  completed artifacts automatically, records exclusions/progress and skips
+  cataloged paths on reruns; it does not rerun validation commands. Current,
+  private, failed/suspended and explicitly hot scopes remain available.
+  Native Windows archival remains a separate validation gate.
 
 - The desktop [Clan Atlas menu](../menu_clan_atlas.md) uses the existing native
   Canvas/tiny-skia fonts and the FFTA DE-ReBuild emblem with a permanent left sidebar (eight Game/eight Debug

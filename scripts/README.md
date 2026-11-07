@@ -151,6 +151,13 @@ use `python3 scripts/cold_storage.py run --input PATH -- COMMAND`; `list`,
 `restore`, `verify`, `retire` and `recover` support explicit inspection/recovery.
 Historical `plan`/`pack` require completion evidence, an exact inventory and host
 process visibility. A missing archived path is recoverable, not a failed test.
+Use `python3 scripts/cold_storage.py batch --apply` to automatically discover
+and compress remaining eligible completed artifacts. Omit `--apply` for a
+preview; add `--exclude 'target/GLOB'` for further exclusions. The default
+minimum is 1 MiB. Per-run receipts under `target/cold-storage-batches/` record
+progress, exclusions and savings; reruns skip cataloged paths. Current/private,
+failed/suspended and explicitly hot scopes remain available. This command only
+performs storage maintenance and does not rerun validation commands.
 See the [bounded lifecycle](../docs/development/LOCAL_ARTIFACTS.md#default-lifecycle-for-new-validation)
 for commands, output placeholders, failure retention and explicit keep reasons.
 Older successful units still use `scripts/local_artifacts.py complete` to

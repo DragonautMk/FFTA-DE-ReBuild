@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "date": "2026-11-07",
+  "slug": "automate-remaining-target-compression",
+  "title": "Automate batch compression of remaining completed target artifacts",
+  "kind": "changed",
+  "platforms": [
+    "Linux host",
+    "Local Windows/Wine artifact retention"
+  ],
+  "changes": [
+    "Add cold_storage.py batch --apply to discover and compress remaining eligible completed artifacts in one invocation, with a 1 MiB default minimum, optional preview, additional path exclusions and per-run progress receipts.",
+    "Reuse existing completion receipts without executing tests, builds, gameplay or benchmarks. Recognize successful legacy exit-code lists and Windows result records, reject conflicting failures and preserve current/shared/private/suspended or explicitly hot paths.",
+    "Reuse verified streamed archives and original-path restoration. Bind original result hashes and source metadata, hold store/scope leases, check host consumers and completion evidence before retirement, and stop interrupted publications for review. Reruns skip cataloged paths and leave manually restored copies available.",
+    "Apply the batch to 272 additional paths in 142 completed scopes: 11409207296 original file-block bytes became 1876983808 compressed payload bytes plus 153452544 metadata bytes, reclaiming 9378770944 bytes (8.73 GiB / 9.38 GB)."
+  ],
+  "validation": [
+    "Automatic discovery selected 272 additional paths totaling 10.63 GiB from existing results; CLI help and Python syntax parsing passed.",
+    "Application receipt target/cold-storage-batches/20261107-113755-51f0fa64/batch.json PASS: all 272 selected archives completed, no errors; archive contents verified by the existing pack operation before originals were retired.",
+    "completion-audit.json PASS: all 272 catalog-manifest hashes and archived states verified, retired source paths absent, all 6426 prior private-file identity/size/mtime guards unchanged. No repeated payload scan, restoration exercise or runtime validation.",
+    "Three unreadable host process details remain recorded in archive proofs; source/tool hashes and observed disk-free space are recorded separately without attributing unrelated disk changes."
+  ],
+  "limitations": [
+    "No test suite, game build, gameplay or benchmark was run for this storage-maintenance request. Native Windows archival remains unverified.",
+    "Unrecognized or conflicting historical result receipts require separate review; canonical Cargo outputs, current datasets, private inputs and unresolved work are intentionally excluded. The command is invoked explicitly and does not install a background service.",
+    "Host process-detail denials are retained in archive proofs; no global host inactivity is claimed. Savings exclude external batch receipts and filesystem directory metadata."
+  ],
+  "files": [
+    "scripts/cold_storage.py",
+    "scripts/cold_storage_batch.py",
+    "scripts/README.md",
+    "docs/development/LOCAL_ARTIFACTS.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md",
+    "docs/development/TASK_COMPLETED_ARCHIVE.md"
+  ],
+  "references": [
+    "docs/development/LOCAL_ARTIFACTS.md",
+    "scripts/README.md"
+  ]
+}

@@ -707,6 +707,10 @@ def main():
     parser.add_argument('--root', type=Path, default=ROOT)
     sub = parser.add_subparsers(dest='action', required=True)
     sub.add_parser('list')
+    batch = sub.add_parser('batch', help='discover and compress completed historical artifacts automatically')
+    batch.add_argument('--apply', action='store_true', help='compress eligible paths; default is a preview')
+    batch.add_argument('--min-mib', type=int, default=1, help='minimum allocated MiB per archive (default: 1)')
+    batch.add_argument('--exclude', action='append', default=[], help='additional repository-relative path glob to preserve')
     for name in ['restore', 'retire', 'verify', 'recover']:
         p = sub.add_parser(name); p.add_argument('path')
     plan = sub.add_parser('plan')
@@ -739,6 +743,9 @@ def main():
                 inputs.close(success=False)
                 raise
         with Store(args.root) as store:
+            if args.action == 'batch':
+                import cold_storage_batch
+                return cold_storage_batch.run(store, args)
             if args.action == 'list':
                 print(json.dumps([{k: d.get(k) for k in ['source', 'state', 'logical_bytes', 'archive_bytes']}
                                   for _, d in store.entries()], indent=2)); return 0

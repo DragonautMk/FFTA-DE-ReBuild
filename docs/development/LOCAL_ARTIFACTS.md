@@ -230,7 +230,35 @@ ordinary `--protect` guard still refuses symlinked trees: use the standalone
 wrapper or explicit restoration for historical Wine trees containing links.
 Archive extraction itself validates links without following their destinations.
 
-Historical adoption is explicit, rather than a sweep based on age or file size:
+For automatic historical adoption, run one batch command:
+
+```sh
+python3 scripts/cold_storage.py batch --apply
+```
+
+The batch scans completed managed work and legacy scopes with recognized
+successful result receipts, selects eligible files and directories of at least
+1 MiB, and compresses them sequentially through the same verified store. It
+does not launch tests, builds, gameplay or benchmarks. Omit `--apply` for a
+preview; `--min-mib N` changes the minimum and repeatable `--exclude 'target/GLOB'`
+adds paths to preserve. Shell globs should be quoted.
+
+Each invocation writes a separate `target/cold-storage-batches/<run>/batch.json`
+with candidates, exclusions, completed archives, errors and reclaimed file
+blocks. The receipt is updated after each archive. A subsequent invocation
+skips cataloged paths, including manually restored copies, and discovers the
+remaining work. Interrupted publications stop the batch for explicit recovery;
+busy or changed sources remain available. Current E132/E131, current packaged
+application, canonical/shared outputs, explicit `--keep-hot` work, private
+inputs, source preimages and known suspended scopes remain excluded. Conflicting
+failure receipts or unrecognized completion formats require separate review.
+The current exceptions are maintained in `scripts/cold_storage_batch.py`.
+
+Legacy successful exit-code lists and Windows result records are recognized
+without modifying historical receipts. Their hashes and the source inventory
+are bound to the batch review; original results and host activity are rechecked
+before retirement. No elapsed-time or file-age heuristic establishes completion.
+Other historical paths can still use an explicit review:
 
 ```sh
 python3 scripts/cold_storage.py plan target/completed-check/resources \
@@ -307,6 +335,17 @@ Reviewed plans, exclusions, source/tool provenance and the application receipt
 are under `target/cold-storage-migration-20261107/`. The final managed evidence
 is `target/validation/units/cold-storage-final-verification-z8k2a8bt/`.
 See the [implementation record](../changes/2026-11-07-enable-validation-cold-storage.json).
+
+The subsequent automatic batch archived **272 additional paths** from 142
+completed scopes. It reclaimed **9,378,770,944 file-block bytes (8.73 GiB /
+9.38 GB)**: 10.63 GiB of original blocks became 1.75 GiB of payloads plus
+146.34 MiB of catalog/evidence metadata. All selected archives completed without
+errors; their catalog manifests match, original payload copies are absent, and
+the previous 6,426 private-file stat guards remain unchanged. Packing performed
+the content-integrity checks; no suite, build, gameplay, benchmark or additional
+restore exercise was run. Three inaccessible host process details remain a
+visibility limit. Receipts: `target/cold-storage-batches/20261107-113755-51f0fa64/`.
+See the [batch automation record](../changes/2026-11-07-automate-remaining-target-compression.json).
 
 ### Wine test prefixes
 

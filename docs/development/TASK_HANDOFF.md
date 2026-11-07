@@ -205,9 +205,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: VALIDATION-COLD-STORAGE completed; compression and on-demand consultation implemented and applied.
-- Last verified result: 382 archives, 22.23 GiB recovered; real dataset/Wine restoration PASS; 6,426 private-file stat guards unchanged.
-- Remaining work: no selected criterion; current/private/failed/unattested scopes remain directly available.
-- Errors or blockers: no application errors; three host process-detail denials recorded as limits.
-- Next action: use the catalog, --protect or the legacy wrapper when needed; routine storage work does not rerun suites/builds/gameplay.
-- References: docs/changes/2026-11-07-enable-validation-cold-storage.json; target/cold-storage-migration-20261107/applied.json.
+- Task: VALIDATION-COLD-STORAGE-BATCH completed; automatic remaining-artifact compression implemented and applied.
+- Last verified result: 272 additional archives, 9.38 GB recovered; all catalog manifests and 6,426 private-file stat guards PASS.
+- Remaining work: no selected criterion; current/private/failed/suspended/unattested paths stay available.
+- Errors or blockers: no batch errors; three host process-detail denials remain recorded limits.
+- Next action: use cold_storage.py batch --apply for further eligible compression and the existing declared-input restore workflow; no suites/builds/gameplay.
+- References: docs/changes/2026-11-07-automate-remaining-target-compression.json; target/cold-storage-batches/20261107-113755-51f0fa64/.
