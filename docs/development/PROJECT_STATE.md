@@ -237,10 +237,15 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   pins. Selection rechecks run outside the frontend thread; catalog indexes
   require a new refresh. New collectors may be
   started after recovery; recorded waits can continue under their original
-  limits with a guarded last observation. An exactly matching retained terminal
-  response can resolve a pending step without redispatch, including an attached
-  wait when its original terminal completion time is available; unmatched requests and
-  open prior collector contexts remain outside this recovery path. Completed
+  limits with a guarded last observation. Current servers attempt bounded,
+  create-once per-step terminal receipts before publishing the shared mailbox;
+  older runs can still use the mailbox. An exactly matching retained response
+  can resolve a pending step without redispatch, including an attached wait
+  when its original terminal completion time is available. An owned open UI
+  trace can be snapshotted on normal close and restored at a matching guarded
+  boundary; the report marks the session gap and the original time limit includes
+  downtime. Missing or changed snapshots, open UI waits, other open collectors
+  and unmatched requests remain outside this recovery path. Completed
   UI/audio/code/gameplay start/report pairs preserve their results without
   redispatch; report files remain external local artifacts. Linux
   isolated recipe-watch checks cover one audit-enabled read hit and default
@@ -250,10 +255,10 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   synthetic checks and isolated Linux/Xvfb normal restarts, including a new UI
   collector/report, an interrupted wait and a retained terminal response with
   or without an attached wait,
-  pass; focused Windows GNU/Wine tests cover those paths. An isolated EUR
-  Wine/Xvfb normal restarts preserve a completed status step or recorded wait
-  and execute the following frame once, under the runner's native-driver prefix
-  lease. Status observations use the remaining original wait budget and remain
+  pass; focused Windows GNU/Wine tests cover those paths. Isolated EUR
+  Wine/Xvfb normal restarts preserve a completed status step, recorded wait or
+  synthetic catalog selection and execute the following frame once, under the
+  runner's native-driver prefix lease. Status observations use the remaining original wait budget and remain
   cancellable in flight. CPU presentation followed GPU fallback. Native Windows,
   broader Wine wait/selection/collector coverage and context recovery remain open.
   The shared operation registry has 127 operations/412 parameters. DBG2-07 persists relative internal/explicit external choice pins and scoped
@@ -458,7 +463,8 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   remapping/shortcut consumption and actual guest-frame latches. Disposable
   host-menu redraw records the existing font's advance/outline/width stop and
   canvas clip with identical observed/unobserved pixels; guest text stays unknown.
-  At most8private reports, no collector snapshots or guest mutation; report
+  At most8private reports and no guest mutation; a separate private UI trace
+  snapshot is limited to guarded recipe recovery after normal close. Report
   presence is not replay/scene acceptance. Wine keyboard/autorepeat/simulated
   XInput and a closed2frame recorded CLI endpoint pass, with browser views and
   exact source-body preservation. Native platforms/physical pads and raw

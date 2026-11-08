@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-08",
+  "slug": "complete-codebreaker-decoder-acceptance",
+  "title": "Complete bounded CodeBreaker decoder acceptance audit",
+  "kind": "changed",
+  "platforms": [
+    "Linux",
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Mark DBG2-18 complete against its original bounded decoder criteria: typed supported operations, master and continuation checks, public synthetic opcode fixtures, atomic refusal and per-candidate capability reporting."
+  ],
+  "validation": [
+    "Public synthetic tests exercise byte and halfword writes, OR, AND, addition, equality and inequality conditions, slides and continuations, cipher and master checks, invalid width and alignment, incomplete and unknown blocks and preflight isolation. Previous focused Linux and Wine suites passed, including conditional-slide atomicity.",
+    "A protected readonly audit queried all 341 current local entries and all 232 CodeBreaker provenance records. It found 21 guarded one-shot source plans, one decoded outside one-shot limits and 210 unresolved sources; none were omitted by the assessment limits. All 22 decoded plans matched separate explicit inspection through the same decoder; only aggregate results were retained and the source was unchanged.",
+    "The first audit harness expected the wrong successful outcome label and failed before completing; correcting the harness produced PASS. No runtime code changed."
+  ],
+  "limitations": [
+    "Unresolved source masters and unsupported formats are not executed or guessed. Actual device behavior, hardware hook timing and per-ROM gameplay compatibility remain unverified. Other catalogs can exceed the bounded assessment limits and report not evaluated. Native Windows and physical input were not tested."
+  ],
+  "files": [
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-08",
+  "slug": "complete-local-cheat-catalog-acceptance",
+  "title": "Complete local cheat catalog acceptance audit",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU / Wine / Xvfb"
+  ],
+  "changes": [
+    "Mark DBG2-17 complete against its original catalog import, preservation, compatibility-state and package-exclusion criteria. Keep device and gameplay verification separate from catalog browsing."
+  ],
+  "validation": [
+    "The retained local catalog result compares all 341 ordered entries and metadata with the source, verifies disabled/unknown/unsupported/unverified states, absent-catalog behavior and unchanged source. A separate public synthetic 341-entry Wine/Xvfb GUI proof checks explicit import, first/last search, details and unchanged guest state.",
+    "The current importer retains whole entry and provenance objects and builds separate bounded source capability assessments. The current portable packager selects explicit public inputs, and the documented synthetic packaging tests cover private catalog exclusion."
+  ],
+  "limitations": [
+    "Source plans and declared ROM regions do not verify actual device version, all ROM checksums or gameplay behavior. Native Windows and physical input are unverified; a distributable project-authored victory operation remains separate unfinished work."
+  ],
+  "files": [
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ]
+}

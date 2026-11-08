@@ -5073,7 +5073,7 @@
       "title": "Prepare a one-shot cheat plan",
       "source": "crates/recomp/src/debug_control.rs",
       "handler": "PlayApp::prepare_cheat_once / Plan::footprint",
-      "cli": "recomp debug-control cheat-prepare SESSION ID PROVENANCE MASTER GENERATION [--timeout-ms N]",
+      "cli": "recomp debug-control cheat-prepare SESSION ID PROVENANCE MASTER GENERATION [--parameter NAME --value N] [--timeout-ms N]",
       "parameters": [
         {
           "name": "SESSION",
@@ -5115,6 +5115,20 @@
           "value_type": "sha256",
           "constraint": "Exact current cheat snapshot generation.",
           "current_menu": "not-applicable",
+          "default": null
+        },
+        {
+          "name": "--parameter",
+          "value_type": "text",
+          "constraint": "Explicit source-declared parameter name; requires --value.",
+          "current_menu": "unavailable",
+          "default": null
+        },
+        {
+          "name": "--value",
+          "value_type": "decimal",
+          "constraint": "Selected integer 0..65535 within the declared list or range; requires --parameter.",
+          "current_menu": "unavailable",
           "default": null
         }
       ],

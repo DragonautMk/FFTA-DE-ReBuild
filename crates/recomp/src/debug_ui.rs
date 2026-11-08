@@ -1,12 +1,66 @@
 //! Explicit bounded frontend observation; never injects input or runs a guest step.
+use serde::{Deserialize, Serialize};
 use serde_json::{Value, json};
 use std::{
     fs,
     path::Path,
-    time::{Instant, SystemTime, UNIX_EPOCH},
+    time::{Duration, Instant, SystemTime, UNIX_EPOCH},
 };
 
 const MAX_EVENTS: usize = 1024;
+pub(crate) const MAX_SNAPSHOT: usize = 2 * 1024 * 1024;
+const MAX_RECOVERIES: usize = 16;
+#[derive(Clone, Deserialize, Serialize)]
+#[serde(deny_unknown_fields)]
+struct RecoveryGap { previous_run:String, current_run:String, saved_unix_ms:u64, restored_unix_ms:u64 }
+
+/// Private local evidence; event metadata remains attributed to its original
+/// control run. A restore adds a gap rather than fabricating a continuous clock.
+#[derive(Clone, Deserialize, Serialize)]
+#[serde(deny_unknown_fields)]
+pub(crate) struct TraceSnapshot {
+    schema:u32, kind:String, origin:Value, events:Vec<Value>, frames:usize,
+    collecting:bool, reason:String, captured_unix_ms:u64, elapsed_ms:u64,
+    clock_session:Value, start_request_id:Option<String>, last_poll:Option<Value>, last_pad:Option<Value>, recoveries:Vec<RecoveryGap>,
+}
+#[derive(Clone, Debug, PartialEq, Eq, Deserialize, Serialize)]
+#[serde(deny_unknown_fields)]
+pub(crate) struct RecoveryPin {
+    pub recipe_run:String,
+    pub source_run:String,
+    pub checkpoint_sha256:String,
+    pub snapshot_sha256:String,
+}
+impl RecoveryPin {
+    pub fn validate(&self)->Result<(),String>{
+        let hash=|s:&str|s.len()==64 && s.bytes().all(|b|b.is_ascii_digit()||(b'a'..=b'f').contains(&b));
+        if !self.recipe_run.starts_with("run-") || !crate::debug_cheat_preset::name_valid(&self.recipe_run)
+            || self.source_run.is_empty() || self.source_run.len()>100 || self.source_run.chars().any(char::is_control)
+            || !hash(&self.checkpoint_sha256) || !hash(&self.snapshot_sha256){return Err("Invalid UI trace recovery pin".into());}
+        Ok(())
+    }
+}
+fn unix_ms()->Result<u64,String>{Ok(SystemTime::now().duration_since(UNIX_EPOCH).map_err(|e|e.to_string())?.as_millis().min(u128::from(u64::MAX)) as u64)}
+fn stop_reason(reason:&str)->Option<&'static str>{match reason{"collecting"=>Some("collecting"),"30-second-limit"=>Some("30-second-limit"),"event-limit"=>Some("event-limit"),"frame-limit"=>Some("frame-limit"),"state-restored"=>Some("state-restored"),"report-request"=>Some("report-request"),_=>None}}
+impl TraceSnapshot {
+    pub(crate) fn source_run(&self)->Option<&str>{self.clock_session["run_id"].as_str()}
+    pub(crate) fn start_request_id(&self)->Option<&str>{self.start_request_id.as_deref()}
+    pub(crate) fn manifest_sha256(&self)->Option<&str>{self.clock_session["manifest_sha256"].as_str()}
+    pub(crate) fn event_count(&self)->usize{self.events.len()}
+    pub(crate) fn frames(&self)->usize{self.frames}
+    pub(crate) fn validate(&self)->Result<(),String>{
+        if self.schema!=1 || self.kind!="ffta-ui-trace-snapshot" || !self.origin.is_object() || self.events.len()>MAX_EVENTS || self.frames>600 || self.elapsed_ms>30_000 || self.captured_unix_ms==0 || self.recoveries.len()>MAX_RECOVERIES
+            || stop_reason(&self.reason).is_none() || self.collecting!=(self.reason=="collecting")
+            || self.clock_session["run_id"].as_str().is_none_or(|id|id.is_empty() || id.len()>100 || id.chars().any(char::is_control))
+            || self.start_request_id.as_ref().is_some_and(|id|id.is_empty() || id.len()>100 || id.chars().any(char::is_control))
+            || self.events.iter().enumerate().any(|(i,event)|event["sequence"]!=i as u64 || event["host_ms"].as_u64().is_none())
+            || self.recoveries.iter().any(|g|g.previous_run.is_empty() || g.previous_run.len()>100 || g.current_run.is_empty() || g.current_run.len()>100 || g.previous_run.chars().any(char::is_control) || g.current_run.chars().any(char::is_control) || g.saved_unix_ms>g.restored_unix_ms) {
+            return Err("Invalid UI trace snapshot".into());
+        }
+        if serde_json::to_vec(self).map_err(|e|e.to_string())?.len()>MAX_SNAPSHOT{return Err("UI trace snapshot exceeds 2 MiB".into());}
+        Ok(())
+    }
+}
 #[derive(Default)]
 pub(crate) struct Trace {
     clock: crate::debug_events::Clock,
@@ -18,6 +72,8 @@ pub(crate) struct Trace {
     reason: &'static str,
     collecting: bool,
     frames: usize,
+    start_request_id: Option<String>,
+    recoveries: Vec<RecoveryGap>,
     pub report: Option<String>,
 }
 impl Trace {
@@ -39,10 +95,13 @@ impl Trace {
         self.reason = "collecting";
         self.collecting = true;
         self.frames = 0;
+        self.start_request_id = None;
+        self.recoveries.clear();
         Ok(())
     }
     pub fn start_shared(&mut self, origin: Value, clock: crate::debug_events::Clock) -> Result<(), String> {
         self.start(origin)?;
+        self.start_request_id = clock.current().request_id;
         self.clock = clock;
         Ok(())
     }
@@ -93,7 +152,33 @@ impl Trace {
         }
     }
     pub fn status(&self) -> Value {
-        json!({"collecting":self.collecting,"has_trace":self.origin.is_some(),"events":self.events.len(),"frames":self.frames,"stop_reason":self.reason,"last_report":self.report,"max_events":MAX_EVENTS,"max_frames":600,"max_seconds":30,"event_clock":self.clock.status()})
+        let mut value=json!({"collecting":self.collecting,"has_trace":self.origin.is_some(),"events":self.events.len(),"frames":self.frames,"stop_reason":self.reason,"last_report":self.report,"max_events":MAX_EVENTS,"max_frames":600,"max_seconds":30,"event_clock":self.clock.status()});
+        if let Some(id)=&self.start_request_id{value["start_request_id"]=json!(id);}
+        if !self.recoveries.is_empty(){value["recovery_gaps"]=json!(self.recoveries);}
+        value
+    }
+    pub(crate) fn snapshot(&self)->Result<TraceSnapshot,String>{self.snapshot_at(unix_ms()?)}
+    fn snapshot_at(&self,captured_unix_ms:u64)->Result<TraceSnapshot,String>{
+        let origin=self.origin.clone().ok_or("No UI trace to preserve")?;
+        let elapsed_ms=self.started.ok_or("UI trace has no start time")?.elapsed().as_millis().min(30_000) as u64;
+        let expired=self.collecting && elapsed_ms>=30_000;
+        let snapshot=TraceSnapshot{schema:1,kind:"ffta-ui-trace-snapshot".into(),origin,events:self.events.clone(),frames:self.frames,collecting:self.collecting && !expired,reason:if expired{"30-second-limit"}else{self.reason}.into(),captured_unix_ms,elapsed_ms,clock_session:self.clock.status()["session"].clone(),start_request_id:self.start_request_id.clone(),last_poll:self.last_poll.clone(),last_pad:self.last_pad.clone(),recoveries:self.recoveries.clone()};
+        snapshot.validate()?;Ok(snapshot)
+    }
+    pub(crate) fn restore(&mut self,snapshot:TraceSnapshot,clock:crate::debug_events::Clock)->Result<(),String>{self.restore_at(snapshot,clock,unix_ms()?)}
+    fn restore_at(&mut self,mut snapshot:TraceSnapshot,clock:crate::debug_events::Clock,restored_unix_ms:u64)->Result<(),String>{
+        if self.origin.is_some(){return Err("Save the current UI trace before restoring another".into());}
+        snapshot.validate()?;
+        if restored_unix_ms<snapshot.captured_unix_ms || snapshot.recoveries.len()>=MAX_RECOVERIES{return Err("UI trace recovery time or count is invalid".into());}
+        let elapsed=snapshot.elapsed_ms.saturating_add(restored_unix_ms-snapshot.captured_unix_ms).min(30_000);
+        let previous_run=snapshot.clock_session["run_id"].as_str().unwrap().to_owned();
+        let current_run=clock.status()["session"]["run_id"].as_str().ok_or("Missing current event run")?.to_owned();
+        if previous_run==current_run{return Err("UI trace recovery needs a different control run".into());}
+        let started=Instant::now().checked_sub(Duration::from_millis(elapsed)).ok_or("UI trace elapsed time cannot be restored")?;
+        snapshot.recoveries.push(RecoveryGap{previous_run,current_run,saved_unix_ms:snapshot.captured_unix_ms,restored_unix_ms});
+        self.origin=Some(snapshot.origin);self.events=snapshot.events;self.frames=snapshot.frames;self.start_request_id=snapshot.start_request_id;self.last_poll=snapshot.last_poll;self.last_pad=snapshot.last_pad;self.clock=clock;self.started=Some(started);self.recoveries=snapshot.recoveries;
+        self.collecting=snapshot.collecting && elapsed<30_000;self.reason=if snapshot.collecting && elapsed>=30_000{"30-second-limit"}else{stop_reason(&snapshot.reason).unwrap()};
+        Ok(())
     }
     pub fn save(
         &mut self,
@@ -156,6 +241,7 @@ impl Trace {
         let path = format!("Data/config/ui/{name}/index.html");
         self.origin = None;
         self.started = None;
+        self.start_request_id = None;
         self.events.clear();
         self.last_poll = None;
         self.last_pad = None;
@@ -240,5 +326,22 @@ mod tests {
         trace.event(0, 0, "mapped-poll", json!({}));
         assert_eq!(trace.reason, "30-second-limit");
         assert!(trace.events.is_empty());
+    }
+    #[test]
+    fn recovered_trace_keeps_prefix_and_marks_the_session_gap(){
+        let mut trace=Trace::default();trace.start(json!({"state":"seed"})).unwrap();trace.event(1,2,"keyboard",json!({"key":"A"}));
+        let old=trace.clock.status()["session"]["run_id"].as_str().unwrap().to_owned();let snapshot=trace.snapshot_at(1_000).unwrap();
+        let bytes=serde_json::to_vec(&snapshot).unwrap();let snapshot:TraceSnapshot=serde_json::from_slice(&bytes).unwrap();
+        let clock=crate::debug_events::Clock::new(crate::debug_events::Session{run_id:"new-control-run".into(),manifest_sha256:None});let mut restored=Trace::default();
+        restored.restore_at(snapshot,clock,1_250).unwrap();assert_eq!(restored.events.len(),1);assert_eq!(restored.events[0]["session"]["run_id"],old);assert_eq!(restored.status()["recovery_gaps"][0]["current_run"],"new-control-run");
+        restored.event(2,3,"keyboard",json!({"key":"B"}));assert_eq!(restored.events[1]["sequence"],1);assert_eq!(restored.events[1]["session"]["run_id"],"new-control-run");assert!(restored.events[1]["host_ms"].as_u64().unwrap()>=250);
+    }
+    #[test]
+    fn snapshot_rejects_invalid_input_and_never_extends_the_time_limit(){
+        let mut trace=Trace::default();trace.start(json!({})).unwrap();trace.event(1,2,"keyboard",json!({"key":"A"}));let snapshot=trace.snapshot_at(1_000).unwrap();
+        let clock=||crate::debug_events::Clock::new(crate::debug_events::Session{run_id:"new-run".into(),manifest_sha256:None});
+        let mut invalid=snapshot.clone();invalid.events[0]["sequence"]=json!(9);let mut restored=Trace::default();assert!(restored.restore_at(invalid,clock(),1_001).is_err());assert!(restored.origin.is_none());
+        assert!(restored.restore_at(snapshot.clone(),clock(),999).is_err());assert!(restored.origin.is_none());
+        restored.restore_at(snapshot,clock(),31_001).unwrap();assert!(!restored.enabled());assert_eq!(restored.reason,"30-second-limit");assert_eq!(restored.events.len(),1);
     }
 }

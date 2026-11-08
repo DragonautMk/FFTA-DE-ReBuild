@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-08",
+  "slug": "complete-guarded-cheat-application-acceptance",
+  "title": "Complete guarded cheat application acceptance audit",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU / Wine / Xvfb"
+  ],
+  "changes": [
+    "Mark DBG2-19 complete within the supported isolated interpreter: explicit source-bound preview, one-shot, frame-boundary maintenance, overlap checks and disarm have defined behavior and failure guards."
+  ],
+  "validation": [
+    "A synthetic isolated Wine/Xvfb proof verified three exact bus writes while paused, unchanged frame/clock/registers, stale state and source refusal, and no duplicate on retry. A separate maintained-set proof verified arming writes nothing, overlap refusal without mutation, two frame applications, disarm and unchanged original inputs.",
+    "Existing isolated Wine/Xvfb tests verified load and Undo disarm and restore the expected machine state. Current preflight checks the entire plan before guest bus access and restricts writes to canonical aligned RAM; native, ROM, mirrors and I/O writes are refused."
+  ],
+  "limitations": [
+    "The supported timing is an interpreter frame boundary, not an original device hook. Disarming stops future writes but does not undo prior ones. Native Windows, physical input and broader device/gameplay equivalence are not established; unsupported memory/backend cases remain refused."
+  ],
+  "files": [
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ]
+}

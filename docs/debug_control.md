@@ -272,7 +272,8 @@ parent close; the corrected sessions closed normally.
 
 <a id="richieste-cancellazione-e-scadenza--dbg-20"></a>
 
-## Typed command recipes — DBG2-16 in progress
+<a id="typed-command-recipes--dbg2-16-in-progress"></a>
+## Typed command recipes — DBG2-16
 
 The command console and `debug-command` can save and inspect an inert sequence:
 
@@ -628,13 +629,19 @@ closed normally and protected inputs remained unchanged. This test predates the
 limited explicit cross-restart recovery described below.
 
 `recipe recover RUN-ID` can rebind a checkpoint to a new control run without
-dispatching an action. A pending step can first be resolved if the old control
-mailbox still contains its successful terminal response with the exact run,
-request, deadline, operation and fingerprint. Recovery records that response
-without resending the action. This is local session evidence, not a signed
-record; keep the session directory trusted. If steps remain, inspect the
-result and invoke `recipe recover RUN-ID` again to rebind them. A missing,
-mismatched or failed response is not retried. For an attached wait, recovery
+dispatching an action. A pending step can first be resolved from its successful
+terminal response with the exact run, request, deadline, operation and
+fingerprint. Current servers attempt to save a create-once `terminal-NN.json`
+receipt in the owning recipe run before publishing the shared mailbox. Each
+receipt is limited to 128 KiB; at most 16 step receipts belong to a run and
+32 runs are retained. Receipt publication is best-effort: if it fails, the
+normal mailbox still works. Recovery prefers a present receipt and refuses it
+if invalid; when no receipt exists, older sessions can use the mailbox. It does
+not resend the action. Receipts and checkpoints are trusted local evidence, not
+signed records; protect the session directory as private. No guarantee is made
+for a crash before receipt publication or sudden power loss. If steps remain,
+inspect the result and invoke `recipe recover RUN-ID` again to rebind them. A
+missing, mismatched or failed response is not retried. For an attached wait, recovery
 requires a valid original terminal completion time, retains the earlier of its
 wait deadline and the recipe deadline, and reports `wait-timeout` if it has
 already elapsed. Responses from older servers without that time cannot recover
@@ -643,9 +650,18 @@ an attached wait. Invalid or out-of-budget timestamps are refused.
 Completed UI, audio, code and gameplay start/report pairs can precede the
 recovery boundary; their recorded results and request identities remain intact
 and neither action is repeated. The report files remain ordinary local artifacts:
-recovery does not verify that they have not been moved or modified. Open or
-unmatched earlier collectors are still refused because their host observations
-are not present in the guest state.
+recovery does not verify that they have not been moved or modified. An open UI
+trace can be retained on normal window close when exactly one stopped recipe
+owns it, its remaining steps are unsent, and the paused guest boundary and
+selected inputs still match. The private snapshot is bounded and linked to the
+checkpoint by hashes. A missing, altered or ambiguous snapshot is refused.
+The frontend checks the boundary again and restores the trace immediately
+before the first remaining action; a server without this capability refuses
+the request. Previous events retain their original session, and the report
+marks the interval between sessions. The original 30-second limit includes
+time spent between close and recovery. This does not reconstruct crashes before
+the snapshot, old checkpoints without one, interrupted waits with an open UI
+trace, or open audio, code and gameplay collectors.
 
 Rebinding requires a completed action, optionally followed by its recorded
 wait, and only unsent later steps, unchanged session inputs and an unexpired
@@ -673,10 +689,9 @@ preflight; there is no continuous filesystem watch between those operations.
 Remaining steps may
 also start a new audio, code, gameplay or UI collector before its report,
 capture graphics before a comparison, or use a search capture action.
-An unresolved action without a matching response, an open earlier collector,
-a report without its new collector and event-freeze searches are refused;
-previous collector contexts are not
-restored by a guest-state hash. A recorded wait can be
+An unresolved action without a matching response, an unsupported open earlier
+collector, a report without its collector and event-freeze searches are refused;
+collector contexts are not restored by a guest-state hash alone. A recorded wait can be
 rebound if its original deadline and poll budget remain, and its most recent
 poll has a recorded idle guest boundary; before any poll, the action result
 provides that boundary. The first new status poll checks that
@@ -702,8 +717,12 @@ and intervening status responses stayed unchanged, and a second final resume
 did not change state. Another run stopped its own client after the server had
 written a terminal status response but before the checkpoint recorded it;
 after a normal restart, recovery recorded that exact response and continued
-without resending the status. These runs used simulated cancellation or client
-interruption and silent audio. A further isolated Linux/Xvfb run interrupted a
+without resending the status. A separate Wine/Xvfb test interrupted its own
+client after a receipt was written, issued a new status that overwrote the old
+mailbox, restarted normally and recovered the receipt without resending the
+action. Its following frame ran once and a second resume was unchanged. These
+runs used simulated cancellation or client interruption; the Linux runs used
+silent audio. A further isolated Linux/Xvfb run interrupted a
 pending status with an attached wait, then recovered its exact response and
 original deadlines across a normal restart. A guarded observation preceded an
 external frame and the recipe's next frame; a second resume changed nothing.
@@ -721,9 +740,21 @@ acceptance. A separate Wine/Xvfb normal restart recovered an interrupted
 recorded wait: the guarded observation preserved the original boundary and
 deadlines, an external frame satisfied the wait, and the following recipe frame
 ran once. The completed action response and second resume remained unchanged.
-This used a private debug-symbol-stripped runtime, simulated cancellation and CPU
+Another isolated Wine/Xvfb interpreter session recovered a synthetic catalog
+selection across two normal restarts: its temporary ID changed, while role,
+location, hash, completed responses and the original deadline stayed consistent.
+The following recipe frame ran once and a second resume left the checkpoint
+unchanged. Protected inputs and the prefix lease were checked. These runs used
+a private debug-symbol-stripped runtime, simulated cancellation and CPU
 presentation; native Windows, broader Wine wait/selection/collector coverage and
 broader host-context recovery remain open.
+
+An isolated Wine/Xvfb run stopped a recipe after UI trace start, closed and
+reopened normally, and recovered the saved trace before one guest frame and its
+report. The original start response remained unchanged, the report contained
+events from both control runs and one recorded gap, and a second resume did not
+change the checkpoint. The runner protected its inputs and drained its leased
+Wine prefix; the test used simulated cancellation and CPU presentation.
 
 Another isolated Linux/Xvfb run completed a UI report, interrupted before its
 next recipe step, and restarted normally. Recovery kept both original request

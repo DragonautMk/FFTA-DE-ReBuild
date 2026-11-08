@@ -21630,3 +21630,52 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: Ordinary and guarded wait observations use the remaining original wait deadline, reserve fresh identities and respond to local or marker cancellation. Slow responses, cancellation and expiry do not dispatch a later action. An isolated Wine/Xvfb normal restart preserved the completed action response, identity and original deadlines; an external frame satisfied the wait, one subsequent recipe frame ran, and a second resume was identical.
 - Evidence: `docs/changes/2026-11-08-preserve-wait-budget-for-slow-observations.json`; `target/validation/units/dbg2-wine-wait-restart-fixed-t5wp9j2p/unit-result.json`; 37 Linux and 36+1 Wine runner tests PASS.
 - Limits: Simulated cancellation, private stripped runtime and CPU presentation; native Windows, physical input, broader restart cases and older host collector restoration remain open. Failed diagnostics and exact-token manual lease-recovery receipt retained. Primary and requested Sol xhigh settings not independently confirmed.
+
+### DBG2-16-WINE-SELECTION-RESTART
+
+- Outcome: completed
+- Verified criteria: A synthetic catalog selection survived two Wine/Xvfb normal restarts with role, location and hash stable despite a changed temporary ID. Original completed responses, request identities and recipe deadline stayed unchanged; the next frame ran once and a second resume preserved the full checkpoint and guest state.
+- Evidence: `docs/changes/2026-11-08-verify-wine-recipe-selection-restarts.json`; `target/validation/units/dbg2-wine-selection-restart-ok4gshdn/unit-result.json` PASS, with preserved driver hash receipt.
+- Limits: Simulated cancellation, one synthetic catalog, private debug-symbol-stripped runtime and CPU presentation after GPU fallback. Native Windows, physical input, other selection roles and broader restart coverage remain unverified.
+
+### DBG2-16-TERMINAL-RECEIPTS
+
+- Outcome: completed
+- Verified criteria: Current servers best-effort preserve bounded create-once terminal responses for matching pending recipe steps before mailbox publication. Recovery verifies exact identity and uses the receipt after mailbox replacement; invalid or missing evidence remains fail-closed and older mailbox-only recovery remains supported. Receipt failure does not suppress normal response publication.
+- Evidence: `docs/changes/2026-11-08-retain-recipe-terminal-receipts.json`; 51 Linux/51 Wine recipe and 37 Linux/38 Wine control tests PASS; `target/validation/units/dbg2-wine-receipt-recovery-published-4baan6g5/unit-result.json` PASS, preserved driver hash receipt.
+- Limits: Best-effort local unsigned evidence, 128 KiB per step and existing 16-step/32-run limits; crash before receipt publication and power loss are not covered. Simulated interruption, private stripped runtime and CPU presentation; native Windows, physical input, earlier open collectors and genuinely absent evidence remain open.
+
+### DBG2-16-OPEN-UI-COLLECTOR
+
+- Outcome: completed
+- Verified criteria: One stopped recipe's open UI trace is snapshotted on normal close, pinned to the exact checkpoint and guest boundary, restored before the guarded next action, and reported with original event identities and a session gap. Downtime counts toward its original limit. Missing or changed snapshots, changed checkpoints, mixed unsupported collectors and older unsupported paths fail closed.
+- Evidence: `docs/changes/2026-11-08-restore-open-ui-recipe-trace.json`; `target/validation/units/dbg2-ui-snapshot-wine-restart-retained-pgyz97ag/unit-result.json`; Linux 4 UI/52 recipe/37 control and Wine 4 UI/52 recipe/38 control tests PASS; Linux 40 runner tests PASS.
+- Limits: Normal close only, one unambiguous owner and no interrupted UI wait; open audio/code/gameplay collectors and old checkpoints without snapshots remain unsupported. Wine used simulated cancellation, private stripped runtime and CPU fallback; native Windows and physical input unverified. One prior functional pass failed retention policy, and an earlier Wine suite hit a test cancellation race; diagnostics retained. Primary model/xhigh not independently confirmed.
+
+### DBG2-16
+
+- Outcome: completed
+- Verified criteria: Saved typed recipes bind parameters and manifest/ROM/runtime pins; reviewed Scripts and tools execution, bounded steps/frames/time/output, waits, assertions, first-error stop, cancellation, explicit reopening of concluded evidence and durable ordered checkpoint results are implemented. A short reviewed recipe and two independently interrupted recipes retained step order, request identities, results and checkpoints. Resumption did not repeat successful operations. Dependencies DBG2-06/15 and DBG-21 are complete.
+- Evidence: `docs/changes/2026-11-08-complete-bounded-command-recipes.json`; `target/validation/units/dbg2-recipe-picker-live-edamzmdj/evidence/result.json`; `target/validation/units/dbg2-recipe-interrupted-live-iyhggbai/evidence/result.json`; `target/validation/units/dbg2-pending-step-live-626n8s9n/evidence/result.json`; their retained completed checkpoints. Latest Linux 4 UI/52 recipe/37 control and Wine 4 UI/52 recipe/38 control tests PASS.
+- Limits: Original bounded acceptance is complete; native Windows, physical input, arbitrary crashes and broad cross-restart collector contexts are not claimed. Missing or mismatched evidence and unsupported contexts fail closed; the exact remaining limits are in `docs/debug_control.md`. Evidence uses isolated EUR interpreter sessions with simulated inputs.
+
+### DBG2-17
+
+- Outcome: completed
+- Verified criteria: The readonly catalog preserves all 341 local entries, ordered blocks and metadata including aliases, notes, provenance and master references. An isolated synthetic 341-entry Wine/Xvfb GUI verified the empty view, explicit import, first/last search and details. ROM context, device, decoder and verification states have distinct reasons; imported entries begin disabled. The portable packager selects public files explicitly and excludes private catalogs. Dependencies DBG2-02/03 are complete.
+- Evidence: `docs/changes/2026-11-08-complete-local-cheat-catalog-acceptance.json`; `target/debug-tools-v2-cheat-index/catalog-result.json`; `target/debug-tools-v2-cheat-menu-gui2/gui-result.json`; `docs/changes/2026-10-31-describe-cheat-target-and-public-guide.json`; current `debug_cheats.rs` and portable packager.
+- Limits: GUI uses a public synthetic catalog and simulated input; the private catalog comparison was readonly and saved no payload. Device versions, actual per-code compatibility and gameplay remain unverified, as do native Windows and physical input. The separate user-requested distributable victory operation remains open as CHEAT-DISTRIBUTION.
+
+### DBG2-18
+
+- Outcome: completed
+- Verified criteria: Public synthetic fixtures exercise each supported CodeBreaker write, modify, condition and slide opcode, continuation and cipher/master handling; incomplete, unsupported and invalid blocks are refused atomically, with preflight preserving guest state on failure. Every candidate in the current 341-entry catalog reports a bounded plan, explicit unsupported format or unresolved reason. No CodeBreaker source was omitted by assessment limits; all 22 decoded plans matched separate explicit inspection using the same decoder. DBG2-17 dependency is complete.
+- Evidence: `docs/changes/2026-11-08-complete-codebreaker-decoder-acceptance.json`; `target/validation/units/dbg2-18-catalog-plan-parity-acbcmze8/unit-result.json`; `crates/recomp/src/debug_cheat_decoder.rs` tests; `docs/changes/2026-11-05-persist-local-cheat-catalog-and-conditional-slide.json`.
+- Limits: Audit covers one local catalog and retains aggregate counts only. Unresolved masters, unsupported formats, other catalogs exceeding bounds, physical-device behavior and gameplay/ROM compatibility are not verified; unsafe cases remain refused. Native Windows and physical input untested. The first audit harness used an incorrect success label; failure retained.
+
+### DBG2-19
+
+- Outcome: completed
+- Verified criteria: Within an isolated paused interpreter, explicit preview and one-shot use state/source/ROM guards; full footprint preflight precedes bus writes. Arming writes nothing, maintained plans apply after input latch before each frame, conflicts are refused without partial arm, and disarm stops later writes. Paused one-shot and two-frame Wine/Xvfb proofs passed with original inputs unchanged; save-state load and Undo disarmed and restored expected states. Dependencies DBG2-18 and DBG-02/10 are complete.
+- Evidence: `docs/changes/2026-11-08-complete-guarded-cheat-application-acceptance.json`; `target/debug-tools-v2-cheat-one-shot-verified/gui-result.json`; `target/debug-tools-v2-maintained/gui-result.json`; `target/debug-tools-v2-maintained-load/gui-result.json`; current decoder and armed-set preflight.
+- Limits: Supported writes are canonical RAM only; unsupported I/O, ROM, mirrors and native backend are refused rather than bypassed. Disarming does not reverse earlier writes. Frame timing is not original device-hook equivalence; native Windows, physical input and broader gameplay/device behavior remain unverified.

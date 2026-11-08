@@ -98,13 +98,16 @@ impl Catalog {
                 *budget-=n;
                 match self.source_bound(entry,index,master.unwrap()) {
                     Err(error)=>json!({"state":"unresolved","reason":error}),
-                    Ok((_,lines,master_lines))=>match crate::debug_cheat_decoder::inspect_source(&lines,&master_lines,None){
+                    Ok((_,lines,master_lines))=>match Self::parameter_spec(p,&lines) {
+                        Err(error)=>json!({"state":"unresolved","reason":error}),
+                        Ok(Some(spec))=>json!({"state":"parameter-required","parameter":spec,"scope":"Declared values are source metadata, not verified game or device behavior"}),
+                        Ok(None)=>match crate::debug_cheat_decoder::inspect_source(&lines,&master_lines,None){
                         Err(error)=>json!({"state":"not-decoded","reason":error}),
                         Ok((plan,master_info))=>match plan.footprint(){
                             Ok(footprint)=>json!({"state":"manual-once-subset","plan":plan,"footprint":footprint,"checksum_required":master_info["game_id"]["checksum_enabled"]}),
                             Err(error)=>json!({"state":"decoded-outside-once-limits","reason":error,"plan":plan}),
                         }
-                    }
+                    }}
                 }
             };
             sources.push(json!({"provenance_index":index,"master_id":master,"assessment":outcome}));
@@ -112,7 +115,7 @@ impl Catalog {
         let accepted=sources.iter().filter(|s|s["assessment"]["state"]=="manual-once-subset").count();
         let decoded=sources.iter().filter(|s|s["assessment"]["state"]=="decoded-outside-once-limits").count();
         let unexamined=provenance.len().saturating_sub(sources.len());
-        let state=if accepted>0 {"manual-once-subset"} else if decoded>0 {"decoded-outside-once-limits"} else if unexamined>0 || sources.iter().any(|s|s["assessment"]["state"]=="not-evaluated") {"not-evaluated"} else {"unresolved"};
+        let state=if accepted>0 {"manual-once-subset"} else if sources.iter().any(|s|s["assessment"]["state"]=="parameter-required") {"parameter-required"} else if decoded>0 {"decoded-outside-once-limits"} else if unexamined>0 || sources.iter().any(|s|s["assessment"]["state"]=="not-evaluated") {"not-evaluated"} else {"unresolved"};
         json!({"state":state,"sources":sources,"unexamined":unexamined,"scope":"Source assumptions only; device, ROM bytes, checksum and behavior require separate verification"})
     }
     fn indexed_summary(&self,index:usize,rom:Option<&str>)->Value {
@@ -122,7 +125,7 @@ impl Catalog {
         let pending=c["sources"].as_array().unwrap().iter().filter(|s|s["assessment"]["state"]=="not-evaluated").count();
         let unexamined=c["unexamined"].as_u64().unwrap_or(0) as usize+pending;
         let relation=Target::new(rom).declaration(entry["region"].as_str().unwrap());
-        let once=if count==0 && unexamined>0 {"not-evaluated"} else if count==0 {match c["state"].as_str().unwrap(){"not-evaluated"=>"not-evaluated","unresolved"=>"not-established",_=>"unavailable"}} else if checksum_sources==0 {"master-checksum-required"} else if relation=="declared-mismatch" {"rom-region-mismatch"} else if relation=="unknown" {"rom-context-required"} else {"requires-runtime-preflight"};
+        let once=if count==0 && unexamined>0 {"not-evaluated"} else if count==0 {match c["state"].as_str().unwrap(){"not-evaluated"=>"not-evaluated","parameter-required"=>"parameter-required","unresolved"=>"not-established",_=>"unavailable"}} else if checksum_sources==0 {"master-checksum-required"} else if relation=="declared-mismatch" {"rom-region-mismatch"} else if relation=="unknown" {"rom-context-required"} else {"requires-runtime-preflight"};
         value["compatibility"]["decoder"]=json!({"state":c["state"],"reason":"Source-bound assessment only; inspect the selected provenance for its full plan"});
         value["compatibility"]["manual_once"]=json!({"state":once,"assessed_sources":c["sources"].as_array().unwrap().len()-pending,"supported_sources":count,"unexamined_sources":unexamined,"scope":"Requires explicit source and master, isolated paused interpreter, unchanged snapshot and actual ROM checksum; not a device or gameplay verification"});
         value
@@ -131,6 +134,21 @@ impl Catalog {
         let lines=provenance.get("raw_code_lines").and_then(Value::as_array).ok_or("Source record has no raw code lines")?;
         if lines.is_empty() || lines.len()>1024{return Err("Source needs 1..1024 raw code lines".into());}
         lines.iter().map(|v|v.as_str().filter(|s|s.len()<=4096).map(str::to_owned).ok_or_else(||"Invalid source code line".to_string())).collect()
+    }
+    fn parameter_spec(provenance:&Value,lines:&[String])->Result<Option<crate::debug_cheat_parameters::Specification>,String>{
+        let Some(value)=provenance.get("parameter") else{return Ok(None)};
+        let spec:crate::debug_cheat_parameters::Specification=serde_json::from_value(value.clone()).map_err(|e|format!("Invalid declared parameter: {e}"))?;
+        spec.validate_source(lines)?;Ok(Some(spec))
+    }
+    fn parameterized_source(provenance:&Value,lines:&[String],parameter:Option<&crate::debug_cheat_parameters::Choice>)->Result<(Vec<String>,Option<crate::debug_cheat_parameters::Specification>),String>{
+        let declared=Self::parameter_spec(provenance,lines)?;
+        let expanded=match (declared.as_ref(),parameter){
+            (Some(spec),Some(choice))=>crate::debug_cheat_parameters::expand(lines,spec,choice)?,
+            (Some(_),None)=>return Err("Choose an explicitly declared parameter value first".into()),
+            (None,Some(_))=>return Err("This source does not declare a parameter".into()),
+            (None,None)=>lines.to_vec(),
+        };
+        Ok((expanded,declared))
     }
     fn source_bound(&self,entry:&Value,index:usize,master_id:&str)->Result<(String,Vec<String>,Vec<String>),String>{
         let p=entry["provenance"].as_array().unwrap().get(index).ok_or("Unknown provenance index")?;
@@ -172,6 +190,7 @@ impl Catalog {
                 "rom-region-mismatch"=>"Source region differs from the selected ROM",
                 "master-checksum-required"=>"Source master needs a supported checksum",
                 "not-evaluated"=>"Source capability was not evaluated",
+                "parameter-required"=>"Source requires an explicit declared parameter",
                 _=>match self.capabilities[index]["state"].as_str().unwrap(){"decoded-outside-once-limits"=>"Source plan exceeds one-shot limits","unsupported-format"=>"Source format is not supported",_=>"Source capability is unresolved"}});
             menu::ContentEntry{id:entry["id"].as_str().unwrap().into(),name:format!("{} · {}",entry["id"].as_str().unwrap(),entry["title"].as_str().unwrap()),
                 kind:format!("{} / {}",entry["format"].as_str().unwrap(),entry["region"].as_str().unwrap()),description:details,
@@ -218,7 +237,7 @@ impl Snapshot {
     pub fn matches(&self,reference:Option<&crate::debug_inputs::Reference>,rom:&str)->bool{
         rom==self.rom_sha256 && reference.is_some_and(|r|r.entry.id==self.selection_id && r.entry.sha256.as_deref()==Some(&self.source_sha256))
     }
-    pub fn prepare_once(&self,reference:&crate::debug_inputs::Reference,rom:&[u8],id:&str,index:usize,master_id:&str,generation:&str)->Result<(crate::debug_cheat_decoder::Plan,Value),String>{
+    pub fn prepare_once(&self,reference:&crate::debug_inputs::Reference,rom:&[u8],id:&str,index:usize,master_id:&str,generation:&str,parameter:Option<&crate::debug_cheat_parameters::Choice>)->Result<(crate::debug_cheat_decoder::Plan,Value),String>{
         self.check_generation(Some(generation))?;
         let sha=gba_core::ffta_rom::digest(rom);
         if !self.matches(Some(reference),&sha){return Err("Cheat snapshot or ROM identity changed".into());}
@@ -227,13 +246,15 @@ impl Snapshot {
         let entry=current.entry(id).ok_or("Unknown CH identifier")?;
         if !entry["format"].as_str().unwrap().eq_ignore_ascii_case("codebreaker") || Target::new(Some(&sha)).declaration(entry["region"].as_str().unwrap())!="declared-match" {return Err("One-shot requires a recognized exact ROM and matching declared CodeBreaker region".into());}
         let (source,lines,master)=current.source_bound(entry,index,master_id)?;
-        let (plan,master_info)=crate::debug_cheat_decoder::inspect_source(&lines,&master,Some(rom))?;
+        let provenance=&entry["provenance"][index];let (expanded,declared)=Catalog::parameterized_source(provenance,&lines,parameter)?;
+        let (plan,master_info)=crate::debug_cheat_decoder::inspect_source(&expanded,&master,Some(rom))?;
         if master_info["rom"]["checksum_state"]!="match"{return Err("Source master checksum does not match the loaded ROM".into());}
         let footprint=plan.footprint()?;
-        let info=json!({"id":id,"provenance_index":index,"source":source,"master_id":master_id,"generation":generation,"selection_id":self.selection_id,
+        let mut info=json!({"id":id,"provenance_index":index,"source":source,"master_id":master_id,"generation":generation,"selection_id":self.selection_id,
             "source_sha256":current.source_sha256,"rom_sha256":sha,"entry_lines_sha256":gba_core::ffta_rom::digest(&serde_json::to_vec(&lines).unwrap()),
             "master_lines_sha256":gba_core::ffta_rom::digest(&serde_json::to_vec(&master).unwrap()),"master":master_info,"plan":plan,"footprint":footprint,
             "scope":"Manual paused one-shot; source/device behavior and hardware hook timing remain unverified"});
+        if let Some(choice)=parameter{info["parameter"]=json!({"choice":choice,"declaration":declared,"scope":"Source-declared domain; not verified device or gameplay behavior"});}
         Ok((plan,info))
     }
     fn check_generation(&self,generation:Option<&str>)->Result<(),String>{
@@ -434,6 +455,23 @@ mod tests {
         let mut more=v.clone();more["entries"][0]["provenance"]=json!(vec![json!({"source":"synthetic","master_id":"CH-0002","raw_code_lines":["BB28F300 B8C0"]});10]);
         let c=Catalog::parse(&serde_json::to_vec(&more).unwrap()).unwrap();assert_eq!(c.capabilities[0]["unexamined"],2);
         assert_eq!(c.indexed_summary(0,None)["compatibility"]["manual_once"]["unexamined_sources"],2);
+    }
+    #[test]
+    fn declared_parameter_requires_choice_and_preserves_source_before_decode(){
+        let mut v=fixture();v["entries"][0]["codes"]=json!(["BB28F30X B8C0"]);
+        v["entries"][0]["provenance"]=json!([{"source":"synthetic","master_id":"CH-0002","raw_code_lines":["BB28F30X B8C0"],
+            "parameter":{"name":"amount","allowed":{"kind":"list","values":[0]},"slots":[{"line":0,"field":"word","offset":7,"digits":1}]}}]);
+        v["entries"][1]["format"]=json!("codebreaker");v["entries"][1]["region"]=json!("EUR");
+        v["entries"][1]["provenance"]=json!([{"source":"synthetic","raw_code_lines":["9ABCDEF0 1234","B131BCEF 0691","26960CD0 140B"]}]);
+        let c=Catalog::parse(&serde_json::to_vec(&v).unwrap()).unwrap();let report=&c.capabilities[0];
+        assert_eq!(report["state"],"parameter-required");assert_eq!(report["sources"][0]["assessment"]["parameter"]["name"],"amount");
+        let source=&c.entries[0]["provenance"][0];let (name,raw,master)=c.source_bound(&c.entries[0],0,"CH-0002").unwrap();assert_eq!(name,"synthetic");
+        assert!(Catalog::parameterized_source(source,&raw,None).is_err());
+        let good=crate::debug_cheat_parameters::Choice{name:"amount".into(),value:0};
+        let (expanded,_)=Catalog::parameterized_source(source,&raw,Some(&good)).unwrap();
+        let (plan,_)=crate::debug_cheat_decoder::inspect_source(&expanded,&master,None).unwrap();assert!(plan.footprint().is_ok());
+        assert!(Catalog::parameterized_source(source,&raw,Some(&crate::debug_cheat_parameters::Choice{name:"amount".into(),value:1})).is_err());
+        assert_eq!(c.entries,v["entries"].as_array().unwrap().clone());
     }
     #[test]
     fn master_links_distinguish_source_records_without_selecting_dependencies(){

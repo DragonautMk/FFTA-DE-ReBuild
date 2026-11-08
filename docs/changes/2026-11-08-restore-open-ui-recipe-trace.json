@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "date": "2026-11-08",
+  "slug": "restore-open-ui-recipe-trace",
+  "title": "Restore an open recipe UI trace after normal restart",
+  "kind": "added",
+  "platforms": [
+    "Linux",
+    "Windows GNU / Wine / Xvfb"
+  ],
+  "changes": [
+    "Retain a bounded private UI trace snapshot on normal close for one stopped, unambiguous recipe at its matching paused guest boundary, pinned to its exact checkpoint and selected inputs.",
+    "Restore the snapshot under a frontend boundary guard before the next unsent action, preserve old session metadata and record the gap; elapsed downtime counts toward the original 30-second limit. Make an existing interrupted-wait test wait for its observation to be recorded before cancellation."
+  ],
+  "validation": [
+    "Linux passed 4 UI, 52 recipe and 37 control tests, followed by 40 runner tests with missing, altered and mixed-collector refusal checks. Windows GNU built and Wine passed 4 UI, 52 recipe and 38 control tests.",
+    "An isolated EUR Wine/Xvfb run stopped after UI start, closed normally, recovered 22 prior events, stepped once and wrote a 46-event report spanning two sessions with one gap. The original result and a second resume were unchanged; protected inputs and the leased Wine prefix passed.",
+    "An initial Wine suite exposed a cancellation-before-observation test race; synchronizing the test on the saved observation fixed it. A first positive GUI run was retained as failed because private scratch inputs were not selected for retention; the corrected managed unit passed."
+  ],
+  "limitations": [
+    "Only normal close and one stopped unambiguous recipe with unsent steps are supported; snapshots absent from older checkpoints, crashes before publication, interrupted waits with an open UI trace and open audio, code or gameplay collectors are refused.",
+    "Snapshots and checkpoints are unsigned private local evidence, bounded to 2 MiB and 16 recoveries. Native Windows, physical input, additional platform and broader collector recovery remain unverified; the GUI proof used simulated cancellation and CPU presentation after GPU fallback."
+  ],
+  "files": [
+    "crates/recomp/src/debug_ui.rs",
+    "crates/recomp/src/debug_control.rs",
+    "crates/recomp/src/debug_command/recipe.rs",
+    "crates/recomp/src/debug_command/recipe/checkpoint.rs",
+    "crates/recomp/src/debug_command/recipe/checkpoint/runner.rs",
+    "crates/recomp/src/play.rs",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/debug_control.md",
+    "docs/debug_ui.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ]
+}

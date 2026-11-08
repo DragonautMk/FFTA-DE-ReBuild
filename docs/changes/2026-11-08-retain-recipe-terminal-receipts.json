@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-11-08",
+  "slug": "retain-recipe-terminal-receipts",
+  "title": "Retain terminal recipe responses across mailbox replacement",
+  "kind": "added",
+  "platforms": [
+    "Linux",
+    "Windows GNU / Wine / Xvfb"
+  ],
+  "changes": [
+    "Before publishing the shared control mailbox, best-effort retain a bounded create-once successful response for a matching pending recipe step in its own run directory. Continue publishing the ordinary response if receipt retention fails.",
+    "Recover an exact retained receipt without redispatch even if the shared mailbox has been replaced. A present invalid receipt is refused; absent receipts retain the older mailbox-only path, and missing or mismatched evidence never authorizes replay."
+  ],
+  "validation": [
+    "Linux passed 51 recipe and 37 control tests; Windows GNU built and Wine passed 51 recipe and 38 control tests. Focused cases cover overwritten mailboxes, altered and conflicting receipts, both query and action channels, and legacy mailbox recovery.",
+    "An isolated EUR Wine/Xvfb session stopped its own client after publishing a status request and receiving a receipt, then issued a new status that overwrote the shared mailbox. After a normal restart, recovery recorded the exact receipt without redispatch, the following frame ran once, and a second resume left the full checkpoint and guest unchanged. Protected inputs passed; the managed Wine prefix drained.",
+    "The first live driver stopped its client before request publication and produced no receipt; its failed diagnostics were retained. The corrected driver waited for the owned request and passed; its source was preserved against the protected preimage hash."
+  ],
+  "limitations": [
+    "Receipt storage is best-effort and bounded to 128 KiB per step, 16 steps per run and 32 retained runs. Failures do not block the normal mailbox, and no evidence exists for a crash before receipt publication; sudden power-loss durability is not claimed.",
+    "A present invalid receipt fails closed even when the mailbox has changed. The files are unsigned local session evidence and may contain private state. Older open collectors and genuinely absent or mismatched evidence remain unsupported.",
+    "The real proof used simulated client interruption, a private debug-symbol-stripped Windows GNU runtime and CPU presentation after GPU fallback. Native Windows, physical input and broader action/platform coverage remain unverified."
+  ],
+  "files": [
+    "crates/recomp/src/debug_control.rs",
+    "crates/recomp/src/debug_command/recipe.rs",
+    "crates/recomp/src/debug_command/recipe/checkpoint.rs",
+    "crates/recomp/src/debug_command/recipe/checkpoint/runner.rs",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ]
+}

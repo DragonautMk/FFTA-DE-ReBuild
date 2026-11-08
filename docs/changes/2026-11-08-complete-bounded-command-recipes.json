@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-08",
+  "slug": "complete-bounded-command-recipes",
+  "title": "Complete the bounded command recipe acceptance audit",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU / Wine / Xvfb"
+  ],
+  "changes": [
+    "Mark DBG2-16 complete against its original criteria: typed pinned recipes, review, bounded waits and assertions, first-error stop, cancellation, journaled checkpoints and explicit safe resumption."
+  ],
+  "validation": [
+    "The existing isolated Wine/Xvfb picker completed a reviewed one-frame recipe. A separate interrupted wait preserved its action identity and recorded two observations; an external frame satisfied the wait, the next step ran once and a second resume left state unchanged.",
+    "Another isolated Wine/Xvfb run interrupted a pending 60-frame action, resumed with the original identity and executed exactly 60 plus one following frames. The retained checkpoints for the short and interrupted recipes contain ordered completed steps, request IDs, action hashes, results and original deadlines.",
+    "Existing focused tests and an isolated live assertion test cover bounds, failure stops, review changes and explicit reopening of concluded evidence. The latest Linux and Wine recipe/control suites and the Wine normal-close UI recovery proof passed."
+  ],
+  "limitations": [
+    "Completion is for the specified bounded recipe and interruption criteria. Native Windows and physical input are unverified; arbitrary crashes, missing evidence and unsupported open collectors across restart remain refused. Existing evidence uses isolated EUR interpreter sessions and simulated input."
+  ],
+  "files": [
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ]
+}

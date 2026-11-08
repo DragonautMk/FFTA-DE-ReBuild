@@ -3,6 +3,28 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-08 — Verify recipe selection across Wine restarts
+
+Type: changed. Platforms: Windows GNU / Wine / Xvfb.
+
+**Changes**
+
+- Verify that a typed recipe can recover a pinned catalog selection across two normal Wine session restarts without repeating the completed selection or later status action.
+
+**Validation**
+
+- An isolated EUR interpreter used a synthetic catalog and three distinct control runs. The catalog role, anchored location and hash remained stable while its temporary ID changed. Completed selection and status results, request identities and the original recipe deadline remained unchanged; one following frame ran and a second resume preserved the full checkpoint and guest state.
+- All three windows closed normally, protected input guards passed, and the runner held its Wine prefix lease through final server drain. The exact driver was preserved with its checked preimage hash beside the validation receipt.
+
+**Limitations**
+
+- The proof used simulated cancellation, one synthetic catalog, a private debug-symbol-stripped Windows GNU runtime and CPU presentation after GPU fallback. Native Windows, physical input, other selection roles and the broader restart matrix remain unverified.
+- Earlier open collectors and pending actions with missing or mismatched responses are still refused; this validation does not change their recovery behavior.
+
+Documentation: [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-08-verify-wine-recipe-selection-restarts.json)
+
 ## 2026-11-08 — Verify recipe recovery across a normal restart
 
 Type: changed. Platforms: Linux / Xvfb, isolated EUR interpreter.
@@ -69,6 +91,55 @@ Type: changed. Platforms: Linux, Windows GNU / Wine.
 Documentation: [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
 
 [Change record](docs/changes/2026-11-08-run-additional-frontend-recipe-actions.json)
+
+## 2026-11-08 — Retain terminal recipe responses across mailbox replacement
+
+Type: added. Platforms: Linux, Windows GNU / Wine / Xvfb.
+
+**Changes**
+
+- Before publishing the shared control mailbox, best-effort retain a bounded create-once successful response for a matching pending recipe step in its own run directory. Continue publishing the ordinary response if receipt retention fails.
+- Recover an exact retained receipt without redispatch even if the shared mailbox has been replaced. A present invalid receipt is refused; absent receipts retain the older mailbox-only path, and missing or mismatched evidence never authorizes replay.
+
+**Validation**
+
+- Linux passed 51 recipe and 37 control tests; Windows GNU built and Wine passed 51 recipe and 38 control tests. Focused cases cover overwritten mailboxes, altered and conflicting receipts, both query and action channels, and legacy mailbox recovery.
+- An isolated EUR Wine/Xvfb session stopped its own client after publishing a status request and receiving a receipt, then issued a new status that overwrote the shared mailbox. After a normal restart, recovery recorded the exact receipt without redispatch, the following frame ran once, and a second resume left the full checkpoint and guest unchanged. Protected inputs passed; the managed Wine prefix drained.
+- The first live driver stopped its client before request publication and produced no receipt; its failed diagnostics were retained. The corrected driver waited for the owned request and passed; its source was preserved against the protected preimage hash.
+
+**Limitations**
+
+- Receipt storage is best-effort and bounded to 128 KiB per step, 16 steps per run and 32 retained runs. Failures do not block the normal mailbox, and no evidence exists for a crash before receipt publication; sudden power-loss durability is not claimed.
+- A present invalid receipt fails closed even when the mailbox has changed. The files are unsigned local session evidence and may contain private state. Older open collectors and genuinely absent or mismatched evidence remain unsupported.
+- The real proof used simulated client interruption, a private debug-symbol-stripped Windows GNU runtime and CPU presentation after GPU fallback. Native Windows, physical input and broader action/platform coverage remain unverified.
+
+Documentation: [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-08-retain-recipe-terminal-receipts.json)
+
+## 2026-11-08 — Restore an open recipe UI trace after normal restart
+
+Type: added. Platforms: Linux, Windows GNU / Wine / Xvfb.
+
+**Changes**
+
+- Retain a bounded private UI trace snapshot on normal close for one stopped, unambiguous recipe at its matching paused guest boundary, pinned to its exact checkpoint and selected inputs.
+- Restore the snapshot under a frontend boundary guard before the next unsent action, preserve old session metadata and record the gap; elapsed downtime counts toward the original 30-second limit. Make an existing interrupted-wait test wait for its observation to be recorded before cancellation.
+
+**Validation**
+
+- Linux passed 4 UI, 52 recipe and 37 control tests, followed by 40 runner tests with missing, altered and mixed-collector refusal checks. Windows GNU built and Wine passed 4 UI, 52 recipe and 38 control tests.
+- An isolated EUR Wine/Xvfb run stopped after UI start, closed normally, recovered 22 prior events, stepped once and wrote a 46-event report spanning two sessions with one gap. The original result and a second resume were unchanged; protected inputs and the leased Wine prefix passed.
+- An initial Wine suite exposed a cancellation-before-observation test race; synchronizing the test on the saved observation fixed it. A first positive GUI run was retained as failed because private scratch inputs were not selected for retention; the corrected managed unit passed.
+
+**Limitations**
+
+- Only normal close and one stopped unambiguous recipe with unsent steps are supported; snapshots absent from older checkpoints, crashes before publication, interrupted waits with an open UI trace and open audio, code or gameplay collectors are refused.
+- Snapshots and checkpoints are unsigned private local evidence, bounded to 2 MiB and 16 recoveries. Native Windows, physical input, additional platform and broader collector recovery remain unverified; the GUI proof used simulated cancellation and CPU presentation after GPU fallback.
+
+Documentation: [debug_control.md](docs/debug_control.md), [debug_ui.md](docs/debug_ui.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-08-restore-open-ui-recipe-trace.json)
 
 ## 2026-11-08 — Resolve retained terminal recipe responses
 
@@ -306,6 +377,92 @@ Type: fixed. Platforms: Linux host, Windows GNU / Wine / Xvfb.
 Documentation: [LOCAL_ARTIFACTS.md](docs/development/LOCAL_ARTIFACTS.md), [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
 
 [Change record](docs/changes/2026-11-08-coordinate-native-wine-validation-drivers.json)
+
+## 2026-11-08 — Complete local cheat catalog acceptance audit
+
+Type: changed. Platforms: Windows GNU / Wine / Xvfb.
+
+**Changes**
+
+- Mark DBG2-17 complete against its original catalog import, preservation, compatibility-state and package-exclusion criteria. Keep device and gameplay verification separate from catalog browsing.
+
+**Validation**
+
+- The retained local catalog result compares all 341 ordered entries and metadata with the source, verifies disabled/unknown/unsupported/unverified states, absent-catalog behavior and unchanged source. A separate public synthetic 341-entry Wine/Xvfb GUI proof checks explicit import, first/last search, details and unchanged guest state.
+- The current importer retains whole entry and provenance objects and builds separate bounded source capability assessments. The current portable packager selects explicit public inputs, and the documented synthetic packaging tests cover private catalog exclusion.
+
+**Limitations**
+
+- Source plans and declared ROM regions do not verify actual device version, all ROM checksums or gameplay behavior. Native Windows and physical input are unverified; a distributable project-authored victory operation remains separate unfinished work.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-08-complete-local-cheat-catalog-acceptance.json)
+
+## 2026-11-08 — Complete guarded cheat application acceptance audit
+
+Type: changed. Platforms: Windows GNU / Wine / Xvfb.
+
+**Changes**
+
+- Mark DBG2-19 complete within the supported isolated interpreter: explicit source-bound preview, one-shot, frame-boundary maintenance, overlap checks and disarm have defined behavior and failure guards.
+
+**Validation**
+
+- A synthetic isolated Wine/Xvfb proof verified three exact bus writes while paused, unchanged frame/clock/registers, stale state and source refusal, and no duplicate on retry. A separate maintained-set proof verified arming writes nothing, overlap refusal without mutation, two frame applications, disarm and unchanged original inputs.
+- Existing isolated Wine/Xvfb tests verified load and Undo disarm and restore the expected machine state. Current preflight checks the entire plan before guest bus access and restricts writes to canonical aligned RAM; native, ROM, mirrors and I/O writes are refused.
+
+**Limitations**
+
+- The supported timing is an interpreter frame boundary, not an original device hook. Disarming stops future writes but does not undo prior ones. Native Windows, physical input and broader device/gameplay equivalence are not established; unsupported memory/backend cases remain refused.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-08-complete-guarded-cheat-application-acceptance.json)
+
+## 2026-11-08 — Complete bounded CodeBreaker decoder acceptance audit
+
+Type: changed. Platforms: Linux, Windows GNU / Wine.
+
+**Changes**
+
+- Mark DBG2-18 complete against its original bounded decoder criteria: typed supported operations, master and continuation checks, public synthetic opcode fixtures, atomic refusal and per-candidate capability reporting.
+
+**Validation**
+
+- Public synthetic tests exercise byte and halfword writes, OR, AND, addition, equality and inequality conditions, slides and continuations, cipher and master checks, invalid width and alignment, incomplete and unknown blocks and preflight isolation. Previous focused Linux and Wine suites passed, including conditional-slide atomicity.
+- A protected readonly audit queried all 341 current local entries and all 232 CodeBreaker provenance records. It found 21 guarded one-shot source plans, one decoded outside one-shot limits and 210 unresolved sources; none were omitted by the assessment limits. All 22 decoded plans matched separate explicit inspection through the same decoder; only aggregate results were retained and the source was unchanged.
+- The first audit harness expected the wrong successful outcome label and failed before completing; correcting the harness produced PASS. No runtime code changed.
+
+**Limitations**
+
+- Unresolved source masters and unsupported formats are not executed or guessed. Actual device behavior, hardware hook timing and per-ROM gameplay compatibility remain unverified. Other catalogs can exceed the bounded assessment limits and report not evaluated. Native Windows and physical input were not tested.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-08-complete-codebreaker-decoder-acceptance.json)
+
+## 2026-11-08 — Complete the bounded command recipe acceptance audit
+
+Type: changed. Platforms: Windows GNU / Wine / Xvfb.
+
+**Changes**
+
+- Mark DBG2-16 complete against its original criteria: typed pinned recipes, review, bounded waits and assertions, first-error stop, cancellation, journaled checkpoints and explicit safe resumption.
+
+**Validation**
+
+- The existing isolated Wine/Xvfb picker completed a reviewed one-frame recipe. A separate interrupted wait preserved its action identity and recorded two observations; an external frame satisfied the wait, the next step ran once and a second resume left state unchanged.
+- Another isolated Wine/Xvfb run interrupted a pending 60-frame action, resumed with the original identity and executed exactly 60 plus one following frames. The retained checkpoints for the short and interrupted recipes contain ordered completed steps, request IDs, action hashes, results and original deadlines.
+- Existing focused tests and an isolated live assertion test cover bounds, failure stops, review changes and explicit reopening of concluded evidence. The latest Linux and Wine recipe/control suites and the Wine normal-close UI recovery proof passed.
+
+**Limitations**
+
+- Completion is for the specified bounded recipe and interruption criteria. Native Windows and physical input are unverified; arbitrary crashes, missing evidence and unsupported open collectors across restart remain refused. Existing evidence uses isolated EUR interpreter sessions and simulated input.
+
+Documentation: [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-08-complete-bounded-command-recipes.json)
 
 ## 2026-11-08 — Run replay jobs within recipe frame budgets
 

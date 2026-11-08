@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-08",
+  "slug": "verify-wine-recipe-selection-restarts",
+  "title": "Verify recipe selection across Wine restarts",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU / Wine / Xvfb"
+  ],
+  "changes": [
+    "Verify that a typed recipe can recover a pinned catalog selection across two normal Wine session restarts without repeating the completed selection or later status action."
+  ],
+  "validation": [
+    "An isolated EUR interpreter used a synthetic catalog and three distinct control runs. The catalog role, anchored location and hash remained stable while its temporary ID changed. Completed selection and status results, request identities and the original recipe deadline remained unchanged; one following frame ran and a second resume preserved the full checkpoint and guest state.",
+    "All three windows closed normally, protected input guards passed, and the runner held its Wine prefix lease through final server drain. The exact driver was preserved with its checked preimage hash beside the validation receipt."
+  ],
+  "limitations": [
+    "The proof used simulated cancellation, one synthetic catalog, a private debug-symbol-stripped Windows GNU runtime and CPU presentation after GPU fallback. Native Windows, physical input, other selection roles and the broader restart matrix remain unverified.",
+    "Earlier open collectors and pending actions with missing or mismatched responses are still refused; this validation does not change their recovery behavior."
+  ],
+  "files": [
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ]
+}

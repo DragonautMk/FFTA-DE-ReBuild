@@ -33,7 +33,7 @@ pub(crate) enum Action {
     CheatList { offset:u32, limit:u8, generation:Option<String> },
     CheatShow { id:String, offset:u32, generation:Option<String> },
     CheatCapabilities { id:String, offset:u32, generation:Option<String> },
-    CheatPrepare { id:String, provenance:u16, master:String, generation:String },
+    CheatPrepare { id:String, provenance:u16, master:String, generation:String, #[serde(default,skip_serializing_if="Option::is_none")] parameter:Option<crate::debug_cheat_parameters::Choice> },
     CheatApply { id:String, provenance:u16, master:String, generation:String, preview:String },
     CheatArm { id:String, provenance:u16, master:String, generation:String, preview:String },
     CheatDisarm { id:Option<String> },
@@ -91,6 +91,7 @@ impl Action {
             Self::CheatPrepare{id,master,generation,..}|Self::CheatApply{id,master,generation,..}|Self::CheatArm{id,master,generation,..}=>{
                 let valid_id=|v:&str|v.len()==7 && v.starts_with("CH-") && v[3..].bytes().all(|b|b.is_ascii_digit());
                 if !valid_id(id)||!valid_id(master)||generation.len()!=64||!generation.bytes().all(|b|b.is_ascii_hexdigit()){return Err("Cheat preparation needs CH IDs and a SHA-256 snapshot generation".into());}
+                if let Self::CheatPrepare{parameter:Some(choice),..}=self {choice.validate()?;}
                 if let Self::CheatApply{preview,..}|Self::CheatArm{preview,..}=self {if preview.len()!=64||!preview.bytes().all(|b|b.is_ascii_hexdigit()){return Err("Apply or arm needs the exact preview SHA-256".into());}}
             },
             Self::CheatDisarm{id:Some(id)} if id.len()!=7 || !id.starts_with("CH-") || !id[3..].bytes().all(|b|b.is_ascii_digit())=>return Err("Cheat ID must be CH- followed by four digits".into()),
@@ -217,6 +218,8 @@ pub(crate) struct ExpectedBoundary {
     pub require_idle_collectors: bool,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub expected_inputs: Option<Vec<crate::debug_choices::SavedInput>>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub expected_ui: Option<crate::debug_ui::RecoveryPin>,
 }
 fn is_false(value:&bool)->bool{!*value}
 impl ExpectedBoundary {
@@ -229,6 +232,7 @@ impl ExpectedBoundary {
             require_cheats_inactive:true,
             require_idle_collectors:true,
             expected_inputs:None,
+            expected_ui:None,
         };
         boundary.check(status)?;Ok(boundary)
     }
@@ -245,6 +249,7 @@ impl ExpectedBoundary {
                 return Err("Invalid expected selected inputs".into());
             }
         }
+        if let Some(pin)=&self.expected_ui {pin.validate()?;if !self.require_idle_collectors{return Err("UI recovery requires an idle collector boundary".into());}}
         if status["paused"] != true || status["remaining"] != 0
             || status["state_sha256"] != self.state_sha256 || status["frame"] != self.frame
             || status["clock"] != self.clock || status["backend"] != self.backend
@@ -322,7 +327,7 @@ impl Server {
     fn ready(&self,active:bool)->Value{
         json!({"schema":1,"kind":"ffta-debug-control","run":self.run,"active":active,
             "pid":std::process::id(),"session":self.session,
-            "capabilities":["query-status","targeted-cancel","request-deadline","idempotent-request-v1","terminal-time-v1","guest-boundary-guard-v1","recipe-selected-inputs-v1","content-discovery-v1","replay-job-v1","bounded-replay-v1","cheat-catalog-v1","cheat-capabilities-v1","cheat-once-v1","cheat-maintain-v1","cheat-presets-v1","probe-window-v1","probe-guard-v1","probe-actions-v1","probe-trigger-v1"]})
+            "capabilities":["query-status","targeted-cancel","request-deadline","idempotent-request-v1","terminal-time-v1","guest-boundary-guard-v1","recipe-selected-inputs-v1","recipe-ui-collector-v1","content-discovery-v1","replay-job-v1","bounded-replay-v1","cheat-catalog-v1","cheat-capabilities-v1","cheat-once-v1","cheat-parameters-v1","cheat-maintain-v1","cheat-presets-v1","probe-window-v1","probe-guard-v1","probe-actions-v1","probe-trigger-v1"]})
     }
     pub fn pending_status(&self)->Value{
         self.pending.as_ref().map_or(Value::Null,|r|json!({"request_id":r.id,"operation_id":r.command.operation_id(),"command":r.command,"deadline_unix_ms":r.deadline_unix_ms}))
@@ -415,6 +420,9 @@ impl Server {
         let fingerprint=request.fingerprint()?;
         let value=json!({"schema":1,"kind":"ffta-debug-control-result","run":self.run,"id":request.id,
             "session":self.session,"request_sha256":fingerprint,"deadline_unix_ms":request.deadline_unix_ms,"completed_unix_ms":completed_unix_ms,"operation_id":request.command.operation_id(),"outcome":outcome,"ok":error.is_none(),"error":error,"status":status});
+        // Retention is best-effort: mailbox behavior stays available when a
+        // checkpoint is absent or its receipt cannot be written.
+        if let Err(e)=crate::debug_command::recipe::retain_terminal(&self.root,&value){eprintln!("debug control: recipe terminal receipt unavailable: {e}");}
         if !request.command.read_query(){
             let size=serde_json::to_vec_pretty(&value).map_err(|e|e.to_string())?.len();
             self.ledger.finish(&request.id,&fingerprint,value.clone(),size);
@@ -501,7 +509,7 @@ pub(crate) fn parse(args: &[String]) -> Result<(PathBuf, Action), String> {
     let action = match args[0].as_str() {
         "cheat-select" if args.len()==3=>Action::SelectId{slot:SelectionSlot::CheatCatalog,id:args[2].clone()},
         "cheat-refresh" if args.len()==2=>Action::CheatRefresh,
-        "cheat-prepare" if args.len()==6=>Action::CheatPrepare{id:args[2].clone(),provenance:provenance(&args[3])?,master:args[4].clone(),generation:args[5].clone()},
+        "cheat-prepare" if args.len()==6 || (args.len()==10 && args[6]=="--parameter" && args[8]=="--value")=>Action::CheatPrepare{id:args[2].clone(),provenance:provenance(&args[3])?,master:args[4].clone(),generation:args[5].clone(),parameter:if args.len()==10{Some(crate::debug_cheat_parameters::Choice{name:args[7].clone(),value:args[9].parse().map_err(|_|"Parameter value must be a decimal integer from 0 to 65535")?})}else{None}},
         "cheat-apply" if args.len()==7=>Action::CheatApply{id:args[2].clone(),provenance:provenance(&args[3])?,master:args[4].clone(),generation:args[5].clone(),preview:args[6].clone()},
         "cheat-arm" if args.len()==7=>Action::CheatArm{id:args[2].clone(),provenance:provenance(&args[3])?,master:args[4].clone(),generation:args[5].clone(),preview:args[6].clone()},
         "cheat-disarm" if args.len()==3=>Action::CheatDisarm{id:if args[2]=="all"{None}else{Some(args[2].clone())}},
@@ -800,6 +808,7 @@ fn execute_action_inner_interruptible(root:&Path,action:Action,timeout:u64,retry
     }
     if matches!(action,Action::CheatCapabilities{..}) && ready["capabilities"].as_array().is_none_or(|c|!c.contains(&json!("cheat-capabilities-v1"))){return Err(ClientFailure::new("incompatible","This session does not support source capability queries","not-sent"));}
     if matches!(action,Action::CheatPrepare{..}|Action::CheatApply{..}) && ready["capabilities"].as_array().is_none_or(|c|!c.contains(&json!("cheat-once-v1"))){return Err(ClientFailure::new("incompatible","This session does not support guarded cheat one-shot","not-sent"));}
+    if matches!(action,Action::CheatPrepare{parameter:Some(_),..}) && ready["capabilities"].as_array().is_none_or(|c|!c.contains(&json!("cheat-parameters-v1"))){return Err(ClientFailure::new("incompatible","This session does not support declared cheat parameters","not-sent"));}
     if matches!(action,Action::CheatArm{..}|Action::CheatDisarm{..}) && ready["capabilities"].as_array().is_none_or(|c|!c.contains(&json!("cheat-maintain-v1"))){return Err(ClientFailure::new("incompatible","This session does not support maintained cheats","not-sent"));}
     if matches!(action,Action::CheatPresetSave{..}|Action::CheatPresetPrepare{..}|Action::CheatPresetArm{..}) && ready["capabilities"].as_array().is_none_or(|c|!c.contains(&json!("cheat-presets-v1"))){return Err(ClientFailure::new("incompatible","This session does not support cheat presets","not-sent"));}
     if matches!(action,Action::Replay{..}) && ready["capabilities"].as_array().is_none_or(|c|!c.contains(&json!("replay-job-v1"))){
@@ -811,6 +820,7 @@ fn execute_action_inner_interruptible(root:&Path,action:Action,timeout:u64,retry
         if ready["capabilities"].as_array().is_none_or(|c|!c.contains(&json!("idempotent-request-v1"))){return Err(ClientFailure::new("incompatible","This session does not support safe request retry","not-sent"));}
         if retry.expected_boundary.is_some() && ready["capabilities"].as_array().is_none_or(|c|!c.contains(&json!("guest-boundary-guard-v1"))){return Err(ClientFailure::new("incompatible","This session cannot guard a guest boundary; no command sent","not-sent"));}
         if retry.expected_boundary.as_ref().is_some_and(|b|b.expected_inputs.is_some()) && ready["capabilities"].as_array().is_none_or(|c|!c.contains(&json!("recipe-selected-inputs-v1"))){return Err(ClientFailure::new("incompatible","This session cannot guard recovered selections; no command sent","not-sent"));}
+        if retry.expected_boundary.as_ref().is_some_and(|b|b.expected_ui.is_some()) && ready["capabilities"].as_array().is_none_or(|c|!c.contains(&json!("recipe-ui-collector-v1"))){return Err(ClientFailure::new("incompatible","This session cannot restore a UI collector; no command sent","not-sent"));}
     }
     let result=if cancel.is_some(){exchange_interruptible(&dir,&ready,action,query,timeout,retry,cancel)}else if let Some(retry)=retry{exchange_with_retry(&dir,&ready,action,query,timeout,Some(retry))}else{exchange(&dir,&ready,action,query,timeout)};
     result.map_err(|e|ClientFailure::new("transport-error",e,"unknown"))
@@ -834,7 +844,7 @@ mod tests {
     #[test]
     fn guest_boundary_requires_exact_paused_state_and_is_bound_to_request_identity() {
         let t=tempfile::tempdir().unwrap();let s=synthetic_server(t.path());
-        let boundary=ExpectedBoundary{state_sha256:"a".repeat(64),frame:17,clock:99,backend:"interp".into(),require_cheats_inactive:true,require_idle_collectors:true,expected_inputs:None};
+        let boundary=ExpectedBoundary{state_sha256:"a".repeat(64),frame:17,clock:99,backend:"interp".into(),require_cheats_inactive:true,require_idle_collectors:true,expected_inputs:None,expected_ui:None};
         let status=json!({"paused":true,"remaining":0,"state_sha256":"a".repeat(64),"frame":17,"clock":99,"backend":"interp","cheat_armed":{"active":false},"replay":{"active":false},"ui_trace":{"has_trace":false}});
         assert!(boundary.check(&status).is_ok());
         for (field,value) in [("paused",json!(false)),("remaining",json!(1)),("frame",json!(18)),("clock",json!(100)),("backend",json!("native")),("state_sha256",json!("b".repeat(64)))] {
@@ -854,7 +864,7 @@ mod tests {
     fn guarded_request_refuses_old_runtime_before_mailbox_publication(){
         let t=tempfile::tempdir().unwrap();let s=synthetic_server(t.path());let path=s.dir.join("ready.json");let mut ready=read(&path).unwrap();
         ready["capabilities"]=json!(["targeted-cancel","idempotent-request-v1"]);put(&s.dir,"ready.json",&ready).unwrap();
-        let boundary=ExpectedBoundary{state_sha256:"a".repeat(64),frame:1,clock:2,backend:"interp".into(),require_cheats_inactive:true,require_idle_collectors:true,expected_inputs:None};
+        let boundary=ExpectedBoundary{state_sha256:"a".repeat(64),frame:1,clock:2,backend:"interp".into(),require_cheats_inactive:true,require_idle_collectors:true,expected_inputs:None,expected_ui:None};
         let error=planned_guarded_action(t.path(),Action::Step{frames:1,keys:0x3ff},100,s.run.clone(),"guarded".into(),unix_ms()+1000,boundary,None,None).unwrap_err();
         assert_eq!(error.outcome,"incompatible");assert_eq!(error.delivery,"not-sent");assert!(!s.dir.join("request.json").exists());
     }
@@ -863,7 +873,7 @@ mod tests {
         let t=tempfile::tempdir().unwrap();let s=synthetic_server(t.path());let mut ready=read(&s.dir.join("ready.json")).unwrap();
         ready["capabilities"]=json!(["targeted-cancel","idempotent-request-v1","guest-boundary-guard-v1"]);put(&s.dir,"ready.json",&ready).unwrap();
         let pin=crate::debug_choices::SavedInput{slot:"Catalog".into(),file:crate::debug_choices::Location::App("catalog.json".into()),sha256:"b".repeat(64),kind:crate::debug_content::Kind::SaveCatalog};
-        let boundary=ExpectedBoundary{state_sha256:"a".repeat(64),frame:1,clock:2,backend:"interp".into(),require_cheats_inactive:true,require_idle_collectors:true,expected_inputs:Some(vec![pin])};
+        let boundary=ExpectedBoundary{state_sha256:"a".repeat(64),frame:1,clock:2,backend:"interp".into(),require_cheats_inactive:true,require_idle_collectors:true,expected_inputs:Some(vec![pin]),expected_ui:None};
         let error=planned_guarded_action(t.path(),Action::Step{frames:1,keys:0x3ff},100,s.run.clone(),"selected".into(),unix_ms()+1000,boundary,None,None).unwrap_err();
         assert_eq!(error.outcome,"incompatible");assert_eq!(error.delivery,"not-sent");assert!(!s.dir.join("request.json").exists());
     }
@@ -1006,10 +1016,19 @@ mod tests {
     fn one_shot_requires_its_own_capability_before_send(){
         let t=tempfile::tempdir().unwrap();let s=synthetic_server(t.path());let mut ready=s.ready(true);ready["capabilities"]=json!(["targeted-cancel","cheat-catalog-v1"]);put(&s.dir,"ready.json",&ready).unwrap();
         let generation="a".repeat(64);let token="b".repeat(64);
-        for action in [Action::CheatPrepare{id:"CH-0001".into(),provenance:0,master:"CH-0002".into(),generation:generation.clone()},Action::CheatApply{id:"CH-0001".into(),provenance:0,master:"CH-0002".into(),generation:generation.clone(),preview:token}]{
+        for action in [Action::CheatPrepare{id:"CH-0001".into(),provenance:0,master:"CH-0002".into(),generation:generation.clone(),parameter:None},Action::CheatApply{id:"CH-0001".into(),provenance:0,master:"CH-0002".into(),generation:generation.clone(),preview:token}]{
             let e=execute_action_classified(t.path(),action,20).unwrap_err();assert_eq!((e.outcome,e.delivery),("incompatible","not-sent"));
         }
         assert!(!s.dir.join("request.json").exists());
+    }
+    #[test]
+    fn declared_parameter_requires_new_capability_and_keeps_legacy_wire_form(){
+        let t=tempfile::tempdir().unwrap();let s=synthetic_server(t.path());let mut ready=s.ready(true);ready["capabilities"]=json!(["targeted-cancel","cheat-catalog-v1","cheat-once-v1"]);put(&s.dir,"ready.json",&ready).unwrap();
+        let args=vec!["cheat-prepare".into(),"session".into(),"CH-0001".into(),"0".into(),"CH-0002".into(),"a".repeat(64),"--parameter".into(),"amount".into(),"--value".into(),"10".into()];
+        let (_,action)=parse(&args).unwrap();assert!(matches!(&action,Action::CheatPrepare{parameter:Some(choice),..} if choice.value==10));
+        let e=execute_action_classified(t.path(),action,20).unwrap_err();assert_eq!((e.outcome,e.delivery),("incompatible","not-sent"));assert!(!s.dir.join("request.json").exists());
+        let (_,legacy)=parse(&args[..6]).unwrap();assert!(serde_json::to_value(legacy).unwrap().get("parameter").is_none());
+        let mut invalid=args;invalid[9]="65536".into();assert!(parse(&invalid).is_err());
     }
 
     #[test]

@@ -102,7 +102,10 @@ Events are not written continuously to disk.
 Maximum **eight directories** per copy, including failed captures. The report
 limits canvas to 1600×1000 and JSON to 2 MiB. Complete state is checked before/
 after redraw; ROM/runtime and origin/current are identified. `ui.json` is
-published last; no overwrite, pruning or additional snapshot from the collector.
+published last; no overwrite or pruning. The recipe recovery path can also
+retain a separate private, bounded trace snapshot on normal close under the
+conditions described in [debug control](debug_control.md); this is not a
+published report or a replay.
 Errors retain the trace and any resources for diagnosis. Status's latest path
 still identifies a previous capture when a new command fails: always read the
 request outcome and identity.

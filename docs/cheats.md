@@ -38,7 +38,8 @@ status and provenance. Each provenance item retains the source title/category,
 original line numbers and raw code lines (or the site's code ID), plus its
 `master_id`. Existing IDs should remain stable when extending the catalog.
 
-## Readonly index and CLI — DBG2-17 in progress
+<a id="readonly-index-and-cli--dbg2-17-in-progress"></a>
+## Readonly index and CLI — DBG2-17
 
 `recomp debug-cheats list` reads `cheats/catalogo.json` beside the executable;
 if it is absent, the result is an explicit empty state. Select another local
@@ -85,6 +86,12 @@ most 64 lines per source and 16,384 lines per catalog. Sources beyond a limit
 are reported as not evaluated, never silently promoted to unsupported or
 verified. The source-bound interpretation assumes the linked master is the
 correct seed; ambiguous, missing or undecodable sources remain unresolved.
+A readonly audit of the current local catalog checked all 341 entries and all
+232 CodeBreaker provenance records without recording their contents. It found
+21 source plans within the one-shot subset, one plan outside its limits and
+210 unresolved sources; no source reached the index assessment limits. All 22
+decoded plans matched a separate explicit inspection using the same decoder.
+These counts describe that catalog and are not device or gameplay verification.
 A listed one-shot candidate still requires explicit source/master selection,
 the actual loaded ROM checksum, a paused isolated interpreter and a fresh
 preview. A caller-supplied ROM hash alone does not verify the ROM bytes.
@@ -199,7 +206,8 @@ reported it unavailable, and the catalog-level **Disarm all** still stopped the
 armed set. The temporary catalog was restored and protected originals remained
 unchanged.
 
-### Assumed plaintext CodeBreaker inspection — DBG2-18 in progress
+<a id="assumed-plaintext-codebreaker-inspection--dbg2-18-in-progress"></a>
+### Assumed plaintext CodeBreaker inspection — DBG2-18
 
 `recomp debug-cheats inspect CH-0001 --catalog FILE
 --assume-plaintext-codebreaker` interprets a single entry declared CodeBreaker
@@ -232,7 +240,8 @@ They are independent descriptions of emulator behavior, not a device-version
 or game-specific compatibility proof. Synthetic tests cover the accepted
 subset and atomic rejection; the existing local catalog remains private.
 
-### Explicit seeded CodeBreaker inspection — DBG2-18 in progress
+<a id="explicit-seeded-codebreaker-inspection--dbg2-18-in-progress"></a>
+### Explicit seeded CodeBreaker inspection — DBG2-18
 
 For a block the caller has independently identified as encrypted CodeBreaker,
 `recomp debug-cheats inspect CH-0001 --catalog FILE --codebreaker-seed
@@ -260,7 +269,8 @@ continuation, malformed/unsupported input and mutually exclusive modes. The
 catalog was unchanged. These checks do not establish correctness for a real
 catalog entry or any guest effect.
 
-### Explicit source and master inspection — DBG2-17/18 in progress
+<a id="explicit-source-and-master-inspection--dbg2-1718-in-progress"></a>
+### Explicit source and master inspection — DBG2-17/18
 
 `recomp debug-cheats inspect CH-0001 --catalog FILE --provenance-index 0
 --master-id CH-0002` selects one original provenance record and the exact master
@@ -293,7 +303,8 @@ in this documentation or the recorded test result. ROM and catalog hashes were
 unchanged. This is static decoding and checksum evidence, not proof of actual
 game effects, correct hook integration, safe activation or reversibility.
 
-### Manual one-shot in an isolated session — DBG2-19 in progress
+<a id="manual-one-shot-in-an-isolated-session--dbg2-19-in-progress"></a>
+### Manual one-shot in an isolated session — DBG2-19
 
 After selecting and refreshing a catalog in an isolated session, use the command
 console or `debug-command` with `cheats prepare CH-0001 0 CH-0002 GENERATION`.

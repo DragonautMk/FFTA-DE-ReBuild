@@ -54,48 +54,24 @@ termination of another owner's process or changing another thread's goal state.
 
 DBG2 audit of 2026-11-01 found eleven parents 13..23 unchecked;
 8 had partial/integrated work and 3 lacked the requested implementation.
-DBG2-13 through DBG2-15 have since completed; current open criteria follow.
+DBG2-13 through DBG2-19 have since completed; current open criteria follow.
 Original criteria and audit notes: [DEBUG_TOOLS_V2_TODO](DEBUG_TOOLS_V2_TODO.md#p2--console-di-comandi-e-ricette-per-lassistente).
 DBG2-01..12 remain complete within their scope. Read historical details only
 for a specific question: archive legacy lines 179..744 or the named record below.
 
-### DBG2-16
+### CHEAT-DISTRIBUTION
 
 - State: active
 - Outcome: partial
-- Verified: assertions, waits, catalog/captures, bounded searches, Start/cancel and interrupted recovery. Cross-run recovery preserves completed identities, recorded waits and selected role/location/hash; exact retained terminal responses resolve pending steps without redispatch. Linux/Xvfb real restarts PASS, including pending waits and completed UI reports; recipe watch and explicit reopening PASS; Linux/Xvfb picker also verifies reason entry and fresh review. Bounded frontend actions include pause/recent/issue/cheats. 46 Linux recipe/112 Wine tests and Linux/Xvfb recent/refusal PASS. Bounded replay: live 101 refusal/102 completion and 127 Wine tests PASS. `docs/changes/2026-11-08-bound-replay-jobs-in-recipes.json`. Basic EUR Wine/Xvfb status/step restart now PASS under --wine-host: completed identity retained, one frame resumed once, both windows closed normally; CPU presentation. Recorded wait restart now also PASS on Wine with original deadlines, identity and no duplicate; 37 Linux and 36+1 Wine runner tests. `docs/changes/2026-11-08-preserve-wait-budget-for-slow-observations.json`.
-- Missing: open earlier collector restoration (host observations are RAM-only; prior checkpoints cannot reconstruct them), pending actions with missing/mismatched responses, broader picker/platform checks and the Wine wait/selection/collector restart matrix. Old selection results without pins are refused; deadlines remain in force.
-- Resume: reconcile original completion criteria and remaining limitations; do not repeat accepted proofs. Open collector restoration is an extension. Private and failed units retained.
-
-### DBG2-17
-
-- State: active
-- Outcome: partial
-- Verified: readonly catalog/import/menu, bounded source index/CLI, and source-capability local query with generation, chunk/hash and CLI parity; `2026-11-03-index-cheat-source-capabilities.json`, `2026-11-03-expose-source-capability-local-control.json`.
-- Missing: complete device/ROM and behavioral verification; source plans are assumptions. A menu-created debug copy retains the current backend; supported cheat activation still requires an interpreter copy.
-- Selection `CHEAT-DISTRIBUTION`: user requests a publishable win operation. CH-0341 originated at GH; no independent replacement or grant established. Favorites and interpreter-copy menu implemented and installed in Linux app; interpreter-source GUI and Wine tests pass. Missing: win replacement, native-source copy GUI proof and public release. Next: investigate game-state victory independently; keep source provenance.
-- Resume: `docs/cheats.md`; do not repeat accepted index or channel checks.
-
-### DBG2-18
-
-- State: suspended
-- Outcome: partial
-- Verified: CodeBreaker subset, explicit plaintext/seed/source/master/CRC and seven static mGBA comparisons; October 31 inspection records. The source-bound index now exposes supported plans and unevaluated limits.
-- Missing: complete per-CH ROM/device verification; unsupported opcodes/formats may remain rejected. A decoded master is not an executed hook.
-- Resume: `docs/cheats.md`, `debug_cheat_decoder.rs`; do not duplicate the decoder.
-
-### DBG2-19
-
-- State: suspended
-- Outcome: partial
-- Verified: one-shot/CH-0334, maintained interpreter timing, conflict/disarm and active indicator; isolated System/Restart, save-state load and Undo disarm synthetic plans, load/Undo restore exact expected state. `2026-11-03-maintain-bounded-interpreter-cheats.json`.
-- Missing: device/gameplay equivalence and broader memory/backend coverage; I/O writes, native/ROM and mirrors unsupported. Disarm does not itself restore memory.
-- Resume: `docs/cheats.md`; do not repeat accepted synthetic checks or restoration paths.
+- Verified: Favorites and interpreter-copy menu implemented and installed in Linux app; interpreter-source GUI and Wine tests pass. CH-0341 originated at GH; no independent replacement or grant established.
+- Missing: user-requested distributable win operation, native-source copy GUI proof and public release.
+- Resume: investigate game-state victory independently, preserving source provenance. `docs/cheats.md`; `docs/development/CHEAT_DISTRIBUTION_PROVENANCE.md`.
 
 ### DBG2-20
 
 - State: active
 - Outcome: partial
+- Selection: complete DBG2-20 parameter flow. Catalog has no structured ranges; 24 CodeBreaker sources contain placeholders. Explicit declaration, bounded substitution, compatible control prepare, preview/apply/arm and preset persistence integrated; Linux synthetic component tests PASS (`dbg2-20-parameter-integration-v2-40q8k4py`). Missing: Windows build/tests, real isolated command-flow proof, documentation and actual source-declared domains. No game semantics inferred. Next build Windows and test the guarded flow.
 - Verified: source/preview/arm/disarm, filters, named presets and guided CHEAT-INTERFACE. CHEAT-COMPACT-NAV adds compact catalog, keyboard shortcuts and held vertical repeat; 133 Linux menu tests and CH-0341 X11 GUI passed, portable runtime installed.
 - Missing: validated values/ranges and broader game/device behavior.
 - Resume: select a missing criterion; do not repeat accepted preset/interface/navigation proofs. `docs/changes/2026-11-06-compact-cheat-navigation.json`.
@@ -115,7 +91,7 @@ for a specific question: archive legacy lines 179..744 or the named record below
 - Outcome: partial
 - Verified: DBG2-23-SNAPSHOT adds bounded conservative SL2 cheat ancestry and safe copy/load/Undo semantics; Linux tests, active-cheat GUI save and recording refusal PASS. Runtime installed in user's Linux portable copy. Legacy ancestry unknown.
 - Missing: exact per-application set/hash/parameters/order/frame/decoder in profiles/recordings/reports, complete reset/ROM semantics, state-clock replay and incompatible-set refusal.
-- Resume: after DBG2-19/21, implement exact recording/replay contract; do not repeat the accepted snapshot tests.
+- Resume: after DBG2-21, implement exact recording/replay contract; do not repeat the accepted snapshot tests.
 
 ### DBG2-25
 
@@ -188,9 +164,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: DBG2-16 partial; Wine recorded-wait recovery and slow observations verified.
-- Last verified result: Wine/Xvfb restart preserved original wait/action identity and deadlines; 37 Linux and 36+1 Wine runner tests PASS.
-- Remaining work: open earlier collectors, ambiguous pending responses, broader Wine selection/collector and other Debug Tools V2 criteria.
-- Errors or blockers: two failed Wine wait attempts and socket-denied test retained; our leases manually released after host checks. GPU fallback used CPU. Primary and requested Sol model/xhigh unconfirmed.
-- Next action: reconcile DBG2-16 remaining criteria without repeating accepted tests; select another missing requirement.
-- References: docs/changes/2026-11-08-preserve-wait-budget-for-slow-observations.json; target/validation/units/dbg2-wine-wait-restart-fixed-t5wp9j2p/.
+- Task: DBG2-20 values, groups and profiles remain partial.
+- Last verified result: paused one-shot, two frame applications, overlap refusal and disarm passed with original inputs unchanged.
+- Remaining work: DBG2-20 and later tasks; separate CHEAT-DISTRIBUTION victory replacement remains partial.
+- Errors or blockers: native, I/O and ROM writes remain refused; device and gameplay equivalence are not claimed.
+- Next action: build Windows, test an isolated parameter flow and refusal, then document declared-domain limits.
+- References: docs/changes/2026-11-08-complete-guarded-cheat-application-acceptance.json; docs/cheats.md.

@@ -2054,22 +2054,24 @@ impl PlayApp {
             crate::debug_control::Action::CheatList{offset,limit,generation}=>{action.validate()?;self.current_cheat_snapshot()?.page(*offset,*limit,generation.as_deref())?;return Ok(());},
             crate::debug_control::Action::CheatShow{id,offset,generation}=>{action.validate()?;self.current_cheat_snapshot()?.show(id,*offset,generation.as_deref())?;return Ok(());},
             crate::debug_control::Action::CheatCapabilities{id,offset,generation}=>{action.validate()?;self.current_cheat_snapshot()?.capabilities(id,*offset,generation.as_deref())?;return Ok(());},
-            crate::debug_control::Action::CheatPrepare{id,provenance,master,generation}=>{
+            crate::debug_control::Action::CheatPrepare{id,provenance,master,generation,parameter}=>{
                 action.validate()?;self.cheat_preview=None;
-                let (_,preview)=self.prepare_cheat_once(id,*provenance,master,generation)?;
+                let (_,preview)=self.prepare_cheat_once(id,*provenance,master,generation,parameter.as_ref())?;
                 self.cheat_preview=Some(preview);self.menu.diagnosis_result(self.menu_text("Preview prepared. Review it before activating.",&[]));self.menu_dirty=true;return Ok(());
             },
             crate::debug_control::Action::CheatApply{id,provenance,master,generation,preview}=>{
                 action.validate()?;
                 if !self.cheat_armed.is_empty(){return Err("Disarm maintained cheats before applying a manual one-shot".into());}
                 if self.cheat_preview.as_ref().and_then(|v|v["token"].as_str())!=Some(preview.as_str()){return Err("Prepare this exact one-shot preview first".into());}
-                let (plan,current)=self.prepare_cheat_once(id,*provenance,master,generation)?;
+                let parameter=self.cheat_preview.as_ref().and_then(|v|v.pointer("/body/details/parameter/choice")).cloned().map(serde_json::from_value::<crate::debug_cheat_parameters::Choice>).transpose().map_err(|e|e.to_string())?;
+                let (plan,current)=self.prepare_cheat_once(id,*provenance,master,generation,parameter.as_ref())?;
                 if current["token"].as_str()!=Some(preview.as_str()){return Err("Cheat preview, source, ROM or paused state changed; prepare again".into());}
                 let details=&current["body"]["details"];
-                let identity=serde_json::json!({"id":id,"provenance_index":provenance,"master_id":master,
+                let mut identity=serde_json::json!({"id":id,"provenance_index":provenance,"master_id":master,
                     "source_sha256":details["source_sha256"],"rom_sha256":details["rom_sha256"],
                     "entry_lines_sha256":details["entry_lines_sha256"],"master_lines_sha256":details["master_lines_sha256"],
                     "plan_sha256":gba_core::ffta_rom::digest(&serde_json::to_vec(&plan).map_err(|e|e.to_string())?),"decoder":"codebreaker-subset-v1"});
+                if let Some(choice)=parameter{identity["parameter"]=serde_json::json!(choice);}
                 let before=(self.machine.bus.frames,self.machine.bus.clock);let count=plan.apply_once(&mut self.machine.bus)?;
                 self.cheat_history.record("once",identity,before.0,before.1,count);
                 self.cheat_preview=None;self.last_cheat_once=Some(serde_json::json!({"id":id,"preview":preview,"writes":count,"frame":before.0,"clock":before.1,"scope":"Manual paused one-shot, no hardware hook or maintained toggle"}));
@@ -2078,10 +2080,12 @@ impl PlayApp {
             crate::debug_control::Action::CheatArm{id,provenance,master,generation,preview}=>{
                 action.validate()?;
                 if self.cheat_preview.as_ref().and_then(|v|v["token"].as_str())!=Some(preview.as_str()){return Err("Prepare this exact cheat preview first".into());}
-                let (plan,current)=self.prepare_cheat_once(id,*provenance,master,generation)?;
+                let parameter=self.cheat_preview.as_ref().and_then(|v|v.pointer("/body/details/parameter/choice")).cloned().map(serde_json::from_value::<crate::debug_cheat_parameters::Choice>).transpose().map_err(|e|e.to_string())?;
+                let (plan,current)=self.prepare_cheat_once(id,*provenance,master,generation,parameter.as_ref())?;
                 if current["token"].as_str()!=Some(preview.as_str()){return Err("Cheat preview, source, ROM or paused state changed; prepare again".into());}
                 let details=&current["body"]["details"];
-                let identity=serde_json::json!({"provenance_index":provenance,"master_id":master,"generation":generation,"source_sha256":details["source_sha256"],"rom_sha256":details["rom_sha256"],"entry_lines_sha256":details["entry_lines_sha256"],"master_lines_sha256":details["master_lines_sha256"]});
+                let mut identity=serde_json::json!({"provenance_index":provenance,"master_id":master,"generation":generation,"source_sha256":details["source_sha256"],"rom_sha256":details["rom_sha256"],"entry_lines_sha256":details["entry_lines_sha256"],"master_lines_sha256":details["master_lines_sha256"]});
+                if let Some(choice)=parameter{identity["parameter"]=serde_json::json!(choice);}
                 self.cheat_armed.arm(id,plan,identity)?;self.cheat_preview=None;
                 if self.menu.cheat_active(){self.open_cheat_catalog();}
                 self.menu.diagnosis_result(self.menu_text("Cheat active for future frames. Disarm stops future writes.",&[]));self.menu_dirty=true;return Ok(());
@@ -2406,6 +2410,24 @@ impl PlayApp {
         Ok(value)
     }
 
+    fn retain_ui_trace_on_close(&self)->Result<bool,String>{
+        if !self.debug_session || self.ui_trace.status()["has_trace"]!=true{return Ok(false);}
+        let Some(server)=self.control_server.as_ref() else{return Ok(false)};
+        let status=self.debug_status()?;let snapshot=self.ui_trace.snapshot()?;
+        crate::debug_command::recipe::retain_ui_on_close(server.root(),&server.event_session().run_id,&status,snapshot)
+    }
+    fn guarded_debug_action(&mut self,request:&crate::debug_control::Request,boundary:&crate::debug_control::ExpectedBoundary)->Result<(),String>{
+        let status=self.debug_status()?;boundary.check(&status)?;
+        if let Some(inputs)=boundary.expected_inputs.as_deref(){self.content_picker.check_recovery_inputs(inputs)?;}
+        let snapshot=if let Some(pin)=&boundary.expected_ui {
+            let root=self.control_server.as_ref().ok_or("Missing control session")?.root();
+            Some(crate::debug_command::recipe::restore_ui_snapshot(root,pin,boundary)?)
+        }else{None};
+        if request.expired(){return Err("Command deadline expired before execution".into());}
+        if let Some(snapshot)=snapshot{self.ui_trace.restore(snapshot,self.events.clock.clone())?;}
+        if request.expired(){return Err("Command deadline expired before execution".into());}
+        self.debug_action(&request.command)
+    }
     fn poll_control(&mut self) {
         // Deadline/cancel/status run on the frontend thread, between existing
         // bounded guest frame/search ticks. No thread interrupts guest execution.
@@ -2442,9 +2464,7 @@ impl PlayApp {
                 }else if let Some(boundary)=&request.expected_boundary {
                     // Compare and dispatch on this same frontend turn, before
                     // accepting any other control or advancing the guest.
-                    self.debug_status().and_then(|status|boundary.check(&status))
-                        .and_then(|()|boundary.expected_inputs.as_deref().map_or(Ok(()),|inputs|self.content_picker.check_recovery_inputs(inputs)))
-                        .and_then(|()|self.debug_action(&request.command))
+                    self.guarded_debug_action(&request,boundary)
                 }else{self.debug_action(&request.command)};
                 if outer_refusal&&!matches!(request.command,crate::debug_control::Action::Status)&&self.events_enabled(){self.ui_event("control-result",serde_json::json!({"command":request.command,"outcome":"refused","error":result.as_ref().err()}));}
                 if result.is_ok() && matches!(request.command,crate::debug_control::Action::Step{..}|crate::debug_control::Action::Find{..}|crate::debug_control::Action::SelectId{..}|crate::debug_control::Action::ContentRefresh|crate::debug_control::Action::CheatRefresh|crate::debug_control::Action::Replay{..}){
@@ -2732,11 +2752,11 @@ impl PlayApp {
         Ok(snapshot)
     }
 
-    fn prepare_cheat_once(&self,id:&str,provenance:u16,master:&str,generation:&str)->Result<(crate::debug_cheat_decoder::Plan,serde_json::Value),String>{
+    fn prepare_cheat_once(&self,id:&str,provenance:u16,master:&str,generation:&str,parameter:Option<&crate::debug_cheat_parameters::Choice>)->Result<(crate::debug_cheat_decoder::Plan,serde_json::Value),String>{
         if !self.paused || self.probe.is_some() || self.frame_control.remaining>0 || self.replay_job.is_some() || self.recording_active(){return Err("One-shot requires an idle paused isolated copy without recording or replay".into());}
         if self.native.is_some(){return Err("One-shot currently requires the interpreter; native cache invalidation is unsupported".into());}
         let reference=self.content_picker.reference(menu::ContentSlot::CheatCatalog).ok_or("Select a cheat catalog first")?;
-        let (plan,info)=self.current_cheat_snapshot()?.prepare_once(reference,&self.machine.bus.rom,id,usize::from(provenance),master,generation)?;
+        let (plan,info)=self.current_cheat_snapshot()?.prepare_once(reference,&self.machine.bus.rom,id,usize::from(provenance),master,generation,parameter)?;
         let state=gba_core::ffta_rom::digest(&self.machine.save_state()?);
         let body=serde_json::json!({"state_sha256":state,"frame":self.machine.bus.frames,"clock":self.machine.bus.clock,"details":info});
         let token=gba_core::ffta_rom::digest(&serde_json::to_vec(&body).map_err(|e|e.to_string())?);
@@ -2751,10 +2771,11 @@ impl PlayApp {
         if preset.catalog_sha256!=snapshot.source_sha256 || preset.rom_sha256!=snapshot.rom_sha256{return Err("Cheat preset catalog or ROM differs from the selected snapshot".into());}
         let mut armed=crate::debug_cheat_armed::ArmedSet::default();let mut previews=Vec::with_capacity(preset.members.len());
         for member in &preset.members {
-            let (plan,preview)=self.prepare_cheat_once(&member.id,member.provenance_index,&member.master_id,&snapshot.generation)?;
+            let (plan,preview)=self.prepare_cheat_once(&member.id,member.provenance_index,&member.master_id,&snapshot.generation,member.parameter.as_ref())?;
             let details=&preview["body"]["details"];
             if details["entry_lines_sha256"].as_str()!=Some(member.entry_lines_sha256.as_str()) || details["master_lines_sha256"].as_str()!=Some(member.master_lines_sha256.as_str()) {return Err("Cheat preset source lines changed".into());}
-            let identity=serde_json::json!({"provenance_index":member.provenance_index,"master_id":member.master_id,"generation":snapshot.generation,"source_sha256":details["source_sha256"],"rom_sha256":details["rom_sha256"],"entry_lines_sha256":details["entry_lines_sha256"],"master_lines_sha256":details["master_lines_sha256"]});
+            let mut identity=serde_json::json!({"provenance_index":member.provenance_index,"master_id":member.master_id,"generation":snapshot.generation,"source_sha256":details["source_sha256"],"rom_sha256":details["rom_sha256"],"entry_lines_sha256":details["entry_lines_sha256"],"master_lines_sha256":details["master_lines_sha256"]});
+            if let Some(choice)=&member.parameter{identity["parameter"]=serde_json::json!(choice);}
             armed.arm(&member.id,plan,identity)?;previews.push(preview["body"].clone());
         }
         let body=serde_json::json!({"preset":preset,"members":previews});
@@ -2827,7 +2848,7 @@ impl PlayApp {
                 let id=id.ok_or("Select a cheat first")?;
                 let source=self.menu.cheat_selected_source().cloned().ok_or("Select a source explicitly first")?;
                 let generation=self.current_cheat_snapshot()?.generation.clone();
-                if request==R::Prepare{A::CheatPrepare{id,provenance:source.index,master:source.master,generation}}
+                if request==R::Prepare{A::CheatPrepare{id,provenance:source.index,master:source.master,generation,parameter:None}}
                 else{if !self.menu.cheat_preview_reviewed(){return Err("Prepare and review this source first".into());}let preview=self.cheat_preview.as_ref().and_then(|v|v["token"].as_str()).ok_or("Prepare and review this source first")?.to_owned();
                     if request==R::Arm{A::CheatArm{id,provenance:source.index,master:source.master,generation,preview}}else{A::CheatApply{id,provenance:source.index,master:source.master,generation,preview}}}
             }
@@ -4725,9 +4746,11 @@ impl ApplicationHandler for PlayApp {
                 _=>{}
             }
         }
-        if matches!(&event,WindowEvent::CloseRequested){self.lifecycle_emit(crate::debug_lifecycle::Family::Session,"close-requested",None,serde_json::json!({"scope":"Frontend close request; buffers are not automatically exported"}));}
+        let closing=matches!(&event,WindowEvent::CloseRequested);
+        if closing{self.lifecycle_emit(crate::debug_lifecycle::Family::Session,"close-requested",None,serde_json::json!({"scope":"Frontend close request; buffers are not automatically exported"}));}
         self.window_event_observed(event_loop,id,event);
         self.observe_menu(cause);
+        if closing {if let Err(error)=self.retain_ui_trace_on_close(){eprintln!("debug control: UI trace recovery snapshot unavailable: {error}");}}
     }
     fn about_to_wait(&mut self,event_loop:&ActiveEventLoop) {
         self.event_console.borrow_mut().begin_tick();

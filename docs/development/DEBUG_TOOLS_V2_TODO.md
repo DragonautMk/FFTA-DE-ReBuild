@@ -395,7 +395,7 @@ No other development was selected. On resumption read only the individual ID in
   native Windows/Linux, physical input, other runtime combinations and a
   real-time progress guarantee remain separate integration-matrix work.
 
-- [ ] **DBG2-16 — Repeatable recipes and bounded batches.**
+- [x] **DBG2-16 — Repeatable recipes and bounded batches.**
   Save a sequence of typed commands from the console, selectable in Scripts and
   tools: parameters, versions/pins, outcome waits, assertions and stop on first
   error. Set explicit step/frame/duration/output limits; preview before start
@@ -405,7 +405,16 @@ No other development was selected. On resumption read only the individual ID in
   resumption does not automatically repeat successful operations.
   **Depends on:** DBG2-06/15, DBG-21.
 
-  **Partial implementation.** [Workbench](../../crates/recomp/src/debug_workbench.rs)
+  **Completion verified.** Saved typed recipes bind their parameters and session
+  pins, expose bounded waits and assertions, preview before execution, journal
+  ordered responses in the checkpoint, stop on error and allow cancellation.
+  The Wine/Xvfb picker proof completed a short recipe after review. Separate
+  Wine/Xvfb interrupted-wait and pending-action proofs retained identities,
+  ordered results and checkpoints and did not repeat successful steps on
+  explicit resume. Explicitly concluded matching evidence requires a reason.
+  The cross-restart and platform limits below remain limits of the implementation,
+  not claims that every possible interruption can be resumed.
+  [Workbench](../../crates/recomp/src/debug_workbench.rs)
   and [declared library](../changes/2026-10-30-add-declared-debug-script-library.json)
   already have bounded read-only status/inspect recipes (DBG2-06 foundation).
   The [console parser](../../crates/recomp/src/debug_command.rs) keeps multiline
@@ -431,12 +440,21 @@ No other development was selected. On resumption read only the individual ID in
   limited explicit recovery now rebinds completed/unsent checkpoints with a
   guarded guest boundary. Selected inputs are checked by stable role, anchored
   location and hash; the index itself needs a new refresh. New collectors and
-  reports may run after recovery. A pending action can be resolved without
-  redispatch if the original mailbox still contains its exact successful
-  terminal response; an attached wait also requires a valid original terminal
+  reports may run after recovery. Current servers attempt to retain a bounded
+  create-once terminal receipt in the owning recipe run before publishing the
+  shared mailbox. A pending action can be resolved without redispatch from an
+  exact receipt or, for older runs, a matching mailbox response. A Wine/Xvfb
+  restart recovered a receipt after a new status overwrote the mailbox. An
+  attached wait also requires a valid original terminal
   completion time and retains its original deadline. A missing or mismatched
   response, missing or invalid wait time, unconfirmed wait observations and
-  open or unmatched earlier collectors are refused. Completed UI, audio, code
+  unsupported open or unmatched earlier collectors are refused. An owned UI
+  trace may be snapshotted on normal close and restored at the matching paused
+  boundary before an unsent recipe action; its original time limit includes the
+  gap, and missing or modified snapshots and open UI waits are refused. An
+  isolated Wine/Xvfb restart retained old events, recorded new events and the
+  session gap, ran one frame once and left a second resume unchanged. Open
+  audio, code and gameplay collectors still cannot be restored. Completed UI, audio, code
   and gameplay start/report pairs can precede recovery without repeating them;
   a Linux/Xvfb UI report restart and synthetic checks for all four families
   passed. Recorded waits can resume within their original bounds
@@ -459,7 +477,10 @@ No other development was selected. On resumption read only the individual ID in
   The native driver holds the runner's prefix lease through both app runs and
   server drain; originals remain unchanged. A separate Wine/Xvfb restart also
   recovered a recorded wait under its original deadlines and executed the next
-  frame once. Ordinary and guarded status polls can use the remaining wait
+  frame once. A separate Wine/Xvfb run retained a synthetic catalog role, location
+  and hash across two normal restarts despite a changed temporary ID, preserved
+  completed results and the original deadline, and executed the next frame once.
+  Ordinary and guarded status polls can use the remaining wait
   budget while cancellation stays responsive. CPU presentation was used after
   GPU fallback. Native Windows, the broader Wine restart matrix and broader
   context recovery remain open.
@@ -504,7 +525,7 @@ No other development was selected. On resumption read only the individual ID in
 
 ## P3 — Cheat menu for preparing debug cases
 
-- [ ] **DBG2-17 — Local catalog import and compatibility states.**
+- [x] **DBG2-17 — Local catalog import and compatibility states.**
   Read the existing catalog preserving CH, complete block order, declared
   format/region, aliases, notes, provenance and source master. Build a separate
   runtime index for exact ROM/device version, decoder and verification; the
@@ -514,7 +535,14 @@ No other development was selected. On resumption read only the individual ID in
   exists; a copy without cheats shows an empty list and explicit Import. No
   third-party payload enters public packages. **Depends on:** DBG2-02/03.
 
-  **Audit 2026-11-01 — partial, import integrated and verified.** [Catalog](../../crates/recomp/src/debug_cheats.rs)
+  **Completion verified.** The local catalog comparison preserved all 341
+  entries and metadata in order; a Wine/Xvfb synthetic catalog checked the empty
+  state, explicit import, first and last entry search and details. Exact ROM
+  identity, device, decoder and behavior are separately qualified; unknown and
+  unverified states remain explicit. The portable packager uses an explicit
+  public-file allowlist and its synthetic tests exclude private catalogs.
+  Device equivalence and individual code behavior are not implied by browsing.
+  [Catalog](../../crates/recomp/src/debug_cheats.rs)
   preserves order/provenance/master; [CLI index](../changes/2026-10-31-index-local-cheat-catalog-readonly.json),
   [menu](../changes/2026-10-31-browse-local-cheat-catalog-in-menu.json),
   [target/guide/package exclusion](../changes/2026-10-31-describe-cheat-target-and-public-guide.json)
@@ -527,7 +555,7 @@ No other development was selected. On resumption read only the individual ID in
   checksum still require separate verification. The seven static source/master
   checks do not verify all entries or behavior.
 
-- [ ] **DBG2-18 — Format decoder and actual operations.**
+- [x] **DBG2-18 — Format decoder and actual operations.**
   Start with the documentable EUR Codebreaker subset; define typed operations
   for supported writes, conditions, repetitions and continuations. Check widths,
   alignment, endianness, master/enable and ordering. Unknown GameShark/Action
@@ -537,20 +565,27 @@ No other development was selected. On resumption read only the individual ID in
   every supported opcode and atomic refusal of incomplete/unknown blocks; each
   candidate CH reports exactly what it can execute. **Depends on:** DBG2-17.
 
-  **Audit 2026-11-01 — subset verified, parent partial.** [Decoder](../../crates/recomp/src/debug_cheat_decoder.rs)
+  **Completion verified.** Public synthetic tests cover each supported opcode,
+  continuations, master validation and atomic refusal. A readonly audit of the
+  current 341-entry local catalog checked every candidate and every CodeBreaker
+  provenance within the index limits: 21 sources yielded guarded one-shot
+  candidates, one decoded outside those limits and 210 remained unresolved.
+  Their 22 decoded plans matched separate explicit inspections using the same
+  decoder. Unsupported formats and unresolved masters are reported, not guessed.
+  [Decoder](../../crates/recomp/src/debug_cheat_decoder.rs)
   implements bounded write/modify/condition/slide with atomic refusal;
   [plaintext](../changes/2026-10-31-inspect-assumed-plaintext-codebreaker.json),
   [explicit seed](../changes/2026-10-31-inspect-explicit-seeded-codebreaker.json) and
   [source/master](../changes/2026-10-31-inspect-source-bound-codebreaker-masters.json)
   record synthetic fixtures and mGBA/CRC comparison for seven EUR priorities.
   The bounded per-source index now exposes assumed decoded operations and the
-  one-shot footprint, with explicit unevaluated and unresolved cases. Complete
-  per-CH capability and ROM/device verification remain open. Unknown opcodes,
+  one-shot footprint, with explicit unevaluated and unresolved cases. Other
+  catalogs may exceed index limits; ROM/device verification remains open. Unknown opcodes,
   formats and placeholders may remain refused as planned; the verified subset
   must not be expanded merely to claim closure. Manual one-shot is distinct
   from inspection. Do not implement a second decoder.
 
-- [ ] **DBG2-19 — Controlled application in the debug copy.**
+- [x] **DBG2-19 — Controlled application in the debug copy.**
   Reuse the isolated session: arm, apply once, maintain and disarm are distinct
   operations with deterministic timing. Show affected operations/areas before
   activation and detect cheat overlaps. Writes follow the correct memory path,
@@ -560,7 +595,13 @@ No other development was selected. On resumption read only the individual ID in
   pause/step have defined effects, errors leave no partially applied block, and
   the original game is not written. **Depends on:** DBG2-18, DBG-02/10.
 
-  **Audit 2026-11-01 — partial.** [One-shot](../changes/2026-10-31-apply-guarded-cheat-once.json)
+  **Completion verified.** In the supported isolated interpreter, a reviewed
+  one-shot applies ordered bus writes while paused; arming writes nothing and
+  applies the bounded plan before each stepped frame, and disarming stops future
+  writes without undoing earlier ones. Synthetic Wine/Xvfb checks verified exact
+  writes, conflict refusal without partial changes and unchanged originals.
+  Unsupported I/O writes, ROM, mirrors and native backend are refused, not
+  treated as supported device behavior. [One-shot](../changes/2026-10-31-apply-guarded-cheat-once.json)
   and CheatPrepare/CheatApply handlers in [play.rs](../../crates/recomp/src/play.rs)
   verify source/state/ROM and preflight before bus writes; synthetic Wine tests
   and bounded CH-0334. A later bounded interpreter set supports explicit arm,

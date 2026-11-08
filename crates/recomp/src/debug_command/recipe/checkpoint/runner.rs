@@ -3,7 +3,7 @@ use super::*;
 use crate::debug_control::Action;
 use std::{fs::File,time::{SystemTime,UNIX_EPOCH}};
 
-fn now()->u64{SystemTime::now().duration_since(UNIX_EPOCH).unwrap_or_default().as_millis().min(u128::from(u64::MAX)) as u64}
+pub(super) fn now()->u64{SystemTime::now().duration_since(UNIX_EPOCH).unwrap_or_default().as_millis().min(u128::from(u64::MAX)) as u64}
 pub(super) fn run_dir(root:&Path,id:&str)->Result<PathBuf,String>{
     if !valid_id(id){return Err("Invalid recipe run ID".into());}
     let dir=base(root,false)?.join(id);if !crate::debug_session::regular(&dir)?.is_dir(){return Err("Recipe run must be a directory".into());}Ok(dir)
@@ -13,7 +13,7 @@ pub(super) fn lock(dir:&Path,name:&str)->Result<File,String>{
     let file=OpenOptions::new().read(true).write(true).create(true).open(&path).map_err(|e|e.to_string())?;
     crate::debug_session::regular(&path)?;file.try_lock().map_err(|_|"Recipe run is busy")?;Ok(file)
 }
-fn publish(dir:&Path,checkpoint:&Checkpoint,recipe:&Recipe)->Result<(),String>{
+pub(super) fn publish(dir:&Path,checkpoint:&Checkpoint,recipe:&Recipe)->Result<(),String>{
     validate(checkpoint,recipe)?;let bytes=serde_json::to_vec_pretty(checkpoint).map_err(|e|e.to_string())?;
     if bytes.len() as u64>MAX_CHECKPOINT || bytes.len()>recipe.limits.output_bytes as usize{return Err("Checkpoint output limit exceeded".into());}
     let mut file=tempfile::NamedTempFile::new_in(dir).map_err(|e|e.to_string())?;
@@ -41,7 +41,12 @@ fn cancelled_in_flight(root:&Path,id:&str,checkpoint:&Checkpoint,query:bool)->Va
     else {result(checkpoint,"cancellation-pending","Cancellation recorded; the reserved action may still execute. Its outcome is unconfirmed.")}
 }
 fn drive(root:&Path,id:&str,resume:bool)->Result<Value,String>{drive_with_cancel(root,id,resume,None)}
-fn recovery_scope(steps:&[Action],index:usize)->Result<(),String>{
+pub(super) fn ui_open_prefix(steps:&[Action],index:usize)->bool{
+    let mut open=false;
+    for action in &steps[..index]{match action{Action::UiStart if !open=>open=true,Action::UiReport if open=>open=false,Action::UiStart|Action::UiReport=>return false,_=>{}}}
+    open
+}
+pub(super) fn recovery_scope(steps:&[Action],index:usize,allow_ui:bool)->Result<(),String>{
     // Completed start/report pairs no longer need their collector in memory.
     // An open or unmatched collector must never be recreated from a guest state.
     let (mut audio,mut code,mut gameplay,mut ui)=(false,false,false,false);
@@ -60,8 +65,8 @@ fn recovery_scope(steps:&[Action],index:usize)->Result<(),String>{
             _=>return Err("Completed steps use host context that cross-run recovery cannot restore".into()),
         }
     }
-    if audio || code || gameplay || ui {return Err("An earlier collector is still open and cannot be restored".into());}
-    let (mut audio,mut code,mut gameplay,mut ui,mut graphics,mut content,mut cheat)=(false,false,false,false,false,false,false);
+    if audio || code || gameplay || (ui && !allow_ui) {return Err("An earlier collector is still open and cannot be restored".into());}
+    let (mut audio,mut code,mut gameplay,mut ui,mut graphics,mut content,mut cheat)=(false,false,false,ui,false,false,false);
     for action in &steps[index..] {
         match action {
             Action::Status|Action::Pause|Action::Inspect{..}|Action::Step{..}=>{},
@@ -86,18 +91,26 @@ fn recovery_scope(steps:&[Action],index:usize)->Result<(),String>{
     }
     Ok(())
 }
-/// A terminal response left by the old server can resolve a pending step, but
-/// absence or a mismatch never authorizes resending it in the new run.
-fn retained_pending(root:&Path,checkpoint:&Checkpoint,recipe:&Recipe,index:usize)->Result<Value,String>{
+pub(super) fn matches_pending(checkpoint:&Checkpoint,recipe:&Recipe,index:usize,value:&Value)->Result<bool,String>{
     let step=&checkpoint.steps[index];let action=&recipe.steps[index];
     let deadline=step.deadline_unix_ms.ok_or("Pending request has no original deadline")?;
     let fingerprint=crate::debug_control::planned_guarded_fingerprint(action.clone(),&checkpoint.session_run,&step.request_id,deadline,&checkpoint.manifest_sha256,step.expected_boundary.clone())?;
-    let name=if action.read_query(){"query-result.json"}else{"result.json"};let path=root.join("Data/config/debug-control").join(name);
+    Ok(step.state=="pending" && value["schema"]==1 && value["kind"]=="ffta-debug-control-result" && value["ok"]==true && value["outcome"]=="ok" && value.get("error")==Some(&Value::Null) && value["status"].is_object()
+        && value["run"]==checkpoint.session_run && value["id"]==step.request_id && value["deadline_unix_ms"]==deadline && value["request_sha256"]==fingerprint
+        && value["session"]["manifest_sha256"]==checkpoint.manifest_sha256 && value["operation_id"]==action.operation_id())
+}
+/// Prefer the immutable per-step receipt when present. Older runs can still
+/// use the mailbox; missing or mismatched evidence never authorizes a resend.
+fn retained_pending(root:&Path,checkpoint:&Checkpoint,recipe:&Recipe,index:usize)->Result<Value,String>{
+    let receipt=run_dir(root,&checkpoint.id)?.join(format!("terminal-{index:02}.json"));
+    let path=match fs::symlink_metadata(&receipt){
+        Ok(_)=>receipt,
+        Err(e) if e.kind()==std::io::ErrorKind::NotFound=>root.join("Data/config/debug-control").join(if recipe.steps[index].read_query(){"query-result.json"}else{"result.json"}),
+        Err(e)=>return Err(e.to_string()),
+    };
     if !crate::debug_session::regular(&path)?.is_file(){return Err("Retained terminal response is unavailable".into());}
     let value:Value=serde_json::from_slice(&crate::diagnostics::read(&path,128*1024)?).map_err(|e|e.to_string())?;
-    if value["schema"]!=1 || value["kind"]!="ffta-debug-control-result" || value["ok"]!=true || value["outcome"]!="ok" || value.get("error")!=Some(&Value::Null) || !value["status"].is_object()
-        || value["run"]!=checkpoint.session_run || value["id"]!=step.request_id || value["deadline_unix_ms"]!=deadline || value["request_sha256"]!=fingerprint
-        || value["session"]["manifest_sha256"]!=checkpoint.manifest_sha256 || value["operation_id"]!=action.operation_id() {
+    if !matches_pending(checkpoint,recipe,index,&value)? {
         return Err("Retained response is absent, unsuccessful or does not match the pending request".into());
     }
     Ok(value)
@@ -146,14 +159,20 @@ fn recover(root:&Path,id:&str)->Result<Value,String>{
     let waiting=checkpoint.steps[index].state=="waiting";
     if (!waiting && (index==0 || checkpoint.steps[index].state!="planned")) || checkpoint.steps[index+1..].iter().any(|s|s.state!="planned") {return Err("Recovery requires completed steps or a recorded wait followed only by unsent steps; unresolved actions cannot be repeated".into());}
     let suffix=if waiting {index+1}else{index};
-    recovery_scope(&recipe.steps,suffix)?;
+    let ui_open=ui_open_prefix(&recipe.steps,suffix);
+    if waiting && ui_open{return Err("An open UI trace with an interrupted wait cannot yet be restored".into());}
+    recovery_scope(&recipe.steps,suffix,ui_open)?;
     let prior=if waiting {&checkpoint.steps[index]}else{&checkpoint.steps[index-1]};
     if waiting {
         let condition=recipe.waits.iter().find(|w|w.after_step as usize==index).ok_or("Missing wait condition")?;
         if prior.wait_deadline_unix_ms.is_none_or(|deadline|now()>=deadline) || prior.wait_polls>=condition.max_polls{return Err("The original wait budget has elapsed; no observation sent".into());}
         if prior.wait_polls>0 && prior.wait_observation.as_ref().is_none_or(|observation|observation.poll!=prior.wait_polls){return Err("The last wait observation is unconfirmed; no observation sent".into());}
     }
-    let boundary=boundary_for_prefix(&checkpoint,&recipe,suffix)?;
+    let mut boundary=boundary_for_prefix_mode(&checkpoint,&recipe,suffix,ui_open)?;
+    if ui_open {
+        if ready["capabilities"].as_array().is_none_or(|c|!c.contains(&json!("recipe-ui-collector-v1"))){return Err("The new run cannot restore a UI trace".into());}
+        boundary.expected_ui=Some(ui_pin_for_recovery(root,&checkpoint,&boundary)?);
+    }
     if boundary.expected_inputs.is_some() && ready["capabilities"].as_array().is_none_or(|c|!c.contains(&json!("recipe-selected-inputs-v1"))){return Err("The new run cannot guard recovered selections".into());}
     let _unstarted=crate::debug_session::replay_command(root)?;
     if let Some(inputs)=&boundary.expected_inputs {
@@ -166,6 +185,7 @@ fn recover(root:&Path,id:&str)->Result<Value,String>{
     if checkpoint.deadline_unix_ms.is_none_or(|deadline|now()>=deadline) || (waiting && checkpoint.steps[index].wait_deadline_unix_ms.is_none_or(|deadline|now()>=deadline)) {return Err("The original recovery deadline elapsed during input verification; no action sent".into());}
     let old_run=checkpoint.session_run.clone();
     for step in &mut checkpoint.steps[..suffix] {if step.original_run.is_none(){step.original_run=Some(old_run.clone());}}
+    checkpoint.ui_snapshot=None;
     checkpoint.session_run=new_run.clone();
     for (i,step) in checkpoint.steps.iter_mut().enumerate().skip(suffix){step.request_id=request_id(id,&new_run,i,&step.action_sha256)?;step.expected_boundary=None;}
     if waiting {checkpoint.steps[index].wait_expected_boundary=Some(boundary);}else{checkpoint.steps[index].expected_boundary=Some(boundary);}
@@ -424,25 +444,30 @@ mod tests {
     #[test]
     fn cross_run_scope_requires_closed_prior_collectors_and_new_suffix_collectors(){
         let parse=|commands:&[&str]|commands.iter().map(|s|super::super::super::action(s).unwrap()).collect::<Vec<_>>();
-        assert!(recovery_scope(&parse(&["status","audio-start","step 1","audio-report"]),1).is_ok());
-        assert!(recovery_scope(&parse(&["status","code-start","step 1","code-report"]),1).is_ok());
-        assert!(recovery_scope(&parse(&["status","gameplay-start","step 1","gameplay-report"]),1).is_ok());
-        assert!(recovery_scope(&parse(&["status","ui-start","step 1","ui-report"]),1).is_ok());
-        assert!(recovery_scope(&parse(&["status","graphics","graphics --compare-last"]),1).is_ok());
-        assert!(recovery_scope(&parse(&["audio-start","step 1","audio-report"]),1).is_err());
-        for (start,report) in [("audio-start","audio-report"),("code-start","code-report"),("gameplay-start","gameplay-report"),("ui-start","ui-report")] {
-            assert!(recovery_scope(&parse(&[start,"step 1",report,"step 1"]),3).is_ok());
-            assert!(recovery_scope(&parse(&[start,"step 1",report,"step 1"]),2).is_err());
-            assert!(recovery_scope(&parse(&[report,"step 1"]),1).is_err());
-            assert!(recovery_scope(&parse(&[start,start,report,"step 1"]),3).is_err());
-            assert!(recovery_scope(&parse(&[start,report,report,"step 1"]),2).is_err());
+        assert!(recovery_scope(&parse(&["status","audio-start","step 1","audio-report"]),1,false).is_ok());
+        assert!(recovery_scope(&parse(&["status","code-start","step 1","code-report"]),1,false).is_ok());
+        assert!(recovery_scope(&parse(&["status","gameplay-start","step 1","gameplay-report"]),1,false).is_ok());
+        assert!(recovery_scope(&parse(&["status","ui-start","step 1","ui-report"]),1,false).is_ok());
+        assert!(recovery_scope(&parse(&["status","graphics","graphics --compare-last"]),1,false).is_ok());
+        assert!(recovery_scope(&parse(&["audio-start","step 1","audio-report"]),1,false).is_err());
+        assert!(recovery_scope(&parse(&["ui-start","step 1","ui-report"]),1,false).is_err());
+        assert!(recovery_scope(&parse(&["ui-start","step 1","ui-report"]),1,true).is_ok());
+        for (start,report) in [("audio-start","audio-report"),("code-start","code-report"),("gameplay-start","gameplay-report")] {
+            assert!(recovery_scope(&parse(&["ui-start",start,"step 1",report,"ui-report"]),2,true).is_err());
         }
-        assert!(recovery_scope(&parse(&["status","audio-report"]),1).is_err());
-        assert!(recovery_scope(&parse(&["status","graphics --compare-last"]),1).is_err());
-        assert!(recovery_scope(&parse(&["status","content list"]),1).is_err());
-        assert!(recovery_scope(&parse(&["status","content refresh","content list","profile select chosen"]),1).is_ok());
-        assert!(recovery_scope(&parse(&["status","cheats list"]),1).is_err());
-        assert!(recovery_scope(&parse(&["status","cheats refresh","cheats list"]),1).is_ok());
+        for (start,report) in [("audio-start","audio-report"),("code-start","code-report"),("gameplay-start","gameplay-report"),("ui-start","ui-report")] {
+            assert!(recovery_scope(&parse(&[start,"step 1",report,"step 1"]),3,false).is_ok());
+            assert!(recovery_scope(&parse(&[start,"step 1",report,"step 1"]),2,false).is_err());
+            assert!(recovery_scope(&parse(&[report,"step 1"]),1,false).is_err());
+            assert!(recovery_scope(&parse(&[start,start,report,"step 1"]),3,false).is_err());
+            assert!(recovery_scope(&parse(&[start,report,report,"step 1"]),2,false).is_err());
+        }
+        assert!(recovery_scope(&parse(&["status","audio-report"]),1,false).is_err());
+        assert!(recovery_scope(&parse(&["status","graphics --compare-last"]),1,false).is_err());
+        assert!(recovery_scope(&parse(&["status","content list"]),1,false).is_err());
+        assert!(recovery_scope(&parse(&["status","content refresh","content list","profile select chosen"]),1,false).is_ok());
+        assert!(recovery_scope(&parse(&["status","cheats list"]),1,false).is_err());
+        assert!(recovery_scope(&parse(&["status","cheats refresh","cheats list"]),1,false).is_ok());
     }
     #[test]
     fn cross_run_recovery_preserves_completed_collector_reports_without_repeating_them(){
@@ -470,6 +495,28 @@ mod tests {
         assert_eq!(done["checkpoint"]["steps"][0]["result"],first["checkpoint"]["steps"][0]["result"]);
     }
     #[test]
+    fn open_ui_trace_recovers_only_from_its_untampered_close_snapshot(){
+        let (t,mut server,id)=fixture(&["ui-start","step 1","ui-report"]);let root=t.path().to_owned();let worker_root=root.clone();let worker_id=id.clone();let session=server.event_session();let source_run=session.run_id.clone();
+        let status=|trace:&crate::debug_ui::Trace,frame:u64,hash:&str|json!({"paused":true,"remaining":0,"state_sha256":hash.repeat(64),"frame":frame,"clock":frame*100,"backend":"interp","cheat_armed":{"active":false},"replay":{"active":false},"ui_trace":trace.status()});
+        let first_status=status;
+        let worker=thread::spawn(move||{let request=loop{if let Ok(Some(request))=server.poll(){break request;}thread::sleep(Duration::from_millis(2));};assert!(matches!(request.command,Action::UiStart));
+            let clock=crate::debug_events::Clock::new(session);let mut trace=crate::debug_ui::Trace::default();{let _context=clock.context(request.event_context());trace.start_shared(json!({"state":"seed"}),clock.clone()).unwrap();}
+            trace.event(1,100,"keyboard",json!({"key":"before"}));assert_eq!(cancel_command(&worker_root,&worker_id)["ok"],true);let _=server.reply(&request,first_status(&trace,1,"a"),None);(server,trace)});
+        let first=drive(&root,&id,false).unwrap();assert_eq!(first["outcome"],"cancelled");let (server,mut trace)=worker.join().unwrap();assert_eq!(first["checkpoint"]["steps"][0]["state"],"completed");
+        trace.event(1,100,"keyboard",json!({"key":"close"}));let close_status=status(&trace,1,"a");assert!(super::super::retain_ui_on_close(&root,&source_run,&close_status,trace.snapshot().unwrap()).unwrap());
+        let (saved,_)=inspect(&root,&id).unwrap();let pin=saved.ui_snapshot.clone().unwrap();let path=super::super::ui_snapshot_path(&root,&id,&source_run).unwrap();let bytes=fs::read(&path).unwrap();
+        drop(server);let mut new_server=crate::debug_control::Server::new(&root).unwrap();
+        let checkpoint_path=run_dir(&root,&id).unwrap().join("checkpoint.json");let original_checkpoint=fs::read(&checkpoint_path).unwrap();
+        let mut changed:Value=serde_json::from_slice(&original_checkpoint).unwrap();changed["deadline_unix_ms"]=json!(saved.deadline_unix_ms.unwrap()+1);fs::write(&checkpoint_path,serde_json::to_vec(&changed).unwrap()).unwrap();assert!(recover(&root,&id).is_err());fs::write(&checkpoint_path,&original_checkpoint).unwrap();
+        fs::remove_file(&path).unwrap();assert!(recover(&root,&id).is_err());fs::write(&path,b"tampered").unwrap();assert!(recover(&root,&id).is_err());fs::write(&path,&bytes).unwrap();
+        let rebound=recover(&root,&id).unwrap();assert_eq!(rebound["outcome"],"rebound");assert_eq!(rebound["checkpoint"]["steps"][1]["expected_boundary"]["expected_ui"]["snapshot_sha256"],pin.snapshot_sha256);
+        let new_session=new_server.event_session();let worker_root=root.clone();let worker=thread::spawn(move||{let request=loop{if let Ok(Some(request))=new_server.poll(){break request;}thread::sleep(Duration::from_millis(2));};assert!(matches!(request.command,Action::Step{..}));let boundary=request.expected_boundary.as_ref().unwrap();
+            let mut trace=crate::debug_ui::Trace::default();boundary.check(&status(&trace,1,"a")).unwrap();let snapshot=super::super::restore_ui_snapshot(&worker_root,boundary.expected_ui.as_ref().unwrap(),boundary).unwrap();trace.restore(snapshot,crate::debug_events::Clock::new(new_session)).unwrap();trace.event(2,200,"keyboard",json!({"key":"after"}));let _=new_server.reply(&request,status(&trace,2,"b"),None);
+            let report=loop{if let Ok(Some(request))=new_server.poll(){break request;}thread::sleep(Duration::from_millis(2));};assert!(matches!(report.command,Action::UiReport));let path=trace.save(&worker_root,json!({}),&[[0,0,0,255]],1,1).unwrap();let _=new_server.reply(&report,status(&trace,2,"b"),None);path});
+        let done=drive(&root,&id,true).unwrap();assert_eq!(done["outcome"],"completed");assert_eq!(done["checkpoint"]["steps"][0]["result"],first["checkpoint"]["steps"][0]["result"]);let path=worker.join().unwrap();
+        let report:Value=serde_json::from_slice(&fs::read(root.join(path).with_file_name("ui.json")).unwrap()).unwrap();assert_eq!(report["events"].as_array().unwrap().len(),3);assert_eq!(report["events"][0]["data"]["key"],"before");assert_eq!(report["events"][2]["data"]["key"],"after");assert_eq!(report["trace"]["recovery_gaps"].as_array().unwrap().len(),1);
+    }
+    #[test]
     fn cross_run_pending_uses_only_the_exact_retained_terminal_response(){
         for first_command in ["status","step 1"] {
             let (t,mut server,id)=fixture(&[first_command,"step 1"]);let dir=run_dir(t.path(),&id).unwrap();let (mut checkpoint,_)=inspect(t.path(),&id).unwrap();let recipe=load(t.path(),"demo").unwrap();let deadline=now()+30_000;
@@ -481,6 +528,8 @@ mod tests {
             let _=server.reply(&request,status.clone(),None);while !client.is_finished(){let _=if first_command=="status"{server.poll_query()}else{server.poll()};thread::sleep(Duration::from_millis(2));}
             let original=client.join().unwrap();assert_eq!(original["ok"],true);drop(server);let mut new_server=crate::debug_control::Server::new(t.path()).unwrap();
             let path=t.path().join("Data/config/debug-control").join(if first_command=="status"{"query-result.json"}else{"result.json"});let valid=fs::read(&path).unwrap();let before=fs::read(dir.join("checkpoint.json")).unwrap();
+            // Exercise the legacy mailbox-only path independently of receipts.
+            fs::remove_file(dir.join("terminal-00.json")).unwrap();
             for (key,value) in [("run",json!("different")),("id",json!("different")),("request_sha256",json!("different")),("operation_id",json!("different")),("deadline_unix_ms",json!(deadline+1)),("ok",json!(false)),("error",json!("refused")),("outcome",json!("timeout")),("status",Value::Null)] {let mut altered:Value=serde_json::from_slice(&valid).unwrap();altered[key]=value;fs::write(&path,serde_json::to_vec(&altered).unwrap()).unwrap();assert!(recover(t.path(),&id).is_err(),"{key}");assert_eq!(fs::read(dir.join("checkpoint.json")).unwrap(),before);}
             let mut altered:Value=serde_json::from_slice(&valid).unwrap();altered["session"]["manifest_sha256"]=json!("different");fs::write(&path,serde_json::to_vec(&altered).unwrap()).unwrap();assert!(recover(t.path(),&id).is_err());assert_eq!(fs::read(dir.join("checkpoint.json")).unwrap(),before);
             fs::write(&path,&valid).unwrap();let resolved=recover(t.path(),&id).unwrap();assert_eq!(resolved["outcome"],"resolved-pending");assert_eq!(resolved["checkpoint"]["steps"][0]["result"],original);assert_eq!(resolved["checkpoint"]["steps"][1]["state"],"planned");
@@ -488,6 +537,34 @@ mod tests {
             let worker=thread::spawn(move||{while !end.load(Ordering::SeqCst){if let Ok(Some(request))=new_server.poll(){n.fetch_add(1,Ordering::SeqCst);request.expected_boundary.as_ref().unwrap().check(&status).unwrap();let _=new_server.reply(&request,status.clone(),None);}thread::sleep(Duration::from_millis(2));}});
             let done=drive(t.path(),&id,true).unwrap();assert_eq!(done["outcome"],"completed");assert_eq!(done["checkpoint"]["steps"][0]["result"],original);assert_eq!(count.load(Ordering::SeqCst),1);stop.store(true,Ordering::SeqCst);worker.join().unwrap();
         }
+    }
+    #[test]
+    fn overwritten_mailbox_uses_matching_receipt_and_rejects_tampering(){
+        for first_command in ["status","step 1"] {
+            let (t,mut server,id)=fixture(&[first_command,"step 1"]);let dir=run_dir(t.path(),&id).unwrap();let (mut checkpoint,_)=inspect(t.path(),&id).unwrap();let recipe=load(t.path(),"demo").unwrap();let deadline=now()+30_000;
+            checkpoint.deadline_unix_ms=Some(deadline);checkpoint.steps[0].state="pending".into();checkpoint.steps[0].deadline_unix_ms=Some(deadline);publish(&dir,&checkpoint,&recipe).unwrap();
+            let root=t.path().to_owned();let action=recipe.steps[0].clone();let run=checkpoint.session_run.clone();let request_id=checkpoint.steps[0].request_id.clone();
+            let client=thread::spawn(move||crate::debug_control::planned_action_classified(&root,action,10_000,run,request_id,deadline).unwrap());
+            let start=std::time::Instant::now();let request=loop{if let Ok(Some(request))=if first_command=="status"{server.poll_query()}else{server.poll()}{break request;}assert!(start.elapsed()<Duration::from_secs(10));thread::sleep(Duration::from_millis(2));};
+            let status=json!({"paused":true,"remaining":0,"state_sha256":"a".repeat(64),"frame":1,"clock":100,"backend":"interp","cheat_armed":{"active":false},"replay":{"active":false},"ui_trace":{"has_trace":false}});
+            let _=server.reply(&request,status,None);while !client.is_finished(){let _=if first_command=="status"{server.poll_query()}else{server.poll()};thread::sleep(Duration::from_millis(2));}let original=client.join().unwrap();assert_eq!(original["ok"],true);
+            let receipt=dir.join("terminal-00.json");let valid=fs::read(&receipt).unwrap();assert_eq!(serde_json::from_slice::<Value>(&valid).unwrap(),original);
+            let mailbox=t.path().join("Data/config/debug-control").join(if first_command=="status"{"query-result.json"}else{"result.json"});fs::write(&mailbox,br#"{"id":"different"}"#).unwrap();
+            drop(server);let _new=crate::debug_control::Server::new(t.path()).unwrap();let before=fs::read(dir.join("checkpoint.json")).unwrap();
+            for (key,value) in [("id",json!("different")),("request_sha256",json!("different")),("operation_id",json!("different")),("ok",json!(false))] {let mut altered:Value=serde_json::from_slice(&valid).unwrap();altered[key]=value;fs::write(&receipt,serde_json::to_vec(&altered).unwrap()).unwrap();assert!(recover(t.path(),&id).is_err());assert_eq!(fs::read(dir.join("checkpoint.json")).unwrap(),before);}
+            fs::write(&receipt,&valid).unwrap();let resolved=recover(t.path(),&id).unwrap();assert_eq!(resolved["outcome"],"resolved-pending");assert_eq!(resolved["checkpoint"]["steps"][0]["result"],original);assert_eq!(resolved["checkpoint"]["steps"][1]["state"],"planned");
+            assert!(!t.path().join("Data/config/debug-control/query.json").exists());assert!(!t.path().join("Data/config/debug-control/request.json").exists());
+        }
+    }
+    #[test]
+    fn conflicting_receipt_is_never_overwritten_or_trusted(){
+        let (t,mut server,id)=fixture(&["status","step 1"]);let dir=run_dir(t.path(),&id).unwrap();let (mut checkpoint,_)=inspect(t.path(),&id).unwrap();let recipe=load(t.path(),"demo").unwrap();let deadline=now()+30_000;
+        checkpoint.deadline_unix_ms=Some(deadline);checkpoint.steps[0].state="pending".into();checkpoint.steps[0].deadline_unix_ms=Some(deadline);publish(&dir,&checkpoint,&recipe).unwrap();
+        let receipt=dir.join("terminal-00.json");fs::write(&receipt,br#"{"id":"different"}"#).unwrap();
+        let root=t.path().to_owned();let action=recipe.steps[0].clone();let run=checkpoint.session_run.clone();let request_id=checkpoint.steps[0].request_id.clone();let client=thread::spawn(move||crate::debug_control::planned_action_classified(&root,action,10_000,run,request_id,deadline).unwrap());
+        let start=std::time::Instant::now();let request=loop{if let Ok(Some(request))=server.poll_query(){break request;}assert!(start.elapsed()<Duration::from_secs(10));thread::sleep(Duration::from_millis(2));};
+        let _=server.reply(&request,json!({"frame":1}),None);while !client.is_finished(){let _=server.poll_query();thread::sleep(Duration::from_millis(2));}assert_eq!(client.join().unwrap()["ok"],true);
+        assert_eq!(fs::read(&receipt).unwrap(),br#"{"id":"different"}"#);drop(server);let _new=crate::debug_control::Server::new(t.path()).unwrap();let before=fs::read(dir.join("checkpoint.json")).unwrap();assert!(recover(t.path(),&id).is_err());assert_eq!(fs::read(dir.join("checkpoint.json")).unwrap(),before);
     }
     #[test]
     fn retained_pending_final_result_and_assertion_failure_are_terminal(){
@@ -510,7 +587,7 @@ mod tests {
         let start=std::time::Instant::now();let request=loop{if let Ok(Some(request))=server.poll_query(){break request;}assert!(start.elapsed()<Duration::from_secs(10));thread::sleep(Duration::from_millis(2));};
         let status=|frame:u64,hash:&str|json!({"paused":true,"remaining":0,"state_sha256":hash.repeat(64),"frame":frame,"clock":frame*100,"backend":"interp","cheat_armed":{"active":false},"replay":{"active":false},"ui_trace":{"has_trace":false}});
         let _=server.reply(&request,status(1,"a"),None);while !client.is_finished(){let _=server.poll_query();thread::sleep(Duration::from_millis(2));}let original=client.join().unwrap();assert_eq!(original["ok"],true);drop(server);let mut new_server=crate::debug_control::Server::new(t.path()).unwrap();
-        let path=t.path().join("Data/config/debug-control/query-result.json");let valid=fs::read(&path).unwrap();let before=fs::read(dir.join("checkpoint.json")).unwrap();
+        let path=t.path().join("Data/config/debug-control/query-result.json");let valid=fs::read(&path).unwrap();let before=fs::read(dir.join("checkpoint.json")).unwrap();fs::remove_file(dir.join("terminal-00.json")).unwrap();
         for invalid in [Value::Null,json!("invalid"),json!(deadline+1),json!(deadline.saturating_sub(120_001))] {let mut altered:Value=serde_json::from_slice(&valid).unwrap();if invalid.is_null(){altered.as_object_mut().unwrap().remove("completed_unix_ms");}else{altered["completed_unix_ms"]=invalid;}fs::write(&path,serde_json::to_vec(&altered).unwrap()).unwrap();assert!(recover(t.path(),&id).is_err());assert_eq!(fs::read(dir.join("checkpoint.json")).unwrap(),before);}
         fs::write(&path,&valid).unwrap();let resolved=recover(t.path(),&id).unwrap();assert_eq!(resolved["outcome"],"resolved-pending");assert_eq!(resolved["checkpoint"]["steps"][0]["state"],"waiting");assert_eq!(resolved["checkpoint"]["steps"][0]["result"],original);assert_eq!(resolved["checkpoint"]["steps"][0]["wait_polls"].as_u64().unwrap_or(0),0);assert_eq!(resolved["checkpoint"]["steps"][0]["wait_deadline_unix_ms"],json!((original["completed_unix_ms"].as_u64().unwrap()+20_000).min(deadline)));
         let rebound=recover(t.path(),&id).unwrap();assert_eq!(rebound["outcome"],"rebound");let worker=thread::spawn(move||{let mut queries=0;let mut actions=0;while actions<1{if let Ok(Some(request))=new_server.poll_query(){queries+=1;let value=if queries==1{let v=status(1,"a");request.expected_boundary.as_ref().unwrap().check(&v).unwrap();v}else{status(2,"b")};let _=new_server.reply(&request,value,None);}if let Ok(Some(request))=new_server.poll(){actions+=1;let _=new_server.reply(&request,status(3,"c"),None);}thread::sleep(Duration::from_millis(2));}(queries,actions)});
@@ -543,10 +620,10 @@ mod tests {
     }
     #[test]
     fn cross_run_wait_retains_action_identity_and_original_poll_budget(){
-        let (t,mut server,id)=fixture(&["status","wait /status/frame 2 30000 20 64","step 1"]);let root=t.path().to_owned();let worker_id=id.clone();
+        let (t,mut server,id)=fixture(&["status","wait /status/frame 2 30000 1000 64","step 1"]);let root=t.path().to_owned();let worker_id=id.clone();
         let status=|frame:u64,hash:&str|json!({"paused":true,"remaining":0,"state_sha256":hash.repeat(64),"frame":frame,"clock":frame*100,"backend":"interp","cheat_armed":{"active":false},"replay":{"active":false},"ui_trace":{"has_trace":false}});
         let first_status=status(1,"a");
-        let worker=thread::spawn(move||{let mut n=0;while n<2 {if let Ok(Some(request))=server.poll_query(){n+=1;if n==2{assert_eq!(cancel_command(&root,&worker_id)["ok"],true);}let _=server.reply(&request,first_status.clone(),None);if n==2{let until=std::time::Instant::now()+Duration::from_secs(10);while server.poll_query().is_err(){assert!(std::time::Instant::now()<until);thread::sleep(Duration::from_millis(2));}}}thread::sleep(Duration::from_millis(2));}});
+        let worker=thread::spawn(move||{let mut n=0;while n<2 {if let Ok(Some(request))=server.poll_query(){n+=1;let _=server.reply(&request,first_status.clone(),None);if n==2{let until=std::time::Instant::now()+Duration::from_secs(10);loop{let _=server.poll_query();if let Ok((checkpoint,_))=inspect(&root,&worker_id){if checkpoint.steps[0].wait_observation.as_ref().is_some_and(|observation|observation.poll==1){break;}}assert!(std::time::Instant::now()<until,"First wait observation was not recorded");thread::sleep(Duration::from_millis(2));}assert_eq!(cancel_command(&root,&worker_id)["ok"],true);}}thread::sleep(Duration::from_millis(2));}});
         let first=drive(t.path(),&id,false).unwrap();assert_eq!(first["outcome"],"cancelled");assert_eq!(first["checkpoint"]["steps"][0]["state"],"waiting");assert_eq!(first["checkpoint"]["steps"][0]["wait_polls"],1);worker.join().unwrap();
         let mut server=crate::debug_control::Server::new(t.path()).unwrap();let recovered=recover(t.path(),&id).unwrap();assert_eq!(recovered["outcome"],"rebound");assert_eq!(recovered["checkpoint"]["steps"][0]["result"],first["checkpoint"]["steps"][0]["result"]);assert_eq!(recovered["checkpoint"]["steps"][0]["wait_polls"],1);
         let worker=thread::spawn(move||{let mut queries=0;let mut actions=0;while actions<1{if let Ok(Some(request))=server.poll_query(){queries+=1;let value=if queries==1{let v=status(1,"a");request.expected_boundary.as_ref().unwrap().check(&v).unwrap();v}else{assert!(request.expected_boundary.is_none());status(2,"b")};thread::sleep(Duration::from_millis(1_200));let _=server.reply(&request,value,None);}if let Ok(Some(request))=server.poll(){actions+=1;let _=server.reply(&request,status(3,"c"),None);}thread::sleep(Duration::from_millis(2));}(queries,actions)});

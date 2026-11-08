@@ -6,6 +6,10 @@ use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 use std::{fs::{self,OpenOptions}, io::Write, path::{Path, PathBuf}};
 
+pub(crate) fn retain_terminal(root:&Path,value:&Value)->Result<bool,String>{checkpoint::retain_terminal(root,value)}
+pub(crate) fn retain_ui_on_close(root:&Path,source_run:&str,status:&Value,snapshot:crate::debug_ui::TraceSnapshot)->Result<bool,String>{checkpoint::retain_ui_on_close(root,source_run,status,snapshot)}
+pub(crate) fn restore_ui_snapshot(root:&Path,pin:&crate::debug_ui::RecoveryPin,boundary:&crate::debug_control::ExpectedBoundary)->Result<crate::debug_ui::TraceSnapshot,String>{checkpoint::restore_ui_snapshot(root,pin,boundary)}
+
 const MAX_BYTES:u64=64*1024;
 const MAX_STEPS:usize=16;
 const MAX_FRAMES:u32=3600;

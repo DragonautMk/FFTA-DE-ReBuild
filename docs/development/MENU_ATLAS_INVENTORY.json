@@ -2363,7 +2363,7 @@
     {
       "id": "cheats.prepare-once",
       "handler": "PlayApp::prepare_cheat_once / Plan::footprint",
-      "cli": "recomp debug-control cheat-prepare SESSION ID PROVENANCE MASTER GENERATION [--timeout-ms N]",
+      "cli": "recomp debug-control cheat-prepare SESSION ID PROVENANCE MASTER GENERATION [--parameter NAME --value N] [--timeout-ms N]",
       "current": "Debug / Cheat / Manage cheat / Prepare preview",
       "destination": "Debug / Cheat / Manage cheat / Prepare preview",
       "menu_implemented": true,

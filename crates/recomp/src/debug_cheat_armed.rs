@@ -64,6 +64,7 @@ impl ArmedSet {
                 master_id: text("master_id")?,
                 entry_lines_sha256: text("entry_lines_sha256")?,
                 master_lines_sha256: text("master_lines_sha256")?,
+                parameter: identity.get("parameter").cloned().map(serde_json::from_value).transpose().map_err(|e|format!("Invalid armed cheat parameter: {e}"))?,
             });
         }
         let preset = Preset { schema: 1, kind: "ffta-debug-cheat-preset".into(), name: name.into(), catalog_sha256: catalog_sha256.into(), rom_sha256: rom_sha256.into(), members };
@@ -148,5 +149,13 @@ mod tests {
         assert_eq!(saved.members[0].id,"CH-0001");assert_eq!(saved.members[0].provenance_index,2);
         assert!(set.preset("example",&"e".repeat(64),&rom).is_err());
         assert!(set.preset("../example",&catalog,&rom).is_err());
+    }
+    #[test]
+    fn parameter_choice_is_retained_in_armed_identity_and_preset() {
+        let mut set=ArmedSet::default();let catalog="a".repeat(64);let rom="b".repeat(64);
+        let identity=json!({"provenance_index":2,"master_id":"CH-0002","source_sha256":catalog,"rom_sha256":rom,"entry_lines_sha256":"c".repeat(64),"master_lines_sha256":"d".repeat(64),"parameter":{"name":"amount","value":10}});
+        set.arm("CH-0001",plan(&["82000002 1234"]),identity).unwrap();
+        let saved=set.preset("example",&catalog,&rom).unwrap();assert_eq!(saved.members[0].parameter.as_ref().unwrap().value,10);
+        assert_eq!(set.provenance()[0]["identity"]["parameter"]["name"],"amount");
     }
 }
