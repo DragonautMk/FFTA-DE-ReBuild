@@ -63,7 +63,7 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 - State: active
 - Outcome: partial
-- Verified: assertions, waits, catalog/captures, bounded searches, Start/cancel and interrupted recovery. Cross-run recovery preserves completed identities, recorded waits and selected role/location/hash; exact retained terminal responses resolve pending steps without redispatch. Linux/Xvfb real restarts PASS, including pending waits and completed UI reports; recipe watch and explicit reopening PASS; Linux/Xvfb picker also verifies reason entry and fresh review. Bounded frontend actions include pause/recent/issue/cheats. 46 Linux recipe/112 Wine tests and Linux/Xvfb recent/refusal PASS. Bounded replay: live 101 refusal/102 completion and 127 Wine tests PASS. `docs/changes/2026-11-08-bound-replay-jobs-in-recipes.json`. Basic EUR Wine/Xvfb status/step restart now PASS under --wine-host: completed identity retained, one frame resumed once, both windows closed normally; CPU presentation. `2026-11-08-coordinate-native-wine-validation-drivers.json`.
+- Verified: assertions, waits, catalog/captures, bounded searches, Start/cancel and interrupted recovery. Cross-run recovery preserves completed identities, recorded waits and selected role/location/hash; exact retained terminal responses resolve pending steps without redispatch. Linux/Xvfb real restarts PASS, including pending waits and completed UI reports; recipe watch and explicit reopening PASS; Linux/Xvfb picker also verifies reason entry and fresh review. Bounded frontend actions include pause/recent/issue/cheats. 46 Linux recipe/112 Wine tests and Linux/Xvfb recent/refusal PASS. Bounded replay: live 101 refusal/102 completion and 127 Wine tests PASS. `docs/changes/2026-11-08-bound-replay-jobs-in-recipes.json`. Basic EUR Wine/Xvfb status/step restart now PASS under --wine-host: completed identity retained, one frame resumed once, both windows closed normally; CPU presentation. Recorded wait restart now also PASS on Wine with original deadlines, identity and no duplicate; 37 Linux and 36+1 Wine runner tests. `docs/changes/2026-11-08-preserve-wait-budget-for-slow-observations.json`.
 - Missing: open earlier collector restoration (host observations are RAM-only; prior checkpoints cannot reconstruct them), pending actions with missing/mismatched responses, broader picker/platform checks and the Wine wait/selection/collector restart matrix. Old selection results without pins are refused; deadlines remain in force.
 - Resume: reconcile original completion criteria and remaining limitations; do not repeat accepted proofs. Open collector restoration is an extension. Private and failed units retained.
 
@@ -188,9 +188,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: WINE-GUI-COORDINATION completed; DBG2-16 retains its separate open criteria.
-- Last verified result: 27 runner tests and EUR Wine/Xvfb restart PASS; exact checkpoint/response preservation, input guards, server drain, lease release and memory checks verified.
-- Remaining work: no coordination implementation remains; native Windows and broader Wine restart criteria remain outside this unit.
-- Errors or blockers: first local driver targeted hidden DirectInput window; corrected proof PASS, failed diagnostics retained. Wine used CPU after GPU failure. Primary model/xhigh unconfirmed.
-- Next action: no further work selected; preserve accepted proof and resume other DBG2 criteria only on request.
-- References: docs/changes/2026-11-08-coordinate-native-wine-validation-drivers.json; target/validation/units/wine-host-gui-restart-fixed-szeihl5s/; target/validation/units/wine-host-coordination-regression-4ni_zanp/.
+- Task: DBG2-16 partial; Wine recorded-wait recovery and slow observations verified.
+- Last verified result: Wine/Xvfb restart preserved original wait/action identity and deadlines; 37 Linux and 36+1 Wine runner tests PASS.
+- Remaining work: open earlier collectors, ambiguous pending responses, broader Wine selection/collector and other Debug Tools V2 criteria.
+- Errors or blockers: two failed Wine wait attempts and socket-denied test retained; our leases manually released after host checks. GPU fallback used CPU. Primary and requested Sol model/xhigh unconfirmed.
+- Next action: reconcile DBG2-16 remaining criteria without repeating accepted tests; select another missing requirement.
+- References: docs/changes/2026-11-08-preserve-wait-budget-for-slow-observations.json; target/validation/units/dbg2-wine-wait-restart-fixed-t5wp9j2p/.

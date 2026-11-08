@@ -747,9 +747,11 @@ pub(crate) fn planned_guarded_action(root:&Path,action:Action,timeout:u64,run:St
     if [run.as_str(),id.as_str()].iter().any(|v|v.is_empty()||v.len()>100||v.chars().any(char::is_control)){return Err(ClientFailure::new("invalid-request","Planned run and request IDs need 1..100 bytes without controls","not-sent"));}
     execute_action_inner_interruptible(root,action,timeout,Some(&RetryIdentity{run,id,deadline_unix_ms,expected_boundary:Some(boundary),cancel_marker:cancel_marker.map(Path::to_owned)}),cancel)
 }
-pub(crate) fn query_action_interruptible(root:&Path,action:Action,timeout:u64,cancel:&std::sync::atomic::AtomicBool)->Result<Value,ClientFailure>{
-    if !action.read_query(){return Err(ClientFailure::new("invalid-request","Interruptible observation requires a read query","not-sent"));}
-    execute_action_inner_interruptible(root,action,timeout,None,Some(cancel))
+/// A single reserved wait observation, never an automatic retry of a query.
+/// The marker keeps console cancellation responsive during a slow response.
+pub(crate) fn planned_wait_observation(root:&Path,timeout:u64,run:String,id:String,deadline_unix_ms:u64,boundary:Option<ExpectedBoundary>,cancel:Option<&std::sync::atomic::AtomicBool>,cancel_marker:&Path)->Result<Value,ClientFailure>{
+    if [run.as_str(),id.as_str()].iter().any(|v|v.is_empty()||v.len()>100||v.chars().any(char::is_control)){return Err(ClientFailure::new("invalid-request","Planned run and request IDs need 1..100 bytes without controls","not-sent"));}
+    execute_action_inner_interruptible(root,Action::Status,timeout,Some(&RetryIdentity{run,id,deadline_unix_ms,expected_boundary:boundary,cancel_marker:Some(cancel_marker.to_owned())}),cancel)
 }
 pub(crate) fn planned_fingerprint(action:Action,run:&str,id:&str,deadline_unix_ms:u64,manifest_sha256:&str)->Result<String,String>{
     planned_guarded_fingerprint(action,run,id,deadline_unix_ms,manifest_sha256,None)

@@ -363,8 +363,11 @@ The checkpoint stores the last bounded scalar observation and response digest.
 New observations also retain an idle guest boundary when one is available.
 A missing or non-scalar value cannot match. A timeout or exhausted poll count
 stops later actions with `wait-timeout`; an unconfirmed read stops with
-`unconfirmed`. Cancellation is checked between polls. Status polls are fresh,
-read-only observations and may see external changes; this runner does not own
+`unconfirmed`. Each status observation can use the remaining original wait
+deadline, including when serializing state takes more than one second. Cancellation
+is checked while a poll is in flight as well as between polls; an already published
+query may still complete. Status polls are fresh, read-only observations and may
+see external changes; this runner does not own
 exclusive control of the session. The deadline uses the system clock.
 
 A Windows GNU test binary and 30 focused Wine tests passed, including a
@@ -679,7 +682,7 @@ poll has a recorded idle guest boundary; before any poll, the action result
 provides that boundary. The first new status poll checks that
 boundary; the prior action is not resent and its deadline, wait deadline and
 consumed poll count are retained. An unconfirmed last poll or an older wait
-observation without a recoverable boundary is refused. The guarded poll may
+observation without a recoverable boundary is refused. A guarded or ordinary poll may
 wait within the remaining original deadline, and a cancellation marker remains
 observable while it is in flight. An isolated Linux
 interpreter session under Xvfb completed a status step, stopped before its next
@@ -714,7 +717,12 @@ windows close normally. Its native driver runs through
 `validation_unit.py --wine-host`, under one prefix lease through both runs and
 the final server drain; protected inputs remain unchanged. The observed GPU
 failure used CPU presentation, so this is not GPU-path or native Windows
-acceptance. The broader Wine wait/selection/collector restart matrix and
+acceptance. A separate Wine/Xvfb normal restart recovered an interrupted
+recorded wait: the guarded observation preserved the original boundary and
+deadlines, an external frame satisfied the wait, and the following recipe frame
+ran once. The completed action response and second resume remained unchanged.
+This used a private debug-symbol-stripped runtime, simulated cancellation and CPU
+presentation; native Windows, broader Wine wait/selection/collector coverage and
 broader host-context recovery remain open.
 
 Another isolated Linux/Xvfb run completed a UI report, interrupted before its

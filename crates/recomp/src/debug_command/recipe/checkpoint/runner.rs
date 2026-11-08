@@ -233,14 +233,12 @@ pub(super) fn drive_with_cancel(root:&Path,id:&str,resume:bool,local_cancel:Opti
             // Reserve each read before publication: crashes cannot increase the poll budget.
             checkpoint.steps[index].wait_polls+=1;publish(&dir,&checkpoint,&recipe)?;
             let remaining=deadline.saturating_sub(now());if remaining<20{continue;}
-            // A guarded status serializes the guest for both the check and
-            // the response. Its acknowledgement can legitimately take more
-            // than a second, but never extends the original wait deadline.
-            let timeout=if checkpoint.steps[index].wait_expected_boundary.is_some(){remaining.min(120_000)}else{remaining.min(1_000)};
-            let response=if let Some(boundary)=checkpoint.steps[index].wait_expected_boundary.clone() {
-                let poll_id=format!("recipe-wait-{}",digest(&serde_json::to_vec(&(&checkpoint.id,&checkpoint.session_run,index,checkpoint.steps[index].wait_polls)).map_err(|e|e.to_string())?));
-                crate::debug_control::planned_guarded_action(root,Action::Status,timeout,checkpoint.session_run.clone(),poll_id,deadline,boundary,local_cancel,Some(&dir.join("cancel.json")))
-            }else if let Some(flag)=local_cancel {crate::debug_control::query_action_interruptible(root,Action::Status,timeout,flag)}else{crate::debug_control::execute_action_classified(root,Action::Status,timeout)};
+            // Even an ordinary status serializes the guest and can take more
+            // than a second. Its reserved identity is never retried, and the
+            // original wait deadline and cancellation marker still apply.
+            let timeout=remaining.min(120_000);
+            let poll_id=format!("recipe-wait-{}",digest(&serde_json::to_vec(&(&checkpoint.id,&checkpoint.session_run,index,checkpoint.steps[index].wait_polls)).map_err(|e|e.to_string())?));
+            let response=crate::debug_control::planned_wait_observation(root,timeout,checkpoint.session_run.clone(),poll_id,deadline,checkpoint.steps[index].wait_expected_boundary.clone(),local_cancel,&dir.join("cancel.json"));
             let value=match response{Ok(v)=>v,Err(e)=>{if local_cancel.is_some_and(|c|c.load(std::sync::atomic::Ordering::SeqCst)){return Ok(cancelled_in_flight(root,id,&checkpoint,true));}return Ok(result(&checkpoint,"unconfirmed",&format!("Wait observation unresolved ({}; delivery {}). Resume explicitly within the original bounds.",e.message,e.delivery)));}};
             if value["outcome"]=="interrupted"{return Ok(cancelled_in_flight(root,id,&checkpoint,true));}
             if value["kind"]!="ffta-debug-control-result" || value["ok"]!=true || value["run"]!=checkpoint.session_run {
@@ -551,15 +549,16 @@ mod tests {
         let worker=thread::spawn(move||{let mut n=0;while n<2 {if let Ok(Some(request))=server.poll_query(){n+=1;if n==2{assert_eq!(cancel_command(&root,&worker_id)["ok"],true);}let _=server.reply(&request,first_status.clone(),None);if n==2{let until=std::time::Instant::now()+Duration::from_secs(10);while server.poll_query().is_err(){assert!(std::time::Instant::now()<until);thread::sleep(Duration::from_millis(2));}}}thread::sleep(Duration::from_millis(2));}});
         let first=drive(t.path(),&id,false).unwrap();assert_eq!(first["outcome"],"cancelled");assert_eq!(first["checkpoint"]["steps"][0]["state"],"waiting");assert_eq!(first["checkpoint"]["steps"][0]["wait_polls"],1);worker.join().unwrap();
         let mut server=crate::debug_control::Server::new(t.path()).unwrap();let recovered=recover(t.path(),&id).unwrap();assert_eq!(recovered["outcome"],"rebound");assert_eq!(recovered["checkpoint"]["steps"][0]["result"],first["checkpoint"]["steps"][0]["result"]);assert_eq!(recovered["checkpoint"]["steps"][0]["wait_polls"],1);
-        let worker=thread::spawn(move||{let mut queries=0;let mut actions=0;while actions<1{if let Ok(Some(request))=server.poll_query(){queries+=1;let value=if queries==1{let v=status(1,"a");request.expected_boundary.as_ref().unwrap().check(&v).unwrap();thread::sleep(Duration::from_millis(1_200));v}else{assert!(request.expected_boundary.is_none());status(2,"b")};let _=server.reply(&request,value,None);}if let Ok(Some(request))=server.poll(){actions+=1;let _=server.reply(&request,status(3,"c"),None);}thread::sleep(Duration::from_millis(2));}(queries,actions)});
+        let worker=thread::spawn(move||{let mut queries=0;let mut actions=0;while actions<1{if let Ok(Some(request))=server.poll_query(){queries+=1;let value=if queries==1{let v=status(1,"a");request.expected_boundary.as_ref().unwrap().check(&v).unwrap();v}else{assert!(request.expected_boundary.is_none());status(2,"b")};thread::sleep(Duration::from_millis(1_200));let _=server.reply(&request,value,None);}if let Ok(Some(request))=server.poll(){actions+=1;let _=server.reply(&request,status(3,"c"),None);}thread::sleep(Duration::from_millis(2));}(queries,actions)});
         let done=drive(t.path(),&id,true).unwrap();assert_eq!(done["outcome"],"completed");assert_eq!(done["checkpoint"]["steps"][0]["wait_polls"],3);assert_eq!(done["checkpoint"]["steps"][0]["result"],first["checkpoint"]["steps"][0]["result"]);assert_eq!(worker.join().unwrap(),(2,1));
     }
     #[test]
     fn completed_wait_recovery_uses_the_observed_boundary(){
-        let (t,mut server,id)=fixture(&["status","wait /status/frame 1 30000 20 64","step 1"]);let root=t.path().to_owned();let worker_id=id.clone();
+        let (t,server,id)=fixture(&["status","wait /status/frame 1 30000 20 64","step 1"]);let dir=run_dir(t.path(),&id).unwrap();let (mut checkpoint,_)=inspect(t.path(),&id).unwrap();let recipe=load(t.path(),"demo").unwrap();let deadline=now()+30_000;
         let status=|frame:u64,hash:&str|json!({"paused":true,"remaining":0,"state_sha256":hash.repeat(64),"frame":frame,"clock":frame*100,"backend":"interp","cheat_armed":{"active":false},"replay":{"active":false},"ui_trace":{"has_trace":false}});
-        let worker=thread::spawn(move||{let mut n=0;while n<2{if let Ok(Some(request))=server.poll_query(){n+=1;if n==2{assert_eq!(cancel_command(&root,&worker_id)["ok"],true);}server.reply(&request,if n==1{status(0,"a")}else{status(1,"b")},None).unwrap();}thread::sleep(Duration::from_millis(2));}});
-        let first=drive(t.path(),&id,false).unwrap();assert_eq!(first["outcome"],"cancelled");assert_eq!(first["checkpoint"]["steps"][0]["state"],"completed");worker.join().unwrap();
+        checkpoint.deadline_unix_ms=Some(deadline);let step=&mut checkpoint.steps[0];step.state="completed".into();step.deadline_unix_ms=Some(deadline);step.wait_deadline_unix_ms=Some(deadline);step.wait_polls=1;
+        step.result=Some(json!({"kind":"ffta-debug-control-result","ok":true,"run":checkpoint.session_run,"id":step.request_id,"deadline_unix_ms":deadline,"request_sha256":crate::debug_control::planned_fingerprint(recipe.steps[0].clone(),&checkpoint.session_run,&step.request_id,deadline,&checkpoint.manifest_sha256).unwrap(),"status":status(0,"a")}));
+        step.wait_observation=Some(WaitObservation{poll:1,id:"observed".into(),response_sha256:"b".repeat(64),present:true,actual:json!(1),matched:true,boundary:crate::debug_control::ExpectedBoundary::from_status(&status(1,"b")).ok(),inputs:None});publish(&dir,&checkpoint,&recipe).unwrap();drop(server);
         let _server=crate::debug_control::Server::new(t.path()).unwrap();let rebound=recover(t.path(),&id).unwrap();
         assert_eq!(rebound["checkpoint"]["steps"][1]["expected_boundary"]["frame"],1);assert_eq!(rebound["checkpoint"]["steps"][1]["expected_boundary"]["state_sha256"],"b".repeat(64));
     }
@@ -585,6 +584,25 @@ mod tests {
         let worker=thread::spawn(move||{loop{if let Ok(Some(request))=server.poll_query(){assert!(request.expected_boundary.is_some());sent.send(()).unwrap();let _=done.recv_timeout(Duration::from_secs(5));break;}thread::sleep(Duration::from_millis(2));}});
         let root=t.path().to_owned();let run_id=id.clone();let runner=thread::spawn(move||drive(&root,&run_id,true).unwrap());received.recv_timeout(Duration::from_secs(5)).unwrap();assert_eq!(cancel_command(t.path(),&id)["ok"],true);
         let result=runner.join().unwrap();assert_eq!(result["outcome"],"cancelled");assert_eq!(result["checkpoint"]["steps"][0]["state"],"waiting");assert_eq!(result["checkpoint"]["steps"][0]["wait_polls"],2);assert_eq!(result["checkpoint"]["steps"][1]["state"],"planned");release.send(()).unwrap();worker.join().unwrap();
+    }
+    #[test]
+    fn ordinary_wait_remains_cancellable_during_slow_observation(){
+        for local in [false,true] {
+            let (t,mut server,id)=fixture(&["status","wait /status/frame 1 30000 20 4","step 1"]);
+            let (sent,received)=std::sync::mpsc::channel();let (release,done)=std::sync::mpsc::channel();
+            let worker=thread::spawn(move||{let mut count=0;loop{if let Ok(Some(request))=server.poll_query(){count+=1;if count==1{server.reply(&request,json!({"frame":0}),None).unwrap();}else{assert!(request.expected_boundary.is_none());sent.send(()).unwrap();let _=done.recv_timeout(Duration::from_secs(5));break;}}thread::sleep(Duration::from_millis(2));}});
+            let root=t.path().to_owned();let run_id=id.clone();let flag=Arc::new(AtomicBool::new(false));let runner_flag=flag.clone();
+            let runner=thread::spawn(move||drive_with_cancel(&root,&run_id,false,local.then_some(runner_flag.as_ref())).unwrap());
+            received.recv_timeout(Duration::from_secs(5)).unwrap();let start=std::time::Instant::now();
+            if local{flag.store(true,Ordering::SeqCst);}else{assert_eq!(cancel_command(t.path(),&id)["ok"],true);}
+            let result=runner.join().unwrap();assert!(start.elapsed()<Duration::from_secs(2));assert_eq!(result["outcome"],"cancelled");assert_eq!(result["checkpoint"]["steps"][0]["state"],"waiting");assert_eq!(result["checkpoint"]["steps"][1]["state"],"planned");assert!(!t.path().join("Data/config/debug-control/request.json").exists());release.send(()).unwrap();worker.join().unwrap();
+        }
+    }
+    #[test]
+    fn slow_wait_observation_never_sends_a_later_step_after_expiry(){
+        let (t,mut server,id)=fixture(&["status","wait /status/frame 1 1500 20 4","step 1"]);
+        let worker=thread::spawn(move||{let mut count=0;loop{if let Ok(Some(request))=server.poll_query(){count+=1;if count==1{server.reply(&request,json!({"frame":0}),None).unwrap();}else{thread::sleep(Duration::from_millis(1_700));let _=server.reply(&request,json!({"frame":1}),None);break;}}thread::sleep(Duration::from_millis(2));}});
+        let result=drive(t.path(),&id,false).unwrap();assert!(matches!(result["outcome"].as_str(),Some("unconfirmed"|"wait-timeout")));assert_eq!(result["checkpoint"]["steps"][1]["state"],"planned");assert!(!t.path().join("Data/config/debug-control/request.json").exists());worker.join().unwrap();
     }
     #[test]
     fn cancellation_between_steps_resumes_without_repeating_completed_step(){

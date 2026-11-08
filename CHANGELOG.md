@@ -234,6 +234,30 @@ Documentation: [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.m
 
 [Change record](docs/changes/2026-11-08-recover-completed-recipe-collectors.json)
 
+## 2026-11-08 — Preserve recipe wait budgets for slow observations
+
+Type: fixed. Platforms: Linux, Windows GNU / Wine / Xvfb.
+
+**Changes**
+
+- Allow ordinary and guarded status observations to await the remaining original recipe wait deadline instead of imposing a separate one-second acknowledgement limit. Reserve a distinct identity for each observation and do not automatically retry read queries.
+- Check both local cancellation and the persistent cancellation marker during an in-flight observation; a published query may still complete. Keep the original deadline and poll count, and stop later actions when an observation is unresolved.
+
+**Validation**
+
+- 37 Linux recipe-runner tests passed, including guarded and ordinary responses delayed more than one second, cancellation by marker and local flag, and no subsequent action after wait expiry. A corrected deterministic completed-wait boundary test passed separately on Linux and Wine; the preceding Wine suite passed its other 36 tests.
+- Windows GNU runtime and tests built. An isolated EUR Wine/Xvfb interpreter stopped during a recorded wait, closed and reopened normally, rebound the checkpoint, observed the guarded boundary, and completed after an external frame and one recipe frame. Original response, request identity and both deadlines were preserved; poll count advanced 1 to 3 and a second resume was identical. Protected inputs and the managed prefix lease were verified.
+- The first live Wine attempt exhausted the 30-second wait while verifying a large debug executable; a private copy without debug symbols shortened the retry without changing the deadline. A second attempt exposed the one-second ordinary-poll acknowledgement race. Failed diagnostics remain. An initial sandboxed Wine test could not create its socket; exact-token leases were manually released after host process checks and the later Wine tests ran with host access.
+
+**Limitations**
+
+- A status query published before cancellation may still complete; missing or ambiguous observations remain unconfirmed. Older open collector state and missing or mismatched pending responses cannot be reconstructed by this change.
+- Real validation used Wine/Xvfb with simulated cancellation, a private stripped runtime and CPU presentation after GPU fallback; native Windows, physical input and broader restart cases remain unverified. The requested Sol xhigh consultant was used, but effective model and effort for it and the primary session were not independently confirmed.
+
+Documentation: [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-08-preserve-wait-budget-for-slow-observations.json)
+
 ## 2026-11-08 — Guard explicit recipe recovery across runs
 
 Type: added. Platforms: Linux synthetic tests.

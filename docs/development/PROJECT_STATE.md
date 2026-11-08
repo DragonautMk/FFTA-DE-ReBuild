@@ -251,10 +251,11 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   collector/report, an interrupted wait and a retained terminal response with
   or without an attached wait,
   pass; focused Windows GNU/Wine tests cover those paths. An isolated EUR
-  Wine/Xvfb normal restart now preserves a completed status step and executes
-  its following frame only once, under the runner's native-driver prefix lease.
-  It used CPU presentation after GPU fallback. Native Windows, broader Wine
-  wait/selection/collector restarts and broader context recovery remain open.
+  Wine/Xvfb normal restarts preserve a completed status step or recorded wait
+  and execute the following frame once, under the runner's native-driver prefix
+  lease. Status observations use the remaining original wait budget and remain
+  cancellable in flight. CPU presentation followed GPU fallback. Native Windows,
+  broader Wine wait/selection/collector coverage and context recovery remain open.
   The shared operation registry has 127 operations/412 parameters. DBG2-07 persists relative internal/explicit external choice pins and scoped
   selector/history state with bounded metadata, async readonly restoration,
   missing/changed explanations and guarded atomic saves. Wine reopens the same

@@ -457,9 +457,12 @@ No other development was selected. On resumption read only the individual ID in
   preserves a completed status identity/result, recovers without guest mutation,
   executes the following frame once and leaves a second resume unchanged.
   The native driver holds the runner's prefix lease through both app runs and
-  server drain; originals remain unchanged. CPU presentation was used after GPU
-  fallback. Native Windows, the broader Wine restart matrix and broader context
-  recovery remain open.
+  server drain; originals remain unchanged. A separate Wine/Xvfb restart also
+  recovered a recorded wait under its original deadlines and executed the next
+  frame once. Ordinary and guarded status polls can use the remaining wait
+  budget while cancellation stays responsive. CPU presentation was used after
+  GPU fallback. Native Windows, the broader Wine restart matrix and broader
+  context recovery remain open.
   A separate isolated EUR Wine/Xvfb GUI run selected the recipe and session
   through the picker, refused Start before Details, then completed one frame
   after preview and recorded the completed step. Input was simulated and
