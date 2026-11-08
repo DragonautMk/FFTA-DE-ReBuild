@@ -194,8 +194,55 @@ pub(crate) struct Request {
     deadline_unix_ms: Option<u64>,
     #[serde(default)]
     session_manifest_sha256: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub expected_boundary: Option<ExpectedBoundary>,
     #[serde(skip)]
     query: bool,
+}
+
+/// Guest boundary checked by the frontend immediately before dispatch. This
+/// Can require absent collectors, but does not restore selected content or
+/// attest cheat provenance.
+#[derive(Clone, Debug, PartialEq, Eq, Deserialize, Serialize)]
+#[serde(deny_unknown_fields)]
+pub(crate) struct ExpectedBoundary {
+    pub state_sha256: String,
+    pub frame: u64,
+    pub clock: u64,
+    pub backend: String,
+    #[serde(default, skip_serializing_if = "is_false")]
+    pub require_cheats_inactive: bool,
+    #[serde(default, skip_serializing_if = "is_false")]
+    pub require_idle_collectors: bool,
+}
+fn is_false(value:&bool)->bool{!*value}
+impl ExpectedBoundary {
+    pub fn from_status(status:&Value)->Result<Self,String>{
+        let boundary=Self{
+            state_sha256:status["state_sha256"].as_str().ok_or("Missing guest state hash")?.to_owned(),
+            frame:status["frame"].as_u64().ok_or("Missing guest frame")?,
+            clock:status["clock"].as_u64().ok_or("Missing guest clock")?,
+            backend:status["backend"].as_str().ok_or("Missing guest backend")?.to_owned(),
+            require_cheats_inactive:true,
+            require_idle_collectors:true,
+        };
+        boundary.check(status)?;Ok(boundary)
+    }
+    pub fn check(&self, status: &Value) -> Result<(), String> {
+        if self.state_sha256.len() != 64 || !self.state_sha256.bytes().all(|b| b.is_ascii_digit() || (b'a'..=b'f').contains(&b))
+            || !matches!(self.backend.as_str(), "native" | "interp") {
+            return Err("Invalid expected guest boundary".into());
+        }
+        if status["paused"] != true || status["remaining"] != 0
+            || status["state_sha256"] != self.state_sha256 || status["frame"] != self.frame
+            || status["clock"] != self.clock || status["backend"] != self.backend
+            || (self.require_cheats_inactive && status["cheat_armed"]["active"] != false)
+            || (self.require_idle_collectors && (status["replay"]["active"] != false || status["ui_trace"]["has_trace"] != false
+                || ["audio_diagnostic","recent","gameplay_trace","code_trace"].iter().any(|key|!status[*key].is_null()))) {
+            return Err("Guest boundary changed; no action executed".into());
+        }
+        Ok(())
+    }
 }
 fn unix_ms()->u64{SystemTime::now().duration_since(UNIX_EPOCH).unwrap_or_default().as_millis().min(u128::from(u64::MAX)) as u64}
 impl Request {
@@ -262,7 +309,7 @@ impl Server {
     fn ready(&self,active:bool)->Value{
         json!({"schema":1,"kind":"ffta-debug-control","run":self.run,"active":active,
             "pid":std::process::id(),"session":self.session,
-            "capabilities":["query-status","targeted-cancel","request-deadline","idempotent-request-v1","content-discovery-v1","replay-job-v1","cheat-catalog-v1","cheat-capabilities-v1","cheat-once-v1","cheat-maintain-v1","cheat-presets-v1","probe-window-v1","probe-guard-v1","probe-actions-v1","probe-trigger-v1"]})
+            "capabilities":["query-status","targeted-cancel","request-deadline","idempotent-request-v1","guest-boundary-guard-v1","content-discovery-v1","replay-job-v1","cheat-catalog-v1","cheat-capabilities-v1","cheat-once-v1","cheat-maintain-v1","cheat-presets-v1","probe-window-v1","probe-guard-v1","probe-actions-v1","probe-trigger-v1"]})
     }
     pub fn pending_status(&self)->Value{
         self.pending.as_ref().map_or(Value::Null,|r|json!({"request_id":r.id,"operation_id":r.command.operation_id(),"command":r.command,"deadline_unix_ms":r.deadline_unix_ms}))
@@ -565,7 +612,7 @@ fn client_lock(dir:&Path,query:bool)->Result<std::fs::File,String>{
     Ok(lock)
 }
 #[derive(Clone)]
-struct RetryIdentity {run:String,id:String,deadline_unix_ms:u64}
+struct RetryIdentity {run:String,id:String,deadline_unix_ms:u64,expected_boundary:Option<ExpectedBoundary>}
 #[derive(Debug)]
 pub(crate) struct ClientFailure {pub outcome:&'static str,pub message:String,pub delivery:&'static str}
 impl ClientFailure {
@@ -590,7 +637,7 @@ fn exchange_interruptible(dir:&Path,ready:&Value,action:Action,query:bool,timeou
     if retry.is_some()&&!protected{return Err("This session does not support safe request retry".into());}
     let request=Request{schema:1,run:run.clone(),id:retry.map_or_else(stamp,|r|r.id.clone()),command:action,
         deadline_unix_ms:Some(retry.map_or_else(||unix_ms().saturating_add(timeout),|r|r.deadline_unix_ms)),
-        session_manifest_sha256:Some(ready["session"]["manifest_sha256"].as_str().ok_or("Missing session identity")?.into()),query};
+        session_manifest_sha256:Some(ready["session"]["manifest_sha256"].as_str().ok_or("Missing session identity")?.into()),expected_boundary:retry.and_then(|r|r.expected_boundary.clone()),query};
     let fingerprint=request.fingerprint()?;
     put(dir,if query{"query.json"}else{"request.json"},&serde_json::to_value(&request).map_err(|e|e.to_string())?)?;
     let start=Instant::now();
@@ -638,7 +685,7 @@ fn parse_retry(args:&[String])->Result<(PathBuf,Action,u64,RetryIdentity),String
     if !(20..=120_000).contains(&timeout){return Err("Timeout needs20..120000milliseconds".into());}
     let mut command=vec![args[separator+1].clone(),args[1].clone()];command.extend_from_slice(&args[separator+2..]);
     let (root,action)=parse(&command)?;if action.read_query(){return Err("Read-only query: request a fresh result instead".into());}
-    Ok((root,action,timeout,RetryIdentity{run,id,deadline_unix_ms}))
+    Ok((root,action,timeout,RetryIdentity{run,id,deadline_unix_ms,expected_boundary:None}))
 }
 fn execute(args:&[String])->Result<Value,ClientFailure>{
     if args.first().is_some_and(|v|v=="retry"){
@@ -664,7 +711,7 @@ pub(crate) fn retry_action_classified(root:&Path,action:Action,timeout:u64,run:S
         return Err(ClientFailure::new("invalid-request","Retry run and request IDs need1..100 bytes without controls","not-sent"));
     }
     if action.read_query(){return Err(ClientFailure::new("invalid-request","Read-only query: request a fresh result instead","not-sent"));}
-    execute_action_inner(root,action,timeout,Some(&RetryIdentity{run,id,deadline_unix_ms}))
+    execute_action_inner(root,action,timeout,Some(&RetryIdentity{run,id,deadline_unix_ms,expected_boundary:None}))
 }
 /// Dispatch a recipe's already-persisted identity. Read queries are permitted
 /// on their first attempt, but their server mailbox has no deduplication ledger.
@@ -672,19 +719,26 @@ pub(crate) fn planned_action_classified(root:&Path,action:Action,timeout:u64,run
     if [run.as_str(),id.as_str()].iter().any(|v|v.is_empty()||v.len()>100||v.chars().any(char::is_control)) {
         return Err(ClientFailure::new("invalid-request","Planned run and request IDs need1..100 bytes without controls","not-sent"));
     }
-    execute_action_inner(root,action,timeout,Some(&RetryIdentity{run,id,deadline_unix_ms}))
+    execute_action_inner(root,action,timeout,Some(&RetryIdentity{run,id,deadline_unix_ms,expected_boundary:None}))
 }
 pub(crate) fn planned_action_interruptible(root:&Path,action:Action,timeout:u64,run:String,id:String,deadline_unix_ms:u64,cancel:&std::sync::atomic::AtomicBool)->Result<Value,ClientFailure>{
     if [run.as_str(),id.as_str()].iter().any(|v|v.is_empty()||v.len()>100||v.chars().any(char::is_control)){return Err(ClientFailure::new("invalid-request","Planned run and request IDs need 1..100 bytes without controls","not-sent"));}
-    execute_action_inner_interruptible(root,action,timeout,Some(&RetryIdentity{run,id,deadline_unix_ms}),Some(cancel))
+    execute_action_inner_interruptible(root,action,timeout,Some(&RetryIdentity{run,id,deadline_unix_ms,expected_boundary:None}),Some(cancel))
+}
+pub(crate) fn planned_guarded_action(root:&Path,action:Action,timeout:u64,run:String,id:String,deadline_unix_ms:u64,boundary:ExpectedBoundary,cancel:Option<&std::sync::atomic::AtomicBool>)->Result<Value,ClientFailure>{
+    if [run.as_str(),id.as_str()].iter().any(|v|v.is_empty()||v.len()>100||v.chars().any(char::is_control)){return Err(ClientFailure::new("invalid-request","Planned run and request IDs need 1..100 bytes without controls","not-sent"));}
+    execute_action_inner_interruptible(root,action,timeout,Some(&RetryIdentity{run,id,deadline_unix_ms,expected_boundary:Some(boundary)}),cancel)
 }
 pub(crate) fn query_action_interruptible(root:&Path,action:Action,timeout:u64,cancel:&std::sync::atomic::AtomicBool)->Result<Value,ClientFailure>{
     if !action.read_query(){return Err(ClientFailure::new("invalid-request","Interruptible observation requires a read query","not-sent"));}
     execute_action_inner_interruptible(root,action,timeout,None,Some(cancel))
 }
 pub(crate) fn planned_fingerprint(action:Action,run:&str,id:&str,deadline_unix_ms:u64,manifest_sha256:&str)->Result<String,String>{
+    planned_guarded_fingerprint(action,run,id,deadline_unix_ms,manifest_sha256,None)
+}
+pub(crate) fn planned_guarded_fingerprint(action:Action,run:&str,id:&str,deadline_unix_ms:u64,manifest_sha256:&str,expected_boundary:Option<ExpectedBoundary>)->Result<String,String>{
     let query=action.query_channel();
-    Request{schema:1,run:run.into(),id:id.into(),command:action,deadline_unix_ms:Some(deadline_unix_ms),session_manifest_sha256:Some(manifest_sha256.into()),query}.fingerprint()
+    Request{schema:1,run:run.into(),id:id.into(),command:action,deadline_unix_ms:Some(deadline_unix_ms),session_manifest_sha256:Some(manifest_sha256.into()),expected_boundary,query}.fingerprint()
 }
 fn execute_action_inner(root:&Path,action:Action,timeout:u64,retry:Option<&RetryIdentity>)->Result<Value,ClientFailure>{execute_action_inner_interruptible(root,action,timeout,retry,None)}
 fn execute_action_inner_interruptible(root:&Path,action:Action,timeout:u64,retry:Option<&RetryIdentity>,cancel:Option<&std::sync::atomic::AtomicBool>)->Result<Value,ClientFailure>{
@@ -734,6 +788,7 @@ fn execute_action_inner_interruptible(root:&Path,action:Action,timeout:u64,retry
     if let Some(retry)=retry {
         if ready["run"].as_str()!=Some(retry.run.as_str()){return Err(ClientFailure::new("incompatible","Retry run differs from the active session; no command sent","not-sent"));}
         if ready["capabilities"].as_array().is_none_or(|c|!c.contains(&json!("idempotent-request-v1"))){return Err(ClientFailure::new("incompatible","This session does not support safe request retry","not-sent"));}
+        if retry.expected_boundary.is_some() && ready["capabilities"].as_array().is_none_or(|c|!c.contains(&json!("guest-boundary-guard-v1"))){return Err(ClientFailure::new("incompatible","This session cannot guard a guest boundary; no command sent","not-sent"));}
     }
     let result=if cancel.is_some(){exchange_interruptible(&dir,&ready,action,query,timeout,retry,cancel)}else if let Some(retry)=retry{exchange_with_retry(&dir,&ready,action,query,timeout,Some(retry))}else{exchange(&dir,&ready,action,query,timeout)};
     result.map_err(|e|ClientFailure::new("transport-error",e,"unknown"))
@@ -754,13 +809,38 @@ pub(crate) fn cmd(args:&[String])->Result<(),String>{
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn guest_boundary_requires_exact_paused_state_and_is_bound_to_request_identity() {
+        let t=tempfile::tempdir().unwrap();let s=synthetic_server(t.path());
+        let boundary=ExpectedBoundary{state_sha256:"a".repeat(64),frame:17,clock:99,backend:"interp".into(),require_cheats_inactive:true,require_idle_collectors:true};
+        let status=json!({"paused":true,"remaining":0,"state_sha256":"a".repeat(64),"frame":17,"clock":99,"backend":"interp","cheat_armed":{"active":false},"replay":{"active":false},"ui_trace":{"has_trace":false}});
+        assert!(boundary.check(&status).is_ok());
+        for (field,value) in [("paused",json!(false)),("remaining",json!(1)),("frame",json!(18)),("clock",json!(100)),("backend",json!("native")),("state_sha256",json!("b".repeat(64)))] {
+            let mut changed=status.clone();changed[field]=value;assert!(boundary.check(&changed).is_err(),"{field}");
+        }
+        let mut armed=status.clone();armed["cheat_armed"]["active"]=json!(true);assert!(boundary.check(&armed).is_err());
+        let mut collector=status.clone();collector["audio_diagnostic"]=json!({"collecting":true});assert!(boundary.check(&collector).is_err());
+        let mut malformed=boundary.clone();malformed.state_sha256="not-a-hash".into();assert!(malformed.check(&status).is_err());
+        let mut request=synthetic_request(&s,"boundary",Action::Step{frames:1,keys:0x3ff},false);
+        let original=request.fingerprint().unwrap();request.expected_boundary=Some(boundary);
+        assert_ne!(original,request.fingerprint().unwrap());
+        assert_eq!(request.fingerprint().unwrap(),serde_json::from_slice::<Request>(&serde_json::to_vec(&request).unwrap()).unwrap().fingerprint().unwrap());
+    }
+    #[test]
+    fn guarded_request_refuses_old_runtime_before_mailbox_publication(){
+        let t=tempfile::tempdir().unwrap();let s=synthetic_server(t.path());let path=s.dir.join("ready.json");let mut ready=read(&path).unwrap();
+        ready["capabilities"]=json!(["targeted-cancel","idempotent-request-v1"]);put(&s.dir,"ready.json",&ready).unwrap();
+        let boundary=ExpectedBoundary{state_sha256:"a".repeat(64),frame:1,clock:2,backend:"interp".into(),require_cheats_inactive:true,require_idle_collectors:true};
+        let error=planned_guarded_action(t.path(),Action::Step{frames:1,keys:0x3ff},100,s.run.clone(),"guarded".into(),unix_ms()+1000,boundary,None).unwrap_err();
+        assert_eq!(error.outcome,"incompatible");assert_eq!(error.delivery,"not-sent");assert!(!s.dir.join("request.json").exists());
+    }
     fn synthetic_server(root:&Path)->Server{
         fs::write(root.join("debug-session.json"),br#"{"label":"SYNTHETIC protocol only"}"#).unwrap();
         Server::new(root).unwrap()
     }
     fn synthetic_request(s:&Server,id:&str,command:Action,query:bool)->Request{
         Request{schema:1,run:s.run.clone(),id:id.into(),command,deadline_unix_ms:Some(unix_ms()+1000),
-            session_manifest_sha256:Some(s.session["manifest_sha256"].as_str().unwrap().into()),query}
+            session_manifest_sha256:Some(s.session["manifest_sha256"].as_str().unwrap().into()),expected_boundary:None,query}
     }
     #[test]
     fn claimed_request_never_removes_a_later_publication(){
@@ -828,7 +908,7 @@ mod tests {
         let args=a(&["retry","case","--run","run-1","--request","id-1","--deadline-unix-ms","123","--timeout-ms","50","--","step","1","--keys","0x3ff"]);
         let (_,action,timeout,retry)=parse_retry(&args).unwrap();assert!(matches!(action,Action::Step{frames:1,keys:0x3ff}));assert_eq!(timeout,50);assert_eq!(retry.id,"id-1");assert_eq!(retry.deadline_unix_ms,123);
         assert!(parse_retry(&a(&["retry","case","--run","r","--request","i","--deadline-unix-ms","1","--","status"])).is_err());
-        let t=tempfile::tempdir().unwrap();let s=synthetic_server(t.path());let wrong=RetryIdentity{run:"other".into(),id:"id".into(),deadline_unix_ms:123};
+        let t=tempfile::tempdir().unwrap();let s=synthetic_server(t.path());let wrong=RetryIdentity{run:"other".into(),id:"id".into(),deadline_unix_ms:123,expected_boundary:None};
         assert!(exchange_with_retry(&s.dir,&s.ready(true),Action::Pause,false,20,Some(&wrong)).is_err());assert!(!s.dir.join("request.json").exists());
     }
     #[test]
@@ -1196,7 +1276,7 @@ mod tests {
             run: s.run.clone(),
             id: "one".into(),
             command: Action::Status,
-            deadline_unix_ms:None,session_manifest_sha256:None,query:false,
+            deadline_unix_ms:None,session_manifest_sha256:None,expected_boundary:None,query:false,
         };
         put(
             &s.dir,
@@ -1231,7 +1311,7 @@ mod tests {
             run: s.run.clone(),
             id: "once".into(),
             command: Action::Pause,
-            deadline_unix_ms:None,session_manifest_sha256:None,query:false,
+            deadline_unix_ms:None,session_manifest_sha256:None,expected_boundary:None,query:false,
         };
         put(&s.dir, "request.json", &serde_json::to_value(&r).unwrap()).unwrap();
         let request = s.poll().unwrap().unwrap();

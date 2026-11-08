@@ -284,6 +284,7 @@ recipe checkpoint RUN-ID
 recipe run RUN-ID
 recipe cancel RUN-ID
 recipe resume RUN-ID
+recipe recover RUN-ID
 ```
 
 Quote each command, assertion or wait as a separate argument. The shared command
@@ -548,8 +549,23 @@ checkpoint retained a completed action followed by an outstanding wait. The
 new control run had a different identity: inspecting the old checkpoint remained
 possible, but resume was refused before dispatch. Checkpoint bytes, the command
 channel and the reopened guest state stayed unchanged; both session windows
-closed normally and protected inputs remained unchanged. Continuing an old run
-in a new session is intentionally refused; this is not cross-restart recovery.
+closed normally and protected inputs remained unchanged. This test predates the
+limited explicit cross-restart recovery described below.
+
+`recipe recover RUN-ID` can rebind a checkpoint to a new control run without
+dispatching an action. It requires at least one completed step followed only by
+unsent steps, unchanged session inputs and an unexpired original deadline. It
+preserves completed request identities, assigns new identities to unsent steps,
+and records the last result's paused guest boundary. Restore that exact state
+in the new session, then explicitly use `recipe resume RUN-ID`: the frontend
+checks its full state hash, frame, clock, backend, absence of armed cheats,
+replay and retained UI, audio, recent-event, code and gameplay collectors
+immediately before the first action. A mismatch refuses the action. The old
+deadline is not extended, and a runtime without the guard refuses before the
+mailbox write. An unresolved action, any recipe wait, capture/freeze searches
+and any recipe action that requires host collectors or selections are refused;
+those host contexts are not restored by a guest-state hash. The new path has
+synthetic Linux tests; real cross-restart execution and Windows remain open.
 
 Two initial attempts exited before opening the session because the test bridge
 inherited validation variables forbidden by the isolated-session guard. The

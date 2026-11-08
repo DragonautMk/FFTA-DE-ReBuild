@@ -20,6 +20,10 @@ struct Checkpoint {
 struct PlannedStep {
     index:u32,request_id:String,action_sha256:String,state:String,
     #[serde(default,skip_serializing_if="Option::is_none")]
+    original_run:Option<String>,
+    #[serde(default,skip_serializing_if="Option::is_none")]
+    expected_boundary:Option<crate::debug_control::ExpectedBoundary>,
+    #[serde(default,skip_serializing_if="Option::is_none")]
     deadline_unix_ms:Option<u64>,
     #[serde(default,skip_serializing_if="Option::is_none")]
     result:Option<Value>,
@@ -70,10 +74,14 @@ fn validate(checkpoint:&Checkpoint,recipe:&Recipe)->Result<(),String>{
     let mut unfinished=false;
     for (i,(step,action)) in checkpoint.steps.iter().zip(&recipe.steps).enumerate(){
         let hash=action_hash(action)?;
-        if step.index!=i as u32 || step.action_sha256!=hash || step.request_id!=request_id(&checkpoint.id,&checkpoint.session_run,i,&hash)? {return Err("Recipe checkpoint step identity is invalid".into());}
+        let step_run=step.original_run.as_deref().unwrap_or(&checkpoint.session_run);
+        if step_run.is_empty() || step_run.len()>100 || step_run.chars().any(char::is_control) || (step.original_run.is_some() && step.state!="completed") || step.index!=i as u32 || step.action_sha256!=hash || step.request_id!=request_id(&checkpoint.id,step_run,i,&hash)? {return Err("Recipe checkpoint step identity is invalid".into());}
+        if let Some(boundary)=&step.expected_boundary {
+            if i==0 || checkpoint.steps[i-1].state!="completed" || checkpoint.steps[i-1].result.as_ref().and_then(|r|crate::debug_control::ExpectedBoundary::from_status(&r["status"]).ok()).as_ref()!=Some(boundary) {return Err("Recipe recovery boundary does not match the previous result".into());}
+        }
         let terminal=if let (Some(deadline),Some(value))=(step.deadline_unix_ms,step.result.as_ref()){
-            let fingerprint=crate::debug_control::planned_fingerprint(action.clone(),&checkpoint.session_run,&step.request_id,deadline,&checkpoint.manifest_sha256)?;
-            value["run"]==checkpoint.session_run && value["id"]==step.request_id && value["deadline_unix_ms"]==deadline && value["request_sha256"]==fingerprint
+            let fingerprint=crate::debug_control::planned_guarded_fingerprint(action.clone(),step_run,&step.request_id,deadline,&checkpoint.manifest_sha256,step.expected_boundary.clone())?;
+            value["run"]==step_run && value["id"]==step.request_id && value["deadline_unix_ms"]==deadline && value["request_sha256"]==fingerprint
         }else{false};
         let checks=step.result.as_ref().map(|r|assertion_checks(recipe,i,r)).unwrap_or_default();
         let wait=recipe.waits.iter().find(|w|w.after_step as usize==i);
@@ -102,7 +110,7 @@ fn prepare(root:&Path,name:&str)->Result<Checkpoint,String>{
     let temp=tempfile::Builder::new().prefix("run-").rand_bytes(16).tempdir_in(&base).map_err(|e|e.to_string())?;
     let id=temp.path().file_name().and_then(|s|s.to_str()).filter(|s|valid_id(s)).ok_or("Invalid generated run ID")?.to_owned();
     let mut steps=Vec::with_capacity(recipe.steps.len());
-    for (i,action) in recipe.steps.iter().enumerate(){let hash=action_hash(action)?;steps.push(PlannedStep{index:i as u32,request_id:request_id(&id,&session_run,i,&hash)?,action_sha256:hash,state:"planned".into(),deadline_unix_ms:None,result:None,checks:Vec::new(),wait_deadline_unix_ms:None,wait_polls:0,wait_observation:None});}
+    for (i,action) in recipe.steps.iter().enumerate(){let hash=action_hash(action)?;steps.push(PlannedStep{index:i as u32,request_id:request_id(&id,&session_run,i,&hash)?,action_sha256:hash,state:"planned".into(),original_run:None,expected_boundary:None,deadline_unix_ms:None,result:None,checks:Vec::new(),wait_deadline_unix_ms:None,wait_polls:0,wait_observation:None});}
     let checkpoint=Checkpoint{schema:1,kind:"ffta-debug-command-checkpoint".into(),id,recipe_name:name.into(),recipe_sha256:recipe_hash(&recipe)?,manifest_sha256:recipe.manifest_sha256.clone(),session_run,steps,deadline_unix_ms:None};
     validate(&checkpoint,&recipe)?;let bytes=serde_json::to_vec_pretty(&checkpoint).map_err(|e|e.to_string())?;if bytes.len() as u64>MAX_CHECKPOINT{return Err("Checkpoint exceeds 64 KiB".into());}
     let file=temp.path().join("checkpoint.json");let mut out=OpenOptions::new().write(true).create_new(true).open(&file).map_err(|e|e.to_string())?;out.write_all(&bytes).and_then(|_|out.sync_all()).map_err(|e|e.to_string())?;drop(out);
@@ -130,6 +138,7 @@ pub(super) fn inspect_command(root:&Path,id:&str)->Value{
     match inspect(root,id){Ok((checkpoint,active))=>json!({"schema":1,"kind":"ffta-debug-command-checkpoint-result","ok":true,"outcome":"inspected","checkpoint":checkpoint,"readiness_matches_run":active,"scope":"Readiness metadata does not prove process liveness."}),Err(e)=>super::super::local_error("invalid-request",&e)}
 }
 pub(super) fn run_command(root:&Path,id:&str,resume:bool)->Value{runner::command(root,id,resume)}
+pub(super) fn recover_command(root:&Path,id:&str)->Value{runner::recover_command(root,id)}
 pub(super) fn cancel_command(root:&Path,id:&str)->Value{runner::cancel_command(root,id)}
 
 #[cfg(test)]

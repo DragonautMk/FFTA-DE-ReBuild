@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-11-08",
+  "slug": "guard-recipe-recovery-across-runs",
+  "title": "Guard explicit recipe recovery across runs",
+  "kind": "added",
+  "platforms": [
+    "Linux synthetic tests"
+  ],
+  "changes": [
+    "Allow explicit recipe checkpoint rebinding after a session restart for guest-only recipes when completed operations are followed only by unsent actions; retain old identities and guard the first new request against the recorded paused guest boundary, active cheats and retained collectors.",
+    "Bind the guard to the request fingerprint, require a compatible runtime before dispatch, and refuse unresolved requests, expired deadlines, waits and recipes containing host-dependent operations."
+  ],
+  "validation": [
+    "Linux synthetic regression: 30 recipe, 35 local-control, 4 completion and 4 operation-registry tests passed, including new cross-run identity, refusal, boundary and old-runtime checks.",
+    "Windows GNU test compilation stopped before compiling project code because x86_64-w64-mingw32-dlltool is absent; failed diagnostics were retained."
+  ],
+  "limitations": [
+    "No real cross-restart session, Windows/Wine, physical input or full host-context recovery is verified; unresolved pending requests and wait/collector/selection continuations remain refused. The existing 120-second deadline is not extended."
+  ],
+  "files": [
+    "crates/recomp/src/debug_control.rs",
+    "crates/recomp/src/play.rs",
+    "crates/recomp/src/debug_command.rs",
+    "crates/recomp/src/debug_command/completion.rs",
+    "crates/recomp/src/debug_command/recipe.rs",
+    "crates/recomp/src/debug_command/recipe/checkpoint.rs",
+    "crates/recomp/src/debug_command/recipe/checkpoint/runner.rs",
+    "crates/recomp/src/debug_operations.json",
+    "crates/menu/assets/debug_v2.tsv",
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/MENU_ATLAS_INVENTORY.json"
+  ],
+  "references": []
+}

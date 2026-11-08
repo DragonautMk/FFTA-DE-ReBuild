@@ -5751,11 +5751,27 @@
       "parameters":[{"name":"RUN","value_type":"text","constraint":"Original recipe run ID and unchanged session run.","current_menu":"selected","default":null}],
       "selection":["Retained checkpoint with original request identities"],
       "menu":{"current":"Debug / Consoles and scripts / Command console","destination":"Debug / Consoles and scripts / Command console","implemented":true},
-      "allowed_state":"Original control run still available and original deadline valid for any new step.",
+      "allowed_state":"Original control run or explicitly recovered run available and original deadline valid for any new step.",
       "effects":"Continue after completed steps and retry an unresolved ledger-protected request with its original identity; clear a cancellation marker explicitly.",
       "result":"Updated checkpoint or explicit refusal/unconfirmed outcome.",
       "limits":"No automatic retry for ambiguous unrecorded read queries; evicted results are not reexecuted.",
       "open_work":["DBG2-16: additional actions and real interrupted recovery remain missing"],
+      "external_dialog":null
+    },
+    {
+      "id":"recipe.recover",
+      "title":"Rebind a recipe after a session restart",
+      "source":"crates/recomp/src/debug_command/recipe/checkpoint/runner.rs",
+      "handler":"recover_command",
+      "cli":"recomp debug-command SESSION \"recipe recover RUN\"",
+      "parameters":[{"name":"RUN","value_type":"text","constraint":"Retained recipe run ID with a completed step and only unsent remaining steps.","current_menu":"selected","default":null}],
+      "selection":["Retained checkpoint and matching isolated session"],
+      "menu":{"current":"Debug / Consoles and scripts / Command console","destination":"Debug / Consoles and scripts / Command console","implemented":true},
+      "allowed_state":"A new compatible run, authenticated inputs and an unexpired original deadline; previous guest state must have no armed cheats.",
+      "effects":"Rebind unsent request identities and retain completed identities; send no action. The first subsequent action checks the recorded guest boundary atomically.",
+      "result":"Rebound checkpoint or explicit refusal; resume is a separate command.",
+      "limits":"No pending or ambiguous action, waits, host-dependent actions or capture/freeze searches anywhere in the recipe. The original deadline is not extended; restore the exact paused guest boundary before resuming.",
+      "open_work":["DBG2-16: real cross-restart validation, host-context recovery and broader actions remain open"],
       "external_dialog":null
     },
     {

@@ -25,6 +25,7 @@ pub(crate) enum Command {
     RecipePrepare { name:String },
     RecipeCheckpoint { id:String },
     RecipeRun { id:String, resume:bool },
+    RecipeRecover { id:String },
     RecipeCancel { id:String },
 }
 
@@ -114,6 +115,7 @@ fn parse_tokens(t:&[String],allow_retry:bool)->Result<Command,String>{
         [family,verb,name] if family=="recipe" && verb=="prepare"=>return Ok(Command::RecipePrepare{name:id(name,48)?}),
         [family,verb,value] if family=="recipe" && verb=="checkpoint"=>return Ok(Command::RecipeCheckpoint{id:id(value,48)?}),
         [family,verb,value] if family=="recipe" && (verb=="run"||verb=="resume")=>return Ok(Command::RecipeRun{id:id(value,48)?,resume:verb=="resume"}),
+        [family,verb,value] if family=="recipe" && verb=="recover"=>return Ok(Command::RecipeRecover{id:id(value,48)?}),
         [family,verb,value] if family=="recipe" && verb=="cancel"=>return Ok(Command::RecipeCancel{id:id(value,48)?}),
         [family,verb,rest @ ..] if family=="cheats" && ["refresh","list","show","capabilities","prepare","apply-once","arm","disarm","preset-save","preset-prepare","preset-arm"].contains(&verb.as_str())=>{
             let name=if verb=="apply-once"{"cheat-apply".into()}else{format!("cheat-{verb}")};
@@ -170,6 +172,7 @@ pub(crate) fn execute(root:&std::path::Path,input:&str)->serde_json::Value {
         Command::RecipePrepare{name}=>return recipe::prepare_command(root,&name),
         Command::RecipeCheckpoint{id}=>return recipe::checkpoint_command(root,&id),
         Command::RecipeRun{id,resume}=>return recipe::run_command(root,&id,resume),
+        Command::RecipeRecover{id}=>return recipe::recover_command(root,&id),
         Command::RecipeCancel{id}=>return recipe::cancel_command(root,&id),
         Command::Control(action)=>crate::debug_control::execute_action_classified(root,action,120_000),
         Command::Retry{run,id,deadline_unix_ms,action}=>crate::debug_control::retry_action_classified(root,action,120_000,run,id,deadline_unix_ms),

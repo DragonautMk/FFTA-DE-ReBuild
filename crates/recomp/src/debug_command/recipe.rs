@@ -200,6 +200,7 @@ pub(super) fn preview_command(root:&Path,name:&str)->Value{result(load(root,name
 pub(super) fn prepare_command(root:&Path,name:&str)->Value{checkpoint::prepare_command(root,name)}
 pub(super) fn checkpoint_command(root:&Path,id:&str)->Value{checkpoint::inspect_command(root,id)}
 pub(super) fn run_command(root:&Path,id:&str,resume:bool)->Value{checkpoint::run_command(root,id,resume)}
+pub(super) fn recover_command(root:&Path,id:&str)->Value{checkpoint::recover_command(root,id)}
 pub(super) fn cancel_command(root:&Path,id:&str)->Value{checkpoint::cancel_command(root,id)}
 
 #[cfg(test)]

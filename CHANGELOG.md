@@ -3,6 +3,26 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-08 — Guard explicit recipe recovery across runs
+
+Type: added. Platforms: Linux synthetic tests.
+
+**Changes**
+
+- Allow explicit recipe checkpoint rebinding after a session restart for guest-only recipes when completed operations are followed only by unsent actions; retain old identities and guard the first new request against the recorded paused guest boundary, active cheats and retained collectors.
+- Bind the guard to the request fingerprint, require a compatible runtime before dispatch, and refuse unresolved requests, expired deadlines, waits and recipes containing host-dependent operations.
+
+**Validation**
+
+- Linux synthetic regression: 30 recipe, 35 local-control, 4 completion and 4 operation-registry tests passed, including new cross-run identity, refusal, boundary and old-runtime checks.
+- Windows GNU test compilation stopped before compiling project code because x86_64-w64-mingw32-dlltool is absent; failed diagnostics were retained.
+
+**Limitations**
+
+- No real cross-restart session, Windows/Wine, physical input or full host-context recovery is verified; unresolved pending requests and wait/collector/selection continuations remain refused. The existing 120-second deadline is not extended.
+
+[Change record](docs/changes/2026-11-08-guard-recipe-recovery-across-runs.json)
+
 ## 2026-11-07 — Summarize debug console results and replay progress
 
 Type: changed. Platforms: Windows GNU build and Wine/Xvfb.

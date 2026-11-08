@@ -38,6 +38,40 @@ fn cancelled_in_flight(root:&Path,id:&str,checkpoint:&Checkpoint,query:bool)->Va
     else {result(checkpoint,"cancellation-pending","Cancellation recorded; the reserved action may still execute. Its outcome is unconfirmed.")}
 }
 fn drive(root:&Path,id:&str,resume:bool)->Result<Value,String>{drive_with_cancel(root,id,resume,None)}
+/// Rebind a stopped, unambiguous checkpoint without dispatching an action.
+/// Host-side collectors and selections are intentionally outside this first
+/// recovery contract; the remaining steps must not depend on those objects.
+fn recover(root:&Path,id:&str)->Result<Value,String>{
+    let dir=run_dir(root,id)?;let _run_lock=lock(&dir,".execution.lock")?;let _gate=lock(&dir,".transition.lock")?;
+    let (mut checkpoint,active)=inspect(root,id)?;
+    if active{return Err("This checkpoint already belongs to the active run; use resume".into());}
+    let recipe=load(root,&checkpoint.recipe_name)?;
+    let new_run=active_run(root,&checkpoint.manifest_sha256)?;
+    if new_run==checkpoint.session_run{return Err("The original run is still active".into());}
+    let ready:Value=serde_json::from_slice(&crate::diagnostics::read(&root.join("Data/config/debug-control/ready.json"),128*1024)?).map_err(|e|e.to_string())?;
+    if ready["run"]!=new_run || ready["capabilities"].as_array().is_none_or(|c|!c.contains(&json!("guest-boundary-guard-v1"))){return Err("The new run does not support a guarded recovery".into());}
+    if checkpoint.deadline_unix_ms.is_none_or(|deadline|now()>=deadline){return Err("The original recipe deadline has elapsed; no action sent".into());}
+    let index=checkpoint.steps.iter().position(|s|s.state!="completed").ok_or("All recipe steps already completed")?;
+    if index==0 || checkpoint.steps[index..].iter().any(|s|s.state!="planned") {return Err("Recovery requires a completed step followed only by unsent steps; unresolved actions cannot be repeated".into());}
+    if !recipe.waits.is_empty() {return Err("Cross-run recovery of wait observations is not supported".into());}
+    if recipe.steps.iter().any(|action|!match action {
+        Action::Status|Action::Inspect{..}|Action::Step{..}=>true,
+        Action::Find{settings}=>matches!(settings.on_hit,None|Some(crate::debug_probe::HitAction::Pause)),
+        _=>false,
+    }) {
+        return Err("This recipe uses host context that cross-run recovery cannot restore".into());
+    }
+    let prior=checkpoint.steps[index-1].result.as_ref().ok_or("Missing previous terminal result")?;
+    let boundary=crate::debug_control::ExpectedBoundary::from_status(&prior["status"])?;
+    let _unstarted=crate::debug_session::replay_command(root)?;
+    let old_run=checkpoint.session_run.clone();
+    for step in &mut checkpoint.steps[..index] {if step.original_run.is_none(){step.original_run=Some(old_run.clone());}}
+    checkpoint.session_run=new_run.clone();
+    for (i,step) in checkpoint.steps.iter_mut().enumerate().skip(index){step.request_id=request_id(id,&new_run,i,&step.action_sha256)?;step.expected_boundary=None;}
+    checkpoint.steps[index].expected_boundary=Some(boundary);
+    publish(&dir,&checkpoint,&recipe)?;
+    Ok(json!({"schema":1,"kind":"ffta-debug-command-recipe-run","ok":true,"outcome":"rebound","message":"Checkpoint rebound; restore the exact guest boundary and explicitly resume. No action was sent.","checkpoint":checkpoint}))
+}
 pub(super) fn drive_with_cancel(root:&Path,id:&str,resume:bool,local_cancel:Option<&std::sync::atomic::AtomicBool>)->Result<Value,String>{
     let dir=run_dir(root,id)?;let _run_lock=lock(&dir,".execution.lock")?;
     let (mut checkpoint,active)=inspect(root,id)?;
@@ -112,7 +146,9 @@ pub(super) fn drive_with_cancel(root:&Path,id:&str,resume:bool,local_cancel:Opti
         }
         let step=&checkpoint.steps[index];let deadline=step.deadline_unix_ms.unwrap();
         let wait=deadline.saturating_sub(now()).clamp(20,120_000);
-        let response=if let Some(flag)=local_cancel {crate::debug_control::planned_action_interruptible(root,recipe.steps[index].clone(),wait,checkpoint.session_run.clone(),step.request_id.clone(),deadline,flag)}else{crate::debug_control::planned_action_classified(root,recipe.steps[index].clone(),wait,checkpoint.session_run.clone(),step.request_id.clone(),deadline)};
+        let response=if let Some(boundary)=step.expected_boundary.clone() {
+            crate::debug_control::planned_guarded_action(root,recipe.steps[index].clone(),wait,checkpoint.session_run.clone(),step.request_id.clone(),deadline,boundary,local_cancel)
+        }else if let Some(flag)=local_cancel {crate::debug_control::planned_action_interruptible(root,recipe.steps[index].clone(),wait,checkpoint.session_run.clone(),step.request_id.clone(),deadline,flag)}else{crate::debug_control::planned_action_classified(root,recipe.steps[index].clone(),wait,checkpoint.session_run.clone(),step.request_id.clone(),deadline)};
         let value=match response{Ok(v)=>v,Err(e)=>{if local_cancel.is_some_and(|c|c.load(std::sync::atomic::Ordering::SeqCst)){return Ok(cancelled_in_flight(root,id,&checkpoint,false));}return Ok(result(&checkpoint,"unconfirmed",&format!("Request may be unresolved ({}; delivery {}). Use resume only for a ledger-protected step.",e.message,e.delivery)));}};
         if value["outcome"]=="interrupted"{return Ok(cancelled_in_flight(root,id,&checkpoint,false));}
         if value["kind"]!="ffta-debug-control-result"{return Ok(result(&checkpoint,"unconfirmed","No terminal server response; retain the same identity for recovery."));}
@@ -144,6 +180,9 @@ pub(super) fn drive_with_cancel(root:&Path,id:&str,resume:bool,local_cancel:Opti
 }
 pub(super) fn command(root:&Path,id:&str,resume:bool)->Value{
     match drive(root,id,resume){Ok(v)=>v,Err(e)=>super::super::super::local_error("invalid-request",&e)}
+}
+pub(super) fn recover_command(root:&Path,id:&str)->Value{
+    match recover(root,id){Ok(v)=>v,Err(e)=>super::super::super::local_error("invalid-request",&e)}
 }
 pub(super) fn cancel_command(root:&Path,id:&str)->Value{
     let result=(||->Result<(),String>{
@@ -185,6 +224,33 @@ mod tests {
                 thread::sleep(Duration::from_millis(2));
             }
         })
+    }
+    #[test]
+    fn cross_run_recovery_preserves_completed_identity_and_guards_first_remaining_action(){
+        let (t,mut server,id)=fixture(&["step 1","step 2"]);let root=t.path().to_owned();let worker_id=id.clone();
+        let status=json!({"paused":true,"remaining":0,"state_sha256":"a".repeat(64),"frame":1,"clock":100,"backend":"interp","cheat_armed":{"active":false},"replay":{"active":false},"ui_trace":{"has_trace":false}});
+        let first_status=status.clone();
+        let worker=thread::spawn(move||loop{if let Ok(Some(request))=server.poll(){assert_eq!(cancel_command(&root,&worker_id)["ok"],true);server.reply(&request,first_status,None).unwrap();break;}thread::sleep(Duration::from_millis(2));});
+        let first=drive(t.path(),&id,false).unwrap();assert_eq!(first["outcome"],"cancelled");worker.join().unwrap();
+        let old_run=first["checkpoint"]["session_run"].as_str().unwrap().to_owned();let old_id=first["checkpoint"]["steps"][0]["request_id"].as_str().unwrap().to_owned();
+        let mut server=crate::debug_control::Server::new(t.path()).unwrap();
+        let recovered=recover(t.path(),&id).unwrap();assert_eq!(recovered["outcome"],"rebound");assert_eq!(recovered["checkpoint"]["steps"][0]["original_run"],old_run);assert_eq!(recovered["checkpoint"]["steps"][0]["request_id"],old_id);
+        assert!(!t.path().join("Data/config/debug-control/request.json").exists());
+        let worker=thread::spawn(move||loop{if let Ok(Some(request))=server.poll(){request.expected_boundary.as_ref().unwrap().check(&status).unwrap();server.reply(&request,status,None).unwrap();break;}thread::sleep(Duration::from_millis(2));});
+        let finished=drive(t.path(),&id,true).unwrap();assert_eq!(finished["outcome"],"completed");assert_eq!(finished["checkpoint"]["steps"][0]["request_id"],old_id);worker.join().unwrap();
+    }
+    #[test]
+    fn cross_run_recovery_refuses_pending_action_and_host_dependent_remaining_steps(){
+        for commands in [vec!["step 1","step 2"],vec!["step 1","audio-report"],vec!["audio-start","step 2"]] {
+            let (t,server,id)=fixture(&commands);let dir=run_dir(t.path(),&id).unwrap();let (mut checkpoint,_)=inspect(t.path(),&id).unwrap();let recipe=load(t.path(),"demo").unwrap();
+            let deadline=now()+30_000;checkpoint.deadline_unix_ms=Some(deadline);checkpoint.steps[0].state="pending".into();checkpoint.steps[0].deadline_unix_ms=Some(deadline);publish(&dir,&checkpoint,&recipe).unwrap();
+            if commands[1]=="audio-report" || commands[0]=="audio-start" {
+                checkpoint.steps[0].state="completed".into();
+                checkpoint.steps[0].result=Some(json!({"kind":"ffta-debug-control-result","ok":true,"run":checkpoint.session_run,"id":checkpoint.steps[0].request_id,"deadline_unix_ms":deadline,"request_sha256":crate::debug_control::planned_fingerprint(recipe.steps[0].clone(),&checkpoint.session_run,&checkpoint.steps[0].request_id,deadline,&checkpoint.manifest_sha256).unwrap(),"status":{"paused":true,"remaining":0,"state_sha256":"a".repeat(64),"frame":1,"clock":100,"backend":"interp","cheat_armed":{"active":false},"replay":{"active":false},"ui_trace":{"has_trace":false}}}));publish(&dir,&checkpoint,&recipe).unwrap();
+            }
+            drop(server);let _new=crate::debug_control::Server::new(t.path()).unwrap();let before=fs::read(dir.join("checkpoint.json")).unwrap();
+            assert!(recover(t.path(),&id).is_err());assert_eq!(fs::read(dir.join("checkpoint.json")).unwrap(),before);assert!(!t.path().join("Data/config/debug-control/request.json").exists());
+        }
     }
     #[test]
     fn cancellation_between_steps_resumes_without_repeating_completed_step(){

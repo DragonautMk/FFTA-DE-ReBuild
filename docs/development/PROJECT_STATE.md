@@ -227,8 +227,12 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   17typed input roles, declared homepage/campaign-report/artifact-preview adapters,
   explicit Python3.11+ selection, source/dependency hashes and cancellable capped
   process logs. Readonly status/inspect recipes and a separate bounded guest
-  catalog link to the gameplay inspector without executing guest data. Shared
-  operation registry now has97operations/329parameters. DBG2-07 persists relative internal/explicit external choice pins and scoped
+  catalog link to the gameplay inspector without executing guest data. Typed
+  recipe checkpoints can explicitly rebind a completed/unsent prefix to
+  a new control run with an atomic guest-boundary guard; host-dependent actions,
+  waits and uncertain requests remain outside this recovery path. Linux
+  synthetic checks pass; real cross-restart validation remains open.
+  The shared operation registry has97operations/329parameters. DBG2-07 persists relative internal/explicit external choice pins and scoped
   selector/history state with bounded metadata, async readonly restoration,
   missing/changed explanations and guarded atomic saves. Wine reopens the same
   seed after a Unicode/spaced portable move from unrelated cwd with exact

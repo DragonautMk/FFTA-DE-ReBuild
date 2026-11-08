@@ -63,10 +63,10 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 - State: active
 - Outcome: partial
-- Selection: user requests completion of Debug Tools V2; existing client-interruption recovery and recipe flows passed, but a new session currently refuses the old checkpoint. Missing: safe cross-restart recovery and remaining parent criteria. Next: inspect session identity, ledger and state guarantees before implementing a complete recovery contract.
-- Verified: assertions, waits, catalog/captures, bounded searches including an EUR Wine Thumb hit, Start/cancel, interrupted recovery, safe restart refusal and interactive recipe/session picker. `2026-11-04-verify-recipe-breakpoint-hit.json`.
-- Missing: other action types, feature-gated watch, broader picker scenarios, cross-restart recovery and wider platforms; ambiguous queries not retried.
-- Resume: select an unverified criterion without repeating accepted search or picker flows; private and failed proof units retained.
+- Selection: user requests completion of Debug Tools V2; prior client-interruption and picker proofs remain accepted. Added explicit guarded cross-run recovery for guest-only recipes; next validate a real restart and complete remaining criteria.
+- Verified: assertions, waits, catalog/captures, bounded searches including EUR Wine Thumb hit, Start/cancel, interrupted recovery and interactive picker. New recovery rebinds completed/unsent identities, checks guest boundary and inactive collectors/cheats before the first new action, and refuses ambiguous or host-dependent recipes. Linux synthetic regression: 30 recipe, 35 control, 4 completion, 4 registry tests PASS. `docs/changes/2026-11-08-guard-recipe-recovery-across-runs.json`.
+- Missing: real session restart proof, Windows/Wine validation, host-dependent recovery, pending/ambiguous actions and waits across restart, other action types, feature-gated watch, broader picker scenarios and wider platforms. Original 120-second deadline remains in force.
+- Resume: use the new recovery code and receipts; inspect host toolchain/Xvfb availability, then validate changed behavior without repeating accepted proofs. No live validation process remains.
 
 ### DBG2-17
 
@@ -189,9 +189,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: DBG2-16 selected after DBG2-24 completed in the recorded interpreter/Wine scope.
-- Last verified result: eleven retained PASS receipts cover trigger hit/miss, bounded conditions, actions, identity, retry and interactive editing; DBG2-15 is accepted.
-- Remaining work: other open Debug Tools V2 tasks; counted watch was synthetic and broader platform/input validation remains DBG2-27.
-- Errors or blockers: effective debugging model/effort unconfirmed; prior GUI cleanup completed after identity verification.
-- Next action: inspect recipe checkpoint, session identity and ledger guarantees for safe cross-restart recovery.
-- References: docs/changes/2026-11-07-complete-named-trigger-editor.json; docs/changes/2026-11-04-authenticate-trigger-capture-and-retry.json.
+- Task: DBG2-16 remains partial; explicit guarded cross-run recovery for guest-only recipes is implemented.
+- Last verified result: 73 Linux synthetic recipe, control, completion and registry tests PASS; protected inputs unchanged.
+- Remaining work: real restart proof, Windows/Wine and complete host-context recovery, plus other Debug Tools V2 tasks.
+- Errors or blockers: Windows GNU compile could not find MinGW dlltool; Xvfb is absent. Failed build diagnostics retained. Effective debugging model/effort unconfirmed.
+- Next action: verify available Windows toolchain and isolated display, then test the new recovery in a real session; preserve unresolved requests and host-context limits.
+- References: docs/changes/2026-11-08-guard-recipe-recovery-across-runs.json; target/validation/units/dbg2-recipe-recovery-guard-final-5hfsi8zi/; target/validation/units/dbg2-recipe-boundary-build-uers2rxh/.

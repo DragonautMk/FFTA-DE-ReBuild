@@ -426,8 +426,11 @@ No other development was selected. On resumption read only the individual ID in
   also terminated its client during a wait and resumed without repeating the
   completed action. A separate EUR session terminated the client while a
   60-frame step was pending and resumed with the same ID and exact frame count.
-  Closing and reopening the session makes the old checkpoint inspectable but
-  refuses resume without dispatch; cross-restart recovery is not implemented.
+  Closing and reopening the session makes the old checkpoint inspectable. A
+  limited explicit recovery now rebinds completed/unsent checkpoints with a
+  guarded guest boundary; pending actions, waits and recipes with host-dependent
+  actions are refused. Synthetic Linux validation covers the new path; a real
+  cross-restart proof and broader context recovery remain open.
   A separate isolated EUR Wine/Xvfb GUI run selected the recipe and session
   through the picker, refused Start before Details, then completed one frame
   after preview and recorded the completed step. Input was simulated and

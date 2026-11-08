@@ -2439,6 +2439,11 @@ impl PlayApp {
                     Err("Command deadline expired before execution".into())
                 }else if !query && self.control_server.as_ref().is_some_and(|s|s.pending.is_some()){
                     Err("A command is still pending; use query status or targeted cancel".into())
+                }else if let Some(boundary)=&request.expected_boundary {
+                    // Compare and dispatch on this same frontend turn, before
+                    // accepting any other control or advancing the guest.
+                    self.debug_status().and_then(|status|boundary.check(&status))
+                        .and_then(|()|self.debug_action(&request.command))
                 }else{self.debug_action(&request.command)};
                 if outer_refusal&&!matches!(request.command,crate::debug_control::Action::Status)&&self.events_enabled(){self.ui_event("control-result",serde_json::json!({"command":request.command,"outcome":"refused","error":result.as_ref().err()}));}
                 if result.is_ok() && matches!(request.command,crate::debug_control::Action::Step{..}|crate::debug_control::Action::Find{..}|crate::debug_control::Action::SelectId{..}|crate::debug_control::Action::ContentRefresh|crate::debug_control::Action::CheatRefresh|crate::debug_control::Action::Replay{..}){
