@@ -3,6 +3,237 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-08 — Verify recipe recovery across a normal restart
+
+Type: changed. Platforms: Linux / Xvfb, isolated EUR interpreter.
+
+**Changes**
+
+- Verify the explicit guest-only recipe recovery path across a normal close and reopen of the same isolated session.
+
+**Validation**
+
+- A status step completed and a simulated cancellation stopped the following step; after reopening under a different control-run identity, recovery preserved the completed result and request identity, sent no guest action, and resumed exactly one frame.
+- A second resume preserved state, frame, clock and keys. Both windows closed normally; ROM, seed state and runtime inputs remained unchanged.
+
+**Limitations**
+
+- One guest-only recipe, simulated cancellation and silent audio; no runtime crash, pending-action replay, waits, host-dependent recovery, Windows or physical input was tested.
+
+Documentation: [2026-11-08-guard-recipe-recovery-across-runs.json](docs/changes/2026-11-08-guard-recipe-recovery-across-runs.json).
+
+[Change record](docs/changes/2026-11-08-verify-recipe-recovery-normal-restart.json)
+
+## 2026-11-08 — Verify feature-gated watch recipes
+
+Type: changed. Platforms: Linux / Xvfb isolated EUR interpreter.
+
+**Changes**
+
+- Document an audit-enabled RAM read watch in a typed recipe and the corresponding default-build feature refusal.
+- Clarify that typed recipes do not dispatch campaign run-case and do not enforce reopening reasons for manually repeated evidence.
+
+**Validation**
+
+- An isolated audit-enabled session recorded one RAM read hit during an HLE/DMA-inclusive interpreter step, passed a hit assertion and completed its next step; an explicit second resume preserved checkpoint and guest state.
+- The default build recorded feature refusal with the next step still planned and guest state unchanged; both windows closed normally and protected inputs were unchanged.
+
+**Limitations**
+
+- This covers one read hit and one refusal in Linux/Xvfb with silent audio, not guest-instruction attribution, Wine or native Windows feature-enabled watch behavior.
+- Recipe-level enforcement of a reopening reason for equivalent concluded evidence remains unresolved; the existing campaign run-case enforces it separately.
+
+Documentation: [debug_campaigns.md](docs/debug_campaigns.md).
+
+[Change record](docs/changes/2026-11-08-verify-feature-gated-recipe-watch.json)
+
+## 2026-11-08 — Run additional bounded frontend actions in recipes
+
+Type: changed. Platforms: Linux, Windows GNU / Wine.
+
+**Changes**
+
+- Allow pause, recent capture/freeze/report, issue reports and guarded cheat/preset operations through the existing typed recipe runner and action handlers.
+- Keep original handler guards, stop on first refusal, preserve request identities and do not repeat completed actions. Cross-run recovery still refuses host contexts it cannot reconstruct; separate replay jobs remain unsupported.
+
+**Validation**
+
+- 46 focused Linux recipe tests and 112 focused Wine tests passed, covering action ordering, cheat refusal and unchanged explicit resume.
+- An isolated Linux/Xvfb EUR interpreter ran pause, recent capture, one frame, freeze and report; resume left the single report unchanged. Disarming an inactive cheat was refused before the following step, with guest state unchanged. The window closed normally and protected inputs stayed unchanged.
+
+**Limitations**
+
+- Cheat application/arming and issue output have synthetic ordering coverage only in these checks; no device-level cheat equivalence or native Windows/physical input is claimed.
+- Replay jobs need a hard worker and aggregate frame limit before recipe support; cross-run recovery of active recent/cheat host state remains refused.
+
+Documentation: [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-08-run-additional-frontend-recipe-actions.json)
+
+## 2026-11-08 — Resolve retained terminal recipe responses
+
+Type: added. Platforms: Linux / Xvfb isolated EUR interpreter; Windows GNU / Wine synthetic tests.
+
+**Changes**
+
+- Allow explicit recovery of a pending recipe step when its retained successful terminal response exactly matches the original run, request, deadline, operation, session and request fingerprint; record it without dispatching the action again.
+- Preserve assertions and terminal completion, require a separate explicit recovery to continue remaining steps, and refuse missing, mismatched, failed or wait-attached pending responses.
+
+**Validation**
+
+- Linux synthetic regression passed 39 recipe, 36 control, 4 completion, 4 registry and 1 selection test; Windows GNU/Wine passed 39, 37, 4, 4 and 1 respectively.
+- An isolated Linux/Xvfb run stopped its own client after the server wrote a terminal status response but before the pending checkpoint changed. After a normal reopen, recovery recorded the exact response without redispatch, then resumed one frame; a second resume changed neither checkpoint nor guest state. Protected inputs stayed unchanged.
+
+**Limitations**
+
+- The response is trusted local session evidence, not a signed record. Overwritten or unavailable responses and pending actions with attached waits remain refused. The real proof used an intentionally interrupted client and silent audio; real Wine restart, native Windows and physical input remain open.
+
+Documentation: [2026-11-08-recover-selected-recipe-inputs.json](docs/changes/2026-11-08-recover-selected-recipe-inputs.json).
+
+[Change record](docs/changes/2026-11-08-resolve-retained-recipe-responses.json)
+
+## 2026-11-08 — Require a reason to reopen concluded recipe evidence
+
+Type: added. Platforms: Linux, Windows GNU / Wine.
+
+**Changes**
+
+- Allow an explicitly terminal recipe checkpoint, including negative outcomes, to be marked concluded without dispatch; matching ordered actions and ROM within the same session require a reopening reason on a new run.
+- Record the reason and matching checkpoint hashes in the new checkpoint, recheck them atomically before the first dispatch, and bind the Scripts and tools preview to the evidence and reason. Preserve existing presets and unmarked repeatable runs.
+
+**Validation**
+
+- 109 focused Linux and 110 Wine tests passed, including completed and negative evidence, renamed recipes, changed assertions, tampering, stale preview, late conclusion, old presets and the rendered reason field.
+- An isolated Linux/Xvfb EUR interpreter completed and concluded a one-frame recipe; a repeat without a reason was refused with unchanged guest state, and a reasoned repeat executed one further frame without duplication on resume. Protected inputs were unchanged and the window closed normally.
+- An initial Wine run exposed transient access denial in an existing synthetic wait test; its server outbox retry was corrected and the final regression passed. A first menu test used the wrong text-commit event and was corrected.
+- An isolated Linux/Xvfb picker selected the saved recipe and session, displayed concluded evidence, refused an empty reason, required a new Details review after editing it, and completed one frame. Simulated keyboard/mouse input and protected originals were used; the window closed normally.
+- The first GUI drivers failed on helper path, sampled short key pulses, scroll overshoot and premature async status matching. A separate trace recorded key press/release pairs before navigation polling; its runner retained private scratch and reported FAIL despite exit 0. The final direct-pointer test passed.
+
+**Limitations**
+
+- Only explicitly concluded recipe checkpoints in the same session with matching typed actions and ROM are detected; different actions, other sessions and campaign evidence require their own explicit workflow. Local evidence is not signed.
+- Real native Windows and physical input were not tested; the prior automated review rejected the separate Wine GUI restart driver.
+
+Documentation: [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-08-require-reopening-for-concluded-recipes.json)
+
+## 2026-11-08 — Recover pinned recipe selections across restarts
+
+Type: added. Platforms: Linux / Xvfb isolated EUR interpreter; Windows GNU / Wine synthetic tests.
+
+**Changes**
+
+- Preserve selected input roles using their anchored locations, kinds and content hashes; verify the input outside the frontend thread and check the restored selection before dispatch without repeating its completed selection command.
+- Record stable pin fingerprints in status observations so a temporary catalog ID may change across runs; explicit refresh remains necessary for a new catalog index or cheat snapshot.
+
+**Validation**
+
+- Linux synthetic regression passed 37 recipe, 36 control, 4 completion, 4 registry and 1 portable-move selection test; Windows GNU/Wine passed 37, 37, 4, 4 and 1 respectively.
+- An isolated Linux/Xvfb interpreter recovered a synthetic catalog selection through two normal restarts and three distinct control runs; the temporary ID changed, stable pin and completed results remained unchanged, one later frame ran, and a second resume had no effect. Protected inputs stayed unchanged.
+
+**Limitations**
+
+- Up to three selected roles and 2 KiB of pin metadata are supported; older selection results without pins, earlier collectors, ambiguous pending actions and stale or unavailable inputs are refused. No continuous filesystem watch exists between recovery verification and later action preflight.
+- The real proof used simulated cancellation and silent audio; real Wine restart, native Windows and physical input remain open.
+
+Documentation: [2026-11-08-recover-recorded-recipe-waits.json](docs/changes/2026-11-08-recover-recorded-recipe-waits.json).
+
+[Change record](docs/changes/2026-11-08-recover-selected-recipe-inputs.json)
+
+## 2026-11-08 — Recover recorded recipe waits across runs
+
+Type: changed. Platforms: Linux / Xvfb isolated EUR interpreter; Windows GNU / Wine synthetic tests.
+
+**Changes**
+
+- Persist recoverable guest boundaries for recorded waits and rebind an interrupted wait without resending its completed action, preserving the original deadlines and consumed poll count.
+- Guard the first resumed observation against the last idle boundary, reject uncertain polls and busy host work, and keep cancellation responsive while a guarded response is pending.
+- Use the remaining wait budget rather than a one-second acknowledgement cap for a guarded poll and retain the response classification in errors.
+
+**Validation**
+
+- Linux synthetic regression passed 36 recipe, 35 control, 4 completion and 4 registry tests; Windows GNU/Wine passed 36, 36, 4 and 4 after correcting a transient-publication assumption in the synthetic server.
+- An isolated Linux/Xvfb normal restart resumed a recorded wait, observed the preserved boundary, accepted an external frame that satisfied the condition and executed one subsequent recipe frame. The action response and deadlines were retained; poll count advanced from one to three and a second resume was unchanged.
+- A diagnostic run captured the successful guarded response after the former one-second client timeout with matching run and request fingerprint; failed attempts and their diagnostics were retained.
+
+**Limitations**
+
+- The real proof used simulated cancellation and silent audio. A real Wine restart, native Windows, prior collector or selection restoration and ambiguous pending actions remain open; wait and recipe deadlines are not extended.
+
+Documentation: [2026-11-08-recover-new-recipe-collectors.json](docs/changes/2026-11-08-recover-new-recipe-collectors.json).
+
+[Change record](docs/changes/2026-11-08-recover-recorded-recipe-waits.json)
+
+## 2026-11-08 — Recover pending recipe actions with bounded waits
+
+Type: fixed. Platforms: Linux, Windows GNU/Wine.
+
+**Changes**
+
+- Terminal responses record server completion time; pending actions with attached waits can recover the exact response without redispatch while preserving the original wait and recipe deadlines.
+- Missing, malformed, out-of-budget or expired timing fails closed; same-run use of older servers remains compatible.
+
+**Validation**
+
+- 86 focused Linux tests, Windows GNU runtime and test compilation, and 87 focused Wine tests passed.
+- An isolated Linux/Xvfb session interrupted its own client before the pending response was checkpointed, restarted normally, restored the guarded wait, advanced an external frame and a recipe frame, and verified an unchanged second resume.
+- The first Linux test run found an incorrect zero-counter JSON expectation; the corrected suite passed.
+
+**Limitations**
+
+- Terminal timestamps are trusted local session evidence, not signed; older responses without them cannot recover pending waits.
+- Real Wine GUI restart, native Windows, prior collector restoration and broader action and platform coverage remain open.
+
+Documentation: [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-08-recover-pending-recipe-waits.json)
+
+## 2026-11-08 — Start new collectors after recipe recovery
+
+Type: changed. Platforms: Linux / Xvfb isolated EUR interpreter; Windows GNU / Wine synthetic tests.
+
+**Changes**
+
+- Allow recovered recipes to start new audio, code, gameplay or UI collectors and use their reports, or create graphics captures and comparisons, when those host objects are created after the restart.
+- Continue to reject an earlier host-dependent step, a report without its new collector, old selections, waits and unresolved actions; completed request identities remain unchanged.
+
+**Validation**
+
+- Linux synthetic regression passed 32 recipe, 35 control, 4 completion and 4 operation-registry tests; Windows GNU/Wine passed 32, 36, 4 and 4 respectively.
+- An isolated Linux/Xvfb session completed status, closed and reopened normally, recovered, started a UI trace, advanced one frame and wrote its report; a second resume left the checkpoint and guest state unchanged. Protected inputs remained unchanged.
+
+**Limitations**
+
+- The real test used simulated cancellation and silent audio. Real Wine restart, native Windows, prior collector restoration, waits and ambiguous pending requests remain unverified or unsupported.
+
+Documentation: [2026-11-08-guard-recipe-recovery-across-runs.json](docs/changes/2026-11-08-guard-recipe-recovery-across-runs.json).
+
+[Change record](docs/changes/2026-11-08-recover-new-recipe-collectors.json)
+
+## 2026-11-08 — Recover recipes after completed capture reports
+
+Type: fixed. Platforms: Linux, Windows GNU/Wine.
+
+**Changes**
+
+- Cross-run recipe recovery permits completed UI, audio, code and gameplay start/report pairs while preserving their original requests and results without redispatch.
+- Open, duplicate or unmatched earlier collectors remain refused; remaining reports require a collector started after recovery.
+
+**Validation**
+
+- 87 focused Linux tests, Windows GNU runtime and test compilation, and 88 focused Wine tests passed.
+- An isolated Linux/Xvfb run completed one UI report, cancelled before the next step, restarted normally, resumed one frame, and verified unchanged JSON/HTML hashes, exactly one report and an unchanged second resume.
+
+**Limitations**
+
+- Report files are external local artifacts and recovery does not attest their continued presence or content.
+- Open prior collector restoration, real Wine GUI restart, native Windows and wider platform coverage remain open.
+
+Documentation: [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-08-recover-completed-recipe-collectors.json)
+
 ## 2026-11-08 — Guard explicit recipe recovery across runs
 
 Type: added. Platforms: Linux synthetic tests.
@@ -22,6 +253,31 @@ Type: added. Platforms: Linux synthetic tests.
 - No real cross-restart session, Windows/Wine, physical input or full host-context recovery is verified; unresolved pending requests and wait/collector/selection continuations remain refused. The existing 120-second deadline is not extended.
 
 [Change record](docs/changes/2026-11-08-guard-recipe-recovery-across-runs.json)
+
+## 2026-11-08 — Run replay jobs within recipe frame budgets
+
+Type: added. Platforms: Linux, Windows GNU / Wine.
+
+**Changes**
+
+- Allow typed recipe replay jobs only with an explicit per-profile frame cap and reserve it against the aggregate step/search/replay budget; comparison reserves twice its selected window for two machines.
+- Pin the replay profile hash at supervisor start and require the worker to recheck both the hash and cap. Bounded replay requires the current frontend executable, so an older worker cannot ignore the limit; uncapped non-recipe replay remains compatible.
+- Preserve legacy replay action serialization and leave older uncapped saved recipes readable while refusing to execute them. Refuse bounded requests before dispatch to runtimes without the capability.
+
+**Validation**
+
+- An isolated Linux/Xvfb EUR interpreter selected a copied 102-frame profile: a cap of 101 was refused before starting the worker with the main guest unchanged; a cap of 102 completed the worker and one subsequent main-session frame, and a second resume changed nothing. The window closed normally and protected inputs stayed unchanged.
+- Linux recipe/control/parser/workbench regressions and 11 replay tests passed; after the same-runtime guard and comparison-window correction, two targeted replay tests passed. The final Windows GNU build and 127 Wine tests passed, including 13 replay tests.
+- An initial replay suite exceeded the executable-size guard and passed with a private stripped test copy. The first live bridge placed its profile outside the portable scanner roots and was corrected before execution.
+
+**Limitations**
+
+- Bounded recipe replay requires the selected worker executable to match the current frontend; other runtime versions remain available through the ordinary uncapped replay workflow.
+- Cross-run recovery does not restore an old replay worker. Comparison profile cap tests are synthetic; native Windows and physical input are unverified.
+
+Documentation: [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-08-bound-replay-jobs-in-recipes.json)
 
 ## 2026-11-07 — Summarize debug console results and replay progress
 

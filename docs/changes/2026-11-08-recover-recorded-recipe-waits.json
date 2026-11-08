@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-11-08",
+  "slug": "recover-recorded-recipe-waits",
+  "title": "Recover recorded recipe waits across runs",
+  "kind": "changed",
+  "platforms": [
+    "Linux / Xvfb isolated EUR interpreter; Windows GNU / Wine synthetic tests"
+  ],
+  "changes": [
+    "Persist recoverable guest boundaries for recorded waits and rebind an interrupted wait without resending its completed action, preserving the original deadlines and consumed poll count.",
+    "Guard the first resumed observation against the last idle boundary, reject uncertain polls and busy host work, and keep cancellation responsive while a guarded response is pending.",
+    "Use the remaining wait budget rather than a one-second acknowledgement cap for a guarded poll and retain the response classification in errors."
+  ],
+  "validation": [
+    "Linux synthetic regression passed 36 recipe, 35 control, 4 completion and 4 registry tests; Windows GNU/Wine passed 36, 36, 4 and 4 after correcting a transient-publication assumption in the synthetic server.",
+    "An isolated Linux/Xvfb normal restart resumed a recorded wait, observed the preserved boundary, accepted an external frame that satisfied the condition and executed one subsequent recipe frame. The action response and deadlines were retained; poll count advanced from one to three and a second resume was unchanged.",
+    "A diagnostic run captured the successful guarded response after the former one-second client timeout with matching run and request fingerprint; failed attempts and their diagnostics were retained."
+  ],
+  "limitations": [
+    "The real proof used simulated cancellation and silent audio. A real Wine restart, native Windows, prior collector or selection restoration and ambiguous pending actions remain open; wait and recipe deadlines are not extended."
+  ],
+  "files": [
+    "crates/recomp/src/debug_control.rs",
+    "crates/recomp/src/debug_command/recipe/checkpoint.rs",
+    "crates/recomp/src/debug_command/recipe/checkpoint/runner.rs",
+    "crates/recomp/src/debug_operations.json",
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/changes/2026-11-08-recover-new-recipe-collectors.json"
+  ]
+}

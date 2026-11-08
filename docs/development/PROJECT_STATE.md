@@ -228,11 +228,29 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   explicit Python3.11+ selection, source/dependency hashes and cancellable capped
   process logs. Readonly status/inspect recipes and a separate bounded guest
   catalog link to the gameplay inspector without executing guest data. Typed
+  recipes support pause, recent capture/report, issue report and guarded cheat
+  operations and replay jobs with explicit same-runtime, worker-enforced frame caps. Typed
   recipe checkpoints can explicitly rebind a completed/unsent prefix to
-  a new control run with an atomic guest-boundary guard; host-dependent actions,
-  waits and uncertain requests remain outside this recovery path. Linux
-  synthetic checks pass; real cross-restart validation remains open.
-  The shared operation registry has97operations/329parameters. DBG2-07 persists relative internal/explicit external choice pins and scoped
+  a new control run with an atomic guest-boundary guard and stable selected-input
+  pins. Selection rechecks run outside the frontend thread; catalog indexes
+  require a new refresh. New collectors may be
+  started after recovery; recorded waits can continue under their original
+  limits with a guarded last observation. An exactly matching retained terminal
+  response can resolve a pending step without redispatch, including an attached
+  wait when its original terminal completion time is available; unmatched requests and
+  open prior collector contexts remain outside this recovery path. Completed
+  UI/audio/code/gameplay start/report pairs preserve their results without
+  redispatch; report files remain external local artifacts. Linux
+  isolated recipe-watch checks cover one audit-enabled read hit and default
+  feature refusal. Explicitly concluded terminal recipe checkpoints require a reason
+  to start a matching recipe in the same session; concluded campaign evidence
+  remains governed by the separate campaign workflow. Linux
+  synthetic checks and isolated Linux/Xvfb normal restarts, including a new UI
+  collector/report, an interrupted wait and a retained terminal response with
+  or without an attached wait,
+  pass; focused Windows GNU/Wine tests cover those paths. Real Wine restart,
+  native Windows and broader context recovery remain open.
+  The shared operation registry has 127 operations/412 parameters. DBG2-07 persists relative internal/explicit external choice pins and scoped
   selector/history state with bounded metadata, async readonly restoration,
   missing/changed explanations and guarded atomic saves. Wine reopens the same
   seed after a Unicode/spaced portable move from unrelated cwd with exact

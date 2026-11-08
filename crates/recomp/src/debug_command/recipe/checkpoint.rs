@@ -1,6 +1,7 @@
 //! Durable recipe checkpoints. Preparing never publishes a request.
 use super::{directory,load,manifest,Recipe};
 mod runner;
+mod conclusion;
 use serde::{Deserialize,Serialize};
 use serde_json::{json,Value};
 use std::{fs::{self,OpenOptions},io::Write,path::{Path,PathBuf}};
@@ -14,6 +15,8 @@ struct Checkpoint {
     manifest_sha256:String,session_run:String,steps:Vec<PlannedStep>,
     #[serde(default,skip_serializing_if="Option::is_none")]
     deadline_unix_ms:Option<u64>,
+    #[serde(default,skip_serializing_if="Option::is_none")]
+    reopening:Option<conclusion::Reopening>,
 }
 #[derive(Serialize,Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -35,11 +38,24 @@ struct PlannedStep {
     wait_polls:u32,
     #[serde(default,skip_serializing_if="Option::is_none")]
     wait_observation:Option<WaitObservation>,
+    #[serde(default,skip_serializing_if="Option::is_none")]
+    wait_expected_boundary:Option<crate::debug_control::ExpectedBoundary>,
 }
 fn is_zero(n:&u32)->bool{*n==0}
 #[derive(Serialize,Deserialize)]
 #[serde(deny_unknown_fields)]
-struct WaitObservation {poll:u32,id:String,response_sha256:String,present:bool,actual:Value,matched:bool}
+struct WaitObservation {poll:u32,id:String,response_sha256:String,present:bool,actual:Value,matched:bool,
+    #[serde(default,skip_serializing_if="Option::is_none")]
+    boundary:Option<crate::debug_control::ExpectedBoundary>,
+    #[serde(default,skip_serializing_if="Option::is_none")]
+    inputs:Option<Vec<ObservedInput>>,
+}
+#[derive(Clone,Serialize,Deserialize)]
+#[serde(deny_unknown_fields)]
+struct ObservedInput {slot:String,id:String,sha256:String,
+    #[serde(default,skip_serializing_if="Option::is_none")]
+    recovery_identity:Option<String>,
+}
 #[derive(Clone,Debug,PartialEq,Serialize,Deserialize)]
 #[serde(deny_unknown_fields)]
 struct AssertionCheck {pointer:String,matched:bool}
@@ -53,6 +69,39 @@ fn request_id(id:&str,run:&str,index:usize,action:&str)->Result<String,String>{
     Ok(format!("recipe-{}",digest(&serde_json::to_vec(&("ffta-recipe-step-v1",id,run,index,action)).map_err(|e|e.to_string())?)))
 }
 fn valid_id(id:&str)->bool{id.starts_with("run-") && crate::debug_cheat_preset::name_valid(id)}
+fn observed_boundary(step:&PlannedStep)->Option<crate::debug_control::ExpectedBoundary>{
+    if let Some(observation)=&step.wait_observation{return observation.boundary.clone();}
+    step.result.as_ref().and_then(|r|crate::debug_control::ExpectedBoundary::from_status(&r["status"]).ok())
+}
+fn status_inputs(status:&Value)->Option<Vec<ObservedInput>>{
+    let picker=&status["content_picker"];if picker["busy"]!=false{return None;}
+    let inputs=picker["inputs"].as_array()?;if inputs.len()>18{return None;}
+    inputs.iter().map(|input|Some(ObservedInput{slot:input["slot"].as_str()?.to_owned(),id:input["id"].as_str()?.to_owned(),sha256:input["sha256"].as_str()?.to_owned(),recovery_identity:input["recovery_identity"].as_str().map(str::to_owned)})).collect()
+}
+fn boundary_for_prefix(checkpoint:&Checkpoint,recipe:&Recipe,prefix:usize)->Result<crate::debug_control::ExpectedBoundary,String>{
+    let prior=checkpoint.steps.get(prefix.checked_sub(1).ok_or("No prior boundary")?).ok_or("No prior boundary")?;
+    let mut boundary=observed_boundary(prior).ok_or("The last observation has no recoverable idle guest boundary")?;
+    let mut selected=std::collections::BTreeMap::new();
+    for (step,action) in checkpoint.steps.iter().zip(&recipe.steps).take(prefix){
+        if let crate::debug_control::Action::SelectId{slot,id}=action {
+            let result=step.result.as_ref().ok_or("Selected input has no terminal result")?;
+            let input:crate::debug_choices::SavedInput=serde_json::from_value(result["status"]["recovery_input"].clone()).map_err(|_|"Selected input has no recoverable location and hash")?;
+            if input.slot()!=Ok(slot.content_slot()) || !super::hash_valid(&input.sha256){return Err("Selected input identity is invalid".into());}
+            let identity=digest(&serde_json::to_vec(&input).map_err(|e|e.to_string())?);
+            let observed=status_inputs(&result["status"]).ok_or("Selected input was not stable at completion")?;
+            if !observed.iter().any(|item|item.slot==slot.content_slot().label() && item.id==*id && item.sha256==input.sha256 && item.recovery_identity.as_deref()==Some(identity.as_str())){return Err("Selected input result does not match the requested identity".into());}
+            selected.insert(input.slot.clone(),(input,identity,slot.content_slot().label()));
+        }
+    }
+    if !selected.is_empty(){
+        let observed=if let Some(wait)=&prior.wait_observation {wait.inputs.clone().ok_or("The last wait did not record selected inputs")?}else{status_inputs(&prior.result.as_ref().ok_or("Missing previous result")?["status"]).ok_or("Selected inputs were not stable at the previous boundary")?};
+        for (input,identity,label) in selected.values(){if !observed.iter().any(|item|item.slot==*label && item.sha256==input.sha256 && item.recovery_identity.as_deref()==Some(identity.as_str())){return Err("Selected input changed before the recovery boundary".into());}}
+        let inputs:Vec<_>=selected.into_values().map(|(input,_,_)|input).collect();
+        if inputs.len()>3 || serde_json::to_vec(&inputs).map_err(|e|e.to_string())?.len()>2048{return Err("Recovered selections exceed the guarded request limit".into());}
+        boundary.expected_inputs=Some(inputs);
+    }
+    Ok(boundary)
+}
 fn active_run(root:&Path,manifest_sha:&str)->Result<String,String>{
     let dir=root.join("Data/config/debug-control");if !crate::debug_session::regular(&dir)?.is_dir(){return Err("No active control directory".into());}
     let file=dir.join("ready.json");if !crate::debug_session::regular(&file)?.is_file(){return Err("Control readiness must be a regular file".into());}
@@ -71,21 +120,23 @@ fn base(root:&Path,create:bool)->Result<PathBuf,String>{
 }
 fn validate(checkpoint:&Checkpoint,recipe:&Recipe)->Result<(),String>{
     if checkpoint.schema!=1 || checkpoint.kind!="ffta-debug-command-checkpoint" || !valid_id(&checkpoint.id) || checkpoint.recipe_name!=recipe.name || checkpoint.manifest_sha256!=recipe.manifest_sha256 || checkpoint.recipe_sha256!=recipe_hash(recipe)? || checkpoint.session_run.is_empty() || checkpoint.session_run.len()>100 || checkpoint.session_run.chars().any(char::is_control) || checkpoint.steps.len()!=recipe.steps.len(){return Err("Recipe checkpoint identity differs from the selected recipe".into());}
+    if let Some(reopening)=&checkpoint.reopening{reopening.validate(&checkpoint.id)?;}
     let mut unfinished=false;
     for (i,(step,action)) in checkpoint.steps.iter().zip(&recipe.steps).enumerate(){
         let hash=action_hash(action)?;
         let step_run=step.original_run.as_deref().unwrap_or(&checkpoint.session_run);
-        if step_run.is_empty() || step_run.len()>100 || step_run.chars().any(char::is_control) || (step.original_run.is_some() && step.state!="completed") || step.index!=i as u32 || step.action_sha256!=hash || step.request_id!=request_id(&checkpoint.id,step_run,i,&hash)? {return Err("Recipe checkpoint step identity is invalid".into());}
+        if step_run.is_empty() || step_run.len()>100 || step_run.chars().any(char::is_control) || (step.original_run.is_some() && !matches!(step.state.as_str(),"completed"|"waiting"|"wait-timeout")) || step.index!=i as u32 || step.action_sha256!=hash || step.request_id!=request_id(&checkpoint.id,step_run,i,&hash)? {return Err("Recipe checkpoint step identity is invalid".into());}
         if let Some(boundary)=&step.expected_boundary {
-            if i==0 || checkpoint.steps[i-1].state!="completed" || checkpoint.steps[i-1].result.as_ref().and_then(|r|crate::debug_control::ExpectedBoundary::from_status(&r["status"]).ok()).as_ref()!=Some(boundary) {return Err("Recipe recovery boundary does not match the previous result".into());}
+            if i==0 || checkpoint.steps[i-1].state!="completed" || boundary_for_prefix(checkpoint,recipe,i).ok().as_ref()!=Some(boundary) {return Err("Recipe recovery boundary does not match the previous observation".into());}
         }
+        if let Some(boundary)=&step.wait_expected_boundary {if step.state!="waiting" || boundary_for_prefix(checkpoint,recipe,i+1).ok().as_ref()!=Some(boundary){return Err("Recipe wait recovery boundary does not match the last observation".into());}}
         let terminal=if let (Some(deadline),Some(value))=(step.deadline_unix_ms,step.result.as_ref()){
             let fingerprint=crate::debug_control::planned_guarded_fingerprint(action.clone(),step_run,&step.request_id,deadline,&checkpoint.manifest_sha256,step.expected_boundary.clone())?;
             value["run"]==step_run && value["id"]==step.request_id && value["deadline_unix_ms"]==deadline && value["request_sha256"]==fingerprint
         }else{false};
         let checks=step.result.as_ref().map(|r|assertion_checks(recipe,i,r)).unwrap_or_default();
         let wait=recipe.waits.iter().find(|w|w.after_step as usize==i);
-        let no_wait=step.wait_deadline_unix_ms.is_none() && step.wait_polls==0 && step.wait_observation.is_none();
+        let no_wait=step.wait_deadline_unix_ms.is_none() && step.wait_polls==0 && step.wait_observation.is_none() && step.wait_expected_boundary.is_none();
         let valid_wait=wait.is_some_and(|w|step.wait_deadline_unix_ms.is_some_and(|d|d<=checkpoint.deadline_unix_ms.unwrap_or(0)) && step.wait_polls<=w.max_polls && step.wait_observation.as_ref().is_none_or(|o|o.poll>0 && o.poll<=step.wait_polls && !o.id.is_empty() && o.id.len()<=100 && super::hash_valid(&o.response_sha256) && super::valid_scalar(&o.actual) && o.matched==(o.present && o.actual==w.expected)));
         let success_wait=if wait.is_some(){valid_wait && step.wait_observation.as_ref().is_some_and(|o|o.matched)}else{no_wait};
         match step.state.as_str(){
@@ -100,18 +151,22 @@ fn validate(checkpoint:&Checkpoint,recipe:&Recipe)->Result<(),String>{
     }
     Ok(())
 }
-fn prepare(root:&Path,name:&str)->Result<Checkpoint,String>{
+#[cfg(test)]
+fn prepare(root:&Path,name:&str)->Result<Checkpoint,String>{prepare_with_reason(root,name,None,None)}
+fn prepare_with_reason(root:&Path,name:&str,reason:Option<&str>,reviewed_evidence:Option<&str>)->Result<Checkpoint,String>{
     let recipe=load(root,name)?;let session_run=active_run(root,&recipe.manifest_sha256)?;
     let base=base(root,true)?;let lock_path=base.join(".run.lock");
     if lock_path.exists(){crate::debug_session::regular(&lock_path)?;}
     let lock=OpenOptions::new().read(true).write(true).create(true).open(&lock_path).map_err(|e|e.to_string())?;crate::debug_session::regular(&lock_path)?;lock.try_lock().map_err(|_|"Another recipe preparation is in progress")?;
+    let reopening=conclusion::authorize(root,&base,&recipe,reason)?;
+    if reviewed_evidence.is_some_and(|expected|conclusion::fingerprint_reopening(&reopening).ok().as_deref()!=Some(expected)){return Err("Concluded evidence changed since Details; review it again".into());}
     let entries=fs::read_dir(&base).map_err(|e|e.to_string())?.filter_map(|e|match e{Ok(e) if e.file_name()==".run.lock"=>None,other=>Some(other)}).take(MAX_RUNS).collect::<Result<Vec<_>,_>>().map_err(|e|e.to_string())?;
     if entries.len()>=MAX_RUNS{return Err("Recipe run directory is full".into());}
     let temp=tempfile::Builder::new().prefix("run-").rand_bytes(16).tempdir_in(&base).map_err(|e|e.to_string())?;
     let id=temp.path().file_name().and_then(|s|s.to_str()).filter(|s|valid_id(s)).ok_or("Invalid generated run ID")?.to_owned();
     let mut steps=Vec::with_capacity(recipe.steps.len());
-    for (i,action) in recipe.steps.iter().enumerate(){let hash=action_hash(action)?;steps.push(PlannedStep{index:i as u32,request_id:request_id(&id,&session_run,i,&hash)?,action_sha256:hash,state:"planned".into(),original_run:None,expected_boundary:None,deadline_unix_ms:None,result:None,checks:Vec::new(),wait_deadline_unix_ms:None,wait_polls:0,wait_observation:None});}
-    let checkpoint=Checkpoint{schema:1,kind:"ffta-debug-command-checkpoint".into(),id,recipe_name:name.into(),recipe_sha256:recipe_hash(&recipe)?,manifest_sha256:recipe.manifest_sha256.clone(),session_run,steps,deadline_unix_ms:None};
+    for (i,action) in recipe.steps.iter().enumerate(){let hash=action_hash(action)?;steps.push(PlannedStep{index:i as u32,request_id:request_id(&id,&session_run,i,&hash)?,action_sha256:hash,state:"planned".into(),original_run:None,expected_boundary:None,deadline_unix_ms:None,result:None,checks:Vec::new(),wait_deadline_unix_ms:None,wait_polls:0,wait_observation:None,wait_expected_boundary:None});}
+    let checkpoint=Checkpoint{schema:1,kind:"ffta-debug-command-checkpoint".into(),id,recipe_name:name.into(),recipe_sha256:recipe_hash(&recipe)?,manifest_sha256:recipe.manifest_sha256.clone(),session_run,steps,deadline_unix_ms:None,reopening};
     validate(&checkpoint,&recipe)?;let bytes=serde_json::to_vec_pretty(&checkpoint).map_err(|e|e.to_string())?;if bytes.len() as u64>MAX_CHECKPOINT{return Err("Checkpoint exceeds 64 KiB".into());}
     let file=temp.path().join("checkpoint.json");let mut out=OpenOptions::new().write(true).create_new(true).open(&file).map_err(|e|e.to_string())?;out.write_all(&bytes).and_then(|_|out.sync_all()).map_err(|e|e.to_string())?;drop(out);
     let _kept=temp.keep();Ok(checkpoint)
@@ -126,14 +181,16 @@ fn inspect(root:&Path,id:&str)->Result<(Checkpoint,bool),String>{
     let (current,_,_)=manifest(root)?;let active=active_run(root,&current).is_ok_and(|r|r==checkpoint.session_run);
     Ok((checkpoint,active))
 }
-pub(super) fn run_reviewed(root:&Path,name:&str,expected:&str,cancel:&std::sync::atomic::AtomicBool)->Result<Value,String>{
-    let checkpoint=prepare(root,name)?;
+pub(super) fn review_evidence(root:&Path,recipe:&Recipe)->Result<(Value,String),String>{conclusion::preview(root,recipe)}
+pub(super) fn run_reviewed(root:&Path,name:&str,expected:&str,cancel:&std::sync::atomic::AtomicBool,reason:Option<&str>,reviewed_evidence:&str)->Result<Value,String>{
+    let checkpoint=prepare_with_reason(root,name,reason,Some(reviewed_evidence))?;
     if checkpoint.recipe_sha256!=expected{return Err("Saved recipe changed after preview; no action sent".into());}
     runner::drive_with_cancel(root,&checkpoint.id,false,Some(cancel)).map_err(|e|format!("Checkpoint {} was prepared: {e}",checkpoint.id))
 }
-pub(super) fn prepare_command(root:&Path,name:&str)->Value{
-    match prepare(root,name){Ok(checkpoint)=>json!({"schema":1,"kind":"ffta-debug-command-checkpoint-result","ok":true,"outcome":"prepared","checkpoint":checkpoint,"scope":"Identities persisted; no request sent. Readiness metadata does not prove process liveness. Run is a separate explicit command."}),Err(e)=>super::super::local_error("invalid-request",&e)}
+pub(super) fn prepare_command(root:&Path,name:&str,reason:Option<&str>)->Value{
+    match prepare_with_reason(root,name,reason,None){Ok(checkpoint)=>json!({"schema":1,"kind":"ffta-debug-command-checkpoint-result","ok":true,"outcome":"prepared","checkpoint":checkpoint,"scope":"Identities persisted; no request sent. Readiness metadata does not prove process liveness. Run is a separate explicit command."}),Err(e)=>super::super::local_error("invalid-request",&e)}
 }
+pub(super) fn conclude_command(root:&Path,id:&str)->Value{conclusion::command(root,id)}
 pub(super) fn inspect_command(root:&Path,id:&str)->Value{
     match inspect(root,id){Ok((checkpoint,active))=>json!({"schema":1,"kind":"ffta-debug-command-checkpoint-result","ok":true,"outcome":"inspected","checkpoint":checkpoint,"readiness_matches_run":active,"scope":"Readiness metadata does not prove process liveness."}),Err(e)=>super::super::local_error("invalid-request",&e)}
 }

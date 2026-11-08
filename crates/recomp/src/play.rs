@@ -2116,9 +2116,9 @@ impl PlayApp {
                 if self.menu.cheat_active(){self.open_cheat_catalog();}
                 self.menu.diagnosis_result("Cheat preset armed for the next interpreter frame; disarm stops future writes.".into());self.menu_dirty=true;return Ok(());
             },
-            crate::debug_control::Action::Replay{mode}=>{
+            crate::debug_control::Action::Replay{mode,max_frames}=>{
                 if !self.paused{return Err("Replay requires an idle paused copy".into());}
-                return self.start_replay_request(false,*mode,false).and_then(|started|if started{Ok(())}else{Err("Choose a replay profile first".into())});
+                return self.start_replay_request(false,*mode,false,*max_frames).and_then(|started|if started{Ok(())}else{Err("Choose a replay profile first".into())});
             },
             crate::debug_control::Action::ContentRefresh=>{
                 if !self.paused || self.probe.is_some() || self.frame_control.remaining>0 || self.replay_job.is_some(){return Err("Content refresh requires an idle paused copy".into());}
@@ -2443,6 +2443,7 @@ impl PlayApp {
                     // Compare and dispatch on this same frontend turn, before
                     // accepting any other control or advancing the guest.
                     self.debug_status().and_then(|status|boundary.check(&status))
+                        .and_then(|()|boundary.expected_inputs.as_deref().map_or(Ok(()),|inputs|self.content_picker.check_recovery_inputs(inputs)))
                         .and_then(|()|self.debug_action(&request.command))
                 }else{self.debug_action(&request.command)};
                 if outer_refusal&&!matches!(request.command,crate::debug_control::Action::Status)&&self.events_enabled(){self.ui_event("control-result",serde_json::json!({"command":request.command,"outcome":"refused","error":result.as_ref().err()}));}
@@ -2521,7 +2522,12 @@ impl PlayApp {
             self.menu_dirty=true;
             let request=self.control_server.as_ref().unwrap().pending.as_ref().unwrap().clone();
             let _context=self.events.clock.context(request.event_context());
-            let status=self.debug_status();
+            let mut status=self.debug_status();
+            if result.is_ok() {
+                if let (crate::debug_control::Action::SelectId{slot,..},Ok(value))=(&request.command,&mut status){
+                    value["recovery_input"]=serde_json::to_value(self.content_picker.recovery_input(slot.content_slot()).ok()).unwrap_or(serde_json::Value::Null);
+                }
+            }
             let error=result.err().or_else(||status.as_ref().err().cloned());
             if self.events_enabled(){self.ui_event("control-complete",serde_json::json!({"command":request.command,"outcome":if error.is_some(){"refused"}else{"complete"},"error":error}));}
             if let Err(error)=self.control_server.as_mut().unwrap().finish(status.unwrap_or_default(),error){self.recent_error(&format!("Control completion reply: {error}"));eprintln!("debug control: {error}");}
@@ -2606,11 +2612,11 @@ impl PlayApp {
         self.replay_path=Some(path.clone());Ok(path)
     }
     fn start_replay(&mut self,choose_only:bool,kind:ReplayKind) {
-        let _=self.start_replay_request(choose_only,kind,true);
+        let _=self.start_replay_request(choose_only,kind,true,None);
     }
-    fn start_replay_request(&mut self,choose_only:bool,kind:ReplayKind,interactive:bool)->Result<bool,String> {
+    fn start_replay_request(&mut self,choose_only:bool,kind:ReplayKind,interactive:bool,max_frames:Option<u32>)->Result<bool,String> {
         let already_running=self.replay_job.is_some();
-        let result=self.start_replay_inner(choose_only,kind,interactive);
+        let result=self.start_replay_inner(choose_only,kind,interactive,max_frames);
         if let Err(error)=&result{self.menu.diagnosis_result(error.clone());self.menu_dirty=true;}
         if !already_running&&self.replay_job.is_some(){
             let job=self.replay_job.as_ref().unwrap();let run=job.run.clone();let profile=job.profile.to_string_lossy().chars().take(1024).collect::<String>();
@@ -2621,7 +2627,7 @@ impl PlayApp {
         }
         result
     }
-    fn start_replay_inner(&mut self, choose_only: bool, kind: ReplayKind,interactive:bool)->Result<bool,String> {
+    fn start_replay_inner(&mut self, choose_only: bool, kind: ReplayKind,interactive:bool,max_frames:Option<u32>)->Result<bool,String> {
         if !self.cheat_armed.is_empty(){return Err("Disarm maintained cheats before starting a separate replay.".into());}
         if self.recent.as_ref().is_some_and(|b|!b.saved()){return Err("Save the recent window before starting a separate replay.".into());}
         if self.gameplay_trace.is_some(){return Err("Save the gameplay trace before starting a separate replay.".into());}
@@ -2632,7 +2638,7 @@ impl PlayApp {
         if self.recording_active() {return Err("Stop input recording before replaying a case.".into());}
         if choose_only {self.choose_tool_input(menu::ContentSlot::Replay,"Choose a profile; this does not start a replay.".into());return Ok(false);}
         let path=match self.selected_replay_profile(){Ok(path)=>path,Err(e) if interactive=>{self.choose_tool_input(menu::ContentSlot::Replay,e);return Ok(false);},Err(e)=>return Err(e)};
-        let result=match kind {ReplayKind::Comparison=>crate::debug_replay::Job::start_comparison(&path),ReplayKind::Capture=>crate::debug_replay::Job::start_capture(&path),ReplayKind::Audit=>crate::debug_replay::Job::start_audit(&path),ReplayKind::Plain=>crate::debug_replay::Job::start(&path)};
+        let result=if let Some(max_frames)=max_frames {crate::debug_replay::Job::start_bounded(&path,kind,max_frames)}else{match kind {ReplayKind::Comparison=>crate::debug_replay::Job::start_comparison(&path),ReplayKind::Capture=>crate::debug_replay::Job::start_capture(&path),ReplayKind::Audit=>crate::debug_replay::Job::start_audit(&path),ReplayKind::Plain=>crate::debug_replay::Job::start(&path)}};
         let job=result.map_err(|e|format!("Cannot replay: {e}"))?;
         self.replay_path=Some(job.profile.clone());self.replay_message.clear();self.replay_terminal=None;self.menu.diagnosis_result("Replay running in an isolated worker. Cancel replay stops it.".into());self.replay_job=Some(job);
         self.menu_dirty=true;

@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "date": "2026-11-08",
+  "slug": "bound-replay-jobs-in-recipes",
+  "title": "Run replay jobs within recipe frame budgets",
+  "kind": "added",
+  "platforms": [
+    "Linux",
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Allow typed recipe replay jobs only with an explicit per-profile frame cap and reserve it against the aggregate step/search/replay budget; comparison reserves twice its selected window for two machines.",
+    "Pin the replay profile hash at supervisor start and require the worker to recheck both the hash and cap. Bounded replay requires the current frontend executable, so an older worker cannot ignore the limit; uncapped non-recipe replay remains compatible.",
+    "Preserve legacy replay action serialization and leave older uncapped saved recipes readable while refusing to execute them. Refuse bounded requests before dispatch to runtimes without the capability."
+  ],
+  "validation": [
+    "An isolated Linux/Xvfb EUR interpreter selected a copied 102-frame profile: a cap of 101 was refused before starting the worker with the main guest unchanged; a cap of 102 completed the worker and one subsequent main-session frame, and a second resume changed nothing. The window closed normally and protected inputs stayed unchanged.",
+    "Linux recipe/control/parser/workbench regressions and 11 replay tests passed; after the same-runtime guard and comparison-window correction, two targeted replay tests passed. The final Windows GNU build and 127 Wine tests passed, including 13 replay tests.",
+    "An initial replay suite exceeded the executable-size guard and passed with a private stripped test copy. The first live bridge placed its profile outside the portable scanner roots and was corrected before execution."
+  ],
+  "limitations": [
+    "Bounded recipe replay requires the selected worker executable to match the current frontend; other runtime versions remain available through the ordinary uncapped replay workflow.",
+    "Cross-run recovery does not restore an old replay worker. Comparison profile cap tests are synthetic; native Windows and physical input are unverified."
+  ],
+  "files": [
+    "crates/recomp/src/debug_control.rs",
+    "crates/recomp/src/debug_replay.rs",
+    "crates/recomp/src/debug_replay/tests.rs",
+    "crates/recomp/src/play.rs",
+    "crates/recomp/src/debug_command.rs",
+    "crates/recomp/src/debug_command/completion.rs",
+    "crates/recomp/src/debug_command/recipe.rs",
+    "crates/recomp/src/debug_command/recipe/checkpoint/runner.rs",
+    "crates/recomp/src/debug_operations.rs",
+    "crates/recomp/src/debug_operations.json",
+    "crates/recomp/src/debug_tools.rs"
+  ],
+  "references": [
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ]
+}

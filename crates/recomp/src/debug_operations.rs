@@ -91,7 +91,7 @@ impl crate::debug_control::Action {
             CheatPresetSave { .. } => "cheats.preset-save",
             CheatPresetPrepare { .. } => "cheats.preset-prepare",
             CheatPresetArm { .. } => "cheats.preset-arm",
-            Replay { mode } => match mode {crate::debug_control::ReplayMode::Plain=>"replay.run",crate::debug_control::ReplayMode::Audit=>"audit.run",crate::debug_control::ReplayMode::Capture=>"capture.run",crate::debug_control::ReplayMode::Comparison=>"compare.run"},
+            Replay { mode,.. } => match mode {crate::debug_control::ReplayMode::Plain=>"replay.run",crate::debug_control::ReplayMode::Audit=>"audit.run",crate::debug_control::ReplayMode::Capture=>"capture.run",crate::debug_control::ReplayMode::Comparison=>"compare.run"},
             Pause => "control.pause",
             Resume => "control.resume",
             Step { .. } => "control.step",

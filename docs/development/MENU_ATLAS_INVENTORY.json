@@ -2498,7 +2498,16 @@
     {
       "id": "recipe.prepare",
       "handler": "prepare_command",
-      "cli": "recomp debug-command SESSION \"recipe prepare NAME\"",
+      "cli": "recomp debug-command SESSION \"recipe prepare NAME [--reopen-reason REASON]\"",
+      "current": "Debug / Consoles and scripts / Command console",
+      "destination": "Debug / Consoles and scripts / Command console",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "recipe.conclude",
+      "handler": "conclude_command",
+      "cli": "recomp debug-command SESSION \"recipe conclude RUN\"",
       "current": "Debug / Consoles and scripts / Command console",
       "destination": "Debug / Consoles and scripts / Command console",
       "menu_implemented": true,

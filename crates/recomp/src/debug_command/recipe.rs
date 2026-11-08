@@ -32,6 +32,8 @@ struct Recipe {
 struct Limits {steps:u32,explicit_step_frames:u32,max_frames:u32,duration_ms:u32,output_bytes:u32,
     #[serde(default,skip_serializing_if="Option::is_none")]
     search_frame_budget:Option<u32>,
+    #[serde(default,skip_serializing_if="Option::is_none")]
+    replay_frame_budget:Option<u32>,
 }
 #[derive(Clone,Debug,PartialEq,Serialize,Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -78,10 +80,19 @@ fn search_frame_cost(action:&Action)->u32 {
         _ => 0,
     }
 }
+fn replay_frame_cost(action:&Action)->Result<u32,String>{
+    match action {
+        Action::Replay{mode,max_frames:Some(frames)}=>frames.checked_mul(if matches!(mode,crate::debug_control::ReplayMode::Comparison){2}else{1}).ok_or("Replay frame budget overflow".into()),
+        Action::Replay{max_frames:None,..}=>Err("Recipe replay requires an explicit --max-frames limit".into()),
+        _=>Ok(0),
+    }
+}
+fn replay_frame_budget(steps:&[Action])->Result<u32,String>{steps.iter().try_fold(0u32,|sum,action|sum.checked_add(replay_frame_cost(action)?).ok_or("Replay frame budget overflow".into()))}
 impl Recipe {
     fn validate_run_frame_budget(&self)->Result<(),String>{
         let search=self.steps.iter().map(search_frame_cost).sum::<u32>();
-        if self.limits.explicit_step_frames.saturating_add(search)>self.limits.max_frames{return Err("Combined step and search frame budget exceeds 3600; no action sent".into());}Ok(())
+        let replay=replay_frame_budget(&self.steps)?;
+        if self.limits.explicit_step_frames.saturating_add(search).saturating_add(replay)>self.limits.max_frames{return Err("Combined step, search and replay frame budget exceeds 3600; no action sent".into());}Ok(())
     }
     fn validate(&self)->Result<(),String>{
         if self.schema!=1 || self.kind!="ffta-debug-command-recipe" || !crate::debug_cheat_preset::name_valid(&self.name){return Err("Invalid command recipe schema or name".into());}
@@ -90,6 +101,7 @@ impl Recipe {
         let (mut frames,mut search_frames)=(0u32,0u32);
         for action in &self.steps {validate_action(action)?;match action{Action::Step{frames:n,..}=>frames=frames.checked_add(*n).ok_or("Frame limit overflow")?,Action::Find{..}=>search_frames=search_frames.checked_add(search_frame_cost(action)).ok_or("Search frame budget overflow")?,_=>{}}}
         if let Some(budget)=self.limits.search_frame_budget {if budget!=search_frames || frames.saturating_add(budget)>MAX_FRAMES{return Err("Invalid aggregate search frame budget".into());}}
+        if let Some(budget)=self.limits.replay_frame_budget {if replay_frame_budget(&self.steps).ok()!=Some(budget) || frames.saturating_add(search_frames).saturating_add(budget)>MAX_FRAMES{return Err("Invalid aggregate replay frame budget".into());}}
         if self.steps.len()+self.assertions.len()+self.waits.len()>MAX_STEPS || self.assertions.iter().any(|a|a.after_step as usize>=self.steps.len()||!valid_pointer(&a.pointer)||!valid_scalar(&a.expected)) || self.assertions.windows(2).any(|w|w[0].after_step>w[1].after_step){return Err("Invalid recipe assertions".into());}
         if self.waits.iter().any(|w|w.after_step as usize>=self.steps.len()||!valid_wait(w)) || self.waits.windows(2).any(|w|w[0].after_step>=w[1].after_step){return Err("Invalid recipe waits".into());}
         if frames!=self.limits.explicit_step_frames{return Err("Recipe explicit frame count does not match its steps".into());}Ok(())
@@ -131,9 +143,10 @@ fn save(root:&Path,name:&str,commands:&[String])->Result<Recipe,String>{
     for command in commands {if let Some(check)=assertion(command,steps.len())?{assertions.push(check);}else if let Some(condition)=wait(command,steps.len())?{waits.push(condition);}else{steps.push(action(command)?);}}
     let frames=steps.iter().try_fold(0u32,|sum,a|sum.checked_add(if let Action::Step{frames,..}=a{*frames}else{0}).ok_or("Frame limit overflow"))?;
     let search_frames=steps.iter().map(search_frame_cost).sum::<u32>();
-    if frames.saturating_add(search_frames)>MAX_FRAMES{return Err("Combined step and search frame budget exceeds 3600".into());}
+    let replay_frames=replay_frame_budget(&steps)?;
+    if frames.saturating_add(search_frames).saturating_add(replay_frames)>MAX_FRAMES{return Err("Combined step, search and replay frame budget exceeds 3600".into());}
     let (manifest_sha256,rom_sha256,runtime_sha256)=manifest(root)?;
-    let recipe=Recipe{schema:1,kind:"ffta-debug-command-recipe".into(),name:name.into(),manifest_sha256,rom_sha256,runtime_sha256,limits:Limits{steps:steps.len() as u32,explicit_step_frames:frames,max_frames:MAX_FRAMES,duration_ms:120_000,output_bytes:1024*1024,search_frame_budget:(search_frames>0).then_some(search_frames)},steps,assertions,waits};
+    let recipe=Recipe{schema:1,kind:"ffta-debug-command-recipe".into(),name:name.into(),manifest_sha256,rom_sha256,runtime_sha256,limits:Limits{steps:steps.len() as u32,explicit_step_frames:frames,max_frames:MAX_FRAMES,duration_ms:120_000,output_bytes:1024*1024,search_frame_budget:(search_frames>0).then_some(search_frames),replay_frame_budget:(replay_frames>0).then_some(replay_frames)},steps,assertions,waits};
     recipe.validate()?;let bytes=serde_json::to_vec_pretty(&recipe).map_err(|e|e.to_string())?;
     if bytes.len() as u64>MAX_BYTES{return Err("Recipe exceeds 64 KiB".into());}
     let dir=directory(root,true)?;
@@ -171,33 +184,44 @@ pub(crate) fn is_command_recipe(path:&Path)->Result<bool,String>{
 pub(crate) fn validate_file(path:&Path)->Result<(),String>{read_recipe(path).map(|_|())}
 pub(crate) fn review_file(path:&Path,root:&Path)->Result<String,String>{review_with_identity(path,root).map(|(text,_)|text)}
 pub(crate) fn review_with_identity(path:&Path,root:&Path)->Result<(String,String),String>{
-    let (recipe,identity)=reviewed(path,root)?;
+    let (recipe,identity,evidence,_)=reviewed(path,root)?;
     let full=serde_json::to_string_pretty(&recipe).map_err(|e|e.to_string())?;
     if full.len() as u64>MAX_BYTES{return Err("Complete preview exceeds 64 KiB; use a smaller recipe".into());}
-    Ok((format!("Typed command recipe preview; no action executed. Start requires this unchanged preview. Focus Details and use Left/Right to scroll, or use the mouse wheel.\n\n{full}"),identity))
+    Ok((format!("Typed command recipe preview; no action executed. Start requires this unchanged preview. Focus Details and use Left/Right to scroll, or use the mouse wheel.\n\nConcluded matching evidence: {evidence}\n\n{full}"),identity))
 }
 /// Bind the reviewed sequence to both selected paths and the session manifest.
-fn reviewed(path:&Path,root:&Path)->Result<(Recipe,String),String>{
+fn reviewed(path:&Path,root:&Path)->Result<(Recipe,String,Value,String),String>{
     let recipe=read_recipe(path)?;verify_session(&recipe,root)?;
     let selected=fs::canonicalize(path).map_err(|e|e.to_string())?;
     let session=fs::canonicalize(root).map_err(|e|e.to_string())?;
-    let bytes=serde_json::to_vec(&(selected,session,&recipe)).map_err(|e|e.to_string())?;
-    Ok((recipe,gba_core::ffta_rom::digest(&bytes)))
+    let (evidence,evidence_hash)=checkpoint::review_evidence(root,&recipe)?;
+    let bytes=serde_json::to_vec(&(selected,session,&recipe,&evidence_hash)).map_err(|e|e.to_string())?;
+    Ok((recipe,gba_core::ffta_rom::digest(&bytes),evidence,evidence_hash))
 }
+#[cfg(test)]
 pub(crate) fn run_reviewed(path:&Path,root:&Path,identity:&str,cancel:&std::sync::atomic::AtomicBool)->Result<Value,String>{
-    let (selected,current)=reviewed(path,root)?;
+    run_reviewed_with_reason(path,root,identity,cancel,None)
+}
+pub(crate) fn run_reviewed_with_reason(path:&Path,root:&Path,identity:&str,cancel:&std::sync::atomic::AtomicBool,reason:Option<&str>)->Result<Value,String>{
+    let (selected,current,_,evidence_hash)=reviewed(path,root)?;
     if current!=identity{return Err("Recipe or session changed since Details; review it again".into());}
     let expected=gba_core::ffta_rom::digest(&serde_json::to_vec(&selected).map_err(|e|e.to_string())?);
     let stored=load(root,&selected.name)?;
     if gba_core::ffta_rom::digest(&serde_json::to_vec(&stored).map_err(|e|e.to_string())?)!=expected{return Err("The session's saved recipe differs from the reviewed selection".into());}
-    checkpoint::run_reviewed(root,&selected.name,&expected,cancel)
+    checkpoint::run_reviewed(root,&selected.name,&expected,cancel,reason,&evidence_hash)
 }
 fn result(value:Result<Recipe,String>,operation:&str)->Value{
-    match value {Ok(recipe)=>json!({"schema":1,"kind":"ffta-debug-command-recipe-preview","ok":true,"outcome":operation,"recipe":recipe,"scope":"Saving and preview never execute. The separate runner accepts status, inspect, bounded step, catalog discovery/selection/queries bounded captures/reports and bounded breakpoint/watch searches."}),Err(error)=>super::local_error("invalid-request",&error)}
+    match value {Ok(recipe)=>json!({"schema":1,"kind":"ffta-debug-command-recipe-preview","ok":true,"outcome":operation,"recipe":recipe,"scope":"Saving and preview never execute. The runner supports bounded frontend commands and replay jobs with an explicit frame cap."}),Err(error)=>super::local_error("invalid-request",&error)}
 }
 pub(super) fn save_command(root:&Path,name:&str,commands:&[String])->Value{result(save(root,name,commands),"saved")}
-pub(super) fn preview_command(root:&Path,name:&str)->Value{result(load(root,name),"preview")}
-pub(super) fn prepare_command(root:&Path,name:&str)->Value{checkpoint::prepare_command(root,name)}
+pub(super) fn preview_command(root:&Path,name:&str)->Value{
+    match load(root,name).and_then(|recipe|{let (evidence,_)=checkpoint::review_evidence(root,&recipe)?;Ok((recipe,evidence))}){
+        Ok((recipe,evidence))=>{let mut value=result(Ok(recipe),"preview");value["concluded_evidence"]=evidence;value},
+        Err(error)=>super::local_error("invalid-request",&error),
+    }
+}
+pub(super) fn prepare_command(root:&Path,name:&str,reason:Option<&str>)->Value{checkpoint::prepare_command(root,name,reason)}
+pub(super) fn conclude_command(root:&Path,id:&str)->Value{checkpoint::conclude_command(root,id)}
 pub(super) fn checkpoint_command(root:&Path,id:&str)->Value{checkpoint::inspect_command(root,id)}
 pub(super) fn run_command(root:&Path,id:&str,resume:bool)->Value{checkpoint::run_command(root,id,resume)}
 pub(super) fn recover_command(root:&Path,id:&str)->Value{checkpoint::recover_command(root,id)}
@@ -268,6 +292,18 @@ mod tests {
         assert_eq!(save_command(t.path(),"capture-over-budget",&vec![capture;6])["ok"],false);
         let file=t.path().join("Data/config/debug-command-recipes/recipe-search.json");let mut legacy=value["recipe"].clone();legacy["limits"].as_object_mut().unwrap().remove("search_frame_budget");fs::write(&file,serde_json::to_vec(&legacy).unwrap()).unwrap();let loaded=load(t.path(),"search").unwrap();assert!(loaded.limits.search_frame_budget.is_none());assert!(loaded.validate_run_frame_budget().is_ok());assert_eq!(serde_json::to_value(loaded).unwrap(),legacy);
         let mut too_many=legacy.clone();too_many["steps"]=json!(vec![legacy["steps"][0].clone();7]);too_many["limits"]["steps"]=json!(7);too_many["limits"]["explicit_step_frames"]=json!(0);fs::write(&file,serde_json::to_vec(&too_many).unwrap()).unwrap();let loaded=load(t.path(),"search").unwrap();assert!(loaded.validate_run_frame_budget().is_err());
+    }
+    #[test]
+    fn replay_budget_is_explicit_aggregated_and_preserves_legacy_refusal(){
+        let t=fixture();let value=save_command(t.path(),"bounded",&["replay run plain --max-frames 10".into(),"step 1".into()]);assert_eq!(value["ok"],true);assert_eq!(value["recipe"]["limits"]["replay_frame_budget"],10);
+        assert_eq!(save_command(t.path(),"compare",&["replay run compare --max-frames 1800".into()])["recipe"]["limits"]["replay_frame_budget"],3600);
+        assert_eq!(save_command(t.path(),"too-many",&["replay run compare --max-frames 1800".into(),"step 1".into()])["ok"],false);
+        let search="break 0x08000000 arm --steps 1".to_string();assert_eq!(save_command(t.path(),"combined",&[search.clone(),"replay run --max-frames 3000".into()])["ok"],true);
+        assert_eq!(save_command(t.path(),"combined-over",&[search,"replay run --max-frames 3000".into(),"step 1".into()])["ok"],false);
+        assert_eq!(save_command(t.path(),"unbounded",&["replay run".into()])["ok"],false);
+        assert_eq!(save_command(t.path(),"zero",&["replay run --max-frames 0".into()])["ok"],false);
+        let legacy=save_command(t.path(),"legacy-replay",&["status".into()]);let mut old=legacy["recipe"].clone();old["steps"][0]=json!({"action":"replay","mode":"plain"});
+        let file=t.path().join("Data/config/debug-command-recipes/recipe-legacy-replay.json");fs::write(&file,serde_json::to_vec(&old).unwrap()).unwrap();let loaded=load(t.path(),"legacy-replay").unwrap();assert_eq!(serde_json::to_value(&loaded).unwrap(),old);assert!(loaded.validate_run_frame_budget().unwrap_err().contains("--max-frames"));
     }
 
 }

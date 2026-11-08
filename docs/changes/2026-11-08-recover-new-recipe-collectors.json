@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-08",
+  "slug": "recover-new-recipe-collectors",
+  "title": "Start new collectors after recipe recovery",
+  "kind": "changed",
+  "platforms": [
+    "Linux / Xvfb isolated EUR interpreter; Windows GNU / Wine synthetic tests"
+  ],
+  "changes": [
+    "Allow recovered recipes to start new audio, code, gameplay or UI collectors and use their reports, or create graphics captures and comparisons, when those host objects are created after the restart.",
+    "Continue to reject an earlier host-dependent step, a report without its new collector, old selections, waits and unresolved actions; completed request identities remain unchanged."
+  ],
+  "validation": [
+    "Linux synthetic regression passed 32 recipe, 35 control, 4 completion and 4 operation-registry tests; Windows GNU/Wine passed 32, 36, 4 and 4 respectively.",
+    "An isolated Linux/Xvfb session completed status, closed and reopened normally, recovered, started a UI trace, advanced one frame and wrote its report; a second resume left the checkpoint and guest state unchanged. Protected inputs remained unchanged."
+  ],
+  "limitations": [
+    "The real test used simulated cancellation and silent audio. Real Wine restart, native Windows, prior collector restoration, waits and ambiguous pending requests remain unverified or unsupported."
+  ],
+  "files": [
+    "crates/recomp/src/debug_command/recipe/checkpoint/runner.rs",
+    "crates/recomp/src/debug_operations.json",
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/MENU_ATLAS_INVENTORY.json",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/changes/2026-11-08-guard-recipe-recovery-across-runs.json"
+  ]
+}

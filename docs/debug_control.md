@@ -280,6 +280,8 @@ The command console and `debug-command` can save and inspect an inert sequence:
 recipe save example 'status' 'step 3 --keys 0x3ff'
 recipe preview example
 recipe prepare example
+recipe conclude RUN-ID
+recipe prepare example --reopen-reason 'The checked behavior changed'
 recipe checkpoint RUN-ID
 recipe run RUN-ID
 recipe cancel RUN-ID
@@ -298,6 +300,29 @@ help and nested recipe commands are rejected. Saving never executes a step.
 Names use 1–48 ASCII letters, digits, hyphens or underscores. At most 32 files
 are stored in the selected session's `Data/config/debug-command-recipes/`;
 existing names are not overwritten.
+
+An explicitly terminal checkpoint (completed, failed, assertion-failed or
+wait-timeout) can be marked concluded with
+`recipe conclude RUN-ID`; this records its hash without dispatching an action.
+Later preparations of a matching recipe in the same session require a nonblank
+reopening reason of at most 512 printable UTF-8 bytes. The new checkpoint stores
+the reason and the concluded run IDs and hashes. Matching uses the ROM pin and
+ordered typed actions, so renaming the recipe or changing assertions or waits
+does not avoid the check. Ordinary completed but unmarked runs remain repeatable. Preview
+shows matching conclusions; the Scripts and tools form has a reopening-reason
+field. A changed conclusion, reason or recipe after Details requires a new
+review, and a conclusion added after preparation is checked before first start.
+An isolated Linux/Xvfb GUI test selected the recipe and session, displayed the
+conclusion, refused an empty reason, required a new review after editing the
+reason and completed one subsequent frame. It used simulated keyboard and mouse
+input; native Windows and physical input remain unverified.
+The local files are trusted evidence and can be moved or removed by their owner;
+semantically equivalent checks with different commands are not inferred.
+
+Typed command recipes do not dispatch campaign `run-case` or discover campaign
+evidence. To rerun a concluded campaign check, use the explicit
+[campaign workflow](debug_campaigns.md), which requires its own reopening
+reason. Arbitrary manually repeated checks cannot be identified automatically.
 
 An assertion immediately follows the action whose terminal response it checks:
 
@@ -327,11 +352,15 @@ before its wait, regardless of their textual order. The wait checks the same
 scalar and JSON Pointer rules as assertions. It observes the current state: it
 does not advance a paused guest or wait for a particular external job itself.
 
-The action's terminal result and wait deadline are stored before polling. Each
+The action's terminal result and wait deadline are stored before polling. New
+servers anchor that deadline to the server's terminal completion time, so a
+delayed client cannot extend it; older servers retain same-run compatibility
+with a deadline measured when the client receives the result. Each
 poll is reserved in the checkpoint before the read; an interruption may consume
 a poll without recording its response. A resume explicitly continues with the
 remaining polls and original deadline and never resends the completed action.
 The checkpoint stores the last bounded scalar observation and response digest.
+New observations also retain an idle guest boundary when one is available.
 A missing or non-scalar value cannot match. A timeout or exhausted poll count
 stops later actions with `wait-timeout`; an unconfirmed read stops with
 `unconfirmed`. Cancellation is checked between polls. Status polls are fresh,
@@ -374,16 +403,52 @@ The runner accepts `status`, `inspect`, bounded `step`, `content refresh`,
 `content list`, `profile select`, `catalog select`, `cheats select`, `cheats
 refresh`, `cheats list`, `cheats show`, `cheats capabilities`, `ui-start`,
 `ui-report`, `graphics`, `audio-start`, `audio-report`, `code-start`,
-`code-report`, `gameplay-start`, `gameplay-report`, and bounded `break`/`watch`
-searches. Discovery and selection
+`code-report`, `gameplay-start`, `gameplay-report`, `pause`, recent-event
+capture/freeze/report, issue report, guarded cheat preparation/application,
+arming/disarming and presets, bounded `break`/`watch` searches and capped replay
+jobs. Discovery and selection
 wait for their terminal responses before the next entry. These
 operations keep their existing idle-session, catalog-generation and validation
-guards. Other actions are rejected before sending any step. For example:
+guards. Cheat operations retain their generation and preview-token requirements;
+the recipe does not interpolate a token from a prior result. For example:
 
 ```text
 recipe save indexed 'content refresh' 'content list --limit 4' 'status'
 recipe save ui-case 'ui-start' 'step 1' 'ui-report'
+recipe save recent-case 'recent-start' 'step 1' 'recent-freeze' 'recent-report'
+recipe save replay-case 'replay run plain --max-frames 102' 'step 1'
 ```
+
+Select the replay profile before the replay action. Each replay requires an
+explicit `--max-frames` cap; the profile's execution window must fit that cap.
+For a comparison this is its selected window, not the length of the full
+recording. The recipe reserves
+that many frames against the shared 3,600-frame budget, or twice that number
+for a comparison because both machines execute frames. The supervisor pins the
+profile hash and the worker rechecks both hash and cap before executing. A
+bounded plain replay refuses a comparison profile so its cost cannot be
+underestimated. The selected worker executable must match the current frontend
+executable: another or older worker might ignore the bounded-worker protocol.
+Create a new profile with the current runtime when a prior profile uses a
+different executable; do not alter the pinned original. Ordinary uncapped replay
+outside a recipe retains its existing runtime options.
+Older runtimes without `bounded-replay-v1` are refused before
+dispatch; legacy saved recipes with uncapped replays remain readable but cannot
+run. A recovered cross-run recipe does not restore an old replay worker.
+
+In an isolated Linux/Xvfb EUR session, a copied 102-frame profile was refused
+before starting a worker with a cap of 101; the same profile completed under a
+cap of 102 and the following main-session step executed once. An explicit
+second resume left the checkpoint and guest state unchanged. Protected inputs
+were unchanged and the window closed normally.
+
+An isolated Linux/Xvfb EUR session ran pause, recent start, one frame, freeze
+and report in order. The report stayed unchanged and was not duplicated on
+resume. A separate recipe attempted to disarm an inactive cheat: the frontend
+refused it, the following step stayed planned and the guest state was unchanged.
+The windows closed normally and protected inputs were unchanged. Other cheat
+operations and the issue report have synthetic ordering coverage here; this does
+not establish device-level cheat behavior.
 
 Capture start/report actions retain their own time, frame, event, report-size
 and output-directory limits; the recipe's 1 MiB limit applies to its checkpoint
@@ -417,8 +482,14 @@ isolated EUR Wine/Xvfb session, a Thumb breakpoint reached the observed paused
 PC after 40,948 interpreter steps, before executing the matched instruction. An
 assertion accepted the hit, the following step advanced one frame, and explicit
 resume did not repeat either action. The checkpoint recorded both steps, the
-window closed normally and protected inputs stayed unchanged. Feature-gated
-watchpoints and native Windows remain unverified.
+window closed normally and protected inputs stayed unchanged. In an isolated
+Linux/Xvfb EUR interpreter session, an audit-enabled build ran a recipe watch
+for a RAM read, asserted the hit and executed its next step; the first match was
+an HLE/DMA-inclusive interpreter step, not an attributed guest instruction.
+A second resume left the checkpoint and guest state unchanged. With the feature
+disabled, the same recipe recorded the feature refusal, left the next step
+planned and preserved the guest state. Both windows closed normally and the
+input copies were protected. Native Windows watch behavior remains unverified.
 
 A Windows GNU build and 31 focused Wine tests covered capture action order,
 report-response recovery without duplicate execution and existing recipe
@@ -495,8 +566,9 @@ The typed recipe's own limits
 apply; the readonly adapter's runtime and timeout fields apply only to its
 separate format. Focused synthetic Wine tests exercised Details, Start, cancellation and explicit resume. A menu rendering test checked that a long preview retains its tail and scrolls at a narrow size. An isolated EUR Wine/Xvfb session with simulated keyboard and mouse selected a saved one-frame recipe and its original session through the interactive picker. Start was refused before Details without creating a run; after Details, Start completed one frame and the checkpoint recorded the step as completed. Protected inputs stayed unchanged and the window closed normally. This verifies one interactive path, not native Windows or physical input.
 
-Additional action types, wider picker scenarios and the full
-short/interrupted acceptance matrix remain missing. Windows GNU builds
+At that earlier authoring stage, action coverage and interrupted execution were
+still incomplete; the subsequent checks above and below cover the implemented
+runner paths. Wider picker and platform scenarios remain open. Windows GNU builds
 and 19 focused Wine tests passed for authoring, validation, parser, completion and
 operation metadata. A synthetic session without ROM or control mailbox also
 passed save, preview and duplicate refusal through the Windows CLI under Wine.
@@ -553,19 +625,95 @@ closed normally and protected inputs remained unchanged. This test predates the
 limited explicit cross-restart recovery described below.
 
 `recipe recover RUN-ID` can rebind a checkpoint to a new control run without
-dispatching an action. It requires at least one completed step followed only by
-unsent steps, unchanged session inputs and an unexpired original deadline. It
-preserves completed request identities, assigns new identities to unsent steps,
+dispatching an action. A pending step can first be resolved if the old control
+mailbox still contains its successful terminal response with the exact run,
+request, deadline, operation and fingerprint. Recovery records that response
+without resending the action. This is local session evidence, not a signed
+record; keep the session directory trusted. If steps remain, inspect the
+result and invoke `recipe recover RUN-ID` again to rebind them. A missing,
+mismatched or failed response is not retried. For an attached wait, recovery
+requires a valid original terminal completion time, retains the earlier of its
+wait deadline and the recipe deadline, and reports `wait-timeout` if it has
+already elapsed. Responses from older servers without that time cannot recover
+an attached wait. Invalid or out-of-budget timestamps are refused.
+
+Completed UI, audio, code and gameplay start/report pairs can precede the
+recovery boundary; their recorded results and request identities remain intact
+and neither action is repeated. The report files remain ordinary local artifacts:
+recovery does not verify that they have not been moved or modified. Open or
+unmatched earlier collectors are still refused because their host observations
+are not present in the guest state.
+
+Rebinding requires a completed action, optionally followed by its recorded
+wait, and only unsent later steps, unchanged session inputs and an unexpired
+original deadline. It preserves completed request identities, assigns new identities to unsent steps,
 and records the last result's paused guest boundary. Restore that exact state
 in the new session, then explicitly use `recipe resume RUN-ID`: the frontend
 checks its full state hash, frame, clock, backend, absence of armed cheats,
-replay and retained UI, audio, recent-event, code and gameplay collectors
+pending control/search work, replay and retained UI, audio, recent-event,
+code and gameplay collectors
 immediately before the first action. A mismatch refuses the action. The old
 deadline is not extended, and a runtime without the guard refuses before the
-mailbox write. An unresolved action, any recipe wait, capture/freeze searches
-and any recipe action that requires host collectors or selections are refused;
-those host contexts are not restored by a guest-state hash. The new path has
-synthetic Linux tests; real cross-restart execution and Windows remain open.
+mailbox write. Completed steps may use status, inspection, bounded stepping,
+search with no action or pause, content discovery and selection. For each
+completed selection, recovery retains the role, anchored location, kind and
+content hash, rechecks the input outside the frontend thread and guards the
+restored selection immediately before dispatch. Temporary catalog IDs may
+change after reopening; the stable pin must match. At most three selected
+inputs and 2 KiB of pin metadata fit in the guarded request. Older selection
+results without a recovery pin are refused. Recovery pins can contain explicit
+external paths; treat the checkpoint and copied JSON as private. The catalog
+index itself is not restored: remaining catalog list/selection commands
+require a new explicit refresh, and cheat queries require a new cheat refresh.
+Input contents are checked during recovery and again by the consuming action's
+preflight; there is no continuous filesystem watch between those operations.
+Remaining steps may
+also start a new audio, code, gameplay or UI collector before its report,
+capture graphics before a comparison, or use a search capture action.
+An unresolved action without a matching response, an open earlier collector,
+a report without its new collector and event-freeze searches are refused;
+previous collector contexts are not
+restored by a guest-state hash. A recorded wait can be
+rebound if its original deadline and poll budget remain, and its most recent
+poll has a recorded idle guest boundary; before any poll, the action result
+provides that boundary. The first new status poll checks that
+boundary; the prior action is not resent and its deadline, wait deadline and
+consumed poll count are retained. An unconfirmed last poll or an older wait
+observation without a recoverable boundary is refused. The guarded poll may
+wait within the remaining original deadline, and a cancellation marker remains
+observable while it is in flight. An isolated Linux
+interpreter session under Xvfb completed a status step, stopped before its next
+step, closed and reopened normally, rebound the checkpoint, and resumed one
+frame. The original status response and request identity were preserved; a
+second resume left the guest unchanged. Protected inputs stayed unchanged.
+Another isolated Linux/Xvfb run started a UI collector after the restart,
+stepped one frame and wrote its report; the prior status result and a second
+resume remained unchanged. A further Linux/Xvfb run interrupted a recorded
+wait, closed and reopened normally, then observed the restored boundary before
+an external step satisfied the wait and the recipe executed its next step.
+The original action response and both deadlines remained unchanged; the poll
+count advanced from one to three and a second resume did not change state.
+Another isolated Linux/Xvfb run retained a synthetic catalog selection across
+two normal restarts, despite a changed temporary ID. The completed selection
+and intervening status responses stayed unchanged, and a second final resume
+did not change state. Another run stopped its own client after the server had
+written a terminal status response but before the checkpoint recorded it;
+after a normal restart, recovery recorded that exact response and continued
+without resending the status. These runs used simulated cancellation or client
+interruption and silent audio. A further isolated Linux/Xvfb run interrupted a
+pending status with an attached wait, then recovered its exact response and
+original deadlines across a normal restart. A guarded observation preceded an
+external frame and the recipe's next frame; a second resume changed nothing.
+Windows GNU/Wine focused tests cover the
+collector ordering, selected inputs, wait recovery, retained terminal
+responses, delayed response, cancellation and refusals; a real Wine restart,
+native Windows and broader host-context recovery remain open.
+
+Another isolated Linux/Xvfb run completed a UI report, interrupted before its
+next recipe step, and restarted normally. Recovery kept both original request
+identities and responses; the report JSON and HTML hashes remained unchanged,
+only one report existed, and the following step ran once. Synthetic checks cover
+the same completed-pair rule for audio, code, gameplay and UI captures.
 
 Two initial attempts exited before opening the session because the test bridge
 inherited validation variables forbidden by the isolated-session guard. The

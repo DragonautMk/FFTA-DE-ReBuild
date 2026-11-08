@@ -22,7 +22,8 @@ pub(crate) enum Command {
     TriggerRetry { name:String, run:String, request:String, deadline_unix_ms:u64 },
     RecipeSave { name:String, commands:Vec<String> },
     RecipePreview { name:String },
-    RecipePrepare { name:String },
+    RecipePrepare { name:String, reason:Option<String> },
+    RecipeConclude { id:String },
     RecipeCheckpoint { id:String },
     RecipeRun { id:String, resume:bool },
     RecipeRecover { id:String },
@@ -75,7 +76,7 @@ fn numeric_syntax(t:&[String])->Result<(),String>{
     }
     for pair in t.windows(2){match pair[0].as_str(){
         "--keys"|"--start"|"--end"|"--context"|"--value"|"--when-address"|"--when-value"=>hex(&pair[1])?,
-        "--steps"|"--width"|"--when-width"|"--hits"|"--frame-start"|"--frame-end"|"--events"|"--frames"|"--offset"|"--limit"|"--generation"=>decimal(&pair[1])?,_=>{}
+        "--steps"|"--width"|"--when-width"|"--hits"|"--frame-start"|"--frame-end"|"--events"|"--frames"|"--max-frames"|"--offset"|"--limit"|"--generation"=>decimal(&pair[1])?,_=>{}
     }}
     Ok(())
 }
@@ -112,7 +113,9 @@ fn parse_tokens(t:&[String],allow_retry:bool)->Result<Command,String>{
             return Ok(Command::RecipeSave{name:id(name,48)?,commands:commands.to_vec()});
         },
         [family,verb,name] if family=="recipe" && verb=="preview"=>return Ok(Command::RecipePreview{name:id(name,48)?}),
-        [family,verb,name] if family=="recipe" && verb=="prepare"=>return Ok(Command::RecipePrepare{name:id(name,48)?}),
+        [family,verb,name] if family=="recipe" && verb=="prepare"=>return Ok(Command::RecipePrepare{name:id(name,48)?,reason:None}),
+        [family,verb,name,flag,reason] if family=="recipe" && verb=="prepare" && flag=="--reopen-reason"=>return Ok(Command::RecipePrepare{name:id(name,48)?,reason:Some(id(reason,512)?)}),
+        [family,verb,value] if family=="recipe" && verb=="conclude"=>return Ok(Command::RecipeConclude{id:id(value,48)?}),
         [family,verb,value] if family=="recipe" && verb=="checkpoint"=>return Ok(Command::RecipeCheckpoint{id:id(value,48)?}),
         [family,verb,value] if family=="recipe" && (verb=="run"||verb=="resume")=>return Ok(Command::RecipeRun{id:id(value,48)?,resume:verb=="resume"}),
         [family,verb,value] if family=="recipe" && verb=="recover"=>return Ok(Command::RecipeRecover{id:id(value,48)?}),
@@ -122,8 +125,8 @@ fn parse_tokens(t:&[String],allow_retry:bool)->Result<Command,String>{
             let mut args=vec![name,"<current-session>".into()];for pair in rest.windows(2){if ["--offset","--limit"].contains(&pair[0].as_str()){decimal(&pair[1])?;}}args.extend_from_slice(rest);return crate::debug_control::parse(&args).map(|(_,a)|Command::Control(a));
         },
         [family,verb,rest @ ..] if family=="replay" && verb=="run"=>{
-            let mode=match rest {[]=>"plain",[mode]=>mode.as_str(),_=>return Err("Use replay run [plain|audit|capture|compare]".into())};
-            let args=vec!["replay-run".into(),"<current-session>".into(),"--mode".into(),mode.into()];return crate::debug_control::parse(&args).map(|(_,a)|Command::Control(a));
+            let (mode,options)=match rest.first(){Some(mode) if !mode.starts_with("--")=>(mode.as_str(),&rest[1..]),_=>("plain",rest)};
+            let mut args=vec!["replay-run".into(),"<current-session>".into(),"--mode".into(),mode.into()];args.extend_from_slice(options);numeric_syntax(t)?;return crate::debug_control::parse(&args).map(|(_,a)|Command::Control(a));
         },
         [family,verb,rest @ ..] if family=="content" && (verb=="refresh"||verb=="list")=>{
             let mut args=vec![if verb=="refresh"{"content-refresh".into()}else{"content-list".into()},"<current-session>".into()];
@@ -169,7 +172,8 @@ pub(crate) fn execute(root:&std::path::Path,input:&str)->serde_json::Value {
         Command::TriggerRetry{name,run,request,deadline_unix_ms}=>return trigger::retry(root,&name,run,request,deadline_unix_ms),
         Command::RecipeSave{name,commands}=>return recipe::save_command(root,&name,&commands),
         Command::RecipePreview{name}=>return recipe::preview_command(root,&name),
-        Command::RecipePrepare{name}=>return recipe::prepare_command(root,&name),
+        Command::RecipePrepare{name,reason}=>return recipe::prepare_command(root,&name,reason.as_deref()),
+        Command::RecipeConclude{id}=>return recipe::conclude_command(root,&id),
         Command::RecipeCheckpoint{id}=>return recipe::checkpoint_command(root,&id),
         Command::RecipeRun{id,resume}=>return recipe::run_command(root,&id,resume),
         Command::RecipeRecover{id}=>return recipe::recover_command(root,&id),

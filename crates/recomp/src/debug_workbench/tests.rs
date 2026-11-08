@@ -11,6 +11,7 @@ fn every_form_has_bounded_unique_fields_and_shared_control_validation() {
         assert_eq!(keys.len(), f.len());
         assert!(checked_values(tool, defaults(tool)).is_ok());
     }
+    let mut legacy=defaults(Tool::Recipe);legacy.remove("--reopen-reason");assert_eq!(checked_values(Tool::Recipe,legacy).unwrap()["--reopen-reason"],"");
     let t = tempfile::tempdir().unwrap();
     let mut d = Draft {
         tool: Tool::Step,
@@ -64,6 +65,15 @@ fn every_form_has_bounded_unique_fields_and_shared_control_validation() {
     d.values = defaults(Tool::Audio);
     d.values.insert("--streams".into(), "mixed,mixed".into());
     assert!(d.control().is_err());
+}
+#[test]
+fn recipe_reopening_reason_is_editable_in_the_rendered_tool_form(){
+    let mut menu=menu::Menu::new(true,true);menu.set_debug_enabled(true);let mut workbench=Workbench::default();workbench.open(&mut menu,Tool::Recipe);
+    let mut av=input_config::AvConfig::default();for _ in 0..3{menu.handle(menu::MenuInput::Down,&mut av);}
+    assert!(menu.handle(menu::MenuInput::Confirm,&mut av).is_none());assert!(menu.content_text_focus());menu.content_text("Observed behavior changed");menu.content_finish_search(false);
+    let values=menu.tool_values().1;assert_eq!(values.iter().find(|(key,_)|key=="--reopen-reason").unwrap().1,"Observed behavior changed");
+    let mut canvas=vec![[0,0,0,255];400*300];let keys: [String;10]=std::array::from_fn(|_|String::new());menu.draw(&av,&keys,"","","","",&mut canvas,400,300);
+    assert!(menu.debug_focus(400,300).selected_bounds.is_some());assert!(canvas.iter().any(|pixel|pixel[0]!=0 || pixel[1]!=0 || pixel[2]!=0));
 }
 #[test]
 fn common_menu_drafts_match_console_and_local_control_actions() {
@@ -261,8 +271,16 @@ fn typed_recipe_tool_requires_current_preview_and_cancels_between_actions() {
     workbench.request(&mut menu,draft(),ToolRequest::Run).unwrap();let cancel=workbench.cancel.as_ref().unwrap().clone();let end=stop.clone();let calls=count.clone();
     let worker=std::thread::spawn(move||{while !end.load(Ordering::SeqCst){if let Ok(Some(request))=server.poll(){let n=calls.fetch_add(1,Ordering::SeqCst)+1;if n==1{cancel.store(true,Ordering::SeqCst);}let _=server.reply(&request,json!({"paused":true,"frame":n,"remaining":0}),None);}std::thread::sleep(Duration::from_millis(2));}});
     finish(&mut workbench,&mut menu);assert!(matches!(workbench.observation.as_ref().unwrap()["outcome"].as_str(),Some("cancelled"|"cancellation-pending")));assert_eq!(count.load(Ordering::SeqCst),1);
-    let id=workbench.observation.as_ref().unwrap()["result"]["checkpoint_id"].as_str().unwrap();
+    let id=workbench.observation.as_ref().unwrap()["result"]["checkpoint_id"].as_str().unwrap().to_owned();
     assert_eq!(crate::debug_command::execute(&root,&format!("recipe resume {id}"))["outcome"],"completed");assert_eq!(count.load(Ordering::SeqCst),2);
     workbench.cancel_view();workbench.request(&mut menu,draft(),ToolRequest::Run).unwrap();finish(&mut workbench,&mut menu);assert!(workbench.last.contains("Review this typed recipe"));assert_eq!(count.load(Ordering::SeqCst),2);
+    assert_eq!(crate::debug_command::execute(&root,&format!("recipe conclude {id}"))["outcome"],"concluded");
+    let mut repeat=draft();let (message,preview)=crate::debug_tools::typed_preview(&repeat).unwrap().unwrap();assert!(message.contains(&id));
+    let err=crate::debug_tools::run_observed(draft(),Arc::new(AtomicBool::new(false)),Some(preview)).err().unwrap();assert!(err.contains("reopening reason"));assert_eq!(count.load(Ordering::SeqCst),2);
+    let (_,stale)=crate::debug_tools::typed_preview(&repeat).unwrap().unwrap();repeat.values.insert("--reopen-reason".into(),"Observed input changed".into());
+    let mut changed=draft();changed.values.insert("--reopen-reason".into(),"Observed input changed".into());
+    assert!(crate::debug_tools::run_observed(changed,Arc::new(AtomicBool::new(false)),Some(stale)).err().unwrap().contains("changed since Details"));
+    let (_,preview)=crate::debug_tools::typed_preview(&repeat).unwrap().unwrap();
+    let result=crate::debug_tools::run_observed(repeat,Arc::new(AtomicBool::new(false)),Some(preview)).unwrap();assert_eq!(result.observation["outcome"],"completed");assert_eq!(count.load(Ordering::SeqCst),4);
     stop.store(true,Ordering::SeqCst);worker.join().unwrap();
 }

@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-11-08",
+  "slug": "recover-pending-recipe-waits",
+  "title": "Recover pending recipe actions with bounded waits",
+  "kind": "fixed",
+  "platforms": [
+    "Linux",
+    "Windows GNU/Wine"
+  ],
+  "changes": [
+    "Terminal responses record server completion time; pending actions with attached waits can recover the exact response without redispatch while preserving the original wait and recipe deadlines.",
+    "Missing, malformed, out-of-budget or expired timing fails closed; same-run use of older servers remains compatible."
+  ],
+  "validation": [
+    "86 focused Linux tests, Windows GNU runtime and test compilation, and 87 focused Wine tests passed.",
+    "An isolated Linux/Xvfb session interrupted its own client before the pending response was checkpointed, restarted normally, restored the guarded wait, advanced an external frame and a recipe frame, and verified an unchanged second resume.",
+    "The first Linux test run found an incorrect zero-counter JSON expectation; the corrected suite passed."
+  ],
+  "limitations": [
+    "Terminal timestamps are trusted local session evidence, not signed; older responses without them cannot recover pending waits.",
+    "Real Wine GUI restart, native Windows, prior collector restoration and broader action and platform coverage remain open."
+  ],
+  "files": [
+    "crates/recomp/src/debug_control.rs",
+    "crates/recomp/src/debug_command/recipe/checkpoint/runner.rs",
+    "crates/recomp/src/debug_operations.json"
+  ],
+  "references": [
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ]
+}

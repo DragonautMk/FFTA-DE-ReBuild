@@ -186,12 +186,13 @@ fn put(root: &Path, name: &str, bytes: &[u8]) -> Result<(), String> {
 fn outputs(root: &Path) -> PathBuf {
     root.join("Data/config/replay")
 }
-fn load(path: &Path) -> Result<(PathBuf, Profile), String> {
+fn load_pinned(path: &Path) -> Result<(PathBuf, Profile, String), String> {
     let path = fs::canonicalize(path).map_err(|e| e.to_string())?;
     if path.file_name().and_then(|s| s.to_str()) != Some(PROFILE) {
         return Err("Select the profile's replay.json".into());
     }
-    let p: Profile = serde_json::from_slice(&read(&path, 64 * 1024)?)
+    let bytes=read(&path,64*1024)?;let identity=digest(&bytes);
+    let p: Profile = serde_json::from_slice(&bytes)
         .map_err(|e| format!("Replay profile: {e}"))?;
     if p.schema != 1
         || p.kind != "ffta-debug-replay-profile"
@@ -219,8 +220,9 @@ fn load(path: &Path) -> Result<(PathBuf, Profile), String> {
         crate::debug_compare::validate(comparison,p.frames,p.library_sha256.is_some())?;
         if p.audit.is_some() || p.capture.is_some(){return Err("Comparison profiles cannot also audit or capture triggers".into());}
     }
-    Ok((path.parent().unwrap().into(), p))
+    Ok((path.parent().unwrap().into(), p, identity))
 }
+fn load(path:&Path)->Result<(PathBuf,Profile),String>{let(root,profile,_)=load_pinned(path)?;Ok((root,profile))}
 fn checked(root: &Path, name: &str, limit: u64, expected: &str) -> Result<Vec<u8>, String> {
     let bytes = read(&root.join(name), limit)?;
     if digest(&bytes) != expected {
@@ -550,14 +552,22 @@ fn preparation(p:&Profile,root:&Path,run:&str,events:&mut Vec<serde_json::Value>
     // Observation failure never prevents the existing validated operation.
     if let Err(error)=json(&outputs(root).join("progress.json"),&report){events.last_mut().unwrap()["publication_error"]=serde_json::json!(error.chars().take(256).collect::<String>());}
 }
-fn worker(path: &Path, run: &str) -> Result<Report, String> {
+struct WorkerLimit {max_frames:u32,profile_sha256:String}
+fn execution_frames(profile:&Profile)->u64{profile.comparison.as_ref().map_or(profile.frames,|comparison|comparison.frames)}
+fn check_bounded_profile(profile:&Profile,mode:crate::debug_control::ReplayMode,max_frames:u32)->Result<(),String>{
+    use crate::debug_control::ReplayMode;
+    let compatible=match mode {ReplayMode::Plain=>profile.comparison.is_none(),ReplayMode::Audit=>profile.audit.is_some(),ReplayMode::Capture=>profile.capture.is_some(),ReplayMode::Comparison=>profile.comparison.is_some()};
+    if !compatible || execution_frames(profile)>u64::from(max_frames){return Err("Replay profile mode or frame count exceeds the reserved recipe budget".into());}Ok(())
+}
+fn worker(path: &Path, run: &str, limit:Option<WorkerLimit>) -> Result<Report, String> {
     if run.is_empty()
         || run.len() > 64
         || !run.bytes().all(|b| b.is_ascii_alphanumeric() || b == b'-')
     {
         return Err("Invalid replay run identifier".into());
     }
-    let (root, p) = load(path)?;
+    let (root, p, profile_sha256) = load_pinned(path)?;
+    if let Some(limit)=limit {if profile_sha256!=limit.profile_sha256 || execution_frames(&p)>u64::from(limit.max_frames){return Err("Replay profile changed or exceeds the reserved frame limit".into());}}
     let preparation_started=Instant::now();let mut preparation_events=Vec::with_capacity(4);
     let _session = crate::debug_session::open(&root)?;
     if digest(&read(
@@ -741,7 +751,21 @@ pub(crate) struct Job {
 }
 impl Job {
     pub fn start(path: &Path) -> Result<Self, String> {
-        let (root, p) = load(path)?;
+        Self::start_inner(path,None)
+    }
+    pub fn start_bounded(path:&Path,mode:crate::debug_control::ReplayMode,max_frames:u32)->Result<Self,String>{
+        if !(1..=360_000).contains(&max_frames){return Err("Invalid bounded replay frame limit".into());}
+        Self::start_inner(path,Some((mode,max_frames)))
+    }
+    fn start_inner(path:&Path,limit:Option<(crate::debug_control::ReplayMode,u32)>)->Result<Self,String>{
+        let (root,p,profile_sha256)=load_pinned(path)?;
+        if let Some((mode,max_frames))=limit {
+            check_bounded_profile(&p,mode,max_frames)?;
+            // A different or older worker may ignore the bounded-worker protocol.
+            // Only the same pinned executable can be trusted to enforce it.
+            let current=std::env::current_exe().map_err(|e|e.to_string())?;
+            if digest(&read(&current,256*1024*1024)?)!=p.runtime_sha256{return Err("Bounded replay requires the current runtime executable; other workers may not enforce its limit".into());}
+        }
         let mut command = crate::debug_session::replay_command(&root)?; // Validate paths before the lease file.
         let lease = OpenOptions::new()
             .create(true)
@@ -777,6 +801,7 @@ impl Job {
             .arg(&run)
             .stdout(Stdio::from(log.try_clone().map_err(|e| e.to_string())?))
             .stderr(Stdio::from(log));
+        if let Some((_,max_frames))=limit {command.arg("--max-frames").arg(max_frames.to_string()).arg("--profile-sha256").arg(profile_sha256);}
         drop(session);
         let child = command.spawn().map_err(|e| e.to_string())?;
         Ok(Self {
@@ -905,7 +930,12 @@ fn error(message: &str) -> u8 {
 }
 pub(crate) fn cmd(args: &[String]) -> u8 {
     match args.first().map(String::as_str) {
-        Some("worker") if args.len()==3=>match worker(Path::new(&args[1]),&args[2]) {Ok(r)=>r.code(),Err(e)=>error(&e)},
+        Some("worker") if args.len()==3=>match worker(Path::new(&args[1]),&args[2],None) {Ok(r)=>r.code(),Err(e)=>error(&e)},
+        Some("worker") if args.len()==7 && args[3]=="--max-frames" && args[5]=="--profile-sha256"=>{
+            let max=match args[4].parse::<u32>(){Ok(n) if (1..=360_000).contains(&n)=>n,_=>return error("Invalid worker frame limit")};
+            if args[6].len()!=64 || !args[6].bytes().all(|b|b.is_ascii_digit() || (b'a'..=b'f').contains(&b)){return error("Invalid worker profile hash");}
+            match worker(Path::new(&args[1]),&args[2],Some(WorkerLimit{max_frames:max,profile_sha256:args[6].clone()})){Ok(r)=>r.code(),Err(e)=>error(&e)}
+        },
         Some("run") if args.len()==2||args.len()==3&&args[2]=="--json"=>{
             install_interrupt();let mut job=match Job::start(Path::new(&args[1])){Ok(j)=>j,Err(e)=>return error(&e)};
             let mut previous=None;

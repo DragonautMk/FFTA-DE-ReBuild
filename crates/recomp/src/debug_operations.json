@@ -5668,8 +5668,8 @@
       "allowed_state":"Selected isolated session with configuration directory and valid declared pins.",
       "effects":"Atomically create an inert typed recipe file; no command is executed.",
       "result":"Typed ordered actions, session pins and declared limits.",
-      "limits":"16 steps, 3600 combined step and worst-case search frames, 64 KiB per recipe, 32 files; runner supports status, inspect, step, catalog discovery/selection/queries bounded captures/reports and bounded searches.",
-      "open_work":["DBG2-16: broader actions and real interrupted recovery remain missing"],
+      "limits":"16 steps, 3600 combined step, worst-case search and reserved replay frames, 64 KiB per recipe, 32 files; replay requires --max-frames, doubled for comparison, and the current runtime executable.",
+      "open_work":["DBG2-16: broader platform and active host-context recovery remain open"],
       "external_dialog":null
     },
     {
@@ -5687,7 +5687,7 @@
       "effects":"Read and validate the recipe and declared pins; no command is executed.",
       "result":"Typed ordered actions and declared limits, or a refusal.",
       "limits":"64 KiB recipe and complete tool preview; direct preview compares declared pins, without independently rehashing session payloads.",
-      "open_work":["DBG2-16: broader actions and real interrupted recovery remain missing"],
+      "open_work":["DBG2-16: broader platform and active host-context recovery remain open"],
       "external_dialog":null
     },
     {
@@ -5695,17 +5695,34 @@
       "title": "Prepare an inert recipe checkpoint",
       "source": "crates/recomp/src/debug_command/recipe/checkpoint.rs",
       "handler": "prepare_command",
-      "cli": "recomp debug-command SESSION \"recipe prepare NAME\"",
+      "cli": "recomp debug-command SESSION \"recipe prepare NAME [--reopen-reason REASON]\"",
       "parameters": [
-        {"name":"NAME","value_type":"text","constraint":"Existing typed command recipe for the selected session.","current_menu":"selected","default":null}
+        {"name":"NAME","value_type":"text","constraint":"Existing typed command recipe for the selected session.","current_menu":"selected","default":null},
+        {"name":"REASON","value_type":"text","constraint":"Required for matching explicitly concluded evidence; at most 512 printable UTF-8 bytes.","current_menu":"selected","default":null}
       ],
       "selection":["Session-pinned typed recipe and active control run"],
       "menu":{"current":"Debug / Consoles and scripts / Command console","destination":"Debug / Consoles and scripts / Command console","implemented":true},
       "allowed_state":"Matching readiness metadata declaring an active control session with idempotent-request-v1.",
-      "effects":"Persist unique per-step planned identities and hashes; do not dispatch any request.",
+      "effects":"Persist unique per-step planned identities and hashes and any reopening reason with concluded checkpoint identities; do not dispatch any request.",
       "result":"Inert checkpoint and recipe run ID.",
-      "limits":"32 retained recipe runs and 16 steps. Run is separate and supports status, inspect, step, catalog discovery/selection/queries bounded captures/reports and bounded searches.",
-      "open_work":["DBG2-16: broader actions and real interrupted recovery remain missing"],
+      "limits":"32 retained recipe runs and 16 steps. Matching is limited to explicitly concluded runs in this session with the same ROM and typed sequence. Run checks evidence again before starting; replay requires an explicit frame cap.",
+      "open_work":["DBG2-16: broader platform and active host-context recovery remain open"],
+      "external_dialog":null
+    },
+    {
+      "id":"recipe.conclude",
+      "title":"Mark terminal recipe evidence concluded",
+      "source":"crates/recomp/src/debug_command/recipe/checkpoint/conclusion.rs",
+      "handler":"conclude_command",
+      "cli":"recomp debug-command SESSION \"recipe conclude RUN\"",
+      "parameters":[{"name":"RUN","value_type":"text","constraint":"Terminal recipe checkpoint ID in the selected session.","current_menu":"selected","default":null}],
+      "selection":["Terminal recipe checkpoint and session"],
+      "menu":{"current":"Debug / Consoles and scripts / Command console","destination":"Debug / Consoles and scripts / Command console","implemented":true},
+      "allowed_state":"A valid completed, failed, assertion-failed or wait-timeout checkpoint with its original recipe and session pins.",
+      "effects":"Record an immutable local conclusion marker bound to the checkpoint hash; do not dispatch an action.",
+      "result":"Concluded evidence identity or a refusal.",
+      "limits":"Only explicitly concluded runs in this session are considered; equivalent checks expressed by different commands are not inferred.",
+      "open_work":["DBG2-16: broader action and platform coverage remains open"],
       "external_dialog":null
     },
     {
@@ -5723,7 +5740,7 @@
       "effects":"Validate planned action and request identities without sending a request.",
       "result":"Checkpoint and whether readiness metadata still matches its original control run; this does not prove process liveness.",
       "limits":"Bounded checkpoint; ambiguous read queries do not have a retry ledger.",
-      "open_work":["DBG2-16: broader actions and real interrupted recovery remain missing"],
+      "open_work":["DBG2-16: broader platform and active host-context recovery remain open"],
       "external_dialog":null
     },
     {
@@ -5736,10 +5753,10 @@
       "selection":["Original session run and prepared checkpoint; Scripts and tools also requires an unchanged reviewed recipe and session"],
       "menu":{"current":"Debug / Consoles and scripts / Command console; Scripts and tools / Debug command recipe","destination":"Debug / Consoles and scripts / Command console; Scripts and tools / Debug command recipe","implemented":true},
       "allowed_state":"Matching original session run and authenticated session inputs; each action enforces its own state guards.",
-      "effects":"Persist deadline and request identity before each dispatch; execute status, inspect, bounded step, catalog discovery/selection/queries bounded captures/reports and bounded searches in order.",
+      "effects":"Persist deadline and request identity before each dispatch; execute bounded frontend actions and capped replay jobs in order.",
       "result":"Completed, cancelled, assertion-failed, wait-timeout, failed, timeout or unconfirmed checkpoint with bounded results.",
-      "limits":"16 steps, 3600 combined step and worst-case search frames, 120-second execution deadline and bounded output; read query with ambiguous result is not retried.",
-      "open_work":["DBG2-16: additional action types and real interrupted recovery remain missing"],
+      "limits":"16 steps, 3600 combined step, worst-case search and reserved replay frames, 120-second execution deadline and bounded output; bounded replay requires the current runtime executable, and ambiguous read queries are not retried.",
+      "open_work":["DBG2-16: broader platform and active host-context recovery remain open"],
       "external_dialog":null
     },
     {
@@ -5764,14 +5781,14 @@
       "source":"crates/recomp/src/debug_command/recipe/checkpoint/runner.rs",
       "handler":"recover_command",
       "cli":"recomp debug-command SESSION \"recipe recover RUN\"",
-      "parameters":[{"name":"RUN","value_type":"text","constraint":"Retained recipe run ID with a completed step and only unsent remaining steps.","current_menu":"selected","default":null}],
+      "parameters":[{"name":"RUN","value_type":"text","constraint":"Retained recipe run ID with a resolvable pending action or completed action, optional recorded wait and only unsent later steps.","current_menu":"selected","default":null}],
       "selection":["Retained checkpoint and matching isolated session"],
       "menu":{"current":"Debug / Consoles and scripts / Command console","destination":"Debug / Consoles and scripts / Command console","implemented":true},
-      "allowed_state":"A new compatible run, authenticated inputs and an unexpired original deadline; previous guest state must have no armed cheats.",
-      "effects":"Rebind unsent request identities and retain completed identities; send no action. The first subsequent action checks the recorded guest boundary atomically.",
-      "result":"Rebound checkpoint or explicit refusal; resume is a separate command.",
-      "limits":"No pending or ambiguous action, waits, host-dependent actions or capture/freeze searches anywhere in the recipe. The original deadline is not extended; restore the exact paused guest boundary before resuming.",
-      "open_work":["DBG2-16: real cross-restart validation, host-context recovery and broader actions remain open"],
+      "allowed_state":"A new compatible run; rebinding also requires authenticated inputs, an unexpired original deadline and no armed cheats.",
+      "effects":"Record an exact retained successful terminal response without dispatch, or rebind unsent request identities while retaining completed identities. The first subsequent action or wait observation checks the recorded guest boundary atomically.",
+      "result":"Resolved pending response, rebound or completed checkpoint, assertion failure, wait timeout, or explicit refusal; resume is a separate command.",
+      "limits":"A pending action requires its exact successful response; an attached wait also needs a valid original terminal completion time. Completed collector start/report pairs retain their results; open or unmatched earlier collectors, unconfirmed observations, stale collectors and event-freeze searches are refused. Up to three selected inputs and 2 KiB of pin metadata are rechecked; catalog indexes need a new refresh. Original limits remain in force.",
+      "open_work":["DBG2-16: real Wine restart and active host-context recovery remain open"],
       "external_dialog":null
     },
     {

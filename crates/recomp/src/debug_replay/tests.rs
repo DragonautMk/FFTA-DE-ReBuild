@@ -158,6 +158,16 @@ fn run_fixture(path: &Path, control: impl FnMut(u64) -> Option<(&'static str, St
     execute(&p, "fixture-run", &mut m, &input, &end, None, None, None, control)
 }
 #[test]
+fn bounded_worker_rechecks_profile_identity_and_frame_limit_before_start(){
+    let f=Fixture::new();let path=f.create();let before=f.inputs();let (_,profile,hash)=load_pinned(&path).unwrap();assert_eq!(profile.frames,4);
+    assert!(Job::start_bounded(&path,crate::debug_control::ReplayMode::Plain,3).err().unwrap().contains("frame"));
+    assert!(worker(&path,"bounded-test",Some(WorkerLimit{max_frames:3,profile_sha256:hash.clone()})).err().unwrap().contains("frame limit"));
+    assert!(worker(&path,"bounded-test",Some(WorkerLimit{max_frames:4,profile_sha256:"a".repeat(64)})).err().unwrap().contains("changed"));
+    let mut changed:serde_json::Value=serde_json::from_slice(&fs::read(&path).unwrap()).unwrap();changed["runtime_sha256"]=serde_json::json!("a".repeat(64));fs::write(&path,serde_json::to_vec(&changed).unwrap()).unwrap();
+    assert!(Job::start_bounded(&path,crate::debug_control::ReplayMode::Plain,4).err().unwrap().contains("current runtime"));
+    assert!(!outputs(path.parent().unwrap()).exists());assert_eq!(f.inputs(),before);
+}
+#[test]
 fn profile_pins_selected_inputs_and_repeats_full_endpoint_without_save_writes() {
     let f = Fixture::new();
     let before = f.inputs();
@@ -387,4 +397,6 @@ fn comparison_profile_is_explicit_bounded_and_separate_from_plain_replay(){
     let args=vec!["--recording".into(),f.recording.to_string_lossy().into_owned(),"--session".into(),f.session.to_string_lossy().into_owned(),"--dir".into(),f.temp.path().join("comparison").to_string_lossy().into_owned(),"--case".into(),"DS-20-EUR".into()];
     let profile=create_cmd_comparison(&args,&crate::debug_compare::Request{settings:crate::debug_compare::Settings{frames:2,backend:"interp".into(),audio:"preserve".into()},dataset:None}).unwrap();
     let(_,p)=load(&profile).unwrap();assert_eq!(p.stop,"first-divergence");assert_eq!(p.comparison.as_ref().unwrap().frames,2);assert_eq!(Report::new(&p,"test","running",0,"running").frames,2);assert!(Job::require_comparison(&profile).is_ok());assert!(Job::require_capture(&profile).is_err());
+    assert!(Job::start_bounded(&profile,crate::debug_control::ReplayMode::Plain,2).err().unwrap().contains("mode"));assert!(Job::start_bounded(&profile,crate::debug_control::ReplayMode::Comparison,1).err().unwrap().contains("frame"));
+    assert_eq!(p.frames,4);assert_eq!(execution_frames(&p),2);assert!(check_bounded_profile(&p,crate::debug_control::ReplayMode::Comparison,2).is_ok());
 }

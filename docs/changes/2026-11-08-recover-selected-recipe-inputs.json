@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-11-08",
+  "slug": "recover-selected-recipe-inputs",
+  "title": "Recover pinned recipe selections across restarts",
+  "kind": "added",
+  "platforms": [
+    "Linux / Xvfb isolated EUR interpreter; Windows GNU / Wine synthetic tests"
+  ],
+  "changes": [
+    "Preserve selected input roles using their anchored locations, kinds and content hashes; verify the input outside the frontend thread and check the restored selection before dispatch without repeating its completed selection command.",
+    "Record stable pin fingerprints in status observations so a temporary catalog ID may change across runs; explicit refresh remains necessary for a new catalog index or cheat snapshot."
+  ],
+  "validation": [
+    "Linux synthetic regression passed 37 recipe, 36 control, 4 completion, 4 registry and 1 portable-move selection test; Windows GNU/Wine passed 37, 37, 4, 4 and 1 respectively.",
+    "An isolated Linux/Xvfb interpreter recovered a synthetic catalog selection through two normal restarts and three distinct control runs; the temporary ID changed, stable pin and completed results remained unchanged, one later frame ran, and a second resume had no effect. Protected inputs stayed unchanged."
+  ],
+  "limitations": [
+    "Up to three selected roles and 2 KiB of pin metadata are supported; older selection results without pins, earlier collectors, ambiguous pending actions and stale or unavailable inputs are refused. No continuous filesystem watch exists between recovery verification and later action preflight.",
+    "The real proof used simulated cancellation and silent audio; real Wine restart, native Windows and physical input remain open."
+  ],
+  "files": [
+    "crates/recomp/src/content_picker.rs",
+    "crates/recomp/src/content_picker/tests.rs",
+    "crates/recomp/src/debug_control.rs",
+    "crates/recomp/src/play.rs",
+    "crates/recomp/src/debug_command/recipe/checkpoint.rs",
+    "crates/recomp/src/debug_command/recipe/checkpoint/runner.rs",
+    "crates/recomp/src/debug_operations.json",
+    "crates/menu/assets/debug_v2.tsv",
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-08-recover-recorded-recipe-waits.json"
+  ]
+}

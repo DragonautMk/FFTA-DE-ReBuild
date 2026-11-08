@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "date": "2026-11-08",
+  "slug": "require-reopening-for-concluded-recipes",
+  "title": "Require a reason to reopen concluded recipe evidence",
+  "kind": "added",
+  "platforms": [
+    "Linux",
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Allow an explicitly terminal recipe checkpoint, including negative outcomes, to be marked concluded without dispatch; matching ordered actions and ROM within the same session require a reopening reason on a new run.",
+    "Record the reason and matching checkpoint hashes in the new checkpoint, recheck them atomically before the first dispatch, and bind the Scripts and tools preview to the evidence and reason. Preserve existing presets and unmarked repeatable runs."
+  ],
+  "validation": [
+    "109 focused Linux and 110 Wine tests passed, including completed and negative evidence, renamed recipes, changed assertions, tampering, stale preview, late conclusion, old presets and the rendered reason field.",
+    "An isolated Linux/Xvfb EUR interpreter completed and concluded a one-frame recipe; a repeat without a reason was refused with unchanged guest state, and a reasoned repeat executed one further frame without duplication on resume. Protected inputs were unchanged and the window closed normally.",
+    "An initial Wine run exposed transient access denial in an existing synthetic wait test; its server outbox retry was corrected and the final regression passed. A first menu test used the wrong text-commit event and was corrected.",
+    "An isolated Linux/Xvfb picker selected the saved recipe and session, displayed concluded evidence, refused an empty reason, required a new Details review after editing it, and completed one frame. Simulated keyboard/mouse input and protected originals were used; the window closed normally.",
+    "The first GUI drivers failed on helper path, sampled short key pulses, scroll overshoot and premature async status matching. A separate trace recorded key press/release pairs before navigation polling; its runner retained private scratch and reported FAIL despite exit 0. The final direct-pointer test passed."
+  ],
+  "limitations": [
+    "Only explicitly concluded recipe checkpoints in the same session with matching typed actions and ROM are detected; different actions, other sessions and campaign evidence require their own explicit workflow. Local evidence is not signed.",
+    "Real native Windows and physical input were not tested; the prior automated review rejected the separate Wine GUI restart driver."
+  ],
+  "files": [
+    "crates/recomp/src/debug_command.rs",
+    "crates/recomp/src/debug_command/completion.rs",
+    "crates/recomp/src/debug_command/recipe.rs",
+    "crates/recomp/src/debug_command/recipe/checkpoint.rs",
+    "crates/recomp/src/debug_command/recipe/checkpoint/conclusion.rs",
+    "crates/recomp/src/debug_command/recipe/checkpoint/runner.rs",
+    "crates/recomp/src/debug_operations.json",
+    "crates/recomp/src/debug_workbench.rs",
+    "crates/recomp/src/debug_workbench/tests.rs",
+    "crates/recomp/src/debug_tools.rs"
+  ],
+  "references": [
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ]
+}

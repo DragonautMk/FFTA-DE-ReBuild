@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-08",
+  "slug": "verify-recipe-recovery-normal-restart",
+  "title": "Verify recipe recovery across a normal restart",
+  "kind": "changed",
+  "platforms": [
+    "Linux / Xvfb, isolated EUR interpreter"
+  ],
+  "changes": [
+    "Verify the explicit guest-only recipe recovery path across a normal close and reopen of the same isolated session."
+  ],
+  "validation": [
+    "A status step completed and a simulated cancellation stopped the following step; after reopening under a different control-run identity, recovery preserved the completed result and request identity, sent no guest action, and resumed exactly one frame.",
+    "A second resume preserved state, frame, clock and keys. Both windows closed normally; ROM, seed state and runtime inputs remained unchanged."
+  ],
+  "limitations": [
+    "One guest-only recipe, simulated cancellation and silent audio; no runtime crash, pending-action replay, waits, host-dependent recovery, Windows or physical input was tested."
+  ],
+  "files": [
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/changes/2026-11-08-guard-recipe-recovery-across-runs.json"
+  ]
+}

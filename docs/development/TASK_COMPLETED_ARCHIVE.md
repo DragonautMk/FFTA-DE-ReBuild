@@ -21545,3 +21545,73 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: named trigger definitions and editing, bounded count/window and guard, pause/capture/freeze, reached and unreached results, safe boundary, evaluated condition and authenticated identity; existing DBG2-05/15 and DBG-08/11 dependencies are accepted. Eleven retained trigger test and EUR Wine/Xvfb GUI receipts report PASS; no accepted proof was rerun.
 - Evidence: docs/changes/2026-11-07-complete-named-trigger-editor.json; docs/changes/2026-11-04-complete-interpreter-trigger-editor.json; docs/changes/2026-11-04-authenticate-trigger-capture-and-retry.json; target/validation/units/dbg2-trigger-identity-live-y5ywb_n6/unit-result.json.
 - Limits: interpreter/Wine scope; feature-gated counted watch was tested synthetically, while native Windows, physical input, other ROMs and broader platform/observer coverage remain DBG2-27.
+
+### DBG2-16-CROSS-RUN-WAIT
+
+- Outcome: completed
+- Verified criteria: recorded wait recovery keeps the original action identity, wait/recipe deadlines and consumed poll count, guards the first new observation and supports cancellation during slow replies. Linux synthetic 79 and Windows GNU/Wine synthetic 80 tests PASS. An isolated Linux/Xvfb normal close/reopen resumed an interrupted wait; external and recipe steps advanced two frames, the original action result persisted and a second resume changed nothing. Protected inputs remained unchanged.
+- Evidence: docs/changes/2026-11-08-recover-recorded-recipe-waits.json; target/validation/units/dbg2-recovery-wait-live-fixed-ox3m35dd/unit-result.json; target/validation/units/dbg2-recovery-wait-wine-verified-oz_5rsmj/unit-result.json.
+- Limits: one Linux interpreter case with simulated cancellation and silent audio; earlier host collectors, selections, uncertain pending actions, real Wine restart and native Windows remain open. Initial wait run expired; a subsequent run captured the matching successful response after the former one-second client cap. Sol consultant requested gpt-6.1-sol xhigh; effective settings and primary model/effort unconfirmed.
+
+### DBG2-16-CROSS-RUN-SELECTIONS
+
+- Outcome: completed
+- Verified criteria: recovery preserves selected role, anchored location, kind and content hash; it rechecks inputs before rebinding and validates restored pins at dispatch without reselecting. A Linux/Xvfb synthetic catalog survived two normal restarts and a changed transient ID; completed responses and later repeated resume were unchanged, protected inputs remained unchanged. Linux synthetic 82 and Windows GNU/Wine synthetic 83 tests PASS.
+- Evidence: docs/changes/2026-11-08-recover-selected-recipe-inputs.json; target/validation/units/dbg2-recovery-selection-two-restarts-30rh2qc2/unit-result.json; target/validation/units/dbg2-recovery-selection-wine-swi52sv6/unit-result.json.
+- Limits: up to three selected roles and 2 KiB pin metadata; older selection results without pins, stale inputs, previous collector state and ambiguous pending actions remain refused. The live case used simulated cancellation and silent audio; real Wine restart, native Windows and physical input remain open. Effective primary model/effort unconfirmed.
+
+### DBG2-16-RETAINED-PENDING
+
+- Outcome: completed
+- Verified criteria: an exact successful terminal response retained in the old mailbox resolves a pending step without dispatch, retaining run, request, deadline, operation, session and request fingerprint; assertions and terminal completion remain explicit. Missing, altered, failed and wait-attached results refuse. Linux synthetic 84 and Windows GNU/Wine synthetic 85 tests PASS. A Linux/Xvfb test stopped its own client after response publication but before checkpoint completion, reopened the isolated session, recorded the exact response, resumed one frame and verified a second resume was unchanged. Protected inputs stayed unchanged.
+- Evidence: docs/changes/2026-11-08-resolve-retained-recipe-responses.json; target/validation/units/dbg2-recovery-pending-live-x_kkf2an/unit-result.json; target/validation/units/dbg2-recovery-pending-wine-v_exl_nb/unit-result.json.
+- Limits: local response evidence is unsigned and requires a trusted session directory; overwritten or unavailable responses, pending waits and earlier collector contexts remain refused. The live case intentionally interrupted its own client and used silent audio; real Wine restart, native Windows and physical input remain open. Effective primary model/effort unconfirmed.
+
+### DBG2-16-PENDING-WAIT
+
+- Outcome: completed
+- Verified criteria: exact retained pending action response with valid terminal completion time restores its attached wait without redispatch or extended deadlines; missing, invalid and expired timing fails closed.
+- Evidence: `docs/changes/2026-11-08-recover-pending-recipe-waits.json`; Linux/Xvfb interrupted-client normal restart PASS, 86 Linux and 87 Wine synthetic tests PASS.
+- Limits: trusted local timestamps; older servers without a timestamp cannot recover an attached pending wait. Real Wine restart, native Windows and prior collector contexts remain open.
+
+### DBG2-16-COMPLETED-COLLECTORS
+
+- Outcome: completed
+- Verified criteria: completed UI, audio, code and gameplay start/report pairs survive cross-run recovery without repeating requests; open or unmatched prior collectors refuse.
+- Evidence: `docs/changes/2026-11-08-recover-completed-recipe-collectors.json`; Linux/Xvfb UI report restart PASS, 87 Linux and 88 Wine synthetic tests PASS.
+- Limits: recovery does not attest report files; open prior collector restoration, real Wine restart, native Windows and broader platforms remain open.
+
+### DBG2-16-RECIPE-WATCH
+
+- Outcome: completed
+- Verified criteria: audit-enabled recipe RAM read watch hit and assertion, following step and unchanged second resume; default build refused the watch with following step unsent and guest unchanged.
+- Evidence: `docs/changes/2026-11-08-verify-feature-gated-recipe-watch.json`; two isolated Linux/Xvfb EUR sessions passed with protected inputs and normal closes.
+- Limits: one HLE/DMA-inclusive read hit, not guest-instruction attribution; feature-enabled Wine and native Windows remain unverified.
+
+### DBG2-16-CONCLUDED-RECIPE-EVIDENCE
+
+- Outcome: completed
+- Verified criteria: explicitly concluded terminal recipe checkpoints require a recorded reason before a matching same-session recipe starts; unmarked runs stay repeatable, evidence and preview changes fail closed.
+- Evidence: `docs/changes/2026-11-08-require-reopening-for-concluded-recipes.json`; 109 Linux/110 Wine tests and isolated Linux/Xvfb reason refusal and rerun PASS.
+- Limits: matching covers the same ROM and ordered typed actions in one session; different actions, sessions and campaign evidence are not inferred. Local evidence is unsigned; native Windows and physical input remain unverified.
+
+### DBG2-16-BOUNDED-FRONTEND-ACTIONS
+
+- Outcome: completed
+- Verified criteria: recipe runner orders pause, recent capture/report, issue and guarded cheat/preset actions; refusal stops later actions and resume does not duplicate completed actions.
+- Evidence: `docs/changes/2026-11-08-run-additional-frontend-recipe-actions.json`; 46 Linux recipe/112 Wine tests and isolated Linux/Xvfb recent report and inactive-cheat refusal PASS.
+- Limits: cheat activation and issue output are synthetic-only in this check; separate replay jobs, real native Windows and active-host-context recovery remain open.
+
+### DBG2-16-BOUNDED-REPLAY
+
+- Outcome: completed
+- Verified criteria: Explicit replay cap counts with step/search budgets; comparisons reserve twice the selected window. The selected current-runtime worker rechecks profile hash and cap. Legacy uncapped recipe execution is refused and old serialization is preserved.
+- Evidence: `docs/changes/2026-11-08-bound-replay-jobs-in-recipes.json`; Linux/Xvfb 101 refusal/102 completion PASS; 127 Wine tests PASS.
+- Limits: Same-runtime worker required; old worker cross-run restoration, live comparison proof, native Windows and physical input remain unverified.
+
+### DBG2-16-REOPENING-PICKER
+
+- Outcome: completed
+- Verified criteria: A real isolated Linux/Xvfb picker selected the recipe and session, displayed explicitly concluded evidence, refused an empty reopening reason, required a fresh review after editing and executed one subsequent frame. Protected inputs remained unchanged; the window closed normally.
+- Evidence: `docs/changes/2026-11-08-require-reopening-for-concluded-recipes.json`; `target/validation/units/dbg2-reopen-picker-synced-i2_ylhjf/unit-result.json` PASS.
+- Limits: Simulated input and Linux/Xvfb only; Wine GUI, native Windows and physical input remain unverified. Failed diagnostic units are retained; the UI trace shows short X11 press/release pairs arriving before navigation polling. Sol xhigh was requested; effective settings and primary model/effort were not independently confirmed.

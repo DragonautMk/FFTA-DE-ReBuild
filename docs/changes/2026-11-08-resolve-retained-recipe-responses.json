@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-08",
+  "slug": "resolve-retained-recipe-responses",
+  "title": "Resolve retained terminal recipe responses",
+  "kind": "added",
+  "platforms": [
+    "Linux / Xvfb isolated EUR interpreter; Windows GNU / Wine synthetic tests"
+  ],
+  "changes": [
+    "Allow explicit recovery of a pending recipe step when its retained successful terminal response exactly matches the original run, request, deadline, operation, session and request fingerprint; record it without dispatching the action again.",
+    "Preserve assertions and terminal completion, require a separate explicit recovery to continue remaining steps, and refuse missing, mismatched, failed or wait-attached pending responses."
+  ],
+  "validation": [
+    "Linux synthetic regression passed 39 recipe, 36 control, 4 completion, 4 registry and 1 selection test; Windows GNU/Wine passed 39, 37, 4, 4 and 1 respectively.",
+    "An isolated Linux/Xvfb run stopped its own client after the server wrote a terminal status response but before the pending checkpoint changed. After a normal reopen, recovery recorded the exact response without redispatch, then resumed one frame; a second resume changed neither checkpoint nor guest state. Protected inputs stayed unchanged."
+  ],
+  "limitations": [
+    "The response is trusted local session evidence, not a signed record. Overwritten or unavailable responses and pending actions with attached waits remain refused. The real proof used an intentionally interrupted client and silent audio; real Wine restart, native Windows and physical input remain open."
+  ],
+  "files": [
+    "crates/recomp/src/debug_command/recipe/checkpoint/runner.rs",
+    "crates/recomp/src/debug_operations.json",
+    "crates/menu/assets/debug_v2.tsv",
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-08-recover-selected-recipe-inputs.json"
+  ]
+}

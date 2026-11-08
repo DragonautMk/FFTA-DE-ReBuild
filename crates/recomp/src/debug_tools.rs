@@ -309,15 +309,20 @@ pub(crate) fn description(tool: Tool) -> String {
         return "Guest catalog v1: bounded readonly metadata view. Inspect catalog reads the selected file; Gameplay inspector opens its form and requires existing authenticated ROM/model checks. Nothing starts on selection.".into();
     }
     if tool == Tool::Recipe {
-        return "Recipe adapter v1: Details reviews the complete selected sequence without execution. Typed recipes require an unchanged preview and matching saved session recipe; Start prepares a checkpoint under the selected session's config/debug-command-runs and executes status, inspect, bounded step, catalog discovery/selection/queries bounded captures/reports and bounded breakpoint/watch searches. Cancel stops at a boundary; a reserved action may still finish. The older readonly recipe format uses the selected runtime and config/debug-tool-runs.".into();
+        return "Recipe adapter v1: Details reviews the complete selected sequence, concluded evidence and reopening reason without execution. Typed recipes require an unchanged preview and matching saved session recipe; Start prepares a checkpoint and executes bounded frontend commands and replay jobs with an explicit frame cap. Cancel stops at a boundary; a reserved action may still finish. The older readonly recipe format uses the selected runtime and config/debug-tool-runs.".into();
     }
     format!("Declared adapter v1: {}\n{}\n{}\nDetails verifies typed references without starting a process. Start is explicit; Cancel retains logs. Output: config/debug-tool-runs/<new-id>/;8runs,120s maximum,8MiB per stream. No overwrite or artifact deletion.", tool.label(),payload(tool).iter().map(|p|format!("{} SHA256 {}",p.name,digest(p.data))).collect::<Vec<_>>().join("\n"),if tool==Tool::Recipe {"Readonly schema1 recipe:1..16 control.status/control.inspect steps; selected recomp runtime. Typed command recipes run only after reviewing the unchanged selection; Cancel stops between actions. Python/PowerShell/Bash/Docker not used."} else {"Explicit Python3.11+ stdlib executable required. Embedded source by default, optional exact-hash external source. Direct argv adapter; PowerShell/Bash wrappers and Docker not used or installed."})
 }
-pub(crate) fn typed_preview(d:&Draft)->Result<Option<(String,String)>,String>{
+fn typed_review(d:&Draft)->Result<Option<(String,String,String)>,String>{
     if d.tool!=Tool::Recipe{return Ok(None);}
     let path=d.path(Slot::Recipe)?;
     if !crate::debug_command::recipe::is_command_recipe(&path)?{return Ok(None);}
-    crate::debug_command::recipe::review_with_identity(&path,&d.path(Slot::Session)?).map(Some)
+    let (message,base)=crate::debug_command::recipe::review_with_identity(&path,&d.path(Slot::Session)?)?;
+    let reason=d.value("--reopen-reason");let identity=digest(&serde_json::to_vec(&(&base,reason)).map_err(|e|e.to_string())?);
+    Ok(Some((format!("Reopening reason: {}\n\n{message}",if reason.is_empty(){"(none)"}else{reason}),identity,base)))
+}
+pub(crate) fn typed_preview(d:&Draft)->Result<Option<(String,String)>,String>{
+    Ok(typed_review(d)?.map(|(message,identity,_)|(message,identity)))
 }
 pub(crate) fn details(d: &Draft) -> Result<String, String> {
     if d.tool == Tool::GuestScripts {
@@ -690,8 +695,10 @@ pub(crate) fn run_observed(d: Draft, cancel: Arc<AtomicBool>, preview: Option<St
     }
     if d.tool == Tool::Recipe && crate::debug_command::recipe::is_command_recipe(&d.path(Slot::Recipe)?)? {
         let identity=preview.ok_or("Review this typed recipe with Details before Start")?;
+        let (_,current,base)=typed_review(&d)?.ok_or("Review this typed recipe with Details before Start")?;
+        if current!=identity{return Err("Recipe, concluded evidence or reopening reason changed since Details; review it again".into());}
         let root=d.path(Slot::Session)?;let path=d.path(Slot::Recipe)?;
-        let result=crate::debug_command::recipe::run_reviewed(&path,&root,&identity,&cancel)?;
+        let reason=d.value("--reopen-reason");let result=crate::debug_command::recipe::run_reviewed_with_reason(&path,&root,&base,&cancel,(!reason.is_empty()).then_some(reason))?;
         let id=result["checkpoint"]["id"].as_str().ok_or("Recipe runner did not return a checkpoint")?;
         let outcome=result["outcome"].as_str().unwrap_or("unconfirmed");
         let message=format!("Recipe {id}: {outcome}. {} Checkpoint retained; use the console to inspect or explicitly resume.",result["message"].as_str().unwrap_or("No terminal message."));

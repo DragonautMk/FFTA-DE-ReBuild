@@ -63,10 +63,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 - State: active
 - Outcome: partial
-- Selection: user requests completion of Debug Tools V2; prior client-interruption and picker proofs remain accepted. Added explicit guarded cross-run recovery for guest-only recipes; next validate a real restart and complete remaining criteria.
-- Verified: assertions, waits, catalog/captures, bounded searches including EUR Wine Thumb hit, Start/cancel, interrupted recovery and interactive picker. New recovery rebinds completed/unsent identities, checks guest boundary and inactive collectors/cheats before the first new action, and refuses ambiguous or host-dependent recipes. Linux synthetic regression: 30 recipe, 35 control, 4 completion, 4 registry tests PASS. `docs/changes/2026-11-08-guard-recipe-recovery-across-runs.json`.
-- Missing: real session restart proof, Windows/Wine validation, host-dependent recovery, pending/ambiguous actions and waits across restart, other action types, feature-gated watch, broader picker scenarios and wider platforms. Original 120-second deadline remains in force.
-- Resume: use the new recovery code and receipts; inspect host toolchain/Xvfb availability, then validate changed behavior without repeating accepted proofs. No live validation process remains.
+- Verified: assertions, waits, catalog/captures, bounded searches, Start/cancel and interrupted recovery. Cross-run recovery preserves completed identities, recorded waits and selected role/location/hash; exact retained terminal responses resolve pending steps without redispatch. Linux/Xvfb real restarts PASS, including pending waits and completed UI reports; recipe watch and explicit reopening PASS; Linux/Xvfb picker also verifies reason entry and fresh review. Bounded frontend actions include pause/recent/issue/cheats. 46 Linux recipe/112 Wine tests and Linux/Xvfb recent/refusal PASS. Bounded replay: live 101 refusal/102 completion and 127 Wine tests PASS. `docs/changes/2026-11-08-bound-replay-jobs-in-recipes.json`.
+- Missing: open earlier collector restoration (host observations are RAM-only; prior checkpoints cannot reconstruct them), pending actions with missing/mismatched responses, broader picker/platform checks and real Wine restart. Old selection results without pins are refused; deadlines remain in force.
+- Resume: reconcile original completion criteria and remaining limitations; do not repeat accepted proofs. Open collector restoration is an extension. Private and failed units retained.
 
 ### DBG2-17
 
@@ -189,9 +188,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: DBG2-16 remains partial; explicit guarded cross-run recovery for guest-only recipes is implemented.
-- Last verified result: 73 Linux synthetic recipe, control, completion and registry tests PASS; protected inputs unchanged.
-- Remaining work: real restart proof, Windows/Wine and complete host-context recovery, plus other Debug Tools V2 tasks.
-- Errors or blockers: Windows GNU compile could not find MinGW dlltool; Xvfb is absent. Failed build diagnostics retained. Effective debugging model/effort unconfirmed.
-- Next action: verify available Windows toolchain and isolated display, then test the new recovery in a real session; preserve unresolved requests and host-context limits.
-- References: docs/changes/2026-11-08-guard-recipe-recovery-across-runs.json; target/validation/units/dbg2-recipe-recovery-guard-final-5hfsi8zi/; target/validation/units/dbg2-recipe-boundary-build-uers2rxh/.
+- Task: DBG2-16 partial; GUI reopening reason and bounded replay verified.
+- Last verified result: Linux/Xvfb picker refused empty reason, required fresh review and executed one frame; memory/atlas checks PASS.
+- Remaining work: old active collectors, ambiguous pending responses, broader platforms and other Debug Tools V2 tasks.
+- Errors or blockers: automated review rejected the Wine GUI driver because shared-prefix coordination was not established; coordinated Wine tests passed. Primary and requested Sol model/effort unconfirmed.
+- Next action: assess DBG2-16 remaining criteria without repeating accepted tests; old collector observations need new persistence.
+- References: docs/changes/2026-11-08-require-reopening-for-concluded-recipes.json; target/validation/units/dbg2-reopen-picker-synced-i2_ylhjf/; target/validation/units/dbg2-picker-tap-diagnosis-_a2dttqc/.

@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-08",
+  "slug": "verify-feature-gated-recipe-watch",
+  "title": "Verify feature-gated watch recipes",
+  "kind": "changed",
+  "platforms": [
+    "Linux / Xvfb isolated EUR interpreter"
+  ],
+  "changes": [
+    "Document an audit-enabled RAM read watch in a typed recipe and the corresponding default-build feature refusal.",
+    "Clarify that typed recipes do not dispatch campaign run-case and do not enforce reopening reasons for manually repeated evidence."
+  ],
+  "validation": [
+    "An isolated audit-enabled session recorded one RAM read hit during an HLE/DMA-inclusive interpreter step, passed a hit assertion and completed its next step; an explicit second resume preserved checkpoint and guest state.",
+    "The default build recorded feature refusal with the next step still planned and guest state unchanged; both windows closed normally and protected inputs were unchanged."
+  ],
+  "limitations": [
+    "This covers one read hit and one refusal in Linux/Xvfb with silent audio, not guest-instruction attribution, Wine or native Windows feature-enabled watch behavior.",
+    "Recipe-level enforcement of a reopening reason for equivalent concluded evidence remains unresolved; the existing campaign run-case enforces it separately."
+  ],
+  "files": [
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/debug_campaigns.md"
+  ]
+}

@@ -42,6 +42,7 @@ pub(crate) struct Picker {
     selected: Option<Reference>,
     slot: Option<ContentSlot>,
     slots: BTreeMap<ContentSlot, Reference>,
+    recovery_pins: BTreeMap<ContentSlot, crate::debug_choices::SavedInput>,
     job: Option<Job>,
     id_job: Option<IdJob>,
     scan_job: Option<ScanJob>,
@@ -105,6 +106,7 @@ impl Picker {
         self.rom = Some(rom.clone());
         self.view = self.view.wrapping_add(1);
         self.slots.clear();
+        self.recovery_pins.clear();
         self.selected = None;
         self.index = None;
         self.locations.clear();
@@ -322,6 +324,26 @@ impl Picker {
         self.slots.clone()
     }
     pub fn reference(&self,slot:ContentSlot)->Option<&Reference>{self.slots.get(&slot)}
+    fn remember_recovery_input(&mut self,slot:ContentSlot,reference:&Reference){
+        let pin=self.memory.as_ref().and_then(|memory|crate::debug_choices::SavedInput::capture(slot,reference,&memory.anchors).ok());
+        if let Some(pin)=pin {self.recovery_pins.insert(slot,pin);}else{self.recovery_pins.remove(&slot);}
+    }
+    /// Return the stable role, location and content pin cached on selection or
+    /// readonly restoration; normal status polling does not scan inputs.
+    pub fn recovery_input(&self,slot:ContentSlot)->Result<crate::debug_choices::SavedInput,String>{
+        if self.busy() || self.restore_pending{return Err("Saved input restoration is still in progress".into());}
+        self.recovery_pins.get(&slot).cloned().ok_or_else(||"Saved input is unavailable".to_owned())
+    }
+    fn recovery_identity(&self,slot:ContentSlot)->Option<String>{
+        let pin=self.recovery_pins.get(&slot)?;
+        Some(gba_core::ffta_rom::digest(&serde_json::to_vec(pin).ok()?))
+    }
+    pub fn check_recovery_inputs(&self,expected:&[crate::debug_choices::SavedInput])->Result<(),String>{
+        for item in expected {
+            if self.recovery_input(item.slot()?)?!=*item{return Err("Selected input changed; no action executed".into());}
+        }
+        Ok(())
+    }
     pub fn rom_context(&self)->Option<&str>{self.rom.as_deref()}
     pub fn completion_ids(&self,slot:ContentSlot) -> Vec<String> {
         self.index.as_ref().map_or_else(Vec::new, |index| index.entries.iter()
@@ -352,6 +374,7 @@ impl Picker {
         if let Some(memory) = &mut self.memory {
             memory.record_input(slot, &reference);
         }
+        self.remember_recovery_input(slot,&reference);
         self.saved_issues.remove(&slot);
         self.slots.insert(slot, reference);
         self.scope(menu);
@@ -456,6 +479,7 @@ impl Picker {
             if let Some(memory) = &mut self.memory {
                 memory.record_input(job.slot, &reference);
             }
+            self.remember_recovery_input(job.slot,&reference);
             self.saved_issues.remove(&job.slot);
             self.slots.insert(job.slot, reference);
             self.scope(menu);
@@ -629,6 +653,7 @@ impl Picker {
                             }
                             if let Some(reference) = restored.references.get(slot) {
                                 self.slots.insert(*slot, reference.clone());
+                                self.recovery_pins.insert(*slot,original.clone());
                                 self.saved_issues.remove(slot);
                             } else if let Some(issue) = restored.issues.get(slot) {
                                 self.saved_issues.insert(*slot, issue.clone());
@@ -695,6 +720,7 @@ impl Picker {
                     if let Some(memory) = &mut self.memory {
                         memory.record_input(slot, &selection);
                     }
+                    self.remember_recovery_input(slot,&selection);
                     self.saved_issues.remove(&slot);
                     self.slots.insert(slot, selection.clone());
                 }
@@ -715,7 +741,7 @@ impl Picker {
         true
     }
     pub fn status(&self) -> Value {
-        json!({"persistence":self.memory.as_ref().map(|m|json!({"file":m.file.path,"message":m.message,"saved_roles":m.file.state.inputs.len(),"saved_views":m.file.state.views.len(),"bookmarks":m.file.state.bookmarks.len(),"readonly_restore_pending":self.restore_pending})),"persistence_error":self.persistence_error,"saved_issues":self.saved_issues.iter().map(|(slot,message)|json!({"slot":slot.label(),"message":message})).collect::<Vec<_>>(),"slot":self.slot.map(|s|s.label()),"inputs":ContentSlot::ALL.into_iter().filter_map(|slot|self.slots.get(&slot).map(|s|json!({"slot":slot.label(),"id":s.entry.id,"kind":s.entry.kind,"relative_path":s.entry.relative_path,"sha256":s.entry.sha256,"scope":"Pinned host reference; rechecked before use; runtime ABI and decoded guest fields still need action preflight"}))).collect::<Vec<_>>(),"generation":self.generation,"busy":self.busy(),"roots":self.roots.len(),"entries":self.index.as_ref().map_or(0,|i|i.entries.len()),"selected":self.selected.as_ref().map(|s|json!({"id":s.entry.id,"kind":s.entry.kind,"root_id":s.entry.root_id,"relative_path":s.entry.relative_path,"sha256":s.entry.sha256,"path":s.path})),"scope":"Host content selection only; no execution or full action verification"})
+        json!({"persistence":self.memory.as_ref().map(|m|json!({"file":m.file.path,"message":m.message,"saved_roles":m.file.state.inputs.len(),"saved_views":m.file.state.views.len(),"bookmarks":m.file.state.bookmarks.len(),"readonly_restore_pending":self.restore_pending})),"persistence_error":self.persistence_error,"saved_issues":self.saved_issues.iter().map(|(slot,message)|json!({"slot":slot.label(),"message":message})).collect::<Vec<_>>(),"slot":self.slot.map(|s|s.label()),"inputs":ContentSlot::ALL.into_iter().filter_map(|slot|self.slots.get(&slot).map(|s|json!({"slot":slot.label(),"id":s.entry.id,"kind":s.entry.kind,"relative_path":s.entry.relative_path,"sha256":s.entry.sha256,"recovery_identity":self.recovery_identity(slot),"scope":"Pinned host reference; rechecked before use; runtime ABI and decoded guest fields still need action preflight"}))).collect::<Vec<_>>(),"generation":self.generation,"busy":self.busy(),"roots":self.roots.len(),"entries":self.index.as_ref().map_or(0,|i|i.entries.len()),"selected":self.selected.as_ref().map(|s|json!({"id":s.entry.id,"kind":s.entry.kind,"root_id":s.entry.root_id,"relative_path":s.entry.relative_path,"sha256":s.entry.sha256,"path":s.path})),"scope":"Host content selection only; no execution or full action verification"})
     }
 }
 #[cfg(test)]

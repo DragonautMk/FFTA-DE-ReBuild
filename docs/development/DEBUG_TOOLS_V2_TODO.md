@@ -415,7 +415,8 @@ No other development was selected. On resumption read only the individual ID in
   and action hashes. A limited console runner
   now handles status/inspect/step, catalog discovery/selection/queries and
   bounded UI/audio/code/gameplay/graphics capture/report actions and bounded
-  breakpoint/watch searches with a combined frame budget,
+  breakpoint/watch searches with a combined frame budget, pause, recent-event
+  capture/report, issue report and guarded cheat/preset operations,
   journals results, stops between steps and
   retries an unresolved ledger-protected request with its original identity.
   Synthetic cancellation/recovery and a short EUR run passed. Bounded scalar
@@ -428,13 +429,36 @@ No other development was selected. On resumption read only the individual ID in
   60-frame step was pending and resumed with the same ID and exact frame count.
   Closing and reopening the session makes the old checkpoint inspectable. A
   limited explicit recovery now rebinds completed/unsent checkpoints with a
-  guarded guest boundary; pending actions, waits and recipes with host-dependent
-  actions are refused. Synthetic Linux validation covers the new path; a real
-  cross-restart proof and broader context recovery remain open.
+  guarded guest boundary. Selected inputs are checked by stable role, anchored
+  location and hash; the index itself needs a new refresh. New collectors and
+  reports may run after recovery. A pending action can be resolved without
+  redispatch if the original mailbox still contains its exact successful
+  terminal response; an attached wait also requires a valid original terminal
+  completion time and retains its original deadline. A missing or mismatched
+  response, missing or invalid wait time, unconfirmed wait observations and
+  open or unmatched earlier collectors are refused. Completed UI, audio, code
+  and gameplay start/report pairs can precede recovery without repeating them;
+  a Linux/Xvfb UI report restart and synthetic checks for all four families
+  passed. Recorded waits can resume within their original bounds
+  using a guarded last observation; synthetic tests and a real Linux/Xvfb
+  normal close/reopen verify the interrupted wait, external condition and next
+  recipe step without repeating the completed action; focused Windows GNU/Wine
+  tests also cover a slow guarded response and cancellation.
+  Synthetic Linux tests and an isolated Linux/Xvfb normal
+  close/reopen verified a status step retained across recovery, a following
+  one-frame step and an unchanged second resume. Another real Linux/Xvfb run
+  started a new UI collector after recovery and wrote its report. A synthetic
+  catalog selection was retained across two Linux/Xvfb restarts without
+  repeating its completed action, despite a changed temporary ID. Another
+  Linux/Xvfb run recovered a retained terminal response after interrupting its
+  client while the checkpoint was pending. A further Linux/Xvfb restart verified
+  a pending action with an attached wait and preserved both deadlines. Windows
+  GNU/Wine focused tests pass; a real Wine restart, native Windows and broader
+  context recovery remain open.
   A separate isolated EUR Wine/Xvfb GUI run selected the recipe and session
   through the picker, refused Start before Details, then completed one frame
   after preview and recorded the completed step. Input was simulated and
-  protected inputs stayed unchanged. Other actions, broader picker scenarios,
+  protected inputs stayed unchanged. Broader picker scenarios,
   wider interrupted acceptance, native Windows and physical input remain open.
   Catalog discovery/selection/query recipe support has synthetic ordering and
   recovery coverage; an isolated EUR run verified content refresh/list and an
@@ -443,7 +467,26 @@ No other development was selected. On resumption read only the individual ID in
   one recipe without changing guest state. Bounded searches enforce the aggregate
   worst-case frame budget. Isolated EUR Wine runs verified both a miss that stops
   on a hit assertion and a Thumb hit followed by one frame without duplication
-  on resume. Feature-gated watch remains unverified. Capture actions have
+  on resume. A separate bounded replay recipe rejected a 102-frame profile
+  under cap 101 before starting a worker, then completed it under cap 102 and
+  ran one subsequent main-session frame without repetition. Comparison reserves
+  twice the declared cap; the selected worker must match the current runtime,
+  and rechecks the profile hash and cap. An isolated Linux/Xvfb EUR recipe verified an audit-enabled RAM
+  read hit, assertion and next step without duplicate execution; the default
+  build refused the watch before the following step and preserved guest state.
+  The observed hit was in an HLE/DMA-inclusive step. An isolated Linux/Xvfb
+  session also verified a recent-event capture/report sequence and refusal of an
+  inactive cheat before the next step; other newly supported cheat and issue
+  actions have synthetic ordering coverage. Terminal recipe evidence
+  can be explicitly marked concluded. Matching ordered typed actions in the
+  same session then require a reopening reason, persisted with the
+  original checkpoint identity. Linux/Xvfb verified refusal without a reason and
+  a one-frame rerun with it. The Linux/Xvfb picker also displayed the conclusion,
+  refused an empty reason, required a new Details review after editing, and ran
+  one frame with simulated input. Typed recipes cannot dispatch campaign `run-case`
+  or infer equivalence across different commands or sessions; the separate
+  campaign workflow enforces its own reopening reason.
+  Capture actions have
   synthetic coverage; isolated EUR Wine recipes produced
   one UI, audio, code, gameplay and graphics report each without duplication
   on resume. Wider scenarios and platform coverage remain. Do not duplicate the

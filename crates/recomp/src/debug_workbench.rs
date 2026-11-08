@@ -67,7 +67,7 @@ pub(crate) fn fields(tool: Tool) -> Vec<Field> {
         Tool::Homepage => vec![input(Slot::Session), input(Slot::HostRuntime), input(Slot::HostTool), choice("--source","embedded",&["embedded","external"],"External requires exact declared script and sibling dependency hashes; embedded ignores any previous override."), text("--timeout-ms","120000","Total host deadline20..120000ms; explicit cancel keeps logs.")],
         Tool::CampaignReport => vec![input(Slot::Campaign), input(Slot::HostRuntime), input(Slot::HostTool), choice("--source","embedded",&["embedded","external"],"External requires exact declared script and sibling dependency hashes; embedded ignores any previous override."), text("--case","","One required explicit campaign case ID; no replay or default all."), text("--timeout-ms","120000","Total host deadline20..120000ms.")],
         Tool::ArtifactPreview => vec![input(Slot::Session), input(Slot::HostRuntime), input(Slot::HostTool), choice("--source","embedded",&["embedded","external"],"External requires exact declared script and sibling dependency hashes; embedded ignores any previous override."), text("--timeout-ms","120000","Readonly preview on a closed session; no artifact deletion/apply.")],
-        Tool::Recipe => vec![input(Slot::Recipe), input(Slot::Session), input(Slot::RuntimeB), text("--timeout-ms","120000","Readonly adapter uses this timeout and selected runtime. Typed recipes use their own limits; review with Details before Start.")],
+        Tool::Recipe => vec![input(Slot::Recipe), input(Slot::Session), input(Slot::RuntimeB), text("--reopen-reason","","Required when this typed recipe matches explicitly concluded recipe evidence."), text("--timeout-ms","120000","Readonly adapter uses this timeout and selected runtime. Typed recipes use their own limits; review with Details before Start.")],
         Tool::GuestScripts => vec![input(Slot::GuestScripts)],
         Tool::Replay => Vec::new(),
         Tool::Audit => vec![
@@ -285,7 +285,9 @@ fn defaults(tool: Tool) -> Values {
         .map(|f| (f.key, f.value))
         .collect()
 }
-fn checked_values(tool: Tool, values: Values) -> Result<Values, String> {
+fn checked_values(tool: Tool, mut values: Values) -> Result<Values, String> {
+    // Presets created before reopening provenance had no reason field.
+    if tool==Tool::Recipe && !values.contains_key("--reopen-reason"){values.insert("--reopen-reason".into(),String::new());}
     let schema = fields(tool);
     let expected = defaults(tool);
     if values.len() != expected.len()

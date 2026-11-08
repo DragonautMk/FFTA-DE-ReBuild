@@ -40,7 +40,7 @@ pub(crate) enum Action {
     CheatPresetSave { name:String },
     CheatPresetPrepare { name:String },
     CheatPresetArm { name:String, preview:String },
-    Replay { mode: ReplayMode },
+    Replay { mode: ReplayMode, #[serde(default,skip_serializing_if="Option::is_none")] max_frames:Option<u32> },
     Pause,
     Resume,
     Step {
@@ -81,6 +81,7 @@ impl Action {
             }
         }
         match self {
+            Self::Replay{max_frames:Some(frames),..} if !(1..=360_000).contains(frames)=>return Err("Replay frame limit must be 1..360000".into()),
             Self::Cancel {request_id} if request_id.is_empty() || request_id.len()>100 => return Err("Cancel needs the exact pending request ID (1..100bytes)".into()),
             Self::SelectId {id,..} if id.is_empty() || id.len()>512 || id.chars().any(char::is_control) => return Err("Content ID must be 1..512 bytes without control characters".into()),
             Self::ContentList {limit,..} if !(1..=16).contains(limit) => return Err("Content page limit needs1..16".into()),
@@ -201,8 +202,8 @@ pub(crate) struct Request {
 }
 
 /// Guest boundary checked by the frontend immediately before dispatch. This
-/// Can require absent collectors, but does not restore selected content or
-/// attest cheat provenance.
+/// Can require absent collectors and matching selected inputs, but does not
+/// restore them or attest cheat provenance.
 #[derive(Clone, Debug, PartialEq, Eq, Deserialize, Serialize)]
 #[serde(deny_unknown_fields)]
 pub(crate) struct ExpectedBoundary {
@@ -214,6 +215,8 @@ pub(crate) struct ExpectedBoundary {
     pub require_cheats_inactive: bool,
     #[serde(default, skip_serializing_if = "is_false")]
     pub require_idle_collectors: bool,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub expected_inputs: Option<Vec<crate::debug_choices::SavedInput>>,
 }
 fn is_false(value:&bool)->bool{!*value}
 impl ExpectedBoundary {
@@ -225,6 +228,7 @@ impl ExpectedBoundary {
             backend:status["backend"].as_str().ok_or("Missing guest backend")?.to_owned(),
             require_cheats_inactive:true,
             require_idle_collectors:true,
+            expected_inputs:None,
         };
         boundary.check(status)?;Ok(boundary)
     }
@@ -233,11 +237,20 @@ impl ExpectedBoundary {
             || !matches!(self.backend.as_str(), "native" | "interp") {
             return Err("Invalid expected guest boundary".into());
         }
+        if let Some(inputs)=&self.expected_inputs {
+            let mut slots=std::collections::BTreeSet::new();
+            if inputs.is_empty() || inputs.len()>3 || serde_json::to_vec(inputs).map_err(|e|e.to_string())?.len()>2048
+                || inputs.iter().any(|input|input.slot().is_err() || input.file.validate().is_err() || input.sha256.len()!=64
+                    || !input.sha256.bytes().all(|b|b.is_ascii_digit()||(b'a'..=b'f').contains(&b)) || !slots.insert(input.slot.clone())) {
+                return Err("Invalid expected selected inputs".into());
+            }
+        }
         if status["paused"] != true || status["remaining"] != 0
             || status["state_sha256"] != self.state_sha256 || status["frame"] != self.frame
             || status["clock"] != self.clock || status["backend"] != self.backend
             || (self.require_cheats_inactive && status["cheat_armed"]["active"] != false)
             || (self.require_idle_collectors && (status["replay"]["active"] != false || status["ui_trace"]["has_trace"] != false
+                || !status["pending_control"].is_null() || !status["search_remaining_steps"].is_null()
                 || ["audio_diagnostic","recent","gameplay_trace","code_trace"].iter().any(|key|!status[*key].is_null()))) {
             return Err("Guest boundary changed; no action executed".into());
         }
@@ -309,7 +322,7 @@ impl Server {
     fn ready(&self,active:bool)->Value{
         json!({"schema":1,"kind":"ffta-debug-control","run":self.run,"active":active,
             "pid":std::process::id(),"session":self.session,
-            "capabilities":["query-status","targeted-cancel","request-deadline","idempotent-request-v1","guest-boundary-guard-v1","content-discovery-v1","replay-job-v1","cheat-catalog-v1","cheat-capabilities-v1","cheat-once-v1","cheat-maintain-v1","cheat-presets-v1","probe-window-v1","probe-guard-v1","probe-actions-v1","probe-trigger-v1"]})
+            "capabilities":["query-status","targeted-cancel","request-deadline","idempotent-request-v1","terminal-time-v1","guest-boundary-guard-v1","recipe-selected-inputs-v1","content-discovery-v1","replay-job-v1","bounded-replay-v1","cheat-catalog-v1","cheat-capabilities-v1","cheat-once-v1","cheat-maintain-v1","cheat-presets-v1","probe-window-v1","probe-guard-v1","probe-actions-v1","probe-trigger-v1"]})
     }
     pub fn pending_status(&self)->Value{
         self.pending.as_ref().map_or(Value::Null,|r|json!({"request_id":r.id,"operation_id":r.command.operation_id(),"command":r.command,"deadline_unix_ms":r.deadline_unix_ms}))
@@ -396,11 +409,12 @@ impl Server {
         self.reply_classified(request,status,error,None)
     }
     fn reply_classified(&mut self,request:&Request,status:Value,mut error:Option<String>,classification:Option<&str>)->Result<(),String>{
-        if request.expired() && error.is_none(){error=Some("Command completed after deadline; inspect returned state before retrying".into());}
-        let outcome=if request.expired(){"timeout"}else if let Some(outcome)=classification{outcome}else if error.as_deref().is_some_and(|e|e.starts_with("Session closed")){"closed"}else if error.as_deref().is_some_and(|e|e.contains("control-cancelled")){"cancelled"}else if error.is_some(){"refused"}else{"ok"};
+        let completed_unix_ms=unix_ms();let expired=request.deadline_unix_ms.is_some_and(|deadline|completed_unix_ms>=deadline);
+        if expired && error.is_none(){error=Some("Command completed after deadline; inspect returned state before retrying".into());}
+        let outcome=if expired{"timeout"}else if let Some(outcome)=classification{outcome}else if error.as_deref().is_some_and(|e|e.starts_with("Session closed")){"closed"}else if error.as_deref().is_some_and(|e|e.contains("control-cancelled")){"cancelled"}else if error.is_some(){"refused"}else{"ok"};
         let fingerprint=request.fingerprint()?;
         let value=json!({"schema":1,"kind":"ffta-debug-control-result","run":self.run,"id":request.id,
-            "session":self.session,"request_sha256":fingerprint,"deadline_unix_ms":request.deadline_unix_ms,"operation_id":request.command.operation_id(),"outcome":outcome,"ok":error.is_none(),"error":error,"status":status});
+            "session":self.session,"request_sha256":fingerprint,"deadline_unix_ms":request.deadline_unix_ms,"completed_unix_ms":completed_unix_ms,"operation_id":request.command.operation_id(),"outcome":outcome,"ok":error.is_none(),"error":error,"status":status});
         if !request.command.read_query(){
             let size=serde_json::to_vec_pretty(&value).map_err(|e|e.to_string())?.len();
             self.ledger.finish(&request.id,&fingerprint,value.clone(),size);
@@ -502,7 +516,11 @@ pub(crate) fn parse(args: &[String]) -> Result<(PathBuf, Action), String> {
                 match key.as_str(){"--offset"=>offset=value.parse().map_err(|_|"Invalid cheat offset")?,"--limit" if !show=>limit=value.parse().map_err(|_|"Invalid cheat page limit")?,"--generation"=>generation=Some(value.clone()),_=>return Err("Use --offset N, --generation SHA and list --limit 1..16".into())}}
             if let Some(id)=id{if capabilities{Action::CheatCapabilities{id,offset,generation}}else{Action::CheatShow{id,offset,generation}}}else{Action::CheatList{offset,limit,generation}}
         },
-        "replay-run" if args.len()==2 || (args.len()==4 && args[2]=="--mode")=>Action::Replay{mode:if args.len()==2{ReplayMode::Plain}else{match args[3].as_str(){"plain"=>ReplayMode::Plain,"audit"=>ReplayMode::Audit,"capture"=>ReplayMode::Capture,"compare"=>ReplayMode::Comparison,_=>return Err("Replay mode needs plain/audit/capture/compare".into())}}},
+        "replay-run"=>{
+            let(mut mode,mut max_frames)=(ReplayMode::Plain,None);let mut seen=std::collections::BTreeSet::new();let mut it=args[2..].iter();
+            while let Some(key)=it.next(){if !seen.insert(key){return Err("Duplicate replay option".into());}let value=it.next().ok_or("Replay option needs a value")?;match key.as_str(){"--mode"=>mode=match value.as_str(){"plain"=>ReplayMode::Plain,"audit"=>ReplayMode::Audit,"capture"=>ReplayMode::Capture,"compare"=>ReplayMode::Comparison,_=>return Err("Replay mode needs plain/audit/capture/compare".into())},"--max-frames"=>max_frames=Some(value.parse().map_err(|_|"Invalid replay frame limit")?),_=>return Err("Use replay-run [--mode MODE] [--max-frames N]".into())}}
+            Action::Replay{mode,max_frames}
+        },
         "content-refresh" if args.len()==2=>Action::ContentRefresh,
         "content-list"=>{
             let(mut offset,mut limit,mut generation)=(0,16,None);let mut seen=std::collections::BTreeSet::new();let mut it=args[2..].iter();
@@ -612,7 +630,7 @@ fn client_lock(dir:&Path,query:bool)->Result<std::fs::File,String>{
     Ok(lock)
 }
 #[derive(Clone)]
-struct RetryIdentity {run:String,id:String,deadline_unix_ms:u64,expected_boundary:Option<ExpectedBoundary>}
+struct RetryIdentity {run:String,id:String,deadline_unix_ms:u64,expected_boundary:Option<ExpectedBoundary>,cancel_marker:Option<PathBuf>}
 #[derive(Debug)]
 pub(crate) struct ClientFailure {pub outcome:&'static str,pub message:String,pub delivery:&'static str}
 impl ClientFailure {
@@ -647,7 +665,7 @@ fn exchange_interruptible(dir:&Path,ready:&Value,action:Action,query:bool,timeou
                 return Ok(value);
             }
         }
-        if cancel.is_some_and(|flag|flag.load(std::sync::atomic::Ordering::SeqCst)){
+        if cancel.is_some_and(|flag|flag.load(std::sync::atomic::Ordering::SeqCst)) || retry.and_then(|r|r.cancel_marker.as_ref()).is_some_and(|path|path.exists()){
             return Ok(json!({"schema":1,"kind":"ffta-debug-control-client","run":run,"id":request.id,"session":ready["session"],"ok":false,"outcome":"interrupted","error":"The client stopped waiting; the published request may still execute.","deadline_unix_ms":request.deadline_unix_ms,"request_sha256":fingerprint,"server_acknowledged":false}));
         }
         if start.elapsed()>=Duration::from_millis(timeout){
@@ -685,7 +703,7 @@ fn parse_retry(args:&[String])->Result<(PathBuf,Action,u64,RetryIdentity),String
     if !(20..=120_000).contains(&timeout){return Err("Timeout needs20..120000milliseconds".into());}
     let mut command=vec![args[separator+1].clone(),args[1].clone()];command.extend_from_slice(&args[separator+2..]);
     let (root,action)=parse(&command)?;if action.read_query(){return Err("Read-only query: request a fresh result instead".into());}
-    Ok((root,action,timeout,RetryIdentity{run,id,deadline_unix_ms,expected_boundary:None}))
+    Ok((root,action,timeout,RetryIdentity{run,id,deadline_unix_ms,expected_boundary:None,cancel_marker:None}))
 }
 fn execute(args:&[String])->Result<Value,ClientFailure>{
     if args.first().is_some_and(|v|v=="retry"){
@@ -711,7 +729,7 @@ pub(crate) fn retry_action_classified(root:&Path,action:Action,timeout:u64,run:S
         return Err(ClientFailure::new("invalid-request","Retry run and request IDs need1..100 bytes without controls","not-sent"));
     }
     if action.read_query(){return Err(ClientFailure::new("invalid-request","Read-only query: request a fresh result instead","not-sent"));}
-    execute_action_inner(root,action,timeout,Some(&RetryIdentity{run,id,deadline_unix_ms,expected_boundary:None}))
+    execute_action_inner(root,action,timeout,Some(&RetryIdentity{run,id,deadline_unix_ms,expected_boundary:None,cancel_marker:None}))
 }
 /// Dispatch a recipe's already-persisted identity. Read queries are permitted
 /// on their first attempt, but their server mailbox has no deduplication ledger.
@@ -719,15 +737,15 @@ pub(crate) fn planned_action_classified(root:&Path,action:Action,timeout:u64,run
     if [run.as_str(),id.as_str()].iter().any(|v|v.is_empty()||v.len()>100||v.chars().any(char::is_control)) {
         return Err(ClientFailure::new("invalid-request","Planned run and request IDs need1..100 bytes without controls","not-sent"));
     }
-    execute_action_inner(root,action,timeout,Some(&RetryIdentity{run,id,deadline_unix_ms,expected_boundary:None}))
+    execute_action_inner(root,action,timeout,Some(&RetryIdentity{run,id,deadline_unix_ms,expected_boundary:None,cancel_marker:None}))
 }
 pub(crate) fn planned_action_interruptible(root:&Path,action:Action,timeout:u64,run:String,id:String,deadline_unix_ms:u64,cancel:&std::sync::atomic::AtomicBool)->Result<Value,ClientFailure>{
     if [run.as_str(),id.as_str()].iter().any(|v|v.is_empty()||v.len()>100||v.chars().any(char::is_control)){return Err(ClientFailure::new("invalid-request","Planned run and request IDs need 1..100 bytes without controls","not-sent"));}
-    execute_action_inner_interruptible(root,action,timeout,Some(&RetryIdentity{run,id,deadline_unix_ms,expected_boundary:None}),Some(cancel))
+    execute_action_inner_interruptible(root,action,timeout,Some(&RetryIdentity{run,id,deadline_unix_ms,expected_boundary:None,cancel_marker:None}),Some(cancel))
 }
-pub(crate) fn planned_guarded_action(root:&Path,action:Action,timeout:u64,run:String,id:String,deadline_unix_ms:u64,boundary:ExpectedBoundary,cancel:Option<&std::sync::atomic::AtomicBool>)->Result<Value,ClientFailure>{
+pub(crate) fn planned_guarded_action(root:&Path,action:Action,timeout:u64,run:String,id:String,deadline_unix_ms:u64,boundary:ExpectedBoundary,cancel:Option<&std::sync::atomic::AtomicBool>,cancel_marker:Option<&Path>)->Result<Value,ClientFailure>{
     if [run.as_str(),id.as_str()].iter().any(|v|v.is_empty()||v.len()>100||v.chars().any(char::is_control)){return Err(ClientFailure::new("invalid-request","Planned run and request IDs need 1..100 bytes without controls","not-sent"));}
-    execute_action_inner_interruptible(root,action,timeout,Some(&RetryIdentity{run,id,deadline_unix_ms,expected_boundary:Some(boundary)}),cancel)
+    execute_action_inner_interruptible(root,action,timeout,Some(&RetryIdentity{run,id,deadline_unix_ms,expected_boundary:Some(boundary),cancel_marker:cancel_marker.map(Path::to_owned)}),cancel)
 }
 pub(crate) fn query_action_interruptible(root:&Path,action:Action,timeout:u64,cancel:&std::sync::atomic::AtomicBool)->Result<Value,ClientFailure>{
     if !action.read_query(){return Err(ClientFailure::new("invalid-request","Interruptible observation requires a read query","not-sent"));}
@@ -785,10 +803,12 @@ fn execute_action_inner_interruptible(root:&Path,action:Action,timeout:u64,retry
     if matches!(action,Action::Replay{..}) && ready["capabilities"].as_array().is_none_or(|c|!c.contains(&json!("replay-job-v1"))){
         return Err(ClientFailure::new("incompatible","This session does not support replay jobs; use the current runtime","not-sent"));
     }
+    if matches!(action,Action::Replay{max_frames:Some(_),..}) && ready["capabilities"].as_array().is_none_or(|c|!c.contains(&json!("bounded-replay-v1"))){return Err(ClientFailure::new("incompatible","This session cannot enforce a replay frame limit; no command sent","not-sent"));}
     if let Some(retry)=retry {
         if ready["run"].as_str()!=Some(retry.run.as_str()){return Err(ClientFailure::new("incompatible","Retry run differs from the active session; no command sent","not-sent"));}
         if ready["capabilities"].as_array().is_none_or(|c|!c.contains(&json!("idempotent-request-v1"))){return Err(ClientFailure::new("incompatible","This session does not support safe request retry","not-sent"));}
         if retry.expected_boundary.is_some() && ready["capabilities"].as_array().is_none_or(|c|!c.contains(&json!("guest-boundary-guard-v1"))){return Err(ClientFailure::new("incompatible","This session cannot guard a guest boundary; no command sent","not-sent"));}
+        if retry.expected_boundary.as_ref().is_some_and(|b|b.expected_inputs.is_some()) && ready["capabilities"].as_array().is_none_or(|c|!c.contains(&json!("recipe-selected-inputs-v1"))){return Err(ClientFailure::new("incompatible","This session cannot guard recovered selections; no command sent","not-sent"));}
     }
     let result=if cancel.is_some(){exchange_interruptible(&dir,&ready,action,query,timeout,retry,cancel)}else if let Some(retry)=retry{exchange_with_retry(&dir,&ready,action,query,timeout,Some(retry))}else{exchange(&dir,&ready,action,query,timeout)};
     result.map_err(|e|ClientFailure::new("transport-error",e,"unknown"))
@@ -812,7 +832,7 @@ mod tests {
     #[test]
     fn guest_boundary_requires_exact_paused_state_and_is_bound_to_request_identity() {
         let t=tempfile::tempdir().unwrap();let s=synthetic_server(t.path());
-        let boundary=ExpectedBoundary{state_sha256:"a".repeat(64),frame:17,clock:99,backend:"interp".into(),require_cheats_inactive:true,require_idle_collectors:true};
+        let boundary=ExpectedBoundary{state_sha256:"a".repeat(64),frame:17,clock:99,backend:"interp".into(),require_cheats_inactive:true,require_idle_collectors:true,expected_inputs:None};
         let status=json!({"paused":true,"remaining":0,"state_sha256":"a".repeat(64),"frame":17,"clock":99,"backend":"interp","cheat_armed":{"active":false},"replay":{"active":false},"ui_trace":{"has_trace":false}});
         assert!(boundary.check(&status).is_ok());
         for (field,value) in [("paused",json!(false)),("remaining",json!(1)),("frame",json!(18)),("clock",json!(100)),("backend",json!("native")),("state_sha256",json!("b".repeat(64)))] {
@@ -820,6 +840,8 @@ mod tests {
         }
         let mut armed=status.clone();armed["cheat_armed"]["active"]=json!(true);assert!(boundary.check(&armed).is_err());
         let mut collector=status.clone();collector["audio_diagnostic"]=json!({"collecting":true});assert!(boundary.check(&collector).is_err());
+        let mut pending=status.clone();pending["pending_control"]=json!({"request_id":"other"});assert!(boundary.check(&pending).is_err());
+        let mut searching=status.clone();searching["search_remaining_steps"]=json!(10);assert!(boundary.check(&searching).is_err());
         let mut malformed=boundary.clone();malformed.state_sha256="not-a-hash".into();assert!(malformed.check(&status).is_err());
         let mut request=synthetic_request(&s,"boundary",Action::Step{frames:1,keys:0x3ff},false);
         let original=request.fingerprint().unwrap();request.expected_boundary=Some(boundary);
@@ -830,8 +852,17 @@ mod tests {
     fn guarded_request_refuses_old_runtime_before_mailbox_publication(){
         let t=tempfile::tempdir().unwrap();let s=synthetic_server(t.path());let path=s.dir.join("ready.json");let mut ready=read(&path).unwrap();
         ready["capabilities"]=json!(["targeted-cancel","idempotent-request-v1"]);put(&s.dir,"ready.json",&ready).unwrap();
-        let boundary=ExpectedBoundary{state_sha256:"a".repeat(64),frame:1,clock:2,backend:"interp".into(),require_cheats_inactive:true,require_idle_collectors:true};
-        let error=planned_guarded_action(t.path(),Action::Step{frames:1,keys:0x3ff},100,s.run.clone(),"guarded".into(),unix_ms()+1000,boundary,None).unwrap_err();
+        let boundary=ExpectedBoundary{state_sha256:"a".repeat(64),frame:1,clock:2,backend:"interp".into(),require_cheats_inactive:true,require_idle_collectors:true,expected_inputs:None};
+        let error=planned_guarded_action(t.path(),Action::Step{frames:1,keys:0x3ff},100,s.run.clone(),"guarded".into(),unix_ms()+1000,boundary,None,None).unwrap_err();
+        assert_eq!(error.outcome,"incompatible");assert_eq!(error.delivery,"not-sent");assert!(!s.dir.join("request.json").exists());
+    }
+    #[test]
+    fn recovered_selection_requires_its_own_capability_before_publication(){
+        let t=tempfile::tempdir().unwrap();let s=synthetic_server(t.path());let mut ready=read(&s.dir.join("ready.json")).unwrap();
+        ready["capabilities"]=json!(["targeted-cancel","idempotent-request-v1","guest-boundary-guard-v1"]);put(&s.dir,"ready.json",&ready).unwrap();
+        let pin=crate::debug_choices::SavedInput{slot:"Catalog".into(),file:crate::debug_choices::Location::App("catalog.json".into()),sha256:"b".repeat(64),kind:crate::debug_content::Kind::SaveCatalog};
+        let boundary=ExpectedBoundary{state_sha256:"a".repeat(64),frame:1,clock:2,backend:"interp".into(),require_cheats_inactive:true,require_idle_collectors:true,expected_inputs:Some(vec![pin])};
+        let error=planned_guarded_action(t.path(),Action::Step{frames:1,keys:0x3ff},100,s.run.clone(),"selected".into(),unix_ms()+1000,boundary,None,None).unwrap_err();
         assert_eq!(error.outcome,"incompatible");assert_eq!(error.delivery,"not-sent");assert!(!s.dir.join("request.json").exists());
     }
     fn synthetic_server(root:&Path)->Server{
@@ -908,7 +939,7 @@ mod tests {
         let args=a(&["retry","case","--run","run-1","--request","id-1","--deadline-unix-ms","123","--timeout-ms","50","--","step","1","--keys","0x3ff"]);
         let (_,action,timeout,retry)=parse_retry(&args).unwrap();assert!(matches!(action,Action::Step{frames:1,keys:0x3ff}));assert_eq!(timeout,50);assert_eq!(retry.id,"id-1");assert_eq!(retry.deadline_unix_ms,123);
         assert!(parse_retry(&a(&["retry","case","--run","r","--request","i","--deadline-unix-ms","1","--","status"])).is_err());
-        let t=tempfile::tempdir().unwrap();let s=synthetic_server(t.path());let wrong=RetryIdentity{run:"other".into(),id:"id".into(),deadline_unix_ms:123,expected_boundary:None};
+        let t=tempfile::tempdir().unwrap();let s=synthetic_server(t.path());let wrong=RetryIdentity{run:"other".into(),id:"id".into(),deadline_unix_ms:123,expected_boundary:None,cancel_marker:None};
         assert!(exchange_with_retry(&s.dir,&s.ready(true),Action::Pause,false,20,Some(&wrong)).is_err());assert!(!s.dir.join("request.json").exists());
     }
     #[test]
@@ -945,7 +976,7 @@ mod tests {
     fn replay_capability_and_terminal_results_preserve_request_identity(){
         let t=tempfile::tempdir().unwrap();let mut s=synthetic_server(t.path());let mut ready=s.ready(true);
         ready["capabilities"]=json!(["targeted-cancel"]);put(&s.dir,"ready.json",&ready).unwrap();
-        let action=Action::Replay{mode:ReplayMode::Plain};
+        let action=Action::Replay{mode:ReplayMode::Plain,max_frames:None};
         let error=execute_action_classified(t.path(),action.clone(),20).unwrap_err();
         assert_eq!((error.outcome,error.delivery),("incompatible","not-sent"));assert!(!s.dir.join("request.json").exists());
         let original=synthetic_request(&s,"replay-id",action,false);
@@ -954,6 +985,12 @@ mod tests {
         s.finish_classified(json!({"pending_control":s.pending_status(),"replay":{"result":"interrupted"}}),Some("worker interrupted".into()),Some("cancelled")).unwrap();
         let result=read(&s.dir.join("result.json")).unwrap();assert_eq!(result["id"],"replay-id");assert_eq!(result["outcome"],"cancelled");assert_eq!(result["ok"],false);assert!(result["status"]["pending_control"].is_null());
         put(&s.dir,"request.json",&serde_json::to_value(&original).unwrap()).unwrap();assert!(s.poll().unwrap().is_none());assert_eq!(read(&s.dir.join("result.json")).unwrap(),result);
+    }
+    #[test]
+    fn bounded_replay_requires_its_own_capability_before_dispatch(){
+        let t=tempfile::tempdir().unwrap();let s=synthetic_server(t.path());let mut ready=s.ready(true);ready["capabilities"]=json!(["targeted-cancel","replay-job-v1"]);put(&s.dir,"ready.json",&ready).unwrap();
+        let action=Action::Replay{mode:ReplayMode::Plain,max_frames:Some(10)};let error=execute_action_classified(t.path(),action,20).unwrap_err();assert_eq!((error.outcome,error.delivery),("incompatible","not-sent"));assert!(!s.dir.join("request.json").exists());
+        assert_eq!(serde_json::to_value(Action::Replay{mode:ReplayMode::Plain,max_frames:None}).unwrap(),json!({"action":"replay","mode":"plain"}));
     }
     #[test]
     fn cheat_capability_is_required_before_selection_or_queries(){

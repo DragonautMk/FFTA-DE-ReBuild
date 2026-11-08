@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-08",
+  "slug": "recover-completed-recipe-collectors",
+  "title": "Recover recipes after completed capture reports",
+  "kind": "fixed",
+  "platforms": [
+    "Linux",
+    "Windows GNU/Wine"
+  ],
+  "changes": [
+    "Cross-run recipe recovery permits completed UI, audio, code and gameplay start/report pairs while preserving their original requests and results without redispatch.",
+    "Open, duplicate or unmatched earlier collectors remain refused; remaining reports require a collector started after recovery."
+  ],
+  "validation": [
+    "87 focused Linux tests, Windows GNU runtime and test compilation, and 88 focused Wine tests passed.",
+    "An isolated Linux/Xvfb run completed one UI report, cancelled before the next step, restarted normally, resumed one frame, and verified unchanged JSON/HTML hashes, exactly one report and an unchanged second resume."
+  ],
+  "limitations": [
+    "Report files are external local artifacts and recovery does not attest their continued presence or content.",
+    "Open prior collector restoration, real Wine GUI restart, native Windows and wider platform coverage remain open."
+  ],
+  "files": [
+    "crates/recomp/src/debug_command/recipe/checkpoint/runner.rs",
+    "crates/recomp/src/debug_operations.json"
+  ],
+  "references": [
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ]
+}
