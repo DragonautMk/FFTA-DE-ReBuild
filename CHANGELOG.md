@@ -254,6 +254,35 @@ Type: added. Platforms: Linux synthetic tests.
 
 [Change record](docs/changes/2026-11-08-guard-recipe-recovery-across-runs.json)
 
+## 2026-11-08 — Coordinate native Wine GUI drivers through the validation runner
+
+Type: fixed. Platforms: Linux host, Windows GNU / Wine / Xvfb.
+
+**Changes**
+
+- Add mutually exclusive --wine-host mode for native foreground drivers, inheriting the runner-owned Wine prefix and holding its existing directory lease across child launches, app restarts and final wineserver drain.
+- Preserve direct --wine command and Windows path behavior, native paths for host drivers, refusal of concurrent prefix access, and protective leases after driver interruption or failed server drain. Receipts include Wine mode, lease owner and drain completion.
+- Replace the rejected external bridge execution path with a runner-owned native GUI driver. Correct the local proof driver to close the observed game window instead of the hidden FFTA DirectInput window; retain both source versions with their protected hashes.
+- Document the supported native-driver path in Windows validation guidance, local artifact lifecycle and project state; record the newly accepted basic Wine recipe restart without closing broader DBG2-16 criteria.
+
+**Validation**
+
+- 27 validation runner tests PASS, including real native subprocesses with synthetic Wine tools, lease continuity across two children and server drain, busy-prefix refusal, driver nonzero exit, driver timeout, server-drain timeout in both Wine modes, Windows path compatibility and mutually exclusive options. Evidence: target/validation/units/wine-host-coordination-regression-4ni_zanp/.
+- The host Wine GUI invocation passed automatic approval and its driver verified runner parent ownership, the active lease and no matching prefix processes at host-visible preflight. The first proof failed on a hidden DirectInput-window close timeout; wineserver drained, leases were released and diagnostics retained in target/validation/units/wine-host-gui-restart-_ni6cqln/.
+- The corrected isolated EUR interpreter Wine/Xvfb GUI proof PASS: two normal window closes around a restart, changed runtime run identity, unchanged completed status request identity, recovery without guest action, exactly one resumed frame and an unchanged second resume. Protected input hashes/times passed; server drained and runner leases were released. Evidence: target/validation/units/wine-host-gui-restart-fixed-szeihl5s/.
+- No runtime rebuild or previously accepted gameplay replay was required. Successful unselected scratch was removed; selected private session files remain available and failed diagnostics are retained.
+- Post-run retained logs verify the complete original status response and all original step fields unchanged; recovery adds only the expected original_run provenance and a second resume preserves the full checkpoint. project_memory.py check, task_handoff.py check and git diff --check PASS.
+
+**Limitations**
+
+- Directory leases coordinate participating consumers; drivers must inherit the managed environment and finish their children. Uncoordinated external prefix users and stale leases still require owner/host checks, never automatic reclamation.
+- Wine reported GPU initialization failure and used CPU presentation; nonfatal D-Bus/ALSA diagnostics remain in the logs. This proves the bounded Wine/Xvfb restart, not GPU presentation, native Windows or physical input.
+- Broader Wine wait, selected-input and collector restart coverage, ambiguous pending responses and earlier collector restoration remain open under DBG2-16. Primary model and xhigh setting could not be independently confirmed.
+
+Documentation: [LOCAL_ARTIFACTS.md](docs/development/LOCAL_ARTIFACTS.md), [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-08-coordinate-native-wine-validation-drivers.json)
+
 ## 2026-11-08 — Run replay jobs within recipe frame budgets
 
 Type: added. Platforms: Linux, Windows GNU / Wine.

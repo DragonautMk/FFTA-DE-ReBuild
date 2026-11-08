@@ -90,7 +90,9 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   active; a sandbox-only process listing is insufficient.
   New local validation uses `scripts/validation_unit.py`: success-only scratch
   retirement after PASS results and input guards, durable evidence, retained
-  failure diagnostics and one coordinated Wine prefix. Keep one current dataset
+  failure diagnostics and one coordinated Wine prefix. `--wine-host` runs native
+  GUI drivers under that same lease across Wine children/restarts and final
+  server drain; `--wine` retains direct Windows-command behavior. Keep one current dataset
   per ROM/profile and only explicitly needed comparison baselines; avoid full
   per-build payload snapshots. Legacy cleanup remains a separate reviewed action.
   Selective `--keep-path` retention keeps only named outputs in place; internal
@@ -248,8 +250,11 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   synthetic checks and isolated Linux/Xvfb normal restarts, including a new UI
   collector/report, an interrupted wait and a retained terminal response with
   or without an attached wait,
-  pass; focused Windows GNU/Wine tests cover those paths. Real Wine restart,
-  native Windows and broader context recovery remain open.
+  pass; focused Windows GNU/Wine tests cover those paths. An isolated EUR
+  Wine/Xvfb normal restart now preserves a completed status step and executes
+  its following frame only once, under the runner's native-driver prefix lease.
+  It used CPU presentation after GPU fallback. Native Windows, broader Wine
+  wait/selection/collector restarts and broader context recovery remain open.
   The shared operation registry has 127 operations/412 parameters. DBG2-07 persists relative internal/explicit external choice pins and scoped
   selector/history state with bounded metadata, async readonly restoration,
   missing/changed explanations and guarded atomic saves. Wine reopens the same

@@ -34,7 +34,8 @@ class ValidationUnitTests(unittest.TestCase):
     def args(self, code=None, **changes):
         code = code or "from pathlib import Path; Path('result.json').write_text('{\"status\":\"PASS\"}'); Path('dataset').mkdir(); Path('dataset/manifest.toml').write_text('revision=1'); Path('dataset/resource.json').write_text('generated payload')"
         args = argparse.Namespace(name='synthetic', result=['result.json'], evidence=[],
-                                  protect=[str(self.source)], env=[], wine=False, wineserver=None,
+                                  protect=[str(self.source)], env=[], wine=False, wine_host=False,
+                                  wineserver=None,
                                   timeout=30, keep_work=None, keep_path=[], keep_reason=None,
                                   keep_hot='Synthetic lifecycle fixture; archive behavior has separate tests',
                                   min_free_gib=5, reserve_gib=1, space_exception=None,
@@ -244,6 +245,156 @@ class ValidationUnitTests(unittest.TestCase):
         (prefix / validation.PREFIX_MARKER).unlink()
         with self.assertRaises((OSError, ValueError)):
             validation.managed_prefix(base)
+
+    def fake_wine_tools(self):
+        """Real foreground processes; only Wine itself is a synthetic stand-in."""
+        tools = self.root / 'tools'
+        tools.mkdir()
+        for name in ['wine', 'wineserver']:
+            path = tools / name
+            path.write_text(f'#!{sys.executable}\n' + '''
+import json, os, sys
+from pathlib import Path
+work = Path(os.environ['FFTA_VALIDATION_WORK'])
+unit = Path(os.environ['FFTA_VALIDATION_UNIT'])
+prefix = Path(os.environ['WINEPREFIX'])
+assert work.is_absolute() and work.is_dir() and work.parent == unit
+owner = json.loads((prefix / '.debug-artifacts-lease/owner.json').read_text())
+assert owner['role'] == 'validation-wine-prefix'
+assert (unit / '.debug-artifacts-lease/owner.json').is_file()
+phase = 'server' if Path(sys.argv[0]).name == 'wineserver' else sys.argv[1]
+if phase == 'server':
+    assert sys.argv[1:] == ['-w']
+(work / (phase + '.json')).write_text(json.dumps({
+    'status': 'PASS', 'owner': owner,
+    'driver_done': (work / 'driver-done').exists()}))
+''')
+            path.chmod(0o755)
+        return tools
+
+    @unittest.skipUnless(os.name == 'posix', 'Wine orchestration needs a POSIX host')
+    def test_native_wine_driver_holds_one_lease_across_children_and_server_drain(self):
+        tools = self.fake_wine_tools()
+        code = f'''
+import json, os, subprocess, sys
+from pathlib import Path
+sys.path.insert(0, {str(validation.ROOT / 'scripts')!r})
+from artifact_coordinator import Lease
+work = Path(os.environ['FFTA_VALIDATION_WORK'])
+assert work == Path.cwd()
+subprocess.run(['wine', 'first'], check=True)
+try:
+    with Lease(os.environ['WINEPREFIX'], 'competing-driver'):
+        raise AssertionError('Shared prefix was available between children')
+except ValueError as error:
+    assert 'Active or interrupted' in str(error)
+subprocess.run(['wine', 'second'], check=True)
+assert json.loads(Path('first.json').read_text())['owner'] == json.loads(Path('second.json').read_text())['owner']
+Path('driver-done').touch()
+Path('result.json').write_text('{{"status":"PASS"}}')
+'''
+        args = self.args(code, wine_host=True, wineserver=str(tools / 'wineserver'),
+                         env=['PATH=' + str(tools) + os.pathsep + os.environ.get('PATH', '')],
+                         evidence=['first.json', 'second.json', 'server.json'])
+        with mock.patch.object(validation.shutil, 'which', side_effect=lambda name: str(tools / Path(name).name)):
+            unit = validation.run_unit(args, root=self.root)
+        report = self.receipt()
+        self.assertEqual(report['wine_mode'], 'host')
+        self.assertEqual(report['command'][0], sys.executable)
+        self.assertTrue(report['wine_server_drained'])
+        server = json.loads((unit / 'evidence/server.json').read_text())
+        self.assertTrue(server['driver_done'])
+        self.assertEqual(server['owner'], report['wine_lease'])
+        self.assertFalse((Path(report['wine_prefix']) / NAME).exists())
+        self.assertFalse((unit / NAME).exists())
+        self.assertFalse((unit / 'work').exists())
+
+    @unittest.skipUnless(os.name == 'posix', 'Wine orchestration needs a POSIX host')
+    def test_busy_prefix_refuses_native_driver_without_touching_owner(self):
+        base = self.root / 'target/validation'
+        base.mkdir(parents=True)
+        prefix = validation.managed_prefix(base)
+        with Lease(prefix, 'existing-owner') as owner:
+            with mock.patch.object(validation.shutil, 'which', return_value='/synthetic/tool'), \
+                    mock.patch.object(validation.subprocess, 'run') as launch:
+                with self.assertRaisesRegex(ValueError, 'Active or interrupted'):
+                    validation.run_unit(self.args(wine_host=True), root=self.root)
+                launch.assert_not_called()
+            owner.check()
+        self.assertEqual(self.receipt()['status'], 'FAIL')
+        self.assertFalse((self.units()[0] / NAME).exists())
+
+    @unittest.skipUnless(os.name == 'posix', 'Wine orchestration needs a POSIX host')
+    def test_native_driver_failure_drains_wine_before_releasing_leases(self):
+        tools = self.fake_wine_tools()
+        with mock.patch.object(validation.shutil, 'which', side_effect=lambda name: str(tools / Path(name).name)):
+            with self.assertRaisesRegex(ValueError, 'exited 7'):
+                validation.run_unit(self.args('raise SystemExit(7)', wine_host=True), root=self.root)
+        report = self.receipt()
+        self.assertTrue(report['wine_server_drained'])
+        self.assertTrue((self.units()[0] / 'work/server.json').is_file())
+        self.assertFalse((Path(report['wine_prefix']) / NAME).exists())
+        self.assertFalse((self.units()[0] / NAME).exists())
+
+    @unittest.skipUnless(os.name == 'posix', 'Wine orchestration needs a POSIX host')
+    def test_native_driver_timeout_retains_both_leases_and_skips_server_drain(self):
+        tools = self.fake_wine_tools()
+        with mock.patch.object(validation.shutil, 'which', side_effect=lambda name: str(tools / Path(name).name)):
+            with self.assertRaises(subprocess.TimeoutExpired):
+                validation.run_unit(self.args('import time; time.sleep(5)', wine_host=True,
+                                              timeout=0.3), root=self.root)
+        report = self.receipt()
+        self.assertTrue(report['leases_retained'])
+        self.assertFalse(report['wine_server_drained'])
+        self.assertFalse((self.units()[0] / 'work/server.json').exists())
+        self.assertTrue((Path(report['wine_prefix']) / NAME).is_dir())
+        self.assertTrue((self.units()[0] / NAME).is_dir())
+
+    @unittest.skipUnless(os.name == 'posix', 'Wine orchestration needs a POSIX host')
+    def test_server_drain_failure_retains_both_leases_in_each_wine_mode(self):
+        for host in [False, True]:
+            with self.subTest(host=host):
+                previous = set(self.units()) if (self.root / 'target/validation/units').exists() else set()
+                def launch(command, **kwargs):
+                    if command[-1] == '-w':
+                        raise subprocess.TimeoutExpired(command, 120)
+                    return subprocess.CompletedProcess(command, 0)
+                with mock.patch.object(validation.shutil, 'which', return_value='/synthetic/tool'), \
+                        mock.patch.object(validation.subprocess, 'run', side_effect=launch):
+                    with self.assertRaises(subprocess.TimeoutExpired):
+                        validation.run_unit(self.args(wine=not host, wine_host=host), root=self.root)
+                unit, = set(self.units()) - previous
+                report = json.loads((unit / 'unit-result.json').read_text())
+                self.assertFalse(report['wine_server_drained'])
+                self.assertTrue(report['leases_retained'])
+                self.assertTrue((unit / NAME).is_dir())
+                lease = Path(report['wine_prefix']) / NAME
+                self.assertEqual(json.loads((lease / 'owner.json').read_text()), report['wine_lease'])
+                # Synthetic subprocesses above never ran. Remove only this test's
+                # diagnostic prefix lease to exercise the second mode.
+                (lease / 'owner.json').unlink()
+                lease.rmdir()
+
+    @unittest.skipUnless(os.name == 'posix', 'Wine orchestration needs a POSIX host')
+    def test_direct_wine_mode_preserves_windows_paths_and_command(self):
+        def launch(command, **kwargs):
+            env = kwargs['env']
+            self.assertTrue(env['FFTA_VALIDATION_WORK'].startswith('Z:'))
+            self.assertTrue((Path(env['WINEPREFIX']) / NAME).is_dir())
+            if command[-1] != '-w':
+                self.assertEqual(command, ['wine', 'selected.exe'])
+                (kwargs['cwd'] / 'result.json').write_text('{"status":"PASS"}')
+            return subprocess.CompletedProcess(command, 0)
+        with mock.patch.object(validation.shutil, 'which', return_value='/synthetic/tool'), \
+                mock.patch.object(validation.subprocess, 'run', side_effect=launch):
+            validation.run_unit(self.args(wine=True, command=['selected.exe']), root=self.root)
+        self.assertEqual(self.receipt()['wine_mode'], 'direct')
+        self.assertTrue(self.receipt()['wine_server_drained'])
+
+    def test_wine_modes_are_mutually_exclusive(self):
+        with self.assertRaisesRegex(ValueError, 'mutually exclusive'):
+            validation.run_unit(self.args(wine=True, wine_host=True), root=self.root)
+        self.assertFalse((self.root / 'target').exists())
 
     def test_unsafe_paths_and_environment_override_are_refused(self):
         for p in ['../result.json', '/result.json', 'C:/result.json', 'dir/../../result.json', '']:

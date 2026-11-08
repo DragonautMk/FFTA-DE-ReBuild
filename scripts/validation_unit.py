@@ -235,9 +235,13 @@ def _run_unit(args, *, root, inputs):
     command = args.command[1:] if args.command[:1] == ['--'] else args.command
     if not command:
         raise ValueError('A foreground validation command is required after --')
+    wine_host = getattr(args, 'wine_host', False)
+    if args.wine and wine_host:
+        raise ValueError('--wine and --wine-host are mutually exclusive')
+    uses_wine = args.wine or wine_host
     wineserver = shutil.which(args.wineserver or os.environ.get('WINESERVER', 'wineserver'))
-    if args.wine and (os.name != 'posix' or not shutil.which('wine') or not wineserver):
-        raise ValueError('--wine requires Wine and wineserver on a POSIX host')
+    if uses_wine and (os.name != 'posix' or not shutil.which('wine') or not wineserver):
+        raise ValueError('--wine/--wine-host require Wine and wineserver on a POSIX host')
     if args.timeout <= 0:
         raise ValueError('Timeout must be positive')
     target = root / 'target'
@@ -287,12 +291,14 @@ def _run_unit(args, *, root, inputs):
             if key.upper() == 'WINEPREFIX':
                 raise ValueError('WINEPREFIX is managed by the runner')
             env[key] = expand(val)
-        if args.wine:
+        if uses_wine:
             prefix = managed_prefix(base)
-            held.append(leases.enter_context(Lease(prefix, 'validation-wine-prefix')))
+            wine_lease = leases.enter_context(Lease(prefix, 'validation-wine-prefix'))
+            held.append(wine_lease)
             env.update(WINEPREFIX=str(prefix), WINEDEBUG='-all', WINESERVER=wineserver,
                        WINEDLLOVERRIDES='winemenubuilder.exe=d')
-            report['wine_prefix'] = str(prefix)
+            report.update(wine_prefix=str(prefix), wine_mode='host' if wine_host else 'direct',
+                          wine_lease=wine_lease.owner, wine_server_drained=False)
         env['FFTA_VALIDATION_WORK'] = wine_path(work) if args.wine else str(work)
         env['FFTA_VALIDATION_UNIT'] = wine_path(unit) if args.wine else str(unit)
         command = (['wine'] if args.wine else []) + [expand(p) for p in command]
@@ -306,9 +312,13 @@ def _run_unit(args, *, root, inputs):
             inputs.safe_to_release = False
             child = subprocess.run(command, cwd=work, env=env, stdout=log, stderr=log,
                                    timeout=args.timeout)
-            if args.wine:
+            if uses_wine:
+                # Native drivers inherit the leased environment for every Wine
+                # child. Keep ownership across restarts and the final server drain.
+                wine_lease.check()
                 subprocess.run([wineserver, '-w'], env=env, stdout=log, stderr=log,
                                timeout=120, check=True)
+                report['wine_server_drained'] = True
             safe_to_release = True
             inputs.safe_to_release = True
         report['exit_code'] = child.returncode
@@ -398,7 +408,11 @@ def main():
                    help='required PASS JSON relative to work (repeatable)')
     p.add_argument('--evidence', action='append', default=[], help='additional small work file to retain')
     p.add_argument('--env', action='append', default=[], help='child NAME=value; supports path placeholders')
-    p.add_argument('--wine', action='store_true', help='run through Wine with the shared leased prefix')
+    wine_mode = p.add_mutually_exclusive_group()
+    wine_mode.add_argument('--wine', action='store_true',
+                           help='run a Windows command through Wine with the shared leased prefix')
+    wine_mode.add_argument('--wine-host', action='store_true',
+                           help='run a native foreground driver with the shared leased Wine prefix')
     p.add_argument('--wineserver', help='matching wineserver executable if absent from PATH')
     p.add_argument('--timeout', type=float, default=900, help='foreground timeout in seconds')
     p.add_argument('--keep-hot', metavar='REASON',

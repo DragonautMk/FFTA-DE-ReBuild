@@ -52,6 +52,11 @@ explicit clean-profile or incompatible-configuration criterion.
 Wine may initialize APPDATA itself; inspect the effective path rather than
 assuming an environment override isolated the config. Keep test controller
 DLLs and screenshots under ignored `target/`, outside deliverables.
+For native Python/shell GUI drivers, use `validation_unit.py --wine-host`:
+the driver and all inherited Wine children run under the runner's prefix lease
+until foreground completion and the final server drain. Keep restarts inside
+that driver; never launch an external driver alongside a lease-holding bridge.
+The existing `--wine` mode remains for direct Windows commands.
 
 Use `scripts/validation_unit.py` for new local units, following the
 [bounded lifecycle](../../../docs/development/LOCAL_ARTIFACTS.md#default-lifecycle-for-new-validation).

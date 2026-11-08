@@ -95,10 +95,34 @@ Symlinks, junctions and nested activity leases remain refused.
 With `--wine`, the runner owns `target/validation/wine-prefix`, refuses adoption
 of an unmarked legacy prefix and holds its lease through `wineserver -w`. Use
 the matching `--wineserver /path/to/wineserver` if it is absent from `PATH`.
+For a native Python/shell GUI driver that launches Wine children, use
+`--wine-host` instead of `--wine`. The runner starts that driver directly in
+the foreground, with native `FFTA_VALIDATION_WORK`/`FFTA_VALIDATION_UNIT` paths
+and the same managed `WINEPREFIX`/`WINESERVER` environment. The driver must pass
+that environment to every Wine child, keep all phases/restarts inside its
+foreground lifetime and finish its children before returning. The runner keeps
+the prefix lease through the final `wineserver -w`, including nonzero driver
+exit; a driver timeout or failed server drain retains diagnostic leases.
+Receipts record the mode, lease owner and whether server drain completed.
+`--wine` still prepends Wine and supplies Windows paths; the modes are mutually
+exclusive. Wine path placeholders remain available in either mode.
+
+For example, with a reviewed native driver and its actual protected inputs:
+
+```sh
+python3 scripts/validation_unit.py --name wine-gui-restart --wine-host \
+  --protect path/to/gui_driver.py --protect path/to/runtime.exe \
+  --protect path/to/input-state --result result.json --reserve-gib 1 \
+  -- python3 '{repo}/path/to/gui_driver.py'
+```
+
 All consumers of this prefix must use the runner; never launch a separate
-uncoordinated Wine process against it. Existing personal/shared prefixes are
-neither adopted nor removed. On native Windows omit `--wine` and use native
-path placeholders. Native Linux validation remains a separate gate.
+uncoordinated Wine process against it or keep a bridge alive while an external
+driver uses its lease. A held lease refuses a new run; inspect its recorded
+owner instead of removing it or stopping unrelated processes. Existing
+personal/shared prefixes are neither adopted nor removed. On native Windows
+omit both Wine modes and use native path placeholders. Native Linux validation
+remains a separate gate.
 
 Nonzero exit, missing/negative results, changed protected inputs, external
 shared scratch paths, unselected private input extensions and tracked scratch content

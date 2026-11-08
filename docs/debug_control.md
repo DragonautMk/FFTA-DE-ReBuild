@@ -706,8 +706,16 @@ original deadlines across a normal restart. A guarded observation preceded an
 external frame and the recipe's next frame; a second resume changed nothing.
 Windows GNU/Wine focused tests cover the
 collector ordering, selected inputs, wait recovery, retained terminal
-responses, delayed response, cancellation and refusals; a real Wine restart,
-native Windows and broader host-context recovery remain open.
+responses, delayed response, cancellation and refusals. An isolated EUR
+Windows GNU/Wine/Xvfb restart also preserves a completed status response and
+request identity, recovers without guest mutation, executes the following
+one-frame step once and leaves state unchanged on a second resume. Both game
+windows close normally. Its native driver runs through
+`validation_unit.py --wine-host`, under one prefix lease through both runs and
+the final server drain; protected inputs remain unchanged. The observed GPU
+failure used CPU presentation, so this is not GPU-path or native Windows
+acceptance. The broader Wine wait/selection/collector restart matrix and
+broader host-context recovery remain open.
 
 Another isolated Linux/Xvfb run completed a UI report, interrupted before its
 next recipe step, and restarted normally. Recovery kept both original request
