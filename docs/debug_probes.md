@@ -45,6 +45,43 @@ means **unknown owner**. These are identified data: they do not prove a typed
 read, reachability or new ROM/DS acceptance. For reads actually served, use
 [the DBG-06 audit](debug_rom_audit.md).
 
+## Pinned observations — DBG2-25
+
+In an isolated paused session, the command console or `debug-command` can pin
+up to 16 session-local observations. Labels and owners are explicit; neither
+identifies a persistent guest object. For example:
+
+```text
+pin-add pc analyst register 15
+pin-add bytes analyst memory 0x02000000 8
+pin-add timer analyst field unit countdown 0x02000000
+pin-view changed 0
+pin-refresh
+pin-remove timer
+```
+
+The equivalent local-control commands put the session path after the command,
+for example `debug-control pin-add SESSION pc analyst register 15`. A register
+index is 0–15; a memory window is 1–32 bytes of supported immutable backing.
+I/O, open bus and backup protocols are refused. The EUR-authenticated decoded
+fields use the existing task descriptor, primary/auxiliary script and unit
+context offsets described in the gameplay inspector. Add them while paused at
+the matching inspector site with its context register equal to the supplied
+address. This establishes the initial observation, not a persistent object
+identity or lifetime; a later allocation can reuse the address.
+
+The console keeps up to three pins visible, with previous and current values,
+owner and source; amber marks a change and red marks stale context. `pin-view`
+selects `all`, `changed` or `stale` and a zero-based offset. Full source,
+frame and clock for both samples are available in the returned status JSON.
+A completed step
+refreshes the pins once at its endpoint; `pin-refresh` explicitly samples an
+idle paused machine. Load, undo, restart or save restoration marks all pins
+stale and prevents refresh: remove and recreate them only after checking the
+new context. A ROM change starts a new session and does not carry pins across.
+Creating, refreshing and displaying pins read backing data only and do not
+write guest state. The feature remains subject to its recorded validation scope.
+
 <a id="fermarsi-su-pc-e-modo"></a>
 
 ## Stop on PC and mode

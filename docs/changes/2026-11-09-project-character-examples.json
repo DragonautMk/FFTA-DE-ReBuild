@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-09",
+  "slug": "project-character-examples",
+  "title": "Project documented character modifier examples",
+  "kind": "added",
+  "platforms": [
+    "Linux",
+    "Windows GNU / Wine / Xvfb"
+  ],
+  "changes": [
+    "Extend the private USA catalog builder with an explicit option for two documented job/race/appearance examples, using dependent domains and preserving the conflicting original notes and provenance.",
+    "Exclude the source entry with an unresolved address and leave all other combinations unavailable rather than infer a compatibility table."
+  ],
+  "validation": [
+    "Protected validation produced seven character entries alongside the existing eight ability entries, preserved source notes/provenance, excluded CH-0236, refused altered source/table inputs and prevented overwriting. A separate compatibility check confirmed the default ability-only output remains byte-identical.",
+    "In a protected isolated USA Wine/Xvfb frontend, an incompatible combination was refused, both documented tuples were explicitly prepared, armed and disarmed, and the first was saved and rearmed from a preset without guest advancement. Evidence: target/validation/units/dbg2-20-usa-character-examples-ucw5y1gi/, dbg2-20-ability-projection-compatibility-in29bkzo/, dbg2-20-character-examples-wine-__ltq06k/."
+  ],
+  "limitations": [
+    "The two combinations are source examples, not a complete domain or proof of actual game effects or physical-device behavior. CH-0236 remains excluded and conflicting original field notes are preserved.",
+    "The Wine test used a Windows GNU executable built before concurrent DBG2-25 changes elsewhere in the shared workspace; native Windows and physical input were not tested."
+  ],
+  "files": [
+    "scripts/cheat_ability_projection.py"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-09",
+  "slug": "observe-ds16-character-example",
+  "title": "Observe one character example in a paired checkpoint",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Document a bounded paired control and one-shot character-example observation while retaining the existing reference-only quarantine."
+  ],
+  "validation": [
+    "A managed isolated Wine/Xvfb unit loaded identical protected USA DS-16 checkpoint copies. After explicit preview, one copy received a single documented example; the control received no write. Both advanced the same 108 frames without maintained cheats and closed normally.",
+    "The intended bytes changed only in the treated copy and remained changed after stepping. Review of the captured character screens found differing statistics and figures while both retained the Soldier title. Protected ROM, checkpoint, prior evidence and executable were unchanged. Evidence: target/validation/units/dbg2-20-ds16-character-control-q1nfmfzh/.",
+    "A public Data Crystal job-table listing identifies 02 as Soldier and 26 as Gunner; its table indices do not establish which saved field uses the table or explain the captured title."
+  ],
+  "limitations": [
+    "This is one tuple, one checkpoint and one bounded scene; it does not establish the meaning of each byte, source correctness, other combinations, native Windows or physical-device behavior. The previous activation-ready projection remains historical evidence and current examples stay reference-only."
+  ],
+  "files": [
+    "docs/cheats.md"
+  ],
+  "references": [
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/changes/2026-11-09-quarantine-character-examples.json"
+  ]
+}

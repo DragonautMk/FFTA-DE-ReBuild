@@ -70,6 +70,12 @@ fn numeric_syntax(t:&[String])->Result<(),String>{
     match t[0].as_str(){
         "step"=>{if let Some(v)=t.get(1){decimal(v)?;}},
         "inspect"=>{if let Some(v)=t.get(1){hex(v)?;}if let Some(v)=t.get(2){decimal(v)?;}},
+        "pin-add"=>match t.get(3).map(String::as_str){
+            Some("register")=>if let Some(v)=t.get(4){decimal(v)?;},
+            Some("memory")=>{if let Some(v)=t.get(4){hex(v)?;}if let Some(v)=t.get(5){decimal(v)?;}},
+            Some("field")=>if let Some(v)=t.get(6){hex(v)?;},_=>{}
+        },
+        "pin-view"=>if let Some(v)=t.get(2){decimal(v)?;},
         "break"=>{if let Some(v)=t.get(1){hex(v)?;}},
         "watch"=>{if let Some(v)=t.get(2){hex(v)?;}if let Some(v)=t.get(3){hex(v)?;}},
         _=>{}
@@ -336,5 +342,24 @@ mod tests {
         assert!(matches!(cycle.apply(&mut e,&[],&ids,&[],&[],&[]),Ok(completion::Applied::Choice{index:2,total:2,..})));assert_eq!(e.text(),"catalog select content-b ");
         let changed=vec!["content-a".into()];assert!(matches!(cycle.apply(&mut e,&[],&changed,&[],&[],&[]),Ok(completion::Applied::None)));assert_eq!(e.text(),"catalog select content-b ");
         e.clear();e.insert("step 1 --keys 0x3ff").unwrap();e.set_cursor(10,false);assert!(matches!(cycle.apply(&mut e,&[],&[],&[],&[],&[]),Ok(completion::Applied::One)));assert_eq!(e.text(),"step 1 --keys 0x3ff");
+    }
+    #[test]
+    fn pinned_observation_commands_share_validation_and_reject_unsafe_syntax(){
+        assert!(matches!(parse("pin-add 'HP counter' analyst register 3"),Ok(Command::Control(Action::PinAdd{target:crate::debug_pins::Target::Register{index:3},..}))));
+        assert!(matches!(parse("pin-add count analyst memory 0x02000000 2"),Ok(Command::Control(Action::PinAdd{target:crate::debug_pins::Target::Memory{length:2,..},..}))));
+        assert!(matches!(parse("pin-add timer analyst field unit countdown 0x02000000"),Ok(Command::Control(Action::PinAdd{target:crate::debug_pins::Target::Field{..},..}))));
+        assert!(matches!(parse("pin-view changed 0"),Ok(Command::Control(Action::PinView{..}))));
+        for input in ["pin-add x o register 16","pin-add x o register 03","pin-add x o memory 02000000 2","pin-add x o memory 0x02000000 33","pin-add x o field unit unknown 0x02000000","pin-view changed 16","pin-view other 0"]{assert!(parse(input).is_err(),"{input}");}
+        let mut editor=editor::Editor::default();let mut cycle=completion::Cycle::default();editor.insert("pin-v").unwrap();
+        assert!(matches!(cycle.apply(&mut editor,&[],&[],&[],&[],&[]),Ok(completion::Applied::One)));assert_eq!(editor.text(),"pin-view ");
+        assert!(completion::hint("pin-view",input_config::Language::default()).contains("changed"));
+    }
+    #[test]
+    fn issue_timeline_commands_validate_without_executing(){
+        assert!(matches!(parse("timeline-bookmark 'before hit'"),Ok(Command::Control(Action::TimelineBookmark{label})) if label=="before hit"));
+        assert!(matches!(parse("timeline-recipe select example"),Ok(Command::Control(Action::TimelineRecipe{name:Some(name)})) if name=="example"));
+        assert!(matches!(parse("timeline-recipe clear"),Ok(Command::Control(Action::TimelineRecipe{name:None}))));
+        assert!(matches!(parse("timeline-checkpoint select run-example"),Ok(Command::Control(Action::TimelineCheckpoint{id:Some(id)})) if id=="run-example"));
+        for input in ["timeline-bookmark ''","timeline-recipe select ../bad","timeline-recipe select","timeline-recipe clear extra"]{assert!(parse(input).is_err(),"{input}");}
     }
 }

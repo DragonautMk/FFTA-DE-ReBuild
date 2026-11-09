@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-09",
+  "slug": "dependent-cheat-parameter-domains",
+  "title": "Validate dependent cheat parameter values",
+  "kind": "added",
+  "platforms": [
+    "Linux",
+    "Windows GNU / Wine / Xvfb"
+  ],
+  "changes": [
+    "Add bounded dependent-list domains tied to an earlier named parameter; validate complete unique cases, width, declared choices and the selected relationship before expansion.",
+    "Filter menu choices using the explicit earlier selection while retaining source-bound previews, preset checks and replay authentication; older runtimes reject the distinct unknown variant."
+  ],
+  "validation": [
+    "Linux offline targeted suites passed: 4 menu management, 26 selector, 4 parameter, 17 catalog, 5 preset and 2 timeline tests; four private-fixture tests were ignored. Windows GNU menu/runtime tests and production executables compiled.",
+    "Three focused Windows GNU/Wine tests passed. In an isolated synthetic Wine/Xvfb frontend, an incompatible pair was refused, the second menu value changed with the first, and a valid dependent pair was saved, reviewed, rearmed and disarmed through a preset without guest advancement; protected selected inputs were unchanged. Evidence: target/validation/units/dbg2-20-dependent-parameter-tests-iiddbvcl/, dbg2-20-dependent-windows-build-2ybrp1a0/, dbg2-20-dependent-wine-gui-ijn43g20/.",
+    "The first standalone Linux menu run lacked a Wayland development package; the combined menu/runtime configuration passed. A first Wine driver selected extra tests by substring; exact-name runs passed in the accepted unit."
+  ],
+  "limitations": [
+    "The relationships are catalog declarations, not proof of game or physical-device behavior. Original XP job/race/appearance records remain unchanged and do not yet declare reviewed domains.",
+    "The Wine GUI used simulated keyboard input and a synthetic catalog; native Windows and physical controllers were not tested. Concurrent DBG2-25 edits appeared in other files after this Windows build and are outside its validation scope."
+  ],
+  "files": [
+    "crates/menu/src/cheat_management.rs",
+    "crates/recomp/src/debug_cheat_parameters.rs",
+    "crates/recomp/src/debug_cheats.rs"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

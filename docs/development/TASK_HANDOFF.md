@@ -71,14 +71,21 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 - State: active
 - Outcome: partial
-- Selection: declared multi-parameter menu/CLI, source mapping, guarded preview and presets integrated. Linux menu, rendering, source mapping and multi-parameter suite PASS (`dbg2-20-menu-values-confirm-vymtsut1`, `dbg2-20-parameter-render-corrected-rkm88ykd`, `dbg2-20-multiple-parameter-suite-_dgohsc9`); protected EUR synthetic preflight PASS (`dbg2-20-multiple-real-rom-preflight-ks8dyakw`); Windows GNU cross-build PASS (`dbg2-20-multiple-windows-build-ry5e8e9o`), not execution. Earlier archive-retirement/test-count failures retain diagnostics. Actual catalog has 24 placeholder sources sharing an unverified two-line master and no structured domains (`dbg2-20-source-domain-audit-e9o97pmb`); target ROM and device behavior unverified. Do not invent domains or bypass master. Focused Wine component and protected-ROM checks pass; native Windows and broader game/device behavior remain open.
+- Selection: multi-parameter menu/CLI, guarded previews and presets integrated; Linux, EUR preflight and Windows cross-build PASS (`dbg2-20-menu-values-confirm-vymtsut1`, `dbg2-20-parameter-render-corrected-rkm88ykd`, `dbg2-20-multiple-parameter-suite-_dgohsc9`, `dbg2-20-multiple-real-rom-preflight-ks8dyakw`, `dbg2-20-multiple-windows-build-ry5e8e9o`). Original XP has 24 placeholder sources and no structured domains (`dbg2-20-source-domain-audit-e9o97pmb`); do not bypass master or invent domains.
 - Verified: source/preview/arm/disarm, filters, named presets and guided CHEAT-INTERFACE. CHEAT-COMPACT-NAV adds compact catalog, keyboard shortcuts and held vertical repeat; 133 Linux menu tests and CH-0341 X11 GUI passed, portable runtime installed.
-- Verified Wine increment: four synthetic parameter/catalog/capability/preset tests PASS (`dbg2-20-focused-wine-8q7tdm2w`); protected EUR ROM synthetic preflight with three temporary RAM writes PASS (`dbg2-20-rom-preflight-wine-eiw70mf0`); three menu confirmation/offscreen EN/IT rendering tests PASS (`dbg2-20-menu-offscreen-wine-ftxmavl9`). Each used the coordinated prefix and drained Wine; host menu builds `_z1qvmbg`/`fiiiprbt` failed because dlltool was absent, so the successful menu test was built with the project Docker toolchain.
+- Verified Wine increment: parameter, protected EUR and menu/offscreen tests PASS (`dbg2-20-focused-wine-8q7tdm2w`, `dbg2-20-rom-preflight-wine-eiw70mf0`, `dbg2-20-menu-offscreen-wine-ftxmavl9`); earlier host menu builds lacked dlltool.
 - Verified live control: explicit two-parameter selection, preset save/review/arm/disarm, duplicate/overlap and changed-source refusals PASS in an isolated Wine/Xvfb frontend with protected EUR ROM and unchanged guest (`dbg2-20-live-parameter-flow-i_1jqzpn`). Earlier accepted live evidence covers one-shot and replay. A separate live keyboard/menu check selected both values, previewed, armed and disarmed (`dbg2-20-live-menu-values-bqd__1zo`); a later keyboard/menu preset roundtrip with both values also PASS (`dbg2-20-parameter-menu-preset-sbd7cz9m`). Actual source domains remain unverified.
 - Selection: plaintext two-line master and recorded-plan identity implemented; strict shape, existing guards, Linux suites, protected USA/EUR preflight, Windows GNU build and targeted Wine PASS. Wine test log includes a trailing D-Bus assertion after successful tests. Sol `gpt-6.1-sol` xhigh `/root/sol_debug_diagnosis` advised the design; effective settings not independently confirmed.
 - Verified projection: eight source-listed ability-label entries and master projected privately for known USA with preserved original provenance, source hashes and strict checksum. USA/EUR preflight, invalid values and Wine frontend preview/arm/disarm PASS; guest unadvanced. Output `dbg2-20-usa-ability-projection-ro_8a3nv/work/projection/catalogo.json`; original XP unchanged.
-- Missing: job/race/appearance choices require correlated-domain validation and source-label reconciliation. Actual ability effects, physical-device behavior and native Windows remain unverified.
-- Resume: resolve dependent character domains from evidence and validate game behavior before claiming full completion; do not flatten choices or modify original sources. `docs/changes/2026-11-09-project-usa-ability-values.json`.
+- Missing: full job/race/appearance domains and CH-0236, source-label reconciliation, actual ability effects, physical-device behavior and native Windows.
+- Verified dependent lists: bounded previous-value cases reject invalid/missing combinations, filter the menu and revalidate presets. Linux suites, Windows GNU build and synthetic Wine keyboard/preset flow PASS (`dbg2-20-dependent-parameter-tests-iiddbvcl`, `dbg2-20-dependent-wine-gui-ijn43g20`); old runtimes reject the schema variant.
+- Verified character examples: earlier tuple preview/arm/disarm PASS without gameplay (`dbg2-20-character-examples-wine-__ltq06k`), but USA DS-16 bytes 84..8B = 02 50 01 02 08 32 63 00 leave byte85 semantics unresolved (`dbg2-20-ds16-readonly-fields-3ao28h9v`). Sol xhigh `/root/sol_debug_diagnosis` advised quarantine.
+- Verified quarantine: newly generated examples retain unknown region and reject preparation; ability path still works in Wine (`dbg2-20-character-reference-only-mtq__gpq`, `dbg2-20-reference-only-wine-maya4aqz`). Earlier activation-ready catalog `dbg2-20-usa-character-examples-ucw5y1gi` is historical evidence only; do not select it for activation.
+- Verified actor: protected DS-16 name pointer matches Marche from the associated screenshot; no guest frames/state change (`dbg2-20-ds16-actor-readonly-czlki7vb`).
+- Verified one example: protected paired DS-16 Wine control observed changed bytes, statistics and figures after 108 identical frames; Soldier title remained (`dbg2-20-ds16-character-control-q1nfmfzh`). One scene does not resolve field meanings; quarantine remains.
+- Verified source lookup: Data Crystal lists Soldier/Gunner job-table indices 02/26 but does not map checkpoint fields or explain the title; quarantine remains.
+- Verified badge: Wine software and Linux Vulkan/llvmpipe GUI PASS (`dbg2-20-persistent-indicator-gameplay-bsrpy2cz`, `dbg2-20-indicator-linux-gpu-retry-xuuv_r2r`).
+- Resume: `docs/changes/2026-11-09-observe-ds16-character-example.json`.
 
 ### DBG2-22
 
@@ -88,22 +95,6 @@ for a specific question: archive legacy lines 179..744 or the named record below
 - User report: CH-0341 worked in final-battle phase two and after Energiga; no instrumented trace or details of actor, target, timing and side effects. Controlled proof remains phase one.
 - Missing: CH-0341 third phase, exact conditions and side effects; CH-0330 suitable EUR scene, other group entries, actual level-up and device-hook equivalence.
 - Resume: user-provided phase-three and victory snapshots are privately archived and structurally validated, not replayed; use on relevant request. `docs/debug_catalog.md`.
-
-### DBG2-25
-
-- State: suspended
-- Outcome: not_started
-- Verified: DBG2-03/15 dependencies are accepted; read-only inspection and gameplay source projections exist, but no pinning acceptance is recorded.
-- Missing: bounded labeled pins for registers, memory and decoded fields, previous values/change display, context invalidation and proof of unchanged state.
-- Resume: upon goal resumption, read only DBG2-25 in the TODO and its existing inspection/gameplay/menu implementations; avoid repeating accepted selector or control tests.
-
-### DBG2-26
-
-- State: waiting
-- Outcome: not_started
-- Verified: preceding foundations accepted; no recorded closure of parent 26, outside audit 13..23.
-- Missing: timeline and exportable recipe; dependencies DBG2-11/16/23 and DBG-09/16.
-- Resume: only criterion DBG2-26 in TODO section P4 upon a relevant request; no development selected now.
 
 ### DBG2-27
 
@@ -161,8 +152,8 @@ for a specific question: archive legacy lines 179..744 or the named record below
 ## Final handover
 
 - Task: DBG2-20 partial; user requested completion.
-- Last verified result: private USA ability projection passed protected USA/EUR preflight and live Wine preview/arm/disarm with guest unchanged; Windows GNU executable built.
-- Remaining work: correlated character modifiers and broader game/device behavior; native Windows and physical controllers remain unverified.
-- Errors or blockers: original XP records remain unchanged and region-unknown. USA CRC matches master; EUR mismatches. Guide and XP character-field labels disagree.
-- Next action: resolve dependent character-domain/source disagreement using further evidence; do not infer combinations or claim untested gameplay effects.
-- References: docs/changes/2026-11-09-project-usa-ability-values.json; docs/cheats.md; target/validation/units/dbg2-20-usa-ability-projection-ro_8a3nv/; target/validation/units/dbg2-20-usa-projection-frontend-e42ixl96/.
+- Last verified result: armed-cheat badge passed Wine software and Linux Vulkan/llvmpipe gameplay/menu checks; one-shot does not show it.
+- Remaining work: field meanings, full character domains, CH-0236, broader game/device behavior, native Windows and physical controllers.
+- Errors or blockers: source labels conflict; one observation cannot validate the domain. Character examples remain reference-only; older activation-ready projection is historical evidence.
+- Next action: seek discriminating evidence for remaining domains; preserve concurrent DBG2-26 work.
+- References: docs/changes/2026-11-09-show-maintained-cheat-indicator.json; docs/cheats.md; target/validation/units/dbg2-20-persistent-indicator-gameplay-bsrpy2cz/.

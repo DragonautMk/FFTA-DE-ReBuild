@@ -1713,6 +1713,69 @@
       "reference": "readonly"
     },
     {
+      "id": "pins.add",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control pin-add SESSION LABEL OWNER register INDEX | memory ADDRESS LENGTH | field FAMILY FIELD CONTEXT",
+      "current": "Debug / command console",
+      "destination": "Debug / command console",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "pins.remove",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control pin-remove SESSION LABEL",
+      "current": "Debug / command console",
+      "destination": "Debug / command console",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "pins.refresh",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control pin-refresh SESSION",
+      "current": "Debug / command console",
+      "destination": "Debug / command console",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "pins.view",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control pin-view SESSION all|changed|stale OFFSET",
+      "current": "Debug / command console",
+      "destination": "Debug / command console",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "timeline.bookmark",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control timeline-bookmark SESSION LABEL",
+      "current": "Debug / command console",
+      "destination": "Debug / command console",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "timeline.recipe",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control timeline-recipe SESSION select NAME | clear",
+      "current": "Debug / command console",
+      "destination": "Debug / command console",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "timeline.checkpoint",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control timeline-checkpoint SESSION select RUN-ID | clear",
+      "current": "Debug / command console",
+      "destination": "Debug / command console",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
       "id": "control.replay-run",
       "handler": "Action::Replay / PlayApp::debug_action_inner",
       "cli": "recomp debug-control replay-run SESSION [--mode MODE] [--max-frames N]",

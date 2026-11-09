@@ -21770,3 +21770,75 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: generated a private nine-record source-bound USA catalog with eight ability-label domains, original provenance and hashes; changed source, table and ROM inputs refused, deterministic CLI refused overwrite. Protected USA/EUR preflight, out-of-domain refusal, synthetic-bus write and Wine frontend preview/arm/disarm PASS; guest unadvanced and original inputs unchanged. Windows GNU production build PASS.
 - Evidence: `docs/changes/2026-11-09-project-usa-ability-values.json`; `target/validation/units/dbg2-20-usa-ability-projection-ro_8a3nv/`, `dbg2-20-usa-ability-preflight-gi901c1n/`, `dbg2-20-usa-projection-frontend-e42ixl96/`. Earlier frontend attempt `dbg2-20-usa-projection-frontend-vtab21f0` retained driver JSON-field failure.
 - Limits: derived USA declaration, no gameplay effect, native Windows or physical-device proof; dependent character modifiers remain open.
+
+### DBG2-20-DEPENDENT-PARAMETERS
+
+- Outcome: completed
+- Verified criteria: dependent lists reject incomplete, ambiguous and incompatible cases, filter menu values by the earlier choice and revalidate saved plans. Linux suites, Windows GNU build, three focused Wine tests and a synthetic Wine/Xvfb menu/preset flow passed with protected selected inputs and unadvanced guest. Older runtimes reject the new variant.
+- Evidence: `docs/changes/2026-11-09-dependent-cheat-parameter-domains.json`; `target/validation/units/dbg2-20-dependent-parameter-tests-iiddbvcl/`, `dbg2-20-dependent-wine-gui-ijn43g20/`. Earlier Wayland-package and imprecise-test-filter attempts retained diagnostics.
+- Limits: source-declared relationships only; original character modifiers and game/device behavior remain unverified. Concurrent DBG2-25 changes in other files appeared after the Windows build and are outside its scope.
+
+### DBG2-20-CHARACTER-EXAMPLES
+
+- Outcome: completed
+- Verified criteria: optional private USA projection preserves original XP notes/provenance, includes two documented dependent tuples for seven character entries and excludes CH-0236. Altered source/table inputs and output overwrite refused; default ability-only projection unchanged. Protected USA Wine frontend prepared, armed and disarmed both examples, refused a mixed pair and restored the first preset without guest advancement.
+- Evidence: `docs/changes/2026-11-09-project-character-examples.json`; `target/validation/units/dbg2-20-usa-character-examples-ucw5y1gi/`, `dbg2-20-character-examples-wine-__ltq06k/`.
+- Limits: two source examples do not establish other combinations, gameplay, device hooks or native Windows. The tested Wine runtime predates concurrent DBG2-25 edits.
+
+### DBG2-20-CHARACTER-QUARANTINE
+
+- Outcome: completed
+- Verified criteria: protected USA DS-16 read exposed unresolved character-field semantics without advancing the guest. Newly generated character records retain unknown region and source notes; USA Wine refused preparation while ability preview/arm/disarm still passed. Original catalog, ROM and prior generated artifact unchanged.
+- Evidence: `docs/changes/2026-11-09-quarantine-character-examples.json`; `target/validation/units/dbg2-20-ds16-readonly-fields-3ao28h9v/`, `dbg2-20-character-reference-only-mtq__gpq/`, `dbg2-20-reference-only-wine-maya4aqz/`. First Wine launch `3bj8s24a` refused the other owner's lease.
+- Limits: supersedes the operational recommendation in DBG2-20-CHARACTER-EXAMPLES; previously generated activation-ready copies remain historical and must not be selected for ordinary activation. Field meanings/game effects remain unverified.
+
+
+### DBG2-25
+
+- Outcome: completed
+- Verified criteria: Up to 16 session-local labeled/owned pins expose CPU registers, immutable backing-memory windows and authenticated EUR task, primary/auxiliary script and unit context fields, with initial source and prior/current frame, clock, source and value. Fields require the matching observed site and context register. An explicit paused refresh or completed step samples without guest writes; Load/Undo/reset invalidates context without automatic reuse. The command console supports paging and filters, with distinct changed and stale colors. Linux tests prove full state unchanged by inspection, bounded/refused inputs and all decoded families. Isolated Windows GNU/Wine/Xvfb frontend observed r3 change 165 to 166 between frames 22219 and 22220, kept guest state unchanged during inspection, displayed both changed and stale rows and confirmed stale after Load; protected inputs unchanged, window closed and Wine drained.
+- Evidence: docs/changes/2026-11-09-add-pinned-debug-observations.json; docs/debug_probes.md; target/validation/units/dbg2-25-linux-windows-build-cmc_wxl7/; dbg2-25-field-families-iu_f8ixo/; dbg2-25-final-help-checks-dzl47xs3/; dbg2-25-operation-descriptors-jpzud10q/; dbg2-25-stale-panel-focus-retry-vjrpfp8v/.
+- Limits: EUR context sites are authenticated but addresses are not persistent identities and may be reused during normal execution. Native Windows, physical-controller and other platform combinations remain DBG2-27. Earlier failed frontend/test units retain diagnostics; qbeikfdb driver succeeded but its runner FAILed after a foreign cold-storage lease, and its visual evidence was independently audited in nxww7jwd.
+
+### DBG2-20-DS16-ACTOR
+
+- Outcome: completed
+- Verified criteria: the protected USA DS-16 checkpoint's name pointer resolves to the Marche encoding matching its associated screenshot; an isolated read-only session left guest state, frame, clock and protected originals unchanged.
+- Evidence: `target/validation/units/dbg2-20-ds16-actor-readonly-czlki7vb/`; `docs/changes/2026-11-09-quarantine-character-examples.json`.
+- Limits: this authenticates the name, not the meanings of the job-related bytes or the effect of either code.
+
+### DBG2-20-DS16-CHARACTER-CONTROL
+
+- Outcome: completed
+- Verified criteria: protected identical USA DS-16 copies in managed Wine/Xvfb; one applied the first guide example once, control only previewed. Both advanced identical 108 frames with no maintained cheat, closed normally and preserved inputs. The expected bytes changed only in the treated copy and persisted through the observation; screenshots show changed statistics and figures but the Soldier title remained.
+- Evidence: `docs/changes/2026-11-09-observe-ds16-character-example.json`; `target/validation/units/dbg2-20-ds16-character-control-q1nfmfzh/`.
+- Limits: one tuple and scene do not resolve individual field meanings, other domains, native Windows or physical-device behavior. Character projections remain reference-only; the older activation-ready projection was used only in this isolated experiment.
+
+### DBG2-20-JOB-TABLE-SOURCE
+
+- Outcome: completed
+- Verified criteria: public Data Crystal job table lists indices 02 Soldier and 26 Gunner, matching the two compared numbers as table indices; documented with its direct source link.
+- Evidence: `docs/cheats.md`; `docs/changes/2026-11-09-observe-ds16-character-example.json`.
+- Limits: the table is not a mapping of the checkpoint's bytes and does not explain the Soldier title or verify combinations; character projections remain reference-only.
+
+### DBG2-20-PERSISTENT-CHEAT-INDICATOR
+
+- Outcome: completed within tested scope
+- Verified criteria: host badge follows nonempty maintained set independently of FPS; Linux HUD tests, Windows GNU build and Wine/Xvfb software GUI PASS. Inspected captures show the badge in resumed gameplay and pause menu, absent before arming, after one-shot and after disarm. Protected inputs unchanged; GUI closed and prefix drained.
+- Evidence: `docs/changes/2026-11-09-show-maintained-cheat-indicator.json`; `target/validation/units/dbg2-20-persistent-indicator-build-pdrv3qqd/`, `dbg2-20-persistent-indicator-gameplay-bsrpy2cz/`. Earlier Wine driver falsely treated a paused capture as gameplay; corrected unit required running state and distinct image. Sandbox Wine attempt retained leases; own exact tokens were recovered after host inspection and successful drain, with receipt in `dbg2-20-persistent-indicator-wine-sh5p4fa_/`.
+- Limits: GPU presentation, native Windows and physical input not visually verified. Badge reports maintained activity, not restoration of prior writes.
+
+### DBG2-20-INDICATOR-VULKAN
+
+- Outcome: completed within tested scope
+- Verified criteria: isolated Linux/Xvfb Vulkan presenter on llvmpipe showed the badge in resumed gameplay and pause menu, absent initially, after one-shot and after disarm; protected inputs unchanged and normal close. Inspected screenshots and running-state evidence.
+- Evidence: `docs/changes/2026-11-09-show-maintained-cheat-indicator.json`; `target/validation/units/dbg2-20-indicator-linux-gpu-build-pc_w0urb/`, `dbg2-20-indicator-linux-gpu-retry-xuuv_r2r/`. Sandbox Xvfb socket startup and the initial host driver import failed; diagnostics retained.
+- Limits: llvmpipe is CPU-based Vulkan; physical GPUs, Wine GPU presentation and native Windows remain unverified.
+
+
+### DBG2-26
+
+- Outcome: completed
+- Verified criteria: Isolated sessions collect bounded private semantic menu, control, lifecycle, completed guest-frame, error and bookmark observations with explicit coverage and loss counters. A selected session-pinned typed recipe and matching checkpoint export with the issue, including request IDs for same-run event correlation; selected content IDs, active cheat identities and safe links to existing private session reports are retained. The HTML exposes bookmarks, event and report links, privacy and unproven causation. Offline reports explicitly lack live context. Its copyable launcher runs the pinned replay, not the selected recipe. Dependencies DBG2-11/16/23 and DBG-09/16 are accepted.
+- Evidence: docs/changes/2026-11-09-connect-issue-timeline-and-recipe.json; docs/debug_issues.md; target/validation/units/dbg2-26-corrected-suite-ef_lfen_/; dbg2-26-windows-build-roac6r92/; dbg2-26-html-render-host-7bgh_3xn/; dbg2-26-replay-evidence-audit-s_tz6m5d/. The retained Wine frontend issue has a GUI bookmark, 128 events, selected recipe/checkpoint and inputs, a matching request spanning the guest-frame event, active synthetic CH-0001 and linked gameplay report. The separate audit checked protected preimages and successfully ran the replay launcher from a moved isolated copy.
+- Limits: chronology and matched request IDs do not prove causation; uninstrumented events, dropped data and external-session link portability remain explicit. Native Windows and physical input are unverified. Original frontend unit n2rz9jfv FAILed on an incorrect test substring after report creation; its app was interrupted, Wine drained and diagnostics retained. Other failed sandbox/build units remain separately recorded.

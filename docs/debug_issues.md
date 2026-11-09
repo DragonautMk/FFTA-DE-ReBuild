@@ -42,6 +42,47 @@ and the command console each created a report for the same selected, pinned
 profile with an empty symptom. Their summaries matched, preflight was compatible,
 and guest state remained unchanged. Creating these reports did not run replay.
 
+## Timeline and selected recipe — DBG2-26
+
+An isolated debug copy retains a bounded private timeline of semantic menu
+changes, shared command and lifecycle events, completed guest frames, errors
+and explicit bookmarks. The collector is active for the isolated session; it
+does not execute actions. Its counters report evictions, dropped and oversized
+events. A missing event is not evidence that the corresponding action did not
+happen, and publication order or a matching request ID does not prove causation.
+
+The command console and `debug-command` can annotate the current boundary and
+select an already saved, session-pinned typed recipe for the next issue report:
+
+```text
+timeline-bookmark "Before the observed change"
+timeline-recipe select investigation
+timeline-checkpoint select run-EXAMPLE
+issue-report --symptom "Describe the observed result"
+timeline-recipe clear
+```
+
+Select the actual checkpoint ID returned by `recipe prepare` and `recipe run`.
+The checkpoint must match the selected recipe; its bounded step request IDs can
+then be correlated with retained events from that same session run. Selecting
+a recipe or checkpoint neither executes it nor proves that it caused the event.
+The report retains the selected copy and says whether the current saved recipe
+and checkpoint remain available. It includes selected content IDs, active cheat identities,
+collector coverage, bookmarks and links to available session-local reports.
+Those paths, the timeline and recipe may be private. Links to another session
+require keeping that session and the profile together; moving only the profile
+can break them. The copy-command button reproduces the selected pinned replay,
+not the selected recipe. Offline `debug-report create` has no live session
+context and records that gap explicitly.
+
+An isolated EUR Wine/Xvfb run produced an issue containing a console bookmark,
+selected recipe and checkpoint, matching step request, guest-frame observation,
+active synthetic cheat and linked gameplay report. A separate audit confirmed
+the protected inputs and replayed the report's launcher from a moved copy. The
+original frontend driver stopped on an incorrect wording assertion after the
+report was written; its FAIL receipt and interrupted session remain separate
+from the successful audit. Native Windows and physical input were not tested.
+
 <a id="leggere-e-riprodurre"></a>
 
 ## Read and reproduce

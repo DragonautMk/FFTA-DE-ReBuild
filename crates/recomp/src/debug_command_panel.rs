@@ -52,6 +52,7 @@ pub(crate) struct Panel {
     target:String,
     pending:String,
     parameters:String,
+    pins:Vec<menu::command_console::PinLine>,
     context_visible:bool,
     context_scroll:usize,
     modifiers:ModifiersState,
@@ -75,7 +76,7 @@ impl Panel {
         #[cfg(target_os="windows")]
         let wine_ime=crate::debug_command_wine_ime::Shim::install(window.clone());
         window.set_ime_allowed(true);
-        Ok(Self{window,#[cfg(target_os="windows")] wine_ime,_context:context,surface,visible:true,focused:true,focus_handoff:Some(Instant::now()),hide_handoff:None,last_draw:Instant::now()-Duration::from_secs(1),last_observation:Instant::now()-Duration::from_secs(1),language,manifest,run:run.into(),manifest_sha256:manifest_sha256.into(),target,pending:language.text("No pending job").into(),parameters:language.text("Parameters: -").into(),context_visible:false,context_scroll:0,modifiers:ModifiersState::empty(),editor:Editor::default(),completion:Default::default(),controller:Controller::default(),clipboard:None,jobs:Vec::new(),lines:VecDeque::new(),last_result:String::new(),notice:language.text("Type a command; submission is explicit.").into(),root})
+        Ok(Self{window,#[cfg(target_os="windows")] wine_ime,_context:context,surface,visible:true,focused:true,focus_handoff:Some(Instant::now()),hide_handoff:None,last_draw:Instant::now()-Duration::from_secs(1),last_observation:Instant::now()-Duration::from_secs(1),language,manifest,run:run.into(),manifest_sha256:manifest_sha256.into(),target,pending:language.text("No pending job").into(),parameters:language.text("Parameters: -").into(),pins:Vec::new(),context_visible:false,context_scroll:0,modifiers:ModifiersState::empty(),editor:Editor::default(),completion:Default::default(),controller:Controller::default(),clipboard:None,jobs:Vec::new(),lines:VecDeque::new(),last_result:String::new(),notice:language.text("Type a command; submission is explicit.").into(),root})
     }
     pub fn owns(&self,id:winit::window::WindowId)->bool{self.window.id()==id}
     pub fn show(&mut self,language:Language){
@@ -88,9 +89,10 @@ impl Panel {
     pub fn hide(&mut self){self.visible=false;self.focused=false;self.context_visible=false;self.editor.set_preedit("");#[cfg(target_os="windows")] if let Some(ime)=self.wine_ime.as_mut(){ime.reset();}self.controller.reset();self.focus_handoff=None;self.hide_handoff=Some(Instant::now());self.window.set_ime_allowed(false);self.window.set_visible(false);}
     pub fn focused(&self)->bool{self.visible&&self.focused}
     pub fn wants_observation(&self)->bool{self.visible&&self.last_observation.elapsed()>=Duration::from_millis(250)}
-    pub fn observe(&mut self,pending:&serde_json::Value,remaining:u32,search_remaining:Option<u64>,replay_progress:Option<(u64,u64)>){
+    pub fn observe(&mut self,pending:&serde_json::Value,remaining:u32,search_remaining:Option<u64>,replay_progress:Option<(u64,u64)>,pins:&serde_json::Value){
         self.last_observation=Instant::now();let (job,parameters)=debug_command::observation::pending(pending,remaining,search_remaining,replay_progress,self.language);
         if self.pending!=job||self.parameters!=parameters{self.pending=job;self.parameters=parameters;self.last_draw=Instant::now()-Duration::from_secs(1);}
+        let pins=debug_command::observation::pin_lines(pins);if self.pins!=pins{self.pins=pins;self.last_draw=Instant::now()-Duration::from_secs(1);}
     }
     pub fn focus_handoff(&self)->bool{self.focus_handoff.is_some_and(|t|t.elapsed()<Duration::from_secs(2))}
     pub fn hide_handoff(&self)->bool{self.hide_handoff.is_some_and(|t|t.elapsed()<Duration::from_millis(400))}
@@ -227,7 +229,7 @@ impl Panel {
         let labels=self.controller.localized_labels(self.language);let keyboard=self.controller.visible().then_some(menu::command_console::Keyboard{labels:&labels,selected:self.controller.selected()});
         let hint=debug_command::completion::hint(self.editor.text(),self.language);
         if self.context_visible {self.context_scroll=menu::command_console::context_lines(self.language,&self.target,&self.pending,&self.parameters,&results,width,height,self.context_scroll).1;menu::command_console::draw_context(self.language,&self.target,&self.pending,&self.parameters,&results,self.context_scroll,&mut rgba,width,height);}
-        else {menu::command_console::draw(&menu::command_console::Display{language:self.language,target:&self.target,pending:&self.pending,parameters:&self.parameters,draft:&draft,preedit:&preedit,hint,notice:&self.notice,lines:&lines,keyboard},&mut rgba,width,height);}
+        else {menu::command_console::draw(&menu::command_console::Display{language:self.language,target:&self.target,pending:&self.pending,parameters:&self.parameters,draft:&draft,preedit:&preedit,hint,notice:&self.notice,lines:&lines,pins:&self.pins,keyboard},&mut rgba,width,height);}
         self.surface.resize(w,h).map_err(|e|e.to_string())?;let mut buffer=self.surface.buffer_mut().map_err(|e|e.to_string())?;
         for(out,p)in buffer.iter_mut().zip(rgba){*out=(u32::from(p[0])<<16)|(u32::from(p[1])<<8)|u32::from(p[2]);}buffer.present().map_err(|e|e.to_string())
     }

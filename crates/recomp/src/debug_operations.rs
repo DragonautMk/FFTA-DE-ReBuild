@@ -96,6 +96,13 @@ impl crate::debug_control::Action {
             Resume => "control.resume",
             Step { .. } => "control.step",
             Inspect { .. } => "control.inspect",
+            PinAdd { .. } => "pins.add",
+            PinRemove { .. } => "pins.remove",
+            PinRefresh => "pins.refresh",
+            PinView { .. } => "pins.view",
+            TimelineBookmark { .. } => "timeline.bookmark",
+            TimelineRecipe { .. } => "timeline.recipe",
+            TimelineCheckpoint { .. } => "timeline.checkpoint",
             Find { settings } => match settings.condition {
                 crate::debug_probe::Condition::Pc { .. } => "control.break",
                 crate::debug_probe::Condition::Access { .. } => "control.watch",

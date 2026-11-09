@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-11-09",
+  "slug": "show-maintained-cheat-indicator",
+  "title": "Keep maintained cheat activity visible",
+  "kind": "added",
+  "platforms": [
+    "Linux",
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Show a persistent host-side CHEAT badge during gameplay and pause menus whenever the maintained cheat set is nonempty; remove it when the set clears. A one-shot write alone does not activate the badge.",
+    "Use a compact, clipped overlay independent of the FPS setting and game color corrections, including GPU composition and software fallback."
+  ],
+  "validation": [
+    "Linux FPS/HUD tests passed, including active/inactive visibility, independence from the FPS setting and bounds on small windows. Windows GNU test and production executable builds passed. Evidence: target/validation/units/dbg2-20-persistent-indicator-build-pdrv3qqd/.",
+    "An isolated Wine/Xvfb software-rendered EUR session and Windows HUD test passed: the badge was absent initially and after a synthetic one-shot, present while armed on the paused menu and in resumed gameplay, and absent after disarm. Screenshots and running-state evidence were inspected, protected inputs unchanged, window closed and Wine drained. Evidence: target/validation/units/dbg2-20-persistent-indicator-gameplay-bsrpy2cz/.",
+    "An earlier driver captured the paused menu after resume and therefore did not establish gameplay visibility despite its own PASS; its diagnostic evidence remains at target/validation/units/dbg2-20-persistent-indicator-wine-49ook0ne/. The corrected unit required a distinct gameplay image and running state.",
+    "A sandboxed Wine attempt failed on a read-only runtime socket and retained its leases; host process inspection and a successful server drain preceded exact-token release of only that completed unit\u2019s leases. Diagnostics and recovery receipt: target/validation/units/dbg2-20-persistent-indicator-wine-sh5p4fa_/.",
+    "A separate isolated Linux/Xvfb frontend using the Vulkan presenter on llvmpipe passed the same paused/gameplay, one-shot and disarm checks with protected inputs and a normal close. Evidence: target/validation/units/dbg2-20-indicator-linux-gpu-retry-xuuv_r2r/. Earlier sandbox Xvfb startup failed on socket access and a host driver attempt missed an import; both retained diagnostics."
+  ],
+  "limitations": [
+    "Linux Vulkan used the llvmpipe CPU adapter; physical GPUs, Wine GPU presentation, native Windows, physical controllers and other desktop environments were not visually verified. The badge signals maintained plans, not restoration of memory after disarm."
+  ],
+  "files": [
+    "crates/recomp/src/fps.rs",
+    "crates/recomp/src/play.rs",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

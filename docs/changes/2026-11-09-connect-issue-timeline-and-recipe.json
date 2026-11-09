@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "date": "2026-11-09",
+  "slug": "connect-issue-timeline-and-recipe",
+  "title": "Connect issue timelines, recipes and private reports",
+  "kind": "added",
+  "platforms": [
+    "Linux",
+    "Windows GNU and Wine"
+  ],
+  "changes": [
+    "Collect a bounded private issue timeline in isolated debug sessions for menu changes, shared control requests, lifecycle events, guest-frame boundaries, errors and explicit bookmarks; report evictions, drops and coverage limits.",
+    "Allow an explicitly selected session-pinned typed recipe and matching checkpoint to accompany the issue; correlate observed request IDs with checkpoint steps without inferring causation or executing the recipe.",
+    "Include selected content IDs, active cheat identities and safe relative links to available private session reports; export private timeline and recipe JSON alongside the existing copyable pinned-replay launcher.",
+    "Show bookmarks, observed events, related reports and explicit privacy and causation scope in the local HTML report; offline report creation records the absent live context."
+  ],
+  "validation": [
+    "Linux production check and focused tests passed for timeline limits and loss counters, parser and registry, safe report links, escaping, recipe/checkpoint identity and private attachment generation. Windows GNU runtime and tests cross-compiled.",
+    "Chrome headless rendered bookmark links, matching recipe request, related report link, omission count and escaped text. An isolated Wine frontend produced a report with a GUI bookmark, selected recipe/checkpoint and content, guest frames, active synthetic cheat and linked gameplay report.",
+    "A separate managed audit verified protected input preimages and all retained report identities, then successfully ran the pinned replay launcher from a moved isolated copy."
+  ],
+  "limitations": [
+    "Event order and request identity are correlation only; collector gaps, caps and uninstrumented guest behavior do not establish absence or causation. Session report links can break if the session and profile are moved separately.",
+    "The original frontend runner failed on an incorrect test substring after writing the report; its app was interrupted and Wine drained. The separate audit and replay passed. Native Windows and physical input remain unverified."
+  ],
+  "files": [
+    "crates/recomp/src/debug_timeline.rs",
+    "crates/recomp/src/debug_issue.rs",
+    "crates/recomp/src/debug_issue/report.html",
+    "crates/recomp/src/debug_command.rs",
+    "crates/recomp/src/debug_command/completion.rs",
+    "crates/recomp/src/debug_command/recipe.rs",
+    "crates/recomp/src/debug_command/recipe/checkpoint.rs",
+    "crates/recomp/src/debug_control.rs",
+    "crates/recomp/src/debug_operations.rs",
+    "crates/recomp/src/debug_operations.json",
+    "crates/recomp/src/main.rs",
+    "crates/recomp/src/play.rs",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/debug_issues.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ]
+}

@@ -45,6 +45,8 @@ mod debug_tools;
 mod debug_choices;
 mod modal_input;
 mod debug_probe;
+mod debug_pins;
+mod debug_timeline;
 mod debug_graphics;
 mod debug_ui;
 mod debug_events;

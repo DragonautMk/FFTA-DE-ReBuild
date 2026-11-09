@@ -97,6 +97,31 @@ Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/develo
 
 [Change record](docs/changes/2026-11-09-support-multiple-declared-cheat-parameters.json)
 
+## 2026-11-09 — Keep maintained cheat activity visible
+
+Type: added. Platforms: Linux, Windows GNU / Wine.
+
+**Changes**
+
+- Show a persistent host-side CHEAT badge during gameplay and pause menus whenever the maintained cheat set is nonempty; remove it when the set clears. A one-shot write alone does not activate the badge.
+- Use a compact, clipped overlay independent of the FPS setting and game color corrections, including GPU composition and software fallback.
+
+**Validation**
+
+- Linux FPS/HUD tests passed, including active/inactive visibility, independence from the FPS setting and bounds on small windows. Windows GNU test and production executable builds passed. Evidence: target/validation/units/dbg2-20-persistent-indicator-build-pdrv3qqd/.
+- An isolated Wine/Xvfb software-rendered EUR session and Windows HUD test passed: the badge was absent initially and after a synthetic one-shot, present while armed on the paused menu and in resumed gameplay, and absent after disarm. Screenshots and running-state evidence were inspected, protected inputs unchanged, window closed and Wine drained. Evidence: target/validation/units/dbg2-20-persistent-indicator-gameplay-bsrpy2cz/.
+- An earlier driver captured the paused menu after resume and therefore did not establish gameplay visibility despite its own PASS; its diagnostic evidence remains at target/validation/units/dbg2-20-persistent-indicator-wine-49ook0ne/. The corrected unit required a distinct gameplay image and running state.
+- A sandboxed Wine attempt failed on a read-only runtime socket and retained its leases; host process inspection and a successful server drain preceded exact-token release of only that completed unit’s leases. Diagnostics and recovery receipt: target/validation/units/dbg2-20-persistent-indicator-wine-sh5p4fa_/.
+- A separate isolated Linux/Xvfb frontend using the Vulkan presenter on llvmpipe passed the same paused/gameplay, one-shot and disarm checks with protected inputs and a normal close. Evidence: target/validation/units/dbg2-20-indicator-linux-gpu-retry-xuuv_r2r/. Earlier sandbox Xvfb startup failed on socket access and a host driver attempt missed an import; both retained diagnostics.
+
+**Limitations**
+
+- Linux Vulkan used the llvmpipe CPU adapter; physical GPUs, Wine GPU presentation, native Windows, physical controllers and other desktop environments were not visually verified. The badge signals maintained plans, not restoration of memory after disarm.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-09-show-maintained-cheat-indicator.json)
+
 ## 2026-11-09 — Select declared cheat values in the management menu
 
 Type: added. Platforms: Linux, Windows GNU cross-build.
@@ -197,6 +222,32 @@ Documentation: [cheats.md](docs/cheats.md), [debug_recordings.md](docs/debug_rec
 
 [Change record](docs/changes/2026-11-09-record-cheat-derived-origins.json)
 
+## 2026-11-09 — Keep unresolved character examples reference-only
+
+Type: fixed. Platforms: Linux, Windows GNU / Wine.
+
+**Changes**
+
+- Keep generated character example entries region-unknown so existing preparation guards refuse activation until their field meanings are verified; retain ability-only behavior and original source records.
+- Withdraw the earlier activation-ready derived catalog from operational use while preserving it unchanged as historical evidence.
+
+**Validation**
+
+- A protected read-only USA DS-16 checkpoint inspection read eight bytes without advancing the guest or changing its state; the byte proposed as level by one source differed from the associated level-50 screenshot, and two proposed job fields also differed. Evidence: target/validation/units/dbg2-20-ds16-readonly-fields-3ao28h9v/.
+- A protected generation check confirmed all seven character entries retain unknown region while the master remains USA, preserved original notes and provenance, refused altered source/table inputs and did not overwrite prior catalogs. Evidence: target/validation/units/dbg2-20-character-reference-only-mtq__gpq/.
+- A Wine frontend check initially did not start because the coordinated prefix was held by the independent DBG2-25 activity; diagnostics retained in dbg2-20-reference-only-wine-3bj8s24a.
+- After the other activity released the coordinated prefix, an isolated USA Wine frontend refused preparation of a reference-only character example, accepted ability preview/arm/disarm, and left guest and protected inputs unchanged. Evidence: target/validation/units/dbg2-20-reference-only-wine-maya4aqz/.
+- A separate protected read-only USA DS-16 inspection followed the character name pointer and matched the Marche encoding in the associated screenshot without advancing the guest or changing state. Evidence: target/validation/units/dbg2-20-ds16-actor-readonly-czlki7vb/.
+
+**Limitations**
+
+- This quarantines newly generated unmodified catalogs using the existing region guard. Previously generated activation-ready copies cannot be retroactively disabled and are retained only as historical evidence; do not select them for activation.
+- The observed bytes and name support the checkpoint identity but do not prove the meanings of the differing fields or the effect of either code. Correlated game behavior, other domains, native Windows and physical devices remain unverified.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-09-quarantine-character-examples.json)
+
 ## 2026-11-09 — Create a private source-bound USA ability projection
 
 Type: added. Platforms: Linux, Windows GNU / Wine.
@@ -220,6 +271,29 @@ Type: added. Platforms: Linux, Windows GNU / Wine.
 Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
 
 [Change record](docs/changes/2026-11-09-project-usa-ability-values.json)
+
+## 2026-11-09 — Project documented character modifier examples
+
+Type: added. Platforms: Linux, Windows GNU / Wine / Xvfb.
+
+**Changes**
+
+- Extend the private USA catalog builder with an explicit option for two documented job/race/appearance examples, using dependent domains and preserving the conflicting original notes and provenance.
+- Exclude the source entry with an unresolved address and leave all other combinations unavailable rather than infer a compatibility table.
+
+**Validation**
+
+- Protected validation produced seven character entries alongside the existing eight ability entries, preserved source notes/provenance, excluded CH-0236, refused altered source/table inputs and prevented overwriting. A separate compatibility check confirmed the default ability-only output remains byte-identical.
+- In a protected isolated USA Wine/Xvfb frontend, an incompatible combination was refused, both documented tuples were explicitly prepared, armed and disarmed, and the first was saved and rearmed from a preset without guest advancement. Evidence: target/validation/units/dbg2-20-usa-character-examples-ucw5y1gi/, dbg2-20-ability-projection-compatibility-in29bkzo/, dbg2-20-character-examples-wine-__ltq06k/.
+
+**Limitations**
+
+- The two combinations are source examples, not a complete domain or proof of actual game effects or physical-device behavior. CH-0236 remains excluded and conflicting original field notes are preserved.
+- The Wine test used a Windows GNU executable built before concurrent DBG2-25 changes elsewhere in the shared workspace; native Windows and physical input were not tested.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-09-project-character-examples.json)
 
 ## 2026-11-09 — Preserve branch-aware cheat snapshot history
 
@@ -246,6 +320,28 @@ Type: added. Platforms: Linux, Windows GNU cross-build.
 Documentation: [save_states.md](docs/save_states.md), [cheats.md](docs/cheats.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
 
 [Change record](docs/changes/2026-11-09-preserve-branch-aware-cheat-snapshot-history.json)
+
+## 2026-11-09 — Observe one character example in a paired checkpoint
+
+Type: changed. Platforms: Windows GNU / Wine.
+
+**Changes**
+
+- Document a bounded paired control and one-shot character-example observation while retaining the existing reference-only quarantine.
+
+**Validation**
+
+- A managed isolated Wine/Xvfb unit loaded identical protected USA DS-16 checkpoint copies. After explicit preview, one copy received a single documented example; the control received no write. Both advanced the same 108 frames without maintained cheats and closed normally.
+- The intended bytes changed only in the treated copy and remained changed after stepping. Review of the captured character screens found differing statistics and figures while both retained the Soldier title. Protected ROM, checkpoint, prior evidence and executable were unchanged. Evidence: target/validation/units/dbg2-20-ds16-character-control-q1nfmfzh/.
+- A public Data Crystal job-table listing identifies 02 as Soldier and 26 as Gunner; its table indices do not establish which saved field uses the table or explain the captured title.
+
+**Limitations**
+
+- This is one tuple, one checkpoint and one bounded scene; it does not establish the meaning of each byte, source correctness, other combinations, native Windows or physical-device behavior. The previous activation-ready projection remains historical evidence and current examples stay reference-only.
+
+Documentation: [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [2026-11-09-quarantine-character-examples.json](docs/changes/2026-11-09-quarantine-character-examples.json).
+
+[Change record](docs/changes/2026-11-09-observe-ds16-character-example.json)
 
 ## 2026-11-09 — Verify parameterized menu presets and identify a matching CodeBreaker guide
 
@@ -318,6 +414,81 @@ Type: fixed. Platforms: Linux.
 Documentation: [debug_operations.md](docs/debug_operations.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
 
 [Change record](docs/changes/2026-11-09-document-missing-debug-operation-options.json)
+
+## 2026-11-09 — Validate dependent cheat parameter values
+
+Type: added. Platforms: Linux, Windows GNU / Wine / Xvfb.
+
+**Changes**
+
+- Add bounded dependent-list domains tied to an earlier named parameter; validate complete unique cases, width, declared choices and the selected relationship before expansion.
+- Filter menu choices using the explicit earlier selection while retaining source-bound previews, preset checks and replay authentication; older runtimes reject the distinct unknown variant.
+
+**Validation**
+
+- Linux offline targeted suites passed: 4 menu management, 26 selector, 4 parameter, 17 catalog, 5 preset and 2 timeline tests; four private-fixture tests were ignored. Windows GNU menu/runtime tests and production executables compiled.
+- Three focused Windows GNU/Wine tests passed. In an isolated synthetic Wine/Xvfb frontend, an incompatible pair was refused, the second menu value changed with the first, and a valid dependent pair was saved, reviewed, rearmed and disarmed through a preset without guest advancement; protected selected inputs were unchanged. Evidence: target/validation/units/dbg2-20-dependent-parameter-tests-iiddbvcl/, dbg2-20-dependent-windows-build-2ybrp1a0/, dbg2-20-dependent-wine-gui-ijn43g20/.
+- The first standalone Linux menu run lacked a Wayland development package; the combined menu/runtime configuration passed. A first Wine driver selected extra tests by substring; exact-name runs passed in the accepted unit.
+
+**Limitations**
+
+- The relationships are catalog declarations, not proof of game or physical-device behavior. Original XP job/race/appearance records remain unchanged and do not yet declare reviewed domains.
+- The Wine GUI used simulated keyboard input and a synthetic catalog; native Windows and physical controllers were not tested. Concurrent DBG2-25 edits appeared in other files after this Windows build and are outside its validation scope.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-09-dependent-cheat-parameter-domains.json)
+
+## 2026-11-09 — Connect issue timelines, recipes and private reports
+
+Type: added. Platforms: Linux, Windows GNU and Wine.
+
+**Changes**
+
+- Collect a bounded private issue timeline in isolated debug sessions for menu changes, shared control requests, lifecycle events, guest-frame boundaries, errors and explicit bookmarks; report evictions, drops and coverage limits.
+- Allow an explicitly selected session-pinned typed recipe and matching checkpoint to accompany the issue; correlate observed request IDs with checkpoint steps without inferring causation or executing the recipe.
+- Include selected content IDs, active cheat identities and safe relative links to available private session reports; export private timeline and recipe JSON alongside the existing copyable pinned-replay launcher.
+- Show bookmarks, observed events, related reports and explicit privacy and causation scope in the local HTML report; offline report creation records the absent live context.
+
+**Validation**
+
+- Linux production check and focused tests passed for timeline limits and loss counters, parser and registry, safe report links, escaping, recipe/checkpoint identity and private attachment generation. Windows GNU runtime and tests cross-compiled.
+- Chrome headless rendered bookmark links, matching recipe request, related report link, omission count and escaped text. An isolated Wine frontend produced a report with a GUI bookmark, selected recipe/checkpoint and content, guest frames, active synthetic cheat and linked gameplay report.
+- A separate managed audit verified protected input preimages and all retained report identities, then successfully ran the pinned replay launcher from a moved isolated copy.
+
+**Limitations**
+
+- Event order and request identity are correlation only; collector gaps, caps and uninstrumented guest behavior do not establish absence or causation. Session report links can break if the session and profile are moved separately.
+- The original frontend runner failed on an incorrect test substring after writing the report; its app was interrupted and Wine drained. The separate audit and replay passed. Native Windows and physical input remain unverified.
+
+Documentation: [debug_issues.md](docs/debug_issues.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-09-connect-issue-timeline-and-recipe.json)
+
+## 2026-11-09 — Pin bounded debug observations with source and stale context
+
+Type: added. Platforms: Linux, Windows GNU and Wine.
+
+**Changes**
+
+- Add up to 16 labeled, owned session-local pins for CPU registers, immutable backing-memory windows and authenticated EUR task, script and unit context fields. Decoded pins require the corresponding observed PC and context register.
+- Track both sample values, their frame, clock and source; refresh at a completed step or explicit paused request. Mark every pin stale on state restoration without silently reusing its address.
+- Show live filtered, paged pins in the command console with distinct normal, changed and stale colors; expose the same bounded operations through local control and command completion.
+
+**Validation**
+
+- Linux tests passed for state-invariant pinning, bounds, unsafe-memory refusal, parser, filtering, colors and authenticated EUR task/script/unit context. Windows GNU runtime and tests cross-compiled.
+- An isolated Wine/Xvfb frontend observed r3 change from 165 to 166 across a frame, kept state unchanged during pin operations and marked pins stale after loading a protected-state copy. An independent audit verified the unobstructed changed-row screenshot and protected preimages.
+- Final isolated Wine/Xvfb frontend validation displayed both the changed register and red stale rows after Load; protected inputs remained unchanged and the owned window closed normally.
+
+**Limitations**
+
+- Pins identify an observation and context address, not a persistent actor or task; the address can be reused during ordinary execution. Decoded fields require the exact EUR ROM and an observed contract site.
+- Native Windows and physical-controller input are not covered. A visual driver passed but its runner retained a FAIL receipt after an unrelated cold-storage lease blocked final retention; diagnostics remain intact.
+
+Documentation: [debug_probes.md](docs/debug_probes.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-09-add-pinned-debug-observations.json)
 
 ## 2026-11-08 — Verify recipe selection across Wine restarts
 

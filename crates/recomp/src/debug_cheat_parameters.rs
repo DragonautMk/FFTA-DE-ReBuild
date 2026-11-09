@@ -23,7 +23,12 @@ pub(crate) struct Specification {
 pub(crate) enum Domain {
     List { values: Vec<u16> },
     Range { min: u16, max: u16, step: u16 },
+    DependentList { on: String, cases: Vec<DependentCase> },
 }
+
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
+#[serde(deny_unknown_fields)]
+pub(crate) struct DependentCase { pub when: u16, pub values: Vec<u16> }
 
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
 #[serde(deny_unknown_fields)]
@@ -55,11 +60,12 @@ impl Specification {
         let value = match &self.allowed {
             Domain::List { values } => *values.first().ok_or("Empty parameter value list")?,
             Domain::Range { min, .. } => *min,
+            Domain::DependentList { .. } => return Err("Dependent parameter needs its earlier choice".into()),
         };
         expand(lines, self, &Choice { name: self.name.clone(), value }).map(|_| ())
     }
 
-    fn accepts(&self, choice: &Choice) -> Result<(), String> {
+    fn accepts(&self, choice: &Choice, prior: &[Specification], choices: &[Choice]) -> Result<(), String> {
         if !valid_name(&self.name) || choice.name != self.name || self.slots.is_empty() || self.slots.len() > 16 {
             return Err("Invalid parameter identity or slots".into());
         }
@@ -68,6 +74,21 @@ impl Specification {
             Domain::Range { min, max, step } => {
                 if min > max || *step == 0 { return Err("Invalid parameter range".into()); }
                 min + ((max - min) / step) * step
+            }
+            Domain::DependentList { on, cases } => {
+                if !valid_name(on) || cases.is_empty() || cases.len()>256 || cases.iter().map(|c|c.values.len()).sum::<usize>()>4096 {
+                    return Err("Invalid dependent parameter cases".into());
+                }
+                let parent=prior.iter().find(|s|s.name==*on).ok_or("Dependent parameter must reference an earlier parameter")?;
+                let expected=parent.allowed.possible_values()?;
+                let keys=cases.iter().map(|case|case.when).collect::<BTreeSet<_>>();
+                if keys.len()!=cases.len() || keys!=expected {return Err("Dependent cases must cover each earlier value exactly once".into());}
+                let mut maximum=0;
+                for case in cases {
+                    if case.values.is_empty() || case.values.len()>256 || case.values.iter().copied().collect::<BTreeSet<_>>().len()!=case.values.len() {return Err("Invalid dependent parameter values".into());}
+                    maximum=maximum.max(*case.values.iter().max().unwrap());
+                }
+                maximum
             }
         };
         for slot in &self.slots {
@@ -87,9 +108,37 @@ impl Specification {
                 if min > max || *step == 0 { return Err("Invalid parameter range".into()); }
                 choice.value >= *min && choice.value <= *max && (choice.value - min) % step == 0
             }
+            Domain::DependentList { on, cases } => {
+                let parent=choices.iter().find(|c|c.name==*on).ok_or("Missing earlier parameter choice")?;
+                cases.iter().find(|case|case.when==parent.value).is_some_and(|case|case.values.contains(&choice.value))
+            }
         };
         if !allowed { return Err("Parameter value is outside its declared domain".into()); }
         Ok(())
+    }
+}
+
+impl Domain {
+    fn possible_values(&self)->Result<BTreeSet<u16>,String>{
+        let values:BTreeSet<u16>=match self {
+            Self::List{values}=>values.iter().copied().collect(),
+            Self::Range{min,max,step} if *step>0 && min<=max=>{
+                let count=(u32::from(*max)-u32::from(*min))/u32::from(*step)+1;
+                if count>256{return Err("Dependent parent has more than 256 values".into());}
+                (0..count).map(|i|(u32::from(*min)+i*u32::from(*step)) as u16).collect()
+            }
+            Self::DependentList{cases,..}=>cases.iter().flat_map(|case|case.values.iter().copied()).collect(),
+            _=>return Err("Invalid dependent parent domain".into()),
+        };
+        if values.is_empty() || values.len()>256{return Err("Dependent parent needs 1..256 values".into());}
+        Ok(values)
+    }
+    fn first_for(&self,choices:&[Choice])->Result<u16,String>{
+        match self {
+            Self::List{values}=>values.first().copied(),
+            Self::Range{min,..}=>Some(*min),
+            Self::DependentList{on,cases}=>choices.iter().find(|c|c.name==*on).and_then(|choice|cases.iter().find(|case|case.when==choice.value)).and_then(|case|case.values.first()).copied(),
+        }.ok_or_else(||"No value available for declared parameter".into())
     }
 }
 
@@ -106,10 +155,10 @@ pub(crate) fn expand_many(lines: &[String], specs: &[Specification], choices: &[
     if specs.is_empty() || specs.len()>8 || choices.len()!=specs.len(){return Err("Choose each declared parameter exactly once".into());}
     let mut names=BTreeSet::new();let mut choice_names=BTreeSet::new();
     for choice in choices {choice.validate()?;if !choice_names.insert(&choice.name){return Err("Duplicate parameter choice".into());}}
-    for spec in specs {
+    for (index,spec) in specs.iter().enumerate() {
         if !names.insert(&spec.name){return Err("Duplicate parameter declaration".into());}
         let choice=choices.iter().find(|choice|choice.name==spec.name).ok_or("Missing declared parameter choice")?;
-        spec.accepts(choice)?;
+        spec.accepts(choice,&specs[..index],choices)?;
     }
     if lines.is_empty() || lines.len() > 1024 { return Err("A block needs 1..1024 lines".into()); }
     let mut fields = Vec::with_capacity(lines.len());
@@ -152,7 +201,7 @@ pub(crate) fn expand_many(lines: &[String], specs: &[Specification], choices: &[
 }
 
 pub(crate) fn validate_many_source(lines:&[String],specs:&[Specification])->Result<(),String>{
-    let choices=specs.iter().map(|spec|Ok(Choice{name:spec.name.clone(),value:match &spec.allowed{Domain::List{values}=>*values.first().ok_or("Empty parameter value list")?,Domain::Range{min,..}=>*min}})).collect::<Result<Vec<_>,String>>()?;
+    let mut choices=Vec::new();for spec in specs{choices.push(Choice{name:spec.name.clone(),value:spec.allowed.first_for(&choices)?});}
     expand_many(lines,specs,&choices).map(|_|())
 }
 
@@ -202,5 +251,23 @@ mod tests {
         assert!(expand_many(&source,&specs,&choices[..2]).is_err());let mut duplicate=choices.clone();duplicate[0]=duplicate[1].clone();assert!(expand_many(&source,&specs,&duplicate).is_err());
         let mut overlapping=specs.clone();overlapping[2].slots[0]=overlapping[1].slots[0].clone();assert!(validate_many_source(&source,&overlapping).is_err());
         let mut bad=choices.clone();bad[0].value=3;assert!(expand_many(&source,&specs,&bad).is_err());
+    }
+    #[test]
+    fn dependent_domains_require_complete_earlier_cases_and_refuse_cross_choices(){
+        let source=vec!["820000XX 00YY".into()];
+        let parent=Specification{name:"race".into(),allowed:Domain::List{values:vec![1,2]},slots:vec![Slot{line:0,field:Field::Word,offset:6,digits:2}]};
+        let child=Specification{name:"job".into(),allowed:Domain::DependentList{on:"race".into(),cases:vec![DependentCase{when:1,values:vec![10,11]},DependentCase{when:2,values:vec![20]}]},slots:vec![Slot{line:0,field:Field::Value,offset:2,digits:2}]};
+        let specs=vec![parent,child];validate_many_source(&source,&specs).unwrap();
+        let choice=|name:&str,value|Choice{name:name.into(),value};
+        assert_eq!(expand_many(&source,&specs,&[choice("job",20),choice("race",2)]).unwrap(),["82000002 0014"]);
+        assert!(expand_many(&source,&specs,&[choice("race",1),choice("job",20)]).is_err());
+        assert!(expand_many(&source,&specs,&[choice("race",2),choice("job",11)]).is_err());
+        let mut missing=specs.clone();if let Domain::DependentList{cases,..}=&mut missing[1].allowed{cases.pop();}assert!(validate_many_source(&source,&missing).is_err());
+        let mut duplicate=specs.clone();if let Domain::DependentList{cases,..}=&mut duplicate[1].allowed{cases[1].when=1;}assert!(validate_many_source(&source,&duplicate).is_err());
+        let mut too_wide=specs.clone();if let Domain::DependentList{cases,..}=&mut too_wide[1].allowed{cases[1].values.push(256);}assert!(validate_many_source(&source,&too_wide).is_err());
+        let mut later=specs.clone();later.swap(0,1);assert!(validate_many_source(&source,&later).is_err());
+        let encoded=serde_json::to_value(&specs[1].allowed).unwrap();
+        #[derive(Deserialize)] #[serde(tag="kind",rename_all="kebab-case")] enum OldDomain { List, Range }
+        assert!(serde_json::from_value::<OldDomain>(encoded).is_err());
     }
 }

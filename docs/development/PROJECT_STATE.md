@@ -199,6 +199,8 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
 
 - The [integrated debug follow-up](DEBUG_TOOLS_V2_TODO.md) is in implementation.
   DBG2-24 provides [named bounded searches](../debug_probes.md#named-searches--dbg2-24) via the command console and debug-command. Definitions default to disabled; explicit runs support bounded counts/windows, a RAM guard and pause/capture/freeze actions. DBG2-24 is accepted in the recorded interpreter/Wine scope; broader platform and input validation remains DBG2-27.
+  DBG2-25 adds [session-local pinned observations](../debug_probes.md#pinned-observations--dbg2-25) for registers, backing memory and authenticated EUR context fields. Samples retain sources and previous values; state restoration invalidates their context. The command console displays filtered changes and stale pins; native Windows and physical-controller coverage remain separate.
+  DBG2-26 adds a bounded private [issue timeline](../debug_issues.md#timeline-and-selected-recipe--dbg2-26), bookmarks, selected recipe/checkpoint correlation and links to retained session reports. It records losses and does not infer causation; the copyable command reproduces the pinned replay rather than automatically running the selected recipe.
   DBG2-01 adds the readonly [operation contract](../debug_operations.md):
   `debug-operations list/show [--json]` initially inventories65operations/242
   parameters (67/250 after DBG2-02), current/planned menu routes, prerequisites/effects/results/caps,

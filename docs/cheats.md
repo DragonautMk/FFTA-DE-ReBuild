@@ -128,6 +128,13 @@ reviewing and closing the preview, the controller focus moves to **Arm**; the
 user must still confirm the action. A currently armed entry is marked in the
 list and its contextual button becomes **Disarm**, stopping future writes.
 The management screen also offers **Disarm all** and presets.
+While any maintained cheat is armed, a **CHEAT** badge remains visible at the
+lower right during gameplay and on every pause-menu page. It disappears when
+the maintained set is disarmed or cleared; a one-shot application alone does
+not show it. The badge reports current maintained activity, not whether earlier
+writes have been restored. Isolated Wine software and Linux Vulkan/llvmpipe
+checks observed the badge in gameplay and pause menus, and its absence after
+disarm and a one-shot.
 The preview summarizes the operation count, maximum writes per application
 and whether the plan contains conditions; the detailed operations remain
 scrollable below. These source-plan conditions do not establish game behavior.
@@ -401,6 +408,17 @@ contains `name`, an `allowed` list or stepped range, and `slots` identifying
 zero-based source lines, `word` or `value`, a zero-based nibble offset and
 digit count. For multiple independent values, use `parameters` as an array of
 up to eight such declarations and repeat `--parameter NAME --value N` for each.
+A parameter's `allowed` domain can also be a `dependent-list`, such as
+`{"kind":"dependent-list","on":"race","cases":[{"when":1,"values":[10,11]},{"when":2,"values":[20]}]}`.
+Its `on` name must identify an earlier parameter. Cases must cover every
+possible earlier value exactly once; each case has 1–256 unique values, with
+at most 256 cases and 4096 values in total. An earlier parameter referenced by a
+dependent list may have at most 256 possible values. The menu offers only values
+from the case selected by the earlier choice, and preparation rechecks the same
+relationship, including when restoring a preset or replay. The new domain uses
+a distinct schema variant: older runtimes reject it rather than ignoring the
+constraint. These are declared relationships, not evidence of game behavior.
+
 The menu asks for each value in declaration order. Each slot must cover only
 one kind of `X`, `Y` or `Z` placeholder; all placeholders must
 be covered and the entire declared domain must fit every slot. Values are
@@ -486,6 +504,44 @@ no-overwrite behavior. A Windows GNU/Wine/Xvfb isolated USA session explicitly
 selected a value, reviewed, armed and disarmed the projected source and rejected
 an out-of-domain value without advancing the guest. A separate preflight rejected
 the known EUR ROM. This is not a gameplay-effect or physical-device test.
+
+To include reference-only character examples in a separate new projection,
+append `--character-examples` to the command and choose an unused output path.
+These seven records retain an unknown region, so the existing source/ROM guard
+refuses their preparation. CH-0236 is excluded because its source address
+remains unresolved. Original XP notes and provenance, including conflicting
+field descriptions, are preserved; the two guide examples are not a verified
+compatibility table. The ability-only projection is unchanged when the option
+is omitted. In an isolated Wine frontend, the regenerated catalog refused a
+character example before arming while an ability-label plan remained available;
+the guest did not advance and protected originals stayed unchanged.
+
+A read-only inspection of the protected USA DS-16 checkpoint, associated with
+a screenshot of Marche as a level-50 Soldier, found that one proposed level
+field does not match the displayed level; another byte does. Two proposed job
+fields also differ. A second read followed the protected checkpoint's name
+pointer and matched the Marche name encoding in the associated screenshot.
+These observations do not establish the fields' meanings. The earlier Wine
+preview/arm/disarm check did not advance the guest.
+
+A later isolated Wine comparison applied the first guide example once to one
+copy of the same checkpoint and advanced both copies by the same 108 frames,
+with no maintained cheat. The specified bytes changed only in the treated copy
+and remained changed through the observation. Its captured character screen
+showed different statistics and some different figures while the title still
+read Soldier. The original ROM and checkpoint remained unchanged. This single
+scene does not establish each field's meaning, the correctness of the example,
+or the behavior of other values or physical devices; the quarantine remains.
+The independently maintained [Data Crystal jobs table](https://datacrystal.tcrf.net/wiki/Final_Fantasy_Tactics_Advance/Jobs)
+lists job-table indices `02` for Soldier and `26` for Gunner. Those table
+indices alone do not establish which checkpoint field uses that table or why
+the captured title remained Soldier.
+
+**Do not select the older `dbg2-20-usa-character-examples-ucw5y1gi` catalog
+for activation.** It was generated before this uncertainty was identified and
+is retained unchanged only as historical validation evidence. Regenerate a
+reference-only projection with the current helper, or use the existing
+ability-only projection.
 
 Frozen Windows GNU tests and an isolated synthetic Wine/Xvfb session checked a
 two-member save/preview/arm flow, duplicate name, changed preset, source lines,

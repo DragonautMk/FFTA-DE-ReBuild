@@ -644,6 +644,8 @@ struct PlayApp {
     probe: Option<crate::debug_probe::Search>,
     probe_result: Option<serde_json::Value>,
     inspection: Option<serde_json::Value>,
+    pins: crate::debug_pins::Pins,
+    issue_timeline: crate::debug_timeline::Timeline,
     graphics_report: Option<String>,
     ui_trace: crate::debug_ui::Trace,
     events: crate::debug_events::Hub,
@@ -954,11 +956,15 @@ impl PlayApp {
                     self.ui_layout(phys, 0).map(|layout| self.ui_frame(layout, 0)),
                     self.ui_layout(phys, 1).map(|layout| self.ui_frame(layout, 1)),
                     self.fps.frame(phys, window.scale_factor()),
+                    crate::fps::cheat_frame(!self.cheat_armed.is_empty(), phys, window.scale_factor()),
                 ];
                 p.set_ui_layers(&layers);
                 self.profile.record_ui_upload(p.ui_uploaded_bytes());
                 self.profile.finish(Phase::UiUpload, ui_start);
-            } else {p.set_ui_layer(None);}
+            } else {
+                p.set_ui_layers(&[None, None, None,
+                    crate::fps::cheat_frame(!self.cheat_armed.is_empty(), phys, window.scale_factor())]);
+            }
             let mut grid = self.grid_params;
             if self.paused {
                 grid.strength = 0.;
@@ -1102,6 +1108,16 @@ impl PlayApp {
                         if let Some(c) = hud.sample(px as f32 + 0.5, py as f32 + 0.5) {
                             buffer[py * w as usize + px] = (c[0] as u32) << 16 | (c[1] as u32) << 8 | c[2] as u32;
                         }
+                    }
+                }
+            }
+        }
+        if let Some(hud) = crate::fps::cheat_frame(!self.cheat_armed.is_empty(), (w, h), window.scale_factor()) {
+            let [x, y, width, height] = hud.layout.clip;
+            for py in y as usize..((y + height) as usize).min(h as usize) {
+                for px in x as usize..((x + width) as usize).min(w as usize) {
+                    if let Some(c) = hud.sample(px as f32 + 0.5, py as f32 + 0.5) {
+                        buffer[py * w as usize + px] = (c[0] as u32) << 16 | (c[1] as u32) << 8 | c[2] as u32;
                     }
                 }
             }
@@ -1971,12 +1987,13 @@ impl PlayApp {
             ("F9",KeyCode::F9)|("F10",KeyCode::F10)|("F12",KeyCode::F12))
     }
     fn events_enabled(&self)->bool {
-        self.ui_trace.enabled()||self.recent.as_ref().is_some_and(|b|b.enabled())||self.event_console.borrow().enabled()
+        self.ui_trace.enabled()||self.recent.as_ref().is_some_and(|b|b.enabled())||self.event_console.borrow().enabled()||self.issue_timeline.enabled()
     }
     fn ui_event(&mut self,stage:&str,data:serde_json::Value) {
         if !self.events_enabled(){return;}
         let coalesce={let console=self.event_console.borrow(); !console.enabled() || console.coalesce_polls};
         if let Some(event)=self.events.publish_with_poll_coalescing(self.machine.bus.frames,self.machine.bus.clock,stage,data,coalesce){
+            self.issue_timeline.accept(&event);
             self.ui_trace.accept(&event);
             if let Some(buffer)=self.recent.as_mut(){buffer.accept(&event);}
             self.event_console.borrow_mut().accept(&event);
@@ -2025,6 +2042,37 @@ impl PlayApp {
                 Err(error)=>eprintln!("Recent context frozen but not saved: {error}")}
         }
     }
+    fn issue_context(&self)->Result<crate::debug_issue::IssueContext,String>{
+        let root=input_config::exe_dir().ok_or("Missing isolated root")?;
+        let mut timeline=self.issue_timeline.snapshot();
+        if let Some(recipe)=self.issue_timeline.recipe(){
+            let name=recipe["name"].as_str().ok_or("Selected recipe identity missing")?;
+            timeline["recipe"]["current_verification"]=match crate::debug_command::recipe::issue_snapshot(&root,name){
+                Ok(current)=>serde_json::json!({"matches_selection":current["sha256"]==recipe["sha256"],"current_sha256":current["sha256"]}),
+                Err(error)=>serde_json::json!({"matches_selection":false,"error":error}),
+            };
+        }
+        if let Some(checkpoint)=self.issue_timeline.checkpoint(){
+            let id=checkpoint["id"].as_str().ok_or("Selected checkpoint identity missing")?;
+            timeline["checkpoint"]=match crate::debug_command::recipe::issue_checkpoint(&root,id){
+                Ok(mut current) if current["recipe_sha256"]==checkpoint["recipe_sha256"] && current["session_run"]==checkpoint["session_run"]=>{current["current_verification"]=serde_json::json!({"available":true});current},
+                Ok(_)=>{let mut selected=checkpoint.clone();selected["current_verification"]=serde_json::json!({"available":false,"error":"Checkpoint identity changed"});selected},
+                Err(error)=>{let mut selected=checkpoint.clone();selected["current_verification"]=serde_json::json!({"available":false,"error":error});selected},
+            };
+        }
+        let mut reports=Vec::new();
+        if let Some(events)=timeline["events"].as_array(){for event in events.iter().rev(){
+            if let Some(path)=event.pointer("/data/details/artifact").and_then(serde_json::Value::as_str){
+                let role=event.pointer("/data/family").and_then(serde_json::Value::as_str).unwrap_or("Observed report");
+                if !reports.iter().any(|(_,p):&(String,String)|p==path){reports.push((role.to_owned(),path.to_owned()));}
+            }
+        }}
+        for (role,path) in [("UI",self.ui_trace.report.as_ref()),("Recent events",self.last_recent_report.as_ref()),("Gameplay",self.last_gameplay_report.as_ref()),("Code",self.last_code_report.as_ref()),("Audio",self.last_audio_report.as_ref()),("Graphics",self.graphics_report.as_ref())] {
+            if let Some(path)=path{if !reports.iter().any(|(_,p)|p==path){reports.push((role.to_owned(),path.clone()));}}
+        }
+        let reports_omitted=reports.len().saturating_sub(8);reports.truncate(8);
+        Ok(crate::debug_issue::IssueContext{session_root:root,timeline,selections:self.content_picker.status()["inputs"].clone(),active_cheats:self.cheat_armed.status(),reports,reports_omitted})
+    }
     fn debug_action(&mut self, action: &crate::debug_control::Action) -> Result<(),String> {
         let mut context=self.events.clock.current();
         if context.request_id.is_none(){context=self.events.clock.request("shared-action");}
@@ -2045,6 +2093,38 @@ impl PlayApp {
     fn debug_action_inner(&mut self, action: &crate::debug_control::Action) -> Result<(),String> {
         if !self.debug_session { return Err("Open an isolated debug copy first".into()); }
         match action {
+            crate::debug_control::Action::TimelineBookmark{label}=>{
+                action.validate()?;self.ui_event("bookmark",serde_json::json!({"label":label,"scope":"User marker at this observed boundary; not a causal claim"}));return Ok(());
+            },
+            crate::debug_control::Action::TimelineRecipe{name}=>{
+                action.validate()?;
+                if !self.paused||self.probe.is_some()||self.frame_control.remaining>0||self.replay_job.is_some(){return Err("Selecting issue context requires an idle paused copy".into());}
+                let root=input_config::exe_dir().ok_or("Missing isolated root")?;
+                let recipe=name.as_deref().map(|n|crate::debug_command::recipe::issue_snapshot(&root,n)).transpose()?;
+                self.issue_timeline.set_recipe(recipe);return Ok(());
+            },
+            crate::debug_control::Action::TimelineCheckpoint{id}=>{
+                action.validate()?;
+                if !self.paused||self.probe.is_some()||self.frame_control.remaining>0||self.replay_job.is_some(){return Err("Selecting issue context requires an idle paused copy".into());}
+                let selected=if let Some(id)=id {
+                    let recipe=self.issue_timeline.recipe().ok_or("Select the matching recipe first")?;
+                    let root=input_config::exe_dir().ok_or("Missing isolated root")?;
+                    let checkpoint=crate::debug_command::recipe::issue_checkpoint(&root,id)?;
+                    if checkpoint["recipe_name"]!=recipe["name"]||checkpoint["recipe_sha256"]!=recipe["sha256"]{return Err("Checkpoint differs from the selected recipe".into());}
+                    Some(checkpoint)
+                }else{None};
+                self.issue_timeline.set_checkpoint(selected);return Ok(());
+            },
+            crate::debug_control::Action::PinAdd{label,owner,target}=>{
+                if !self.paused||self.probe.is_some()||self.frame_control.remaining>0||self.replay_job.is_some(){return Err("Pinning requires an idle paused copy".into());}
+                self.pins.add(&self.machine,label.clone(),owner.clone(),target.clone())?;return Ok(());
+            },
+            crate::debug_control::Action::PinRemove{label}=>{action.validate()?;self.pins.remove(label)?;return Ok(());},
+            crate::debug_control::Action::PinView{filter,offset}=>{action.validate()?;self.pins.set_view(filter,usize::from(*offset))?;return Ok(());},
+            crate::debug_control::Action::PinRefresh=>{
+                if !self.paused||self.probe.is_some()||self.frame_control.remaining>0||self.replay_job.is_some(){return Err("Pin refresh requires an idle paused copy".into());}
+                self.pins.refresh(&self.machine);return Ok(());
+            },
             crate::debug_control::Action::CheatRefresh=>{
                 if !self.paused||self.probe.is_some()||self.frame_control.remaining>0||self.replay_job.is_some()||self.cheat_refresh.is_some(){return Err("Cheat refresh requires an idle paused copy".into());}
                 let reference=self.content_picker.reference(menu::ContentSlot::CheatCatalog).cloned().ok_or("Select a cheat catalog by ID first")?;
@@ -2151,7 +2231,7 @@ impl PlayApp {
                 if !self.paused||self.probe.is_some()||self.frame_control.remaining>0||self.replay_job.is_some(){return Err("Issue report requires an idle paused copy".into());}
                 let selected=if profile.is_none(){Some(self.selected_replay_profile()?)}else{None};
                 let path=profile.as_ref().or(selected.as_ref()).ok_or("Choose a replay profile first")?;
-                let report=crate::debug_issue::create(path,symptom)?;
+                let report=crate::debug_issue::create_with_context(path,symptom,Some(self.issue_context()?))?;
                 self.replay_path=Some(path.clone());self.last_issue_report=Some(report.path.to_string_lossy().into_owned());
                 self.menu.diagnosis_result(if report.compatible{"Issue saved. Open its index.html; replay was not started."}else{"Error issue saved. Inspect preflight in its index.html."}.into());self.menu_dirty=true;
                 return if report.compatible{Ok(())}else{Err("Issue report saved with incompatible inputs".into())};
@@ -2411,6 +2491,8 @@ impl PlayApp {
         value["cheat_preview"]=self.cheat_preview.clone().unwrap_or(serde_json::Value::Null);value["cheat_once"]=self.last_cheat_once.clone().unwrap_or(serde_json::Value::Null);
         value["cheat_armed"]=self.cheat_armed.status();
         value["cheat_ancestry"]=self.cheat_history.status();
+        value["pins"]=self.pins.status();
+        value["issue_timeline"]=self.issue_timeline.status();
         value["runtime_lifecycles"]=self.lifecycle.status();
         value["request_ledger"]=self.control_server.as_ref().map_or(serde_json::Value::Null,|s|s.retry_status());
         value["event_console"]=self.event_console.borrow().status();
@@ -3179,6 +3261,7 @@ impl PlayApp {
     }
 
     fn after_state_restore(&mut self) {
+        self.pins.invalidate("state-restored");
         self.cheat_armed.clear();self.cheat_preview=None;
         self.lifecycle_emit(crate::debug_lifecycle::Family::State,"timeline-restored",None,serde_json::json!({"frame":self.machine.bus.frames,"clock":self.machine.bus.clock,"scope":"Existing frontend restore boundary before collector discontinuity freeze"}));
         if let Some(buffer)=self.recent.as_mut(){buffer.freeze(&self.machine,"state-restored");}
@@ -4515,6 +4598,7 @@ impl PlayApp {
                 let before=self.machine.bus.frames;
                 if !self.run_one_frame() {self.frame_control.stop("incomplete-frame");self.finish_control();event_loop.exit();return;}
                 if let Err(error)=self.frame_control.completed_frame(before,self.machine.bus.frames){self.error=Some(error);self.finish_control();event_loop.exit();return;}
+                if self.frame_control.remaining==0{self.pins.refresh(&self.machine);}
                 self.menu_dirty=true;
                 self.finish_control();
             }
@@ -4781,6 +4865,7 @@ impl ApplicationHandler for PlayApp {
     }
     fn about_to_wait(&mut self,event_loop:&ActiveEventLoop) {
         self.event_console.borrow_mut().begin_tick();
+        self.issue_timeline.begin_tick();
         self.observe_menu("frontend-before");
         self.about_to_wait_observed(event_loop);
         self.observe_menu("frontend-tick");
@@ -4792,7 +4877,8 @@ impl ApplicationHandler for PlayApp {
             let pending=self.control_server.as_ref().map_or(serde_json::Value::Null,|s|s.pending_status());
             let remaining=self.frame_control.remaining;let search_remaining=self.probe.as_ref().map(|p|p.remaining());
             let replay_progress=self.replay_job.as_ref().and_then(|job|job.progress()).map(|report|(report.completed,report.frames));
-            self.command_console_panel.as_mut().unwrap().observe(&pending,remaining,search_remaining,replay_progress);
+            let pins=self.pins.status();
+            self.command_console_panel.as_mut().unwrap().observe(&pending,remaining,search_remaining,replay_progress,&pins);
         }
         if let Some(panel)=self.command_console_panel.as_mut(){panel.tick();if let Err(error)=panel.draw_if_due(){eprintln!("command console: {error}");}}
     }
@@ -5359,6 +5445,8 @@ Place your own dump as gba_bios.bin next to the executable:\n  {}",
         probe: None,
         probe_result: None,
         inspection: None,
+        pins: Default::default(),
+        issue_timeline: crate::debug_timeline::Timeline::new(session.is_some()),
         graphics_report: None,
         ui_trace: Default::default(),
         events,

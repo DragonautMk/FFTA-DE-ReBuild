@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-09",
+  "slug": "quarantine-character-examples",
+  "title": "Keep unresolved character examples reference-only",
+  "kind": "fixed",
+  "platforms": [
+    "Linux",
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Keep generated character example entries region-unknown so existing preparation guards refuse activation until their field meanings are verified; retain ability-only behavior and original source records.",
+    "Withdraw the earlier activation-ready derived catalog from operational use while preserving it unchanged as historical evidence."
+  ],
+  "validation": [
+    "A protected read-only USA DS-16 checkpoint inspection read eight bytes without advancing the guest or changing its state; the byte proposed as level by one source differed from the associated level-50 screenshot, and two proposed job fields also differed. Evidence: target/validation/units/dbg2-20-ds16-readonly-fields-3ao28h9v/.",
+    "A protected generation check confirmed all seven character entries retain unknown region while the master remains USA, preserved original notes and provenance, refused altered source/table inputs and did not overwrite prior catalogs. Evidence: target/validation/units/dbg2-20-character-reference-only-mtq__gpq/.",
+    "A Wine frontend check initially did not start because the coordinated prefix was held by the independent DBG2-25 activity; diagnostics retained in dbg2-20-reference-only-wine-3bj8s24a.",
+    "After the other activity released the coordinated prefix, an isolated USA Wine frontend refused preparation of a reference-only character example, accepted ability preview/arm/disarm, and left guest and protected inputs unchanged. Evidence: target/validation/units/dbg2-20-reference-only-wine-maya4aqz/.",
+    "A separate protected read-only USA DS-16 inspection followed the character name pointer and matched the Marche encoding in the associated screenshot without advancing the guest or changing state. Evidence: target/validation/units/dbg2-20-ds16-actor-readonly-czlki7vb/."
+  ],
+  "limitations": [
+    "This quarantines newly generated unmodified catalogs using the existing region guard. Previously generated activation-ready copies cannot be retroactively disabled and are retained only as historical evidence; do not select them for activation.",
+    "The observed bytes and name support the checkpoint identity but do not prove the meanings of the differing fields or the effect of either code. Correlated game behavior, other domains, native Windows and physical devices remain unverified."
+  ],
+  "files": [
+    "scripts/cheat_ability_projection.py"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

@@ -201,6 +201,14 @@ fn inspect(root:&Path,id:&str)->Result<(Checkpoint,bool),String>{
     let (current,_,_)=manifest(root)?;let active=active_run(root,&current).is_ok_and(|r|r==checkpoint.session_run);
     Ok((checkpoint,active))
 }
+/// Bounded request identities link observed actions to a selected checkpoint;
+/// the stored results themselves can contain large/private session status.
+pub(super) fn issue_snapshot(root:&Path,id:&str)->Result<Value,String>{
+    let (checkpoint,active)=inspect(root,id)?;
+    Ok(json!({"id":checkpoint.id,"recipe_name":checkpoint.recipe_name,"recipe_sha256":checkpoint.recipe_sha256,"session_run":checkpoint.session_run,"readiness_matches_run":active,
+        "steps":checkpoint.steps.iter().map(|s|json!({"index":s.index,"request_id":s.request_id,"action_sha256":s.action_sha256,"state":s.state,"original_run":s.original_run})).collect::<Vec<_>>(),
+        "scope":"Validated checkpoint identities and recorded states; matching IDs provide correlation, not proof of causation"}))
+}
 #[derive(Serialize,Deserialize)]
 #[serde(deny_unknown_fields)]
 struct UiSnapshotEnvelope {
@@ -339,6 +347,8 @@ mod tests {
         let t=fixture();let response=crate::debug_command::execute(t.path(),"recipe prepare sample");assert_eq!(response["ok"],true);let id=response["checkpoint"]["id"].as_str().unwrap();assert_eq!(crate::debug_command::execute(t.path(),&format!("recipe checkpoint {id}"))["readiness_matches_run"],true);
         let a=inspect(t.path(),id).unwrap().0;let b=prepare(t.path(),"sample").unwrap();assert_ne!(a.id,b.id);assert_ne!(a.steps[0].request_id,a.steps[1].request_id);assert_ne!(a.steps[0].request_id,b.steps[0].request_id);
         let (loaded,active)=inspect(t.path(),&a.id).unwrap();assert!(active);assert_eq!(loaded.steps[0].request_id,a.steps[0].request_id);assert_eq!(loaded.steps[0].state,"planned");assert!(!t.path().join("Data/config/debug-control/request.json").exists());
+        let selected=super::super::issue_snapshot(t.path(),"sample").unwrap();let projection=issue_snapshot(t.path(),id).unwrap();
+        assert_eq!(projection["recipe_sha256"],selected["sha256"]);assert_eq!(projection["session_run"],"session-1");assert_eq!(projection["steps"][0]["request_id"],a.steps[0].request_id);assert!(projection["steps"][0].get("result").is_none());
     }
     #[test]
     fn changed_recipe_and_incompatible_or_closed_session_are_not_silently_accepted(){

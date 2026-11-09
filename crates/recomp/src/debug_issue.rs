@@ -14,7 +14,32 @@ fn attachment(root:&Path,name:&str,role:&str,limit:u64)->Value{
     match read(&root.join(name),limit){Ok(bytes)=>json!({"role":role,"path":name,"href":format!("../../../../{}",href(name)),"bytes":bytes.len(),"sha256":digest(&bytes),"privacy":"private; do not distribute automatically"}),Err(error)=>json!({"role":role,"path":name,"error":error,"privacy":"private"})}
 }
 pub(crate) struct Created {pub path:PathBuf,pub compatible:bool}
+pub(crate) struct IssueContext {
+    pub session_root:PathBuf,
+    pub timeline:Value,
+    pub selections:Value,
+    pub active_cheats:Value,
+    pub reports:Vec<(String,String)>,
+    pub reports_omitted:usize,
+}
+/// Build a relative link only to an ordinary, existing report beneath the
+/// selected session. Moving the profile alone may break this private link.
+fn session_link(issue_dir:&Path,session:&Path,name:&str)->Result<String,String>{
+    if !relative(name)||!name.starts_with("Data/config/")||!name.ends_with("/index.html"){return Err("Report is not a session-relative report index".into());}
+    let root=fs::canonicalize(session).map_err(|e|e.to_string())?;
+    let mut current=root.clone();
+    for component in Path::new(name).components(){if let Component::Normal(part)=component{current.push(part);crate::debug_session::regular(&current)?;}else{return Err("Invalid report path".into());}}
+    if !current.is_file(){return Err("Report index is not a file".into());}
+    let from:Vec<_>=issue_dir.components().collect();let to:Vec<_>=current.components().collect();
+    let common=from.iter().zip(&to).take_while(|(a,b)|a==b).count();
+    if common==0 || from.first()!=to.first(){return Err("Report is on another filesystem root".into());}
+    let mut rel=PathBuf::new();for _ in common..from.len(){rel.push("..");}for component in &to[common..]{rel.push(component.as_os_str());}
+    Ok(href(&rel.to_string_lossy().replace('\\',"/")))
+}
 pub(crate) fn create(profile:&Path,symptom:&str)->Result<Created,String>{
+    create_with_context(profile,symptom,None)
+}
+pub(crate) fn create_with_context(profile:&Path,symptom:&str,context:Option<IssueContext>)->Result<Created,String>{
     validate_symptom(symptom)?;
     if profile.file_name().and_then(|s|s.to_str())!=Some("replay.json"){return Err("Select the existing profile's replay.json".into());}
     let root=fs::canonicalize(profile.parent().filter(|p|!p.as_os_str().is_empty()).unwrap_or(Path::new("."))).map_err(|e|e.to_string())?;
@@ -73,7 +98,7 @@ pub(crate) fn create(profile:&Path,symptom:&str)->Result<Created,String>{
     let selected_frames=declared["comparison"]["frames"].as_u64().or_else(||declared["capture"]["limit_frames"].as_u64()).or_else(||declared["frames"].as_u64());
     let cheats=metadata.as_ref().ok().and_then(|value|value.get("cheat_timeline")).cloned().unwrap_or(Value::Null);
     let starting_cheats=metadata.as_ref().ok().and_then(|value|value.get("starting_cheat_ancestry")).cloned().unwrap_or(Value::Null);
-    let summary=json!({"schema":1,"kind":"ffta-issue-summary","symptom":if symptom.is_empty(){"Not supplied"}else{symptom},"case":declared["case"],"preflight_compatible":compatible,
+    let mut summary=json!({"schema":1,"kind":"ffta-issue-summary","symptom":if symptom.is_empty(){"Not supplied"}else{symptom},"case":declared["case"],"preflight_compatible":compatible,
         "outcome":outcome,"frame_origin":declared["first_frame"],"recorded_frames":declared["frames"],"selected_frames":selected_frames,"completed":result.as_ref().map(|r|&r["completed"]),
         "first_difference":comparison["first_difference"],"different_components":comparison["different_components"],"cheat_timeline":cheats,"starting_cheat_ancestry":starting_cheats,
         "identities":{"runtime":declared["runtime_sha256"],"recording_runtime":declared["recording_runtime_sha256"],"rom":declared["rom_sha256"],"bios":declared["bios_sha256"],"dataset":declared["dataset_sha256"],"snapshot":declared["start_sha256"],"input":declared["input_sha256"],"expected_endpoint":declared["end_sha256"],"library":declared["library_sha256"]},
@@ -92,8 +117,19 @@ pub(crate) fn create(profile:&Path,symptom:&str)->Result<Created,String>{
     if root.join("gba_bios.bin").exists(){attachments.push(attachment(&root,"gba_bios.bin","private BIOS",16384));}
     if !declared["library_sha256"].is_null(){attachments.push(attachment(&root,"native.bin","private native translation",256*1024*1024));}
     if !declared["dataset_sha256"].is_null(){attachments.push(attachment(&root,"Data/dataset/manifest.toml","private dataset manifest",gba_core::rom_data::MAX_MANIFEST_FILE_BYTES));}
+    let name=format!("{}-{}",SystemTime::now().duration_since(UNIX_EPOCH).map_err(|e|e.to_string())?.as_nanos(),std::process::id());let dir=base.join(name);
+    let mut context_data=Value::Null;let mut timeline_bytes=None;let mut recipe_bytes=None;
+    if let Some(context)=context {
+        if context.reports.len()>8 || serde_json::to_vec(&context.timeline).map_err(|e|e.to_string())?.len()>512*1024 || serde_json::to_vec(&context.selections).map_err(|e|e.to_string())?.len()>128*1024 || serde_json::to_vec(&context.active_cheats).map_err(|e|e.to_string())?.len()>128*1024 {return Err("Issue context exceeds bounded limits".into());}
+        let links:Vec<Value>=context.reports.iter().map(|(role,path)|match session_link(&dir,&context.session_root,path){Ok(link)=>json!({"role":role,"path":path,"href":link,"privacy":"private session report; move it with its session"}),Err(error)=>json!({"role":role,"path":path,"error":error,"privacy":"private"})}).collect();
+        let bytes=serde_json::to_vec_pretty(&context.timeline).map_err(|e|e.to_string())?;
+        attachments.push(json!({"role":"private issue timeline","path":"timeline.json","href":"timeline.json","bytes":bytes.len(),"sha256":digest(&bytes),"privacy":"private; review before sharing"}));timeline_bytes=Some(bytes);
+        if context.timeline["recipe"]["recipe"].is_object(){let bytes=serde_json::to_vec_pretty(&context.timeline["recipe"]["recipe"]).map_err(|e|e.to_string())?;attachments.push(json!({"role":"private selected command recipe","path":"recipe.json","href":"recipe.json","bytes":bytes.len(),"sha256":digest(&bytes),"privacy":"private; selection does not prove execution"}));recipe_bytes=Some(bytes);}
+        context_data=json!({"timeline":context.timeline,"selected_inputs":context.selections,"active_cheats":context.active_cheats,"related_reports":links,"related_reports_omitted":context.reports_omitted,"scope":"Private observed session context. Ordering and request IDs do not establish causation; profile replay remains the reproducible command."});
+    }
+    summary["session_context"]=if context_data.is_null(){json!({"available":false,"gap":"Offline report did not capture a live session timeline"})}else{json!({"available":true,"events":context_data["timeline"]["events"].as_array().map_or(0,Vec::len),"collector":context_data["timeline"]["collector"],"related_reports":context_data["related_reports"].as_array().map_or(0,Vec::len),"selected_recipe":!context_data["timeline"]["recipe"].is_null(),"privacy":"Full timeline, selected IDs, active cheats and recipe are private"})};
     let data=json!({"schema":1,"kind":"ffta-issue-report","summary":summary,"preflight":match metadata{Ok(v)=>json!({"compatible":true,"checked":v}),Err(e)=>json!({"compatible":false,"error":e})},
-        "declared_profile":declared,"profile_file_sha256":bytes.as_ref().ok().map(|b|digest(b)),"retained_result":result,"comparison":comparison,"warnings":warnings,"attachments":attachments,
+        "declared_profile":declared,"profile_file_sha256":bytes.as_ref().ok().map(|b|digest(b)),"retained_result":result,"comparison":comparison,"warnings":warnings,"attachments":attachments,"session_context":context_data,
         "commands":{"working_directory":"report folder; launchers resolve the profile from their own location","profile_relative_root":"../../../..","windows_script":"reproduce.ps1","posix_script":"reproduce.sh","argv":["profile's pinned runtime","debug-replay","run","profile's replay.json","--json"]},
         "builder":{"runtime_sha256":digest(&read(&std::env::current_exe().map_err(|e|e.to_string())?,256*1024*1024)?),"revision":env!("FFTA_BUILD_REVISION"),"target":env!("FFTA_BUILD_TARGET")},
         "privacy":{"issue_json":"Private paths/error details/pins; review before sharing","summary_json":"Metadata candidate, no source paths or game bytes; symptom can still be personal","payloads":"Referenced in place, never copied/uploaded by this operation"},
@@ -101,10 +137,12 @@ pub(crate) fn create(profile:&Path,symptom:&str)->Result<Created,String>{
         "scope":"Readonly identities and retained evidence; no guest execution, new snapshot, benchmark or automatic send. Retained result may be historical and is not a new validation"});
     let json=serde_json::to_vec(&data).map_err(|e|e.to_string())?;if json.len()>2*1024*1024{return Err("Issue JSON exceeds 2 MiB".into());}
     fs::create_dir_all(&base).map_err(|e|e.to_string())?;
-    let name=format!("{}-{}",SystemTime::now().duration_since(UNIX_EPOCH).map_err(|e|e.to_string())?.as_nanos(),std::process::id());let dir=base.join(name);fs::create_dir(&dir).map_err(|e|e.to_string())?;
+    fs::create_dir(&dir).map_err(|e|e.to_string())?;
     fs::write(dir.join(".gitignore"),"*\n").map_err(|e|e.to_string())?;
     fs::write(dir.join("summary.json"),serde_json::to_vec_pretty(&data["summary"]).map_err(|e|e.to_string())?).map_err(|e|e.to_string())?;
     fs::write(dir.join("reproduce.ps1"),PS).map_err(|e|e.to_string())?;fs::write(dir.join("reproduce.sh"),SH).map_err(|e|e.to_string())?;
+    if let Some(bytes)=timeline_bytes{fs::write(dir.join("timeline.json"),bytes).map_err(|e|e.to_string())?;}
+    if let Some(bytes)=recipe_bytes{fs::write(dir.join("recipe.json"),bytes).map_err(|e|e.to_string())?;}
     fs::write(dir.join("index.html"),include_str!("debug_issue/report.html").replacen("/*REPORT*/",&String::from_utf8(json.clone()).unwrap().replace('<',"\\u003c"),1)).map_err(|e|e.to_string())?;
     fs::write(dir.join("issue.json"),json).map_err(|e|e.to_string())?;
     if let Some(e)=error{eprintln!("Issue preflight: {e}");}
@@ -132,5 +170,19 @@ pub(crate) fn cmd(args:&[String])->u8{
         assert!(create(&p,"").err().unwrap().contains("Another issue"));drop(lock);
         let base=root.parent().unwrap();for i in 0..7{fs::create_dir(base.join(format!("keep-{i}"))).unwrap();}
         assert!(create(&p,"").is_err());assert_eq!(fs::read(root.join("issue.json")).unwrap(),json);assert!(validate_symptom(&"x".repeat(2049)).is_err());
+    }
+    #[test]fn private_timeline_recipe_and_report_links_are_bounded_and_reconstructable(){
+        let d=tempfile::tempdir().unwrap();let profile_root=d.path().join("profile");let session=d.path().join("session");
+        fs::create_dir_all(&profile_root).unwrap();let report=session.join("Data/config/gameplay/run/index.html");fs::create_dir_all(report.parent().unwrap()).unwrap();fs::write(&report,"private report").unwrap();
+        let profile=profile_root.join("replay.json");fs::write(&profile,b"{}").unwrap();
+        let timeline=json!({"schema":1,"kind":"ffta-issue-timeline","events":[{"event_id":"run:1","frame":3,"clock":10,"stage":"bookmark","data":{"label":"before <hit>"}}],"collector":{"evicted":2,"oversize":0},"coverage":"partial","causation":"not proven","privacy":"private","recipe":{"name":"demo","sha256":"a".repeat(64),"recipe":{"schema":1,"name":"demo","steps":[]}}});
+        let context=IssueContext{session_root:session.clone(),timeline:timeline.clone(),selections:json!([{"id":"content-1"}]),active_cheats:json!({"active":true,"entries":[{"id":"CH-0001"}]}),reports:vec![("Gameplay".into(),"Data/config/gameplay/run/index.html".into()),("Unsafe".into(),"../outside/index.html".into())],reports_omitted:1};
+        let result=create_with_context(&profile,"Observed",Some(context)).unwrap();let issue=result.path.parent().unwrap();let data:Value=serde_json::from_slice(&fs::read(issue.join("issue.json")).unwrap()).unwrap();
+        assert_eq!(data["session_context"]["timeline"],timeline);assert_eq!(data["session_context"]["selected_inputs"][0]["id"],"content-1");assert_eq!(data["session_context"]["active_cheats"]["entries"][0]["id"],"CH-0001");assert_eq!(data["session_context"]["related_reports_omitted"],1);
+        let link=data["session_context"]["related_reports"][0]["href"].as_str().unwrap();assert_eq!(fs::canonicalize(issue.join(link)).unwrap(),fs::canonicalize(&report).unwrap());assert!(data["session_context"]["related_reports"][1]["error"].is_string());
+        assert_eq!(serde_json::from_slice::<Value>(&fs::read(issue.join("timeline.json")).unwrap()).unwrap(),timeline);assert!(issue.join("recipe.json").exists());assert!(issue.join("reproduce.sh").exists());
+        let html=fs::read_to_string(&result.path).unwrap();assert!(html.contains("event-${i}")&&html.contains("Open related private report"));assert!(!html.contains("before <hit>"));
+        assert_eq!(fs::read(&profile).unwrap(),b"{}");assert_eq!(fs::read(report).unwrap(),b"private report");
+        let oversized=IssueContext{session_root:session,timeline:json!({"padding":"x".repeat(512*1024)}),selections:json!([]),active_cheats:json!({}),reports:vec![],reports_omitted:0};assert!(create_with_context(&profile,"",Some(oversized)).is_err());
     }
 }

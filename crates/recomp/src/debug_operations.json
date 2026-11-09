@@ -1746,6 +1746,265 @@
       "external_dialog": null
     },
     {
+      "id": "pins.add",
+      "title": "Add pinned observation",
+      "source": "crates/recomp/src/debug_pins.rs",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control pin-add SESSION LABEL OWNER register INDEX | memory ADDRESS LENGTH | field FAMILY FIELD CONTEXT",
+      "parameters": [
+        {
+          "name": "SESSION",
+          "value_type": "path",
+          "constraint": "Active isolated debug session.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "LABEL",
+          "value_type": "text",
+          "constraint": "Unique label, 1..48 bytes; quote spaces.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "OWNER",
+          "value_type": "text",
+          "constraint": "Explicit owner, 1..48 bytes; quote spaces.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "TARGET",
+          "value_type": "selection",
+          "constraint": "register 0..15; memory hexadecimal ADDRESS and decimal LENGTH 1..32; or field FAMILY FIELD hexadecimal CONTEXT at an authenticated site.",
+          "current_menu": "selected",
+          "default": null
+        }
+      ],
+      "selection": [],
+      "menu": {
+        "current": "Debug / command console",
+        "destination": "Debug / command console",
+        "implemented": true
+      },
+      "allowed_state": "Idle paused isolated session.",
+      "effects": "Add one bounded passive observation; no guest mutation.",
+      "result": "Acknowledged schema-1 ffta-debug-control-result: request/run/session, ok/error/outcome/status; client refusal JSON. Timeout requires status before retry.",
+      "limits": "16 session-local pins, 32-byte memory windows; decoded fields require authenticated EUR ROM; stale after restoration.",
+      "open_work": [],
+      "external_dialog": null
+    },
+    {
+      "id": "pins.remove",
+      "title": "Remove pinned observation",
+      "source": "crates/recomp/src/debug_pins.rs",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control pin-remove SESSION LABEL",
+      "parameters": [
+        {
+          "name": "SESSION",
+          "value_type": "path",
+          "constraint": "Active isolated debug session.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "LABEL",
+          "value_type": "text",
+          "constraint": "Exact existing pin label.",
+          "current_menu": "selected",
+          "default": null
+        }
+      ],
+      "selection": [],
+      "menu": {
+        "current": "Debug / command console",
+        "destination": "Debug / command console",
+        "implemented": true
+      },
+      "allowed_state": "Active isolated session.",
+      "effects": "Remove an observation; no guest mutation.",
+      "result": "Acknowledged schema-1 ffta-debug-control-result: request/run/session, ok/error/outcome/status; client refusal JSON. Timeout requires status before retry.",
+      "limits": "16 session-local pins, 32-byte memory windows; decoded fields require authenticated EUR ROM; stale after restoration.",
+      "open_work": [],
+      "external_dialog": null
+    },
+    {
+      "id": "pins.refresh",
+      "title": "Refresh pinned observations",
+      "source": "crates/recomp/src/debug_pins.rs",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control pin-refresh SESSION",
+      "parameters": [
+        {
+          "name": "SESSION",
+          "value_type": "path",
+          "constraint": "Active isolated debug session.",
+          "current_menu": "selected",
+          "default": null
+        }
+      ],
+      "selection": [],
+      "menu": {
+        "current": "Debug / command console",
+        "destination": "Debug / command console",
+        "implemented": true
+      },
+      "allowed_state": "Idle paused isolated session.",
+      "effects": "Sample live pins once; stale pins remain stale.",
+      "result": "Acknowledged schema-1 ffta-debug-control-result: request/run/session, ok/error/outcome/status; client refusal JSON. Timeout requires status before retry.",
+      "limits": "16 session-local pins, 32-byte memory windows; decoded fields require authenticated EUR ROM; stale after restoration.",
+      "open_work": [],
+      "external_dialog": null
+    },
+    {
+      "id": "pins.view",
+      "title": "Filter pinned observations",
+      "source": "crates/recomp/src/debug_pins.rs",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control pin-view SESSION all|changed|stale OFFSET",
+      "parameters": [
+        {
+          "name": "SESSION",
+          "value_type": "path",
+          "constraint": "Active isolated debug session.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "FILTER",
+          "value_type": "selection",
+          "constraint": "all, changed or stale.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "OFFSET",
+          "value_type": "decimal",
+          "constraint": "Zero-based matching-row offset 0..15.",
+          "current_menu": "selected",
+          "default": null
+        }
+      ],
+      "selection": [],
+      "menu": {
+        "current": "Debug / command console",
+        "destination": "Debug / command console",
+        "implemented": true
+      },
+      "allowed_state": "Active isolated session.",
+      "effects": "Change the local display filter and offset.",
+      "result": "Acknowledged schema-1 ffta-debug-control-result: request/run/session, ok/error/outcome/status; client refusal JSON. Timeout requires status before retry.",
+      "limits": "16 session-local pins, 32-byte memory windows; decoded fields require authenticated EUR ROM; stale after restoration.",
+      "open_work": [],
+      "external_dialog": null
+    },
+    {
+      "id": "timeline.bookmark",
+      "title": "Mark issue timeline",
+      "source": "crates/recomp/src/debug_timeline.rs",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control timeline-bookmark SESSION LABEL",
+      "parameters": [
+        {
+          "name": "SESSION",
+          "value_type": "path",
+          "constraint": "Active isolated debug session.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "LABEL",
+          "value_type": "text",
+          "constraint": "1..96 bytes, no control characters; quote spaces.",
+          "current_menu": "selected",
+          "default": null
+        }
+      ],
+      "selection": [],
+      "menu": {
+        "current": "Debug / command console",
+        "destination": "Debug / command console",
+        "implemented": true
+      },
+      "allowed_state": "Active isolated session; recipe selection requires an idle pause.",
+      "effects": "Host-only issue context; no guest mutation or recipe execution.",
+      "result": "Acknowledged schema-1 ffta-debug-control-result with request identity, outcome and current status.",
+      "limits": "Timeline is bounded and private; dropped events and unknown causation are explicit.",
+      "open_work": [],
+      "external_dialog": null
+    },
+    {
+      "id": "timeline.recipe",
+      "title": "Select issue recipe",
+      "source": "crates/recomp/src/debug_timeline.rs",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control timeline-recipe SESSION select NAME | clear",
+      "parameters": [
+        {
+          "name": "SESSION",
+          "value_type": "path",
+          "constraint": "Active isolated debug session.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "NAME",
+          "value_type": "text",
+          "constraint": "Existing session-pinned recipe name; select does not execute.",
+          "current_menu": "selected",
+          "default": null
+        }
+      ],
+      "selection": [],
+      "menu": {
+        "current": "Debug / command console",
+        "destination": "Debug / command console",
+        "implemented": true
+      },
+      "allowed_state": "Active isolated session; recipe selection requires an idle pause.",
+      "effects": "Host-only issue context; no guest mutation or recipe execution.",
+      "result": "Acknowledged schema-1 ffta-debug-control-result with request identity, outcome and current status.",
+      "limits": "Timeline is bounded and private; dropped events and unknown causation are explicit.",
+      "open_work": [],
+      "external_dialog": null
+    },
+    {
+      "id": "timeline.checkpoint",
+      "title": "Select issue recipe checkpoint",
+      "source": "crates/recomp/src/debug_timeline.rs",
+      "handler": "Action / play.rs::debug_action_inner",
+      "cli": "recomp debug-control timeline-checkpoint SESSION select RUN-ID | clear",
+      "parameters": [
+        {
+          "name": "SESSION",
+          "value_type": "path",
+          "constraint": "Active isolated debug session.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "RUN-ID",
+          "value_type": "text",
+          "constraint": "Exact validated checkpoint for the selected recipe.",
+          "current_menu": "selected",
+          "default": null
+        }
+      ],
+      "selection": [],
+      "menu": {
+        "current": "Debug / command console",
+        "destination": "Debug / command console",
+        "implemented": true
+      },
+      "allowed_state": "Active isolated session and idle pause.",
+      "effects": "Select bounded private checkpoint context; no guest mutation or recipe execution.",
+      "result": "Acknowledged schema-1 ffta-debug-control-result with request identity, outcome and current status.",
+      "limits": "Step request IDs establish correlation, not causation; session identity and recipe hash must match.",
+      "open_work": [],
+      "external_dialog": null
+    },
+    {
       "id": "control.replay-run",
       "title": "Run a bounded replay through local control",
       "source": "crates/recomp/src/debug_control.rs",

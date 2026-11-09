@@ -9,6 +9,31 @@ fn clean(value:&str,limit:usize)->String {
     if chars.next().is_some(){text.push_str("...");}text
 }
 
+/// Live pinned rows are a bounded projection; full sources remain in status.
+pub(crate) fn pin_lines(status:&Value)->Vec<menu::command_console::PinLine>{
+    use menu::command_console::{PinLine,PinState};
+    let Some(items)=status["pins"].as_array() else{return Vec::new()};
+    if items.is_empty(){return Vec::new();}
+    let filter=status["filter"].as_str().unwrap_or("all");
+    let selected:Vec<_>=items.iter().filter(|p|match filter{"changed"=>p["changed"]==true,"stale"=>p["stale"]==true,_=>true}).collect();
+    let offset=status["offset"].as_u64().unwrap_or(0) as usize;
+    let mut out=vec![PinLine{text:format!("Pins: {filter} · {} matches · offset {offset}",selected.len()),state:PinState::Normal}];
+    for pin in selected.iter().skip(offset).take(3){
+        let state=if pin["stale"]==true{PinState::Stale}else if pin["changed"]==true{PinState::Changed}else{PinState::Normal};
+        let mark=match state{PinState::Normal=>"=",PinState::Changed=>"CHANGED",PinState::Stale=>"STALE"};
+        let label=clean(pin["label"].as_str().unwrap_or("?"),48);let owner=clean(pin["owner"].as_str().unwrap_or("?"),48);
+        let previous=clean(&pin["previous"].to_string(),72);let current=clean(&pin["value"].to_string(),72);
+        let source=&pin["source"];let origin=match source["kind"].as_str(){
+            Some("register")=>format!("r{}",source["register"]),
+            Some("readonly-backing")=>format!("0x{:08X}",source["address"].as_u64().unwrap_or(0)),
+            Some("decoded-context-field")=>format!("{}/{} @0x{:08X}",source["family"].as_str().unwrap_or("?"),source["field"].as_str().unwrap_or("?"),source["context"].as_u64().unwrap_or(0)),
+            _=>"unknown".into(),
+        };
+        out.push(PinLine{text:format!("{mark} {label} [{owner}] {origin}: {previous} → {current}"),state});
+    }
+    out
+}
+
 pub(crate) fn target(manifest:&Value,run:&str,language:Language)->String {
     let label=clean(manifest["label"].as_str().unwrap_or("?"),48);
     let hash=manifest["pins"]["ffta.gba"].as_str().filter(|h|h.len()==64&&h.bytes().all(|c|c.is_ascii_hexdigit())).unwrap_or("");
@@ -285,5 +310,15 @@ mod tests {
         let (progress,params)=pending(&long,0,None,None,en);assert!(progress.contains(&"x".repeat(100))&&params.contains(&"y".repeat(512)));
         let excessive=json!({"request_id":"x".repeat(500),"command":{"action":"select-id","id":"y".repeat(5000)}});
         let (progress,params)=pending(&excessive,0,None,None,en);assert!(progress.len()<160&&params.len()<600);
+    }
+    #[test]
+    fn pins_show_sources_changes_stale_and_filter(){
+        use menu::command_console::PinState;
+        let pins=json!({"filter":"changed","offset":0,"pins":[
+            {"label":"x","owner":"a","previous":1,"value":2,"changed":true,"stale":false,"source":{"kind":"register","register":3}},
+            {"label":"y","owner":"b","previous":2,"value":2,"changed":false,"stale":true,"source":{"kind":"readonly-backing","address":33554432}}
+        ]});
+        let lines=pin_lines(&pins);assert_eq!(lines.len(),2);assert_eq!(lines[1].state,PinState::Changed);assert!(lines[1].text.contains("r3")&&lines[1].text.contains("1 → 2"));
+        let mut stale=pins;stale["filter"]=json!("stale");let lines=pin_lines(&stale);assert_eq!(lines[1].state,PinState::Stale);assert!(lines[1].text.contains("0x02000000"));
     }
 }

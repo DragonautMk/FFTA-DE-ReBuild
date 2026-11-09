@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "date": "2026-11-09",
+  "slug": "add-pinned-debug-observations",
+  "title": "Pin bounded debug observations with source and stale context",
+  "kind": "added",
+  "platforms": [
+    "Linux",
+    "Windows GNU and Wine"
+  ],
+  "changes": [
+    "Add up to 16 labeled, owned session-local pins for CPU registers, immutable backing-memory windows and authenticated EUR task, script and unit context fields. Decoded pins require the corresponding observed PC and context register.",
+    "Track both sample values, their frame, clock and source; refresh at a completed step or explicit paused request. Mark every pin stale on state restoration without silently reusing its address.",
+    "Show live filtered, paged pins in the command console with distinct normal, changed and stale colors; expose the same bounded operations through local control and command completion."
+  ],
+  "validation": [
+    "Linux tests passed for state-invariant pinning, bounds, unsafe-memory refusal, parser, filtering, colors and authenticated EUR task/script/unit context. Windows GNU runtime and tests cross-compiled.",
+    "An isolated Wine/Xvfb frontend observed r3 change from 165 to 166 across a frame, kept state unchanged during pin operations and marked pins stale after loading a protected-state copy. An independent audit verified the unobstructed changed-row screenshot and protected preimages.",
+    "Final isolated Wine/Xvfb frontend validation displayed both the changed register and red stale rows after Load; protected inputs remained unchanged and the owned window closed normally."
+  ],
+  "limitations": [
+    "Pins identify an observation and context address, not a persistent actor or task; the address can be reused during ordinary execution. Decoded fields require the exact EUR ROM and an observed contract site.",
+    "Native Windows and physical-controller input are not covered. A visual driver passed but its runner retained a FAIL receipt after an unrelated cold-storage lease blocked final retention; diagnostics remain intact."
+  ],
+  "files": [
+    "crates/recomp/src/debug_pins.rs",
+    "crates/recomp/src/debug_command.rs",
+    "crates/recomp/src/debug_command/completion.rs",
+    "crates/recomp/src/debug_command/observation.rs",
+    "crates/recomp/src/debug_command_panel.rs",
+    "crates/recomp/src/debug_control.rs",
+    "crates/recomp/src/debug_operations.rs",
+    "crates/recomp/src/debug_operations.json",
+    "crates/recomp/src/main.rs",
+    "crates/recomp/src/play.rs",
+    "crates/menu/src/command_console.rs",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/debug_probes.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ]
+}

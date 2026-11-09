@@ -14,10 +14,14 @@ pub struct Source {
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Parameter { pub name: String, pub domain: Domain }
 #[derive(Clone, Debug, PartialEq, Eq)]
-pub enum Domain { List(Vec<u16>), Range { min:u16, max:u16, step:u16 } }
+pub enum Domain { List(Vec<u16>), Range { min:u16, max:u16, step:u16 }, DependentList { on:String, cases:Vec<(u16,Vec<u16>)> } }
 impl Domain {
-    fn count(&self)->u32 { match self { Self::List(values)=>values.len() as u32, Self::Range{min,max,step} if *step>0 && min<=max=>u32::from((max-min)/step)+1, _=>0 } }
-    fn value(&self,index:u32)->Option<u16> { match self { Self::List(values)=>values.get(index as usize).copied(), Self::Range{min,step,..} if index<self.count()=>u16::try_from(u32::from(*min)+index*u32::from(*step)).ok(), _=>None } }
+    fn dependent_values<'a>(on:&str,cases:&'a [(u16,Vec<u16>)],parameters:&[Parameter],selected:&[u16])->Option<&'a [u16]>{
+        let parent=parameters.iter().position(|p|p.name==on)?;let selected=*selected.get(parent)?;
+        cases.iter().find(|(when,_)|*when==selected).map(|(_,values)|values.as_slice())
+    }
+    fn count(&self,parameters:&[Parameter],selected:&[u16])->u32 { match self { Self::List(values)=>values.len() as u32, Self::Range{min,max,step} if *step>0 && min<=max=>u32::from((max-min)/step)+1, Self::DependentList{on,cases}=>Self::dependent_values(on,cases,parameters,selected).map_or(0,|v|v.len() as u32), _=>0 } }
+    fn value(&self,index:u32,parameters:&[Parameter],selected:&[u16])->Option<u16> { match self { Self::List(values)=>values.get(index as usize).copied(), Self::Range{min,step,..} if index<self.count(parameters,selected)=>u16::try_from(u32::from(*min)+index*u32::from(*step)).ok(), Self::DependentList{on,cases}=>Self::dependent_values(on,cases,parameters,selected)?.get(index as usize).copied(), _=>None } }
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -50,11 +54,11 @@ impl State {
     }
     pub fn selected_source(&self) -> Option<&Source> { self.selected.and_then(|index| self.sources.get(index)) }
     pub fn selected_parameters(&self)->Option<Vec<(&str,u16)>>{let source=self.selected_source()?;if source.parameters.len()!=self.parameter_selected.len(){return None;}Some(source.parameters.iter().zip(&self.parameter_selected).map(|(p,v)|(p.name.as_str(),*v)).collect())}
-    pub fn current_parameter(&self)->Option<(&str,u16)>{let p=self.selected_source()?.parameters.get(self.parameter_selected.len())?;Some((&p.name,p.domain.value(self.parameter_cursor)?))}
+    pub fn current_parameter(&self)->Option<(&str,u16)>{let source=self.selected_source()?;let p=source.parameters.get(self.parameter_selected.len())?;Some((&p.name,p.domain.value(self.parameter_cursor,&source.parameters,&self.parameter_selected)?))}
     pub fn handle(&mut self, input: MenuInput) -> Option<Request> {
         if self.parameter_mode {
             self.focus=0;
-            let count=self.selected_source().and_then(|s|s.parameters.get(self.parameter_selected.len())).map_or(0,|p|p.domain.count());
+            let count=self.selected_source().and_then(|s|s.parameters.get(self.parameter_selected.len()).map(|p|p.domain.count(&s.parameters,&self.parameter_selected))).unwrap_or(0);
             match input {
                 MenuInput::Up => self.parameter_cursor=self.parameter_cursor.saturating_sub(1),
                 MenuInput::Down => self.parameter_cursor=(self.parameter_cursor+1).min(count.saturating_sub(1)),
@@ -148,5 +152,19 @@ mod tests {
         assert_eq!(state.selected_parameters(),Some(vec![("race",2),("job",1),("look",2)]));assert_eq!(state.handle(MenuInput::Confirm),Some(Request::Prepare));
         state.preview="old".into();state.preview_token="old".into();state.handle(MenuInput::Left);state.handle(MenuInput::Confirm);
         assert!(state.selected_parameters().is_none());assert_eq!(state.current_parameter(),Some(("race",1)));assert!(state.preview.is_empty());assert!(state.preview_token.is_empty());
+    }
+    #[test]
+    fn dependent_parameter_choices_follow_the_explicit_previous_value(){
+        let source=Source{index:0,name:"synthetic".into(),master:"CH-0002".into(),assessment:"parameter-required".into(),parameters:vec![
+            Parameter{name:"race".into(),domain:Domain::List(vec![1,2])},
+            Parameter{name:"job".into(),domain:Domain::DependentList{on:"race".into(),cases:vec![(1,vec![10,11]),(2,vec![20])]}},
+        ]};
+        let mut state=State::new("CH-0001".into(),"Example".into(),false,vec![source],vec![]);
+        state.handle(MenuInput::Confirm);state.handle(MenuInput::Down);state.handle(MenuInput::Confirm);
+        assert_eq!(state.current_parameter(),Some(("job",20)));state.handle(MenuInput::Down);assert_eq!(state.current_parameter(),Some(("job",20)));
+        state.handle(MenuInput::Confirm);assert_eq!(state.selected_parameters(),Some(vec![("race",2),("job",20)]));
+        state.preview="old".into();state.preview_token="old".into();state.handle(MenuInput::Left);state.handle(MenuInput::Confirm);state.handle(MenuInput::Confirm);
+        assert_eq!(state.current_parameter(),Some(("job",10)));state.handle(MenuInput::Down);assert_eq!(state.current_parameter(),Some(("job",11)));
+        assert!(state.preview.is_empty());assert!(state.preview_token.is_empty());
     }
 }

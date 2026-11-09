@@ -2,6 +2,52 @@
 use std::sync::OnceLock;
 use std::time::{Duration, Instant};
 
+/// A persistent host-side warning for maintained cheats. The fixed bitmap is
+/// deliberately independent of the FPS setting, guest pixels and game LUT.
+pub fn cheat_frame(active: bool, window: (u32, u32), dpi: f64) -> Option<screen::ui_layer::Frame<'static>> {
+    if !active { return None; }
+    const WIDTH: usize = 36;
+    const HEIGHT: usize = 13;
+    static PIXELS: OnceLock<Vec<[u8; 4]>> = OnceLock::new();
+    static COLORS: OnceLock<Vec<[u8; 4]>> = OnceLock::new();
+    static REVISION: OnceLock<u64> = OnceLock::new();
+    let pixels = PIXELS.get_or_init(|| {
+        let mut pixels = vec![[0, 0, 0, 16]; 480 * 160];
+        for y in 0..HEIGHT { pixels[y * 480..y * 480 + WIDTH].fill([0, 0, 16, 0]); }
+        // CHEAT, in a fixed 5x7 font with one pixel between glyphs.
+        let glyphs: [[u8; 7]; 5] = [
+            [14, 17, 16, 16, 16, 17, 14], [17, 17, 17, 31, 17, 17, 17],
+            [31, 16, 16, 30, 16, 16, 31], [14, 17, 17, 31, 17, 17, 17],
+            [31, 4, 4, 4, 4, 4, 4],
+        ];
+        for (letter, glyph) in glyphs.iter().enumerate() {
+            for (y, bits) in glyph.iter().enumerate() {
+                for x in 0..5 { if bits & (1 << (4 - x)) != 0 {
+                    pixels[(y + 3) * 480 + 3 + letter * 6 + x] = [255, 127, 16, 0];
+                }}
+            }
+        }
+        pixels
+    });
+    let colors = COLORS.get_or_init(|| {
+        let mut colors = vec![[255, 255, 255, 255]; 32768];
+        colors[0] = [100, 20, 20, 255];
+        colors
+    });
+    let scale = (2. * dpi as f32).round().clamp(1., 4.);
+    let margin = 4. * scale;
+    let width = (WIDTH as f32 * scale).min(window.0 as f32);
+    let height = (HEIGHT as f32 * scale).min(window.1 as f32);
+    let x = (window.0 as f32 - margin - width).max(0.);
+    let y = (window.1 as f32 - margin - height).max(0.);
+    Some(screen::ui_layer::Frame {
+        grid: None, pixels, pixels_revision: Some(*REVISION.get_or_init(screen::ui_layer::fresh_pixels_revision)),
+        raw_world: &[0], world_dims: (1, 1), lut: colors,
+        layout: screen::ui_layer::Layout { rect: [x, y, 480. * scale, 160. * scale], clip: [x, y, width, height] },
+        world_view: [0., 0., 1., 1.],
+    })
+}
+
 pub struct Meter {
     mode: String,
     start: Instant,
@@ -106,6 +152,23 @@ impl Meter {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn maintained_cheat_warning_is_independent_of_fps_and_clipped_to_window() {
+        let meter = Meter::new(Instant::now());
+        assert!(meter.frame((640, 480), 1.).is_none());
+        assert!(cheat_frame(false, (640, 480), 1.).is_none());
+        let warning = cheat_frame(true, (640, 480), 1.).unwrap();
+        let [x, y, width, height] = warning.layout.clip;
+        assert!(x > 0. && y > 0. && x + width <= 640. && y + height <= 480.);
+        assert_eq!(warning.sample(x + 0.5, y + 0.5), Some([100, 20, 20, 255]));
+        assert!((0..height as usize).any(|dy| (0..width as usize).any(|dx|
+            warning.sample(x + dx as f32 + 0.5, y + dy as f32 + 0.5) == Some([255, 255, 255, 255]))));
+        assert!(warning.sample(x - 1., y).is_none());
+        let small = cheat_frame(true, (20, 10), 2.).unwrap();
+        assert!(small.layout.clip[2] <= 20. && small.layout.clip[3] <= 10.);
+        assert!(cheat_frame(false, (640, 480), 1.).is_none());
+    }
 
     #[test]
     fn upload_revision_changes_only_on_render_and_is_not_reused_by_another_meter() {

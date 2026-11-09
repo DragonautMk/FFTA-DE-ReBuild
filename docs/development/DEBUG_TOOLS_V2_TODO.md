@@ -661,8 +661,20 @@ No other development was selected. On resumption read only the individual ID in
   now binds eight source-listed primary ability-set label records to the known
   USA identity and master checksum, preserving original provenance and table
   hashes. Protected USA/EUR preflight and Wine frontend selection/arm/disarm
-  passed without guest advancement. Job/race/appearance choices still require
-  correlated-domain validation; game/device effects remain unverified.
+  passed without guest advancement. Dependent lists now validate declared
+  relationships and filter menu values. Linux suites, Windows GNU build and a
+  synthetic Wine/Xvfb menu/preset flow passed; older runtimes reject the new
+  domain variant. An earlier private projection covered two source-illustrated
+  character combinations, but a protected USA DS-16 read exposed unresolved
+  field semantics. New character projections are reference-only and retain an
+  unknown region; the earlier activation-ready catalog is historical evidence,
+  not an operational recommendation. A protected paired DS-16 Wine observation
+  showed changed bytes, statistics and figures for one applied example, while
+  the title remained Soldier; it does not establish field meanings. CH-0236
+  remains excluded. Broader combinations and device effects remain unverified.
+  A persistent maintained-cheat badge is shown in gameplay and pause menus;
+  Wine software and Linux Vulkan/llvmpipe rendering verified arm/disarm and
+  one-shot behavior; physical GPUs and Windows native remain unverified.
 
 - [x] **DBG2-21 — First EUR selection useful for debugging.**
   Priorities, subject to decoding/verification: access to Card Shop/Item Shop/
@@ -792,7 +804,7 @@ No other development was selected. On resumption read only the individual ID in
   interpreter/Wine scope after DBG2-15 completion; native Windows, physical
   input and broader platform checks remain in DBG2-27.
 
-- [ ] **DBG2-25 — Pinned observations and differences.**
+- [x] **DBG2-25 — Pinned observations and differences.**
   Permit pins for registers, read-only memory windows and already decoded
   task/script/unit fields, with label/owner and previous value. Refresh at a
   bounded cadence or on step; invalidate addresses/context after Load/reset/
@@ -802,7 +814,18 @@ No other development was selected. On resumption read only the individual ID in
   unchanged by inspection and recognizable stale context.
   **Depends on:** DBG2-03/15, DBG-11/17.
 
-- [ ] **DBG2-26 — Issue timeline and exportable recipe.**
+  **Accepted in the recorded interpreter/Wine scope.** The command console and
+  local channel pin bounded registers, readonly backing windows and EUR
+  task/script/unit fields at authenticated observation sites. Previous/current
+  samples retain frame, clock and source; completed steps or explicit refresh
+  update them, and state restoration marks their context stale. Filters and
+  colors distinguish changes and stale rows. A protected-ROM frontend test
+  observed r3 change from 165 to 166 across a frame, kept the complete guest
+  state unchanged during inspection, and displayed stale pins after Load.
+  Context addresses are not persistent identities. Native Windows, physical
+  input and other platform combinations remain under DBG2-27.
+
+- [x] **DBG2-26 — Issue timeline and exportable recipe.**
   Connect menu selection → command/script → observed guest event → capture/
   difference/error, with bookmarks and access to the corresponding report. Add
   recipe, selected IDs and any active cheats to the issue report; copy the
@@ -810,6 +833,19 @@ No other development was selected. On resumption read only the individual ID in
   causation. **Completion:** user and assistant reconstruct the same case
   without manually searching for paths; gaps/drops and private attachments are
   explicit. **Depends on:** DBG2-11/16/23, DBG-09/16.
+
+  **Accepted in the recorded interpreter/Wine scope.** Isolated sessions retain
+  a bounded private timeline of menu, command, lifecycle, completed guest-frame,
+  error and bookmark observations. Reports include selected content IDs, active
+  cheat identities, an explicitly selected session-pinned recipe and checkpoint,
+  and links to available private reports. Matching checkpoint request IDs tie
+  steps to retained events without claiming causation; losses and missing context
+  are explicit. A GUI bookmark, recipe step, gameplay report and active synthetic
+  cheat were reconstructed from the report; the pinned replay launcher passed
+  from a moved isolated copy. The original frontend runner failed an incorrect
+  wording assertion after report creation; a separate audit verified the retained
+  evidence and unchanged protected inputs. Native Windows and physical input
+  remain part of DBG2-27.
 
 - [ ] **DBG2-27 — Targeted integration and regression checks.**
   Exercise new selection, console off/on, macros and cheats with public synthetic

@@ -1,7 +1,7 @@
 //! Pure, bounded command completion. Suggestions never dispatch an action.
 use std::ops::Range;
 
-const COMMANDS:&[&str]=&["help","status","pause","resume","step","inspect","break","watch","cancel","graphics","ui-start","ui-report","audio-start","audio-report","code-start","code-report","gameplay-start","gameplay-report","recent-start","recent-freeze","recent-report","issue-report","profile","catalog","cheats","content","replay","jobs","retry","recipe","trigger"];
+const COMMANDS:&[&str]=&["help","status","pause","resume","step","inspect","pin-add","pin-remove","pin-refresh","pin-view","timeline-bookmark","timeline-recipe","timeline-checkpoint","break","watch","cancel","graphics","ui-start","ui-report","audio-start","audio-report","code-start","code-report","gameplay-start","gameplay-report","recent-start","recent-freeze","recent-report","issue-report","profile","catalog","cheats","content","replay","jobs","retry","recipe","trigger"];
 
 #[derive(Debug)]
 struct Token {range:Range<usize>,value:String,prefix:String}
@@ -125,6 +125,13 @@ pub(crate) fn hint(text:&str,language:input_config::Language)->&'static str {
         "cancel"=>"cancel --request REQUEST-ID · cancel only the exact request",
         "step"=>"step N [--keys 0xMASK] · N 1..600; active-low mask",
         "inspect"=>"inspect 0xADDRESS LENGTH · 1..256 bytes, read-only",
+        "pin-add"=>"pin-add LABEL OWNER register INDEX | memory 0xADDRESS LENGTH | field FAMILY FIELD 0xCONTEXT",
+        "pin-remove"=>"pin-remove LABEL · remove an observation",
+        "pin-refresh"=>"pin-refresh · sample live pins at the paused boundary",
+        "pin-view"=>"pin-view all|changed|stale OFFSET · filter and page the display",
+        "timeline-bookmark"=>"timeline-bookmark LABEL · mark an observed boundary",
+        "timeline-recipe"=>"timeline-recipe select NAME | clear · choose private issue context",
+        "timeline-checkpoint"=>"timeline-checkpoint select RUN-ID | clear · correlate recipe steps",
         "break"=>"break 0xPC arm|thumb [--steps N --hits N --frame-start N --frame-end N] · interpreter",
         "watch"=>"watch read|write 0xSTART 0xEND [--steps N --width 1|2|4 --value 0xHEX --hits N]",
         "graphics"=>"graphics [--compare-last] · explicit capture",

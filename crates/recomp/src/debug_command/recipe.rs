@@ -170,6 +170,12 @@ fn load(root:&Path,name:&str)->Result<Recipe,String>{
     if recipe.name!=name{return Err("Recipe name differs from requested name".into());}
     verify_session(&recipe,root)?;Ok(recipe)
 }
+/// A private, session-validated immutable copy for an explicitly selected issue context.
+pub(crate) fn issue_snapshot(root:&Path,name:&str)->Result<Value,String>{
+    let recipe=load(root,name)?;let bytes=serde_json::to_vec(&recipe).map_err(|e|e.to_string())?;
+    Ok(json!({"name":name,"sha256":gba_core::ffta_rom::digest(&bytes),"recipe":recipe,"scope":"Selected context only; selection does not execute the recipe"}))
+}
+pub(crate) fn issue_checkpoint(root:&Path,id:&str)->Result<Value,String>{checkpoint::issue_snapshot(root,id)}
 fn read_recipe(path:&Path)->Result<Recipe,String>{
     if !crate::debug_session::regular(path)?.is_file(){return Err("Recipe must be an ordinary file".into());}
     let recipe:Recipe=serde_json::from_slice(&crate::diagnostics::read(path,MAX_BYTES)?).map_err(|e|e.to_string())?;

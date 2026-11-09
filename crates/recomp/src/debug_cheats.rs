@@ -205,7 +205,7 @@ impl Catalog {
         Ok(sources.iter().filter_map(|s|{
             let index=s["provenance_index"].as_u64()?;let provenance=entry["provenance"].as_array()?.get(index as usize)?;
             let assessment=&s["assessment"];let specs=if let Some(value)=assessment.get("parameter"){serde_json::from_value::<crate::debug_cheat_parameters::Specification>(value.clone()).ok().into_iter().collect()}else{assessment.get("parameters").cloned().and_then(|v|serde_json::from_value::<Vec<crate::debug_cheat_parameters::Specification>>(v).ok()).unwrap_or_default()};
-            let parameters=specs.into_iter().map(|spec|menu::CheatParameter{name:spec.name,domain:match spec.allowed{crate::debug_cheat_parameters::Domain::List{values}=>menu::CheatParameterDomain::List(values),crate::debug_cheat_parameters::Domain::Range{min,max,step}=>menu::CheatParameterDomain::Range{min,max,step}}}).collect();
+            let parameters=specs.into_iter().map(|spec|menu::CheatParameter{name:spec.name,domain:match spec.allowed{crate::debug_cheat_parameters::Domain::List{values}=>menu::CheatParameterDomain::List(values),crate::debug_cheat_parameters::Domain::Range{min,max,step}=>menu::CheatParameterDomain::Range{min,max,step},crate::debug_cheat_parameters::Domain::DependentList{on,cases}=>menu::CheatParameterDomain::DependentList{on,cases:cases.into_iter().map(|case|(case.when,case.values)).collect()}}}).collect();
             Some(menu::CheatSource{index:u16::try_from(index).ok()?,name:provenance["source"].as_str().unwrap_or("unknown").chars().take(80).collect(),master:s["master_id"].as_str().unwrap_or("unknown").chars().take(16).collect(),assessment:assessment["state"].as_str().unwrap_or("unresolved").into(),parameters})
         }).collect())
     }
@@ -555,6 +555,22 @@ mod tests {
         let choices=[crate::debug_cheat_parameters::Choice{name:"race".into(),value:0},crate::debug_cheat_parameters::Choice{name:"job".into(),value:0},crate::debug_cheat_parameters::Choice{name:"look".into(),value:0}];
         assert!(Catalog::parameterized_source(source,&raw,&choices[..2]).is_err());let (expanded,declared)=Catalog::parameterized_source(source,&raw,&choices).unwrap();assert_eq!(declared.len(),3);assert_eq!(expanded[0],"BB28F300 B8C0");
         assert!(crate::debug_cheat_decoder::inspect_source(&expanded,&master,None).unwrap().0.footprint().is_ok());
+    }
+    #[test]
+    fn dependent_parameter_catalog_maps_menu_and_rejects_cross_combinations(){
+        let mut v=fixture();v["entries"][0]["codes"]=json!(["820000XX 00YY"]);
+        v["entries"][0]["provenance"]=json!([{"source":"synthetic","master_id":"CH-0002","raw_code_lines":v["entries"][0]["codes"],"parameters":[
+            {"name":"race","allowed":{"kind":"list","values":[1,2]},"slots":[{"line":0,"field":"word","offset":6,"digits":2}]},
+            {"name":"job","allowed":{"kind":"dependent-list","on":"race","cases":[{"when":1,"values":[10,11]},{"when":2,"values":[20]}]},"slots":[{"line":0,"field":"value","offset":2,"digits":2}]}
+        ]}]);
+        v["entries"][1]["format"]=json!("codebreaker");v["entries"][1]["region"]=json!("EUR");v["entries"][1]["provenance"]=json!([{"source":"synthetic","raw_code_lines":["0000FFE7 000A","10000100 0007"]}]);
+        let c=Catalog::parse(&serde_json::to_vec(&v).unwrap()).unwrap();assert_eq!(c.capabilities[0]["state"],"parameter-required");
+        let source=c.menu_sources("CH-0001").unwrap().remove(0);
+        assert_eq!(source.parameters[1].domain,menu::CheatParameterDomain::DependentList{on:"race".into(),cases:vec![(1,vec![10,11]),(2,vec![20])]});
+        let (_,lines,_)=c.source_bound(&c.entries[0],0,"CH-0002").unwrap();let p=&c.entries[0]["provenance"][0];
+        let choice=|name:&str,value|crate::debug_cheat_parameters::Choice{name:name.into(),value};
+        assert!(Catalog::parameterized_source(p,&lines,&[choice("race",1),choice("job",20)]).is_err());
+        assert_eq!(Catalog::parameterized_source(p,&lines,&[choice("race",2),choice("job",20)]).unwrap().0,["82000002 0014"]);
     }
     #[test]
     #[ignore = "Requires an explicitly protected EUR ROM fixture and validation work directory"]

@@ -66,6 +66,13 @@ pub(crate) enum Action {
         address: u32,
         length: u32,
     },
+    PinAdd { label:String, owner:String, target:crate::debug_pins::Target },
+    PinRemove { label:String },
+    PinRefresh,
+    PinView { filter:String, offset:u8 },
+    TimelineBookmark { label:String },
+    TimelineRecipe { name:Option<String> },
+    TimelineCheckpoint { id:Option<String> },
     Find {
         settings: crate::debug_probe::Settings,
     },
@@ -107,6 +114,15 @@ impl Action {
             {
                 return Err("Inspect needs1..256 bytes without wrap".into())
             }
+            Self::PinAdd{label,owner,target}=>{
+                if label.is_empty()||label.len()>48||label.chars().any(char::is_control)||owner.is_empty()||owner.len()>48||owner.chars().any(char::is_control){return Err("Pin label and owner need 1..48 bytes without control characters".into());}
+                target.validate()?;
+            },
+            Self::PinRemove{label} if label.is_empty()||label.len()>48||label.chars().any(char::is_control)=>return Err("Invalid pin label".into()),
+            Self::PinView{filter,offset} if !["all","changed","stale"].contains(&filter.as_str())||*offset>=16=>return Err("Pin view needs all/changed/stale and offset 0..15".into()),
+            Self::TimelineBookmark{label} if !crate::debug_timeline::valid_label(label)=>return Err("Bookmark needs 1..96 bytes without control characters".into()),
+            Self::TimelineRecipe{name:Some(name)} if !crate::debug_cheat_preset::name_valid(name)=>return Err("Recipe name must contain 1..48 ASCII letters, digits, '-' or '_'".into()),
+            Self::TimelineCheckpoint{id:Some(id)} if !id.starts_with("run-") || !crate::debug_cheat_preset::name_valid(id)=>return Err("Checkpoint must be an exact run ID".into()),
             Self::Find { settings } => settings.validate()?,
             Self::AudioStart { settings } => settings.validate()?,
             Self::CodeStart { settings } => settings.validate()?,
@@ -165,7 +181,7 @@ impl Control {
                 self.reason = "stepping";
                 Ok(true)
             }
-            Action::SelectId{..} | Action::ContentRefresh | Action::ContentList{..} | Action::CheatRefresh | Action::CheatList{..} | Action::CheatShow{..} | Action::CheatCapabilities{..} | Action::CheatPrepare{..} | Action::CheatApply{..} | Action::CheatArm{..} | Action::CheatDisarm{..} | Action::CheatPresetSave{..} | Action::CheatPresetPrepare{..} | Action::CheatPresetArm{..} | Action::Replay{..} | Action::RecentStart{..} | Action::RecentFreeze | Action::RecentReport | Action::GameplayStart{..} | Action::GameplayReport | Action::IssueReport{..} | Action::CodeStart{..} | Action::CodeReport | Action::AudioStart{..} | Action::AudioReport | Action::UiStart | Action::UiReport | Action::Graphics { .. } | Action::Inspect { .. } | Action::Find { .. } => {
+            Action::TimelineBookmark{..} | Action::TimelineRecipe{..} | Action::TimelineCheckpoint{..} | Action::PinAdd{..} | Action::PinRemove{..} | Action::PinRefresh | Action::PinView{..} | Action::SelectId{..} | Action::ContentRefresh | Action::ContentList{..} | Action::CheatRefresh | Action::CheatList{..} | Action::CheatShow{..} | Action::CheatCapabilities{..} | Action::CheatPrepare{..} | Action::CheatApply{..} | Action::CheatArm{..} | Action::CheatDisarm{..} | Action::CheatPresetSave{..} | Action::CheatPresetPrepare{..} | Action::CheatPresetArm{..} | Action::Replay{..} | Action::RecentStart{..} | Action::RecentFreeze | Action::RecentReport | Action::GameplayStart{..} | Action::GameplayReport | Action::IssueReport{..} | Action::CodeStart{..} | Action::CodeReport | Action::AudioStart{..} | Action::AudioReport | Action::UiStart | Action::UiReport | Action::Graphics { .. } | Action::Inspect { .. } | Action::Find { .. } => {
                 Err("Inspection/search is owned by the isolated frontend".into())
             }
             Action::Status => unreachable!(),
@@ -466,7 +482,7 @@ impl Drop for Server {
 pub(crate) fn parse(args: &[String]) -> Result<(PathBuf, Action), String> {
     if args.len() < 2 {
         return Err(
-            "Use debug-control <status|cancel|pause|resume|step|inspect|break|watch|graphics|ui-start|ui-report|audio-start|audio-report|code-start|code-report|gameplay-start|gameplay-report|recent-start|recent-freeze|recent-report|issue-report> SESSION [options]"
+            "Use debug-control <status|cancel|pause|resume|step|inspect|pin-add|pin-remove|pin-refresh|pin-view|break|watch|graphics|ui-start|ui-report|audio-start|audio-report|code-start|code-report|gameplay-start|gameplay-report|recent-start|recent-freeze|recent-report|issue-report> SESSION [options]"
                 .into(),
         );
     }
@@ -593,6 +609,23 @@ pub(crate) fn parse(args: &[String]) -> Result<(PathBuf, Action), String> {
                 .parse()
                 .map_err(|_| "Length must be decimal1..256")?,
         },
+        "pin-add" if args.len()>=6=>{
+            let target=match args[4].as_str(){
+                "register" if args.len()==6=>crate::debug_pins::Target::Register{index:args[5].parse().map_err(|_|"Register index must be 0..15")?},
+                "memory" if args.len()==7=>crate::debug_pins::Target::Memory{address:hex(&args[5])?,length:args[6].parse().map_err(|_|"Memory length must be 1..32")?},
+                "field" if args.len()==8=>crate::debug_pins::Target::Field{family:args[5].clone(),field:args[6].clone(),context:hex(&args[7])?},
+                _=>return Err("Use pin-add LABEL OWNER register INDEX | memory ADDRESS LENGTH | field FAMILY FIELD CONTEXT".into()),
+            };
+            Action::PinAdd{label:args[2].clone(),owner:args[3].clone(),target}
+        },
+        "pin-remove" if args.len()==3=>Action::PinRemove{label:args[2].clone()},
+        "pin-refresh" if args.len()==2=>Action::PinRefresh,
+        "pin-view" if args.len()==4=>Action::PinView{filter:args[2].clone(),offset:args[3].parse().map_err(|_|"Pin offset must be 0..15")?},
+        "timeline-bookmark" if args.len()==3=>Action::TimelineBookmark{label:args[2].clone()},
+        "timeline-recipe" if args.len()==4 && args[2]=="select"=>Action::TimelineRecipe{name:Some(args[3].clone())},
+        "timeline-recipe" if args.len()==3 && args[2]=="clear"=>Action::TimelineRecipe{name:None},
+        "timeline-checkpoint" if args.len()==4 && args[2]=="select"=>Action::TimelineCheckpoint{id:Some(args[3].clone())},
+        "timeline-checkpoint" if args.len()==3 && args[2]=="clear"=>Action::TimelineCheckpoint{id:None},
         "break" if args.len() >= 4 => {
             let thumb = match args[3].as_str() { "arm" => false, "thumb" => true, _ => return Err("Choose arm or thumb".into()) };
             let (steps, _, _, window, guard, on_hit) = search_options(&args[4..], false)?;
@@ -618,7 +651,7 @@ pub(crate) fn parse(args: &[String]) -> Result<(PathBuf, Action), String> {
             },
         },
         _ => return Err(
-            "Use debug-control <status|cancel|pause|resume|step|inspect|break|watch|graphics|ui-start|ui-report|audio-start|audio-report|code-start|code-report|gameplay-start|gameplay-report|recent-start|recent-freeze|recent-report|issue-report> SESSION [options]"
+            "Use debug-control <status|cancel|pause|resume|step|inspect|pin-add|pin-remove|pin-refresh|pin-view|break|watch|graphics|ui-start|ui-report|audio-start|audio-report|code-start|code-report|gameplay-start|gameplay-report|recent-start|recent-freeze|recent-report|issue-report> SESSION [options]"
                 .into(),
         ),
     };

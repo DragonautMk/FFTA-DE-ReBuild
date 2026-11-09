@@ -11,8 +11,13 @@ pub struct Display<'a> {
     pub hint: &'a str,
     pub notice: &'a str,
     pub lines: &'a [String],
+    pub pins: &'a [PinLine],
     pub keyboard: Option<Keyboard<'a>>,
 }
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct PinLine { pub text:String, pub state:PinState }
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum PinState { Normal, Changed, Stale }
 pub struct Keyboard<'a> {pub labels:&'a [String],pub selected:usize}
 
 /// Wrapped lines and the clamped top line of the read-only context view.
@@ -75,9 +80,16 @@ pub fn draw(view: &Display<'_>, pixels: &mut [[u8; 4]], width: usize, height: us
     let keyboard_height=if view.keyboard.is_some(){(height as f32*0.43).clamp(105.0,240.0)}else{0.0};
     let keyboard_top=(height as f32-55.0-keyboard_height).max(105.0);
     let bottom=if view.keyboard.is_some(){keyboard_top-4.0}else{(height as f32-52.0).max(105.0)};
-    let visible_rows=((bottom-145.0).max(0.0)/17.0).floor() as usize;
+    let pin_rows=((bottom-145.0).max(0.0)/17.0).floor() as usize;
+    let shown_pins=view.pins.len().min(pin_rows).min(4);
+    for (i,pin) in view.pins.iter().take(shown_pins).enumerate(){
+        let color=match pin.state{PinState::Normal=>[165,204,185],PinState::Changed=>[250,205,100],PinState::Stale=>[241,143,130]};
+        canvas.text_with_fallback(12.0,145.0+i as f32*17.0,&pin.text,color,13.0,available);
+    }
+    let results_top=145.0+shown_pins as f32*17.0;
+    let visible_rows=((bottom-results_top).max(0.0)/17.0).floor() as usize;
     for (i,line) in result_rows(view.lines,available,visible_rows).iter().enumerate() {
-        let y=145.0+i as f32*17.0;if y+16.0>bottom{break;}
+        let y=results_top+i as f32*17.0;if y+16.0>bottom{break;}
         canvas.text_with_fallback(12.0,y,line,[218,226,226],13.0,available);
     }
     if let Some(keyboard)=&view.keyboard {
@@ -120,5 +132,15 @@ mod tests {
         assert!(top+visible>=lines.len());
         let mut pixels=vec![[0;4];480*360];draw_context(language,&target,"ID 123 | in progress",&parameters,&results,0,&mut pixels,480,360);
         assert!(pixels.iter().any(|p|p[0]>100));
+    }
+    #[test]
+    fn pinned_rows_render_distinct_changed_and_stale_colors(){
+        let mut normal=vec![[0;4];480*360];let mut changed=normal.clone();let mut stale=normal.clone();
+        let render=|pixels:&mut [[u8;4]],state|{
+            let pins=[PinLine{text:"counter: 1 -> 2".into(),state}];
+            draw(&Display{language:input_config::Language::default(),target:"session",pending:"idle",parameters:"",draft:"",preedit:"",hint:"",notice:"",lines:&[],pins:&pins,keyboard:None},pixels,480,360);
+        };
+        render(&mut normal,PinState::Normal);render(&mut changed,PinState::Changed);render(&mut stale,PinState::Stale);
+        assert_ne!(normal,changed);assert_ne!(changed,stale);assert_ne!(normal,stale);
     }
 }
