@@ -46,6 +46,16 @@ to replace the selected library. A library with incompatible ABI/ROM/BIOS may
 fail or diverge; the separate worker retains its outcome. Compatibility is
 not inferred from the `.dll` name.
 
+Recordings with an exact cheat timeline or cheat-derived starting ancestry
+currently require the plain interpreter profile: native libraries, audits,
+trigger captures and comparisons are refused. Starting ancestry is pinned and
+reported, while its already-applied effects come from the starting snapshot.
+The private catalog and timeline are copied into the profile and checked against
+the ROM and source-bound plans before replay. A replay started from the menu is
+refused while any separate maintained cheat set is armed. The result identifies
+recorded variants and links the complete private application timeline. See
+[cheat recording limits and validation](cheats.md).
+
 The dataset is inherited from the source session and must match the recording.
 All payload paths are relative; moving the whole profile folder preserves
 the case. Personal files remain private, Git-ignored and outside packages.

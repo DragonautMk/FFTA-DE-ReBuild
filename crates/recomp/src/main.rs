@@ -33,6 +33,7 @@ mod debug_content;
 mod debug_cheats;
 mod debug_cheat_favorites;
 mod debug_cheat_decoder;
+mod debug_cheat_timeline;
 mod debug_cheat_parameters;
 mod debug_cheat_armed;
 mod cheat_provenance;

@@ -98,10 +98,11 @@ impl Catalog {
                 *budget-=n;
                 match self.source_bound(entry,index,master.unwrap()) {
                     Err(error)=>json!({"state":"unresolved","reason":error}),
-                    Ok((_,lines,master_lines))=>match Self::parameter_spec(p,&lines) {
+                    Ok((_,lines,master_lines))=>match Self::parameter_specs(p,&lines) {
                         Err(error)=>json!({"state":"unresolved","reason":error}),
-                        Ok(Some(spec))=>json!({"state":"parameter-required","parameter":spec,"scope":"Declared values are source metadata, not verified game or device behavior"}),
-                        Ok(None)=>match crate::debug_cheat_decoder::inspect_source(&lines,&master_lines,None){
+                        Ok(specs) if specs.len()==1=>json!({"state":"parameter-required","parameter":specs[0],"scope":"Declared values are source metadata, not verified game or device behavior"}),
+                        Ok(specs) if !specs.is_empty()=>json!({"state":"parameter-required","parameters":specs,"scope":"Declared values are source metadata, not verified game or device behavior"}),
+                        Ok(_)=>match crate::debug_cheat_decoder::inspect_source(&lines,&master_lines,None){
                         Err(error)=>json!({"state":"not-decoded","reason":error}),
                         Ok((plan,master_info))=>match plan.footprint(){
                             Ok(footprint)=>json!({"state":"manual-once-subset","plan":plan,"footprint":footprint,"checksum_required":master_info["game_id"]["checksum_enabled"]}),
@@ -135,19 +136,17 @@ impl Catalog {
         if lines.is_empty() || lines.len()>1024{return Err("Source needs 1..1024 raw code lines".into());}
         lines.iter().map(|v|v.as_str().filter(|s|s.len()<=4096).map(str::to_owned).ok_or_else(||"Invalid source code line".to_string())).collect()
     }
-    fn parameter_spec(provenance:&Value,lines:&[String])->Result<Option<crate::debug_cheat_parameters::Specification>,String>{
-        let Some(value)=provenance.get("parameter") else{return Ok(None)};
-        let spec:crate::debug_cheat_parameters::Specification=serde_json::from_value(value.clone()).map_err(|e|format!("Invalid declared parameter: {e}"))?;
-        spec.validate_source(lines)?;Ok(Some(spec))
+    fn parameter_specs(provenance:&Value,lines:&[String])->Result<Vec<crate::debug_cheat_parameters::Specification>,String>{
+        let single=provenance.get("parameter");let multiple=provenance.get("parameters");
+        if single.is_some() && multiple.is_some(){return Err("Use either parameter or parameters, not both".into());}
+        let specs=if let Some(value)=single{vec![serde_json::from_value(value.clone()).map_err(|e|format!("Invalid declared parameter: {e}"))?]}
+            else if let Some(value)=multiple{serde_json::from_value(value.clone()).map_err(|e|format!("Invalid declared parameters: {e}"))?}else{return Ok(Vec::new())};
+        crate::debug_cheat_parameters::validate_many_source(lines,&specs)?;Ok(specs)
     }
-    fn parameterized_source(provenance:&Value,lines:&[String],parameter:Option<&crate::debug_cheat_parameters::Choice>)->Result<(Vec<String>,Option<crate::debug_cheat_parameters::Specification>),String>{
-        let declared=Self::parameter_spec(provenance,lines)?;
-        let expanded=match (declared.as_ref(),parameter){
-            (Some(spec),Some(choice))=>crate::debug_cheat_parameters::expand(lines,spec,choice)?,
-            (Some(_),None)=>return Err("Choose an explicitly declared parameter value first".into()),
-            (None,Some(_))=>return Err("This source does not declare a parameter".into()),
-            (None,None)=>lines.to_vec(),
-        };
+    fn parameterized_source(provenance:&Value,lines:&[String],parameters:&[crate::debug_cheat_parameters::Choice])->Result<(Vec<String>,Vec<crate::debug_cheat_parameters::Specification>),String>{
+        let declared=Self::parameter_specs(provenance,lines)?;
+        let expanded=if declared.is_empty(){if !parameters.is_empty(){return Err("This source does not declare parameters".into());}lines.to_vec()}
+            else{crate::debug_cheat_parameters::expand_many(lines,&declared,parameters)?};
         Ok((expanded,declared))
     }
     fn source_bound(&self,entry:&Value,index:usize,master_id:&str)->Result<(String,Vec<String>,Vec<String>),String>{
@@ -204,7 +203,9 @@ impl Catalog {
         let entry=&self.entries[index];let sources=self.capabilities[index]["sources"].as_array().ok_or("Missing source assessment")?;
         Ok(sources.iter().filter_map(|s|{
             let index=s["provenance_index"].as_u64()?;let provenance=entry["provenance"].as_array()?.get(index as usize)?;
-            Some(menu::CheatSource{index:u16::try_from(index).ok()?,name:provenance["source"].as_str().unwrap_or("unknown").chars().take(80).collect(),master:s["master_id"].as_str().unwrap_or("unknown").chars().take(16).collect(),assessment:s["assessment"]["state"].as_str().unwrap_or("unresolved").into()})
+            let assessment=&s["assessment"];let specs=if let Some(value)=assessment.get("parameter"){serde_json::from_value::<crate::debug_cheat_parameters::Specification>(value.clone()).ok().into_iter().collect()}else{assessment.get("parameters").cloned().and_then(|v|serde_json::from_value::<Vec<crate::debug_cheat_parameters::Specification>>(v).ok()).unwrap_or_default()};
+            let parameters=specs.into_iter().map(|spec|menu::CheatParameter{name:spec.name,domain:match spec.allowed{crate::debug_cheat_parameters::Domain::List{values}=>menu::CheatParameterDomain::List(values),crate::debug_cheat_parameters::Domain::Range{min,max,step}=>menu::CheatParameterDomain::Range{min,max,step}}}).collect();
+            Some(menu::CheatSource{index:u16::try_from(index).ok()?,name:provenance["source"].as_str().unwrap_or("unknown").chars().take(80).collect(),master:s["master_id"].as_str().unwrap_or("unknown").chars().take(16).collect(),assessment:assessment["state"].as_str().unwrap_or("unresolved").into(),parameters})
         }).collect())
     }
 }
@@ -237,7 +238,7 @@ impl Snapshot {
     pub fn matches(&self,reference:Option<&crate::debug_inputs::Reference>,rom:&str)->bool{
         rom==self.rom_sha256 && reference.is_some_and(|r|r.entry.id==self.selection_id && r.entry.sha256.as_deref()==Some(&self.source_sha256))
     }
-    pub fn prepare_once(&self,reference:&crate::debug_inputs::Reference,rom:&[u8],id:&str,index:usize,master_id:&str,generation:&str,parameter:Option<&crate::debug_cheat_parameters::Choice>)->Result<(crate::debug_cheat_decoder::Plan,Value),String>{
+    pub fn prepare_once(&self,reference:&crate::debug_inputs::Reference,rom:&[u8],id:&str,index:usize,master_id:&str,generation:&str,parameters:&[crate::debug_cheat_parameters::Choice])->Result<(crate::debug_cheat_decoder::Plan,Value),String>{
         self.check_generation(Some(generation))?;
         let sha=gba_core::ffta_rom::digest(rom);
         if !self.matches(Some(reference),&sha){return Err("Cheat snapshot or ROM identity changed".into());}
@@ -246,7 +247,7 @@ impl Snapshot {
         let entry=current.entry(id).ok_or("Unknown CH identifier")?;
         if !entry["format"].as_str().unwrap().eq_ignore_ascii_case("codebreaker") || Target::new(Some(&sha)).declaration(entry["region"].as_str().unwrap())!="declared-match" {return Err("One-shot requires a recognized exact ROM and matching declared CodeBreaker region".into());}
         let (source,lines,master)=current.source_bound(entry,index,master_id)?;
-        let provenance=&entry["provenance"][index];let (expanded,declared)=Catalog::parameterized_source(provenance,&lines,parameter)?;
+        let provenance=&entry["provenance"][index];let (expanded,declared)=Catalog::parameterized_source(provenance,&lines,parameters)?;
         let (plan,master_info)=crate::debug_cheat_decoder::inspect_source(&expanded,&master,Some(rom))?;
         if master_info["rom"]["checksum_state"]!="match"{return Err("Source master checksum does not match the loaded ROM".into());}
         let footprint=plan.footprint()?;
@@ -254,7 +255,8 @@ impl Snapshot {
             "source_sha256":current.source_sha256,"rom_sha256":sha,"entry_lines_sha256":gba_core::ffta_rom::digest(&serde_json::to_vec(&lines).unwrap()),
             "master_lines_sha256":gba_core::ffta_rom::digest(&serde_json::to_vec(&master).unwrap()),"master":master_info,"plan":plan,"footprint":footprint,
             "scope":"Manual paused one-shot; source/device behavior and hardware hook timing remain unverified"});
-        if let Some(choice)=parameter{info["parameter"]=json!({"choice":choice,"declaration":declared,"scope":"Source-declared domain; not verified device or gameplay behavior"});}
+        if parameters.len()==1{info["parameter"]=json!({"choice":parameters[0],"declaration":declared[0],"scope":"Source-declared domain; not verified device or gameplay behavior"});}
+        else if !parameters.is_empty(){info["parameters"]=json!({"choices":parameters,"declarations":declared,"scope":"Source-declared domains; not verified device or gameplay behavior"});}
         Ok((plan,info))
     }
     fn check_generation(&self,generation:Option<&str>)->Result<(),String>{
@@ -465,13 +467,59 @@ mod tests {
         v["entries"][1]["provenance"]=json!([{"source":"synthetic","raw_code_lines":["9ABCDEF0 1234","B131BCEF 0691","26960CD0 140B"]}]);
         let c=Catalog::parse(&serde_json::to_vec(&v).unwrap()).unwrap();let report=&c.capabilities[0];
         assert_eq!(report["state"],"parameter-required");assert_eq!(report["sources"][0]["assessment"]["parameter"]["name"],"amount");
+        let sources=c.menu_sources("CH-0001").unwrap();assert_eq!(sources.len(),1);
+        assert_eq!(sources[0].parameters,vec![menu::CheatParameter{name:"amount".into(),domain:menu::CheatParameterDomain::List(vec![0])}]);
         let source=&c.entries[0]["provenance"][0];let (name,raw,master)=c.source_bound(&c.entries[0],0,"CH-0002").unwrap();assert_eq!(name,"synthetic");
-        assert!(Catalog::parameterized_source(source,&raw,None).is_err());
+        assert!(Catalog::parameterized_source(source,&raw,&[]).is_err());
         let good=crate::debug_cheat_parameters::Choice{name:"amount".into(),value:0};
-        let (expanded,_)=Catalog::parameterized_source(source,&raw,Some(&good)).unwrap();
+        let (expanded,_)=Catalog::parameterized_source(source,&raw,std::slice::from_ref(&good)).unwrap();
         let (plan,_)=crate::debug_cheat_decoder::inspect_source(&expanded,&master,None).unwrap();assert!(plan.footprint().is_ok());
-        assert!(Catalog::parameterized_source(source,&raw,Some(&crate::debug_cheat_parameters::Choice{name:"amount".into(),value:1})).is_err());
+        assert!(Catalog::parameterized_source(source,&raw,&[crate::debug_cheat_parameters::Choice{name:"amount".into(),value:1}]).is_err());
         assert_eq!(c.entries,v["entries"].as_array().unwrap().clone());
+    }
+    #[test]
+    fn multiple_declared_parameters_map_to_menu_and_decode_together(){
+        let mut v=fixture();v["entries"][0]["codes"]=json!(["BB28F3XY B8CZ"]);
+        let spec=|name:&str,field:&str,offset:u8|json!({"name":name,"allowed":{"kind":"list","values":[0]},"slots":[{"line":0,"field":field,"offset":offset,"digits":1}]});
+        v["entries"][0]["provenance"]=json!([{"source":"synthetic","master_id":"CH-0002","raw_code_lines":v["entries"][0]["codes"],"parameters":[spec("race","word",6),spec("job","word",7),spec("look","value",3)]}]);
+        v["entries"][1]["format"]=json!("codebreaker");v["entries"][1]["region"]=json!("EUR");v["entries"][1]["provenance"]=json!([{"source":"synthetic","raw_code_lines":["9ABCDEF0 1234","B131BCEF 0691","26960CD0 140B"]}]);
+        let c=Catalog::parse(&serde_json::to_vec(&v).unwrap()).unwrap();assert_eq!(c.capabilities[0]["state"],"parameter-required");let sources=c.menu_sources("CH-0001").unwrap();assert_eq!(sources[0].parameters.len(),3);
+        let (_,raw,master)=c.source_bound(&c.entries[0],0,"CH-0002").unwrap();let source=&c.entries[0]["provenance"][0];
+        let choices=[crate::debug_cheat_parameters::Choice{name:"race".into(),value:0},crate::debug_cheat_parameters::Choice{name:"job".into(),value:0},crate::debug_cheat_parameters::Choice{name:"look".into(),value:0}];
+        assert!(Catalog::parameterized_source(source,&raw,&choices[..2]).is_err());let (expanded,declared)=Catalog::parameterized_source(source,&raw,&choices).unwrap();assert_eq!(declared.len(),3);assert_eq!(expanded[0],"BB28F300 B8C0");
+        assert!(crate::debug_cheat_decoder::inspect_source(&expanded,&master,None).unwrap().0.footprint().is_ok());
+    }
+    #[test]
+    #[ignore = "Requires an explicitly protected EUR ROM fixture and validation work directory"]
+    fn declared_parameter_uses_real_rom_preflight_with_a_synthetic_catalog(){
+        let rom=std::fs::read(std::env::var_os("FFTA_PARAMETER_TEST_ROM").expect("protected ROM fixture")).unwrap();
+        let work=std::path::PathBuf::from(std::env::var_os("FFTA_VALIDATION_WORK").expect("validation work"));
+        let dir=tempfile::tempdir_in(work).unwrap();let path=dir.path().join("catalogo.json");
+        let mut value=fixture();value["entries"][0]["codes"]=json!(["AE1934BX 70E6","524D3BD0 7FEE","473AF42B 20FC","07A5CB01 381C"]);
+        value["entries"][0]["provenance"]=json!([{"source":"synthetic","master_id":"CH-0002","raw_code_lines":value["entries"][0]["codes"],
+            "parameter":{"name":"amount","allowed":{"kind":"list","values":[15]},"slots":[{"line":0,"field":"word","offset":7,"digits":1}]}}]);
+        value["entries"][1]["format"]=json!("codebreaker");value["entries"][1]["region"]=json!("EUR");
+        value["entries"][1]["provenance"]=json!([{"source":"synthetic","raw_code_lines":["9ABCDEF0 1234","19A10BC4 AA65","26960CD0 140B"]}]);
+        std::fs::write(&path,serde_json::to_vec(&value).unwrap()).unwrap();let source=std::fs::read(&path).unwrap();
+        let sha=gba_core::ffta_rom::digest(&rom);let reference=crate::debug_inputs::Reference::explicit(&path,menu::ContentSlot::CheatCatalog,&sha).unwrap();
+        let catalog=Catalog::load(&path).unwrap();let snapshot=Snapshot::new(catalog,reference.entry.id.clone(),sha).unwrap();let generation=snapshot.generation.clone();
+        let invalid=crate::debug_cheat_parameters::Choice{name:"amount".into(),value:14};
+        assert!(snapshot.prepare_once(&reference,&rom,"CH-0001",0,"CH-0002",&generation,&[]).is_err());
+        assert!(snapshot.prepare_once(&reference,&rom,"CH-0001",0,"CH-0002",&generation,std::slice::from_ref(&invalid)).is_err());
+        let choice=crate::debug_cheat_parameters::Choice{name:"amount".into(),value:15};
+        let (plan,info)=snapshot.prepare_once(&reference,&rom,"CH-0001",0,"CH-0002",&generation,std::slice::from_ref(&choice)).unwrap();
+        assert_eq!(info["parameter"]["choice"]["value"],15);assert_eq!(info["master"]["rom"]["checksum_state"],"match");
+        let mut machine=gba_core::Machine::new(vec![]);assert_eq!(plan.apply_once(&mut machine.bus).unwrap(),3);
+        assert_eq!(std::fs::read(&path).unwrap(),source);
+        value["entries"][0]["codes"][0]=json!("AE1934BX 70EY");value["entries"][0]["provenance"][0]["raw_code_lines"]=value["entries"][0]["codes"].clone();
+        let provenance=&mut value["entries"][0]["provenance"][0];provenance.as_object_mut().unwrap().remove("parameter");
+        provenance["parameters"]=json!([{ "name":"first","allowed":{"kind":"list","values":[15]},"slots":[{"line":0,"field":"word","offset":7,"digits":1}] },{ "name":"second","allowed":{"kind":"range","min":6,"max":6,"step":1},"slots":[{"line":0,"field":"value","offset":3,"digits":1}] }]);
+        std::fs::write(&path,serde_json::to_vec(&value).unwrap()).unwrap();assert!(snapshot.prepare_once(&reference,&rom,"CH-0001",0,"CH-0002",&generation,std::slice::from_ref(&choice)).is_err());
+        let reference=crate::debug_inputs::Reference::explicit(&path,menu::ContentSlot::CheatCatalog,&gba_core::ffta_rom::digest(&rom)).unwrap();let snapshot=Snapshot::new(Catalog::load(&path).unwrap(),reference.entry.id.clone(),gba_core::ffta_rom::digest(&rom)).unwrap();
+        let choices=[crate::debug_cheat_parameters::Choice{name:"first".into(),value:15},crate::debug_cheat_parameters::Choice{name:"second".into(),value:6}];
+        assert!(snapshot.prepare_once(&reference,&rom,"CH-0001",0,"CH-0002",&snapshot.generation,&choices[..1]).is_err());
+        let (multiple,info)=snapshot.prepare_once(&reference,&rom,"CH-0001",0,"CH-0002",&snapshot.generation,&choices).unwrap();assert_eq!(info["parameters"]["choices"].as_array().unwrap().len(),2);
+        let mut other=gba_core::Machine::new(vec![]);assert_eq!(multiple.apply_once(&mut other.bus).unwrap(),3);
     }
     #[test]
     fn master_links_distinguish_source_records_without_selecting_dependencies(){

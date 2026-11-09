@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-09",
+  "slug": "validate-declared-cheat-parameter-domain-width",
+  "title": "Validate the full declared cheat parameter domain",
+  "kind": "fixed",
+  "platforms": [
+    "Linux",
+    "Windows GNU cross-build"
+  ],
+  "changes": [
+    "Document the existing partial source-declared parameter command, guarded preview and preset choice preservation without claiming that local declarations verify game behavior.",
+    "Reject a declared parameter list or stepped range when any selectable value cannot fit every placeholder slot, before advertising that declaration as usable."
+  ],
+  "validation": [
+    "Focused Linux tests passed for parameter substitution, catalog assessment, local-control compatibility, preset persistence and armed-set behavior. The width tests cover a list with an oversized later value, an oversized stepped-range endpoint and a range whose last reachable value fits.",
+    "The changed Windows GNU test target cross-compiled successfully; Windows tests were not executed."
+  ],
+  "limitations": [
+    "The parameter command and preset path remain partial: the current catalog has no structured value domains, the menu has no value selector, and an isolated end-to-end flow and Windows execution are not yet verified. An attempted Wine validation did not start because automatic approval review hit its usage limit; no unsafe fallback was used."
+  ],
+  "files": [
+    "crates/recomp/src/debug_cheat_parameters.rs",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

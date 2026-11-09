@@ -315,8 +315,8 @@ CH-0002 GENERATION TOKEN`. The same typed actions are available as
 `debug-control cheat-prepare` and `cheat-apply`. A successful one-shot consumes
 the preview; retry uses the existing request ledger and does not duplicate it.
 
-Preparation and application require an idle paused isolated copy without an
-active recording or replay, an interpreter backend, the exact recognized ROM,
+Preparation and application require an idle paused isolated copy without a
+legacy recording or replay, an interpreter backend, the exact recognized ROM,
 a matching declared region and a source master checksum matching the loaded ROM
 bytes. The selected catalog is rechecked; application recomputes the plan and
 requires the same source, generation and complete paused-state hash as the
@@ -328,11 +328,27 @@ are refused. Operations execute once at the paused frame/clock, in their source
 order, without installing the original device hook or maintaining a toggle.
 This is an explicit manual experiment, not verification of the code's intended
 game effect; restoring a checkpoint remains a separate action. Broader memory
-semantics and provenance-aware recording remain unfinished.
-Snapshot slots can be saved after a one-shot. Such snapshots carry a bounded,
-conservative record of observed cheat ancestry; see [save states](save_states.md).
-Input recordings after cheat use remain refused because they do not yet retain
-the provenance needed for replay.
+semantics remain unfinished.
+Snapshot slots can be saved after a one-shot. SL3 retains conservative cheat
+ancestry separately from a bounded exact suffix of observed applications; see
+[save states](save_states.md).
+An interpreter recording can start after observed cheat use. It pins the
+starting state's conservative ancestry and any exact observed suffix separately;
+replay restores that state and does not apply the earlier cheats again. Earlier
+unknown ancestry remains unknown. A snapshot-relative recording can also record
+subsequent one-shots and maintained interpreter applications. It keeps a private
+catalog copy and a bounded timeline with
+source/plan hashes, parameters, application order, frame, clock and write count.
+The timeline admits at most 65,536 application events, 64 distinct variants
+and 16 MiB; a maintained set records one event per frame. An application that
+exceeds a limit is refused before its write; if maintained execution reaches a
+limit, the recording stops as incomplete.
+Plain interpreter replay re-decodes every recorded plan against the pinned ROM
+and catalog before execution, then applies it at the recorded boundary. Other
+replay modes refuse these recordings. A protected-ROM synthetic test reproduced
+the exact state and clock and refused modified inputs; live frontend and Windows
+execution remain unverified. The timeline and catalog contain private cheat
+data and must not be included in public packages.
 
 For maintained use, prepare the same state-bound preview, then issue `cheats
 arm CH-0001 0 CH-0002 GENERATION TOKEN`. Arm itself writes nothing. The frozen
@@ -373,7 +389,48 @@ guest write occurs until the next interpreter frame. The **Manage cheat** page
 also has **Presets**: edit the name and save the armed set, then explicitly
 select a saved preset, prepare and review it, and arm it. Changing the selection
 or switching between source and preset views invalidates the stored review
-token. Parameter value and range selection remains open work.
+token. Declared parameter values can be selected as described below; validated
+domains for the current local catalog remain open work.
+
+The control command also accepts an explicit source-declared parameter:
+`cheats prepare CH-0001 0 CH-0002 GENERATION --parameter amount --value 10`.
+The optional `parameter` object belongs to the selected provenance record and
+contains `name`, an `allowed` list or stepped range, and `slots` identifying
+zero-based source lines, `word` or `value`, a zero-based nibble offset and
+digit count. For multiple independent values, use `parameters` as an array of
+up to eight such declarations and repeat `--parameter NAME --value N` for each.
+The menu asks for each value in declaration order. Each slot must cover only
+one kind of `X`, `Y` or `Z` placeholder; all placeholders must
+be covered and the entire declared domain must fit every slot. Values are
+decimal integers and are substituted into the original source lines before
+the source-bound decoder runs. The unchanged source, chosen value and decoded
+plan are included in the guarded preview; a saved preset retains the choice.
+The selected value must still pass the ordinary master, ROM, state and
+footprint checks. In the management screen, explicitly select the source,
+choose a value with the previous/next controls, then confirm it before preparing
+the preview. While choosing, focus identifies the parameter and current value;
+activation buttons appear after confirmation. Returning to the source or
+changing the value clears the old review. A local declaration describes an allowed domain; it does not establish
+that the values have the intended game effect or that the source is valid for
+a physical device. The current local catalog has no such structured domains.
+Synthetic Windows GNU/Wine checks now cover multiple-parameter substitution,
+source mapping, capability refusal and presets, plus menu confirmation and
+offscreen rendering in English and Italian. A protected EUR ROM and synthetic
+catalog also passed Wine checksum/master preflight and isolated temporary RAM
+writes. These checks do not exercise a live menu-to-application flow or physical
+device. An isolated end-to-end run and broader Windows execution remain open.
+A separate Linux check used a synthetic catalog and a protected EUR ROM for checksum preflight:
+it refused an absent or out-of-domain value and applied the decoded synthetic
+plan to temporary RAM. It did not exercise the graphical frontend.
+
+A readonly audit of the current local catalog found 24 CodeBreaker source
+records containing placeholders, all linked to the same two-line master. One
+entry describes three distinct placeholder groups. The master has the shape of
+a possible plaintext game-ID/hook pair, but under that hypothesis its enabled
+checksum differs from the protected known EUR ROM. Its format, target ROM and
+device behavior therefore remain unverified; the current source-bound decoder
+refuses it. Multiple-parameter support does not verify a source's declared
+values or make an unsupported master executable.
 
 Frozen Windows GNU tests and an isolated synthetic Wine/Xvfb session checked a
 two-member save/preview/arm flow, duplicate name, changed preset, source lines,

@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "date": "2026-11-09",
+  "slug": "record-source-bound-cheat-replay-timeline",
+  "title": "Record source-bound cheat replay timelines",
+  "kind": "added",
+  "platforms": [
+    "Linux",
+    "Windows GNU cross-build"
+  ],
+  "changes": [
+    "Record bounded source-bound one-shot and maintained cheat applications at their actual interpreter frame and clock boundaries, with ordered identities, parameter choices, plan hashes, source catalog and write counts.",
+    "Authenticate the private catalog and ROM, re-decode each plan and reject altered, conflicting, incomplete or incompatible timelines before applying them in plain isolated interpreter replay. Preserve conservative snapshot ancestry and existing refusal after observed prior cheat use.",
+    "Include recorded variant identity in replay and issue reports, authenticate retained report identity and retain private catalog and timeline attachments without automatic distribution."
+  ],
+  "validation": [
+    "A protected EUR ROM and synthetic catalog reproduced exact state and clock across manual and maintained applications, identified the variant, refused altered catalog, timeline and incompatible mode, and excluded a stale report after a forged plan and hashes were substituted.",
+    "Linux timeline, recording and replay regression suites passed, as did an issue-report check; Windows GNU tests cross-compiled without execution."
+  ],
+  "limitations": [
+    "Live frontend/menu-to-recording execution, native Windows and physical inputs remain unverified. Recordings after observed prior cheat ancestry and audit, capture, comparison or native replay with cheat timelines remain refused.",
+    "SL2 snapshot ancestry remains conservative rather than an exact per-application timeline; complete reset/ROM semantics and an actual incompatible active-set replay refusal remain open. No ordinary DS case was promoted."
+  ],
+  "files": [
+    "crates/recomp/src/main.rs",
+    "crates/recomp/src/debug_cheat_decoder.rs",
+    "crates/recomp/src/debug_cheat_timeline.rs",
+    "crates/recomp/src/debug_cheat_armed.rs",
+    "crates/recomp/src/debug_recording.rs",
+    "crates/recomp/src/debug_replay.rs",
+    "crates/recomp/src/debug_replay/tests.rs",
+    "crates/recomp/src/debug_issue.rs",
+    "crates/recomp/src/play.rs",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/debug_recordings.md",
+    "docs/debug_replays.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

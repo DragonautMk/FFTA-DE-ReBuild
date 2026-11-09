@@ -50,6 +50,7 @@ impl Choice {
 
 impl Specification {
     /// Check the declared shape without choosing a value for execution.
+    #[cfg(test)]
     pub(crate) fn validate_source(&self, lines: &[String]) -> Result<(), String> {
         let value = match &self.allowed {
             Domain::List { values } => *values.first().ok_or("Empty parameter value list")?,
@@ -61,6 +62,19 @@ impl Specification {
     fn accepts(&self, choice: &Choice) -> Result<(), String> {
         if !valid_name(&self.name) || choice.name != self.name || self.slots.is_empty() || self.slots.len() > 16 {
             return Err("Invalid parameter identity or slots".into());
+        }
+        let max_value = match &self.allowed {
+            Domain::List { values } => *values.iter().max().ok_or("Empty parameter value list")?,
+            Domain::Range { min, max, step } => {
+                if min > max || *step == 0 { return Err("Invalid parameter range".into()); }
+                min + ((max - min) / step) * step
+            }
+        };
+        for slot in &self.slots {
+            let digits = usize::from(slot.digits);
+            if digits == 0 || digits > 4 || (digits < 4 && u32::from(max_value) >= (1u32 << (digits * 4))) {
+                return Err("Declared parameter domain exceeds slot width".into());
+            }
         }
         let allowed = match &self.allowed {
             Domain::List { values } => {
@@ -81,8 +95,22 @@ impl Specification {
 
 /// Substitute only explicitly declared placeholder nibbles. All remaining
 /// input must be complete hexadecimal code before the normal decoder runs.
+#[cfg(test)]
 pub(crate) fn expand(lines: &[String], spec: &Specification, choice: &Choice) -> Result<Vec<String>, String> {
-    spec.accepts(choice)?;
+    expand_many(lines,std::slice::from_ref(spec),std::slice::from_ref(choice))
+}
+
+/// All declared choices are required, matched by unique name and applied as
+/// one transaction. Slots may cover X, Y or Z placeholders but never overlap.
+pub(crate) fn expand_many(lines: &[String], specs: &[Specification], choices: &[Choice]) -> Result<Vec<String>, String> {
+    if specs.is_empty() || specs.len()>8 || choices.len()!=specs.len(){return Err("Choose each declared parameter exactly once".into());}
+    let mut names=BTreeSet::new();let mut choice_names=BTreeSet::new();
+    for choice in choices {choice.validate()?;if !choice_names.insert(&choice.name){return Err("Duplicate parameter choice".into());}}
+    for spec in specs {
+        if !names.insert(&spec.name){return Err("Duplicate parameter declaration".into());}
+        let choice=choices.iter().find(|choice|choice.name==spec.name).ok_or("Missing declared parameter choice")?;
+        spec.accepts(choice)?;
+    }
     if lines.is_empty() || lines.len() > 1024 { return Err("A block needs 1..1024 lines".into()); }
     let mut fields = Vec::with_capacity(lines.len());
     for line in lines {
@@ -93,7 +121,7 @@ pub(crate) fn expand(lines: &[String], spec: &Specification, choice: &Choice) ->
         fields.push([parts[0].as_bytes().to_vec(), parts[1].as_bytes().to_vec()]);
     }
     let mut occupied = BTreeSet::new();
-    for slot in &spec.slots {
+    for spec in specs {let choice=choices.iter().find(|choice|choice.name==spec.name).unwrap();for slot in &spec.slots {
         let index = usize::from(slot.line);
         let field = match slot.field { Field::Word => 0, Field::Value => 1 };
         let offset = usize::from(slot.offset);
@@ -103,14 +131,16 @@ pub(crate) fn expand(lines: &[String], spec: &Specification, choice: &Choice) ->
             return Err("Parameter slot or value width is invalid".into());
         }
         let replacement = format!("{:0digits$X}", choice.value);
+        let placeholder=fields[index][field][offset].to_ascii_lowercase();
+        if !matches!(placeholder,b'x'|b'y'|b'z'){return Err("Parameter slot does not match placeholders".into());}
         for (i, byte) in replacement.bytes().enumerate() {
             let position = offset + i;
-            if !occupied.insert((index, field, position)) || !matches!(fields[index][field][position], b'x' | b'X') {
+            if !occupied.insert((index, field, position)) || fields[index][field][position].to_ascii_lowercase()!=placeholder {
                 return Err("Parameter slots overlap or do not match placeholders".into());
             }
             fields[index][field][position] = byte;
         }
-    }
+    }}
     let mut expanded = Vec::with_capacity(fields.len());
     for [word, value] in fields {
         if !word.iter().chain(value.iter()).all(u8::is_ascii_hexdigit) {
@@ -119,6 +149,11 @@ pub(crate) fn expand(lines: &[String], spec: &Specification, choice: &Choice) ->
         expanded.push(format!("{} {}", String::from_utf8(word).unwrap(), String::from_utf8(value).unwrap()));
     }
     Ok(expanded)
+}
+
+pub(crate) fn validate_many_source(lines:&[String],specs:&[Specification])->Result<(),String>{
+    let choices=specs.iter().map(|spec|Ok(Choice{name:spec.name.clone(),value:match &spec.allowed{Domain::List{values}=>*values.first().ok_or("Empty parameter value list")?,Domain::Range{min,..}=>*min}})).collect::<Result<Vec<_>,String>>()?;
+    expand_many(lines,specs,&choices).map(|_|())
 }
 
 #[cfg(test)]
@@ -150,6 +185,22 @@ mod tests {
         both.slots.push(both.slots[0].clone()); assert!(expand(&source, &both, &choice).is_err());
         let mut list = spec(); list.allowed = Domain::List { values: vec![2, 256] };
         assert!(expand(&["82000000 00XX".into()], &list, &Choice { name: "amount".into(), value: 256 }).is_err());
+        assert!(list.validate_source(&["82000000 00XX".into()]).is_err());
+        let mut range = spec(); range.allowed = Domain::Range { min: 2, max: 256, step: 2 };
+        assert!(range.validate_source(&["82000000 00XX".into()]).is_err());
+        range.allowed = Domain::Range { min: 2, max: 256, step: 3 };
+        assert!(range.validate_source(&["82000000 00XX".into()]).is_ok());
         list.allowed = Domain::List { values: vec![2, 2] }; assert!(expand(&source, &list, &choice).is_err());
+    }
+    #[test]
+    fn multiple_parameters_expand_independently_and_refuse_ambiguous_inputs(){
+        let source=vec!["820000XX YYZZ".to_string()];
+        let mk=|name:&str,field,offset|Specification{name:name.into(),allowed:Domain::List{values:vec![1,2]},slots:vec![Slot{line:0,field,offset,digits:2}]};
+        let specs=vec![mk("race",Field::Word,6),mk("job",Field::Value,0),mk("look",Field::Value,2)];
+        let choices=vec![Choice{name:"look".into(),value:2},Choice{name:"race".into(),value:1},Choice{name:"job".into(),value:2}];
+        validate_many_source(&source,&specs).unwrap();assert_eq!(expand_many(&source,&specs,&choices).unwrap()[0],"82000001 0202");assert_eq!(source[0],"820000XX YYZZ");
+        assert!(expand_many(&source,&specs,&choices[..2]).is_err());let mut duplicate=choices.clone();duplicate[0]=duplicate[1].clone();assert!(expand_many(&source,&specs,&duplicate).is_err());
+        let mut overlapping=specs.clone();overlapping[2].slots[0]=overlapping[1].slots[0].clone();assert!(validate_many_source(&source,&overlapping).is_err());
+        let mut bad=choices.clone();bad[0].value=3;assert!(expand_many(&source,&specs,&bad).is_err());
     }
 }

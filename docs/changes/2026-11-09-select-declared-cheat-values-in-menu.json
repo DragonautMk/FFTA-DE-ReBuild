@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "date": "2026-11-09",
+  "slug": "select-declared-cheat-values-in-menu",
+  "title": "Select declared cheat values in the management menu",
+  "kind": "added",
+  "platforms": [
+    "Linux",
+    "Windows GNU cross-build"
+  ],
+  "changes": [
+    "Expose a source-declared list or stepped range in the existing cheat management screen. Require explicit value confirmation and send the chosen parameter to the guarded preview; changing source or returning to value selection invalidates the review.",
+    "Prevent action clicks and focus changes from implicitly confirming a value. Keep source declarations unverified and preserve the existing decoder, ROM, state and footprint guards.",
+    "Show the current declared value in focus metadata and hide activation buttons until value confirmation."
+  ],
+  "validation": [
+    "Linux focused tests passed for management selection, 25 content-selector cases, catalog assessment, parameter validation and local control. A separate synthetic catalog test confirms that its declared domain reaches the menu source unchanged. Windows GNU test target cross-compiled successfully with the changed menu and runtime files.",
+    "The first standalone menu test build lacked system Wayland metadata. A second unit ran its tests successfully but its receipt failed during archive retirement with a broken pipe; the corrected managed unit passed and retained its evidence.",
+    "A separate protected EUR ROM checksum preflight used a public synthetic catalog: missing and out-of-domain choices were refused, the chosen value produced three writes in temporary RAM, and the synthetic source and protected ROM were unchanged. No graphical frontend was involved.",
+    "Offscreen Linux rendering and focus checks passed in English and Italian, together with 26 selector tests. An initial wrapper expected the old 25-test count after adding the new test; its failed unit was retained and a corrected unit passed.",
+    "The Windows GNU test target cross-compiled after the focus and rendering changes; this is compilation, not Windows execution.",
+    "A protected readonly audit found 24 current CodeBreaker placeholder source records sharing a two-line master; one entry describes three independent placeholder groups. The master matches a possible plaintext structural shape, but its enabled checksum does not match the known EUR ROM. This does not establish the source format, target or device behavior."
+  ],
+  "limitations": [
+    "The current local catalog has no structured parameter domains, and synthetic selections do not verify game or device behavior. Windows execution and a full isolated menu-to-application proof remain outstanding; a previous Wine launch was not executed because automatic approval review hit its usage limit.",
+    "The current menu supports one declared parameter per source, not multiple independent groups; the shared two-line master remains unsupported and the possible plaintext interpretation is unverified."
+  ],
+  "files": [
+    "crates/menu/src/cheat_management.rs",
+    "crates/menu/src/content_selector.rs",
+    "crates/menu/src/content_selector/tests.rs",
+    "crates/menu/src/lib.rs",
+    "crates/recomp/src/debug_cheats.rs",
+    "crates/recomp/src/play.rs",
+    "crates/recomp/src/debug_operations.json",
+    "crates/input-config/languages/en.json",
+    "crates/input-config/languages/it.json",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

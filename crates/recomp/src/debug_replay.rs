@@ -30,6 +30,10 @@ pub(crate) struct Profile {
     start_sha256: String,
     input_sha256: String,
     end_sha256: String,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    start_cheat_ancestry_sha256: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    cheat_timeline_sha256: Option<String>,
     pub frames: u64,
     first_frame: u64,
     first_clock: u64,
@@ -75,6 +79,10 @@ pub(crate) struct Report {
     pub comparison_report: Option<String>,
     #[serde(default,skip_serializing_if="Vec::is_empty")]
     pub preparation:Vec<serde_json::Value>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub cheat_timeline:Option<serde_json::Value>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub starting_cheat_ancestry:Option<serde_json::Value>,
 }
 impl Report {
     fn new(p: &Profile, run: &str, outcome: &str, completed: u64, message: &str) -> Self {
@@ -100,6 +108,8 @@ impl Report {
             capture_catalog: None,
             comparison_report: None,
             preparation:Vec::new(),
+            cheat_timeline:None,
+            starting_cheat_ancestry:None,
         }
     }
     pub fn code(&self) -> u8 {
@@ -220,6 +230,7 @@ fn load_pinned(path: &Path) -> Result<(PathBuf, Profile, String), String> {
         crate::debug_compare::validate(comparison,p.frames,p.library_sha256.is_some())?;
         if p.audit.is_some() || p.capture.is_some(){return Err("Comparison profiles cannot also audit or capture triggers".into());}
     }
+    if (p.cheat_timeline_sha256.is_some() || p.start_cheat_ancestry_sha256.is_some()) && (p.library_sha256.is_some() || p.audit.is_some() || p.capture.is_some() || p.comparison.is_some()) {return Err("Cheat recordings currently require plain interpreter replay".into());}
     Ok((path.parent().unwrap().into(), p, identity))
 }
 fn load(path:&Path)->Result<(PathBuf,Profile),String>{let(root,profile,_)=load_pinned(path)?;Ok((root,profile))}
@@ -229,6 +240,12 @@ fn checked(root: &Path, name: &str, limit: u64, expected: &str) -> Result<Vec<u8
         return Err(format!("Replay input changed: {name}"));
     }
     Ok(bytes)
+}
+fn starting_cheat_ancestry(root:&Path,p:&Profile)->Result<Option<serde_json::Value>,String>{
+    let Some(hash)=&p.start_cheat_ancestry_sha256 else{return Ok(None);};
+    let bytes=checked(root,"cheat-ancestry.json",256*1024,hash)?;
+    let history:crate::cheat_provenance::History=serde_json::from_slice(&bytes).map_err(|e|format!("Invalid starting cheat ancestry: {e}"))?;
+    history.validate()?;Ok(Some(serde_json::json!({"sha256":hash,"summary":history.recording_summary()})))
 }
 
 /// Readonly report preflight. Does not acquire a lease, execute or load native code.
@@ -241,12 +258,19 @@ pub(crate) fn issue_metadata(path: &Path) -> Result<serde_json::Value, String> {
     checked(&root,"expected.ffstate",gba_core::save_state::MAX_STATE_BYTES as u64,&p.end_sha256)?;
     let bytes=checked(&root,"input.input",MAX_INPUT,&p.input_sha256)?;
     let _script=crate::debug_recording::script(&bytes,p.frames)?;
+    let cheat_report=if let Some(hash)=&p.cheat_timeline_sha256 {
+        let bytes=checked(&root,"cheats-timeline.json",crate::debug_cheat_timeline::MAX_BYTES,hash)?;
+        let timeline=crate::debug_cheat_timeline::Timeline::parse(&bytes)?;
+        timeline.authenticate(&root.join("catalogo.json"),&read(&root.join("ffta.gba"),32*1024*1024)?,p.frames)?;
+        Some(timeline.report())
+    }else{None};
     if let Some(hash)=&p.library_sha256 {checked(&root,"native.bin",256*1024*1024,hash)?;}
     if let Some(hash)=&p.dataset_sha256 {checked(&root,"Data/dataset/manifest.toml",gba_core::rom_data::MAX_MANIFEST_FILE_BYTES,hash)?;}
     let bios=if root.join("gba_bios.bin").exists(){read(&root.join("gba_bios.bin"),16384)?}else{Machine::new(vec![0;256]).bus.bios};
     if digest(&bios)!=p.bios_sha256{return Err("Replay BIOS mismatch".into());}
     let manifest=read(&root.join("debug-session.json"),1024*1024)?;
-    Ok(serde_json::json!({"profile":p,"session_manifest":serde_json::from_slice::<serde_json::Value>(&manifest).map_err(|e|e.to_string())?,
+    let initial_ancestry=starting_cheat_ancestry(&root,&p)?;
+    Ok(serde_json::json!({"profile":p,"cheat_timeline":cheat_report,"starting_cheat_ancestry":initial_ancestry,"session_manifest":serde_json::from_slice::<serde_json::Value>(&manifest).map_err(|e|e.to_string())?,
         "session_manifest_sha256":digest(&manifest),"scope":"Profile bounds, session pins, payload hashes and input parser checked without guest execution. Worker still validates decoded snapshots, runtime compatibility and actual endpoint"}))
 }
 fn executable() -> &'static str {
@@ -330,6 +354,11 @@ fn create_inner(
     {
         return Err("Recording and session ROM/BIOS/dataset differ".into());
     }
+    if (data.cheats.is_some() || data.start_ancestry.is_some()) && (!m.interp || library.is_some() || audit.is_some() || capture.is_some() || comparison.is_some()){return Err("Cheat recordings currently require plain interpreter replay".into());}
+    if let Some((timeline_bytes,_))=&data.cheats {
+        let timeline=crate::debug_cheat_timeline::Timeline::parse(timeline_bytes)?;
+        timeline.authenticate(&recording.join("catalogo.json"),&rom,m.frames)?;
+    }
     let dataset = comparison.and_then(|r| r.dataset.clone()).or_else(||capture.and_then(|r| r.dataset.clone())).or_else(||audit.and_then(|r| r.dataset.clone())).or(dataset);
     let dataset_sha256 = dataset
         .as_ref()
@@ -385,6 +414,8 @@ fn create_inner(
     )?;
     put(&root, "input.input", &data.input)?;
     put(&root, "expected.ffstate", &data.end)?;
+    if let Some((timeline,catalog))=&data.cheats {put(&root,"cheats-timeline.json",timeline)?;put(&root,"catalogo.json",catalog)?;}
+    if let Some((ancestry,_))=&data.start_ancestry {put(&root,"cheat-ancestry.json",ancestry)?;}
     if let Some(bytes) = &native {
         put(&root, "native.bin", bytes)?;
     }
@@ -407,6 +438,8 @@ fn create_inner(
         start_sha256: digest(&data.start),
         input_sha256: digest(&data.input),
         end_sha256: digest(&data.end),
+        start_cheat_ancestry_sha256: data.start_ancestry.as_ref().map(|(bytes,_)|digest(bytes)),
+        cheat_timeline_sha256: data.cheats.as_ref().map(|(bytes,_)|digest(bytes)),
         frames: m.frames,
         first_frame: m.first_frame,
         first_clock: m.first_clock,
@@ -472,12 +505,17 @@ fn execute(
     table: Option<&crate::BlockTable>,
     mut audit: Option<&mut crate::debug_rom_audit::Audit>,
     mut capture: Option<&mut crate::debug_capture::Observer>,
+    mut cheats: Option<&mut crate::debug_cheat_timeline::Playback>,
     mut control: impl FnMut(u64) -> Option<(&'static str, String)>,
 ) -> Report {
     let mut completed = 0;
     let outcome = loop {
         if let Some((kind, message)) = control(completed) {
             break Report::new(p, run, kind, completed, &message);
+        }
+        if let Some(cheats)=cheats.as_deref_mut(){
+            let (frame,clock)=(machine.bus.frames,machine.bus.clock);
+            if let Err(e)=cheats.apply(&mut machine.bus,frame,clock,"once"){break Report::new(p,run,"incompatible",completed,&e);}
         }
         if let Some(capture) = capture.as_deref_mut() {
             let reached = capture.reached(completed, machine.bus.frames);
@@ -493,6 +531,7 @@ fn execute(
             }
         }
         if completed == p.frames {
+            if cheats.as_ref().is_some_and(|c|!c.done()){break Report::new(p,run,"incompatible",completed,"Unreplayed cheat applications remain.");}
             let actual = match machine.save_state() {
                 Ok(s) => s,
                 Err(e) => break Report::new(p, run, "error", completed, &e),
@@ -522,6 +561,10 @@ fn execute(
         machine.bus.keys = input.keys_at(completed);
         if let Err(e) = input.apply_mouse(&mut machine.bus, completed) {
             break Report::new(p, run, "incompatible", completed, &e);
+        }
+        if let Some(cheats)=cheats.as_deref_mut(){
+            let (frame,clock)=(machine.bus.frames,machine.bus.clock);
+            if let Err(e)=cheats.apply(&mut machine.bus,frame,clock,"maintained"){break Report::new(p,run,"incompatible",completed,&e);}
         }
         let before = machine.bus.frames;
         if let Some(table) = table {
@@ -618,6 +661,14 @@ fn worker(path: &Path, run: &str, limit:Option<WorkerLimit>) -> Result<Report, S
     )?;
     let bytes = checked(&root, "input.input", MAX_INPUT, &p.input_sha256)?;
     let input = crate::debug_recording::script(&bytes, p.frames)?;
+    let initial_ancestry=starting_cheat_ancestry(&root,&p)?;
+    let (mut cheats,cheat_report)=if let Some(hash)=&p.cheat_timeline_sha256 {
+        let bytes=checked(&root,"cheats-timeline.json",crate::debug_cheat_timeline::MAX_BYTES,hash)?;
+        let timeline=crate::debug_cheat_timeline::Timeline::parse(&bytes)?;
+        if timeline.first_frame!=p.first_frame{return Err("Cheat timeline origin differs".into());}
+        let plans=timeline.authenticate(&root.join("catalogo.json"),&machine.bus.rom,p.frames)?;
+        let report=timeline.report();(Some(crate::debug_cheat_timeline::Playback::new(timeline,plans)),Some(report))
+    }else{(None,None)};
     machine.load_state(&end)?;
     if p.first_frame.checked_add(p.frames) != Some(machine.bus.frames)
         || machine.bus.clock != p.final_clock
@@ -696,7 +747,9 @@ fn worker(path: &Path, run: &str, limit:Option<WorkerLimit>) -> Result<Report, S
         let result=crate::debug_compare::run(&root,run,settings,origin,&mut machine,&start,&input,native.as_ref().map(|n|&n.1),control)?;
         let mut report=Report::new(&p,run,&result.outcome,result.completed,&result.message);
         report.comparison_report=Some(result.report);report.state_sha256=Some(result.state_sha256);report.clock=Some(result.clock);report
-    }else{execute(&p,run,&mut machine,&input,&end,native.as_ref().map(|n|&n.1),audit.as_mut(),capture.as_mut(),control)};
+    }else{execute(&p,run,&mut machine,&input,&end,native.as_ref().map(|n|&n.1),audit.as_mut(),capture.as_mut(),cheats.as_mut(),control)};
+    report.cheat_timeline=cheat_report;
+    report.starting_cheat_ancestry=initial_ancestry;
     if let Some(audit) = audit {
         let mut result = audit.finish(
             report.completed,

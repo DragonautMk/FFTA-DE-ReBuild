@@ -16,6 +16,8 @@ pub(crate) struct Member {
     pub master_lines_sha256: String,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub parameter: Option<crate::debug_cheat_parameters::Choice>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub parameters: Vec<crate::debug_cheat_parameters::Choice>,
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
@@ -58,6 +60,8 @@ impl Preset {
                 return Err("Invalid or duplicate cheat preset member".into());
             }
             if let Some(choice)=&member.parameter { choice.validate()?; }
+            if member.parameter.is_some() && !member.parameters.is_empty() || member.parameters.len()>8 {return Err("Invalid preset parameter choices".into());}
+            let mut names=BTreeSet::new();for choice in &member.parameters{choice.validate()?;if !names.insert(&choice.name){return Err("Duplicate preset parameter".into());}}
         }
         Ok(())
     }
@@ -137,7 +141,7 @@ mod tests {
         Preset { schema: 1, kind: "ffta-debug-cheat-preset".into(), name: "shop-test".into(),
             catalog_sha256: "a".repeat(64), rom_sha256: "b".repeat(64), members: vec![Member {
                 id: "CH-0001".into(), provenance_index: 0, master_id: "CH-0002".into(),
-                entry_lines_sha256: "c".repeat(64), master_lines_sha256: "d".repeat(64), parameter: None,
+                entry_lines_sha256: "c".repeat(64), master_lines_sha256: "d".repeat(64), parameter: None, parameters: Vec::new(),
             }] }
     }
     #[test]
@@ -155,6 +159,13 @@ mod tests {
         p.members[0].parameter=Some(crate::debug_cheat_parameters::Choice{name:"amount".into(),value:10});
         let root=tempfile::tempdir().unwrap();save(root.path(),&p).unwrap();assert_eq!(load(root.path(),&p.name).unwrap(),p);
         p.members[0].parameter.as_mut().unwrap().name="../bad".into();assert!(p.validate().is_err());
+    }
+    #[test]
+    fn multiple_parameter_choices_are_retained_and_unique(){
+        let mut p=preset();p.members[0].parameters=vec![crate::debug_cheat_parameters::Choice{name:"race".into(),value:1},crate::debug_cheat_parameters::Choice{name:"job".into(),value:2}];
+        let root=tempfile::tempdir().unwrap();save(root.path(),&p).unwrap();assert_eq!(load(root.path(),&p.name).unwrap(),p);
+        p.members[0].parameters[1].name="race".into();assert!(p.validate().is_err());
+        p.members[0].parameters[1].name="job".into();p.members[0].parameter=Some(p.members[0].parameters[0].clone());assert!(p.validate().is_err());
     }
     #[test]
     fn malformed_and_ambiguous_members_are_rejected() {

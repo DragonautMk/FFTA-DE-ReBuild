@@ -71,10 +71,11 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 - State: active
 - Outcome: partial
-- Selection: complete DBG2-20 parameter flow. Catalog has no structured ranges; 24 CodeBreaker sources contain placeholders. Explicit declaration, bounded substitution, compatible control prepare, preview/apply/arm and preset persistence integrated; Linux synthetic component tests PASS (`dbg2-20-parameter-integration-v2-40q8k4py`). Missing: Windows build/tests, real isolated command-flow proof, documentation and actual source-declared domains. No game semantics inferred. Next build Windows and test the guarded flow.
+- Selection: declared multi-parameter menu/CLI, source mapping, guarded preview and presets integrated. Linux menu, rendering, source mapping and multi-parameter suite PASS (`dbg2-20-menu-values-confirm-vymtsut1`, `dbg2-20-parameter-render-corrected-rkm88ykd`, `dbg2-20-multiple-parameter-suite-_dgohsc9`); protected EUR synthetic preflight PASS (`dbg2-20-multiple-real-rom-preflight-ks8dyakw`); Windows GNU cross-build PASS (`dbg2-20-multiple-windows-build-ry5e8e9o`), not execution. Earlier archive-retirement/test-count failures retain diagnostics. Actual catalog has 24 placeholder sources sharing an unverified two-line master and no structured domains (`dbg2-20-source-domain-audit-e9o97pmb`); neither target nor format established. Do not invent domains or bypass master. Full isolated GUI/application proof and broader Windows execution remain open; focused Wine component and protected-ROM checks now pass.
 - Verified: source/preview/arm/disarm, filters, named presets and guided CHEAT-INTERFACE. CHEAT-COMPACT-NAV adds compact catalog, keyboard shortcuts and held vertical repeat; 133 Linux menu tests and CH-0341 X11 GUI passed, portable runtime installed.
 - Missing: validated values/ranges and broader game/device behavior.
-- Resume: select a missing criterion; do not repeat accepted preset/interface/navigation proofs. `docs/changes/2026-11-06-compact-cheat-navigation.json`.
+- Verified Wine increment: four synthetic parameter/catalog/capability/preset tests PASS (`dbg2-20-focused-wine-8q7tdm2w`); protected EUR ROM synthetic preflight with three temporary RAM writes PASS (`dbg2-20-rom-preflight-wine-eiw70mf0`); three menu confirmation/offscreen EN/IT rendering tests PASS (`dbg2-20-menu-offscreen-wine-ftxmavl9`). Each used the coordinated prefix and drained Wine; host menu builds `_z1qvmbg`/`fiiiprbt` failed because dlltool was absent, so the successful menu test was built with the project Docker toolchain.
+- Resume: full isolated frontend-to-application proof and validated source domains remain open; do not repeat accepted Wine increments or bypass the unsupported master. `docs/changes/2026-11-09-support-multiple-declared-cheat-parameters.json`.
 
 ### DBG2-22
 
@@ -85,21 +86,13 @@ for a specific question: archive legacy lines 179..744 or the named record below
 - Missing: CH-0341 third phase, exact conditions and side effects; CH-0330 suitable EUR scene, other group entries, actual level-up and device-hook equivalence.
 - Resume: user-provided phase-three and victory snapshots are privately archived and structurally validated, not replayed; use on relevant request. `docs/debug_catalog.md`.
 
-### DBG2-23
-
-- State: waiting
-- Outcome: partial
-- Verified: DBG2-23-SNAPSHOT adds bounded conservative SL2 cheat ancestry and safe copy/load/Undo semantics; Linux tests, active-cheat GUI save and recording refusal PASS. Runtime installed in user's Linux portable copy. Legacy ancestry unknown.
-- Missing: exact per-application set/hash/parameters/order/frame/decoder in profiles/recordings/reports, complete reset/ROM semantics, state-clock replay and incompatible-set refusal.
-- Resume: after DBG2-21, implement exact recording/replay contract; do not repeat the accepted snapshot tests.
-
 ### DBG2-25
 
-- State: waiting
+- State: suspended
 - Outcome: not_started
-- Verified: preceding foundations accepted; no recorded closure of parent 25, outside audit 13..23.
-- Missing: observed values/differences pinned on screen; dependencies DBG2-03/15 and DBG-11/17.
-- Resume: only criterion DBG2-25 in TODO section P4 upon a relevant request; no development selected now.
+- Verified: DBG2-03/15 dependencies are accepted; read-only inspection and gameplay source projections exist, but no pinning acceptance is recorded.
+- Missing: bounded labeled pins for registers, memory and decoded fields, previous values/change display, context invalidation and proof of unchanged state.
+- Resume: upon goal resumption, read only DBG2-25 in the TODO and its existing inspection/gameplay/menu implementations; avoid repeating accepted selector or control tests.
 
 ### DBG2-26
 
@@ -164,9 +157,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: LINUX-RELEASE-WARNINGS completed; previous Windows work and unrelated tasks preserved.
-- Last verified result: Linux release build has zero warnings; 11 save-state and 40 recipe-runner tests PASS with unchanged protected inputs.
-- Remaining work: none for these warnings; no new Linux/Windows package was produced.
-- Errors or blockers: none for the requested scope; host ALSA metadata was unavailable, so validation used the Linux container.
-- Next action: no further work selected.
-- References: docs/changes/2026-11-09-scope-test-only-debug-and-save-adapters.json; target/validation/units/linux-release-warning-check-tabi7i5p/.
+- Task: DBG2-23 completed and archived; goal currently paused.
+- Last verified result: DBG2-23 real Wine frontend and additive protected-ROM tests PASS, as do memory, handoff, Atlas and diff checks.
+- Remaining work: DBG2-20, DBG2-22 and DBG2-25 through DBG2-28 remain open.
+- Errors or blockers: previous DBG2-23 frontend FAIL receipts and their diagnostics are retained; no other owner jobs disturbed.
+- Next action: on goal resumption, select an unfinished parent and check its current handoff and evidence before implementation.
+- References: docs/development/DEBUG_TOOLS_V2_TODO.md; docs/changes/2026-11-09-record-cheat-derived-origins.json.

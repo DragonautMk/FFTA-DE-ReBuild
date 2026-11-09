@@ -59,10 +59,15 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   displays its keyboard shortcuts; held Up/Down repeats menu navigation without
   repeating confirmation or cancellation. It can create an isolated
   interpreter copy and seed it with the selected default catalog's favorites. Desktop snapshots
-  with observed cheat ancestry carry a bounded SL2 record; loading disarms and
-  conservatively retains ancestry across restoration and debug copies. Legacy
-  snapshot ancestry is unknown. Recording/replay provenance and broader backends
-  remain open; see [save states](../save_states.md).
+  with observed cheat ancestry carry a bounded SL3 record with an exact observed
+  suffix and separate conservative ancestry; loading disarms and restores the
+  suffix for that branch. SL2 remains readable; legacy snapshot ancestry and
+  history before the observed suffix are unknown. Snapshot-relative interpreter
+  recordings can pin cheat-derived starting ancestry without reapplying it, and
+  retain exact source-bound timelines for subsequent applications; a protected-ROM
+  synthetic state/clock test passed.
+  Live frontend, Windows execution, broader provenance and backends remain
+  open; see [save states](../save_states.md) and [cheats](../cheats.md).
 
 - The explicitly requested [private debug-assets export](../private_debug_assets.md)
   builds a separate ignored Windows portable ZIP from the user's selected local

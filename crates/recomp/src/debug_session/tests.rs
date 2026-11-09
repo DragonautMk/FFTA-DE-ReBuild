@@ -75,10 +75,12 @@ fn debug_copy_preserves_cheat_ancestry_in_its_seed_and_slot() {
     let mut restored = crate::make_machine(f.rom.clone(), None);
     let loaded = crate::save_state::load_with_history(&mut restored, &session.state().unwrap()).unwrap();
     assert_eq!(loaded.events, history.events);
+    assert_eq!(serde_json::to_value(&loaded.exact).unwrap(),serde_json::to_value(&history.exact).unwrap());
     assert_eq!(restored.bus.frames, 17);
     let mut slots = crate::save_state::Slots::new(&root.join("Data/saves/ffta.sav"), &f.rom);
     let loaded = slots.load_with_history(&mut restored, 1).unwrap();
     assert_eq!(loaded.events, history.events);
+    assert_eq!(serde_json::to_value(&loaded.exact).unwrap(),serde_json::to_value(&history.exact).unwrap());
 }
 
 #[test]

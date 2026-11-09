@@ -11,6 +11,7 @@ const MAX_FRAMES: u64 = 360_000;
 const MAX_EVENTS: u64 = 200_000;
 const MAX_INPUT: u64 = 8 * 1024 * 1024;
 const MAX_CAPTURES: usize = 8;
+const MAX_ANCESTRY: u64 = 256 * 1024;
 
 #[derive(Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -36,6 +37,10 @@ pub(crate) struct Manifest {
     pub(crate) start_sha256: String,
     pub(crate) input_sha256: Option<String>,
     pub(crate) end_sha256: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub(crate) start_cheat_ancestry_sha256: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub(crate) cheat_timeline_sha256: Option<String>,
 }
 
 pub(crate) struct Capture {
@@ -45,6 +50,7 @@ pub(crate) struct Capture {
     last_keys: u16,
     next_frame: u64,
     bytes: u64,
+    cheat_timeline: Option<crate::debug_cheat_timeline::Timeline>,
 }
 
 fn publish(path: &Path, bytes: &[u8], replace: bool) -> Result<(), String> {
@@ -72,6 +78,7 @@ impl Capture {
     pub fn lifecycle_status(&self)->serde_json::Value{
         serde_json::json!({"first_frame":self.manifest.first_frame,"expected_next_frame":self.next_frame,"input_bytes":self.bytes,"last_keys":self.last_keys,"scope":"Input writer metadata; expected next frame is not proof of a completed frame"})
     }
+    #[cfg(test)]
     pub fn start(
         directory: &Path,
         machine: &Machine,
@@ -80,8 +87,22 @@ impl Capture {
         av: &input_config::AvConfig,
         input: &input_config::InputConfig,
     ) -> Result<Self, String> {
+        Self::start_with_history(directory,machine,interp,dataset,av,input,&Default::default())
+    }
+
+    pub fn start_with_history(
+        directory:&Path,machine:&Machine,interp:bool,dataset:Option<&Path>,
+        av:&input_config::AvConfig,input:&input_config::InputConfig,history:&crate::cheat_provenance::History,
+    )->Result<Self,String>{
         // All serialization/identity checks precede creation; never touch the machine.
         let start = machine.save_state()?;
+        let ancestry=if history.is_empty(){None}else{
+            if !interp{return Err("Recording a cheat-derived state requires the interpreter".into());}
+            history.validate()?;
+            let bytes=serde_json::to_vec(history).map_err(|e|e.to_string())?;
+            if bytes.len() as u64>MAX_ANCESTRY{return Err("Starting cheat ancestry exceeds the size limit".into());}
+            Some(bytes)
+        };
         let executable_sha256 = identity(
             &std::env::current_exe().map_err(|e| e.to_string())?,
             256 * 1024 * 1024,
@@ -116,11 +137,14 @@ impl Capture {
             start_sha256: gba_core::ffta_rom::digest(&start),
             input_sha256: None,
             end_sha256: None,
+            start_cheat_ancestry_sha256: ancestry.as_deref().map(gba_core::ffta_rom::digest),
+            cheat_timeline_sha256: None,
         };
         fs::create_dir(directory)
             .map_err(|e| format!("Cannot create new recording folder: {e}"))?;
         publish(&directory.join(".gitignore"), b"*\n", false)?;
         publish(&directory.join("start.ffstate"), &start, false)?;
+        if let Some(bytes)=&ancestry{publish(&directory.join("cheat-ancestry.json"),bytes,false)?;}
         publish(&directory.join("av.cfg"), av.serialize().as_bytes(), false)?;
         publish(
             &directory.join("input.cfg"),
@@ -139,6 +163,7 @@ impl Capture {
             manifest,
             input: file,
             bytes: 0,
+            cheat_timeline: None,
         };
         capture.write(b"gba-input v1\n")?;
         capture.event(&format!("0 {:03x}\n", capture.last_keys))?;
@@ -199,6 +224,19 @@ impl Capture {
             .ok_or("Recording frame overflow")?;
         Ok(())
     }
+    /// Reserve an exact application before the caller touches guest RAM.
+    pub fn reserve_cheats(&mut self,machine:&Machine,catalog:&Path,kind:&str,entries:Vec<crate::debug_cheat_timeline::Entry>)->Result<(),String>{
+        if !self.manifest.interp || machine.bus.frames!=self.next_frame && !(kind=="maintained" && machine.bus.frames.checked_add(1)==Some(self.next_frame)) {return Err("Cheat recording requires the current interpreter frame boundary".into());}
+        if self.cheat_timeline.is_none(){
+            let bytes=crate::diagnostics::read(catalog,32*1024*1024)?;
+            let hash=gba_core::ffta_rom::digest(&bytes);
+            if entries.iter().any(|entry|entry.identity["source_sha256"]!=hash){return Err("Selected cheat catalog changed before recording".into());}
+            publish(&self.directory.join("catalogo.json"),&bytes,false)?;
+            self.cheat_timeline=Some(crate::debug_cheat_timeline::Timeline::new(hash,self.manifest.rom_sha256.clone(),self.manifest.first_frame));
+        }
+        self.cheat_timeline.as_mut().unwrap().reserve(machine.bus.frames,machine.bus.clock,kind,entries)
+    }
+    pub fn commit_cheats(&mut self,writes:usize)->Result<(),String>{self.cheat_timeline.as_mut().ok_or("Missing cheat timeline")?.finish_event(writes)}
     pub fn finish(
         mut self,
         machine: &Machine,
@@ -214,6 +252,14 @@ impl Capture {
             && (gba_core::mem::extra(), gba_core::mem::extra_y())
                 == (self.manifest.extra, self.manifest.extra_y)
         {
+            if let Some(timeline)=&self.cheat_timeline {
+                if !timeline.events.is_empty(){
+                    timeline.validate(machine.bus.frames-self.manifest.first_frame)?;
+                    let bytes=serde_json::to_vec(timeline).map_err(|e|e.to_string())?;
+                    publish(&self.directory.join("cheats-timeline.json"),&bytes,false)?;
+                    self.manifest.cheat_timeline_sha256=Some(gba_core::ffta_rom::digest(&bytes));
+                }
+            }
             let end = machine.save_state()?;
             publish(&self.directory.join("end.ffstate"), &end, false)?;
             self.manifest.frames = machine.bus.frames - self.manifest.first_frame;
@@ -291,6 +337,8 @@ pub(crate) struct Export {
     pub start: Vec<u8>,
     pub end: Vec<u8>,
     pub input: Vec<u8>,
+    pub cheats: Option<(Vec<u8>, Vec<u8>)>,
+    pub start_ancestry: Option<(Vec<u8>,crate::cheat_provenance::History)>,
 }
 
 /// Shared immutable input authentication for focused checks and replay profiles.
@@ -323,28 +371,37 @@ pub(crate) fn export(directory: &Path) -> Result<Export, String> {
         return Err("Recording checksum mismatch".into());
     }
     script(&input, manifest.frames)?;
+    let start_ancestry=if let Some(hash)=&manifest.start_cheat_ancestry_sha256 {
+        if !manifest.interp{return Err("Cheat-derived recording requires an interpreter".into());}
+        let bytes=crate::diagnostics::read(&directory.join("cheat-ancestry.json"),MAX_ANCESTRY)?;
+        if gba_core::ffta_rom::digest(&bytes)!=*hash{return Err("Recording starting cheat ancestry checksum mismatch".into());}
+        let history:crate::cheat_provenance::History=serde_json::from_slice(&bytes).map_err(|e|format!("Invalid starting cheat ancestry: {e}"))?;
+        history.validate()?;Some((bytes,history))
+    }else{None};
+    let cheats=if let Some(hash)=&manifest.cheat_timeline_sha256 {
+        let bytes=crate::diagnostics::read(&directory.join("cheats-timeline.json"),crate::debug_cheat_timeline::MAX_BYTES)?;
+        if gba_core::ffta_rom::digest(&bytes)!=*hash{return Err("Recording cheat timeline checksum mismatch".into());}
+        let timeline=crate::debug_cheat_timeline::Timeline::parse(&bytes)?;
+        timeline.validate(manifest.frames)?;
+        if timeline.first_frame!=manifest.first_frame || timeline.rom_sha256!=manifest.rom_sha256{return Err("Recording cheat timeline origin differs".into());}
+        let catalog=crate::diagnostics::read(&directory.join("catalogo.json"),32*1024*1024)?;
+        if gba_core::ffta_rom::digest(&catalog)!=timeline.catalog_sha256{return Err("Recording cheat catalog checksum mismatch".into());}
+        Some((bytes,catalog))
+    }else{None};
     Ok(Export {
         manifest,
         start,
         end,
         input,
+        cheats,
+        start_ancestry,
     })
 }
 
 /// Focused functional interpreter replay for DBG-04; no benchmark or save writer.
 pub(crate) fn verify(directory: &Path, machine: &mut Machine) -> Result<serde_json::Value, String> {
-    let manifest: Manifest = serde_json::from_slice(&crate::diagnostics::read(
-        &directory.join("recording.json"),
-        64 * 1024,
-    )?)
-    .map_err(|e| e.to_string())?;
-    if manifest.schema != 1
-        || manifest.kind != "ffta-input-recording"
-        || manifest.status != "complete"
-        || manifest.frames > MAX_FRAMES
-    {
-        return Err("Recording is incomplete or incompatible".into());
-    }
+    let Export { manifest, start, end, input, cheats, start_ancestry } = export(directory)?;
+    let initial_ancestry=start_ancestry.as_ref().map(|(bytes,history)|serde_json::json!({"sha256":gba_core::ffta_rom::digest(bytes),"summary":history.recording_summary()}));
     if !manifest.interp {
         return Err("This focused check requires an interpreter recording; native replay belongs to the selected runtime workflow".into());
     }
@@ -361,9 +418,13 @@ pub(crate) fn verify(directory: &Path, machine: &mut Machine) -> Result<serde_js
     {
         return Err("Recording was made with a different executable".into());
     }
-    let Export {
-        start, end, input, ..
-    } = export(directory)?;
+    let mut cheat_report=None;
+    let mut playback=if let Some((bytes,_))=cheats {
+        let timeline=crate::debug_cheat_timeline::Timeline::parse(&bytes)?;
+        let plans=timeline.authenticate(&directory.join("catalogo.json"),&machine.bus.rom,manifest.frames)?;
+        cheat_report=Some(timeline.report());
+        Some(crate::debug_cheat_timeline::Playback::new(timeline,plans))
+    }else{None};
     let input = script(&input, manifest.frames)?;
     // All preflight checks use a disposable machine owned by the caller.
     machine.load_state(&start)?;
@@ -391,8 +452,10 @@ pub(crate) fn verify(directory: &Path, machine: &mut Machine) -> Result<serde_js
         if std::time::Instant::now() > deadline {
             return Err("Recording verification timeout (120 seconds)".into());
         }
+        if let Some(p)=&mut playback {let clock=machine.bus.clock;p.apply(&mut machine.bus,manifest.first_frame+frame,clock,"once")?;}
         machine.bus.keys = input.keys_at(frame);
         input.apply_mouse(&mut machine.bus, frame)?;
+        if let Some(p)=&mut playback {let clock=machine.bus.clock;p.apply(&mut machine.bus,manifest.first_frame+frame,clock,"maintained")?;}
         let before = machine.bus.frames;
         machine.run_frame(5_000_000);
         if machine.bus.frames != before + 1 {
@@ -405,6 +468,10 @@ pub(crate) fn verify(directory: &Path, machine: &mut Machine) -> Result<serde_js
         machine.bus.fifo_tap[0].clear();
         machine.bus.fifo_tap[1].clear();
     }
+    if let Some(p)=&mut playback {
+        let clock=machine.bus.clock;p.apply(&mut machine.bus,manifest.last_frame,clock,"once")?;
+        if !p.done(){return Err("Unreplayed cheat applications remain".into());}
+    }
     let actual = machine.save_state()?;
     let ok = actual == end
         && machine.bus.frames == manifest.last_frame
@@ -412,7 +479,7 @@ pub(crate) fn verify(directory: &Path, machine: &mut Machine) -> Result<serde_js
     Ok(
         serde_json::json!({"schema":1,"kind":"ffta-recording-verification","ok":ok,"frames":manifest.frames,
         "first_frame":manifest.first_frame,"last_frame":machine.bus.frames,"clock":machine.bus.clock,
-        "state_sha256":gba_core::ffta_rom::digest(&actual),"expected_state_sha256":manifest.end_sha256}),
+        "state_sha256":gba_core::ffta_rom::digest(&actual),"expected_state_sha256":manifest.end_sha256,"cheat_timeline":cheat_report,"starting_cheat_ancestry":initial_ancestry}),
     )
 }
 

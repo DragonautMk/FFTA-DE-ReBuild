@@ -1713,6 +1713,24 @@
       "reference": "readonly"
     },
     {
+      "id": "control.replay-run",
+      "handler": "Action::Replay / PlayApp::debug_action_inner",
+      "cli": "recomp debug-control replay-run SESSION [--mode MODE] [--max-frames N]",
+      "current": null,
+      "destination": "Debug / Replay / Local control",
+      "menu_implemented": false,
+      "reference": "readonly"
+    },
+    {
+      "id": "control.search-options",
+      "handler": "debug_control::parse search_options / debug_probe::Settings",
+      "cli": "recomp debug-control break|watch SESSION ... [search options]",
+      "current": null,
+      "destination": "Debug / Execution and memory / Search",
+      "menu_implemented": false,
+      "reference": "readonly"
+    },
+    {
       "id": "control.break",
       "handler": "Action / play.rs::debug_action_inner",
       "cli": "recomp debug-control break SESSION PC arm|thumb [--steps N]",
@@ -2244,6 +2262,15 @@
       "reference": "readonly"
     },
     {
+      "id": "workbench.recipe-reopening",
+      "handler": "Workbench::request / play.rs::workbench_request",
+      "cli": null,
+      "current": "Debug / Scripts and tools / Recipe / Reopening reason",
+      "destination": "Debug / Scripts and tools / Recipe / Reopening reason",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
       "id": "workbench.run",
       "handler": "Workbench::request / play.rs::workbench_request",
       "cli": null,
@@ -2285,6 +2312,15 @@
       "cli": null,
       "current": "Debug / Console e script / Script e strumenti / artifact-preview",
       "destination": "Debug / Console e script / Script e strumenti / artifact-preview",
+      "menu_implemented": true,
+      "reference": "readonly"
+    },
+    {
+      "id": "tools.recipe-reopening",
+      "handler": "details/run",
+      "cli": null,
+      "current": "Debug / Scripts and tools / Recipe / Reopening reason",
+      "destination": "Debug / Scripts and tools / Recipe / Reopening reason",
       "menu_implemented": true,
       "reference": "readonly"
     },
@@ -2363,7 +2399,7 @@
     {
       "id": "cheats.prepare-once",
       "handler": "PlayApp::prepare_cheat_once / Plan::footprint",
-      "cli": "recomp debug-control cheat-prepare SESSION ID PROVENANCE MASTER GENERATION [--parameter NAME --value N] [--timeout-ms N]",
+      "cli": "recomp debug-control cheat-prepare SESSION ID PROVENANCE MASTER GENERATION [--parameter NAME --value N]... [--timeout-ms N]",
       "current": "Debug / Cheat / Manage cheat / Prepare preview",
       "destination": "Debug / Cheat / Manage cheat / Prepare preview",
       "menu_implemented": true,

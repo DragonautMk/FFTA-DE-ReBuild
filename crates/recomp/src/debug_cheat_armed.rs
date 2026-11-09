@@ -65,6 +65,7 @@ impl ArmedSet {
                 entry_lines_sha256: text("entry_lines_sha256")?,
                 master_lines_sha256: text("master_lines_sha256")?,
                 parameter: identity.get("parameter").cloned().map(serde_json::from_value).transpose().map_err(|e|format!("Invalid armed cheat parameter: {e}"))?,
+                parameters: identity.get("parameters").cloned().map(serde_json::from_value).transpose().map_err(|e|format!("Invalid armed cheat parameters: {e}"))?.unwrap_or_default(),
             });
         }
         let preset = Preset { schema: 1, kind: "ffta-debug-cheat-preset".into(), name: name.into(), catalog_sha256: catalog_sha256.into(), rom_sha256: rom_sha256.into(), members };
@@ -81,6 +82,16 @@ impl ArmedSet {
     pub(crate) fn provenance(&self) -> Value {
         json!(self.entries.iter().map(|entry|json!({"id":entry.id,"identity":entry.identity,
             "plan_sha256":entry.plan_sha256,"decoder":"codebreaker-subset-v1"})).collect::<Vec<_>>())
+    }
+
+    pub(crate) fn recording_entries(&self) -> Result<Vec<crate::debug_cheat_timeline::Entry>,String> {
+        self.entries.iter().map(|entry| {
+            let mut identity=entry.identity.clone();
+            identity["id"]=json!(entry.id);
+            identity["plan_sha256"]=json!(entry.plan_sha256);
+            identity["decoder"]=json!("codebreaker-subset-v1");
+            Ok(crate::debug_cheat_timeline::Entry{identity,plan:serde_json::to_value(&entry.plan).map_err(|e|e.to_string())?})
+        }).collect()
     }
 
     pub(crate) fn apply<B: gba_core::Bus>(&self, bus: &mut B) -> Result<usize, String> {

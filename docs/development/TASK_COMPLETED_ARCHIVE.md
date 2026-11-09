@@ -21695,3 +21695,42 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: three warned adapters (planned_fingerprint, Slots::save and Slots::load) are compiled only in tests, their only callers; production continues using guarded fingerprint and history-aware save/load. Linux Bookworm release build for recomp/ffta-play PASS with zero compiler warnings. Eleven save-state tests and 40 recipe checkpoint runner tests PASS in the same container; protected sources and other inputs unchanged. Existing unrelated Windows Docker work remained intact.
 - Evidence: docs/changes/2026-11-09-scope-test-only-debug-and-save-adapters.json; target/validation/units/linux-release-warning-check-tabi7i5p/ (receipt, build/test logs and result).
 - Limits: Linux container validation only; no native Windows rebuild or new package, no personal ROM/save or unrelated gameplay test. Host ALSA pkg-config metadata absent, so the existing container toolchain and coordinated BuildKit cache were used.
+
+### DBG2-OPERATION-DESCRIPTORS
+
+- Outcome: completed
+- Verified criteria: Existing search window/guard/action, bounded local replay and typed-recipe reopening options have additive reference descriptors; mode-specific result identities and all 97 historical Atlas contracts remain unchanged. The previously failing Python inventory suite and focused Rust operation/command tests pass.
+- Evidence: `docs/changes/2026-11-09-document-missing-debug-operation-options.json`; `target/validation/units/dbg2-operation-descriptor-audit-me_a5wzz/unit-result.json`; Python `scripts.tests.test_debug_operations` 3 PASS; Atlas regeneration PASS.
+- Limits: Metadata only, Linux synthetic tests; no new runtime behavior, Windows execution or DBG2-20 end-to-end parameter proof.
+
+
+### DBG2-20-FOCUSED-WINE
+
+- Outcome: completed
+- Verified criteria: Windows GNU/Wine synthetic tests for multi-parameter substitution/refusal, catalog-to-menu mapping and decode, v2 capability refusal, and preset identity PASS (one test each). Coordinated --wine-host prefix lease, host-visible same-prefix preflight, protected inputs, Wine server drain and lease release verified.
+- Evidence: target/validation/units/dbg2-20-focused-wine-8q7tdm2w/ (logs, receipt and result).
+- Limits: synthetic focused component scope only; no frontend or game execution. DBG2-20 parent remains partial.
+
+
+### DBG2-20-ROM-PREFLIGHT-WINE
+
+- Outcome: completed
+- Verified criteria: existing synthetic single and multiple declared-parameter test PASS under Windows GNU/Wine with protected EUR ROM checksum/master preflight, expected invalid-choice/source refusals and three writes to isolated temporary RAM. Inputs unchanged, coordinated prefix lease held through server drain and released.
+- Evidence: target/validation/units/dbg2-20-rom-preflight-wine-eiw70mf0/ (receipt, test and result).
+- Limits: synthetic test, no full frontend, device or ordinary game effect; DBG2-20 remains partial. Linux equivalent already accepted and was not repeated.
+
+
+### DBG2-20-MENU-WINE-OFFSCREEN
+
+- Outcome: completed
+- Verified criteria: three Windows GNU/Wine tests PASS for sequential multiple-parameter confirmation, explicit selector confirmation, and offscreen value/focus rendering in English and Italian. The menu test executable was built with the project Docker/MinGW toolchain after host cross-build failed due to missing dlltool; coordinated Wine prefix and protected inputs passed, Wine server drained and scratch retired.
+- Evidence: target/validation/units/dbg2-20-menu-offscreen-wine-ftxmavl9/; failed host builds dbg2-20-menu-windows-test-build-_z1qvmbg/ and dbg2-20-menu-windows-test-build-diagnostics-fiiiprbt/.
+- Limits: offscreen component tests only; no live GUI, physical input, actual source domains or ordinary game/device effects. DBG2-20 parent remains partial.
+
+
+### DBG2-23
+
+- Outcome: completed
+- Verified criteria: SL3 snapshots preserve bounded exact observed cheat identities, set and plan hashes, parameters, ordered applications, frame and clock; Load/Undo restore the corresponding branch without rearming, and reset/save switch/backup end the exact suffix. Legacy snapshots remain readable. Plain interpreter recordings pin authenticated source/ROM/decoder and post-start application timeline; replay reproduces exact state and clock and refuses an incompatible active set. Recording from an already cheat-derived state pins its ancestry without executing prior applications. Reports identify variants, protected originals remained unchanged and no ordinary DS case was promoted.
+- Evidence: docs/changes/2026-11-09-record-source-bound-cheat-replay-timeline.json; docs/changes/2026-11-09-preserve-branch-aware-cheat-snapshot-history.json; docs/changes/2026-11-09-record-cheat-derived-origins.json; target/validation/units/dbg2-23-frontend-evidence-audit-4vxhvlly/; target/validation/units/dbg2-23-origin-additive-proof-0q7t02c1/; target/validation/units/dbg2-23-cheat-origin-frontend-8lyk_vty/.
+- Limits: unknown earlier ancestry and bounded truncation remain explicit. Only plain interpreter replay supports cheat-derived recordings; native Windows, physical inputs and hardware-hook equivalence are unverified. Earlier Wine GUI runs retained FAIL receipts and diagnostic scratch despite the separate successful audit; later origin frontend unit PASS with selected private artifacts kept hot after automatic archival declined them.

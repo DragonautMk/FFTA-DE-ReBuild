@@ -155,7 +155,7 @@ fn run_fixture(path: &Path, control: impl FnMut(u64) -> Option<(&'static str, St
     let bytes = read(&root.join("input.input"), MAX_INPUT).unwrap();
     let input = crate::debug_recording::script(&bytes, p.frames).unwrap();
     let end = read(&root.join("expected.ffstate"), 64 * 1024 * 1024).unwrap();
-    execute(&p, "fixture-run", &mut m, &input, &end, None, None, None, control)
+    execute(&p, "fixture-run", &mut m, &input, &end, None, None, None, None, control)
 }
 #[test]
 fn bounded_worker_rechecks_profile_identity_and_frame_limit_before_start(){
@@ -222,6 +222,7 @@ fn endpoint_divergence_never_becomes_a_success() {
         &mut m,
         &input,
         b"different expected endpoint",
+        None,
         None,
         None,
         None,
@@ -342,7 +343,7 @@ fn triggered(path:&Path) -> (Report, Machine, crate::debug_capture::Observer) {
     let(root,p)=load(path).unwrap();let mut m=machine();m.load_state(&fs::read(root.join("seed.ffstate")).unwrap()).unwrap();
     let input=crate::debug_recording::script(&fs::read(root.join("input.input")).unwrap(),p.frames).unwrap();
     let mut observer=crate::debug_capture::Observer::start(&root,p.capture.as_ref().unwrap(),&m.bus.rom).unwrap();
-    let r=execute(&p,"fixture-trigger",&mut m,&input,&[],None,None,Some(&mut observer),|_|None);
+    let r=execute(&p,"fixture-trigger",&mut m,&input,&[],None,None,Some(&mut observer),None,|_|None);
     (r,m,observer)
 }
 #[cfg(feature="rom-data-read-audit")]
@@ -399,4 +400,84 @@ fn comparison_profile_is_explicit_bounded_and_separate_from_plain_replay(){
     let(_,p)=load(&profile).unwrap();assert_eq!(p.stop,"first-divergence");assert_eq!(p.comparison.as_ref().unwrap().frames,2);assert_eq!(Report::new(&p,"test","running",0,"running").frames,2);assert!(Job::require_comparison(&profile).is_ok());assert!(Job::require_capture(&profile).is_err());
     assert!(Job::start_bounded(&profile,crate::debug_control::ReplayMode::Plain,2).err().unwrap().contains("mode"));assert!(Job::start_bounded(&profile,crate::debug_control::ReplayMode::Comparison,1).err().unwrap().contains("frame"));
     assert_eq!(p.frames,4);assert_eq!(execution_frames(&p),2);assert!(check_bounded_profile(&p,crate::debug_control::ReplayMode::Comparison,2).is_ok());
+}
+
+#[test]
+#[ignore = "Requires an explicitly protected EUR ROM and validation work directory"]
+fn cheat_recording_replays_exact_state_and_refuses_changed_inputs() {
+    use crate::debug_cheat_timeline::Entry;
+    use serde_json::json;
+    let rom=fs::read(std::env::var_os("FFTA_PARAMETER_TEST_ROM").expect("protected EUR ROM")).unwrap();
+    let work=PathBuf::from(std::env::var_os("FFTA_VALIDATION_WORK").expect("validation work"));
+    let temporary=tempfile::tempdir_in(work).unwrap();let root=temporary.path();
+    let catalog_path=root.join("catalogo.json");
+    let codes=json!(["AE1934BX 70EY","524D3BD0 7FEE","473AF42B 20FC","07A5CB01 381C"]);
+    let catalog=json!({"schema":1,"sources":[{"id":"synthetic","sha256":"a".repeat(64)}],"entries":[
+        {"id":"CH-0001","format":"codebreaker","region":"EUR","section":"synthetic","title":"Example","codes":codes,"notes":[],"aliases":[],"status":"not-runtime-tested","provenance":[{"source":"synthetic","master_id":"CH-0002","raw_code_lines":codes,"parameters":[
+            {"name":"first","allowed":{"kind":"list","values":[15]},"slots":[{"line":0,"field":"word","offset":7,"digits":1}]},
+            {"name":"second","allowed":{"kind":"range","min":6,"max":6,"step":1},"slots":[{"line":0,"field":"value","offset":3,"digits":1}]}]}]},
+        {"id":"CH-0002","format":"codebreaker","region":"EUR","section":"synthetic","title":"Master","codes":[],"notes":[],"aliases":[],"status":"not-runtime-tested","provenance":[{"source":"synthetic","raw_code_lines":["9ABCDEF0 1234","19A10BC4 AA65","26960CD0 140B"]}]},
+        {"id":"CH-0003","format":"codebreaker","region":"EUR","section":"synthetic","title":"Prior additive write","codes":["725D3BDA 7FFE"],"notes":[],"aliases":[],"status":"not-runtime-tested","provenance":[{"source":"synthetic","master_id":"CH-0002","raw_code_lines":["725D3BDA 7FFE"]}]}]});
+    fs::write(&catalog_path,serde_json::to_vec(&catalog).unwrap()).unwrap();
+    let sha=digest(&rom);let reference=crate::debug_inputs::Reference::explicit(&catalog_path,menu::ContentSlot::CheatCatalog,&sha).unwrap();
+    let snapshot=crate::debug_cheats::Snapshot::new(crate::debug_cheats::Catalog::load(&catalog_path).unwrap(),reference.entry.id.clone(),sha.clone()).unwrap();
+    let choices=vec![crate::debug_cheat_parameters::Choice{name:"first".into(),value:15},crate::debug_cheat_parameters::Choice{name:"second".into(),value:6}];
+    let (plan,info)=snapshot.prepare_once(&reference,&rom,"CH-0001",0,"CH-0002",&snapshot.generation,&choices).unwrap();
+    let identity=json!({"id":"CH-0001","provenance_index":0,"master_id":"CH-0002","source_sha256":info["source_sha256"],"rom_sha256":sha,"entry_lines_sha256":info["entry_lines_sha256"],"master_lines_sha256":info["master_lines_sha256"],"plan_sha256":digest(&serde_json::to_vec(&plan).unwrap()),"decoder":"codebreaker-subset-v1","parameters":choices});
+    let entry=Entry{identity,plan:serde_json::to_value(&plan).unwrap()};
+    let once_identity=entry.identity.clone();
+    let maintained_identity=json!([{"id":"CH-0001","identity":entry.identity,"plan_sha256":entry.identity["plan_sha256"],"decoder":"codebreaker-subset-v1"}]);
+    let mut history=crate::cheat_provenance::History::default();
+    let mut m=crate::make_machine(rom.clone(),None);let av=input_config::AvConfig::default();let input=input_config::InputConfig::default();
+    let (prior,prior_info)=snapshot.prepare_once(&reference,&rom,"CH-0003",0,"CH-0002",&snapshot.generation,&[]).unwrap();
+    let prior_json=serde_json::to_value(&prior).unwrap();assert_eq!(prior_json["operations"].as_array().unwrap().len(),1);assert_eq!(prior_json["operations"][0]["kind"],"modify");assert_eq!(prior_json["operations"][0]["operation"],"add");
+    let prior_identity=json!({"id":"CH-0003","provenance_index":0,"master_id":"CH-0002","source_sha256":prior_info["source_sha256"],"rom_sha256":prior_info["rom_sha256"],"entry_lines_sha256":prior_info["entry_lines_sha256"],"master_lines_sha256":prior_info["master_lines_sha256"],"plan_sha256":digest(&serde_json::to_vec(&prior).unwrap()),"decoder":"codebreaker-subset-v1"});
+    let prior_writes=prior.apply_once(&mut m.bus).unwrap();history.record("once",prior_identity,m.bus.frames,m.bus.clock,prior_writes);
+    let initial=m.save_state().unwrap();let recording=root.join("recording");
+    let mut capture=crate::debug_recording::Capture::start_with_history(&recording,&m,true,None,&av,&input,&history).unwrap();
+    capture.reserve_cheats(&m,&catalog_path,"once",vec![entry.clone()]).unwrap();let writes=plan.apply_once(&mut m.bus).unwrap();capture.commit_cheats(writes).unwrap();history.record("once",once_identity.clone(),m.bus.frames,m.bus.clock,writes);
+    for n in 0..2 {
+        m.bus.keys=if n==0{0x3fe}else{0x3ff};capture.before_frame(&m,&[]).unwrap();
+        capture.reserve_cheats(&m,&catalog_path,"maintained",vec![entry.clone()]).unwrap();let writes=plan.apply_once(&mut m.bus).unwrap();capture.commit_cheats(writes).unwrap();history.record("maintained",maintained_identity.clone(),m.bus.frames,m.bus.clock,writes);
+        let before=m.bus.frames;m.run_frame(5_000_000);assert_eq!(m.bus.frames,before+1);drain(&mut m);
+        if n==0 {
+            let saved=crate::save_state::encode(&m,&vec![[0,0,0,255];240*160],&history).unwrap();assert!(saved.starts_with(b"FFTA-SL3"));
+            let mut restored=crate::make_machine(rom.clone(),None);let ancestry=crate::save_state::load_bytes_with_history(&mut restored,&saved).unwrap();
+            let exact=serde_json::to_value(&ancestry.exact).unwrap();assert_eq!(exact["applications"].as_array().unwrap().len(),3);
+            assert_eq!(exact["variants"][1]["parameters"][0]["name"],"first");assert_eq!(restored.save_state().unwrap(),m.save_state().unwrap());
+        }
+    }
+    capture.reserve_cheats(&m,&catalog_path,"once",vec![entry]).unwrap();let writes=plan.apply_once(&mut m.bus).unwrap();capture.commit_cheats(writes).unwrap();history.record("once",once_identity,m.bus.frames,m.bus.clock,writes);
+    assert_eq!(&m.bus.ewram[0x3ffe0..0x3ffe2],&[1,0]);
+    let end=m.save_state().unwrap();let end_clock=m.bus.clock;capture.finish(&m,"synthetic test",true).unwrap();
+    let mut verify_machine=crate::make_machine(rom.clone(),None);let checked=crate::debug_recording::verify(&recording,&mut verify_machine).unwrap();assert_eq!(checked["ok"],true,"{checked}");assert_eq!(checked["clock"],end_clock);assert_eq!(verify_machine.save_state().unwrap(),end);assert_eq!(checked["cheat_timeline"]["applications"],4);assert_eq!(checked["starting_cheat_ancestry"]["summary"]["observed_variants"][0],"CH-0003");
+    let session=crate::debug_session::create(&root.join("source"),crate::debug_session::Source{rom:&rom,bios:None,save:m.bus.save_data(),state:Some(&initial),av,input,interp:true,dataset:None,executable:&std::env::current_exe().unwrap(),cheat_favorites:None}).unwrap();
+    let profile=create(&recording,&session,&root.join("profile"),"synthetic-cheat",120000,&std::env::current_exe().unwrap(),None).unwrap();
+    let profile_root=profile.parent().unwrap();fs::create_dir_all(outputs(profile_root)).unwrap();let result=worker(&profile,"cheat-test",None).unwrap();
+    assert_eq!(result.outcome,"passed","{}",result.message);assert_eq!(result.clock,Some(end_clock));assert_eq!(result.cheat_timeline.unwrap()["variants"][0]["id"],"CH-0001");assert_eq!(result.starting_cheat_ancestry.unwrap()["summary"]["observed_variants"][0],"CH-0003");
+    let issue=crate::debug_issue::create(&profile,"Synthetic cheat replay").unwrap();assert!(issue.compatible);
+    let issue_json:serde_json::Value=serde_json::from_slice(&fs::read(issue.path.parent().unwrap().join("issue.json")).unwrap()).unwrap();
+    assert_eq!(issue_json["summary"]["cheat_timeline"]["variants"][0]["id"],"CH-0001");
+    assert_eq!(issue_json["summary"]["starting_cheat_ancestry"]["summary"]["observed_variants"][0],"CH-0003");
+    assert_eq!(issue_json["retained_result"]["outcome"],"passed");
+    assert!(issue_json["attachments"].as_array().unwrap().iter().any(|item|item["path"]=="cheats-timeline.json"));
+    let timeline_path=profile_root.join("cheats-timeline.json");let original=fs::read(&timeline_path).unwrap();let mut changed=original.clone();changed.push(b' ');fs::write(&timeline_path,&changed).unwrap();
+    assert!(worker(&profile,"changed-timeline",None).err().unwrap().contains("changed"));fs::write(&timeline_path,&original).unwrap();
+    // Even replacing both the plan hash and the profile's file hash must not
+    // turn a different decoded plan into the selected source-bound variant.
+    let mut forged=crate::debug_cheat_timeline::Timeline::parse(&original).unwrap();
+    let old=forged.entries[0].plan["operations"][0]["value"].as_u64().unwrap();forged.entries[0].plan["operations"][0]["value"]=json!(old^1);
+    let forged_plan=crate::debug_cheat_decoder::Plan::from_recorded(&forged.entries[0].plan).unwrap();
+    forged.entries[0].identity["plan_sha256"]=json!(digest(&serde_json::to_vec(&forged_plan).unwrap()));
+    let forged_bytes=serde_json::to_vec(&forged).unwrap();fs::write(&timeline_path,&forged_bytes).unwrap();
+    let original_profile=fs::read(&profile).unwrap();let mut forged_profile:serde_json::Value=serde_json::from_slice(&original_profile).unwrap();
+    forged_profile["cheat_timeline_sha256"]=json!(digest(&forged_bytes));fs::write(&profile,serde_json::to_vec(&forged_profile).unwrap()).unwrap();
+    assert!(worker(&profile,"changed-plan",None).err().unwrap().contains("differs from source"));
+    let incompatible_issue=crate::debug_issue::create(&profile,"Changed variant").unwrap();assert!(!incompatible_issue.compatible);
+    let issue_json:serde_json::Value=serde_json::from_slice(&fs::read(incompatible_issue.path.parent().unwrap().join("issue.json")).unwrap()).unwrap();assert!(issue_json["retained_result"].is_null());
+    fs::write(&profile,original_profile).unwrap();fs::write(&timeline_path,original).unwrap();
+    let copied_catalog=profile_root.join("catalogo.json");let original=fs::read(&copied_catalog).unwrap();fs::write(&copied_catalog,b"{}").unwrap();assert!(worker(&profile,"changed-catalog",None).is_err());fs::write(&copied_catalog,original).unwrap();
+    let initial_history=profile_root.join("cheat-ancestry.json");let original=fs::read(&initial_history).unwrap();let mut changed=original.clone();changed.push(b' ');fs::write(&initial_history,changed).unwrap();
+    assert!(worker(&profile,"changed-start-ancestry",None).err().unwrap().contains("changed"));fs::write(&initial_history,original).unwrap();
+    let mut changed_profile:serde_json::Value=serde_json::from_slice(&fs::read(&profile).unwrap()).unwrap();changed_profile["library_sha256"]=json!("a".repeat(64));fs::write(&profile,serde_json::to_vec(&changed_profile).unwrap()).unwrap();assert!(load(&profile).err().unwrap().contains("plain interpreter"));
 }

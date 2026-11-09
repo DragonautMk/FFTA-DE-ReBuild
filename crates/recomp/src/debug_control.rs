@@ -33,7 +33,7 @@ pub(crate) enum Action {
     CheatList { offset:u32, limit:u8, generation:Option<String> },
     CheatShow { id:String, offset:u32, generation:Option<String> },
     CheatCapabilities { id:String, offset:u32, generation:Option<String> },
-    CheatPrepare { id:String, provenance:u16, master:String, generation:String, #[serde(default,skip_serializing_if="Option::is_none")] parameter:Option<crate::debug_cheat_parameters::Choice> },
+    CheatPrepare { id:String, provenance:u16, master:String, generation:String, #[serde(default,skip_serializing_if="Option::is_none")] parameter:Option<crate::debug_cheat_parameters::Choice>, #[serde(default,skip_serializing_if="Vec::is_empty")] parameters:Vec<crate::debug_cheat_parameters::Choice> },
     CheatApply { id:String, provenance:u16, master:String, generation:String, preview:String },
     CheatArm { id:String, provenance:u16, master:String, generation:String, preview:String },
     CheatDisarm { id:Option<String> },
@@ -91,7 +91,10 @@ impl Action {
             Self::CheatPrepare{id,master,generation,..}|Self::CheatApply{id,master,generation,..}|Self::CheatArm{id,master,generation,..}=>{
                 let valid_id=|v:&str|v.len()==7 && v.starts_with("CH-") && v[3..].bytes().all(|b|b.is_ascii_digit());
                 if !valid_id(id)||!valid_id(master)||generation.len()!=64||!generation.bytes().all(|b|b.is_ascii_hexdigit()){return Err("Cheat preparation needs CH IDs and a SHA-256 snapshot generation".into());}
-                if let Self::CheatPrepare{parameter:Some(choice),..}=self {choice.validate()?;}
+                if let Self::CheatPrepare{parameter,parameters,..}=self {
+                    if parameter.is_some() && !parameters.is_empty() || parameters.len()>8{return Err("Choose either one parameter or up to eight distinct parameters".into());}
+                    let mut names=std::collections::BTreeSet::new();for choice in parameter.iter().chain(parameters){choice.validate()?;if !names.insert(&choice.name){return Err("Duplicate parameter choice".into());}}
+                }
                 if let Self::CheatApply{preview,..}|Self::CheatArm{preview,..}=self {if preview.len()!=64||!preview.bytes().all(|b|b.is_ascii_hexdigit()){return Err("Apply or arm needs the exact preview SHA-256".into());}}
             },
             Self::CheatDisarm{id:Some(id)} if id.len()!=7 || !id.starts_with("CH-") || !id[3..].bytes().all(|b|b.is_ascii_digit())=>return Err("Cheat ID must be CH- followed by four digits".into()),
@@ -327,7 +330,7 @@ impl Server {
     fn ready(&self,active:bool)->Value{
         json!({"schema":1,"kind":"ffta-debug-control","run":self.run,"active":active,
             "pid":std::process::id(),"session":self.session,
-            "capabilities":["query-status","targeted-cancel","request-deadline","idempotent-request-v1","terminal-time-v1","guest-boundary-guard-v1","recipe-selected-inputs-v1","recipe-ui-collector-v1","content-discovery-v1","replay-job-v1","bounded-replay-v1","cheat-catalog-v1","cheat-capabilities-v1","cheat-once-v1","cheat-parameters-v1","cheat-maintain-v1","cheat-presets-v1","probe-window-v1","probe-guard-v1","probe-actions-v1","probe-trigger-v1"]})
+            "capabilities":["query-status","targeted-cancel","request-deadline","idempotent-request-v1","terminal-time-v1","guest-boundary-guard-v1","recipe-selected-inputs-v1","recipe-ui-collector-v1","content-discovery-v1","replay-job-v1","bounded-replay-v1","cheat-catalog-v1","cheat-capabilities-v1","cheat-once-v1","cheat-parameters-v1","cheat-parameters-v2","cheat-maintain-v1","cheat-presets-v1","probe-window-v1","probe-guard-v1","probe-actions-v1","probe-trigger-v1"]})
     }
     pub fn pending_status(&self)->Value{
         self.pending.as_ref().map_or(Value::Null,|r|json!({"request_id":r.id,"operation_id":r.command.operation_id(),"command":r.command,"deadline_unix_ms":r.deadline_unix_ms}))
@@ -509,7 +512,10 @@ pub(crate) fn parse(args: &[String]) -> Result<(PathBuf, Action), String> {
     let action = match args[0].as_str() {
         "cheat-select" if args.len()==3=>Action::SelectId{slot:SelectionSlot::CheatCatalog,id:args[2].clone()},
         "cheat-refresh" if args.len()==2=>Action::CheatRefresh,
-        "cheat-prepare" if args.len()==6 || (args.len()==10 && args[6]=="--parameter" && args[8]=="--value")=>Action::CheatPrepare{id:args[2].clone(),provenance:provenance(&args[3])?,master:args[4].clone(),generation:args[5].clone(),parameter:if args.len()==10{Some(crate::debug_cheat_parameters::Choice{name:args[7].clone(),value:args[9].parse().map_err(|_|"Parameter value must be a decimal integer from 0 to 65535")?})}else{None}},
+        "cheat-prepare" if args.len()>=6=>{
+            let mut choices=Vec::new();for group in args[6..].chunks(4){if group.len()!=4 || group[0]!="--parameter" || group[2]!="--value"{return Err("Use --parameter NAME --value N for each declared parameter".into());}choices.push(crate::debug_cheat_parameters::Choice{name:group[1].clone(),value:group[3].parse().map_err(|_|"Parameter value must be a decimal integer from 0 to 65535")?});}
+            let parameter=if choices.len()==1{choices.pop()}else{None};Action::CheatPrepare{id:args[2].clone(),provenance:provenance(&args[3])?,master:args[4].clone(),generation:args[5].clone(),parameter,parameters:choices}
+        },
         "cheat-apply" if args.len()==7=>Action::CheatApply{id:args[2].clone(),provenance:provenance(&args[3])?,master:args[4].clone(),generation:args[5].clone(),preview:args[6].clone()},
         "cheat-arm" if args.len()==7=>Action::CheatArm{id:args[2].clone(),provenance:provenance(&args[3])?,master:args[4].clone(),generation:args[5].clone(),preview:args[6].clone()},
         "cheat-disarm" if args.len()==3=>Action::CheatDisarm{id:if args[2]=="all"{None}else{Some(args[2].clone())}},
@@ -810,6 +816,7 @@ fn execute_action_inner_interruptible(root:&Path,action:Action,timeout:u64,retry
     if matches!(action,Action::CheatCapabilities{..}) && ready["capabilities"].as_array().is_none_or(|c|!c.contains(&json!("cheat-capabilities-v1"))){return Err(ClientFailure::new("incompatible","This session does not support source capability queries","not-sent"));}
     if matches!(action,Action::CheatPrepare{..}|Action::CheatApply{..}) && ready["capabilities"].as_array().is_none_or(|c|!c.contains(&json!("cheat-once-v1"))){return Err(ClientFailure::new("incompatible","This session does not support guarded cheat one-shot","not-sent"));}
     if matches!(action,Action::CheatPrepare{parameter:Some(_),..}) && ready["capabilities"].as_array().is_none_or(|c|!c.contains(&json!("cheat-parameters-v1"))){return Err(ClientFailure::new("incompatible","This session does not support declared cheat parameters","not-sent"));}
+    if matches!(&action,Action::CheatPrepare{parameters,..} if !parameters.is_empty()) && ready["capabilities"].as_array().is_none_or(|c|!c.contains(&json!("cheat-parameters-v2"))){return Err(ClientFailure::new("incompatible","This session does not support multiple cheat parameters","not-sent"));}
     if matches!(action,Action::CheatArm{..}|Action::CheatDisarm{..}) && ready["capabilities"].as_array().is_none_or(|c|!c.contains(&json!("cheat-maintain-v1"))){return Err(ClientFailure::new("incompatible","This session does not support maintained cheats","not-sent"));}
     if matches!(action,Action::CheatPresetSave{..}|Action::CheatPresetPrepare{..}|Action::CheatPresetArm{..}) && ready["capabilities"].as_array().is_none_or(|c|!c.contains(&json!("cheat-presets-v1"))){return Err(ClientFailure::new("incompatible","This session does not support cheat presets","not-sent"));}
     if matches!(action,Action::Replay{..}) && ready["capabilities"].as_array().is_none_or(|c|!c.contains(&json!("replay-job-v1"))){
@@ -1017,7 +1024,7 @@ mod tests {
     fn one_shot_requires_its_own_capability_before_send(){
         let t=tempfile::tempdir().unwrap();let s=synthetic_server(t.path());let mut ready=s.ready(true);ready["capabilities"]=json!(["targeted-cancel","cheat-catalog-v1"]);put(&s.dir,"ready.json",&ready).unwrap();
         let generation="a".repeat(64);let token="b".repeat(64);
-        for action in [Action::CheatPrepare{id:"CH-0001".into(),provenance:0,master:"CH-0002".into(),generation:generation.clone(),parameter:None},Action::CheatApply{id:"CH-0001".into(),provenance:0,master:"CH-0002".into(),generation:generation.clone(),preview:token}]{
+        for action in [Action::CheatPrepare{id:"CH-0001".into(),provenance:0,master:"CH-0002".into(),generation:generation.clone(),parameter:None,parameters:vec![]},Action::CheatApply{id:"CH-0001".into(),provenance:0,master:"CH-0002".into(),generation:generation.clone(),preview:token}]{
             let e=execute_action_classified(t.path(),action,20).unwrap_err();assert_eq!((e.outcome,e.delivery),("incompatible","not-sent"));
         }
         assert!(!s.dir.join("request.json").exists());
@@ -1030,6 +1037,14 @@ mod tests {
         let e=execute_action_classified(t.path(),action,20).unwrap_err();assert_eq!((e.outcome,e.delivery),("incompatible","not-sent"));assert!(!s.dir.join("request.json").exists());
         let (_,legacy)=parse(&args[..6]).unwrap();assert!(serde_json::to_value(legacy).unwrap().get("parameter").is_none());
         let mut invalid=args;invalid[9]="65536".into();assert!(parse(&invalid).is_err());
+    }
+    #[test]
+    fn multiple_parameters_require_v2_before_dispatch(){
+        let t=tempfile::tempdir().unwrap();let s=synthetic_server(t.path());let mut ready=s.ready(true);ready["capabilities"]=json!(["targeted-cancel","cheat-catalog-v1","cheat-once-v1","cheat-parameters-v1"]);put(&s.dir,"ready.json",&ready).unwrap();
+        let args=vec!["cheat-prepare".into(),"session".into(),"CH-0001".into(),"0".into(),"CH-0002".into(),"a".repeat(64),"--parameter".into(),"race".into(),"--value".into(),"1".into(),"--parameter".into(),"job".into(),"--value".into(),"2".into()];
+        let (_,action)=parse(&args).unwrap();assert!(matches!(&action,Action::CheatPrepare{parameter:None,parameters,..} if parameters.len()==2));
+        let e=execute_action_classified(t.path(),action,20).unwrap_err();assert_eq!((e.outcome,e.delivery),("incompatible","not-sent"));assert!(!s.dir.join("request.json").exists());
+        let mut invalid=args;invalid[11]="race".into();assert!(parse(&invalid).is_err());
     }
 
     #[test]

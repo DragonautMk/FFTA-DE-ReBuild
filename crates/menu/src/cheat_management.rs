@@ -8,6 +8,16 @@ pub struct Source {
     pub name: String,
     pub master: String,
     pub assessment: String,
+    pub parameters: Vec<Parameter>,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct Parameter { pub name: String, pub domain: Domain }
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub enum Domain { List(Vec<u16>), Range { min:u16, max:u16, step:u16 } }
+impl Domain {
+    fn count(&self)->u32 { match self { Self::List(values)=>values.len() as u32, Self::Range{min,max,step} if *step>0 && min<=max=>u32::from((max-min)/step)+1, _=>0 } }
+    fn value(&self,index:u32)->Option<u16> { match self { Self::List(values)=>values.get(index as usize).copied(), Self::Range{min,step,..} if index<self.count()=>u16::try_from(u32::from(*min)+index*u32::from(*step)).ok(), _=>None } }
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -29,6 +39,9 @@ pub(super) struct State {
     pub preset_selected: Option<String>,
     pub preset_name: String,
     pub preset_mode: bool,
+    pub parameter_mode: bool,
+    pub parameter_cursor: u32,
+    pub parameter_selected: Vec<u16>,
 }
 
 impl State {
@@ -36,7 +49,21 @@ impl State {
         Self { id, title, sources, presets, focus: if armed { 4 } else { 0 }, ..Self::default() }
     }
     pub fn selected_source(&self) -> Option<&Source> { self.selected.and_then(|index| self.sources.get(index)) }
+    pub fn selected_parameters(&self)->Option<Vec<(&str,u16)>>{let source=self.selected_source()?;if source.parameters.len()!=self.parameter_selected.len(){return None;}Some(source.parameters.iter().zip(&self.parameter_selected).map(|(p,v)|(p.name.as_str(),*v)).collect())}
+    pub fn current_parameter(&self)->Option<(&str,u16)>{let p=self.selected_source()?.parameters.get(self.parameter_selected.len())?;Some((&p.name,p.domain.value(self.parameter_cursor)?))}
     pub fn handle(&mut self, input: MenuInput) -> Option<Request> {
+        if self.parameter_mode {
+            self.focus=0;
+            let count=self.selected_source().and_then(|s|s.parameters.get(self.parameter_selected.len())).map_or(0,|p|p.domain.count());
+            match input {
+                MenuInput::Up => self.parameter_cursor=self.parameter_cursor.saturating_sub(1),
+                MenuInput::Down => self.parameter_cursor=(self.parameter_cursor+1).min(count.saturating_sub(1)),
+                MenuInput::Confirm if count>0 => {let value=self.current_parameter().unwrap().1;self.parameter_selected.push(value);self.parameter_cursor=0;if self.selected_source().is_some_and(|s|s.parameters.len()==self.parameter_selected.len()){self.parameter_mode=false;self.focus=1;}},
+                MenuInput::Left => {self.parameter_mode=false;self.selected=None;self.parameter_selected.clear();},
+                _=>{}
+            }
+            self.preview.clear();self.preview_token.clear();self.feedback.clear();return None;
+        }
         if self.focus == 0 {
             if self.preset_mode {
                 match input {
@@ -57,7 +84,9 @@ impl State {
                 MenuInput::Right => self.focus = 1,
                 MenuInput::Confirm if !self.sources.is_empty() => {
                     self.selected = Some(self.cursor); self.preview.clear(); self.preview_token.clear(); self.feedback.clear();
-                    self.focus = 1;
+                    self.parameter_selected.clear();self.parameter_cursor=0;
+                    self.parameter_mode=self.selected_source().is_some_and(|s|!s.parameters.is_empty());
+                    self.focus = if self.parameter_mode {0}else{1};
                 }
                 _ => {}
             }
@@ -91,7 +120,7 @@ mod tests {
 
     #[test]
     fn selection_is_explicit_and_changing_source_clears_preview() {
-        let mut state = State::new("CH-0001".into(), "Example".into(), false, vec![Source { index: 2, name: "one".into(), master: "CH-0002".into(), assessment: "candidate".into() }, Source { index: 5, name: "two".into(), master: "CH-0003".into(), assessment: "unresolved".into() }], vec![]);
+        let mut state = State::new("CH-0001".into(), "Example".into(), false, vec![Source { index: 2, name: "one".into(), master: "CH-0002".into(), assessment: "candidate".into(),parameters:vec![] }, Source { index: 5, name: "two".into(), master: "CH-0003".into(), assessment: "unresolved".into(),parameters:vec![] }], vec![]);
         assert!(state.selected_source().is_none());
         state.handle(MenuInput::Right); assert_eq!(state.handle(MenuInput::Confirm), Some(Request::Prepare));
         assert!(state.selected_source().is_none());
@@ -99,5 +128,25 @@ mod tests {
         assert_eq!(state.selected_source().unwrap().index, 5);
         state.preview = "old preview".into(); state.handle(MenuInput::Left); state.handle(MenuInput::Up); state.handle(MenuInput::Confirm);
         assert_eq!(state.selected_source().unwrap().index, 2); assert!(state.preview.is_empty());
+    }
+    #[test]
+    fn parameter_requires_explicit_selection_and_source_change_clears_review(){
+        let source=Source{index:0,name:"source".into(),master:"CH-0002".into(),assessment:"parameter-required".into(),parameters:vec![Parameter{name:"amount".into(),domain:Domain::Range{min:2,max:8,step:2}}]};
+        let mut state=State::new("CH-0001".into(),"Example".into(),false,vec![source],vec![]);
+        state.handle(MenuInput::Confirm);assert!(state.parameter_mode);assert!(state.selected_parameters().is_none());
+        state.handle(MenuInput::Down);assert_eq!(state.current_parameter(),Some(("amount",4)));state.handle(MenuInput::Confirm);assert_eq!(state.selected_parameters(),Some(vec![("amount",4)]));
+        state.preview="old".into();state.preview_token="token".into();state.handle(MenuInput::Left);state.handle(MenuInput::Confirm);assert!(state.parameter_mode);assert!(state.selected_parameters().is_none());assert!(state.preview.is_empty());assert!(state.preview_token.is_empty());
+    }
+    #[test]
+    fn multiple_parameters_are_confirmed_in_order_before_prepare(){
+        let parameter=|name:&str|Parameter{name:name.into(),domain:Domain::List(vec![1,2])};
+        let source=Source{index:0,name:"source".into(),master:"CH-0002".into(),assessment:"parameter-required".into(),parameters:vec![parameter("race"),parameter("job"),parameter("look")]};
+        let mut state=State::new("CH-0001".into(),"Example".into(),false,vec![source],vec![]);
+        state.handle(MenuInput::Confirm);assert_eq!(state.current_parameter(),Some(("race",1)));state.handle(MenuInput::Down);state.handle(MenuInput::Confirm);
+        assert_eq!(state.current_parameter(),Some(("job",1)));assert!(state.selected_parameters().is_none());state.handle(MenuInput::Confirm);
+        assert_eq!(state.current_parameter(),Some(("look",1)));state.handle(MenuInput::Down);state.handle(MenuInput::Confirm);
+        assert_eq!(state.selected_parameters(),Some(vec![("race",2),("job",1),("look",2)]));assert_eq!(state.handle(MenuInput::Confirm),Some(Request::Prepare));
+        state.preview="old".into();state.preview_token="old".into();state.handle(MenuInput::Left);state.handle(MenuInput::Confirm);
+        assert!(state.selected_parameters().is_none());assert_eq!(state.current_parameter(),Some(("race",1)));assert!(state.preview.is_empty());assert!(state.preview_token.is_empty());
     }
 }

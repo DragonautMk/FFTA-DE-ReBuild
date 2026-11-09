@@ -193,3 +193,17 @@ fn recording_folder_is_movable_with_relative_payload_names() {
     fs::rename(root, &moved).unwrap();
     assert_eq!(verify(&moved, &mut machine()).unwrap()["ok"], true);
 }
+
+#[test]
+fn cheat_derived_origin_is_recorded_without_reapplying_prior_applications() {
+    let temp=tempfile::tempdir().unwrap();let root=temp.path().join("capture");let mut m=machine();
+    let mut history=crate::cheat_provenance::History::default();
+    m.bus.ewram[0]=7;history.record("once",serde_json::json!({"id":"CH-0001","parameter":{"name":"amount","value":7}}),m.bus.frames,m.bus.clock,1);
+    let start=m.save_state().unwrap();let av=input_config::AvConfig::default();let input=input_config::InputConfig::default();
+    let native=temp.path().join("native");assert!(Capture::start_with_history(&native,&m,false,None,&av,&input,&history).is_err());assert!(!native.exists());
+    let mut capture=Capture::start_with_history(&root,&m,true,None,&av,&input,&history).unwrap();
+    assert_eq!(fs::read(root.join("start.ffstate")).unwrap(),start);capture.before_frame(&m,&[]).unwrap();step(&mut m);capture.finish(&m,"test",true).unwrap();
+    let result=verify(&root,&mut machine()).unwrap();assert_eq!(result["ok"],true);assert_eq!(result["starting_cheat_ancestry"]["summary"]["observed_variants"][0],"CH-0001");
+    let path=root.join("cheat-ancestry.json");let mut damaged=fs::read(&path).unwrap();damaged.push(b' ');fs::write(path,damaged).unwrap();
+    assert!(export(&root).err().unwrap().contains("ancestry checksum"));
+}

@@ -3,6 +3,80 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-09 — Validate the full declared cheat parameter domain
+
+Type: fixed. Platforms: Linux, Windows GNU cross-build.
+
+**Changes**
+
+- Document the existing partial source-declared parameter command, guarded preview and preset choice preservation without claiming that local declarations verify game behavior.
+- Reject a declared parameter list or stepped range when any selectable value cannot fit every placeholder slot, before advertising that declaration as usable.
+
+**Validation**
+
+- Focused Linux tests passed for parameter substitution, catalog assessment, local-control compatibility, preset persistence and armed-set behavior. The width tests cover a list with an oversized later value, an oversized stepped-range endpoint and a range whose last reachable value fits.
+- The changed Windows GNU test target cross-compiled successfully; Windows tests were not executed.
+
+**Limitations**
+
+- The parameter command and preset path remain partial: the current catalog has no structured value domains, the menu has no value selector, and an isolated end-to-end flow and Windows execution are not yet verified. An attempted Wine validation did not start because automatic approval review hit its usage limit; no unsafe fallback was used.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-09-validate-declared-cheat-parameter-domain-width.json)
+
+## 2026-11-09 — Support multiple declared cheat parameters
+
+Type: added. Platforms: Linux, Windows GNU cross-build, Windows GNU / Wine.
+
+**Changes**
+
+- Accept up to eight uniquely named source-declared parameters and require one choice for each. Expand disjoint X, Y or Z placeholder slots atomically before the existing source-bound decoder and reject missing, duplicate, out-of-domain, overlapping or uncovered choices.
+- Keep the legacy single-parameter wire format and preset representation; use a new capability for multiple choices. Select values sequentially in the management menu, bind all choices to the guarded preview and retain them in armed identities and presets.
+
+**Validation**
+
+- Linux targeted tests passed: 3 menu management, 26 selector, 15 catalog, 3 parameter, 39 local-control, 5 preset and 4 armed-set tests; two private-fixture tests remained ignored in that suite. Tests cover independent selections, stale previews, old-server refusal, duplicate choices, source mapping, decode and preset roundtrip.
+- An isolated Linux preflight used a synthetic multi-parameter catalog and protected EUR ROM: missing choices and a changed source were refused, both explicit values passed the exact ROM/master checks and the synthetic plan performed three writes in temporary RAM. The Windows GNU test target cross-compiled; Windows tests were not executed.
+- Windows GNU/Wine focused checks PASS: four synthetic parameter/catalog/control/preset tests; an existing protected EUR ROM preflight test verifies single/multiple choices and three temporary RAM writes; three menu selection and offscreen English/Italian rendering tests. No GUI session or ordinary game/device effect was tested. Evidence: target/validation/units/dbg2-20-focused-wine-8q7tdm2w/, dbg2-20-rom-preflight-wine-eiw70mf0/ and dbg2-20-menu-offscreen-wine-ftxmavl9/.
+
+**Limitations**
+
+- The current local catalog has no structured domains. Its 24 CodeBreaker placeholder sources use an unverified two-line master; a possible plaintext reading has a checksum mismatch against the known EUR ROM. No target or device compatibility is inferred and the master remains refused.
+- A live menu-to-application proof, broader Windows and native-device execution remain outstanding. An earlier Wine launch did not execute because automatic approval review reached its usage limit; the later focused Wine checks passed. The single-parameter schema remains supported.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-09-support-multiple-declared-cheat-parameters.json)
+
+## 2026-11-09 — Select declared cheat values in the management menu
+
+Type: added. Platforms: Linux, Windows GNU cross-build.
+
+**Changes**
+
+- Expose a source-declared list or stepped range in the existing cheat management screen. Require explicit value confirmation and send the chosen parameter to the guarded preview; changing source or returning to value selection invalidates the review.
+- Prevent action clicks and focus changes from implicitly confirming a value. Keep source declarations unverified and preserve the existing decoder, ROM, state and footprint guards.
+- Show the current declared value in focus metadata and hide activation buttons until value confirmation.
+
+**Validation**
+
+- Linux focused tests passed for management selection, 25 content-selector cases, catalog assessment, parameter validation and local control. A separate synthetic catalog test confirms that its declared domain reaches the menu source unchanged. Windows GNU test target cross-compiled successfully with the changed menu and runtime files.
+- The first standalone menu test build lacked system Wayland metadata. A second unit ran its tests successfully but its receipt failed during archive retirement with a broken pipe; the corrected managed unit passed and retained its evidence.
+- A separate protected EUR ROM checksum preflight used a public synthetic catalog: missing and out-of-domain choices were refused, the chosen value produced three writes in temporary RAM, and the synthetic source and protected ROM were unchanged. No graphical frontend was involved.
+- Offscreen Linux rendering and focus checks passed in English and Italian, together with 26 selector tests. An initial wrapper expected the old 25-test count after adding the new test; its failed unit was retained and a corrected unit passed.
+- The Windows GNU test target cross-compiled after the focus and rendering changes; this is compilation, not Windows execution.
+- A protected readonly audit found 24 current CodeBreaker placeholder source records sharing a two-line master; one entry describes three independent placeholder groups. The master matches a possible plaintext structural shape, but its enabled checksum does not match the known EUR ROM. This does not establish the source format, target or device behavior.
+
+**Limitations**
+
+- The current local catalog has no structured parameter domains, and synthetic selections do not verify game or device behavior. Windows execution and a full isolated menu-to-application proof remain outstanding; a previous Wine launch was not executed because automatic approval review hit its usage limit.
+- The current menu supports one declared parameter per source, not multiple independent groups; the shared two-line master remains unsupported and the possible plaintext interpretation is unverified.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-09-select-declared-cheat-values-in-menu.json)
+
 ## 2026-11-09 — Scope debug and save-state test adapters to test builds
 
 Type: fixed. Platforms: Linux, Windows.
@@ -25,6 +99,81 @@ Type: fixed. Platforms: Linux, Windows.
 Documentation: [debug_control.md](docs/debug_control.md), [save_states.md](docs/save_states.md).
 
 [Change record](docs/changes/2026-11-09-scope-test-only-debug-and-save-adapters.json)
+
+## 2026-11-09 — Record source-bound cheat replay timelines
+
+Type: added. Platforms: Linux, Windows GNU cross-build.
+
+**Changes**
+
+- Record bounded source-bound one-shot and maintained cheat applications at their actual interpreter frame and clock boundaries, with ordered identities, parameter choices, plan hashes, source catalog and write counts.
+- Authenticate the private catalog and ROM, re-decode each plan and reject altered, conflicting, incomplete or incompatible timelines before applying them in plain isolated interpreter replay. Preserve conservative snapshot ancestry and existing refusal after observed prior cheat use.
+- Include recorded variant identity in replay and issue reports, authenticate retained report identity and retain private catalog and timeline attachments without automatic distribution.
+
+**Validation**
+
+- A protected EUR ROM and synthetic catalog reproduced exact state and clock across manual and maintained applications, identified the variant, refused altered catalog, timeline and incompatible mode, and excluded a stale report after a forged plan and hashes were substituted.
+- Linux timeline, recording and replay regression suites passed, as did an issue-report check; Windows GNU tests cross-compiled without execution.
+
+**Limitations**
+
+- Live frontend/menu-to-recording execution, native Windows and physical inputs remain unverified. Recordings after observed prior cheat ancestry and audit, capture, comparison or native replay with cheat timelines remain refused.
+- SL2 snapshot ancestry remains conservative rather than an exact per-application timeline; complete reset/ROM semantics and an actual incompatible active-set replay refusal remain open. No ordinary DS case was promoted.
+
+Documentation: [cheats.md](docs/cheats.md), [debug_recordings.md](docs/debug_recordings.md), [debug_replays.md](docs/debug_replays.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-09-record-source-bound-cheat-replay-timeline.json)
+
+## 2026-11-09 — Record cheat-derived starting states without reapplication
+
+Type: added. Platforms: Linux, Windows GNU cross-build.
+
+**Changes**
+
+- Allow interpreter recordings to start from a state with observed cheat ancestry; pin the bounded private ancestry separately from subsequent application events and verify its hash in recordings, replay profiles and issue reports.
+- Restore the recorded starting state without executing prior cheat applications again; reject incompatible native and non-plain replay modes before changing application state.
+- Keep legacy recordings and profiles compatible, retain bounded provenance summaries and identify observed variants in replay and verification reports.
+
+**Validation**
+
+- Linux production check, provenance and recording tests passed; protected EUR ROM integration reproduced exact state and clock and used a distinct additive prior cheat to detect accidental reapplication.
+- Windows GNU production runtime and test target cross-compiled; separate Wine frontend evidence proved exact cheat recording and replay with an incompatible active set refused.
+- An isolated Windows GNU/Wine/Xvfb frontend recorded from an SL3 state with three observed applications; verification and replay reproduced its exact endpoint and clock, reported CH-0001 ancestry, preserved protected inputs and closed normally.
+
+**Limitations**
+
+- Unknown earlier ancestry and truncated history remain explicit; native Windows, physical input and device-hook equivalence are not established.
+- Cheat-derived recordings currently require plain interpreter replay; other replay modes and native execution refuse them.
+
+Documentation: [cheats.md](docs/cheats.md), [debug_recordings.md](docs/debug_recordings.md), [debug_replays.md](docs/debug_replays.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-09-record-cheat-derived-origins.json)
+
+## 2026-11-09 — Preserve branch-aware cheat snapshot history
+
+Type: added. Platforms: Linux, Windows GNU cross-build.
+
+**Changes**
+
+- Save a bounded exact observed application suffix in versioned SL3 snapshot envelopes, alongside the existing conservative ancestry; include source and plan identities, ordered set hashes, parameter choices, frame, clock and write count without raw cheat codes.
+- Restore the observed suffix belonging to a loaded snapshot or the pre-load state on Undo; end that suffix on restart, save switch or backup restoration, retain conservative ancestry, and do not rearm cheats. Keep legacy raw, SL1 and SL2 snapshots readable.
+- Mark unknown prior ancestry and truncation explicitly, validate bounded metadata and identity hashes and bind the snapshot to the suffix with the existing integrity checksum.
+- Keep local-control status compatible with the conservative history shape and expose only a bounded exact-suffix summary and hash; full event metadata remains in the private snapshot.
+
+**Validation**
+
+- Linux production cargo check and focused tests passed: four provenance tests, thirteen snapshot tests including SL2/SL3 compatibility and load/undo branch restoration, and an isolated debug-copy metadata preservation test. Windows GNU test target cross-compiled without execution.
+- A synthetic multi-parameter cheat recording with a protected EUR ROM saved and reloaded an SL3 snapshot mid-recording, preserving its two exact application identities and complete machine state; the same recording replayed to the exact final state and clock.
+- The ancestry status retained the legacy conservative schema and stayed under 4 KiB in the tested repeated-application case after the exact suffix reached its retention bound.
+
+**Limitations**
+
+- The exact suffix starts at observed applications and does not establish earlier history or surviving cartridge ancestry; it marks truncation at 4096 applications, 64 identities or 128 KiB. It is not a complete replay by itself.
+- Native Windows, live frontend load/undo/reset and physical controller behavior remain unverified. Existing private files and historical SL2 evidence were preserved; no ordinary DS case was promoted.
+
+Documentation: [save_states.md](docs/save_states.md), [cheats.md](docs/cheats.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-09-preserve-branch-aware-cheat-snapshot-history.json)
 
 ## 2026-11-09 — Fix Windows Docker Unicode and link tests and retain build errors
 
@@ -55,6 +204,26 @@ Type: fixed. Platforms: Linux host, Windows GNU / Wine container.
 Documentation: [docker.md](docs/docker.md), [README.md](scripts/README.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
 
 [Change record](docs/changes/2026-11-09-fix-windows-docker-test-environment-and-logs.json)
+
+## 2026-11-09 — Document bounded debug control options in the operation inventory
+
+Type: fixed. Platforms: Linux.
+
+**Changes**
+
+- Add reference descriptors for shared break/watch windows and guards, bounded local-control replay and typed-recipe reopening, preserving all historical Atlas operation contracts and existing response identities.
+
+**Validation**
+
+- The Python operation-inventory suite passed all three tests after previously reporting missing parser flags in three source files. Focused Linux tests passed four operation-registry and eleven command tests. Atlas regeneration preserved all 97 historical contracts.
+
+**Limitations**
+
+- These changes describe existing behavior and do not add runtime capabilities. Windows execution and the separate DBG2-20 parameter end-to-end proof remain outstanding.
+
+Documentation: [debug_operations.md](docs/debug_operations.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-09-document-missing-debug-operation-options.json)
 
 ## 2026-11-08 — Verify recipe selection across Wine restarts
 

@@ -1746,6 +1746,133 @@
       "external_dialog": null
     },
     {
+      "id": "control.replay-run",
+      "title": "Run a bounded replay through local control",
+      "source": "crates/recomp/src/debug_control.rs",
+      "handler": "Action::Replay / PlayApp::debug_action_inner",
+      "cli": "recomp debug-control replay-run SESSION [--mode MODE] [--max-frames N]",
+      "parameters": [
+        {
+          "name": "SESSION",
+          "value_type": "path",
+          "constraint": "Authenticated isolated session directory.",
+          "current_menu": "selected",
+          "default": null
+        },
+        {
+          "name": "--timeout-ms",
+          "value_type": "decimal",
+          "constraint": "20..120000 host milliseconds; timeout does not establish non-delivery.",
+          "current_menu": "not-applicable",
+          "default": 120000
+        },
+        {
+          "name": "--mode",
+          "value_type": "choice",
+          "constraint": "plain, audit, capture or compare; selects the mode-specific operation ID.",
+          "current_menu": "not-applicable",
+          "default": "plain"
+        },
+        {
+          "name": "--max-frames",
+          "value_type": "decimal",
+          "constraint": "Optional frame cap 1..360000; requires a compatible worker.",
+          "current_menu": "not-applicable",
+          "default": null
+        }
+      ],
+      "selection": [
+        "Explicit replay profile selected in the isolated session"
+      ],
+      "menu": {
+        "current": null,
+        "destination": "Debug / Replay / Local control",
+        "implemented": false
+      },
+      "allowed_state": "Idle isolated session and a selected compatible replay profile.",
+      "effects": "Explicitly starts the selected bounded or ordinary replay worker.",
+      "result": "The response uses the mode-specific replay.run, audit.run, capture.run or compare.run operation ID.",
+      "limits": "A bounded request requires a compatible worker; no implicit retry or extension of its frame cap.",
+      "open_work": [
+        "DBG2-27: broader replay and platform integration checks"
+      ],
+      "external_dialog": null
+    },
+    {
+      "id": "control.search-options",
+      "title": "Configure a bounded search window",
+      "source": "crates/recomp/src/debug_control.rs",
+      "handler": "debug_control::parse search_options / debug_probe::Settings",
+      "cli": "recomp debug-control break|watch SESSION ... [search options]",
+      "parameters": [
+        {
+          "name": "--frame-start",
+          "value_type": "decimal",
+          "constraint": "First eligible completed frame, inclusive; 0 <= start < end <= 600.",
+          "current_menu": "not-applicable",
+          "default": 0
+        },
+        {
+          "name": "--frame-end",
+          "value_type": "decimal",
+          "constraint": "Last eligible completed frame, exclusive; 0 <= start < end <= 600.",
+          "current_menu": "not-applicable",
+          "default": 600
+        },
+        {
+          "name": "--hits",
+          "value_type": "decimal",
+          "constraint": "Number of eligible hits, 1..10000.",
+          "current_menu": "not-applicable",
+          "default": 1
+        },
+        {
+          "name": "--when-address",
+          "value_type": "hex",
+          "constraint": "Canonical RAM guard address; requires --when-width and --when-value.",
+          "current_menu": "not-applicable",
+          "default": null
+        },
+        {
+          "name": "--when-width",
+          "value_type": "decimal",
+          "constraint": "RAM guard width 1, 2 or 4; requires --when-address and --when-value.",
+          "current_menu": "not-applicable",
+          "default": null
+        },
+        {
+          "name": "--when-value",
+          "value_type": "hex",
+          "constraint": "Expected RAM guard value; requires --when-address and --when-width.",
+          "current_menu": "not-applicable",
+          "default": null
+        },
+        {
+          "name": "--on-hit",
+          "value_type": "choice",
+          "constraint": "Optional pause, capture or freeze action.",
+          "current_menu": "not-applicable",
+          "default": null
+        }
+      ],
+      "selection": [
+        "Isolated paused session and a valid break or watch condition"
+      ],
+      "menu": {
+        "current": null,
+        "destination": "Debug / Execution and memory / Search",
+        "implemented": false
+      },
+      "allowed_state": "Idle paused isolated session with a bounded interpreter search.",
+      "effects": "Sets the eligibility window, guard and optional hit action for the same search.",
+      "result": "The mode-specific break or watch response retains its normal operation ID.",
+      "limits": "At most 600 frames and 10000 hits; guard and capture actions retain their own validation.",
+      "open_work": [
+        "DBG2-27: broader search and platform integration checks"
+      ],
+      "external_dialog": null
+    },
+    {
       "id": "control.break",
       "title": "Break at PC",
       "source": "crates/recomp/src/debug_control.rs",
@@ -4483,6 +4610,36 @@
       "external_dialog": null
     },
     {
+      "id": "workbench.recipe-reopening",
+      "title": "Review a recipe reopening reason",
+      "source": "crates/recomp/src/debug_workbench.rs",
+      "handler": "Workbench::request / play.rs::workbench_request",
+      "cli": null,
+      "parameters": [
+        {
+          "name": "--reopen-reason",
+          "value_type": "text",
+          "constraint": "Required to start a typed recipe matching explicitly concluded evidence; review again after changing it.",
+          "current_menu": "selected",
+          "default": ""
+        }
+      ],
+      "selection": [
+        "Explicitly selected typed recipe and isolated session"
+      ],
+      "menu": {
+        "current": "Debug / Scripts and tools / Recipe / Reopening reason",
+        "destination": "Debug / Scripts and tools / Recipe / Reopening reason",
+        "implemented": true
+      },
+      "allowed_state": "Selected typed recipe, prior to Details and explicit Start.",
+      "effects": "Includes the reason in the reviewed identity; editing it requires a new review.",
+      "result": "A nonblank reason is retained when matching explicitly concluded evidence is reopened.",
+      "limits": "Applies to matching concluded typed recipes in the same session; no guest action is sent by review.",
+      "open_work": [],
+      "external_dialog": null
+    },
+    {
       "id": "workbench.run",
       "title": "run draft",
       "source": "crates/recomp/src/debug_workbench.rs",
@@ -4659,6 +4816,36 @@
       "effects": "Open typed draft only; explicit Start executes the declared readonly adapter/recipe or reads guest catalog; explicit Cancel stops supervised host process.",
       "result": "Details with version/hash/prerequisites/output; retained request/result/logs for host execution or readonly guest summary.",
       "limits": "8retained runs,20..120000ms,8MiB per process stream,16readonly recipe steps,1MiB guest catalog; scalar preset limits remain shared.",
+      "open_work": [],
+      "external_dialog": null
+    },
+    {
+      "id": "tools.recipe-reopening",
+      "title": "Review a recipe reopening reason",
+      "source": "crates/recomp/src/debug_tools.rs",
+      "handler": "details/run",
+      "cli": null,
+      "parameters": [
+        {
+          "name": "--reopen-reason",
+          "value_type": "text",
+          "constraint": "Required to start a typed recipe matching explicitly concluded evidence; review again after changing it.",
+          "current_menu": "selected",
+          "default": ""
+        }
+      ],
+      "selection": [
+        "Explicitly selected typed recipe and isolated session"
+      ],
+      "menu": {
+        "current": "Debug / Scripts and tools / Recipe / Reopening reason",
+        "destination": "Debug / Scripts and tools / Recipe / Reopening reason",
+        "implemented": true
+      },
+      "allowed_state": "Selected typed recipe, prior to Details and explicit Start.",
+      "effects": "Includes the reason in the reviewed identity; editing it requires a new review.",
+      "result": "A nonblank reason is retained when matching explicitly concluded evidence is reopened.",
+      "limits": "Applies to matching concluded typed recipes in the same session; no guest action is sent by review.",
       "open_work": [],
       "external_dialog": null
     },
@@ -5073,7 +5260,7 @@
       "title": "Prepare a one-shot cheat plan",
       "source": "crates/recomp/src/debug_control.rs",
       "handler": "PlayApp::prepare_cheat_once / Plan::footprint",
-      "cli": "recomp debug-control cheat-prepare SESSION ID PROVENANCE MASTER GENERATION [--parameter NAME --value N] [--timeout-ms N]",
+      "cli": "recomp debug-control cheat-prepare SESSION ID PROVENANCE MASTER GENERATION [--parameter NAME --value N]... [--timeout-ms N]",
       "parameters": [
         {
           "name": "SESSION",
@@ -5120,15 +5307,15 @@
         {
           "name": "--parameter",
           "value_type": "text",
-          "constraint": "Explicit source-declared parameter name; requires --value.",
-          "current_menu": "unavailable",
+          "constraint": "Repeat with --value for each source-declared parameter, at most eight unique names; menu selection is explicit.",
+          "current_menu": "selected",
           "default": null
         },
         {
           "name": "--value",
           "value_type": "decimal",
-          "constraint": "Selected integer 0..65535 within the declared list or range; requires --parameter.",
-          "current_menu": "unavailable",
+          "constraint": "Decimal integer 0..65535 within the corresponding declared list or stepped range; repeat with --parameter.",
+          "current_menu": "selected",
           "default": null
         }
       ],

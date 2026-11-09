@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "date": "2026-11-09",
+  "slug": "support-multiple-declared-cheat-parameters",
+  "title": "Support multiple declared cheat parameters",
+  "kind": "added",
+  "platforms": [
+    "Linux",
+    "Windows GNU cross-build",
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Accept up to eight uniquely named source-declared parameters and require one choice for each. Expand disjoint X, Y or Z placeholder slots atomically before the existing source-bound decoder and reject missing, duplicate, out-of-domain, overlapping or uncovered choices.",
+    "Keep the legacy single-parameter wire format and preset representation; use a new capability for multiple choices. Select values sequentially in the management menu, bind all choices to the guarded preview and retain them in armed identities and presets."
+  ],
+  "validation": [
+    "Linux targeted tests passed: 3 menu management, 26 selector, 15 catalog, 3 parameter, 39 local-control, 5 preset and 4 armed-set tests; two private-fixture tests remained ignored in that suite. Tests cover independent selections, stale previews, old-server refusal, duplicate choices, source mapping, decode and preset roundtrip.",
+    "An isolated Linux preflight used a synthetic multi-parameter catalog and protected EUR ROM: missing choices and a changed source were refused, both explicit values passed the exact ROM/master checks and the synthetic plan performed three writes in temporary RAM. The Windows GNU test target cross-compiled; Windows tests were not executed.",
+    "Windows GNU/Wine focused checks PASS: four synthetic parameter/catalog/control/preset tests; an existing protected EUR ROM preflight test verifies single/multiple choices and three temporary RAM writes; three menu selection and offscreen English/Italian rendering tests. No GUI session or ordinary game/device effect was tested. Evidence: target/validation/units/dbg2-20-focused-wine-8q7tdm2w/, dbg2-20-rom-preflight-wine-eiw70mf0/ and dbg2-20-menu-offscreen-wine-ftxmavl9/."
+  ],
+  "limitations": [
+    "The current local catalog has no structured domains. Its 24 CodeBreaker placeholder sources use an unverified two-line master; a possible plaintext reading has a checksum mismatch against the known EUR ROM. No target or device compatibility is inferred and the master remains refused.",
+    "A live menu-to-application proof, broader Windows and native-device execution remain outstanding. An earlier Wine launch did not execute because automatic approval review reached its usage limit; the later focused Wine checks passed. The single-parameter schema remains supported."
+  ],
+  "files": [
+    "crates/recomp/src/debug_cheat_parameters.rs",
+    "crates/recomp/src/debug_cheats.rs",
+    "crates/recomp/src/debug_control.rs",
+    "crates/recomp/src/debug_cheat_armed.rs",
+    "crates/recomp/src/debug_cheat_preset.rs",
+    "crates/recomp/src/play.rs",
+    "crates/recomp/src/debug_operations.json",
+    "crates/menu/src/cheat_management.rs",
+    "crates/menu/src/content_selector.rs",
+    "crates/menu/src/content_selector/tests.rs",
+    "crates/menu/src/lib.rs",
+    "crates/menu/assets/debug_v2.tsv",
+    "docs/development/MENU_ATLAS_INVENTORY.json"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

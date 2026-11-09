@@ -71,6 +71,10 @@ destinations, declared gaps and menu/control correspondence. Rust enum matches
 are exhaustive. Python checks compare parser flags, menu variants and dialog
 sites with the inventory; flags passed to child processes are distinguished
 from parent-command options. Update the descriptor and check when adding an operation.
+Separate additive reference cards describe the shared break/watch window,
+guard and hit-action options, the local-control replay frame cap, and the
+typed-recipe reopening reason. The response still uses the existing
+mode-specific operation identity. Historical Atlas contracts remain unchanged.
 
 This unit's validation covers metadata and local protocol with synthetic
 fixtures; it needs no ROM, replay or new scene checks. Actual build/test results

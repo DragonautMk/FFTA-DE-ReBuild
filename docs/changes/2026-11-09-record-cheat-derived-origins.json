@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "date": "2026-11-09",
+  "slug": "record-cheat-derived-origins",
+  "title": "Record cheat-derived starting states without reapplication",
+  "kind": "added",
+  "platforms": [
+    "Linux",
+    "Windows GNU cross-build"
+  ],
+  "changes": [
+    "Allow interpreter recordings to start from a state with observed cheat ancestry; pin the bounded private ancestry separately from subsequent application events and verify its hash in recordings, replay profiles and issue reports.",
+    "Restore the recorded starting state without executing prior cheat applications again; reject incompatible native and non-plain replay modes before changing application state.",
+    "Keep legacy recordings and profiles compatible, retain bounded provenance summaries and identify observed variants in replay and verification reports."
+  ],
+  "validation": [
+    "Linux production check, provenance and recording tests passed; protected EUR ROM integration reproduced exact state and clock and used a distinct additive prior cheat to detect accidental reapplication.",
+    "Windows GNU production runtime and test target cross-compiled; separate Wine frontend evidence proved exact cheat recording and replay with an incompatible active set refused.",
+    "An isolated Windows GNU/Wine/Xvfb frontend recorded from an SL3 state with three observed applications; verification and replay reproduced its exact endpoint and clock, reported CH-0001 ancestry, preserved protected inputs and closed normally."
+  ],
+  "limitations": [
+    "Unknown earlier ancestry and truncated history remain explicit; native Windows, physical input and device-hook equivalence are not established.",
+    "Cheat-derived recordings currently require plain interpreter replay; other replay modes and native execution refuse them."
+  ],
+  "files": [
+    "crates/recomp/src/cheat_provenance.rs",
+    "crates/recomp/src/debug_recording.rs",
+    "crates/recomp/src/debug_recording/tests.rs",
+    "crates/recomp/src/debug_replay.rs",
+    "crates/recomp/src/debug_replay/tests.rs",
+    "crates/recomp/src/debug_issue.rs",
+    "crates/recomp/src/play.rs",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/debug_recordings.md",
+    "docs/debug_replays.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

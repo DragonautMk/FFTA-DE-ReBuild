@@ -630,7 +630,22 @@ No other development was selected. On resumption read only the individual ID in
   armed atomically through explicit text commands, with synthetic conflict and
   drift refusals. The page also supports naming, saving, explicit selection,
   preview and arming. Values/ranges and complete game-effect evidence remain
-  missing; retain the integrated view instead of rebuilding it.
+  missing; retain the integrated view instead of rebuilding it. A partial
+  text-command path accepts an explicitly declared source parameter, validates
+  its complete list or stepped range against the placeholder width, binds the
+  choice into the preview and preserves it in presets. Synthetic Linux tests
+  and a Windows cross-build passed. The menu now requires an explicit value
+  selection for a declared parameter. The current catalog supplies no structured
+  domains. Focused Windows/Wine component, protected-ROM synthetic preflight
+  and offscreen menu checks passed; isolated end-to-end and broader Windows
+  execution checks remain outstanding.
+  declarations do not establish game or device behavior. A readonly audit found
+  that the current 24 CodeBreaker placeholder sources share an unsupported
+  two-line master; one describes three independent placeholder groups. Under a
+  possible plaintext interpretation its checksum differs from the known EUR
+  ROM, so neither the format nor target is established. Multiple declared
+  parameters now have synthetic coverage; a verified compatible source is still
+  needed for those entries.
 
 - [x] **DBG2-21 — First EUR selection useful for debugging.**
   Priorities, subject to decoding/verification: access to Card Shop/Item Shop/
@@ -690,7 +705,7 @@ No other development was selected. On resumption read only the individual ID in
   before/after/side effects of the requested groups; DBG2-21 remains open. The
   original uncertainty around the Clear Mission note is retained.
 
-- [ ] **DBG2-23 — Cheats, checkpoints, replay and provenance.**
+- [x] **DBG2-23 — Cheats, checkpoints, replay and provenance.**
   Record cheat set/hash/parameters, decoder, order and frame of each application
   in compatible snapshots/profiles/recordings/reports. Define Load/Undo/reset/
   ROM change and replay with a different set: explicit restore or reasoned
@@ -708,6 +723,28 @@ No other development was selected. On resumption read only the individual ID in
   do not record set/decoder/order/frame or prove state-clock cheat replay,
   Load/Undo/reset/ROM behavior and incompatible-set refusal. The preventive
   refusal does not equal the feature; no new recording was created in the audit.
+
+  Subsequent work adds a bounded exact application timeline to snapshot-relative
+  recordings. Starting cheat ancestry is pinned separately and is not reapplied.
+  Plain interpreter replay authenticates
+  the private copied catalog, ROM, source, parameters and decoded plans, then
+  applies the recorded events at their original frame and clock boundaries.
+  A synthetic source with a protected EUR ROM reproduced exact state/clock and
+  refused altered timeline, catalog and replay mode. Conservative snapshot
+  ancestry is still separate and may have an unknown earlier prefix.
+  SL3 snapshots now retain a bounded exact observed suffix with application
+  identities, set hashes, parameters, frame and clock, alongside conservative
+  ancestry. Load and Undo restore their respective suffixes; restart, save switch
+  and backup restoration end the current suffix. Earlier history remains unknown,
+  and overflow is marked rather than silently treated as complete.
+  An isolated Wine/Xvfb frontend recording and replay reproduced exact state
+  and clock and refused replay with an active maintained set; the replay unit's
+  runner retained private scratch, and a separate read-only audit verified its
+  results and unchanged protected inputs. Native Windows, broader reset/ROM
+  behavior and other replay modes remain unverified. A separate Wine frontend
+  run recorded from an SL3 state with observed ancestry and reproduced its exact
+  endpoint and clock. A protected-ROM additive-cheat test also confirmed that
+  prior applications are not repeated. Original inputs remained unchanged.
 
 <a id="p4--ulteriori-potenziamenti-e-chiusura"></a>
 

@@ -44,7 +44,9 @@ pub(crate) fn create(profile:&Path,symptom:&str)->Result<Created,String>{
     let result=result.filter(|v|{
         let ok=v["schema"]==1 && v["kind"]=="ffta-debug-replay-result"
             && ["runtime_sha256","rom_sha256","input_sha256"].iter().all(|k|v[*k].as_str().is_some_and(|s|s.len()==64&&s.bytes().all(|b|b.is_ascii_hexdigit())))
-            && ["runtime_sha256","rom_sha256","input_sha256","library_sha256","dataset_sha256"].iter().all(|k|v[*k]==declared[*k]);
+            && ["runtime_sha256","rom_sha256","input_sha256","library_sha256","dataset_sha256"].iter().all(|k|v[*k]==declared[*k])
+            && v["cheat_timeline"]["timeline_sha256"]==declared["cheat_timeline_sha256"]
+            && v["starting_cheat_ancestry"]["sha256"]==declared["start_cheat_ancestry_sha256"];
         if !ok{warnings.push("Retained result identity/schema differs; excluded from the issue conclusion".into());}ok
     });
     let mut comparison=Value::Null;
@@ -69,9 +71,11 @@ pub(crate) fn create(profile:&Path,symptom:&str)->Result<Created,String>{
         "timeout"|"interrupted"|"error"|"incompatible"=>"Inspect the retained worker log and declared timeout/cancellation/preflight before choosing another run",
         _=>"Run the pinned command when ready; this report itself has not executed the case"}};
     let selected_frames=declared["comparison"]["frames"].as_u64().or_else(||declared["capture"]["limit_frames"].as_u64()).or_else(||declared["frames"].as_u64());
+    let cheats=metadata.as_ref().ok().and_then(|value|value.get("cheat_timeline")).cloned().unwrap_or(Value::Null);
+    let starting_cheats=metadata.as_ref().ok().and_then(|value|value.get("starting_cheat_ancestry")).cloned().unwrap_or(Value::Null);
     let summary=json!({"schema":1,"kind":"ffta-issue-summary","symptom":if symptom.is_empty(){"Not supplied"}else{symptom},"case":declared["case"],"preflight_compatible":compatible,
         "outcome":outcome,"frame_origin":declared["first_frame"],"recorded_frames":declared["frames"],"selected_frames":selected_frames,"completed":result.as_ref().map(|r|&r["completed"]),
-        "first_difference":comparison["first_difference"],"different_components":comparison["different_components"],
+        "first_difference":comparison["first_difference"],"different_components":comparison["different_components"],"cheat_timeline":cheats,"starting_cheat_ancestry":starting_cheats,
         "identities":{"runtime":declared["runtime_sha256"],"recording_runtime":declared["recording_runtime_sha256"],"rom":declared["rom_sha256"],"bios":declared["bios_sha256"],"dataset":declared["dataset_sha256"],"snapshot":declared["start_sha256"],"input":declared["input_sha256"],"expected_endpoint":declared["end_sha256"],"library":declared["library_sha256"]},
         "next_check":next,"sharing":"Metadata candidate only: review symptom, case and identities before sharing. No game bytes or absolute paths included"});
     let mut attachments=Vec::new();
@@ -79,6 +83,11 @@ pub(crate) fn create(profile:&Path,symptom:&str)->Result<Created,String>{
         attachments.push(attachment(&root,name,role,limit));
     }
     attachments.push(attachment(&root,"ffta.gba","private ROM",32*1024*1024));
+    if !declared["cheat_timeline_sha256"].is_null(){
+        attachments.push(attachment(&root,"cheats-timeline.json","private recorded cheat applications",crate::debug_cheat_timeline::MAX_BYTES));
+        attachments.push(attachment(&root,"catalogo.json","private source cheat catalog",4*1024*1024));
+    }
+    if !declared["start_cheat_ancestry_sha256"].is_null(){attachments.push(attachment(&root,"cheat-ancestry.json","private starting cheat ancestry",256*1024));}
     attachments.push(attachment(&root,if root.join("recomp.exe").exists(){"recomp.exe"}else{"recomp"},"selected runtime",256*1024*1024));
     if root.join("gba_bios.bin").exists(){attachments.push(attachment(&root,"gba_bios.bin","private BIOS",16384));}
     if !declared["library_sha256"].is_null(){attachments.push(attachment(&root,"native.bin","private native translation",256*1024*1024));}

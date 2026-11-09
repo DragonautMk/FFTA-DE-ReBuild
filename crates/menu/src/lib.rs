@@ -41,7 +41,7 @@ mod debug_unlock;
 pub use debug_tool::{DebugTool,ToolRequest,ToolField,ToolFieldKind};
 pub use tool_inputs::ContentSlot;
 pub use content_selector::{CheatFilter,CheatShortcut,ContentEntry,ContentViewPreferences,ContentHistory};
-pub use cheat_management::{Source as CheatSource, Request as CheatRequest};
+pub use cheat_management::{Source as CheatSource, Request as CheatRequest, Parameter as CheatParameter, Domain as CheatParameterDomain};
 pub use debug_catalog::CatalogEntry;
 pub use save_backups::BackupInfo;
 pub use save_states::StateSlot;
@@ -967,6 +967,7 @@ impl Menu {
     }
     pub fn open_cheat_management(&mut self,sources:Vec<CheatSource>,presets:Vec<String>){self.cheats.open_cheat_management(sources,presets);}
     pub fn cheat_selected_source(&self)->Option<&CheatSource>{self.cheats.cheat_selected_source()}
+    pub fn cheat_selected_parameters(&self)->Option<Vec<(&str,u16)>>{self.cheats.cheat_selected_parameters()}
     pub fn cheat_preview_reviewed(&self)->bool{self.cheats.cheat_preview_reviewed()}
     pub fn cheat_preset_name(&self)->Option<&str>{self.cheats.cheat_preset_name()}
     pub fn cheat_preset_selected(&self)->Option<&str>{self.cheats.cheat_preset_selected()}

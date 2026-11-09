@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "date": "2026-11-09",
+  "slug": "preserve-branch-aware-cheat-snapshot-history",
+  "title": "Preserve branch-aware cheat snapshot history",
+  "kind": "added",
+  "platforms": [
+    "Linux",
+    "Windows GNU cross-build"
+  ],
+  "changes": [
+    "Save a bounded exact observed application suffix in versioned SL3 snapshot envelopes, alongside the existing conservative ancestry; include source and plan identities, ordered set hashes, parameter choices, frame, clock and write count without raw cheat codes.",
+    "Restore the observed suffix belonging to a loaded snapshot or the pre-load state on Undo; end that suffix on restart, save switch or backup restoration, retain conservative ancestry, and do not rearm cheats. Keep legacy raw, SL1 and SL2 snapshots readable.",
+    "Mark unknown prior ancestry and truncation explicitly, validate bounded metadata and identity hashes and bind the snapshot to the suffix with the existing integrity checksum.",
+    "Keep local-control status compatible with the conservative history shape and expose only a bounded exact-suffix summary and hash; full event metadata remains in the private snapshot."
+  ],
+  "validation": [
+    "Linux production cargo check and focused tests passed: four provenance tests, thirteen snapshot tests including SL2/SL3 compatibility and load/undo branch restoration, and an isolated debug-copy metadata preservation test. Windows GNU test target cross-compiled without execution.",
+    "A synthetic multi-parameter cheat recording with a protected EUR ROM saved and reloaded an SL3 snapshot mid-recording, preserving its two exact application identities and complete machine state; the same recording replayed to the exact final state and clock.",
+    "The ancestry status retained the legacy conservative schema and stayed under 4 KiB in the tested repeated-application case after the exact suffix reached its retention bound."
+  ],
+  "limitations": [
+    "The exact suffix starts at observed applications and does not establish earlier history or surviving cartridge ancestry; it marks truncation at 4096 applications, 64 identities or 128 KiB. It is not a complete replay by itself.",
+    "Native Windows, live frontend load/undo/reset and physical controller behavior remain unverified. Existing private files and historical SL2 evidence were preserved; no ordinary DS case was promoted."
+  ],
+  "files": [
+    "crates/recomp/src/cheat_provenance.rs",
+    "crates/recomp/src/save_state.rs",
+    "crates/recomp/src/play.rs",
+    "crates/recomp/src/debug_session/tests.rs",
+    "crates/menu/assets/debug_v2.tsv",
+    "crates/recomp/src/debug_replay/tests.rs"
+  ],
+  "references": [
+    "docs/save_states.md",
+    "docs/cheats.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

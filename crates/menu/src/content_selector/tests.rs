@@ -70,13 +70,43 @@ fn cheat_view_keeps_all_rows_and_never_dispatches_selection(){
 fn management_requires_explicit_source_and_dispatches_separate_requests(){
     let mut s=Selector::default();s.cheat_mode=true;s.set("Cheat".into(),vec![ContentEntry{id:"CH-0001".into(),name:"Example".into(),..Default::default()}],String::new(),0);
     s.focus=8;assert_eq!(s.handle(MenuInput::Confirm),Some(MenuAction::CheatManage));
-    s.open_cheat_management(vec![super::super::CheatSource{index:0,name:"source".into(),master:"CH-0002".into(),assessment:"manual-once-subset".into()}],vec![]);
+    s.open_cheat_management(vec![super::super::CheatSource{index:0,name:"source".into(),master:"CH-0002".into(),assessment:"manual-once-subset".into(),parameters:vec![]}],vec![]);
     assert!(s.cheat_selected_source().is_none());s.handle(MenuInput::Right);assert_eq!(s.handle(MenuInput::Confirm),Some(MenuAction::CheatRequest(super::super::CheatRequest::Prepare)));assert!(s.cheat_selected_source().is_none());
     s.handle(MenuInput::Left);s.handle(MenuInput::Confirm);assert_eq!(s.cheat_selected_source().unwrap().index,0);
     s.handle(MenuInput::Right);assert_eq!(s.handle(MenuInput::Confirm),Some(MenuAction::CheatRequest(super::super::CheatRequest::Prepare)));
     s.cheat_management_feedback("Review".into(),Some("plan and footprint".into()));assert!(s.detail_mode);assert!(!s.cheat_preview_reviewed());s.handle(MenuInput::Cancel);assert!(!s.detail_mode);assert!(s.cheat_preview_reviewed());
     assert_eq!(s.handle(MenuInput::Confirm),Some(MenuAction::CheatRequest(super::super::CheatRequest::Arm)));
     s.handle(MenuInput::Cancel);assert!(!s.cheat_management_active());
+}
+
+#[test]
+fn parameter_selection_requires_confirmation_and_ignores_action_clicks(){
+    let mut s=Selector::default();s.cheat_mode=true;s.set("Cheat".into(),vec![ContentEntry{id:"CH-0001".into(),name:"Example".into(),..Default::default()}],String::new(),0);
+    let parameter=super::super::CheatParameter{name:"amount".into(),domain:super::super::CheatParameterDomain::List(vec![2,7,10])};
+    s.open_cheat_management(vec![super::super::CheatSource{index:0,name:"source".into(),master:"CH-0002".into(),assessment:"parameter-required".into(),parameters:vec![parameter]}],vec![]);
+    s.handle(MenuInput::Confirm);assert!(s.manage.as_ref().unwrap().parameter_mode);assert!(s.cheat_selected_parameters().is_none());
+    let g=s.layout(940,620);let action=g.actions[2];assert!(s.click(action[0]+2,action[1]+2,940,620,true).is_none());assert!(s.cheat_selected_parameters().is_none());
+    s.tab(false);assert_eq!(s.manage.as_ref().unwrap().focus,0);
+    let next=g.controls[1];s.click(next[0]+2,next[1]+2,940,620,true);assert_eq!(s.manage.as_ref().unwrap().current_parameter(),Some(("amount",7)));
+    let select=g.controls[2];s.click(select[0]+2,select[1]+2,940,620,true);assert_eq!(s.cheat_selected_parameters(),Some(vec![("amount",7)]));
+    assert_eq!(s.handle(MenuInput::Confirm),Some(MenuAction::CheatRequest(super::super::CheatRequest::Prepare)));
+    s.cheat_management_feedback("Review".into(),Some("preview".into()));s.handle(MenuInput::Cancel);assert!(s.cheat_preview_reviewed());
+    s.handle(MenuInput::Left);s.handle(MenuInput::Confirm);assert!(s.manage.as_ref().unwrap().parameter_mode);assert!(!s.cheat_preview_reviewed());assert!(s.cheat_selected_parameters().is_none());
+    s.handle(MenuInput::Cancel);assert!(s.cheat_management_active());assert!(s.cheat_selected_source().is_none());
+}
+
+#[test]
+fn parameter_selector_renders_value_and_focus_in_both_languages(){
+    let mut s=Selector::default();s.cheat_mode=true;s.set("Cheat".into(),vec![ContentEntry{id:"CH-0001".into(),name:"Example".into(),..Default::default()}],String::new(),0);
+    let parameter=super::super::CheatParameter{name:"amount".into(),domain:super::super::CheatParameterDomain::Range{min:2,max:8,step:2}};
+    s.open_cheat_management(vec![super::super::CheatSource{index:0,name:"source".into(),master:"CH-0002".into(),assessment:"parameter-required".into(),parameters:vec![parameter]}],vec![]);
+    s.handle(MenuInput::Confirm);s.handle(MenuInput::Down);assert_eq!(s.focus_label(),"Declared parameter: amount · 4");
+    for (language,select,description) in [(input_config::Language::default(),"Select value","Declared parameter: amount · 4"),(input_config::Language::parse("it"),"Seleziona valore","Parametro dichiarato: amount · 4")] {
+        let mut pixels=vec![[0,0,0,255];940*620];let runs=diagnostics::capture(||draw(&s,&mut pixels,940,620,language)).unwrap().runs;
+        assert!(runs.iter().any(|r|r.text==select));assert!(runs.iter().any(|r|r.text==description));
+        assert!(!runs.iter().any(|r|r.text=="Arm" || r.text=="Attiva"));
+    }
+    s.handle(MenuInput::Confirm);assert_eq!(s.cheat_selected_parameters(),Some(vec![("amount",4)]));assert_eq!(s.focus_label(),"Prepare preview");
 }
 
 #[test]

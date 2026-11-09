@@ -80,6 +80,15 @@ the `gba-input v1` file.
   complete/incomplete, binary/ROM/BIOS/dataset and payload hashes, absolute
   start/end frames and clocks, render dimensions and stop reason.
 - `av.cfg`, `input.cfg`: starting configuration, useful for reproducing context.
+- When cheats are applied during a supported interpreter recording,
+  `cheats-timeline.json` records exact application order, frame, clock,
+  identities and plans; `catalogo.json` is the pinned private source catalog.
+  The manifest hashes the timeline, which in turn pins the catalog. Verification
+  re-decodes the plans before applying them on the isolated machine. Recordings
+  can start with observed cheat ancestry: `cheat-ancestry.json` retains that
+  bounded private history and its hash is pinned in the manifest. The initial
+  state already contains earlier effects, so replay does not apply them again.
+  Legacy ancestry can be unknown. See [cheat recording limits and validation](cheats.md).
 
 Payload names are relative. The folder can move with the copy or on its own,
 while retaining a compatible session for verification. An interrupted process

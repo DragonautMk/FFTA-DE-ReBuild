@@ -89,6 +89,41 @@ fn range_list(bytes: std::collections::BTreeSet<u32>) -> Vec<(u32, u32)> {
 }
 
 impl Plan {
+    /// Reconstruct a recorded, already source-bound plan without trusting its
+    /// serialized operations. Only the exact supported shape can be replayed.
+    pub(crate) fn from_recorded(value: &serde_json::Value) -> Result<Self, String> {
+        #[derive(serde::Deserialize)]
+        #[serde(deny_unknown_fields)]
+        struct SavedPlan { format: String, assumption: String, endianness: String, executable: bool, operations: Vec<SavedOp> }
+        #[derive(serde::Deserialize)]
+        #[serde(tag = "kind", rename_all = "kebab-case", deny_unknown_fields)]
+        enum SavedOp {
+            Write { address:u32, width:u8, value:u16 },
+            Modify { address:u32, width:u8, operation:String, value:u16 },
+            Slide { address:u32, width:u8, value:u16, count:u16, address_increment:u16, value_increment:u16 },
+            Conditional { address:u32, width:u8, comparison:String, value:u16, next:Box<SavedOp> },
+        }
+        fn convert(op: SavedOp, nested: bool) -> Result<Operation,String> {
+            Ok(match op {
+                SavedOp::Write{address,width,value}=>Operation::Write{address,width,value},
+                SavedOp::Modify{address,width,operation,value}=>Operation::Modify{address,width,operation:match operation.as_str(){"or"=>"or","and"=>"and","add"=>"add",_=>return Err("Unsupported recorded modification".into())},value},
+                SavedOp::Slide{address,width,value,count,address_increment,value_increment}=>Operation::Slide{address,width,value,count,address_increment,value_increment},
+                SavedOp::Conditional{address,width,comparison,value,next}=>{
+                    if nested{return Err("Nested recorded condition".into());}
+                    Operation::Conditional{address,width,comparison:match comparison.as_str(){"equal"=>"equal","not-equal"=>"not-equal",_=>return Err("Unsupported recorded comparison".into())},value,next:Box::new(convert(*next,true)?)}
+                },
+            })
+        }
+        let saved:SavedPlan=serde_json::from_value(value.clone()).map_err(|e|format!("Invalid recorded plan: {e}"))?;
+        if saved.format!="codebreaker-advance-source-bound-subset" || saved.assumption!="Caller selected the source and linked master; seed and entry encryption are source assumptions, not verified device behavior" || saved.endianness!="little" || saved.executable || saved.operations.is_empty() || saved.operations.len()>1024 {
+            return Err("Unsupported recorded source-bound plan".into());
+        }
+        let plan=Self{format:"codebreaker-advance-source-bound-subset",assumption:"Caller selected the source and linked master; seed and entry encryption are source assumptions, not verified device behavior",endianness:"little",executable:false,operations:saved.operations.into_iter().map(|op|convert(op,false)).collect::<Result<_,_>>()?};
+        plan.footprint()?;
+        if serde_json::to_value(&plan).map_err(|e|e.to_string())? != *value{return Err("Recorded plan is not canonical".into());}
+        Ok(plan)
+    }
+
     /// No bus access happens until every potential operation has passed.
     pub(crate) fn footprint(&self) -> Result<Footprint, String> {
         use std::collections::BTreeSet;

@@ -242,6 +242,7 @@ impl Selector {
         match index {2 if self.cheat_armed()=>"Disarm",2=>"Activate...",7 if self.collection==1=>"Show all",_=>CHEAT_ACTIONS[index]}
     }
     pub fn cheat_selected_source(&self)->Option<&super::CheatSource>{self.manage.as_ref()?.selected_source()}
+    pub fn cheat_selected_parameters(&self)->Option<Vec<(&str,u16)>>{self.manage.as_ref()?.selected_parameters()}
     pub fn cheat_preview_reviewed(&self)->bool{self.manage.as_ref().is_some_and(|state|!state.preview.is_empty())&&!self.detail_mode}
     pub fn cheat_preset_name(&self)->Option<&str>{self.manage.as_ref().map(|s|s.preset_name.as_str())}
     pub fn cheat_preset_selected(&self)->Option<&str>{self.manage.as_ref()?.preset_selected.as_deref()}
@@ -623,7 +624,7 @@ impl Selector {
         None
     }
     pub fn tab(&mut self, back: bool) {
-        if !self.editing {if let Some(manage)=self.manage.as_mut(){if !self.detail_mode{manage.focus=(manage.focus+if back{6}else{1})%7;}return;}}
+        if !self.editing {if let Some(manage)=self.manage.as_mut(){if !self.detail_mode && !manage.parameter_mode{manage.focus=(manage.focus+if back{6}else{1})%7;}return;}}
         if self.choice_focus(){self.finish_search(true);}
         if self.editing {
             self.finish_search(false);
@@ -635,6 +636,7 @@ impl Selector {
     pub fn handle(&mut self, input: MenuInput) -> Option<MenuAction> {
         if self.manage.is_some() && !self.editing {
             if self.detail_mode {match input{MenuInput::Cancel|MenuInput::Confirm=>{self.detail_mode=false;if let Some(m)=self.manage.as_mut(){if !m.preset_mode{m.focus=3;}}},MenuInput::Up|MenuInput::Left=>self.detail_scroll.set(self.detail_scroll.get().saturating_sub(1)),_=>self.detail_scroll.set((self.detail_scroll.get()+1).min(8192))};return None;}
+            if input==MenuInput::Cancel && self.manage.as_ref().is_some_and(|state|state.parameter_mode){self.manage.as_mut().unwrap().handle(MenuInput::Left);return None;}
             if input==MenuInput::Cancel{self.manage=None;self.focus=5;return None;}
             if input==MenuInput::Confirm && self.manage.as_ref().is_some_and(|s|s.preset_mode && s.focus==5) {
                 let name=self.manage.as_ref().unwrap().preset_name.clone();self.start_search();self.query=name;self.preset_name_edit=true;return None;
@@ -808,7 +810,7 @@ impl Selector {
             if inside(g.controls[0],x,y){self.manage.as_mut().unwrap().focus=0;return self.handle(MenuInput::Up);}
             if inside(g.controls[1],x,y){self.manage.as_mut().unwrap().focus=0;return self.handle(MenuInput::Down);}
             if inside(g.controls[2],x,y){self.manage.as_mut().unwrap().focus=0;return self.handle(MenuInput::Confirm);}
-            for i in 0..6{if inside(g.actions[i],x,y){self.manage.as_mut().unwrap().focus=i+1;return self.handle(MenuInput::Confirm);}}
+            if !self.manage.as_ref().unwrap().parameter_mode {for i in 0..6{if inside(g.actions[i],x,y){self.manage.as_mut().unwrap().focus=i+1;return self.handle(MenuInput::Confirm);}}}
             if inside(g.actions[6],x,y){return self.handle(MenuInput::Cancel);}
             return None;
         }
@@ -872,7 +874,7 @@ impl Selector {
         }
     }
     fn focus_label(&self)->String {
-        if let Some(manage)=&self.manage {if !self.editing{return if manage.focus==0{if manage.preset_mode{manage.presets.get(manage.preset_cursor).cloned().unwrap_or_else(||"No preset".into())}else{manage.sources.get(manage.cursor).map_or_else(||"No source".into(),|s|format!("Source {} · {}",s.index,s.name))}}else{(if manage.preset_mode{["Save preset","Prepare preset","Arm preset","Disarm all","Edit preset name","Back to sources"]}else{["Prepare preview","Apply once","Arm","Disarm","Disarm all","Presets"]})[manage.focus-1].into()};}}
+        if let Some(manage)=&self.manage {if !self.editing{return if manage.focus==0{if manage.preset_mode{manage.presets.get(manage.preset_cursor).cloned().unwrap_or_else(||"No preset".into())}else if manage.parameter_mode{manage.current_parameter().map_or_else(||"No value available".into(),|(name,value)|format!("Declared parameter: {name} · {value}"))}else{manage.sources.get(manage.cursor).map_or_else(||"No source".into(),|s|format!("Source {} · {}",s.index,s.name))}}else{(if manage.preset_mode{["Save preset","Prepare preset","Arm preset","Disarm all","Edit preset name","Back to sources"]}else{["Prepare preview","Apply once","Arm","Disarm","Disarm all","Presets"]})[manage.focus-1].into()};}}
         if self.editing {
             format!("Search keyboard: {}", self.key_labels()[self.key])
         } else if self.detail_mode {
@@ -1007,17 +1009,17 @@ pub(super) fn draw(s: &Selector, px: &mut [[u8; 4]], w: usize, h: usize, languag
     if let Some(m)=s.manage.as_ref().filter(|_|!s.editing) {
         let title=if m.preset_mode{locale.tr("CHEAT PRESETS").to_owned()}else{format!("{} · {}",locale.tr("CHEAT MANAGEMENT"),m.title)};
         c.text((x+10) as f32,(y+5) as f32,&title,ink,size*1.1,true,pw.saturating_sub(20) as f32);
-        for (i,label) in (if m.preset_mode{["Previous preset","Next preset","Select preset"]}else{["Previous source (short)","Next source (short)","Select source"]}).iter().enumerate(){button(&mut c,g.controls[i],locale.tr(label),i==2&&m.focus==0,size);}
-        let source=if m.preset_mode{m.presets.get(m.preset_cursor).cloned().unwrap_or_else(||locale.tr("No preset").to_owned())}else{m.sources.get(m.cursor).map_or_else(||locale.tr("No source").to_owned(),|v|format!("{} · {} · {} · {}",v.index,v.name,v.master,locale.tr(match v.assessment.as_str(){"manual-once-subset"=>"Preview available","decoded-outside-once-limits"=>"Outside supported limits","not-evaluated"=>"Not assessed",_=>"Source needs review"})))};
-        let selection=if m.preset_mode{format!("{}: {} · {}: {}",locale.tr("Selected preset"),m.preset_selected.as_deref().unwrap_or("-"),locale.tr("Preset name"),m.preset_name)}else{m.selected_source().map_or_else(||locale.tr("No source selected").to_owned(),|v|format!("{} · {}",locale.tr("Selected source"),v.index))};
+        for (i,label) in (if m.preset_mode{["Previous preset","Next preset","Select preset"]}else if m.parameter_mode{["Previous value","Next value","Select value"]}else{["Previous source (short)","Next source (short)","Select source"]}).iter().enumerate(){button(&mut c,g.controls[i],locale.tr(label),i==2&&m.focus==0,size);}
+        let source=if m.preset_mode{m.presets.get(m.preset_cursor).cloned().unwrap_or_else(||locale.tr("No preset").to_owned())}else if m.parameter_mode{m.current_parameter().map_or_else(||locale.tr("No value available").to_owned(),|(name,value)|format!("{}: {} · {}",locale.tr("Declared parameter"),name,value))}else{m.sources.get(m.cursor).map_or_else(||locale.tr("No source").to_owned(),|v|format!("{} · {} · {} · {}",v.index,v.name,v.master,locale.tr(match v.assessment.as_str(){"manual-once-subset"=>"Preview available","parameter-required"=>"Choose a declared value","decoded-outside-once-limits"=>"Outside supported limits","not-evaluated"=>"Not assessed",_=>"Source needs review"})))};
+        let selection=if m.preset_mode{format!("{}: {} · {}: {}",locale.tr("Selected preset"),m.preset_selected.as_deref().unwrap_or("-"),locale.tr("Preset name"),m.preset_name)}else{m.selected_source().map_or_else(||locale.tr("No source selected").to_owned(),|v|format!("{} · {}{}",locale.tr("Selected source"),v.index,m.selected_parameters().map_or_else(String::new,|choices|choices.iter().map(|(name,value)|format!(" · {name}: {value}")).collect::<String>()))) };
         c.text((x+10) as f32,(g.controls[0][1]+g.row+3) as f32,&source,ink,size,false,pw.saturating_sub(20) as f32);
         c.text((x+10) as f32,(g.controls[0][1]+g.row*2+3) as f32,&format!("{} · {}",selection,locale.tr(&m.feedback)),ink,size,false,pw.saturating_sub(20) as f32);
         if !m.preset_mode {
             let active=s.entries.iter().find(|entry|entry.id==m.id).and_then(|entry|entry.cheat_filter.as_ref()).is_some_and(|filter|filter.armed);
-            let hint=if active{"Active: disable to stop future writes"}else if m.selected_source().is_none(){"1. Select a source"}else if m.preview.is_empty(){"2. Prepare and review the preview"}else{"3. Activate or apply once"};
+            let hint=if active{"Active: disable to stop future writes"}else if m.selected_source().is_none(){"1. Select a source"}else if m.parameter_mode{"Select a declared value"}else if m.preview.is_empty(){"2. Prepare and review the preview"}else{"3. Activate or apply once"};
             c.text((x+10) as f32,(g.controls[0][1]+g.row*3+3) as f32,locale.tr(hint),ink,size,false,pw.saturating_sub(20) as f32);
         }
-        for (i,label) in (if m.preset_mode{["Save preset","Prepare preset","Arm preset","Disarm all","Edit preset name","Back to sources"]}else{["Prepare preview","Apply once","Arm","Disarm","Disarm all","Presets"]}).iter().enumerate(){button(&mut c,g.actions[i],locale.tr(label),m.focus==i+1,size);}
+        if !m.parameter_mode {for (i,label) in (if m.preset_mode{["Save preset","Prepare preset","Arm preset","Disarm all","Edit preset name","Back to sources"]}else{["Prepare preview","Apply once","Arm","Disarm","Disarm all","Presets"]}).iter().enumerate(){button(&mut c,g.actions[i],locale.tr(label),m.focus==i+1,size);}}
         button(&mut c,g.actions[6],locale.tr("Back"),false,size);
         c.finish(px);return;
     }

@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-09",
+  "slug": "document-missing-debug-operation-options",
+  "title": "Document bounded debug control options in the operation inventory",
+  "kind": "fixed",
+  "platforms": [
+    "Linux"
+  ],
+  "changes": [
+    "Add reference descriptors for shared break/watch windows and guards, bounded local-control replay and typed-recipe reopening, preserving all historical Atlas operation contracts and existing response identities."
+  ],
+  "validation": [
+    "The Python operation-inventory suite passed all three tests after previously reporting missing parser flags in three source files. Focused Linux tests passed four operation-registry and eleven command tests. Atlas regeneration preserved all 97 historical contracts."
+  ],
+  "limitations": [
+    "These changes describe existing behavior and do not add runtime capabilities. Windows execution and the separate DBG2-20 parameter end-to-end proof remain outstanding."
+  ],
+  "files": [
+    "crates/recomp/src/debug_operations.json",
+    "docs/development/MENU_ATLAS_INVENTORY.json"
+  ],
+  "references": [
+    "docs/debug_operations.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

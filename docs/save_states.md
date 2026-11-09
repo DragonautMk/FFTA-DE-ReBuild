@@ -87,7 +87,7 @@ and atomic replacement. An unexpected occupied slot is protected against an
 unconfirmed write, even if it appeared after the menu read its status.
 
 Files persist across restarts. For SL1 files the slot picker reads only the
-preview prefix; for SL2 it also checks the complete file and ancestry checksum.
+preview prefix; for SL2 and SL3 it also checks the complete file and ancestry checksum.
 It does not decode complete machines just to show a thumbnail.
 
 ## Existing checkpoints and compatibility
@@ -108,21 +108,28 @@ does not establish that its machine data can be loaded.
 Desktop save/load operations use the history-aware slot APIs; no-history
 convenience adapters are compiled only for tests.
 
-After cheat use, the desktop writes an `FFTA-SL2` envelope with bounded cheat
-ancestry in the same atomic file. It includes observed source and plan hashes,
-ordered set identities and summarized frame/clock information, but no raw cheat
-codes. A checksum binds the ancestry to the machine snapshot. It is an integrity
-check, not proof of authorship or of an exact replay. History is bounded and
-marks omitted entries; it may include earlier changes later restored away.
-Recording, full event-by-event replay and parameter tracking remain unsupported.
+After cheat use, the desktop writes an `FFTA-SL3` envelope containing bounded
+cheat provenance in the same atomic file. Conservative ancestry may include
+earlier changes later restored away. A separate observed suffix records each
+known one-shot or maintained application, ordered identities and parameter
+choices, set hash, frame, clock and write count. It contains no raw cheat codes.
+The suffix explicitly leaves earlier history unknown and marks truncation; it
+is limited to 4,096 applications, 64 distinct identities and 128 KiB. A checksum
+binds the metadata to the machine snapshot. It is an integrity check, not proof
+of authorship or a complete replay from the beginning of play. Debug status
+reports a bounded suffix summary and hash; the full suffix remains in the
+private snapshot.
 
-Loading such a snapshot disarms cheats and keeps its ancestry in the current
-session. The ancestry is also retained conservatively across Undo, restart and
-new debug copies, because cartridge data can survive those operations. Existing
-raw and SL1 files remain readable, but their ancestry was not recorded and is
-not evidence that cheats were absent. Older application versions cannot read
-SL2. Input recordings remain blocked after observed cheat use; an SL2 file can
-be shared as a private checkpoint without sharing the local cheat catalog.
+Loading a snapshot disarms cheats, conservatively retains ancestry, and restores
+the observed suffix belonging to that snapshot. Undo load restores the prior
+suffix; restart, save switching and backup restoration end that suffix because
+the machine timeline changed. Conservative ancestry remains because cartridge
+data may survive. New debug copies preserve the snapshot's metadata. Existing
+raw, SL1 and conservative SL2 files remain readable; their earlier ancestry or
+exact application sequence is unknown. Older application versions cannot read
+SL2 or SL3. Interpreter recordings can start from a cheat-derived state and pin
+its ancestry without replaying the prior applications; see [recordings](debug_recordings.md).
+These private checkpoints do not require sharing the local cheat catalog.
 
 Compatible builds can share files with matching ROM/BIOS and formats. Changes
 to incompatible machine layouts or execution semantics require incrementing
