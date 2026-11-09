@@ -21734,3 +21734,18 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: SL3 snapshots preserve bounded exact observed cheat identities, set and plan hashes, parameters, ordered applications, frame and clock; Load/Undo restore the corresponding branch without rearming, and reset/save switch/backup end the exact suffix. Legacy snapshots remain readable. Plain interpreter recordings pin authenticated source/ROM/decoder and post-start application timeline; replay reproduces exact state and clock and refuses an incompatible active set. Recording from an already cheat-derived state pins its ancestry without executing prior applications. Reports identify variants, protected originals remained unchanged and no ordinary DS case was promoted.
 - Evidence: docs/changes/2026-11-09-record-source-bound-cheat-replay-timeline.json; docs/changes/2026-11-09-preserve-branch-aware-cheat-snapshot-history.json; docs/changes/2026-11-09-record-cheat-derived-origins.json; target/validation/units/dbg2-23-frontend-evidence-audit-4vxhvlly/; target/validation/units/dbg2-23-origin-additive-proof-0q7t02c1/; target/validation/units/dbg2-23-cheat-origin-frontend-8lyk_vty/.
 - Limits: unknown earlier ancestry and bounded truncation remain explicit. Only plain interpreter replay supports cheat-derived recordings; native Windows, physical inputs and hardware-hook equivalence are unverified. Earlier Wine GUI runs retained FAIL receipts and diagnostic scratch despite the separate successful audit; later origin frontend unit PASS with selected private artifacts kept hot after automatic archival declined them.
+
+
+### DBG2-20-LIVE-PARAMETER-CONTROL
+
+- Outcome: completed
+- Verified criteria: live Windows GNU/Wine/Xvfb isolated frontend with protected EUR ROM and synthetic catalog accepted explicit two-parameter preview, arm, preset save/review/rearm and disarm. Missing/out-of-domain choices, duplicate preset, overlapping second plan and changed source were refused without partial activation or guest state/frame/clock changes. Window closed normally, guarded inputs passed, prefix drained and scratch retired. Earlier independent live evidence covers one-shot application and exact replay.
+- Evidence: docs/changes/2026-11-09-verify-live-parameter-cheat-control.json; target/validation/units/dbg2-20-live-parameter-flow-i_1jqzpn/; target/validation/units/dbg2-23-frontend-evidence-audit-4vxhvlly/.
+- Limits: explicit text-command path, not live menu/controller-only selection; values and catalog synthetic, not evidence of actual source/device/gameplay domains. DBG2-20 remains partial.
+
+### DBG2-20-LIVE-MENU-VALUES
+
+- Outcome: completed
+- Verified criteria: in an isolated Wine/Xvfb frontend, keyboard navigation selected the synthetic source and both declared values, reviewed the preview, armed and disarmed; guest state/frame/clock and protected originals were unchanged, the window closed normally, and Wine drained.
+- Evidence: `target/validation/units/dbg2-20-live-menu-values-bqd__1zo/`; earlier menu-driver attempts `dbg2-20-live-menu-values-3u98itkk` and `dbg2-20-live-menu-values-nmb_uv3q` retained diagnostics after wrong scripted navigation and selection.
+- Limits: synthetic values, not real-catalog domains or device behavior; full preset/conflict/drift flow was tested separately using explicit commands.

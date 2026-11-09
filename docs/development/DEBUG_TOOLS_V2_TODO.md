@@ -637,9 +637,13 @@ No other development was selected. On resumption read only the individual ID in
   and a Windows cross-build passed. The menu now requires an explicit value
   selection for a declared parameter. The current catalog supplies no structured
   domains. Focused Windows/Wine component, protected-ROM synthetic preflight
-  and offscreen menu checks passed; isolated end-to-end and broader Windows
-  execution checks remain outstanding.
-  declarations do not establish game or device behavior. A readonly audit found
+  and offscreen menu checks passed. A live isolated Wine/Xvfb explicit-command
+  flow also verified parameterized preset save/review/arm/disarm, overlap and
+  changed-source refusal without guest changes; earlier live evidence verified
+  one-shot application. A separate live keyboard/menu check selected two values,
+  prepared, armed and disarmed a synthetic plan. The complete preset flow through
+  menu/controller alone and validated real catalog domains remain open.
+  Declarations do not establish game or device behavior. A readonly audit found
   that the current 24 CodeBreaker placeholder sources share an unsupported
   two-line master; one describes three independent placeholder groups. Under a
   possible plaintext interpretation its checksum differs from the known EUR

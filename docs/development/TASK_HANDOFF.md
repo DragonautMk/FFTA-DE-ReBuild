@@ -71,11 +71,13 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 - State: active
 - Outcome: partial
-- Selection: declared multi-parameter menu/CLI, source mapping, guarded preview and presets integrated. Linux menu, rendering, source mapping and multi-parameter suite PASS (`dbg2-20-menu-values-confirm-vymtsut1`, `dbg2-20-parameter-render-corrected-rkm88ykd`, `dbg2-20-multiple-parameter-suite-_dgohsc9`); protected EUR synthetic preflight PASS (`dbg2-20-multiple-real-rom-preflight-ks8dyakw`); Windows GNU cross-build PASS (`dbg2-20-multiple-windows-build-ry5e8e9o`), not execution. Earlier archive-retirement/test-count failures retain diagnostics. Actual catalog has 24 placeholder sources sharing an unverified two-line master and no structured domains (`dbg2-20-source-domain-audit-e9o97pmb`); neither target nor format established. Do not invent domains or bypass master. Full isolated GUI/application proof and broader Windows execution remain open; focused Wine component and protected-ROM checks now pass.
+- Selection: declared multi-parameter menu/CLI, source mapping, guarded preview and presets integrated. Linux menu, rendering, source mapping and multi-parameter suite PASS (`dbg2-20-menu-values-confirm-vymtsut1`, `dbg2-20-parameter-render-corrected-rkm88ykd`, `dbg2-20-multiple-parameter-suite-_dgohsc9`); protected EUR synthetic preflight PASS (`dbg2-20-multiple-real-rom-preflight-ks8dyakw`); Windows GNU cross-build PASS (`dbg2-20-multiple-windows-build-ry5e8e9o`), not execution. Earlier archive-retirement/test-count failures retain diagnostics. Actual catalog has 24 placeholder sources sharing an unverified two-line master and no structured domains (`dbg2-20-source-domain-audit-e9o97pmb`); neither target nor format established. Do not invent domains or bypass master. Focused Wine component and protected-ROM checks pass; native Windows and broader game/device behavior remain open.
 - Verified: source/preview/arm/disarm, filters, named presets and guided CHEAT-INTERFACE. CHEAT-COMPACT-NAV adds compact catalog, keyboard shortcuts and held vertical repeat; 133 Linux menu tests and CH-0341 X11 GUI passed, portable runtime installed.
 - Missing: validated values/ranges and broader game/device behavior.
 - Verified Wine increment: four synthetic parameter/catalog/capability/preset tests PASS (`dbg2-20-focused-wine-8q7tdm2w`); protected EUR ROM synthetic preflight with three temporary RAM writes PASS (`dbg2-20-rom-preflight-wine-eiw70mf0`); three menu confirmation/offscreen EN/IT rendering tests PASS (`dbg2-20-menu-offscreen-wine-ftxmavl9`). Each used the coordinated prefix and drained Wine; host menu builds `_z1qvmbg`/`fiiiprbt` failed because dlltool was absent, so the successful menu test was built with the project Docker toolchain.
-- Resume: full isolated frontend-to-application proof and validated source domains remain open; do not repeat accepted Wine increments or bypass the unsupported master. `docs/changes/2026-11-09-support-multiple-declared-cheat-parameters.json`.
+- Verified live control: explicit two-parameter selection, preset save/review/arm/disarm, duplicate/overlap and changed-source refusals PASS in an isolated Wine/Xvfb frontend with protected EUR ROM and unchanged guest (`dbg2-20-live-parameter-flow-i_1jqzpn`). Earlier accepted live evidence covers one-shot and replay. A separate live keyboard/menu check selected both values, previewed, armed and disarmed (`dbg2-20-live-menu-values-bqd__1zo`); the entire preset flow via menu alone and actual source domains remain unverified.
+- Selection checkpoint: user requests DBG2-20 completion and does not know the original source/device. Synthetic live menu selection/preview/arm/disarm PASS. Two earlier menu-driver attempts chose the wrong navigation/selection; diagnostics retained. Actual source domains remain unavailable.
+- Resume: obtain authoritative source/device/ROM evidence before validating real domains or master; never infer domains or bypass the unsupported master. The equivalent explicit-command preset/conflict/drift flow is already accepted; avoid replaying it. `docs/changes/2026-11-09-verify-live-parameter-cheat-control.json`.
 
 ### DBG2-22
 
@@ -157,9 +159,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: DBG2-23 completed and archived; goal currently paused.
-- Last verified result: DBG2-23 real Wine frontend and additive protected-ROM tests PASS, as do memory, handoff, Atlas and diff checks.
-- Remaining work: DBG2-20, DBG2-22 and DBG2-25 through DBG2-28 remain open.
-- Errors or blockers: previous DBG2-23 frontend FAIL receipts and their diagnostics are retained; no other owner jobs disturbed.
-- Next action: on goal resumption, select an unfinished parent and check its current handoff and evidence before implementation.
-- References: docs/development/DEBUG_TOOLS_V2_TODO.md; docs/changes/2026-11-09-record-cheat-derived-origins.json.
+- Task: DBG2-20 partial; user requested completion.
+- Last verified result: Wine/Xvfb synthetic keyboard selected both values, previewed, armed and disarmed; explicit-command preset/conflict/drift and earlier one-shot proofs also PASS.
+- Remaining work: validated original catalog domains/master and broader game/device behavior; complete preset flow by menu alone remains unverified.
+- Errors or blockers: 24 placeholder records have an unattributed source/master and no structured domains; the plaintext checksum hypothesis does not match the protected EUR ROM. Do not fabricate or bypass checks.
+- Next action: await authoritative source/device/ROM evidence; the user does not know it. Preserve accepted synthetic proofs and do not infer domains.
+- References: docs/changes/2026-11-09-verify-live-parameter-cheat-control.json; target/validation/units/dbg2-20-live-parameter-flow-i_1jqzpn/; target/validation/units/dbg2-20-live-menu-values-bqd__1zo/; target/validation/units/dbg2-20-source-domain-audit-e9o97pmb/.

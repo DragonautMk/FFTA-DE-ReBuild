@@ -3,6 +3,30 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-09 — Verify the live parameterized cheat control flow
+
+Type: docs. Platforms: Windows GNU / Wine / Xvfb.
+
+**Changes**
+
+- Record the live isolated explicit-command validation of multi-parameter cheat presets, conflict handling and source-change refusal without claiming real-source or device equivalence.
+- Record live menu selection, preview, arming and disarming of a synthetic two-parameter plan.
+
+**Validation**
+
+- A protected EUR ROM, synthetic two-parameter catalog and isolated Windows GNU/Wine/Xvfb frontend accepted explicit catalog selection, parameter preview, arming, preset save/review/rearm and disarm. Missing or invalid values, a duplicate preset, overlapping plan and changed catalog were refused without partial activation or guest state/frame/clock changes; the window closed normally and Wine drained. Evidence: target/validation/units/dbg2-20-live-parameter-flow-i_1jqzpn/.
+- Earlier separate live proof verified the same multi-parameter selection, one-shot writes and maintained arm/disarm, with an independently checked recording/replay endpoint. Evidence: target/validation/units/dbg2-23-frontend-evidence-audit-4vxhvlly/.
+- A separate isolated Windows GNU/Wine/Xvfb keyboard check selected both synthetic parameters in the menu, reviewed the preview, armed and disarmed while guest state/frame/clock and protected inputs stayed unchanged; the window closed and Wine drained. Evidence: target/validation/units/dbg2-20-live-menu-values-bqd__1zo/. Two earlier menu-driver attempts retained diagnostics after incorrect navigation; they do not establish product failures.
+
+**Limitations**
+
+- The catalogs and selected values are synthetic. The full preset/conflict/source-change flow was tested through explicit text commands; the live menu check covers selection, preview, arming and disarming, not the entire preset flow.
+- The local catalog has no structured parameter domains; its 24 placeholder CodeBreaker source records share a two-line master with unestablished format/target and a checksum mismatch under one plaintext hypothesis. Native Windows, physical device hooks and ordinary game effects remain unverified.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-09-verify-live-parameter-cheat-control.json)
+
 ## 2026-11-09 — Validate the full declared cheat parameter domain
 
 Type: fixed. Platforms: Linux, Windows GNU cross-build.

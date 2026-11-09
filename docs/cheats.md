@@ -417,8 +417,15 @@ Synthetic Windows GNU/Wine checks now cover multiple-parameter substitution,
 source mapping, capability refusal and presets, plus menu confirmation and
 offscreen rendering in English and Italian. A protected EUR ROM and synthetic
 catalog also passed Wine checksum/master preflight and isolated temporary RAM
-writes. These checks do not exercise a live menu-to-application flow or physical
-device. An isolated end-to-end run and broader Windows execution remain open.
+writes. An isolated Wine/Xvfb frontend then accepted explicit text commands for
+two source-declared values, a reviewed preview, arming and a preset roundtrip.
+It refused missing/out-of-domain choices, an overlapping plan, duplicate preset
+and changed catalog, with guest state, frame and clock unchanged; protected inputs
+remained unchanged. Earlier live evidence verified one-shot application and
+disarming. A separate isolated Wine/Xvfb keyboard check selected both declared values
+in the live menu, reviewed the preview, armed and disarmed the plan; the guest
+and protected inputs remained unchanged. These synthetic checks do not verify
+real-catalog domains, physical devices or the complete preset flow by menu alone.
 A separate Linux check used a synthetic catalog and a protected EUR ROM for checksum preflight:
 it refused an absent or out-of-domain value and applied the decoded synthetic
 plan to temporary RAM. It did not exercise the graphical frontend.
