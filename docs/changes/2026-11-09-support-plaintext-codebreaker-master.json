@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-09",
+  "slug": "support-plaintext-codebreaker-master",
+  "title": "Support source-bound plaintext CodeBreaker masters",
+  "kind": "added",
+  "platforms": [
+    "Linux",
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Accept strictly structured two-line plaintext game-ID/hook masters alongside existing three-line seeded masters; keep the plaintext assumption distinct in recorded plans and preserve the existing seeded serialization.",
+    "Validate source master shape before exposing declared parameters, retaining source, region, checksum, snapshot and bounded-footprint guards."
+  ],
+  "validation": [
+    "Linux offline focused suites: decoder 10, catalog 16 and timeline 2 passed; additional ignored protected-ROM preflight passed on known USA and EUR images with a synthetic temporary bus write.",
+    "Read-only protected ROM identity/CRC audit matched USA/Eurasia and rejected EUR under the plaintext master hypothesis. Windows GNU test target compiled, and two targeted tests passed under coordinated Wine; the Wine log contains a trailing D-Bus assertion after the successful tests and the runner reported PASS with server drain.",
+    "Malformed masters, replay plan identity, unknown region and bounded-write refusal covered by focused tests; protected ROMs and sources unchanged. Evidence: target/validation/units/dbg2-20-plaintext-master-tests-o_rnfulh/, dbg2-20-plaintext-rom-preflight-2psoj0bq/, dbg2-20-plaintext-windows-build-26zdkx4r/, dbg2-20-plaintext-wine-tests-pjm0g5c1/, dbg2-20-master-region-audit-vjj6_29y/."
+  ],
+  "limitations": [
+    "The local XP catalog remains region-unknown with annotated raw lines and no structured parameter domains; no original data was rewritten and no unsupported activation was enabled. Checksum identity is not proof of gameplay or physical-device behavior.",
+    "Job, race and appearance choices need correlated validation and source reconciliation. Native Windows and physical devices were not tested."
+  ],
+  "files": [
+    "crates/recomp/src/debug_cheat_decoder.rs",
+    "crates/recomp/src/debug_cheats.rs"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

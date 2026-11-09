@@ -653,8 +653,16 @@ No other development was selected. On resumption read only the individual ID in
   provides tables, but does not establish the local compilation's provenance or
   target ROM. Its job/appearance/race mapping conflicts with the local CH-0234
   notes; preserve the notes and resolve the discrepancy before declaring domains.
-  Multiple declared parameters have synthetic coverage; a verified compatible
-  source is still needed for those entries.
+  A protected read-only audit found the plaintext master checksum matches the
+  known USA/Eurasia ROM and not the known EUR ROM. The decoder now supports a
+  strict two-line plaintext master; source-bound region, checksum, drift and
+  footprint guards remain. Original XP annotations and unknown region still
+  prevent automatic activation. A private explicitly selected USA projection
+  now binds eight source-listed primary ability-set label records to the known
+  USA identity and master checksum, preserving original provenance and table
+  hashes. Protected USA/EUR preflight and Wine frontend selection/arm/disarm
+  passed without guest advancement. Job/race/appearance choices still require
+  correlated-domain validation; game/device effects remain unverified.
 
 - [x] **DBG2-21 — First EUR selection useful for debugging.**
   Priorities, subject to decoding/verification: access to Card Shop/Item Shop/

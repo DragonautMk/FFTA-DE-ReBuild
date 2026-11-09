@@ -92,12 +92,13 @@ impl Catalog {
             else if n>MAX_CAPABILITY_LINES || n>*budget {json!({"state":"not-evaluated","reason":"Capability assessment limit reached"})}
             else if self.entry(master.unwrap()).and_then(|m|m.get("provenance")).and_then(Value::as_array).is_none_or(|items|{
                 let matches=items.iter().filter(|m|m.get("source").and_then(Value::as_str)==p.get("source").and_then(Value::as_str)).collect::<Vec<_>>();
-                matches.len()!=1 || matches[0].get("raw_code_lines").and_then(Value::as_array).is_none_or(|lines|lines.len()!=3)
-            }) {json!({"state":"unresolved","reason":"Source master is missing, ambiguous or not a supported three-line block"})}
+                matches.len()!=1 || matches[0].get("raw_code_lines").and_then(Value::as_array).is_none_or(|lines|!matches!(lines.len(),2|3))
+            }) {json!({"state":"unresolved","reason":"Source master is missing, ambiguous or not a supported two- or three-line block"})}
             else {
                 *budget-=n;
                 match self.source_bound(entry,index,master.unwrap()) {
                     Err(error)=>json!({"state":"unresolved","reason":error}),
+                    Ok((_,_lines,master_lines)) if crate::debug_cheat_decoder::validate_source_master(&master_lines).is_err()=>json!({"state":"unresolved","reason":"Source master is malformed or unsupported"}),
                     Ok((_,lines,master_lines))=>match Self::parameter_specs(p,&lines) {
                         Err(error)=>json!({"state":"unresolved","reason":error}),
                         Ok(specs) if specs.len()==1=>json!({"state":"parameter-required","parameter":specs[0],"scope":"Declared values are source metadata, not verified game or device behavior"}),
@@ -476,6 +477,72 @@ mod tests {
         let (plan,_)=crate::debug_cheat_decoder::inspect_source(&expanded,&master,None).unwrap();assert!(plan.footprint().is_ok());
         assert!(Catalog::parameterized_source(source,&raw,&[crate::debug_cheat_parameters::Choice{name:"amount".into(),value:1}]).is_err());
         assert_eq!(c.entries,v["entries"].as_array().unwrap().clone());
+    }
+    #[test]
+    fn plaintext_master_capability_keeps_unknown_region_unverified() {
+        let mut v=fixture();
+        v["entries"][0]["region"]=json!("unknown");
+        v["entries"][0]["provenance"]=json!([{"source":"synthetic","master_id":"CH-0002","raw_code_lines":["3200000X 0001"],
+            "parameter":{"name":"offset","allowed":{"kind":"list","values":[1]},"slots":[{"line":0,"field":"word","offset":7,"digits":1}]}}]);
+        v["entries"][1]["format"]=json!("codebreaker");v["entries"][1]["region"]=json!("unknown");
+        v["entries"][1]["provenance"]=json!([{"source":"synthetic","raw_code_lines":["0000FFE7 000A","10000100 0007"]}]);
+        let catalog=Catalog::parse(&serde_json::to_vec(&v).unwrap()).unwrap();
+        assert_eq!(catalog.capabilities[0]["state"],"parameter-required");
+        assert_eq!(catalog.indexed_summary(0,Some(gba_core::ffta_rom::SHA256))["compatibility"]["rom"]["state"],"unknown");
+        assert_eq!(catalog.entries,v["entries"].as_array().unwrap().clone());
+        v["entries"][1]["provenance"][0]["raw_code_lines"][1]=json!("10000101 0007");
+        let malformed=Catalog::parse(&serde_json::to_vec(&v).unwrap()).unwrap();
+        assert_eq!(malformed.capabilities[0]["state"],"unresolved");
+    }
+    #[test]
+    #[ignore = "Requires protected known USA and EUR ROMs and validation work"]
+    fn plaintext_master_checks_actual_rom_before_synthetic_write() {
+        use gba_core::Bus;
+        let work=std::path::PathBuf::from(std::env::var_os("FFTA_VALIDATION_WORK").unwrap());
+        let dir=tempfile::tempdir_in(work).unwrap();
+        for (region,var,expected) in [("USA","FFTA_PLAIN_TEST_ROM_USA",true),("EUR","FFTA_PLAIN_TEST_ROM_EUR",false)] {
+            let rom=std::fs::read(std::env::var_os(var).unwrap()).unwrap();
+            let mut value=fixture();
+            value["entries"][0]["region"]=json!(region);
+            value["entries"][0]["provenance"]=json!([{"source":"synthetic","master_id":"CH-0002","raw_code_lines":["3200000X 0001"],
+                "parameter":{"name":"offset","allowed":{"kind":"list","values":[1]},"slots":[{"line":0,"field":"word","offset":7,"digits":1}]}}]);
+            value["entries"][1]["format"]=json!("codebreaker");value["entries"][1]["region"]=json!(region);
+            value["entries"][1]["provenance"]=json!([{"source":"synthetic","raw_code_lines":["000037AE 000A","10000488 0007"]}]);
+            let folder=dir.path().join(region);std::fs::create_dir(&folder).unwrap();
+            let path=folder.join("catalogo.json");std::fs::write(&path,serde_json::to_vec(&value).unwrap()).unwrap();
+            let sha=gba_core::ffta_rom::digest(&rom);let reference=crate::debug_inputs::Reference::explicit(&path,menu::ContentSlot::CheatCatalog,&sha).unwrap();
+            let snapshot=Snapshot::new(Catalog::load(&path).unwrap(),reference.entry.id.clone(),sha).unwrap();
+            let choice=crate::debug_cheat_parameters::Choice{name:"offset".into(),value:1};
+            let result=snapshot.prepare_once(&reference,&rom,"CH-0001",0,"CH-0002",&snapshot.generation,&[choice]);
+            if expected {
+                let (plan,info)=result.unwrap();assert_eq!(info["master"]["rom"]["checksum_state"],"match");
+                let mut machine=gba_core::Machine::new(vec![]);assert_eq!(plan.apply_once(&mut machine.bus).unwrap(),1);assert_eq!(machine.bus.read8(0x02000001),1);
+            } else { assert!(result.unwrap_err().contains("checksum")); }
+        }
+    }
+    #[test]
+    #[ignore = "Requires a protected derived catalog and recognized USA and EUR ROMs"]
+    fn derived_usa_ability_catalog_obeys_source_and_rom_guards() {
+        use gba_core::Bus;
+        let path=std::path::PathBuf::from(std::env::var_os("FFTA_ABILITY_PROJECTION").unwrap());
+        let usa=std::fs::read(std::env::var_os("FFTA_PLAIN_TEST_ROM_USA").unwrap()).unwrap();
+        let eur=std::fs::read(std::env::var_os("FFTA_PLAIN_TEST_ROM_EUR").unwrap()).unwrap();
+        let catalog_bytes=std::fs::read(&path).unwrap();
+        let choice=crate::debug_cheat_parameters::Choice{name:"ability_set_label".into(),value:1};
+        for (rom,should_pass) in [(&usa,true),(&eur,false)] {
+            let sha=gba_core::ffta_rom::digest(rom);let reference=crate::debug_inputs::Reference::explicit(&path,menu::ContentSlot::CheatCatalog,&sha).unwrap();
+            let snapshot=Snapshot::new(Catalog::load(&path).unwrap(),reference.entry.id.clone(),sha).unwrap();
+            let result=snapshot.prepare_once(&reference,rom,"CH-0226",0,"CH-0225",&snapshot.generation,std::slice::from_ref(&choice));
+            if should_pass {
+                let (plan,info)=result.unwrap();assert_eq!(info["master"]["rom"]["checksum_state"],"match");
+                assert_eq!(info["parameter"]["choice"]["value"],1);
+                let address=info["plan"]["operations"][0]["address"].as_u64().unwrap() as u32;
+                let mut machine=gba_core::Machine::new(vec![]);assert_eq!(plan.apply_once(&mut machine.bus).unwrap(),1);assert_eq!(machine.bus.read8(address),1);
+                let invalid=crate::debug_cheat_parameters::Choice{name:"ability_set_label".into(),value:35};
+                assert!(snapshot.prepare_once(&reference,rom,"CH-0226",0,"CH-0225",&snapshot.generation,&[invalid]).is_err());
+            } else { assert!(result.is_err()); }
+        }
+        assert_eq!(std::fs::read(path).unwrap(),catalog_bytes);
     }
     #[test]
     fn multiple_declared_parameters_map_to_menu_and_decode_together(){

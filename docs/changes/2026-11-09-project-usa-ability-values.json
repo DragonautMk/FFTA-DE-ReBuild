@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-09",
+  "slug": "project-usa-ability-values",
+  "title": "Create a private source-bound USA ability projection",
+  "kind": "added",
+  "platforms": [
+    "Linux",
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Add an explicit local projection builder for eight source-listed primary ability-set label records and their master. Check the recognized USA ROM and checksum, preserve original provenance and source hashes, require the exact listed values, and refuse to overwrite output.",
+    "Keep original XP entries unchanged and omit job/race/appearance modifiers whose choices require correlated validation."
+  ],
+  "validation": [
+    "A protected foreground validation created a private nine-record catalog from the local source, verified eight domains with 35 values, and refused changed ROM, table and source-line inputs. A separate CLI check verified deterministic output and refusal to overwrite.",
+    "A protected integration check accepted the USA catalog/master/value and a synthetic bus write, rejected a value outside the source list and rejected the known EUR ROM. Windows GNU production build passed.",
+    "An isolated Windows GNU/Wine/Xvfb USA frontend explicitly prepared, armed and disarmed a projected ability label and rejected an out-of-domain value without guest advancement; originals remained unchanged and the window closed normally. An earlier driver attempt retained diagnostics after using the multiple-parameter JSON field for a single-parameter result. Evidence: target/validation/units/dbg2-20-usa-ability-projection-ro_8a3nv/, dbg2-20-usa-ability-preflight-gi901c1n/, dbg2-20-ability-projection-cli-_a2sir4h/, dbg2-20-usa-projection-frontend-e42ixl96/."
+  ],
+  "limitations": [
+    "The derived USA declaration is based on the known ROM identity, checksum and source reference; it does not establish actual game effects or physical-device behavior. The source describes the ability-set label, not learned abilities.",
+    "The projected catalog remains private, explicitly selected and is a pinned snapshot. Other placeholders, correlated character modifiers, native Windows and physical controllers remain unverified."
+  ],
+  "files": [
+    "scripts/cheat_ability_projection.py",
+    "crates/recomp/src/debug_cheats.rs"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

@@ -21756,3 +21756,17 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: isolated Wine/Xvfb keyboard selected two declared synthetic values and saved, selected, reviewed, armed and disarmed their preset; guest state/frame/clock and protected inputs stayed unchanged, the window closed normally and Wine drained.
 - Evidence: `target/validation/units/dbg2-20-parameter-menu-preset-sbd7cz9m/` and `docs/changes/2026-11-09-identify-codebreaker-guide-and-menu-preset.json`.
 - Limits: synthetic catalog, no native Windows, physical controller, real-source domain or game/device verification.
+
+### DBG2-20-PLAINTEXT-MASTER
+
+- Outcome: completed
+- Verified criteria: strict source-bound two-line plaintext and three-line seeded master parsing, distinct recorded-plan identity, existing checksum/region/footprint safeguards, Linux focused tests, protected USA/EUR synthetic preflight, Windows GNU build and targeted Wine tests passed. USA master checksum matched; EUR did not. Wine log contains a trailing D-Bus assertion after successful tests.
+- Evidence: `docs/changes/2026-11-09-support-plaintext-codebreaker-master.json`; `target/validation/units/dbg2-20-plaintext-master-tests-o_rnfulh/`, `dbg2-20-plaintext-rom-preflight-2psoj0bq/`, `dbg2-20-plaintext-wine-tests-pjm0g5c1/`.
+- Limits: original XP region and annotated lines unchanged; source domains, device and gameplay effects not verified.
+
+### DBG2-20-USA-ABILITY-PROJECTION
+
+- Outcome: completed
+- Verified criteria: generated a private nine-record source-bound USA catalog with eight ability-label domains, original provenance and hashes; changed source, table and ROM inputs refused, deterministic CLI refused overwrite. Protected USA/EUR preflight, out-of-domain refusal, synthetic-bus write and Wine frontend preview/arm/disarm PASS; guest unadvanced and original inputs unchanged. Windows GNU production build PASS.
+- Evidence: `docs/changes/2026-11-09-project-usa-ability-values.json`; `target/validation/units/dbg2-20-usa-ability-projection-ro_8a3nv/`, `dbg2-20-usa-ability-preflight-gi901c1n/`, `dbg2-20-usa-projection-frontend-e42ixl96/`. Earlier frontend attempt `dbg2-20-usa-projection-frontend-vtab21f0` retained driver JSON-field failure.
+- Limits: derived USA declaration, no gameplay effect, native Windows or physical-device proof; dependent character modifiers remain open.

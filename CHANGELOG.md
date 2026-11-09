@@ -49,6 +49,30 @@ Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/develo
 
 [Change record](docs/changes/2026-11-09-validate-declared-cheat-parameter-domain-width.json)
 
+## 2026-11-09 — Support source-bound plaintext CodeBreaker masters
+
+Type: added. Platforms: Linux, Windows GNU / Wine.
+
+**Changes**
+
+- Accept strictly structured two-line plaintext game-ID/hook masters alongside existing three-line seeded masters; keep the plaintext assumption distinct in recorded plans and preserve the existing seeded serialization.
+- Validate source master shape before exposing declared parameters, retaining source, region, checksum, snapshot and bounded-footprint guards.
+
+**Validation**
+
+- Linux offline focused suites: decoder 10, catalog 16 and timeline 2 passed; additional ignored protected-ROM preflight passed on known USA and EUR images with a synthetic temporary bus write.
+- Read-only protected ROM identity/CRC audit matched USA/Eurasia and rejected EUR under the plaintext master hypothesis. Windows GNU test target compiled, and two targeted tests passed under coordinated Wine; the Wine log contains a trailing D-Bus assertion after the successful tests and the runner reported PASS with server drain.
+- Malformed masters, replay plan identity, unknown region and bounded-write refusal covered by focused tests; protected ROMs and sources unchanged. Evidence: target/validation/units/dbg2-20-plaintext-master-tests-o_rnfulh/, dbg2-20-plaintext-rom-preflight-2psoj0bq/, dbg2-20-plaintext-windows-build-26zdkx4r/, dbg2-20-plaintext-wine-tests-pjm0g5c1/, dbg2-20-master-region-audit-vjj6_29y/.
+
+**Limitations**
+
+- The local XP catalog remains region-unknown with annotated raw lines and no structured parameter domains; no original data was rewritten and no unsupported activation was enabled. Checksum identity is not proof of gameplay or physical-device behavior.
+- Job, race and appearance choices need correlated validation and source reconciliation. Native Windows and physical devices were not tested.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-09-support-plaintext-codebreaker-master.json)
+
 ## 2026-11-09 — Support multiple declared cheat parameters
 
 Type: added. Platforms: Linux, Windows GNU cross-build, Windows GNU / Wine.
@@ -172,6 +196,30 @@ Type: added. Platforms: Linux, Windows GNU cross-build.
 Documentation: [cheats.md](docs/cheats.md), [debug_recordings.md](docs/debug_recordings.md), [debug_replays.md](docs/debug_replays.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
 
 [Change record](docs/changes/2026-11-09-record-cheat-derived-origins.json)
+
+## 2026-11-09 — Create a private source-bound USA ability projection
+
+Type: added. Platforms: Linux, Windows GNU / Wine.
+
+**Changes**
+
+- Add an explicit local projection builder for eight source-listed primary ability-set label records and their master. Check the recognized USA ROM and checksum, preserve original provenance and source hashes, require the exact listed values, and refuse to overwrite output.
+- Keep original XP entries unchanged and omit job/race/appearance modifiers whose choices require correlated validation.
+
+**Validation**
+
+- A protected foreground validation created a private nine-record catalog from the local source, verified eight domains with 35 values, and refused changed ROM, table and source-line inputs. A separate CLI check verified deterministic output and refusal to overwrite.
+- A protected integration check accepted the USA catalog/master/value and a synthetic bus write, rejected a value outside the source list and rejected the known EUR ROM. Windows GNU production build passed.
+- An isolated Windows GNU/Wine/Xvfb USA frontend explicitly prepared, armed and disarmed a projected ability label and rejected an out-of-domain value without guest advancement; originals remained unchanged and the window closed normally. An earlier driver attempt retained diagnostics after using the multiple-parameter JSON field for a single-parameter result. Evidence: target/validation/units/dbg2-20-usa-ability-projection-ro_8a3nv/, dbg2-20-usa-ability-preflight-gi901c1n/, dbg2-20-ability-projection-cli-_a2sir4h/, dbg2-20-usa-projection-frontend-e42ixl96/.
+
+**Limitations**
+
+- The derived USA declaration is based on the known ROM identity, checksum and source reference; it does not establish actual game effects or physical-device behavior. The source describes the ability-set label, not learned abilities.
+- The projected catalog remains private, explicitly selected and is a pinned snapshot. Other placeholders, correlated character modifiers, native Windows and physical controllers remain unverified.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-09-project-usa-ability-values.json)
 
 ## 2026-11-09 — Preserve branch-aware cheat snapshot history
 

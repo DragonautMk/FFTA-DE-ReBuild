@@ -1,6 +1,10 @@
 //! Readonly, explicitly assumed plaintext CodeBreaker inspection. Never executes.
 use serde::Serialize;
 
+const BOUND_FORMAT: &str = "codebreaker-advance-source-bound-subset";
+const SEEDED_ASSUMPTION: &str = "Caller selected the source and linked master; seed and entry encryption are source assumptions, not verified device behavior";
+const PLAIN_ASSUMPTION: &str = "Caller selected the source and linked master and assumes plaintext; device and game behavior are unverified";
+
 #[derive(Clone, Debug, PartialEq, Eq, Serialize)]
 #[serde(tag = "kind", rename_all = "kebab-case")]
 enum Operation {
@@ -115,10 +119,11 @@ impl Plan {
             })
         }
         let saved:SavedPlan=serde_json::from_value(value.clone()).map_err(|e|format!("Invalid recorded plan: {e}"))?;
-        if saved.format!="codebreaker-advance-source-bound-subset" || saved.assumption!="Caller selected the source and linked master; seed and entry encryption are source assumptions, not verified device behavior" || saved.endianness!="little" || saved.executable || saved.operations.is_empty() || saved.operations.len()>1024 {
+        let assumption=match saved.assumption.as_str(){SEEDED_ASSUMPTION=>SEEDED_ASSUMPTION,PLAIN_ASSUMPTION=>PLAIN_ASSUMPTION,_=>return Err("Unsupported recorded source-bound plan".into())};
+        if saved.format!=BOUND_FORMAT || saved.endianness!="little" || saved.executable || saved.operations.is_empty() || saved.operations.len()>1024 {
             return Err("Unsupported recorded source-bound plan".into());
         }
-        let plan=Self{format:"codebreaker-advance-source-bound-subset",assumption:"Caller selected the source and linked master; seed and entry encryption are source assumptions, not verified device behavior",endianness:"little",executable:false,operations:saved.operations.into_iter().map(|op|convert(op,false)).collect::<Result<_,_>>()?};
+        let plan=Self{format:BOUND_FORMAT,assumption,endianness:"little",executable:false,operations:saved.operations.into_iter().map(|op|convert(op,false)).collect::<Result<_,_>>()?};
         plan.footprint()?;
         if serde_json::to_value(&plan).map_err(|e|e.to_string())? != *value{return Err("Recorded plan is not canonical".into());}
         Ok(plan)
@@ -446,25 +451,42 @@ fn master_crc(rom: &[u8]) -> u16 {
     crc
 }
 
-/// Decode one explicitly selected source's seed/game-ID/hook master.
-/// This is a description only: the native backend does not install this hook.
+/// Parse a source-selected master without inferring a seed from entry bytes.
+fn source_master(master: &[String]) -> Result<(Option<String>, u32, u16, u32, u16), String> {
+    let (seed, game_id, flags, hook, slot) = match master {
+        [game, hook] => {
+            let (game_id, flags) = line(game, 0)?;
+            let (hook, slot) = line(hook, 1)?;
+            (None, game_id, flags, hook, slot)
+        }
+        [seed, game, hook] => {
+            let (seed_word, seed_half) = line(seed, 0)?;
+            let cipher = Cipher::new(seed_word, seed_half)?;
+            let (w, h) = line(game, 1)?;
+            let (game_id, flags) = cipher.decrypt(w, h);
+            let (w, h) = line(hook, 2)?;
+            let (hook, slot) = cipher.decrypt(w, h);
+            (Some(format!("{seed_word:08X}:{seed_half:04X}")), game_id, flags, hook, slot)
+        }
+        _ => return Err("Selected source master needs game ID and hook, optionally preceded by a seed".into()),
+    };
+    if game_id >> 16 != 0 || flags > 15 || hook >> 28 != 1 || hook & 0x0e000001 != 0 || slot > 7 {
+        return Err("Selected source master is not a supported seed/game-ID/hook block".into());
+    }
+    Ok((seed, game_id, flags, hook, slot))
+}
+
+pub(crate) fn validate_source_master(master: &[String]) -> Result<(), String> {
+    source_master(master).map(|_| ())
+}
+
+/// Describe the selected plaintext or seeded master; no hook is installed.
 pub(crate) fn inspect_source(
     lines: &[String],
     master: &[String],
     rom: Option<&[u8]>,
 ) -> Result<(Plan, serde_json::Value), String> {
-    if master.len() != 3 {
-        return Err("Selected source master needs exactly seed, game ID and hook lines".into());
-    }
-    let (seed_word, seed_half) = line(&master[0], 0)?;
-    let cipher = Cipher::new(seed_word, seed_half)?;
-    let (w, h) = line(&master[1], 1)?;
-    let (game_id, flags) = cipher.decrypt(w, h);
-    let (w, h) = line(&master[2], 2)?;
-    let (hook, slot) = cipher.decrypt(w, h);
-    if game_id >> 16 != 0 || flags > 15 || hook >> 28 != 1 || hook & 0x0e000001 != 0 || slot > 7 {
-        return Err("Selected source master is not a supported seed/game-ID/hook block".into());
-    }
+    let (seed, game_id, flags, hook, slot) = source_master(master)?;
     let expected = game_id as u16;
     let checksum_enabled = flags & 8 != 0;
     let rom_info = rom.map(|rom| {
@@ -474,16 +496,17 @@ pub(crate) fn inspect_source(
             "checksum_state":if !checksum_enabled {"not-required"} else if actual==expected {"match"} else {"mismatch"},
             "scope":"CRC and SHA-256 calculated from supplied bytes; not proof of device hook or cheat behavior"})
     });
-    let seed = format!("{seed_word:08X}:{seed_half:04X}");
-    let mut plan = inspect_seeded(lines, &seed)?;
-    plan.format = "codebreaker-advance-source-bound-subset";
-    plan.assumption = "Caller selected the source and linked master; seed and entry encryption are source assumptions, not verified device behavior";
-    let info = serde_json::json!({"seed_sha256":gba_core::ffta_rom::digest(seed.as_bytes()),
+    let mut plan = if let Some(seed) = &seed { inspect_seeded(lines, seed)? } else { inspect(lines)? };
+    plan.format = BOUND_FORMAT;
+    plan.assumption = if seed.is_some() {SEEDED_ASSUMPTION} else {PLAIN_ASSUMPTION};
+    let mut info = serde_json::json!({
         "game_id":{"checksum":expected,"checksum_enabled":checksum_enabled,"disable_interrupts":flags&2!=0,"flags":flags},
         "hook":{"rom_offset":hook&0x01ffffff,"address":0x08000000u32+(hook&0x01ffffff),"mode":"thumb",
             "handler_slot":slot,"handler_address":0x08000100u32+u32::from(slot)*0x00400000},
         "rom":rom_info,"executable":false,
         "scope":"Decoded source master metadata; no native hook or code is installed"});
+    if let Some(seed) = seed { info["seed_sha256"] = serde_json::json!(gba_core::ffta_rom::digest(seed.as_bytes())); }
+    else { info["encoding"] = serde_json::json!("assumed-plaintext"); }
     Ok((plan, info))
 }
 
@@ -695,6 +718,28 @@ mod tests {
         let mut invalid = master.clone();
         invalid[2] = "BB28F300 B8C0".into();
         assert!(inspect_source(&lines, &invalid, None).is_err());
+    }
+    #[test]
+    fn plaintext_master_checks_shape_crc_replay_and_bounded_writes() {
+        use gba_core::Bus;
+        let rom = (0..65536).map(|n| n as u8).collect::<Vec<_>>();
+        let master = vec!["0000FFE7 000A".into(), "10000100 0007".into()];
+        let (plan, info) = inspect_source(&["32000001 001C".into()], &master, Some(&rom)).unwrap();
+        assert_eq!(info["encoding"], "assumed-plaintext");
+        assert_eq!(info["rom"]["checksum_state"], "match");
+        assert!(info.get("seed_sha256").is_none());
+        let serialized = serde_json::to_value(&plan).unwrap();
+        assert_eq!(serde_json::to_value(Plan::from_recorded(&serialized).unwrap()).unwrap(), serialized);
+        let mut forged=serialized.clone();forged["assumption"]=serde_json::json!("unverified");
+        assert!(Plan::from_recorded(&forged).is_err());
+        let mut machine=gba_core::Machine::new(vec![]);
+        assert_eq!(plan.apply_once(&mut machine.bus).unwrap(),1);
+        assert_eq!(machine.bus.read8(0x02000001),0x1c);
+        assert_eq!(inspect_source(&["32000001 001C".into()], &master, Some(&[])).unwrap().1["rom"]["checksum_state"],"mismatch");
+        assert!(inspect_source(&["34000130 0001".into()], &master, None).unwrap().0.footprint().is_err());
+        for invalid in [vec!["10000100 0007", "0000FFE7 000A"],vec!["0000FFE7 001A", "10000100 0007"],vec!["0000FFE7 000A", "10000101 0007"],vec!["0000FFE7 000A", "10000100 0008"],vec!["0000FFE7 000A"],vec!["0000FFE7 000A", "10000100 0007", "00000000 0000", "00000000 0000"]] {
+            assert!(inspect_source(&["32000001 001C".into()], &invalid.into_iter().map(str::to_owned).collect::<Vec<_>>(), None).is_err());
+        }
     }
     #[test]
     fn one_shot_preflights_every_access_and_uses_width_correct_bus_operations() {

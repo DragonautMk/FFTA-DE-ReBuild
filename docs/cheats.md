@@ -275,8 +275,10 @@ catalog entry or any guest effect.
 `recomp debug-cheats inspect CH-0001 --catalog FILE --provenance-index 0
 --master-id CH-0002` selects one original provenance record and the exact master
 ID it names. The master must have exactly one provenance record from the same
-source and matching declared format and region. Its three source lines must
-decode as seed, game ID and hook; the entry is interpreted from that source's
+source and matching declared format and region. A three-line master is
+interpreted as seed, encrypted game ID and hook; a two-line master is explicitly
+reported as an assumed-plaintext game ID and hook. Both have strict structural
+checks. The entry is interpreted in the corresponding mode from that source's
 original lines, rather than silently substituting a different source. The result
 identifies the selected source and hashes its entry/master line arrays; it also
 reports whether the entry's canonical lines match those source lines. Missing,
@@ -443,10 +445,47 @@ identifies them as CodeBreaker. It supplies tables and describes the character
 modifier fields as job, appearance and race, in that order; the local XP notes
 for CH-0234 describe different associations. The guide is a matching reference,
 not proof that it was the Italian compilation's source or that the codes target
-the protected EUR ROM. The master remains refused by the current decoder and
-the real domains and game/device effects remain unverified. Preserve the
-original XP notes while resolving the discrepancy; do not copy the guide into
-the project or infer compatibility from the matching lines.
+the protected EUR ROM. A read-only audit of project-recognized ROMs found the
+plaintext master checksum matches the known USA/Eurasia ROM but not EUR. The
+decoder now supports this two-line master under an explicit plaintext assumption;
+the original XP records still declare unknown regions, contain annotations in
+some raw lines, and do not declare structured domains. They are not automatically
+activated. Preserve the original XP notes; the related job/race/appearance fields
+require correlated-domain validation, and game/device effects remain unverified.
+
+#### Private USA ability projection
+
+A user who has the local XP catalog and modifier table can create a separate,
+explicitly derived catalog for the eight primary ability-set label records and
+their master. The helper checks the exact recognized USA ROM SHA-256, the
+master checksum and hook shape, the source-line mapping and the 35 listed table
+values. It preserves the original provenance and region inside each derived
+record and records hashes of both source files. It leaves the original files
+unchanged, refuses to overwrite an existing output, and does not distribute
+third-party data. For example, choose an unused private output path:
+
+```sh
+python3 scripts/cheat_ability_projection.py \
+  --catalog cheats/catalogo.json --table cheats/tabelle-modificatori.md \
+  --rom "rom/Final Fantasy Tactics Advance (U)(Eurasia).gba" \
+  --output target/private-usa-ability/catalogo.json
+```
+
+Explicitly select that `catalogo.json` in the cheat catalog picker, select a
+source and value, and review the preview. The USA region is the **derived**
+projection's declaration, based on the known ROM identity and master checksum;
+it is not a statement that the original compilation declared that region. This
+source describes an ability-set label, not a grant of learned abilities. Actual
+game effects, hardware behavior and job/race/appearance combinations are not
+verified. Recreate the projection after changing its source; the selected
+catalog is a pinned snapshot, not a live link to the original.
+
+Protected checks generated and validated eight records, rejected modified source
+lines, table and ROM inputs, and confirmed deterministic generation and
+no-overwrite behavior. A Windows GNU/Wine/Xvfb isolated USA session explicitly
+selected a value, reviewed, armed and disarmed the projected source and rejected
+an out-of-domain value without advancing the guest. A separate preflight rejected
+the known EUR ROM. This is not a gameplay-effect or physical-device test.
 
 Frozen Windows GNU tests and an isolated synthetic Wine/Xvfb session checked a
 two-member save/preview/arm flow, duplicate name, changed preset, source lines,
