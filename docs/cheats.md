@@ -425,7 +425,9 @@ remained unchanged. Earlier live evidence verified one-shot application and
 disarming. A separate isolated Wine/Xvfb keyboard check selected both declared values
 in the live menu, reviewed the preview, armed and disarmed the plan; the guest
 and protected inputs remained unchanged. These synthetic checks do not verify
-real-catalog domains, physical devices or the complete preset flow by menu alone.
+real-catalog domains or physical devices. A later separate Wine/Xvfb keyboard
+check saved, selected, reviewed, armed and disarmed a preset containing both
+synthetic parameter choices. Guest state and protected inputs stayed unchanged.
 A separate Linux check used a synthetic catalog and a protected EUR ROM for checksum preflight:
 it refused an absent or out-of-domain value and applied the decoded synthetic
 plan to temporary RAM. It did not exercise the graphical frontend.
@@ -434,10 +436,17 @@ A readonly audit of the current local catalog found 24 CodeBreaker source
 records containing placeholders, all linked to the same two-line master. One
 entry describes three distinct placeholder groups. The master has the shape of
 a possible plaintext game-ID/hook pair, but under that hypothesis its enabled
-checksum differs from the protected known EUR ROM. Its format, target ROM and
-device behavior therefore remain unverified; the current source-bound decoder
-refuses it. Multiple-parameter support does not verify a source's declared
-values or make an unsupported master executable.
+checksum differs from the protected known EUR ROM. A separately located
+[Labmaster CodeBreaker guide](https://gamefaqs.gamespot.com/gba/560436-final-fantasy-tactics-advance/faqs/26118)
+contains the same alternate master and corresponding placeholder examples and
+identifies them as CodeBreaker. It supplies tables and describes the character
+modifier fields as job, appearance and race, in that order; the local XP notes
+for CH-0234 describe different associations. The guide is a matching reference,
+not proof that it was the Italian compilation's source or that the codes target
+the protected EUR ROM. The master remains refused by the current decoder and
+the real domains and game/device effects remain unverified. Preserve the
+original XP notes while resolving the discrepancy; do not copy the guide into
+the project or infer compatibility from the matching lines.
 
 Frozen Windows GNU tests and an isolated synthetic Wine/Xvfb session checked a
 two-member save/preview/arm flow, duplicate name, changed preset, source lines,

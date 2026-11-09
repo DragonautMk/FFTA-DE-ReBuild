@@ -21749,3 +21749,10 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: in an isolated Wine/Xvfb frontend, keyboard navigation selected the synthetic source and both declared values, reviewed the preview, armed and disarmed; guest state/frame/clock and protected originals were unchanged, the window closed normally, and Wine drained.
 - Evidence: `target/validation/units/dbg2-20-live-menu-values-bqd__1zo/`; earlier menu-driver attempts `dbg2-20-live-menu-values-3u98itkk` and `dbg2-20-live-menu-values-nmb_uv3q` retained diagnostics after wrong scripted navigation and selection.
 - Limits: synthetic values, not real-catalog domains or device behavior; full preset/conflict/drift flow was tested separately using explicit commands.
+
+### DBG2-20-MENU-PARAMETER-PRESET
+
+- Outcome: completed
+- Verified criteria: isolated Wine/Xvfb keyboard selected two declared synthetic values and saved, selected, reviewed, armed and disarmed their preset; guest state/frame/clock and protected inputs stayed unchanged, the window closed normally and Wine drained.
+- Evidence: `target/validation/units/dbg2-20-parameter-menu-preset-sbd7cz9m/` and `docs/changes/2026-11-09-identify-codebreaker-guide-and-menu-preset.json`.
+- Limits: synthetic catalog, no native Windows, physical controller, real-source domain or game/device verification.

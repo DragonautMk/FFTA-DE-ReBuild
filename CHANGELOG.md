@@ -199,6 +199,28 @@ Documentation: [save_states.md](docs/save_states.md), [cheats.md](docs/cheats.md
 
 [Change record](docs/changes/2026-11-09-preserve-branch-aware-cheat-snapshot-history.json)
 
+## 2026-11-09 — Verify parameterized menu presets and identify a matching CodeBreaker guide
+
+Type: docs. Platforms: Windows GNU / Wine / Xvfb.
+
+**Changes**
+
+- Record the live menu preset roundtrip and a source-attributed CodeBreaker reference, including the disagreement in local character modifier notes.
+
+**Validation**
+
+- An isolated Windows GNU/Wine/Xvfb keyboard check saved, selected, reviewed, armed and disarmed a preset containing two synthetic parameters; guest state, frame, clock and protected inputs stayed unchanged. The window closed normally and Wine drained. Evidence: target/validation/units/dbg2-20-parameter-menu-preset-sbd7cz9m/.
+- Compared the local XP master and placeholder examples with Labmaster’s published CodeBreaker guide and compared its modifier mapping with the local CH-0234 notes; no imported source or catalog was modified.
+
+**Limitations**
+
+- Matching published code lines do not prove the Italian compilation’s origin, the intended ROM region, or actual device and game behavior. The protected EUR checksum mismatch remains under the existing plaintext hypothesis; no master check was bypassed.
+- Synthetic menu evidence is Wine/Xvfb keyboard input, not native Windows or a physical controller; real catalog value domains are not declared or verified.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-09-identify-codebreaker-guide-and-menu-preset.json)
+
 ## 2026-11-09 — Fix Windows Docker Unicode and link tests and retain build errors
 
 Type: fixed. Platforms: Linux host, Windows GNU / Wine container.

@@ -641,15 +641,20 @@ No other development was selected. On resumption read only the individual ID in
   flow also verified parameterized preset save/review/arm/disarm, overlap and
   changed-source refusal without guest changes; earlier live evidence verified
   one-shot application. A separate live keyboard/menu check selected two values,
-  prepared, armed and disarmed a synthetic plan. The complete preset flow through
-  menu/controller alone and validated real catalog domains remain open.
+  prepared, armed and disarmed a synthetic plan. A separate keyboard/menu check
+  saved, selected, reviewed, armed and disarmed a preset containing both synthetic
+  values. Validated real catalog domains and game/device behavior remain open.
   Declarations do not establish game or device behavior. A readonly audit found
   that the current 24 CodeBreaker placeholder sources share an unsupported
   two-line master; one describes three independent placeholder groups. Under a
   possible plaintext interpretation its checksum differs from the known EUR
-  ROM, so neither the format nor target is established. Multiple declared
-  parameters now have synthetic coverage; a verified compatible source is still
-  needed for those entries.
+  ROM. A [Labmaster guide](https://gamefaqs.gamespot.com/gba/560436-final-fantasy-tactics-advance/faqs/26118)
+  identifies matching examples and the alternate master as CodeBreaker and
+  provides tables, but does not establish the local compilation's provenance or
+  target ROM. Its job/appearance/race mapping conflicts with the local CH-0234
+  notes; preserve the notes and resolve the discrepancy before declaring domains.
+  Multiple declared parameters have synthetic coverage; a verified compatible
+  source is still needed for those entries.
 
 - [x] **DBG2-21 — First EUR selection useful for debugging.**
   Priorities, subject to decoding/verification: access to Card Shop/Item Shop/

@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-09",
+  "slug": "identify-codebreaker-guide-and-menu-preset",
+  "title": "Verify parameterized menu presets and identify a matching CodeBreaker guide",
+  "kind": "docs",
+  "platforms": [
+    "Windows GNU / Wine / Xvfb"
+  ],
+  "changes": [
+    "Record the live menu preset roundtrip and a source-attributed CodeBreaker reference, including the disagreement in local character modifier notes."
+  ],
+  "validation": [
+    "An isolated Windows GNU/Wine/Xvfb keyboard check saved, selected, reviewed, armed and disarmed a preset containing two synthetic parameters; guest state, frame, clock and protected inputs stayed unchanged. The window closed normally and Wine drained. Evidence: target/validation/units/dbg2-20-parameter-menu-preset-sbd7cz9m/.",
+    "Compared the local XP master and placeholder examples with Labmaster’s published CodeBreaker guide and compared its modifier mapping with the local CH-0234 notes; no imported source or catalog was modified."
+  ],
+  "limitations": [
+    "Matching published code lines do not prove the Italian compilation’s origin, the intended ROM region, or actual device and game behavior. The protected EUR checksum mismatch remains under the existing plaintext hypothesis; no master check was bypassed.",
+    "Synthetic menu evidence is Wine/Xvfb keyboard input, not native Windows or a physical controller; real catalog value domains are not declared or verified."
+  ],
+  "files": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}
