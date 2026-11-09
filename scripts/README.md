@@ -129,9 +129,12 @@ paths and neighbors with complete state/clock/image/audio equivalence. Other
 nodes/maps, opaque ordinary use and new Linux/USA checks remain pending.
 
 
-The Linux Docker builder saves each run's output and errors under
-`target/build-logs/linux-*.log`. On failure it waits for Enter in an interactive
-terminal; noninteractive automation receives the original exit code immediately.
+The Linux and Windows Bash Docker builders save each run's output and errors
+under `target/build-logs/linux-*.log` and `target/build-logs/windows-*.log`.
+On failure they wait for Enter in an interactive terminal; noninteractive
+automation receives the original exit code immediately. The Windows container
+test helper `windows/test_wine.py` selects UTF-8, supplies real filesystem aliases
+to the negative content test and drains its owned wineserver before cleanup.
 
 For new local validation, use `python3 scripts/validation_unit.py --help`.
 Its owned scratch is automatically removed after foreground completion, PASS

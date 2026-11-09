@@ -142,6 +142,7 @@ impl Slots {
         }
     }
 
+    #[cfg(test)]
     pub fn save(
         &mut self,
         machine: &Machine,
@@ -186,6 +187,7 @@ impl Slots {
         Ok(())
     }
 
+    #[cfg(test)]
     pub fn load(&mut self, machine: &mut Machine, slot: u8) -> Result<(), String> {
         self.load_with_history(machine, slot).map(|_| ())
     }

@@ -14,14 +14,16 @@ ROOT = Path(__file__).resolve().parents[2]
 
 @unittest.skipUnless(os.name == 'posix' and shutil.which('bash'), 'requires Bash')
 class LinuxBuilderTests(unittest.TestCase):
+    platform = 'linux'
+
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(prefix='ffta linux builder ')
         self.addCleanup(self.temp.cleanup)
         self.directory = Path(self.temp.name)
         self.repo = self.directory / 'project checkout'
-        self.script = self.repo / 'scripts/linux/build_linux_docker.sh'
+        self.script = self.repo / f'scripts/linux/build_{self.platform}_docker.sh'
         self.script.parent.mkdir(parents=True)
-        shutil.copy2(ROOT / 'scripts/linux/build_linux_docker.sh', self.script)
+        shutil.copy2(ROOT / 'scripts/linux' / self.script.name, self.script)
         self.arguments = self.directory / 'docker-arguments.json'
         docker = self.directory / 'docker'
         docker.write_text('''#!/usr/bin/env python3
@@ -38,7 +40,7 @@ sys.exit(int(os.environ.get('DOCKER_TEST_STATUS', '0')))
                                 DOCKER_TEST_ARGUMENTS=str(self.arguments))
 
     def log(self):
-        logs = list((self.repo / 'target/build-logs').glob('linux-*.log'))
+        logs = list((self.repo / 'target/build-logs').glob(f'{self.platform}-*.log'))
         self.assertEqual(len(logs), 1)
         return logs[0].read_text()
 
@@ -48,7 +50,7 @@ sys.exit(int(os.environ.get('DOCKER_TEST_STATUS', '0')))
                                 env=self.environment, capture_output=True, text=True, timeout=10)
         self.assertEqual(result.returncode, 0, result.stderr)
         arguments = json.loads(self.arguments.read_text())
-        self.assertEqual(arguments[arguments.index('--file') + 1], str(self.repo / 'Dockerfile.linux'))
+        self.assertEqual(arguments[arguments.index('--file') + 1], str(self.repo / f'Dockerfile.{self.platform}'))
         self.assertEqual(arguments[arguments.index('--output') + 1], f'type=local,dest={output}')
         self.assertEqual(arguments[-1], str(self.repo))
         self.assertIn('Portable archive and BUILD-INFO.txt exported', self.log())
@@ -74,23 +76,6 @@ sys.exit(int(os.environ.get('DOCKER_TEST_STATUS', '0')))
                                         capture_output=True, text=True, timeout=10)
                 self.assertEqual(result.returncode, 2)
                 self.assertFalse(self.arguments.exists())
-
-    def test_windows_docker_wrapper_routes_and_rejects_the_same_unsafe_paths(self):
-        script = self.script.with_name('build_windows_docker.sh')
-        shutil.copy2(ROOT/'scripts/linux/build_windows_docker.sh', script)
-        for character in [',', '"', '\n', '\r']:
-            result = subprocess.run(['bash', str(script), 'bad'+character+'path'],
-                                    cwd=self.directory, env=self.environment,
-                                    capture_output=True, text=True, timeout=10)
-            self.assertEqual(result.returncode, 2)
-            self.assertFalse(self.arguments.exists())
-        result = subprocess.run(['bash', str(script), 'Windows export with spaces'],
-                                cwd=self.directory, env=dict(self.environment, DOCKER_TEST_STATUS='17'),
-                                capture_output=True, text=True, timeout=10)
-        self.assertEqual(result.returncode, 17)
-        arguments = json.loads(self.arguments.read_text())
-        self.assertEqual(arguments[arguments.index('--file')+1], str(self.repo/'Dockerfile.windows'))
-        self.assertEqual(arguments[arguments.index('--target')+1], 'export')
 
     def test_terminal_failure_stays_open_until_enter(self):
         import pty
@@ -121,6 +106,10 @@ sys.exit(int(os.environ.get('DOCKER_TEST_STATUS', '0')))
             os.close(master)
             if slave is not None:
                 os.close(slave)
+
+
+class WindowsBuilderTests(LinuxBuilderTests):
+    platform = 'windows'
 
 
 if __name__ == '__main__':

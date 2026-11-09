@@ -105,6 +105,9 @@ Bad/truncated previews, damaged state data, wrong ROM/BIOS and incompatible
 versions are rejected before changing the live machine. A valid thumbnail alone
 does not establish that its machine data can be loaded.
 
+Desktop save/load operations use the history-aware slot APIs; no-history
+convenience adapters are compiled only for tests.
+
 After cheat use, the desktop writes an `FFTA-SL2` envelope with bounded cheat
 ancestry in the same atomic file. It includes observed source and plan hashes,
 ordered set identities and summarized frame/clock information, but no raw cheat

@@ -2926,7 +2926,12 @@ coverage refreshes its archived sources. The host checkout is unaffected.
   and runs input/config, menu and runtime tests under container Wine.
   `scripts/windows/build_docker.ps1` is the Windows-host entry point: default Windows,
   `-Platform linux` for Linux. Docker Desktop must use Linux containers.
-  `scripts/linux/build_windows_docker.sh` offers the Windows target from Bash.
+  `scripts/linux/build_windows_docker.sh` offers the Windows target from Bash,
+  retains output/errors under `target/build-logs/windows-*.log` and waits for
+  Enter on interactive failure while preserving noninteractive exit status.
+  The container selects C.UTF-8 before Wine starts and uses
+  `scripts/windows/test_wine.py` to supply genuine Unix link fixtures to the
+  existing negative content-index test; no test assertions are skipped.
   Export is `dist/docker-windows/`; it contains no game or personal data.
   Resource build scripts branch on Cargo's target OS rather than build-host cfg.
   The Windows builder reuses the pinned Rust image and copies its toolchain

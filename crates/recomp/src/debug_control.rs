@@ -761,6 +761,7 @@ pub(crate) fn planned_wait_observation(root:&Path,timeout:u64,run:String,id:Stri
     if [run.as_str(),id.as_str()].iter().any(|v|v.is_empty()||v.len()>100||v.chars().any(char::is_control)){return Err(ClientFailure::new("invalid-request","Planned run and request IDs need 1..100 bytes without controls","not-sent"));}
     execute_action_inner_interruptible(root,Action::Status,timeout,Some(&RetryIdentity{run,id,deadline_unix_ms,expected_boundary:boundary,cancel_marker:Some(cancel_marker.to_owned())}),cancel)
 }
+#[cfg(test)]
 pub(crate) fn planned_fingerprint(action:Action,run:&str,id:&str,deadline_unix_ms:u64,manifest_sha256:&str)->Result<String,String>{
     planned_guarded_fingerprint(action,run,id,deadline_unix_ms,manifest_sha256,None)
 }

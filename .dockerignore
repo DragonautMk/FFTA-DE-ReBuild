@@ -51,6 +51,7 @@
 !docs/rom_data.md
 !docs/rom_data_runtime.md
 !scripts/windows/
+!scripts/windows/test_wine.py
 !scripts/debug_campaign.py
 !scripts/debug_campaign.html
 !scripts/report_home.py

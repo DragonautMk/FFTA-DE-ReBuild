@@ -3,6 +3,59 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-09 — Scope debug and save-state test adapters to test builds
+
+Type: fixed. Platforms: Linux, Windows.
+
+**Changes**
+
+- Compile the unguarded planned request fingerprint adapter only for tests; production continues using the guarded fingerprint implementation.
+- Compile the convenience slot save/load adapters only for tests; production continues using the history-aware save/load paths and preserves cheat ancestry and undo behavior.
+
+**Validation**
+
+- Linux Bookworm container release build (cargo build --locked --release -p recomp -p ffta-play) PASS with zero compiler warnings; protected inputs unchanged. Evidence: target/validation/units/linux-release-warning-check-tabi7i5p/.
+- 11 existing save-state tests and 40 existing recipe-checkpoint runner tests PASS in the same Linux container, exercising the test-only convenience adapters; no new test fixtures or personal game data used.
+- Existing uncommitted Windows Docker changes were preserved.
+
+**Limitations**
+
+- The validation uses a Linux container; native Windows was not rebuilt for this warning-only change. Previously accepted Windows results remain scoped to their original source revision.
+
+Documentation: [debug_control.md](docs/debug_control.md), [save_states.md](docs/save_states.md).
+
+[Change record](docs/changes/2026-11-09-scope-test-only-debug-and-save-adapters.json)
+
+## 2026-11-09 — Fix Windows Docker Unicode and link tests and retain build errors
+
+Type: fixed. Platforms: Linux host, Windows GNU / Wine container.
+
+**Changes**
+
+- Select C.UTF-8 before Wine starts so Windows Unicode paths can be represented on the Unix filesystem.
+- Run the existing serial Windows test gate through a container helper that creates and verifies genuine file/directory symlinks and a hardlink, supplies the existing FFTA_DEBUG_CONTENT_LINK_FIXTURE hook, waits for wineserver and preserves failed fixtures. All existing test assertions remain enabled.
+- Give the Windows Bash builder persistent combined stdout/stderr logs, explicit failure and log-path reporting, original noninteractive exit status and an interactive Enter prompt matching the Linux builder.
+
+**Validation**
+
+- Original Buildx ohc3u6mqtx9i8uppdx96pu6ji compiled successfully but failed six recomp tests: five Unicode fixture directory creations and one unmaterialized Wine symlink; 438 recomp tests passed. Original log retained.
+- A minimal Win32 CreateDirectoryW probe using the same container bases and Wine prefix passes ASCII/fails accented paths with LC_ALL=C and passes both with C.UTF-8. Evidence: target/validation/units/windows-docker-locale-probe-8lem554r/.
+- Twelve focused launcher/helper regression tests PASS: Linux and Windows argument routing, combined output retention, failure status, unsafe paths and interactive pause; real synthetic symlinks/hardlinks, UTF-8 environment, server drain, failure retention and missing owned-prefix refusal. Evidence: target/validation/units/windows-docker-builder-regression-_ms6tugr/.
+- Full isolated Windows Docker build and serial Wine suites PASS: 905 tests passed, 403 intentionally ignored, including all six previously failing cases. Package ZIP integrity and the BUILD-INFO SHA-256 match; protected inputs unchanged. Evidence: target/validation/units/windows-docker-fixed-export-6rsbnz5e/.
+- Both x86-64 EXEs contain icon/group-icon resources and all three PE binaries have import tables; the archive contains 99 entries and no ROM/save/state/input files. Initial inspection 2aq3_7jh expected symbolic objdump resource names; corrected numeric-ID inspection PASS in windows-docker-package-inspection-fixed-6f091_za/.
+- Published the checked ZIP and BUILD-INFO to dist/docker-windows with matching hashes; previous files were preserved in the validation evidence for rollback. Two existing dead-code warnings remained nonfatal.
+- A first supplemental privacy assertion incorrectly rejected standard empty Data directories; the corrected check passes for empty directories, disallows private files and reconfirms published ZIP integrity. The original Buildx failure log was copied to the unit evidence with a matching hash.
+
+**Limitations**
+
+- This validates a Linux-hosted MinGW/Wine build and test environment; native Windows, physical input and game-specific optional fixtures remain separate.
+- Container helper assumes a container-owned prefix; host Wine work must continue using the shared-prefix validation runner. No host prefix, personal ROM/save, shared build-cache cleanup or runtime Rust behavior was changed.
+- Sol diagnostic consultation requested gpt-6.1-sol/xhigh and corroborated both causes; effective consultant settings and primary xhigh were not independently confirmed. The primary model is GPT-6.1 Terra.
+
+Documentation: [docker.md](docs/docker.md), [README.md](scripts/README.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-09-fix-windows-docker-test-environment-and-logs.json)
+
 ## 2026-11-08 — Verify recipe selection across Wine restarts
 
 Type: changed. Platforms: Windows GNU / Wine / Xvfb.

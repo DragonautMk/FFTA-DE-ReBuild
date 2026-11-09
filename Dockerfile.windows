@@ -22,7 +22,7 @@ ENV CARGO_TARGET_X86_64_PC_WINDOWS_GNU_LINKER=x86_64-w64-mingw32-gcc \
     AR_x86_64_pc_windows_gnu=x86_64-w64-mingw32-ar \
     CARGO_TARGET_X86_64_PC_WINDOWS_GNU_RUNNER=/usr/lib/wine/wine64 \
     WINEPREFIX=/tmp/ffta-build-wine WINEARCH=win64 WINEDEBUG=-all \
-    WINESERVER=/usr/lib/wine/wineserver64
+    WINESERVER=/usr/lib/wine/wineserver64 LANG=C.UTF-8 LC_ALL=C.UTF-8
 
 WORKDIR /workspace
 COPY Cargo.toml Cargo.lock ./
@@ -32,6 +32,7 @@ COPY TinyCC/ TinyCC/
 COPY Licenses/ Licenses/
 COPY gamedb.sqlite ./
 COPY scripts/package_ffta_portable.py scripts/
+COPY scripts/windows/test_wine.py scripts/windows/
 COPY docs/portable.md docs/docker.md docs/fps_overlay.md docs/menu_shortcuts.md docs/save_states.md docs/save_backups.md docs/rom_data.md docs/rom_data_runtime.md docs/
 COPY docs/menu_clan_atlas.md docs/extended_saves.md docs/
 COPY scripts/artifact_coordinator.py scripts/local_artifacts.py scripts/debug_artifacts.py scripts/debug_artifacts.html scripts/debug_campaign.py scripts/debug_campaign.html scripts/report_home.py scripts/report_home.html scripts/
@@ -47,7 +48,7 @@ RUN --mount=type=cache,id=ffta-linux-cargo-registry,target=/usr/local/cargo/regi
     && cargo build --locked --release --target x86_64-pc-windows-gnu -p recomp -p ffta-play \
     && python3 TinyCC/build.py --platform windows --cc x86_64-w64-mingw32-gcc --host-cc gcc \
         --output target/x86_64-pc-windows-gnu/release/tcc/libtcc.dll \
-    && cargo test --locked --release --target x86_64-pc-windows-gnu \
+    && python3 scripts/windows/test_wine.py cargo test --locked --release --target x86_64-pc-windows-gnu \
         -p input-config -p menu -p gba-core -p screen -p recomp -- --test-threads=1 \
     && python3 scripts/package_ffta_portable.py --platform windows \
         --runtime-dir target/x86_64-pc-windows-gnu/release \

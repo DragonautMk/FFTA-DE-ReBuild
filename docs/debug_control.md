@@ -541,6 +541,9 @@ cancellation marker and continues within the original deadline. Cancellation
 does not roll back effects already applied. Checkpoint files
 are synced and atomically replaced, but power-loss durability is not claimed.
 
+In production, planned fingerprints use the guard-aware request encoder; the
+unguarded convenience adapter is compiled only for tests.
+
 Windows GNU builds and 16 focused Wine tests checked distinct planned IDs,
 checkpoint reload, changed recipe/session handling and rejection of altered
 identities, alongside the existing retry-ledger tests. A synthetic CLI check

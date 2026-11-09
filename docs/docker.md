@@ -96,9 +96,9 @@ reuse a binary produced from different source content. Unchanged Docker layers
 remain cached. The refresh happens inside the image, without touching the host
 checkout. The coverage recipe already refreshes its Git archive at extraction.
 
-The Bash Linux builder uses English for its diagnostics and terminal prompt. It prints the path of a new log under
-`target/build-logs/linux-*.log` on every invocation and saves both normal output
-and errors there. When a build fails in an interactive terminal, it waits for
+The Bash Linux and Windows builders use English diagnostics and terminal prompts.
+Each invocation prints its new log path under `target/build-logs/linux-*.log` or
+`target/build-logs/windows-*.log` and saves both normal output and errors there. When a build fails in an interactive terminal, it waits for
 Enter before exiting, so a terminal opened by a file manager keeps the error
 visible. Noninteractive runs return the original failure code without waiting;
 failed builds do not report a successful export.
@@ -291,6 +291,16 @@ for `libtcc.dll`. Resource build scripts check the target OS so Windows icons
 are embedded during cross-compilation as well as native compilation.
 Input/config, menu and runtime tests execute through 64-bit Wine **inside the
 container**, with a disposable prefix. They are not native Windows test runs.
+The Windows container sets `LANG` and `LC_ALL` to `C.UTF-8` before Wine starts:
+Wine's Unix filename conversion otherwise rejects accented names under the C
+locale, even when a Windows wide-character filesystem API is used.
+`scripts/windows/test_wine.py` creates actual file/directory symlinks and a
+hardlink in an owned temporary fixture, verifies those aliases and supplies
+`FFTA_DEBUG_CONTENT_LINK_FIXTURE` to the existing negative content-index test.
+This avoids Wine's stub link-creation API without weakening the assertions or
+skipping tests. The helper waits for the container wineserver before retiring
+successful fixtures; failures keep them for diagnosis. Its prefix belongs to
+the container; host Wine drivers still use `validation_unit.py --wine-host`.
 Windows target caches are separate from Linux target caches; Cargo downloads
 are shared. See Rust's [Windows GNU target support](https://doc.rust-lang.org/nightly/rustc/platform-support/windows-gnu.html).
 

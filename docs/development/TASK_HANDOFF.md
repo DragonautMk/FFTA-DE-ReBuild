@@ -164,9 +164,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: DBG2-20 values, groups and profiles remain partial.
-- Last verified result: paused one-shot, two frame applications, overlap refusal and disarm passed with original inputs unchanged.
-- Remaining work: DBG2-20 and later tasks; separate CHEAT-DISTRIBUTION victory replacement remains partial.
-- Errors or blockers: native, I/O and ROM writes remain refused; device and gameplay equivalence are not claimed.
-- Next action: build Windows, test an isolated parameter flow and refusal, then document declared-domain limits.
-- References: docs/changes/2026-11-08-complete-guarded-cheat-application-acceptance.json; docs/cheats.md.
+- Task: LINUX-RELEASE-WARNINGS completed; previous Windows work and unrelated tasks preserved.
+- Last verified result: Linux release build has zero warnings; 11 save-state and 40 recipe-runner tests PASS with unchanged protected inputs.
+- Remaining work: none for these warnings; no new Linux/Windows package was produced.
+- Errors or blockers: none for the requested scope; host ALSA metadata was unavailable, so validation used the Linux container.
+- Next action: no further work selected.
+- References: docs/changes/2026-11-09-scope-test-only-debug-and-save-adapters.json; target/validation/units/linux-release-warning-check-tabi7i5p/.

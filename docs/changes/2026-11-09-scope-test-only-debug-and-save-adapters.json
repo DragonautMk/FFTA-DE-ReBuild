@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-09",
+  "slug": "scope-test-only-debug-and-save-adapters",
+  "title": "Scope debug and save-state test adapters to test builds",
+  "kind": "fixed",
+  "platforms": [
+    "Linux",
+    "Windows"
+  ],
+  "changes": [
+    "Compile the unguarded planned request fingerprint adapter only for tests; production continues using the guarded fingerprint implementation.",
+    "Compile the convenience slot save/load adapters only for tests; production continues using the history-aware save/load paths and preserves cheat ancestry and undo behavior."
+  ],
+  "validation": [
+    "Linux Bookworm container release build (cargo build --locked --release -p recomp -p ffta-play) PASS with zero compiler warnings; protected inputs unchanged. Evidence: target/validation/units/linux-release-warning-check-tabi7i5p/.",
+    "11 existing save-state tests and 40 existing recipe-checkpoint runner tests PASS in the same Linux container, exercising the test-only convenience adapters; no new test fixtures or personal game data used.",
+    "Existing uncommitted Windows Docker changes were preserved."
+  ],
+  "limitations": [
+    "The validation uses a Linux container; native Windows was not rebuilt for this warning-only change. Previously accepted Windows results remain scoped to their original source revision."
+  ],
+  "files": [
+    "crates/recomp/src/debug_control.rs",
+    "crates/recomp/src/save_state.rs"
+  ],
+  "references": [
+    "docs/debug_control.md",
+    "docs/save_states.md"
+  ]
+}
