@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-10",
+  "slug": "compare-character-offset85",
+  "title": "Compare a character tuple while preserving offset 85",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Document a same-checkpoint comparison of the full character example and a synthetic race/job-only write while retaining the reference-only quarantine.",
+    "Record a separate Japanese-version community source that distinguishes job-name and actual-job fields without asserting cross-version equivalence."
+  ],
+  "validation": [
+    "A protected isolated USA DS-16 Wine/Xvfb session applied a synthetic plan changing only offsets 86 and 87 to the first guide example’s race and job values. Offset 85 and adjacent checked bytes remained unchanged immediately and after the same 144-frame B/Up/A route. No maintained cheat was armed; the window closed, protected inputs remained unchanged and Wine drained. Evidence: target/validation/units/dbg20-character-preserve85-t3l31iu3/.",
+    "The resulting ability-screen capture was visually inspected and its SHA-256 exactly matched the earlier full-example capture from the same checkpoint, executable and route; both displayed Gunner. The two guest states still differ at offset 85. Evidence: target/validation/units/dbg20-character-ability-screen-h75fjx8y/.",
+    "The linked Japanese-version forum guide lists first-character offsets 85 and 87 as job-name and actual-job fields respectively. Existing isolated USA observations show both can affect a refreshed job title, and one byte-85-only observation also changed displayed statistics; the source is a hypothesis, not a validation of the USA field semantics."
+  ],
+  "limitations": [
+    "The identical capture is limited to one screenshot and does not prove equivalent game states, battle behavior, other combinations or the full semantics of offset 85. CH-0236, physical devices and native Windows remain unverified; character examples remain reference-only.",
+    "The guide targets the Japanese version and warns of earlier errors; its original device and ROM provenance were not established. No cross-version equivalence or operational domain is inferred."
+  ],
+  "files": [
+    "docs/cheats.md",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/changes/2026-11-10-observe-single-offset85.json"
+  ]
+}

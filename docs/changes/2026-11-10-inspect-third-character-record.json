@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-10",
+  "slug": "inspect-third-character-record",
+  "title": "Inspect the third character record without writes",
+  "kind": "changed",
+  "platforms": [
+    "Linux",
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Document a source-supported third-character address candidate and a read-only checkpoint inspection while preserving the anomalous imported code and reference-only quarantine.",
+    "Document a bounded, source-distinct candidate appearance-byte observation while keeping the imported code and reference-only quarantine unchanged."
+  ],
+  "validation": [
+    "An isolated protected USA DS-16 frontend read three candidate record prefixes and name pointers, plus the imported outlier, without advancing the guest or changing state. The candidate starts have a 0x108-byte stride; the imported outlier lies within the preceding interval and the alternate source address is the third start plus four. The session closed normally and protected inputs stayed unchanged. Evidence: target/validation/units/dbg20-third-record-readonly-sww_z0qx/.",
+    "A separate protected offline comparison resolved the second and third name pointers into known entries of the authenticated USA ROM name table, correcting the assumption that these pointers must reference EWRAM. Evidence: target/validation/units/dbg20-third-record-pointers-nb08dpqa/.",
+    "A separate US CodeBreaker listing identifies the stride-aligned third-character appearance byte; its original provenance and device behavior are not established. Direct source is linked from docs/cheats.md.",
+    "A separate cheat-free isolated USA Wine/Xvfb route left the jobs screen, selected the third roster member and displayed the same name resolved from the third candidate’s ROM pointer. Intermediate screenshots were reviewed; protected inputs remained unchanged, the window closed and Wine drained. Evidence: target/validation/units/dbg20-third-roster-route-4hh0fmeo/.",
+    "A synthetic one-shot changed only the alternative third-record appearance byte from 01 to 02 in an isolated USA Wine/Xvfb checkpoint; the imported outlier and protected inputs stayed unchanged. After the same 152-frame route and same runtime as the no-write control, the selected third member’s portrait and sprite differed. Screenshots were reviewed, the session closed normally and Wine drained. Evidence: target/validation/units/dbg20-third-candidate-effect-lwmjwzo2/ and target/validation/units/dbg20-third-roster-route-4hh0fmeo/."
+  ],
+  "limitations": [
+    "The candidate effect covers one byte, value, checkpoint and screen. It does not validate the imported two-line CH-0236, its author’s intent, other values, game behavior or original hardware. Original CH-0236 is unchanged and excluded; character projections remain reference-only."
+  ],
+  "files": [
+    "docs/cheats.md",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/changes/2026-11-10-trace-player-three-source-anomaly.json"
+  ]
+}

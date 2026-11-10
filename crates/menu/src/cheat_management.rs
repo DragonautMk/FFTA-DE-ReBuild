@@ -12,7 +12,7 @@ pub struct Source {
 }
 
 #[derive(Clone, Debug, PartialEq, Eq)]
-pub struct Parameter { pub name: String, pub domain: Domain }
+pub struct Parameter { pub name: String, pub domain: Domain, pub labels: Vec<(u16,String)> }
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub enum Domain { List(Vec<u16>), Range { min:u16, max:u16, step:u16 }, DependentList { on:String, cases:Vec<(u16,Vec<u16>)> } }
 impl Domain {
@@ -55,6 +55,7 @@ impl State {
     pub fn selected_source(&self) -> Option<&Source> { self.selected.and_then(|index| self.sources.get(index)) }
     pub fn selected_parameters(&self)->Option<Vec<(&str,u16)>>{let source=self.selected_source()?;if source.parameters.len()!=self.parameter_selected.len(){return None;}Some(source.parameters.iter().zip(&self.parameter_selected).map(|(p,v)|(p.name.as_str(),*v)).collect())}
     pub fn current_parameter(&self)->Option<(&str,u16)>{let source=self.selected_source()?;let p=source.parameters.get(self.parameter_selected.len())?;Some((&p.name,p.domain.value(self.parameter_cursor,&source.parameters,&self.parameter_selected)?))}
+    pub fn current_parameter_label(&self)->Option<&str>{let (_,value)=self.current_parameter()?;let parameter=self.selected_source()?.parameters.get(self.parameter_selected.len())?;parameter.labels.iter().find(|(number,_)|*number==value).map(|(_,label)|label.as_str())}
     pub fn handle(&mut self, input: MenuInput) -> Option<Request> {
         if self.parameter_mode {
             self.focus=0;
@@ -135,7 +136,7 @@ mod tests {
     }
     #[test]
     fn parameter_requires_explicit_selection_and_source_change_clears_review(){
-        let source=Source{index:0,name:"source".into(),master:"CH-0002".into(),assessment:"parameter-required".into(),parameters:vec![Parameter{name:"amount".into(),domain:Domain::Range{min:2,max:8,step:2}}]};
+        let source=Source{index:0,name:"source".into(),master:"CH-0002".into(),assessment:"parameter-required".into(),parameters:vec![Parameter{name:"amount".into(),domain:Domain::Range{min:2,max:8,step:2},labels:vec![]}]};
         let mut state=State::new("CH-0001".into(),"Example".into(),false,vec![source],vec![]);
         state.handle(MenuInput::Confirm);assert!(state.parameter_mode);assert!(state.selected_parameters().is_none());
         state.handle(MenuInput::Down);assert_eq!(state.current_parameter(),Some(("amount",4)));state.handle(MenuInput::Confirm);assert_eq!(state.selected_parameters(),Some(vec![("amount",4)]));
@@ -143,7 +144,7 @@ mod tests {
     }
     #[test]
     fn multiple_parameters_are_confirmed_in_order_before_prepare(){
-        let parameter=|name:&str|Parameter{name:name.into(),domain:Domain::List(vec![1,2])};
+        let parameter=|name:&str|Parameter{name:name.into(),domain:Domain::List(vec![1,2]),labels:vec![]};
         let source=Source{index:0,name:"source".into(),master:"CH-0002".into(),assessment:"parameter-required".into(),parameters:vec![parameter("race"),parameter("job"),parameter("look")]};
         let mut state=State::new("CH-0001".into(),"Example".into(),false,vec![source],vec![]);
         state.handle(MenuInput::Confirm);assert_eq!(state.current_parameter(),Some(("race",1)));state.handle(MenuInput::Down);state.handle(MenuInput::Confirm);
@@ -156,8 +157,8 @@ mod tests {
     #[test]
     fn dependent_parameter_choices_follow_the_explicit_previous_value(){
         let source=Source{index:0,name:"synthetic".into(),master:"CH-0002".into(),assessment:"parameter-required".into(),parameters:vec![
-            Parameter{name:"race".into(),domain:Domain::List(vec![1,2])},
-            Parameter{name:"job".into(),domain:Domain::DependentList{on:"race".into(),cases:vec![(1,vec![10,11]),(2,vec![20])]}},
+            Parameter{name:"race".into(),domain:Domain::List(vec![1,2]),labels:vec![]},
+            Parameter{name:"job".into(),domain:Domain::DependentList{on:"race".into(),cases:vec![(1,vec![10,11]),(2,vec![20])]},labels:vec![]},
         ]};
         let mut state=State::new("CH-0001".into(),"Example".into(),false,vec![source],vec![]);
         state.handle(MenuInput::Confirm);state.handle(MenuInput::Down);state.handle(MenuInput::Confirm);

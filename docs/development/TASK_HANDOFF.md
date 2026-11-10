@@ -81,11 +81,19 @@ for a specific question: archive legacy lines 179..744 or the named record below
 - Verified dependent lists: bounded previous-value cases reject invalid/missing combinations, filter the menu and revalidate presets. Linux suites, Windows GNU build and synthetic Wine keyboard/preset flow PASS (`dbg2-20-dependent-parameter-tests-iiddbvcl`, `dbg2-20-dependent-wine-gui-ijn43g20`); old runtimes reject the schema variant.
 - Verified character examples: earlier tuple preview/arm/disarm PASS without gameplay (`dbg2-20-character-examples-wine-__ltq06k`), but USA DS-16 bytes 84..8B = 02 50 01 02 08 32 63 00 leave byte85 semantics unresolved (`dbg2-20-ds16-readonly-fields-3ao28h9v`). Sol xhigh `/root/sol_debug_diagnosis` advised quarantine.
 - Verified quarantine: newly generated examples retain unknown region and reject preparation; ability path still works in Wine (`dbg2-20-character-reference-only-mtq__gpq`, `dbg2-20-reference-only-wine-maya4aqz`). Earlier activation-ready catalog `dbg2-20-usa-character-examples-ucw5y1gi` is historical evidence only; do not select it for activation.
-- Verified actor: protected DS-16 name pointer matches Marche from the associated screenshot; no guest frames/state change (`dbg2-20-ds16-actor-readonly-czlki7vb`).
-- Verified one example: protected paired DS-16 Wine control observed changed bytes, statistics and figures after 108 identical frames; Soldier title remained (`dbg2-20-ds16-character-control-q1nfmfzh`). One scene does not resolve field meanings; quarantine remains.
-- Verified source lookup: Data Crystal lists Soldier/Gunner job-table indices 02/26 but does not map checkpoint fields or explain the title; quarantine remains.
-- Verified badge: Wine software and Linux Vulkan/llvmpipe GUI PASS (`dbg2-20-persistent-indicator-gameplay-bsrpy2cz`, `dbg2-20-indicator-linux-gpu-retry-xuuv_r2r`).
-- Resume: `docs/changes/2026-11-09-observe-ds16-character-example.json`.
+- Badge: Wine/Linux GUI PASS (`dbg2-20-persistent-indicator-gameplay-bsrpy2cz`, `dbg2-20-indicator-linux-gpu-retry-xuuv_r2r`).
+- DS-16 route/ability: `dbg20-ability-screen-route-9ozkfq50`, `dbg20-usa-ability-effect-4yt445cl`.
+- Tuple: Soldier control versus Gunner after full example (`dbg20-character-ability-screen-h75fjx8y`); individual fields unresolved.
+- Field87: Soldier to Thief (`dbg20-single-job-byte-b00g2384`); Sol xhigh advised, effective settings unconfirmed.
+- Offset85: byte-only write changed title and stats (`dbg20-single-offset85-yqmspzpv`); Japanese guide distinguishes job name and actual job; cross-version/mixed-state validity unverified.
+- Race/job-only matched full tuple screenshot (`dbg20-character-preserve85-t3l31iu3`); state equivalence unproved.
+- Labels: Linux/Wine PASS (`dbg20-value-label-build-zkxk1v_j`, `dbg20-value-label-wine-z3h_9726`).
+- CH-0236 source: guide repeats anomalous first address; intent unresolved.
+- CH-0236 candidate: distinct US listing, record pointers and one-byte Wine appearance effect support alternate address (`dbg20-third-record-readonly-sww_z0qx`, `dbg20-third-record-pointers-nb08dpqa`, `dbg20-third-candidate-effect-lwmjwzo2`); original intent remains unresolved.
+- Source reasons: Wine PASS (`dbg20-source-reasons-final-wine-m69p1pgw`).
+- Third actor: Wine roster matches ROM pointer (`dbg20-third-roster-route-4hh0fmeo`).
+- Selection checkpoint: user requests DBG2-20 completion; USA byte85/87 meaning unresolved. Compare protected USA ROM with the verified EUR job-routing source.
+- Resume: `docs/changes/2026-11-10-inspect-third-character-record.json`.
 
 ### DBG2-22
 
@@ -152,8 +160,8 @@ for a specific question: archive legacy lines 179..744 or the named record below
 ## Final handover
 
 - Task: DBG2-20 partial; user requested completion.
-- Last verified result: armed-cheat badge passed Wine software and Linux Vulkan/llvmpipe gameplay/menu checks; one-shot does not show it.
+- Last verified result: a synthetic candidate byte changed the third actor’s portrait and sprite in one Wine checkpoint against the same-runtime control.
 - Remaining work: field meanings, full character domains, CH-0236, broader game/device behavior, native Windows and physical controllers.
 - Errors or blockers: source labels conflict; one observation cannot validate the domain. Character examples remain reference-only; older activation-ready projection is historical evidence.
-- Next action: seek discriminating evidence for remaining domains; preserve concurrent DBG2-26 work.
-- References: docs/changes/2026-11-09-show-maintained-cheat-indicator.json; docs/cheats.md; target/validation/units/dbg2-20-persistent-indicator-gameplay-bsrpy2cz/.
+- Next action: resolve character field/domain semantics with suitable evidence; preserve quarantine.
+- References: docs/changes/2026-11-10-inspect-third-character-record.json; target/validation/units/dbg20-third-candidate-effect-lwmjwzo2/.

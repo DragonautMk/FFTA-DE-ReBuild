@@ -624,7 +624,9 @@ No other development was selected. On resumption read only the individual ID in
 
   **Audit 2026-11-01 — partial.** The [catalog view](../changes/2026-10-31-browse-local-cheat-catalog-in-menu.json)
   provides search/details/filters and a later explicit source/preview/arm/disarm
-  page flow. The cheat filters now use source-plan, declared-region and armed
+  page flow. Details now surface bounded per-source failure reasons and
+  missing placeholder domains; a protected Wine check covered CH-0236.
+  The cheat filters now use source-plan, declared-region and armed
   metadata rather than localized labels; synthetic Wine GUI checks include
   arm/disarm updates. Named source-bound groups can now be saved, reviewed and
   armed atomically through explicit text commands, with synthetic conflict and
@@ -661,8 +663,13 @@ No other development was selected. On resumption read only the individual ID in
   now binds eight source-listed primary ability-set label records to the known
   USA identity and master checksum, preserving original provenance and table
   hashes. Protected USA/EUR preflight and Wine frontend selection/arm/disarm
-  passed without guest advancement. Dependent lists now validate declared
-  relationships and filter menu values. Linux suites, Windows GNU build and a
+  passed without guest advancement. A later paired USA Wine checkpoint run
+  observed one ability label change from Battle Tech to Black Magic after a
+  single write; battle behavior and other values remain unverified. Dependent
+  lists now validate declared
+  relationships and filter menu values. Optional source-bound value labels
+  accompany the numeric choices; the USA ability projection derives these
+  labels from the local table, and older runtimes reject labeled declarations. Linux suites, Windows GNU build and a
   synthetic Wine/Xvfb menu/preset flow passed; older runtimes reject the new
   domain variant. An earlier private projection covered two source-illustrated
   character combinations, but a protected USA DS-16 read exposed unresolved
@@ -670,8 +677,23 @@ No other development was selected. On resumption read only the individual ID in
   unknown region; the earlier activation-ready catalog is historical evidence,
   not an operational recommendation. A protected paired DS-16 Wine observation
   showed changed bytes, statistics and figures for one applied example, while
-  the title remained Soldier; it does not establish field meanings. CH-0236
-  remains excluded. Broader combinations and device effects remain unverified.
+  the title remained Soldier on the job screen. A later paired ability-screen
+  refresh displayed Soldier in control and Gunner after the full example;
+  it does not isolate individual field meanings. A synthetic same-race write
+  to byte 87 alone changed the refreshed title from Soldier to Thief while
+  byte 85 stayed unchanged. A separate byte-85-only diagnostic showed Gunner
+  and altered statistics with byte 87 unchanged. A race/job-only diagnostic
+  preserving byte 85 matched the full example’s ability-screen capture. A
+  Japanese-version community guide separately names the two fields job name
+  and actual job; cross-version semantics and other behavior remain open.
+  CH-0236 remains excluded: the matching guide repeats its anomalous first
+  address in CodeBreaker and RAW listings, without resolving its intent. A
+  separate US listing and protected USA record/name-pointer inspection support
+  a stride-aligned candidate; a cheat-free roster capture matches the third
+  pointer. One synthetic candidate-byte write changed that actor’s portrait and
+  sprite against a protected control. This single value and screen do not
+  validate the imported code, its intent, other values or the device.
+  Broader combinations and device effects remain unverified.
   A persistent maintained-cheat badge is shown in gameplay and pause menus;
   Wine software and Linux Vulkan/llvmpipe rendering verified arm/disarm and
   one-shot behavior; physical GPUs and Windows native remain unverified.

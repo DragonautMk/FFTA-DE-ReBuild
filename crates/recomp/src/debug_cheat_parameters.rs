@@ -16,7 +16,13 @@ pub(crate) struct Specification {
     pub name: String,
     pub allowed: Domain,
     pub slots: Vec<Slot>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub labels: Vec<ValueLabel>,
 }
+
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
+#[serde(deny_unknown_fields)]
+pub(crate) struct ValueLabel { pub value: u16, pub label: String }
 
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
 #[serde(tag = "kind", rename_all = "kebab-case", deny_unknown_fields)]
@@ -69,6 +75,16 @@ impl Specification {
         if !valid_name(&self.name) || choice.name != self.name || self.slots.is_empty() || self.slots.len() > 16 {
             return Err("Invalid parameter identity or slots".into());
         }
+        let mut labeled_values = BTreeSet::new();
+        if self.labels.len() > 256 || self.labels.iter().any(|item| {
+            let in_domain = match &self.allowed {
+                Domain::List { values } => values.contains(&item.value),
+                Domain::Range { min, max, step } => *step > 0 && item.value >= *min && item.value <= *max && (item.value - min) % step == 0,
+                Domain::DependentList { cases, .. } => cases.iter().any(|case| case.values.contains(&item.value)),
+            };
+            !in_domain || !labeled_values.insert(item.value) || item.label.trim().is_empty()
+                || item.label.len() > 256 || item.label.chars().count() > 80 || item.label.chars().any(char::is_control)
+        }) { return Err("Invalid parameter value labels".into()); }
         let max_value = match &self.allowed {
             Domain::List { values } => *values.iter().max().ok_or("Empty parameter value list")?,
             Domain::Range { min, max, step } => {
@@ -210,7 +226,7 @@ mod tests {
     use super::*;
 
     fn spec() -> Specification {
-        Specification { name: "amount".into(), allowed: Domain::Range { min: 2, max: 10, step: 2 },
+        Specification { name: "amount".into(), allowed: Domain::Range { min: 2, max: 10, step: 2 }, labels: vec![],
             slots: vec![Slot { line: 0, field: Field::Value, offset: 2, digits: 2 }] }
     }
 
@@ -222,6 +238,27 @@ mod tests {
         assert_eq!(source[0], "82000000 00XX");
         for value in [0, 3, 12] { assert!(expand(&source, &spec(), &Choice { name: "amount".into(), value }).is_err()); }
         assert!(expand(&source, &spec(), &Choice { name: "other".into(), value: 2 }).is_err());
+    }
+
+    #[test]
+    fn optional_labels_are_bounded_and_do_not_change_selected_values() {
+        let lines = vec!["82000000 00XX".to_string()];
+        let mut parameter = spec();
+        let choice = Choice { name: "amount".into(), value: 4 };
+        let plain = expand(&lines, &parameter, &choice).unwrap();
+        assert!(serde_json::to_value(&parameter).unwrap().get("labels").is_none());
+        parameter.labels = vec![ValueLabel { value: 4, label: "Four".into() }];
+        assert_eq!(expand(&lines, &parameter, &choice).unwrap(), plain);
+        let parsed: Specification = serde_json::from_value(serde_json::to_value(&parameter).unwrap()).unwrap();
+        assert_eq!(parsed, parameter);
+        parameter.labels.push(ValueLabel { value: 4, label: "Duplicate".into() });
+        assert!(expand(&lines, &parameter, &choice).is_err());
+        parameter.labels = vec![ValueLabel { value: 3, label: "Outside stepped range".into() }];
+        assert!(expand(&lines, &parameter, &choice).is_err());
+        parameter.labels = vec![ValueLabel { value: 4, label: "Line\nbreak".into() }];
+        assert!(expand(&lines, &parameter, &choice).is_err());
+        parameter.labels = vec![ValueLabel { value: 4, label: "x".repeat(81) }];
+        assert!(expand(&lines, &parameter, &choice).is_err());
     }
 
     #[test]
@@ -244,7 +281,7 @@ mod tests {
     #[test]
     fn multiple_parameters_expand_independently_and_refuse_ambiguous_inputs(){
         let source=vec!["820000XX YYZZ".to_string()];
-        let mk=|name:&str,field,offset|Specification{name:name.into(),allowed:Domain::List{values:vec![1,2]},slots:vec![Slot{line:0,field,offset,digits:2}]};
+        let mk=|name:&str,field,offset|Specification{name:name.into(),allowed:Domain::List{values:vec![1,2]},labels:vec![],slots:vec![Slot{line:0,field,offset,digits:2}]};
         let specs=vec![mk("race",Field::Word,6),mk("job",Field::Value,0),mk("look",Field::Value,2)];
         let choices=vec![Choice{name:"look".into(),value:2},Choice{name:"race".into(),value:1},Choice{name:"job".into(),value:2}];
         validate_many_source(&source,&specs).unwrap();assert_eq!(expand_many(&source,&specs,&choices).unwrap()[0],"82000001 0202");assert_eq!(source[0],"820000XX YYZZ");
@@ -255,8 +292,8 @@ mod tests {
     #[test]
     fn dependent_domains_require_complete_earlier_cases_and_refuse_cross_choices(){
         let source=vec!["820000XX 00YY".into()];
-        let parent=Specification{name:"race".into(),allowed:Domain::List{values:vec![1,2]},slots:vec![Slot{line:0,field:Field::Word,offset:6,digits:2}]};
-        let child=Specification{name:"job".into(),allowed:Domain::DependentList{on:"race".into(),cases:vec![DependentCase{when:1,values:vec![10,11]},DependentCase{when:2,values:vec![20]}]},slots:vec![Slot{line:0,field:Field::Value,offset:2,digits:2}]};
+        let parent=Specification{name:"race".into(),allowed:Domain::List{values:vec![1,2]},labels:vec![],slots:vec![Slot{line:0,field:Field::Word,offset:6,digits:2}]};
+        let child=Specification{name:"job".into(),allowed:Domain::DependentList{on:"race".into(),cases:vec![DependentCase{when:1,values:vec![10,11]},DependentCase{when:2,values:vec![20]}]},labels:vec![],slots:vec![Slot{line:0,field:Field::Value,offset:2,digits:2}]};
         let specs=vec![parent,child];validate_many_source(&source,&specs).unwrap();
         let choice=|name:&str,value|Choice{name:name.into(),value};
         assert_eq!(expand_many(&source,&specs,&[choice("job",20),choice("race",2)]).unwrap(),["82000002 0014"]);

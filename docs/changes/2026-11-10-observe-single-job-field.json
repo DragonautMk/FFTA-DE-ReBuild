@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-10",
+  "slug": "observe-single-job-field",
+  "title": "Observe one isolated job field change",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Document a synthetic same-race single-byte discriminator for the character modifier while retaining quarantine for unverified source combinations."
+  ],
+  "validation": [
+    "On a protected isolated USA DS-16 copy, an explicitly selected synthetic CodeBreaker plan wrote only character offset 87 from Soldier to the source-listed human Thief value. Offsets 84\u201386, level and adjacent observed bytes were unchanged immediately and after the 144-frame B/Up/A route; no maintained cheat was armed. The refreshed ability screen displayed Thief.",
+    "The protected prior control used the same checkpoint, executable hash and route, displayed Soldier, and made no write. Both screenshots were inspected. The test closed normally, preserved protected inputs and drained Wine. Evidence: target/validation/units/dbg20-single-job-byte-b00g2384/ and dbg20-character-ability-screen-h75fjx8y/.",
+    "Focused Sol consultation `/root/sol_debug_diagnosis` was requested as gpt-6.1-sol with xhigh; effective model/effort were not independently exposed."
+  ],
+  "limitations": [
+    "This establishes a displayed-job effect of offset 87 in one human checkpoint, not complete semantics of offset 85, other fields or compatible combinations. CH-0236, broader gameplay, physical devices and native Windows remain unverified; character projections remain reference-only."
+  ],
+  "files": [
+    "docs/cheats.md",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/changes/2026-11-10-observe-character-tuple-screen.json"
+  ]
+}

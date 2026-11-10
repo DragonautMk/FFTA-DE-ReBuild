@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-10",
+  "slug": "label-declared-cheat-values",
+  "title": "Show source labels for declared cheat values",
+  "kind": "added",
+  "platforms": [
+    "Linux",
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Allow bounded optional labels for declared numeric parameter values; reject duplicate, out-of-domain or invalid labels while preserving existing unlabeled declarations and numeric selection identity.",
+    "Show a source label alongside the numeric choice in the cheat menu. The private USA ability projection derives labels from the user-provided source table without changing that table or the original catalog."
+  ],
+  "validation": [
+    "Linux parameter-focused tests passed: seven menu tests and sixteen recomp tests, with seventeen unrelated private tests ignored. Tests cover labeled display, explicit numeric confirmation, old unlabeled serialization and invalid label rejection. Windows GNU test and production executable builds passed. Evidence: target/validation/units/dbg20-value-label-build-zkxk1v_j/.",
+    "Protected projection validation checked all 35 labels and values and refusal to overwrite. An isolated Windows GNU/Wine/Xvfb session passed focused Windows tests, selected an actual source-derived labeled value in the menu, and prepared numeric value 10 without advancing or modifying the guest; screenshot reviewed, protected inputs unchanged, window closed and Wine drained. Evidence: target/validation/units/dbg20-value-label-wine-z3h_9726/."
+  ],
+  "limitations": [
+    "Labels are source metadata, not a claim that every value has verified game or physical-device behavior. Existing pinned catalogs are unchanged; regenerate to include labels. Older runtimes with strict parameter schemas reject labeled declarations. Native Windows and physical controllers were not tested. Character projections remain reference-only."
+  ],
+  "files": [
+    "crates/menu/src/cheat_management.rs",
+    "crates/menu/src/content_selector.rs",
+    "crates/menu/src/content_selector/tests.rs",
+    "crates/recomp/src/debug_cheat_parameters.rs",
+    "crates/recomp/src/debug_cheats.rs",
+    "scripts/cheat_ability_projection.py",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

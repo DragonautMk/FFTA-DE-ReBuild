@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-10",
+  "slug": "observe-ability-label-write",
+  "title": "Observe one ability label write in a paired checkpoint",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Document the scoped visible effect of one source-listed ability label and the earlier byte-only observation."
+  ],
+  "validation": [
+    "An isolated Wine/Xvfb USA DS-16 comparison applied CH-0226 Black Magic once to one copy, left the control unwritten and gave both copies identical 243-frame input sequences. The treated target byte changed from 2 to 10 and persisted; the control stayed 2. Protected original inputs were unchanged, both sessions closed normally and the shared Wine server drained. Evidence: target/validation/units/dbg20-usa-ability-effect-4yt445cl/.",
+    "Review of both captures showed the job-selection screen rather than the desired abilities screen; the test protocol PASS establishes the byte observation only.",
+    "A separate cheat-free protected DS-16 route observation used B, Up and A for eight frames each, separated by 30 released frames. Intermediate captures showed the party menu, Pick Abilities selection and ability screen; the window closed and Wine drained. Evidence: target/validation/units/dbg20-ability-screen-route-9ozkfq50/.",
+    "A corrected isolated USA DS-16 Wine pair applied CH-0226 value 0A once in the treated copy and no write in the control. After identical 144-frame B/Up/A sequences both reached the ability screen; the primary label was Battle Tech in the control and Black Magic in the treated copy, consistent with the persisted 02 versus 0A byte. Protected inputs remained unchanged; both windows closed and Wine drained. Evidence: target/validation/units/dbg20-usa-ability-screen-effect-h93b9l2e/."
+  ],
+  "limitations": [
+    "The visible effect covers one value, one USA checkpoint and one screen only; learned abilities, battle use, other values, physical devices and native Windows remain unverified."
+  ],
+  "files": [
+    "docs/cheats.md",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/changes/2026-11-09-project-usa-ability-values.json",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

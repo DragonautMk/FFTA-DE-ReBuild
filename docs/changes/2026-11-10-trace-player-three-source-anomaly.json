@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-10",
+  "slug": "trace-player-three-source-anomaly",
+  "title": "Trace the Player 3 code anomaly to the matching guide",
+  "kind": "changed",
+  "platforms": [
+    "All"
+  ],
+  "changes": [
+    "Document that the matching guide repeats the local Player 3 address anomaly in its CodeBreaker and RAW entries; retain the original source and quarantine without guessing a correction."
+  ],
+  "validation": [
+    "Compared CH-0236 with its neighboring local source entries and the linked Labmaster guide\u2019s Player 3 and neighboring CodeBreaker/RAW listings. The guide reproduces the anomalous first address while its second CodeBreaker address follows the neighboring stride. This confirms a matching transcription, not independent correctness or shared provenance."
+  ],
+  "limitations": [
+    "No runtime, original-device or author-intent evidence establishes the correct Player 3 address. CH-0236 remains excluded; character domains remain reference-only."
+  ],
+  "files": [
+    "docs/cheats.md",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

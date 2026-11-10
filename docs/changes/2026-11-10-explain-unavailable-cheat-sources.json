@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-11-10",
+  "slug": "explain-unavailable-cheat-sources",
+  "title": "Explain unavailable cheat sources in the catalog",
+  "kind": "changed",
+  "platforms": [
+    "Linux",
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Show bounded per-source assessment failures, missing provenance or placeholder domains, and the existence of unassessed sources in the cheat details panel. Preserve original source records, execution guards and numeric code behavior.",
+    "Add English and Italian labels for the new diagnostics and common source-assessment failures; other dynamic decoder messages retain the English fallback."
+  ],
+  "validation": [
+    "Linux debug-cheat tests passed: 18 passed and four private ROM tests intentionally ignored. Tests cover separate source failures, missing placeholder domains, English and Italian labels, unchanged original entries and non-executable status. Windows GNU test and production executable builds passed. Evidence: target/validation/units/dbg20-source-reasons-build-sjfq7hg6/.",
+    "A focused Windows test and isolated Wine/Xvfb session loaded a protected copy of the real local catalog and searched CH-0236. The inspected details screenshot showed its source-specific decoding failure and missing declared-domain explanation. The guest remained paused and unchanged, protected inputs stayed unchanged, the window closed and Wine drained. Evidence: target/validation/units/dbg20-source-reasons-wine-4jmosvuo/.",
+    "After adding the empty-provenance diagnostic and a control-character/length bound check, Linux tests and Windows GNU builds passed again; the final Wine executable repeated the focused test and CH-0236 details screenshot with protected inputs and unchanged guest. Evidence: target/validation/units/dbg20-source-reasons-final-build-7k_hzu1i/, dbg20-source-reasons-final-wine-m69p1pgw/."
+  ],
+  "limitations": [
+    "The diagnostic describes source assessment and does not prove the intended correction, ROM/device compatibility or gameplay. CH-0236 and the character projection remain non-executable/reference-only. Native Windows and physical controllers were not tested."
+  ],
+  "files": [
+    "crates/recomp/src/debug_cheats.rs",
+    "crates/input-config/languages/en.json",
+    "crates/input-config/languages/it.json",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/changes/2026-11-10-inspect-third-character-record.json"
+  ]
+}

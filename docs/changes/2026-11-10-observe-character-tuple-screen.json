@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-10",
+  "slug": "observe-character-tuple-screen",
+  "title": "Observe a character tuple on the ability screen",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Document the scoped effect of the first complete source-listed character tuple after an authenticated ability-screen redraw while retaining the reference-only quarantine."
+  ],
+  "validation": [
+    "A protected paired USA DS-16 Wine/Xvfb experiment applied the first complete guide tuple once to the treated copy and no write to the control. Both followed the verified B/Up/A route for the same 144 frames with no maintained cheats. The control ability screen displayed Soldier; the treated screen displayed Gunner and different ability labels. The specified target bytes remained changed only in the treated copy. Both windows closed normally and Wine drained; protected ROM, checkpoint, earlier evidence and executable were unchanged. Evidence: target/validation/units/dbg20-character-ability-screen-h75fjx8y/.",
+    "Visual evidence was inspected separately; a prior one-frame route had remained on the job screen and was not evidence of an ability-screen redraw."
+  ],
+  "limitations": [
+    "This supports the complete tuple in one checkpoint and screen, not independent meanings of its fields, other combinations, physical devices or native Windows. CH-0236 remains excluded; current character examples remain reference-only."
+  ],
+  "files": [
+    "docs/cheats.md",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/changes/2026-11-09-quarantine-character-examples.json"
+  ]
+}

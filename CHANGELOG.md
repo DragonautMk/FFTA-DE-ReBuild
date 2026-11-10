@@ -3,6 +3,207 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-10 — Trace the Player 3 code anomaly to the matching guide
+
+Type: changed. Platforms: All.
+
+**Changes**
+
+- Document that the matching guide repeats the local Player 3 address anomaly in its CodeBreaker and RAW entries; retain the original source and quarantine without guessing a correction.
+
+**Validation**
+
+- Compared CH-0236 with its neighboring local source entries and the linked Labmaster guide’s Player 3 and neighboring CodeBreaker/RAW listings. The guide reproduces the anomalous first address while its second CodeBreaker address follows the neighboring stride. This confirms a matching transcription, not independent correctness or shared provenance.
+
+**Limitations**
+
+- No runtime, original-device or author-intent evidence establishes the correct Player 3 address. CH-0236 remains excluded; character domains remain reference-only.
+
+Documentation: [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-10-trace-player-three-source-anomaly.json)
+
+## 2026-11-10 — Observe the isolated character offset 85
+
+Type: changed. Platforms: Windows GNU / Wine.
+
+**Changes**
+
+- Document the distinct visible effect of offset 85 while preserving quarantine for unverified character combinations.
+
+**Validation**
+
+- On a protected isolated USA DS-16 copy, a synthetic CodeBreaker plan changed only character offset 85 from 50 to 26 hexadecimal. Offsets 84, 86, 87 and the level remained unchanged immediately and after the same 144-frame B/Up/A route. The treated ability screen displayed Gunner and different statistics; the protected same-checkpoint/same-executable control displayed Soldier. Both screenshots were inspected.
+- The session used no maintained cheat, closed normally, preserved protected inputs and drained Wine. Evidence: target/validation/units/dbg20-single-offset85-yqmspzpv/ and the prior control dbg20-character-ability-screen-h75fjx8y/.
+
+**Limitations**
+
+- A single mixed state on one screen does not establish the full purpose of offset 85, the validity of that combination, battle behavior or other contexts. Offset 87 alone also affected the displayed job in a different test; the fields are not thereby interchangeable. Other domains, CH-0236, physical devices and native Windows remain unverified; character projections remain reference-only.
+
+Documentation: [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [2026-11-10-observe-single-job-field.json](docs/changes/2026-11-10-observe-single-job-field.json).
+
+[Change record](docs/changes/2026-11-10-observe-single-offset85.json)
+
+## 2026-11-10 — Observe one isolated job field change
+
+Type: changed. Platforms: Windows GNU / Wine.
+
+**Changes**
+
+- Document a synthetic same-race single-byte discriminator for the character modifier while retaining quarantine for unverified source combinations.
+
+**Validation**
+
+- On a protected isolated USA DS-16 copy, an explicitly selected synthetic CodeBreaker plan wrote only character offset 87 from Soldier to the source-listed human Thief value. Offsets 84–86, level and adjacent observed bytes were unchanged immediately and after the 144-frame B/Up/A route; no maintained cheat was armed. The refreshed ability screen displayed Thief.
+- The protected prior control used the same checkpoint, executable hash and route, displayed Soldier, and made no write. Both screenshots were inspected. The test closed normally, preserved protected inputs and drained Wine. Evidence: target/validation/units/dbg20-single-job-byte-b00g2384/ and dbg20-character-ability-screen-h75fjx8y/.
+- Focused Sol consultation `/root/sol_debug_diagnosis` was requested as gpt-6.1-sol with xhigh; effective model/effort were not independently exposed.
+
+**Limitations**
+
+- This establishes a displayed-job effect of offset 87 in one human checkpoint, not complete semantics of offset 85, other fields or compatible combinations. CH-0236, broader gameplay, physical devices and native Windows remain unverified; character projections remain reference-only.
+
+Documentation: [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [2026-11-10-observe-character-tuple-screen.json](docs/changes/2026-11-10-observe-character-tuple-screen.json).
+
+[Change record](docs/changes/2026-11-10-observe-single-job-field.json)
+
+## 2026-11-10 — Observe a character tuple on the ability screen
+
+Type: changed. Platforms: Windows GNU / Wine.
+
+**Changes**
+
+- Document the scoped effect of the first complete source-listed character tuple after an authenticated ability-screen redraw while retaining the reference-only quarantine.
+
+**Validation**
+
+- A protected paired USA DS-16 Wine/Xvfb experiment applied the first complete guide tuple once to the treated copy and no write to the control. Both followed the verified B/Up/A route for the same 144 frames with no maintained cheats. The control ability screen displayed Soldier; the treated screen displayed Gunner and different ability labels. The specified target bytes remained changed only in the treated copy. Both windows closed normally and Wine drained; protected ROM, checkpoint, earlier evidence and executable were unchanged. Evidence: target/validation/units/dbg20-character-ability-screen-h75fjx8y/.
+- Visual evidence was inspected separately; a prior one-frame route had remained on the job screen and was not evidence of an ability-screen redraw.
+
+**Limitations**
+
+- This supports the complete tuple in one checkpoint and screen, not independent meanings of its fields, other combinations, physical devices or native Windows. CH-0236 remains excluded; current character examples remain reference-only.
+
+Documentation: [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [2026-11-09-quarantine-character-examples.json](docs/changes/2026-11-09-quarantine-character-examples.json).
+
+[Change record](docs/changes/2026-11-10-observe-character-tuple-screen.json)
+
+## 2026-11-10 — Observe one ability label write in a paired checkpoint
+
+Type: changed. Platforms: Windows GNU / Wine.
+
+**Changes**
+
+- Document the scoped visible effect of one source-listed ability label and the earlier byte-only observation.
+
+**Validation**
+
+- An isolated Wine/Xvfb USA DS-16 comparison applied CH-0226 Black Magic once to one copy, left the control unwritten and gave both copies identical 243-frame input sequences. The treated target byte changed from 2 to 10 and persisted; the control stayed 2. Protected original inputs were unchanged, both sessions closed normally and the shared Wine server drained. Evidence: target/validation/units/dbg20-usa-ability-effect-4yt445cl/.
+- Review of both captures showed the job-selection screen rather than the desired abilities screen; the test protocol PASS establishes the byte observation only.
+- A separate cheat-free protected DS-16 route observation used B, Up and A for eight frames each, separated by 30 released frames. Intermediate captures showed the party menu, Pick Abilities selection and ability screen; the window closed and Wine drained. Evidence: target/validation/units/dbg20-ability-screen-route-9ozkfq50/.
+- A corrected isolated USA DS-16 Wine pair applied CH-0226 value 0A once in the treated copy and no write in the control. After identical 144-frame B/Up/A sequences both reached the ability screen; the primary label was Battle Tech in the control and Black Magic in the treated copy, consistent with the persisted 02 versus 0A byte. Protected inputs remained unchanged; both windows closed and Wine drained. Evidence: target/validation/units/dbg20-usa-ability-screen-effect-h93b9l2e/.
+
+**Limitations**
+
+- The visible effect covers one value, one USA checkpoint and one screen only; learned abilities, battle use, other values, physical devices and native Windows remain unverified.
+
+Documentation: [2026-11-09-project-usa-ability-values.json](docs/changes/2026-11-09-project-usa-ability-values.json), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-10-observe-ability-label-write.json)
+
+## 2026-11-10 — Show source labels for declared cheat values
+
+Type: added. Platforms: Linux, Windows GNU / Wine.
+
+**Changes**
+
+- Allow bounded optional labels for declared numeric parameter values; reject duplicate, out-of-domain or invalid labels while preserving existing unlabeled declarations and numeric selection identity.
+- Show a source label alongside the numeric choice in the cheat menu. The private USA ability projection derives labels from the user-provided source table without changing that table or the original catalog.
+
+**Validation**
+
+- Linux parameter-focused tests passed: seven menu tests and sixteen recomp tests, with seventeen unrelated private tests ignored. Tests cover labeled display, explicit numeric confirmation, old unlabeled serialization and invalid label rejection. Windows GNU test and production executable builds passed. Evidence: target/validation/units/dbg20-value-label-build-zkxk1v_j/.
+- Protected projection validation checked all 35 labels and values and refusal to overwrite. An isolated Windows GNU/Wine/Xvfb session passed focused Windows tests, selected an actual source-derived labeled value in the menu, and prepared numeric value 10 without advancing or modifying the guest; screenshot reviewed, protected inputs unchanged, window closed and Wine drained. Evidence: target/validation/units/dbg20-value-label-wine-z3h_9726/.
+
+**Limitations**
+
+- Labels are source metadata, not a claim that every value has verified game or physical-device behavior. Existing pinned catalogs are unchanged; regenerate to include labels. Older runtimes with strict parameter schemas reject labeled declarations. Native Windows and physical controllers were not tested. Character projections remain reference-only.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-10-label-declared-cheat-values.json)
+
+## 2026-11-10 — Inspect the third character record without writes
+
+Type: changed. Platforms: Linux, Windows GNU / Wine.
+
+**Changes**
+
+- Document a source-supported third-character address candidate and a read-only checkpoint inspection while preserving the anomalous imported code and reference-only quarantine.
+- Document a bounded, source-distinct candidate appearance-byte observation while keeping the imported code and reference-only quarantine unchanged.
+
+**Validation**
+
+- An isolated protected USA DS-16 frontend read three candidate record prefixes and name pointers, plus the imported outlier, without advancing the guest or changing state. The candidate starts have a 0x108-byte stride; the imported outlier lies within the preceding interval and the alternate source address is the third start plus four. The session closed normally and protected inputs stayed unchanged. Evidence: target/validation/units/dbg20-third-record-readonly-sww_z0qx/.
+- A separate protected offline comparison resolved the second and third name pointers into known entries of the authenticated USA ROM name table, correcting the assumption that these pointers must reference EWRAM. Evidence: target/validation/units/dbg20-third-record-pointers-nb08dpqa/.
+- A separate US CodeBreaker listing identifies the stride-aligned third-character appearance byte; its original provenance and device behavior are not established. Direct source is linked from docs/cheats.md.
+- A separate cheat-free isolated USA Wine/Xvfb route left the jobs screen, selected the third roster member and displayed the same name resolved from the third candidate’s ROM pointer. Intermediate screenshots were reviewed; protected inputs remained unchanged, the window closed and Wine drained. Evidence: target/validation/units/dbg20-third-roster-route-4hh0fmeo/.
+- A synthetic one-shot changed only the alternative third-record appearance byte from 01 to 02 in an isolated USA Wine/Xvfb checkpoint; the imported outlier and protected inputs stayed unchanged. After the same 152-frame route and same runtime as the no-write control, the selected third member’s portrait and sprite differed. Screenshots were reviewed, the session closed normally and Wine drained. Evidence: target/validation/units/dbg20-third-candidate-effect-lwmjwzo2/ and target/validation/units/dbg20-third-roster-route-4hh0fmeo/.
+
+**Limitations**
+
+- The candidate effect covers one byte, value, checkpoint and screen. It does not validate the imported two-line CH-0236, its author’s intent, other values, game behavior or original hardware. Original CH-0236 is unchanged and excluded; character projections remain reference-only.
+
+Documentation: [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [2026-11-10-trace-player-three-source-anomaly.json](docs/changes/2026-11-10-trace-player-three-source-anomaly.json).
+
+[Change record](docs/changes/2026-11-10-inspect-third-character-record.json)
+
+## 2026-11-10 — Explain unavailable cheat sources in the catalog
+
+Type: changed. Platforms: Linux, Windows GNU / Wine.
+
+**Changes**
+
+- Show bounded per-source assessment failures, missing provenance or placeholder domains, and the existence of unassessed sources in the cheat details panel. Preserve original source records, execution guards and numeric code behavior.
+- Add English and Italian labels for the new diagnostics and common source-assessment failures; other dynamic decoder messages retain the English fallback.
+
+**Validation**
+
+- Linux debug-cheat tests passed: 18 passed and four private ROM tests intentionally ignored. Tests cover separate source failures, missing placeholder domains, English and Italian labels, unchanged original entries and non-executable status. Windows GNU test and production executable builds passed. Evidence: target/validation/units/dbg20-source-reasons-build-sjfq7hg6/.
+- A focused Windows test and isolated Wine/Xvfb session loaded a protected copy of the real local catalog and searched CH-0236. The inspected details screenshot showed its source-specific decoding failure and missing declared-domain explanation. The guest remained paused and unchanged, protected inputs stayed unchanged, the window closed and Wine drained. Evidence: target/validation/units/dbg20-source-reasons-wine-4jmosvuo/.
+- After adding the empty-provenance diagnostic and a control-character/length bound check, Linux tests and Windows GNU builds passed again; the final Wine executable repeated the focused test and CH-0236 details screenshot with protected inputs and unchanged guest. Evidence: target/validation/units/dbg20-source-reasons-final-build-7k_hzu1i/, dbg20-source-reasons-final-wine-m69p1pgw/.
+
+**Limitations**
+
+- The diagnostic describes source assessment and does not prove the intended correction, ROM/device compatibility or gameplay. CH-0236 and the character projection remain non-executable/reference-only. Native Windows and physical controllers were not tested.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [2026-11-10-inspect-third-character-record.json](docs/changes/2026-11-10-inspect-third-character-record.json).
+
+[Change record](docs/changes/2026-11-10-explain-unavailable-cheat-sources.json)
+
+## 2026-11-10 — Compare a character tuple while preserving offset 85
+
+Type: changed. Platforms: Windows GNU / Wine.
+
+**Changes**
+
+- Document a same-checkpoint comparison of the full character example and a synthetic race/job-only write while retaining the reference-only quarantine.
+- Record a separate Japanese-version community source that distinguishes job-name and actual-job fields without asserting cross-version equivalence.
+
+**Validation**
+
+- A protected isolated USA DS-16 Wine/Xvfb session applied a synthetic plan changing only offsets 86 and 87 to the first guide example’s race and job values. Offset 85 and adjacent checked bytes remained unchanged immediately and after the same 144-frame B/Up/A route. No maintained cheat was armed; the window closed, protected inputs remained unchanged and Wine drained. Evidence: target/validation/units/dbg20-character-preserve85-t3l31iu3/.
+- The resulting ability-screen capture was visually inspected and its SHA-256 exactly matched the earlier full-example capture from the same checkpoint, executable and route; both displayed Gunner. The two guest states still differ at offset 85. Evidence: target/validation/units/dbg20-character-ability-screen-h75fjx8y/.
+- The linked Japanese-version forum guide lists first-character offsets 85 and 87 as job-name and actual-job fields respectively. Existing isolated USA observations show both can affect a refreshed job title, and one byte-85-only observation also changed displayed statistics; the source is a hypothesis, not a validation of the USA field semantics.
+
+**Limitations**
+
+- The identical capture is limited to one screenshot and does not prove equivalent game states, battle behavior, other combinations or the full semantics of offset 85. CH-0236, physical devices and native Windows remain unverified; character examples remain reference-only.
+- The guide targets the Japanese version and warns of earlier errors; its original device and ROM provenance were not established. No cross-version equivalence or operational domain is inferred.
+
+Documentation: [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [2026-11-10-observe-single-offset85.json](docs/changes/2026-11-10-observe-single-offset85.json).
+
+[Change record](docs/changes/2026-11-10-compare-character-offset85.json)
+
 ## 2026-11-09 — Verify the live parameterized cheat control flow
 
 Type: docs. Platforms: Windows GNU / Wine / Xvfb.

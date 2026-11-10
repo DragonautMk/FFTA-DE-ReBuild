@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-10",
+  "slug": "observe-single-offset85",
+  "title": "Observe the isolated character offset 85",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Document the distinct visible effect of offset 85 while preserving quarantine for unverified character combinations."
+  ],
+  "validation": [
+    "On a protected isolated USA DS-16 copy, a synthetic CodeBreaker plan changed only character offset 85 from 50 to 26 hexadecimal. Offsets 84, 86, 87 and the level remained unchanged immediately and after the same 144-frame B/Up/A route. The treated ability screen displayed Gunner and different statistics; the protected same-checkpoint/same-executable control displayed Soldier. Both screenshots were inspected.",
+    "The session used no maintained cheat, closed normally, preserved protected inputs and drained Wine. Evidence: target/validation/units/dbg20-single-offset85-yqmspzpv/ and the prior control dbg20-character-ability-screen-h75fjx8y/."
+  ],
+  "limitations": [
+    "A single mixed state on one screen does not establish the full purpose of offset 85, the validity of that combination, battle behavior or other contexts. Offset 87 alone also affected the displayed job in a different test; the fields are not thereby interchangeable. Other domains, CH-0236, physical devices and native Windows remain unverified; character projections remain reference-only."
+  ],
+  "files": [
+    "docs/cheats.md",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/changes/2026-11-10-observe-single-job-field.json"
+  ]
+}

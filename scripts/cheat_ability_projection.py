@@ -23,9 +23,15 @@ def project(catalog_bytes, table_bytes, rom, *, expected_sha=USA_SHA256, expecte
         raise ValueError('The ROM does not match the declared master checksum')
     table = table_bytes.decode('utf-8')
     section = table.split('## Tabella Abilità', 1)[1].split('## Tabella Razza', 1)[0]
-    values = [int(m.group(1), 16) for m in re.finditer(r'^([0-9A-F]{2})\s+', section, re.MULTILINE)]
+    rows = [(int(m.group(1), 16), m.group(2).strip())
+            for m in re.finditer(r'^([0-9A-F]{2})[ \t]+([^\r\n]+)', section, re.MULTILINE)]
+    values = [value for value, _ in rows]
     if values != list(range(0x23)):
         raise ValueError('Ability table is incomplete, reordered or has duplicate values')
+    if any(not label or len(label) > 80 or len(label.encode('utf-8')) > 256
+           or any(ord(char) < 32 or 0x7f <= ord(char) <= 0x9f for char in label)
+           for _, label in rows):
+        raise ValueError('Ability table contains an invalid label')
     original = json.loads(catalog_bytes)
     if original.get('schema') != 1:
         raise ValueError('Unsupported original catalog schema')
@@ -80,6 +86,7 @@ def project(catalog_bytes, table_bytes, rom, *, expected_sha=USA_SHA256, expecte
         projected.update(master_id='CH-0225', raw_code_lines=list(codes), parameter={
             'name': 'ability_set_label', 'allowed': {'kind': 'list', 'values': values},
             'slots': [{'line': 0, 'field': 'value', 'offset': 2, 'digits': 2}],
+            'labels': [{'value': value, 'label': label} for value, label in rows],
         })
         derived.append(item)
     if character_examples:

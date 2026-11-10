@@ -152,7 +152,11 @@ before loading. Selecting a CH only opens its details; execution requires the
 separate management view. Cheat action labels use English source keys and follow the selected menu
 language; existing Italian keys remain available for compatibility. Details
 occupy a separate scrollable panel with the compatibility reasons
-before the original record. Long individual records are marked as abbreviated
+before the original record. Each assessed source can show its bounded failure
+reason and provenance index; placeholder lines without a parameter declaration
+explicitly say that a declared value domain is missing. Empty provenance and
+additional unassessed sources are identified. Dynamic decoder errors without a locale entry remain
+in English. These diagnostics do not enable the entry or establish compatibility. Long individual records are marked as abbreviated
 in the view and remain available in full through `debug-cheats show`. Decoding
 and controlled application remain partial, with the one-shot scope below.
 
@@ -493,10 +497,25 @@ Explicitly select that `catalogo.json` in the cheat catalog picker, select a
 source and value, and review the preview. The USA region is the **derived**
 projection's declaration, based on the known ROM identity and master checksum;
 it is not a statement that the original compilation declared that region. This
-source describes an ability-set label, not a grant of learned abilities. Actual
-game effects, hardware behavior and job/race/appearance combinations are not
-verified. Recreate the projection after changing its source; the selected
-catalog is a pinned snapshot, not a live link to the original.
+source describes an ability-set label, not a grant of learned abilities. A
+paired isolated USA checkpoint experiment applied the documented Black Magic
+label once: its target byte changed and remained changed for 243 frames, while
+the control did not change. Both captures remained on the job-selection screen,
+so the visible ability label and actual game effects remain unverified. A
+separate cheat-free route check reached the ability screen with eight-frame
+button presses and intermediate captures. A corrected paired Wine run then
+showed Battle Tech in the control and Black Magic as the first ability label in
+the treated copy; its changed byte persisted through 144 matching frames. This
+observes one label in one USA checkpoint, not learned spells, battle use, other
+values or hardware behavior. Job/race/appearance combinations remain
+unverified. Recreate the projection after changing its source; the selected
+catalog is a pinned snapshot, not a live link to the original. Newly generated
+projections carry the source table’s value labels: the menu shows each label
+alongside its numeric value. Labels are descriptive source metadata; they do not
+change the selected value or establish game behavior. Catalogs without labels
+continue to show numbers. Older runtimes that do not understand the optional
+label field refuse the labeled declaration; use a matching runtime and do not
+remove labels from an already selected, hash-pinned catalog.
 
 Protected checks generated and validated eight records, rejected modified source
 lines, table and ROM inputs, and confirmed deterministic generation and
@@ -509,7 +528,26 @@ To include reference-only character examples in a separate new projection,
 append `--character-examples` to the command and choose an unused output path.
 These seven records retain an unknown region, so the existing source/ROM guard
 refuses their preparation. CH-0236 is excluded because its source address
-remains unresolved. Original XP notes and provenance, including conflicting
+remains unresolved. The matching [Labmaster guide](https://gamefaqs.gamespot.com/gba/560436-final-fantasy-tactics-advance/faqs/26118)
+repeats the same outlying Player 3 first address in both its CodeBreaker and
+RAW listings; its CodeBreaker second address follows the neighboring-player
+stride. This corroborates the transcription but does not establish which
+address the original author intended or justify a correction. A separate
+[US CodeBreaker listing](https://etherealgames.com/gba/f/final-fantasy-tactics-advance/code-breaker-codes-us/)
+identifies `02000294` as the third character’s appearance byte. A protected
+read-only USA checkpoint inspection found three candidate records at the
+neighboring stride, with the third candidate beginning at `02000290`; its
+name pointer matched a known ROM name-table entry. A separate cheat-free
+Wine route selected the third roster member and its displayed name matched
+that pointer. The imported outlier falls
+inside the preceding record interval, while the alternate address is four
+bytes after the third candidate’s start. This supports a distinct candidate. In an isolated USA checkpoint, a synthetic
+one-shot changed only the alternative appearance byte for the authenticated third
+roster member. After the same route used by a protected no-write control, the
+selected actor’s portrait and sprite changed; the imported outlier was unchanged.
+This covers one value and screen, not the imported two-line code, its author’s
+intent, other values, or device behavior. The original CH-0236 remains unchanged
+and excluded. Original XP notes and provenance, including conflicting
 field descriptions, are preserved; the two guide examples are not a verified
 compatibility table. The ability-only projection is unchanged when the option
 is omitted. In an isolated Wine frontend, the regenerated catalog refused a
@@ -532,10 +570,39 @@ showed different statistics and some different figures while the title still
 read Soldier. The original ROM and checkpoint remained unchanged. This single
 scene does not establish each field's meaning, the correctness of the example,
 or the behavior of other values or physical devices; the quarantine remains.
+A later paired comparison followed the verified route to the ability screen:
+the control showed Soldier, while the copy receiving the complete first guide
+example showed Gunner and different ability labels. The changed bytes persisted
+for 144 identical frames. This supports that whole tuple in this checkpoint,
+but does not isolate the individual field meanings or validate other tuples.
+A further synthetic diagnostic changed only offset `87` from the existing
+human Soldier value to the source-listed human Thief value. After the same
+144-frame route, the ability screen displayed Thief while offsets `84`–`86`
+and the level remained unchanged. In this checkpoint, that single byte can
+select the displayed job without rewriting offset `85`. This does not prove
+the full meaning of offset `85`, other contexts or complete compatibility.
+In a separate same-checkpoint diagnostic, changing only offset `85` from its
+original value to `26` displayed Gunner and changed some displayed statistics,
+while the actual value at offset `87` stayed unchanged. Both offsets can affect
+the refreshed title in these experiments; the observation does not establish
+that they are interchangeable or that the resulting mixed state is valid.
+A third diagnostic wrote the first guide example’s race and job bytes while
+leaving offset `85` at its original value. Its ability-screen capture was
+byte-for-byte identical to the earlier full-example capture, including the
+Gunner title, after the same 144-frame route. This establishes that rewriting
+offset `85` was unnecessary for that screen in that checkpoint; it does not
+establish equivalence of the two states during other game activity.
+A [Japanese-version community guide](https://bbs.newwise.com/thread-251749-1-1.html)
+distinguishes the first character’s job-name field at `02000085` from an
+actual-job field at `02000087`, alongside appearance and race. This is a
+source attribution and a useful hypothesis for the USA observations above,
+not proof that these fields have identical meanings across versions or that
+either field has only the named effect. The source itself warns of errors in
+earlier material; its device and ROM provenance are not established here.
 The independently maintained [Data Crystal jobs table](https://datacrystal.tcrf.net/wiki/Final_Fantasy_Tactics_Advance/Jobs)
 lists job-table indices `02` for Soldier and `26` for Gunner. Those table
 indices alone do not establish which checkpoint field uses that table or why
-the captured title remained Soldier.
+the earlier job-screen title remained Soldier.
 
 **Do not select the older `dbg2-20-usa-character-examples-ucw5y1gi` catalog
 for activation.** It was generated before this uncertainty was identified and

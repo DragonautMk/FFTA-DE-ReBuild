@@ -39,6 +39,21 @@ fn strings(entry:&Value,key:&str,max:usize)->Result<(),String>{
     let values=entry.get(key).and_then(Value::as_array).ok_or_else(||format!("Invalid catalog array {key}"))?;
     if values.len()>max || values.iter().any(|v|v.as_str().is_none_or(|s|s.len()>4096)) {return Err(format!("Invalid catalog array {key}"));}Ok(())
 }
+
+fn has_undeclared_placeholders(source:&Value)->bool {
+    if source.get("parameter").is_some() || source.get("parameters").is_some(){return false;}
+    source.get("raw_code_lines").and_then(Value::as_array).is_some_and(|lines|lines.iter().any(|line|{
+        let Some(line)=line.as_str() else{return false;};
+        let parts:Vec<_>=line.split_ascii_whitespace().collect();
+        if parts.len()!=2 || parts[0].len()!=8 || parts[1].len()!=4 || !line.is_ascii(){return false;}
+        let mut placeholder=false;
+        for byte in parts[0].bytes().chain(parts[1].bytes()) {
+            if matches!(byte.to_ascii_lowercase(),b'x'|b'y'|b'z'){placeholder=true;}
+            else if !byte.is_ascii_hexdigit(){return false;}
+        }
+        placeholder
+    }))
+}
 impl Catalog {
     fn parse(bytes:&[u8])->Result<Self,String>{
         if bytes.len() as u64>MAX_BYTES{return Err("Catalog exceeds 4 MiB".into());}
@@ -192,10 +207,29 @@ impl Catalog {
                 "not-evaluated"=>"Source capability was not evaluated",
                 "parameter-required"=>"Source requires an explicit declared parameter",
                 _=>match self.capabilities[index]["state"].as_str().unwrap(){"decoded-outside-once-limits"=>"Source plan exceeds one-shot limits","unsupported-format"=>"Source format is not supported",_=>"Source capability is unresolved"}});
+            let mut reason=menu::i18n::format(language,"{relation}; {capability}. Source declaration only, not code verification. Device and behavior unverified; runtime preflight required.",&[("relation",relation.into()),("capability",capability.into())]);
+            if let (Some(reports),Some(provenance))=(self.capabilities[index]["sources"].as_array(),entry["provenance"].as_array()) {
+                if provenance.is_empty(){reason.push('\n');reason.push_str(language.text("No source provenance was provided"));}
+                for report in reports {
+                    let Some(source_index)=report["provenance_index"].as_u64().and_then(|n|usize::try_from(n).ok()) else{continue;};
+                    let Some(source)=provenance.get(source_index) else{continue;};
+                    let explanation=report["assessment"]["reason"].as_str().filter(|s|!s.is_empty());
+                    if let Some(explanation)=explanation {
+                        let clean:String=language.text(explanation).chars().filter(|c|!c.is_control()).take(200).collect();
+                        reason.push('\n');reason.push_str(&menu::i18n::format(language,"Source {index}: {reason}",&[("index",source_index.to_string()),("reason",clean)]));
+                    }
+                    if has_undeclared_placeholders(source) {
+                        reason.push('\n');reason.push_str(&menu::i18n::format(language,"Source {index}: {reason}",&[("index",source_index.to_string()),("reason",language.text("Placeholder values need a declared domain").into())]));
+                    }
+                }
+            }
+            if self.capabilities[index]["unexamined"].as_u64().unwrap_or(0)>0 {
+                reason.push('\n');reason.push_str(language.text("Additional sources were not assessed"));
+            }
             menu::ContentEntry{id:entry["id"].as_str().unwrap().into(),name:format!("{} · {}",entry["id"].as_str().unwrap(),entry["title"].as_str().unwrap()),
                 kind:format!("{} / {}",entry["format"].as_str().unwrap(),entry["region"].as_str().unwrap()),description:details,
                 location:language.text("Local catalog · read only").into(),identity:menu::i18n::format(language,"Catalog SHA256 {catalog}\nROM SHA256 {rom} · recognized region {region}",&[("catalog",self.source_sha256.clone()),("rom",target.sha256.unwrap_or_else(||language.text("Unknown ROM hash")).into()),("region",target.region.unwrap_or_else(||language.text("Unknown recognized region")).into())]),status:language.text("Cheat disabled").into(),compatibility:language.text("Cheat unverified").into(),
-                reason:menu::i18n::format(language,"{relation}; {capability}. Source declaration only, not code verification. Device and behavior unverified; runtime preflight required.",&[("relation",relation.into()),("capability",capability.into())]),available:true,
+                reason,available:true,
                 cheat_filter:Some(menu::CheatFilter{armed:false,declared_match:target.declaration(region)=="declared-match",plan_candidate:summary["compatibility"]["manual_once"]["state"]=="requires-runtime-preflight"})}
         }).collect()
     }
@@ -205,7 +239,7 @@ impl Catalog {
         Ok(sources.iter().filter_map(|s|{
             let index=s["provenance_index"].as_u64()?;let provenance=entry["provenance"].as_array()?.get(index as usize)?;
             let assessment=&s["assessment"];let specs=if let Some(value)=assessment.get("parameter"){serde_json::from_value::<crate::debug_cheat_parameters::Specification>(value.clone()).ok().into_iter().collect()}else{assessment.get("parameters").cloned().and_then(|v|serde_json::from_value::<Vec<crate::debug_cheat_parameters::Specification>>(v).ok()).unwrap_or_default()};
-            let parameters=specs.into_iter().map(|spec|menu::CheatParameter{name:spec.name,domain:match spec.allowed{crate::debug_cheat_parameters::Domain::List{values}=>menu::CheatParameterDomain::List(values),crate::debug_cheat_parameters::Domain::Range{min,max,step}=>menu::CheatParameterDomain::Range{min,max,step},crate::debug_cheat_parameters::Domain::DependentList{on,cases}=>menu::CheatParameterDomain::DependentList{on,cases:cases.into_iter().map(|case|(case.when,case.values)).collect()}}}).collect();
+            let parameters=specs.into_iter().map(|spec|menu::CheatParameter{name:spec.name,labels:spec.labels.into_iter().map(|item|(item.value,item.label)).collect(),domain:match spec.allowed{crate::debug_cheat_parameters::Domain::List{values}=>menu::CheatParameterDomain::List(values),crate::debug_cheat_parameters::Domain::Range{min,max,step}=>menu::CheatParameterDomain::Range{min,max,step},crate::debug_cheat_parameters::Domain::DependentList{on,cases}=>menu::CheatParameterDomain::DependentList{on,cases:cases.into_iter().map(|case|(case.when,case.values)).collect()}}}).collect();
             Some(menu::CheatSource{index:u16::try_from(index).ok()?,name:provenance["source"].as_str().unwrap_or("unknown").chars().take(80).collect(),master:s["master_id"].as_str().unwrap_or("unknown").chars().take(16).collect(),assessment:assessment["state"].as_str().unwrap_or("unresolved").into(),parameters})
         }).collect())
     }
@@ -385,6 +419,34 @@ mod tests {
         let result=catalog.indexed_summary(0,Some(&"a".repeat(64)));assert_eq!(result["enabled"],false);assert_eq!(result["executable"],false);assert_eq!(result["compatibility"]["rom"]["state"],"unknown");assert_eq!(result["compatibility"]["decoder"]["state"],"unresolved");assert_eq!(result["compatibility"]["verification"]["state"],"unverified");
     }
     #[test]
+    fn menu_explains_missing_source_dependencies_and_placeholder_domains(){
+        let mut v=fixture();
+        v["entries"][0]["codes"]=json!(["82000084 XXYY"]);
+        v["entries"][0]["provenance"]=json!([
+            {"source":"missing","raw_code_lines":["82000084 XXYY"]},
+            {"source":"other","master_id":"CH-0002","raw_code_lines":["82000084 XXYY"]}
+        ]);
+        let catalog=Catalog::parse(&serde_json::to_vec(&v).unwrap()).unwrap();
+        let en=catalog.menu_entries(None,input_config::Language::default());
+        let it=catalog.menu_entries(None,input_config::Language::parse("it"));
+        assert!(en[0].reason.contains("Source 0: Source lines or master reference are missing"));
+        assert!(en[0].reason.contains("Source 0: Placeholder values need a declared domain"));
+        assert!(en[0].reason.contains("Source 1: Source master is missing"));
+        assert!(it[0].reason.contains("Fonte 0: Mancano le righe della fonte o il riferimento al master"));
+        assert!(it[0].reason.contains("Fonte 0: I valori segnaposto richiedono un dominio dichiarato"));
+        assert_eq!(catalog.entries,v["entries"].as_array().unwrap().clone());
+        assert_eq!(catalog.indexed_summary(0,None)["executable"],false);
+        let mut declared=v["entries"][0]["provenance"][0].clone();declared["parameter"]=json!({});
+        assert!(!has_undeclared_placeholders(&declared));
+        assert!(!has_undeclared_placeholders(&json!({"raw_code_lines":["not a code x"]})));
+        let mut missing=v.clone();missing["entries"][0]["provenance"]=json!([]);
+        let empty=Catalog::parse(&serde_json::to_vec(&missing).unwrap()).unwrap();
+        assert!(empty.menu_entries(None,input_config::Language::default())[0].reason.contains("No source provenance was provided"));
+        let mut noisy=catalog;noisy.capabilities[0]["sources"][0]["assessment"]["reason"]=json!(format!("bad\r{}","x".repeat(1000)));
+        let reason=&noisy.menu_entries(None,input_config::Language::default())[0].reason;
+        assert!(!reason.contains('\r'));assert!(reason.len()<1000);
+    }
+    #[test]
     fn inspection_requires_explicit_assumption_and_does_not_enable_a_catalog_entry(){
         let dir=tempfile::tempdir().unwrap();let path=dir.path().join("catalog.json");let mut v=fixture();
         v["entries"][0]["codes"]=json!(["32000001 00FF","82000002 1234"]);
@@ -469,7 +531,7 @@ mod tests {
         let c=Catalog::parse(&serde_json::to_vec(&v).unwrap()).unwrap();let report=&c.capabilities[0];
         assert_eq!(report["state"],"parameter-required");assert_eq!(report["sources"][0]["assessment"]["parameter"]["name"],"amount");
         let sources=c.menu_sources("CH-0001").unwrap();assert_eq!(sources.len(),1);
-        assert_eq!(sources[0].parameters,vec![menu::CheatParameter{name:"amount".into(),domain:menu::CheatParameterDomain::List(vec![0])}]);
+        assert_eq!(sources[0].parameters,vec![menu::CheatParameter{name:"amount".into(),domain:menu::CheatParameterDomain::List(vec![0]),labels:vec![]}]);
         let source=&c.entries[0]["provenance"][0];let (name,raw,master)=c.source_bound(&c.entries[0],0,"CH-0002").unwrap();assert_eq!(name,"synthetic");
         assert!(Catalog::parameterized_source(source,&raw,&[]).is_err());
         let good=crate::debug_cheat_parameters::Choice{name:"amount".into(),value:0};

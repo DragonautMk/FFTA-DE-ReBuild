@@ -82,7 +82,7 @@ fn management_requires_explicit_source_and_dispatches_separate_requests(){
 #[test]
 fn parameter_selection_requires_confirmation_and_ignores_action_clicks(){
     let mut s=Selector::default();s.cheat_mode=true;s.set("Cheat".into(),vec![ContentEntry{id:"CH-0001".into(),name:"Example".into(),..Default::default()}],String::new(),0);
-    let parameter=super::super::CheatParameter{name:"amount".into(),domain:super::super::CheatParameterDomain::List(vec![2,7,10])};
+    let parameter=super::super::CheatParameter{name:"amount".into(),domain:super::super::CheatParameterDomain::List(vec![2,7,10]),labels:vec![]};
     s.open_cheat_management(vec![super::super::CheatSource{index:0,name:"source".into(),master:"CH-0002".into(),assessment:"parameter-required".into(),parameters:vec![parameter]}],vec![]);
     s.handle(MenuInput::Confirm);assert!(s.manage.as_ref().unwrap().parameter_mode);assert!(s.cheat_selected_parameters().is_none());
     let g=s.layout(940,620);let action=g.actions[2];assert!(s.click(action[0]+2,action[1]+2,940,620,true).is_none());assert!(s.cheat_selected_parameters().is_none());
@@ -98,7 +98,7 @@ fn parameter_selection_requires_confirmation_and_ignores_action_clicks(){
 #[test]
 fn parameter_selector_renders_value_and_focus_in_both_languages(){
     let mut s=Selector::default();s.cheat_mode=true;s.set("Cheat".into(),vec![ContentEntry{id:"CH-0001".into(),name:"Example".into(),..Default::default()}],String::new(),0);
-    let parameter=super::super::CheatParameter{name:"amount".into(),domain:super::super::CheatParameterDomain::Range{min:2,max:8,step:2}};
+    let parameter=super::super::CheatParameter{name:"amount".into(),domain:super::super::CheatParameterDomain::Range{min:2,max:8,step:2},labels:vec![]};
     s.open_cheat_management(vec![super::super::CheatSource{index:0,name:"source".into(),master:"CH-0002".into(),assessment:"parameter-required".into(),parameters:vec![parameter]}],vec![]);
     s.handle(MenuInput::Confirm);s.handle(MenuInput::Down);assert_eq!(s.focus_label(),"Declared parameter: amount · 4");
     for (language,select,description) in [(input_config::Language::default(),"Select value","Declared parameter: amount · 4"),(input_config::Language::parse("it"),"Seleziona valore","Parametro dichiarato: amount · 4")] {
@@ -107,6 +107,21 @@ fn parameter_selector_renders_value_and_focus_in_both_languages(){
         assert!(!runs.iter().any(|r|r.text=="Arm" || r.text=="Attiva"));
     }
     s.handle(MenuInput::Confirm);assert_eq!(s.cheat_selected_parameters(),Some(vec![("amount",4)]));assert_eq!(s.focus_label(),"Prepare preview");
+}
+
+#[test]
+fn parameter_label_follows_the_numeric_choice_and_keeps_explicit_confirmation(){
+    let mut s=Selector::default();s.cheat_mode=true;s.set("Cheat".into(),vec![ContentEntry{id:"CH-0001".into(),name:"Example".into(),..Default::default()}],String::new(),0);
+    let parameter=super::super::CheatParameter{name:"ability".into(),domain:super::super::CheatParameterDomain::List(vec![2,10]),labels:vec![(2,"Battle Tech".into()),(10,"Black Magic".into())]};
+    s.open_cheat_management(vec![super::super::CheatSource{index:0,name:"source".into(),master:"CH-0002".into(),assessment:"parameter-required".into(),parameters:vec![parameter]}],vec![]);
+    s.handle(MenuInput::Confirm);assert_eq!(s.focus_label(),"Declared parameter: ability · 2 · Battle Tech");
+    s.handle(MenuInput::Down);assert_eq!(s.focus_label(),"Declared parameter: ability · 10 · Black Magic");
+    assert!(s.cheat_selected_parameters().is_none());
+    for language in [input_config::Language::default(),input_config::Language::parse("it")] {
+        let mut pixels=vec![[0,0,0,255];940*620];let runs=diagnostics::capture(||draw(&s,&mut pixels,940,620,language)).unwrap().runs;
+        assert!(runs.iter().any(|r|r.text.contains("ability · 10 · Black Magic")));
+    }
+    s.handle(MenuInput::Confirm);assert_eq!(s.cheat_selected_parameters(),Some(vec![("ability",10)]));
 }
 
 #[test]
