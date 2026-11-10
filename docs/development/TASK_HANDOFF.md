@@ -74,10 +74,10 @@ for a specific question: archive legacy lines 179..744 or the named record below
 - Integrated multi-parameter menu/CLI and guarded previews: `dbg2-20-menu-values-confirm-vymtsut1`, `dbg2-20-parameter-render-corrected-rkm88ykd`, `dbg2-20-multiple-parameter-suite-_dgohsc9`, `dbg2-20-multiple-real-rom-preflight-ks8dyakw`, `dbg2-20-multiple-windows-build-ry5e8e9o`. XP domains absent (`dbg2-20-source-domain-audit-e9o97pmb`); preserve master guards.
 - One-shot feedback: zero and positive counts shown (`dbg20-cheat-feedback-wine-0htinf7a`).
 - Verified: source/preview/arm/disarm, filters, named presets, CHEAT-INTERFACE and CHEAT-COMPACT-NAV; 133 Linux menu tests and CH-0341 X11 GUI passed; portable runtime installed.
-- Wine parameter/EUR/offscreen PASS: `dbg2-20-focused-wine-8q7tdm2w`, `dbg2-20-rom-preflight-wine-eiw70mf0`, `dbg2-20-menu-offscreen-wine-ftxmavl9`; prior host builds lacked dlltool.
+- Wine PASS: `dbg2-20-focused-wine-8q7tdm2w`, `dbg2-20-rom-preflight-wine-eiw70mf0`, `dbg2-20-menu-offscreen-wine-ftxmavl9`; earlier builds lacked dlltool.
 - Live values/presets PASS: `dbg2-20-live-parameter-flow-i_1jqzpn`, `dbg2-20-live-menu-values-bqd__1zo`, `dbg2-20-parameter-menu-preset-sbd7cz9m`; domains unverified.
-- Plaintext master and USA/EUR preflight PASS; trailing D-Bus assertion. Sol `/root/sol_debug_diagnosis` requested gpt-6.1-sol xhigh, effective settings unconfirmed.
-- USA ability projection: eight source-listed entries, original provenance/hashes preserved; USA/EUR preflight, invalid values and Wine preview/arm/disarm PASS, guest unadvanced (`dbg2-20-usa-ability-projection-ro_8a3nv/work/projection/catalogo.json`). XP unchanged.
+- Plaintext master and USA/EUR preflight PASS; trailing D-Bus assertion; Sol `/root/sol_debug_diagnosis` advised.
+- USA ability projection: eight entries, guarded preflight and Wine checks PASS; XP unchanged (`dbg2-20-usa-ability-projection-ro_8a3nv/work/projection/catalogo.json`).
 - Missing: full job/race/appearance domains and CH-0236, source-label reconciliation, actual ability effects, physical-device behavior and native Windows.
 - Verified dependent lists: bounded previous-value cases reject invalid/missing combinations, filter the menu and revalidate presets. Linux suites, Windows GNU build and synthetic Wine keyboard/preset flow PASS (`dbg2-20-dependent-parameter-tests-iiddbvcl`, `dbg2-20-dependent-wine-gui-ijn43g20`); old runtimes reject the schema variant.
 - Character examples: preview/arm/disarm (`dbg2-20-character-examples-wine-__ltq06k`); DS-16 bytes 84..8B = 02 50 01 02 08 32 63 00 (`dbg2-20-ds16-readonly-fields-3ao28h9v`). Sol `/root/sol_debug_diagnosis` advised quarantine.
@@ -86,8 +86,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 - DS-16 route/ability: `dbg20-ability-screen-route-9ozkfq50`, `dbg20-usa-ability-effect-4yt445cl`.
 - Tuple: Soldier control versus Gunner after full example (`dbg20-character-ability-screen-h75fjx8y`); individual fields unresolved.
 - Field87: Soldier to Thief (`dbg20-single-job-byte-b00g2384`); Sol xhigh advised, effective settings unconfirmed.
-- Human titles03..0C: one-scene matches; conditional entry/menu PASS (`dbg20-human-jobs-matrix-316k2185`, `dbg20-human-job-titles-wine-y4hetpub`). Full job behavior unproved.
+- Human titles03..0C: one scene/menu PASS (`dbg20-human-jobs-matrix-316k2185`, `dbg20-human-job-titles-wine-y4hetpub`); mechanics unproved.
 - Paired job/ability labels: Black Mage/Black Magic one-screen PASS (`dbg20-paired-job-ability-664h7_f_`); nine other pairs source-listed only.
+- Paired progress: B5/B6 02/0A→0A/0A; first142 candidate bytes unchanged; five Black Magic rows match at different frames (`dbg20-paired-progress-wine-5ufj87ja`, `dbg20-ability-info-compare-k050osb_`). Full learning unproved.
 - Conditional USA job05 entry: one write when matching; zero on mismatch (`dbg20-first-job-wine-vlhi_rx4`).
 - Offset85 title/stats (`dbg20-single-offset85-yqmspzpv`); routing (`dbg20-usa-eur-job-routing-r9g1avi3`); actor/name (`dbg20-usa-job-call-registers-uienjad6`, `dbg20-usa-job-name-caller-_8hlaicc`); XP labels conflict.
 - Race/job-only matched full tuple screenshot (`dbg20-character-preserve85-t3l31iu3`); state equivalence unproved.
@@ -99,7 +100,7 @@ for a specific question: archive legacy lines 179..744 or the named record below
 - Values filter: Linux/Windows GNU tests and USA Wine GUI PASS (`dbg20-values-filter-wine-f820ejz6`); discovery only, guards unchanged.
 - USA jobs: labels41/43, race42/43; row01 undecoded/different, row02 blank/Soldier (`dbg20-usa-job-label-comparison-34opuv6d`, `dbg20-usa-job-race-metadata-hp0v8vns`); gameplay unproved.
 - Reference lists: 5 races/43 jobs/226 appearances (`dbg20-reference-values-wine-e4mbx839`); quarantine retained.
-- Third appearances: 129 source choices; 03/0D/CA/F0 differ from same-seed control, CA green and F0 blue face (`dbg20-appearance-matrix-wine-5e8dfxho`); compatibility unverified.
+- Third appearances: 129 source choices; 03/0D/CA/F0 differ on one screen, CA green/F0 blue face (`dbg20-appearance-matrix-wine-5e8dfxho`); compatibility unverified.
 - Parameter chooser: decimal and hex displayed; Linux and Wine GUI PASS (`dbg20-hex-values-wine-oyxdakfz`).
 - Separate USA third-appearance value02: derived private entry/menu one-shot PASS (`dbg20-third-appearance-menu-xtrn7in4`); CH-0236 unchanged.
 - Resume: `docs/changes/2026-11-10-inspect-third-character-record.json`.
@@ -169,8 +170,8 @@ for a specific question: archive legacy lines 179..744 or the named record below
 ## Final handover
 
 - Task: DBG2-20 partial; user requested completion.
-- Last verified result: paired Black Mage/Black Magic labels observed in one USA screen; guarded menu and invalid-pair tests passed.
-- Remaining work: field meanings, full character domains, CH-0236, broader game/device behavior, native Windows and physical controllers.
-- Errors or blockers: source labels conflict; one observation cannot validate the domain. Character examples remain reference-only; older activation-ready projection is historical evidence.
-- Next action: resolve character field/domain semantics with suitable evidence; preserve quarantine.
-- References: docs/changes/2026-11-10-project-paired-human-job-ability-labels.json; target/validation/units/dbg20-paired-job-ability-664h7_f_/.
+- Last verified result: B6 already 0A; bounded progress bytes unchanged and five Black Magic rows match despite different frames.
+- Remaining work: field meanings, character domains, CH-0236, game/device behavior, native Windows and physical controllers.
+- Errors or blockers: conflicting source labels; one observation cannot validate the domain. Examples remain reference-only; older activation-ready projection is historical.
+- Next action: investigate actual class/ability behavior beyond the bounded checkpoint; preserve quarantine.
+- References: docs/changes/2026-11-10-compare-paired-ability-progress.json; target/validation/units/dbg20-paired-progress-wine-5ufj87ja/.

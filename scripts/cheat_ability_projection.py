@@ -399,7 +399,7 @@ def project(catalog_bytes, table_bytes, rom, *, expected_sha=USA_SHA256, expecte
                 'codes': paired_lines, 'aliases': [], 'status': 'not-runtime-tested',
                 'notes': [
                     'Source-listed job/primary ability labels; not a verified complete job or learned-ability change.',
-                    'Only Black Mage / Black Magic was observed together on one USA ability screen; the second Black Magic label remained visible.',
+                    'In one USA checkpoint, byte B6 was already 0A; the paired write set B5 to 0A and 142 candidate progress bytes stayed unchanged along the observed route.',
                     'Both writes require bytes 86-87 to be 01 02; this does not establish actor identity or complete state safety.',
                 ],
                 'provenance': [{

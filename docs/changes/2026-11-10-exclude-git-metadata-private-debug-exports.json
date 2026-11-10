@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-10",
+  "slug": "exclude-git-metadata-private-debug-exports",
+  "title": "Exclude Git metadata from private debug asset exports",
+  "kind": "fixed",
+  "platforms": [
+    "Windows",
+    "Linux"
+  ],
+  "changes": [
+    "Skip Git metadata files and directories when copying debug asset trees, so worktree pointers and repository internals do not enter private exports."
+  ],
+  "validation": [
+    "Synthetic export suite: 16 tests run, 15 passed and one skipped; validation unit private-git-export-exclusion-i4nry6we passed."
+  ],
+  "limitations": [
+    "Synthetic Linux validation only; no native Windows or real-data export was run."
+  ],
+  "files": [
+    "scripts/export_debug_assets.py",
+    "scripts/tests/test_export_debug_assets.py"
+  ],
+  "references": [
+    "docs/private_debug_assets.md"
+  ]
+}

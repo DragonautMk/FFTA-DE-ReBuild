@@ -410,6 +410,26 @@ Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/develo
 
 [Change record](docs/changes/2026-11-10-explain-unavailable-cheat-sources.json)
 
+## 2026-11-10 — Exclude Git metadata from private debug asset exports
+
+Type: fixed. Platforms: Windows, Linux.
+
+**Changes**
+
+- Skip Git metadata files and directories when copying debug asset trees, so worktree pointers and repository internals do not enter private exports.
+
+**Validation**
+
+- Synthetic export suite: 16 tests run, 15 passed and one skipped; validation unit private-git-export-exclusion-i4nry6we passed.
+
+**Limitations**
+
+- Synthetic Linux validation only; no native Windows or real-data export was run.
+
+Documentation: [private_debug_assets.md](docs/private_debug_assets.md).
+
+[Change record](docs/changes/2026-11-10-exclude-git-metadata-private-debug-exports.json)
+
 ## 2026-11-10 — Compare USA and EUR character job routing
 
 Type: changed. Platforms: USA and EUR ROM source comparison, Windows GNU / Wine prior observation.
@@ -455,6 +475,31 @@ Type: changed. Platforms: USA ROM source comparison.
 Documentation: [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [2026-11-10-trace-usa-job-name-arguments.json](docs/changes/2026-11-10-trace-usa-job-name-arguments.json).
 
 [Change record](docs/changes/2026-11-10-compare-usa-job-labels.json)
+
+## 2026-11-10 — Distinguish paired ability labels from stored progress
+
+Type: changed. Platforms: USA/EUR static comparison, Windows GNU / Wine.
+
+**Changes**
+
+- Document the separate mode-1 and mode-2 selector fields and the bounded candidate progress comparison for the paired USA job/ability projection; add the observed selector and progress limits to its private entry notes.
+- Restore the accidentally truncated DBG2-20 job-routing paragraph from the preceding version, preserving the later additions.
+
+**Validation**
+
+- Protected static comparison authenticated both ROM hashes and found equivalent 222-byte selector bodies after checking eight relocated branch targets against the previously compared job wrapper/getter. Two bounded USA/EUR progress-reader instruction windows also matched. The first attempt failed because the test used a byte offset two bytes early; the corrected retry passed. Evidence: target/validation/units/dbg20-usa-selectors-static-ocmzaz05/ and dbg20-usa-selectors-static-retry-4u0xr0hz/.
+- Protected USA Wine control and paired runs read the full 264-byte first record before application, after application, after the ability screen and after R-information. Only offsets07 and35 changed during the paused paired application. Byte88 stayed 08, B5/B6 changed from 02/0A to 0A/0A, and the first 142 candidate progress bytes remained identical across both cases and all inspected phases. The 142-byte extent is EUR-derived and not proved complete for USA. The screenshots show displayed Move 4 to 3 and Evade 50 to 35, with Jump 2 unchanged. Both processes closed normally, protected inputs stayed unchanged and Wine drained. Evidence: target/validation/units/dbg20-paired-progress-wine-5ufj87ja/.
+- The initial control R-information route opened Battle Tech rather than the desired category; one Right in a separate bounded check reached a list beginning Nurse/Defense. A further protected control run cycled six categories to Black Magic. Its Fire/Fira/Firaga/Thunder/Thundara list region matched the paired screen pixel-for-pixel, although captures were after 410 versus 220 frames. Selected screenshots were reviewed; protected inputs unchanged, normal close and Wine drained. Evidence: target/validation/units/dbg20-secondary-info-wine-2y49gace/, dbg20-info-category-cycle-a7123s1v/, dbg20-ability-info-compare-k050osb_/.
+- Protected generation verified the new note, source associations, defaults, prior entries, guards and invalid inputs. Evidence: target/validation/units/dbg20-paired-progress-projection-pra56gnz/. Focused Sol follow-up `/root/sol_domain_diagnosis` was originally requested as gpt-6.1-sol with xhigh; effective settings were not independently exposed.
+
+**Limitations**
+
+- The identical five-row crop is not a full state, descriptor-index or complete learned-ability comparison; the captures have different frame counts. The 142 bytes are a bounded candidate span derived from EUR counts, not a proven complete USA progress domain.
+- The separate-set explanation is consistent with the static and live observations but does not by itself prove every screen call path, a complete class transition, equipment legality, battle behavior or physical-device equivalence. Native Windows was not tested.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [2026-11-10-project-paired-human-job-ability-labels.json](docs/changes/2026-11-10-project-paired-human-job-ability-labels.json).
+
+[Change record](docs/changes/2026-11-10-compare-paired-ability-progress.json)
 
 ## 2026-11-10 — Compare a character tuple while preserving offset 85
 

@@ -112,6 +112,8 @@ It avoids source mirrors for diagnostic support
 files and excludes extracted resource filenames maintained by the ROM extractor.
 Symlink/junction directories are never followed. Links and excluded artifact
 paths are reported. Unrecognized binaries are not treated as debug assets.
+Git metadata files and directories named `.git` are excluded from copied asset
+trees, including worktree pointer files containing host-local paths.
 Scopes with an active or interrupted `.debug-artifacts-lease` are left untouched
 and listed as excluded in both editions. This protects work in progress without
 stopping jobs or reclaiming their locks. Export again after the owner completes

@@ -104,6 +104,15 @@ class DebugAssetExportTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'Catalog checksum mismatch'):exporter.export(self.args)
         self.assertFalse(self.args.output.exists())
 
+    def test_export_omits_git_files_and_nested_git_directories(self):
+        self.write('debug_saves/.git', b'gitdir: /private/host/path\n')
+        self.write('debug_saves/generated/.git/config', b'private metadata')
+        payloads = self.export()
+        self.assertTrue(any('original-catalog.json' in name for name in payloads))
+        self.assertFalse(any('/.git' in name or name.endswith('/.git') for name in payloads))
+        self.assertFalse(any(b'gitdir: /private/host/path' in data for data in payloads.values()))
+        self.assertFalse(any(b'private metadata' in data for data in payloads.values()))
+
     def test_refuses_overwrite_and_changing_source(self):
         self.export();before=self.args.output.read_bytes()
         with self.assertRaisesRegex(ValueError,'already exists'):exporter.export(self.args)

@@ -37,10 +37,15 @@ def tree(path):
     for directory, subdirs, files in os.walk(path, followlinks=False):
         here = Path(directory)
         subdirs.sort(); files.sort()
+        # Git metadata is not part of a private asset collection. A linked
+        # worktree may instead have a .git file containing a host-local path.
+        subdirs[:] = [name for name in subdirs if name != '.git']
         for name in subdirs:
             if (here / name).is_symlink():
                 raise ValueError(f'Symlink in source collection: {here / name}')
         for name in files:
+            if name == '.git':
+                continue
             file = regular(here / name)
             yield file, file.relative_to(path).as_posix()
 

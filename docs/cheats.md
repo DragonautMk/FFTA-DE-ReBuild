@@ -770,6 +770,31 @@ In a protected USA Wine comparison, one synthetic paired plan selected Black
 Mage and Black Magic. After the same 144-frame route, the control showed
 Soldier and Battle Tech while the treated copy showed Black Mage and Black
 Magic as the first ability label. The second Black Magic label remained visible.
+The comparison also displayed Move changing from 4 to 3 and Evade from 50 to 35;
+Jump remained 2. These are displayed properties, not a test of movement or battle.
+
+A later protected comparison authenticated the USA and EUR selector code after
+checking eight relocated calls against the previously compared job getters. In
+that code, mode 1 reads unit byte `35`, while mode 2 reads byte `36` and uses
+unit byte `08`; a separate matching instruction window reads candidate progress
+at unit `40 + index`. In the isolated USA checkpoint, bytes `B5/B6` initially
+held `02/0A` and byte `88` held `08`. The paired application changed `B5` to
+`0A` while leaving `B6` and `88` unchanged, which is consistent with the two
+Black Magic labels being independently selected sets. Only offsets `07` and
+`35` changed in the 264-byte record during the paused application. The first
+142 candidate progress bytes stayed unchanged in both copies through the
+bounded information route; that count comes from EUR evidence and is not an
+authenticated complete USA domain.
+
+The control's Black Magic information was reached separately by cycling six
+categories; its five visible rows, Fire through Thundara, match the treated
+copy's first Black Magic information list in the inspected screen region. The
+captures were reached at different frame counts. This does not establish the
+same descriptor indices, all learned abilities, a complete job transition or
+battle behavior. The initial control R-information attempt opened Battle Tech,
+and a single Right reached Chivalry; neither was treated as the Black Magic
+comparison. Original ROMs and checkpoint remained unchanged.
+
 A separate menu check explicitly selected both choices, made two writes, refused
 an undeclared pair, and made zero writes when the condition no longer matched.
 Only this pair was observed together on one screen; the other associations are

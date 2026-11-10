@@ -700,15 +700,24 @@ No other development was selected. On resumption read only the individual ID in
   A separate optional entry pairs those job labels with source-listed primary
   ability labels under the same condition. In one matched USA Wine screen,
   Black Mage/Black Magic changed the title and first ability label; the second
-  Black Magic label remained. Menu selection, invalid-pair refusal and a
-  false-condition zero-write check passed; other pairs and full mechanics remain
+  Black Magic label remained. Authenticated USA/EUR code compares mode-1/2
+  selectors and a bounded progress-reader window. In the paired USA checkpoint
+  B5/B6 changed from 02/0A to 0A/0A; 142 candidate progress bytes stayed equal
+  through the bounded route. A separate control reached Black Magic information
+  after six category steps and its five visible rows matched the treated crop;
+  frame counts differed and full learning is unproved. Menu selection,
+  invalid-pair refusal and a false-condition zero-write check passed; other pairs and full mechanics remain
   unverified. The condition
   does not prove actor identity or full-state safety. Protected generation and
   a USA Wine menu one-shot plus false-condition check passed; other gameplay,
   maintained use and physical devices remain unverified. A separate byte-85-only diagnostic showed Gunner
   and altered statistics with byte 87 unchanged. A race/job-only diagnostic
-  preserving byte 85 matched the full example’s
-  point captured six
+  preserving byte 85 matched the full example’s ability-screen capture. A
+  Japanese-version community guide separately names the two fields job name
+  and actual job. A protected USA/EUR ROM comparison found the same 116-record
+  metadata and relocated getter: row 50 routes selected properties through the
+  alternate byte, while rows 02/05/26 use their own data. This is consistent
+  with the observations. A later cheat-free Wine breakpoint captured six
   calls for the selected first actor with primary 50 and alternate 02. Its
   property-zero result resolves to the Soldier name in the original USA caller;
   the local XP table labels Soldier 01 and 02 as a dash. Of 43 job rows under
