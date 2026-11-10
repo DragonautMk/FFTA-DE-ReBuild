@@ -2714,3 +2714,59 @@ Protected ROM and source inputs passed; successful scratch was removed:
 a bounded prefix test: it does not establish behavior for zero/negative
 divisors, the full constructor, translated execution, task liveness or
 ordinary gameplay. No performance measurement was made.
+
+## Branch-selected static OBJ lists (E133)
+
+Three additional EUR lists have authenticated original branch paths to existing
+OBJ draw wrappers: offsets `397e22` (14 bytes, two entries), `399724` (8
+bytes, one entry) and `3add94` (14 bytes, two entries). The source readers and
+call sites are respectively `0808b9a0` / `0808b9f4`, `080c8d14` /
+`080c8e10` and `0813a9ca` / `0813abd8`. Their branch windows were checked
+against the protected EUR ROM in
+`target/validation/units/obj-retained-candidate-windows-61ceiuwx/`.
+
+The existing static-list owner now includes these 36 source bytes and uses
+extractor/decoder revisions 133/132. Windows test and production executables cross-compiled successfully. The
+targeted EUR Wine test created and reused E133, preserved all E132 resources
+other than the three added lists, and compared both original draw routines for
+all three lists with managed ROM spans poisoned: all six full-state and clock
+comparisons passed (`target/validation/units/e133-obj-branch-wine-retry-b1nwkwkj/`).
+A second EUR Wine test reloads a machine state before each case and compares
+all six translated-original draws with the interpreter, again poisoning the
+source spans; all full-state/clock comparisons and managed-source assertions
+pass (`target/validation/units/e133-obj-branch-native-wine-fj_liizb/`). The
+production CLI creates, reuses and verifies E133 and completes one managed
+startup frame under Wine (`target/validation/units/e133-obj-branch-cli-wine-retry-j1c58e34/`).
+That startup does not establish ordinary use of the new lists. Full UI save/Load
+lifecycle, ordinary gameplay, other roots and consumers, Linux, USA and native
+Windows remain unverified. No performance measurements were made.
+
+## Conditional context-updater OBJ bank (E134)
+
+The EUR caller at `081449fc` initializes an object-index root at `08b93ff0`
+and a sequence-index root at `08b93f50`. Its updater wrapper `080accf4`
+calls `080ac640`, which advances the context's frame index and duration and
+resolves the selected OBJ list through the object index. The draw path reads
+the resulting pointer from context offset `14h`. The bounded first-sequence
+join contains 38 frames and selects 19 lists; the full relative index bounds
+21 lists and 258 objects. All 21 list spans, the index and sequence have no
+overlap with the E133 manifest. Protected EUR Wine source evidence is
+`target/validation/units/obj-context-0accf4-wine-s8syadj8/`,
+`target/validation/units/obj-context-0ac640-wine-zllr_5xd/`,
+`target/validation/units/obj-context-first-sequence-wine-n_apgke7/` and
+`target/validation/units/obj-context-full-bank-wine-p_z8yq34/`.
+
+The existing indexed-animation owner is extended for this bank and source
+pages in E134. The production CLI creates, reuses and verifies the dataset
+and completes a managed startup frame under EUR Wine
+(`target/validation/units/e134-obj-context-cli-wine-4lvv71nu/`); this does not
+prove ordinary use of the new bank. A focused Wine test checks every new
+source byte with the ROM spans poisoned and compares three original updater
+and draw cases for full state and clock, preserving the E133 dataset
+(`target/validation/units/e134-obj-context-wine-retry-4hbc5mu3/`). The same
+three cases pass translated-original updater/draw comparisons after machine-state
+reload (`target/validation/units/e134-obj-context-native-wine-mc1ztvqg/`).
+Full UI save/Load lifecycle, ordinary use, Linux, USA and native Windows remain
+unverified. The two indexed lists not
+selected by this sequence have bounded index/data evidence only. No performance
+measurements were made.

@@ -67,6 +67,29 @@ Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/develo
 
 [Change record](docs/changes/2026-11-10-show-cheat-values-in-hex.json)
 
+## 2026-11-10 — Find cheat categories independently of abbreviated details
+
+Type: fixed. Platforms: Linux, Windows GNU / Wine.
+
+**Changes**
+
+- Keep each cheat entry category, aliases, and source categories and titles as search terms separate from bounded displayed details. Search remains case-insensitive and combines with existing type, state and collection filters.
+
+**Validation**
+
+- Protected Linux catalog suite: 21 passed and four fixture-dependent tests ignored. Menu selector suite: 29 passed. Regressions cover categories beyond long code lists, alternate source titles, Unicode and absent queries. Evidence: dbg20-category-search-linux-s85q6zud.
+- Windows GNU menu/recomp tests and app cross-build passed. Both focused tests and synthetic 700-line primary/source category searches passed in coordinated Wine/Xvfb; both screenshots reviewed and showed the single expected row. Guest paused and unchanged, normal close and Wine drain. Evidence: dbg20-category-search-windows-build-46axr61j and dbg20-category-search-wine-gui-retry-7ep44203.
+- The first Wine GUI attempt reached Audio instead of the cheat page because its navigation was not synchronized. The corrected driver waits for menu status after navigation; its retry passed. Evidence: dbg20-category-search-wine-gui-yyd7w3cy.
+- Read-only aggregate check of the local catalog: 341 entries, 569 source records, 203 entries with multiple sources; all source section/title values are strings.
+
+**Limitations**
+
+- Synthetic GUI evidence does not verify native Windows, physical controllers or the effect and compatibility of source codes. Broader DBG2-20 domain and device evidence remains open.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-10-search-cheat-source-categories.json)
+
 ## 2026-11-10 — Report actual cheat one-shot writes in the menu
 
 Type: fixed. Platforms: Linux, Windows GNU / Wine.
@@ -207,6 +230,28 @@ Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/develo
 
 [Change record](docs/changes/2026-11-10-project-conditional-first-job-example.json)
 
+## 2026-11-10 — Keep cheat notes visible ahead of long code lists
+
+Type: fixed. Platforms: Linux, Windows GNU / Wine.
+
+**Changes**
+
+- For abbreviated cheat details, show source notes before the bounded original-record excerpt. Keep the original record and the explicit full-record command; localize the two new section labels in English and Italian.
+
+**Validation**
+
+- Protected Linux debug_cheats suite: 20 passed, four fixture-dependent tests ignored; regression verifies long code lists, Unicode, bounded oversized notes and complete paged original. The initial test launch lacked ALSA pkg-config metadata; retry with the existing local sysroot passed. Evidence: dbg20-notes-visibility-test-gxiub46s and dbg20-notes-visibility-test-retry-y77qeo43.
+- Protected Linux menu selector suite: 28 passed, including details and scrolling. The first standalone menu attempt lacked Wayland development metadata; the joint menu/recomp build resolved project feature configuration and passed. Evidence: dbg20-notes-menu-suite-aw9kr3rv and dbg20-notes-menu-suite-retry-7f5r_pwh.
+- Windows GNU test and app cross-builds passed; the focused test passed under coordinated Wine. A synthetic 700-line catalog displayed the warning after scrolling in the Windows Wine/Xvfb GUI; screenshot reviewed, guest stayed paused and unchanged, process closed and Wine drained. Evidence: dbg20-notes-windows-build-aczgzh3z, dbg20-notes-windows-app-l570j5rk, dbg20-notes-windows-wine-1e9d8b2o and dbg20-notes-gui-wine-2hpoigda.
+
+**Limitations**
+
+- The menu view remains bounded to 8192 characters and explicitly directs readers to the full record when notes themselves exceed the limit. Native Windows, physical controllers and full DBG2-20 game/device behavior remain unverified.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-10-prioritize-cheat-notes-in-long-details.json)
+
 ## 2026-11-10 — Compare source-listed third appearances in one USA scene
 
 Type: changed. Platforms: Windows GNU / Wine, Linux projection.
@@ -294,6 +339,27 @@ Documentation: [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md)
 
 [Change record](docs/changes/2026-11-10-observe-character-tuple-screen.json)
 
+## 2026-11-10 — Document battle command label and ability list mismatch
+
+Type: changed. Platforms: Windows GNU / Wine.
+
+**Changes**
+
+- Add the bounded battle observation to the private derived CH-0226 source notes and document that the command label does not guarantee the opened ability list changes. Preserve original source notes and conditional code.
+
+**Validation**
+
+- Protected USA Wine pair started from the same existing in-battle checkpoint. Control kept byte B5 at 02; one-shot CH-0226 changed only that byte to 09 while paused. After identical 158-frame inputs the command label was Battle Tech versus White Magic, with Black Magic second in both. Opening the first set showed the same Battle Tech abilities; screenshots inspected, sessions closed and Wine drained. Evidence: dbg20-battle-ability-selector-05qypq6p.
+- Protected analysis compared all 38400 pixels of the opened list screens and full 264-byte records at each phase: only offset35 differed after the write. Regenerated projection includes the new note on CH-0226, leaves other ability notes and all eight original code lines unchanged. Evidence: dbg20-battle-ability-analysis-3cq1ada9.
+
+**Limitations**
+
+- One USA battle checkpoint and one value only. Identical visible list does not explain the internal cause or prove casting, all abilities, other scenes, physical devices or native Windows. Existing generated catalogs are pinned snapshots and must be regenerated to include the note.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-10-observe-battle-ability-label-mismatch.json)
+
 ## 2026-11-10 — Observe one ability label write in a paired checkpoint
 
 Type: changed. Platforms: Windows GNU / Wine.
@@ -338,6 +404,25 @@ Type: added. Platforms: Linux, Windows GNU / Wine.
 Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
 
 [Change record](docs/changes/2026-11-10-label-declared-cheat-values.json)
+
+## 2026-11-10 — Investigate ordinary item-parameter byte00 reachability
+
+Type: docs. Platforms: EUR; Wine.
+
+**Changes**
+
+- Record the original byte00 formatter dispatch and distinguish it from the byte01 reader, retaining dynamic producers as open.
+
+**Validation**
+
+- A protected Wine static screen of 58045 E132 decoded programs and 16635 expanded strings finds no extended 67 [1], compact 81 [1] or expanded 40 67 01; compact 81 [0] occurs 15 times (e132-byte00-textscan-78suaoix).
+- Original EUR disassembly identifies formatter selector 1, compact opcode mapping and two scoped direct callers; no game replay or performance measurement (e132-byte00-dispatch-x_kvdhlr, e132-byte00-callers-46bhd9gj, e132-byte00-compact-81n7kxzq, e132-byte00-direct-refs-i3y2fh32, e132-byte00-producers-uvjzdkyv).
+
+**Limitations**
+
+- Generated RAM text, unscanned sources, indirect calls and ordinary byte00 use remain unproved; Linux, USA and native Windows remain pending.
+
+[Change record](docs/changes/2026-11-10-investigate-item-parameter-byte00.json)
 
 ## 2026-11-10 — Inspect the third character record without writes
 
@@ -501,6 +586,29 @@ Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/develo
 
 [Change record](docs/changes/2026-11-10-compare-paired-ability-progress.json)
 
+## 2026-11-10 — Expose equipment differences in derived job selectors
+
+Type: changed. Platforms: Windows GNU / Wine.
+
+**Changes**
+
+- Add an ordinary job-change equipment warning to the three opt-in derived first-record job projections; retain their guarded bytes and source quarantine.
+- Document the bounded same-seed comparison and keep full job and ability behavior open.
+
+**Validation**
+
+- Protected USA Wine ordinary route opened Change Jobs and confirmed Hunter; its notice said Unequipped all items. Initial record matched the paired run; ordinary offsets 07/35 changed 02/02 to 0C/14, and nine other nonzero bytes at 2A and 2C..33 became zero. Screenshots were reviewed; the process closed normally and the server drained. Evidence: target/validation/units/dbg20-ordinary-job-comparison-nl85j_ik/.
+- Protected paused USA Wine CH-9024 Hunter/Hunt one-shot made two writes with no frame or clock advance and changed only offsets 07/35 in the same 264-byte record. Evidence: target/validation/units/dbg20-hunter-paired-once-wu600y_z/.
+- Protected projection generation confirms all three warnings and unchanged conditional codes. The first test failed before generation due to the test script using its scratch working directory; the corrected retry passed. Evidence: target/validation/units/dbg20-hunter-warning-projection-d6ve55cx/ and dbg20-hunter-warning-projection-retry-w3rgdg6o/.
+
+**Limitations**
+
+- The ordinary route advanced frames while the paired application was paused; the nine extra offsets are observed record changes, not a complete equipment schema. Other jobs, states, learned skills, battle effects, physical devices and native Windows remain unverified.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-10-compare-ordinary-hunter-job-change.json)
+
 ## 2026-11-10 — Compare a character tuple while preserving offset 85
 
 Type: changed. Platforms: Windows GNU / Wine.
@@ -525,6 +633,57 @@ Documentation: [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md)
 
 [Change record](docs/changes/2026-11-10-compare-character-offset85.json)
 
+## 2026-11-10 — Compare First Aid after a selector change
+
+Type: changed. Platforms: Windows GNU / Wine.
+
+**Changes**
+
+- Document a paired USA First Aid target and forecast observation following the prior CH-0226 selector comparison; retain the distinction between a forecast and an executed action.
+- Extend the private CH-0226 note with the bounded observation that First Aid could still start after the command label changed.
+
+**Validation**
+
+- Protected same-checkpoint Wine copies used matching inputs after a paused selector one-shot in one copy. Target, forecast and later waiting screenshots were visually reviewed and matched pixel-for-pixel; sampled 264-byte records differed only at offset35. Both sessions closed and Wine drained. Evidence: dbg20-battle-firstaid-bz6jt1vh and dbg20-firstaid-forecast-analysis-ncilu0y7.
+- An attempted forecast-confirmation unit was refused before any process started because the coordinated Wine lease was owned by a separate running unit. Host process inspection confirmed its owner was active; no lock or process was altered. Evidence: dbg20-battle-firstaid-confirm-zrryrli8.
+- A corrected retry after the other Wine owner completed reached the separate Do it / Cancel confirmation in both copies. Both confirmation screenshots matched and the first records still differed only at byte35; earlier forecast captures differed in pixels. Both sessions closed and Wine drained. Evidence: dbg20-battle-firstaid-confirm-retry-lwx05ag4.
+- A further protected paired continuation confirmed Do it in both copies. Both showed First Aid at the same frame; decision, action and later screenshots were visually reviewed and matched pixel-for-pixel, and sampled 264-byte records differed only at byte35. Sessions closed and Wine drained. Evidence: dbg20-battle-firstaid-final-s0pu3f1f and dbg20-firstaid-final-analysis-87gn7fpm.
+- Protected regeneration checked the revised CH-0226 note, preserved the original source and eight code lines, and left other ability notes unchanged. Evidence: dbg20-battle-firstaid-projection-mjmfzqct.
+
+**Limitations**
+
+- Marche had full HP; the observed action does not establish the amount or occurrence of healing. Only one USA checkpoint and one action were observed; other abilities, game states, devices and native Windows remain unverified.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-10-compare-battle-first-aid-forecast.json)
+
+## 2026-11-10 — Classify conditional live event-selector sources
+
+Type: docs. Platforms: EUR; Wine.
+
+**Changes**
+
+- Trace two live parameter-selector writers and distinguish ten-bit helper returns from the event index retained by their caller.
+
+**Validation**
+
+- Protected Wine static join authenticates the original writer instructions and all 256 event parameter bytes: selectors 0..255 yield exactly the existing 59 parameter indices (param27-conditional-writers-js3rbve5).
+- Original helper and caller disassembly plus a 512-record source audit identify kind-1 normalization to event 211 and the remaining zero-branch and alias limitations (param27-helper-audit-yokwurma, param27-caller-flow-8j_cycwm).
+- Protected EUR Wine disassembly bounds local zero-branch output writes and identifies descriptor, path and slot mutations plus remaining calls (param27-zero-callees-dfkkpeh8, param27-zero-tail-mxvvfwd8, param27-nested-effects-7lnjv3mo, param27-nested-tail-07i6btyo, param27-transitive-55sms0pp).
+- Protected EUR Wine source checks classify the final read-only leaf, find five bounded candidate pointer writers and verify conditional closure of the first 30 graph rows (param27-pointer-init-qq_9fyre, param27-pointer-helper-inner-i6t2mw81, param27-graph-first30-yjh8l5ml); an initial opcode assertion was corrected after failure (param27-graph-domain-ub05xwlh).
+- Protected EUR Wine join authenticates all 256 event-to-parameter selectors; retained snapshots yield no type-2/4 candidate in the five live records (param27-event-target-join-4wtrz1ss, param27-retained-context-l3xag_2z). Arena-selector static window records its conditional size comparison (param27-arena-select-retry-czaqq1ca); the first launch was refused by a shared Wine lease (param27-arena-select-30hzy25i).
+- Protected EUR Wine static producer and 512-mission/event/parameter joins identify four type-2/4 mission candidates and exclude them from the examined ordinal producer (param27-live-producers-a2x2_mze, param27-mission-producer-join-retry-zbsuv7dk, param27-event-types-r9_7r79c). Two protected snapshots show three disabled location selectors, without guest execution (param27-live-location-snapshots-z7m9qhd5). The first mission join failed on a truncated expected hash (param27-mission-producer-join-il3agjv8).
+- Protected EUR Wine disassembly and bounded direct-caller scan identify zero initialization, four constant placement writes and the 0..30 cursor producer (param27-placement-writers-4rbvjzmc, param27-placement-callers-vjq635n9, param27-placement-contract-f2wuxi8g); an intervening conditional call remains unclassified (param27-placement-intervening-21dea3in, param27-placement-intervening-inner-8d_phfu5).
+- Protected EUR Wine source check connects the selected live 10-bit mission record to the constructor and finds one bounded direct caller; a retained 14-entry pub list has none of the four candidate IDs (param27-mission-route-retry-sbupsq5k). Initial entry launch met a shared Wine lease (param27-mission-entry-zbtg0hxm); initial route audit had a wrong instruction address (param27-mission-route-u87u2ufq); both corrected retries passed.
+- Protected EUR Wine read-only checks show the retained DS-19 and town states lack an interpretable list, pub options has count zero, and the rumors context reproduces the previously checked 14 IDs in the same order (param27-ds19-list-0p9do6w0, param27-retained-pub-lists-q9bens5q, param27-pub-list-compare-m1p_8lhy). No gameplay was executed.
+
+**Limitations**
+
+- Only examined paths are classified; other menu lists, mission activation, indirect calls, save loads, live mapping bounds, aliasing, arena validity and path termination remain open. Linux, USA and native Windows pending; no performance measurements.
+
+[Change record](docs/changes/2026-11-10-classify-live-event-selector-sources.json)
+
 ## 2026-11-10 — Browse character source values without activation
 
 Type: added. Platforms: Linux, Windows GNU / Wine.
@@ -547,6 +706,77 @@ Type: added. Platforms: Linux, Windows GNU / Wine.
 Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [2026-11-10-compare-usa-job-labels.json](docs/changes/2026-11-10-compare-usa-job-labels.json).
 
 [Change record](docs/changes/2026-11-10-browse-character-reference-values.json)
+
+## 2026-11-10 — Add fixed conditional OBJ transfer
+
+Type: added. Platforms: EUR; Wine pending.
+
+**Changes**
+
+- Extend the existing raw-transfer model with an independently identified 32768-byte EUR OBJ graphics bank, preserving localized group counters.
+- Advance extractor/decoder revisions to 135/134 and add a focused predecessor, original queue and DMA Wine test.
+
+**Validation**
+
+- Protected EUR Wine disassembly and source join authenticate caller literals, transfer-queue helper, 16-bit DMA control and the disjoint E134 source range (obj-context-graphics-consumer-wine-rcruc6ln, obj-context-graphics-source-wine-9sny93_2).
+
+**Limitations**
+
+- Build and runtime, translated execution, CLI, ordinary use, Linux, USA and native Windows pending. No performance measurements.
+
+[Change record](docs/changes/2026-11-10-add-fixed-obj-transfer.json)
+
+## 2026-11-10 — Add conditional context-updater OBJ bank
+
+Type: added. Platforms: EUR; Wine.
+
+**Changes**
+
+- Extend the existing indexed OBJ animation bank with the EUR context-updater bank and its source pages; advance extractor/decoder revisions to 134/133.
+- Add a targeted predecessor-preservation and original-consumer Wine test.
+- Add a focused translated updater and draw test.
+
+**Validation**
+
+- Protected EUR Wine disassembly joins the caller, updater and draw pointer; the authenticated first sequence has 38 frames selecting 19 lists (obj-context-0accf4-wine-s8syadj8, obj-context-0ac640-wine-zllr_5xd, obj-context-first-sequence-wine-n_apgke7).
+- The full bounded relative index contains 21 valid lists and 258 objects, with no E133 source overlap (obj-context-full-bank-wine-p_z8yq34).
+- Windows GNU test build passed (e134-obj-context-build-c8ejvbif). Initial Wine run reached the attached 17-bank dataset but failed in the test setup: it tried to load a state after poisoning ROM bytes (e134-obj-context-wine-_ghiv7sj); test corrected and retried as recorded below.
+- Production Windows CLI creates, reuses, verifies and starts E134 on EUR Wine; 102 unchanged files match E133 (e134-obj-context-cli-wine-4lvv71nu).
+- Corrected EUR Wine runtime test preserves E133 and passes three original updater/draw full-state/clock comparisons after checking all poisoned source bytes (e134-obj-context-wine-retry-4hbc5mu3).
+- EUR Wine translated-original updater/draw comparisons pass for three cases with managed-source reads after machine-state reload (e134-obj-context-native-wine-mc1ztvqg).
+
+**Limitations**
+
+- Ordinary use, full UI save/Load lifecycle, Linux, USA and native Windows remain pending. Two additional indexed lists are not selected by the examined sequence. No performance measurements.
+
+[Change record](docs/changes/2026-11-10-add-context-updater-obj-bank.json)
+
+## 2026-11-10 — Add three branch-selected EUR OBJ lists
+
+Type: added. Platforms: EUR; Wine.
+
+**Changes**
+
+- Add three authenticated branch-selected EUR OBJ roots to the existing static-list owner and advance extractor/decoder revisions to 133/132.
+- Add a focused protected-ROM test for prior dataset preservation and original draw equivalence.
+- Add a focused translated-original draw and machine-state reload test.
+
+**Validation**
+
+- Protected EUR Wine disassembly authenticates the three source readers, branches and existing draw calls (obj-retained-candidate-windows-61ceiuwx).
+- Windows GNU test and production executables cross-compiled successfully (e133-obj-branch-build-retry-tsjg5an3, e133-obj-branch-cli-build-rv_bnyv6); the initial test build failed on a missing trait import, which was corrected.
+- The first Wine launch respected an active shared-prefix lease (e133-obj-branch-wine-7t43juft).
+- The targeted EUR Wine test created and reused E133, preserved prior resources, and passed six poisoned-source original-draw full-state/clock comparisons (e133-obj-branch-wine-retry-b1nwkwkj).
+- A production CLI test launch respected an active shared Wine lease (e133-obj-branch-cli-wine-svcbax1j).
+- The Windows GNU executable including the translated draw and state reload test cross-compiled (e133-obj-branch-native-build-mhky99v3).
+- EUR Wine production CLI create/reuse/verify and managed one-frame startup pass, with 102 unaffected files unchanged (e133-obj-branch-cli-wine-retry-j1c58e34).
+- EUR Wine translated-original and interpreter comparisons pass for six cases with poisoned source spans and managed reads after machine-state reload (e133-obj-branch-native-wine-fj_liizb).
+
+**Limitations**
+
+- Full UI save/Load lifecycle, ordinary gameplay, remaining roots and consumers, Linux, USA and native Windows remain unverified. CLI startup does not establish ordinary use of the new lists. No performance measurements.
+
+[Change record](docs/changes/2026-11-10-add-branch-selected-obj-lists.json)
 
 ## 2026-11-09 — Verify the live parameterized cheat control flow
 

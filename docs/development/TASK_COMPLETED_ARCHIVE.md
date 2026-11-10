@@ -22052,3 +22052,100 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: USA/EUR selector bodies matched after eight checked branch relocations; bounded progress-reader windows matched. Paired USA Wine first-record reads found direct changes only offsets07/35; B5/B6 02/0A became 0A/0A and 142 EUR-derived candidate progress bytes stayed equal in both copies through information route. Control Black Magic information after six category steps matched five visible treated rows in a pixel crop, at different frames. Screenshots reviewed, inputs protected, normal closes and Wine drained. Projected entry notes updated; protected generation PASS.
 - Evidence: `docs/changes/2026-11-10-compare-paired-ability-progress.json`; `target/validation/units/dbg20-usa-selectors-static-retry-4u0xr0hz/`, `dbg20-paired-progress-wine-5ufj87ja/`, `dbg20-info-category-cycle-a7123s1v/`, `dbg20-ability-info-compare-k050osb_/`. Initial static check failed from an off-by-two test offset; corrected retry passed.
 - Limits: one checkpoint, five visible rows and different frame counts; candidate span not proved complete USA progress, no learned/full-job/battle/device equivalence. Sol `/root/sol_domain_diagnosis` requested gpt-6.1-sol xhigh; effective settings unconfirmed.
+
+### ROMDATA-01-GAMEPLAY-6E84E0-BYTE00-TEXT-SCREEN
+
+- Outcome: scoped EUR/Wine static investigation complete. Formatter selector1 reads byte00; compact81 01 maps to extended40 67 01. Protected manifest-bound text screen covers 58045 programs/16635 expanded strings: neither form found, compact81 00 occurs15 times. Two bounded direct-call candidates pass live text bytes to alternate formatter; Select help is not an evidenced byte00 trigger. No guest replay.
+- Evidence: docs/changes/2026-11-10-investigate-item-parameter-byte00.json; target/validation/units/e132-byte00-textscan-78suaoix/, e132-byte00-dispatch-x_kvdhlr/, e132-byte00-callers-46bhd9gj/, e132-byte00-compact-81n7kxzq/, e132-byte00-direct-refs-i3y2fh32/, e132-byte00-producers-uvjzdkyv/. Sol /root/sol_parameter_record requested gpt-6.1-sol xhigh; actual primary and consultant settings unconfirmed.
+- Limits: generated RAM text, other sources, indirect calls and ordinary byte00 use unproved; Linux/USA/native Windows pending; no performance measurement. Keep parent ROMDATA-04-GAMEPLAY-6E84E0-BYTE00 partial.
+
+### ROMDATA-01-PARAMETER-RECORDS27-CONDITIONAL-WRITERS
+
+- Outcome: scoped EUR/Wine static source join accepted. Original writers 08034d20 and 080351b4 copy event[view+a4].byte06 to view+a8; selectors 0..255 yield exactly existing 59 parameter indices. Helper 080d5290 can return a ten-bit live ID in kind1, but caller 08046960 copies it to view+20 and replaces view+a4 with event211/parameter0; kind2/3 nonzero returns are u8. Conditional on disjoint out scratch/view, no BL intervenes on these cases.
+- Evidence: docs/changes/2026-11-10-classify-live-event-selector-sources.json; target/validation/units/param27-conditional-writers-js3rbve5/, param27-helper-audit-yokwurma/, param27-helper-refs-_jjl0u0z/, param27-caller-flow-8j_cycwm/, param27-zero-callees-dfkkpeh8/. All 512 source mission type/byte45 fields checked; 21 high-ID candidates satisfy ROM-only filters, not proven live.
+- Limits: zero-result branch calls unclassified helpers, scratch/view physical nonalias, other writers, indirect calls and global u16 event domain unproved. No new ownership or global guest cap. Linux/USA/native Windows pending; no performance measurements. Sol /root/sol_parameter_record requested gpt-6.1-sol xhigh; effective settings and primary model/effort unconfirmed.
+
+### ROMDATA-01-PARAMETER27-ZERO-GRAPH-STATIC-SCREEN
+
+- Outcome: scoped EUR/Wine static screen complete. In the four examined slots, 90 active links from rows 0..29 stay within 0..29; eight active links in rows 30..31 exceed 31. Leaf 080377bc has no data stores. Five bounded candidate stores to the descriptor pointer have two distinct provenances; four invoke 0800719c with 0x740, the fifth derives a live context offset.
+- Evidence: docs/changes/2026-11-10-classify-live-event-selector-sources.json; target/validation/units/param27-graph-first30-yjh8l5ml/, param27-pointer-callee-zmn946lo/, param27-pointer-stores-ly1pb883/, param27-pointer-init-qq_9fyre/, param27-pointer-helper-inner-i6t2mw81/. Initial graph audit ub05xwlh failed due to a wrong assertion address; corrected i3uyqxp5 passed. Sol /root/sol_parameter_record requested gpt-6.1-sol xhigh; effective settings and primary model/effort unconfirmed.
+- Limits: rows 30..31 are not proven graph entries; live node domain, predecessor termination, other pointer writers, initializer reachability and nonalias remain unproved. No global selector cap or new ownership. Linux/USA/native Windows pending; no performance measurement.
+
+### ROMDATA-01-PARAMETER27-TARGET-SOURCE-JOIN
+
+- Outcome: scoped EUR/Wine static event-to-target join complete. All 256 authenticated event rows refer to the existing 59 parameters: 252 produce sentinel 255, event104 constant0, and events106/112/120 read three live bytes before subtracting one. Origin derives from a five-bit live field minus one; type2/4 gating does not bound it. Two retained Giza snapshots have no type2/4 candidate among five live records; no guest execution. Original 30-node/90-link contract was already accepted; no global guest cap follows.
+- Evidence: docs/changes/2026-11-10-classify-live-event-selector-sources.json; target/validation/units/param27-event-target-join-4wtrz1ss/, param27-retained-context-l3xag_2z/, param27-arena-select-retry-czaqq1ca/. Arena selector conditionally selects an adequate recorded size; actual arena validity, extent, free state and alias remain open. First launch 30hzy25i was refused by another Wine lease and retried only after release. Sol /root/sol_parameter_record requested gpt-6.1-sol xhigh; effective settings and primary model/effort unconfirmed.
+- Limits: producer and ordinary invocation of the six-byte records, three RAM byte values, other view writers, alias and path termination unproved; snapshots are bounded negatives. Linux/USA/native Windows pending; no performance measurements.
+
+### ROMDATA-01-PARAMETER27-LIVE-PRODUCER-JOIN
+
+- Outcome: scoped EUR/Wine source join complete. Examined ordinal producer writes events226..255; none has type2/4. Mission-type1 producer can form type2/4 in only four authenticated mission rows 104/106/112/120, with five live location bytes controlling origin/destination. Two retained Giza states have two enabled 1..30 selectors and three disabled zeros; no candidate type2/4 and no guest execution. The producer getter does not itself check enabled/range.
+- Evidence: docs/changes/2026-11-10-classify-live-event-selector-sources.json; target/validation/units/param27-live-producers-a2x2_mze/, param27-event-types-r9_7r79c/, param27-mission-producer-join-retry-zbsuv7dk/, param27-live-location-snapshots-z7m9qhd5/. Initial mission join il3agjv8 failed due to an incomplete expected hash; corrected retry passed. Sol /root/sol_parameter_record requested gpt-6.1-sol xhigh; effective and primary settings unconfirmed.
+- Limits: other producers, activation, later writes and absolute-record/save-base equivalence unproved; snapshot values do not prove reachability. Linux/USA/native Windows pending; no performance measurement.
+
+### ROMDATA-01-PARAMETER27-LOCATION-WRITERS
+
+- Outcome: scoped EUR/Wine static classification complete. Initializer zeros 30 location bytes; direct calls to 08031444 set region/node pairs 8/20, 2/18, 1/28 and 30/9. The helper itself has no input cap. Existing cursor helper returns 0 or 1..30 on normal return, and one caller writes view+1a. Writer 08034020 copies that field after reloading it across a conditional call; no global location bound follows.
+- Evidence: docs/changes/2026-11-10-classify-live-event-selector-sources.json; target/validation/units/param27-placement-writers-4rbvjzmc/, param27-placement-callers-vjq635n9/, param27-placement-contract-f2wuxi8g/, param27-placement-intervening-21dea3in/, param27-placement-intervening-inner-8d_phfu5/. Sol /root/sol_parameter_record requested gpt-6.1-sol xhigh; effective settings and primary model/effort unconfirmed.
+- Limits: bounded Thumb BL scan and immediate heuristic are not exhaustive; save loads, indirect calls, other writers, interposed effects, physical alias and ordinary candidate activation remain unproved. Linux/USA/native Windows pending; no performance measurements.
+
+### DBG2-20-ORDINARY-JOB-COMPARISON
+
+- Outcome: closed
+- Verified criteria: USA ordinary Soldier-to-Hunter and paused Hunter/Hunt one-shot began with identical 264-byte records. Both set offsets 07/35 to 0C/14; ordinary change displayed an unequip notice and cleared nine additional nonzero bytes. Derived job projection notes identify this distinction; protected generation preserves conditional codes.
+- Evidence: `dbg20-ordinary-job-comparison-nl85j_ik`, `dbg20-hunter-paired-once-wu600y_z`, `dbg20-hunter-warning-projection-retry-w3rgdg6o`; `docs/changes/2026-11-10-compare-ordinary-hunter-job-change.json`.
+- Limits: first generation test failed due to test working directory, corrected retry passed. Ordinary route advanced frames, direct write was paused. Other states, learned skills, complete equipment semantics, battle effects, devices and native Windows remain unverified; DBG2-20 stays partial.
+
+### ROMDATA-01-PARAMETER27-MISSION-MENU-ROUTE
+
+- Outcome: scoped EUR/Wine source and retained-list audit complete. Constructor 080d457c reads its mission ID from a live record; bounded Thumb BL scan finds 0806119e, on dispatcher state17 and input bit0, using the selected menu pointer. The authenticated prior pub list contains 14 entries, none of mission IDs104/106/112/120. No navigation or guest execution was repeated.
+- Evidence: docs/changes/2026-11-10-classify-live-event-selector-sources.json; target/validation/units/param27-mission-entry-retry-7cwx844a/, param27-mission-route-retry-sbupsq5k/. Initial entry zbtg0hxm was refused by an owned Wine lease and retried after release; initial route u87u2ufq had an instruction-address assertion failure and was corrected. Sol /root/sol_parameter_record requested gpt-6.1-sol xhigh; effective and primary settings unconfirmed.
+- Limits: one retained list only; other saves, input semantics beyond examined bit, indirect calls, positive activation, save-load, aliases and global selector domain remain open. Linux/USA/native Windows pending; no performance measurements.
+
+### DBG2-20-NOTES-VISIBILITY
+
+- Outcome: completed
+- Verified criteria: abbreviated records prioritize source notes before long code lists, preserve the bounded display and explicit full-record route, and localize section labels. Linux catalog/menu suites, Windows GNU builds, focused Wine test and synthetic Wine GUI scrolling passed; screenshot reviewed, guest unchanged.
+- Evidence: `dbg20-notes-visibility-test-retry-y77qeo43`, `dbg20-notes-menu-suite-retry-7f5r_pwh`, `dbg20-notes-windows-build-aczgzh3z`, `dbg20-notes-windows-app-l570j5rk`, `dbg20-notes-windows-wine-1e9d8b2o`, `dbg20-notes-gui-wine-2hpoigda`; `docs/changes/2026-11-10-prioritize-cheat-notes-in-long-details.json`.
+- Limits: initial Linux catalog attempt lacked ALSA metadata and standalone menu attempt lacked Wayland metadata; corrected retries passed. Oversized notes remain abbreviated in the menu; full paged record remains accessible. Native Windows and physical controller not tested; DBG2-20 remains partial.
+
+### ROMDATA-01-PARAMETER27-RETAINED-PUB-LISTS
+
+- Outcome: scoped EUR/Wine read-only inspection complete. DS-19 and Cyril-town have no valid list context; Cyril pub options has count zero. The retained rumors context projects the same 14 IDs in the same order as the already examined pub list, with none of 104/106/112/120. The rumors context itself is not proven an active quest list. No guest execution or navigation.
+- Evidence: docs/changes/2026-11-10-classify-live-event-selector-sources.json; target/validation/units/param27-ds19-list-0p9do6w0/, param27-retained-pub-lists-q9bens5q/, param27-pub-list-compare-m1p_8lhy/.
+- Limits: no other list, candidate activation, save-load, alias or global selector bound established. Linux/USA/native Windows pending; no performance measurements.
+
+### DBG2-20-CATEGORY-SEARCH
+
+- Outcome: completed
+- Verified criteria: primary category, aliases and source categories/titles are searched independently of the abbreviated record. Linux catalog and menu suites, Windows GNU builds, focused Wine tests and synthetic long-record primary/source GUI searches passed; screenshots reviewed and guest unchanged.
+- Evidence: `dbg20-category-search-linux-s85q6zud`, `dbg20-category-search-windows-build-46axr61j`, `dbg20-category-search-wine-gui-retry-7ep44203`; `docs/changes/2026-11-10-search-cheat-source-categories.json`.
+- Limits: first GUI attempt opened Audio due to unsynchronized navigation; corrected retry passed. GUI used synthetic data and Wine, not native Windows or physical controllers. Full DBG2-20 source domains and device/game effects remain open.
+
+### DBG2-20-BATTLE-ABILITY-SELECTOR
+
+- Outcome: completed
+- Verified criteria: in the same USA in-battle checkpoint a paused CH-0226 one-shot changed byte35 from 02 to 09. With identical inputs the first command label became White Magic but both opened Battle Tech screens were pixel-identical; sampled first records differed only at byte35. The private projection and feature documentation state the limit.
+- Evidence: `dbg20-battle-ability-selector-05qypq6p`, `dbg20-battle-ability-analysis-3cq1ada9`; `docs/changes/2026-11-10-observe-battle-ability-label-mismatch.json`.
+- Limits: one checkpoint/value and a bounded route; casting, internal cause, other states and devices/native Windows unproved. No original source or protected inputs changed; DBG2-20 remains partial.
+
+### DBG2-20-BATTLE-FIRST-AID
+
+- Outcome: completed
+- Verified criteria: same-input USA battle copies, one with CH-0226 byte35 02→09, reached First Aid target, forecast and Do it; after final confirmation both displayed First Aid. Decision, action and later screens matched pixel-for-pixel; sampled first records differed only at byte35. The derived note and feature docs capture the scoped observation.
+- Evidence: `dbg20-battle-firstaid-bz6jt1vh`, `dbg20-firstaid-forecast-analysis-ncilu0y7`, `dbg20-battle-firstaid-confirm-retry-lwx05ag4`, `dbg20-battle-firstaid-final-s0pu3f1f`, `dbg20-firstaid-final-analysis-87gn7fpm`, `dbg20-battle-firstaid-projection-mjmfzqct`; `docs/changes/2026-11-10-compare-battle-first-aid-forecast.json`.
+- Limits: Marche was at full HP, so healing was not measured. One checkpoint/action only; other abilities, devices and native Windows remain unverified. Initial confirmation launch `dbg20-battle-firstaid-confirm-zrryrli8` was refused due to another active Wine lease; its owner completed and the retry passed. DBG2-20 remains partial.
+
+### ROMDATA-02-OBJ-BRANCH-LISTS
+
+- Outcome: completed for declared EUR/Wine source/model/runtime/CLI scope.
+- Verified criteria: three branch-selected static OBJ lists (36 source bytes) integrated in E133-d132; unchanged E132 resources preserved. Six original interpreter and six translated draw comparisons passed full state/clock with poisoned managed source spans, including machine-state reload. Production CLI create/reuse/verify and one-frame managed startup pass.
+- Evidence: `obj-retained-candidate-windows-61ceiuwx`, `e133-obj-branch-wine-retry-b1nwkwkj`, `e133-obj-branch-native-wine-fj_liizb`, `e133-obj-branch-cli-wine-retry-j1c58e34`; `docs/changes/2026-11-10-add-branch-selected-obj-lists.json`.
+- Limits: no ordinary-use proof or full UI save/Load lifecycle; remaining OBJ sources/consumers, Linux, USA and native Windows open. No performance measurement. Initial Wine launches respected an active shared prefix; retry passed.
+
+### ROMDATA-01-OBJ-CONTEXT-UPDATER
+
+- Outcome: completed for declared EUR/Wine source/model/runtime/CLI scope.
+- Verified criteria: caller 1449fc and updater 0accf4→0ac640 join a 38-frame sequence with a 21-list indexed OBJ bank (258 objects). E134 preserves E133 resources; all new source bytes and three original interpreter and translated updater/draw full-state/clock cases pass, including machine-state reload. Production CLI create/reuse/verify and managed startup pass.
+- Evidence: `obj-context-full-bank-wine-p_z8yq34`, `e134-obj-context-wine-retry-4hbc5mu3`, `e134-obj-context-native-wine-mc1ztvqg`, `e134-obj-context-cli-wine-4lvv71nu`; `docs/changes/2026-11-10-add-context-updater-obj-bank.json`.
+- Limits: two indexed lists are not selected by the examined sequence; ordinary use, full UI save/Load lifecycle, other sources, Linux, USA and native Windows remain open. No performance measurement. Initial runtime test _ghiv7sj failed by poisoning before state load; corrected retry passed. Sol xhigh requested, actual effort unconfirmed.

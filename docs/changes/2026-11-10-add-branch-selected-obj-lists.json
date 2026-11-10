@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "date": "2026-11-10",
+  "slug": "add-branch-selected-obj-lists",
+  "title": "Add three branch-selected EUR OBJ lists",
+  "kind": "added",
+  "platforms": [
+    "EUR; Wine"
+  ],
+  "changes": [
+    "Add three authenticated branch-selected EUR OBJ roots to the existing static-list owner and advance extractor/decoder revisions to 133/132.",
+    "Add a focused protected-ROM test for prior dataset preservation and original draw equivalence.",
+    "Add a focused translated-original draw and machine-state reload test."
+  ],
+  "validation": [
+    "Protected EUR Wine disassembly authenticates the three source readers, branches and existing draw calls (obj-retained-candidate-windows-61ceiuwx).",
+    "Windows GNU test and production executables cross-compiled successfully (e133-obj-branch-build-retry-tsjg5an3, e133-obj-branch-cli-build-rv_bnyv6); the initial test build failed on a missing trait import, which was corrected.",
+    "The first Wine launch respected an active shared-prefix lease (e133-obj-branch-wine-7t43juft).",
+    "The targeted EUR Wine test created and reused E133, preserved prior resources, and passed six poisoned-source original-draw full-state/clock comparisons (e133-obj-branch-wine-retry-b1nwkwkj).",
+    "A production CLI test launch respected an active shared Wine lease (e133-obj-branch-cli-wine-svcbax1j).",
+    "The Windows GNU executable including the translated draw and state reload test cross-compiled (e133-obj-branch-native-build-mhky99v3).",
+    "EUR Wine production CLI create/reuse/verify and managed one-frame startup pass, with 102 unaffected files unchanged (e133-obj-branch-cli-wine-retry-j1c58e34).",
+    "EUR Wine translated-original and interpreter comparisons pass for six cases with poisoned source spans and managed reads after machine-state reload (e133-obj-branch-native-wine-fj_liizb)."
+  ],
+  "limitations": [
+    "Full UI save/Load lifecycle, ordinary gameplay, remaining roots and consumers, Linux, USA and native Windows remain unverified. CLI startup does not establish ordinary use of the new lists. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/obj_lists/roots.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/obj_branch_list_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/development/PROJECT_STATE.md",
+    "crates/recomp/src/rom_data/obj_branch_native_tests.rs",
+    "docs/development/ROM_DATA_TODO.md"
+  ],
+  "references": []
+}

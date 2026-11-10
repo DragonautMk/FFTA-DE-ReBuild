@@ -156,6 +156,16 @@ mod obj_list_tests;
 #[cfg(test)]
 mod obj_list_runtime_tests;
 #[cfg(test)]
+mod obj_branch_list_tests;
+#[cfg(test)]
+mod obj_branch_native_tests;
+#[cfg(test)]
+mod obj_context_bank_tests;
+#[cfg(test)]
+mod obj_context_native_tests;
+#[cfg(test)]
+mod fixed_obj_transfer_tests;
+#[cfg(test)]
 mod obj_extra_tests;
 #[cfg(test)]
 mod obj_ui_property_tests;

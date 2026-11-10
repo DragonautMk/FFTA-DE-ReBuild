@@ -212,7 +212,15 @@ impl Catalog {
         let target=Target::new(rom);
         self.entries.iter().enumerate().map(|(index,entry)|{
             let full=serde_json::to_string_pretty(entry).unwrap_or_default();
-            let truncated=full.chars().count()>8192;let mut details:String=full.chars().take(8192).collect();
+            let truncated=full.chars().count()>8192;
+            // Keep source notes ahead of a long code list so the bounded menu
+            // view does not silently omit them. The snapshot still holds the
+            // original record for complete paged CLI inspection.
+            let display=if truncated && entry["notes"].as_array().is_some_and(|notes|!notes.is_empty()) {
+                format!("{}:\n{}\n\n{}:\n{}",language.text("Catalog notes"),
+                    serde_json::to_string_pretty(&entry["notes"]).unwrap_or_default(),language.text("Catalog record"),full)
+            }else{full};
+            let mut details:String=display.chars().take(8192).collect();
             if truncated{details.push_str(&format!("\n[{}]",language.text("Details abbreviated; use debug-cheats show for the complete record")));}
             let region=entry["region"].as_str().unwrap();let relation=language.text(match target.declaration(region){"declared-match"=>"Declared source region matches","declared-mismatch"=>"Declared source region differs",_=>"Source region match unknown"});
             let summary=self.indexed_summary(index,rom);
@@ -246,12 +254,19 @@ impl Catalog {
             if self.capabilities[index]["unexamined"].as_u64().unwrap_or(0)>0 {
                 reason.push('\n');reason.push_str(language.text("Additional sources were not assessed"));
             }
+            let mut search_terms=vec![entry["section"].as_str().unwrap().to_owned()];
+            search_terms.extend(entry["aliases"].as_array().unwrap().iter().filter_map(Value::as_str).map(str::to_owned));
+            for source in entry["provenance"].as_array().unwrap() {
+                for key in ["section","title"] {
+                    if let Some(value)=source.get(key).and_then(Value::as_str){search_terms.push(value.to_owned());}
+                }
+            }
             menu::ContentEntry{id:entry["id"].as_str().unwrap().into(),name:format!("{} · {}",entry["id"].as_str().unwrap(),entry["title"].as_str().unwrap()),
                 kind:format!("{} / {}",entry["format"].as_str().unwrap(),entry["region"].as_str().unwrap()),description:details,
                 location:language.text("Local catalog · read only").into(),identity:menu::i18n::format(language,"Catalog SHA256 {catalog}\nROM SHA256 {rom} · recognized region {region}",&[("catalog",self.source_sha256.clone()),("rom",target.sha256.unwrap_or_else(||language.text("Unknown ROM hash")).into()),("region",target.region.unwrap_or_else(||language.text("Unknown recognized region")).into())]),status:language.text("Cheat disabled").into(),compatibility:language.text("Cheat unverified").into(),
                 reason,available:true,
                 cheat_filter:Some(menu::CheatFilter{armed:false,declared_match:target.declaration(region)=="declared-match",plan_candidate:summary["compatibility"]["manual_once"]["state"]=="requires-runtime-preflight",
-                    values_required:self.capabilities[index]["sources"].as_array().is_some_and(|sources|sources.iter().any(|source|matches!(source["assessment"]["state"].as_str(),Some("parameter-required"|"reference-only"))))})}
+                    values_required:self.capabilities[index]["sources"].as_array().is_some_and(|sources|sources.iter().any(|source|matches!(source["assessment"]["state"].as_str(),Some("parameter-required"|"reference-only")))),search_terms})}
         }).collect()
     }
     pub fn menu_sources(&self,id:&str)->Result<Vec<menu::CheatSource>,String>{
@@ -781,6 +796,54 @@ mod tests {
         let mut offset=0u32;let mut joined=String::new();loop{let chunk=s.show("CH-0001",offset,Some(&s.generation)).unwrap();let text=chunk["json_part"].as_str().unwrap();assert!(text.len()<=4096);joined.push_str(text);match chunk["next_offset_bytes"].as_u64(){Some(next)=>offset=next as u32,None=>break,}}
         assert_eq!(serde_json::from_str::<Value>(&joined).unwrap(),v["entries"][0]);assert!(s.show("CH-9999",0,None).is_err());
         let pos=joined.find('é').unwrap();assert!(s.show("CH-0001",(pos+1) as u32,None).is_err());
+    }
+    #[test]
+    fn long_catalog_details_prioritize_notes_and_keep_full_paged_record(){
+        let mut v=fixture();
+        v["entries"][0]["codes"]=json!(vec!["12345678 1234";700]);
+        v["entries"][0]["notes"]=json!(["Important warning: equipaggiamento è unverified"]);
+        let c=Catalog::parse(&serde_json::to_vec(&v).unwrap()).unwrap();
+        let en=c.menu_entries(None,input_config::Language::default());
+        let it=c.menu_entries(None,input_config::Language::parse("it"));
+        assert!(en[0].description.starts_with("Catalog notes:"));
+        assert!(it[0].description.starts_with("Note del catalogo:"));
+        for row in [&en[0],&it[0]] {
+            assert!(row.description.contains("Important warning: equipaggiamento è unverified"));
+            assert!(row.description.contains("12345678 1234"));
+        }
+        assert!(en[0].description.contains("Details abbreviated"));
+        let s=Snapshot::new(c,"content-id".into(),"a".repeat(64)).unwrap();
+        let mut offset=0;let mut joined=String::new();loop {
+            let part=s.show("CH-0001",offset,Some(&s.generation)).unwrap();
+            joined.push_str(part["json_part"].as_str().unwrap());
+            match part["next_offset_bytes"].as_u64(){Some(next)=>offset=next as u32,None=>break}
+        }
+        assert_eq!(serde_json::from_str::<Value>(&joined).unwrap(),v["entries"][0]);
+
+        // Even oversized Unicode notes stay bounded and explicitly abbreviated.
+        v["entries"][0]["notes"]=json!(vec!["é".repeat(2000);5]);
+        let c=Catalog::parse(&serde_json::to_vec(&v).unwrap()).unwrap();
+        let view=c.menu_entries(None,input_config::Language::default());
+        assert!(view[0].description.starts_with("Catalog notes:"));
+        assert!(view[0].description.contains("Details abbreviated"));
+        assert!(view[0].description.chars().count()<8300);
+    }
+    #[test]
+    fn long_catalog_records_keep_primary_and_provenance_search_terms(){
+        let mut v=fixture();let e=&mut v["entries"][0];
+        e["codes"]=json!(vec!["12345678 1234";700]);
+        e["section"]=json!("Hidden primary category");
+        e["aliases"]=json!(["alternate alias"]);
+        e["provenance"][0]["section"]=json!("Hidden source category");
+        e["provenance"][0]["title"]=json!("Hidden source title");
+        let c=Catalog::parse(&serde_json::to_vec(&v).unwrap()).unwrap();
+        let rows=c.menu_entries(None,input_config::Language::default());
+        assert!(!rows[0].description.contains("Hidden primary category"));
+        assert!(!rows[0].description.contains("Hidden source category"));
+        let terms=&rows[0].cheat_filter.as_ref().unwrap().search_terms;
+        for expected in ["Hidden primary category","alternate alias","Hidden source category","Hidden source title"] {
+            assert!(terms.iter().any(|term|term==expected));
+        }
     }
     #[test]
     fn capability_snapshot_chunks_preserve_report_generation_and_utf8(){

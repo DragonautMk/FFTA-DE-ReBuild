@@ -670,3 +670,20 @@ does not establish all link behavior, the presence or absence of a peer, or a
 causal explanation for the observed result. Protected sources, executable and
 checkpoints passed; no guest instructions ran. Evidence:
 `target/validation/units/e128-dynamic-link-serial-path-hi825gpr/`.
+
+## Conditional fixed OBJ transfer (E135)
+
+The EUR caller at `081449fc` queues a direct halfword DMA from ROM offset
+`b80b5c` to VRAM `06010000`, with original control `80004000`: the bounded
+source extent is 32,768 bytes through `b88b5c`. It is independent of the
+localized selector tables and has no overlap with E134 manifest sources.
+The caller instructions, literal words and queue helper passed protected Wine
+source checks (`target/validation/units/obj-context-graphics-consumer-wine-rcruc6ln/`,
+`target/validation/units/obj-context-graphics-source-wine-9sny93_2/`). This is
+a conditional source contract, not an observed ordinary-game scene.
+
+E135 extends the existing raw-transfer model with one separately identified
+fixed bank. Localized bank/group usage counters retain their prior meaning;
+the fixed bank contributes only raw payload bytes. Runtime, translated
+execution, production CLI, ordinary use, Linux, USA and native Windows remain
+unverified. No performance measurement was made.

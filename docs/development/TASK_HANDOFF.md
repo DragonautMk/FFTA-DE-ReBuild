@@ -4,14 +4,13 @@
 
 English-first project with optional Italian. Accepted report/guide/export scopes remain recorded; the cross-tree audit remains open.
 
-Read this file, then only relevant linked sections. Do not preload archives, CHANGELOG, PROJECT_STATE or large TODOs. Retired artifacts do not invalidate accepted evidence. Rules: [MEMORY_WORKFLOW](MEMORY_WORKFLOW.md#resume-and-repeat-decisions).
+Read only relevant linked sections; do not preload archives, CHANGELOG, PROJECT_STATE or large TODOs. Retired artifacts do not invalidate accepted evidence. Rules: [MEMORY_WORKFLOW](MEMORY_WORKFLOW.md#resume-and-repeat-decisions).
 
-Execution state and acceptance outcome are separate: `active`, `suspended`,
-`interrupted`, `failed`, `waiting`; open outcomes are `partial`,
-`integrated_unverified`, `not_started`. Completed/rejected tasks move to the
-archive after acceptance checks; an open parent never reopens closed children.
-Here `suspended` means outside this session's selection, without authorizing
-termination of another owner's process or changing another thread's goal state.
+Execution states `active`, `suspended`, `interrupted`, `failed`, `waiting` are
+separate from outcomes `partial`, `integrated_unverified`, `not_started`.
+Archive completed/rejected tasks after acceptance; an open parent does not
+reopen closed children. `suspended` means outside this session's selection;
+it does not authorize stopping other work or changing another thread's goal.
 
 ## Running or suspended tasks
 
@@ -36,10 +35,12 @@ termination of another owner's process or changing another thread's goal state.
 
 - State: active
 - Outcome: partial
-- Verified: E132 103 resources/104 files, 63 compact banks; EUR Wine managed/native prefixes and CLI create/reuse/verify/startup PASS. Current: target/validation/units/e132-6e84e0-cli-wine-\_al2e8me/work/resources/. E131 retained for comparison.
+- Verified: E134 103 resources/104 files, 63 compact banks; EUR Wine interpreter, translated and CLI PASS. Current: target/validation/units/e134-obj-context-wine-retry-4hbc5mu3/work/e134-resources/. E133 retained for comparison.
 - Missing: unmigrated resources/consumers, missing ordinary-use evidence, ABI/global extent/indirect calls and mod phases ROMDATA-06/07; Linux/USA/native Windows/new32:9 remain distinct. EUR, reduced Wine scope, no performance/space measurements; originals and personal saves unchanged.
-- Selection: `ROMDATA-05-GAMEPLAY-6E84E0-LIFECYCLE` scoped EUR Wine PASS (6k2_x7_1); E132 owner retains typed data across Load/Undo, backup and restart with copied files unavailable. Full lifecycle/platform matrix remains open. Next select a distinct unfinished ROMDATA criterion; do not repeat this test.
+- Selection: `ROMDATA-01-OBJ-CONTEXT-GRAPHICS` integrated_unverified. EUR 32 KiB DMA source (9sny93_2); E135 build handle 43671, then targeted Wine.
 - Resume: [validation recovery checklist](ROM_DATA_VALIDATION_RECOVERY_TODO.md) for skipped checks; [ROM_DATA_TODO](ROM_DATA_TODO.md), only the selected criterion's section (ROMDATA-01/02/03/04/05/06/07); [inventory](ROM_DATA_INVENTORY.md). Do not read the whole TODO. Children retain their IDs and limits:
+  - `ROMDATA-01-PARAMETER-RECORDS27-DYNAMIC-SOURCES`: partial; writers map to 59 rows (js3rbve5); retained lists negative/inconclusive (m1p_8lhy). Live domain, save loads and aliases open. `docs/rom_data_gameplay.md`.
+  - `ROMDATA-04-GAMEPLAY-6E84E0-BYTE00`: partial; static text screen 78suaoix found no token; generated/indirect sources open, no blind Select. `docs/rom_data_gameplay.md`.
   - `ROMDATA-04-PARAMETER-RECORDS27-ORDINARY`: source/model/runtime/CLI accepted; normal-input positive/full pair pass from save of unknown ancestry, cheat-free ordinary proof open. User confirms Ambervale; recorded movement and post-save A windows are negative (inl3r0yl/l_97lwxn), not global absence. `docs/rom_data_gameplay.md`.
   - Localized table graphics: scoped ordinary trigger and pair accepted; aggregate counters do not identify the three groups, and all-bank/all-group/consumer coverage remains open. `docs/rom_data_ui_graphics.md`, ordinary table extension section.
   - `ROMDATA-05-DYNAMIC-RAW-ORDINARY-REACHABILITY` and `ROMDATA-01-LOCALIZED-RAW-DYNAMIC-DOMAIN`: conditional fragments/paths accepted; global domain and ordinary invocation unproven. Unit320 negative closed; later state2/state4/selector-witnesses diagnosis closed without a scene. Archive 59..75 and 789..866; no blind navigation.
@@ -71,35 +72,36 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 - State: active
 - Outcome: partial
-- Integrated multi-parameter menu/CLI and guarded previews: `dbg2-20-menu-values-confirm-vymtsut1`, `dbg2-20-parameter-render-corrected-rkm88ykd`, `dbg2-20-multiple-parameter-suite-_dgohsc9`, `dbg2-20-multiple-real-rom-preflight-ks8dyakw`, `dbg2-20-multiple-windows-build-ry5e8e9o`. XP domains absent (`dbg2-20-source-domain-audit-e9o97pmb`); preserve master guards.
+- First Aid started in both copies after Do it; screens matched (`dbg20-battle-firstaid-final-s0pu3f1f`, `dbg20-firstaid-final-analysis-87gn7fpm`). Healing unproved at full HP.
+- Battle selector 02→09: label White Magic, opened Battle Tech screen identical; records differ only byte35 (`dbg20-battle-ability-selector-05qypq6p`, `dbg20-battle-ability-analysis-3cq1ada9`); other actions unproved.
+- Category/source search PASS: `dbg20-category-search-linux-s85q6zud`, `dbg20-category-search-wine-gui-retry-7ep44203`.
+- Parameters/guards: `dbg2-20-menu-values-confirm-vymtsut1`, `dbg2-20-parameter-render-corrected-rkm88ykd`, `dbg2-20-multiple-parameter-suite-_dgohsc9`, `dbg2-20-multiple-real-rom-preflight-ks8dyakw`, `dbg2-20-multiple-windows-build-ry5e8e9o`; XP domains absent (`dbg2-20-source-domain-audit-e9o97pmb`).
 - One-shot feedback: zero and positive counts shown (`dbg20-cheat-feedback-wine-0htinf7a`).
-- Verified: source/preview/arm/disarm, filters, named presets, CHEAT-INTERFACE and CHEAT-COMPACT-NAV; 133 Linux menu tests and CH-0341 X11 GUI passed; portable runtime installed.
+- Verified: source/preview/arm/disarm, filters, presets, CHEAT-INTERFACE/CHEAT-COMPACT-NAV; Linux menu and CH-0341 X11 passed; runtime installed.
 - Wine PASS: `dbg2-20-focused-wine-8q7tdm2w`, `dbg2-20-rom-preflight-wine-eiw70mf0`, `dbg2-20-menu-offscreen-wine-ftxmavl9`; earlier builds lacked dlltool.
-- Live values/presets PASS: `dbg2-20-live-parameter-flow-i_1jqzpn`, `dbg2-20-live-menu-values-bqd__1zo`, `dbg2-20-parameter-menu-preset-sbd7cz9m`; domains unverified.
-- Plaintext master and USA/EUR preflight PASS; trailing D-Bus assertion; Sol `/root/sol_debug_diagnosis` advised.
-- USA ability projection: eight entries, guarded preflight and Wine checks PASS; XP unchanged (`dbg2-20-usa-ability-projection-ro_8a3nv/work/projection/catalogo.json`).
+- Values/presets PASS: `dbg2-20-live-parameter-flow-i_1jqzpn`, `dbg2-20-live-menu-values-bqd__1zo`, `dbg2-20-parameter-menu-preset-sbd7cz9m`; domains unverified.
+- Master USA/EUR preflight PASS; D-Bus assertion; Sol `/root/sol_debug_diagnosis` advised. Eight USA abilities: guarded Wine PASS, XP unchanged (`dbg2-20-usa-ability-projection-ro_8a3nv/work/projection/catalogo.json`).
 - Missing: full job/race/appearance domains and CH-0236, source-label reconciliation, actual ability effects, physical-device behavior and native Windows.
-- Verified dependent lists: bounded previous-value cases reject invalid/missing combinations, filter the menu and revalidate presets. Linux suites, Windows GNU build and synthetic Wine keyboard/preset flow PASS (`dbg2-20-dependent-parameter-tests-iiddbvcl`, `dbg2-20-dependent-wine-gui-ijn43g20`); old runtimes reject the schema variant.
-- Character examples: preview/arm/disarm (`dbg2-20-character-examples-wine-__ltq06k`); DS-16 bytes 84..8B = 02 50 01 02 08 32 63 00 (`dbg2-20-ds16-readonly-fields-3ao28h9v`). Sol `/root/sol_debug_diagnosis` advised quarantine.
-- Verified quarantine: newly generated examples retain unknown region and reject preparation; ability path still works in Wine (`dbg2-20-character-reference-only-mtq__gpq`, `dbg2-20-reference-only-wine-maya4aqz`). Earlier activation-ready catalog `dbg2-20-usa-character-examples-ucw5y1gi` is historical evidence only; do not select it for activation.
+- Dependent lists/guards PASS (`dbg2-20-dependent-parameter-tests-iiddbvcl`, `dbg2-20-dependent-wine-gui-ijn43g20`); older runtimes reject schema.
+- Character examples/DS-16 bytes: `dbg2-20-character-examples-wine-__ltq06k`, `dbg2-20-ds16-readonly-fields-3ao28h9v`. Sol `/root/sol_debug_diagnosis` advised quarantine.
+- Quarantine: unknown region rejects preparation; abilities work (`dbg2-20-character-reference-only-mtq__gpq`, `dbg2-20-reference-only-wine-maya4aqz`). Never activate historical catalog `dbg2-20-usa-character-examples-ucw5y1gi`.
 - Badge: Wine/Linux GUI PASS (`dbg2-20-persistent-indicator-gameplay-bsrpy2cz`, `dbg2-20-indicator-linux-gpu-retry-xuuv_r2r`).
-- DS-16 route/ability: `dbg20-ability-screen-route-9ozkfq50`, `dbg20-usa-ability-effect-4yt445cl`.
-- Tuple: Soldier control versus Gunner after full example (`dbg20-character-ability-screen-h75fjx8y`); individual fields unresolved.
+- DS-16 route/ability: `dbg20-ability-screen-route-9ozkfq50`, `dbg20-usa-ability-effect-4yt445cl`; tuple Soldier/Gunner `dbg20-character-ability-screen-h75fjx8y`, fields unresolved.
 - Field87: Soldier to Thief (`dbg20-single-job-byte-b00g2384`); Sol xhigh advised, effective settings unconfirmed.
-- Human titles03..0C: one scene/menu PASS (`dbg20-human-jobs-matrix-316k2185`, `dbg20-human-job-titles-wine-y4hetpub`); mechanics unproved.
+- Titles03..0C: `dbg20-human-jobs-matrix-316k2185`, `dbg20-human-job-titles-wine-y4hetpub`; mechanics unproved.
 - Paired job/ability labels: Black Mage/Black Magic one-screen PASS (`dbg20-paired-job-ability-664h7_f_`); nine other pairs source-listed only.
-- Paired progress: B5/B6 02/0A→0A/0A; first142 candidate bytes unchanged; five Black Magic rows match at different frames (`dbg20-paired-progress-wine-5ufj87ja`, `dbg20-ability-info-compare-k050osb_`). Full learning unproved.
+- Paired progress: first142 candidate bytes unchanged; five Black Magic rows match at different frames (`dbg20-paired-progress-wine-5ufj87ja`, `dbg20-ability-info-compare-k050osb_`); learning unproved.
+- Hunter ordinary vs paired: unequip notice and nine extra bytes (`dbg20-ordinary-job-comparison-nl85j_ik`, `dbg20-hunter-paired-once-wu600y_z`); transitions unproved.
+- Long details prioritize notes: `dbg20-notes-visibility-test-retry-y77qeo43`, `dbg20-notes-gui-wine-2hpoigda`; oversized notes need full command.
 - Conditional USA job05 entry: one write when matching; zero on mismatch (`dbg20-first-job-wine-vlhi_rx4`).
 - Offset85 title/stats (`dbg20-single-offset85-yqmspzpv`); routing (`dbg20-usa-eur-job-routing-r9g1avi3`); actor/name (`dbg20-usa-job-call-registers-uienjad6`, `dbg20-usa-job-name-caller-_8hlaicc`); XP labels conflict.
 - Race/job-only matched full tuple screenshot (`dbg20-character-preserve85-t3l31iu3`); state equivalence unproved.
-- Labels: Linux/Wine PASS (`dbg20-value-label-build-zkxk1v_j`, `dbg20-value-label-wine-z3h_9726`).
-- CH-0236 source: guide repeats anomalous first address; intent unresolved.
-- CH-0236 US candidate: record/name/effect (`dbg20-third-record-readonly-sww_z0qx`, `dbg20-third-record-pointers-nb08dpqa`, `dbg20-third-candidate-effect-lwmjwzo2`); intent unresolved.
-- Source reasons: Wine PASS (`dbg20-source-reasons-final-wine-m69p1pgw`).
-- Third actor: Wine roster matches ROM pointer (`dbg20-third-roster-route-4hh0fmeo`).
-- Values filter: Linux/Windows GNU tests and USA Wine GUI PASS (`dbg20-values-filter-wine-f820ejz6`); discovery only, guards unchanged.
+- Labels PASS: `dbg20-value-label-build-zkxk1v_j`, `dbg20-value-label-wine-z3h_9726`.
+- CH-0236 intent unresolved; guide repeats anomalous address. US candidate: `dbg20-third-record-readonly-sww_z0qx`, `dbg20-third-record-pointers-nb08dpqa`, `dbg20-third-candidate-effect-lwmjwzo2`.
+- Source reasons/third roster PASS: `dbg20-source-reasons-final-wine-m69p1pgw`, `dbg20-third-roster-route-4hh0fmeo`.
+- Values filter PASS (`dbg20-values-filter-wine-f820ejz6`); discovery only.
 - USA jobs: labels41/43, race42/43; row01 undecoded/different, row02 blank/Soldier (`dbg20-usa-job-label-comparison-34opuv6d`, `dbg20-usa-job-race-metadata-hp0v8vns`); gameplay unproved.
-- Reference lists: 5 races/43 jobs/226 appearances (`dbg20-reference-values-wine-e4mbx839`); quarantine retained.
+- Reference lists: 5 races/43 jobs/226 appearances (`dbg20-reference-values-wine-e4mbx839`); quarantined.
 - Third appearances: 129 source choices; 03/0D/CA/F0 differ on one screen, CA green/F0 blue face (`dbg20-appearance-matrix-wine-5e8dfxho`); compatibility unverified.
 - Parameter chooser: decimal and hex displayed; Linux and Wine GUI PASS (`dbg20-hex-values-wine-oyxdakfz`).
 - Separate USA third-appearance value02: derived private entry/menu one-shot PASS (`dbg20-third-appearance-menu-xtrn7in4`); CH-0236 unchanged.
@@ -169,9 +171,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: DBG2-20 partial; user requested completion.
-- Last verified result: B6 already 0A; bounded progress bytes unchanged and five Black Magic rows match despite different frames.
-- Remaining work: field meanings, character domains, CH-0236, game/device behavior, native Windows and physical controllers.
-- Errors or blockers: conflicting source labels; one observation cannot validate the domain. Examples remain reference-only; older activation-ready projection is historical.
-- Next action: investigate actual class/ability behavior beyond the bounded checkpoint; preserve quarantine.
-- References: docs/changes/2026-11-10-compare-paired-ability-progress.json; target/validation/units/dbg20-paired-progress-wine-5ufj87ja/.
+- Task: DBG2-20 partial.
+- Last verified result: First Aid started in both USA battle copies after selector change; screens matched.
+- Remaining work: healing/other ability effects, full job/race/appearance domains, CH-0236/source labels, devices and native Windows.
+- Errors or blockers: shared Wine lease wait resolved; effective model/effort unknown.
+- Next action: select an unresolved domain or measurable ability effect.
+- References: docs/changes/2026-11-10-compare-battle-first-aid-forecast.json; docs/cheats.md.

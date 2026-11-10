@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-10",
+  "slug": "prioritize-cheat-notes-in-long-details",
+  "title": "Keep cheat notes visible ahead of long code lists",
+  "kind": "fixed",
+  "platforms": [
+    "Linux",
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "For abbreviated cheat details, show source notes before the bounded original-record excerpt. Keep the original record and the explicit full-record command; localize the two new section labels in English and Italian."
+  ],
+  "validation": [
+    "Protected Linux debug_cheats suite: 20 passed, four fixture-dependent tests ignored; regression verifies long code lists, Unicode, bounded oversized notes and complete paged original. The initial test launch lacked ALSA pkg-config metadata; retry with the existing local sysroot passed. Evidence: dbg20-notes-visibility-test-gxiub46s and dbg20-notes-visibility-test-retry-y77qeo43.",
+    "Protected Linux menu selector suite: 28 passed, including details and scrolling. The first standalone menu attempt lacked Wayland development metadata; the joint menu/recomp build resolved project feature configuration and passed. Evidence: dbg20-notes-menu-suite-aw9kr3rv and dbg20-notes-menu-suite-retry-7f5r_pwh.",
+    "Windows GNU test and app cross-builds passed; the focused test passed under coordinated Wine. A synthetic 700-line catalog displayed the warning after scrolling in the Windows Wine/Xvfb GUI; screenshot reviewed, guest stayed paused and unchanged, process closed and Wine drained. Evidence: dbg20-notes-windows-build-aczgzh3z, dbg20-notes-windows-app-l570j5rk, dbg20-notes-windows-wine-1e9d8b2o and dbg20-notes-gui-wine-2hpoigda."
+  ],
+  "limitations": [
+    "The menu view remains bounded to 8192 characters and explicitly directs readers to the full record when notes themselves exceed the limit. Native Windows, physical controllers and full DBG2-20 game/device behavior remain unverified."
+  ],
+  "files": [
+    "crates/recomp/src/debug_cheats.rs",
+    "crates/input-config/languages/en.json",
+    "crates/input-config/languages/it.json",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

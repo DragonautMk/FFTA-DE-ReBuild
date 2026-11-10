@@ -67,6 +67,22 @@ fn cheat_view_keeps_all_rows_and_never_dispatches_selection(){
 }
 
 #[test]
+fn cheat_search_uses_source_terms_even_when_details_are_abbreviated(){
+    let mut s=Selector::default();s.cheat_mode=true;
+    s.set("Cheats".into(),vec![
+        ContentEntry{id:"CH-0001".into(),name:"First".into(),description:"abbreviated".into(),
+            cheat_filter:Some(CheatFilter{search_terms:vec!["Primary category".into(),"Équipement source".into()],..Default::default()}),..Default::default()},
+        ContentEntry{id:"CH-0002".into(),name:"Second".into(),description:"different".into(),cheat_filter:Some(CheatFilter::default()),..Default::default()},
+    ],String::new(),0);
+    for query in ["primary category","éQUIPEMENT"] {
+        s.query=query.into();s.rebuild(None);
+        assert_eq!(s.visible.iter().map(|&i|s.entries[i].id.as_str()).collect::<Vec<_>>(),vec!["CH-0001"]);
+    }
+    s.query="not present".into();s.rebuild(None);assert!(s.visible.is_empty());
+    s.query="CH-0002".into();s.rebuild(None);assert_eq!(s.visible.len(),1);assert_eq!(s.entries[s.visible[0]].id,"CH-0002");
+}
+
+#[test]
 fn management_requires_explicit_source_and_dispatches_separate_requests(){
     let mut s=Selector::default();s.cheat_mode=true;s.set("Cheat".into(),vec![ContentEntry{id:"CH-0001".into(),name:"Example".into(),..Default::default()}],String::new(),0);
     s.focus=8;assert_eq!(s.handle(MenuInput::Confirm),Some(MenuAction::CheatManage));
@@ -294,7 +310,7 @@ fn cheat_filters_use_machine_metadata_and_follow_armed_changes() {
         id: id.into(), name: id.into(), available: true,
         // Localized presentation must not control the filter.
         status: "Attivo".into(), compatibility: "Non verificato".into(),
-        cheat_filter: Some(CheatFilter { armed, declared_match, plan_candidate, values_required }),
+        cheat_filter: Some(CheatFilter { armed, declared_match, plan_candidate, values_required, ..Default::default() }),
         ..Default::default()
     };
     let mut s = Selector::default();

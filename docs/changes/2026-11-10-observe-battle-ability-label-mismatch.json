@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-10",
+  "slug": "observe-battle-ability-label-mismatch",
+  "title": "Document battle command label and ability list mismatch",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Add the bounded battle observation to the private derived CH-0226 source notes and document that the command label does not guarantee the opened ability list changes. Preserve original source notes and conditional code."
+  ],
+  "validation": [
+    "Protected USA Wine pair started from the same existing in-battle checkpoint. Control kept byte B5 at 02; one-shot CH-0226 changed only that byte to 09 while paused. After identical 158-frame inputs the command label was Battle Tech versus White Magic, with Black Magic second in both. Opening the first set showed the same Battle Tech abilities; screenshots inspected, sessions closed and Wine drained. Evidence: dbg20-battle-ability-selector-05qypq6p.",
+    "Protected analysis compared all 38400 pixels of the opened list screens and full 264-byte records at each phase: only offset35 differed after the write. Regenerated projection includes the new note on CH-0226, leaves other ability notes and all eight original code lines unchanged. Evidence: dbg20-battle-ability-analysis-3cq1ada9."
+  ],
+  "limitations": [
+    "One USA battle checkpoint and one value only. Identical visible list does not explain the internal cause or prove casting, all abilities, other scenes, physical devices or native Windows. Existing generated catalogs are pinned snapshots and must be regenerated to include the note."
+  ],
+  "files": [
+    "scripts/cheat_ability_projection.py",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

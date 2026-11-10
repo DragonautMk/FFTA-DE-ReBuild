@@ -1,4 +1,4 @@
-//! Independently located EUR constructor literals and bank pair identities.
+//! Independently located EUR setup literals, consumer calls and bank identities.
 use super::RootReference;
 
 pub const BANK_ROOTS: &[(u32, u32)] = &[
@@ -18,9 +18,22 @@ pub const BANK_ROOTS: &[(u32, u32)] = &[
     (0xb4ec0c, 0xb4f924),
     (0xb4f028, 0xb4f9b8),
     (0xb4f088, 0xb4fa14),
+    (0xb93ff0, 0xb93f50),
 ];
 
 pub const REFERENCES: &[RootReference] = &[
+    // The caller stores these two roots in its context, then invokes the
+    // shared updater, which resolves the selected list before the draw call.
+    RootReference {
+        call: 0x144ac2,
+        constructor: 0xaccf4,
+        object_reader: 0x144aaa,
+        object_literal: 0x144b30,
+        sequence_reader: 0x144aae,
+        sequence_literal: 0x144b34,
+        object_root: 0xb93ff0,
+        sequence_root: 0xb93f50,
+    },
     RootReference {
         call: 0x88760,
         constructor: 0x4e494,

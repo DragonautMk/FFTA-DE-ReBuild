@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-10",
+  "slug": "investigate-item-parameter-byte00",
+  "title": "Investigate ordinary item-parameter byte00 reachability",
+  "kind": "docs",
+  "platforms": [
+    "EUR; Wine"
+  ],
+  "changes": [
+    "Record the original byte00 formatter dispatch and distinguish it from the byte01 reader, retaining dynamic producers as open."
+  ],
+  "validation": [
+    "A protected Wine static screen of 58045 E132 decoded programs and 16635 expanded strings finds no extended 67 [1], compact 81 [1] or expanded 40 67 01; compact 81 [0] occurs 15 times (e132-byte00-textscan-78suaoix).",
+    "Original EUR disassembly identifies formatter selector 1, compact opcode mapping and two scoped direct callers; no game replay or performance measurement (e132-byte00-dispatch-x_kvdhlr, e132-byte00-callers-46bhd9gj, e132-byte00-compact-81n7kxzq, e132-byte00-direct-refs-i3y2fh32, e132-byte00-producers-uvjzdkyv)."
+  ],
+  "limitations": [
+    "Generated RAM text, unscanned sources, indirect calls and ordinary byte00 use remain unproved; Linux, USA and native Windows remain pending."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md"
+  ],
+  "references": []
+}

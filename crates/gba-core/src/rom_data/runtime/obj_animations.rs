@@ -43,7 +43,7 @@ impl ObjAnimationResources {
         })
     }
     pub(super) fn source_page(index: usize) -> bool {
-        matches!(index >> 12, 0x395 | 0xb4b..=0xb4f)
+        matches!(index >> 12, 0x395 | 0xb4b..=0xb4f | 0xb93..=0xb94)
     }
 
     fn localized(&self, bank: &Bank) -> bool {

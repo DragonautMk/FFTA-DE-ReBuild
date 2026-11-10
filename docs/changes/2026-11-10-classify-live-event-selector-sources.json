@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-10",
+  "slug": "classify-live-event-selector-sources",
+  "title": "Classify conditional live event-selector sources",
+  "kind": "docs",
+  "platforms": [
+    "EUR; Wine"
+  ],
+  "changes": [
+    "Trace two live parameter-selector writers and distinguish ten-bit helper returns from the event index retained by their caller."
+  ],
+  "validation": [
+    "Protected Wine static join authenticates the original writer instructions and all 256 event parameter bytes: selectors 0..255 yield exactly the existing 59 parameter indices (param27-conditional-writers-js3rbve5).",
+    "Original helper and caller disassembly plus a 512-record source audit identify kind-1 normalization to event 211 and the remaining zero-branch and alias limitations (param27-helper-audit-yokwurma, param27-caller-flow-8j_cycwm).",
+    "Protected EUR Wine disassembly bounds local zero-branch output writes and identifies descriptor, path and slot mutations plus remaining calls (param27-zero-callees-dfkkpeh8, param27-zero-tail-mxvvfwd8, param27-nested-effects-7lnjv3mo, param27-nested-tail-07i6btyo, param27-transitive-55sms0pp).",
+    "Protected EUR Wine source checks classify the final read-only leaf, find five bounded candidate pointer writers and verify conditional closure of the first 30 graph rows (param27-pointer-init-qq_9fyre, param27-pointer-helper-inner-i6t2mw81, param27-graph-first30-yjh8l5ml); an initial opcode assertion was corrected after failure (param27-graph-domain-ub05xwlh).",
+    "Protected EUR Wine join authenticates all 256 event-to-parameter selectors; retained snapshots yield no type-2/4 candidate in the five live records (param27-event-target-join-4wtrz1ss, param27-retained-context-l3xag_2z). Arena-selector static window records its conditional size comparison (param27-arena-select-retry-czaqq1ca); the first launch was refused by a shared Wine lease (param27-arena-select-30hzy25i).",
+    "Protected EUR Wine static producer and 512-mission/event/parameter joins identify four type-2/4 mission candidates and exclude them from the examined ordinal producer (param27-live-producers-a2x2_mze, param27-mission-producer-join-retry-zbsuv7dk, param27-event-types-r9_7r79c). Two protected snapshots show three disabled location selectors, without guest execution (param27-live-location-snapshots-z7m9qhd5). The first mission join failed on a truncated expected hash (param27-mission-producer-join-il3agjv8).",
+    "Protected EUR Wine disassembly and bounded direct-caller scan identify zero initialization, four constant placement writes and the 0..30 cursor producer (param27-placement-writers-4rbvjzmc, param27-placement-callers-vjq635n9, param27-placement-contract-f2wuxi8g); an intervening conditional call remains unclassified (param27-placement-intervening-21dea3in, param27-placement-intervening-inner-8d_phfu5).",
+    "Protected EUR Wine source check connects the selected live 10-bit mission record to the constructor and finds one bounded direct caller; a retained 14-entry pub list has none of the four candidate IDs (param27-mission-route-retry-sbupsq5k). Initial entry launch met a shared Wine lease (param27-mission-entry-zbtg0hxm); initial route audit had a wrong instruction address (param27-mission-route-u87u2ufq); both corrected retries passed.",
+    "Protected EUR Wine read-only checks show the retained DS-19 and town states lack an interpretable list, pub options has count zero, and the rumors context reproduces the previously checked 14 IDs in the same order (param27-ds19-list-0p9do6w0, param27-retained-pub-lists-q9bens5q, param27-pub-list-compare-m1p_8lhy). No gameplay was executed."
+  ],
+  "limitations": [
+    "Only examined paths are classified; other menu lists, mission activation, indirect calls, save loads, live mapping bounds, aliasing, arena validity and path termination remain open. Linux, USA and native Windows pending; no performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md"
+  ],
+  "references": []
+}

@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-11-10",
+  "slug": "add-context-updater-obj-bank",
+  "title": "Add conditional context-updater OBJ bank",
+  "kind": "added",
+  "platforms": [
+    "EUR; Wine"
+  ],
+  "changes": [
+    "Extend the existing indexed OBJ animation bank with the EUR context-updater bank and its source pages; advance extractor/decoder revisions to 134/133.",
+    "Add a targeted predecessor-preservation and original-consumer Wine test.",
+    "Add a focused translated updater and draw test."
+  ],
+  "validation": [
+    "Protected EUR Wine disassembly joins the caller, updater and draw pointer; the authenticated first sequence has 38 frames selecting 19 lists (obj-context-0accf4-wine-s8syadj8, obj-context-0ac640-wine-zllr_5xd, obj-context-first-sequence-wine-n_apgke7).",
+    "The full bounded relative index contains 21 valid lists and 258 objects, with no E133 source overlap (obj-context-full-bank-wine-p_z8yq34).",
+    "Windows GNU test build passed (e134-obj-context-build-c8ejvbif). Initial Wine run reached the attached 17-bank dataset but failed in the test setup: it tried to load a state after poisoning ROM bytes (e134-obj-context-wine-_ghiv7sj); test corrected and retried as recorded below.",
+    "Production Windows CLI creates, reuses, verifies and starts E134 on EUR Wine; 102 unchanged files match E133 (e134-obj-context-cli-wine-4lvv71nu).",
+    "Corrected EUR Wine runtime test preserves E133 and passes three original updater/draw full-state/clock comparisons after checking all poisoned source bytes (e134-obj-context-wine-retry-4hbc5mu3).",
+    "EUR Wine translated-original updater/draw comparisons pass for three cases with managed-source reads after machine-state reload (e134-obj-context-native-wine-mc1ztvqg)."
+  ],
+  "limitations": [
+    "Ordinary use, full UI save/Load lifecycle, Linux, USA and native Windows remain pending. Two additional indexed lists are not selected by the examined sequence. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/obj_animations/roots.rs",
+    "crates/gba-core/src/rom_data/runtime/obj_animations.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/obj_context_bank_tests.rs",
+    "docs/rom_data_obj.md",
+    "crates/recomp/src/rom_data/obj_context_native_tests.rs",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ],
+  "references": []
+}

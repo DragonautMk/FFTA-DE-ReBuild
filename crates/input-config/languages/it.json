@@ -28,6 +28,8 @@
     "No entry selected": "Nessuna voce selezionata",
     "No catalog: choose Import catalog.": "Nessun catalogo: scegli Importa catalogo.",
     "Details abbreviated; use debug-cheats show for the complete record": "Dettagli abbreviati; usare debug-cheats show per il record completo",
+    "Catalog notes": "Note del catalogo",
+    "Catalog record": "Record del catalogo",
     "Declared source region matches": "regione sorgente dichiarata corrispondente",
     "Declared source region differs": "regione sorgente dichiarata diversa",
     "Source region match unknown": "corrispondenza regione sconosciuta",

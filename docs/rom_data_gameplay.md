@@ -6988,3 +6988,191 @@ are protected. Evidence: `e132-lifecycle-wine-6k2_x7_1/`. The first test
 `e132-lifecycle-wine-4mny_y1a/` failed because it left the temporary ROM altered
 during backup identity verification; diagnostics are retained. This is a
 targeted lifecycle proof, not full save/rollback or platform coverage.
+
+### Ordinary byte00 reachability investigation
+
+The two `0x08016196`/`0x080161a4` byte00 reads are in one formatter case,
+selected by argument 1 at dispatcher `0x08015e9c`; the earlier `0x08019f02`
+reader consumes byte01. An extended text command `40 67 01` supplies that
+selector through `0x08015410`. The compact opcode `81 01` maps to the same
+command via `0x0801448c`/`0x08014544`. A separate formatter entry at
+`0x08016414` receives the selector in its first argument; bounded Thumb BL and
+aligned-pointer scanning finds two candidate callers, `0x08012950` and
+`0x08015882`, whose examined instructions take the argument from a live text
+byte. Indirect references and other dynamic producers remain open.
+
+A protected EUR Wine static screen checked the E132 manifest-bound
+`text-catalogs.json`, `script-text.json` and `short-texts.json`: among 58,045
+programs and 16,635 expanded strings, no extended `67 [1]`, compact `81 [1]`
+or expanded string `40 67 01` occurred. Compact `81 [0]` occurred 15 times.
+The earlier IN-08 Trade Items pair reads byte01 and value02 but no byte00.
+Select in that scene is linked to item-help text, yet no source-backed byte00
+trigger has been established; it was not replayed. These results apply only to
+the declared projections: generated RAM text, other sources, direct arguments
+and global reachability remain unproved. Evidence under `target/validation/units/`:
+`e132-byte00-dispatch-x_kvdhlr/`, `e132-byte00-callers-46bhd9gj/`,
+`e132-byte00-compact-81n7kxzq/`, `e132-byte00-direct-5qdyz2e1/`,
+`e132-byte00-direct-refs-i3y2fh32/`, `e132-byte00-producers-uvjzdkyv/` and
+`e132-byte00-textscan-78suaoix/`. New Linux, USA and native Windows checks
+remain pending; no performance measurements.
+
+### Conditional live event-selector sources for parameter records
+
+Two EUR writers at `0x08034d20` and `0x080351b4` read the live halfword
+`view+0xa4`, index the 12-byte event records and copy their byte06 to
+`view+0xa8`; subsequent readers use that byte as the 27-byte parameter index.
+The writers impose no local 256-row limit. A protected Wine static join pins
+the original instructions and verifies the parameter byte of all 256
+authenticated event rows: conditional on an event selector in `0..255`, the
+result is exactly the existing 59-index set (`param27-conditional-writers-js3rbve5/`). This does not classify outside event rows or other view writers.
+
+The original helper at `0x080d5290` has output kinds 0, 1, 2 and 3. Kind 0
+returns zero; kind 2 returns an unsigned mission byte45; kind 3 combines bits
+into an eight-bit value. Kind 1 may instead return a ten-bit live mission ID
+when mission byte45 is zero. The caller at `0x08046960` first stores that
+return to `view+0xa4`, but for kind 1 copies it to `view+0x20` and replaces
+`view+0xa4` with event 211 before joining. The authenticated event 211 uses
+parameter index 0, already owned. A static check of all 512 mission records
+found 21 IDs above 255 satisfying the examined ROM-only type/byte45 filters;
+actual list membership and other runtime conditions are not established. The
+nonzero kind 2/3 paths retain their eight-bit selector to the local join.
+
+These caller conclusions require the output scratch at `SP+0x40` not to alias
+the view through RAM mirrors. For kind 0 or a zero kind 3 result, the caller
+invokes further helpers before the join. The complete local body of
+`0x080d57b4` writes at most 16 pointers
+at the original `view+0x24..0x63` and modifies live list records; it calls
+`0x080cce98`. The leaf at `0x08037418` writes `view+0x64/0x65`. The direct
+body of `0x08045f2c` writes other view fields and calls several further helpers;
+its nested effects and root/view identity remain unclassified. In those nested
+windows, `0x080cce98`, `0x08036e90` and `0x08036eb4` are read-only leaves.
+`0x08036cb4` writes `view+0` and `root+0xf3e`, then calls `0x0804e494`;
+`0x08046390` calls `0x080463b0`, which writes several bytes and a halfword in
+a root-relative slot, plus one byte in the following slot. The latter calls
+`0x080471f8`, `0x0804db1c` and `0x08047164`; its root is reloaded after
+calls, so the slot formulas alone do not prove object stability. The inspected
+`0x0804e494` chain writes a 28-byte descriptor through a live pointer;
+`0x0804db1c` writes a path through a live destination, with no demonstrated
+path bound; `0x08047164` writes additional root-relative slot fields. The
+`0x080471f8` body has no direct data store; its callee `0x080377bc` is also
+a read-only leaf. Four candidate stores of the descriptor pointer call
+`0x0800719c` with size `0x740`; a fifth derives it from another live context.
+The helper requests `0x1d0` words from `0x08006f24` and returns its nonzero
+result plus 12 bytes, or zero on failure. The latter selects an arena block
+through `0x08006cec`. On normal return, a
+nonzero selected header has a recorded size at least the requested `0x1d0`
+words, provided header data stay stable and the output/stack writes do not
+alias it. This does not prove arena validity, physical extent, free status,
+non-aliasing, tree completeness or termination. The bounded search is not an
+exhaustive writer inventory, and the initializer reaching this scene is
+unproved. A static view of 32 possible graph rows found
+90 active neighbor slots in rows 0..29, all pointing within 0..29; the eight
+active slots in rows 30..31 contain values above 31. The scan does not prove
+that the latter rows are graph records or that live start/target values are in
+0..29. The 30-node projection, including its 90 opposite-direction links, was
+already authenticated in the [world-node contract](rom_data_maps.md#world-node-record-source-projection).
+It also does not establish predecessor termination, physical non-aliasing
+through RAM mirrors or pointer stability. Thus no global selector cap, new
+owned rows or ordinary reachability follows.
+
+For the separate `0x080463b0` path, an examined six-byte live record supplies
+an unsigned event index from one bit of byte02 and seven bits of byte03; the
+path origin is `(byte02 & 31) - 1` modulo 256. The call is gated by a decoded
+type of 2 or 4, but that alone does not bound the origin. A protected Wine
+join verifies all 256 authenticated event rows and their referenced parameter
+bytes: event 104 selects constant destination 0; events 106, 112 and 120
+select live bytes at `0x02002cff`, `0x02002cdb` and `0x02002cf3`, respectively,
+then subtract one modulo 256; the other 252 select the sentinel 255. This is
+the source projection, not proof that all of those events reach the call or
+that the live values are valid. Existing world-travel snapshots belong to a
+different caller. A read-only projection of the same two retained snapshots
+found no records with type 2 or 4 among the five candidates, so it gives no
+positive evidence for this path. No snapshot was replayed or modified.
+
+The original constructor entry `0x080d457c` takes a pointer to a live record
+and reads the 10-bit mission ID from its first two bytes. A bounded Thumb BL
+scan found one direct caller, `0x0806119e`. In the examined dispatcher, state
+17 and the input bit at `0x03000002` lead to that call using the selected
+record pointer from the menu context. A protected read of the previously
+accepted 14-entry pub-list checkpoint found none of mission IDs 104, 106, 112
+or 120. It was not replayed, and this negative says nothing about other pub
+lists, saves, indirect calls or execution after a selection. A later read-only
+inspection found that the retained DS-19 checkpoint has no valid list context;
+the Cyril-town checkpoint also lacks one, and the pub-options checkpoint has
+an empty context. The retained rumors checkpoint has 14 interpretable entries,
+identical in order to the already examined pub-list projection. These states do
+not supply a new positive candidate or prove that the rumors context is an
+active quest list.
+
+A further protected source join identifies two candidate constructors of those
+six-byte records. The first selects an ordinal 1..30 and writes event 225 plus
+that ordinal; none of events 226..255 has a parameter type of 2 or 4 in the
+authenticated 256-event projection. The second follows a mission with
+`mission.byte02 & 7 == 1` through `mission.byte45`, the event row and its
+parameter. Across 512 authenticated mission rows, four meet that ROM-only
+criterion and select types 2/4: mission/event 104, 106, 112 and 120. Runtime
+mission eligibility, other producers, later record changes and indirect calls
+remain open. The producer's origin uses the event's byte00 and the live getter;
+it is distinct from the destination selector in the parameter.
+
+The four cases depend on five one-based live world-location bytes at ordinals
+2, 3, 5, 6 and 16. In the two retained Giza snapshots, ordinals 2 and 3 are
+enabled and have node selectors in 1..30; ordinals 5, 6 and 16 are disabled
+and have selector 0. This is a read-only observation of those two states, not a
+proof of those missions running or a global range. The previously documented
+world-location reader uses byte03 of a 12-byte save record and checks its
+byte01 enabled bit; the producer's getter reads the byte directly and does not
+itself enforce that flag or a 1..30 range. The absolute RAM records coincide
+with the `save+0x224` consumer in those snapshots, not necessarily in every
+state.
+
+For placement writes, `0x08031444` stores the low byte of its second argument
+plus one at `save+0xb3+12*index`; it imposes no local index or value bound.
+A bounded Thumb BL search found four direct calls, with region/node pairs
+8/20, 2/18, 1/28 and 30/9. Initializer `0x08031488` also zeros that byte for
+all 30 rows when invoked with zero, before two of those calls. Another writer,
+`0x08034020`, reloads the view and stores its byte `+0x1a` using a region index
+from view `+0x8c`. The previously authenticated cursor helper `0x080375f8`
+returns 0 or 1..30 on normal return and its examined caller writes that result
+to view `+0x1a`. This only constrains that producer: other writers, save loads,
+root/view stability and the conditional helper call between the check and the
+`0x08034020` store are still open. In particular, the checked nonzero value
+is read again after that call. These are not a global 1..30 invariant or proof
+that any of the four missions runs.
+
+The bounded reference scan found one direct
+Thumb BL candidate to the helper, not a proof against indirect calls. Evidence:
+`param27-writers-541cg0s5/`, `param27-event-id-writers-pjywz1nj/`,
+`param27-helper-018bboaf/`, `param27-helper-caller-0nf9a49k/`,
+`param27-caller-flow-8j_cycwm/`, `param27-helper-audit-yokwurma/`,
+`param27-helper-refs-_jjl0u0z/`, `param27-zero-callees-dfkkpeh8/`,
+`param27-zero-tail-mxvvfwd8/`, `param27-nested-effects-7lnjv3mo/`,
+`param27-nested-tail-07i6btyo/`, `param27-transitive-55sms0pp/`,
+`param27-pointer-callee-zmn946lo/`, `param27-pointer-stores-ly1pb883/`,
+`param27-pointer-init-qq_9fyre/`, `param27-pointer-helper-rdoh3hcc/`,
+`param27-pointer-helper-inner-i6t2mw81/`,
+`param27-graph-first30-yjh8l5ml/`, `param27-arena-select-retry-czaqq1ca/`,
+`param27-event-target-join-4wtrz1ss/`, `param27-retained-context-l3xag_2z/`,
+`param27-live-literals-chvkr18b/`, `param27-live-producers-a2x2_mze/`,
+`param27-mission-producer-join-retry-zbsuv7dk/`, `param27-event-types-r9_7r79c/`
+`param27-live-location-snapshots-z7m9qhd5/`,
+`param27-placement-literals-qneecjg8/`, `param27-placement-heuristic-4zej9q4x/`,
+`param27-placement-writers-4rbvjzmc/`, `param27-placement-callers-vjq635n9/`,
+`param27-placement-contract-f2wuxi8g/`, `param27-placement-intervening-21dea3in/`
+`param27-placement-intervening-inner-8d_phfu5/`,
+`param27-mission-entry-retry-7cwx844a/` and
+`param27-mission-route-retry-sbupsq5k/`, `param27-ds19-list-0p9do6w0/`,
+`param27-retained-pub-lists-q9bens5q/` and `param27-pub-list-compare-m1p_8lhy/`
+under `target/validation/units/`. The first graph audit `param27-graph-domain-ub05xwlh/` failed its own opcode assertion
+because its script used the preceding instruction address; the corrected
+`param27-graph-domain-fixed-i3uyqxp5/` passed. The first arena selection launch
+`param27-arena-select-30hzy25i/` was refused because a shared Wine lease was
+held; the retry passed after it was released. The first mission join
+`param27-mission-producer-join-il3agjv8/` failed because its script contained a
+truncated expected event hash; the corrected retry passed. The first mission
+entry launch `param27-mission-entry-zbtg0hxm/` was refused while another Wine
+lease was active; the retry ran after release. The first route audit
+`param27-mission-route-u87u2ufq/` failed an instruction-address assertion;
+the corrected retry passed. Wine static analysis and read-only snapshot
+projection only;
+Linux, USA and native Windows remain pending, with no performance measurements.

@@ -24,6 +24,8 @@ pub struct CheatFilter {
     pub declared_match: bool,
     pub plan_candidate: bool,
     pub values_required: bool,
+    /// Source names and categories kept independently of abbreviated details.
+    pub search_terms: Vec<String>,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -427,7 +429,8 @@ impl Selector {
                             e.name, e.id, e.kind, e.location, e.description
                         )
                         .to_lowercase()
-                        .contains(&query))
+                        .contains(&query)
+                        || e.cheat_filter.as_ref().is_some_and(|c|c.search_terms.iter().any(|term|term.to_lowercase().contains(&query))))
             })
             .map(|(i, _)| i)
             .collect();

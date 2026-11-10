@@ -160,6 +160,10 @@ def project(catalog_bytes, table_bytes, rom, *, expected_sha=USA_SHA256, expecte
         if len(codes) != 1 or len(raw) != 1 or raw[0].partition(':')[0].strip() != codes[0] or not re.fullmatch(r'[0-9A-Fa-f]{8} 00[xX]{2}', codes[0]):
             raise ValueError(f'Unexpected annotated source line for {entry["id"]}')
         item = base(entry, source)
+        if number == 226:
+            item['notes'] = list(entry['notes']) + [
+                'In one USA battle checkpoint, value 09 changed the command label to White Magic, but the Battle Tech list remained and First Aid could still start.',
+            ]
         projected = item['provenance'][0]
         projected.update(master_id='CH-0225', raw_code_lines=list(codes), parameter={
             'name': 'ability_set_label', 'allowed': {'kind': 'list', 'values': values},
@@ -326,6 +330,7 @@ def project(catalog_bytes, table_bytes, rom, *, expected_sha=USA_SHA256, expecte
                     'Independently derived from an isolated USA observation; not the original CH-0234.',
                     'Condition checks bytes 86-87 are 01 02 before writing 05 to byte 87; it does not identify the character or validate the entire state.',
                     'One checkpoint and ability screen observed. Other scenes, maintained writes and physical-device behavior remain unverified.',
+                    'This byte write does not perform the ordinary job-change equipment handling; an ordinary Hunter change displayed an unequip notice.',
                 ],
                 'provenance': [{
                     'source': FIRST_JOB_SOURCE, 'master_id': 'CH-0225', 'raw_code_lines': lines,
@@ -354,6 +359,7 @@ def project(catalog_bytes, table_bytes, rom, *, expected_sha=USA_SHA256, expecte
                     'A derived one-byte plan, not the original CH-0234 or a verified full job change.',
                     'Condition checks bytes 86-87 are 01 02; it does not establish actor identity or the rest of the state.',
                     'Each listed title was observed in one USA ability screen; the visible ability list remained unchanged. Other effects are unverified.',
+                    'This byte write does not perform the ordinary job-change equipment handling; an ordinary Hunter change displayed an unequip notice.',
                 ],
                 'provenance': [{
                     'source': FIRST_JOB_SOURCE, 'master_id': 'CH-0225', 'raw_code_lines': lines,
@@ -400,6 +406,7 @@ def project(catalog_bytes, table_bytes, rom, *, expected_sha=USA_SHA256, expecte
                 'notes': [
                     'Source-listed job/primary ability labels; not a verified complete job or learned-ability change.',
                     'In one USA checkpoint, byte B6 was already 0A; the paired write set B5 to 0A and 142 candidate progress bytes stayed unchanged along the observed route.',
+                    'For Hunter/Hunt in one USA checkpoint, an ordinary job change displayed an unequip notice and changed nine additional record bytes; this pair did not.',
                     'Both writes require bytes 86-87 to be 01 02; this does not establish actor identity or complete state safety.',
                 ],
                 'provenance': [{

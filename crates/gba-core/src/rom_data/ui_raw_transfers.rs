@@ -1,4 +1,4 @@
-//! Raw localized transfer views; live selectors, queues and copy work stay guest code.
+//! Raw transfer views; live selectors, queues and copy work stay guest code.
 use super::{SourceRange, ui_graphics::table_selected::Table};
 use crate::ffta_rom;
 use serde::{Deserialize, Serialize};
@@ -11,6 +11,9 @@ pub const ROOTS: [u32; 7] = [
 pub const VIEW_BYTES: [usize; 7] = [224, 160, 768, 1600, 2048, 2432, 384];
 pub const VIEW_OFFSETS: [u32; 7] = [0, 0, 0, 0, 0, 0, 0x200];
 pub const SOURCE_SHA256: &str = "e11ef4d5f16feea8ef90e7fce58056e19d689004b7ca973270285e3cd31b8f80";
+pub const FIXED_OBJ_OFFSET: u32 = 0xb80b5c;
+pub const FIXED_OBJ_BYTES: usize = 0x8000;
+pub const FIXED_OBJ_SHA256: &str = "1604cd2aaa9b264913f05cb5266b8062c211374ca47b60ba18a3eae50486b7b2";
 pub type SourceSpan = (u32, Vec<u8>, String);
 fn invalid() -> String {
     "Invalid declared localized raw transfer views".into()
@@ -42,6 +45,9 @@ impl BankView {
 pub struct RawTransfers {
     pub tables: Vec<Table>,
     pub banks: Vec<BankView>,
+    /// Independently rooted direct transfers, without a localized selector.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub fixed_banks: Vec<BankView>,
 }
 impl RawTransfers {
     pub fn source_spans(&self) -> Result<Vec<SourceSpan>, String> {
@@ -98,6 +104,18 @@ impl RawTransfers {
         {
             return Err(invalid());
         }
+        if self.fixed_banks.len() > 1 {
+            return Err(invalid());
+        }
+        for bank in &self.fixed_banks {
+            if bank.bank_offset != FIXED_OBJ_OFFSET
+                || bank.relative_offset != 0
+                || bank.words.len() != FIXED_OBJ_BYTES / 4
+            {
+                return Err(invalid());
+            }
+            spans.push((bank.bank_offset, bank.source_bytes(), "fixed-obj-transfer".into()));
+        }
         spans.sort_by_key(|v| v.0);
         if spans
             .windows(2)
@@ -118,7 +136,7 @@ impl RawTransfers {
                 return p.source_bytes().ok().map(|v| v[i as usize % 4]);
             }
         }
-        self.banks.iter().find_map(|b| b.byte_at(offset))
+        self.banks.iter().chain(&self.fixed_banks).find_map(|b| b.byte_at(offset))
     }
     pub fn verify_source(&self, rom: &[u8]) -> Result<(), String> {
         self.validate()?;
@@ -141,6 +159,14 @@ impl Catalog {
             if ffta_rom::digest(&rom[at..at + len]) != sha {
                 return Err("Raw transfer reader fingerprint mismatch".into());
             }
+        }
+        // The original caller queues 0x4000 halfwords from this exact source.
+        if u32::from_le_bytes(rom[0x144b28..0x144b2c].try_into().unwrap())
+            != 0x08000000 + FIXED_OBJ_OFFSET
+            || ffta_rom::digest(&rom[FIXED_OBJ_OFFSET as usize..FIXED_OBJ_OFFSET as usize + FIXED_OBJ_BYTES])
+                != FIXED_OBJ_SHA256
+        {
+            return Err("Fixed OBJ transfer source fingerprint mismatch".into());
         }
         let mut tables = Vec::new();
         let mut banks = std::collections::BTreeMap::new();
@@ -186,11 +212,20 @@ impl Catalog {
         let decoded = RawTransfers {
             tables,
             banks: banks.into_values().collect(),
+            fixed_banks: vec![BankView {
+                bank_offset: FIXED_OBJ_OFFSET,
+                relative_offset: 0,
+                words: rom[FIXED_OBJ_OFFSET as usize..FIXED_OBJ_OFFSET as usize + FIXED_OBJ_BYTES]
+                    .chunks_exact(4)
+                    .map(|v| u32::from_le_bytes(v.try_into().unwrap()))
+                    .collect(),
+            }],
         };
         let spans = decoded.source_spans()?;
         if ffta_rom::digest(
             &spans
                 .iter()
+                .filter(|v| v.2 != "fixed-obj-transfer")
                 .flat_map(|v| v.1.iter().copied())
                 .collect::<Vec<_>>(),
         ) != SOURCE_SHA256

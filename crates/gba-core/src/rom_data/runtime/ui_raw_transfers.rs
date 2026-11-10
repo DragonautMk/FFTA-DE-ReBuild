@@ -15,7 +15,8 @@ pub struct RawTransfersStats {
 struct Byte {
     value: u8,
     bank: Option<usize>,
-    group: u8,
+    group: Option<u8>,
+    payload: bool,
 }
 pub(super) struct RawTransfersResources {
     data: model::RawTransfers,
@@ -80,7 +81,8 @@ impl RawTransfersResources {
                 return Some(Byte {
                     value,
                     bank: None,
-                    group: group as u8,
+                    group: Some(group as u8),
+                    payload: false,
                 });
             }
         }
@@ -88,9 +90,12 @@ impl RawTransfersResources {
             view.byte_at(offset).map(|value| Byte {
                 value,
                 bank: Some(bank),
-                group: self.bank_groups[bank],
+                group: Some(self.bank_groups[bank]),
+                payload: true,
             })
-        })
+        }).or_else(|| self.data.fixed_banks.iter().find_map(|view| {
+            view.byte_at(offset).map(|value| Byte { value, bank: None, group: None, payload: true })
+        }))
     }
     pub(super) fn guest_read<const N: usize>(
         &self,
@@ -108,13 +113,17 @@ impl RawTransfersResources {
         let (mut selector, mut payload, mut banks, mut groups) = (0, 0, 0, 0);
         let result = std::array::from_fn(|i| match &values[i] {
             Some(cell) => {
-                if let Some(bank) = cell.bank {
+                if cell.payload {
                     payload += 1;
-                    banks |= 1u64 << bank;
                 } else {
                     selector += 1;
                 }
-                groups |= 1u64 << cell.group;
+                if let Some(bank) = cell.bank {
+                    banks |= 1u64 << bank;
+                }
+                if let Some(group) = cell.group {
+                    groups |= 1u64 << group;
+                }
                 cell.value
             }
             None => prior.as_ref().map_or_else(|| rom[index + i], |p| p[i]),
@@ -141,6 +150,7 @@ impl RawTransfersResources {
         self.data
             .banks
             .iter()
+            .chain(&self.data.fixed_banks)
             .map(|b| b.words.len() * 4 + std::mem::size_of::<model::BankView>())
             .sum::<usize>()
             + self.data.tables.len()
@@ -148,6 +158,7 @@ impl RawTransfersResources {
     }
 }
 const SOURCE_BOUNDS: &[(usize, usize)] = &[
+    (0xb80b5c, 0x8000),
     (0x431470, 160),
     (0x4386c0, 1600),
     (0x439190, 768),

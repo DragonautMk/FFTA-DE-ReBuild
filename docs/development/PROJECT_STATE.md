@@ -2250,6 +2250,19 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   coverage, callers and deferred platforms remain
   open. No benchmark.
   [Contract](../rom_data_compact_catalog.md).
+- EUR e134-d133 adds a conditional context-updater bank with 21 OBJ lists
+  and one 38-frame sequence. EUR Wine CLI create/reuse/verify/startup and
+  three interpreter and three translated updater/draw state/clock comparisons
+  pass, including machine-state reload. Ordinary use, UI save/Load, Linux, USA
+  and native Windows remain open. No performance measurement.
+  [Evidence](../rom_data_obj.md#conditional-context-updater-obj-bank-e134).
+- EUR e133-d132 adds three branch-selected OBJ lists, 36 bytes total. Wine
+  creation/reuse preserves E132 resources; six interpreter and six translated
+  original draw comparisons match full state and clock with managed spans
+  poisoned, including machine-state reload. CLI create/reuse/verify and managed
+  startup pass. UI save/Load lifecycle, ordinary scenes, remaining sources,
+  Linux, USA and native Windows remain open; no performance measurement.
+  [Evidence](../rom_data_obj.md#branch-selected-static-obj-lists-e133).
 - EUR e129-d128 adds conditional RAM-slot marker lists `395172` and `39517a`
   to the static OBJ catalog. A focused Wine managed test preserves the E128
   predecessor projection and other resources, and checks publication lifecycle,

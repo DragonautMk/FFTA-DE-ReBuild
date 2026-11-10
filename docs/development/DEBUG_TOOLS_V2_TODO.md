@@ -625,7 +625,10 @@ No other development was selected. On resumption read only the individual ID in
   **Audit 2026-11-01 — partial.** The [catalog view](../changes/2026-10-31-browse-local-cheat-catalog-in-menu.json)
   provides search/details/filters and a later explicit source/preview/arm/disarm
   page flow. Details now surface bounded per-source failure reasons and
-  missing placeholder domains; a protected Wine check covered CH-0236.
+  missing placeholder domains; a protected Wine check covered CH-0236. Long
+  records put source notes before the abbreviated raw record; oversized notes
+  still require the full paged text command. Category and source-title search
+  uses dedicated terms, so abbreviated code lists do not hide those matches.
   The cheat filters now use source-plan, declared-region and armed
   metadata rather than localized labels; a separate values filter finds
   assessed parameter declarations without implying ROM compatibility. Wine GUI
@@ -668,7 +671,13 @@ No other development was selected. On resumption read only the individual ID in
   hashes. Protected USA/EUR preflight and Wine frontend selection/arm/disarm
   passed without guest advancement. A later paired USA Wine checkpoint run
   observed one ability label change from Battle Tech to Black Magic after a
-  single write; battle behavior and other values remain unverified. Dependent
+  single write. A same-input USA battle pair changed the first command label
+  from Battle Tech to White Magic, but the opened ability screens matched
+  pixel-for-pixel and showed Battle Tech entries; the first-record difference
+  remained only byte35. A later pair also reached identical First Aid target
+  and forecast screens, another reached matching “Do it” confirmations, and a
+  final pair displayed First Aid after confirmation with matching screens.
+  Healing and other actions remain unverified. Dependent
   lists now validate declared
   relationships and filter menu values. Optional source-bound value labels
   accompany the numeric choices; the USA ability projection derives these
@@ -707,7 +716,10 @@ No other development was selected. On resumption read only the individual ID in
   after six category steps and its five visible rows matched the treated crop;
   frame counts differed and full learning is unproved. Menu selection,
   invalid-pair refusal and a false-condition zero-write check passed; other pairs and full mechanics remain
-  unverified. The condition
+  unverified. A same-seed Hunter/Hunt comparison found the ordinary job change
+  displayed an unequip notice and cleared nine more first-record bytes than the
+  paused two-byte plan. The opt-in job projections now surface that difference;
+  other equipment states and full equivalence remain unverified. The condition
   does not prove actor identity or full-state safety. Protected generation and
   a USA Wine menu one-shot plus false-condition check passed; other gameplay,
   maintained use and physical devices remain unverified. A separate byte-85-only diagnostic showed Gunner

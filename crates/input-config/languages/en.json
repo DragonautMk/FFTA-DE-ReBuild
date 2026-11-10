@@ -28,6 +28,8 @@
     "No entry selected": "No entry selected",
     "No catalog: choose Import catalog.": "No catalog: choose Import catalog.",
     "Details abbreviated; use debug-cheats show for the complete record": "Details abbreviated; use debug-cheats show for the complete record",
+    "Catalog notes": "Catalog notes",
+    "Catalog record": "Catalog record",
     "Declared source region matches": "Declared source region matches",
     "Declared source region differs": "Declared source region differs",
     "Source region match unknown": "Source region match unknown",

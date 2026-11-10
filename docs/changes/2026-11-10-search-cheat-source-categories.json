@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-10",
+  "slug": "search-cheat-source-categories",
+  "title": "Find cheat categories independently of abbreviated details",
+  "kind": "fixed",
+  "platforms": [
+    "Linux",
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Keep each cheat entry category, aliases, and source categories and titles as search terms separate from bounded displayed details. Search remains case-insensitive and combines with existing type, state and collection filters."
+  ],
+  "validation": [
+    "Protected Linux catalog suite: 21 passed and four fixture-dependent tests ignored. Menu selector suite: 29 passed. Regressions cover categories beyond long code lists, alternate source titles, Unicode and absent queries. Evidence: dbg20-category-search-linux-s85q6zud.",
+    "Windows GNU menu/recomp tests and app cross-build passed. Both focused tests and synthetic 700-line primary/source category searches passed in coordinated Wine/Xvfb; both screenshots reviewed and showed the single expected row. Guest paused and unchanged, normal close and Wine drain. Evidence: dbg20-category-search-windows-build-46axr61j and dbg20-category-search-wine-gui-retry-7ep44203.",
+    "The first Wine GUI attempt reached Audio instead of the cheat page because its navigation was not synchronized. The corrected driver waits for menu status after navigation; its retry passed. Evidence: dbg20-category-search-wine-gui-yyd7w3cy.",
+    "Read-only aggregate check of the local catalog: 341 entries, 569 source records, 203 entries with multiple sources; all source section/title values are strings."
+  ],
+  "limitations": [
+    "Synthetic GUI evidence does not verify native Windows, physical controllers or the effect and compatibility of source codes. Broader DBG2-20 domain and device evidence remains open."
+  ],
+  "files": [
+    "crates/menu/src/content_selector.rs",
+    "crates/menu/src/content_selector/tests.rs",
+    "crates/recomp/src/debug_cheats.rs",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

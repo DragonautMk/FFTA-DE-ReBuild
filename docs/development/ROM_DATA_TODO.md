@@ -208,6 +208,21 @@ families and Linux/USA remain open. [Contract](../rom_data_gameplay.md).
 
 ## ROMDATA-02 — Extractors and decoders
 
+**ROMDATA-02-OBJ-CONTEXT-UPDATER scoped EUR progress:** E134 adds one
+38-frame sequence and a 21-list OBJ bank. Wine verifies CLI create/reuse/verify/
+startup, source bytes and three updater/draw full-state/clock cases each in
+the interpreter and translated execution, including machine-state reload.
+Ordinary use, UI save/Load, Linux, USA and native Windows remain open; no
+performance measurement.
+[Evidence](../rom_data_obj.md#conditional-context-updater-obj-bank-e134).
+
+**ROMDATA-02-OBJ-BRANCH-LISTS scoped EUR progress:** three branch-selected
+static OBJ lists (36 bytes) are added in E133. Wine interpreter and translated
+draws match full state/clock in six cases each, including machine-state reload;
+production CLI create/reuse/verify and managed startup pass. Ordinary scenes,
+UI save/Load, other sources, Linux, USA and native Windows remain open. No
+performance measurement. [Evidence](../rom_data_obj.md#branch-selected-static-obj-lists-e133).
+
 **ROMDATA-02/03/04-GAMEPLAY-6E84E0 scoped EUR progress.** The 31 four-byte
 records selected by authenticated item byte18 are modeled and attached with an
 item-owner dependency; E132 managed Wine publication and 194 original prefix

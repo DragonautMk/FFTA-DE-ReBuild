@@ -114,6 +114,9 @@ absent catalog and an unknown ID. This does not validate cheat semantics.
 The Debug / Cheat page computes the exact hash from the currently loaded ROM
 and shows it alongside the catalog hash and the same declared-region comparison.
 It opens a catalog view with search, filters and scrollable original details.
+Search includes the CH identifier, title, aliases and both the entry's category
+and its source categories and titles. These terms remain searchable when the
+displayed record is abbreviated.
 The type filter combines the source format and declared region. State filters
 can show armed entries, entries not armed, matching declared regions, source
 plan candidates, entries needing attention or entries with **Values to choose**.
@@ -161,7 +164,10 @@ reason and provenance index; placeholder lines without a parameter declaration
 explicitly say that a declared value domain is missing. Empty provenance and
 additional unassessed sources are identified. Dynamic decoder errors without a locale entry remain
 in English. These diagnostics do not enable the entry or establish compatibility. Long individual records are marked as abbreviated
-in the view and remain available in full through `debug-cheats show`. Decoding
+in the view and remain available in full through `debug-cheats show`. When a
+record is abbreviated, its source notes are shown before the raw record so a
+long code list does not hide them. The same size bound still applies to very
+long notes, and the abbreviation notice directs readers to the full record. Decoding
 and controlled application remain partial, with the one-shot scope below.
 
 To keep a cheat in the favorites list, highlight it and choose **Favorite**;
@@ -525,6 +531,41 @@ continue to show numbers. Older runtimes that do not understand the optional
 label field refuse the labeled declaration; use a matching runtime and do not
 remove labels from an already selected, hash-pinned catalog.
 
+A separate protected USA Wine comparison started from the same in-battle
+checkpoint with Marche's Action command selected. A paused one-shot `CH-0226`
+write changed byte `020000B5` from `02` to `09`; the no-write control remained
+`02`. After identical inputs and 158 frames, the treated Action menu named the
+first ability set White Magic instead of Battle Tech, while Black Magic remained
+the second set. Opening the first set produced a pixel-identical battle screen
+in both copies, listing First Aid, Powerbreak, Mindbreak, Magicbreak, Speedbreak
+and Mug. The inspected 264-byte first records differed only at offset `35`
+through the sampled route. This checkpoint demonstrates a changed command label
+without a changed visible ability list; it does not establish the internal cause,
+casting behavior, every ability, other states or device equivalence. Evidence:
+`target/validation/units/dbg20-battle-ability-selector-05qypq6p/`.
+
+Extending that pair to First Aid selected Marche as the target and opened the
+same “Cure status & heal HP!” forecast in both copies. The target and forecast
+screens were pixel-identical, and the observed first records still differed only
+at offset `35`. Marche had full HP. The forecast remained open after waiting;
+this observation did not confirm the action or demonstrate healing. Evidence:
+`target/validation/units/dbg20-battle-firstaid-bz6jt1vh/` and
+`target/validation/units/dbg20-firstaid-forecast-analysis-ncilu0y7/`.
+A subsequent pair advanced to the separate “Do it / Cancel” confirmation; its
+two captured confirmation screens matched, and the first records still differed
+only at `35`. Earlier forecast captures differed in pixels, so they are not
+claimed identical in that run. Evidence:
+`target/validation/units/dbg20-battle-firstaid-confirm-retry-lwx05ag4/`.
+
+In a further paired continuation, both copies confirmed “Do it” and displayed
+the First Aid action at the same frame. The decision, action and later screens
+matched pixel-for-pixel, and the sampled first records still differed only at
+offset `35`. Marche started with full HP, so the observation does not establish
+how much HP First Aid restores or whether healing changed any value. It covers
+this one action and checkpoint, not every skill or battle state. Evidence:
+`target/validation/units/dbg20-battle-firstaid-final-s0pu3f1f/` and
+`target/validation/units/dbg20-firstaid-final-analysis-87gn7fpm/`.
+
 Protected checks generated and validated eight records, rejected modified source
 lines, table and ROM inputs, and confirmed deterministic generation and
 no-overwrite behavior. A Windows GNU/Wine/Xvfb isolated USA session explicitly
@@ -755,6 +796,11 @@ writes, devices and native Windows remain unverified. A separate Wine menu test
 selected Fighter, made the conditional write once, then reported zero writes
 when the condition no longer matched; an undeclared value was refused.
 
+These single-byte entries do not run the game's ordinary job-change equipment
+handling. In the Hunter comparison below, an ordinary change displayed an
+unequip notice and changed additional record bytes. Do not assume a job-title
+write makes equipment or the rest of the character state equivalent.
+
 For paired **job and primary ability labels**, append
 `--first-human-job-ability` when creating a new private USA projection and
 select entry `CH-9024`. The ten source-listed human job choices each lead to
@@ -794,6 +840,19 @@ same descriptor indices, all learned abilities, a complete job transition or
 battle behavior. The initial control R-information attempt opened Battle Tech,
 and a single Right reached Chivalry; neither was treated as the Black Magic
 comparison. Original ROMs and checkpoint remained unchanged.
+
+Another protected USA Wine comparison used the same checkpoint and identical
+initial 264-byte first records for an ordinary Soldier-to-Hunter change and a
+paused `CH-9024` Hunter/Hunt application. Both changed offsets `07` and `35`
+from `02/02` to `0C/14`. The ordinary route displayed “Unequipped all items”
+and also cleared nine previously nonzero bytes at offsets `2A`, `2C..33`; the
+one-shot pair left them unchanged. This is a concrete difference in this
+checkpoint, not a complete equipment-layout or game-state comparison. The
+ordinary route advanced frames while the paired application was paused. It does
+not establish other jobs, learned skills, battle behavior or native Windows.
+The guarded Wine units and screenshots are retained in
+`target/validation/units/dbg20-ordinary-job-comparison-nl85j_ik/` and
+`target/validation/units/dbg20-hunter-paired-once-wu600y_z/`.
 
 A separate menu check explicitly selected both choices, made two writes, refused
 an undeclared pair, and made zero writes when the condition no longer matched.

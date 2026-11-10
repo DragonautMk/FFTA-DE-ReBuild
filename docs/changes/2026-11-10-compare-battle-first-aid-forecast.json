@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-10",
+  "slug": "compare-battle-first-aid-forecast",
+  "title": "Compare First Aid after a selector change",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Document a paired USA First Aid target and forecast observation following the prior CH-0226 selector comparison; retain the distinction between a forecast and an executed action.",
+    "Extend the private CH-0226 note with the bounded observation that First Aid could still start after the command label changed."
+  ],
+  "validation": [
+    "Protected same-checkpoint Wine copies used matching inputs after a paused selector one-shot in one copy. Target, forecast and later waiting screenshots were visually reviewed and matched pixel-for-pixel; sampled 264-byte records differed only at offset35. Both sessions closed and Wine drained. Evidence: dbg20-battle-firstaid-bz6jt1vh and dbg20-firstaid-forecast-analysis-ncilu0y7.",
+    "An attempted forecast-confirmation unit was refused before any process started because the coordinated Wine lease was owned by a separate running unit. Host process inspection confirmed its owner was active; no lock or process was altered. Evidence: dbg20-battle-firstaid-confirm-zrryrli8.",
+    "A corrected retry after the other Wine owner completed reached the separate Do it / Cancel confirmation in both copies. Both confirmation screenshots matched and the first records still differed only at byte35; earlier forecast captures differed in pixels. Both sessions closed and Wine drained. Evidence: dbg20-battle-firstaid-confirm-retry-lwx05ag4.",
+    "A further protected paired continuation confirmed Do it in both copies. Both showed First Aid at the same frame; decision, action and later screenshots were visually reviewed and matched pixel-for-pixel, and sampled 264-byte records differed only at byte35. Sessions closed and Wine drained. Evidence: dbg20-battle-firstaid-final-s0pu3f1f and dbg20-firstaid-final-analysis-87gn7fpm.",
+    "Protected regeneration checked the revised CH-0226 note, preserved the original source and eight code lines, and left other ability notes unchanged. Evidence: dbg20-battle-firstaid-projection-mjmfzqct."
+  ],
+  "limitations": [
+    "Marche had full HP; the observed action does not establish the amount or occurrence of healing. Only one USA checkpoint and one action were observed; other abilities, game states, devices and native Windows remain unverified."
+  ],
+  "files": [
+    "crates/menu/assets/debug_v2.tsv",
+    "scripts/cheat_ability_projection.py"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

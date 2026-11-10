@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-10",
+  "slug": "add-fixed-obj-transfer",
+  "title": "Add fixed conditional OBJ transfer",
+  "kind": "added",
+  "platforms": [
+    "EUR; Wine pending"
+  ],
+  "changes": [
+    "Extend the existing raw-transfer model with an independently identified 32768-byte EUR OBJ graphics bank, preserving localized group counters.",
+    "Advance extractor/decoder revisions to 135/134 and add a focused predecessor, original queue and DMA Wine test."
+  ],
+  "validation": [
+    "Protected EUR Wine disassembly and source join authenticate caller literals, transfer-queue helper, 16-bit DMA control and the disjoint E134 source range (obj-context-graphics-consumer-wine-rcruc6ln, obj-context-graphics-source-wine-9sny93_2)."
+  ],
+  "limitations": [
+    "Build and runtime, translated execution, CLI, ordinary use, Linux, USA and native Windows pending. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/ui_raw_transfers.rs",
+    "crates/gba-core/src/rom_data/runtime/ui_raw_transfers.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/fixed_obj_transfer_tests.rs",
+    "docs/rom_data_ui_raw_transfers.md"
+  ],
+  "references": []
+}

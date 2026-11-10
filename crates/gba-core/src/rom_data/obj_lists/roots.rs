@@ -444,6 +444,13 @@ pub const REFERENCES: &[RootReference] = &[
         source_offset: 0x00397e14,
     },
     RootReference {
+        reader: 0x0008b9a0,
+        literal: 0x0008b9d0,
+        call: 0x0008b9f4,
+        wrapper: 0x00001d28,
+        source_offset: 0x00397e22,
+    },
+    RootReference {
         reader: 0x0008b9dc,
         literal: 0x0008b9fc,
         call: 0x0008b9f4,
@@ -463,6 +470,13 @@ pub const REFERENCES: &[RootReference] = &[
         call: 0x000acd98,
         wrapper: 0x00001d28,
         source_offset: 0x00399524,
+    },
+    RootReference {
+        reader: 0x000c8d14,
+        literal: 0x000c8d44,
+        call: 0x000c8e10,
+        wrapper: 0x00001f6c,
+        source_offset: 0x00399724,
     },
     RootReference {
         reader: 0x000c8d92,
@@ -666,6 +680,13 @@ pub const REFERENCES: &[RootReference] = &[
         call: 0x0013abba,
         wrapper: 0x00001f6c,
         source_offset: 0x003addcc,
+    },
+    RootReference {
+        reader: 0x0013a9ca,
+        literal: 0x0013a9f4,
+        call: 0x0013abd8,
+        wrapper: 0x00001f6c,
+        source_offset: 0x003add94,
     },
     RootReference {
         reader: 0x0013abbe,

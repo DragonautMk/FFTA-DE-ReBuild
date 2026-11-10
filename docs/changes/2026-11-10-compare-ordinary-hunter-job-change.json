@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-10",
+  "slug": "compare-ordinary-hunter-job-change",
+  "title": "Expose equipment differences in derived job selectors",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Add an ordinary job-change equipment warning to the three opt-in derived first-record job projections; retain their guarded bytes and source quarantine.",
+    "Document the bounded same-seed comparison and keep full job and ability behavior open."
+  ],
+  "validation": [
+    "Protected USA Wine ordinary route opened Change Jobs and confirmed Hunter; its notice said Unequipped all items. Initial record matched the paired run; ordinary offsets 07/35 changed 02/02 to 0C/14, and nine other nonzero bytes at 2A and 2C..33 became zero. Screenshots were reviewed; the process closed normally and the server drained. Evidence: target/validation/units/dbg20-ordinary-job-comparison-nl85j_ik/.",
+    "Protected paused USA Wine CH-9024 Hunter/Hunt one-shot made two writes with no frame or clock advance and changed only offsets 07/35 in the same 264-byte record. Evidence: target/validation/units/dbg20-hunter-paired-once-wu600y_z/.",
+    "Protected projection generation confirms all three warnings and unchanged conditional codes. The first test failed before generation due to the test script using its scratch working directory; the corrected retry passed. Evidence: target/validation/units/dbg20-hunter-warning-projection-d6ve55cx/ and dbg20-hunter-warning-projection-retry-w3rgdg6o/."
+  ],
+  "limitations": [
+    "The ordinary route advanced frames while the paired application was paused; the nine extra offsets are observed record changes, not a complete equipment schema. Other jobs, states, learned skills, battle effects, physical devices and native Windows remain unverified."
+  ],
+  "files": [
+    "scripts/cheat_ability_projection.py",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}
