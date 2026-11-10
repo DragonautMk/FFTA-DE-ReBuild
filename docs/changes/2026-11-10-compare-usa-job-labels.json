@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-10",
+  "slug": "compare-usa-job-labels",
+  "title": "Compare source job labels with USA ROM rows",
+  "kind": "changed",
+  "platforms": [
+    "USA ROM source comparison"
+  ],
+  "changes": [
+    "Document a bounded source-label comparison across the five playable race headings while preserving the conflicting local labels and existing character quarantine.",
+    "Compare the source race groupings with a documented but not independently runtime-verified metadata byte."
+  ],
+  "validation": [
+    "A protected read-only check authenticated the USA ROM and the already verified 116-row metadata table, parsed 43 job rows under the local Human, Bangaa, Nu Mou, Viera and Moogle headings, and compared their labels to original ROM name rows. After case, punctuation and spacing normalization, 41 matched; source row 02 was blank while the ROM resolved Soldier, and source row 01 named Soldier while its ROM string could not be decoded by this bounded check. Protected inputs stayed unchanged. Evidence: target/validation/units/dbg20-usa-job-label-comparison-34opuv6d/.",
+    "Earlier isolated Wine breakpoints established a selected first-member property-zero call with job bytes 50/02; its return index led through the original caller to the Soldier string. Evidence: target/validation/units/dbg20-usa-job-call-registers-uienjad6/ and dbg20-usa-job-name-caller-_8hlaicc/.",
+    "A protected second comparison checked metadata byte 04 against each of the 43 source race headings. Forty-two matched; job row 01 held zero where the source group is Human, and row 02 matched the Human group. The independent job map labels byte 04 as race but marks its interpretation as needing verification. Evidence: target/validation/units/dbg20-usa-job-race-metadata-hp0v8vns/."
+  ],
+  "limitations": [
+    "Name-row agreement does not establish race/job compatibility, valid combinations, game behavior or device behavior. The unresolved row 01 is not asserted to have any particular meaning. Original XP descriptions, CH-0236 and character quarantine are unchanged.",
+    "Matching metadata byte 04 strengthens a source comparison but does not establish actual race/job transitions, validity of every combination or battle behavior."
+  ],
+  "files": [
+    "docs/cheats.md",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/changes/2026-11-10-trace-usa-job-name-arguments.json"
+  ]
+}

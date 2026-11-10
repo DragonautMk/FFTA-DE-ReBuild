@@ -108,6 +108,9 @@ impl State {
                     1 => Some(Request::PresetSave), 2 => Some(Request::PresetPrepare),
                     3 => Some(Request::PresetArm), 4 => Some(Request::DisarmAll), _ => None,
                 },
+                MenuInput::Confirm if (1..=3).contains(&self.focus) && self.selected_source().is_some_and(|source|source.assessment=="reference-only") => {
+                    self.preview.clear();self.preview_token.clear();self.feedback="Reference values cannot be activated".into();
+                },
                 MenuInput::Confirm => return Some(match self.focus {
                     1 => Request::Prepare, 2 => Request::ApplyOnce, 3 => Request::Arm,
                     4 => Request::Disarm, _ => Request::DisarmAll,
@@ -123,6 +126,15 @@ impl State {
 mod tests {
     use super::*;
 
+    #[test]
+    fn reference_values_can_be_browsed_but_not_prepared_or_armed(){
+        let source=Source{index:0,name:"source".into(),master:"CH-0002".into(),assessment:"reference-only".into(),parameters:vec![Parameter{name:"appearance".into(),domain:Domain::List(vec![0,2]),labels:vec![(0,"Source reports glitch".into())]}]};
+        let mut state=State::new("CH-0001".into(),"Example".into(),false,vec![source],vec![]);
+        state.handle(MenuInput::Confirm);assert_eq!(state.current_parameter(),Some(("appearance",0)));assert_eq!(state.current_parameter_label(),Some("Source reports glitch"));
+        state.handle(MenuInput::Down);state.handle(MenuInput::Confirm);assert_eq!(state.selected_parameters(),Some(vec![("appearance",2)]));
+        for focus in 1..=3 {state.focus=focus;assert_eq!(state.handle(MenuInput::Confirm),None);assert_eq!(state.feedback,"Reference values cannot be activated");}
+        state.focus=4;assert_eq!(state.handle(MenuInput::Confirm),Some(Request::Disarm));
+    }
     #[test]
     fn selection_is_explicit_and_changing_source_clears_preview() {
         let mut state = State::new("CH-0001".into(), "Example".into(), false, vec![Source { index: 2, name: "one".into(), master: "CH-0002".into(), assessment: "candidate".into(),parameters:vec![] }, Source { index: 5, name: "two".into(), master: "CH-0003".into(), assessment: "unresolved".into(),parameters:vec![] }], vec![]);

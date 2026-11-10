@@ -21968,3 +21968,38 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: opt-in private USA projection adds a distinct source-bound third-appearance entry for value02 while preserving XP quarantine, source inputs, default output behavior, explicit selection, master/ROM guards and no-overwrite. Protected generation rejected bad inputs and ID collisions. USA Wine/Xvfb menu selected source/value, reviewed and applied once; byte01→02, imported outlier unchanged, value13 refused, no guest frames or maintained cheat, normal close and Wine drained.
 - Evidence: `docs/changes/2026-11-10-project-third-appearance-candidate.json`; `target/validation/units/dbg20-third-appearance-projection-ltwc_atr/`, `dbg20-third-appearance-menu-xtrn7in4/`; prior paired effect `dbg20-third-candidate-effect-lwmjwzo2/`.
 - Limits: one value/checkpoint/screen; separate from original CH-0236, not its correction. Other values, slot identities, maintained writes, gameplay, devices and native Windows remain open; first two addresses in the separate listing differ.
+
+### DBG2-20-USA-JOB-NAME-ARGUMENTS
+
+- Outcome: completed within tested scope
+- Verified criteria: an isolated cheat-free USA Wine breakpoint captured six original job-property calls for the selected first roster member, with primary 50 and alternate 02. Property0 returned decimal29; a protected static caller/pointer check resolved that index to the USA Soldier name. Checked bytes and protected inputs unchanged; normal close and Wine drained.
+- Evidence: `docs/changes/2026-11-10-trace-usa-job-name-arguments.json`; `target/validation/units/dbg20-usa-job-call-registers-uienjad6/`, `dbg20-usa-job-name-caller-_8hlaicc/`. Sol `gpt-6.1-sol` xhigh `/root/sol_domain_diagnosis` proposed register capture; effective settings unconfirmed.
+- Limits: one actor/property/checkpoint; XP lists Soldier01 and 02 as dash. This does not validate all job/race mappings, earlier job-screen title, learned abilities, battle or physical devices. Original XP entries and CH-0236 remain quarantined.
+
+### DBG2-20-USA-JOB-LABEL-COMPARISON
+
+- Outcome: completed bounded source comparison
+- Verified criteria: protected read-only USA ROM/table comparison covered 43 job rows under five local playable-race headings. Forty-one names match after case/punctuation/space normalization; source row02 is blank while ROM resolves Soldier, and source row01 says Soldier but its ROM string was not decoded. Inputs unchanged.
+- Evidence: `docs/changes/2026-11-10-compare-usa-job-labels.json`; `target/validation/units/dbg20-usa-job-label-comparison-34opuv6d/`; prior selected-actor result `dbg20-usa-job-call-registers-uienjad6/`.
+- Limits: labels do not prove race compatibility, safe combinations, learned abilities or physical-device behavior. Row01 remains undecoded; original local source and character quarantine remain unchanged.
+
+### DBG2-20-USA-JOB-RACE-METADATA
+
+- Outcome: completed bounded source comparison
+- Verified criteria: protected USA job-table metadata byte04 matched 42 of 43 local source race groupings; source Human job row01 instead had byte00. Row02 matched Human, despite its source label being blank. The independent ROM map calls byte04 job race with verification needed. Inputs unchanged.
+- Evidence: `docs/changes/2026-11-10-compare-usa-job-labels.json`; `target/validation/units/dbg20-usa-job-race-metadata-hp0v8vns/`, `dbg20-usa-job-label-comparison-34opuv6d/`.
+- Limits: static metadata agreement is not runtime compatibility or proof of safe transitions; complete job/race/appearance behavior, CH-0236 and device checks remain open. Original source and character quarantine preserved.
+
+### DBG2-20-CHARACTER-REFERENCE-VALUES
+
+- Outcome: completed within tested scope
+- Verified criteria: optional private projection browses five playable race groups, 43 source job rows and 226 listed appearances, preserving warnings and conflicts. Menu and backend refuse execution, including a synthetic matching-region source. Focused Linux and Windows GNU/Wine tests and protected Wine GUI passed; guest unchanged, screenshots reviewed, normal close and Wine drained. Original quarantine and source tables retained.
+- Evidence: `docs/changes/2026-11-10-browse-character-reference-values.json`; `target/validation/units/dbg20-reference-values-build-cqwrsjpy/`, `dbg20-reference-values-wine-e4mbx839/`.
+- Limits: source lists do not establish valid or safe combinations; CH-0236, wider effects, native Windows and physical devices remain open. Older runtimes were not tested with this projection.
+
+### DBG2-20-PARAMETER-HEX-DISPLAY
+
+- Outcome: completed within tested scope
+- Verified criteria: cheat parameter chooser, focus label and confirmed selection show decimal and hexadecimal without changing chosen values. Focused Linux and Windows GNU/Wine tests cover English/Italian, range/list/reference and 16-bit values; protected USA Wine GUI showed Gunner 38 (0x26), selected choices and refusal of reference preparation. Screenshots reviewed, guest unchanged, normal close and Wine drained.
+- Evidence: `docs/changes/2026-11-10-show-cheat-values-in-hex.json`; `target/validation/units/dbg20-hex-values-build-4138gep6/`, `dbg20-hex-values-wine-oyxdakfz/`.
+- Limits: formatting does not validate source domains; original CH-0236, game/device effects, native Windows and physical controllers remain open.

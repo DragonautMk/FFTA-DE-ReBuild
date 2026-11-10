@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-10",
+  "slug": "trace-usa-job-name-arguments",
+  "title": "Identify a USA job-name lookup for the selected actor",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU / Wine",
+    "USA ROM source comparison"
+  ],
+  "changes": [
+    "Record selected-actor arguments and a job-name lookup for the existing USA route, and retain the conflicting source labels and character quarantine."
+  ],
+  "validation": [
+    "A cheat-free isolated USA Wine/Xvfb run followed the existing ability-screen input route and captured six interpreter breakpoint calls for the first roster member. Each used primary 50 and alternate 02; property zero returned decimal index 29. Checked field bytes and protected inputs stayed unchanged, the window closed normally and Wine drained. Evidence: target/validation/units/dbg20-usa-job-call-registers-uienjad6/.",
+    "A separate protected static check decoded the original caller branch, verified its pointer-table indexing after the retained return value, and resolved that USA string to Soldier. It authenticated the ROM and preserved both the ROM and the prior breakpoint result. Evidence: target/validation/units/dbg20-usa-job-name-caller-_8hlaicc/.",
+    "Focused consultant `/root/sol_domain_diagnosis` was requested as gpt-6.1-sol with xhigh. It identified the unresolved source-label discrepancy, warned that executable domains would lift quarantine, and proposed register capture; effective model and effort were not independently exposed."
+  ],
+  "limitations": [
+    "One actor, property and checkpoint were correlated; this does not validate all job/race combinations, other properties, the earlier job-screen title, learned abilities, battle behavior or physical devices. The local XP table labels Soldier 01 and 02 as a dash; no source was silently corrected. Original CH-0236 remains excluded and original character examples remain reference-only."
+  ],
+  "files": [
+    "docs/cheats.md",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/changes/2026-11-10-compare-usa-job-routing.json"
+  ]
+}

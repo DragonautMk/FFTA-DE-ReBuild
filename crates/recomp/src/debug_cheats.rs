@@ -105,6 +105,14 @@ impl Catalog {
             let n=lines.map_or(0,Vec::len);
             let outcome=if master.is_none() || lines.is_none() || n==0 {json!({"state":"unresolved","reason":"Source lines or master reference are missing"})}
             else if n>MAX_CAPABILITY_LINES || n>*budget {json!({"state":"not-evaluated","reason":"Capability assessment limit reached"})}
+            else if p.get("reference_parameters").is_some() {
+                *budget-=n;
+                match Self::reference_specs(p){
+                    Ok(Some(specs))=>json!({"state":"reference-only","parameters":specs,"reason":"Reference values cannot be activated"}),
+                    Ok(None)=>json!({"state":"unresolved","reason":"Reference values are missing"}),
+                    Err(error)=>json!({"state":"unresolved","reason":error}),
+                }
+            }
             else if self.entry(master.unwrap()).and_then(|m|m.get("provenance")).and_then(Value::as_array).is_none_or(|items|{
                 let matches=items.iter().filter(|m|m.get("source").and_then(Value::as_str)==p.get("source").and_then(Value::as_str)).collect::<Vec<_>>();
                 matches.len()!=1 || matches[0].get("raw_code_lines").and_then(Value::as_array).is_none_or(|lines|!matches!(lines.len(),2|3))
@@ -159,7 +167,16 @@ impl Catalog {
             else if let Some(value)=multiple{serde_json::from_value(value.clone()).map_err(|e|format!("Invalid declared parameters: {e}"))?}else{return Ok(Vec::new())};
         crate::debug_cheat_parameters::validate_many_source(lines,&specs)?;Ok(specs)
     }
+    fn reference_specs(provenance:&Value)->Result<Option<Vec<crate::debug_cheat_parameters::Specification>>,String>{
+        let Some(value)=provenance.get("reference_parameters") else{return Ok(None);};
+        if provenance.get("parameter").is_some() || provenance.get("parameters").is_some(){return Err("Reference values cannot be executable parameters".into());}
+        let specs:Vec<crate::debug_cheat_parameters::Specification>=serde_json::from_value(value.clone()).map_err(|e|format!("Invalid reference parameters: {e}"))?;
+        let lines=Self::source_lines(provenance)?;
+        crate::debug_cheat_parameters::validate_many_source(&lines,&specs)?;
+        Ok(Some(specs))
+    }
     fn parameterized_source(provenance:&Value,lines:&[String],parameters:&[crate::debug_cheat_parameters::Choice])->Result<(Vec<String>,Vec<crate::debug_cheat_parameters::Specification>),String>{
+        if provenance.get("reference_parameters").is_some(){return Err("Reference values cannot be executed".into());}
         let declared=Self::parameter_specs(provenance,lines)?;
         let expanded=if declared.is_empty(){if !parameters.is_empty(){return Err("This source does not declare parameters".into());}lines.to_vec()}
             else{crate::debug_cheat_parameters::expand_many(lines,&declared,parameters)?};
@@ -221,6 +238,9 @@ impl Catalog {
                     if has_undeclared_placeholders(source) {
                         reason.push('\n');reason.push_str(&menu::i18n::format(language,"Source {index}: {reason}",&[("index",source_index.to_string()),("reason",language.text("Placeholder values need a declared domain").into())]));
                     }
+                    if source.get("reference_parameters").is_some() && explanation!=Some("Reference values cannot be activated") {
+                        reason.push('\n');reason.push_str(&menu::i18n::format(language,"Source {index}: {reason}",&[("index",source_index.to_string()),("reason",language.text("Reference values cannot be activated").into())]));
+                    }
                 }
             }
             if self.capabilities[index]["unexamined"].as_u64().unwrap_or(0)>0 {
@@ -231,7 +251,7 @@ impl Catalog {
                 location:language.text("Local catalog · read only").into(),identity:menu::i18n::format(language,"Catalog SHA256 {catalog}\nROM SHA256 {rom} · recognized region {region}",&[("catalog",self.source_sha256.clone()),("rom",target.sha256.unwrap_or_else(||language.text("Unknown ROM hash")).into()),("region",target.region.unwrap_or_else(||language.text("Unknown recognized region")).into())]),status:language.text("Cheat disabled").into(),compatibility:language.text("Cheat unverified").into(),
                 reason,available:true,
                 cheat_filter:Some(menu::CheatFilter{armed:false,declared_match:target.declaration(region)=="declared-match",plan_candidate:summary["compatibility"]["manual_once"]["state"]=="requires-runtime-preflight",
-                    values_required:self.capabilities[index]["sources"].as_array().is_some_and(|sources|sources.iter().any(|source|source["assessment"]["state"]=="parameter-required"))})}
+                    values_required:self.capabilities[index]["sources"].as_array().is_some_and(|sources|sources.iter().any(|source|matches!(source["assessment"]["state"].as_str(),Some("parameter-required"|"reference-only"))))})}
         }).collect()
     }
     pub fn menu_sources(&self,id:&str)->Result<Vec<menu::CheatSource>,String>{
@@ -239,9 +259,10 @@ impl Catalog {
         let entry=&self.entries[index];let sources=self.capabilities[index]["sources"].as_array().ok_or("Missing source assessment")?;
         Ok(sources.iter().filter_map(|s|{
             let index=s["provenance_index"].as_u64()?;let provenance=entry["provenance"].as_array()?.get(index as usize)?;
-            let assessment=&s["assessment"];let specs=if let Some(value)=assessment.get("parameter"){serde_json::from_value::<crate::debug_cheat_parameters::Specification>(value.clone()).ok().into_iter().collect()}else{assessment.get("parameters").cloned().and_then(|v|serde_json::from_value::<Vec<crate::debug_cheat_parameters::Specification>>(v).ok()).unwrap_or_default()};
+            let assessment=&s["assessment"];let reference_only=provenance.get("reference_parameters").is_some();let reference=if assessment["state"]=="reference-only"{Self::reference_specs(provenance).ok().flatten()}else{None};
+            let specs=if reference_only{reference.unwrap_or_default()}else if let Some(value)=assessment.get("parameter"){serde_json::from_value::<crate::debug_cheat_parameters::Specification>(value.clone()).ok().into_iter().collect()}else{assessment.get("parameters").cloned().and_then(|v|serde_json::from_value::<Vec<crate::debug_cheat_parameters::Specification>>(v).ok()).unwrap_or_default()};
             let parameters=specs.into_iter().map(|spec|menu::CheatParameter{name:spec.name,labels:spec.labels.into_iter().map(|item|(item.value,item.label)).collect(),domain:match spec.allowed{crate::debug_cheat_parameters::Domain::List{values}=>menu::CheatParameterDomain::List(values),crate::debug_cheat_parameters::Domain::Range{min,max,step}=>menu::CheatParameterDomain::Range{min,max,step},crate::debug_cheat_parameters::Domain::DependentList{on,cases}=>menu::CheatParameterDomain::DependentList{on,cases:cases.into_iter().map(|case|(case.when,case.values)).collect()}}}).collect();
-            Some(menu::CheatSource{index:u16::try_from(index).ok()?,name:provenance["source"].as_str().unwrap_or("unknown").chars().take(80).collect(),master:s["master_id"].as_str().unwrap_or("unknown").chars().take(16).collect(),assessment:assessment["state"].as_str().unwrap_or("unresolved").into(),parameters})
+            Some(menu::CheatSource{index:u16::try_from(index).ok()?,name:provenance["source"].as_str().unwrap_or("unknown").chars().take(80).collect(),master:s["master_id"].as_str().unwrap_or("unknown").chars().take(16).collect(),assessment:if reference_only{"reference-only"}else{assessment["state"].as_str().unwrap_or("unresolved")}.into(),parameters})
         }).collect())
     }
 }
@@ -521,6 +542,28 @@ mod tests {
         let mut more=v.clone();more["entries"][0]["provenance"]=json!(vec![json!({"source":"synthetic","master_id":"CH-0002","raw_code_lines":["BB28F300 B8C0"]});10]);
         let c=Catalog::parse(&serde_json::to_vec(&more).unwrap()).unwrap();assert_eq!(c.capabilities[0]["unexamined"],2);
         assert_eq!(c.indexed_summary(0,None)["compatibility"]["manual_once"]["unexamined_sources"],2);
+    }
+    #[test]
+    fn reference_parameters_are_browsable_but_never_execution_parameters(){
+        let mut v=fixture();v["entries"][0]["codes"]=json!(["82000000 00XX"]);
+        v["entries"][0]["provenance"]=json!([{"source":"synthetic","master_id":"CH-0002","raw_code_lines":["82000000 00XX"],
+            "reference_parameters":[{"name":"appearance","allowed":{"kind":"list","values":[0,2]},"slots":[{"line":0,"field":"value","offset":2,"digits":2}],"labels":[{"value":0,"label":"Source reports glitch"}]}]}]);
+        v["entries"][1]["format"]=json!("codebreaker");v["entries"][1]["region"]=json!("EUR");
+        v["entries"][1]["provenance"]=json!([{"source":"synthetic","raw_code_lines":["9ABCDEF0 1234","B131BCEF 0691","26960CD0 140B"]}]);
+        let c=Catalog::parse(&serde_json::to_vec(&v).unwrap()).unwrap();
+        let sources=c.menu_sources("CH-0001").unwrap();assert_eq!(sources[0].assessment,"reference-only");assert_eq!(sources[0].parameters.len(),1);
+        assert_eq!(sources[0].parameters[0].labels,vec![(0,"Source reports glitch".into())]);
+        let item=&c.menu_entries(Some(gba_core::ffta_rom::EUROPE_SHA256),input_config::Language::default())[0];
+        assert!(item.cheat_filter.as_ref().unwrap().values_required);assert!(!item.cheat_filter.as_ref().unwrap().plan_candidate);
+        assert!(item.reason.contains("Reference values cannot be activated"));
+        let p=&c.entries[0]["provenance"][0];let lines=Catalog::source_lines(p).unwrap();
+        assert!(Catalog::parameterized_source(p,&lines,&[]).unwrap_err().contains("Reference values"));
+        assert!(Catalog::parameterized_source(p,&lines,&[crate::debug_cheat_parameters::Choice{name:"appearance".into(),value:2}]).is_err());
+        let mut mixed=p.clone();mixed["parameter"]=mixed["reference_parameters"][0].clone();
+        assert!(Catalog::reference_specs(&mixed).is_err());assert!(Catalog::parameterized_source(&mixed,&lines,&[]).is_err());
+        let mut malformed=v;malformed["entries"][0]["provenance"][0]["reference_parameters"][0]["allowed"]["values"]=json!([]);
+        let c=Catalog::parse(&serde_json::to_vec(&malformed).unwrap()).unwrap();let source=&c.menu_sources("CH-0001").unwrap()[0];
+        assert_eq!(source.assessment,"reference-only");assert!(source.parameters.is_empty());
     }
     #[test]
     fn declared_parameter_requires_choice_and_preserves_source_before_decode(){

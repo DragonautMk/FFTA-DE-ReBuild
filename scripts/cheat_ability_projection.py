@@ -19,7 +19,76 @@ def digest(data):
     return hashlib.sha256(data).hexdigest()
 
 
-def project(catalog_bytes, table_bytes, rom, *, expected_sha=USA_SHA256, expected_crc=MASTER_CHECKSUM, character_examples=False, third_appearance=False):
+def character_reference_parameters(table):
+    """Parse source descriptions for browsing only; these are not safe domains."""
+    race_text = table.split('## Tabella Razza', 1)[1].split('## Tabella Apparenza', 1)[0]
+    appearance_text = table.split('## Tabella Apparenza', 1)[1]
+    headers = {'01 Human': 1, '02 Bangaa': 2, '03 Numou': 3, '04 Viera': 4, '05 Moogle': 5}
+    cases = {value: [] for value in headers.values()}
+    job_labels = []
+    current = None
+    for raw in race_text.splitlines():
+        line = raw.strip()
+        if line in headers:
+            current = headers[line]
+            continue
+        if line == '06 Monster':
+            break
+        match = re.fullmatch(r'([0-9A-F]{2})\s+(.+)', line)
+        if match and current is not None:
+            value = int(match[1], 16)
+            label = match[2].strip()
+            if value in [item['value'] for item in job_labels]:
+                raise ValueError('Duplicate source job value')
+            cases[current].append(value)
+            if value == 1:
+                label += ' (source; USA row 01 unresolved)'
+            elif value == 2:
+                label += ' (source; USA row 02 is Soldier)'
+            job_labels.append({'value': value, 'label': label})
+    expected = {1: list(range(1, 13)), 2: list(range(13, 20)), 3: list(range(20, 28)),
+                4: list(range(28, 36)), 5: list(range(36, 44))}
+    if cases != expected:
+        raise ValueError('Source playable job groups are incomplete, reordered or ambiguous')
+    appearance_values, appearance_labels = [], []
+    for raw in appearance_text.splitlines():
+        line = raw.strip()
+        match = re.fullmatch(r'([0-9A-F]{2})(?:-([0-9A-F]{2}))?\s+-\s+(.+)', line)
+        if not match:
+            if re.match(r'^[0-9A-F]{2}(?:-|\s+-)', line):
+                raise ValueError('Malformed source appearance row')
+            continue
+        first, last = int(match[1], 16), int(match[2] or match[1], 16)
+        if first > last:
+            raise ValueError('Invalid source appearance range')
+        label = match[3].strip()
+        for value in range(first, last + 1):
+            if value in appearance_values:
+                raise ValueError('Duplicate source appearance value')
+            appearance_values.append(value)
+            appearance_labels.append({'value': value, 'label': label})
+    if appearance_values != list(range(0xe1)) + [0xf0]:
+        raise ValueError('Source appearance values are incomplete, reordered or ambiguous')
+    for label in job_labels + appearance_labels:
+        value = label['label']
+        if not value or len(value) > 80 or len(value.encode('utf-8')) > 256 or any(ord(c) < 32 or 0x7f <= ord(c) <= 0x9f for c in value):
+            raise ValueError('Invalid source reference label')
+    return [
+        {'name': 'race', 'allowed': {'kind': 'list', 'values': list(cases)},
+         'labels': [{'value': value, 'label': name.split(' ', 1)[1]} for name, value in headers.items()],
+         'slots': [{'line': 1, 'field': 'value', 'offset': 2, 'digits': 2}]},
+        {'name': 'job', 'allowed': {'kind': 'dependent-list', 'on': 'race',
+                                    'cases': [{'when': race, 'values': values} for race, values in cases.items()]},
+         'labels': job_labels,
+         'slots': [{'line': 0, 'field': 'value', 'offset': 0, 'digits': 2}, {'line': 1, 'field': 'value', 'offset': 0, 'digits': 2}]},
+        {'name': 'appearance', 'allowed': {'kind': 'list', 'values': appearance_values},
+         'labels': appearance_labels, 'slots': [{'line': 0, 'field': 'value', 'offset': 2, 'digits': 2}]},
+    ], {'race_job': race_text, 'appearance': appearance_text}
+
+
+def project(catalog_bytes, table_bytes, rom, *, expected_sha=USA_SHA256, expected_crc=MASTER_CHECKSUM, character_examples=False, third_appearance=False, character_reference_values=False):
+    if character_examples and character_reference_values:
+        raise ValueError('Choose either the two examples or the source reference lists')
     if digest(rom) != expected_sha or len(rom) < 65536:
         raise ValueError('The ROM does not match the explicitly recognized USA image')
     if binascii.crc_hqx(rom[:65536], 0xffff) != expected_crc:
@@ -92,7 +161,7 @@ def project(catalog_bytes, table_bytes, rom, *, expected_sha=USA_SHA256, expecte
             'labels': [{'value': value, 'label': label} for value, label in rows],
         })
         derived.append(item)
-    if character_examples:
+    if character_examples or character_reference_values:
         race_table = table.split('## Tabella Razza', 1)[1].split('## Tabella Apparenza', 1)[0]
         moogle = race_table.split('05 Moogle', 1)[1].split('06 Monster', 1)[0]
         appearance = table.split('## Tabella Apparenza', 1)[1]
@@ -102,6 +171,7 @@ def project(catalog_bytes, table_bytes, rom, *, expected_sha=USA_SHA256, expecte
             raise ValueError('The source appearance examples no longer match the local table')
         # The guide supplies these two tuples as examples, not a complete
         # compatibility table.  CH-0236 has a separately unresolved address.
+        reference = character_reference_parameters(table) if character_reference_values else None
         baseline = int(by_id['CH-0234']['codes'][0].split()[0], 16)
         for number in (234, 235, 237, 238, 239, 240, 241):
             entry = by_id[f'CH-{number:04}']
@@ -121,6 +191,12 @@ def project(catalog_bytes, table_bytes, rom, *, expected_sha=USA_SHA256, expecte
             # non-executable even in older runtimes; the original is untouched.
             item['region'] = entry['region']
             projected = item['provenance'][0]
+            if reference is not None:
+                projected.update(master_id='CH-0225', raw_code_lines=list(codes),
+                                 reference_parameters=reference[0], reference_source_tables=reference[1],
+                                 interpretation='Reference only: source lists include uncertain, non-working and crashing values. No combination is authorized for execution; original source labels and warnings are retained.')
+                derived.append(item)
+                continue
             projected.update(master_id='CH-0225', raw_code_lines=list(codes), parameters=[
                 {'name': 'race', 'allowed': {'kind': 'list', 'values': [5]},
                  'slots': [{'line': 1, 'field': 'value', 'offset': 2, 'digits': 2}]},
@@ -181,6 +257,9 @@ def project(catalog_bytes, table_bytes, rom, *, expected_sha=USA_SHA256, expecte
         result['derivation']['kind'] += '-with-third-appearance'
         result['derivation']['scope'] += ' Separately derived third-character appearance value 02 is included with its own source and limited observation.'
         result['derivation']['third_appearance_reference'] = THIRD_APPEARANCE_REFERENCE
+    if character_reference_values:
+        result['derivation']['kind'] += '-with-character-reference-values'
+        result['derivation']['scope'] += ' Source-listed character values are reference-only and cannot be executed; the original table and warnings are preserved.'
     return result
 
 
@@ -189,9 +268,10 @@ def main():
     for name in ('catalog', 'table', 'rom', 'output'):
         parser.add_argument('--' + name, type=Path, required=True)
     parser.add_argument('--character-examples', action='store_true', help='include two reference-only job/race/appearance examples')
+    parser.add_argument('--character-reference-values', action='store_true', help='include non-executable source-listed character values for browsing')
     parser.add_argument('--third-appearance', action='store_true', help='include separately sourced third-character appearance value 02 for the recognized USA ROM')
     args = parser.parse_args()
-    projection = project(args.catalog.read_bytes(), args.table.read_bytes(), args.rom.read_bytes(), character_examples=args.character_examples, third_appearance=args.third_appearance)
+    projection = project(args.catalog.read_bytes(), args.table.read_bytes(), args.rom.read_bytes(), character_examples=args.character_examples, third_appearance=args.third_appearance, character_reference_values=args.character_reference_values)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open('x', encoding='utf-8') as output:
         json.dump(projection, output, ensure_ascii=False, indent=2)

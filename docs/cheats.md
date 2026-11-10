@@ -515,7 +515,11 @@ values or hardware behavior. Job/race/appearance combinations remain
 unverified. Recreate the projection after changing its source; the selected
 catalog is a pinned snapshot, not a live link to the original. Newly generated
 projections carry the source table’s value labels: the menu shows each label
-alongside its numeric value. Labels are descriptive source metadata; they do not
+alongside its numeric value. The selector shows the decimal value and its
+hexadecimal equivalent, for example `38 (0x26)`, both while choosing and after
+confirmation. This makes it possible to compare values with source tables that
+use hexadecimal; it does not change the selected number. Labels are descriptive
+source metadata; they do not
 change the selected value or establish game behavior. Catalogs without labels
 continue to show numbers. Older runtimes that do not understand the optional
 label field refuse the labeled declaration; use a matching runtime and do not
@@ -527,6 +531,26 @@ no-overwrite behavior. A Windows GNU/Wine/Xvfb isolated USA session explicitly
 selected a value, reviewed, armed and disarmed the projected source and rejected
 an out-of-domain value without advancing the guest. A separate preflight rejected
 the known EUR ROM. This is not a gameplay-effect or physical-device test.
+
+To browse the character values listed in the local source, append
+`--character-reference-values` to the projection command above, use a new output
+path, and explicitly select that private catalog in the menu. The menu offers
+five playable race groups, their 43 source job rows, and 226 appearance values
+explicitly listed by the source. Labels include the source warnings for glitches,
+non-working sprites and crashes, as well as the observed USA job-label conflicts.
+Wrapped source descriptions are shortened in the chooser; the complete original
+race/job and appearance table excerpts remain in the private catalog metadata.
+Other race groups are retained in the table excerpt but not offered as choices.
+
+These are **reference values**, not verified combinations: the source rows do not
+establish compatible jobs, appearances or safe game behavior. The seven character
+entries retain the source's unknown region; the original CH-0236 remains excluded.
+Their metadata uses `reference_parameters`, not executable parameter declarations.
+The current menu and backend refuse activation even if a region is made to match.
+The unmodified projection also retains unknown region and unexpanded placeholders;
+older runtimes have not been tested with this particular projection. This option
+and `--character-examples` are mutually exclusive; either can be combined with
+`--third-appearance`. Neither option modifies or redistributes the original table.
 
 To include reference-only character examples in a separate new projection,
 append `--character-examples` to the command and choose an unused output path.
@@ -607,10 +631,13 @@ it to `26` therefore changes this conditional route, whereas keeping `50`
 and changing offset `07` selects a different alternate row. This gives a
 specific explanation consistent with the separate observations. A later
 cheat-free Wine trace observed the matching wrapper, including its call into the
-getter, while opening the ability screen along the same input route. The trace
-records instruction addresses rather than function arguments, so it does not
-identify the unit for that call or prove which path produced every visible
-change. The getter has special cases and other behavior remains open.
+getter, while opening the ability screen along the same input route. A later
+breakpoint run captured six calls for the selected first roster member, all
+with primary `50` and alternate `02`. The property-zero call returned index
+`29` decimal; its original caller uses that index to read the USA job-name
+string for Soldier. This connects one selected unit and one property to the
+conditional lookup, but does not identify every visible effect. The getter has
+special cases and other behavior remains open.
 A [Japanese-version community guide](https://bbs.newwise.com/thread-251749-1-1.html)
 distinguishes the first character’s job-name field at `02000085` from an
 actual-job field at `02000087`, alongside appearance and race. This is a
@@ -619,9 +646,21 @@ not proof that these fields have identical meanings across versions or that
 either field has only the named effect. The source itself warns of errors in
 earlier material; its device and ROM provenance are not established here.
 The independently maintained [Data Crystal jobs table](https://datacrystal.tcrf.net/wiki/Final_Fantasy_Tactics_Advance/Jobs)
-lists job-table indices `02` for Soldier and `26` for Gunner. Those table
-indices alone do not establish which checkpoint field uses that table or why
-the earlier job-screen title remained Soldier.
+lists job-table indices `02` for Soldier and `26` for Gunner. The local XP
+job/race table instead labels `01` Soldier and `02` as a dash. The observed
+`50`/`02` routing and name lookup support the former for this checkpoint, but
+do not resolve every source label, explain the earlier job-screen title or
+establish a complete compatible job/race domain. A protected read-only
+comparison covered the 43 job rows listed under the five playable race headings:
+41 source labels matched their USA ROM job-name rows after case, punctuation and
+spacing normalization. The source leaves row `02` unnamed while its ROM row
+names Soldier; the source labels row `01` Soldier, but the comparison could
+not decode its ROM string. A second comparison found that metadata byte `04`
+matched the source race heading for 42 of the 43 rows; row `01` held zero rather
+than the Human heading's value. The independent ROM map describes this byte as
+job race, but marks that description as needing verification. These checks do
+not establish valid transitions, every race/job combination or gameplay. Preserve
+the original table.
 
 **Do not select the older `dbg2-20-usa-character-examples-ucw5y1gi` catalog
 for activation.** It was generated before this uncertainty was identified and

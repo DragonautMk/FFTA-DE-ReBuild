@@ -3,6 +3,28 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-10 — Identify a USA job-name lookup for the selected actor
+
+Type: changed. Platforms: Windows GNU / Wine, USA ROM source comparison.
+
+**Changes**
+
+- Record selected-actor arguments and a job-name lookup for the existing USA route, and retain the conflicting source labels and character quarantine.
+
+**Validation**
+
+- A cheat-free isolated USA Wine/Xvfb run followed the existing ability-screen input route and captured six interpreter breakpoint calls for the first roster member. Each used primary 50 and alternate 02; property zero returned decimal index 29. Checked field bytes and protected inputs stayed unchanged, the window closed normally and Wine drained. Evidence: target/validation/units/dbg20-usa-job-call-registers-uienjad6/.
+- A separate protected static check decoded the original caller branch, verified its pointer-table indexing after the retained return value, and resolved that USA string to Soldier. It authenticated the ROM and preserved both the ROM and the prior breakpoint result. Evidence: target/validation/units/dbg20-usa-job-name-caller-_8hlaicc/.
+- Focused consultant `/root/sol_domain_diagnosis` was requested as gpt-6.1-sol with xhigh. It identified the unresolved source-label discrepancy, warned that executable domains would lift quarantine, and proposed register capture; effective model and effort were not independently exposed.
+
+**Limitations**
+
+- One actor, property and checkpoint were correlated; this does not validate all job/race combinations, other properties, the earlier job-screen title, learned abilities, battle behavior or physical devices. The local XP table labels Soldier 01 and 02 as a dash; no source was silently corrected. Original CH-0236 remains excluded and original character examples remain reference-only.
+
+Documentation: [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [2026-11-10-compare-usa-job-routing.json](docs/changes/2026-11-10-compare-usa-job-routing.json).
+
+[Change record](docs/changes/2026-11-10-trace-usa-job-name-arguments.json)
+
 ## 2026-11-10 — Trace the Player 3 code anomaly to the matching guide
 
 Type: changed. Platforms: All.
@@ -22,6 +44,28 @@ Type: changed. Platforms: All.
 Documentation: [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
 
 [Change record](docs/changes/2026-11-10-trace-player-three-source-anomaly.json)
+
+## 2026-11-10 — Show cheat parameter values in decimal and hexadecimal
+
+Type: changed. Platforms: Linux, Windows GNU / Wine.
+
+**Changes**
+
+- Show both decimal and hexadecimal parameter values in the cheat chooser, its focus label and the confirmed selection summary, so source tables using hexadecimal can be compared without changing the selected numeric value.
+- Apply the same formatting to executable declarations and non-executable source references; existing explicit selection and reference refusal remain in effect.
+
+**Validation**
+
+- Focused Linux selector tests exercised list and range selections, localized English and Italian rendering, reference refusal, hexadecimal digits and a value above one byte. Windows GNU menu tests and frontend built. Evidence: target/validation/units/dbg20-hex-values-build-4138gep6/.
+- Three focused Windows GNU selector tests passed under Wine. In a protected USA Wine/Xvfb GUI session, Moogle job Gunner displayed 38 (0x26), the selected values and appearance warning used the same formatting, and preparing reference values was refused with guest state unchanged. Both screenshots were visually reviewed; normal close and Wine server drain passed. Evidence: target/validation/units/dbg20-hex-values-wine-oyxdakfz/.
+
+**Limitations**
+
+- Formatting does not establish source-value safety, game compatibility or device behavior. Native Windows and physical-controller input were not tested.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [2026-11-10-browse-character-reference-values.json](docs/changes/2026-11-10-browse-character-reference-values.json).
+
+[Change record](docs/changes/2026-11-10-show-cheat-values-in-hex.json)
 
 ## 2026-11-10 — Offer a separately sourced third-character appearance value
 
@@ -248,6 +292,30 @@ Documentation: [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md)
 
 [Change record](docs/changes/2026-11-10-compare-usa-job-routing.json)
 
+## 2026-11-10 — Compare source job labels with USA ROM rows
+
+Type: changed. Platforms: USA ROM source comparison.
+
+**Changes**
+
+- Document a bounded source-label comparison across the five playable race headings while preserving the conflicting local labels and existing character quarantine.
+- Compare the source race groupings with a documented but not independently runtime-verified metadata byte.
+
+**Validation**
+
+- A protected read-only check authenticated the USA ROM and the already verified 116-row metadata table, parsed 43 job rows under the local Human, Bangaa, Nu Mou, Viera and Moogle headings, and compared their labels to original ROM name rows. After case, punctuation and spacing normalization, 41 matched; source row 02 was blank while the ROM resolved Soldier, and source row 01 named Soldier while its ROM string could not be decoded by this bounded check. Protected inputs stayed unchanged. Evidence: target/validation/units/dbg20-usa-job-label-comparison-34opuv6d/.
+- Earlier isolated Wine breakpoints established a selected first-member property-zero call with job bytes 50/02; its return index led through the original caller to the Soldier string. Evidence: target/validation/units/dbg20-usa-job-call-registers-uienjad6/ and dbg20-usa-job-name-caller-_8hlaicc/.
+- A protected second comparison checked metadata byte 04 against each of the 43 source race headings. Forty-two matched; job row 01 held zero where the source group is Human, and row 02 matched the Human group. The independent job map labels byte 04 as race but marks its interpretation as needing verification. Evidence: target/validation/units/dbg20-usa-job-race-metadata-hp0v8vns/.
+
+**Limitations**
+
+- Name-row agreement does not establish race/job compatibility, valid combinations, game behavior or device behavior. The unresolved row 01 is not asserted to have any particular meaning. Original XP descriptions, CH-0236 and character quarantine are unchanged.
+- Matching metadata byte 04 strengthens a source comparison but does not establish actual race/job transitions, validity of every combination or battle behavior.
+
+Documentation: [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [2026-11-10-trace-usa-job-name-arguments.json](docs/changes/2026-11-10-trace-usa-job-name-arguments.json).
+
+[Change record](docs/changes/2026-11-10-compare-usa-job-labels.json)
+
 ## 2026-11-10 — Compare a character tuple while preserving offset 85
 
 Type: changed. Platforms: Windows GNU / Wine.
@@ -271,6 +339,29 @@ Type: changed. Platforms: Windows GNU / Wine.
 Documentation: [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [2026-11-10-observe-single-offset85.json](docs/changes/2026-11-10-observe-single-offset85.json).
 
 [Change record](docs/changes/2026-11-10-compare-character-offset85.json)
+
+## 2026-11-10 — Browse character source values without activation
+
+Type: added. Platforms: Linux, Windows GNU / Wine.
+
+**Changes**
+
+- Expose five playable source race groups, 43 job rows and 226 explicitly listed appearance values as optional non-executable reference parameters in a private projection. Preserve the local source tables and show source warnings and known USA job-label conflicts.
+- Allow the cheat menu to browse reference choices while explicitly refusing preparation, one-shot application and arming; the backend independently refuses reference metadata even for a matching region. Original unknown-region declarations and the CH-0236 exclusion remain unchanged.
+
+**Validation**
+
+- Protected projection checks verified the listed counts and warning labels, unchanged default and example projections, combined third-appearance option, unknown regions, absent executable parameter declarations, and no-overwrite behavior. Malformed or duplicated source rows and conflicting options were rejected. Focused Linux menu and backend tests passed; Windows GNU test executables and frontend built. Evidence: target/validation/units/dbg20-reference-values-build-cqwrsjpy/.
+- Both focused Windows GNU tests passed under Wine. A protected USA Wine/Xvfb session browsed race, conflicting job labels and the appearance-00 glitch warning; preparing the reference was refused without changing guest state. Text preparation also refused both the original unknown-region entry and a synthetic matching-region reference entry. Screenshots reference-job.png and reference-warning.png were visually inspected; normal close and Wine server drain passed. Evidence: target/validation/units/dbg20-reference-values-wine-e4mbx839/.
+
+**Limitations**
+
+- Source labels include explicitly non-working and crashing values and do not prove compatibility, safety or behavior. The GUI's wrapped descriptions are abbreviated; the complete source table excerpts are retained privately. The source's Monster and other non-playable groupings are not interactive choices.
+- The original CH-0236 intent, broader character domains and actual effects remain unresolved. Older runtimes were not tested with this projection; its unknown-region declaration, lack of executable parameter keys and unexpanded placeholders remain unchanged safeguards. Native Windows and physical-device behavior were not tested.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [2026-11-10-compare-usa-job-labels.json](docs/changes/2026-11-10-compare-usa-job-labels.json).
+
+[Change record](docs/changes/2026-11-10-browse-character-reference-values.json)
 
 ## 2026-11-09 — Verify the live parameterized cheat control flow
 

@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-10",
+  "slug": "show-cheat-values-in-hex",
+  "title": "Show cheat parameter values in decimal and hexadecimal",
+  "kind": "changed",
+  "platforms": [
+    "Linux",
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Show both decimal and hexadecimal parameter values in the cheat chooser, its focus label and the confirmed selection summary, so source tables using hexadecimal can be compared without changing the selected numeric value.",
+    "Apply the same formatting to executable declarations and non-executable source references; existing explicit selection and reference refusal remain in effect."
+  ],
+  "validation": [
+    "Focused Linux selector tests exercised list and range selections, localized English and Italian rendering, reference refusal, hexadecimal digits and a value above one byte. Windows GNU menu tests and frontend built. Evidence: target/validation/units/dbg20-hex-values-build-4138gep6/.",
+    "Three focused Windows GNU selector tests passed under Wine. In a protected USA Wine/Xvfb GUI session, Moogle job Gunner displayed 38 (0x26), the selected values and appearance warning used the same formatting, and preparing reference values was refused with guest state unchanged. Both screenshots were visually reviewed; normal close and Wine server drain passed. Evidence: target/validation/units/dbg20-hex-values-wine-oyxdakfz/."
+  ],
+  "limitations": [
+    "Formatting does not establish source-value safety, game compatibility or device behavior. Native Windows and physical-controller input were not tested."
+  ],
+  "files": [
+    "crates/menu/src/content_selector.rs",
+    "crates/menu/src/content_selector/tests.rs",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/changes/2026-11-10-browse-character-reference-values.json"
+  ]
+}

@@ -639,7 +639,8 @@ No other development was selected. On resumption read only the individual ID in
   its complete list or stepped range against the placeholder width, binds the
   choice into the preview and preserves it in presets. Synthetic Linux tests
   and a Windows cross-build passed. The menu now requires an explicit value
-  selection for a declared parameter. The current catalog supplies no structured
+  selection for a declared parameter and displays decimal and hexadecimal
+  equivalents for comparison with source tables. The current catalog supplies no structured
   domains. Focused Windows/Wine component, protected-ROM synthetic preflight
   and offscreen menu checks passed. A live isolated Wine/Xvfb explicit-command
   flow also verified parameterized preset save/review/arm/disarm, overlap and
@@ -676,7 +677,12 @@ No other development was selected. On resumption read only the individual ID in
   domain variant. An earlier private projection covered two source-illustrated
   character combinations, but a protected USA DS-16 read exposed unresolved
   field semantics. New character projections are reference-only and retain an
-  unknown region; the earlier activation-ready catalog is historical evidence,
+  unknown region. A separate optional projection makes the source's five playable
+  race groups, 43 job rows and 226 listed appearance values browsable as
+  non-executable reference parameters, including source warnings and USA row
+  conflicts. Linux tests and a Windows GNU/Wine menu and backend refusal check
+  passed, including a synthetic matching-region source; these lists do not verify
+  compatibility or game behavior. The earlier activation-ready catalog is historical evidence,
   not an operational recommendation. A protected paired DS-16 Wine observation
   showed changed bytes, statistics and figures for one applied example, while
   the title remained Soldier on the job screen. A later paired ability-screen
@@ -690,9 +696,15 @@ No other development was selected. On resumption read only the individual ID in
   and actual job. A protected USA/EUR ROM comparison found the same 116-record
   metadata and relocated getter: row 50 routes selected properties through the
   alternate byte, while rows 02/05/26 use their own data. This is consistent
-  with the observations. A later cheat-free Wine trace observed the wrapper
-  and its getter call while opening the ability screen, but did not capture the
-  call arguments. Complete field semantics and behavior remain open.
+  with the observations. A later cheat-free Wine breakpoint captured six
+  calls for the selected first actor with primary 50 and alternate 02. Its
+  property-zero result resolves to the Soldier name in the original USA caller;
+  the local XP table labels Soldier 01 and 02 as a dash. Of 43 job rows under
+  the five playable race headings, 41 source labels match USA ROM names after
+  normalization; row 02 is blank in the source and row 01 could not be decoded.
+  Metadata byte 04 matches 42 source race groups; row 01 differs. Its race
+  interpretation and runtime transitions remain unverified; complete behavior
+  remains open.
   CH-0236 remains excluded: the matching guide repeats its anomalous first
   address in CodeBreaker and RAW listings, without resolving its intent. A
   separate US listing and protected USA record/name-pointer inspection support

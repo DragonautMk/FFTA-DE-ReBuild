@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-11-10",
+  "slug": "browse-character-reference-values",
+  "title": "Browse character source values without activation",
+  "kind": "added",
+  "platforms": [
+    "Linux",
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Expose five playable source race groups, 43 job rows and 226 explicitly listed appearance values as optional non-executable reference parameters in a private projection. Preserve the local source tables and show source warnings and known USA job-label conflicts.",
+    "Allow the cheat menu to browse reference choices while explicitly refusing preparation, one-shot application and arming; the backend independently refuses reference metadata even for a matching region. Original unknown-region declarations and the CH-0236 exclusion remain unchanged."
+  ],
+  "validation": [
+    "Protected projection checks verified the listed counts and warning labels, unchanged default and example projections, combined third-appearance option, unknown regions, absent executable parameter declarations, and no-overwrite behavior. Malformed or duplicated source rows and conflicting options were rejected. Focused Linux menu and backend tests passed; Windows GNU test executables and frontend built. Evidence: target/validation/units/dbg20-reference-values-build-cqwrsjpy/.",
+    "Both focused Windows GNU tests passed under Wine. A protected USA Wine/Xvfb session browsed race, conflicting job labels and the appearance-00 glitch warning; preparing the reference was refused without changing guest state. Text preparation also refused both the original unknown-region entry and a synthetic matching-region reference entry. Screenshots reference-job.png and reference-warning.png were visually inspected; normal close and Wine server drain passed. Evidence: target/validation/units/dbg20-reference-values-wine-e4mbx839/."
+  ],
+  "limitations": [
+    "Source labels include explicitly non-working and crashing values and do not prove compatibility, safety or behavior. The GUI's wrapped descriptions are abbreviated; the complete source table excerpts are retained privately. The source's Monster and other non-playable groupings are not interactive choices.",
+    "The original CH-0236 intent, broader character domains and actual effects remain unresolved. Older runtimes were not tested with this projection; its unknown-region declaration, lack of executable parameter keys and unexpanded placeholders remain unchanged safeguards. Native Windows and physical-device behavior were not tested."
+  ],
+  "files": [
+    "scripts/cheat_ability_projection.py",
+    "crates/recomp/src/debug_cheats.rs",
+    "crates/menu/src/cheat_management.rs",
+    "crates/menu/src/content_selector.rs",
+    "crates/input-config/languages/en.json",
+    "crates/input-config/languages/it.json",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/changes/2026-11-10-compare-usa-job-labels.json"
+  ]
+}

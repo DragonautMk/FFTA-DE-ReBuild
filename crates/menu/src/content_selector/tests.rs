@@ -100,8 +100,8 @@ fn parameter_selector_renders_value_and_focus_in_both_languages(){
     let mut s=Selector::default();s.cheat_mode=true;s.set("Cheat".into(),vec![ContentEntry{id:"CH-0001".into(),name:"Example".into(),..Default::default()}],String::new(),0);
     let parameter=super::super::CheatParameter{name:"amount".into(),domain:super::super::CheatParameterDomain::Range{min:2,max:8,step:2},labels:vec![]};
     s.open_cheat_management(vec![super::super::CheatSource{index:0,name:"source".into(),master:"CH-0002".into(),assessment:"parameter-required".into(),parameters:vec![parameter]}],vec![]);
-    s.handle(MenuInput::Confirm);s.handle(MenuInput::Down);assert_eq!(s.focus_label(),"Declared parameter: amount · 4");
-    for (language,select,description) in [(input_config::Language::default(),"Select value","Declared parameter: amount · 4"),(input_config::Language::parse("it"),"Seleziona valore","Parametro dichiarato: amount · 4")] {
+    s.handle(MenuInput::Confirm);s.handle(MenuInput::Down);assert_eq!(s.focus_label(),"Declared parameter: amount · 4 (0x04)");
+    for (language,select,description) in [(input_config::Language::default(),"Select value","Declared parameter: amount · 4 (0x04)"),(input_config::Language::parse("it"),"Seleziona valore","Parametro dichiarato: amount · 4 (0x04)")] {
         let mut pixels=vec![[0,0,0,255];940*620];let runs=diagnostics::capture(||draw(&s,&mut pixels,940,620,language)).unwrap().runs;
         assert!(runs.iter().any(|r|r.text==select));assert!(runs.iter().any(|r|r.text==description));
         assert!(!runs.iter().any(|r|r.text=="Arm" || r.text=="Attiva"));
@@ -114,14 +114,31 @@ fn parameter_label_follows_the_numeric_choice_and_keeps_explicit_confirmation(){
     let mut s=Selector::default();s.cheat_mode=true;s.set("Cheat".into(),vec![ContentEntry{id:"CH-0001".into(),name:"Example".into(),..Default::default()}],String::new(),0);
     let parameter=super::super::CheatParameter{name:"ability".into(),domain:super::super::CheatParameterDomain::List(vec![2,10]),labels:vec![(2,"Battle Tech".into()),(10,"Black Magic".into())]};
     s.open_cheat_management(vec![super::super::CheatSource{index:0,name:"source".into(),master:"CH-0002".into(),assessment:"parameter-required".into(),parameters:vec![parameter]}],vec![]);
-    s.handle(MenuInput::Confirm);assert_eq!(s.focus_label(),"Declared parameter: ability · 2 · Battle Tech");
-    s.handle(MenuInput::Down);assert_eq!(s.focus_label(),"Declared parameter: ability · 10 · Black Magic");
+    s.handle(MenuInput::Confirm);assert_eq!(s.focus_label(),"Declared parameter: ability · 2 (0x02) · Battle Tech");
+    s.handle(MenuInput::Down);assert_eq!(s.focus_label(),"Declared parameter: ability · 10 (0x0A) · Black Magic");
     assert!(s.cheat_selected_parameters().is_none());
     for language in [input_config::Language::default(),input_config::Language::parse("it")] {
         let mut pixels=vec![[0,0,0,255];940*620];let runs=diagnostics::capture(||draw(&s,&mut pixels,940,620,language)).unwrap().runs;
-        assert!(runs.iter().any(|r|r.text.contains("ability · 10 · Black Magic")));
+        assert!(runs.iter().any(|r|r.text.contains("ability · 10 (0x0A) · Black Magic")));
     }
     s.handle(MenuInput::Confirm);assert_eq!(s.cheat_selected_parameters(),Some(vec![("ability",10)]));
+}
+
+#[test]
+fn reference_values_show_source_hex_without_changing_selection(){
+    let mut s=Selector::default();s.cheat_mode=true;s.set("Cheat".into(),vec![ContentEntry{id:"CH-0001".into(),name:"Example".into(),..Default::default()}],String::new(),0);
+    let parameter=super::super::CheatParameter{name:"job".into(),domain:super::super::CheatParameterDomain::List(vec![38,256]),labels:vec![(38,"Gunner".into())]};
+    s.open_cheat_management(vec![super::super::CheatSource{index:0,name:"source".into(),master:"CH-0002".into(),assessment:"reference-only".into(),parameters:vec![parameter]}],vec![]);
+    s.handle(MenuInput::Confirm);assert_eq!(s.focus_label(),"Reference parameter: job · 38 (0x26) · Gunner");
+    for language in [input_config::Language::default(),input_config::Language::parse("it")] {
+        let mut pixels=vec![[0,0,0,255];940*620];let runs=diagnostics::capture(||draw(&s,&mut pixels,940,620,language)).unwrap().runs;
+        assert!(runs.iter().any(|r|r.text.contains("job · 38 (0x26) · Gunner")));
+    }
+    s.handle(MenuInput::Down);assert_eq!(s.focus_label(),"Reference parameter: job · 256 (0x100)");
+    s.handle(MenuInput::Confirm);assert_eq!(s.cheat_selected_parameters(),Some(vec![("job",256)]));
+    let mut pixels=vec![[0,0,0,255];940*620];let runs=diagnostics::capture(||draw(&s,&mut pixels,940,620,input_config::Language::default())).unwrap().runs;
+    assert!(runs.iter().any(|r|r.text.contains("job: 256 (0x100)")));
+    assert!(s.handle(MenuInput::Confirm).is_none());
 }
 
 #[test]
