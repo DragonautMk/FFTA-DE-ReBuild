@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-10",
+  "slug": "compare-usa-job-routing",
+  "title": "Compare USA and EUR character job routing",
+  "kind": "changed",
+  "platforms": [
+    "USA and EUR ROM source comparison",
+    "Windows GNU / Wine prior observation"
+  ],
+  "changes": [
+    "Document a conditional original-game job-property routing rule that explains why the two observed character fields can interact, while preserving the reference-only character quarantine."
+  ],
+  "validation": [
+    "A protected validation compared exact known USA and EUR ROM identities, 116 identical 52-byte metadata rows, the full 1204-byte getter after verifying 50 relocated pointer words, and identical wrapper bytes with an explicitly decoded branch to the USA getter. For rows 02, 05 and 26 the routing byte is 00; for row 50 it is FF. Protected ROMs and existing result receipts remained unchanged. Evidence: target/validation/units/dbg20-usa-eur-job-routing-r9g1avi3/.",
+    "Previously accepted paired Wine diagnostics used initial bytes 02 50 01 02 and changed either offset 85 to 26 or offset 87 to 05; a third changed race and job while preserving 50. The observed screens and prior EUR source analysis are consistent with conditional alternate-row routing. Evidence: target/validation/units/dbg20-single-offset85-yqmspzpv/, dbg20-single-job-byte-b00g2384/, dbg20-character-preserve85-t3l31iu3/; docs/rom_data_unit_obj.md.",
+    "An isolated cheat-free USA Wine/Xvfb run followed the same 144-frame route. A bounded interpreter trace over the ability-screen transition retained 78 events in the USA wrapper, including its branch into the getter; the final screenshot was reviewed, checked character bytes and protected inputs stayed unchanged, the window closed and Wine drained. Evidence: target/validation/units/dbg20-usa-job-route-trace-h79fbpm7/. An earlier driver attempt stopped at the ownership check before launching Wine because its process was wrapped; its runner reported the prefix drained: dbg20-usa-job-route-trace-anefs3x8/."
+  ],
+  "limitations": [
+    "The subsequent trace captures instruction addresses, not call arguments; it does not identify the unit or prove that the getter produced every visible effect. Property 2 and other special paths must not be generalized from this routing rule. Complete field semantics, valid combinations, imported CH-0236 intent, battle and hardware behavior remain unverified. Character examples remain reference-only."
+  ],
+  "files": [
+    "docs/cheats.md",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/rom_data_unit_obj.md",
+    "docs/rom_data_gameplay.md",
+    "docs/changes/2026-11-10-compare-character-offset85.json"
+  ]
+}

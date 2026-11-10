@@ -85,14 +85,14 @@ for a specific question: archive legacy lines 179..744 or the named record below
 - DS-16 route/ability: `dbg20-ability-screen-route-9ozkfq50`, `dbg20-usa-ability-effect-4yt445cl`.
 - Tuple: Soldier control versus Gunner after full example (`dbg20-character-ability-screen-h75fjx8y`); individual fields unresolved.
 - Field87: Soldier to Thief (`dbg20-single-job-byte-b00g2384`); Sol xhigh advised, effective settings unconfirmed.
-- Offset85: byte-only write changed title and stats (`dbg20-single-offset85-yqmspzpv`); Japanese guide distinguishes job name and actual job; cross-version/mixed-state validity unverified.
+- Offset85: write changed title/stats (`dbg20-single-offset85-yqmspzpv`); USA/EUR source routing matches (`dbg20-usa-eur-job-routing-r9g1avi3`), wrapper traced on ability route (`dbg20-usa-job-route-trace-h79fbpm7`); unit arguments unknown.
 - Race/job-only matched full tuple screenshot (`dbg20-character-preserve85-t3l31iu3`); state equivalence unproved.
 - Labels: Linux/Wine PASS (`dbg20-value-label-build-zkxk1v_j`, `dbg20-value-label-wine-z3h_9726`).
 - CH-0236 source: guide repeats anomalous first address; intent unresolved.
 - CH-0236 candidate: distinct US listing, record pointers and one-byte Wine appearance effect support alternate address (`dbg20-third-record-readonly-sww_z0qx`, `dbg20-third-record-pointers-nb08dpqa`, `dbg20-third-candidate-effect-lwmjwzo2`); original intent remains unresolved.
 - Source reasons: Wine PASS (`dbg20-source-reasons-final-wine-m69p1pgw`).
 - Third actor: Wine roster matches ROM pointer (`dbg20-third-roster-route-4hh0fmeo`).
-- Selection checkpoint: user requests DBG2-20 completion; USA byte85/87 meaning unresolved. Compare protected USA ROM with the verified EUR job-routing source.
+- Values filter: Linux/Windows GNU tests and USA Wine GUI PASS (`dbg20-values-filter-wine-f820ejz6`); discovery only, guards unchanged.
 - Resume: `docs/changes/2026-11-10-inspect-third-character-record.json`.
 
 ### DBG2-22
@@ -160,8 +160,8 @@ for a specific question: archive legacy lines 179..744 or the named record below
 ## Final handover
 
 - Task: DBG2-20 partial; user requested completion.
-- Last verified result: a synthetic candidate byte changed the third actor’s portrait and sprite in one Wine checkpoint against the same-runtime control.
+- Last verified result: values filter shows eight source-derived USA entries in Wine; focused Linux/Wine tests and Windows GNU builds passed.
 - Remaining work: field meanings, full character domains, CH-0236, broader game/device behavior, native Windows and physical controllers.
 - Errors or blockers: source labels conflict; one observation cannot validate the domain. Character examples remain reference-only; older activation-ready projection is historical evidence.
 - Next action: resolve character field/domain semantics with suitable evidence; preserve quarantine.
-- References: docs/changes/2026-11-10-inspect-third-character-record.json; target/validation/units/dbg20-third-candidate-effect-lwmjwzo2/.
+- References: docs/changes/2026-11-10-filter-cheats-with-declared-values.json; target/validation/units/dbg20-values-filter-wine-f820ejz6/.

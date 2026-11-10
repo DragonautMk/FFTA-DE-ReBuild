@@ -23,6 +23,7 @@ pub struct CheatFilter {
     pub armed: bool,
     pub declared_match: bool,
     pub plan_candidate: bool,
+    pub values_required: bool,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -54,8 +55,8 @@ const FILTERS: [&str; 4] = [
     "Declared match",
     "Needs attention",
 ];
-const CHEAT_FILTERS: [&str; 6] = [
-    "All states", "Plan candidate", "Declared match", "Needs attention", "Armed", "Not armed",
+const CHEAT_FILTERS: [&str; 7] = [
+    "All states", "Plan candidate", "Declared match", "Needs attention", "Armed", "Not armed", "Values to choose",
 ];
 const SORTS: [&str; 3] = ["Name", "Type", "Recent"];
 const COLLECTIONS: [&str; 3] = ["All content", "Favorites", "Recent"];
@@ -401,6 +402,7 @@ impl Selector {
                             (3, Some(c)) => !c.plan_candidate,
                             (4, Some(c)) => c.armed,
                             (5, Some(c)) => !c.armed,
+                            (6, Some(c)) => c.values_required,
                             _ => false,
                         }
                     } else { match self.filter {

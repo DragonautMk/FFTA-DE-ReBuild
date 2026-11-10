@@ -230,7 +230,8 @@ impl Catalog {
                 kind:format!("{} / {}",entry["format"].as_str().unwrap(),entry["region"].as_str().unwrap()),description:details,
                 location:language.text("Local catalog · read only").into(),identity:menu::i18n::format(language,"Catalog SHA256 {catalog}\nROM SHA256 {rom} · recognized region {region}",&[("catalog",self.source_sha256.clone()),("rom",target.sha256.unwrap_or_else(||language.text("Unknown ROM hash")).into()),("region",target.region.unwrap_or_else(||language.text("Unknown recognized region")).into())]),status:language.text("Cheat disabled").into(),compatibility:language.text("Cheat unverified").into(),
                 reason,available:true,
-                cheat_filter:Some(menu::CheatFilter{armed:false,declared_match:target.declaration(region)=="declared-match",plan_candidate:summary["compatibility"]["manual_once"]["state"]=="requires-runtime-preflight"})}
+                cheat_filter:Some(menu::CheatFilter{armed:false,declared_match:target.declaration(region)=="declared-match",plan_candidate:summary["compatibility"]["manual_once"]["state"]=="requires-runtime-preflight",
+                    values_required:self.capabilities[index]["sources"].as_array().is_some_and(|sources|sources.iter().any(|source|source["assessment"]["state"]=="parameter-required"))})}
         }).collect()
     }
     pub fn menu_sources(&self,id:&str)->Result<Vec<menu::CheatSource>,String>{
@@ -530,6 +531,22 @@ mod tests {
         v["entries"][1]["provenance"]=json!([{"source":"synthetic","raw_code_lines":["9ABCDEF0 1234","B131BCEF 0691","26960CD0 140B"]}]);
         let c=Catalog::parse(&serde_json::to_vec(&v).unwrap()).unwrap();let report=&c.capabilities[0];
         assert_eq!(report["state"],"parameter-required");assert_eq!(report["sources"][0]["assessment"]["parameter"]["name"],"amount");
+        for sha in [Some(gba_core::ffta_rom::EUROPE_SHA256), Some(gba_core::ffta_rom::SHA256), None] {
+            let menu=c.menu_entries(sha,input_config::Language::default());
+            let filter=menu[0].cheat_filter.as_ref().unwrap();
+            assert!(filter.values_required);
+            assert!(!filter.plan_candidate);
+            assert!(!menu[1].cheat_filter.as_ref().unwrap().values_required);
+        }
+        let mut mixed=v.clone();
+        mixed["entries"][0]["provenance"].as_array_mut().unwrap().push(json!({"source":"synthetic","master_id":"CH-0002","raw_code_lines":["BB28F300 B8C0"]}));
+        let mixed=Catalog::parse(&serde_json::to_vec(&mixed).unwrap()).unwrap();
+        assert_eq!(mixed.capabilities[0]["state"],"manual-once-subset");
+        let filter=mixed.menu_entries(Some(gba_core::ffta_rom::EUROPE_SHA256),input_config::Language::default())[0].cheat_filter.clone().unwrap();
+        assert!(filter.plan_candidate && filter.values_required);
+        let mut invalid=v.clone();invalid["entries"][0]["provenance"][0]["parameter"]["allowed"]["values"]=json!([]);
+        let invalid=Catalog::parse(&serde_json::to_vec(&invalid).unwrap()).unwrap();
+        assert!(!invalid.menu_entries(None,input_config::Language::default())[0].cheat_filter.as_ref().unwrap().values_required);
         let sources=c.menu_sources("CH-0001").unwrap();assert_eq!(sources.len(),1);
         assert_eq!(sources[0].parameters,vec![menu::CheatParameter{name:"amount".into(),domain:menu::CheatParameterDomain::List(vec![0]),labels:vec![]}]);
         let source=&c.entries[0]["provenance"][0];let (name,raw,master)=c.source_bound(&c.entries[0],0,"CH-0002").unwrap();assert_eq!(name,"synthetic");

@@ -21940,3 +21940,24 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: a Japanese-version community guide identifies first-character offsets 85 and 87 as job-name and actual-job fields. Previously recorded USA Wine experiments show both can affect a displayed title and offset 85 can also change displayed statistics. The comparison is documented without importing source content.
 - Evidence: `docs/changes/2026-11-10-compare-character-offset85.json`; original source linked from `docs/cheats.md`; existing `dbg20-single-offset85-yqmspzpv` and `dbg20-single-job-byte-b00g2384`.
 - Limits: the guide targets a different version and notes earlier errors; its ROM/device provenance and equivalence to USA are unestablished. The two fields are not proved interchangeable; character quarantine remains.
+
+### DBG2-20-USA-EUR-JOB-ROUTING
+
+- Outcome: completed bounded static comparison
+- Verified criteria: exact recognized USA/EUR ROMs contain identical 116-row job metadata, matching wrapper and matching getter after 50 verified pointer relocations. Wrapper reads unit bytes 05/07 and branches to the getter; row 50 redirects relevant properties to byte07, rows 02/05/26 use their own data. Existing checkpoint observations are consistent with this conditional rule. Inputs protected and unchanged.
+- Evidence: `docs/changes/2026-11-10-compare-usa-job-routing.json`; `target/validation/units/dbg20-usa-eur-job-routing-r9g1avi3/`; prior EUR source analysis in `docs/rom_data_unit_obj.md`.
+- Limits: screenshots did not trace calls, getter special cases remain distinct, and the comparison does not establish all semantics, safe combinations, CH-0236 intent, battle or hardware behavior. Character projections remain reference-only.
+
+### DBG2-20-USA-JOB-ROUTE-TRACE
+
+- Outcome: completed within tested scope
+- Verified criteria: an isolated cheat-free USA Wine/Xvfb 144-frame route reached the ability screen. A bounded interpreter trace captured 78 wrapper instructions, including the getter call during the transition; checked character bytes and protected inputs unchanged, screenshot reviewed, normal close and Wine drained.
+- Evidence: `docs/changes/2026-11-10-compare-usa-job-routing.json`; `target/validation/units/dbg20-usa-job-route-trace-h79fbpm7/`. Earlier `dbg20-usa-job-route-trace-anefs3x8/` failed at the prefix ownership check before Wine launch due to a wrapper process; the runner reported Wine drained and retained diagnostics.
+- Limits: captured PCs do not identify unit arguments or prove which call produced a displayed value. Complete semantics, safe combinations, CH-0236, battle and hardware remain open; character projections stay reference-only.
+
+### DBG2-20-DECLARED-VALUES-FILTER
+
+- Outcome: completed within tested scope
+- Verified criteria: a separate typed filter discovers entries with an assessed valid parameter source, including mixed-source cases, while preserving existing region/candidate filters and explicit value selection. Linux and Windows GNU/Wine focused tests, Windows GNU builds and USA source-derived Wine/Xvfb UI passed; screenshot shows eight parameterized entries without the master. Guest and protected inputs unchanged, normal close and Wine drained.
+- Evidence: `docs/changes/2026-11-10-filter-cheats-with-declared-values.json`; `target/validation/units/dbg20-values-filter-build-receipt-_abfzj6t/`, `dbg20-values-filter-wine-tests-receipt-kpd4ao71/`, `dbg20-values-filter-wine-f820ejz6/`. Earlier Linux linker, temporary symlink retention and GUI navigation failures retained in their recorded units.
+- Limits: filtering does not verify ROM, values, plan or hardware, and changes no execution guard. Character domains/CH-0236, native Windows and physical controllers remain open. Primary model/effort were not independently confirmed.

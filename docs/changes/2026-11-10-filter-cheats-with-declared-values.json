@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-11-10",
+  "slug": "filter-cheats-with-declared-values",
+  "title": "Find cheats with values to choose",
+  "kind": "added",
+  "platforms": [
+    "Linux",
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Add a values-to-choose filter for entries with at least one assessed, valid parameter declaration. Preserve the existing candidate, region and armed filters and do not select parameter values implicitly.",
+    "Keep the filter independent of ROM compatibility or execution: source selection, explicit values, checksums, preview and runtime guards remain required. Add English and Italian labels."
+  ],
+  "validation": [
+    "Focused Linux selector and source-assessment tests passed, including different ROM contexts, a mixed fixed/parameterized source and an invalid declaration. Windows GNU test binaries and frontend built. Initial Linux linking failed without a Wayland development link; a subsequent unit ran all four commands successfully but retained scratch because the temporary link was still present. A separate protected-input and log receipt verified their completion and unchanged source preimages: target/validation/units/dbg20-values-filter-build-receipt-_abfzj6t/; diagnostic units dbg20-values-filter-build-mkrwefap/ and dbg20-values-filter-build-9bwr44ef/.",
+    "The two affected Windows GNU tests passed under Wine, with unchanged test binaries verified by target/validation/units/dbg20-values-filter-wine-tests-receipt-kpd4ao71/. An initial GUI driver retained diagnostics after selecting the wrong filter; its Wine prefix drained.",
+    "A corrected isolated Wine/Xvfb GUI selected the new filter in a privately derived USA ability catalog, displayed eight parameterized entries and excluded the master, then explicitly opened a source and its value prompt. Screenshot reviewed; guest state and protected inputs unchanged, normal close and Wine drained. Evidence: target/validation/units/dbg20-values-filter-wine-f820ejz6/."
+  ],
+  "limitations": [
+    "The filter is a discovery aid, not proof of source compatibility, all valid values or device behavior. Character examples remain reference-only and CH-0236 stays excluded. Native Windows and physical controllers were not tested. Primary debugging model and reasoning effort could not be independently verified."
+  ],
+  "files": [
+    "crates/menu/src/content_selector.rs",
+    "crates/menu/src/content_selector/tests.rs",
+    "crates/recomp/src/debug_cheats.rs",
+    "crates/input-config/languages/en.json",
+    "crates/input-config/languages/it.json",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/changes/2026-11-03-filter-cheats-by-machine-state.json"
+  ]
+}

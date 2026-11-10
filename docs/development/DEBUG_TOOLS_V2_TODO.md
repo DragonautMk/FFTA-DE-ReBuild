@@ -627,8 +627,10 @@ No other development was selected. On resumption read only the individual ID in
   page flow. Details now surface bounded per-source failure reasons and
   missing placeholder domains; a protected Wine check covered CH-0236.
   The cheat filters now use source-plan, declared-region and armed
-  metadata rather than localized labels; synthetic Wine GUI checks include
-  arm/disarm updates. Named source-bound groups can now be saved, reviewed and
+  metadata rather than localized labels; a separate values filter finds
+  assessed parameter declarations without implying ROM compatibility. Wine GUI
+  checks include arm/disarm updates and the source-derived USA values filter.
+  Named source-bound groups can now be saved, reviewed and
   armed atomically through explicit text commands, with synthetic conflict and
   drift refusals. The page also supports naming, saving, explicit selection,
   preview and arming. Values/ranges and complete game-effect evidence remain
@@ -685,7 +687,12 @@ No other development was selected. On resumption read only the individual ID in
   and altered statistics with byte 87 unchanged. A race/job-only diagnostic
   preserving byte 85 matched the full example’s ability-screen capture. A
   Japanese-version community guide separately names the two fields job name
-  and actual job; cross-version semantics and other behavior remain open.
+  and actual job. A protected USA/EUR ROM comparison found the same 116-record
+  metadata and relocated getter: row 50 routes selected properties through the
+  alternate byte, while rows 02/05/26 use their own data. This is consistent
+  with the observations. A later cheat-free Wine trace observed the wrapper
+  and its getter call while opening the ability screen, but did not capture the
+  call arguments. Complete field semantics and behavior remain open.
   CH-0236 remains excluded: the matching guide repeats its anomalous first
   address in CodeBreaker and RAW listings, without resolving its intent. A
   separate US listing and protected USA record/name-pointer inspection support

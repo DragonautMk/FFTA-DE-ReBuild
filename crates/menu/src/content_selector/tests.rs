@@ -273,19 +273,19 @@ fn entries() -> Vec<ContentEntry> {
 
 #[test]
 fn cheat_filters_use_machine_metadata_and_follow_armed_changes() {
-    let entry = |id: &str, armed, declared_match, plan_candidate| ContentEntry {
+    let entry = |id: &str, armed, declared_match, plan_candidate, values_required| ContentEntry {
         id: id.into(), name: id.into(), available: true,
         // Localized presentation must not control the filter.
         status: "Attivo".into(), compatibility: "Non verificato".into(),
-        cheat_filter: Some(CheatFilter { armed, declared_match, plan_candidate }),
+        cheat_filter: Some(CheatFilter { armed, declared_match, plan_candidate, values_required }),
         ..Default::default()
     };
     let mut s = Selector::default();
     s.cheat_mode = true;
-    s.set("Cheats".into(), vec![entry("a", true, true, true), entry("b", false, true, false), entry("c", false, false, false)], String::new(), 0);
+    s.set("Cheats".into(), vec![entry("a", true, true, true, false), entry("b", false, true, false, true), entry("c", false, false, false, false)], String::new(), 0);
     s.focus = 2;
     let visible = |s: &Selector| s.visible.iter().map(|&i| s.entries[i].id.clone()).collect::<Vec<_>>();
-    for expected in [vec!["a"], vec!["a", "b"], vec!["b", "c"], vec!["a"], vec!["b", "c"], vec!["a", "b", "c"]] {
+    for expected in [vec!["a"], vec!["a", "b"], vec!["b", "c"], vec!["a"], vec!["b", "c"], vec!["b"], vec!["a", "b", "c"]] {
         s.handle(MenuInput::Confirm);
         s.handle(MenuInput::Right);
         s.handle(MenuInput::Confirm);
@@ -295,9 +295,10 @@ fn cheat_filters_use_machine_metadata_and_follow_armed_changes() {
     for _ in 0..4 { s.handle(MenuInput::Right); }
     s.handle(MenuInput::Confirm);
     assert_eq!(visible(&s), vec!["a"]);
-    s.set("Cheats".into(), vec![entry("a", false, true, true), entry("b", true, true, false)], String::new(), 1);
+    s.set("Cheats".into(), vec![entry("a", false, true, true, false), entry("b", true, true, false, true)], String::new(), 1);
     assert_eq!(visible(&s), vec!["b"]);
     assert_eq!(input_config::Language::parse("it").text(CHEAT_FILTERS[4]), "Attivi");
+    assert_eq!(input_config::Language::parse("it").text(CHEAT_FILTERS[6]), "Valori da scegliere");
 }
 fn selector() -> Selector {
     let mut s = Selector::default();

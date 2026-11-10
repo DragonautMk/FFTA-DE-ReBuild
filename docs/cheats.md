@@ -116,8 +116,12 @@ and shows it alongside the catalog hash and the same declared-region comparison.
 It opens a catalog view with search, filters and scrollable original details.
 The type filter combines the source format and declared region. State filters
 can show armed entries, entries not armed, matching declared regions, source
-plan candidates or entries needing attention. A plan candidate still requires
-runtime preflight and does not establish device or gameplay compatibility.
+plan candidates, entries needing attention or entries with **Values to choose**.
+The values filter includes entries with at least one assessed source that has a
+valid declared parameter; it does not imply a matching ROM or an executable
+plan. Values still require explicit selection and the normal source, checksum
+and runtime checks. A plan candidate still requires runtime preflight and does
+not establish device or gameplay compatibility.
 In a synthetic Windows GNU/Wine GUI test, the armed filter changed from zero
 to one entry and back after disarm; candidate, declared-region, attention and
 not-armed filters were also checked without advancing the guest.
@@ -592,6 +596,21 @@ byte-for-byte identical to the earlier full-example capture, including the
 Gunner title, after the same 144-frame route. This establishes that rewriting
 offset `85` was unnecessary for that screen in that checkpoint; it does not
 establish equivalence of the two states during other game activity.
+A protected static comparison found that the recognized USA and EUR ROMs share
+the same 116-record job metadata table and, after checking the relocated
+pointers, the same property getter. Their matching wrapper reads unit offsets
+`05` and `07` (the first roster member’s `02000085` and `02000087`). For the
+property paths described in the [existing EUR source analysis](rom_data_unit_obj.md#registry-generic-jobs-redirected-to-a-known-alternate-job),
+row `50` redirects to the offset-`07` value, while rows `02`, `05` and `26`
+select their own data. In the observed control, offset `05` was `50`; changing
+it to `26` therefore changes this conditional route, whereas keeping `50`
+and changing offset `07` selects a different alternate row. This gives a
+specific explanation consistent with the separate observations. A later
+cheat-free Wine trace observed the matching wrapper, including its call into the
+getter, while opening the ability screen along the same input route. The trace
+records instruction addresses rather than function arguments, so it does not
+identify the unit for that call or prove which path produced every visible
+change. The getter has special cases and other behavior remains open.
 A [Japanese-version community guide](https://bbs.newwise.com/thread-251749-1-1.html)
 distinguishes the first character’s job-name field at `02000085` from an
 actual-job field at `02000087`, alongside appearance and race. This is a

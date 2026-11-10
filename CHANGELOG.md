@@ -157,6 +157,29 @@ Documentation: [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md)
 
 [Change record](docs/changes/2026-11-10-inspect-third-character-record.json)
 
+## 2026-11-10 — Find cheats with values to choose
+
+Type: added. Platforms: Linux, Windows GNU / Wine.
+
+**Changes**
+
+- Add a values-to-choose filter for entries with at least one assessed, valid parameter declaration. Preserve the existing candidate, region and armed filters and do not select parameter values implicitly.
+- Keep the filter independent of ROM compatibility or execution: source selection, explicit values, checksums, preview and runtime guards remain required. Add English and Italian labels.
+
+**Validation**
+
+- Focused Linux selector and source-assessment tests passed, including different ROM contexts, a mixed fixed/parameterized source and an invalid declaration. Windows GNU test binaries and frontend built. Initial Linux linking failed without a Wayland development link; a subsequent unit ran all four commands successfully but retained scratch because the temporary link was still present. A separate protected-input and log receipt verified their completion and unchanged source preimages: target/validation/units/dbg20-values-filter-build-receipt-_abfzj6t/; diagnostic units dbg20-values-filter-build-mkrwefap/ and dbg20-values-filter-build-9bwr44ef/.
+- The two affected Windows GNU tests passed under Wine, with unchanged test binaries verified by target/validation/units/dbg20-values-filter-wine-tests-receipt-kpd4ao71/. An initial GUI driver retained diagnostics after selecting the wrong filter; its Wine prefix drained.
+- A corrected isolated Wine/Xvfb GUI selected the new filter in a privately derived USA ability catalog, displayed eight parameterized entries and excluded the master, then explicitly opened a source and its value prompt. Screenshot reviewed; guest state and protected inputs unchanged, normal close and Wine drained. Evidence: target/validation/units/dbg20-values-filter-wine-f820ejz6/.
+
+**Limitations**
+
+- The filter is a discovery aid, not proof of source compatibility, all valid values or device behavior. Character examples remain reference-only and CH-0236 stays excluded. Native Windows and physical controllers were not tested. Primary debugging model and reasoning effort could not be independently verified.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [2026-11-03-filter-cheats-by-machine-state.json](docs/changes/2026-11-03-filter-cheats-by-machine-state.json).
+
+[Change record](docs/changes/2026-11-10-filter-cheats-with-declared-values.json)
+
 ## 2026-11-10 — Explain unavailable cheat sources in the catalog
 
 Type: changed. Platforms: Linux, Windows GNU / Wine.
@@ -179,6 +202,28 @@ Type: changed. Platforms: Linux, Windows GNU / Wine.
 Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [2026-11-10-inspect-third-character-record.json](docs/changes/2026-11-10-inspect-third-character-record.json).
 
 [Change record](docs/changes/2026-11-10-explain-unavailable-cheat-sources.json)
+
+## 2026-11-10 — Compare USA and EUR character job routing
+
+Type: changed. Platforms: USA and EUR ROM source comparison, Windows GNU / Wine prior observation.
+
+**Changes**
+
+- Document a conditional original-game job-property routing rule that explains why the two observed character fields can interact, while preserving the reference-only character quarantine.
+
+**Validation**
+
+- A protected validation compared exact known USA and EUR ROM identities, 116 identical 52-byte metadata rows, the full 1204-byte getter after verifying 50 relocated pointer words, and identical wrapper bytes with an explicitly decoded branch to the USA getter. For rows 02, 05 and 26 the routing byte is 00; for row 50 it is FF. Protected ROMs and existing result receipts remained unchanged. Evidence: target/validation/units/dbg20-usa-eur-job-routing-r9g1avi3/.
+- Previously accepted paired Wine diagnostics used initial bytes 02 50 01 02 and changed either offset 85 to 26 or offset 87 to 05; a third changed race and job while preserving 50. The observed screens and prior EUR source analysis are consistent with conditional alternate-row routing. Evidence: target/validation/units/dbg20-single-offset85-yqmspzpv/, dbg20-single-job-byte-b00g2384/, dbg20-character-preserve85-t3l31iu3/; docs/rom_data_unit_obj.md.
+- An isolated cheat-free USA Wine/Xvfb run followed the same 144-frame route. A bounded interpreter trace over the ability-screen transition retained 78 events in the USA wrapper, including its branch into the getter; the final screenshot was reviewed, checked character bytes and protected inputs stayed unchanged, the window closed and Wine drained. Evidence: target/validation/units/dbg20-usa-job-route-trace-h79fbpm7/. An earlier driver attempt stopped at the ownership check before launching Wine because its process was wrapped; its runner reported the prefix drained: dbg20-usa-job-route-trace-anefs3x8/.
+
+**Limitations**
+
+- The subsequent trace captures instruction addresses, not call arguments; it does not identify the unit or prove that the getter produced every visible effect. Property 2 and other special paths must not be generalized from this routing rule. Complete field semantics, valid combinations, imported CH-0236 intent, battle and hardware behavior remain unverified. Character examples remain reference-only.
+
+Documentation: [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [rom_data_unit_obj.md](docs/rom_data_unit_obj.md), [rom_data_gameplay.md](docs/rom_data_gameplay.md), [2026-11-10-compare-character-offset85.json](docs/changes/2026-11-10-compare-character-offset85.json).
+
+[Change record](docs/changes/2026-11-10-compare-usa-job-routing.json)
 
 ## 2026-11-10 — Compare a character tuple while preserving offset 85
 
