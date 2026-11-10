@@ -75,7 +75,7 @@ for a specific question: archive legacy lines 179..744 or the named record below
 - Verified: source/preview/arm/disarm, filters, named presets and guided CHEAT-INTERFACE. CHEAT-COMPACT-NAV adds compact catalog, keyboard shortcuts and held vertical repeat; 133 Linux menu tests and CH-0341 X11 GUI passed, portable runtime installed.
 - Verified Wine increment: parameter, protected EUR and menu/offscreen tests PASS (`dbg2-20-focused-wine-8q7tdm2w`, `dbg2-20-rom-preflight-wine-eiw70mf0`, `dbg2-20-menu-offscreen-wine-ftxmavl9`); earlier host menu builds lacked dlltool.
 - Verified live control: explicit two-parameter selection, preset save/review/arm/disarm, duplicate/overlap and changed-source refusals PASS in an isolated Wine/Xvfb frontend with protected EUR ROM and unchanged guest (`dbg2-20-live-parameter-flow-i_1jqzpn`). Earlier accepted live evidence covers one-shot and replay. A separate live keyboard/menu check selected both values, previewed, armed and disarmed (`dbg2-20-live-menu-values-bqd__1zo`); a later keyboard/menu preset roundtrip with both values also PASS (`dbg2-20-parameter-menu-preset-sbd7cz9m`). Actual source domains remain unverified.
-- Selection: plaintext two-line master and recorded-plan identity implemented; strict shape, existing guards, Linux suites, protected USA/EUR preflight, Windows GNU build and targeted Wine PASS. Wine test log includes a trailing D-Bus assertion after successful tests. Sol `gpt-6.1-sol` xhigh `/root/sol_debug_diagnosis` advised the design; effective settings not independently confirmed.
+- Plaintext master/plan identity: Linux/Windows GNU/Wine and USA/EUR preflight PASS; trailing D-Bus assertion after successful tests. Sol `gpt-6.1-sol` xhigh `/root/sol_debug_diagnosis` advised; effective settings unconfirmed.
 - Verified projection: eight source-listed ability-label entries and master projected privately for known USA with preserved original provenance, source hashes and strict checksum. USA/EUR preflight, invalid values and Wine frontend preview/arm/disarm PASS; guest unadvanced. Output `dbg2-20-usa-ability-projection-ro_8a3nv/work/projection/catalogo.json`; original XP unchanged.
 - Missing: full job/race/appearance domains and CH-0236, source-label reconciliation, actual ability effects, physical-device behavior and native Windows.
 - Verified dependent lists: bounded previous-value cases reject invalid/missing combinations, filter the menu and revalidate presets. Linux suites, Windows GNU build and synthetic Wine keyboard/preset flow PASS (`dbg2-20-dependent-parameter-tests-iiddbvcl`, `dbg2-20-dependent-wine-gui-ijn43g20`); old runtimes reject the schema variant.
@@ -89,10 +89,11 @@ for a specific question: archive legacy lines 179..744 or the named record below
 - Race/job-only matched full tuple screenshot (`dbg20-character-preserve85-t3l31iu3`); state equivalence unproved.
 - Labels: Linux/Wine PASS (`dbg20-value-label-build-zkxk1v_j`, `dbg20-value-label-wine-z3h_9726`).
 - CH-0236 source: guide repeats anomalous first address; intent unresolved.
-- CH-0236 candidate: distinct US listing, record pointers and one-byte Wine appearance effect support alternate address (`dbg20-third-record-readonly-sww_z0qx`, `dbg20-third-record-pointers-nb08dpqa`, `dbg20-third-candidate-effect-lwmjwzo2`); original intent remains unresolved.
+- CH-0236: distinct US candidate supported by record/name/effect (`dbg20-third-record-readonly-sww_z0qx`, `dbg20-third-record-pointers-nb08dpqa`, `dbg20-third-candidate-effect-lwmjwzo2`); original intent unresolved.
 - Source reasons: Wine PASS (`dbg20-source-reasons-final-wine-m69p1pgw`).
 - Third actor: Wine roster matches ROM pointer (`dbg20-third-roster-route-4hh0fmeo`).
 - Values filter: Linux/Windows GNU tests and USA Wine GUI PASS (`dbg20-values-filter-wine-f820ejz6`); discovery only, guards unchanged.
+- Separate USA third-appearance value02: derived private entry/menu one-shot PASS (`dbg20-third-appearance-menu-xtrn7in4`); CH-0236 unchanged.
 - Resume: `docs/changes/2026-11-10-inspect-third-character-record.json`.
 
 ### DBG2-22
@@ -160,8 +161,8 @@ for a specific question: archive legacy lines 179..744 or the named record below
 ## Final handover
 
 - Task: DBG2-20 partial; user requested completion.
-- Last verified result: values filter shows eight source-derived USA entries in Wine; focused Linux/Wine tests and Windows GNU builds passed.
+- Last verified result: separately sourced third-appearance value02 selected and applied once through USA Wine menu; invalid value refused.
 - Remaining work: field meanings, full character domains, CH-0236, broader game/device behavior, native Windows and physical controllers.
 - Errors or blockers: source labels conflict; one observation cannot validate the domain. Character examples remain reference-only; older activation-ready projection is historical evidence.
 - Next action: resolve character field/domain semantics with suitable evidence; preserve quarantine.
-- References: docs/changes/2026-11-10-filter-cheats-with-declared-values.json; target/validation/units/dbg20-values-filter-wine-f820ejz6/.
+- References: docs/changes/2026-11-10-project-third-appearance-candidate.json; target/validation/units/dbg20-third-appearance-menu-xtrn7in4/.

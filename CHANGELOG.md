@@ -23,6 +23,29 @@ Documentation: [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md)
 
 [Change record](docs/changes/2026-11-10-trace-player-three-source-anomaly.json)
 
+## 2026-11-10 — Offer a separately sourced third-character appearance value
+
+Type: added. Platforms: Linux, Windows GNU / Wine.
+
+**Changes**
+
+- Add an opt-in private USA projection entry for the separately sourced third-character appearance address and the single value observed in an isolated checkpoint. The new derived identifier and provenance remain distinct from the unchanged, excluded CH-0236.
+- Require the exact known USA ROM and matching source master, reject a reserved-ID collision or altered local appearance value, and keep all original character examples reference-only. Existing default projection behavior and original inputs are preserved.
+
+**Validation**
+
+- Protected generation verified the default projection, separate source and master binding, single declared value, combined reference-only options, unchanged original inputs, deterministic output and no-overwrite refusal. Altered master/table/ROM and a reserved-ID collision were refused. Evidence: target/validation/units/dbg20-third-appearance-projection-ltwc_atr/.
+- In isolated USA Wine/Xvfb, explicit menu navigation selected the derived source and value, reviewed its preview and applied once. The third-record byte changed from 01 to 02 while the imported outlier and protected inputs stayed unchanged; value 13 was refused, no guest frames advanced and no maintained cheat was armed. Screenshot reviewed; normal close and Wine drained. Evidence: target/validation/units/dbg20-third-appearance-menu-xtrn7in4/.
+- An earlier independently paired Wine observation showed the same one-byte change produced a different third-member portrait and sprite on one roster screen. Evidence: target/validation/units/dbg20-third-candidate-effect-lwmjwzo2/ and dbg20-third-roster-route-4hh0fmeo/.
+
+**Limitations**
+
+- This is a source-distinct private entry, not a repair or validation of CH-0236. Only appearance value 02, one USA checkpoint and one roster screen were observed; other values, maintained writes, broader gameplay, device equivalence and native Windows remain unverified. The named slot is not a persistent identity; the separate listing has inconsistent offsets in its first two character entries.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [2026-11-10-inspect-third-character-record.json](docs/changes/2026-11-10-inspect-third-character-record.json).
+
+[Change record](docs/changes/2026-11-10-project-third-appearance-candidate.json)
+
 ## 2026-11-10 — Observe the isolated character offset 85
 
 Type: changed. Platforms: Windows GNU / Wine.

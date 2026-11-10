@@ -629,6 +629,25 @@ is retained unchanged only as historical validation evidence. Regenerate a
 reference-only projection with the current helper, or use the existing
 ability-only projection.
 
+To add the separately sourced third-character appearance candidate to a **new**
+private USA projection, append `--third-appearance` to the projection command
+above. The helper adds derived entry `CH-9020` with its own source attribution
+and the same source-matched USA master. It refuses an original catalog that
+already uses that ID. This entry is distinct from the imported CH-0236 and is
+not a correction of it. Its only offered value is `02`, taken from the local
+appearance table and observed on one USA roster screen; the slot identifies a
+roster position, not a permanent character identity. Other values, scenes,
+maintained writes and original-device behavior are not established. The
+separate US listing uses different offsets for its first two appearance entries,
+so this observation must not be extrapolated to them.
+
+In an isolated Wine session, the menu selected the derived source and value,
+reviewed the preview and applied it once. The intended third-record byte
+changed, the imported outlier was unchanged and an undeclared value was refused.
+The normal ROM identity, master checksum, source and preview guards still apply.
+The optional `--character-examples` records remain reference-only even when the
+two flags are combined. Neither flag changes the source catalog or table.
+
 Frozen Windows GNU tests and an isolated synthetic Wine/Xvfb session checked a
 two-member save/preview/arm flow, duplicate name, changed preset, source lines,
 ROM and selected catalog, and a conflicting group. The group was not partially

@@ -698,9 +698,11 @@ No other development was selected. On resumption read only the individual ID in
   separate US listing and protected USA record/name-pointer inspection support
   a stride-aligned candidate; a cheat-free roster capture matches the third
   pointer. One synthetic candidate-byte write changed that actor’s portrait and
-  sprite against a protected control. This single value and screen do not
-  validate the imported code, its intent, other values or the device.
-  Broader combinations and device effects remain unverified.
+  sprite against a protected control. A separate opt-in private USA projection
+  now offers only the observed appearance value for that address with distinct
+  provenance; menu selection, one-shot write and invalid-value refusal passed
+  in Wine. This does not validate the imported code, its intent, other values,
+  maintained writes or the device. Broader combinations remain unverified.
   A persistent maintained-cheat badge is shown in gameplay and pause menus;
   Wine software and Linux Vulkan/llvmpipe rendering verified arm/disarm and
   one-shot behavior; physical GPUs and Windows native remain unverified.

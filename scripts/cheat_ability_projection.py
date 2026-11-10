@@ -10,13 +10,16 @@ from pathlib import Path
 USA_SHA256 = '43fc8204c6dceee58828aebc7af0c72eb807e99f35ad641c8bb0a4fa8b6edc19'
 MASTER_CHECKSUM = 0x37AE
 SOURCE = 'XP-reviewed-usa-ability-projection'
+THIRD_APPEARANCE_SOURCE = 'derived-us-third-appearance'
+THIRD_APPEARANCE_ID = 'CH-9020'
+THIRD_APPEARANCE_REFERENCE = 'https://etherealgames.com/gba/f/final-fantasy-tactics-advance/code-breaker-codes-us/'
 
 
 def digest(data):
     return hashlib.sha256(data).hexdigest()
 
 
-def project(catalog_bytes, table_bytes, rom, *, expected_sha=USA_SHA256, expected_crc=MASTER_CHECKSUM, character_examples=False):
+def project(catalog_bytes, table_bytes, rom, *, expected_sha=USA_SHA256, expected_crc=MASTER_CHECKSUM, character_examples=False, third_appearance=False):
     if digest(rom) != expected_sha or len(rom) < 65536:
         raise ValueError('The ROM does not match the explicitly recognized USA image')
     if binascii.crc_hqx(rom[:65536], 0xffff) != expected_crc:
@@ -129,13 +132,56 @@ def project(catalog_bytes, table_bytes, rom, *, expected_sha=USA_SHA256, expecte
                  'slots': [{'line': 0, 'field': 'value', 'offset': 2, 'digits': 2}]},
             ], interpretation='Reference only: the cited guide identifies the fields as job, appearance and race, but the original XP notes differ and a USA checkpoint leaves one field unresolved. These examples cannot be activated until reviewed.')
             derived.append(item)
-    return {'schema': 1, 'derivation': {
+    if third_appearance:
+        # This is a separate US source, not a correction of XP's CH-0236.
+        # Only value 02 has been observed for this address in the isolated
+        # USA checkpoint; retain the existing quarantine for the XP tuples.
+        if THIRD_APPEARANCE_ID in by_id:
+            raise ValueError('The reserved derived appearance ID exists in the original catalog')
+        if raw_master != ['000037AE 000A', '10000488 0007']:
+            raise ValueError('The original master differs from the separately cited USA listing')
+        appearance = table.split('## Tabella Apparenza', 1)[1]
+        if not re.search(r'^02\s+-\s+Marche\b', appearance, re.MULTILINE):
+            raise ValueError('The source appearance value no longer matches the local table')
+        derived_master['provenance'].append({
+            'source': THIRD_APPEARANCE_SOURCE,
+            'raw_code_lines': list(raw_master),
+            'reference': THIRD_APPEARANCE_REFERENCE,
+            'original_master_source': 'XP',
+            'scope': 'Identical master lines in the local XP record and the separately cited US listing.',
+        })
+        code = '32000294 00XX'
+        derived.append({
+            'id': THIRD_APPEARANCE_ID, 'format': 'codebreaker', 'region': 'USA',
+            'section': 'derived third-character appearance',
+            'title': 'Third character appearance (separate US source)',
+            'codes': [code], 'aliases': [], 'status': 'observed-one-usa-checkpoint',
+            'notes': [
+                'Derived private entry, not the imported CH-0236 or a correction of it.',
+                'Only value 02 was observed on one roster screen; other scenes and device behavior remain unverified.',
+            ],
+            'provenance': [{
+                'source': THIRD_APPEARANCE_SOURCE, 'master_id': 'CH-0225',
+                'raw_code_lines': [code], 'reference': THIRD_APPEARANCE_REFERENCE,
+                'source_placeholder': '??',
+                'interpretation': 'The listing names the address as character 3 appearance. Value 02 comes from the local appearance table and one isolated USA observation.',
+                'parameter': {'name': 'appearance', 'allowed': {'kind': 'list', 'values': [2]},
+                              'slots': [{'line': 0, 'field': 'value', 'offset': 2, 'digits': 2}],
+                              'labels': [{'value': 2, 'label': 'Appearance 02 (observed on one roster screen)'}]},
+            }],
+        })
+    result = {'schema': 1, 'derivation': {
         'kind': 'private-usa-ability-and-character-examples' if character_examples else 'private-usa-primary-ability-projection',
         'source_catalog_sha256': digest(catalog_bytes), 'source_table_sha256': digest(table_bytes),
         'rom_sha256': expected_sha, 'master_crc16': f'{expected_crc:04X}',
         'scope': 'Source-listed USA ability-set labels and two reference-only character examples. Character regions remain unknown and cannot be activated pending field verification. Original provenance and region are retained; game/device effects are unverified.' if character_examples else 'Source-listed ability-set labels only. This is a derived USA declaration based on the master checksum; original provenance and region are retained. Game effects and physical-device behavior are unverified.',
         'reference': 'https://gamefaqs.gamespot.com/gba/560436-final-fantasy-tactics-advance/faqs/26118',
     }, 'entries': derived}
+    if third_appearance:
+        result['derivation']['kind'] += '-with-third-appearance'
+        result['derivation']['scope'] += ' Separately derived third-character appearance value 02 is included with its own source and limited observation.'
+        result['derivation']['third_appearance_reference'] = THIRD_APPEARANCE_REFERENCE
+    return result
 
 
 def main():
@@ -143,8 +189,9 @@ def main():
     for name in ('catalog', 'table', 'rom', 'output'):
         parser.add_argument('--' + name, type=Path, required=True)
     parser.add_argument('--character-examples', action='store_true', help='include two reference-only job/race/appearance examples')
+    parser.add_argument('--third-appearance', action='store_true', help='include separately sourced third-character appearance value 02 for the recognized USA ROM')
     args = parser.parse_args()
-    projection = project(args.catalog.read_bytes(), args.table.read_bytes(), args.rom.read_bytes(), character_examples=args.character_examples)
+    projection = project(args.catalog.read_bytes(), args.table.read_bytes(), args.rom.read_bytes(), character_examples=args.character_examples, third_appearance=args.third_appearance)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open('x', encoding='utf-8') as output:
         json.dump(projection, output, ensure_ascii=False, indent=2)
