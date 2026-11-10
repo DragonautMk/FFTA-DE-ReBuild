@@ -22003,3 +22003,45 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: cheat parameter chooser, focus label and confirmed selection show decimal and hexadecimal without changing chosen values. Focused Linux and Windows GNU/Wine tests cover English/Italian, range/list/reference and 16-bit values; protected USA Wine GUI showed Gunner 38 (0x26), selected choices and refusal of reference preparation. Screenshots reviewed, guest unchanged, normal close and Wine drained.
 - Evidence: `docs/changes/2026-11-10-show-cheat-values-in-hex.json`; `target/validation/units/dbg20-hex-values-build-4138gep6/`, `dbg20-hex-values-wine-oyxdakfz/`.
 - Limits: formatting does not validate source domains; original CH-0236, game/device effects, native Windows and physical controllers remain open.
+
+### DBG2-20-CONDITIONAL-FIRST-JOB
+
+- Outcome: completed within tested scope
+- Verified criteria: opt-in private USA projection adds source-distinct first-record job05 with condition bytes86/87 = 01/02. Protected generation covers options and invalid inputs. Wine menu selected and applied one write on the observed checkpoint; repeating with a false condition reported zero writes. Invalid value refused, screenshot reviewed, guest unadvanced, normal close and Wine drained. Prior paired Wine screen showed Thief from the same single-byte write.
+- Evidence: `docs/changes/2026-11-10-project-conditional-first-job-example.json`; `target/validation/units/dbg20-first-job-projection-xdj0hbp4/`, `dbg20-first-job-wine-vlhi_rx4/`, `dbg20-single-job-byte-b00g2384/`.
+- Limits: two-byte condition does not identify actor or establish state safety; only one checkpoint/screen/value observed. CH-0234 original remains quarantined; broader domains, gameplay, maintained use, native Windows and devices remain open.
+
+### DBG2-20-ONE-SHOT-WRITE-FEEDBACK
+
+- Outcome: completed within tested scope
+- Verified criteria: menu and diagnostic feedback use actual one-shot write count, distinguishing zero writes from positive results in English/Italian; zero remains successful execution. Focused Linux and Windows GNU/Wine tests passed. Protected USA Wine menu applied conditional job once with one write, then with zero; screenshots reviewed, guest unadvanced, normal close and Wine drained.
+- Evidence: `docs/changes/2026-11-10-report-one-shot-write-count.json`; `target/validation/units/dbg20-cheat-feedback-build-uwmm9dtn/`, `dbg20-cheat-feedback-wine-0htinf7a/`.
+- Limits: count does not establish gameplay safety; full domains, CH-0236, native Windows and physical devices remain open. Primary model/effort not independently exposed.
+
+### DBG2-20-SOURCE-LISTED-THIRD-APPEARANCES
+
+- Outcome: completed within tested scope
+- Verified criteria: opt-in separate USA entry offers 129 source-listed values, excluding source-marked glitching/non-working/crashing and absent values; original CH-0236 quarantine and observed-only entry preserved. Protected projection validates inputs/options; USA Wine menu selected value03, applied one target-byte write, refused excluded values, left guest unadvanced and protected inputs unchanged. Screenshot reviewed, normal close and Wine drained. Indentation-only edit after Wine was AST-equivalent; final protected projection test passed.
+- Evidence: `docs/changes/2026-11-10-project-source-listed-third-appearances.json`; `target/validation/units/dbg20-source-appearances-final-e_o6lx58/`, `dbg20-source-appearances-wine-pas9leu0/`.
+- Limits: source-listed is not verified or safe; value03 effect and other states unproved, identity may differ, black sprites included. Broader domains, CH-0236, native Windows and physical devices remain open.
+
+### DBG2-20-THIRD-APPEARANCE-SCENE-MATRIX
+
+- Outcome: completed within tested scope
+- Verified criteria: protected USA Wine comparison used the same checkpoint, runtime, 152-frame route and catalog for a no-write control and values03/0D/CA/F0. One-shot bytes persisted; inspected neighbors and imported outlier unchanged; no maintained cheats. All four changed the third portrait/figure; CA and F0 showed green and blue faces. Screenshots reviewed, five normal closes and Wine drain. Generated selector labels now report the two observed colors; protected projection and Wine catalog checks pass.
+- Evidence: `docs/changes/2026-11-10-observe-third-appearance-values.json`; `target/validation/units/dbg20-appearance-matrix-wine-5e8dfxho/`, `dbg20-appearance-observation-labels-9lr8ft89/`, `dbg20-appearance-labels-wine-gjl_ez_3/`.
+- Limits: one checkpoint, actor slot and scene; no proof of expected palette, general compatibility, remaining values, CH-0236, physical devices or native Windows.
+
+### DBG2-20-OBSERVED-HUMAN-JOB-TITLES
+
+- Outcome: completed within tested scope
+- Verified criteria: same-seed USA Wine control showed Soldier; nine conditional single-byte values03/04/06..0C showed expected job titles on one 144-frame ability route, complementing earlier Thief05. Neighboring checked bytes and visible ability list unchanged. Ten screenshots reviewed; normal closes, protected inputs and Wine drain passed. Opt-in derived conditional entry offers values03..0C; protected projection and menu tests passed, including zero-write false condition and invalid value refusal.
+- Evidence: `docs/changes/2026-11-10-project-observed-human-job-titles.json`; `target/validation/units/dbg20-human-jobs-matrix-316k2185/`, `dbg20-human-job-titles-projection-h4eo8rpq/`, `dbg20-human-job-titles-wine-y4hetpub/`, `dbg20-single-job-byte-b00g2384/`.
+- Limits: titles do not establish complete job/ability changes, safe transitions, other states, CH-0234/0236 intent, native Windows or physical devices.
+
+### DBG2-20-PAIRED-HUMAN-JOB-ABILITY-LABELS
+
+- Outcome: completed within tested scope
+- Verified criteria: opt-in private USA entry offers ten source-listed dependent job/primary-ability label pairs with guarded ability-before-job writes. Matched Wine control and one paired Black Mage/Black Magic case changed the title and first label on one screen; second Black Magic label remained. Invalid pair and false-condition zero-write checks passed. Protected projection and Wine menu explicit-selection checks passed; screenshots reviewed, guest inputs protected, normal close and Wine drained. One parallel projection check initially met the shared storage lease; sequential retry passed.
+- Evidence: `docs/changes/2026-11-10-project-paired-human-job-ability-labels.json`; `target/validation/units/dbg20-paired-job-ability-664h7_f_/`, `dbg20-paired-job-ability-projection-rlap8qha/`, `dbg20-paired-job-ability-menu-43cf8my_/`.
+- Limits: other nine pairs source-listed only; titles/labels do not prove complete job mechanics, learned abilities or safety. Actor identity, broader behavior, CH-0236, native Windows and devices remain open.

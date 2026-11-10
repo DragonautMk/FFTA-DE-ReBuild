@@ -78,6 +78,8 @@
     "Source and verification": "Fonte e verifica",
     "Review the plan, then return to choose an action": "Verifica il piano, poi torna per scegliere un’azione",
     "Applied once": "Applicato una volta",
+    "No writes made; check conditions": "Nessuna scrittura; controlla le condizioni",
+    "Applied once · writes: {writes}": "Applicato una volta · scritture: {writes}",
     "Armed for future frames": "Attivo per i frame successivi",
     "Disarmed; earlier writes remain": "Disattivato; le scritture precedenti rimangono",
     "Select a source explicitly first": "Seleziona prima una fonte esplicitamente",

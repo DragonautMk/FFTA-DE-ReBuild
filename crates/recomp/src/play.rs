@@ -719,6 +719,11 @@ struct PlayApp {
     error: Option<String>,
 }
 
+fn cheat_once_feedback(language:input_config::Language,writes:u64)->String {
+    if writes==0 { menu::i18n::format(language,"No writes made; check conditions",&[]) }
+    else { menu::i18n::format(language,"Applied once · writes: {writes}",&[("writes",writes.to_string())]) }
+}
+
 impl PlayApp {
     fn menu_text(&self,key:&str,args:&[(&str,String)])->String {
         menu::i18n::format(self.av.menu_language,key,args)
@@ -2162,7 +2167,7 @@ impl PlayApp {
                 if let Some(capture)=self.capture.as_mut(){if let Err(error)=capture.commit_cheats(count){self.stop_input_recording(&error,false);return Err(error);}}
                 self.cheat_history.record("once",identity,before.0,before.1,count);
                 self.cheat_preview=None;self.last_cheat_once=Some(serde_json::json!({"id":id,"preview":preview,"writes":count,"frame":before.0,"clock":before.1,"scope":"Manual paused one-shot, no hardware hook or maintained toggle"}));
-                self.menu.diagnosis_result(format!("Applied {count} writes once in the isolated paused copy."));self.menu_dirty=true;return Ok(());
+                self.menu.diagnosis_result(cheat_once_feedback(self.av.menu_language,count as u64));self.menu_dirty=true;return Ok(());
             },
             crate::debug_control::Action::CheatArm{id,provenance,master,generation,preview}=>{
                 action.validate()?;
@@ -2961,7 +2966,8 @@ impl PlayApp {
             Some(format!("{}\n{}\n{}\n\n{}\n{}\n{}\n{}\n{}\n{}",self.av.menu_language.text("Review these operations. Activate runs them on future frames; Apply once runs them immediately."),summary,conditional,self.av.menu_language.text("Operations"),serde_json::to_string_pretty(operations).map_err(|e|e.to_string())?,self.av.menu_language.text("Potential reads and writes"),serde_json::to_string_pretty(&details["footprint"]).map_err(|e|e.to_string())?,self.av.menu_language.text("Source and verification"),serde_json::to_string_pretty(details).map_err(|e|e.to_string())?))
         }else if request==R::PresetPrepare{Some(serde_json::to_string_pretty(&self.cheat_preview.as_ref().ok_or("Preview unavailable")?["body"]).map_err(|e|e.to_string())?)}else{None};
         let token=if request==R::PresetPrepare{self.cheat_preview.as_ref().and_then(|v|v["token"].as_str()).map(str::to_owned)}else{None};
-        self.menu.cheat_management_feedback(match request{R::Prepare|R::PresetPrepare=>"Review the plan, then return to choose an action",R::ApplyOnce=>"Applied once",R::Arm|R::PresetArm=>"Armed for future frames",R::PresetSave=>"Preset saved",R::Disarm|R::DisarmAll=>"Disarmed; earlier writes remain"}.into(),preview);if let Some(token)=token{self.menu.cheat_set_preview_token(token);}self.menu_dirty=true;Ok(())
+        let feedback=match request{R::Prepare|R::PresetPrepare=>"Review the plan, then return to choose an action".into(),R::ApplyOnce=>cheat_once_feedback(self.av.menu_language,self.last_cheat_once.as_ref().and_then(|v|v["writes"].as_u64()).ok_or("One-shot result unavailable")?),R::Arm|R::PresetArm=>"Armed for future frames".into(),R::PresetSave=>"Preset saved".into(),R::Disarm|R::DisarmAll=>"Disarmed; earlier writes remain".into()};
+        self.menu.cheat_management_feedback(feedback,preview);if let Some(token)=token{self.menu.cheat_set_preview_token(token);}self.menu_dirty=true;Ok(())
     }
 
     fn open_debug_catalog(&mut self, choose: bool) {
@@ -5557,6 +5563,18 @@ fn menu_panel_native(index:usize,bounds:[i32;4],length:f32)->(f32,f32) {
     let shift=if bounds[0]+bounds[2]>=240 {distance}else{-distance};
     ((index%480)as f32-120.+shift,(index/480)as f32)
 }
+#[cfg(test)]
+mod cheat_once_feedback_tests {
+    #[test]
+    fn distinguishes_zero_and_positive_writes_in_both_languages() {
+        let en=input_config::Language::default();let it=input_config::Language::parse("it");
+        assert_eq!(super::cheat_once_feedback(en,0),"No writes made; check conditions");
+        assert_eq!(super::cheat_once_feedback(it,0),"Nessuna scrittura; controlla le condizioni");
+        assert_eq!(super::cheat_once_feedback(en,2),"Applied once · writes: 2");
+        assert_eq!(super::cheat_once_feedback(it,2),"Applicato una volta · scritture: 2");
+    }
+}
+
 #[cfg(test)]
 mod gamepad_capture_simulation {
     use super::MenuTapFilter;

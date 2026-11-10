@@ -687,6 +687,96 @@ The normal ROM identity, master checksum, source and preview guards still apply.
 The optional `--character-examples` records remain reference-only even when the
 two flags are combined. Neither flag changes the source catalog or table.
 
+For a broader **unverified** source-listed third-appearance selector, append
+`--third-appearance-source-values` to the projection command and select its new
+private catalog explicitly. Separate entry `CH-9022` offers the 129 source-listed
+values `01..5F`, `C0..E0` and `F0`, with the table's labels. The source marks
+`00` as glitching, `60..AF` and `B1..BF` as non-working, and `B0` as crashing;
+these are excluded. Values not listed by the source are excluded too. Some
+included labels are uncertain or describe black sprites. The source describes
+appearances, not verified compatibility, and other included values can also fail.
+Wrapped descriptions are shortened in the chooser; consult the original local
+table for the full text. The slot may identify a different actor in another state.
+
+This is a separate source-listed entry, not the original CH-0236 or a guarantee
+of safe behavior. `--third-appearance` still produces the distinct `CH-9020`
+with its single observed value. Both options can be selected together, but the
+entries write the same address and therefore conflict when simultaneously armed.
+In a protected USA Wine menu test, value `03` was explicitly selected and wrote
+the intended byte once; rejected values included `00`, `60`, `B0`, `E1` and
+`FF`. That particular test did not advance the guest. A later isolated Wine
+comparison used the same USA checkpoint, runtime and 152-frame roster route for
+a no-write control and one-shot values `03`, `0D`, `CA` and `F0`. All four
+showed a different third-member portrait and figure from the control; `CA`
+showed a green face and `F0` a blue face in that scene. The selector appends
+these two bounded color observations to the source labels. These observations
+do not establish correct palettes, identity in other states, gameplay compatibility
+or device behavior. Value `02` has a separate earlier one-screen observation.
+Source data stays local and the original table is unchanged.
+
+To include the separately derived conditional first-record job example in a
+**new** private USA projection, append `--first-job-thief` to the projection
+command above and select the resulting catalog explicitly. Entry `CH-9021`
+offers the single value `05` (Thief), based on the isolated first-record
+observation described above. It is a new conditional one-byte plan, not the
+original CH-0234 or a correction of that source. It can be combined with the
+other projection options; the original character examples remain quarantined.
+
+The plan writes `05` to `02000087` only while the two bytes at `02000086` and
+`02000087` are `01 02`, respectively. If the condition is false, application
+succeeds with **zero writes**; the menu reports that no writes were made and
+suggests checking the conditions. Successful applications with writes show the
+actual count. The text command also reports the count. This check does
+not establish the character's identity, the value of other fields, or the safety
+of the transition in another state. In the protected USA Wine checkpoint, the
+menu explicitly selected the value and applied one write, while a subsequent
+application with the now-different job byte made zero writes; no guest frames
+advanced. The earlier paired test observed the Thief title on one ability
+screen. Further effects, maintained writes, other checkpoints and physical
+devices remain unverified. The slot may refer to a different actor later.
+
+To include the ten observed human job **titles** in a separate new private USA
+projection, append `--first-human-job-titles` and select the resulting catalog.
+Entry `CH-9023` offers values `03..0C`. It uses a derived conditional one-byte
+plan: bytes `02000086..87` must be `01 02` before byte `02000087` is written;
+a false condition makes zero writes. It is distinct from the original CH-0234,
+and does not identify the actor or verify the rest of the state. It targets the
+same byte as `--first-job-thief`, so the two entries conflict if armed together.
+
+In one USA checkpoint, the no-write control displayed Soldier. Nine separate
+one-shot copies for `03`, `04` and `06..0C` followed the same 144-frame route
+and displayed Paladin, Fighter, Ninja, White Mage, Black Mage, Illusionist, Blue
+Mage, Archer and Hunter respectively. Each changed byte persisted through that
+route while the inspected adjacent bytes stayed unchanged. A prior paired test
+of `05` displayed Thief. The visible ability list remained unchanged in the
+screens examined: a displayed title is **not proof of a complete job change**,
+learned abilities, safe transitions or battle behavior. Other states, maintained
+writes, devices and native Windows remain unverified. A separate Wine menu test
+selected Fighter, made the conditional write once, then reported zero writes
+when the condition no longer matched; an undeclared value was refused.
+
+For paired **job and primary ability labels**, append
+`--first-human-job-ability` when creating a new private USA projection and
+select entry `CH-9024`. The ten source-listed human job choices each lead to
+one source-listed primary ability label; confirm both choices explicitly. The
+plan checks bytes `02000086..87` are `01 02` before each write. It writes the
+ability label byte first and the job byte second, so the job write does not
+invalidate the condition before the ability write. A false condition produces
+zero writes. The condition does not establish the actor's identity or verify
+the rest of the state. This entry overlaps the first-record job entries and
+CH-0226, so overlapping plans cannot be armed together.
+
+In a protected USA Wine comparison, one synthetic paired plan selected Black
+Mage and Black Magic. After the same 144-frame route, the control showed
+Soldier and Battle Tech while the treated copy showed Black Mage and Black
+Magic as the first ability label. The second Black Magic label remained visible.
+A separate menu check explicitly selected both choices, made two writes, refused
+an undeclared pair, and made zero writes when the condition no longer matched.
+Only this pair was observed together on one screen; the other associations are
+source-listed and unverified. Neither the title nor the ability label proves
+learned abilities, a complete job change, safe transitions, battle behavior or
+physical-device equivalence.
+
 Frozen Windows GNU tests and an isolated synthetic Wine/Xvfb session checked a
 two-member save/preview/arm flow, duplicate name, changed preset, source lines,
 ROM and selected catalog, and a conflicting group. The group was not partially

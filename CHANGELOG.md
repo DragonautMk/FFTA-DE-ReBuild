@@ -67,6 +67,28 @@ Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/develo
 
 [Change record](docs/changes/2026-11-10-show-cheat-values-in-hex.json)
 
+## 2026-11-10 — Report actual cheat one-shot writes in the menu
+
+Type: fixed. Platforms: Linux, Windows GNU / Wine.
+
+**Changes**
+
+- Report an explicit zero-write result with a suggestion to check conditions, or the actual positive write count, after applying a cheat once. Use the same localized result in the diagnostic message and cheat management panel.
+- Preserve the existing conditional execution behavior and machine-readable result; a successful zero-write application is not converted into an error.
+
+**Validation**
+
+- A focused Linux test checked zero and positive counts in English and Italian. Windows GNU test executable and frontend built. Evidence: target/validation/units/dbg20-cheat-feedback-build-uwmm9dtn/.
+- The focused Windows GNU test passed under Wine. A protected USA Wine/Xvfb menu session applied the conditional derived job once with one write and again with its condition false and zero writes; inspected bytes stayed unchanged on the second application, no guest frames advanced and no maintained cheat was armed. Screenshots of both messages were visually reviewed; protected inputs unchanged, normal close and Wine drained. Evidence: target/validation/units/dbg20-cheat-feedback-wine-0htinf7a/.
+
+**Limitations**
+
+- A positive count reports writes performed, not that game behavior is safe or verified. A zero count suggests checking conditions but does not diagnose every possible cause. Native Windows and physical-controller input were not tested.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [2026-11-10-project-conditional-first-job-example.json](docs/changes/2026-11-10-project-conditional-first-job-example.json).
+
+[Change record](docs/changes/2026-11-10-report-one-shot-write-count.json)
+
 ## 2026-11-10 — Offer a separately sourced third-character appearance value
 
 Type: added. Platforms: Linux, Windows GNU / Wine.
@@ -89,6 +111,124 @@ Type: added. Platforms: Linux, Windows GNU / Wine.
 Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [2026-11-10-inspect-third-character-record.json](docs/changes/2026-11-10-inspect-third-character-record.json).
 
 [Change record](docs/changes/2026-11-10-project-third-appearance-candidate.json)
+
+## 2026-11-10 — Offer source-listed third-character appearances
+
+Type: added. Platforms: Linux projection, Windows GNU / Wine.
+
+**Changes**
+
+- Add an explicitly opt-in, separately identified private USA third-appearance entry with 129 source-listed values and labels. Exclude the source's glitching, non-working and crashing values and values absent from the table; mark the remaining choices unverified, including uncertain and black-sprite descriptions.
+- Keep the previously observed single-value entry distinct, preserve original CH-0236 quarantine and source data, and bind both derived appearance entries to the separately attributed USA master and address. Existing default output and other options remain unchanged.
+
+**Validation**
+
+- Protected generation checked all 129 values and labels, excluded and absent ranges, unchanged default and prior single-value entry, combined options, unique master provenance, no-overwrite, and rejection of changed source warnings, duplicate source value, ROM and reserved ID collision. Final protected generation passed after an indentation-only edit whose Python AST was verified unchanged. Evidence: target/validation/units/dbg20-source-appearances-final-e_o6lx58/; earlier identical-semantics generation dbg20-source-appearances-4sesckdf/.
+- In a protected USA Wine/Xvfb menu session, the source-listed value03 was explicitly selected, previewed and applied once; only the target byte among the inspected third-record bytes changed from 01 to 03, the original outlier stayed unchanged, and values 00, 60, B0, E1 and FF were refused. The guest did not advance, no maintained cheat was armed, the screenshot was reviewed, protected inputs stayed unchanged, normal close and Wine drain passed. Evidence: target/validation/units/dbg20-source-appearances-wine-pas9leu0/. The generator subsequently received only the AST-equivalent indentation edit recorded above.
+
+**Limitations**
+
+- Source-listed does not mean safe or compatible. Value03 was checked only as a byte write without guest advancement; value02 alone has an earlier one-screen effect observation. Other values, game states, retained writes, physical devices and native Windows remain unverified. Some source labels are uncertain and some describe black sprites.
+- The derived US entry is not the original CH-0236 or proof of its author's intent. Its slot may represent a different actor in another state. The two derived appearance entries target the same address and cannot be armed together.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [2026-11-10-project-third-appearance-candidate.json](docs/changes/2026-11-10-project-third-appearance-candidate.json).
+
+[Change record](docs/changes/2026-11-10-project-source-listed-third-appearances.json)
+
+## 2026-11-10 — Pair source-listed human job and primary ability labels
+
+Type: added. Platforms: Linux projection, Windows GNU / Wine.
+
+**Changes**
+
+- Add an opt-in private USA entry with ten source-listed human job and dependent primary-ability label pairs. Require explicit choices and guard both writes with the observed first-record race/job bytes; write the ability byte before the job byte so both checks see the initial condition.
+- Keep the original CH-0226/CH-0234 provenance and quarantine unchanged and identify the derived entry as unverified. Document that labels do not prove learned abilities or a complete job change.
+
+**Validation**
+
+- A protected USA Wine/Xvfb comparison used identical checkpoint, runtime and 144-frame route for an unwritten control and a synthetic paired Black Mage/Black Magic plan. The treated case made exactly two writes, retained both target values, refused an undeclared pair, and made zero writes on a second application after the condition became false. Control and treated screenshots were reviewed: Soldier/Battle Tech changed to Black Mage/Black Magic in the first label, while the second Black Magic label remained visible. Protected inputs stayed unchanged, both processes closed normally and Wine drained. Evidence: target/validation/units/dbg20-paired-job-ability-664h7_f_/.
+- Protected projection tests checked all ten source-declared associations, ordered guards/slots, unchanged defaults and prior entries, option combinations, source master uniqueness, no-overwrite and rejection of altered source data, addresses, ROM and reserved ID. Prior human-title and appearance projection checks passed after the change. One parallel validation launch was refused by the shared cold-storage lease; the sequential retry passed. Evidence: target/validation/units/dbg20-paired-job-ability-projection-rlap8qha/, dbg20-human-titles-after-pairs-1uz_kcu_/, dbg20-appearances-after-pairs-xwuwxgu4/.
+- In a protected USA Wine/Xvfb menu test, Black Mage and its dependent Black Magic label were explicitly selected; the plan made two writes, rejected an invalid pair and reported zero writes when the condition no longer matched. Both selection screenshots were reviewed, guest frames did not advance, no maintained cheat was armed, protected inputs remained unchanged, normal close and Wine drain passed. Evidence: target/validation/units/dbg20-paired-job-ability-menu-43cf8my_/.
+
+**Limitations**
+
+- Only Black Mage/Black Magic was observed together on one ability screen; the other nine pairs are source-listed, not behaviorally verified. The second Black Magic label remained visible, and none of the tests establishes learned abilities, a complete job change, safe transitions, battle behavior, maintained writes, physical devices or native Windows.
+- The two-byte condition does not establish actor identity or complete state safety. This derived entry does not repair the original CH-0234 or CH-0236. Overlapping job and ability plans conflict when armed.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [2026-11-10-project-observed-human-job-titles.json](docs/changes/2026-11-10-project-observed-human-job-titles.json), [2026-11-10-observe-ability-label-write.json](docs/changes/2026-11-10-observe-ability-label-write.json).
+
+[Change record](docs/changes/2026-11-10-project-paired-human-job-ability-labels.json)
+
+## 2026-11-10 — Offer observed human job titles with a conditional write
+
+Type: added. Platforms: Linux projection, Windows GNU / Wine.
+
+**Changes**
+
+- Add an opt-in private USA entry for ten human job titles observed at first-record byte87 in one checkpoint. Retain the condition bytes86/87 = 01/02, preserve original CH-0234 quarantine, and distinguish displayed titles from verified full job changes.
+- Bind the new entry to its own source-bound master and original source addresses, reject altered human rows or reserved IDs, and preserve the separate existing Thief-only entry and default output.
+
+**Validation**
+
+- A protected Wine/Xvfb matrix ran fresh copies of the same USA checkpoint and runtime on the same 144-frame ability-screen route: one no-write Soldier control and nine synthetic conditional single-byte plans for 03, 04 and 06..0C. Each expected title appeared; the changed byte persisted and inspected adjacent bytes remained unchanged. The visible ability list remained unchanged. All ten screenshots were reviewed, all processes closed normally, protected inputs stayed unchanged and Wine drained. Evidence: target/validation/units/dbg20-human-jobs-matrix-316k2185/. A prior paired observation of 05 showed Thief: dbg20-single-job-byte-b00g2384/.
+- Protected generation checked all ten labels/values, unchanged default and existing Thief entry, combined options, master uniqueness, no-overwrite, and rejection of altered source rows, addresses, master, ROM and reserved ID. Evidence: target/validation/units/dbg20-human-job-titles-projection-h4eo8rpq/.
+- A protected USA Wine menu selected Fighter, prepared and applied one conditional byte write; a repeated application after the condition changed reported zero writes, and undeclared value38 was refused. The guest did not advance, screenshot was reviewed, no maintained cheat was armed, protected inputs remained unchanged, normal close and Wine drain passed. Evidence: target/validation/units/dbg20-human-job-titles-wine-y4hetpub/.
+
+**Limitations**
+
+- Only one checkpoint, actor slot and ability screen were observed. The title change does not prove full job mechanics, learned abilities, transition safety or battle behavior; the condition does not establish actor identity or the rest of the state. Maintained writes, other states, physical devices and native Windows remain unverified.
+- The new derived code does not repair or verify CH-0234 or CH-0236. CH-9021 and CH-9023 write the same byte and conflict if armed together. Source row01 and the source/ROM row02 disagreement remain unresolved.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [2026-11-10-observe-single-job-field.json](docs/changes/2026-11-10-observe-single-job-field.json).
+
+[Change record](docs/changes/2026-11-10-project-observed-human-job-titles.json)
+
+## 2026-11-10 — Offer a conditional observed first-record job example
+
+Type: added. Platforms: Linux projection, Windows GNU / Wine.
+
+**Changes**
+
+- Add an opt-in private USA projection entry for the single first-record job value observed in a human checkpoint. A separately derived conditional plan writes job byte 05 only when bytes 86 and 87 are 01 and 02; it is not the original CH-0234 and does not alter the quarantined source entries.
+- Bind the derived entry to its own master provenance, known USA identity and one declared value; reject changed source addresses, master or source label and reserved-ID collisions.
+
+**Validation**
+
+- Protected generation verified unchanged default output, standalone and combined options, source/master binding, the conditional plan and single allowed value, no-overwrite, and refusal of changed source addresses, label, master, ROM and reserved ID collision. Evidence: target/validation/units/dbg20-first-job-projection-xdj0hbp4/.
+- In an isolated USA Wine/Xvfb session, menu selection and one-shot applied one write changing first-record bytes 02 50 01 02 to 02 50 01 05. The menu screenshot was reviewed. A repeated preparation and application after the condition became false reported zero writes and left inspected bytes unchanged; undeclared value 38 was refused. Guest frame/clock did not advance, no maintained cheat was armed, protected inputs remained unchanged, normal close and Wine server drain passed. Evidence: target/validation/units/dbg20-first-job-wine-vlhi_rx4/.
+- The earlier independent paired USA Wine observation advanced the same checkpoint by 144 frames and showed the refreshed Thief title after an unconditional write of the same byte/value; its no-write control displayed Soldier. Evidence: target/validation/units/dbg20-single-job-byte-b00g2384/, dbg20-character-ability-screen-h75fjx8y/.
+
+**Limitations**
+
+- The two-byte condition does not establish actor identity, other field values, general compatibility or transition safety. False conditions are successful zero-write applications, not errors. One checkpoint and ability screen are observed; other values, maintained application, broader gameplay, physical devices and native Windows remain unverified. The record may represent another actor later.
+- The derived conditional entry is distinct from CH-0234 and does not resolve the original source's conflicting field descriptions or CH-0236.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [2026-11-10-observe-single-job-field.json](docs/changes/2026-11-10-observe-single-job-field.json).
+
+[Change record](docs/changes/2026-11-10-project-conditional-first-job-example.json)
+
+## 2026-11-10 — Compare source-listed third appearances in one USA scene
+
+Type: changed. Platforms: Windows GNU / Wine, Linux projection.
+
+**Changes**
+
+- Record a matched one-scene comparison for four source-listed third-appearance values and annotate CA and F0 in the private selector with their observed green and blue portrait colors. Preserve source names and mark every broader source-listed choice unverified.
+- Keep the imported CH-0236 and its unresolved intent unchanged; no global compatibility or device behavior is inferred from the observed screen.
+
+**Validation**
+
+- A protected USA Wine/Xvfb unit created five fresh isolated copies from the same seed, with the same initial state, runtime, catalog and 152-frame input route. The control received no write; values 03, 0D, CA and F0 each received one byte write. The value persisted through the route, the inspected neighboring bytes and original outlier stayed unchanged, no maintained cheat was armed, all five processes closed normally, protected inputs remained unchanged and Wine drained. Screenshots of control and four treatments were visually reviewed: all four show different third-member portraits and figures; CA and F0 show green and blue faces. Evidence: target/validation/units/dbg20-appearance-matrix-wine-5e8dfxho/.
+- Protected projection checks verified the annotated CA/F0 labels, unchanged allowed/excluded values, existing single-observation entry and combined options, source warnings and no-overwrite refusal. The Windows GNU/Wine catalog CLI accepted the generated entry with both labels and reported explicit parameter selection required. Evidence: target/validation/units/dbg20-appearance-observation-labels-9lr8ft89/ and dbg20-appearance-labels-wine-gjl_ez_3/.
+
+**Limitations**
+
+- The screen comparison covers one USA checkpoint, one actor slot and one 152-frame route; it does not establish correct palettes, compatibility, broader gameplay, persistence beyond the route, maintained writes or physical-device behavior. Name labels are source descriptions, not identities established by this test. Native Windows was not tested.
+- The conditional palette appearances do not establish that the values are safe in other states, nor do they resolve CH-0236 or verify the remaining source-listed values.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [2026-11-10-project-source-listed-third-appearances.json](docs/changes/2026-11-10-project-source-listed-third-appearances.json).
+
+[Change record](docs/changes/2026-11-10-observe-third-appearance-values.json)
 
 ## 2026-11-10 — Observe the isolated character offset 85
 

@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-10",
+  "slug": "observe-third-appearance-values",
+  "title": "Compare source-listed third appearances in one USA scene",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU / Wine",
+    "Linux projection"
+  ],
+  "changes": [
+    "Record a matched one-scene comparison for four source-listed third-appearance values and annotate CA and F0 in the private selector with their observed green and blue portrait colors. Preserve source names and mark every broader source-listed choice unverified.",
+    "Keep the imported CH-0236 and its unresolved intent unchanged; no global compatibility or device behavior is inferred from the observed screen."
+  ],
+  "validation": [
+    "A protected USA Wine/Xvfb unit created five fresh isolated copies from the same seed, with the same initial state, runtime, catalog and 152-frame input route. The control received no write; values 03, 0D, CA and F0 each received one byte write. The value persisted through the route, the inspected neighboring bytes and original outlier stayed unchanged, no maintained cheat was armed, all five processes closed normally, protected inputs remained unchanged and Wine drained. Screenshots of control and four treatments were visually reviewed: all four show different third-member portraits and figures; CA and F0 show green and blue faces. Evidence: target/validation/units/dbg20-appearance-matrix-wine-5e8dfxho/.",
+    "Protected projection checks verified the annotated CA/F0 labels, unchanged allowed/excluded values, existing single-observation entry and combined options, source warnings and no-overwrite refusal. The Windows GNU/Wine catalog CLI accepted the generated entry with both labels and reported explicit parameter selection required. Evidence: target/validation/units/dbg20-appearance-observation-labels-9lr8ft89/ and dbg20-appearance-labels-wine-gjl_ez_3/."
+  ],
+  "limitations": [
+    "The screen comparison covers one USA checkpoint, one actor slot and one 152-frame route; it does not establish correct palettes, compatibility, broader gameplay, persistence beyond the route, maintained writes or physical-device behavior. Name labels are source descriptions, not identities established by this test. Native Windows was not tested.",
+    "The conditional palette appearances do not establish that the values are safe in other states, nor do they resolve CH-0236 or verify the remaining source-listed values."
+  ],
+  "files": [
+    "scripts/cheat_ability_projection.py",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/changes/2026-11-10-project-source-listed-third-appearances.json"
+  ]
+}

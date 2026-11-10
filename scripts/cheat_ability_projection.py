@@ -12,7 +12,12 @@ MASTER_CHECKSUM = 0x37AE
 SOURCE = 'XP-reviewed-usa-ability-projection'
 THIRD_APPEARANCE_SOURCE = 'derived-us-third-appearance'
 THIRD_APPEARANCE_ID = 'CH-9020'
+THIRD_APPEARANCE_SOURCE_VALUES_ID = 'CH-9022'
 THIRD_APPEARANCE_REFERENCE = 'https://etherealgames.com/gba/f/final-fantasy-tactics-advance/code-breaker-codes-us/'
+FIRST_JOB_SOURCE = 'derived-usa-first-record-job-byte'
+FIRST_JOB_ID = 'CH-9021'
+FIRST_HUMAN_TITLES_ID = 'CH-9023'
+FIRST_HUMAN_JOB_ABILITY_ID = 'CH-9024'
 
 
 def digest(data):
@@ -86,7 +91,7 @@ def character_reference_parameters(table):
     ], {'race_job': race_text, 'appearance': appearance_text}
 
 
-def project(catalog_bytes, table_bytes, rom, *, expected_sha=USA_SHA256, expected_crc=MASTER_CHECKSUM, character_examples=False, third_appearance=False, character_reference_values=False):
+def project(catalog_bytes, table_bytes, rom, *, expected_sha=USA_SHA256, expected_crc=MASTER_CHECKSUM, character_examples=False, third_appearance=False, character_reference_values=False, first_job_thief=False, third_appearance_source_values=False, first_human_job_titles=False, first_human_job_ability=False):
     if character_examples and character_reference_values:
         raise ValueError('Choose either the two examples or the source reference lists')
     if digest(rom) != expected_sha or len(rom) < 65536:
@@ -98,6 +103,7 @@ def project(catalog_bytes, table_bytes, rom, *, expected_sha=USA_SHA256, expecte
     rows = [(int(m.group(1), 16), m.group(2).strip())
             for m in re.finditer(r'^([0-9A-F]{2})[ \t]+([^\r\n]+)', section, re.MULTILINE)]
     values = [value for value, _ in rows]
+    ability_rows = dict(rows)
     if values != list(range(0x23)):
         raise ValueError('Ability table is incomplete, reordered or has duplicate values')
     if any(not label or len(label) > 80 or len(label.encode('utf-8')) > 256
@@ -208,12 +214,14 @@ def project(catalog_bytes, table_bytes, rom, *, expected_sha=USA_SHA256, expecte
                  'slots': [{'line': 0, 'field': 'value', 'offset': 2, 'digits': 2}]},
             ], interpretation='Reference only: the cited guide identifies the fields as job, appearance and race, but the original XP notes differ and a USA checkpoint leaves one field unresolved. These examples cannot be activated until reviewed.')
             derived.append(item)
-    if third_appearance:
+    if third_appearance or third_appearance_source_values:
         # This is a separate US source, not a correction of XP's CH-0236.
         # Only value 02 has been observed for this address in the isolated
         # USA checkpoint; retain the existing quarantine for the XP tuples.
-        if THIRD_APPEARANCE_ID in by_id:
+        if third_appearance and THIRD_APPEARANCE_ID in by_id:
             raise ValueError('The reserved derived appearance ID exists in the original catalog')
+        if third_appearance_source_values and THIRD_APPEARANCE_SOURCE_VALUES_ID in by_id:
+            raise ValueError('The reserved source-listed appearance ID exists in the original catalog')
         if raw_master != ['000037AE 000A', '10000488 0007']:
             raise ValueError('The original master differs from the separately cited USA listing')
         appearance = table.split('## Tabella Apparenza', 1)[1]
@@ -227,25 +235,188 @@ def project(catalog_bytes, table_bytes, rom, *, expected_sha=USA_SHA256, expecte
             'scope': 'Identical master lines in the local XP record and the separately cited US listing.',
         })
         code = '32000294 00XX'
-        derived.append({
-            'id': THIRD_APPEARANCE_ID, 'format': 'codebreaker', 'region': 'USA',
-            'section': 'derived third-character appearance',
-            'title': 'Third character appearance (separate US source)',
-            'codes': [code], 'aliases': [], 'status': 'observed-one-usa-checkpoint',
-            'notes': [
-                'Derived private entry, not the imported CH-0236 or a correction of it.',
-                'Only value 02 was observed on one roster screen; other scenes and device behavior remain unverified.',
-            ],
-            'provenance': [{
-                'source': THIRD_APPEARANCE_SOURCE, 'master_id': 'CH-0225',
-                'raw_code_lines': [code], 'reference': THIRD_APPEARANCE_REFERENCE,
-                'source_placeholder': '??',
-                'interpretation': 'The listing names the address as character 3 appearance. Value 02 comes from the local appearance table and one isolated USA observation.',
-                'parameter': {'name': 'appearance', 'allowed': {'kind': 'list', 'values': [2]},
-                              'slots': [{'line': 0, 'field': 'value', 'offset': 2, 'digits': 2}],
-                              'labels': [{'value': 2, 'label': 'Appearance 02 (observed on one roster screen)'}]},
-            }],
+        if third_appearance:
+            derived.append({
+                'id': THIRD_APPEARANCE_ID, 'format': 'codebreaker', 'region': 'USA',
+                'section': 'derived third-character appearance',
+                'title': 'Third character appearance (separate US source)',
+                'codes': [code], 'aliases': [], 'status': 'observed-one-usa-checkpoint',
+                'notes': [
+                    'Derived private entry, not the imported CH-0236 or a correction of it.',
+                    'Only value 02 was observed on one roster screen; other scenes and device behavior remain unverified.',
+                ],
+                'provenance': [{
+                    'source': THIRD_APPEARANCE_SOURCE, 'master_id': 'CH-0225',
+                    'raw_code_lines': [code], 'reference': THIRD_APPEARANCE_REFERENCE,
+                    'source_placeholder': '??',
+                    'interpretation': 'The listing names the address as character 3 appearance. Value 02 comes from the local appearance table and one isolated USA observation.',
+                    'parameter': {'name': 'appearance', 'allowed': {'kind': 'list', 'values': [2]},
+                                  'slots': [{'line': 0, 'field': 'value', 'offset': 2, 'digits': 2}],
+                                  'labels': [{'value': 2, 'label': 'Appearance 02 (observed on one roster screen)'}]},
+                }],
+            })
+        if third_appearance_source_values:
+            reference, _ = character_reference_parameters(table)
+            source_labels = {item['value']: item['label'] for item in reference[2]['labels']}
+            for value, phrase in [(0x00, 'glitches'), (0x60, 'non-working'), (0xaf, 'non-working'),
+                                  (0xb0, 'crashes'), (0xb1, 'non-working'), (0xbf, 'non-working')]:
+                if phrase not in source_labels[value].lower():
+                    raise ValueError('Source appearance warnings changed; review the exclusions')
+            values = list(range(0x01, 0x60)) + list(range(0xc0, 0xe1)) + [0xf0]
+            labels = [{'value': value, 'label': source_labels[value]} for value in values]
+            for item in labels:
+                if item['value'] == 0xca:
+                    item['label'] += ' [green portrait in one USA scene]'
+                elif item['value'] == 0xf0:
+                    item['label'] += ' [blue portrait in one USA scene]'
+            derived.append({
+                'id': THIRD_APPEARANCE_SOURCE_VALUES_ID, 'format': 'codebreaker', 'region': 'USA',
+                'section': 'derived third-character source-listed appearances',
+                'title': 'Third appearance: source values (unverified)',
+                'codes': [code], 'aliases': [], 'status': 'not-runtime-tested',
+                'notes': [
+                    'Source-listed values, not verified compatibility or safe transitions; 02, 03, 0D, CA and F0 were observed on one USA roster screen.',
+                    'The source marks 00 as glitching, 60-AF and B1-BF as non-working, and B0 as crashing; those values are excluded.',
+                    'Other values may also fail. This record is not the original CH-0236, and the slot does not establish actor identity.',
+                ],
+                'provenance': [{
+                    'source': THIRD_APPEARANCE_SOURCE, 'master_id': 'CH-0225',
+                    'raw_code_lines': [code], 'reference': THIRD_APPEARANCE_REFERENCE,
+                    'source_placeholder': '??',
+                    'interpretation': 'The separate US listing names the third appearance address. Values and descriptions come from the local table; gameplay and physical devices remain unverified.',
+                    'parameter': {'name': 'appearance', 'allowed': {'kind': 'list', 'values': values},
+                                  'slots': [{'line': 0, 'field': 'value', 'offset': 2, 'digits': 2}],
+                                  'labels': labels},
+                }],
+            })
+    if first_job_thief or first_human_job_titles or first_human_job_ability:
+        # A new conditional one-byte plan derived from a bounded USA observation,
+        # not a transcription or correction of the original two-line source.
+        if first_job_thief and FIRST_JOB_ID in by_id:
+            raise ValueError('The reserved derived job ID exists in the original catalog')
+        if first_human_job_titles and FIRST_HUMAN_TITLES_ID in by_id:
+            raise ValueError('The reserved derived human title ID exists in the original catalog')
+        if first_human_job_ability and FIRST_HUMAN_JOB_ABILITY_ID in by_id:
+            raise ValueError('The reserved derived job/ability ID exists in the original catalog')
+        if raw_master != ['000037AE 000A', '10000488 0007']:
+            raise ValueError('The original master differs from the observed USA master')
+        player = by_id['CH-0234']
+        player_source = provenance(player)
+        if (player['format'].lower() != 'codebreaker' or player['region'] != 'unknown'
+                or player_source.get('master_id') != 'CH-0225'
+                or player['codes'] != ['82000084 xxyy', '82000086 xxzz']
+                or player_source['raw_code_lines'] != player['codes']):
+            raise ValueError('The original first-character source differs from the observed addresses')
+        human = table.split('## Tabella Razza', 1)[1].split('01 Human', 1)[1].split('02 Bangaa', 1)[0]
+        if not re.search(r'^05\s+Thief\s*$', human, re.MULTILINE):
+            raise ValueError('The source human job value no longer matches the observation')
+        derived_master['provenance'].append({
+            'source': FIRST_JOB_SOURCE, 'raw_code_lines': list(raw_master),
+            'original_master_source': 'XP',
+            'scope': 'Known USA checksum and the original master; the conditional job plan is independently derived.',
         })
+        lines = ['72000086 0201', '32000087 00XX']
+        if first_job_thief:
+            derived.append({
+                'id': FIRST_JOB_ID, 'format': 'codebreaker', 'region': 'USA',
+                'section': 'derived first-record job byte',
+                'title': 'First record: observed human Soldier to Thief',
+                'codes': lines, 'aliases': [], 'status': 'observed-one-usa-checkpoint',
+                'notes': [
+                    'Independently derived from an isolated USA observation; not the original CH-0234.',
+                    'Condition checks bytes 86-87 are 01 02 before writing 05 to byte 87; it does not identify the character or validate the entire state.',
+                    'One checkpoint and ability screen observed. Other scenes, maintained writes and physical-device behavior remain unverified.',
+                ],
+                'provenance': [{
+                    'source': FIRST_JOB_SOURCE, 'master_id': 'CH-0225', 'raw_code_lines': lines,
+                    'original_source': 'XP', 'original_entry': 'CH-0234',
+                    'interpretation': 'Derived conditional single-byte plan; 05 changed the displayed title to Thief in one human USA checkpoint. Other field and gameplay effects are unverified.',
+                    'parameter': {'name': 'job', 'allowed': {'kind': 'list', 'values': [5]},
+                                  'slots': [{'line': 1, 'field': 'value', 'offset': 2, 'digits': 2}],
+                                  'labels': [{'value': 5, 'label': 'Thief (one USA ability screen)'}]},
+                }],
+            })
+        if first_human_job_titles:
+            observed = [(0x03, 'Paladin'), (0x04, 'Fighter'), (0x05, 'Thief'),
+                        (0x06, 'Ninja'), (0x07, 'White Mage'), (0x08, 'Black Mage'),
+                        (0x09, 'Illusionist'), (0x0a, 'Blue Mage'),
+                        (0x0b, 'Archer'), (0x0c, 'Hunter')]
+            rows = [(int(m.group(1), 16), m.group(2).strip())
+                    for m in re.finditer(r'^([0-9A-F]{2})[ \t]+([^\r\n]+)', human, re.MULTILINE)]
+            if rows != [(1, 'Soldier'), (2, '-')] + observed:
+                raise ValueError('The source human job rows differ from the observed comparison')
+            derived.append({
+                'id': FIRST_HUMAN_TITLES_ID, 'format': 'codebreaker', 'region': 'USA',
+                'section': 'derived first-record human displayed job title',
+                'title': 'First human record: observed job titles',
+                'codes': lines, 'aliases': [], 'status': 'observed-one-usa-checkpoint',
+                'notes': [
+                    'A derived one-byte plan, not the original CH-0234 or a verified full job change.',
+                    'Condition checks bytes 86-87 are 01 02; it does not establish actor identity or the rest of the state.',
+                    'Each listed title was observed in one USA ability screen; the visible ability list remained unchanged. Other effects are unverified.',
+                ],
+                'provenance': [{
+                    'source': FIRST_JOB_SOURCE, 'master_id': 'CH-0225', 'raw_code_lines': lines,
+                    'original_source': 'XP', 'original_entry': 'CH-0234',
+                    'interpretation': 'Conditional single-byte plan observed to change displayed titles in one USA checkpoint; actual job mechanics and compatibility are unverified.',
+                    'parameter': {'name': 'job_title', 'allowed': {'kind': 'list', 'values': [v for v, _ in observed]},
+                                  'slots': [{'line': 1, 'field': 'value', 'offset': 2, 'digits': 2}],
+                                  'labels': [{'value': v, 'label': label} for v, label in observed]},
+                }],
+            })
+        if first_human_job_ability:
+            ability_entry = by_id['CH-0226']
+            ability_source = provenance(ability_entry)
+            if (ability_entry['format'].lower() != 'codebreaker' or ability_entry['region'] != 'unknown'
+                    or ability_source.get('master_id') != 'CH-0225'
+                    or ability_entry['codes'] != ['320000B5 00xx']
+                    or len(ability_source['raw_code_lines']) != 1
+                    or ability_source['raw_code_lines'][0].partition(':')[0].strip() != ability_entry['codes'][0]):
+                raise ValueError('The original primary ability source differs from the observed address')
+            pairs = [
+                (0x03, 'Paladin', 0x03, 'Chivalry Paladin'),
+                (0x04, 'Fighter', 0x04, 'Fighter Tech Fighter'),
+                (0x05, 'Thief', 0x18, 'Steal Thief'),
+                (0x06, 'Ninja', 0x10, 'Ninja Skill Ninja'),
+                (0x07, 'White Mage', 0x09, 'White Magic White Mage'),
+                (0x08, 'Black Mage', 0x0a, 'Black Magic Black Mage'),
+                (0x09, 'Illusionist', 0x11, 'Phantasm Skill Illusionist'),
+                (0x0a, 'Blue Mage', 0x0b, 'Blue Magic Blue Mage'),
+                (0x0b, 'Archer', 0x1b, 'Aim Archer'),
+                (0x0c, 'Hunter', 0x14, 'Hunt Hunter'),
+            ]
+            human_rows = [(int(m.group(1), 16), m.group(2).strip())
+                          for m in re.finditer(r'^([0-9A-F]{2})[ \t]+([^\r\n]+)', human, re.MULTILINE)]
+            if human_rows != [(1, 'Soldier'), (2, '-')] + [(job, name) for job, name, _, _ in pairs]:
+                raise ValueError('The source human job rows differ from the observed comparison')
+            if any(ability_rows.get(value) != label for _, _, value, label in pairs):
+                raise ValueError('The source ability/job associations differ from the reviewed table')
+            paired_lines = ['72000086 0201', '320000B5 00YY', '72000086 0201', '32000087 00XX']
+            derived.append({
+                'id': FIRST_HUMAN_JOB_ABILITY_ID, 'format': 'codebreaker', 'region': 'USA',
+                'section': 'derived first-record job and primary ability labels',
+                'title': 'First human: job and ability labels (unverified)',
+                'codes': paired_lines, 'aliases': [], 'status': 'not-runtime-tested',
+                'notes': [
+                    'Source-listed job/primary ability labels; not a verified complete job or learned-ability change.',
+                    'Only Black Mage / Black Magic was observed together on one USA ability screen; the second Black Magic label remained visible.',
+                    'Both writes require bytes 86-87 to be 01 02; this does not establish actor identity or complete state safety.',
+                ],
+                'provenance': [{
+                    'source': FIRST_JOB_SOURCE, 'master_id': 'CH-0225', 'raw_code_lines': paired_lines,
+                    'original_source': 'XP', 'original_entries': ['CH-0226', 'CH-0234'],
+                    'interpretation': 'Independently derived conditional pair; title and primary ability labels are source-listed. Gameplay, learning and device behavior are unverified.',
+                    'parameters': [
+                        {'name': 'job_title', 'allowed': {'kind': 'list', 'values': [job for job, _, _, _ in pairs]},
+                         'slots': [{'line': 3, 'field': 'value', 'offset': 2, 'digits': 2}],
+                         'labels': [{'value': job, 'label': name} for job, name, _, _ in pairs]},
+                        {'name': 'primary_ability', 'allowed': {'kind': 'dependent-list', 'on': 'job_title',
+                         'cases': [{'when': job, 'values': [ability]} for job, _, ability, _ in pairs]},
+                         'slots': [{'line': 1, 'field': 'value', 'offset': 2, 'digits': 2}],
+                         'labels': [{'value': ability, 'label': label} for _, _, ability, label in pairs]},
+                    ],
+                }],
+            })
     result = {'schema': 1, 'derivation': {
         'kind': 'private-usa-ability-and-character-examples' if character_examples else 'private-usa-primary-ability-projection',
         'source_catalog_sha256': digest(catalog_bytes), 'source_table_sha256': digest(table_bytes),
@@ -257,9 +428,22 @@ def project(catalog_bytes, table_bytes, rom, *, expected_sha=USA_SHA256, expecte
         result['derivation']['kind'] += '-with-third-appearance'
         result['derivation']['scope'] += ' Separately derived third-character appearance value 02 is included with its own source and limited observation.'
         result['derivation']['third_appearance_reference'] = THIRD_APPEARANCE_REFERENCE
+    if third_appearance_source_values:
+        result['derivation']['kind'] += '-with-third-appearance-source-values'
+        result['derivation']['scope'] += ' Source-listed third-appearance values exclude source-reported faults but remain unverified; no safety or compatibility is implied.'
+        result['derivation']['third_appearance_reference'] = THIRD_APPEARANCE_REFERENCE
     if character_reference_values:
         result['derivation']['kind'] += '-with-character-reference-values'
         result['derivation']['scope'] += ' Source-listed character values are reference-only and cannot be executed; the original table and warnings are preserved.'
+    if first_job_thief:
+        result['derivation']['kind'] += '-with-first-job-thief'
+        result['derivation']['scope'] += ' Independently derived conditional first-record job byte 05 is included with one-checkpoint evidence; identity and wider behavior remain unverified.'
+    if first_human_job_titles:
+        result['derivation']['kind'] += '-with-first-human-job-titles'
+        result['derivation']['scope'] += ' Conditional first-record human job titles 03..0C were observed on one USA ability screen; class mechanics and identity remain unverified.'
+    if first_human_job_ability:
+        result['derivation']['kind'] += '-with-first-human-job-ability'
+        result['derivation']['scope'] += ' Conditional source-listed job and primary ability labels are included; only one pair was observed on one USA screen and full behavior remains unverified.'
     return result
 
 
@@ -270,8 +454,12 @@ def main():
     parser.add_argument('--character-examples', action='store_true', help='include two reference-only job/race/appearance examples')
     parser.add_argument('--character-reference-values', action='store_true', help='include non-executable source-listed character values for browsing')
     parser.add_argument('--third-appearance', action='store_true', help='include separately sourced third-character appearance value 02 for the recognized USA ROM')
+    parser.add_argument('--third-appearance-source-values', action='store_true', help='include unverified source-listed third appearances, excluding source-reported faults')
+    parser.add_argument('--first-job-thief', action='store_true', help='include the conditional first-record job byte observed on one USA checkpoint')
+    parser.add_argument('--first-human-job-titles', action='store_true', help='include conditional human job titles observed on one USA screen')
+    parser.add_argument('--first-human-job-ability', action='store_true', help='include conditional source-listed job and primary ability label pairs')
     args = parser.parse_args()
-    projection = project(args.catalog.read_bytes(), args.table.read_bytes(), args.rom.read_bytes(), character_examples=args.character_examples, third_appearance=args.third_appearance, character_reference_values=args.character_reference_values)
+    projection = project(args.catalog.read_bytes(), args.table.read_bytes(), args.rom.read_bytes(), character_examples=args.character_examples, third_appearance=args.third_appearance, character_reference_values=args.character_reference_values, first_job_thief=args.first_job_thief, third_appearance_source_values=args.third_appearance_source_values, first_human_job_titles=args.first_human_job_titles, first_human_job_ability=args.first_human_job_ability)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open('x', encoding='utf-8') as output:
         json.dump(projection, output, ensure_ascii=False, indent=2)

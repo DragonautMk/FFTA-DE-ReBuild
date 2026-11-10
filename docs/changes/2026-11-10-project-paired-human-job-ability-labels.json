@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-11-10",
+  "slug": "project-paired-human-job-ability-labels",
+  "title": "Pair source-listed human job and primary ability labels",
+  "kind": "added",
+  "platforms": [
+    "Linux projection",
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Add an opt-in private USA entry with ten source-listed human job and dependent primary-ability label pairs. Require explicit choices and guard both writes with the observed first-record race/job bytes; write the ability byte before the job byte so both checks see the initial condition.",
+    "Keep the original CH-0226/CH-0234 provenance and quarantine unchanged and identify the derived entry as unverified. Document that labels do not prove learned abilities or a complete job change."
+  ],
+  "validation": [
+    "A protected USA Wine/Xvfb comparison used identical checkpoint, runtime and 144-frame route for an unwritten control and a synthetic paired Black Mage/Black Magic plan. The treated case made exactly two writes, retained both target values, refused an undeclared pair, and made zero writes on a second application after the condition became false. Control and treated screenshots were reviewed: Soldier/Battle Tech changed to Black Mage/Black Magic in the first label, while the second Black Magic label remained visible. Protected inputs stayed unchanged, both processes closed normally and Wine drained. Evidence: target/validation/units/dbg20-paired-job-ability-664h7_f_/.",
+    "Protected projection tests checked all ten source-declared associations, ordered guards/slots, unchanged defaults and prior entries, option combinations, source master uniqueness, no-overwrite and rejection of altered source data, addresses, ROM and reserved ID. Prior human-title and appearance projection checks passed after the change. One parallel validation launch was refused by the shared cold-storage lease; the sequential retry passed. Evidence: target/validation/units/dbg20-paired-job-ability-projection-rlap8qha/, dbg20-human-titles-after-pairs-1uz_kcu_/, dbg20-appearances-after-pairs-xwuwxgu4/.",
+    "In a protected USA Wine/Xvfb menu test, Black Mage and its dependent Black Magic label were explicitly selected; the plan made two writes, rejected an invalid pair and reported zero writes when the condition no longer matched. Both selection screenshots were reviewed, guest frames did not advance, no maintained cheat was armed, protected inputs remained unchanged, normal close and Wine drain passed. Evidence: target/validation/units/dbg20-paired-job-ability-menu-43cf8my_/."
+  ],
+  "limitations": [
+    "Only Black Mage/Black Magic was observed together on one ability screen; the other nine pairs are source-listed, not behaviorally verified. The second Black Magic label remained visible, and none of the tests establishes learned abilities, a complete job change, safe transitions, battle behavior, maintained writes, physical devices or native Windows.",
+    "The two-byte condition does not establish actor identity or complete state safety. This derived entry does not repair the original CH-0234 or CH-0236. Overlapping job and ability plans conflict when armed."
+  ],
+  "files": [
+    "scripts/cheat_ability_projection.py",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/changes/2026-11-10-project-observed-human-job-titles.json",
+    "docs/changes/2026-11-10-observe-ability-label-write.json"
+  ]
+}

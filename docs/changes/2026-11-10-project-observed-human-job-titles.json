@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-10",
+  "slug": "project-observed-human-job-titles",
+  "title": "Offer observed human job titles with a conditional write",
+  "kind": "added",
+  "platforms": [
+    "Linux projection",
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Add an opt-in private USA entry for ten human job titles observed at first-record byte87 in one checkpoint. Retain the condition bytes86/87 = 01/02, preserve original CH-0234 quarantine, and distinguish displayed titles from verified full job changes.",
+    "Bind the new entry to its own source-bound master and original source addresses, reject altered human rows or reserved IDs, and preserve the separate existing Thief-only entry and default output."
+  ],
+  "validation": [
+    "A protected Wine/Xvfb matrix ran fresh copies of the same USA checkpoint and runtime on the same 144-frame ability-screen route: one no-write Soldier control and nine synthetic conditional single-byte plans for 03, 04 and 06..0C. Each expected title appeared; the changed byte persisted and inspected adjacent bytes remained unchanged. The visible ability list remained unchanged. All ten screenshots were reviewed, all processes closed normally, protected inputs stayed unchanged and Wine drained. Evidence: target/validation/units/dbg20-human-jobs-matrix-316k2185/. A prior paired observation of 05 showed Thief: dbg20-single-job-byte-b00g2384/.",
+    "Protected generation checked all ten labels/values, unchanged default and existing Thief entry, combined options, master uniqueness, no-overwrite, and rejection of altered source rows, addresses, master, ROM and reserved ID. Evidence: target/validation/units/dbg20-human-job-titles-projection-h4eo8rpq/.",
+    "A protected USA Wine menu selected Fighter, prepared and applied one conditional byte write; a repeated application after the condition changed reported zero writes, and undeclared value38 was refused. The guest did not advance, screenshot was reviewed, no maintained cheat was armed, protected inputs remained unchanged, normal close and Wine drain passed. Evidence: target/validation/units/dbg20-human-job-titles-wine-y4hetpub/."
+  ],
+  "limitations": [
+    "Only one checkpoint, actor slot and ability screen were observed. The title change does not prove full job mechanics, learned abilities, transition safety or battle behavior; the condition does not establish actor identity or the rest of the state. Maintained writes, other states, physical devices and native Windows remain unverified.",
+    "The new derived code does not repair or verify CH-0234 or CH-0236. CH-9021 and CH-9023 write the same byte and conflict if armed together. Source row01 and the source/ROM row02 disagreement remain unresolved."
+  ],
+  "files": [
+    "scripts/cheat_ability_projection.py",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/changes/2026-11-10-observe-single-job-field.json"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-10",
+  "slug": "project-conditional-first-job-example",
+  "title": "Offer a conditional observed first-record job example",
+  "kind": "added",
+  "platforms": [
+    "Linux projection",
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Add an opt-in private USA projection entry for the single first-record job value observed in a human checkpoint. A separately derived conditional plan writes job byte 05 only when bytes 86 and 87 are 01 and 02; it is not the original CH-0234 and does not alter the quarantined source entries.",
+    "Bind the derived entry to its own master provenance, known USA identity and one declared value; reject changed source addresses, master or source label and reserved-ID collisions."
+  ],
+  "validation": [
+    "Protected generation verified unchanged default output, standalone and combined options, source/master binding, the conditional plan and single allowed value, no-overwrite, and refusal of changed source addresses, label, master, ROM and reserved ID collision. Evidence: target/validation/units/dbg20-first-job-projection-xdj0hbp4/.",
+    "In an isolated USA Wine/Xvfb session, menu selection and one-shot applied one write changing first-record bytes 02 50 01 02 to 02 50 01 05. The menu screenshot was reviewed. A repeated preparation and application after the condition became false reported zero writes and left inspected bytes unchanged; undeclared value 38 was refused. Guest frame/clock did not advance, no maintained cheat was armed, protected inputs remained unchanged, normal close and Wine server drain passed. Evidence: target/validation/units/dbg20-first-job-wine-vlhi_rx4/.",
+    "The earlier independent paired USA Wine observation advanced the same checkpoint by 144 frames and showed the refreshed Thief title after an unconditional write of the same byte/value; its no-write control displayed Soldier. Evidence: target/validation/units/dbg20-single-job-byte-b00g2384/, dbg20-character-ability-screen-h75fjx8y/."
+  ],
+  "limitations": [
+    "The two-byte condition does not establish actor identity, other field values, general compatibility or transition safety. False conditions are successful zero-write applications, not errors. One checkpoint and ability screen are observed; other values, maintained application, broader gameplay, physical devices and native Windows remain unverified. The record may represent another actor later.",
+    "The derived conditional entry is distinct from CH-0234 and does not resolve the original source's conflicting field descriptions or CH-0236."
+  ],
+  "files": [
+    "scripts/cheat_ability_projection.py",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/changes/2026-11-10-observe-single-job-field.json"
+  ]
+}

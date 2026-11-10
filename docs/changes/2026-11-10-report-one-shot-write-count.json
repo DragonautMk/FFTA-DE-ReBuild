@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-10",
+  "slug": "report-one-shot-write-count",
+  "title": "Report actual cheat one-shot writes in the menu",
+  "kind": "fixed",
+  "platforms": [
+    "Linux",
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Report an explicit zero-write result with a suggestion to check conditions, or the actual positive write count, after applying a cheat once. Use the same localized result in the diagnostic message and cheat management panel.",
+    "Preserve the existing conditional execution behavior and machine-readable result; a successful zero-write application is not converted into an error."
+  ],
+  "validation": [
+    "A focused Linux test checked zero and positive counts in English and Italian. Windows GNU test executable and frontend built. Evidence: target/validation/units/dbg20-cheat-feedback-build-uwmm9dtn/.",
+    "The focused Windows GNU test passed under Wine. A protected USA Wine/Xvfb menu session applied the conditional derived job once with one write and again with its condition false and zero writes; inspected bytes stayed unchanged on the second application, no guest frames advanced and no maintained cheat was armed. Screenshots of both messages were visually reviewed; protected inputs unchanged, normal close and Wine drained. Evidence: target/validation/units/dbg20-cheat-feedback-wine-0htinf7a/."
+  ],
+  "limitations": [
+    "A positive count reports writes performed, not that game behavior is safe or verified. A zero count suggests checking conditions but does not diagnose every possible cause. Native Windows and physical-controller input were not tested."
+  ],
+  "files": [
+    "crates/recomp/src/play.rs",
+    "crates/input-config/languages/en.json",
+    "crates/input-config/languages/it.json",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/changes/2026-11-10-project-conditional-first-job-example.json"
+  ]
+}

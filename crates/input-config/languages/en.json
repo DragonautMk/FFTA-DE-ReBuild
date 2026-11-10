@@ -78,6 +78,8 @@
     "Source and verification": "Source and verification",
     "Review the plan, then return to choose an action": "Review the plan, then return to choose an action",
     "Applied once": "Applied once",
+    "No writes made; check conditions": "No writes made; check conditions",
+    "Applied once · writes: {writes}": "Applied once · writes: {writes}",
     "Armed for future frames": "Armed for future frames",
     "Disarmed; earlier writes remain": "Disarmed; earlier writes remain",
     "Select a source explicitly first": "Select a source explicitly first",

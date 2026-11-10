@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-10",
+  "slug": "project-source-listed-third-appearances",
+  "title": "Offer source-listed third-character appearances",
+  "kind": "added",
+  "platforms": [
+    "Linux projection",
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Add an explicitly opt-in, separately identified private USA third-appearance entry with 129 source-listed values and labels. Exclude the source's glitching, non-working and crashing values and values absent from the table; mark the remaining choices unverified, including uncertain and black-sprite descriptions.",
+    "Keep the previously observed single-value entry distinct, preserve original CH-0236 quarantine and source data, and bind both derived appearance entries to the separately attributed USA master and address. Existing default output and other options remain unchanged."
+  ],
+  "validation": [
+    "Protected generation checked all 129 values and labels, excluded and absent ranges, unchanged default and prior single-value entry, combined options, unique master provenance, no-overwrite, and rejection of changed source warnings, duplicate source value, ROM and reserved ID collision. Final protected generation passed after an indentation-only edit whose Python AST was verified unchanged. Evidence: target/validation/units/dbg20-source-appearances-final-e_o6lx58/; earlier identical-semantics generation dbg20-source-appearances-4sesckdf/.",
+    "In a protected USA Wine/Xvfb menu session, the source-listed value03 was explicitly selected, previewed and applied once; only the target byte among the inspected third-record bytes changed from 01 to 03, the original outlier stayed unchanged, and values 00, 60, B0, E1 and FF were refused. The guest did not advance, no maintained cheat was armed, the screenshot was reviewed, protected inputs stayed unchanged, normal close and Wine drain passed. Evidence: target/validation/units/dbg20-source-appearances-wine-pas9leu0/. The generator subsequently received only the AST-equivalent indentation edit recorded above."
+  ],
+  "limitations": [
+    "Source-listed does not mean safe or compatible. Value03 was checked only as a byte write without guest advancement; value02 alone has an earlier one-screen effect observation. Other values, game states, retained writes, physical devices and native Windows remain unverified. Some source labels are uncertain and some describe black sprites.",
+    "The derived US entry is not the original CH-0236 or proof of its author's intent. Its slot may represent a different actor in another state. The two derived appearance entries target the same address and cannot be armed together."
+  ],
+  "files": [
+    "scripts/cheat_ability_projection.py",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/changes/2026-11-10-project-third-appearance-candidate.json"
+  ]
+}
