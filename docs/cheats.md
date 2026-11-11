@@ -570,10 +570,15 @@ A later USA control used a retained battle checkpoint where Marche showed
 65/442 HP. The inspected current-HP field stayed at 65 through opening First
 Aid, and the captured action screen showed First Aid after confirmation. The
 validation session was interrupted before its post-action HP read and before
-the treated copy ran. Its lease and diagnostics remain retained; this is not
-evidence of the amount healed or of a paired comparison. Evidence:
-`target/validation/units/dbg20-injured-fresh-q1dz0v4k/` and
-`target/validation/units/dbg20-injured-interruption-forensics-z5c2kl9g/`.
+the treated copy ran. Its unit lease and diagnostics remain retained; this is
+not evidence of the amount healed or of a paired comparison. The shared Wine
+prefix lease was later recovered after a host process audit and the runner
+successfully reacquired it and drained the server. The interrupted unit did not
+complete and its original receipt remains unchanged. Evidence:
+`target/validation/units/dbg20-injured-fresh-q1dz0v4k/`,
+`target/validation/units/dbg20-injured-interruption-forensics-z5c2kl9g/`,
+`target/validation/units/dbg20-lease-host-audit-o1l9zurc/` and
+`target/validation/units/dbg20-lease-reacquire-2sxydeqx/`.
 
 A later isolated Linux/Xvfb pair used the same injured USA checkpoint and
 runtime for both copies. In the treated copy, a paused `CH-0226` one-shot

@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "date": "2026-11-11",
+  "slug": "recover-interrupted-wine-prefix-lease",
+  "title": "Recover an interrupted shared Wine lease",
+  "kind": "docs",
+  "platforms": [
+    "Linux / Wine"
+  ],
+  "changes": [
+    "Record the user-requested recovery of the interrupted shared Wine prefix lease while preserving the old unit and its original lease metadata."
+  ],
+  "validation": [
+    "A host-visible process and PID namespace audit found no matching owner or visible Wine client; four unreadable environments belonged to identified session services. The original prefix lease was moved intact with a local recovery receipt. A new managed Wine-host unit reacquired the lease, completed wineserver -w and released it: dbg20-lease-host-audit-o1l9zurc and dbg20-lease-reacquire-2sxydeqx."
+  ],
+  "limitations": [
+    "The interrupted original unit remains incomplete with its unit lease and original running receipt retained. This recovery does not prove its Wine gameplay result, native Windows or physical-device behavior."
+  ],
+  "files": [
+    "docs/cheats.md"
+  ],
+  "references": []
+}

@@ -37,7 +37,7 @@ it does not authorize stopping other work or changing another thread's goal.
 - Outcome: partial
 - Verified: E135 103 resources/104 files, 63 compact banks; EUR clean-profile Wine interpreter, translated and CLI PASS. Current: target/validation/units/e135-clean-profile-first-start-dma-wine-9qxljiuw/work/interpreter/e135-resources/. E134 retained for comparison.
 - Missing: unmigrated resources/consumers, missing ordinary-use evidence, ABI/global extent/indirect calls and mod phases ROMDATA-06/07; Linux/USA/native Windows/new32:9 remain distinct. EUR, reduced Wine scope, no performance/space measurements; originals and personal saves unchanged.
-- Selection: EUR Wine-only `ROMDATA-01-OBJ-CONTEXT-EXTRA-TRANSFERS` integrated_unverified; builds PASS, Wine blocked by DBG20 lease. No index9 in 14 (dubn20o1); Sol `/root/sol_e136_destinations` (gpt-6.1-sol xhigh requested, effective unknown): flag44 bypass, cold-start candidate. Run target/rom-data-e136-next/ on release.
+- Selection: EUR `ROMDATA-01-OBJ-CONTEXT-EXTRA-TRANSFERS` integrated_unverified. DBG20 prefix lease recovered and runner drain PASS (`dbg20-lease-reacquire-2sxydeqx`). Builds PASS (1iux4706); dubn20o1. Sol `/root/sol_e136_destinations`: gpt-6.1-sol xhigh requested, effective unknown. Launchers: target/rom-data-e136-next/.
 - Resume: [validation recovery checklist](ROM_DATA_VALIDATION_RECOVERY_TODO.md) for skipped checks; [ROM_DATA_TODO](ROM_DATA_TODO.md), only the selected criterion's section (ROMDATA-01/02/03/04/05/06/07); [inventory](ROM_DATA_INVENTORY.md). Do not read the whole TODO. Children retain their IDs and limits:
   - `ROMDATA-01-PARAMETER-RECORDS27-DYNAMIC-SOURCES`: partial; writers map to 59 rows (js3rbve5); retained lists negative/inconclusive (m1p_8lhy). Live domain, save loads and aliases open. `docs/rom_data_gameplay.md`.
   - `ROMDATA-04-GAMEPLAY-6E84E0-BYTE00`: partial; static text screen 78suaoix found no token; generated/indirect sources open, no blind Select. `docs/rom_data_gameplay.md`.
@@ -72,9 +72,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 - State: active
 - Outcome: partial
-- Selector/consumer: USA 02/09 use the same bank/interval (`dbg20-consumer-analysis-ipe6acdz`).
-- First Aid Linux pair: both heal 65→106/442 (`dbg20-injured-firstaid-linux-daqpbkda`, `dbg20-linux-firstaid-analysis-i5e8wbjf`); interrupted Wine: `dbg20-injured-fresh-q1dz0v4k`.
-- 02→09 label/list evidence: `dbg20-battle-ability-selector-05qypq6p`, `dbg20-battle-ability-analysis-3cq1ada9`; full HP: `dbg20-battle-firstaid-final-s0pu3f1f`.
+- Wine prefix lease recovered; runner reacquisition/drain PASS (`dbg20-lease-reacquire-2sxydeqx`). Interrupted unit remains retained.
+- First Aid Linux pair: both heal 65→106/442 (`dbg20-linux-firstaid-analysis-i5e8wbjf`); Wine unit `dbg20-injured-fresh-q1dz0v4k` interrupted.
+- 02→09 list: `dbg20-battle-ability-analysis-3cq1ada9`; full HP: `dbg20-battle-firstaid-final-s0pu3f1f`.
 - Category/source search PASS: `dbg20-category-search-linux-s85q6zud`, `dbg20-category-search-wine-gui-retry-7ep44203`.
 - Parameters/guards: `dbg2-20-menu-values-confirm-vymtsut1`, `dbg2-20-parameter-render-corrected-rkm88ykd`, `dbg2-20-multiple-parameter-suite-_dgohsc9`, `dbg2-20-multiple-real-rom-preflight-ks8dyakw`, `dbg2-20-multiple-windows-build-ry5e8e9o`; XP domains absent (`dbg2-20-source-domain-audit-e9o97pmb`).
 - One-shot feedback: zero and positive counts shown (`dbg20-cheat-feedback-wine-0htinf7a`).
@@ -175,6 +175,6 @@ for a specific question: archive legacy lines 179..744 or the named record below
 - Task: DBG2-20 partial.
 - Last verified result: paired USA 02/09 reach the same consumer with bank and interval 1–11.
 - Remaining work: other abilities, full domains, CH-0236/source labels, devices and native Windows.
-- Errors or blockers: Linux probes inconclusive; interrupted Wine unit retains lease, owner/handle missing.
-- Next action: on user resume, select an unresolved catalog domain or remaining DBG2-20 criterion.
-- References: docs/changes/2026-11-11-inspect-ability-selector-mode.json; docs/cheats.md.
+- Errors or blockers: original Wine unit remains interrupted with its unit lease; shared prefix recovered.
+- Next action: resume relevant validation using the managed Wine lease; DBG2-20 broader criteria remain open.
+- References: docs/changes/2026-11-11-recover-interrupted-wine-prefix-lease.json; docs/cheats.md.

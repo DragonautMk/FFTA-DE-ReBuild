@@ -3,6 +3,24 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-11 — Recover an interrupted shared Wine lease
+
+Type: docs. Platforms: Linux / Wine.
+
+**Changes**
+
+- Record the user-requested recovery of the interrupted shared Wine prefix lease while preserving the old unit and its original lease metadata.
+
+**Validation**
+
+- A host-visible process and PID namespace audit found no matching owner or visible Wine client; four unreadable environments belonged to identified session services. The original prefix lease was moved intact with a local recovery receipt. A new managed Wine-host unit reacquired the lease, completed wineserver -w and released it: dbg20-lease-host-audit-o1l9zurc and dbg20-lease-reacquire-2sxydeqx.
+
+**Limitations**
+
+- The interrupted original unit remains incomplete with its unit lease and original running receipt retained. This recovery does not prove its Wine gameplay result, native Windows or physical-device behavior.
+
+[Change record](docs/changes/2026-11-11-recover-interrupted-wine-prefix-lease.json)
+
 ## 2026-11-11 — Preserve interrupted injured First Aid control evidence
 
 Type: docs. Platforms: Windows GNU / Wine.
@@ -120,6 +138,8 @@ Type: added. Platforms: EUR; Wine pending.
 - Reused an earlier authenticated EUR snapshot result: 14 entries representing seven distinct hashes recorded byte 02001f78 as 08h or 28h, leaving bit 4 clear at capture; later changes and the alternative request remain possible.
 - Protected read-only inspection of 14 retained EUR checkpoint entries (e136-eur-index-checkpoint-inspect-dubn20o1) found current indices 1 or 2, pending ffff and the expected slot-9 pointer. Captured values do not rule out later transitions; no guest code ran.
 - A focused follow-up with /root/sol_e136_destinations (gpt-6.1-sol xhigh requested; effective settings unknown), independently checked against EUR ROM windows and call targets, identified a flag-44 bypass and a conditional initial selector-11 route. An ordinary cold-start observation remains pending.
+- Read-only EUR source inspection narrows the first-entry readiness path to an initial countdown, an input-halfword 0009h mask and a second countdown; the ordinary prompt and alternative paths remain unverified.
+- A bounded raw EUR HLE cold-start observer cross-compiled for Windows (e136-cold-observer-build-1iux4706); source, executable and protected build inputs match their receipt. Its no-input Wine run and all managed or translated observations remain pending.
 
 **Limitations**
 

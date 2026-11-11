@@ -837,6 +837,29 @@ Once Wine is available, an ordinary EUR cold-start observation can record the
 selector and pending transitions, readiness at `0813fecc`, and hits at
 `081401e8`, `08140362`, `08140578` and `08144b3c`, without forcing guest state.
 
+A bounded observer for that next check has been cross-compiled for Windows
+(`target/validation/units/e136-cold-observer-build-1iux4706/`); its executable
+and protected build-source hashes were checked after the build. It is prepared
+to run 180 frames of the raw EUR HLE interpreter with all keys released,
+capture selected executed Thumb PCs and frame-boundary selector samples, and
+retain the final raw GBA framebuffer. Its event limit and dropped count are
+explicit. The launcher is `target/rom-data-e136-next/run-cold-observer.py`.
+No Wine observation has run yet. This raw, no-input observation would identify
+a candidate path or prompt; it would not establish managed E136 consumption,
+translated execution or other scenes.
+
+The retained disassembly further narrows the first-entry wait: `0813fecc`
+decrements an initial countdown in state 0 before entering state 1. In state 1,
+the branch at `0813ff40` tests `03000002 & 0009h`; when nonzero it sets the
+local state to 2 and a countdown to `20h`. The state-2 code returns ready once
+that countdown reaches zero. This source path supports observing the prompt
+and input state, but does not prove an ordinary startup reaches it or establish
+which on-screen choice should be made. Other writes and paths remain possible.
+Exact EUR windows `13fecc..13ff32`, `13ff3c..13ff72` and `140190..1401b0`
+hash to `6ff9770c4ad9728839b7666cf842d6adbdda88611ae35986022edd5bbc8724cc`,
+`60eb6b89acb5e7771bfb9f7f1e571008355334ce32bd703264c89ef0e5238582` and
+`0ac19226af636b1d157d79e25381b222aa89a2699254ce8f085dab0810cc9ad7`.
+
 The exact EUR ROM windows `00370e..003736`, `1401e8..140252`,
 `14054e..140570` and `1418bc..1418c6` hash respectively to
 `1fd62decbffe197e240ff7d173a1cab57bddbab1f930c0f50a74d8a1b2ba988e`,

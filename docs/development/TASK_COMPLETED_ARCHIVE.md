@@ -22170,3 +22170,10 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: caller 1449fc queues 32768 raw OBJ bytes from b80b5c for DMA16; E135 adds a fixed raw bank without attributing reads to localized groups. A named clean Wine profile passes first CLI create/reuse/verify/startup, full fixed source and boundary reads, original and translated queue/DMA full-state/clock and exact VRAM comparisons after state reload. E134 data remains preserved.
 - Evidence: `obj-context-graphics-source-wine-9sny93_2`, `e135-clean-profile-first-start-dma-wine-9qxljiuw`; `docs/changes/2026-11-10-add-fixed-obj-transfer.json`.
 - Limits: one controlled transfer; ordinary scene and full UI save/Load lifecycle, other sources, Linux, USA and native Windows remain open. Clean profile server drained and profile removed on PASS; interrupted shared DBG20 lease untouched. No performance measurement.
+
+### DBG2-20-WINE-LEASE-RECOVERY
+
+- Outcome: completed
+- Verified criteria: User-requested manual recovery preserved the original prefix lease and unit. Host and nested-PID audit found no matching owner or visible Wine client; the managed runner subsequently acquired a fresh lease, drained the Wine server and released it.
+- Evidence: `target/validation/lease-recovery/dbg20-injured-fresh-aa4a31a078de4ddb9a834083e470166a/receipt.json`; `dbg20-lease-host-audit-o1l9zurc`; `dbg20-lease-reacquire-2sxydeqx`; `docs/changes/2026-11-11-recover-interrupted-wine-prefix-lease.json`.
+- Limits: Four known session services had unreadable environments. The original unit and its unit lease remain retained; its original running receipt and interrupted gameplay result were not rewritten or accepted.
