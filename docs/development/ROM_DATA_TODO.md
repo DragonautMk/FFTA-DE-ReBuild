@@ -208,6 +208,13 @@ families and Linux/USA remain open. [Contract](../rom_data_gameplay.md).
 
 ## ROMDATA-02 — Extractors and decoders
 
+**ROMDATA-02-OBJ-CONTEXT-GRAPHICS scoped EUR progress:** E135 adds a
+32 KiB fixed OBJ transfer. A clean Wine profile passes CLI first create/reuse/
+verify/startup and interpreter plus translated original queue/DMA full-state/
+clock comparisons, exact VRAM bytes and machine-state reload. Ordinary use,
+UI save/Load, Linux, USA and native Windows remain open; no performance
+measurement. [Evidence](../rom_data_ui_raw_transfers.md#conditional-fixed-obj-transfer-e135).
+
 **ROMDATA-02-OBJ-CONTEXT-UPDATER scoped EUR progress:** E134 adds one
 38-frame sequence and a 21-list OBJ bank. Wine verifies CLI create/reuse/verify/
 startup, source bytes and three updater/draw full-state/clock cases each in

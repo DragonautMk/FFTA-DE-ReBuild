@@ -14,6 +14,13 @@ pub const SOURCE_SHA256: &str = "e11ef4d5f16feea8ef90e7fce58056e19d689004b7ca973
 pub const FIXED_OBJ_OFFSET: u32 = 0xb80b5c;
 pub const FIXED_OBJ_BYTES: usize = 0x8000;
 pub const FIXED_OBJ_SHA256: &str = "1604cd2aaa9b264913f05cb5266b8062c211374ca47b60ba18a3eae50486b7b2";
+/// Exact source bounds; the latter three destinations remain live guest state.
+pub const FIXED_SOURCES: &[(u32, usize, &str, &str)] = &[
+    (FIXED_OBJ_OFFSET, FIXED_OBJ_BYTES, FIXED_OBJ_SHA256, "fixed-obj-transfer"),
+    (0xb88c18, 0x2de0, "d82f23fb253995fd478117302066d47915ecb9e7f079c996d19ad474beb66afe", "fixed-context-transfer"),
+    (0xb8dcb4, 0x800, "5ac3a4c84c3a226ddb760e1fd7bfc28309c45882500c26784ba923db510214ea", "fixed-context-transfer"),
+    (0xb8e4b4, 0x800, "1a53285718d67f28ac6dac1528914c9bfed039111c31e173696f22f06c3933a7", "fixed-context-transfer"),
+];
 pub type SourceSpan = (u32, Vec<u8>, String);
 fn invalid() -> String {
     "Invalid declared localized raw transfer views".into()
@@ -104,17 +111,17 @@ impl RawTransfers {
         {
             return Err(invalid());
         }
-        if self.fixed_banks.len() > 1 {
+        if self.fixed_banks.len() > FIXED_SOURCES.len() {
             return Err(invalid());
         }
-        for bank in &self.fixed_banks {
-            if bank.bank_offset != FIXED_OBJ_OFFSET
+        for (bank, &(offset, length, _, role)) in self.fixed_banks.iter().zip(FIXED_SOURCES) {
+            if bank.bank_offset != offset
                 || bank.relative_offset != 0
-                || bank.words.len() != FIXED_OBJ_BYTES / 4
+                || bank.words.len() != length / 4
             {
                 return Err(invalid());
             }
-            spans.push((bank.bank_offset, bank.source_bytes(), "fixed-obj-transfer".into()));
+            spans.push((bank.bank_offset, bank.source_bytes(), role.into()));
         }
         spans.sort_by_key(|v| v.0);
         if spans
@@ -163,10 +170,37 @@ impl Catalog {
         // The original caller queues 0x4000 halfwords from this exact source.
         if u32::from_le_bytes(rom[0x144b28..0x144b2c].try_into().unwrap())
             != 0x08000000 + FIXED_OBJ_OFFSET
-            || ffta_rom::digest(&rom[FIXED_OBJ_OFFSET as usize..FIXED_OBJ_OFFSET as usize + FIXED_OBJ_BYTES])
-                != FIXED_OBJ_SHA256
         {
             return Err("Fixed OBJ transfer source fingerprint mismatch".into());
+        }
+        // Three later calls use the same halfword queue with live destinations.
+        for &(at, expected) in &[
+            (0x144b40, 0x4912u16), (0x144b42, 0x4c13), (0x144b44, 0x6922),
+            (0x144b46, 0x4b13), (0x144b48, 0xf6bb), (0x144b4a, 0xffc2),
+            (0x144b50, 0x4911), (0x144b52, 0x6962), (0x144b54, 0x2480),
+            (0x144b56, 0x00e4), (0x144b58, 0x1c23), (0x144b5a, 0xf6bb),
+            (0x144b5c, 0xffb9), (0x144b62, 0x490e), (0x144b64, 0x4a0e),
+            (0x144b66, 0x6952), (0x144b68, 0x1c23), (0x144b6a, 0xf6bb),
+            (0x144b6c, 0xffb1),
+        ] {
+            if u16::from_le_bytes(rom[at..at + 2].try_into().unwrap()) != expected {
+                return Err("Fixed context transfer instruction mismatch".into());
+            }
+        }
+        for &(at, expected) in &[
+            (0x144b8c, 0x08b88c18u32), (0x144b90, 0x030008b0),
+            (0x144b94, 0x16f0), (0x144b98, 0x08b8dcb4),
+            (0x144b9c, 0x08b8e4b4), (0x144ba0, 0x03000990),
+        ] {
+            if u32::from_le_bytes(rom[at..at + 4].try_into().unwrap()) != expected {
+                return Err("Fixed context transfer literal mismatch".into());
+            }
+        }
+        for &(offset, length, sha, _) in FIXED_SOURCES {
+            let at = offset as usize;
+            if ffta_rom::digest(&rom[at..at + length]) != sha {
+                return Err("Fixed transfer source fingerprint mismatch".into());
+            }
         }
         let mut tables = Vec::new();
         let mut banks = std::collections::BTreeMap::new();
@@ -212,20 +246,20 @@ impl Catalog {
         let decoded = RawTransfers {
             tables,
             banks: banks.into_values().collect(),
-            fixed_banks: vec![BankView {
-                bank_offset: FIXED_OBJ_OFFSET,
+            fixed_banks: FIXED_SOURCES.iter().map(|&(offset, length, _, _)| BankView {
+                bank_offset: offset,
                 relative_offset: 0,
-                words: rom[FIXED_OBJ_OFFSET as usize..FIXED_OBJ_OFFSET as usize + FIXED_OBJ_BYTES]
+                words: rom[offset as usize..offset as usize + length]
                     .chunks_exact(4)
                     .map(|v| u32::from_le_bytes(v.try_into().unwrap()))
                     .collect(),
-            }],
+            }).collect(),
         };
         let spans = decoded.source_spans()?;
         if ffta_rom::digest(
             &spans
                 .iter()
-                .filter(|v| v.2 != "fixed-obj-transfer")
+                .filter(|v| !v.2.starts_with("fixed-"))
                 .flat_map(|v| v.1.iter().copied())
                 .collect::<Vec<_>>(),
         ) != SOURCE_SHA256
@@ -245,6 +279,18 @@ impl Catalog {
     }
 }
 const WINDOWS: &[(usize, usize, &str)] = &[
+    // Conditional initialization of the live destination fields; later guest
+    // writes are intentionally not constrained by this source fingerprint.
+    (
+        0x323f6,
+        0x22,
+        "b24bea0b4651f271dd0b3dc0d898303a25eba0fab3221f316f04dfe1216f842d",
+    ),
+    (
+        0x32474,
+        0x14,
+        "0e99069059f06e012c99610ff6b280281f4d99ca47f1ce9715678f0a8237bb17",
+    ),
     (
         0x23a90,
         96,

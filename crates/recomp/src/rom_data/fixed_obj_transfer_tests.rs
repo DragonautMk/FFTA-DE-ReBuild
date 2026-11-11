@@ -1,6 +1,6 @@
 //! EUR fixed OBJ transfer publication and original queue/DMA consumption.
 use super::*;
-use gba_core::{Bus, Machine};
+use gba_core::{Bus, Machine, capi::RT_API};
 
 const SOURCE: u32 = 0x00b8_0b5c;
 const LENGTH: usize = 0x8000;
@@ -110,6 +110,20 @@ fn european_fixed_obj_transfer_preserves_dataset_and_original_queue() {
         (after.selector_bytes, after.banks_used, after.groups_used),
         (before.selector_bytes, before.banks_used, before.groups_used)
     );
+    let pointer = &mut decoded as *mut Machine as *mut std::ffi::c_void;
+    for edge in [SOURCE, SOURCE + LENGTH as u32] {
+        for delta in [-3i32, -1, 0, 1] {
+            let at = (edge as i32 + delta) as usize;
+            assert_eq!(
+                (RT_API.read16)(pointer, 0x0a00_0000 + at as u32),
+                u32::from(u16::from_le_bytes(rom[at..at + 2].try_into().unwrap()))
+            );
+            assert_eq!(
+                (RT_API.read32)(pointer, 0x0800_0000 + at as u32),
+                u32::from_le_bytes(rom[at..at + 4].try_into().unwrap())
+            );
+        }
+    }
     decoded.bus.rom[SOURCE as usize..SOURCE as usize + LENGTH]
         .copy_from_slice(&rom[SOURCE as usize..SOURCE as usize + LENGTH]);
     raw.load_state(&initial).unwrap();
@@ -129,6 +143,10 @@ fn european_fixed_obj_transfer_preserves_dataset_and_original_queue() {
     }
     let after_dma = owner.ui_raw_transfers_stats().unwrap();
     assert!(after_dma.payload_bytes - before_dma.payload_bytes >= LENGTH as u64);
+    assert_eq!(
+        &decoded.bus.vram[0x10000..0x18000],
+        &rom[SOURCE as usize..SOURCE as usize + LENGTH]
+    );
     assert_eq!(
         (
             after_dma.selector_bytes,

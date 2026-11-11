@@ -22163,3 +22163,10 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: In one paired USA battle checkpoint, selector values 02/09 reached the same unit and mode-1 consumer with the same returned bank and interval; authenticated static code indexes eight-byte records from that context.
 - Evidence: `dbg20-caller-dataflow-pqtw703u`, `dbg20-selector-consumer-s1xw7avb`, `dbg20-consumer-analysis-ipe6acdz`; `docs/changes/2026-11-11-inspect-ability-selector-mode.json`.
 - Limits: One scene and two values; later filters, other units, values, actions, platforms and device behavior remain open under DBG2-20.
+
+### ROMDATA-01-OBJ-CONTEXT-GRAPHICS
+
+- Outcome: completed for declared EUR/Wine source/model/controlled runtime/CLI scope.
+- Verified criteria: caller 1449fc queues 32768 raw OBJ bytes from b80b5c for DMA16; E135 adds a fixed raw bank without attributing reads to localized groups. A named clean Wine profile passes first CLI create/reuse/verify/startup, full fixed source and boundary reads, original and translated queue/DMA full-state/clock and exact VRAM comparisons after state reload. E134 data remains preserved.
+- Evidence: `obj-context-graphics-source-wine-9sny93_2`, `e135-clean-profile-first-start-dma-wine-9qxljiuw`; `docs/changes/2026-11-10-add-fixed-obj-transfer.json`.
+- Limits: one controlled transfer; ordinary scene and full UI save/Load lifecycle, other sources, Linux, USA and native Windows remain open. Clean profile server drained and profile removed on PASS; interrupted shared DBG20 lease untouched. No performance measurement.

@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-11",
+  "slug": "inspect-context-extra-transfers",
+  "title": "Inspect additional context transfer candidates",
+  "kind": "docs",
+  "platforms": [
+    "EUR; static source review"
+  ],
+  "changes": [
+    "Identify three additional conditional halfword transfer source ranges from retained original caller disassembly and compare them with E135 ownership."
+  ],
+  "validation": [
+    "Read-only decoding of three retained Thumb call pairs resolves each to the previously classified 000ad0 DMA queue helper; source literals and lengths imply 11744, 2048 and 2048 bytes.",
+    "Read-only E135 manifest join finds no declared source overlap for the three ranges; disassembly and manifest hashes are recorded in the feature guide. No guest execution or new tests ran."
+  ],
+  "limitations": [
+    "The ranges are static candidates only: original source-byte authentication, live destinations, additional aliases, managed consumption and ordinary reachability remain open. Linux, USA and native Windows remain pending; no performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_ui_raw_transfers.md"
+  ],
+  "references": []
+}

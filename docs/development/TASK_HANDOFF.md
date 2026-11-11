@@ -35,9 +35,9 @@ it does not authorize stopping other work or changing another thread's goal.
 
 - State: active
 - Outcome: partial
-- Verified: E134 103 resources/104 files, 63 compact banks; EUR Wine interpreter, translated and CLI PASS. Current: target/validation/units/e134-obj-context-wine-retry-4hbc5mu3/work/e134-resources/. E133 retained for comparison.
+- Verified: E135 103 resources/104 files, 63 compact banks; EUR clean-profile Wine interpreter, translated and CLI PASS. Current: target/validation/units/e135-clean-profile-first-start-dma-wine-9qxljiuw/work/interpreter/e135-resources/. E134 retained for comparison.
 - Missing: unmigrated resources/consumers, missing ordinary-use evidence, ABI/global extent/indirect calls and mod phases ROMDATA-06/07; Linux/USA/native Windows/new32:9 remain distinct. EUR, reduced Wine scope, no performance/space measurements; originals and personal saves unchanged.
-- Selection: `ROMDATA-01-OBJ-CONTEXT-GRAPHICS` integrated_unverified. EUR 32 KiB DMA source (9sny93_2); E135 build handle 43671, then targeted Wine.
+- Selection: EUR Wine-only `ROMDATA-01-OBJ-CONTEXT-EXTRA-TRANSFERS` integrated_unverified; builds PASS, Wine blocked by DBG20 lease. No index9 in 14 (dubn20o1); Sol `/root/sol_e136_destinations` (gpt-6.1-sol xhigh requested, effective unknown): flag44 bypass, cold-start candidate. Run target/rom-data-e136-next/ on release.
 - Resume: [validation recovery checklist](ROM_DATA_VALIDATION_RECOVERY_TODO.md) for skipped checks; [ROM_DATA_TODO](ROM_DATA_TODO.md), only the selected criterion's section (ROMDATA-01/02/03/04/05/06/07); [inventory](ROM_DATA_INVENTORY.md). Do not read the whole TODO. Children retain their IDs and limits:
   - `ROMDATA-01-PARAMETER-RECORDS27-DYNAMIC-SOURCES`: partial; writers map to 59 rows (js3rbve5); retained lists negative/inconclusive (m1p_8lhy). Live domain, save loads and aliases open. `docs/rom_data_gameplay.md`.
   - `ROMDATA-04-GAMEPLAY-6E84E0-BYTE00`: partial; static text screen 78suaoix found no token; generated/indirect sources open, no blind Select. `docs/rom_data_gameplay.md`.

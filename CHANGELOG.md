@@ -24,6 +24,25 @@ Documentation: [TASK_HANDOFF.md](docs/development/TASK_HANDOFF.md).
 
 [Change record](docs/changes/2026-11-11-preserve-interrupted-injured-first-aid-evidence.json)
 
+## 2026-11-11 — Inspect additional context transfer candidates
+
+Type: docs. Platforms: EUR; static source review.
+
+**Changes**
+
+- Identify three additional conditional halfword transfer source ranges from retained original caller disassembly and compare them with E135 ownership.
+
+**Validation**
+
+- Read-only decoding of three retained Thumb call pairs resolves each to the previously classified 000ad0 DMA queue helper; source literals and lengths imply 11744, 2048 and 2048 bytes.
+- Read-only E135 manifest join finds no declared source overlap for the three ranges; disassembly and manifest hashes are recorded in the feature guide. No guest execution or new tests ran.
+
+**Limitations**
+
+- The ranges are static candidates only: original source-byte authentication, live destinations, additional aliases, managed consumption and ordinary reachability remain open. Linux, USA and native Windows remain pending; no performance measurements.
+
+[Change record](docs/changes/2026-11-11-inspect-context-extra-transfers.json)
+
 ## 2026-11-11 — Inspect the USA ability selector mode
 
 Type: docs. Platforms: USA ROM, static inspection.
@@ -69,6 +88,44 @@ Type: changed. Platforms: Linux / Xvfb.
 Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
 
 [Change record](docs/changes/2026-11-11-compare-injured-first-aid-linux.json)
+
+## 2026-11-11 — Add three conditional context transfer sources
+
+Type: added. Platforms: EUR; Wine pending.
+
+**Changes**
+
+- Extend the fixed raw-transfer model with three conditional EUR source views totaling 15840 bytes, retaining their generic roles and original live guest destinations.
+- Advance extractor/decoder revisions to 136/135 and add a focused predecessor and original queue/DMA Wine test.
+- Prepare a targeted translated-original queue/DMA comparison for all three source ranges, with state reload and exact destination-byte checks.
+- Fingerprint the original initializer and prepare interpreter and translated DMA checks using its conditional VRAM values.
+
+**Validation**
+
+- Read-only source review identifies three caller literals, halfword-count controls and direct calls to the existing original queue helper; E135 manifest sources do not overlap the ranges.
+- The exact EUR ROM identity and source hashes were inspected without guest execution; the extractor pins the observed caller instructions, literals and source bytes.
+- Windows GNU test executable cross-compiled successfully (e136-context-transfers-build-cse66u9d); no tests ran in that build.
+- Windows GNU production CLI cross-compiled successfully (e136-context-transfers-cli-build-ripic0w9); both executable hashes and protected build source identities match their receipts.
+- Windows GNU executable containing the translated queue/DMA test cross-compiled successfully (e136-context-transfers-native-build-3sueb0b5); execution remains pending. At that checkpoint, the production CLI build matched its receipt and the only subsequent frontend change was a cfg(test) module; both binaries were rebuilt after the initializer fingerprints were added.
+- Read-only EUR ROM inspection matches the retained initializer instruction and literal windows; three VRAM destinations are conditional on initialization and no later overwrite. A focused gpt-6.1-sol xhigh consultation identified the producer; effective model and effort are unconfirmed.
+- Windows GNU executable containing the conditional-VRAM interpreter and translated tests cross-compiled successfully (e136-context-vram-build-q1xlqi1g); execution remains pending.
+- Windows GNU production CLI cross-compiled after the initializer fingerprints were added (e136-context-vram-cli-build-ge64x2vn); its executable and protected source identities match the receipt.
+- The pending Wine CLI launcher reports gameplay parameter reads separately and leaves context-transfer ordinary use pending; static inspection only, with no Wine execution.
+- Read-only EUR ROM and retained disassembly inspection identifies state 1 of the caller as the three-transfer path, and state 0 as a conditional predecessor that saves state 2; live sequencing and ordinary scene remain unverified.
+- Read-only EUR source inspection links constructor 08144dfc and object fields 2f8/2fc to the Thumb pointer for the transfer state machine; ordinary construction and dispatch remain unverified.
+- Read-only EUR instruction inspection identifies a state-zero path in 08144808 that directly calls the constructor and stores its result at 0200f3c0; ordinary reachability and dispatch remain open.
+- Read-only EUR inspection connects conditional pointer registrations at 080036c4 and 081404e0 to wrapper 08142168 and the constructor predecessor; neither registered callback is proved invoked during ordinary use.
+- Read-only EUR instruction inspection identifies index 9 as the conditional pointer-table selection for the previously found callback; invocation and the corresponding ordinary scene remain unverified.
+- Read-only EUR instruction inspection identifies two conditional requests for index 9, one gated by a bit at 02001f78; the bit meaning, callers, transition execution and ordinary scene remain unverified.
+- Reused an earlier authenticated EUR snapshot result: 14 entries representing seven distinct hashes recorded byte 02001f78 as 08h or 28h, leaving bit 4 clear at capture; later changes and the alternative request remain possible.
+- Protected read-only inspection of 14 retained EUR checkpoint entries (e136-eur-index-checkpoint-inspect-dubn20o1) found current indices 1 or 2, pending ffff and the expected slot-9 pointer. Captured values do not rule out later transitions; no guest code ran.
+- A focused follow-up with /root/sol_e136_destinations (gpt-6.1-sol xhigh requested; effective settings unknown), independently checked against EUR ROM windows and call targets, identified a flag-44 bypass and a conditional initial selector-11 route. An ordinary cold-start observation remains pending.
+
+**Limitations**
+
+- Wine runtime and CLI, translated execution, ordering and intervening writes for live destinations, ordinary use, Linux, USA and native Windows remain open. The shared Wine prefix retains an unrelated interrupted lease. No performance measurements.
+
+[Change record](docs/changes/2026-11-11-add-context-transfer-sources.json)
 
 ## 2026-11-10 — Identify a USA job-name lookup for the selected actor
 
@@ -776,20 +833,27 @@ Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/develo
 
 ## 2026-11-10 — Add fixed conditional OBJ transfer
 
-Type: added. Platforms: EUR; Wine pending.
+Type: added. Platforms: EUR; Wine.
 
 **Changes**
 
 - Extend the existing raw-transfer model with an independently identified 32768-byte EUR OBJ graphics bank, preserving localized group counters.
 - Advance extractor/decoder revisions to 135/134 and add a focused predecessor, original queue and DMA Wine test.
+- Extend the pending Wine test to check 16- and 32-bit reads at both source boundaries and compare the entire DMA destination with the original bytes.
+- Prepare a focused translated-original queue and DMA comparison, including exact VRAM content and state reload.
 
 **Validation**
 
 - Protected EUR Wine disassembly and source join authenticate caller literals, transfer-queue helper, 16-bit DMA control and the disjoint E134 source range (obj-context-graphics-consumer-wine-rcruc6ln, obj-context-graphics-source-wine-9sny93_2).
+- Windows GNU test executable cross-compiled successfully (e135-fixed-obj-build-h6t1mval); no tests ran in that build.
+- Windows GNU production executable cross-compiled successfully (e135-fixed-obj-cli-build-0k13qkqb); no tests ran in that build.
+- Windows GNU test executable with boundary and full VRAM assertions cross-compiled successfully (e135-fixed-obj-boundary-build-ehcn_yi6); execution remains pending.
+- Windows GNU executable containing the translated queue/DMA test cross-compiled successfully (e135-fixed-obj-native-build-jzkcqmi8); protected source hashes match the build receipt and Wine execution remains pending.
+- A named clean Wine profile passes CLI first create/reuse/verify/managed startup, all fixed source bytes and boundaries, and original plus translated queue/DMA full-state/clock comparisons after machine-state reload; exact VRAM bytes and localized counters match (e135-clean-profile-first-start-dma-wine-9qxljiuw). The temporary profile was drained and removed; the separate shared lease remained unchanged.
 
 **Limitations**
 
-- Build and runtime, translated execution, CLI, ordinary use, Linux, USA and native Windows pending. No performance measurements.
+- Ordinary use, full UI save/Load lifecycle, Linux, USA and native Windows remain pending. The startup frame does not establish ordinary use of the new bank. No performance measurements.
 
 [Change record](docs/changes/2026-11-10-add-fixed-obj-transfer.json)
 

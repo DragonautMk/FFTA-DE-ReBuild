@@ -166,6 +166,12 @@ mod obj_context_native_tests;
 #[cfg(test)]
 mod fixed_obj_transfer_tests;
 #[cfg(test)]
+mod fixed_obj_transfer_native_tests;
+#[cfg(test)]
+mod context_transfer_tests;
+#[cfg(test)]
+mod context_transfer_native_tests;
+#[cfg(test)]
 mod obj_extra_tests;
 #[cfg(test)]
 mod obj_ui_property_tests;

@@ -5,17 +5,24 @@
   "title": "Add fixed conditional OBJ transfer",
   "kind": "added",
   "platforms": [
-    "EUR; Wine pending"
+    "EUR; Wine"
   ],
   "changes": [
     "Extend the existing raw-transfer model with an independently identified 32768-byte EUR OBJ graphics bank, preserving localized group counters.",
-    "Advance extractor/decoder revisions to 135/134 and add a focused predecessor, original queue and DMA Wine test."
+    "Advance extractor/decoder revisions to 135/134 and add a focused predecessor, original queue and DMA Wine test.",
+    "Extend the pending Wine test to check 16- and 32-bit reads at both source boundaries and compare the entire DMA destination with the original bytes.",
+    "Prepare a focused translated-original queue and DMA comparison, including exact VRAM content and state reload."
   ],
   "validation": [
-    "Protected EUR Wine disassembly and source join authenticate caller literals, transfer-queue helper, 16-bit DMA control and the disjoint E134 source range (obj-context-graphics-consumer-wine-rcruc6ln, obj-context-graphics-source-wine-9sny93_2)."
+    "Protected EUR Wine disassembly and source join authenticate caller literals, transfer-queue helper, 16-bit DMA control and the disjoint E134 source range (obj-context-graphics-consumer-wine-rcruc6ln, obj-context-graphics-source-wine-9sny93_2).",
+    "Windows GNU test executable cross-compiled successfully (e135-fixed-obj-build-h6t1mval); no tests ran in that build.",
+    "Windows GNU production executable cross-compiled successfully (e135-fixed-obj-cli-build-0k13qkqb); no tests ran in that build.",
+    "Windows GNU test executable with boundary and full VRAM assertions cross-compiled successfully (e135-fixed-obj-boundary-build-ehcn_yi6); execution remains pending.",
+    "Windows GNU executable containing the translated queue/DMA test cross-compiled successfully (e135-fixed-obj-native-build-jzkcqmi8); protected source hashes match the build receipt and Wine execution remains pending.",
+    "A named clean Wine profile passes CLI first create/reuse/verify/managed startup, all fixed source bytes and boundaries, and original plus translated queue/DMA full-state/clock comparisons after machine-state reload; exact VRAM bytes and localized counters match (e135-clean-profile-first-start-dma-wine-9qxljiuw). The temporary profile was drained and removed; the separate shared lease remained unchanged."
   ],
   "limitations": [
-    "Build and runtime, translated execution, CLI, ordinary use, Linux, USA and native Windows pending. No performance measurements."
+    "Ordinary use, full UI save/Load lifecycle, Linux, USA and native Windows remain pending. The startup frame does not establish ordinary use of the new bank. No performance measurements."
   ],
   "files": [
     "crates/gba-core/src/rom_data.rs",
@@ -23,7 +30,10 @@
     "crates/gba-core/src/rom_data/runtime/ui_raw_transfers.rs",
     "crates/recomp/src/rom_data.rs",
     "crates/recomp/src/rom_data/fixed_obj_transfer_tests.rs",
-    "docs/rom_data_ui_raw_transfers.md"
+    "docs/rom_data_ui_raw_transfers.md",
+    "crates/recomp/src/rom_data/fixed_obj_transfer_native_tests.rs",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md"
   ],
   "references": []
 }

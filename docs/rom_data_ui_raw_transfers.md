@@ -684,6 +684,192 @@ a conditional source contract, not an observed ordinary-game scene.
 
 E135 extends the existing raw-transfer model with one separately identified
 fixed bank. Localized bank/group usage counters retain their prior meaning;
-the fixed bank contributes only raw payload bytes. Runtime, translated
-execution, production CLI, ordinary use, Linux, USA and native Windows remain
-unverified. No performance measurement was made.
+the fixed bank contributes only raw payload bytes. A named clean-profile Wine
+unit verifies CLI create/reuse/verify and one managed startup frame, preserving
+102 unaffected E134 files. The original queue and DMA pass full-state/clock
+comparisons in both interpreter and translated execution, with the source ROM
+span poisoned, the complete VRAM destination checked and machine-state reload
+covered (`target/validation/units/e135-clean-profile-first-start-dma-wine-9qxljiuw/`).
+The temporary clean profile was drained and removed after PASS; the separate
+shared prefix and its interrupted lease were not changed. The startup frame
+does not prove ordinary use of this bank. Ordinary gameplay, full UI save/Load
+lifecycle, Linux, USA and native Windows remain unverified. No performance
+measurement was made.
+
+## Additional context transfer candidates
+
+A read-only review of the retained `081449fc` disassembly identifies three
+further calls to the same halfword queue helper `08000ad0`. At calls `08144b48`,
+`08144b5a` and `08144b6a`, the literal sources and declared DMA lengths imply
+these conditional source ranges:
+
+- `b88c18..b8b9f8`: 5,872 halfwords, 11,744 bytes.
+- `b8dcb4..b8e4b4`: 1,024 halfwords, 2,048 bytes.
+- `b8e4b4..b8ecb4`: 1,024 halfwords, 2,048 bytes.
+
+The destination values are loaded from live IWRAM and are not classified by
+this source review. A read-only comparison with the retained E135 manifest
+found no overlap with its declared sources. The reviewed disassembly
+`target/rom-data-obj-remaining/new-caller-1449fc.txt` has SHA-256
+`deb229e4599db0c7def6929e714658d3cdd16a6c991ffb1669ed5a301992989d`;
+the compared E135 manifest has SHA-256
+`43f80c4e270b183874a4d7fe37528bcab53c57e04ac3de91f638e70a480d91c4`.
+These are bounded static candidates, not new extracted owners or proof of
+ordinary execution. Wine validation of the source fingerprints and managed
+consumer checks remains open, as do other aliases, live destination ordering,
+Linux, USA and native Windows. No guest instructions, new tests or performance measurements ran in
+this review.
+
+A further bounded source inspection identifies initializer `0803227c` writing
+`06008000`, `06007000` and `06007800` into the three respective live fields.
+If those values are still present at the caller, the corresponding DMA
+destination ranges are `06008000..0600ade0`, `06007000..06007800` and
+`06007800..06008000`. The instruction and literal windows were compared with
+the exact EUR ROM and are fingerprinted by the E136 extractor. The preserved
+disassembly `target/rom-data-obj-remaining/31c00-disassembly.txt` has SHA-256
+`157508a6e6ae8a8b999e68dbcb2e17fba8d7f96b29bf38cb8becde0761e58767`.
+Ordering between the initializer and ordinary callers, and intervening writes,
+remain unproved. Prepared Wine checks inject these conditional values rather
+than claim ordinary reachability.
+
+The caller also has a five-entry dispatch table at `08144a28`, indexed by the
+halfword at object offset `2a8`. State 1 enters `08144b3c`, which queues all
+three transfers; state 0 enters `08144a3c` and later writes state 1 while saving
+state 2 in the object's state stack. If the same object is invoked again with
+state 1 and the relevant fields intact, the three queue calls follow; state 1
+then restores the preceding state from that stack. This is a conditional source
+path, not evidence that an ordinary scene reaches it or that its live
+destination fields still hold the initializer's values.
+
+The table pointer and all five destinations were checked against the exact EUR
+ROM; instruction windows `144a0a..144a22`, `144af0..144b0e` and
+`144b3c..144b8c` have SHA-256 respectively
+`c3a6f830dfef381fbf37b35f51b99b6b79c769bc84be493023da3bd347979907`,
+`5ecb720fe4ed52ac592a886e670cab4fbed388204cad9e10bd97335e00c7043e` and
+`a40b5689a5513eeec8ffd884d601ecaf74e36984dd33420940bd68665438a4b5`.
+An eventual Wine observation can distinguish the live path by recording the
+object identity, state and three destination fields at those call sites.
+
+A further static link leads to constructor `08144dfc`: it stores `083ae47c`
+at object offset `2f8` and the halfword value 1 at offset `2fc`. The word at
+`083ae47c` is `081449fd`, the Thumb pointer to the state-machine caller above.
+The constructor and table word in the exact EUR ROM have SHA-256
+`c14d721c31d00b534a30dce9d28b9e47d41984639ba0ec467c1087fd9a4d0781`
+for `144dfc..144e3c` and
+`322c20c2476dbcaa4ceb7a498278565523650de82836f97df26e8ea53130ebca`
+for `3ae47c..3ae480`. Observing this constructor can provide an object
+identity for the later state-1 check, but its ordinary callers and the actual
+dispatch sequence remain unverified.
+
+A further conditional predecessor is `08144808`: when its input object's first
+byte is zero, its branch at `0814481a` reaches a direct call to `08144dfc` at
+`08144828`. The returned object pointer is stored at `0200f3c0`, and the input
+state byte is set to 1. EUR ROM window `144808..14483c` has SHA-256
+`433c23a1e6f5ab7f06a2c8475da16c7d20af143166f0595536458a1e9493ef76`.
+This supplies an earlier conditional observation point, not an identified
+ordinary scene or proof that the constructed object reaches state 1 above.
+
+The earlier registration path is also bounded statically. When the byte in
+its input context is zero, `080036c4` writes the Thumb pointer `081404e1` to
+`03000854`. In state 2, `081404e0` initializes a structure at `0200f3a0` and
+uses `08006b40` to place `08142169` into its first pointer slot at `0200f3b8`.
+The wrapper at `08142168` directly calls `08144808`, forwarding its second
+argument. These are conditional registrations and a direct call; the evidence
+does not establish that either registered pointer is invoked in a scene.
+
+For the exact EUR ROM, the SHA-256 values of windows `0036c4..003712`,
+`1404e0..1404fa`, `140578..1405ac` and `142168..142176` are respectively
+`67bedcc75c48af9fe05aa21872aa996f6dec04f7f5b6e1f0f4b117c9589cffd0`,
+`96f809509ae444f8430b994e47e2b3bdeb8b2b65996ddd358f8b2391465191da`,
+`f1639ccad6c2ac1cc07edbe815b2d626aa7a1b9efbe0c483d6fb69b71e1698ce` and
+`4692e6515a3d9b743841d4077b6601f2672535b89f1112fd315bf26c07e746ab`.
+The callback literals at `003738..003764` hash to
+`c9f6763ffbadc3c769712ae743f48c2df38416e51387f8bf4174544c6b1b18c5`;
+initializer `006ae0..006af8` hashes to
+`1326879814188ee0d868326b7b3312d8e9e83a61568852ab66c4c022d0b533f7`,
+and pointer writer `006b40..006b5c` hashes to
+`adfcb3744861f340a5e92fd533d4d2906eae4c1878541e53f574283adcc0814e`.
+
+On a later branch of `080036c4`, the halfword at offset 4 of the object pointed
+to by `030034b8` selects an entry in the `03000830` pointer table; values above
+11 select entry 0. If that halfword is 9 and the earlier table assignment is
+still intact, the selected pointer is `081404e1`. The branch passes the pointer
+to `08006b5c` for storage in another structure; this still does not establish
+invocation or identify a game scene. EUR ROM windows `003780..0037c6`,
+`0037d8..0037f8` and `006b5c..006b76` hash to
+`cf37724bb72e591607959b227218c0f303d310c3666b4d376073fe094e84a8e8`,
+`92dea8943fad69d0b3dbe354cad7282b826ae7654d4056402234d2345fb7fe17` and
+`f6eadf47b02db91b84275720c4f86f3961e096385b432f4d5ba175d5136a87e7`.
+
+Two conditional paths can request index 9. At `08025374`, a call with argument
+`44h` tests bit 4 of byte `02001f78`; if set, `08025382` calls `0800394c`
+with 9, which stores that halfword at `030034d2`. Another path at `08140362`
+calls `0800392c` with 9, which stores `8009h` at the same address. The
+transition logic handles the high-bit form by clearing bit 15 and writing the
+result to offset 4 of the currently selected object. These paths require their
+own callers, state and subsequent transition processing; neither is proof of a
+scene or of the transfer itself. The bit's gameplay meaning remains unknown.
+
+The previously authenticated read-only scan recorded byte `02001f78` for 14 EUR
+checkpoint entries representing seven distinct snapshot hashes. All recorded
+values were `08h` or `28h`, so bit 4 was clear in those snapshots at scan time.
+The retained result is
+`target/rom-data-dynamic-ordinary-reachability/snapshot-peek-flag40-corrected.json`
+(SHA-256 `78403f4b664a865d33a756a4d55af020084dfcce4d2c0e10181c1763cf0612e8`).
+This rules out the bit-gated request at those exact captured values only; the
+bit can change later, and the separate `8009h` request is unaffected. No new
+snapshot, replay or runtime test was needed for this comparison.
+
+The bit-gated request is not by itself a reliable route to the transfers.
+In state 1, callback `081404e0` reads the state produced by its preliminary
+callback; if flag `44h` is set and that state is 2, it writes `ffh` instead
+of proceeding to the state-2 registration. Separately, completion at
+`081418bc..081418c4` writes 2 to `0200f390`; what makes ordinary execution
+reach that completion remains unknown.
+
+An earlier startup path provides a better candidate for observation:
+initialization at `080036c4` registers callback `081401e9` in slot 11 and
+sets the initial selector to 11. That callback can request `8009h` at
+`08140362`. When `030009c4` is initially zero, its first-entry path invokes
+`0813fe44` and subsequently waits for `0813fecc`. The source does not prove
+that this completes without input or that a cold start reaches the transfers.
+Once Wine is available, an ordinary EUR cold-start observation can record the
+selector and pending transitions, readiness at `0813fecc`, and hits at
+`081401e8`, `08140362`, `08140578` and `08144b3c`, without forcing guest state.
+
+The exact EUR ROM windows `00370e..003736`, `1401e8..140252`,
+`14054e..140570` and `1418bc..1418c6` hash respectively to
+`1fd62decbffe197e240ff7d173a1cab57bddbab1f930c0f50a74d8a1b2ba988e`,
+`33338fe42240c2a81311114c16e0940ce70071f3ed31adb6f2e46f82af48a5e5`,
+`7f874eb9793923a72ac4b283341487d2cf30e8ca5464c154e91114cbf02557b4` and
+`52a1146b3fb3060eebd2ab75394c1d2b0860f430faed3459f0e29817f2035f5f`.
+The bounded source interpretation was independently suggested by the focused
+Sol consultation and checked against these ROM bytes and call targets.
+
+A subsequent protected, read-only inspection of those same 14 entries
+(`target/validation/units/e136-eur-index-checkpoint-inspect-dubn20o1/`)
+found current indices 1 or 2, pending value `ffffh`, and the expected slot-9
+pointer `081404e1` in each snapshot. These are observations at capture only:
+they do not exclude a later index-9 transition or show invocation. The ROM
+identity, payload checksums and recorded snapshot hashes were checked; the
+inputs remained unchanged. This inspection did not execute guest code or
+replace the pending Wine tests.
+
+EUR source windows `025374..02538e`, `0cce98..0cceca`, `00392c..003962`,
+`003884..0038a6`, `0038c8..0038d2` and `140354..140366` hash respectively to
+`5a844a34260abde4eb6bc8dec36cadd42f8d5498e12274e5f7be7e54fd6720a5`,
+`d7f7e83cf5a4610e8ba85a212bb0751b73c350ac13064a4775fc9e919e682ab4`,
+`6441820a2043d959d2e378d1b1d2e3e6fd3dc7083e57d7b38aad5e6bfc2d10a0`,
+`45f6de5347b4b62b543a97a37c5071195e30b888bef6e2677c9927ad643677f9`,
+`46fb8582eddbd655be2fa3524e972a70282b7a245b64aa5f137d9a2414f39cd5` and
+`0d8ce76124a0033287fb51b9f5dc170387e5ad932832ab3a4745a95ffbc1b553`.
+
+E136 adds these three views to the existing fixed raw-transfer model, with
+separate `fixed-context-transfer` provenance roles; the E135 fixed OBJ role and
+the localized group identifiers remain unchanged. The exact EUR ROM identity,
+source ranges, source hashes, caller instructions and literals are checked by
+the extractor. Their destination semantics are deliberately left to guest code.
+The implementation and its focused Wine test are integrated but not yet
+verified; E135 remains the accepted current dataset. Original and translated
+runtime, the production CLI, ordinary use, Linux, USA and native Windows remain
+open. No performance measurement was made.

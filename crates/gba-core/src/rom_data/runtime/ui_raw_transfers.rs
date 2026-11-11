@@ -159,6 +159,9 @@ impl RawTransfersResources {
 }
 const SOURCE_BOUNDS: &[(usize, usize)] = &[
     (0xb80b5c, 0x8000),
+    (0xb88c18, 0x2de0),
+    (0xb8dcb4, 0x800),
+    (0xb8e4b4, 0x800),
     (0x431470, 160),
     (0x4386c0, 1600),
     (0x439190, 768),

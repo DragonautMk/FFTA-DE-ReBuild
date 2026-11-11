@@ -2250,6 +2250,12 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   coverage, callers and deferred platforms remain
   open. No benchmark.
   [Contract](../rom_data_compact_catalog.md).
+- EUR e135-d134 adds a conditional 32 KiB fixed OBJ DMA source. A clean Wine
+  profile passes CLI first create/reuse/verify/startup and interpreter plus
+  translated original queue/DMA full-state/clock comparisons, including state
+  reload, exact VRAM bytes and preserved localized counters. Ordinary use, UI
+  save/Load, Linux, USA and native Windows remain open; no performance
+  measurement. [Evidence](../rom_data_ui_raw_transfers.md#conditional-fixed-obj-transfer-e135).
 - EUR e134-d133 adds a conditional context-updater bank with 21 OBJ lists
   and one 38-frame sequence. EUR Wine CLI create/reuse/verify/startup and
   three interpreter and three translated updater/draw state/clock comparisons
