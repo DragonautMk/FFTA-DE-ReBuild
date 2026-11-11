@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-11",
+  "slug": "add-context-language-position-pairs",
+  "title": "Add EUR language-position pairs",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add two separately tracked five-row language-position source plans to the existing layered context resource, preserving the original uncapped index calculations and mixed-owner reads."
+  ],
+  "validation": [
+    "Wine e141-language-position-wine-lz2v0zcj preserves the E140 projection and other resources, checks 20 poisoned source bytes and mixed 16/32-bit boundaries, and compares both original readers for indices 0, 4, 5 and 255. Three-frame ordinary interpreter/native-dispatch raw/managed pairs observe six typed first-table bytes and no raw table reads with matching full states and clocks.",
+    "Wine e141-language-position-cli-wine-czl55ur9 passes production CLI create, no-write reuse, verification and one-frame startup; 102 other resource files match. First attempt n3dtu223 failed because the test loaded a state while its ROM copy was poisoned; the corrected setup passed.",
+    "Wine e141-language-position-second-wine-texo_p5s reaches the second table after 55 no-input frames from the retained ordinary checkpoint; original English draw-wrapper arguments match, and three-frame interpreter/native-dispatch raw/managed pairs each record eight typed reads and no raw reads with matching full states/clocks and poisoned source spans.",
+    "Wine e141-language-one-wine-i5_k9agp observes the original 0→1 selection and language publication after Down/release/A, reaches both table readers at frames 545 and 599, checks original wrapper arguments and passes three-frame interpreter/native-dispatch raw/managed pairs with eight typed and zero raw reads per table and arm. The pre-selection checkpoint is retained.",
+    "Wine e141-languages-234-wine-xn8l5k88 reuses the authenticated pre-selection state, observes all original selection increments and publication for IDs 2, 3 and 4, and validates both original wrapper arguments plus three-frame interpreter/native-dispatch raw/managed pairs for each table and language; every pair records eight typed and zero raw reads with matching states/clocks."
+  ],
+  "limitations": [
+    "Other scenes, global language writers and index extent, per-read native attribution, frontend save/load, Linux, USA and native Windows remain open. The CLI smoke frame does not use the new tables. No performance measurement."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/layered_obj_animations.rs",
+    "crates/gba-core/src/rom_data/layered_obj_animations/tests.rs",
+    "crates/gba-core/src/rom_data/runtime/layered_obj_animations.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/context_language_position_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

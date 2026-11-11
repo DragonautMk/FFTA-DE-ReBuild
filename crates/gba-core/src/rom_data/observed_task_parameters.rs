@@ -4,6 +4,7 @@ use crate::ffta_rom;
 use serde::{Deserialize, Serialize};
 
 pub const PHASE_SOURCE: u32 = 0x371064;
+pub const BATTLE_PHASE_SOURCE: u32 = 0x37101c;
 /// Conditional phases in the original wrap sequence, not a prelookup guest cap.
 pub const PHASE_COUNT: usize = 3;
 pub const VERTICAL_SOURCE: u32 = 0x394e14;
@@ -114,6 +115,9 @@ impl VerticalCorrections {
 pub struct ObservedTaskParameters {
     pub phase_thresholds: PhaseThresholds,
     pub vertical_corrections: VerticalCorrections,
+    /// Separate battle-task bytes; absent in datasets before E148.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub battle_phase_thresholds: Option<[u8; 3]>,
 }
 impl ObservedTaskParameters {
     pub fn validate(&self) -> Result<(), String> {
@@ -124,10 +128,14 @@ impl ObservedTaskParameters {
         self.phase_thresholds
             .byte_at(offset)
             .or_else(|| self.vertical_corrections.byte_at(offset))
+            .or_else(|| self.battle_phase_thresholds.as_ref()?.get(offset.checked_sub(BATTLE_PHASE_SOURCE)? as usize).copied())
     }
     pub fn source_spans(&self) -> Result<Vec<SourceSpan>, String> {
         let mut spans = self.phase_thresholds.source_spans()?;
         spans.extend(self.vertical_corrections.source_spans()?);
+        if let Some(thresholds) = &self.battle_phase_thresholds {
+            spans.push((BATTLE_PHASE_SOURCE, thresholds.to_vec(), "battle-phase-threshold".into()));
+        }
         Ok(spans)
     }
     pub fn verify_source(&self, rom: &[u8]) -> Result<(), String> {
@@ -162,19 +170,21 @@ impl Catalog {
                 0x26538,
                 "84f6899435d7407e888845b8cb41eca0c66b255c8cb7188a3cd28f48c1f43a1b",
             ),
+            (0x131b8, 0x1320c, "63818f5802278ef13d944cdc09da0539f0332a7cc5ac63577327a8941b2caeb6"),
         ] {
             if ffta_rom::digest(&rom[start..end]) != sha {
                 return Err("Original task-parameter reader fingerprint mismatch".into());
             }
         }
-        for (literal, expected) in [(0x18df4, 0x08371064u32), (0x26534, 0x08394e0cu32)] {
+        for (literal, expected) in [(0x18df4, 0x08371064u32), (0x26534, 0x08394e0cu32), (0x13258, 0x0837101cu32)] {
             if u32::from_le_bytes(rom[literal..literal + 4].try_into().unwrap()) != expected {
                 return Err("Original task-parameter source literal mismatch".into());
             }
         }
         let phases = &rom[PHASE_SOURCE as usize..PHASE_SOURCE as usize + PHASE_COUNT];
         let vertical = &rom[VERTICAL_SOURCE as usize..VERTICAL_SOURCE as usize + 8];
-        if ffta_rom::digest(phases) != PHASE_SHA256 || ffta_rom::digest(vertical) != VERTICAL_SHA256
+        let battle = &rom[BATTLE_PHASE_SOURCE as usize..BATTLE_PHASE_SOURCE as usize + 3];
+        if ffta_rom::digest(phases) != PHASE_SHA256 || ffta_rom::digest(vertical) != VERTICAL_SHA256 || ffta_rom::digest(battle) != PHASE_SHA256
         {
             return Err("Observed task-parameter source fingerprint mismatch".into());
         }
@@ -201,6 +211,7 @@ impl Catalog {
                     })
                     .collect(),
             },
+            battle_phase_thresholds: Some(battle.try_into().unwrap()),
         };
         let sources = decoded
             .source_spans()?

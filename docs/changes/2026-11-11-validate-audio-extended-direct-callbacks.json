@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-11",
+  "slug": "validate-audio-extended-direct-callbacks",
+  "title": "Validate EUR audio extended direct callbacks",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Exercise eight selected original extended-audio callbacks after typed dispatch, including one four-byte operand and seven one-byte operands, with synthetic track state.",
+    "Exercise the shared indirect callback for selectors 0 and 3 with the original default RAM-table pointer and no active channels."
+  ],
+  "validation": [
+    "Wine e145-audio-callback-wine-ifke1a2i checks selectors 1, 2, 4, 5, 6, 7, 10 and 11 through the original dispatcher and callback. Raw interpreter, managed interpreter and managed compiled instruction blocks match full state and clock; field updates and cursor increments match their operands, and each managed path serves four dispatch bytes with the ROM source poisoned.",
+    "Wine e145-audio-callback-dis-wine-1b9xztet identifies the dispatcher and callback instruction windows. The first disassembly attempt e145-audio-callback-dis-wine-_sxx67p0 rejected a stale executable hash; the retry used the E145 CLI receipt.",
+    "Wine e145-audio-indirect-wine-qerm5hzp checks both selectors with the first original command pointer copied into RAM: raw interpreter, managed interpreter and managed compiled instruction blocks match full state and clock, clear the track status and advance its cursor with poisoned dispatch sources."
+  ],
+  "limitations": [
+    "These are controlled synthetic cases, not ordinary reachability. Other RAM callback values, active channels, other sequence inputs and scenes, production native attribution, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/audio_extended_dispatch_runtime_tests.rs",
+    "docs/rom_data_audio.md"
+  ],
+  "references": []
+}

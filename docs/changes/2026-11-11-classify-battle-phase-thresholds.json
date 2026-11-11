@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "date": "2026-11-11",
+  "slug": "classify-battle-phase-thresholds",
+  "title": "Classify EUR battle phase thresholds",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Identify an independent three-byte phase-threshold source at 37101c used by a battle task; the original signed phase index is not clamped before lookup."
+  ],
+  "validation": [
+    "Wine e148-battle-37101d-dis-wine-hykbr3_9 shows 080131d6 loading 37101c, 080131e0 sign-extending the live phase, 080131e8 reading the threshold, and the subsequent phase increment/wrap only after comparison. Wine e145-battle-residue-wine-3pq4rwye observes phase-1 and phase-2 reads in the retained EUR battle window. The three source bytes have SHA-256 ee8357f0303dac80be96e10b1b49913c294c163771824fca6152057a6e1da957, equal in value but independent of the older 371064 source."
+  ],
+  "limitations": [
+    "Phase 0 ordinary use, prelookup out-of-range inputs, managed serving, other consumers, Linux, USA and native Windows remain open. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md"
+  ],
+  "references": []
+}

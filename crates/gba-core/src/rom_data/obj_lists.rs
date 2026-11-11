@@ -9,6 +9,7 @@ pub use roots::REFERENCES;
 pub mod observed;
 pub mod constructor_animation;
 pub mod conditional_markers;
+pub mod context_selector;
 
 #[derive(Clone, Copy, Debug)]
 pub struct RootReference {
@@ -267,6 +268,40 @@ impl Catalog {
         let markers = conditional_markers::Catalog::from_rom(rom)?;
         lists.extend(markers.decoded.lists);
         sources.extend(markers.sources);
+        // Four lists selected by the context constructor have their own
+        // bounded selector proof; they are not direct RootReferences.
+        let context = context_selector::Catalog::from_rom(rom)?;
+        lists.extend(context.decoded.lists);
+        sources.extend(context.sources);
+        // This battle constructor passes one independent list through the
+        // previously authenticated copied constructor/reader bridge.
+        const BATTLE_ROOT: u32 = 0x395088;
+        const BATTLE_HASH: &str = "c685f8be3478ab57ac1cd59834466c36a155553f5b1ce40933c45a5d932c1459";
+        if ffta_rom::digest(&rom[0xbdfce..0xbdffc]) != "c887064f853182fcd06e535648f6a32dd24546d7c8ecabaed1b9df5cb8626e4f"
+            || word(0xbe054)? != 0x0800_0000 + BATTLE_ROOT
+            || word(0xbe048)? != 0x0839_7f9c || word(0x397f9c)? != 0x0300_6b6d {
+            return Err("Battle OBJ constructor identity mismatch".into());
+        }
+        let bytes = &rom[BATTLE_ROOT as usize..BATTLE_ROOT as usize + 14];
+        if ffta_rom::digest(bytes) != BATTLE_HASH { return Err("Battle OBJ source identity mismatch".into()); }
+        let battle = List::decode(BATTLE_ROOT, bytes)?;
+        if battle.objects.len() != 2 || battle.objects.iter().any(|object| object.shape >= 3) {
+            return Err("Battle OBJ list count or shape mismatch".into());
+        }
+        lists.push(battle);
+        sources.push(SourceRange { offset: BATTLE_ROOT, length: 14, sha256: BATTLE_HASH.into(), role: "static-obj-list".into() });
+        // The established original draw reader was observed consuming this
+        // distinct list in battle; its pointer producer is not yet known.
+        const DRAW_ROOT: u32 = 0x40dcba;
+        const DRAW_HASH: &str = "68880753b277e373d5bb81345fa01ce63650fd5e6c908c845dd1dd8f9b956715";
+        let bytes = &rom[DRAW_ROOT as usize..DRAW_ROOT as usize + 50];
+        if ffta_rom::digest(bytes) != DRAW_HASH { return Err("Observed battle draw source identity mismatch".into()); }
+        let draw = List::decode(DRAW_ROOT, bytes)?;
+        if draw.objects.len() != 8 || draw.objects.iter().any(|object| object.shape >= 3) {
+            return Err("Observed battle draw list count or shape mismatch".into());
+        }
+        lists.push(draw);
+        sources.push(SourceRange { offset: DRAW_ROOT, length: 50, sha256: DRAW_HASH.into(), role: "static-obj-list".into() });
         lists.sort_by_key(|list| list.source_offset);
         sources.sort_by_key(|source| source.offset);
         let decoded = Lists { lists };

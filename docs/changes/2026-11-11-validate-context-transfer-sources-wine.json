@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-11-11",
+  "slug": "validate-context-transfer-sources-wine",
+  "title": "Validate EUR context transfer sources under Wine",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Validate the existing E136 raw-transfer extension and retain the current authenticated EUR dataset."
+  ],
+  "validation": [
+    "Wine source and interpreter queue/DMA checks pass for three ranges with state and clock equivalence, preserved predecessor and conditional VRAM destinations: e136-context-transfers-wine-sqk59qhr.",
+    "Wine translated queue/DMA and production CLI create/reuse/verify/startup pass: e136-context-transfers-native-wine-i4lkp88p and e136-context-transfers-cli-wine-jtdsittv.",
+    "A 180-frame no-input raw HLE Wine cold start reaches language selection with English highlighted; selector 11 and zero readiness observed, with no selected transfer entry and no dropped events: e136-cold-observer-wine-_kyjkycg.",
+    "The first Wine attempt failed at sandbox runtime lock creation; its own retained prefix lease was preserved in a targeted manual recovery before the host Wine runs.",
+    "A raw EUR Wine cold-start observation pressed A for two frames on the observed English language choice; readiness became 1 at frame 213, the Square Enix splash appeared at frame 360, and no selected transfer entry was reached (e136-select-observer-wine-mri3o4xu).",
+    "A Wine observation extending the same English-selection prefix to 1200 frames reaches request 8009 at frame 466 and selector 9 at frame 468, with no selected transfer entry; a protected endpoint is retained (e136-long-observer-wine-jt59h5bk).",
+    "A 600-frame no-input Wine continuation from the protected frame-1200 endpoint observes selector 9 and the original context callbacks, without reaching the selected transfer entries; no events dropped and a new endpoint retained (e136-resume-observer-wine-uxsheu99).",
+    "A further no-input Wine continuation after ordinary English selection observes all three original queue calls with live VRAM destinations 06000000, 06009000 and 06008000; a pre-queue state is retained (e136-timeline-observer-wine-sjr5o0bg).",
+    "Wine ordinary interpreter raw/managed pair confirms three original queue arguments, exact VRAM after DMA and matching full state/clock for three frames with managed ROM sources poisoned: e136-ordinary-pair-wine-ez7huad9.",
+    "Wine ordinary translated raw/managed pair confirms translated original queue/DMA, exact VRAM and matching full state/clock for three frames with managed sources poisoned: e136-ordinary-translated-wine-e2v3_rjg."
+  ],
+  "limitations": [
+    "Other ordinary scenes, UI save/Load, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_ui_raw_transfers.md",
+    "docs/development/PROJECT_STATE.md",
+    "crates/recomp/src/rom_data/context_transfer_tests.rs"
+  ],
+  "references": []
+}

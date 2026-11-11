@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-11-11",
+  "slug": "add-context-timeline-records",
+  "title": "Add EUR context timeline records and copied sources",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add five typed context timeline records and two separately identified 32-byte copied halfword sources to the layered OBJ dataset, with distinct table/source counters.",
+    "Authenticate the exact EUR ROM and original table literal, caller, consumer and CpuSet helper; retain earlier JSON shape parsing and the E137 resource projection."
+  ],
+  "validation": [
+    "Wine observer e138-timeline-observer-wine-_c2goa23 reaches all five original rows and both source copies during the previously observed ordinary startup.",
+    "Wine E138 test e138-timeline-wine-5au_a6sp checks 164 source bytes and mixed boundary/native API reads with ROM poisoned; first-row interpreter and native-dispatch raw/managed pairs confirm exact copies and three equal full states/clocks.",
+    "Wine production CLI e138-timeline-cli-wine-5dlgcs2a passes create/reuse/verify and one-frame managed startup, preserving 102 other files; that startup reads zero new bytes.",
+    "A launch initially referenced a vanished temporary build helper and stopped before a validation unit started; an equivalent protected workspace helper was used for the successful build."
+  ],
+  "limitations": [
+    "One ordinary startup; other scenes, indirect consumers, full source graph, frontend save/Load, Linux, USA and native Windows remain unverified. A native timeline dispatch entry was observed but per-read native attribution was not established. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/layered_obj_animations.rs",
+    "crates/gba-core/src/rom_data/layered_obj_animations/tests.rs",
+    "crates/gba-core/src/rom_data/runtime/layered_obj_animations.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/context_timeline_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

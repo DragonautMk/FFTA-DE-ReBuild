@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-11",
+  "slug": "census-context-event-initializer",
+  "title": "Bound EUR context event initializer callsites",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Record a bounded static census of aligned Thumb calls to the context event initializer."
+  ],
+  "validation": [
+    "Wine read-only scan of the exact EUR ROM found one aligned Thumb BL candidate to 0814352c, call 08140b44, already connected to the E139 event source: e140-event-calls-wine-ur8ojq9h."
+  ],
+  "limitations": [
+    "The encoding scan does not prove reachability or exclude indirect callers, alternate instruction modes, other images or unrelated source tables. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_obj.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-11",
+  "slug": "add-context-target-rectangle",
+  "title": "Add EUR context target rectangle",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add the separately tracked eight-byte target rectangle to the layered context resource, preserving the original copy and interpolation logic."
+  ],
+  "validation": [
+    "Wine e143-target-wine-xvznh4i6 preserves the E142 projection and other resources, checks poisoned bytes and mixed 16/32-bit boundaries, compares the original helper and observes ordinary copy arguments, destination, state and first interpolation update. Interpreter/native-dispatch raw/managed pairs match three full states/clocks with eight typed bytes and no raw source reads per arm.",
+    "Wine e143-target-cli-wine-1cr9s2xr passes production CLI create, no-write reuse, verification and one-frame startup; 102 other resource files match.",
+    "Wine e143-target-full-wine-g822y6t7 follows one no-input interpolation to exact target and two held frames; 182 interpreter/native-dispatch raw/managed frames per arm match complete states, clocks, framebuffers and OAM with the source poisoned. Audio was not checked."
+  ],
+  "limitations": [
+    "Other consumers, per-read native attribution, frontend save/load, Linux, USA and native Windows remain open. The CLI smoke frame does not establish ordinary use. No performance measurement."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/layered_obj_animations.rs",
+    "crates/gba-core/src/rom_data/layered_obj_animations/tests.rs",
+    "crates/gba-core/src/rom_data/runtime/layered_obj_animations.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/context_target_coordinate_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

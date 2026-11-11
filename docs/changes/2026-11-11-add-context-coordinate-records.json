@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-11-11",
+  "slug": "add-context-coordinate-records",
+  "title": "Add EUR context coordinate records",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add six separately identified, typed context-coordinate records to the layered OBJ dataset and serve their source bytes with independent counters.",
+    "Authenticate six direct initializer calls and source literals; preserve the earlier dataset projection and permit parsing its earlier JSON shape."
+  ],
+  "validation": [
+    "Wine E137 test preserves the E136 projection and other files, checks all 48 poisoned source bytes and boundary/native reads, and compares six interpreter and six translated original coordinate prefixes with full state and clock equality: e137-coordinate-wine-66ksu9lx.",
+    "Wine production CLI create/reuse/verify and one-frame managed startup pass with 102 previous files identical; this startup reads zero new coordinate bytes: e137-coordinate-cli-wine-7xckikk4.",
+    "Initial Windows test build e137-coordinate-test-build-l9_cimmm failed due to a missing Bus trait import; corrected build 5efccs2c passed.",
+    "Wine ordinary startup reaches source 3ae164; interpreter and native-dispatch raw/managed pairs confirm the exact context copy, managed bytes and three matching full states/clocks with source ROM poisoned: e137-coordinate-observer-wine-mrxjf4_a and e137-ordinary-coordinate-wine-5mc6rq2h.",
+    "Wine ordinary continuation reaches 3ae13c, 3ae144 and 3ae14c; each passes an exact context copy and three-frame interpreter/native-dispatch raw/managed state/clock pair with poisoned source spans: e137-ordinary-coordinate-3ae13c-wine-5dgv8ca9, e137-ordinary-coordinate-3ae144-wine-bduhu___ and e137-ordinary-coordinate-3ae14c-wine-j1bhu1h6.",
+    "The bounded ordinary continuation through the third transfer did not observe the 3ae12c/3ae134 calls: e137-coordinate-remaining-wine-dk7q3y39 and e137-coordinate-rest-wine-_cd68mop.",
+    "Wine early startup observation reaches 3ae12c and 3ae134 before the previously observed continuation; each passes exact context copy and three-frame interpreter/native-dispatch raw/managed state/clock comparison with poisoned source spans: e137-early-coordinates-wine-kc6b1g9v, e137-ordinary-coordinate-3ae12c-wine-58muw9dp and e137-ordinary-coordinate-3ae134-wine-0050qdh8.",
+    "The first early observation dk2m_tmo found both calls but failed retention because an unselected duplicate endpoint remained in scratch; a corrected observer passed and the failed unit was retained."
+  ],
+  "limitations": [
+    "Other ordinary paths, full initializer behavior across inputs, ordinary translated initializer attribution, indirect callers, Linux, USA and native Windows remain unverified. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/layered_obj_animations.rs",
+    "crates/gba-core/src/rom_data/layered_obj_animations/tests.rs",
+    "crates/gba-core/src/rom_data/runtime/layered_obj_animations.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/context_coordinate_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

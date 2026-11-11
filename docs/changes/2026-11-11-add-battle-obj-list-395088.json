@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-11",
+  "slug": "add-battle-obj-list-395088",
+  "title": "Add EUR battle constructor OBJ list",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add the authenticated two-object battle list to the existing static OBJ resource, preserving the original copied constructor and draw path."
+  ],
+  "validation": [
+    "Wine e146-battle-obj-wine-kh3780ub preserves the E145 projection and all unrelated resources, checks all 14 poisoned bytes and mixed-width boundaries, and compares three ordinary battle frames. Interpreter and native-dispatch raw/managed pairs match complete states and clocks with 558 typed requests and no raw reads per arm.",
+    "Wine e146-battle-obj-cli-wine-6_eokaze passes production CLI create, no-write reuse, verification and one-frame startup; 102 other resource files match E145."
+  ],
+  "limitations": [
+    "other scenes and producers, per-read native attribution, frontend save/load, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/obj_lists.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/battle_obj_list_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

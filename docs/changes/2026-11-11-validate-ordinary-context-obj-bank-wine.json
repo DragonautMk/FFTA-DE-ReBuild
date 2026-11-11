@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-11",
+  "slug": "validate-ordinary-context-obj-bank-wine",
+  "title": "Validate ordinary EUR context OBJ bank under Wine",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Verify ordinary startup consumption of the existing E134 context OBJ bank using exact bank read provenance and raw/managed comparisons.",
+    "Add an isolated ordinary-checkpoint test with a temporary translation table augmented by the updater instructions actually observed on that route."
+  ],
+  "validation": [
+    "EUR Wine three-frame interpreter and native-dispatch raw/managed pairs each observe 144 typed selected-bank reads and zero raw reads from selected spans; states and clocks match with all bank source spans poisoned: e134-ordinary-pair-wine-x9h8ztad.",
+    "Earlier e134-ordinary-pair-wine-h4vucl4s failed at a test assumption that a native updater entry would be observable; state and bank read comparisons had passed before that assertion. The revised trace records actual provenance and dispatch without making that assumption.",
+    "Read-only inspection of the exact translation artifact protected by x9h8ztad (SHA-256 ab7aa1808c4c14550c46ec2410f18ef47e301dbcf07a6ed021dbd015cf8f38ca): its 28,859 ELF block keys include none in the context updater, ordinary caller or OBJ draw ranges. The source also routes the draw range through the interpreter when the authenticated sprite hook is enabled; that condition was not observed in this inspection.",
+    "Wine e134-ordinary-augmented-wine-m7063z21: 43 observed instruction entries augment the protected translation; 71 updater dispatches, including 10 with 45 selected-bank typed bus reads outside interpreter scopes, zero selected-bank raw reads in those dispatches, and three matching raw/managed full machine states and clocks with ROM sources poisoned.",
+    "First Wine attempt e134-ordinary-augmented-wine-oq8pw9nm failed full-state equality at frame zero when comparing interpreter with augmented native execution; cause was not established. The passing test uses the same augmented dispatch for both arms."
+  ],
+  "limitations": [
+    "The normal native-dispatch run executes native blocks, but its observed bank reads have interpreter instruction scopes; ordinary translated updater/draw execution remains unproven. Controlled translated cases were accepted separately. Other paths, UI save/Load, Linux, USA and native Windows remain open. No performance measurements.",
+    "The block-table finding is specific to the retained translation artifact. No new Wine execution, translated ordinary updater proof, hook activation observation, Linux or USA validation was performed in this inspection.",
+    "The augmented table is test-only; it proves neither production translation coverage nor ordinary translated draw. Captured dispatches can include nested work. Linux, USA and native Windows remain pending; no performance measurement."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/obj_context_bank_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

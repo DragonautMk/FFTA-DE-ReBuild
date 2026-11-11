@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "date": "2026-11-11",
+  "slug": "classify-context-initial-and-target-geometry",
+  "title": "Classify two EUR context geometry sources",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Identify separate initial and target geometry sources at 3ae154 and 3ae15c from original context calls and the four-halfword helper contracts."
+  ],
+  "validation": [
+    "Wine disassembly e145-context-sources-dis-wine-ktov4uzs shows 3ae154 initializing heap-relative contexts 8b8c and 8bb0, and 3ae15c copied as a target with duration 50; existing e143-coordinate-dis-wine-0q6sqru2 establishes the four-halfword helper copies."
+  ],
+  "limitations": [
+    "Managed source serving, ordinary paths, other consumers, Linux, USA and native Windows remain open. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_obj.md"
+  ],
+  "references": []
+}

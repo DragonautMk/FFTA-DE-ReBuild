@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-11",
+  "slug": "add-context-selected-obj-lists",
+  "title": "Add EUR context-selected OBJ lists",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Extend the existing static OBJ resource with four authenticated context-selected lists; preserve the original selector aliases and unchanged-pointer behavior for out-of-range low-byte selectors."
+  ],
+  "validation": [
+    "Wine e140-context-obj-wine-p2emd6x4 validates nine original selector cases, all 50 source bytes with poisoned ROM, E139 projection and unchanged unrelated resources; a three-frame ordinary interpreter/native-dispatch raw/managed pair observes 50 typed reads and zero raw reads per arm with matching full state and clock.",
+    "Wine e140-context-obj-cli-wine-ufvipvnu passes production CLI create, no-write reuse, verify and one-frame startup; all 102 other resource files are identical."
+  ],
+  "limitations": [
+    "Ordinary use of other selectors, per-read native attribution, other scenes, frontend save/load, Linux, USA and native Windows remain open. The independent adjacent language table remains raw. No performance measurement."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/obj_lists.rs",
+    "crates/gba-core/src/rom_data/obj_lists/context_selector.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/context_obj_selector_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

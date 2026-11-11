@@ -2087,3 +2087,75 @@ record 0 stays raw and adjacent bank-1 reads compose with the existing owner.
 The focused Wine test covers publication, mixed-owner edges, original native
 prefixes and coherent edit rejection, not ordinary gameplay or Linux/USA.
 [Contract and evidence](rom_data_gameplay.md#managed-conditional-descriptor-bank-0).
+
+## E139 ordinary high-ROM read inventory
+
+Three no-input interpreter frames from the authenticated EUR context-event
+checkpoint were audited against the E139 manifest over physical offsets
+`300000..1000000`. The capture observed 505 high-ROM requests, dropped none,
+and excluded instruction fetches. Thirty-four distinct bytes were outside
+declared source spans; no observed raw request overlapped a declared span.
+The 12 bytes at `370e68..6c`, `370e74..78` and `370eb0..b4` are already
+classified above as hardware/branch support. The other 22 bytes occur at
+`3ae42c..2e`, `3ae440..46`, `3ae448..4c`, `3ae44e..52` and `3ae454..5a`;
+their observed scopes include context code and the original OBJ reader. They
+are source leads, not established asset boundaries or complete domains.
+
+Evidence: `e139-ordinary-residue-wine-zmi0glsw`. Interpreter scopes may include
+nested HLE/DMA work; declared source ownership does not itself prove typed
+service. This covers one short scene, not all reads or game paths. Linux, USA
+and native Windows remain open; no performance measurement was made.
+The two language-position source plans and the adjacent selected OBJ lists
+were subsequently added in E141 and E140 respectively; see their scoped
+[contracts](rom_data_obj.md#conditional-language-position-pairs-e141).
+
+The same bounded inventory was later run with E141 on three no-input frames
+from the separately authenticated EUR frame-814 coordinate checkpoint
+(`e141-early-residue-wine-5b7xk8ul`). It recorded 309 high-ROM requests with
+no drops or raw events overlapping declared source spans. The only four
+unowned bytes are `370eb0..b4`, the previously classified copied-IWRAM helper
+vector. This is a negative result only for this short window; it does not
+establish complete ROM coverage or exercise other regions or platforms.
+
+A further three-frame E141 audit starts from the authenticated later
+`08140e1e` coordinate checkpoint (`e141-late-residue-wine-px0r_2m1`). It
+records 89 high-ROM requests without drops or raw events overlapping declared
+sources. The 164 distinct unowned bytes consist of the previously classified
+`370eb0..b4` helper vector and 160 bytes at `3ae38c..3ae42c`, observed as
+word reads in the `08140e7e` interpreter scope. This is a source lead, not yet
+a proven data format, full extent, destination or global consumer domain.
+The indexed tick and neighboring gate source contracts were subsequently
+modeled in E142; [their scope](rom_data_obj.md#context-activation-tick-and-gate-source-contract)
+does not establish other consumers or a global domain.
+
+An E142 audit waits without input for the first activation and then captures
+three interpreter frames (`e142-first-event-residue-wine-ih9nxtd5`). Of 2,281
+high-ROM requests, none were dropped or read raw across a declared source.
+The 12 unowned bytes comprise the known `370eb0..b4` helper vector and eight
+bytes at `3ae16c..3ae174`, observed as halfword reads in the `08145230`
+interpreter scope. The latter are a source lead, not yet an authenticated
+record format, full extent, destination or consumer domain.
+The eight-byte target rectangle and its original copy/interpolation path were
+subsequently modeled and checked in E143; see the
+[scoped contract](rom_data_obj.md#context-target-rectangle-source-contract).
+E144 also serves six additional geometry sources with distinct runtime
+accounting; their controlled Wine validation and remaining ordinary-use limits
+are described in the [source contract](rom_data_obj.md#additional-context-geometry-sources). A separate
+three-frame Wine inventory at context tick 1320 found no unowned high-ROM
+data beyond the previously classified helper vector and no raw events
+overlapping declared E144 spans (`e144-late-residue-wine-qpvutjx9`). This is a
+negative only for that window, not global source coverage. A distinct
+three-frame inventory of a retained EUR second-battle deployment records 102
+unowned high-ROM bytes in eight observed ranges, with no dropped requests or
+raw events overlapping declared E145 spans (`e145-battle-residue-wine-3pq4rwye`).
+Some ranges are known executable control words; the others are source leads,
+not established asset extents. The observed 102 bytes are subsequently
+classified: 36 bytes are previously authenticated hardware/branch control,
+14 bytes at `395088` and 50 at `40dcba` are served as OBJ lists in E146/E147,
+and the two observed bytes at `37101d..1f` belong to the three-byte E148 battle
+threshold fragment. This classification covers only that window; the draw-list
+pointer producer and other scenes remain open. See the
+[battle list contract](rom_data_obj.md#battle-constructor-list-at-395088). E145 extends the
+same source owner with two earlier context geometries; the old six-record
+representation remains accepted. See the
+[scoped contract](rom_data_obj.md#earlier-context-geometry-source-contracts).

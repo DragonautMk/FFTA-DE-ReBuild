@@ -691,10 +691,17 @@ comparisons in both interpreter and translated execution, with the source ROM
 span poisoned, the complete VRAM destination checked and machine-state reload
 covered (`target/validation/units/e135-clean-profile-first-start-dma-wine-9qxljiuw/`).
 The temporary clean profile was drained and removed after PASS; the separate
-shared prefix and its interrupted lease were not changed. The startup frame
-does not prove ordinary use of this bank. Ordinary gameplay, full UI save/Load
-lifecycle, Linux, USA and native Windows remain unverified. No performance
-measurement was made.
+shared prefix and its interrupted lease were not changed. The startup frame alone does not prove ordinary use. A later ordinary Wine
+startup after English selection reaches the original queue call with source
+`08b80b5c`, destination `06010000` and halfword count `4000h`
+(`e135-ordinary-observer-wine-s462xxqw`); the state immediately before that
+call is retained. From this checkpoint, raw/managed pairs with both the
+interpreter and translated original queue/DMA pass exact 32 KiB VRAM comparison
+and three full frame state/clock comparisons with the managed ROM source
+poisoned (`e135-ordinary-pair-wine-jjgeygm9`). Each run records 48,608 raw
+transfer payload bytes in aggregate, including the subsequent E136 transfers.
+Other scenes, full UI save/Load, Linux, USA and native Windows remain open. No
+performance measurement was made.
 
 ## Additional context transfer candidates
 
@@ -714,11 +721,9 @@ found no overlap with its declared sources. The reviewed disassembly
 `deb229e4599db0c7def6929e714658d3cdd16a6c991ffb1669ed5a301992989d`;
 the compared E135 manifest has SHA-256
 `43f80c4e270b183874a4d7fe37528bcab53c57e04ac3de91f638e70a480d91c4`.
-These are bounded static candidates, not new extracted owners or proof of
-ordinary execution. Wine validation of the source fingerprints and managed
-consumer checks remains open, as do other aliases, live destination ordering,
-Linux, USA and native Windows. No guest instructions, new tests or performance measurements ran in
-this review.
+At this initial review they were bounded static candidates, with no proof of
+ordinary execution. No guest instructions, new tests or performance
+measurements ran in that review; the later E136 validation is recorded below.
 
 A further bounded source inspection identifies initializer `0803227c` writing
 `06008000`, `06007000` and `06007800` into the three respective live fields.
@@ -729,8 +734,8 @@ the exact EUR ROM and are fingerprinted by the E136 extractor. The preserved
 disassembly `target/rom-data-obj-remaining/31c00-disassembly.txt` has SHA-256
 `157508a6e6ae8a8b999e68dbcb2e17fba8d7f96b29bf38cb8becde0761e58767`.
 Ordering between the initializer and ordinary callers, and intervening writes,
-remain unproved. Prepared Wine checks inject these conditional values rather
-than claim ordinary reachability.
+remain unproved. The Wine checks inject these conditional values rather than
+claim ordinary reachability.
 
 The caller also has a five-entry dispatch table at `08144a28`, indexed by the
 halfword at object offset `2a8`. State 1 enters `08144b3c`, which queues all
@@ -833,20 +838,69 @@ sets the initial selector to 11. That callback can request `8009h` at
 `08140362`. When `030009c4` is initially zero, its first-entry path invokes
 `0813fe44` and subsequently waits for `0813fecc`. The source does not prove
 that this completes without input or that a cold start reaches the transfers.
-Once Wine is available, an ordinary EUR cold-start observation can record the
-selector and pending transitions, readiness at `0813fecc`, and hits at
-`081401e8`, `08140362`, `08140578` and `08144b3c`, without forcing guest state.
+The EUR cold-start observation below records selector and pending transitions,
+readiness at `0813fecc`, and selected PC entries without forcing guest state.
 
-A bounded observer for that next check has been cross-compiled for Windows
+A bounded observer for that check was cross-compiled for Windows
 (`target/validation/units/e136-cold-observer-build-1iux4706/`); its executable
-and protected build-source hashes were checked after the build. It is prepared
-to run 180 frames of the raw EUR HLE interpreter with all keys released,
+and protected build-source hashes were checked after the build. It ran 180
+frames of the raw EUR HLE interpreter with all keys released under Wine,
 capture selected executed Thumb PCs and frame-boundary selector samples, and
 retain the final raw GBA framebuffer. Its event limit and dropped count are
 explicit. The launcher is `target/rom-data-e136-next/run-cold-observer.py`.
-No Wine observation has run yet. This raw, no-input observation would identify
-a candidate path or prompt; it would not establish managed E136 consumption,
-translated execution or other scenes.
+The no-input run (`e136-cold-observer-wine-_kyjkycg`) reached the language
+selection screen with English highlighted. Selector 11 was observed at frame
+9, and readiness returned zero on all 170 observed returns; none of the
+selected transfer-path entries was reached. No events were dropped. This raw
+observation does not establish managed E136 consumption or other scenes.
+
+An independent raw EUR Wine continuation repeated that observed cold-start
+prefix, pressed A on the highlighted English choice during frames 180–181 and
+then released all keys (`e136-select-observer-wine-mri3o4xu`). The readiness
+return became 1 at frame 213. At frame 360 the raw framebuffer showed the
+Square Enix splash; the sampled selector remained 11, no selected transfer
+entry was reached and no events were dropped. This is a bounded ordinary-input
+observation, not proof that later startup cannot reach the transfers. Inputs
+and the prior no-input evidence remained protected.
+
+A longer Wine observation of the same input prefix extended it to frame 1200
+and retained its exact endpoint (`e136-long-observer-wine-jt59h5bk`). It
+observed the `8009h` request at frame 466 and selector 9 at frame 468; none of
+the selected transfer entries was reached, and no events were dropped. The
+final raw framebuffer was nearly black. The retained endpoint is for a bounded
+continuation, not evidence that the transfers are unreachable. Its ROM, source,
+prior observation and build inputs remained protected.
+
+Continuing that endpoint for 600 frames under Wine with no additional input
+(`e136-resume-observer-wine-uxsheu99`) retained selector 9 and context state 1
+at sampled frame boundaries. The original `081404e0` and `08140670` entries
+were observed, but none of the selected transfer entries was reached; no events
+were dropped. The final raw framebuffer showed two introductory image panels.
+This bounded result does not establish what later inputs or frames do. The
+original endpoint stayed unchanged and the continuation endpoint was retained.
+
+A further no-input Wine continuation from that endpoint
+(`e136-timeline-observer-wine-sjr5o0bg`) followed the automatic callback
+timeline. At the third transfer call, the raw interpreter had observed all
+three queue calls with these live source, destination and halfword-count values:
+
+- `08b88c18`, `06000000`, `16f0h`.
+- `08b8dcb4`, `06009000`, `0400h`.
+- `08b8e4b4`, `06008000`, `0400h`.
+
+These destinations differ from the conditional initializer values used in the
+earlier isolated tests. The calls occurred after the ordinary English selection
+and automatic timeline, with no further inputs or dropped observations. A
+machine state immediately before queueing and the state after the third call
+are retained in that unit. The ordinary interpreter pair
+(`e136-ordinary-pair-wine-ez7huad9`) confirms all three queue arguments and
+the exact resulting VRAM ranges with the managed source ROM spans poisoned.
+All three complete frame states and clocks match the raw execution; managed
+reads account for the 15,840 source bytes. The corresponding Wine pair with
+translated original queue/DMA code also passes on the same checkpoint
+(`e136-ordinary-translated-wine-e2v3_rjg`), including the poisoned sources,
+exact VRAM, managed reads and three complete frame state/clock comparisons.
+Other scenes remain to be verified.
 
 The retained disassembly further narrows the first-entry wait: `0813fecc`
 decrements an initial countdown in state 0 before entering state 1. In state 1,
@@ -875,8 +929,7 @@ found current indices 1 or 2, pending value `ffffh`, and the expected slot-9
 pointer `081404e1` in each snapshot. These are observations at capture only:
 they do not exclude a later index-9 transition or show invocation. The ROM
 identity, payload checksums and recorded snapshot hashes were checked; the
-inputs remained unchanged. This inspection did not execute guest code or
-replace the pending Wine tests.
+inputs remained unchanged. This inspection did not execute guest code.
 
 EUR source windows `025374..02538e`, `0cce98..0cceca`, `00392c..003962`,
 `003884..0038a6`, `0038c8..0038d2` and `140354..140366` hash respectively to
@@ -892,7 +945,18 @@ separate `fixed-context-transfer` provenance roles; the E135 fixed OBJ role and
 the localized group identifiers remain unchanged. The exact EUR ROM identity,
 source ranges, source hashes, caller instructions and literals are checked by
 the extractor. Their destination semantics are deliberately left to guest code.
-The implementation and its focused Wine test are integrated but not yet
-verified; E135 remains the accepted current dataset. Original and translated
-runtime, the production CLI, ordinary use, Linux, USA and native Windows remain
-open. No performance measurement was made.
+EUR Wine verification passed: `e136-context-transfers-wine-sqk59qhr` checks all
+15,840 source bytes, the E135 predecessor and three original queue/DMA cases;
+`e136-context-transfers-native-wine-i4lkp88p` checks the three translated
+queue/DMA cases after reload. Both compare full machine state and clocks and
+use injected conditional VRAM destinations. Production CLI create, reuse,
+verify and one-frame managed startup passed in
+`e136-context-transfers-cli-wine-jtdsittv`, with 102 unchanged prior files.
+The current E136 dataset is retained in the first unit. A Wine lifecycle test
+copies the dataset into isolated scratch, makes the copy unavailable, and
+confirms failed reattachment is transactional. Slot load, Undo, backup restore
+and restart retain the same resource owner and still serve all 48,608 fixed
+transfer bytes with ROM sources poisoned
+(`e136-context-lifecycle-wine-5ncguagd`). This covers the backend operations;
+the frontend UI, other scenes, Linux, USA and native Windows remain open.
+No performance measurement was made.

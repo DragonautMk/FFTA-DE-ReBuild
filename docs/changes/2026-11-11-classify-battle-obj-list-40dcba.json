@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "date": "2026-11-11",
+  "slug": "classify-battle-obj-list-40dcba",
+  "title": "Classify an observed EUR battle draw list",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Classify an eight-object static list observed as an argument to the established original OBJ reader during an existing battle window."
+  ],
+  "validation": [
+    "Wine e145-battle-residue-wine-3pq4rwye observes original reader instructions 0800153c/3e read the header at 40dcba and their existing six-byte object loop read through 40dceb, with no dropped requests. The signed count is eight, the extent is 50 bytes and the source SHA-256 is 68880753b277e373d5bb81345fa01ce63650fd5e6c908c845dd1dd8f9b956715; all eight object shapes are supported."
+  ],
+  "limitations": [
+    "The pointer producer, managed serving, scene equivalence and global consumers remain unproved. Other scenes, Linux, USA and native Windows remain open. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_obj.md"
+  ],
+  "references": []
+}

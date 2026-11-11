@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-11",
+  "slug": "add-battle-phase-thresholds",
+  "title": "Add EUR battle phase threshold source",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add a separate three-byte battle threshold fragment to the existing task-parameter resource, preserving older datasets and the original signed prelookup behavior."
+  ],
+  "validation": [
+    "Wine e148-battle-phase-wine-vu2q576j preserves the E147 projection, checks all three poisoned source bytes and mixed boundaries, and compares ten original prefixes including phases -1 and 3. Three ordinary interpreter/native-dispatch raw/managed battle frames match states and clocks with three typed requests and no raw reads per arm.",
+    "Wine e148-battle-phase-cli-wine-6yxh8kcc passes production CLI create, no-write reuse, verification and one-frame startup; 102 other resource files match E147."
+  ],
+  "limitations": [
+    "ordinary phase 0, other scenes and consumers, per-read native attribution, frontend save/load, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/observed_task_parameters.rs",
+    "crates/gba-core/src/rom_data/runtime/observed_task_parameters.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/battle_phase_threshold_tests.rs",
+    "docs/rom_data_gameplay.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

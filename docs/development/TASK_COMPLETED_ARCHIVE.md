@@ -22177,3 +22177,353 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: User-requested manual recovery preserved the original prefix lease and unit. Host and nested-PID audit found no matching owner or visible Wine client; the managed runner subsequently acquired a fresh lease, drained the Wine server and released it.
 - Evidence: `target/validation/lease-recovery/dbg20-injured-fresh-aa4a31a078de4ddb9a834083e470166a/receipt.json`; `dbg20-lease-host-audit-o1l9zurc`; `dbg20-lease-reacquire-2sxydeqx`; `docs/changes/2026-11-11-recover-interrupted-wine-prefix-lease.json`.
 - Limits: Four known session services had unreadable environments. The original unit and its unit lease remain retained; its original running receipt and interrupted gameplay result were not rewritten or accepted.
+
+### ROMDATA-01-OBJ-CONTEXT-EXTRA-TRANSFERS
+
+- Outcome: completed for declared EUR/Wine source/model/controlled runtime/CLI scope.
+- Verified criteria: E136 adds 15,840 bytes across three conditional sources, preserves the E135 predecessor and localized counters, and passes full-byte, original and translated queue/DMA state/clock and VRAM checks after reload. Wine production CLI create/reuse/verify and managed startup pass.
+- Evidence: `e136-context-transfers-wine-sqk59qhr`, `e136-context-transfers-native-wine-i4lkp88p`, `e136-context-transfers-cli-wine-jtdsittv`; `docs/changes/2026-11-11-validate-context-transfer-sources-wine.json`.
+- Limits: destinations were injected; live ordering, ordinary use, full UI save/Load, Linux, USA and native Windows remain open. Initial sandbox launch i1n6p66p failed on read-only Wine runtime; this session's lease was preserved by targeted manual recovery. No performance measurement.
+
+### ROMDATA-04-OBJ-CONTEXT-EXTRA-ORDINARY
+
+- Outcome: completed for one declared EUR/Wine ordinary startup route.
+- Verified criteria: After ordinary English selection and the automatic timeline, three original queue calls reach live VRAM destinations 06000000, 06009000 and 06008000. With managed source ROM spans poisoned, interpreter and translated raw/managed executions produce exact VRAM bytes, consume 15,840 managed bytes and match full machine states and clocks for three frames.
+- Evidence: `e136-timeline-observer-wine-sjr5o0bg`, `e136-ordinary-pair-wine-ez7huad9`, `e136-ordinary-translated-wine-e2v3_rjg`; `docs/changes/2026-11-11-validate-context-transfer-sources-wine.json`.
+- Limits: One startup route; other scenes, UI save/Load, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-04-OBJ-CONTEXT-GRAPHICS-ORDINARY
+
+- Outcome: completed for one declared EUR/Wine ordinary startup route.
+- Verified criteria: Original queue uses b80b5c→06010000, count 4000h, after ordinary English selection. Interpreter and translated raw/managed pairs compare exact 32 KiB VRAM and three full frame states/clocks with the managed source ROM poisoned; aggregate 48,608 payload bytes include later E136 transfers.
+- Evidence: `e135-ordinary-observer-wine-s462xxqw`, `e135-ordinary-pair-wine-jjgeygm9`; `docs/changes/2026-11-11-validate-ordinary-fixed-obj-transfer-wine.json`.
+- Limits: Other scenes, UI save/Load, Linux, USA and native Windows remain open. Initial observer build `pjhllipr` failed before compilation because of a relative path; corrected build passed. No performance measurement.
+
+### ROMDATA-04-OBJ-CONTEXT-BANK-ORDINARY
+
+- Outcome: completed for one EUR/Wine ordinary startup route and observed interpreter-scoped bank reads.
+- Verified criteria: Interpreter and native-dispatch raw/managed pairs each trace 144 typed reads and zero raw reads from the 24 selected E134 bank spans; three full frame states and clocks match with source ROM spans poisoned. The updater call occurs in the interpreter route.
+- Evidence: `e134-ordinary-pair-wine-x9h8ztad`; `docs/changes/2026-11-11-validate-ordinary-context-obj-bank-wine.json`.
+- Limits: Native-dispatch bank reads had interpreter instruction scopes, so an ordinary translated updater/draw remains unproved; controlled translated cases are separate. Other paths, UI save/Load, Linux, USA and native Windows remain open. First `h4vucl4s` failed on an unjustified native entry assertion; revised trace reports actual provenance. No performance measurement.
+
+### ROMDATA-05-CONTEXT-LIFECYCLE
+
+- Outcome: completed for EUR/Wine isolated backend slot/Undo/backup/restart scope.
+- Verified criteria: A copied E136 dataset becomes unavailable; failed reattachment preserves state and owner. After slot load, Undo, backup restore and restart the same owner serves all 48,608 E135/E136 fixed-transfer bytes and all 24 E134 OBJ bank spans with the source ROM poisoned.
+- Evidence: `e136-context-lifecycle-wine-5ncguagd`; `docs/changes/2026-11-11-validate-context-resource-lifecycle-wine.json`.
+- Limits: Backend, not frontend UI; other scenes, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-01-CONTEXT-COORDINATE-RECORDS
+
+- Outcome: completed for declared EUR/Wine source/model/controlled prefix/CLI scope.
+- Verified criteria: E137 adds six separately typed eight-byte context coordinate records to the existing layered file, verifies six original call targets and literals, preserves the E136 projection and other resource files, and serves exact bytes with separate counters. Six interpreter and six translated original coordinate prefixes match full state/clock with ROM spans poisoned. Wine CLI create/reuse/verify/startup passes.
+- Evidence: `e137-coordinate-wine-66ksu9lx`, `e137-coordinate-cli-wine-7xckikk4`; `docs/changes/2026-11-11-add-context-coordinate-records.json`.
+- Limits: Full initializer, indirect calls, ordinary use, Linux, USA and native Windows remain open. Initial build `l9_cimmm` failed for a missing Bus import; corrected build passed. Startup reads no coordinate bytes; no performance measurement.
+
+### ROMDATA-04-CONTEXT-COORDINATES-ORDINARY
+
+- Outcome: completed for EUR/Wine ordinary record 3ae164 on one startup route.
+- Verified criteria: Ordinary English-selection startup reaches call 08140e1e with source 083ae164. From the retained pre-call state, interpreter and native-dispatch raw/managed pairs match exact eight-byte context copy and three full frame states/clocks while the source ROM spans are poisoned; eight bytes are served by the managed record.
+- Evidence: `e137-coordinate-observer-wine-mrxjf4_a`, `e137-ordinary-coordinate-wine-5mc6rq2h`; `docs/changes/2026-11-11-add-context-coordinate-records.json`.
+- Limits: Other five records and paths, translated initializer attribution, broader initializer/indirect callers, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-04-CONTEXT-COORDINATES-REMAINING
+
+- Outcome: completed for the other five E137 records on one declared EUR/Wine ordinary startup route.
+- Verified criteria: Records 3ae13c/144/14c are reached later in the observed startup; 3ae12c/134 occur earlier at frames 540/814. Each passes exact context copy and three full frame state/clock interpreter and native-dispatch raw/managed comparisons with source spans poisoned. Together with the previously accepted 3ae164 case, all six have one ordinary positive route.
+- Evidence: `e137-ordinary-coordinate-3ae13c-wine-5dgv8ca9`, `e137-ordinary-coordinate-3ae144-wine-bduhu___`, `e137-ordinary-coordinate-3ae14c-wine-j1bhu1h6`, `e137-early-coordinates-wine-kc6b1g9v`, `e137-ordinary-coordinate-3ae12c-wine-58muw9dp`, `e137-ordinary-coordinate-3ae134-wine-0050qdh8`; `docs/changes/2026-11-11-add-context-coordinate-records.json`.
+- Limits: Other paths, full initializer/indirect callers, ordinary translated initializer attribution, Linux, USA and native Windows remain open. Failed `dk2m_tmo` retained due an unselected duplicate endpoint; corrected observer passed. No performance measurement.
+
+### ROMDATA-01-CONTEXT-TIMELINE-RECORDS
+
+- Outcome: completed for declared EUR/Wine source/model/runtime/CLI and one ordinary route.
+- Verified criteria: E138 adds five 20-byte timeline records and two 32-byte original CpuSet sources, authenticates caller/consumer/helper, preserves E137 projection and all other resources, and serves 164 bytes with separate counters. An ordinary startup observes all five rows and both copies. The first-row raw/managed interpreter and native-dispatch pairs match exact RAM copies and three full frame states/clocks with ROM spans poisoned; CLI create/reuse/verify/startup passes.
+- Evidence: `e138-timeline-observer-wine-_c2goa23`, `e138-timeline-wine-5au_a6sp`, `e138-timeline-cli-wine-5dlgcs2a`; `docs/changes/2026-11-11-add-context-timeline-records.json`.
+- Limits: Other scenes, indirect consumers, full source graph, UI save/Load, Linux, USA and native Windows remain open. A native path entry was observed, but source-read native attribution is not separately proven. Initial build launch referenced a vanished /tmp helper and stopped before creating a unit; the protected workspace helper passed. No performance measurement.
+
+### ROMDATA-01-CONTEXT-ADJACENT-SOURCE
+
+- Outcome: completed for declared EUR/Wine source/model/runtime/CLI and one ordinary route.
+- Verified criteria: E139 adds four timed context records and a preserved terminator (80 bytes), validates original caller, pointer initializer and reader, and preserves the E138 projection and other resources. Original ordinary Wine observations reach all records and terminator; first-reader interpreter/native-dispatch raw/managed pairs match three full frame states/clocks with ROM source poisoned. Mixed boundary/native API reads and production CLI create/reuse/verify/startup pass.
+- Evidence: `e139-adjacent-observer-wine-9x8tuk_e`, `e139-adjacent-follow-wine-63_77gd8`, `e139-event-wine-ecuz_do9`, `e139-event-cli-wine-wv9xs9i_`; `docs/changes/2026-11-11-add-context-timed-events.json`.
+- Limits: Later-row managed pairs, other scenes, indirect callers, UI save/Load, Linux, USA and native Windows remain open; native reader entry observed without per-read native attribution. The first test `rdy4w2qg` exposed missing page-3ad routing, corrected and verified. No performance measurement.
+
+### ROMDATA-04-CONTEXT-EVENTS-ALL-ORDINARY
+
+- Outcome: completed for one declared EUR/Wine ordinary startup route.
+- Verified criteria: Interpreter and native-dispatch raw/managed pairs cover all four event rows and the terminator over 421 frames. Full states, clocks, framebuffers, OAM and audio buffers match each frame with the 80-byte ROM source span poisoned; all five record addresses are observed in the interpreter.
+- Evidence: `e139-event-all-pair-wine-d5tiwmqx`; `docs/changes/2026-11-11-add-context-timed-events.json`.
+- Limits: Nonempty audio was not established; per-read native attribution, other scenes, indirect callers, UI save/Load, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-01-CONTEXT-EVENT-OTHER-ROOTS
+
+- Outcome: completed for the bounded EUR aligned Thumb direct-call encoding census.
+- Verified criteria: The protected Wine scan of the exact EUR image identifies one aligned Thumb BL candidate to initializer 0814352c, call 08140b44, already connected to the E139 source.
+- Evidence: `e140-event-calls-wine-ur8ojq9h`; `docs/changes/2026-11-11-census-context-event-initializer.json`.
+- Limits: Static encodings do not prove reachability or exclude indirect callers, alternate instruction modes, other images or unrelated tables. No performance measurement.
+
+### ROMDATA-04-OBJ-CONTEXT-TRANSLATION-COVERAGE
+
+- Outcome: completed for static diagnosis of the translation artifact protected by the existing EUR/Wine ordinary pair.
+- Verified criteria: Its 28,859 keys include none in the context updater, caller or OBJ draw ranges. Source routing can force draw interpretation when the authenticated sprite hook is enabled.
+- Evidence: `e134-ordinary-pair-wine-x9h8ztad`, `docs/changes/2026-11-11-validate-ordinary-context-obj-bank-wine.json`.
+- Limits: Artifact-specific static inspection; hook activation was not observed. Ordinary translated updater/draw, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-04-OBJ-CONTEXT-AUGMENTED-UPDATER
+
+- Outcome: completed for the isolated augmented-table EUR/Wine ordinary checkpoint updater.
+- Verified criteria: 43 actually observed updater instructions augment a protected translation; 71 updater entries include 10 dispatches with 45 selected-bank typed bus reads outside interpreter scopes and no raw selected-bank reads. Three full raw/managed machine states and clocks match using the same augmented table with source spans poisoned.
+- Evidence: `e134-ordinary-augmented-wine-m7063z21`; `docs/changes/2026-11-11-validate-ordinary-context-obj-bank-wine.json`.
+- Limits: Test-only supplement, not production coverage; ordinary translated draw, other routes, Linux, USA and native Windows remain open; dispatches may contain nested work. First cross-mode comparison failed at frame zero (`oq8pw9nm`), cause unestablished. Initial build launcher failed before compilation (`09og58kw`), corrected build passed. No performance measurement.
+
+### ROMDATA-04-CONTEXT-LIFECYCLE-E139
+
+- Outcome: completed for isolated EUR/Wine backend context-source lifecycle.
+- Verified criteria: With copied E139 dataset files unavailable and the same owner attached, failed reattachment, slot load, undo, backup restoration and restart preserve typed access to all 48 coordinate, 100 timeline-table, 64 timeline-source and 80 event bytes. Exact byte checks poison ROM sources and verify independent usage counters.
+- Evidence: `e139-context-lifecycle-wine-03czlhbv`; `docs/changes/2026-11-11-validate-context-resource-lifecycle-wine.json`.
+- Limits: Frontend UI, other scenes, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-01-E139-ORDINARY-RESIDUE
+
+- Outcome: completed for three EUR/Wine interpreter frames and high ROM offsets 300000..1000000.
+- Verified criteria: 505 recorded read requests, no dropped events and no raw request overlapping a declared E139 source. Thirty-four unique bytes lie outside declared sources: twelve classified earlier as control support, and 22 at 3ae42c/3ae440-family are new source leads.
+- Evidence: `e139-ordinary-residue-wine-zmi0glsw`; `docs/changes/2026-11-11-inventory-e139-ordinary-high-rom-reads.json`.
+- Limits: Observed bytes do not establish asset boundaries, all consumers or global domains; interpreter scopes may include nested work. Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-02-CONTEXT-OBJ-440
+
+- Outcome: completed for the four authenticated EUR context-selected OBJ lists and one ordinary route.
+- Verified criteria: E140-d139 adds four lists (50 bytes) to static OBJ, preserving E139 projection and 102 other files. Nine original selector cases include aliases, low-byte truncation and unchanged-pointer cases. Full poisoned-source bytes, CLI create/reuse/verify/startup, and three-frame interpreter/native-dispatch raw/managed pairs pass with 50 typed selected-list reads per arm.
+- Evidence: `e140-context-obj-wine-p2emd6x4`, `e140-context-obj-cli-wine-ufvipvnu`; `docs/changes/2026-11-11-add-context-selected-obj-lists.json`.
+- Limits: Other ordinary selectors, per-read native attribution, other scenes, frontend save/load, Linux, USA and native Windows remain open. Neighboring language table remains raw. No performance measurement.
+
+### ROMDATA-02-CONTEXT-LANGUAGE-POSITIONS
+
+- Outcome: completed for two conditional EUR five-language source plans, E141 publication/runtime and one ordinary first-table route.
+- Verified criteria: Two 10-byte position tables preserve uncapped original indexing. Wine checks E140 projection, all poisoned bytes, mixed 16/32-bit boundaries, both original readers at indices 0/4/5/255 and three-frame interpreter/native-dispatch raw/managed pairs. Each ordinary arm observes six typed first-table bytes, no raw table reads and matching full states/clocks. CLI create/reuse/verify/startup passes with 102 unchanged other files.
+- Evidence: `e141-language-position-wine-lz2v0zcj`, `e141-language-position-cli-wine-czl55ur9`; `docs/changes/2026-11-11-add-context-language-position-pairs.json`.
+- Limits: First test `n3dtu223` failed state loading while its test ROM was poisoned; corrected setup passed. Ordinary second-table/other-language use, global writers/extent, per-read native attribution, frontend UI, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-04-LANGUAGE-POSITION-B
+
+- Outcome: completed for one ordinary EUR/Wine English startup continuation.
+- Verified criteria: The retained checkpoint naturally reaches the second-table reader after 55 frames without input; original draw-wrapper arguments match the English pair. Interpreter/native-dispatch raw/managed pairs each observe eight typed reads and no raw reads over three matching full states/clocks with sources poisoned.
+- Evidence: `e141-language-position-second-wine-texo_p5s`; `docs/changes/2026-11-11-add-context-language-position-pairs.json`.
+- Limits: Other languages, global writers/index extent, per-read native attribution, frontend UI, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-04-LANGUAGE-POSITIONS-01
+
+- Outcome: completed for one ordinary EUR/Wine startup selecting language ID 1.
+- Verified criteria: Original instructions observe selection 0→1 and publication after Down/release/A. Both position tables reach their original readers at startup frames 545/599; original draw-wrapper arguments match, and three-frame interpreter/native-dispatch raw/managed pairs per table match complete states/clocks with eight typed and zero raw reads per arm and poisoned sources. The authenticated pre-selection checkpoint is retained.
+- Evidence: `e141-language-one-wine-i5_k9agp`; `docs/changes/2026-11-11-add-context-language-position-pairs.json`.
+- Limits: Language IDs 2–4, global writers/index extent, per-read native attribution, frontend UI, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-04-LANGUAGE-POSITIONS-234
+
+- Outcome: completed for ordinary EUR/Wine startup choices 2, 3 and 4.
+- Verified criteria: From the authenticated pre-selection checkpoint, original selection increments and language publication are observed for each ID. Both original table readers and wrapper arguments are reached; each table/language passes three-frame interpreter/native-dispatch raw/managed pairs with eight typed and zero raw reads and matching full states/clocks with source spans poisoned. Together with prior ID 0/1 proofs, all five declared EUR choices have an ordinary route for both tables.
+- Evidence: `e141-languages-234-wine-xn8l5k88`; `docs/changes/2026-11-11-add-context-language-position-pairs.json`.
+- Limits: Other scenes, global writers/index extent, per-read native attribution, frontend UI, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-04-LANGUAGE-LIFECYCLE
+
+- Outcome: completed for isolated EUR/Wine backend lifecycle of the E141 language-position tables.
+- Verified criteria: Both ten-byte tables remain served by the same attached owner, with exact typed counters and poisoned ROM bytes, after failed reattachment, slot load, undo, backup restoration and restart while copied dataset files are unavailable.
+- Evidence: `e141-language-lifecycle-wine-_o_4hw_y`; `docs/changes/2026-11-11-validate-context-resource-lifecycle-wine.json`.
+- Limits: Frontend UI, other scenes, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-01-E141-EARLY-RESIDUE
+
+- Outcome: completed for three EUR/Wine interpreter frames from the authenticated frame-814 checkpoint and high ROM offsets 300000..1000000.
+- Verified criteria: Against E141, 309 recorded read requests include no dropped events and no raw events overlapping declared sources. The only four unowned bytes are the previously classified 370eb0 copied-IWRAM helper vector.
+- Evidence: `e141-early-residue-wine-5b7xk8ul`; `docs/changes/2026-11-11-inventory-e139-ordinary-high-rom-reads.json`.
+- Limits: Negative only for this short window; it does not establish global coverage. Other scenes, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-01-E141-LATE-RESIDUE
+
+- Outcome: completed for three EUR/Wine interpreter frames from the later authenticated coordinate checkpoint and high ROM offsets 300000..1000000.
+- Verified criteria: 89 recorded requests, no drops or raw events overlapping E141 declared sources. The 164 unowned bytes comprise the known 370eb0 helper vector and a 160-byte word-read union at 3ae38c..3ae42c, observed in scope 08140e7e.
+- Evidence: `e141-late-residue-wine-px0r_2m1`; `docs/changes/2026-11-11-inventory-e139-ordinary-high-rom-reads.json`.
+- Limits: The new union does not establish format, extent, destination or global consumers. Other scenes, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-01-CONTEXT-3AE38C
+
+- Outcome: completed for the bounded EUR context activation source contract.
+- Verified criteria: Original callback loops 40 words at 3ae38c, compares the live context counter, conditionally consults 40 bytes at 3ae364 and sets live RAM flags. The tick words are observed as original reads in an ordinary Wine window; the static loop and source literals are authenticated.
+- Evidence: `e141-late-residue-wine-px0r_2m1`, `e142-context-copy-dis-wine-igwmrii5`; `docs/changes/2026-11-11-classify-context-activation-ticks.json`.
+- Limits: No ordinary gate read or matching activation established; model/runtime/other consumers, Linux, USA and native Windows remain open. Failed rs6vfcmi disassembly omitted an asserted address; corrected window passed. No performance measurement.
+
+### ROMDATA-02-CONTEXT-ACTIVATION
+
+- Outcome: completed for declared EUR activation tick/gate sources and first ordinary activation route.
+- Verified criteria: E142-d141 serves 40 tick words and 40 gate bytes, preserving E141 projection and 102 other files. All poisoned source bytes and mixed boundaries, five original-loop cases including gated mode, and CLI create/reuse/verify/startup pass. A no-input continuation observes the first flag set/read/clear after 29 frames; three-frame interpreter/native-dispatch raw/managed pairs match full states/clocks with 480 typed tick bytes and no raw table reads per arm.
+- Evidence: `e142-activation-wine-n53ke_kn`, `e142-activation-cli-wine-y0yfn2r6`; `docs/changes/2026-11-11-add-context-activation-sources.json`.
+- Limits: Ordinary gate use, other activations/consumers, per-read native attribution, frontend save/load, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-04-ACTIVATION-LIFECYCLE
+
+- Outcome: completed for isolated EUR/Wine backend lifecycle of E142 activation sources.
+- Verified criteria: All 40 gate and 160 tick bytes remain served by the same attached owner with exact typed counters and poisoned ROM bytes after failed reattachment, slot load, undo, backup restoration and restart while copied dataset files are unavailable.
+- Evidence: `e142-activation-lifecycle-wine-v8kzwx7r`; `docs/changes/2026-11-11-validate-context-resource-lifecycle-wine.json`.
+- Limits: Frontend UI, other scenes, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-04-ACTIVATION-GATED
+
+- Outcome: completed for one ordinary EUR/Wine Start-triggered gated activation.
+- Verified criteria: A brief Start press/release causes the original mode write and six original gate reads at the first due tick; three activations are permitted and three suppressed. Three-frame interpreter/native-dispatch raw/managed pairs match full states/clocks with 160 typed tick bytes, six typed gate bytes and no raw table reads per arm with sources poisoned.
+- Evidence: `e142-activation-gated-wine-gyhob_p2`; `docs/changes/2026-11-11-add-context-activation-sources.json`.
+- Limits: Other activations/consumers, per-read native attribution, frontend UI, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-04-ACTIVATION-ALL
+
+- Outcome: completed for one no-input EUR/Wine activation route.
+- Verified criteria: All 40 original indexed flag stores are observed with the matching live tick, followed by the final flag read, terminal-state write and flag clear. At the last activation, three-frame interpreter/native-dispatch raw/managed pairs match full states/clocks with 160 typed tick bytes and no raw table reads per arm with sources poisoned.
+- Evidence: `e142-activation-all-wine-iqelzquy`; `docs/changes/2026-11-11-add-context-activation-sources.json`.
+- Limits: This does not prove all downstream actions, other scenes/consumers, per-read native attribution, frontend UI, Linux, USA or native Windows. No performance measurement.
+
+### ROMDATA-01-E142-FIRST-EVENT-RESIDUE
+
+- Outcome: completed for three EUR/Wine interpreter frames at the first activation and high ROM offsets 300000..1000000.
+- Verified criteria: After a 29-frame no-input prelude, 2,281 recorded requests have no drops and no raw events overlapping E142 declared sources. Twelve unowned bytes comprise the known 370eb0 helper vector and an eight-byte halfword-read lead at 3ae16c..3ae174 in scope 08145230.
+- Evidence: `e142-first-event-residue-wine-ih9nxtd5`; `docs/changes/2026-11-11-inventory-e139-ordinary-high-rom-reads.json`.
+- Limits: The eight bytes do not establish format, full extent, destination or global consumers. Other scenes, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-01-CONTEXT-3AE16C
+
+- Outcome: completed for the bounded EUR target-rectangle source contract.
+- Verified criteria: Original flag-1 path loads 3ae16c and calls the target helper with duration 180. The helper copies four halfwords to context+0c and sets interpolation state; the later reader treats them as signed target geometry. All four source halfwords are observed in an ordinary Wine activation audit.
+- Evidence: `e142-first-event-residue-wine-ih9nxtd5`, `e142-context-copy-dis-wine-igwmrii5`, `e143-coordinate-dis-wine-0q6sqru2`; `docs/changes/2026-11-11-classify-context-target-rectangle.json`.
+- Limits: Live absolute destination, managed source serving, interpolation equivalence, other consumers, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-02-CONTEXT-TARGET
+
+- Outcome: completed for the declared EUR target rectangle source and one ordinary copy/interpolation-start route.
+- Verified criteria: E143-d142 adds eight separately tracked source bytes, preserving E142 projection and 102 other files. Wine checks all poisoned bytes and mixed boundaries, original helper, actual ordinary copy arguments/destination/state and the first interpolation update. Three-frame interpreter/native-dispatch raw/managed pairs match full states/clocks with eight typed bytes and no raw source reads per arm. Production CLI create/reuse/verify/startup passes.
+- Evidence: `e143-target-wine-xvznh4i6`, `e143-target-cli-wine-1cr9s2xr`; `docs/changes/2026-11-11-add-context-target-rectangle.json`.
+- Limits: Complete interpolation, other consumers, per-read native attribution, frontend UI, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-04-TARGET-FULL
+
+- Outcome: completed for one ordinary no-input EUR/Wine target interpolation.
+- Verified criteria: Interpreter/native-dispatch raw/managed pairs match 182 complete states, clocks, framebuffers and OAM per arm with poisoned source bytes. The geometry reaches the exact target and holds for two frames at elapsed 181 and state 2.
+- Evidence: `e143-target-full-wine-g822y6t7`; `docs/changes/2026-11-11-add-context-target-rectangle.json`.
+- Limits: Audio, other consumers/scenes, per-read native attribution, frontend UI, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-02-CONTEXT-ADDITIONAL-GEOMETRY
+
+- Outcome: completed for six EUR sources and seven ordinary call sites in one no-input route.
+- Verified criteria: E144-d143 preserves the E143 projection, serves all 48 poisoned bytes and mixed boundaries, and matches seven controlled original-helper cases. Production CLI create/reuse/verify/startup passes with 102 other files unchanged. All seven ordinary calls are reached; one-frame interpreter/native-dispatch raw/managed pairs match states and clocks with typed reads and no raw source reads.
+- Evidence: `e144-geometry-wine-170mmiv4`, `e144-geometry-cli-wine-atuj1ub2`, `e144-ordinary-wine-ewu2vo72`; `docs/changes/2026-11-11-add-additional-context-geometry.json`.
+- Limits: Other scenes/consumers, per-read native attribution, frontend UI, Linux, USA and native Windows remain open. No performance measurement. The initial test build lacked a Bus import; corrected build passed.
+
+### ROMDATA-01-E144-LATE-RESIDUE
+
+- Outcome: completed for three EUR/Wine interpreter frames at context tick 1320 and high ROM offsets 300000..1000000.
+- Verified criteria: From the authenticated retained later checkpoint, 1,713 requests have no drops and no raw events overlapping E144 declared sources. The only four unowned bytes are the known 370eb0 helper vector.
+- Evidence: `e144-late-residue-wine-qpvutjx9`; `docs/changes/2026-11-11-inventory-e139-ordinary-high-rom-reads.json`.
+- Limits: Other windows, consumers, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-01-CONTEXT-3AE154-15C
+
+- Outcome: completed for two bounded EUR context geometry source contracts.
+- Verified criteria: 3ae154 supplies two initial contexts; 3ae15c supplies a duration-50 target. Original callers and copy helpers establish four halfwords per source.
+- Evidence: `e145-context-sources-dis-wine-ktov4uzs`, `e143-coordinate-dis-wine-0q6sqru2`; `docs/changes/2026-11-11-classify-context-initial-and-target-geometry.json`.
+- Limits: Managed serving, ordinary use, other consumers, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-02-CONTEXT-3AE154-15C
+
+- Outcome: completed for two declared EUR sources and the ordinary duration-50 target route.
+- Verified criteria: E145-d144 preserves the E144 projection and validates all 16 poisoned bytes, mixed-width boundaries and three original-helper cases. The state-1 ordinary target call passes one-frame interpreter/native-dispatch raw/managed state and clock pairs with typed reads and no raw source reads. Production CLI create/reuse/verify/startup passes; 102 other resource files are unchanged.
+- Evidence: `e145-geometry-retry-wine-umk6z87g`, `e145-geometry-cli-wine-drenf7if`; `docs/changes/2026-11-11-add-earlier-context-geometry.json`.
+- Limits: Initial source ordinary use, other consumers, native per-read attribution, frontend UI, Linux, USA and native Windows remain open. First attempt `e145-geometry-wine-3hvmtlai` used a state-2 checkpoint after the target call; the same flag address is reused by a distinct later consumer. No performance measurement.
+
+### ROMDATA-04-CONTEXT-3AE154-ORDINARY
+
+- Outcome: completed for the two initial-source calls in one EUR/Wine cold-start route.
+- Verified criteria: After the established English choice, both original callers use 3ae154 with their respective contexts and selectors. One-frame interpreter/native-dispatch raw/managed pairs match states and clocks with the source poisoned, typed reads and no raw source reads.
+- Evidence: `e145-initial-wine-7x55zro_`; `docs/changes/2026-11-11-add-earlier-context-geometry.json`.
+- Limits: Other scenes/consumers, per-read native attribution, frontend UI, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-04-CONTEXT-E145-LIFECYCLE
+
+- Outcome: completed for isolated EUR/Wine backend lifecycle of E143–E145 geometry sources.
+- Verified criteria: All 72 geometry bytes remain served with exact target/additional counters and poisoned ROM after failed reattachment, slot load, undo, backup restoration and restart with copied dataset unavailable and the same owner retained.
+- Evidence: `e145-geometry-lifecycle-wine-y8_ychw0`; `docs/changes/2026-11-11-validate-context-resource-lifecycle-wine.json`.
+- Limits: Frontend UI, other scenes, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-04-AUDIO-EXTENDED-CALLBACK
+
+- Outcome: completed for eight controlled EUR extended-audio direct callback cases.
+- Verified criteria: Selectors 1, 2, 4–7 and 10–11 execute the original dispatcher and callbacks with synthetic track data; field writes and cursor increments match. Raw interpreter, managed interpreter and managed compiled instruction blocks match full states and clocks with poisoned dispatch sources and four typed bytes per managed case.
+- Evidence: `e145-audio-callback-wine-ifke1a2i`, `e145-audio-callback-dis-wine-1b9xztet`; `docs/changes/2026-11-11-validate-audio-extended-direct-callbacks.json`.
+- Limits: Indirect callbacks 0/3, ordinary reachability, production-native attribution, other inputs, Linux, USA and native Windows remain open. The first disassembly used a stale binary receipt and was rejected; corrected retry passed. No performance measurement.
+
+### ROMDATA-04-AUDIO-EXTENDED-INDIRECT
+
+- Outcome: completed for two controlled EUR selectors with default RAM callback and no active channels.
+- Verified criteria: Selectors 0 and 3 call the shared original indirect handler using the default command pointer copied into RAM. Track status clears and cursor advances; raw interpreter, managed interpreter and managed compiled instruction blocks match state and clock with poisoned dispatch sources.
+- Evidence: `e145-audio-indirect-dis-wine-etbp0vjb`, `e145-audio-indirect-wine-qerm5hzp`; `docs/changes/2026-11-11-validate-audio-extended-direct-callbacks.json`.
+- Limits: Other callback pointer values, active channels, ordinary reachability, production native attribution, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-01-E145-BATTLE-RESIDUE
+
+- Outcome: completed for three interpreter frames of one retained EUR/Wine battle state and high ROM offsets 300000..1000000.
+- Verified criteria: 2,793 requests have no drops and no raw events overlapping E145 declared sources; 102 unowned bytes lie in eight observed ranges, including previously classified executable control words and several data leads.
+- Evidence: `e145-battle-residue-wine-3pq4rwye`; `docs/changes/2026-11-11-inventory-e139-ordinary-high-rom-reads.json`.
+- Limits: No unowned range establishes a format, full extent or global consumer. Other windows, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-01-OBJ-395088
+
+- Outcome: completed for one bounded EUR battle constructor/list source contract.
+- Verified criteria: Original 080bdff6 loads 395088 and routes it through the authenticated copied constructor; the existing counted six-byte reader yields two objects/14 bytes. A separate EUR battle audit observes reads across all 14 bytes.
+- Evidence: `e146-obj-395088-dis-wine-dma7xnd0`, `e145-battle-residue-wine-3pq4rwye`; `docs/changes/2026-11-11-classify-battle-obj-list-395088.json`.
+- Limits: Managed serving, scene equivalence, other producers, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-02-OBJ-395088
+
+- Outcome: completed for one EUR battle constructor list and its ordinary three-frame route.
+- Verified criteria: E146-d145 adds the two-object/14-byte source while preserving E145 projection and unrelated resources. Poisoned source bytes and mixed-width boundaries match. Three-frame interpreter/native-dispatch raw/managed battle pairs match states and clocks with 558 typed requests and no raw reads per arm. Production CLI create/reuse/verify/startup passes with 102 other files unchanged.
+- Evidence: `e146-battle-obj-wine-kh3780ub`, `e146-battle-obj-cli-wine-6_eokaze`; `docs/changes/2026-11-11-add-battle-obj-list-395088.json`.
+- Limits: Other producers/scenes, per-read native attribution, frontend UI, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-01-OBJ-40DCBA
+
+- Outcome: completed for one bounded EUR battle draw-list source contract.
+- Verified criteria: Original reader 08001500 reads the header at 40dcba and all eight six-byte object records through 40dceb in the retained three-frame battle audit. The signed count establishes 50 bytes; all shapes are supported.
+- Evidence: `e145-battle-residue-wine-3pq4rwye`; `docs/changes/2026-11-11-classify-battle-obj-list-40dcba.json`.
+- Limits: The pointer producer, managed serving, other consumers, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-02-OBJ-40DCBA
+
+- Outcome: completed for one observed EUR battle draw list and its three-frame route.
+- Verified criteria: E147-d146 adds the eight-object/50-byte source while preserving the E146 projection and unrelated resources. Poisoned source bytes and mixed-width boundaries match. Three-frame interpreter/native-dispatch raw/managed battle pairs match states and clocks with 198 typed requests and no raw reads per arm. Production CLI create/reuse/verify/startup passes; 102 other files are unchanged.
+- Evidence: `e147-battle-draw-wine-0zxq45dx`, `e147-battle-draw-cli-wine-rusumaee`; `docs/changes/2026-11-11-add-battle-obj-list-40dcba.json`.
+- Limits: Pointer producer, other scenes/consumers, per-read native attribution, frontend UI, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-01-BATTLE-37101D
+
+- Outcome: completed for one conditional EUR battle phase-threshold source contract.
+- Verified criteria: Original 080131d6..08013204 indexes three conditional bytes at 37101c by a signed live phase, compares the old counter and wraps phase only after advancing. Ordinary battle audit observes indices 1 and 2. The source has the same values as 371064 but independent physical provenance.
+- Evidence: `e148-battle-37101d-dis-wine-hykbr3_9`, `e145-battle-residue-wine-3pq4rwye`; `docs/changes/2026-11-11-classify-battle-phase-thresholds.json`.
+- Limits: Phase 0 ordinary use, prelookup out-of-range inputs, managed serving, other consumers, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-02-BATTLE-37101C
+
+- Outcome: completed for one conditional EUR battle threshold source and a three-frame route.
+- Verified criteria: E148-d147 adds three independent bytes while preserving E147 projection. Poisoned bytes, mixed boundaries and ten original prefixes cover phases -1..3 with no prelookup clamp. Three-frame interpreter/native-dispatch raw/managed battle pairs match states and clocks with three typed and no raw source reads per arm. Production CLI create/reuse/verify/startup passes; 102 other files are unchanged.
+- Evidence: `e148-battle-phase-wine-vu2q576j`, `e148-battle-phase-cli-wine-6yxh8kcc`; `docs/changes/2026-11-11-add-battle-phase-thresholds.json`.
+- Limits: Ordinary phase 0, other scenes/consumers, per-read native attribution, frontend UI, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-01-E145-BATTLE-REMAINING
+
+- Outcome: completed for classification of all 102 previously unowned bytes observed in the selected EUR battle window.
+- Verified criteria: 36 bytes are previously authenticated hardware/branch control; 14 bytes at 395088 and 50 at 40dcba are managed OBJ lists; two observed bytes belong to the independently managed 37101c threshold fragment.
+- Evidence: `e145-battle-residue-wine-3pq4rwye`, `e146-battle-obj-wine-kh3780ub`, `e147-battle-draw-wine-0zxq45dx`, `e148-battle-phase-wine-vu2q576j`; `docs/changes/2026-11-11-inventory-e139-ordinary-high-rom-reads.json`.
+- Limits: This is not global ROM or scene coverage; the 40dcba pointer producer and Linux/USA/native Windows remain open. No performance measurement.
+
+### ROMDATA-01-BATTLE-40DCBA-CALLER
+
+- Outcome: completed for one observed EUR/Wine battle draw caller path.
+- Verified criteria: The retained scene calls 08001500 with 0840dcba through 0802e324/0802e36c/08001d28. Existing original-code authentication identifies the pointer read from live task+24.
+- Evidence: `e148-battle-caller-wine-qe49ajoc`; `docs/changes/2026-11-11-add-battle-obj-list-40dcba.json`.
+- Limits: Earlier task-slot writer, other consumers, Linux, USA and native Windows remain open. No performance measurement.

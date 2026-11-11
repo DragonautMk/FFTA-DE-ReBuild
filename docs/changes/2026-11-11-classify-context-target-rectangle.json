@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-11",
+  "slug": "classify-context-target-rectangle",
+  "title": "Classify EUR context target rectangle source",
+  "kind": "docs",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Identify the independent eight-byte target rectangle at 3ae16c, its original context-relative copy, duration and interpolation consumer."
+  ],
+  "validation": [
+    "Wine e142-first-event-residue-wine-ih9nxtd5 observes all four source halfword reads in the first ordinary activation; e142-context-copy-dis-wine-igwmrii5 and e143-coordinate-dis-wine-0q6sqru2 inspect the producer, copy helper and original context writes."
+  ],
+  "limitations": [
+    "Live absolute destination, managed source serving and interpolation equivalence, other consumers, Linux, USA and native Windows remain open. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_obj.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

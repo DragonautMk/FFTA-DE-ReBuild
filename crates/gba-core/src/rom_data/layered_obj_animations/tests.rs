@@ -91,7 +91,7 @@ fn european_layered_obj_model_and_original_initializers() {
     let spans = model.source_spans().unwrap();
     assert_eq!(
         (spans.len(), spans.iter().map(|s| s.1.len()).sum::<usize>()),
-        (633, 20474)
+        (656, 21058)
     );
     assert_eq!(catalog.sources.len(), spans.len());
     for ((at, raw, role), source) in spans.iter().zip(&catalog.sources) {

@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "date": "2026-11-11",
+  "slug": "classify-battle-obj-list-395088",
+  "title": "Classify an observed EUR battle OBJ list",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Identify a separate two-object static OBJ list at 395088 through an original constructor literal and the previously authenticated copied-reader bridge."
+  ],
+  "validation": [
+    "Wine e145-battle-residue-wine-3pq4rwye observes reads covering 395088..395096 in one retained battle window. Wine e146-obj-395088-dis-wine-dma7xnd0 shows original 080bdff6 loading the exact list address and 080bdff8 branching through 08145c10 with the constructor pointer from 397f9c; the existing observed-OBJ contract authenticates the copied constructor and six-byte reader stride. The source header has two objects and its 14-byte SHA-256 is c685f8be3478ab57ac1cd59834466c36a155553f5b1ce40933c45a5d932c1459."
+  ],
+  "limitations": [
+    "Managed serving and scene equivalence are not yet proved. Other producers, scenes, Linux, USA and native Windows remain open. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_obj.md"
+  ],
+  "references": []
+}

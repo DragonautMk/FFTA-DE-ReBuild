@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-11",
+  "slug": "add-earlier-context-geometry",
+  "title": "Add earlier EUR context geometry sources",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add two independently authenticated eight-byte context geometry sources to the layered resource, retaining compatibility with six-record E144 datasets and leaving guest state and timing unchanged."
+  ],
+  "validation": [
+    "Wine e145-geometry-retry-wine-umk6z87g preserves the E144 projection, checks 16 poisoned bytes and mixed-width boundaries, and matches three controlled original-helper cases. One ordinary target call matches one interpreter and one native-dispatch raw/managed state and clock with typed reads and no raw reads.",
+    "Wine e145-geometry-wine-3hvmtlai passed the preliminary source and helper checks but failed to find the ordinary target: its checkpoint was already in a later callback state. Original-code diagnosis identified a state-specific flag reused by another callback; the retry used the earlier state-1 checkpoint.",
+    "Wine e145-geometry-cli-wine-drenf7if passes production CLI create, no-write reuse, verification and one-frame startup; 102 other resource files match E144.",
+    "Wine e145-initial-wine-7x55zro_ observes both initial source calls during cold startup after English selection; one-frame interpreter/native-dispatch raw/managed pairs match state and clock with typed reads and no raw source reads."
+  ],
+  "limitations": [
+    "Other consumers and scenes, per-read native attribution, frontend save/load, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/layered_obj_animations.rs",
+    "crates/gba-core/src/rom_data/layered_obj_animations/tests.rs",
+    "crates/recomp/src/rom_data/context_additional_geometry_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

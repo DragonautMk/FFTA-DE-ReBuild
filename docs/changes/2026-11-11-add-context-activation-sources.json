@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-11-11",
+  "slug": "add-context-activation-sources",
+  "title": "Add EUR context activation sources",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add separately tracked 40-word activation tick and 40-byte conditional gate sources to the existing layered context resource; original comparisons and live RAM flags remain guest state."
+  ],
+  "validation": [
+    "Wine e142-activation-wine-n53ke_kn preserves the E141 projection and other resources, checks all 200 poisoned source bytes and mixed 16/32-bit boundaries, and compares five original-loop cases including gated behavior. A natural no-input continuation observes the first flag set, read and clear; interpreter/native-dispatch raw/managed pairs match three full states/clocks with 480 typed tick bytes and no raw table reads per arm.",
+    "Wine e142-activation-cli-wine-y0yfn2r6 passes production CLI create, no-write reuse, verification and one-frame startup; 102 other resource files match.",
+    "Wine e142-activation-gated-wine-gyhob_p2 uses a brief ordinary Start press/release, observes the original mode write and six gate reads at the first due tick (three permitted and three suppressed), and passes three-frame interpreter/native-dispatch raw/managed pairs with 160 typed tick bytes, six typed gate bytes, zero raw table reads and matching full states/clocks per arm.",
+    "Wine e142-activation-all-wine-iqelzquy observes all 40 original activation stores and the final flag read, terminal-state write and flag clear in one no-input EUR route. The last event passes three-frame interpreter/native-dispatch raw/managed pairs with 160 typed tick bytes, zero raw table reads and matching full states/clocks per arm."
+  ],
+  "limitations": [
+    "Other scenes and consumers, per-read native attribution, frontend save/load, Linux, USA and native Windows remain open. The CLI smoke frame does not use the new sources. No performance measurement."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/layered_obj_animations.rs",
+    "crates/gba-core/src/rom_data/layered_obj_animations/tests.rs",
+    "crates/gba-core/src/rom_data/runtime/layered_obj_animations.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/context_activation_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

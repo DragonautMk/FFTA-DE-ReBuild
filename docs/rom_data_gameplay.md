@@ -7176,3 +7176,24 @@ lease was active; the retry ran after release. The first route audit
 the corrected retry passed. Wine static analysis and read-only snapshot
 projection only;
 Linux, USA and native Windows remain pending, with no performance measurements.
+
+## Battle task phase thresholds at 37101c
+
+The EUR task at `080131b8` loads a signed live phase and reads a byte at
+`37101c + phase`, comparing it with the old counter after storing its
+increment. Only after the comparison does an advancing phase above two wrap to
+zero. Thus the three phase-0..2 bytes are a conditional source fragment, not a
+prelookup guest cap. Their bytes happen to match the older `371064` threshold
+fragment, but their physical source and consumer remain independent. The original
+reader was disassembled in `e148-battle-37101d-dis-wine-hykbr3_9`; one retained
+EUR battle audit observed phase-1 and phase-2 reads
+(`e145-battle-residue-wine-3pq4rwye`). E148-d147 serves these bytes through the
+existing task-parameter resource while preserving older dataset parsing. Wine
+checks all poisoned source bytes, mixed boundaries and ten original-prefix cases,
+including signed phases -1 and 3. Three interpreter/native-dispatch raw/managed
+battle frames match full states and clocks with three typed requests and no raw
+source reads per arm (`e148-battle-phase-wine-vu2q576j`). Production Wine CLI
+create, no-write reuse, verification and one-frame startup pass
+(`e148-battle-phase-cli-wine-6yxh8kcc`); 102 other files match E147. Ordinary
+phase 0, other consumers, per-read native attribution, frontend UI, Linux, USA
+and native Windows remain open. No performance was measured.

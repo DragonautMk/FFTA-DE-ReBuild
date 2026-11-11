@@ -33,11 +33,13 @@ it does not authorize stopping other work or changing another thread's goal.
 
 ### ROM-DATA-FULL-EUR
 
-- State: active
+- State: suspended
 - Outcome: partial
-- Verified: E135 103 resources/104 files, 63 compact banks; EUR clean-profile Wine interpreter, translated and CLI PASS. Current: target/validation/units/e135-clean-profile-first-start-dma-wine-9qxljiuw/work/interpreter/e135-resources/. E134 retained for comparison.
+- Verified: E148 EUR Wine threshold pair/CLI PASS (`e148-battle-phase-wine-vu2q576j`, `e148-battle-phase-cli-wine-6yxh8kcc`); E147 retained.
 - Missing: unmigrated resources/consumers, missing ordinary-use evidence, ABI/global extent/indirect calls and mod phases ROMDATA-06/07; Linux/USA/native Windows/new32:9 remain distinct. EUR, reduced Wine scope, no performance/space measurements; originals and personal saves unchanged.
-- Selection: EUR `ROMDATA-01-OBJ-CONTEXT-EXTRA-TRANSFERS` integrated_unverified. DBG20 prefix lease recovered and runner drain PASS (`dbg20-lease-reacquire-2sxydeqx`). Builds PASS (1iux4706); dubn20o1. Sol `/root/sol_e136_destinations`: gpt-6.1-sol xhigh requested, effective unknown. Launchers: target/rom-data-e136-next/.
+- Selection: ROMDATA-01-BATTLE-40DCBA-PRODUCER paused; draw reads task+24, writer open. Sol consultation interrupted by user pause.
+- ROMDATA-01-CONTEXT-3AE42C: partial; both tables pass ordinary IDs 0–4. Global writers/index extent remain open. Pre-selection: `e141-language-one-wine-i5_k9agp/work/pre-language.ffstate`.
+- E134 ordinary updater: augmented-table native reads and three-frame pair PASS (`m7063z21`); production table lacks keys (`x9h8ztad`). Draw remains open.
 - Resume: [validation recovery checklist](ROM_DATA_VALIDATION_RECOVERY_TODO.md) for skipped checks; [ROM_DATA_TODO](ROM_DATA_TODO.md), only the selected criterion's section (ROMDATA-01/02/03/04/05/06/07); [inventory](ROM_DATA_INVENTORY.md). Do not read the whole TODO. Children retain their IDs and limits:
   - `ROMDATA-01-PARAMETER-RECORDS27-DYNAMIC-SOURCES`: partial; writers map to 59 rows (js3rbve5); retained lists negative/inconclusive (m1p_8lhy). Live domain, save loads and aliases open. `docs/rom_data_gameplay.md`.
   - `ROMDATA-04-GAMEPLAY-6E84E0-BYTE00`: partial; static text screen 78suaoix found no token; generated/indirect sources open, no blind Select. `docs/rom_data_gameplay.md`.

@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-11",
+  "slug": "classify-context-activation-ticks",
+  "title": "Classify EUR context activation tick sources",
+  "kind": "docs",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Identify the bounded 40-word context tick table and independently rooted 40-byte conditional gate, distinguishing both immutable sources from live counter and activation flags."
+  ],
+  "validation": [
+    "Wine e141-late-residue-wine-px0r_2m1 observes all 40 tick words in one ordinary three-frame window; Wine e142-context-copy-dis-wine-igwmrii5 inspects the original indexed comparison, mode/gate condition and RAM flag write. Earlier disassembly attempt rs6vfcmi omitted an asserted address and was corrected."
+  ],
+  "limitations": [
+    "The observed mode did not establish ordinary gate reads or a matching activation. Source model, runtime integration, other consumers, Linux, USA and native Windows remain open. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_obj.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

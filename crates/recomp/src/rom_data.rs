@@ -162,6 +162,20 @@ mod obj_branch_native_tests;
 #[cfg(test)]
 mod obj_context_bank_tests;
 #[cfg(test)]
+mod context_obj_selector_tests;
+#[cfg(test)]
+mod battle_obj_list_tests;
+#[cfg(test)]
+mod battle_phase_threshold_tests;
+#[cfg(test)]
+mod context_language_position_tests;
+#[cfg(test)]
+mod context_activation_tests;
+#[cfg(test)]
+mod context_target_coordinate_tests;
+#[cfg(test)]
+mod context_additional_geometry_tests;
+#[cfg(test)]
 mod obj_context_native_tests;
 #[cfg(test)]
 mod fixed_obj_transfer_tests;
@@ -169,6 +183,12 @@ mod fixed_obj_transfer_tests;
 mod fixed_obj_transfer_native_tests;
 #[cfg(test)]
 mod context_transfer_tests;
+#[cfg(test)]
+mod context_coordinate_tests;
+#[cfg(test)]
+mod context_timeline_tests;
+#[cfg(test)]
+mod context_event_tests;
 #[cfg(test)]
 mod context_transfer_native_tests;
 #[cfg(test)]
@@ -2739,7 +2759,7 @@ pub fn report_usage(machine: &gba_core::Machine) {
             eprintln!("ROM_DATA_USE resource={AUDIO_EXTENDED_DISPATCH_ID} dataset={} bus_reads={} source_bytes={} selector_mask={} host_reads={} host_source_bytes={}", resources.dataset_sha256(), i.bus_reads, i.source_bytes, i.selector_mask, i.host_reads, i.host_source_bytes);
         }
         if let Some(i)=resources.layered_obj_animations_stats() {
-            eprintln!("ROM_DATA_USE resource={LAYERED_OBJ_ANIMATIONS_ID} dataset={} bus_reads={} source_bytes={} descriptor_bytes={} host_reads={}",resources.dataset_sha256(),i.fields.bus_reads + i.descriptor_reads,i.fields.source_bytes + i.descriptor_bytes,i.descriptor_bytes,i.fields.host_reads);
+            eprintln!("ROM_DATA_USE resource={LAYERED_OBJ_ANIMATIONS_ID} dataset={} bus_reads={} source_bytes={} descriptor_bytes={} coordinate_bytes={} timeline_table_bytes={} timeline_source_bytes={} event_bytes={} host_reads={} language_position_a_bytes={} language_position_b_bytes={} activation_tick_bytes={} activation_gate_bytes={} target_coordinate_bytes={} additional_geometry_bytes={}",resources.dataset_sha256(),i.fields.bus_reads + i.descriptor_reads + i.coordinate_reads + i.timeline_reads + i.event_reads + i.language_position_reads + i.activation_reads + i.target_coordinate_reads + i.additional_geometry_reads,i.fields.source_bytes + i.descriptor_bytes + i.coordinate_bytes + i.timeline_table_bytes + i.timeline_source_bytes + i.event_bytes + i.language_position_a_bytes + i.language_position_b_bytes + i.activation_tick_bytes + i.activation_gate_bytes + i.target_coordinate_bytes + i.additional_geometry_bytes,i.descriptor_bytes,i.coordinate_bytes,i.timeline_table_bytes,i.timeline_source_bytes,i.event_bytes,i.fields.host_reads,i.language_position_a_bytes,i.language_position_b_bytes,i.activation_tick_bytes,i.activation_gate_bytes,i.target_coordinate_bytes,i.additional_geometry_bytes);
         }
         if let Some(i)=resources.conditional_descriptor_banks_stats() {
             eprintln!("ROM_DATA_USE resource={CONDITIONAL_DESCRIPTOR_BANKS_ID} dataset={} bus_reads={} source_bytes={} pointer_bytes={} field0_bytes={} field2_bytes={} field4_bytes={} kind_bytes={} byte7_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.pointer_bytes,i.field0_bytes,i.field2_bytes,i.field4_bytes,i.kind_bytes,i.byte7_bytes);
@@ -2874,7 +2894,7 @@ pub fn report_usage(machine: &gba_core::Machine) {
             eprintln!("ROM_DATA_USE resource={SLOT_JOB_LOOKUP_ID} dataset={} bus_reads={} source_bytes={} slots_used={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.slots_used);
         }
         if let Some(i)=resources.observed_task_parameters_stats() {
-            eprintln!("ROM_DATA_USE resource={OBSERVED_TASK_PARAMETERS_ID} dataset={} bus_reads={} source_bytes={} phase_threshold_bytes={} vertical_correction_bytes={} phases_used={} corrections_used={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.phase_threshold_bytes,i.vertical_correction_bytes,i.phases_used,i.corrections_used);
+            eprintln!("ROM_DATA_USE resource={OBSERVED_TASK_PARAMETERS_ID} dataset={} bus_reads={} source_bytes={} phase_threshold_bytes={} vertical_correction_bytes={} phases_used={} corrections_used={} battle_phase_threshold_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.phase_threshold_bytes,i.vertical_correction_bytes,i.phases_used,i.corrections_used,i.battle_phase_threshold_bytes);
         }
         if let Some(i)=resources.constructor_obj_animation_stats() {
             eprintln!("ROM_DATA_USE resource={CONSTRUCTOR_OBJ_ANIMATION_ID} dataset={} bus_reads={} source_bytes={} threshold_bytes={} pointer_bytes={} phases_used={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.threshold_bytes,i.pointer_bytes,i.phases_used);

@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-11-11",
+  "slug": "add-additional-context-geometry",
+  "title": "Add EUR context geometry sources",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Represent six separately authenticated context geometry sources, including one reused as both an initial rectangle and a target, in the existing layered resource while preserving original game state and timing."
+  ],
+  "validation": [
+    "Wine e144-geometry-wine-170mmiv4 checks the E143 projection, all 48 poisoned source bytes and mixed-width boundaries, plus seven original-helper cases with matching raw and managed states and clocks.",
+    "The first test build e144-geometry-build-rr8qummd failed because the test lacked the Bus trait import; the corrected Windows cross-build e144-geometry-build-retry-zt_jqavv passed.",
+    "Wine e144-geometry-cli-wine-atuj1ub2 passes production CLI creation, no-write reuse, verification and one-frame startup; 102 other resource files match E143.",
+    "Wine e144-ordinary-wine-ewu2vo72 observes all seven source call sites in one no-input continuation; each one-frame interpreter and native-dispatch raw/managed pair matches state and clock with poisoned sources, typed reads and no raw source reads."
+  ],
+  "limitations": [
+    "Other scenes and consumers, per-read native attribution, frontend save/load, Linux, USA and native Windows remain pending. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/layered_obj_animations.rs",
+    "crates/gba-core/src/rom_data/layered_obj_animations/tests.rs",
+    "crates/gba-core/src/rom_data/runtime/layered_obj_animations.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/context_additional_geometry_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

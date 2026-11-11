@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-11-11",
+  "slug": "inventory-e139-ordinary-high-rom-reads",
+  "title": "Inventory ordinary EUR E139 high-ROM reads",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add a bounded source-ownership and actual-service inventory for high ROM reads in the retained ordinary context-event checkpoint.",
+    "Allow the bounded inventory to authenticate another retained checkpoint and dataset revision.",
+    "Allow the inventory to wait for an authenticated activation tick before recording a bounded window."
+  ],
+  "validation": [
+    "Wine e139-ordinary-residue-wine-zmi0glsw: three no-input frames, 505 requests, zero dropped and zero observed raw events overlapping E139 source spans; 34 unique bytes outside declared sources. Twelve bytes are previously classified control support; 22 bytes near 3ae42c and 3ae440 are new bounded source leads.",
+    "Wine e141-early-residue-wine-5b7xk8ul checks three no-input frames from the authenticated frame-814 checkpoint against E141: 309 high-ROM requests, no drops or raw requests overlapping declared spans, and only four unowned bytes, the previously classified 370eb0 helper vector.",
+    "Wine e141-late-residue-wine-px0r_2m1 checks three frames from the later authenticated coordinate checkpoint: 89 high-ROM requests, no drops or raw events overlapping declared spans, and 164 unowned bytes comprising the known helper vector and a 160-byte source lead at 3ae38c..3ae42c.",
+    "Wine e142-first-event-residue-wine-ih9nxtd5 waits 29 no-input frames to the first activation and records three frames against E142: 2,281 high-ROM requests, no drops or raw requests overlapping declared sources, and 12 unowned bytes comprising the known helper vector and an eight-byte lead at 3ae16c..3ae174.",
+    "Wine e144-late-residue-wine-qpvutjx9 checks three frames at tick 1320 from a retained later EUR checkpoint against E144: 1,713 high-ROM requests, no drops or raw requests overlapping declared spans, and only the known four-byte 370eb0 helper vector outside them.",
+    "Wine e145-battle-residue-wine-3pq4rwye checks three frames of a retained EUR second-battle deployment against E145: 2,793 high-ROM requests, no drops or raw requests overlapping declared spans, and 102 unowned bytes in eight observed ranges. Some are previously classified executable control words; the remaining observed ranges are source leads only.",
+    "The 102 bytes in e145-battle-residue-wine-3pq4rwye are now classified: 36 bytes of previously authenticated hardware/branch control, 14 bytes at 395088 and 50 at 40dcba migrated as OBJ lists, and two observed bytes of the independent 37101c battle threshold fragment migrated in E148."
+  ],
+  "limitations": [
+    "The 22 bytes are not authenticated resource boundaries; instruction scopes may include nested work. Other frames, consumers, Linux, USA and native Windows remain open. No performance measurement.",
+    "This negative result covers only the selected frame-814 window and does not establish global source or regional coverage.",
+    "The 160-byte observed read union is not yet a proven resource format, full extent, destination or global consumer domain.",
+    "The eight newly observed bytes do not yet establish a record format, full extent, destination or global consumer domain.",
+    "The later E144 negative covers only its three-frame no-input window; it does not establish global source or regional coverage.",
+    "The battle inventory covers only its selected three-frame window; observed ranges do not establish format, full extent or global consumers.",
+    "Classification is confined to observed bytes in that battle window; pointer provenance for 40dcba, other reads and scenes remain open."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/context_event_tests.rs",
+    "docs/rom_data_runtime.md"
+  ],
+  "references": []
+}

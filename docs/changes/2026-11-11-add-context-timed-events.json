@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-11",
+  "slug": "add-context-timed-events",
+  "title": "Add EUR timed context events",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add four typed timed-context records and a preserved terminator to the existing layered OBJ dataset with a separate source role and counters.",
+    "Authenticate the EUR caller, pointer initializer and original updater, and include both ROM pages touched by the new table in runtime routing."
+  ],
+  "validation": [
+    "Wine ordinary observer e139-adjacent-follow-wine-63_77gd8 reaches all four records and the terminator after the previously observed initial call.",
+    "Wine test e139-event-wine-ecuz_do9 checks all 80 poisoned source bytes, boundary/native reads across the adjacent E138 table, E138 projection preservation and three-frame interpreter/native-dispatch ordinary state/clock pairs.",
+    "Wine production CLI e139-event-cli-wine-wv9xs9i_ passes create/reuse/verify and one-frame managed startup with 102 other files unchanged; the startup reads zero new event bytes.",
+    "Initial Wine test e139-event-wine-rdy4w2qg failed because page 3ad was absent from runtime routing; the page was added and the focused test passed.",
+    "Wine continuous interpreter and native-dispatch raw/managed pairs reach all four event rows and terminator and match full state, clock, images, OAM and audio buffers for 421 frames with the ROM source poisoned: e139-event-all-pair-wine-d5tiwmqx."
+  ],
+  "limitations": [
+    "One ordinary startup; other scenes, indirect callers, full source graph, frontend save/Load, Linux, USA and native Windows remain unverified. Nonempty audio was not established. A native reader entry was observed but per-read native attribution is not established. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/layered_obj_animations.rs",
+    "crates/gba-core/src/rom_data/layered_obj_animations/tests.rs",
+    "crates/gba-core/src/rom_data/runtime/layered_obj_animations.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/context_event_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-11",
+  "slug": "add-battle-obj-list-40dcba",
+  "title": "Add an observed EUR battle draw list",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add one previously observed eight-object battle draw list to the existing static OBJ resource; its original pointer producer remains unknown."
+  ],
+  "validation": [
+    "Wine e147-battle-draw-wine-0zxq45dx preserves the E146 projection and unrelated resources, checks all 50 poisoned bytes and mixed-width boundaries, and compares three ordinary battle frames. Interpreter and native-dispatch raw/managed pairs match complete states and clocks with 198 typed requests and no raw source reads per arm.",
+    "Wine e147-battle-draw-cli-wine-rusumaee passes production CLI create, no-write reuse, verification and one-frame startup; 102 other resource files match E146.",
+    "Wine e148-battle-caller-wine-qe49ajoc observes the original draw of 40dcba from the retained battle state through 0802e324/0802e36c/08001d28 into 08001500; the established path reads the pointer from the live task slot at +24."
+  ],
+  "limitations": [
+    "task-slot writer, other scenes and consumers, per-read native attribution, frontend save/load, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/obj_lists.rs",
+    "crates/recomp/src/rom_data/battle_obj_list_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

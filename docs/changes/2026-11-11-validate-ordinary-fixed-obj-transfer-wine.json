@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-11",
+  "slug": "validate-ordinary-fixed-obj-transfer-wine",
+  "title": "Validate ordinary EUR fixed OBJ transfer under Wine",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Verify ordinary startup use of the existing E135 fixed OBJ transfer with interpreter and translated execution."
+  ],
+  "validation": [
+    "A protected continuation of ordinary EUR startup observes the original queue call with source 08b80b5c, destination 06010000 and count 4000h, and retains the pre-call state: e135-ordinary-observer-wine-s462xxqw.",
+    "Wine raw/managed interpreter and translated pairs pass exact 32 KiB VRAM, three full state and clock comparisons each, with the managed source ROM poisoned; 48608 aggregate raw transfer bytes include E136: e135-ordinary-pair-wine-jjgeygm9.",
+    "Initial observer build e135-ordinary-observer-build-pjhllipr failed before compilation because the script path was relative to validation scratch; the corrected build e135-ordinary-observer-build-w_4gg37c passed."
+  ],
+  "limitations": [
+    "One ordinary startup route; other scenes, UI save/Load, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/context_transfer_tests.rs",
+    "docs/rom_data_ui_raw_transfers.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

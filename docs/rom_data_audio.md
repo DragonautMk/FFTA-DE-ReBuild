@@ -813,5 +813,21 @@ this is not an ordinary-use proof (`e131-audio-extended-cli-wine-0wep0_sw/`).
 The isolated CLI build exited successfully, although its original validation
 unit rejected Cargo hard links in scratch; a separate unit checked its recorded
 input preimages, binary hash and execution. The failed unit remains retained.
+A later controlled Wine check executes the original dispatcher and eight direct
+callbacks for selectors 1, 2, 4–7 and 10–11 using synthetic track state.
+Selector 1 consumes four operand bytes; the others consume one. The expected
+track fields and cursor increments are checked, and raw interpreter, managed
+interpreter and managed compiled instruction blocks match full state and clock
+with the dispatch source poisoned. Each managed path serves four typed dispatch
+bytes (`e145-audio-callback-wine-ifke1a2i`). This does not establish ordinary
+reachability. A separate controlled Wine check executes selectors 0 and 3
+through the shared indirect callback with the original default command pointer
+copied into RAM and no active channels. Both clear track status and advance the
+cursor; interpreter and compiled managed states and clocks match the raw path
+with the dispatch source poisoned (`e145-audio-indirect-wine-qerm5hzp`). Other
+RAM pointer values and active channels remain open. The first direct-callback
+disassembly attempt rejected an outdated executable hash; the corrected one
+passed (`e145-audio-callback-dis-wine-1b9xztet`).
+
 Linux, USA and native Windows remain pending; no performance measurements were
 made.

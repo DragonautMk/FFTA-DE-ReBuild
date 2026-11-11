@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-11",
+  "slug": "validate-context-resource-lifecycle-wine",
+  "title": "Validate EUR context resource lifecycle under Wine",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Verify that existing E134\u2013E136 context resources survive isolated save-state and cartridge-save lifecycle operations.",
+    "Extend isolated backend lifecycle coverage to the E137\u2013E139 context-coordinate, timeline and event sources.",
+    "Extend isolated backend lifecycle coverage to the E141 language-position tables.",
+    "Extend isolated backend lifecycle coverage to the E142 activation tick and gate sources.",
+    "Extend the same isolated backend lifecycle proof to the E143\u2013E145 context geometry sources."
+  ],
+  "validation": [
+    "Wine test copies the E136 dataset to isolated scratch, removes its original copied path, confirms failed reattachment preserves state and owner, and checks slot Load/Undo, backup restoration and restart: e136-context-lifecycle-wine-5ncguagd.",
+    "After each operation all 48608 fixed transfer bytes and all 24 E134 bank source spans match the ROM while those ROM spans are poisoned; the loaded owner is retained.",
+    "Wine e139-context-lifecycle-wine-03czlhbv checks 48 coordinate, 100 timeline-table, 64 timeline-source and 80 event bytes with poisoned ROM spans and exact typed counters before and after failed reattachment, slot load, undo, backup restoration and restart; copied files are unavailable and the same owner remains attached.",
+    "Wine e141-language-lifecycle-wine-_o_4hw_y verifies all 20 poisoned source bytes and separate table counters after failed reattachment, slot load, undo, backup restoration and restart with copied dataset files unavailable and the same owner retained.",
+    "Wine e142-activation-lifecycle-wine-v8kzwx7r verifies all 200 poisoned source bytes and separate tick/gate counters after failed reattachment, slot load, undo, backup restoration and restart with copied files unavailable and the same owner retained.",
+    "Wine e145-geometry-lifecycle-wine-y8_ychw0 verifies all 72 poisoned geometry bytes and separate target/additional counters after failed reattachment, slot load, undo, backup restoration and restart with copied files unavailable and the same owner retained."
+  ],
+  "limitations": [
+    "The test exercises backend operations rather than the frontend UI. Other scenes, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/context_transfer_tests.rs",
+    "docs/rom_data_ui_raw_transfers.md",
+    "docs/rom_data_obj.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

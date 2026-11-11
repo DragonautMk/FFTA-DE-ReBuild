@@ -2250,17 +2250,113 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   coverage, callers and deferred platforms remain
   open. No benchmark.
   [Contract](../rom_data_compact_catalog.md).
+- EUR e141-d140 adds two five-language position tables (20 source bytes).
+  EUR Wine validates original reader prefixes, uncapped index cases, mixed-owner
+  boundaries, CLI and ordinary first- and second-table pairs for all five EUR
+  language choices. The isolated backend lifecycle preserves both tables.
+  Global writers, Linux, USA and native Windows remain open.
+  No performance measurement. [Contract](../rom_data_obj.md#conditional-language-position-pairs-e141).
+- EUR e142-d141 serves a 40-word context activation tick table and a
+  conditional 40-byte gate table. Wine validates the original loop, CLI and
+  the first natural flag set/read/clear with a three-frame raw/managed pair.
+  Isolated backend load/undo/backup/restart retains both sources.
+  A separate ordinary Start path verifies both gate outcomes and paired state.
+  One no-input route observes all 40 activation stores and terminal state;
+  the last activation passes a three-frame pair. Other scenes, Linux, USA and
+  native Windows remain open.
+  [Contract](../rom_data_obj.md#context-activation-tick-and-gate-source-contract).
+- EUR e143-d142 serves the eight-byte context target rectangle at `3ae16c`.
+  Wine validates the original copy and initial interpolation, CLI and a
+  three-frame ordinary pair. A 182-frame ordinary pair reaches and holds the
+  target with state/clock/image/OAM equality; audio was not checked. Other
+  consumers, Linux, USA and native Windows remain open; no performance measurement.
+  [Contract](../rom_data_obj.md#context-target-rectangle-source-contract).
+- EUR e148-d147 adds three independent battle-task phase thresholds. Wine
+  validates original signed-phase prefixes and a three-frame battle pair; phase
+  0 ordinary use, Linux, USA and native Windows remain open.
+  [Contract](../rom_data_gameplay.md#battle-task-phase-thresholds-at-37101c).
+- EUR e147-d146 adds one 50-byte observed battle draw list; Wine verifies
+  poisoned reads and a three-frame interpreter/native-dispatch battle pair.
+  Its pointer producer, other scenes, Linux, USA and native Windows remain open.
+  [Contract](../rom_data_obj.md#observed-battle-draw-list-at-40dcba).
+- EUR e146-d145 adds one 14-byte battle constructor OBJ list; Wine verifies
+  poisoned reads and a three-frame interpreter/native-dispatch battle pair.
+  Other scenes, Linux, USA and native Windows remain open.
+  [Contract](../rom_data_obj.md#battle-constructor-list-at-395088).
+- EUR e145-d144 adds two earlier context geometry sources (16 bytes); Wine
+  validates controlled helpers, the ordinary duration-50 target call and both
+  initial-source calls. Isolated Wine backend lifecycle preserves all 72
+  E143–E145 geometry bytes. Other scenes, Linux, USA and native Windows remain open.
+  [Contract](../rom_data_obj.md#earlier-context-geometry-source-contracts).
+- EUR e144-d143 adds six context geometry sources (48 bytes), including one
+  shared starting/target rectangle. Wine verifies the original helpers, CLI,
+  and all seven ordinary call sites in one no-input route with one-frame
+  raw/managed state and clock comparisons. Other scenes, per-read native
+  attribution, Linux, USA and native Windows remain open.
+  [Contract](../rom_data_obj.md#additional-context-geometry-sources).
+- EUR e140-d139 adds four context-selected static OBJ lists (50 source bytes)
+  to the existing catalog. EUR Wine validates original selector cases, source
+  bytes, E139 projection, CLI and a three-frame ordinary raw/managed pair;
+  other ordinary selectors and per-read native attribution remain open.
+  Linux, USA and native Windows remain pending; no performance measurement.
+  [Contract](../rom_data_obj.md#context-selected-static-obj-lists-e140).
+- EUR e139-d138 adds four timed context-event records and one 16-byte
+  terminator, adjacent to E138. All entries are observed in one ordinary Wine
+  startup; interpreter/native-dispatch poisoned-source pairs cover all rows and
+  terminator with 421 matching state/clock/image/OAM/audio-buffer frames, and CLI
+  create/reuse/verify/startup passes. The page-3ad routing omission exposed by
+  the first test is fixed. An aligned Thumb census found one direct initializer
+  call encoding; indirect callers remain open. E137–E139 sources survive
+  isolated backend load/undo/backup/restart with unavailable dataset copies.
+  Other scenes, UI save/Load,
+  Linux, USA and native Windows remain open;
+  no performance measurement. [Contract](../rom_data_obj.md#context-timed-events-e139).
+- EUR e138-d137 adds five context-timeline records (100 bytes) and two
+  32-byte CpuSet sources to the layered OBJ dataset with separate provenance
+  and counters. All five rows and both copies are observed in one ordinary Wine
+  startup; the first-row interpreter/native-dispatch raw/managed pairs match
+  exact RAM and three full frame states/clocks. E137 projection and CLI
+  create/reuse/verify/startup pass. Other scenes, indirect consumers, UI
+  save/Load, Linux, USA and native Windows remain open; no performance measurement.
+  [Contract](../rom_data_obj.md#context-timeline-records-and-copied-sources-e138).
+- EUR e137-d136 adds six independent context-coordinate records (48 bytes)
+  to the layered OBJ dataset, with separate source roles and usage counters.
+  E136 data is preserved; Wine original/translated coordinate-prefix and CLI
+  checks pass. One ordinary startup reaches all six records and passes exact
+  context-copy and three-frame interpreter/native-dispatch state/clock pairs.
+  Other ordinary paths, full initializer coverage, indirect consumers,
+  Linux, USA and native Windows remain open; no performance measurement.
+  [Contract](../rom_data_obj.md#adjacent-conditional-structure-initializer).
+- EUR e136-d135 extends the fixed raw-transfer model by three conditional
+  sources (15,840 bytes). EUR Wine predecessor, CLI and original/translated
+  queue/DMA checks pass with injected VRAM destinations and state reload.
+  An ordinary English-selection startup reaches all three live VRAM queues;
+  Wine interpreter and translated raw/managed pairs match exact VRAM and three
+  complete frame states and clocks. Other scenes, UI save/Load, Linux, USA and
+  native Windows remain open; no performance measurement. Backend slot load,
+  Undo, backup restore and restart retain the E134–E136 owners and serve the
+  selected poisoned sources with copied dataset files unavailable; frontend UI
+  remains unverified.
+  [Evidence](../rom_data_ui_raw_transfers.md#additional-context-transfer-candidates).
 - EUR e135-d134 adds a conditional 32 KiB fixed OBJ DMA source. A clean Wine
   profile passes CLI first create/reuse/verify/startup and interpreter plus
   translated original queue/DMA full-state/clock comparisons, including state
-  reload, exact VRAM bytes and preserved localized counters. Ordinary use, UI
-  save/Load, Linux, USA and native Windows remain open; no performance
-  measurement. [Evidence](../rom_data_ui_raw_transfers.md#conditional-fixed-obj-transfer-e135).
+  reload, exact VRAM bytes and preserved localized counters. An ordinary Wine
+  startup also passes interpreter and translated raw/managed pairs for exact
+  VRAM and three full frame states/clocks. Other scenes, UI save/Load, Linux,
+  USA and native Windows remain open; no performance measurement. [Evidence](../rom_data_ui_raw_transfers.md#conditional-fixed-obj-transfer-e135).
 - EUR e134-d133 adds a conditional context-updater bank with 21 OBJ lists
   and one 38-frame sequence. EUR Wine CLI create/reuse/verify/startup and
   three interpreter and three translated updater/draw state/clock comparisons
-  pass, including machine-state reload. Ordinary use, UI save/Load, Linux, USA
-  and native Windows remain open. No performance measurement.
+  pass, including machine-state reload. One ordinary Wine startup pair confirms
+  typed bank reads, no raw bank fallback and matching states/clocks for interpreter
+  and native-dispatch execution; the observed bank reads have interpreter scopes.
+  The particular protected translation has no updater, caller or draw block keys;
+  an isolated augmented table executes observed ordinary updater instructions
+  and passes a three-frame typed-read/state comparison. Production updater
+  coverage and ordinary translated draw execution remain unproved.
+  Other paths, UI save/Load, Linux, USA and native Windows remain open. No
+  performance measurement.
   [Evidence](../rom_data_obj.md#conditional-context-updater-obj-bank-e134).
 - EUR e133-d132 adds three branch-selected OBJ lists, 36 bytes total. Wine
   creation/reuse preserves E132 resources; six interpreter and six translated

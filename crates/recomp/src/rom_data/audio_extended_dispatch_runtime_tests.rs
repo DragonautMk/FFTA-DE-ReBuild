@@ -1,4 +1,4 @@
-//! EUR managed dispatch fragments; the original callback itself is not executed.
+//! EUR managed dispatch fragments and selected original callback executions.
 use super::*;
 use gba_core::{capi::RT_API, rom_data::audio_extended_dispatch::*, Machine};
 use recomp_core::analyze::{Analysis, Block, View};
@@ -329,4 +329,202 @@ fn european_audio_extended_dispatch_guest_transfers_and_boundaries() {
         assert_eq!(raw.save_state().unwrap(), decoded.save_state().unwrap());
     }
     fs::write(report, serde_json::to_vec_pretty(&serde_json::json!({"status":"PASS","scope":"E131 audio fragment guest widths, mirrors, two-owner DMA3 and CpuSet boundaries","boundary_mirror_bios_cases":checked,"dma_pairs":2,"cpuset_pairs":2,"full_states_and_clocks_equal":true,"raw_fallback":true,"Linux":"pending","USA":"pending","nativeWindows":"pending","performance_measurements":false})).unwrap()).unwrap();
+}
+
+#[test]
+#[ignore = "exact EUR ROM, E145 dataset and TinyCC; Windows executable under Wine"]
+fn european_audio_extended_direct_callbacks_original_and_native() {
+    const RETURN: u32 = 0x0800_0300;
+    const CASES: [(u8, usize, usize); 8] = [
+        (1, 0x28, 4), (2, 0x24, 1), (4, 0x2c, 1), (5, 0x2d, 1),
+        (6, 0x2e, 1), (7, 0x2f, 1), (10, 0x26, 1), (11, 0x27, 1),
+    ];
+    let root = PathBuf::from(std::env::var_os("FFTA_AUDIO_EXTENDED_ROOT").unwrap());
+    let dataset = PathBuf::from(std::env::var_os("FFTA_AUDIO_EXTENDED_DATASET").unwrap());
+    let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    assert_eq!(gba_core::ffta_rom::digest(&rom), gba_core::ffta_rom::EUROPE_SHA256);
+    let manifest: Manifest = toml::from_str(&fs::read_to_string(dataset.join(MANIFEST_FILE)).unwrap()).unwrap();
+    assert_eq!((manifest.extractor_revision, manifest.decoder_revision), (145, 144));
+    let configure = |machine: &mut Machine, selector: u8| {
+        setup(machine, selector);
+        machine.bus.ewram[0x301..0x305].copy_from_slice(&[0x12, 0x34, 0x56, 0x78]);
+        machine.cpu.regs[4] = 0xdead_beef;
+        machine.cpu.regs[14] = RETURN | 1;
+        machine.cpu.regs[15] = 0x0814_9e88;
+    };
+    let validate = |machine: &Machine, field: usize, len: usize| {
+        assert_eq!(&machine.bus.ewram[0x100 + field..0x100 + field + len], &[0x12, 0x34, 0x56, 0x78][..len]);
+        assert_eq!(u32::from_le_bytes(machine.bus.ewram[0x140..0x144].try_into().unwrap()), 0x0200_0301 + len as u32);
+    };
+    let mut trace = crate::make_machine(rom.clone(), None);
+    let initial = trace.save_state().unwrap();
+    let mut visited = BTreeSet::new();
+    for (selector, field, len) in CASES {
+        trace.load_state(&initial).unwrap();
+        configure(&mut trace, selector);
+        for _ in 0..200 {
+            if trace.cpu.regs[15] == RETURN { break; }
+            visited.insert((trace.cpu.regs[15], trace.cpu.thumb()));
+            trace.step();
+        }
+        assert_eq!(trace.cpu.regs[15], RETURN, "callback selector {selector} did not return");
+        validate(&trace, field, len);
+    }
+    let view = View { rom: &rom, ewram: None, iwram: Some(&trace.bus.iwram), bios: None };
+    let blocks = visited.iter().map(|&(address, thumb)| {
+        let first = if thumb { armv4t::decode_thumb(view.read16(address), address) }
+                    else { armv4t::decode_arm(view.read32(address), address) };
+        Block { addr: address, thumb, instrs: vec![first] }
+    }).collect();
+    let object = root.join("callbacks-native.o");
+    recomp_core::tcc_memory::build(&Analysis { blocks }, &view,
+        &recomp_core::tcc_memory::library_path().expect("TinyCC required"), &object, &mut |_| {}).unwrap();
+    let (_library, table) = crate::load_native(&object).unwrap();
+    let mut results = Vec::new();
+    for (selector, field, len) in CASES {
+        let mut raw = crate::make_machine(rom.clone(), None);
+        let mut interpreted = crate::make_machine(rom.clone(), None);
+        let mut translated = crate::make_machine(rom.clone(), None);
+        attach_from_directory(&mut interpreted, &dataset).unwrap();
+        attach_from_directory(&mut translated, &dataset).unwrap();
+        for machine in [&mut raw, &mut interpreted, &mut translated] {
+            machine.load_state(&initial).unwrap();
+            configure(machine, selector);
+        }
+        let owner_i = interpreted.bus.rom_resources().unwrap().clone();
+        let owner_n = translated.bus.rom_resources().unwrap().clone();
+        let before_i = owner_i.audio_extended_dispatch_stats().unwrap().source_bytes;
+        let before_n = owner_n.audio_extended_dispatch_stats().unwrap().source_bytes;
+        for machine in [&mut interpreted, &mut translated] {
+            machine.bus.rom[0x370d38..0x370d58].fill(0xcd);
+            machine.bus.rom[0x370d60..0x370d68].fill(0xcd);
+        }
+        for machine in [&mut raw, &mut interpreted] {
+            for _ in 0..200 { if machine.cpu.regs[15] == RETURN { break; } machine.step(); }
+            assert_eq!(machine.cpu.regs[15], RETURN, "interpreter callback return");
+            validate(machine, field, len);
+        }
+        let mut native_steps = 0;
+        while translated.cpu.regs[15] != RETURN {
+            table.get(translated.cpu.regs[15] | u32::from(translated.cpu.thumb())).expect("compiled callback instruction")(
+                &RT_API, &mut translated as *mut Machine as *mut std::ffi::c_void);
+            native_steps += 1;
+            assert!(native_steps < 200, "native callback return");
+        }
+        validate(&translated, field, len);
+        let typed_i = owner_i.audio_extended_dispatch_stats().unwrap().source_bytes - before_i;
+        let typed_n = owner_n.audio_extended_dispatch_stats().unwrap().source_bytes - before_n;
+        assert_eq!((typed_i, typed_n), (4, 4));
+        for machine in [&mut interpreted, &mut translated] {
+            machine.bus.rom[0x370d38..0x370d58].copy_from_slice(&rom[0x370d38..0x370d58]);
+            machine.bus.rom[0x370d60..0x370d68].copy_from_slice(&rom[0x370d60..0x370d68]);
+        }
+        assert!(raw.save_state().unwrap() == interpreted.save_state().unwrap(), "interpreter selector {selector}");
+        assert!(raw.save_state().unwrap() == translated.save_state().unwrap(), "compiled selector {selector}");
+        results.push((selector, len, typed_i, typed_n, native_steps));
+    }
+    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
+        "status":"PASS", "scope":"controlled EUR direct extended-audio callbacks; original interpreter and compiled instruction blocks",
+        "cases":results, "source_rom_poisoned":true, "full_state_clock_equal":true,
+        "indirect_callbacks_0_3":"pending", "ordinary_reachability":"pending", "Linux":"pending", "USA":"pending",
+        "native_windows":"pending", "performance_measurements":false
+    })).unwrap()).unwrap();
+}
+
+#[test]
+#[ignore = "exact EUR ROM, E145 dataset and TinyCC; Windows executable under Wine"]
+fn european_audio_extended_indirect_callbacks_original_and_native() {
+    const RETURN: u32 = 0x0800_0300;
+    const CASES: [(u8, usize, usize); 2] = [(0, 0, 0), (3, 0, 0)];
+    let root = PathBuf::from(std::env::var_os("FFTA_AUDIO_EXTENDED_ROOT").unwrap());
+    let dataset = PathBuf::from(std::env::var_os("FFTA_AUDIO_EXTENDED_DATASET").unwrap());
+    let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    assert_eq!(gba_core::ffta_rom::digest(&rom), gba_core::ffta_rom::EUROPE_SHA256);
+    let manifest: Manifest = toml::from_str(&fs::read_to_string(dataset.join(MANIFEST_FILE)).unwrap()).unwrap();
+    assert_eq!((manifest.extractor_revision, manifest.decoder_revision), (145, 144));
+    let configure = |machine: &mut Machine, selector: u8| {
+        setup(machine, selector);
+        machine.bus.ewram[0x100] = 0x80;
+        machine.bus.ewram[0x8e60..0x8e64].copy_from_slice(&rom[0x370a90..0x370a94]);
+        machine.cpu.regs[4] = 0xdead_beef;
+        machine.cpu.regs[14] = RETURN | 1;
+        machine.cpu.regs[15] = 0x0814_9e88;
+    };
+    let validate = |machine: &Machine, _field: usize, _len: usize| {
+        assert_eq!(machine.bus.ewram[0x100], 0);
+        assert_eq!(u32::from_le_bytes(machine.bus.ewram[0x140..0x144].try_into().unwrap()), 0x0200_0301);
+    };
+    let mut trace = crate::make_machine(rom.clone(), None);
+    let initial = trace.save_state().unwrap();
+    let mut visited = BTreeSet::new();
+    for (selector, field, len) in CASES {
+        trace.load_state(&initial).unwrap();
+        configure(&mut trace, selector);
+        for _ in 0..200 {
+            if trace.cpu.regs[15] == RETURN { break; }
+            visited.insert((trace.cpu.regs[15], trace.cpu.thumb()));
+            trace.step();
+        }
+        assert_eq!(trace.cpu.regs[15], RETURN, "callback selector {selector} did not return");
+        validate(&trace, field, len);
+    }
+    let view = View { rom: &rom, ewram: None, iwram: Some(&trace.bus.iwram), bios: None };
+    let blocks = visited.iter().map(|&(address, thumb)| {
+        let first = if thumb { armv4t::decode_thumb(view.read16(address), address) }
+                    else { armv4t::decode_arm(view.read32(address), address) };
+        Block { addr: address, thumb, instrs: vec![first] }
+    }).collect();
+    let object = root.join("indirect-callbacks-native.o");
+    recomp_core::tcc_memory::build(&Analysis { blocks }, &view,
+        &recomp_core::tcc_memory::library_path().expect("TinyCC required"), &object, &mut |_| {}).unwrap();
+    let (_library, table) = crate::load_native(&object).unwrap();
+    let mut results = Vec::new();
+    for (selector, field, len) in CASES {
+        let mut raw = crate::make_machine(rom.clone(), None);
+        let mut interpreted = crate::make_machine(rom.clone(), None);
+        let mut translated = crate::make_machine(rom.clone(), None);
+        attach_from_directory(&mut interpreted, &dataset).unwrap();
+        attach_from_directory(&mut translated, &dataset).unwrap();
+        for machine in [&mut raw, &mut interpreted, &mut translated] {
+            machine.load_state(&initial).unwrap();
+            configure(machine, selector);
+        }
+        let owner_i = interpreted.bus.rom_resources().unwrap().clone();
+        let owner_n = translated.bus.rom_resources().unwrap().clone();
+        let before_i = owner_i.audio_extended_dispatch_stats().unwrap().source_bytes;
+        let before_n = owner_n.audio_extended_dispatch_stats().unwrap().source_bytes;
+        for machine in [&mut interpreted, &mut translated] {
+            machine.bus.rom[0x370d38..0x370d58].fill(0xcd);
+            machine.bus.rom[0x370d60..0x370d68].fill(0xcd);
+        }
+        for machine in [&mut raw, &mut interpreted] {
+            for _ in 0..200 { if machine.cpu.regs[15] == RETURN { break; } machine.step(); }
+            assert_eq!(machine.cpu.regs[15], RETURN, "interpreter callback return");
+            validate(machine, field, len);
+        }
+        let mut native_steps = 0;
+        while translated.cpu.regs[15] != RETURN {
+            table.get(translated.cpu.regs[15] | u32::from(translated.cpu.thumb())).expect("compiled callback instruction")(
+                &RT_API, &mut translated as *mut Machine as *mut std::ffi::c_void);
+            native_steps += 1;
+            assert!(native_steps < 200, "native callback return");
+        }
+        validate(&translated, field, len);
+        let typed_i = owner_i.audio_extended_dispatch_stats().unwrap().source_bytes - before_i;
+        let typed_n = owner_n.audio_extended_dispatch_stats().unwrap().source_bytes - before_n;
+        assert_eq!((typed_i, typed_n), (4, 4));
+        for machine in [&mut interpreted, &mut translated] {
+            machine.bus.rom[0x370d38..0x370d58].copy_from_slice(&rom[0x370d38..0x370d58]);
+            machine.bus.rom[0x370d60..0x370d68].copy_from_slice(&rom[0x370d60..0x370d68]);
+        }
+        assert!(raw.save_state().unwrap() == interpreted.save_state().unwrap(), "interpreter selector {selector}");
+        assert!(raw.save_state().unwrap() == translated.save_state().unwrap(), "compiled selector {selector}");
+        results.push((selector, len, typed_i, typed_n, native_steps));
+    }
+    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
+        "status":"PASS", "scope":"controlled EUR indirect extended-audio callbacks with initialized default pointer and no active channels",
+        "cases":results, "source_rom_poisoned":true, "full_state_clock_equal":true,
+        "other_pointer_values_and_active_channels":"pending", "ordinary_reachability":"pending", "Linux":"pending", "USA":"pending",
+        "native_windows":"pending", "performance_measurements":false
+    })).unwrap()).unwrap();
 }
