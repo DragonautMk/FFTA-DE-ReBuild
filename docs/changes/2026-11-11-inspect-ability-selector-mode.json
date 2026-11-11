@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-11",
+  "slug": "inspect-ability-selector-mode",
+  "title": "Inspect the USA ability selector mode",
+  "kind": "docs",
+  "platforms": [
+    "USA ROM, static inspection"
+  ],
+  "changes": [
+    "Document the USA ability selector and evidence showing the same job-derived bank and interval reach the same consumer for two observed battle values."
+  ],
+  "validation": [
+    "Protected static instruction and branch-target check passed in dbg20-selector-mode1-source-retry-x6r7bvgs; the initial driver failed because of its working-directory assumption.",
+    "A Linux breakpoint attempt timed out at five million steps; a shorter 100,000-step search reported not reached with zero completed frames. The latter driver closed normally, but validation failed because its private session copy remained in scratch. Both units retain diagnostics; neither proves a battle caller or its absence.",
+    "A protected isolated Linux interpreter trace observed one selector entry during 16 frames of primary-ability opening (dbg20-selector-battle-trace-5r_lgrzj), reaching its frame limit and closing normally.",
+    "A second protected Linux trace of the same control input observed the mode-1 branch and both property calls within 16 frames (dbg20-selector-battle-branch-iimcw05u); the session closed normally.",
+    "A paired protected Linux breakpoint hit mode 1 at the same unit pointer and return address in both cases; their first 64 unit bytes differed only at offset 35 (02 versus 09). Evidence: dbg20-selector-paired-pointer-jlrfq4b2.",
+    "A second paired protected Linux breakpoint captured the same return bank 0851bb64 and interval 1\u201311 for control and treated copies; independent result analysis passed (dbg20-selector-paired-return-i28wx6kc, dbg20-selector-return-analysis-i55ph7uh).",
+    "Protected static dataflow inspection verified both consumer input layouts (dbg20-caller-dataflow-pqtw703u). Paired Linux breakpoints observed the same consumer 08026d44 and same bank/interval in both copies, confirmed by independent evidence analysis (dbg20-selector-consumer-s1xw7avb, dbg20-consumer-analysis-ipe6acdz)."
+  ],
+  "limitations": [
+    "This one checkpoint does not establish every subsequent filter, other values, characters or actions, physical-device behavior, or native Windows equivalence."
+  ],
+  "files": [
+    "docs/cheats.md"
+  ],
+  "references": []
+}

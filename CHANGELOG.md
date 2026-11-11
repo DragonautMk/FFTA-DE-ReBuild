@@ -3,6 +3,73 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-11 — Preserve interrupted injured First Aid control evidence
+
+Type: docs. Platforms: Windows GNU / Wine.
+
+**Changes**
+
+- Record the partial injured First Aid control and explicitly distinguish action start from a measured heal or paired result.
+
+**Validation**
+
+- Read-only protected forensic analysis confirms current HP 65, maximum HP 442 and selector 02 in four retained pre-action inspections. Six saved 240x160 screenshots include the reviewed First Aid action screen. Evidence: dbg20-injured-fresh-q1dz0v4k and dbg20-injured-interruption-forensics-z5c2kl9g.
+- The original session handle and recorded owner PID were missing; host-visible process search found no matching task or Wine process. The runner receipt still says running and its protective lease remains. No process or lease was altered.
+
+**Limitations**
+
+- No post-action HP read or treated run was captured. The runner has no terminal receipt and no completed protected-input audit; recovery and a new comparison remain open. Native Windows and physical device behavior remain unverified.
+
+Documentation: [TASK_HANDOFF.md](docs/development/TASK_HANDOFF.md).
+
+[Change record](docs/changes/2026-11-11-preserve-interrupted-injured-first-aid-evidence.json)
+
+## 2026-11-11 — Inspect the USA ability selector mode
+
+Type: docs. Platforms: USA ROM, static inspection.
+
+**Changes**
+
+- Document the USA ability selector and evidence showing the same job-derived bank and interval reach the same consumer for two observed battle values.
+
+**Validation**
+
+- Protected static instruction and branch-target check passed in dbg20-selector-mode1-source-retry-x6r7bvgs; the initial driver failed because of its working-directory assumption.
+- A Linux breakpoint attempt timed out at five million steps; a shorter 100,000-step search reported not reached with zero completed frames. The latter driver closed normally, but validation failed because its private session copy remained in scratch. Both units retain diagnostics; neither proves a battle caller or its absence.
+- A protected isolated Linux interpreter trace observed one selector entry during 16 frames of primary-ability opening (dbg20-selector-battle-trace-5r_lgrzj), reaching its frame limit and closing normally.
+- A second protected Linux trace of the same control input observed the mode-1 branch and both property calls within 16 frames (dbg20-selector-battle-branch-iimcw05u); the session closed normally.
+- A paired protected Linux breakpoint hit mode 1 at the same unit pointer and return address in both cases; their first 64 unit bytes differed only at offset 35 (02 versus 09). Evidence: dbg20-selector-paired-pointer-jlrfq4b2.
+- A second paired protected Linux breakpoint captured the same return bank 0851bb64 and interval 1–11 for control and treated copies; independent result analysis passed (dbg20-selector-paired-return-i28wx6kc, dbg20-selector-return-analysis-i55ph7uh).
+- Protected static dataflow inspection verified both consumer input layouts (dbg20-caller-dataflow-pqtw703u). Paired Linux breakpoints observed the same consumer 08026d44 and same bank/interval in both copies, confirmed by independent evidence analysis (dbg20-selector-consumer-s1xw7avb, dbg20-consumer-analysis-ipe6acdz).
+
+**Limitations**
+
+- This one checkpoint does not establish every subsequent filter, other values, characters or actions, physical-device behavior, or native Windows equivalence.
+
+[Change record](docs/changes/2026-11-11-inspect-ability-selector-mode.json)
+
+## 2026-11-11 — Compare First Aid healing after a selector change
+
+Type: changed. Platforms: Linux / Xvfb.
+
+**Changes**
+
+- Document a bounded injured-character comparison and update the opt-in CH-0226 note to report the observed First Aid healing result.
+
+**Validation**
+
+- Protected USA Linux/Xvfb pair used the same injured checkpoint, runtime and inputs; one paused CH-0226 write changed selector 02 to 09. Control and treated copies both healed current HP 65 to 106 with maximum 442, closed normally and preserved guarded inputs. Evidence: dbg20-injured-firstaid-linux-daqpbkda.
+- Independent protected analysis verified five corresponding screens pixel-identical and all sampled 264-byte first records differ only at offset35 after application. Protected projection regeneration verifies the revised note, unchanged source code lines and other notes. Evidence: dbg20-linux-firstaid-analysis-i5e8wbjf and dbg20-linux-heal-projection-flqixidu.
+- Three initial attempts using an already-spent turn were stopped on reviewed control screens; no treated case was run. A later interrupted Wine unit left its lease and partial evidence intact; Linux was selected to continue the same criterion without touching it.
+
+**Limitations**
+
+- One USA checkpoint and one First Aid use, not a general healing formula, all abilities, native Windows or physical-device equivalence. The interrupted Wine prefix lease still needs coordinated manual recovery.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-11-compare-injured-first-aid-linux.json)
+
 ## 2026-11-10 — Identify a USA job-name lookup for the selected actor
 
 Type: changed. Platforms: Windows GNU / Wine, USA ROM source comparison.

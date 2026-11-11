@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-11",
+  "slug": "compare-injured-first-aid-linux",
+  "title": "Compare First Aid healing after a selector change",
+  "kind": "changed",
+  "platforms": [
+    "Linux / Xvfb"
+  ],
+  "changes": [
+    "Document a bounded injured-character comparison and update the opt-in CH-0226 note to report the observed First Aid healing result."
+  ],
+  "validation": [
+    "Protected USA Linux/Xvfb pair used the same injured checkpoint, runtime and inputs; one paused CH-0226 write changed selector 02 to 09. Control and treated copies both healed current HP 65 to 106 with maximum 442, closed normally and preserved guarded inputs. Evidence: dbg20-injured-firstaid-linux-daqpbkda.",
+    "Independent protected analysis verified five corresponding screens pixel-identical and all sampled 264-byte first records differ only at offset35 after application. Protected projection regeneration verifies the revised note, unchanged source code lines and other notes. Evidence: dbg20-linux-firstaid-analysis-i5e8wbjf and dbg20-linux-heal-projection-flqixidu.",
+    "Three initial attempts using an already-spent turn were stopped on reviewed control screens; no treated case was run. A later interrupted Wine unit left its lease and partial evidence intact; Linux was selected to continue the same criterion without touching it."
+  ],
+  "limitations": [
+    "One USA checkpoint and one First Aid use, not a general healing formula, all abilities, native Windows or physical-device equivalence. The interrupted Wine prefix lease still needs coordinated manual recovery."
+  ],
+  "files": [
+    "scripts/cheat_ability_projection.py",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

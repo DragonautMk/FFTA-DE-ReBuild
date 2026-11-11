@@ -566,6 +566,77 @@ this one action and checkpoint, not every skill or battle state. Evidence:
 `target/validation/units/dbg20-battle-firstaid-final-s0pu3f1f/` and
 `target/validation/units/dbg20-firstaid-final-analysis-87gn7fpm/`.
 
+A later USA control used a retained battle checkpoint where Marche showed
+65/442 HP. The inspected current-HP field stayed at 65 through opening First
+Aid, and the captured action screen showed First Aid after confirmation. The
+validation session was interrupted before its post-action HP read and before
+the treated copy ran. Its lease and diagnostics remain retained; this is not
+evidence of the amount healed or of a paired comparison. Evidence:
+`target/validation/units/dbg20-injured-fresh-q1dz0v4k/` and
+`target/validation/units/dbg20-injured-interruption-forensics-z5c2kl9g/`.
+
+A later isolated Linux/Xvfb pair used the same injured USA checkpoint and
+runtime for both copies. In the treated copy, a paused `CH-0226` one-shot
+changed the primary selector from `02` to `09`; its command label became White
+Magic, while the opened list remained Battle Tech. Both copies confirmed First
+Aid on Marche and his current HP rose from 65 to 106, with maximum HP 442 in
+both. Five corresponding list, target, confirmation and action screens matched
+pixel-for-pixel; the sampled 264-byte first records differed only at offset
+`35`. This demonstrates one healing outcome, not a general formula, all ability
+behavior, native Windows or physical-device equivalence. Evidence:
+`target/validation/units/dbg20-injured-firstaid-linux-daqpbkda/` and
+`target/validation/units/dbg20-linux-firstaid-analysis-i5e8wbjf/`.
+
+An authenticated USA code inspection found a possible explanation for the
+unchanged list: when called in mode 1, the descriptor selector takes the
+ability interval from job properties `25` and `26` and the bank from unit byte
+`06`. Unit byte `35` chooses a special path only when it is `01`; both `02`
+and `09` use the same non-special path. The property wrapper reads unit bytes
+`05` and `07`. The paired battle records had the same bytes at these offsets.
+This is a conditional code result and does not identify the unit argument or
+rule out a cached list. The first static check failed before reading
+the ROM because its driver assumed the wrong working directory; the corrected
+protected check passed. Evidence:
+`target/validation/units/dbg20-selector-mode1-source-n_rggvfs/` and
+`target/validation/units/dbg20-selector-mode1-source-retry-x6r7bvgs/`.
+
+A follow-up isolated Linux breakpoint search was inconclusive: a five-million
+step attempt timed out, while a shorter 100,000-step search did not reach the
+entry and completed no guest frame. The shorter driver closed normally, but its
+validation unit failed because the private session copy was still in scratch;
+its diagnostics remain retained. These are not proof of absence. Evidence:
+`target/validation/units/dbg20-selector-battle-probe-retry-m8oso94l/` and
+`target/validation/units/dbg20-selector-battle-short-5epq4ccr/`.
+
+A protected interpreter trace observed one entry into this selector during 16
+frames after confirming the primary ability on the same USA control checkpoint.
+A second trace of the same bounded input path recorded the mode-1 branch and
+both property calls. Both reached their frame limit and closed normally. The
+trace does not record argument registers; the unit pointer and treated path
+were established by the later paired breakpoint below.
+Evidence: `target/validation/units/dbg20-selector-battle-trace-5r_lgrzj/` and
+`target/validation/units/dbg20-selector-battle-branch-iimcw05u/`.
+
+A paired bounded Linux breakpoint then stopped both the control and treated
+copies at that selector entry. Both calls used mode 1, unit pointer `02000080`
+and return address `0802731b`. Their first 64 unit bytes differed only at
+byte `35` (`02` versus `09`); both sessions closed normally. This identifies
+the observed unit and path. A subsequent protected paired return check found
+that both calls returned bank pointer `0851bb64` and interval `1–11`; an
+independent evidence check confirmed the comparison. A further paired
+breakpoint observed both copies enter consumer `08026d44` with that same bank
+and interval. An authenticated static inspection shows that consumer uses the
+interval to index eight-byte records from the bank; the alternative consumer
+has the same input layout. This supports the unchanged list for this one scene,
+but does not establish every subsequent filter or any other character, value,
+action, platform or physical-device behavior. Evidence:
+`target/validation/units/dbg20-selector-paired-pointer-jlrfq4b2/`,
+`target/validation/units/dbg20-selector-paired-return-i28wx6kc/`,
+`target/validation/units/dbg20-selector-return-analysis-i55ph7uh/`,
+`target/validation/units/dbg20-caller-dataflow-pqtw703u/`,
+`target/validation/units/dbg20-selector-consumer-s1xw7avb/` and
+`target/validation/units/dbg20-consumer-analysis-ipe6acdz/`.
+
 Protected checks generated and validated eight records, rejected modified source
 lines, table and ROM inputs, and confirmed deterministic generation and
 no-overwrite behavior. A Windows GNU/Wine/Xvfb isolated USA session explicitly

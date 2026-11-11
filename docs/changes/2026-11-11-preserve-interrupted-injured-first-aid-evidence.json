@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-11",
+  "slug": "preserve-interrupted-injured-first-aid-evidence",
+  "title": "Preserve interrupted injured First Aid control evidence",
+  "kind": "docs",
+  "platforms": [
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Record the partial injured First Aid control and explicitly distinguish action start from a measured heal or paired result."
+  ],
+  "validation": [
+    "Read-only protected forensic analysis confirms current HP 65, maximum HP 442 and selector 02 in four retained pre-action inspections. Six saved 240x160 screenshots include the reviewed First Aid action screen. Evidence: dbg20-injured-fresh-q1dz0v4k and dbg20-injured-interruption-forensics-z5c2kl9g.",
+    "The original session handle and recorded owner PID were missing; host-visible process search found no matching task or Wine process. The runner receipt still says running and its protective lease remains. No process or lease was altered."
+  ],
+  "limitations": [
+    "No post-action HP read or treated run was captured. The runner has no terminal receipt and no completed protected-input audit; recovery and a new comparison remain open. Native Windows and physical device behavior remain unverified."
+  ],
+  "files": [
+    "docs/cheats.md"
+  ],
+  "references": [
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

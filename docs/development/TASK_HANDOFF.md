@@ -72,21 +72,22 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 - State: active
 - Outcome: partial
-- First Aid started in both copies after Do it; screens matched (`dbg20-battle-firstaid-final-s0pu3f1f`, `dbg20-firstaid-final-analysis-87gn7fpm`). Healing unproved at full HP.
-- Battle selector 02→09: label White Magic, opened Battle Tech screen identical; records differ only byte35 (`dbg20-battle-ability-selector-05qypq6p`, `dbg20-battle-ability-analysis-3cq1ada9`); other actions unproved.
+- Selector/consumer: USA 02/09 use the same bank/interval (`dbg20-consumer-analysis-ipe6acdz`).
+- First Aid Linux pair: both heal 65→106/442 (`dbg20-injured-firstaid-linux-daqpbkda`, `dbg20-linux-firstaid-analysis-i5e8wbjf`); interrupted Wine: `dbg20-injured-fresh-q1dz0v4k`.
+- 02→09 label/list evidence: `dbg20-battle-ability-selector-05qypq6p`, `dbg20-battle-ability-analysis-3cq1ada9`; full HP: `dbg20-battle-firstaid-final-s0pu3f1f`.
 - Category/source search PASS: `dbg20-category-search-linux-s85q6zud`, `dbg20-category-search-wine-gui-retry-7ep44203`.
 - Parameters/guards: `dbg2-20-menu-values-confirm-vymtsut1`, `dbg2-20-parameter-render-corrected-rkm88ykd`, `dbg2-20-multiple-parameter-suite-_dgohsc9`, `dbg2-20-multiple-real-rom-preflight-ks8dyakw`, `dbg2-20-multiple-windows-build-ry5e8e9o`; XP domains absent (`dbg2-20-source-domain-audit-e9o97pmb`).
 - One-shot feedback: zero and positive counts shown (`dbg20-cheat-feedback-wine-0htinf7a`).
-- Verified: source/preview/arm/disarm, filters, presets, CHEAT-INTERFACE/CHEAT-COMPACT-NAV; Linux menu and CH-0341 X11 passed; runtime installed.
-- Wine PASS: `dbg2-20-focused-wine-8q7tdm2w`, `dbg2-20-rom-preflight-wine-eiw70mf0`, `dbg2-20-menu-offscreen-wine-ftxmavl9`; earlier builds lacked dlltool.
-- Values/presets PASS: `dbg2-20-live-parameter-flow-i_1jqzpn`, `dbg2-20-live-menu-values-bqd__1zo`, `dbg2-20-parameter-menu-preset-sbd7cz9m`; domains unverified.
+- Verified: source/preview/arm/disarm, filters, presets, CHEAT-INTERFACE/CHEAT-COMPACT-NAV; Linux/X11 passed.
+- Wine PASS: `dbg2-20-focused-wine-8q7tdm2w`, `dbg2-20-rom-preflight-wine-eiw70mf0`, `dbg2-20-menu-offscreen-wine-ftxmavl9`.
+- Values/presets: `dbg2-20-live-parameter-flow-i_1jqzpn`, `dbg2-20-live-menu-values-bqd__1zo`, `dbg2-20-parameter-menu-preset-sbd7cz9m`; domains open.
 - Master USA/EUR preflight PASS; D-Bus assertion; Sol `/root/sol_debug_diagnosis` advised. Eight USA abilities: guarded Wine PASS, XP unchanged (`dbg2-20-usa-ability-projection-ro_8a3nv/work/projection/catalogo.json`).
 - Missing: full job/race/appearance domains and CH-0236, source-label reconciliation, actual ability effects, physical-device behavior and native Windows.
 - Dependent lists/guards PASS (`dbg2-20-dependent-parameter-tests-iiddbvcl`, `dbg2-20-dependent-wine-gui-ijn43g20`); older runtimes reject schema.
-- Character examples/DS-16 bytes: `dbg2-20-character-examples-wine-__ltq06k`, `dbg2-20-ds16-readonly-fields-3ao28h9v`. Sol `/root/sol_debug_diagnosis` advised quarantine.
-- Quarantine: unknown region rejects preparation; abilities work (`dbg2-20-character-reference-only-mtq__gpq`, `dbg2-20-reference-only-wine-maya4aqz`). Never activate historical catalog `dbg2-20-usa-character-examples-ucw5y1gi`.
+- Character examples/DS-16: `dbg2-20-character-examples-wine-__ltq06k`, `dbg2-20-ds16-readonly-fields-3ao28h9v`; Sol advised quarantine.
+- Quarantine: unknown region rejects preparation (`dbg2-20-character-reference-only-mtq__gpq`, `dbg2-20-reference-only-wine-maya4aqz`). Never activate historical `dbg2-20-usa-character-examples-ucw5y1gi`.
 - Badge: Wine/Linux GUI PASS (`dbg2-20-persistent-indicator-gameplay-bsrpy2cz`, `dbg2-20-indicator-linux-gpu-retry-xuuv_r2r`).
-- DS-16 route/ability: `dbg20-ability-screen-route-9ozkfq50`, `dbg20-usa-ability-effect-4yt445cl`; tuple Soldier/Gunner `dbg20-character-ability-screen-h75fjx8y`, fields unresolved.
+- DS-16 route/tuple: `dbg20-ability-screen-route-9ozkfq50`, `dbg20-usa-ability-effect-4yt445cl`, `dbg20-character-ability-screen-h75fjx8y`; fields unresolved.
 - Field87: Soldier to Thief (`dbg20-single-job-byte-b00g2384`); Sol xhigh advised, effective settings unconfirmed.
 - Titles03..0C: `dbg20-human-jobs-matrix-316k2185`, `dbg20-human-job-titles-wine-y4hetpub`; mechanics unproved.
 - Paired job/ability labels: Black Mage/Black Magic one-screen PASS (`dbg20-paired-job-ability-664h7_f_`); nine other pairs source-listed only.
@@ -172,8 +173,8 @@ for a specific question: archive legacy lines 179..744 or the named record below
 ## Final handover
 
 - Task: DBG2-20 partial.
-- Last verified result: First Aid started in both USA battle copies after selector change; screens matched.
-- Remaining work: healing/other ability effects, full job/race/appearance domains, CH-0236/source labels, devices and native Windows.
-- Errors or blockers: shared Wine lease wait resolved; effective model/effort unknown.
-- Next action: select an unresolved domain or measurable ability effect.
-- References: docs/changes/2026-11-10-compare-battle-first-aid-forecast.json; docs/cheats.md.
+- Last verified result: paired USA 02/09 reach the same consumer with bank and interval 1–11.
+- Remaining work: other abilities, full domains, CH-0236/source labels, devices and native Windows.
+- Errors or blockers: Linux probes inconclusive; interrupted Wine unit retains lease, owner/handle missing.
+- Next action: on user resume, select an unresolved catalog domain or remaining DBG2-20 criterion.
+- References: docs/changes/2026-11-11-inspect-ability-selector-mode.json; docs/cheats.md.

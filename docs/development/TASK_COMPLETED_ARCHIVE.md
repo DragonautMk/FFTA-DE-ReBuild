@@ -22149,3 +22149,17 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: caller 1449fc and updater 0accf4→0ac640 join a 38-frame sequence with a 21-list indexed OBJ bank (258 objects). E134 preserves E133 resources; all new source bytes and three original interpreter and translated updater/draw full-state/clock cases pass, including machine-state reload. Production CLI create/reuse/verify and managed startup pass.
 - Evidence: `obj-context-full-bank-wine-p_z8yq34`, `e134-obj-context-wine-retry-4hbc5mu3`, `e134-obj-context-native-wine-mc1ztvqg`, `e134-obj-context-cli-wine-4lvv71nu`; `docs/changes/2026-11-10-add-context-updater-obj-bank.json`.
 - Limits: two indexed lists are not selected by the examined sequence; ordinary use, full UI save/Load lifecycle, other sources, Linux, USA and native Windows remain open. No performance measurement. Initial runtime test _ghiv7sj failed by poisoning before state load; corrected retry passed. Sol xhigh requested, actual effort unconfirmed.
+
+### DBG2-20-FIRST-AID-HP
+
+- Outcome: completed
+- Verified criteria: isolated Linux USA pair, same checkpoint and inputs, one selector changed 02→09; both First Aid uses raised current HP 65→106/442. Five corresponding screens matched and sampled 264-byte first records differed only at offset35. Derived note and documentation updated.
+- Evidence: `dbg20-injured-firstaid-linux-daqpbkda`, `dbg20-linux-firstaid-analysis-i5e8wbjf`, `dbg20-linux-heal-projection-flqixidu`; `docs/changes/2026-11-11-compare-injured-first-aid-linux.json`.
+- Limits: one checkpoint/action and Linux only; other abilities, states, physical device and native Windows unproved. Earlier Wine unit `dbg20-injured-fresh-q1dz0v4k` was interrupted and retains its lease and diagnostics; it was not treated as a paired result. DBG2-20 remains partial.
+
+### DBG2-20-BATTLE-LIST-SOURCE
+
+- Outcome: completed
+- Verified criteria: In one paired USA battle checkpoint, selector values 02/09 reached the same unit and mode-1 consumer with the same returned bank and interval; authenticated static code indexes eight-byte records from that context.
+- Evidence: `dbg20-caller-dataflow-pqtw703u`, `dbg20-selector-consumer-s1xw7avb`, `dbg20-consumer-analysis-ipe6acdz`; `docs/changes/2026-11-11-inspect-ability-selector-mode.json`.
+- Limits: One scene and two values; later filters, other units, values, actions, platforms and device behavior remain open under DBG2-20.

@@ -162,7 +162,7 @@ def project(catalog_bytes, table_bytes, rom, *, expected_sha=USA_SHA256, expecte
         item = base(entry, source)
         if number == 226:
             item['notes'] = list(entry['notes']) + [
-                'In one USA battle checkpoint, value 09 changed the command label to White Magic, but the Battle Tech list remained and First Aid could still start.',
+                'In one USA battle checkpoint, value 09 changed the command label to White Magic, but Battle Tech remained and First Aid healed 65 to 106 HP in both copies.',
             ]
         projected = item['provenance'][0]
         projected.update(master_id='CH-0225', raw_code_lines=list(codes), parameter={
