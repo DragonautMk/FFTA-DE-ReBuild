@@ -3,6 +3,24 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-12 — Validate paired injured First Aid in Wine
+
+Type: docs. Platforms: Windows GNU executable / Wine / Xvfb.
+
+**Changes**
+
+- Document the paired USA battle check showing First Aid heals 65 to 106 HP in both the control and selector 02-to-09 cases.
+
+**Validation**
+
+- Protected Wine interpreter run passed both cases, normal window closure and managed wineserver drain (dbg20-injured-wine-reviewed-335_mucw). Independent analysis verified inspected 264-byte records and five corresponding pixel-identical screens (dbg20-wine-firstaid-analysis-49elnozl). A relative driver path failed before launch (tea7evo_); the next attempt timed out at a review prompt (wagtzenf), so the passing retry compared against protected previously reviewed screenshots.
+
+**Limitations**
+
+- This covers one checkpoint and one ability, not all values or skills, native Windows, physical controllers or cheat devices. The earlier interrupted unit remains preserved.
+
+[Change record](docs/changes/2026-11-12-validate-injured-first-aid-wine.json)
+
 ## 2026-11-11 — Validate ordinary EUR fixed OBJ transfer under Wine
 
 Type: changed. Platforms: EUR / Wine.

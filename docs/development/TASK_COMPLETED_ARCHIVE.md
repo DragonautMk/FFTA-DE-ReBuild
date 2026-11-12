@@ -22527,3 +22527,10 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: The retained scene calls 08001500 with 0840dcba through 0802e324/0802e36c/08001d28. Existing original-code authentication identifies the pointer read from live task+24.
 - Evidence: `e148-battle-caller-wine-qe49ajoc`; `docs/changes/2026-11-11-add-battle-obj-list-40dcba.json`.
 - Limits: Earlier task-slot writer, other consumers, Linux, USA and native Windows remain open. No performance measurement.
+
+### DBG2-20-FIRST-AID-WINE
+
+- Outcome: completed
+- Verified criteria: In paired isolated USA Wine/Xvfb interpreter copies, one-shot CH-0226 value 09 changed only the observed selector byte; First Aid healed 65 to 106/442 HP in both, with five corresponding screens identical. Both windows closed normally; managed server drained.
+- Evidence: `dbg20-injured-wine-reviewed-335_mucw`, `dbg20-wine-firstaid-analysis-49elnozl`; `docs/changes/2026-11-12-validate-injured-first-aid-wine.json`. Previous failed path and interactive timeout: `dbg20-injured-firstaid-wine-pair-tea7evo_`, `dbg20-injured-firstaid-wine-retry-wagtzenf`.
+- Limits: One checkpoint and action; other skills/values, devices and native Windows remain open under DBG2-20. Original interrupted unit preserved.

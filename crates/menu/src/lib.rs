@@ -1198,7 +1198,7 @@ impl Menu {
 
         if self.page==Page::Information{return self.information_input(input);}
         if self.atlas_reference_active(){return self.atlas_reference_input(input);}
-        if (self.tool_active()||self.content_active()||self.cheat_active()) && !self.content_text_focus() && !(self.cheat_active()&&self.cheats.cheat_management_active()) && input==MenuInput::Left {
+        if (self.tool_active()||self.content_active()||self.cheat_active()) && !self.content_text_focus() && !(self.cheat_active()&&(self.cheats.cheat_management_active()||self.cheats.cheat_details_active())) && input==MenuInput::Left {
             self.atlas.sidebar_focus=true;self.atlas.nav_cursor=self.atlas.selected_section()+1;return None;
         }
         if self.tool_active(){let a=self.tool.handle(input);return self.tool_action(a);}

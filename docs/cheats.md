@@ -592,6 +592,22 @@ behavior, native Windows or physical-device equivalence. Evidence:
 `target/validation/units/dbg20-injured-firstaid-linux-daqpbkda/` and
 `target/validation/units/dbg20-linux-firstaid-analysis-i5e8wbjf/`.
 
+A later protected Windows GNU executable under Wine/Xvfb repeated that paired
+checkpoint through the complete First Aid action. Both copies again healed
+65 to 106/442 HP; the treated copy made one paused write from `02` to `09`.
+Five corresponding list, target, decision and later screens were identical,
+and the inspected 264-byte records differed only at byte `35` after the write.
+Screens were also compared with the previously reviewed Linux references. Both
+sessions closed normally and the managed Wine server drained. A first launch
+failed because the driver path was relative to scratch; the next timed out at
+an interactive review prompt. The completed retry used automatic comparison to
+the protected reviewed screenshots. These observations cover this one action
+and checkpoint, not other values or skills, native Windows or a physical device.
+Evidence: `target/validation/units/dbg20-injured-firstaid-wine-pair-tea7evo_/`,
+`target/validation/units/dbg20-injured-firstaid-wine-retry-wagtzenf/`,
+`target/validation/units/dbg20-injured-wine-reviewed-335_mucw/` and
+`target/validation/units/dbg20-wine-firstaid-analysis-49elnozl/`.
+
 An authenticated USA code inspection found a possible explanation for the
 unchanged list: when called in mode 1, the descriptor selector takes the
 ability interval from job properties `25` and `26` and the bank from unit byte

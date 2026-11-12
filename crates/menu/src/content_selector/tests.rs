@@ -191,6 +191,61 @@ fn cheat_shortcuts_use_existing_actions_and_are_disabled_in_editors() {
 }
 
 #[test]
+fn long_cheat_records_have_bounded_pages_for_controller_and_mouse() {
+    let mut s=Selector::default();s.cheat_mode=true;
+    let filter=CheatFilter{record_pages:vec!["First record page".into(),"Last record page".into()],..Default::default()};
+    s.set("Cheats".into(),vec![ContentEntry{id:"CH-0001".into(),name:"Example".into(),description:"Abbreviated summary".into(),cheat_filter:Some(filter),..Default::default()}],String::new(),0);
+    assert_eq!(s.cheat_shortcut(CheatShortcut::Details),None);
+    assert!(s.detail_mode);assert_eq!(s.detail_page,0);
+    let capture=|s:&Selector,language|{let mut pixels=vec![[0,0,0,255];940*620];diagnostics::capture(||draw(s,&mut pixels,940,620,language)).unwrap().runs.into_iter().map(|run|run.text).collect::<Vec<_>>()};
+    let en=input_config::Language::default();let it=input_config::Language::parse("it");
+    assert!(capture(&s,en).iter().any(|text|text=="Page 1/3"));
+    s.detail_scroll.set(8);s.handle(MenuInput::Right);assert_eq!(s.detail_page,1);assert_eq!(s.detail_scroll.get(),0);
+    let page=capture(&s,it);assert!(page.iter().any(|text|text=="Pagina 2/3"));assert!(page.iter().any(|text|text=="First record page"));
+    s.handle(MenuInput::Right);s.handle(MenuInput::Right);assert_eq!(s.detail_page,2);
+    assert!(capture(&s,en).iter().any(|text|text=="Last record page"));
+    let buttons=detail_page_buttons(s.layout(940,620));
+    s.click(buttons[0][0]+2,buttons[0][1]+2,940,620,true);assert_eq!(s.detail_page,1);
+    s.click(buttons[2][0]+2,buttons[2][1]+2,940,620,true);assert!(!s.detail_mode);assert_eq!(s.detail_page,0);
+    assert_eq!(s.cheat_shortcut(CheatShortcut::Details),None);assert_eq!(s.detail_page,0);
+    s.handle(MenuInput::Left);assert_eq!(s.detail_page,0);
+}
+
+#[test]
+fn long_cheat_detail_controls_remain_legible_at_compact_sizes() {
+    let mut s=Selector::default();s.cheat_mode=true;
+    s.set("Cheats".into(),vec![ContentEntry{id:"CH-0001".into(),name:"Example".into(),cheat_filter:Some(CheatFilter{record_pages:vec!["data".into()],..Default::default()}),..Default::default()}],String::new(),0);
+    s.cheat_shortcut(CheatShortcut::Details);
+    for (w,h) in [(627,241),(400,300),(320,240)] {
+        for language in [input_config::Language::default(),input_config::Language::parse("it")] {
+            let mut pixels=vec![[0,0,0,255];w*h];
+            let capture=diagnostics::capture(||draw(&s,&mut pixels,w,h,language)).unwrap();
+            for key in ["Page {page}/{total}","Left: prev","Right: next","↑↓ scroll · Back"] {
+                let text=if key.starts_with("Page"){super::super::i18n::format(language,key,&[("page","1".into()),("total","2".into())])}else{language.text(key).to_owned()};
+                let run=capture.runs.iter().find(|r|r.text==text).unwrap_or_else(||panic!("missing {text} at {w}x{h}"));
+                assert!(!run.width_stopped && !run.canvas_clipped,"clipped {text} at {w}x{h}: {run:?}");
+            }
+        }
+    }
+}
+
+#[test]
+fn menu_routes_left_to_open_cheat_detail_pages_before_sidebar() {
+    let mut menu=super::super::Menu::unlocked_for_test(true,true);
+    let mut av=input_config::AvConfig::default();
+    menu.open_cheats(vec![ContentEntry{id:"CH-0001".into(),name:"Example".into(),cheat_filter:Some(CheatFilter{record_pages:vec!["record".into()],..Default::default()}),..Default::default()}],String::new());
+    assert_eq!(menu.cheat_shortcut(CheatShortcut::Details),None);
+    assert_eq!(menu.handle(MenuInput::Right,&mut av),None);
+    assert_eq!(menu.cheats.detail_page,1);
+    assert_eq!(menu.handle(MenuInput::Left,&mut av),None);
+    assert_eq!(menu.cheats.detail_page,0);
+    assert!(!menu.atlas.sidebar_focus);
+    assert_eq!(menu.handle(MenuInput::Cancel,&mut av),None);
+    assert_eq!(menu.handle(MenuInput::Left,&mut av),None);
+    assert!(menu.atlas.sidebar_focus);
+}
+
+#[test]
 fn cheat_catalog_uses_two_action_rows_and_gives_the_list_more_space() {
     let mut s=Selector::default();s.cheat_mode=true;
     for (w,h) in [(627,241),(940,360),(1280,480)] {

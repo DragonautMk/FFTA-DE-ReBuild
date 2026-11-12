@@ -26,6 +26,8 @@ pub struct CheatFilter {
     pub values_required: bool,
     /// Source names and categories kept independently of abbreviated details.
     pub search_terms: Vec<String>,
+    /// Bounded, ordered pieces of the complete record for the details view.
+    pub record_pages: Vec<String>,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -91,6 +93,19 @@ type Rect = [usize; 4];
 fn cheat_parameter_value(value:u16)->String { format!("{value} (0x{value:02X})") }
 fn inside(r: Rect, x: usize, y: usize) -> bool {
     x >= r[0] && x < r[0] + r[2] && y >= r[1] && y < r[1] + r[3]
+}
+
+fn detail_page_buttons(g: Geometry) -> [Rect; 3] {
+    let [x, y, width, height] = g.panel;
+    let left = x + 6;
+    let available = width.saturating_sub(12);
+    let third = available / 3;
+    let top = y + height.saturating_sub(g.row);
+    [
+        [left, top, third, g.row],
+        [left + third, top, third, g.row],
+        [left + 2 * third, top, available.saturating_sub(2 * third), g.row],
+    ]
 }
 #[derive(Clone, Copy)]
 pub(super) struct Geometry {
@@ -205,6 +220,7 @@ pub(super) struct Selector {
     key_page: usize,
     detail_mode: bool,
     detail_scroll: Cell<usize>,
+    detail_page: usize,
     manage: Option<super::cheat_management::State>,
     preset_name_edit: bool,
 }
@@ -254,10 +270,15 @@ impl Selector {
     pub fn cheat_set_presets(&mut self,presets:Vec<String>){if let Some(s)=self.manage.as_mut(){s.presets=presets;s.preset_cursor=s.preset_cursor.min(s.presets.len().saturating_sub(1));}}
     pub fn cheat_set_preview_token(&mut self,token:String){if let Some(s)=self.manage.as_mut(){s.preview_token=token;}}
     pub fn cheat_management_active(&self)->bool{self.manage.is_some()}
+    pub(super) fn cheat_details_active(&self)->bool{self.cheat_mode && self.detail_mode}
     pub fn cheat_management_feedback(&mut self,message:String,preview:Option<String>){if let Some(state)=self.manage.as_mut(){state.feedback=message;if let Some(preview)=preview{state.preview=preview;self.detail_mode=true;self.detail_scroll.set(0);}else{state.preview.clear();state.preview_token.clear();}}else{self.message=message;}}
     fn cheat_details(&self,locale:&crate::i18n::Locale)->String{
         self.selected().map(|i|{let e=&self.entries[i];format!("{} · {} · {}\n{}\n{}\n{}",e.name,e.status,e.compatibility,e.reason,e.identity,e.description)})
             .unwrap_or_else(||locale.tr("No entry selected").into())
+    }
+    fn cheat_record_pages(&self) -> &[String] {
+        self.selected().and_then(|i|self.entries[i].cheat_filter.as_ref())
+            .map_or(&[], |filter|filter.record_pages.as_slice())
     }
     pub(super) fn description(&self,language:input_config::Language)->String {
         let kinds=self.kinds();let kind=kinds.get(self.kind).map(String::as_str).unwrap_or_default();
@@ -459,6 +480,7 @@ impl Selector {
         self.preview.clear();
         self.preview_message.clear();
         self.detail_scroll.set(0);
+        self.detail_page = 0;
     }
     pub fn selected(&self) -> Option<usize> {
         self.visible.get(self.cursor).copied()
@@ -563,6 +585,7 @@ impl Selector {
         self.preview.clear();
         self.preview_message.clear();
         self.detail_scroll.set(0);
+        self.detail_page = 0;
     }
     fn confirm(&mut self) -> Option<MenuAction> {
         match self.focus {
@@ -573,7 +596,7 @@ impl Selector {
             5 if self.cheat_mode => return self.selected().map(|_|MenuAction::CheatManage),
             5 => self.focus = 6,
             6 => {
-                if self.cheat_mode {if self.selected().is_some(){self.detail_mode=true;}else{self.message="No catalog: choose Import catalog.".into();}return None;}
+                if self.cheat_mode {if self.selected().is_some(){self.detail_mode=true;self.detail_page=0;self.detail_scroll.set(0);}else{self.message="No catalog: choose Import catalog.".into();}return None;}
                 if self.busy {
                     self.message = "Wait for the current catalog operation, or cancel.".into();
                 } else if let Some(index) = self.selected() {
@@ -675,7 +698,16 @@ impl Selector {
             match input {
                 MenuInput::Cancel | MenuInput::Confirm => {
                     self.detail_mode = false;
+                    self.detail_page = 0;
                     self.focus = 5;
+                }
+                MenuInput::Left if self.cheat_mode && !self.cheat_record_pages().is_empty() => {
+                    self.detail_page = self.detail_page.saturating_sub(1);
+                    self.detail_scroll.set(0);
+                }
+                MenuInput::Right if self.cheat_mode && !self.cheat_record_pages().is_empty() => {
+                    self.detail_page = (self.detail_page + 1).min(self.cheat_record_pages().len());
+                    self.detail_scroll.set(0);
                 }
                 MenuInput::Up | MenuInput::Left => self
                     .detail_scroll
@@ -821,7 +853,11 @@ impl Selector {
             return None;
         }
         if self.cheat_mode && self.detail_mode {
-            if y>=g.panel[1]+g.panel[3].saturating_sub(g.row){return self.handle(MenuInput::Cancel);}
+            if !self.cheat_record_pages().is_empty() {
+                for (button, input) in detail_page_buttons(g).into_iter().zip([MenuInput::Left,MenuInput::Right,MenuInput::Cancel]) {
+                    if inside(button,x,y){return self.handle(input);}
+                }
+            } else if y>=g.panel[1]+g.panel[3].saturating_sub(g.row){return self.handle(MenuInput::Cancel);}
             return None;
         }
         if self.editing {
@@ -1003,13 +1039,21 @@ pub(super) fn draw(s: &Selector, px: &mut [[u8; 4]], w: usize, h: usize, languag
         [89, 121, 139],
     );
     if s.cheat_mode && s.detail_mode {
-        let text=s.manage.as_ref().map_or_else(||s.cheat_details(&locale),|m|m.preview.clone());
-        c.text((x+10) as f32,(y+5) as f32,locale.tr(if s.manage.is_some(){"CHEAT PREVIEW"}else{"CHEAT DETAILS · READ ONLY"}),ink,size*1.1,true,pw.saturating_sub(20) as f32);
+        let pages=if s.manage.is_some(){&[][..]}else{s.cheat_record_pages()};
+        let page=s.detail_page.min(pages.len());
+        let text=if page>0{pages[page-1].clone()}else{s.manage.as_ref().map_or_else(||s.cheat_details(&locale),|m|m.preview.clone())};
+        let title=locale.tr(if s.manage.is_some(){"CHEAT PREVIEW"}else{"CHEAT DETAILS · READ ONLY"});
+        c.text((x+10) as f32,(y+5) as f32,title,ink,size*1.1,true,if pages.is_empty(){pw.saturating_sub(20)}else{pw.saturating_mul(2)/3} as f32);
+        if !pages.is_empty() {
+            let label=super::i18n::format(language,"Page {page}/{total}",&[("page",(page+1).to_string()),("total",(pages.len()+1).to_string())]);
+            c.text((x+pw*2/3) as f32,(y+5) as f32,&label,ink,size,false,(pw/3).saturating_sub(10) as f32);
+        }
         let lines=Canvas::wrap_text(&text,size,pw.saturating_sub(24) as f32);
         let pitch=(size*1.5).ceil() as usize;let top=y+g.row+4;let bottom=(y+ph).saturating_sub(g.row);
         let rows=bottom.saturating_sub(top)/pitch.max(1);let offset=s.detail_scroll.get().min(lines.len().saturating_sub(rows));s.detail_scroll.set(offset);
         for (n,line) in lines.iter().skip(offset).take(rows).enumerate(){c.text((x+10) as f32,(top+n*pitch) as f32,line,ink,size,false,pw.saturating_sub(20) as f32);}
-        c.text((x+10) as f32,bottom as f32,locale.tr("Up/Down: scroll · OK/Cancel: return"),ink,size,false,pw.saturating_sub(20) as f32);
+        if pages.is_empty(){c.text((x+10) as f32,bottom as f32,locale.tr("Up/Down: scroll · OK/Cancel: return"),ink,size,false,pw.saturating_sub(20) as f32);}
+        else {for (rect,label) in detail_page_buttons(g).into_iter().zip(["Left: prev","Right: next","↑↓ scroll · Back"]) {button(&mut c,rect,locale.tr(label),false,size);}}
         c.finish(px);return;
     }
     if let Some(m)=s.manage.as_ref().filter(|_|!s.editing) {

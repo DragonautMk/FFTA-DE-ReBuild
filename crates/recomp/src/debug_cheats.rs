@@ -8,6 +8,20 @@ const MAX_PAGE:usize=64;
 const MAX_CAPABILITY_SOURCES:usize=8;
 const MAX_CAPABILITY_LINES:usize=64;
 const MAX_CATALOG_CAPABILITY_LINES:usize=16384;
+const MENU_RECORD_PAGE_BYTES:usize=2048;
+
+/// Keep complete records reachable without wrapping an unbounded string on
+/// every menu frame. Each page ends at a UTF-8 boundary.
+fn menu_record_pages(entry:&Value)->Vec<String>{
+    let full=serde_json::to_string(entry).unwrap_or_default();
+    let mut pages=Vec::new();let mut start=0;
+    while start<full.len(){
+        let mut end=(start+MENU_RECORD_PAGE_BYTES).min(full.len());
+        while !full.is_char_boundary(end){end-=1;}
+        pages.push(full[start..end].to_owned());start=end;
+    }
+    pages
+}
 
 pub(crate) struct Catalog { pub source_sha256:String, metadata:Value, entries:Vec<Value>, capabilities:Vec<Value> }
 
@@ -221,7 +235,8 @@ impl Catalog {
                     serde_json::to_string_pretty(&entry["notes"]).unwrap_or_default(),language.text("Catalog record"),full)
             }else{full};
             let mut details:String=display.chars().take(8192).collect();
-            if truncated{details.push_str(&format!("\n[{}]",language.text("Details abbreviated; use debug-cheats show for the complete record")));}
+            if truncated{details.push_str(&format!("\n[{}]",language.text("Details abbreviated; use Left/Right pages or debug-cheats show for the complete record")));}
+            let record_pages=if truncated{menu_record_pages(entry)}else{Vec::new()};
             let region=entry["region"].as_str().unwrap();let relation=language.text(match target.declaration(region){"declared-match"=>"Declared source region matches","declared-mismatch"=>"Declared source region differs",_=>"Source region match unknown"});
             let summary=self.indexed_summary(index,rom);
             let capability=language.text(match summary["compatibility"]["manual_once"]["state"].as_str().unwrap(){
@@ -266,7 +281,7 @@ impl Catalog {
                 location:language.text("Local catalog · read only").into(),identity:menu::i18n::format(language,"Catalog SHA256 {catalog}\nROM SHA256 {rom} · recognized region {region}",&[("catalog",self.source_sha256.clone()),("rom",target.sha256.unwrap_or_else(||language.text("Unknown ROM hash")).into()),("region",target.region.unwrap_or_else(||language.text("Unknown recognized region")).into())]),status:language.text("Cheat disabled").into(),compatibility:language.text("Cheat unverified").into(),
                 reason,available:true,
                 cheat_filter:Some(menu::CheatFilter{armed:false,declared_match:target.declaration(region)=="declared-match",plan_candidate:summary["compatibility"]["manual_once"]["state"]=="requires-runtime-preflight",
-                    values_required:self.capabilities[index]["sources"].as_array().is_some_and(|sources|sources.iter().any(|source|matches!(source["assessment"]["state"].as_str(),Some("parameter-required"|"reference-only")))),search_terms})}
+                    values_required:self.capabilities[index]["sources"].as_array().is_some_and(|sources|sources.iter().any(|source|matches!(source["assessment"]["state"].as_str(),Some("parameter-required"|"reference-only")))),search_terms,record_pages})}
         }).collect()
     }
     pub fn menu_sources(&self,id:&str)->Result<Vec<menu::CheatSource>,String>{
@@ -821,12 +836,17 @@ mod tests {
         assert_eq!(serde_json::from_str::<Value>(&joined).unwrap(),v["entries"][0]);
 
         // Even oversized Unicode notes stay bounded and explicitly abbreviated.
-        v["entries"][0]["notes"]=json!(vec!["é".repeat(2000);5]);
+        v["entries"][0]["notes"]=json!(vec!["🧭é".repeat(680);8]);
         let c=Catalog::parse(&serde_json::to_vec(&v).unwrap()).unwrap();
         let view=c.menu_entries(None,input_config::Language::default());
         assert!(view[0].description.starts_with("Catalog notes:"));
         assert!(view[0].description.contains("Details abbreviated"));
         assert!(view[0].description.chars().count()<8300);
+        let pages=&view[0].cheat_filter.as_ref().unwrap().record_pages;
+        assert!(pages.len()>1);
+        assert!(pages.iter().all(|page|page.len()<=MENU_RECORD_PAGE_BYTES));
+        assert_eq!(serde_json::from_str::<Value>(&pages.concat()).unwrap(),v["entries"][0]);
+        assert!(view[1].cheat_filter.as_ref().unwrap().record_pages.is_empty());
     }
     #[test]
     fn long_catalog_records_keep_primary_and_provenance_search_terms(){

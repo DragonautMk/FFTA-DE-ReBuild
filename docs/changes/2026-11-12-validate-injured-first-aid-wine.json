@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "slug": "validate-injured-first-aid-wine",
+  "title": "Validate paired injured First Aid in Wine",
+  "kind": "docs",
+  "platforms": [
+    "Windows GNU executable / Wine / Xvfb"
+  ],
+  "changes": [
+    "Document the paired USA battle check showing First Aid heals 65 to 106 HP in both the control and selector 02-to-09 cases."
+  ],
+  "validation": [
+    "Protected Wine interpreter run passed both cases, normal window closure and managed wineserver drain (dbg20-injured-wine-reviewed-335_mucw). Independent analysis verified inspected 264-byte records and five corresponding pixel-identical screens (dbg20-wine-firstaid-analysis-49elnozl). A relative driver path failed before launch (tea7evo_); the next attempt timed out at a review prompt (wagtzenf), so the passing retry compared against protected previously reviewed screenshots."
+  ],
+  "limitations": [
+    "This covers one checkpoint and one ability, not all values or skills, native Windows, physical controllers or cheat devices. The earlier interrupted unit remains preserved."
+  ],
+  "files": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": []
+}

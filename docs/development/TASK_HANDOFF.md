@@ -74,9 +74,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 - State: active
 - Outcome: partial
-- Wine prefix lease recovered; runner reacquisition/drain PASS (`dbg20-lease-reacquire-2sxydeqx`). Interrupted unit remains retained.
+- First Aid Wine pair: both heal 65→106/442; managed server drain PASS (`dbg20-wine-firstaid-analysis-49elnozl`).
 - First Aid Linux pair: both heal 65→106/442 (`dbg20-linux-firstaid-analysis-i5e8wbjf`); Wine unit `dbg20-injured-fresh-q1dz0v4k` interrupted.
-- 02→09 list: `dbg20-battle-ability-analysis-3cq1ada9`; full HP: `dbg20-battle-firstaid-final-s0pu3f1f`.
+- Selector 02→09 list: `dbg20-battle-ability-analysis-3cq1ada9`.
 - Category/source search PASS: `dbg20-category-search-linux-s85q6zud`, `dbg20-category-search-wine-gui-retry-7ep44203`.
 - Parameters/guards: `dbg2-20-menu-values-confirm-vymtsut1`, `dbg2-20-parameter-render-corrected-rkm88ykd`, `dbg2-20-multiple-parameter-suite-_dgohsc9`, `dbg2-20-multiple-real-rom-preflight-ks8dyakw`, `dbg2-20-multiple-windows-build-ry5e8e9o`; XP domains absent (`dbg2-20-source-domain-audit-e9o97pmb`).
 - One-shot feedback: zero and positive counts shown (`dbg20-cheat-feedback-wine-0htinf7a`).
@@ -95,7 +95,7 @@ for a specific question: archive legacy lines 179..744 or the named record below
 - Paired job/ability labels: Black Mage/Black Magic one-screen PASS (`dbg20-paired-job-ability-664h7_f_`); nine other pairs source-listed only.
 - Paired progress: first142 candidate bytes unchanged; five Black Magic rows match at different frames (`dbg20-paired-progress-wine-5ufj87ja`, `dbg20-ability-info-compare-k050osb_`); learning unproved.
 - Hunter ordinary vs paired: unequip notice and nine extra bytes (`dbg20-ordinary-job-comparison-nl85j_ik`, `dbg20-hunter-paired-once-wu600y_z`); transitions unproved.
-- Long details prioritize notes: `dbg20-notes-visibility-test-retry-y77qeo43`, `dbg20-notes-gui-wine-2hpoigda`; oversized notes need full command.
+- Selection: `DBG2-20-FULL-DETAIL-PAGES` paused; Linux/Wine tests PASS (`jp2u86pt`, `1y7p4j8w`); GUI PASS (`dbg20-pages-gui-left-fix-a8xtwimn`), images await review.
 - Conditional USA job05 entry: one write when matching; zero on mismatch (`dbg20-first-job-wine-vlhi_rx4`).
 - Offset85 title/stats (`dbg20-single-offset85-yqmspzpv`); routing (`dbg20-usa-eur-job-routing-r9g1avi3`); actor/name (`dbg20-usa-job-call-registers-uienjad6`, `dbg20-usa-job-name-caller-_8hlaicc`); XP labels conflict.
 - Race/job-only matched full tuple screenshot (`dbg20-character-preserve85-t3l31iu3`); state equivalence unproved.
@@ -175,8 +175,8 @@ for a specific question: archive legacy lines 179..744 or the named record below
 ## Final handover
 
 - Task: DBG2-20 partial.
-- Last verified result: paired USA 02/09 reach the same consumer with bank and interval 1–11.
+- Last verified result: USA Wine 02/09 First Aid pair heals 65→106; screens and records compared.
 - Remaining work: other abilities, full domains, CH-0236/source labels, devices and native Windows.
 - Errors or blockers: original Wine unit remains interrupted with its unit lease; shared prefix recovered.
-- Next action: resume relevant validation using the managed Wine lease; DBG2-20 broader criteria remain open.
-- References: docs/changes/2026-11-11-recover-interrupted-wine-prefix-lease.json; docs/cheats.md.
+- Next action: review GUI screenshots, then finish documentation and acceptance checks.
+- References: docs/changes/2026-11-12-validate-injured-first-aid-wine.json; docs/cheats.md.

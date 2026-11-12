@@ -677,8 +677,8 @@ No other development was selected. On resumption read only the individual ID in
   remained only byte35. A later pair also reached identical First Aid target
   and forecast screens, another reached matching “Do it” confirmations, and a
   final pair displayed First Aid after confirmation with matching screens.
-  An injured USA Linux pair observed First Aid restore 65 to 106 HP in both
-  cases despite the changed label; other actions remain unverified. Dependent
+  Injured USA Linux and Wine/Xvfb pairs observed First Aid restore 65 to 106
+  HP in both cases despite the changed label; other actions remain unverified. Dependent
   lists now validate declared
   relationships and filter menu values. Optional source-bound value labels
   accompany the numeric choices; the USA ability projection derives these
