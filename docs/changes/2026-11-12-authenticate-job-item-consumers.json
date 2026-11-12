@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "slug": "authenticate-job-item-consumers",
+  "title": "Authenticate item consumers for the Hunter comparison",
+  "kind": "docs",
+  "platforms": [
+    "USA and EUR ROM static analysis"
+  ],
+  "changes": [
+    "Document that two authenticated consumers use the five halfwords affected by the observed ordinary Hunter transition as item-table indices."
+  ],
+  "validation": [
+    "A protected read-only unit compared the retained ordinary and paired USA records, authenticated both ROMs, verified the two direct item-getter calls and matched the complete 376-entry USA/EUR tables. The ordinary route cleared the five values while the paired write retained them. Evidence: target/validation/units/dbg20-job-item-consumer-45iaunf6/."
+  ],
+  "limitations": [
+    "Static consumers do not prove execution on the observed route, identify the displayed equipment slots, or establish complete job-change behavior, learned skills or battle safety."
+  ],
+  "files": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

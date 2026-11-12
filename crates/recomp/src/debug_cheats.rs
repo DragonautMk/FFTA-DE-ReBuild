@@ -8,7 +8,7 @@ const MAX_PAGE:usize=64;
 const MAX_CAPABILITY_SOURCES:usize=8;
 const MAX_CAPABILITY_LINES:usize=64;
 const MAX_CATALOG_CAPABILITY_LINES:usize=16384;
-const MENU_RECORD_PAGE_BYTES:usize=2048;
+const MENU_RECORD_PAGE_BYTES:usize=1024;
 
 /// Keep complete records reachable without wrapping an unbounded string on
 /// every menu frame. Each page ends at a UTF-8 boundary.
@@ -227,16 +227,19 @@ impl Catalog {
         self.entries.iter().enumerate().map(|(index,entry)|{
             let full=serde_json::to_string_pretty(entry).unwrap_or_default();
             let truncated=full.chars().count()>8192;
+            let needs_record_pages=truncated || !full.is_ascii() || full.as_bytes().contains(&0x7f);
             // Keep source notes ahead of a long code list so the bounded menu
             // view does not silently omit them. The snapshot still holds the
-            // original record for complete paged CLI inspection.
+            // original record for complete paged menu and CLI inspection.
             let display=if truncated && entry["notes"].as_array().is_some_and(|notes|!notes.is_empty()) {
                 format!("{}:\n{}\n\n{}:\n{}",language.text("Catalog notes"),
                     serde_json::to_string_pretty(&entry["notes"]).unwrap_or_default(),language.text("Catalog record"),full)
             }else{full};
             let mut details:String=display.chars().take(8192).collect();
             if truncated{details.push_str(&format!("\n[{}]",language.text("Details abbreviated; use Left/Right pages or debug-cheats show for the complete record")));}
-            let record_pages=if truncated{menu_record_pages(entry)}else{Vec::new()};
+            // Unsupported glyphs, including ASCII DEL, can expand into
+            // visible escapes. Keep the full record in bounded pages too.
+            let record_pages=if needs_record_pages{menu_record_pages(entry)}else{Vec::new()};
             let region=entry["region"].as_str().unwrap();let relation=language.text(match target.declaration(region){"declared-match"=>"Declared source region matches","declared-mismatch"=>"Declared source region differs",_=>"Source region match unknown"});
             let summary=self.indexed_summary(index,rom);
             let capability=language.text(match summary["compatibility"]["manual_once"]["state"].as_str().unwrap(){
@@ -847,6 +850,26 @@ mod tests {
         assert!(pages.iter().all(|page|page.len()<=MENU_RECORD_PAGE_BYTES));
         assert_eq!(serde_json::from_str::<Value>(&pages.concat()).unwrap(),v["entries"][0]);
         assert!(view[1].cheat_filter.as_ref().unwrap().record_pages.is_empty());
+
+        // Short Unicode records also get pages: their visible escapes can
+        // expand beyond the bounded summary when a font lacks a glyph.
+        let mut short=fixture();short["entries"][0]["notes"]=json!(["漢🧭"]);
+        let catalog=Catalog::parse(&serde_json::to_vec(&short).unwrap()).unwrap();
+        let entries=catalog.menu_entries(None,input_config::Language::default());
+        let pages=&entries[0].cheat_filter.as_ref().unwrap().record_pages;
+        assert!(!pages.is_empty());
+        assert_eq!(serde_json::from_str::<Value>(&pages.concat()).unwrap(),short["entries"][0]);
+
+        // DEL is ASCII and valid in notes, but the details font escapes it.
+        // Its expansion can exceed the wrapping limit even for a short record.
+        let mut del=fixture();del["entries"][0]["notes"]=json!([format!("{}END_RECORD","\u{7f}".repeat(4000))]);
+        let serialized=serde_json::to_string(&del["entries"][0]).unwrap();
+        assert!(serialized.is_ascii() && serialized.contains('\u{7f}') && serialized.chars().count()<8192);
+        let catalog=Catalog::parse(&serde_json::to_vec(&del).unwrap()).unwrap();
+        let entries=catalog.menu_entries(None,input_config::Language::default());
+        let pages=&entries[0].cheat_filter.as_ref().unwrap().record_pages;
+        assert!(pages.len()>1 && pages.iter().all(|page|page.len()<=1024));
+        assert_eq!(serde_json::from_str::<Value>(&pages.concat()).unwrap(),del["entries"][0]);
     }
     #[test]
     fn long_catalog_records_keep_primary_and_provenance_search_terms(){

@@ -47,9 +47,9 @@ def character_reference_parameters(table):
                 raise ValueError('Duplicate source job value')
             cases[current].append(value)
             if value == 1:
-                label += ' (source; USA row 01 unresolved)'
+                label += ' (source; USA ROM: -)'
             elif value == 2:
-                label += ' (source; USA row 02 is Soldier)'
+                label += ' (source; USA ROM: Soldier)'
             job_labels.append({'value': value, 'label': label})
     expected = {1: list(range(1, 13)), 2: list(range(13, 20)), 3: list(range(20, 28)),
                 4: list(range(28, 36)), 5: list(range(36, 44))}

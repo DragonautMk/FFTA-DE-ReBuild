@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "slug": "identify-truncated-cheat-previews",
+  "title": "Page complete cheat previews",
+  "kind": "changed",
+  "platforms": [
+    "Linux",
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Split source and preset management previews into bounded UTF-8-safe pages and reuse the existing keyboard, controller, mouse and scroll controls.",
+    "Keep preview authorization tokens separate from displayed pages and clear pages and tokens when the selected source, preset or accepted preset name changes."
+  ],
+  "validation": [
+    "Source inspection identified the 16384-character canvas limit and the non-paged management preview; preset preparation can produce previews exceeding it.",
+    "Linux menu tests passed (153 passed, 1 ignored); Wine selector and management tests passed (37 and 5). The Windows GNU application and focused test binaries built successfully.",
+    "A focused Sol consultation reviewed paging and preview-token flow without finding a concrete defect; gpt-6.1-sol with xhigh was requested but effective settings were not independently confirmed.",
+    "The later Wine GUI run stopped during catalog-page navigation, before the source and preset previews. Its diagnostics remain available.",
+    "A protected Wine/Xvfb GUI navigated 21 source-preview pages (over 20710 characters) and 17 preset-preview pages (17216 characters); screenshots show the final record and preset name. It saved, armed and disarmed without advancing the paused guest, then closed normally and drained Wine. Evidence: target/validation/units/dbg20-glyph-preview-gui-final-1pnyxi0d/.",
+    "The previous completed driver reported PASS but its validation wrapper refused to retire scratch containing unselected private test copies. That unit remains FAIL with its diagnostics retained; the corrected run explicitly retained those copies and passed."
+  ],
+  "limitations": [
+    "Earlier builds may truncate management previews; the accepted GUI check used an isolated synthetic catalog under Wine with CPU scaling.",
+    "Full DBG2-20 domains, game effects, physical devices and native Windows behavior remain unverified."
+  ],
+  "files": [
+    "crates/menu/src/cheat_management.rs",
+    "crates/menu/src/content_selector.rs",
+    "crates/menu/src/content_selector/tests.rs",
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

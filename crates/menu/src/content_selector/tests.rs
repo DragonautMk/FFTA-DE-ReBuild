@@ -96,6 +96,74 @@ fn management_requires_explicit_source_and_dispatches_separate_requests(){
 }
 
 #[test]
+fn long_management_preview_keeps_every_byte_and_routes_page_controls() {
+    let mut s=Selector::default();s.cheat_mode=true;
+    s.set("Cheat".into(),vec![ContentEntry{id:"CH-0001".into(),name:"Example".into(),..Default::default()}],String::new(),0);
+    s.open_cheat_management(vec![super::super::CheatSource{index:0,name:"source".into(),master:"CH-0002".into(),assessment:"manual-once-subset".into(),parameters:vec![]}],vec![]);
+    s.handle(MenuInput::Confirm);
+    // The compass crosses a page boundary; the final marker exceeds the old canvas limit.
+    let preview=format!("{}🧭{}\\u0031 END_OPERATION", "A".repeat(1023), "B".repeat(16500));
+    s.cheat_management_feedback("Review".into(),Some(preview.clone()));
+    s.cheat_set_preview_token("token".into());
+    let state=s.manage.as_ref().unwrap();
+    let pages=std::iter::once(state.preview.as_str()).chain(state.preview_pages.iter().map(String::as_str)).collect::<Vec<_>>();
+    assert!(pages.len()>2);assert!(pages.iter().all(|page|page.len()<=1024));assert_eq!(pages.concat(),preview);
+    let last=pages.len()-1;
+    assert!(!s.cheat_preview_reviewed());assert!(s.cheat_preview_token().is_none());
+    s.handle(MenuInput::Left);assert_eq!(s.detail_page,0);
+    s.detail_scroll.set(10);s.handle(MenuInput::Right);assert_eq!(s.detail_page,1);assert_eq!(s.detail_scroll.get(),0);
+    s.wheel(false);assert_eq!(s.detail_scroll.get(),2);
+    let buttons=detail_page_buttons(s.layout(940,620));
+    s.click(buttons[1][0]+2,buttons[1][1]+2,940,620,true);assert_eq!(s.detail_page,2);assert_eq!(s.detail_scroll.get(),0);
+    s.click(buttons[0][0]+2,buttons[0][1]+2,940,620,true);assert_eq!(s.detail_page,1);
+    for _ in 0..=last{s.handle(MenuInput::Right);}assert_eq!(s.detail_page,last);
+    s.detail_scroll.set(8192);
+    let mut pixels=vec![[0,0,0,255];940*620];
+    let runs=diagnostics::capture(||draw(&s,&mut pixels,940,620,input_config::Language::default())).unwrap().runs;
+    assert!(runs.iter().any(|run|run.text.contains("END_OPERATION")));
+    assert!(runs.iter().any(|run|run.text==format!("Page {}/{}",last+1,last+1)));
+    s.click(buttons[2][0]+2,buttons[2][1]+2,940,620,true);
+    assert!(!s.detail_mode);assert_eq!(s.detail_page,0);assert_eq!(s.detail_scroll.get(),0);
+    assert!(s.cheat_preview_reviewed());assert_eq!(s.cheat_preview_token(),Some("token"));assert_eq!(s.manage.as_ref().unwrap().focus,3);
+    s.handle(MenuInput::Left);s.handle(MenuInput::Confirm);
+    let state=s.manage.as_ref().unwrap();assert!(state.preview.is_empty());assert!(state.preview_pages.is_empty());assert!(state.preview_token.is_empty());
+    assert!(!s.cheat_preview_reviewed());
+}
+
+#[test]
+fn preset_preview_pages_reset_with_selection_name_and_feedback() {
+    let mut s=Selector::default();s.cheat_mode=true;
+    s.set("Cheat".into(),vec![ContentEntry{id:"CH-0001".into(),..Default::default()}],String::new(),0);
+    s.open_cheat_management(vec![],vec!["alpha".into(),"beta".into()]);
+    {let state=s.manage.as_mut().unwrap();state.preset_mode=true;state.focus=2;state.preset_selected=Some("alpha".into());}
+    let preview="item\n".repeat(500);
+    s.cheat_management_feedback("Review".into(),Some(preview.clone()));s.cheat_set_preview_token("first".into());
+    s.handle(MenuInput::Right);assert_eq!(s.detail_page,1);assert!(s.cheat_preview_token().is_none());
+    s.handle(MenuInput::Confirm);assert_eq!(s.cheat_preview_token(),Some("first"));assert_eq!(s.manage.as_ref().unwrap().focus,2);
+    s.handle(MenuInput::Left);s.handle(MenuInput::Down);s.handle(MenuInput::Confirm);
+    assert_eq!(s.cheat_preset_selected(),Some("beta"));
+    let state=s.manage.as_ref().unwrap();assert!(state.preview.is_empty());assert!(state.preview_pages.is_empty());assert!(state.preview_token.is_empty());
+    s.cheat_management_feedback("Review".into(),Some(preview.clone()));s.cheat_set_preview_token("second".into());s.handle(MenuInput::Cancel);
+    s.manage.as_mut().unwrap().focus=5;s.handle(MenuInput::Confirm);assert!(s.preset_name_edit);
+    s.query="renamed".into();s.finish_search(false);
+    let state=s.manage.as_ref().unwrap();assert!(state.preview.is_empty());assert!(state.preview_pages.is_empty());assert!(state.preview_token.is_empty());
+    s.cheat_management_feedback("Review".into(),Some(preview));s.cheat_set_preview_token("third".into());s.handle(MenuInput::Cancel);
+    s.cheat_management_feedback("Error".into(),None);
+    let state=s.manage.as_ref().unwrap();assert!(state.preview.is_empty());assert!(state.preview_pages.is_empty());assert!(state.preview_token.is_empty());
+}
+
+#[test]
+fn menu_routes_left_and_right_to_management_preview_pages() {
+    let mut menu=super::super::Menu::unlocked_for_test(true,true);
+    let mut av=input_config::AvConfig::default();
+    menu.open_cheats(vec![ContentEntry{id:"CH-0001".into(),name:"Example".into(),..Default::default()}],String::new());
+    menu.open_cheat_management(vec![],vec![]);
+    menu.cheat_management_feedback("Review".into(),Some("operation\n".repeat(300)));
+    assert_eq!(menu.handle(MenuInput::Right,&mut av),None);assert_eq!(menu.cheats.detail_page,1);
+    assert_eq!(menu.handle(MenuInput::Left,&mut av),None);assert_eq!(menu.cheats.detail_page,0);assert!(!menu.atlas.sidebar_focus);
+}
+
+#[test]
 fn parameter_selection_requires_confirmation_and_ignores_action_clicks(){
     let mut s=Selector::default();s.cheat_mode=true;s.set("Cheat".into(),vec![ContentEntry{id:"CH-0001".into(),name:"Example".into(),..Default::default()}],String::new(),0);
     let parameter=super::super::CheatParameter{name:"amount".into(),domain:super::super::CheatParameterDomain::List(vec![2,7,10]),labels:vec![]};
@@ -209,6 +277,71 @@ fn long_cheat_records_have_bounded_pages_for_controller_and_mouse() {
     s.click(buttons[2][0]+2,buttons[2][1]+2,940,620,true);assert!(!s.detail_mode);assert_eq!(s.detail_page,0);
     assert_eq!(s.cheat_shortcut(CheatShortcut::Details),None);assert_eq!(s.detail_page,0);
     s.handle(MenuInput::Left);assert_eq!(s.detail_page,0);
+}
+
+#[test]
+fn expanded_catalog_summary_and_reasons_remain_reachable_before_record_pages() {
+    let mut s=Selector::default();s.cheat_mode=true;
+    let entry=ContentEntry{
+        id:"CH-0001".into(),name:"Example".into(),
+        reason:format!("{}{}", "🧭".repeat(400), "\nEND_REASON\n".repeat(4)),
+        description:format!("{}{}", "\u{7f}".repeat(4000), "\nEND_RECORD\n".repeat(4)),
+        cheat_filter:Some(CheatFilter{record_pages:vec!["first raw record".into(),"last raw record".into()],..Default::default()}),
+        ..Default::default()
+    };
+    s.set("Cheats".into(),vec![entry],String::new(),0);s.cheat_shortcut(CheatShortcut::Details);
+    let locale=crate::i18n::Locale(input_config::Language::default());
+    let summary=s.cheat_details(&locale);
+    assert_eq!(s.detail_summary_pages.concat(),summary);
+    assert!(s.detail_summary_pages.len()>2);
+    assert!(s.detail_summary_pages.iter().all(|page|page.len()<=1024));
+    let reason_page=s.detail_summary_pages.iter().position(|page|page.contains("END_REASON")).unwrap();
+    let tail_page=s.detail_summary_pages.iter().position(|page|page.contains("END_RECORD")).unwrap();
+    assert!(reason_page<tail_page);
+    for _ in 0..reason_page{s.handle(MenuInput::Right);}
+    let geometry=s.layout(940,620);let size=(13.*geometry.scale).max(4.);
+    let reason=Canvas::escape_unsupported_glyphs(&s.detail_text(s.detail_page,&locale));
+    let lines=Canvas::wrap_text_with_fallback(&reason,size,geometry.panel[2].saturating_sub(24) as f32);
+    s.detail_scroll.set(lines.iter().position(|line|line.contains("END_REASON")).unwrap());
+    let mut pixels=vec![[0,0,0,255];940*620];
+    let reason_runs=diagnostics::capture(||draw(&s,&mut pixels,940,620,input_config::Language::default())).unwrap().runs;
+    assert!(reason_runs.iter().any(|run|run.text.contains("END_REASON") && !run.width_stopped && !run.canvas_clipped));
+    for _ in reason_page..tail_page{s.handle(MenuInput::Right);}
+    s.detail_scroll.set(8192);
+    let runs=diagnostics::capture(||draw(&s,&mut pixels,940,620,input_config::Language::parse("it"))).unwrap().runs;
+    assert!(runs.iter().any(|run|run.text.contains("END_RECORD") && !run.width_stopped && !run.canvas_clipped));
+    assert!(runs.iter().any(|run|run.text==format!("Pagina {}/{}",tail_page+1,s.detail_continuations()+1)));
+    for _ in tail_page..s.detail_summary_pages.len(){s.handle(MenuInput::Right);}
+    assert_eq!(s.detail_text(s.detail_page,&locale),"first raw record");
+    let buttons=detail_page_buttons(s.layout(940,620));
+    s.click(buttons[1][0]+2,buttons[1][1]+2,940,620,true);
+    assert_eq!(s.detail_text(s.detail_page,&locale),"last raw record");
+    // A reload can replace the entry without changing its ID or generation.
+    let replacement=ContentEntry{id:"CH-0001".into(),name:"Changed".into(),reason:"New assessment".into(),
+        cheat_filter:Some(CheatFilter{record_pages:vec!["new raw record".into()],..Default::default()}),..Default::default()};
+    s.set("Cheats".into(),vec![replacement],String::new(),0);
+    assert_eq!(s.detail_page,0);assert!(s.detail_summary_pages.concat().contains("New assessment"));
+    assert!(!s.detail_summary_pages.concat().contains("END_RECORD"));
+    assert_eq!(s.detail_continuations(),1);s.handle(MenuInput::Right);
+    assert_eq!(s.detail_text(s.detail_page,&locale),"new raw record");
+}
+
+#[test]
+fn cheat_record_pages_render_cjk_and_escape_unsupported_glyphs() {
+    fn capture(note:&str)->(Vec<[u8;4]>,Vec<String>) {
+        let mut s=Selector::default();s.cheat_mode=true;
+        let page=format!("{{\"note\":\"{note}\"}}");
+        let filter=CheatFilter{record_pages:vec![page],..Default::default()};
+        s.set("Cheats".into(),vec![ContentEntry{id:"CH-0001".into(),name:"Example".into(),cheat_filter:Some(filter),..Default::default()}],String::new(),0);
+        s.cheat_shortcut(CheatShortcut::Details);s.handle(MenuInput::Right);
+        let mut pixels=vec![[0,0,0,255];940*620];
+        let runs=diagnostics::capture(||draw(&s,&mut pixels,940,620,input_config::Language::default())).unwrap().runs.into_iter().map(|run|run.text).collect();
+        (pixels,runs)
+    }
+    let (han,runs)=capture("漢🧭\u{200b}");
+    assert!(runs.iter().any(|text|text.contains("漢\\uD83E\\uDDED\\u200B")));
+    let (other,_)=capture("字🧭\u{200b}");
+    assert_ne!(han,other);
 }
 
 #[test]

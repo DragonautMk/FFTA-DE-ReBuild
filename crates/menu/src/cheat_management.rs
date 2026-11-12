@@ -2,6 +2,22 @@
 //! accessed here; actions are requests to the existing shared handlers.
 use super::MenuInput;
 
+// Even after unsupported characters are escaped, a page stays below the
+// canvas wrapping limit and its contents can be scrolled in full.
+const DETAIL_PAGE_BYTES: usize = 1024;
+
+pub(super) fn detail_text_pages(text: &str) -> Vec<String> {
+    let mut pages = Vec::new();
+    let mut start = 0;
+    while start < text.len() {
+        let mut end = (start + DETAIL_PAGE_BYTES).min(text.len());
+        while !text.is_char_boundary(end) { end -= 1; }
+        pages.push(text[start..end].to_owned());
+        start = end;
+    }
+    pages
+}
+
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Source {
     pub index: u16,
@@ -37,6 +53,7 @@ pub(super) struct State {
     pub focus: usize,
     pub feedback: String,
     pub preview: String,
+    pub preview_pages: Vec<String>,
     pub preview_token: String,
     pub presets: Vec<String>,
     pub preset_cursor: usize,
@@ -51,6 +68,17 @@ pub(super) struct State {
 impl State {
     pub fn new(id: String, title: String, armed: bool, sources: Vec<Source>, presets: Vec<String>) -> Self {
         Self { id, title, sources, presets, focus: if armed { 4 } else { 0 }, ..Self::default() }
+    }
+    pub fn clear_preview(&mut self) {
+        self.preview.clear();
+        self.preview_pages.clear();
+        self.preview_token.clear();
+    }
+    pub fn set_preview(&mut self, preview: String) {
+        self.clear_preview();
+        let mut pages = detail_text_pages(&preview).into_iter();
+        self.preview = pages.next().unwrap_or_default();
+        self.preview_pages = pages.collect();
     }
     pub fn selected_source(&self) -> Option<&Source> { self.selected.and_then(|index| self.sources.get(index)) }
     pub fn selected_parameters(&self)->Option<Vec<(&str,u16)>>{let source=self.selected_source()?;if source.parameters.len()!=self.parameter_selected.len(){return None;}Some(source.parameters.iter().zip(&self.parameter_selected).map(|(p,v)|(p.name.as_str(),*v)).collect())}
@@ -67,7 +95,7 @@ impl State {
                 MenuInput::Left => {self.parameter_mode=false;self.selected=None;self.parameter_selected.clear();},
                 _=>{}
             }
-            self.preview.clear();self.preview_token.clear();self.feedback.clear();return None;
+            self.clear_preview();self.feedback.clear();return None;
         }
         if self.focus == 0 {
             if self.preset_mode {
@@ -77,7 +105,7 @@ impl State {
                     MenuInput::Right => self.focus = 1,
                     MenuInput::Confirm => {
                         self.preset_selected = self.presets.get(self.preset_cursor).cloned();
-                        self.preview.clear(); self.preview_token.clear(); self.feedback.clear();
+                        self.clear_preview(); self.feedback.clear();
                     }
                     _ => {}
                 }
@@ -88,7 +116,7 @@ impl State {
                 MenuInput::Down => self.cursor = (self.cursor + 1).min(self.sources.len().saturating_sub(1)),
                 MenuInput::Right => self.focus = 1,
                 MenuInput::Confirm if !self.sources.is_empty() => {
-                    self.selected = Some(self.cursor); self.preview.clear(); self.preview_token.clear(); self.feedback.clear();
+                    self.selected = Some(self.cursor); self.clear_preview(); self.feedback.clear();
                     self.parameter_selected.clear();self.parameter_cursor=0;
                     self.parameter_mode=self.selected_source().is_some_and(|s|!s.parameters.is_empty());
                     self.focus = if self.parameter_mode {0}else{1};
@@ -102,14 +130,14 @@ impl State {
                 MenuInput::Down => self.focus = (self.focus + 1).min(6),
                 MenuInput::Confirm if self.focus == 6 => {
                     self.preset_mode = !self.preset_mode; self.focus = 0;
-                    self.preview.clear(); self.preview_token.clear(); self.feedback.clear();
+                    self.clear_preview(); self.feedback.clear();
                 }
                 MenuInput::Confirm if self.preset_mode => return match self.focus {
                     1 => Some(Request::PresetSave), 2 => Some(Request::PresetPrepare),
                     3 => Some(Request::PresetArm), 4 => Some(Request::DisarmAll), _ => None,
                 },
                 MenuInput::Confirm if (1..=3).contains(&self.focus) && self.selected_source().is_some_and(|source|source.assessment=="reference-only") => {
-                    self.preview.clear();self.preview_token.clear();self.feedback="Reference values cannot be activated".into();
+                    self.clear_preview();self.feedback="Reference values cannot be activated".into();
                 },
                 MenuInput::Confirm => return Some(match self.focus {
                     1 => Request::Prepare, 2 => Request::ApplyOnce, 3 => Request::Arm,

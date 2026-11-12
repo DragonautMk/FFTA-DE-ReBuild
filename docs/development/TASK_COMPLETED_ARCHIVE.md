@@ -22534,3 +22534,61 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: In paired isolated USA Wine/Xvfb interpreter copies, one-shot CH-0226 value 09 changed only the observed selector byte; First Aid healed 65 to 106/442 HP in both, with five corresponding screens identical. Both windows closed normally; managed server drained.
 - Evidence: `dbg20-injured-wine-reviewed-335_mucw`, `dbg20-wine-firstaid-analysis-49elnozl`; `docs/changes/2026-11-12-validate-injured-first-aid-wine.json`. Previous failed path and interactive timeout: `dbg20-injured-firstaid-wine-pair-tea7evo_`, `dbg20-injured-firstaid-wine-retry-wagtzenf`.
 - Limits: One checkpoint and action; other skills/values, devices and native Windows remain open under DBG2-20. Original interrupted unit preserved.
+
+### DBG2-20-FULL-DETAIL-PAGES
+
+- Outcome: completed
+- Verified criteria: oversized cheat details expose the full compact JSON in UTF-8-safe numbered pages, with bounded rendering, keyboard and mouse navigation and a notes-first summary.
+- Evidence: Linux menu 32/catalog 21 tests (4 ignored), Windows GNU build and Wine menu 32/catalog 21 (4 ignored); protected synthetic GUI `dbg20-pages-gui-left-fix-a8xtwimn` passed and screenshots reviewed. Project-memory, atlas and handoff checks passed.
+- Limits: synthetic catalog and Wine/Xvfb, no native Windows, physical controller or device behavior; DBG2-20 remains partial. See `docs/changes/2026-11-12-browse-full-cheat-record-pages.json`.
+
+### DBG2-20-JOB01-NAME
+
+- Outcome: completed
+- Verified criteria: authenticated USA name rows 01/02 map to dash/Soldier; source lists Soldier/dash. New reference-only projections preserve and annotate both.
+- Evidence: protected static comparison `dbg20-job01-placeholder-2ujj9fad`; seven-entry projection `dbg20-job01-projection-ma7l6k1m`; external character and string maps linked in `docs/cheats.md`; memory, atlas and handoff checks PASS.
+- Limits: static USA name metadata only; author intent, transitions, safety and physical devices remain unproved. Existing snapshots require regeneration; DBG2-20 remains partial. See `docs/changes/2026-11-12-reconcile-usa-job-source-labels.json`.
+
+### DBG2-20-CH0236-SPAN
+
+- Outcome: completed
+- Verified criteria: under plaintext interpretation the first halfword is at second candidate offsets BC..BD, corresponding to positions 124/125 in the prior first-record candidate progress span; the second targets third candidate offsets 06..07.
+- Evidence: protected source/decoder and retained checkpoint comparison `dbg20-ch0236-spans-53ly10yn`; no guest execution. Memory, atlas and handoff checks PASS.
+- Limits: the span length is EUR-derived; second-record field semantics, author intent, device behavior and original code effects remain unproved. CH-0236 stays unchanged and excluded; DBG2-20 remains partial. See `docs/changes/2026-11-12-locate-ch0236-candidate-record-spans.json`.
+
+### DBG2-20-GUIDE-CONTEXT
+
+- Outcome: completed
+- Verified criteria: The matching guide author describes the Eurasia release as usable and reports the alternate master tested with CodeBreaker v1.2; the appearance-table contributor states that checks were confined to the Party screen. A separate indexed forum post reports a battle hang for appearance 0B.
+- Evidence: `docs/changes/2026-11-12-clarify-cheat-guide-test-context.json`; links in `docs/cheats.md`.
+- Limits: Source statements do not establish the local compilation's provenance, exact ROM digest, all-code/device behavior or safe domains. The forum page returned HTTP 502; only its search-index excerpt was accessible, with no reproducible version or state. No guest execution. DBG2-20 remains partial.
+
+### LOCAL-STORAGE-MAINTENANCE-20261112
+
+- Outcome: completed
+- Verified criteria: user-requested cleanup and completed-only Docker compression; active/partial handoff-referenced units, current E13/E14/E15 datasets, private files and suspended scopes excluded. Three eligible completed artifacts archived, reclaiming 264,830,976 file-block bytes, with no errors. Existing pack integrity and host activity checks applied. Earlier completed-only pass found no eligible artifacts; no successful legacy temporary copies remained under the older cleanup helper's scope.
+- Evidence: target/cold-storage-batches/20261112-130730-0155e6b3/batch.json; target/cold-storage-batches/20261112-130609-7bad601b/batch.json.
+- Limits: active host Cargo process observed, so canonical incremental/build caches remained intact. No tests, builds, gameplay or benchmarks were launched. Free-space observation is shared with other writers and is not an attributed savings figure. The original LOCAL-ARTIFACT-HYGIENE remains partial.
+- Next action: retain current/failed/suspended data and consult the archive catalog when needed.
+
+### TARGET-CACHE-CLEANUP-20261112
+
+- Outcome: completed
+- Verified criteria: user requested further cleanup in target. The previously active Cargo build had exited; held the existing Cargo build lock and an owned activity lease, checked host build processes and target/debug consumers, inventoried and rechecked the cache, then retired only target/debug/incremental. User-owned canonical output guards remained unchanged. Calculated reclaimed file blocks: 5,554,057,216 bytes; 67,174,400 bytes linked externally remain available through their other names and were not counted as reclaimed. Cache can be regenerated by Cargo; subsequent incremental builds may take longer.
+- Evidence: target/local-incremental-cleanup-20261112-268578e4/receipt.json; preceding compression target/cold-storage-batches/20261112-130730-0155e6b3/batch.json.
+- Limits: host activity checks could not read three process details; no global inactivity is claimed. No tests, build, gameplay or benchmarks were started. Free-disk changes may include other activity. Private data and partial/suspended units were not selected.
+- Next action: use the existing cold-storage catalog for archive consultation; no unrelated task was resumed.
+
+### DBG2-20-FULL-DETAIL-GLYPHS
+
+- Outcome: completed
+- Verified criteria: Bounded UTF-8 summary and record paging retains Unicode and DEL text; fallback glyphs and escapes render, and selected-entry replacement refreshes the view.
+- Evidence: Linux unit `dbg20-glyph-preview-linux-kop5ebfw`; Windows GNU build `dbg20-glyph-preview-windows-build-zb4n02cd`; Wine tests `dbg20-glyph-preview-wine-mjhe0zm9`; GUI `dbg20-glyph-preview-gui-final-1pnyxi0d`; change record `2026-11-12-render-unicode-cheat-details.json`.
+- Limits: Synthetic Wine GUI used CPU scaling; native Windows, physical controllers and complete font coverage remain unverified. Earlier GUI interruptions and failed scratch remain retained.
+
+### DBG2-20-PREVIEW-PAGES
+
+- Outcome: completed
+- Verified criteria: Source and preset previews retain long UTF-8 text across numbered pages and preserve preview-token handling; synthetic GUI navigated 21 and 17 pages and armed/disarmed while paused.
+- Evidence: Linux `dbg20-glyph-preview-linux-kop5ebfw`, Wine tests `dbg20-glyph-preview-wine-mjhe0zm9`, GUI `dbg20-glyph-preview-gui-final-1pnyxi0d`; change record `2026-11-12-identify-truncated-cheat-previews.json`.
+- Limits: Wine GUI used CPU scaling; native Windows and physical devices remain unverified. Previous wrapper failure on private scratch is retained; subsequent explicitly selected retention passed.

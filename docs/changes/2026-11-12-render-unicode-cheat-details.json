@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "slug": "render-unicode-cheat-details",
+  "title": "Page and render Unicode cheat details",
+  "kind": "changed",
+  "platforms": [
+    "Linux",
+    "Windows GNU / Wine"
+  ],
+  "changes": [
+    "Use the bundled fallback font for cheat details and represent missing or zero-advance characters as UTF-16 escapes.",
+    "Page the complete summary, including derived explanations, and then the complete record with UTF-8-safe 1024-byte bounds. Keep full record pages for short non-ASCII and ASCII DEL records.",
+    "Refresh cached summaries when a selected entry is replaced, even with the same ID and generation; retain management preview and record navigation."
+  ],
+  "validation": [
+    "Source inspection and fc-query showed that the prior details renderer used only Inter, which lacks U+6F22 and U+1F9ED; the bundled fallback contains U+6F22 but not U+1F9ED.",
+    "Focused Sol source reviews identified the DEL and Unicode expansion cases and found no concrete defect in the revised paging and routing; Sol/xhigh was requested but effective settings were not independently confirmed.",
+    "Linux menu tests: 153 passed and 1 ignored; catalog tests: 21 passed and 4 ignored. The Windows GNU binaries built; Wine selector, canvas and management tests passed (37, 2 and 5), as did catalog tests (21 passed, 4 ignored).",
+    "An interrupted Wine GUI run displayed CJK and UTF-16 escapes and reached catalog pages 2 and 3 by keyboard and mouse; it exited before completing page navigation. Its diagnostics are retained.",
+    "A synthetic Wine/Xvfb GUI completed 18 details pages by keyboard and pointer, with a visible CJK glyph, UTF-16 escapes and the last record marker. The process closed normally and the coordinated Wine server drained. Evidence: target/validation/units/dbg20-glyph-preview-gui-final-1pnyxi0d/."
+  ],
+  "limitations": [
+    "Native Windows, physical controllers, other renderer paths and complete font coverage remain unverified.",
+    "The Wine GUI used CPU scaling after the GPU presenter was unavailable; it did not establish native GPU behavior."
+  ],
+  "files": [
+    "crates/menu/src/canvas.rs",
+    "crates/menu/src/cheat_management.rs",
+    "crates/menu/src/content_selector.rs",
+    "crates/menu/src/content_selector/tests.rs",
+    "crates/recomp/src/debug_cheats.rs",
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

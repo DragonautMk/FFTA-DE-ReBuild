@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "slug": "browse-full-cheat-record-pages",
+  "title": "Browse complete cheat records in the menu",
+  "kind": "changed",
+  "platforms": [
+    "Linux",
+    "Windows GNU executable / Wine / Xvfb"
+  ],
+  "changes": [
+    "Split oversized catalog records into bounded UTF-8 JSON pages in the read-only details panel, retaining the notes-first summary and full text command.",
+    "Route Left and Right to the open cheat details before the atlas sidebar, and offer numbered pages, scrolling and mouse buttons in English and Italian."
+  ],
+  "validation": [
+    "Linux selector/menu suite passed 32 tests (dbg20-pages-left-tests-jp2u86pt); catalog suite passed 21 tests with four fixture-dependent tests ignored (dbg20-full-details-final-tests-5klpxz96).",
+    "Windows GNU app and test binaries built (dbg20-pages-windows-left-fix-798flnqa); Wine passed 32 menu and 21 catalog tests, four ignored, with a managed server drain (dbg20-pages-wine-left-tests-1y7p4j8w).",
+    "Protected synthetic Wine/Xvfb GUI check navigated 12 record pages by keyboard, returned with Left, advanced with mouse, and reached the final note without guest changes; screenshots were reviewed and the managed server drained (dbg20-pages-gui-left-fix-a8xtwimn).",
+    "Earlier GUI evidence exposed the atlas Left interception and an unsynchronized driver; both were corrected before the passing checks. Compact English and Italian control labels passed the 320x240 layout test."
+  ],
+  "limitations": [
+    "Synthetic navigation and one desktop rendering do not establish native Windows, physical controller, cheat device or game behavior. Four catalog tests requiring fixtures were ignored; DBG2-20 remains partial."
+  ],
+  "files": [
+    "crates/menu/src/content_selector.rs",
+    "crates/menu/src/content_selector/tests.rs",
+    "crates/menu/src/lib.rs",
+    "crates/recomp/src/debug_cheats.rs",
+    "crates/input-config/languages/en.json",
+    "crates/input-config/languages/it.json",
+    "crates/menu/assets/debug_v2.tsv",
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

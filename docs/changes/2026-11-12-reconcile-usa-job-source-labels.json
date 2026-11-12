@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "slug": "reconcile-usa-job-source-labels",
+  "title": "Show the USA job-name discrepancy in reference values",
+  "kind": "changed",
+  "platforms": [
+    "USA ROM source comparison",
+    "Linux projection generator"
+  ],
+  "changes": [
+    "Retain source job labels and annotate rows 01 and 02 with the different authenticated USA ROM name strings in new reference-only projections.",
+    "Document the compact dash glyph and the preserved difference between the source and USA ROM; do not infer valid job transitions."
+  ],
+  "validation": [
+    "Protected read-only check authenticated the USA ROM and metadata table, resolved row 01 to the compact dash glyph and row 02 to the previously authenticated Soldier string, and found the same placeholder in a second string table (dbg20-job01-placeholder-2ujj9fad). The dash interpretation agrees with separately cited public character and ROM string tables.",
+    "Protected generation checked all seven character reference entries, both updated labels, preserved source text, unknown regions, reference-only parameters and exclusion of CH-0236 (dbg20-job01-projection-ma7l6k1m). A preliminary invocation was refused before launch because an evidence path lay outside scratch."
+  ],
+  "limitations": [
+    "This is static USA name metadata, not proof of original author intent, valid race/job transitions, gameplay or device behavior. Existing private snapshots require regeneration; character entries remain reference-only and DBG2-20 remains partial."
+  ],
+  "files": [
+    "scripts/cheat_ability_projection.py",
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

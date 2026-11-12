@@ -21,6 +21,169 @@ Type: docs. Platforms: Windows GNU executable / Wine / Xvfb.
 
 [Change record](docs/changes/2026-11-12-validate-injured-first-aid-wine.json)
 
+## 2026-11-12 — Page and render Unicode cheat details
+
+Type: changed. Platforms: Linux, Windows GNU / Wine.
+
+**Changes**
+
+- Use the bundled fallback font for cheat details and represent missing or zero-advance characters as UTF-16 escapes.
+- Page the complete summary, including derived explanations, and then the complete record with UTF-8-safe 1024-byte bounds. Keep full record pages for short non-ASCII and ASCII DEL records.
+- Refresh cached summaries when a selected entry is replaced, even with the same ID and generation; retain management preview and record navigation.
+
+**Validation**
+
+- Source inspection and fc-query showed that the prior details renderer used only Inter, which lacks U+6F22 and U+1F9ED; the bundled fallback contains U+6F22 but not U+1F9ED.
+- Focused Sol source reviews identified the DEL and Unicode expansion cases and found no concrete defect in the revised paging and routing; Sol/xhigh was requested but effective settings were not independently confirmed.
+- Linux menu tests: 153 passed and 1 ignored; catalog tests: 21 passed and 4 ignored. The Windows GNU binaries built; Wine selector, canvas and management tests passed (37, 2 and 5), as did catalog tests (21 passed, 4 ignored).
+- An interrupted Wine GUI run displayed CJK and UTF-16 escapes and reached catalog pages 2 and 3 by keyboard and mouse; it exited before completing page navigation. Its diagnostics are retained.
+- A synthetic Wine/Xvfb GUI completed 18 details pages by keyboard and pointer, with a visible CJK glyph, UTF-16 escapes and the last record marker. The process closed normally and the coordinated Wine server drained. Evidence: target/validation/units/dbg20-glyph-preview-gui-final-1pnyxi0d/.
+
+**Limitations**
+
+- Native Windows, physical controllers, other renderer paths and complete font coverage remain unverified.
+- The Wine GUI used CPU scaling after the GPU presenter was unavailable; it did not establish native GPU behavior.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-12-render-unicode-cheat-details.json)
+
+## 2026-11-12 — Show the USA job-name discrepancy in reference values
+
+Type: changed. Platforms: USA ROM source comparison, Linux projection generator.
+
+**Changes**
+
+- Retain source job labels and annotate rows 01 and 02 with the different authenticated USA ROM name strings in new reference-only projections.
+- Document the compact dash glyph and the preserved difference between the source and USA ROM; do not infer valid job transitions.
+
+**Validation**
+
+- Protected read-only check authenticated the USA ROM and metadata table, resolved row 01 to the compact dash glyph and row 02 to the previously authenticated Soldier string, and found the same placeholder in a second string table (dbg20-job01-placeholder-2ujj9fad). The dash interpretation agrees with separately cited public character and ROM string tables.
+- Protected generation checked all seven character reference entries, both updated labels, preserved source text, unknown regions, reference-only parameters and exclusion of CH-0236 (dbg20-job01-projection-ma7l6k1m). A preliminary invocation was refused before launch because an evidence path lay outside scratch.
+
+**Limitations**
+
+- This is static USA name metadata, not proof of original author intent, valid race/job transitions, gameplay or device behavior. Existing private snapshots require regeneration; character entries remain reference-only and DBG2-20 remains partial.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-12-reconcile-usa-job-source-labels.json)
+
+## 2026-11-12 — Locate the two CH-0236 candidate record spans
+
+Type: docs. Platforms: USA checkpoint / plaintext CodeBreaker interpretation.
+
+**Changes**
+
+- Document that the imported CH-0236 halfwords target different candidate records and relate the anomalous first pair to the analogous candidate ability-progress span.
+
+**Validation**
+
+- Protected static check compared unchanged source lines and decoder width with retained USA record boundaries and the previous first-record progress span. The first halfword falls at second-record offsets BC..BD; the second falls at third-record offsets 06..07 (dbg20-ch0236-spans-53ly10yn). No guest execution was performed.
+
+**Limitations**
+
+- The candidate progress span length is EUR-derived; second-record field semantics, original author intent, actual code/device behavior and valid character combinations are unverified. CH-0236 remains unchanged and excluded from the character projections.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-12-locate-ch0236-candidate-record-spans.json)
+
+## 2026-11-12 — Page complete cheat previews
+
+Type: changed. Platforms: Linux, Windows GNU / Wine.
+
+**Changes**
+
+- Split source and preset management previews into bounded UTF-8-safe pages and reuse the existing keyboard, controller, mouse and scroll controls.
+- Keep preview authorization tokens separate from displayed pages and clear pages and tokens when the selected source, preset or accepted preset name changes.
+
+**Validation**
+
+- Source inspection identified the 16384-character canvas limit and the non-paged management preview; preset preparation can produce previews exceeding it.
+- Linux menu tests passed (153 passed, 1 ignored); Wine selector and management tests passed (37 and 5). The Windows GNU application and focused test binaries built successfully.
+- A focused Sol consultation reviewed paging and preview-token flow without finding a concrete defect; gpt-6.1-sol with xhigh was requested but effective settings were not independently confirmed.
+- The later Wine GUI run stopped during catalog-page navigation, before the source and preset previews. Its diagnostics remain available.
+- A protected Wine/Xvfb GUI navigated 21 source-preview pages (over 20710 characters) and 17 preset-preview pages (17216 characters); screenshots show the final record and preset name. It saved, armed and disarmed without advancing the paused guest, then closed normally and drained Wine. Evidence: target/validation/units/dbg20-glyph-preview-gui-final-1pnyxi0d/.
+- The previous completed driver reported PASS but its validation wrapper refused to retire scratch containing unselected private test copies. That unit remains FAIL with its diagnostics retained; the corrected run explicitly retained those copies and passed.
+
+**Limitations**
+
+- Earlier builds may truncate management previews; the accepted GUI check used an isolated synthetic catalog under Wine with CPU scaling.
+- Full DBG2-20 domains, game effects, physical devices and native Windows behavior remain unverified.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-12-identify-truncated-cheat-previews.json)
+
+## 2026-11-12 — Clarify the cheat guide’s reported test context
+
+Type: docs. Platforms: Source research.
+
+**Changes**
+
+- Record the matching guide author’s Eurasia statement and the CodeBreaker v1.2 claim for the alternate master without assigning them to the separate local compilation.
+- Record that the appearance-table contributor described Party-screen checks only, and note an unconfirmed indexed forum report of a battle hang for appearance 0B.
+
+**Validation**
+
+- Read the guide FAQ, alternate-master section and appearance-table introduction directly. The local source-bound projection separately checks the matching alternate master and known USA/Eurasia checksum; no new ROM or guest execution was performed.
+- The web search index returned the 2003 forum post and the reported 0B battle hang; direct retrieval of the forum page returned HTTP 502, so the report remains an indexed, unconfirmed lead.
+
+**Limitations**
+
+- The guide does not establish the local compilation’s origin or identify its exact ROM digest. Its device statement concerns the alternate master, not all individual codes.
+- No new gameplay or device proof, source-domain authorization, or correction of CH-0236 follows. The forum report does not identify a reproducible ROM and state; other values can also fail.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-12-clarify-cheat-guide-test-context.json)
+
+## 2026-11-12 — Browse complete cheat records in the menu
+
+Type: changed. Platforms: Linux, Windows GNU executable / Wine / Xvfb.
+
+**Changes**
+
+- Split oversized catalog records into bounded UTF-8 JSON pages in the read-only details panel, retaining the notes-first summary and full text command.
+- Route Left and Right to the open cheat details before the atlas sidebar, and offer numbered pages, scrolling and mouse buttons in English and Italian.
+
+**Validation**
+
+- Linux selector/menu suite passed 32 tests (dbg20-pages-left-tests-jp2u86pt); catalog suite passed 21 tests with four fixture-dependent tests ignored (dbg20-full-details-final-tests-5klpxz96).
+- Windows GNU app and test binaries built (dbg20-pages-windows-left-fix-798flnqa); Wine passed 32 menu and 21 catalog tests, four ignored, with a managed server drain (dbg20-pages-wine-left-tests-1y7p4j8w).
+- Protected synthetic Wine/Xvfb GUI check navigated 12 record pages by keyboard, returned with Left, advanced with mouse, and reached the final note without guest changes; screenshots were reviewed and the managed server drained (dbg20-pages-gui-left-fix-a8xtwimn).
+- Earlier GUI evidence exposed the atlas Left interception and an unsynchronized driver; both were corrected before the passing checks. Compact English and Italian control labels passed the 320x240 layout test.
+
+**Limitations**
+
+- Synthetic navigation and one desktop rendering do not establish native Windows, physical controller, cheat device or game behavior. Four catalog tests requiring fixtures were ignored; DBG2-20 remains partial.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-12-browse-full-cheat-record-pages.json)
+
+## 2026-11-12 — Authenticate item consumers for the Hunter comparison
+
+Type: docs. Platforms: USA and EUR ROM static analysis.
+
+**Changes**
+
+- Document that two authenticated consumers use the five halfwords affected by the observed ordinary Hunter transition as item-table indices.
+
+**Validation**
+
+- A protected read-only unit compared the retained ordinary and paired USA records, authenticated both ROMs, verified the two direct item-getter calls and matched the complete 376-entry USA/EUR tables. The ordinary route cleared the five values while the paired write retained them. Evidence: target/validation/units/dbg20-job-item-consumer-45iaunf6/.
+
+**Limitations**
+
+- Static consumers do not prove execution on the observed route, identify the displayed equipment slots, or establish complete job-change behavior, learned skills or battle safety.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-12-authenticate-job-item-consumers.json)
+
 ## 2026-11-11 — Validate ordinary EUR fixed OBJ transfer under Wine
 
 Type: changed. Platforms: EUR / Wine.

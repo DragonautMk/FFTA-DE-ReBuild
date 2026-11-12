@@ -626,8 +626,15 @@ No other development was selected. On resumption read only the individual ID in
   provides search/details/filters and a later explicit source/preview/arm/disarm
   page flow. Details now surface bounded per-source failure reasons and
   missing placeholder domains; a protected Wine check covered CH-0236. Long
-  records put source notes before the abbreviated raw record; oversized notes
-  still require the full paged text command. Category and source-title search
+  records put source notes before the abbreviated raw record; complete records
+  are available in numbered menu pages and through the paged text command.
+  Fallback-font and missing/zero-advance Unicode escapes, with bounded summary
+  and record pages for Unicode expansion and ASCII DEL, pass Linux and Wine
+  tests. A synthetic Wine GUI displayed CJK and escapes and navigated 18 pages.
+  Earlier long management previews can stop after 16,384 characters without
+  notice, yet returning permits activation. A Wine GUI traversed 21 source
+  pages and 17 preset pages and armed/disarmed without advancing the guest.
+  Category and source-title search
   uses dedicated terms, so abbreviated code lists do not hide those matches.
   The cheat filters now use source-plan, declared-region and armed
   metadata rather than localized labels; a separate values filter finds
@@ -658,8 +665,10 @@ No other development was selected. On resumption read only the individual ID in
   possible plaintext interpretation its checksum differs from the known EUR
   ROM. A [Labmaster guide](https://gamefaqs.gamespot.com/gba/560436-final-fantasy-tactics-advance/faqs/26118)
   identifies matching examples and the alternate master as CodeBreaker and
-  provides tables, but does not establish the local compilation's provenance or
-  target ROM. Its job/appearance/race mapping conflicts with the local CH-0234
+  provides tables. The author names Eurasia and reports testing the alternate
+  master on CodeBreaker v1.2; the appearance list's contributor reports Party
+  screen checks only. These statements do not establish the local compilation's
+  provenance, exact ROM or battle safety. Its job/appearance/race mapping conflicts with the local CH-0234
   notes; preserve the notes and resolve the discrepancy before declaring domains.
   A protected read-only audit found the plaintext master checksum matches the
   known USA/Eurasia ROM and not the known EUR ROM. The decoder now supports a
@@ -719,8 +728,11 @@ No other development was selected. On resumption read only the individual ID in
   invalid-pair refusal and a false-condition zero-write check passed; other pairs and full mechanics remain
   unverified. A same-seed Hunter/Hunt comparison found the ordinary job change
   displayed an unequip notice and cleared nine more first-record bytes than the
-  paused two-byte plan. The opt-in job projections now surface that difference;
-  other equipment states and full equivalence remain unverified. The condition
+  paused two-byte plan. Two authenticated USA/EUR static consumers use the
+  five affected halfwords as item-table indices; their execution on that route
+  and the displayed slot mapping remain unproved. The opt-in job projections
+  surface the difference; other equipment states and full equivalence remain
+  unverified. The condition
   does not prove actor identity or full-state safety. Protected generation and
   a USA Wine menu one-shot plus false-condition check passed; other gameplay,
   maintained use and physical devices remain unverified. A separate byte-85-only diagnostic showed Gunner
@@ -735,7 +747,8 @@ No other development was selected. On resumption read only the individual ID in
   property-zero result resolves to the Soldier name in the original USA caller;
   the local XP table labels Soldier 01 and 02 as a dash. Of 43 job rows under
   the five playable race headings, 41 source labels match USA ROM names after
-  normalization; row 02 is blank in the source and row 01 could not be decoded.
+  normalization; source rows 01/02 say Soldier/dash, while their USA ROM name
+  strings are dash/Soldier. The compact dash glyph was confirmed separately.
   Metadata byte 04 matches 42 source race groups; row 01 differs. Its race
   interpretation and runtime transitions remain unverified; complete behavior
   remains open.
@@ -743,7 +756,10 @@ No other development was selected. On resumption read only the individual ID in
   address in CodeBreaker and RAW listings, without resolving its intent. A
   separate US listing and protected USA record/name-pointer inspection support
   a stride-aligned candidate; a cheat-free roster capture matches the third
-  pointer. One synthetic candidate-byte write changed that actor’s portrait and
+  pointer. Under a plaintext interpretation, the original first halfword falls
+  at offsets BC..BD of the second candidate record, corresponding to positions
+  in the first record's EUR-derived candidate progress span; progress semantics
+  in the second record are unverified. One synthetic candidate-byte write changed that actor’s portrait and
   sprite against a protected control. A separate opt-in private USA projection
   now offers only the observed appearance value for that address with distinct
   provenance; menu selection, one-shot write and invalid-value refusal passed

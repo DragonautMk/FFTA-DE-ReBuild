@@ -72,11 +72,10 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ### DBG2-20
 
-- State: active
+- State: suspended
 - Outcome: partial
-- First Aid Wine pair: both heal 65→106/442; managed server drain PASS (`dbg20-wine-firstaid-analysis-49elnozl`).
-- First Aid Linux pair: both heal 65→106/442 (`dbg20-linux-firstaid-analysis-i5e8wbjf`); Wine unit `dbg20-injured-fresh-q1dz0v4k` interrupted.
-- Selector 02→09 list: `dbg20-battle-ability-analysis-3cq1ada9`.
+- Selection: paused by user. Item-consumer audit PASS (`45iaunf6`); `/tmp/dbg20-single-unequip.py` prepared but not run. Resume only on request.
+- First Aid 02/09: 65→106/442 PASS (`335_mucw`); old Wine interrupted.
 - Category/source search PASS: `dbg20-category-search-linux-s85q6zud`, `dbg20-category-search-wine-gui-retry-7ep44203`.
 - Parameters/guards: `dbg2-20-menu-values-confirm-vymtsut1`, `dbg2-20-parameter-render-corrected-rkm88ykd`, `dbg2-20-multiple-parameter-suite-_dgohsc9`, `dbg2-20-multiple-real-rom-preflight-ks8dyakw`, `dbg2-20-multiple-windows-build-ry5e8e9o`; XP domains absent (`dbg2-20-source-domain-audit-e9o97pmb`).
 - One-shot feedback: zero and positive counts shown (`dbg20-cheat-feedback-wine-0htinf7a`).
@@ -84,7 +83,7 @@ for a specific question: archive legacy lines 179..744 or the named record below
 - Wine PASS: `dbg2-20-focused-wine-8q7tdm2w`, `dbg2-20-rom-preflight-wine-eiw70mf0`, `dbg2-20-menu-offscreen-wine-ftxmavl9`.
 - Values/presets: `dbg2-20-live-parameter-flow-i_1jqzpn`, `dbg2-20-live-menu-values-bqd__1zo`, `dbg2-20-parameter-menu-preset-sbd7cz9m`; domains open.
 - Master USA/EUR preflight PASS; D-Bus assertion; Sol `/root/sol_debug_diagnosis` advised. Eight USA abilities: guarded Wine PASS, XP unchanged (`dbg2-20-usa-ability-projection-ro_8a3nv/work/projection/catalogo.json`).
-- Missing: full job/race/appearance domains and CH-0236, source-label reconciliation, actual ability effects, physical-device behavior and native Windows.
+- Missing: full job/race/appearance domains and CH-0236, actual ability effects, physical-device behavior and native Windows.
 - Dependent lists/guards PASS (`dbg2-20-dependent-parameter-tests-iiddbvcl`, `dbg2-20-dependent-wine-gui-ijn43g20`); older runtimes reject schema.
 - Character examples/DS-16: `dbg2-20-character-examples-wine-__ltq06k`, `dbg2-20-ds16-readonly-fields-3ao28h9v`; Sol advised quarantine.
 - Quarantine: unknown region rejects preparation (`dbg2-20-character-reference-only-mtq__gpq`, `dbg2-20-reference-only-wine-maya4aqz`). Never activate historical `dbg2-20-usa-character-examples-ucw5y1gi`.
@@ -95,15 +94,15 @@ for a specific question: archive legacy lines 179..744 or the named record below
 - Paired job/ability labels: Black Mage/Black Magic one-screen PASS (`dbg20-paired-job-ability-664h7_f_`); nine other pairs source-listed only.
 - Paired progress: first142 candidate bytes unchanged; five Black Magic rows match at different frames (`dbg20-paired-progress-wine-5ufj87ja`, `dbg20-ability-info-compare-k050osb_`); learning unproved.
 - Hunter ordinary vs paired: unequip notice and nine extra bytes (`dbg20-ordinary-job-comparison-nl85j_ik`, `dbg20-hunter-paired-once-wu600y_z`); transitions unproved.
-- Selection: `DBG2-20-FULL-DETAIL-PAGES` paused; Linux/Wine tests PASS (`jp2u86pt`, `1y7p4j8w`); GUI PASS (`dbg20-pages-gui-left-fix-a8xtwimn`), images await review.
+- `DBG2-20-JOB-TRANSITION` partial: static item-consumer audit PASS (`45iaunf6`); one-slot ordinary unequip and full transitions open; Sol xhigh unconfirmed.
 - Conditional USA job05 entry: one write when matching; zero on mismatch (`dbg20-first-job-wine-vlhi_rx4`).
 - Offset85 title/stats (`dbg20-single-offset85-yqmspzpv`); routing (`dbg20-usa-eur-job-routing-r9g1avi3`); actor/name (`dbg20-usa-job-call-registers-uienjad6`, `dbg20-usa-job-name-caller-_8hlaicc`); XP labels conflict.
 - Race/job-only matched full tuple screenshot (`dbg20-character-preserve85-t3l31iu3`); state equivalence unproved.
 - Labels PASS: `dbg20-value-label-build-zkxk1v_j`, `dbg20-value-label-wine-z3h_9726`.
-- CH-0236 intent unresolved; guide repeats anomalous address. US candidate: `dbg20-third-record-readonly-sww_z0qx`, `dbg20-third-record-pointers-nb08dpqa`, `dbg20-third-candidate-effect-lwmjwzo2`.
+- CH-0236: under plaintext, first halfword is second candidate+BC..BD; corresponding first-record span is candidate progress (`53ly10yn`). Intent, field effects and original device remain unproved.
 - Source reasons/third roster PASS: `dbg20-source-reasons-final-wine-m69p1pgw`, `dbg20-third-roster-route-4hh0fmeo`.
 - Values filter PASS (`dbg20-values-filter-wine-f820ejz6`); discovery only.
-- USA jobs: labels41/43, race42/43; row01 undecoded/different, row02 blank/Soldier (`dbg20-usa-job-label-comparison-34opuv6d`, `dbg20-usa-job-race-metadata-hp0v8vns`); gameplay unproved.
+- USA jobs: 41/43 source names match; source 01/02 Soldier/dash, ROM dash/Soldier (`dbg20-job01-placeholder-2ujj9fad`); 42/43 race metadata matches; gameplay unproved.
 - Reference lists: 5 races/43 jobs/226 appearances (`dbg20-reference-values-wine-e4mbx839`); quarantined.
 - Third appearances: 129 source choices; 03/0D/CA/F0 differ on one screen, CA green/F0 blue face (`dbg20-appearance-matrix-wine-5e8dfxho`); compatibility unverified.
 - Parameter chooser: decimal and hex displayed; Linux and Wine GUI PASS (`dbg20-hex-values-wine-oyxdakfz`).
@@ -174,9 +173,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: DBG2-20 partial.
-- Last verified result: USA Wine 02/09 First Aid pair heals 65→106; screens and records compared.
-- Remaining work: other abilities, full domains, CH-0236/source labels, devices and native Windows.
-- Errors or blockers: original Wine unit remains interrupted with its unit lease; shared prefix recovered.
-- Next action: review GUI screenshots, then finish documentation and acceptance checks.
-- References: docs/changes/2026-11-12-validate-injured-first-aid-wine.json; docs/cheats.md.
+- Task: DBG2-20 paused by user; outcome partial.
+- Last verified result: GUI `1pnyxi0d` and static item audit `45iaunf6` PASS.
+- Remaining work: domains, abilities, CH-0236 and devices.
+- Errors or blockers: prior GUI `89m4hbg4` wrapper FAIL; diagnostics retained.
+- Next action: resume only on request; inspect prepared one-slot driver and checkpoint.
+- References: `1pnyxi0d`, `45iaunf6`, `nl85j_ik`.

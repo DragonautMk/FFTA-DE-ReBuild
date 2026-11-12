@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "slug": "locate-ch0236-candidate-record-spans",
+  "title": "Locate the two CH-0236 candidate record spans",
+  "kind": "docs",
+  "platforms": [
+    "USA checkpoint / plaintext CodeBreaker interpretation"
+  ],
+  "changes": [
+    "Document that the imported CH-0236 halfwords target different candidate records and relate the anomalous first pair to the analogous candidate ability-progress span."
+  ],
+  "validation": [
+    "Protected static check compared unchanged source lines and decoder width with retained USA record boundaries and the previous first-record progress span. The first halfword falls at second-record offsets BC..BD; the second falls at third-record offsets 06..07 (dbg20-ch0236-spans-53ly10yn). No guest execution was performed."
+  ],
+  "limitations": [
+    "The candidate progress span length is EUR-derived; second-record field semantics, original author intent, actual code/device behavior and valid character combinations are unverified. CH-0236 remains unchanged and excluded from the character projections."
+  ],
+  "files": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

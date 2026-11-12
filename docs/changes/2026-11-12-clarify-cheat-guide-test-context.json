@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "slug": "clarify-cheat-guide-test-context",
+  "title": "Clarify the cheat guide’s reported test context",
+  "kind": "docs",
+  "platforms": [
+    "Source research"
+  ],
+  "changes": [
+    "Record the matching guide author’s Eurasia statement and the CodeBreaker v1.2 claim for the alternate master without assigning them to the separate local compilation.",
+    "Record that the appearance-table contributor described Party-screen checks only, and note an unconfirmed indexed forum report of a battle hang for appearance 0B."
+  ],
+  "validation": [
+    "Read the guide FAQ, alternate-master section and appearance-table introduction directly. The local source-bound projection separately checks the matching alternate master and known USA/Eurasia checksum; no new ROM or guest execution was performed.",
+    "The web search index returned the 2003 forum post and the reported 0B battle hang; direct retrieval of the forum page returned HTTP 502, so the report remains an indexed, unconfirmed lead."
+  ],
+  "limitations": [
+    "The guide does not establish the local compilation’s origin or identify its exact ROM digest. Its device statement concerns the alternate master, not all individual codes.",
+    "No new gameplay or device proof, source-domain authorization, or correction of CH-0236 follows. The forum report does not identify a reproducible ROM and state; other values can also fail."
+  ],
+  "files": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

@@ -148,6 +148,11 @@ scrollable below. These source-plan conditions do not establish game behavior.
 Choose a source and review the operations and potential read/write ranges before
 explicitly applying or arming; the shared identity, state, checksum and overlap
 guards still apply. Disarm stops future writes without restoring memory.
+The menu divides long plan and preset previews into numbered pages. A synthetic
+Wine GUI check navigated a 21-page source preview and a 17-page preset preview,
+then armed and disarmed while the guest was paused. Earlier builds can omit
+content after 16,384 characters without a truncation notice, even though
+returning permits activation.
 The catalog's **Disarm all** action is also available when the selected catalog
 is empty or unavailable, so it can stop an already armed set.
 A catalog next to the executable is loaded when present;
@@ -163,12 +168,22 @@ before the original record. Each assessed source can show its bounded failure
 reason and provenance index; placeholder lines without a parameter declaration
 explicitly say that a declared value domain is missing. Empty provenance and
 additional unassessed sources are identified. Dynamic decoder errors without a locale entry remain
-in English. These diagnostics do not enable the entry or establish compatibility. Long individual records are marked as abbreviated
-in the view and remain available in full through `debug-cheats show`. When a
-record is abbreviated, its source notes are shown before the raw record so a
-long code list does not hide them. The same size bound still applies to very
-long notes, and the abbreviation notice directs readers to the full record. Decoding
-and controlled application remain partial, with the one-shot scope below.
+in English. These diagnostics do not enable the entry or establish compatibility.
+Long records have a bounded summary that puts source notes before the raw record.
+For an abbreviated record, the details panel also provides the complete compact
+JSON in numbered pages: use Left and Right or the on-screen buttons to change
+pages, Up and Down to scroll, and OK or Cancel to return. The full record remains
+available through `debug-cheats show`. Paging preserves the catalog's original
+content; it does not verify or enable the entry. Decoding and controlled
+application remain partial, with the one-shot scope below.
+
+The details renderer uses the bundled fallback font and displays missing or
+zero-advance glyphs as Unicode escapes. It pages the complete summary, including
+generated explanations, before the record pages; non-ASCII records and records
+containing ASCII DEL receive full record pages as well. Linux and Wine tests pass.
+A synthetic Wine GUI check showed a CJK glyph and escaped characters, and
+navigated 18 details pages with keyboard and pointer. Native Windows, physical
+controllers and complete font coverage remain unverified.
 
 To keep a cheat in the favorites list, highlight it and choose **Favorite**;
 choose **Unfavorite** to remove it. **Show favorites** switches directly to
@@ -473,7 +488,10 @@ a possible plaintext game-ID/hook pair, but under that hypothesis its enabled
 checksum differs from the protected known EUR ROM. A separately located
 [Labmaster CodeBreaker guide](https://gamefaqs.gamespot.com/gba/560436-final-fantasy-tactics-advance/faqs/26118)
 contains the same alternate master and corresponding placeholder examples and
-identifies them as CodeBreaker. It supplies tables and describes the character
+identifies them as CodeBreaker. Its author says the Eurasia release is usable
+and describes the alternate master as tested on CodeBreaker v1.2. These are
+claims about that guide, not authentication of the Italian compilation, an
+exact ROM digest or the compatibility of every code. It supplies tables and describes the character
 modifier fields as job, appearance and race, in that order; the local XP notes
 for CH-0234 describe different associations. The guide is a matching reference,
 not proof that it was the Italian compilation's source or that the codes target
@@ -702,7 +720,14 @@ name pointer matched a known ROM name-table entry. A separate cheat-free
 Wine route selected the third roster member and its displayed name matched
 that pointer. The imported outlier falls
 inside the preceding record interval, while the alternate address is four
-bytes after the third candidate’s start. This supports a distinct candidate. In an isolated USA checkpoint, a synthetic
+bytes after the third candidate’s start. Under the plaintext interpretation,
+the original first halfword instead targets offsets `BC..BD` of the second
+candidate record; its second halfword targets offsets `06..07` of the third.
+The first pair occupies the corresponding positions of the `+40..+CD` span
+previously inspected as candidate ability progress in the first record. That
+span's length came from EUR evidence, and the second record's field semantics
+have not been established. This comparison does not verify the original code or
+its intended target. In an isolated USA checkpoint, a synthetic
 one-shot changed only the alternative appearance byte for the authenticated third
 roster member. After the same route used by a protected no-write control, the
 selected actor’s portrait and sprite changed; the imported outlier was unchanged.
@@ -786,9 +811,16 @@ do not resolve every source label, explain the earlier job-screen title or
 establish a complete compatible job/race domain. A protected read-only
 comparison covered the 43 job rows listed under the five playable race headings:
 41 source labels matched their USA ROM job-name rows after case, punctuation and
-spacing normalization. The source leaves row `02` unnamed while its ROM row
-names Soldier; the source labels row `01` Soldier, but the comparison could
-not decode its ROM string. A second comparison found that metadata byte `04`
+spacing normalization. The source labels row `01` Soldier and row `02` with a
+dash, while the corresponding USA ROM name strings are a dash and Soldier,
+respectively. The first comparison could not decode the compact dash glyph;
+a later protected read confirmed its encoding and the same placeholder in a
+second string table, consistent with an independently published [character
+table](https://github.com/lofimichael/ffta-agent/blob/main/data/char_table.json)
+and [ROM string map](https://datacrystal.tcrf.net/wiki/Final_Fantasy_Tactics_Advance%3AString_Tables).
+New reference projections record both labels; existing snapshots must be
+regenerated for the updated note. The chooser may shorten long labels. A second
+comparison found that metadata byte `04`
 matched the source race heading for 42 of the 43 rows; row `01` held zero rather
 than the Human heading's value. The independent ROM map describes this byte as
 job race, but marks that description as needing verification. These checks do
@@ -828,6 +860,13 @@ values `01..5F`, `C0..E0` and `F0`, with the table's labels. The source marks
 these are excluded. Values not listed by the source are excluded too. Some
 included labels are uncertain or describe black sprites. The source describes
 appearances, not verified compatibility, and other included values can also fail.
+The appearance-table contributor says those values were checked only on the
+Party screen and that playability was not tested. A separate [2003 forum
+report](https://home.eyesonff.com/showthread.php/38957-Codes) describes a battle
+hang with third-character appearance `0B`; its exact ROM and state are unknown.
+Only the search index was accessible during this review (the page returned
+HTTP 502), so this is an unconfirmed warning, not a reproduced result or an
+exhaustive list of unsafe values.
 Wrapped descriptions are shortened in the chooser; consult the original local
 table for the full text. The slot may identify a different actor in another state.
 
@@ -945,6 +984,12 @@ not establish other jobs, learned skills, battle behavior or native Windows.
 The guarded Wine units and screenshots are retained in
 `target/validation/units/dbg20-ordinary-job-comparison-nl85j_ik/` and
 `target/validation/units/dbg20-hunter-paired-once-wu600y_z/`.
+A protected static comparison found two USA/EUR consumers using the five
+halfwords at offsets `2A..33` as indices into identical 376-entry item tables.
+The ordinary route cleared all five values; the paired write kept them. This
+supports an equipment-related difference, but does not prove those consumers ran
+on the observed route, identify the displayed slots or establish complete job
+transition behavior. Evidence: `target/validation/units/dbg20-job-item-consumer-45iaunf6/`.
 
 A separate menu check explicitly selected both choices, made two writes, refused
 an undeclared pair, and made zero writes when the condition no longer matched.

@@ -221,6 +221,7 @@ pub(super) struct Selector {
     detail_mode: bool,
     detail_scroll: Cell<usize>,
     detail_page: usize,
+    detail_summary_pages: Vec<String>,
     manage: Option<super::cheat_management::State>,
     preset_name_edit: bool,
 }
@@ -252,7 +253,7 @@ impl Selector {
         if let Some(i)=self.selected(){
             let entry=&self.entries[i];
             let armed=entry.cheat_filter.as_ref().is_some_and(|f|f.armed);
-            self.detail_mode=false;
+            self.detail_mode=false;self.detail_page=0;self.detail_scroll.set(0);self.detail_summary_pages.clear();
             self.manage=Some(super::cheat_management::State::new(entry.id.clone(),entry.name.clone(),armed,sources,presets));
         }
     }
@@ -271,7 +272,7 @@ impl Selector {
     pub fn cheat_set_preview_token(&mut self,token:String){if let Some(s)=self.manage.as_mut(){s.preview_token=token;}}
     pub fn cheat_management_active(&self)->bool{self.manage.is_some()}
     pub(super) fn cheat_details_active(&self)->bool{self.cheat_mode && self.detail_mode}
-    pub fn cheat_management_feedback(&mut self,message:String,preview:Option<String>){if let Some(state)=self.manage.as_mut(){state.feedback=message;if let Some(preview)=preview{state.preview=preview;self.detail_mode=true;self.detail_scroll.set(0);}else{state.preview.clear();state.preview_token.clear();}}else{self.message=message;}}
+    pub fn cheat_management_feedback(&mut self,message:String,preview:Option<String>){if let Some(state)=self.manage.as_mut(){state.feedback=message;if let Some(preview)=preview{state.set_preview(preview);self.detail_mode=true;self.detail_page=0;self.detail_scroll.set(0);}else{state.clear_preview();}}else{self.message=message;}}
     fn cheat_details(&self,locale:&crate::i18n::Locale)->String{
         self.selected().map(|i|{let e=&self.entries[i];format!("{} · {} · {}\n{}\n{}\n{}",e.name,e.status,e.compatibility,e.reason,e.identity,e.description)})
             .unwrap_or_else(||locale.tr("No entry selected").into())
@@ -279,6 +280,24 @@ impl Selector {
     fn cheat_record_pages(&self) -> &[String] {
         self.selected().and_then(|i|self.entries[i].cheat_filter.as_ref())
             .map_or(&[], |filter|filter.record_pages.as_slice())
+    }
+    fn refresh_detail_summary(&mut self) {
+        self.detail_summary_pages=if self.selected().is_some() {
+            let locale=crate::i18n::Locale(input_config::Language::default());
+            super::cheat_management::detail_text_pages(&self.cheat_details(&locale))
+        } else {Vec::new()};
+    }
+    fn detail_continuations(&self) -> usize {
+        if let Some(manage)=self.manage.as_ref(){manage.preview_pages.len()}
+        else{self.detail_summary_pages.len().saturating_sub(1)+self.cheat_record_pages().len()}
+    }
+    fn detail_text(&self,page:usize,locale:&crate::i18n::Locale)->String {
+        if let Some(manage)=self.manage.as_ref(){
+            if page==0{manage.preview.clone()}else{manage.preview_pages[page-1].clone()}
+        } else if self.detail_summary_pages.is_empty(){
+            if page==0{self.cheat_details(locale)}else{self.cheat_record_pages()[page-1].clone()}
+        } else if page<self.detail_summary_pages.len(){self.detail_summary_pages[page].clone()}
+        else{self.cheat_record_pages()[page-self.detail_summary_pages.len()].clone()}
     }
     pub(super) fn description(&self,language:input_config::Language)->String {
         let kinds=self.kinds();let kind=kinds.get(self.kind).map(String::as_str).unwrap_or_default();
@@ -481,6 +500,8 @@ impl Selector {
         self.preview_message.clear();
         self.detail_scroll.set(0);
         self.detail_page = 0;
+        if self.cheat_mode && self.detail_mode && self.manage.is_none(){self.refresh_detail_summary();}
+        else{self.detail_summary_pages.clear();}
     }
     pub fn selected(&self) -> Option<usize> {
         self.visible.get(self.cursor).copied()
@@ -546,7 +567,7 @@ impl Selector {
     }
     pub fn finish_search(&mut self, cancel: bool) {
         if self.preset_name_edit {
-            if !cancel {if let Some(s)=self.manage.as_mut(){s.preset_name=self.query.clone();s.preview.clear();s.preview_token.clear();}}
+            if !cancel {if let Some(s)=self.manage.as_mut(){s.preset_name=self.query.clone();s.clear_preview();}}
             self.query=self.search_backup.clone();let id=self.search_backup_id.clone();self.editing=false;self.preset_name_edit=false;self.preedit.clear();self.rebuild(id.as_deref());return;
         }
         if let Some(index)=self.choice_edit.take() {
@@ -586,6 +607,8 @@ impl Selector {
         self.preview_message.clear();
         self.detail_scroll.set(0);
         self.detail_page = 0;
+        if self.cheat_mode && self.detail_mode && self.manage.is_none(){self.refresh_detail_summary();}
+        else{self.detail_summary_pages.clear();}
     }
     fn confirm(&mut self) -> Option<MenuAction> {
         match self.focus {
@@ -596,7 +619,7 @@ impl Selector {
             5 if self.cheat_mode => return self.selected().map(|_|MenuAction::CheatManage),
             5 => self.focus = 6,
             6 => {
-                if self.cheat_mode {if self.selected().is_some(){self.detail_mode=true;self.detail_page=0;self.detail_scroll.set(0);}else{self.message="No catalog: choose Import catalog.".into();}return None;}
+                if self.cheat_mode {if self.selected().is_some(){self.refresh_detail_summary();self.detail_mode=true;self.detail_page=0;self.detail_scroll.set(0);}else{self.message="No catalog: choose Import catalog.".into();}return None;}
                 if self.busy {
                     self.message = "Wait for the current catalog operation, or cancel.".into();
                 } else if let Some(index) = self.selected() {
@@ -664,7 +687,20 @@ impl Selector {
     }
     pub fn handle(&mut self, input: MenuInput) -> Option<MenuAction> {
         if self.manage.is_some() && !self.editing {
-            if self.detail_mode {match input{MenuInput::Cancel|MenuInput::Confirm=>{self.detail_mode=false;if let Some(m)=self.manage.as_mut(){if !m.preset_mode{m.focus=3;}}},MenuInput::Up|MenuInput::Left=>self.detail_scroll.set(self.detail_scroll.get().saturating_sub(1)),_=>self.detail_scroll.set((self.detail_scroll.get()+1).min(8192))};return None;}
+            if self.detail_mode {
+                let pages=self.detail_continuations();
+                match input {
+                    MenuInput::Cancel|MenuInput::Confirm=>{
+                        self.detail_mode=false;self.detail_page=0;self.detail_scroll.set(0);
+                        if let Some(m)=self.manage.as_mut(){if !m.preset_mode{m.focus=3;}}
+                    },
+                    MenuInput::Left if pages>0=>{self.detail_page=self.detail_page.saturating_sub(1);self.detail_scroll.set(0);},
+                    MenuInput::Right if pages>0=>{self.detail_page=(self.detail_page+1).min(pages);self.detail_scroll.set(0);},
+                    MenuInput::Up|MenuInput::Left=>self.detail_scroll.set(self.detail_scroll.get().saturating_sub(1)),
+                    MenuInput::Down|MenuInput::Right=>self.detail_scroll.set((self.detail_scroll.get()+1).min(8192)),
+                }
+                return None;
+            }
             if input==MenuInput::Cancel && self.manage.as_ref().is_some_and(|state|state.parameter_mode){self.manage.as_mut().unwrap().handle(MenuInput::Left);return None;}
             if input==MenuInput::Cancel{self.manage=None;self.focus=5;return None;}
             if input==MenuInput::Confirm && self.manage.as_ref().is_some_and(|s|s.preset_mode && s.focus==5) {
@@ -701,12 +737,12 @@ impl Selector {
                     self.detail_page = 0;
                     self.focus = 5;
                 }
-                MenuInput::Left if self.cheat_mode && !self.cheat_record_pages().is_empty() => {
+                MenuInput::Left if self.cheat_mode && self.detail_continuations()>0 => {
                     self.detail_page = self.detail_page.saturating_sub(1);
                     self.detail_scroll.set(0);
                 }
-                MenuInput::Right if self.cheat_mode && !self.cheat_record_pages().is_empty() => {
-                    self.detail_page = (self.detail_page + 1).min(self.cheat_record_pages().len());
+                MenuInput::Right if self.cheat_mode && self.detail_continuations()>0 => {
+                    self.detail_page = (self.detail_page + 1).min(self.detail_continuations());
                     self.detail_scroll.set(0);
                 }
                 MenuInput::Up | MenuInput::Left => self
@@ -844,7 +880,14 @@ impl Selector {
         }
         let g = self.layout(w, h);
         if self.manage.is_some() && !self.editing {
-            if self.detail_mode{return if y>=g.panel[1]+g.panel[3].saturating_sub(g.row){self.handle(MenuInput::Cancel)}else{None};}
+            if self.detail_mode {
+                if self.detail_continuations()>0 {
+                    for (button,input) in detail_page_buttons(g).into_iter().zip([MenuInput::Left,MenuInput::Right,MenuInput::Cancel]) {
+                        if inside(button,x,y){return self.handle(input);}
+                    }
+                } else if y>=g.panel[1]+g.panel[3].saturating_sub(g.row){return self.handle(MenuInput::Cancel);}
+                return None;
+            }
             if inside(g.controls[0],x,y){self.manage.as_mut().unwrap().focus=0;return self.handle(MenuInput::Up);}
             if inside(g.controls[1],x,y){self.manage.as_mut().unwrap().focus=0;return self.handle(MenuInput::Down);}
             if inside(g.controls[2],x,y){self.manage.as_mut().unwrap().focus=0;return self.handle(MenuInput::Confirm);}
@@ -853,7 +896,7 @@ impl Selector {
             return None;
         }
         if self.cheat_mode && self.detail_mode {
-            if !self.cheat_record_pages().is_empty() {
+            if self.detail_continuations()>0 {
                 for (button, input) in detail_page_buttons(g).into_iter().zip([MenuInput::Left,MenuInput::Right,MenuInput::Cancel]) {
                     if inside(button,x,y){return self.handle(input);}
                 }
@@ -1039,20 +1082,21 @@ pub(super) fn draw(s: &Selector, px: &mut [[u8; 4]], w: usize, h: usize, languag
         [89, 121, 139],
     );
     if s.cheat_mode && s.detail_mode {
-        let pages=if s.manage.is_some(){&[][..]}else{s.cheat_record_pages()};
-        let page=s.detail_page.min(pages.len());
-        let text=if page>0{pages[page-1].clone()}else{s.manage.as_ref().map_or_else(||s.cheat_details(&locale),|m|m.preview.clone())};
+        let pages=s.detail_continuations();
+        let page=s.detail_page.min(pages);
+        let text=s.detail_text(page,&locale);
         let title=locale.tr(if s.manage.is_some(){"CHEAT PREVIEW"}else{"CHEAT DETAILS · READ ONLY"});
-        c.text((x+10) as f32,(y+5) as f32,title,ink,size*1.1,true,if pages.is_empty(){pw.saturating_sub(20)}else{pw.saturating_mul(2)/3} as f32);
-        if !pages.is_empty() {
-            let label=super::i18n::format(language,"Page {page}/{total}",&[("page",(page+1).to_string()),("total",(pages.len()+1).to_string())]);
+        c.text((x+10) as f32,(y+5) as f32,title,ink,size*1.1,true,if pages==0{pw.saturating_sub(20)}else{pw.saturating_mul(2)/3} as f32);
+        if pages>0 {
+            let label=super::i18n::format(language,"Page {page}/{total}",&[("page",(page+1).to_string()),("total",(pages+1).to_string())]);
             c.text((x+pw*2/3) as f32,(y+5) as f32,&label,ink,size,false,(pw/3).saturating_sub(10) as f32);
         }
-        let lines=Canvas::wrap_text(&text,size,pw.saturating_sub(24) as f32);
+        let text=Canvas::escape_unsupported_glyphs(&text);
+        let lines=Canvas::wrap_text_with_fallback(&text,size,pw.saturating_sub(24) as f32);
         let pitch=(size*1.5).ceil() as usize;let top=y+g.row+4;let bottom=(y+ph).saturating_sub(g.row);
         let rows=bottom.saturating_sub(top)/pitch.max(1);let offset=s.detail_scroll.get().min(lines.len().saturating_sub(rows));s.detail_scroll.set(offset);
-        for (n,line) in lines.iter().skip(offset).take(rows).enumerate(){c.text((x+10) as f32,(top+n*pitch) as f32,line,ink,size,false,pw.saturating_sub(20) as f32);}
-        if pages.is_empty(){c.text((x+10) as f32,bottom as f32,locale.tr("Up/Down: scroll · OK/Cancel: return"),ink,size,false,pw.saturating_sub(20) as f32);}
+        for (n,line) in lines.iter().skip(offset).take(rows).enumerate(){c.text_with_fallback((x+10) as f32,(top+n*pitch) as f32,line,ink,size,pw.saturating_sub(20) as f32);}
+        if pages==0{c.text((x+10) as f32,bottom as f32,locale.tr("Up/Down: scroll · OK/Cancel: return"),ink,size,false,pw.saturating_sub(20) as f32);}
         else {for (rect,label) in detail_page_buttons(g).into_iter().zip(["Left: prev","Right: next","↑↓ scroll · Back"]) {button(&mut c,rect,locale.tr(label),false,size);}}
         c.finish(px);return;
     }

@@ -23,6 +23,10 @@ mod tests {
         assert_ne!(rendered("日",true),rendered("日",false));
         assert_ne!(rendered("日",true),rendered("候",true));
     }
+    #[test]
+    fn unsupported_characters_are_visible_as_reversible_escapes(){
+        assert_eq!(Canvas::escape_unsupported_glyphs("è漢🧭\u{200b}\n"),"è漢\\uD83E\\uDDED\\u200B\n");
+    }
 }
 pub(super) fn panel_alpha() -> u8 { PANEL_ALPHA.with(|value| value.get()) }
 pub(super) fn with_panel_alpha(alpha: u8, draw: impl FnOnce()) {
@@ -163,6 +167,31 @@ impl Canvas {
     fn fallback_typeface()->&'static FontRef<'static>{
         static FALLBACK:OnceLock<FontRef<'static>>=OnceLock::new();
         FALLBACK.get_or_init(||FontRef::try_from_slice(include_bytes!("../assets/fonts/DroidSansFallback.ttf")).unwrap())
+    }
+    /// Keep missing or zero-advance scalars visible as UTF-16 escapes.
+    pub fn escape_unsupported_glyphs(text:&str)->String {
+        use std::fmt::Write as _;
+        let primary=Self::typeface(false);
+        let fallback=Self::fallback_typeface();
+        let primary_scaled=primary.as_scaled(12.);
+        let fallback_scaled=fallback.as_scaled(12.);
+        let mut output=String::with_capacity(text.len());
+        for ch in text.chars() {
+            let primary_id=primary.glyph_id(ch);
+            let advance=if primary_id.0!=0 {primary_scaled.h_advance(primary_id)} else {
+                let fallback_id=fallback.glyph_id(ch);
+                if fallback_id.0!=0 {fallback_scaled.h_advance(fallback_id)} else {0.}
+            };
+            if ch=='\n' || advance>0. {
+                output.push(ch);
+            } else {
+                let mut units=[0u16;2];
+                for unit in ch.encode_utf16(&mut units).iter() {
+                    write!(&mut output,"\\u{unit:04X}").unwrap();
+                }
+            }
+        }
+        output
     }
     /// Wrap with the same face, variation, kerning and advances as text().
     pub fn wrap_text(text: &str, size: f32, max: f32) -> Vec<String> {
