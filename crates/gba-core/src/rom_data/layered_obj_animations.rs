@@ -13,6 +13,12 @@ pub const CONTEXT_TARGET_COORDINATE: u32 = 0x3ae16c;
 pub const CONTEXT_ADDITIONAL_GEOMETRY: [u32; 8] = [0x3ae154, 0x3ae15c, 0x3ae174, 0x3ae17c, 0x3ae184, 0x3ae18c, 0x3ae194, 0x3ae19c];
 pub const CONTEXT_TIMELINE_ROOT: u32 = 0x3ae038;
 pub const CONTEXT_EVENT_ROOT: u32 = 0x3adfe8;
+pub const TITLE_MAIN_POSITION_ROOT: u32 = 0x3adca0;
+pub const TITLE_MAIN_OBJECT_ROOT: u32 = 0xb8ed28;
+pub const TITLE_MAIN_SEQUENCE_ROOT: u32 = 0xb8ecb4;
+pub const TITLE_LANGUAGE_POSITION_ROOT: u32 = 0x3adcfc;
+pub const TITLE_OBJECT_ROOT: u32 = 0xb8eda4;
+pub const TITLE_SEQUENCE_ROOT: u32 = 0xb8ecd4;
 pub const CONTEXT_LANGUAGE_POSITION_A: u32 = 0x3ae42c;
 pub const CONTEXT_LANGUAGE_POSITION_B: u32 = 0x3ae436;
 pub const CONTEXT_ACTIVATION_GATES: u32 = 0x3ae364;
@@ -226,6 +232,18 @@ pub struct LayeredObjAnimations {
     pub context_timed_events: Option<Vec<ContextTimedEvent>>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub context_language_positions: Option<ContextLanguagePositions>,
+    /// Conditional title-menu cursor positions for five ordinary language choices.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub title_language_positions: Option<[[u16; 2]; 5]>,
+    /// Independently rooted title animation, without a layered descriptor.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub title_language_bank: Option<obj_animations::Bank>,
+    /// Five language-specific sets of four main title cursor positions.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub title_main_positions: Option<[[[u16; 2]; 4]; 5]>,
+    /// A separate title animation selected through its own original producer.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub title_main_bank: Option<obj_animations::Bank>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub context_activation: Option<ContextActivation>,
     /// Target geometry for a separate original interpolation path.
@@ -289,6 +307,24 @@ impl LayeredObjAnimations {
                 return Err("Invalid declared layered OBJ bank shape".into());
             }
         }
+        if let Some(bank) = &self.title_language_bank {
+            bank.validate()?;
+            if (bank.object_root, bank.sequence_root) != (TITLE_OBJECT_ROOT, TITLE_SEQUENCE_ROOT)
+                || bank.lists.len() != 15 || bank.sequences.len() != 2
+                || bank.sequences.iter().map(|s| s.frames.len()).collect::<Vec<_>>() != [9, 8]
+                || bank.lists.iter().any(|list| list.objects.iter().any(|object| object.shape >= 3)) {
+                return Err("Invalid title language animation bank".into());
+            }
+        }
+        if let Some(bank) = &self.title_main_bank {
+            bank.validate()?;
+            if (bank.object_root, bank.sequence_root) != (TITLE_MAIN_OBJECT_ROOT, TITLE_MAIN_SEQUENCE_ROOT)
+                || bank.lists.len() != 6 || bank.sequences.len() != 1
+                || bank.sequences[0].frames.len() != 6
+                || bank.lists.iter().any(|list| list.objects.iter().any(|object| object.shape >= 3)) {
+                return Err("Invalid main title animation bank".into());
+            }
+        }
         let spans = self.source_spans_unchecked()?;
         if spans
             .windows(2)
@@ -348,6 +384,12 @@ impl LayeredObjAnimations {
                 spans.push((offset, rows.iter().flat_map(ContextLanguagePosition::source_bytes).collect(), role.into()));
             }
         }
+        if let Some(groups) = &self.title_main_positions {
+            spans.push((TITLE_MAIN_POSITION_ROOT, groups.iter().flatten().flatten().flat_map(|value| value.to_le_bytes()).collect(), "title-main-positions".into()));
+        }
+        if let Some(rows) = &self.title_language_positions {
+            spans.push((TITLE_LANGUAGE_POSITION_ROOT, rows.iter().flatten().flat_map(|value| value.to_le_bytes()).collect(), "title-language-positions".into()));
+        }
         if let Some(activation) = &self.context_activation {
             spans.push((CONTEXT_ACTIVATION_GATES, activation.gates.clone(), "context-activation-gates".into()));
             spans.push((CONTEXT_ACTIVATION_TICKS, activation.ticks.iter().flat_map(|tick| tick.to_le_bytes()).collect(), "context-activation-ticks".into()));
@@ -358,7 +400,7 @@ impl LayeredObjAnimations {
         for record in &self.context_additional_geometry {
             spans.push((record.source_offset, record.source_bytes().to_vec(), "context-additional-geometry".into()));
         }
-        for bank in &self.banks {
+        for bank in self.banks.iter().chain(self.title_language_bank.iter()).chain(self.title_main_bank.iter()) {
             for (at, offsets, role) in [
                 (
                     bank.object_root,
@@ -467,6 +509,13 @@ impl Catalog {
             (0x14325c, 0x14329c, "e82a4547a0b988614626a5c53d7575853a73de5e66beba39249592bbb5875a4b"),
             (0x14073a, 0x140756, "c72459af942ef733c90f92af033ef241c7e24ab3e36a8e7039c504629e0578f6"),
             (0x140c34, 0x140c40, "333cedd32c64c04a1a4e4f1c3ecbeff225b2da5e42656bce917a91c87b46b1ab"),
+            (0x13aa5a, 0x13aa7e, "0f5e10cbe49182a13131a4e495f27c08fcee9b407bbda18444382563029abd58"),
+            (0x13b20c, 0x13b228, "d18f507dd57cae950c192a0c0f821f0db96543df450f350f131bd2062f9394f5"),
+            (0x139ca0, 0x139d28, "67733b8af31a06c532df977d73eeb3c8ef9c061863611aaee36194cf46655ff1"),
+            (0x1500, 0x16f2, "0e5f0c56689302c705b57240819d430a96f18111a5abc548f2c321b220840f6e"),
+            (0x13ba10, 0x13ba90, "91ca9d9af0d87555f09df9069bbbdc51195ed07244a225592971cbb07415721e"),
+            (0x13a710, 0x13a7e6, "667e6f067cb6b24587b27d4d04a4e2d3338100cb18eb2d5105d2b6f24fa46603"),
+            (0x13a21e, 0x13a23a, "048593c8b52a33967572118641842e88ab944b94dca33a28ad213f63b8f65238"),
         ] {
             if ffta_rom::digest(&rom[start..end]) != hash {
                 return Err("Original layered OBJ producer/reader fingerprint mismatch".into());
@@ -580,6 +629,56 @@ impl Catalog {
             first: language_rows(CONTEXT_LANGUAGE_POSITION_A),
             second: language_rows(CONTEXT_LANGUAGE_POSITION_B),
         });
+        for (literal, expected) in [(0x13aaa8, 0x0800_0000 + TITLE_LANGUAGE_POSITION_ROOT),
+            (0x13b2fc, 0x0800_0000 + TITLE_OBJECT_ROOT), (0x13b300, 0x0800_0000 + TITLE_SEQUENCE_ROOT)] {
+            if u32::from_le_bytes(rom[literal..literal + 4].try_into().unwrap()) != expected {
+                return Err("Title language source literal mismatch".into());
+            }
+        }
+        let raw = &rom[TITLE_LANGUAGE_POSITION_ROOT as usize..TITLE_LANGUAGE_POSITION_ROOT as usize + 20];
+        if ffta_rom::digest(raw) != "ffef7ade0828b2da33d4e71f9229241128a0a84919ed2cbedaac1c9a9ea39516" {
+            return Err("Title language position source mismatch".into());
+        }
+        let title_language_positions = Some(std::array::from_fn(|index| std::array::from_fn(|axis| {
+            let at = 4 * index + 2 * axis; u16::from_le_bytes([raw[at], raw[at + 1]])
+        })));
+        let title_bank = obj_animations::Bank::decode(rom, TITLE_OBJECT_ROOT, TITLE_SEQUENCE_ROOT)?;
+        let mut title_spans = title_bank.spans(); title_spans.sort_by_key(|span| span.0);
+        let mut title_bytes = Vec::new();
+        for &(at, len, _) in &title_spans { title_bytes.extend_from_slice(&rom[at as usize..at as usize + len]); }
+        if title_spans.len() != 19 || title_bytes.len() != 290
+            || ffta_rom::digest(&title_bytes) != "a20bf3c20bee033386435098276481c16ca2dc5a6fa6c6f9fe43c47dabc62396" {
+            return Err("Title animation source projection mismatch".into());
+        }
+        let title_language_bank = Some(title_bank);
+        for (literal, expected) in [(0x13ba54, 0x0800_0000 + TITLE_MAIN_POSITION_ROOT),
+            (0x13ba5c, 0x0800_0000 + TITLE_MAIN_POSITION_ROOT + 16),
+            (0x13ba64, 0x0800_0000 + TITLE_MAIN_POSITION_ROOT + 32),
+            (0x13ba6c, 0x0800_0000 + TITLE_MAIN_POSITION_ROOT + 48),
+            (0x13ba8c, 0x0800_0000 + TITLE_MAIN_POSITION_ROOT + 64),
+            (0x13a284, 0x0800_0000 + TITLE_MAIN_OBJECT_ROOT),
+            (0x13a288, 0x0800_0000 + TITLE_MAIN_SEQUENCE_ROOT)] {
+            if u32::from_le_bytes(rom[literal..literal + 4].try_into().unwrap()) != expected {
+                return Err("Main title source literal mismatch".into());
+            }
+        }
+        let raw = &rom[TITLE_MAIN_POSITION_ROOT as usize..TITLE_MAIN_POSITION_ROOT as usize + 80];
+        if ffta_rom::digest(raw) != "7b0eb881e070b31ed8552874db7fa6d3b16aa635f500e39cafe22949e28f3092" {
+            return Err("Main title position source mismatch".into());
+        }
+        let title_main_positions = Some(std::array::from_fn(|language| std::array::from_fn(|row| std::array::from_fn(|axis| {
+            let at = 16 * language + 4 * row + 2 * axis; u16::from_le_bytes([raw[at], raw[at + 1]])
+        }))));
+        let main_bank = obj_animations::Bank::decode(rom, TITLE_MAIN_OBJECT_ROOT, TITLE_MAIN_SEQUENCE_ROOT)?;
+        let mut main_spans = main_bank.spans(); main_spans.sort_by_key(|span| span.0);
+        let mut main_bytes = Vec::new();
+        for &(at, len, _) in &main_spans { main_bytes.extend_from_slice(&rom[at as usize..at as usize + len]); }
+        if main_spans.len() != 9 || main_bytes.len() != 150
+            || ffta_rom::digest(&main_bytes) != "e7c8f21cd00e94be51f9bb764f655046f5100736097b6a0cd4dfb50ab8dde1d8" {
+            return Err("Main title animation source projection mismatch".into());
+        }
+        let title_main_bank = Some(main_bank);
+
         let context_activation = Some(ContextActivation {
             ticks: (0..40).map(|index| {
                 let at = CONTEXT_ACTIVATION_TICKS as usize + 4 * index;
@@ -600,7 +699,7 @@ impl Catalog {
                 x_extent: half(4), y_extent: half(6) }
         }).collect();
         let decoded = LayeredObjAnimations { descriptors, banks, context_coordinate_records,
-            context_timeline, context_timed_events, context_language_positions, context_activation, context_target_coordinate, context_additional_geometry };
+            context_timeline, context_timed_events, context_language_positions, title_language_positions, title_language_bank, title_main_positions, title_main_bank, context_activation, context_target_coordinate, context_additional_geometry };
         let sources = decoded
             .source_spans()?
             .into_iter()

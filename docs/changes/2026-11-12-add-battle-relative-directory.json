@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "slug": "add-battle-relative-directory",
+  "title": "Serve the EUR battle relative directory",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add the independent 103-entry battle relative directory to the static OBJ resource, keeping its opaque header byte and all offsets while leaving target interpretation and original selection logic in the guest."
+  ],
+  "validation": [
+    "Wine e149-battle-directory-wine-951r5cd9 preserves the E148 projection and other resources, verifies all 210 poisoned source bytes and mixed-width boundaries, and compares six original-reader selector cases including low-16-bit truncation and out-of-range inputs. One ordinary selector-62 interpreter/native-dispatch raw/managed pair matches complete state and clock, with five typed bytes and no raw source reads per arm.",
+    "Wine e149-battle-directory-cli-wine-602qybdq passes production CLI create, no-write reuse, verification and one-frame startup; 102 other resource files match E148."
+  ],
+  "limitations": [
+    "other ordinary selectors, target payload classification, per-read native attribution, frontend save/load, Linux, USA and native Windows remain open. No performance measurement."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/obj_lists.rs",
+    "crates/gba-core/src/rom_data/obj_lists/context_selector.rs",
+    "crates/gba-core/src/rom_data/obj_lists/constructor_animation.rs",
+    "crates/gba-core/src/rom_data/obj_lists/conditional_markers.rs",
+    "crates/gba-core/src/rom_data/obj_lists/observed.rs",
+    "crates/gba-core/src/rom_data/runtime/obj_lists.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/battle_obj_list_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

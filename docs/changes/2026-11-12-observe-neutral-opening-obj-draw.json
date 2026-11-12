@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "slug": "observe-neutral-opening-obj-draw",
+  "title": "Observe one EUR opening OBJ draw under Wine",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add a bounded neutral-opening observation for the first managed title OBJ list and retain its immediately preceding private checkpoint."
+  ],
+  "validation": [
+    "Wine e157-title-opening-draw-wine-28msdufg observes 19 typed directory requests and the 3ade0a list through original affine draw header readers 08001998/199a; poisoned source ranges have no raw reads and the first list-read interpreter frame matches the original full state and clock."
+  ],
+  "limitations": [
+    "One ordinary list and frame only; other lists, regular drawing, native dispatch, Linux, USA and native Windows remain open. No performance measurement."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/title_opening_draw_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

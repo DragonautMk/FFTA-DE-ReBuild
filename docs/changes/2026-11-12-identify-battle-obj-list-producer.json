@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "slug": "identify-battle-obj-list-producer",
+  "title": "Identify the EUR battle OBJ list producer",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Identify the ordinary producer of the previously observed 40dcba battle list as a relative-directory lookup followed by a write to the live task slot."
+  ],
+  "validation": [
+    "Wine battle-writer-observer-wine-q7qbukus follows one retained neutral-input continuation with a width/value-unfiltered watch on the task slot. It observes an initial clear, then 0800720c with directory 0840d300 and selector 62, followed by original 0802e110 writing 0840dcba to task+24. Matching pre-resolver and pre-writer states are retained privately.",
+    "Static EUR inspection identifies a kind-2 directory with 103 entries; selector 62 resolves through relative offset 09b6. The accepted three-frame E147 battle pair remains unchanged."
+  ],
+  "limitations": [
+    "The watch captures the first overlapping bus access per step and its pre-step PC can include nested work. Other directory selectors and consumers, original entry payloads, frontend UI, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/battle_obj_list_tests.rs",
+    "docs/rom_data_obj.md"
+  ],
+  "references": []
+}

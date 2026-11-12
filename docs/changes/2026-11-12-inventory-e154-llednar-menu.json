@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "slug": "inventory-e154-llednar-menu",
+  "title": "Inventory E154 EUR Llednar menu reads",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Record a bounded high-ROM source ownership and runtime-service inventory in a retained EUR Llednar confirmation menu."
+  ],
+  "validation": [
+    "Wine e154-llednar-menu-residue-wine-yq2cxie0: three neutral frames, 2,982 high-ROM requests, no drops or raw events overlapping declared sources. All 36 unowned bytes are previously classified code support."
+  ],
+  "limitations": [
+    "This bounded negative covers only the selected three-frame interpreter window, not global coverage. Linux, USA and native Windows pending. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md"
+  ],
+  "references": []
+}

@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "slug": "classify-battle-directory-lists",
+  "title": "Classify conditional EUR battle directory lists",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Define the conditional list-source projection for the 103 entries of the battle relative directory, preserving the distinction between static source coverage and ordinary selector reachability."
+  ],
+  "validation": [
+    "Wine battle-directory-target-audit-wine-uf6zbm9k authenticates original resolver, task-slot producer, draw consumer and counted six-byte OBJ reader code against the exact EUR ROM, then checks all 103 independently counted source extents and supported object shapes. There are 576 objects in 3,662 source bytes; indices 32 and 62 exactly match existing static-list owners and 101 other disjoint sources total 3,574 bytes. No partial overlaps with E149 source ranges occur.",
+    "The complete ordered source SHA-256 is bfcadc626d308693563396b9030f7ae097895c64b491467b90b01aca256f62ef; the 101 new sources concatenate to 934b25f8b031dbd8282f69f30d121c6f55ad7c25b25e9bbee12c11a7f9142973. Ordinary selector 62 was established separately by battle-writer-observer-wine-q7qbukus."
+  ],
+  "limitations": [
+    "The source projection is conditional on the original task-slot/draw path; other callers, all-selector reachability, managed serving, Linux, USA and native Windows remain open. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_obj.md"
+  ],
+  "references": []
+}

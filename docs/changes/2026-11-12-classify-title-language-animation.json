@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "slug": "classify-title-language-animation",
+  "title": "Classify EUR title language cursor and animation sources",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Identify a conditional five-pair title cursor source and the independently rooted title animation directories, sequences and counted OBJ lists."
+  ],
+  "validation": [
+    "Wine e154-title-residue-sources-dis-wine-cxe2yngk and e154-title-bank-contract-dis-wine-hj04kd_b authenticate the title cursor and animator reader/producer code.",
+    "Exact EUR source inspection checks the 20-byte five-pair cursor and 19 disjoint animation spans totaling 290 bytes against the E154 manifest; three-frame title inventory ry8vy8i9 observed only indices 9, 10 and 13.",
+    "Focused Sol consultation requested gpt-6.1-sol xhigh; effective settings are not independently verifiable."
+  ],
+  "limitations": [
+    "Other selectors and callers, ordinary use of remaining entries, global directory extent, Linux, USA and native Windows remain open. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_obj.md"
+  ],
+  "references": []
+}

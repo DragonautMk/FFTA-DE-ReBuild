@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "slug": "serve-dialogue-draw-sequence",
+  "title": "Serve the EUR conditional dialogue draw sequence",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Serve the conditional 32-byte post-mask dialogue draw sequence through the existing task-parameter resource while preserving earlier dataset representations and original out-of-fragment behavior.",
+    "Route page 370 and report the draw sequence source bytes separately from other task parameter fields."
+  ],
+  "validation": [
+    "Wine e154-dialogue-sequence-wine-397wfb6_ preserves E153 projection, validates 32 poisoned bytes and mixed page/adjacent-owner boundaries, five original prefix cases including -1 and 32, and three-frame interpreter/native-dispatch ordinary pairs with three typed and zero raw requests per arm.",
+    "Wine e154-dialogue-sequence-cli-wine-huydule1 passes production CLI create/reuse/verify and one-frame startup with one sequence source byte used; 102 unrelated files match E153."
+  ],
+  "limitations": [
+    "First indices, other task-byte writers/consumers/scenes, per-read native attribution, frontend UI, Linux, USA and native Windows remain open. No performance measurement."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/observed_task_parameters.rs",
+    "crates/gba-core/src/rom_data/runtime/observed_task_parameters.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/dialogue_draw_sequence_tests.rs",
+    "docs/rom_data_gameplay.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "slug": "serve-llednar-draw-list",
+  "title": "Serve an observed EUR Llednar draw list",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add the independently observed one-object Llednar list to the existing static OBJ source, retaining the prior dataset projection."
+  ],
+  "validation": [
+    "Wine e152-llednar-list-wine-92rch9l_ preserves the E151 projection, checks all eight poisoned source bytes, mixed boundaries and the original draw, and passes three-frame interpreter/native-dispatch ordinary pairs with 155 typed requests and no raw reads per arm.",
+    "Read-only EUR creator-window fingerprint, literal 0809b238, call target 08022f10 and setter opcode check establishes a conditional producer writing 08395014 to object+28; its Llednar invocation is unproved. Initial opcode assertion used incorrect constants and was corrected. Focused Sol requested gpt-6.1-sol xhigh, effective settings unconfirmed.",
+    "Wine e152-llednar-list-cli-wine-inu0hb6h passes production CLI create/reuse/verify and one-frame startup; 102 other resource files match E151."
+  ],
+  "limitations": [
+    "Ordinary use of the conditional producer, other producers, other scenes/consumers, per-read native attribution, frontend UI, Linux, USA and native Windows remain open. No performance measurement."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/obj_lists.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/llednar_draw_list_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "slug": "inventory-eur-language-writers",
+  "title": "Inventory bounded EUR language-byte writers",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Document five additional original language-byte stores and distinguish preservation paths from an independent selection callback publisher."
+  ],
+  "validation": [
+    "Wine e154-language-writer-dis-wine-rkhdqwg9 and e154-language-alternates-dis-wine-8mbnf7uq authenticate original instruction windows. Existing obj-retained-candidate-windows-61ceiuwx links the alternative publisher to context+8964 and its ordinary selection controls.",
+    "Focused Sol consultation requested gpt-6.1-sol xhigh; effective model and effort are not independently verifiable."
+  ],
+  "limitations": [
+    "The inventory is not exhaustive; the alternative callback ordinary invocation and global value/writer domain remain unproved. Linux, USA and native Windows pending; no performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_obj.md"
+  ],
+  "references": []
+}

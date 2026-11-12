@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "slug": "trace-eur-language-option-route",
+  "title": "Trace a bounded EUR options route for language publication",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Record the source-backed ordinary world-menu to System and Options route and its bounded negative for a language entry.",
+    "Correct the unsupported association between the independent language publisher and the visible Options screen."
+  ],
+  "validation": [
+    "The System capture e154-language-system-capture-wine-o5r_2j1d exited successfully but its unit was retained FAIL because unselected intermediate generated states remained. Wine preservation unit e154-language-system-preserve-wine-tcuplybv verifies protected hashes and retains the existing result without replay.",
+    "Wine e154-language-options-capture-wine-quskrm71, e154-language-option-scan-wine-ia9yhlut and e154-language-option-scan2-wine-098p6b71 reach and scroll Options through Default; no language item is visible."
+  ],
+  "limitations": [
+    "This is a bounded negative for that Options list, not proof that the 13aafe callback is unreachable elsewhere. The correct callback screen, ordinary publication, Linux, USA and native Windows remain open. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_obj.md"
+  ],
+  "references": []
+}

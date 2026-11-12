@@ -10,17 +10,18 @@ pub struct ObservedTaskParametersStats {
     pub phase_threshold_bytes: u64,
     pub vertical_correction_bytes: u64,
     pub battle_phase_threshold_bytes: u64,
+    pub battle_draw_sequence_bytes: u64,
     pub phases_used: u64,
     pub corrections_used: u64,
 }
 pub(super) struct ObservedTaskParametersResources {
     data: model::ObservedTaskParameters,
-    counts: [AtomicU64; 5],
+    counts: [AtomicU64; 6],
     used: AtomicU64,
 }
 impl ObservedTaskParametersResources {
     pub(super) fn source_page(index: usize) -> bool {
-        matches!(index >> 12, 0x371 | 0x394)
+        matches!(index >> 12, 0x370 | 0x371 | 0x394)
     }
     pub(super) fn new(
         data: model::ObservedTaskParameters,
@@ -51,9 +52,12 @@ impl ObservedTaskParametersResources {
             self.used
                 .fetch_or(1 << (at - model::PHASE_SOURCE), Ordering::Relaxed);
             Some((value, 2))
+        } else if let Some(value) = self.data.battle_draw_sequence.as_ref()
+            .and_then(|values| values.get(at.checked_sub(model::BATTLE_DRAW_SEQUENCE_SOURCE)? as usize)) {
+            Some((*value, 5))
         } else if let Some(value) = self.data.battle_phase_thresholds.as_ref()
             .and_then(|values| values.get(at.checked_sub(model::BATTLE_PHASE_SOURCE)? as usize)) {
-            self.used.fetch_or(1 << (7 + at - model::BATTLE_PHASE_SOURCE), Ordering::Relaxed);
+            self.used.fetch_or(1 << (9 + at - model::BATTLE_PHASE_SOURCE), Ordering::Relaxed);
             Some((*value, 4))
         } else {
             let value = self.data.vertical_corrections.byte_at(at)?;
@@ -73,7 +77,7 @@ impl ObservedTaskParametersResources {
         if !Self::source_page(index) {
             return prior;
         }
-        let mut counts = [0u64; 5];
+        let mut counts = [0u64; 6];
         let fields: [_; N] = std::array::from_fn(|i| self.byte(index + i));
         if fields.iter().all(Option::is_none) {
             return prior;
@@ -93,7 +97,7 @@ impl ObservedTaskParametersResources {
         Some(bytes)
     }
     pub(super) fn stats(&self) -> ObservedTaskParametersStats {
-        let [bus_reads, source_bytes, phase_threshold_bytes, vertical_correction_bytes, battle_phase_threshold_bytes] =
+        let [bus_reads, source_bytes, phase_threshold_bytes, vertical_correction_bytes, battle_phase_threshold_bytes, battle_draw_sequence_bytes] =
             self.counts.each_ref().map(|i| i.load(Ordering::Relaxed));
         let used = self.used.load(Ordering::Relaxed);
         ObservedTaskParametersStats {
@@ -102,8 +106,9 @@ impl ObservedTaskParametersResources {
             phase_threshold_bytes,
             vertical_correction_bytes,
             battle_phase_threshold_bytes,
+            battle_draw_sequence_bytes,
             phases_used: u64::from((used & ((1 << model::PHASE_COUNT) - 1)).count_ones()),
-            corrections_used: u64::from(((used >> model::PHASE_COUNT) & 0xf).count_ones()),
+            corrections_used: u64::from(((used >> model::PHASE_COUNT) & 0x3f).count_ones()),
         }
     }
     pub(super) fn resident_bytes(&self) -> usize {

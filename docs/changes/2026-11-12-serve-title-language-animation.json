@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "slug": "serve-title-language-animation",
+  "title": "Serve EUR title language cursor and animation sources",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Extend the layered OBJ resource with five title language cursor pairs and an independently rooted 15-list, two-sequence title animation bank.",
+    "Retain the previous dataset representation and account for title cursor reads separately."
+  ],
+  "validation": [
+    "Wine e155-title-language-bank-wine-clf3wf29 preserves E154 projection, checks 310 poisoned bytes across 20 spans and mixed boundaries, four original cursor cases and two original animator sequences, and passes three-frame interpreter/native-dispatch title pairs with six cursor and 258 bank typed requests and no raw requests per arm.",
+    "Wine emitted a D-Bus diagnostic during the successful unit; the test and protected-input checks passed.",
+    "Wine e155-title-language-bank-cli-wine-f0s6bsao passes production CLI create/reuse/verify and one-frame startup with four title-position source bytes used; 102 unrelated files match E154."
+  ],
+  "limitations": [
+    "Other choices, all entries/consumers, per-read native attribution, frontend UI, Linux, USA and native Windows remain open. No performance measurement."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/layered_obj_animations.rs",
+    "crates/gba-core/src/rom_data/runtime/layered_obj_animations.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/title_language_bank_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

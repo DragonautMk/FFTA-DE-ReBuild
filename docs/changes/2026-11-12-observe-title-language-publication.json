@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "slug": "observe-title-language-publication",
+  "title": "Observe EUR title language publication",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add a bounded passive observer of the original title language selector and publisher."
+  ],
+  "validation": [
+    "Wine e154-title-language-capture-wine-oh96r2eh reaches the visible five-language title selector from a retained normal EUR title checkpoint.",
+    "Wine e154-title-language-publisher-wine-ij_gnywg observes normal Down/release/A selecting French, followed by original 0813aafe publishing value 1 to 02001f6e; source and destination are checked and pre/post states retained."
+  ],
+  "limitations": [
+    "One ordinary title path is covered; other selections, indirect writers and global value domain remain open. Linux, USA and native Windows pending. No performance measurement."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/title_language_publisher_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

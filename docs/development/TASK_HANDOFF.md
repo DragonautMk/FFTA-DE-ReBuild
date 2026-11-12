@@ -35,10 +35,12 @@ it does not authorize stopping other work or changing another thread's goal.
 
 - State: suspended
 - Outcome: partial
-- Verified: E148 EUR Wine threshold pair/CLI PASS (`e148-battle-phase-wine-vu2q576j`, `e148-battle-phase-cli-wine-6yxh8kcc`); E147 retained.
-- Missing: unmigrated resources/consumers, missing ordinary-use evidence, ABI/global extent/indirect calls and mod phases ROMDATA-06/07; Linux/USA/native Windows/new32:9 remain distinct. EUR, reduced Wine scope, no performance/space measurements; originals and personal saves unchanged.
-- Selection: ROMDATA-01-BATTLE-40DCBA-PRODUCER paused; draw reads task+24, writer open. Sol consultation interrupted by user pause.
-- ROMDATA-01-CONTEXT-3AE42C: partial; both tables pass ordinary IDs 0–4. Global writers/index extent remain open. Pre-selection: `e141-language-one-wine-i5_k9agp/work/pre-language.ffstate`.
+- Verified: E157 reader/CLI Wine PASS (`pfxplazm`, `shuvdeal`).
+- Missing: EUR resources/consumers, ordinary evidence, ABI/global extent/indirect calls, ROMDATA-06/07; Linux/USA/native Windows/new32:9 distinct. EUR/Wine, no metrics or space limits; originals/saves protected.
+- Selection: paused by user; first opening affine list PASS (`28msdufg`). Other lists/paths, native, Linux/USA pending. Resume only on request; checkpoint retained in unit.
+- Title banks: main bank first read PASS (vzea9l43), draw/native open; FIRSTBANK-ZERO: no direct producer (f4_b2apw), other scenes open.
+- ROMDATA-04-BATTLE-40D300-OTHER: index56 ordinary PASS (`qbzrv3ua`); other new lists remain open.
+- ROMDATA-01-CONTEXT-3AE42C: partial; tables pass IDs 0–4; title French publisher PASS (ij_gnywg). Other writers/index extent open. Pre-selection: `e141-language-one-wine-i5_k9agp/work/pre-language.ffstate`.
 - E134 ordinary updater: augmented-table native reads and three-frame pair PASS (`m7063z21`); production table lacks keys (`x9h8ztad`). Draw remains open.
 - Resume: [validation recovery checklist](ROM_DATA_VALIDATION_RECOVERY_TODO.md) for skipped checks; [ROM_DATA_TODO](ROM_DATA_TODO.md), only the selected criterion's section (ROMDATA-01/02/03/04/05/06/07); [inventory](ROM_DATA_INVENTORY.md). Do not read the whole TODO. Children retain their IDs and limits:
   - `ROMDATA-01-PARAMETER-RECORDS27-DYNAMIC-SOURCES`: partial; writers map to 59 rows (js3rbve5); retained lists negative/inconclusive (m1p_8lhy). Live domain, save loads and aliases open. `docs/rom_data_gameplay.md`.
@@ -173,9 +175,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: DBG2-20 paused by user; outcome partial.
-- Last verified result: GUI `1pnyxi0d` and static item audit `45iaunf6` PASS.
-- Remaining work: domains, abilities, CH-0236 and devices.
-- Errors or blockers: prior GUI `89m4hbg4` wrapper FAIL; diagnostics retained.
-- Next action: resume only on request; inspect prepared one-slot driver and checkpoint.
-- References: `1pnyxi0d`, `45iaunf6`, `nl85j_ik`.
+- Task: TARGET-STORAGE-CLEANUP-20261112B completed; ROMDATA-02 remains active above.
+- Last verified result: 19 superseded datasets archived; 9,468,792,832 bytes reclaimed.
+- Remaining work: ROMDATA-02 criteria and running CLI unit as above.
+- Errors or blockers: no archive errors; host process-detail limits retained.
+- Next action: resume active work only through its owner; restore archived datasets on demand.
+- References: target/local-superseded-datasets-20261112/receipt.json and -cont/receipt.json.

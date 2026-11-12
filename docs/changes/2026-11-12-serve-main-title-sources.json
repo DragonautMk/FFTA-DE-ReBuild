@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "slug": "serve-main-title-sources",
+  "title": "Serve EUR main title cursor and separate animation bank",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Extend the layered OBJ resource with five four-row main-title cursor tables and a separate six-list, one-sequence title animation bank.",
+    "Retain E155 dataset compatibility and count main-title cursor reads separately."
+  ],
+  "validation": [
+    "Wine e156-title-main-sources-wine-nexxapjy preserves the E155 projection, checks all 230 poisoned bytes and mixed boundaries, eleven original cursor cases including invalid language and uncapped row, and one original bank initializer/update. Three-frame interpreter/native-dispatch ordinary title pairs match state and clock with six typed cursor requests and zero raw reads per arm.",
+    "Wine e156-title-main-sources-cli-wine-813gyofb passes production CLI create/reuse/verify and one-frame startup with four main-title position bytes used; 102 unrelated files match E155."
+  ],
+  "limitations": [
+    "The separate bank was not used in this ordinary window; its ordinary scene, other choices, per-read native attribution, frontend UI, Linux, USA and native Windows remain open. No performance measurement."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/layered_obj_animations.rs",
+    "crates/gba-core/src/rom_data/runtime/layered_obj_animations.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/title_main_sources_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

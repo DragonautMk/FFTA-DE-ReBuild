@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "slug": "inventory-e150-llednar-high-rom-reads",
+  "title": "Inventory E150 EUR Llednar high-ROM reads",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Record a bounded high-ROM source-ownership and runtime-service inventory for three neutral frames in an authenticated Llednar battle state."
+  ],
+  "validation": [
+    "Wine e150-llednar-residue-wine-ek23m5tm PASS: 3,477 high-ROM requests, zero drops and no raw events overlapping declared source spans; 52 distinct unowned bytes in eight ranges. Thirty-six bytes are previously classified executable support and 16 are bounded source leads."
+  ],
+  "limitations": [
+    "Only the selected three-frame interpreter window is covered; observed reads do not establish resource boundaries, full consumer domains or other scenes. Linux, USA and native Windows remain pending; no performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md"
+  ],
+  "references": []
+}

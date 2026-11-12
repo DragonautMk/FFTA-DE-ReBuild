@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "slug": "observe-llednar-lookup-and-setter",
+  "title": "Observe EUR Llednar lookup and OBJ setter",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add a bounded interpreter observer for the two callback lookup sites and the conditional OBJ-list setter."
+  ],
+  "validation": [
+    "Wine e152-llednar-lookup-observer-wine-ro1bzrrb records both callback return addresses reading lookup indices 0 and 1, nine setter writes across three frames and original draw entries. Three observed objects already contain the list pointer before each write."
+  ],
+  "limitations": [
+    "No per-object draw association, initial pointer assignment or global lookup domain is proved; other scenes, Linux, USA and native Windows remain pending. No performance measurement."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/llednar_lookup_caller_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

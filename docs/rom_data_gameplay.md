@@ -7197,3 +7197,50 @@ create, no-write reuse, verification and one-frame startup pass
 (`e148-battle-phase-cli-wine-6yxh8kcc`); 102 other files match E147. Ordinary
 phase 0, other consumers, per-read native attribution, frontend UI, Linux, USA
 and native Windows remain open. No performance was measured.
+
+
+## Observed vertical correction indices 8 and 9
+
+An ordinary EUR Llednar battle reads indices 8 and 9 of the signed correction
+table through `080264f6` (`e150-llednar-residue-wine-ek23m5tm`). Original
+code shifts the live task byte right before the lookup, so each index has two
+byte aliases; this does not limit the original table's full index domain.
+E151-d150 extends the existing `gameplay.observed-task-parameters` fragment by
+four source bytes at `394e1c..20`, retaining the E150 projection and accepting
+the older four-row representation. Correction-use accounting remains separate
+from the battle phase bits. Wine unit `e151-vertical-extension-wine-92o14x87`
+checks poisoned bytes, mixed-width boundaries, four original prefix cases and
+three ordinary frames with equal raw/managed states and clocks in interpreter
+and native-dispatch paths. Each arm records three typed requests and zero raw
+reads of the extension. The scope does not prove all task values or consumers,
+and per-read native attribution, frontend UI, Linux, USA and native Windows
+remain pending. No performance measurement.
+
+Production Wine CLI `e151-vertical-cli-wine-_w2bvosq` passes create, no-write
+reuse, verification and one-frame managed startup, with 102 other resource
+files identical to E150. Startup reports two correction source bytes used;
+the counter aggregates the correction owner.
+
+
+## Conditional dialogue draw sequence at 370ffc
+
+Original EUR routine `08013130` increments task+`38` and uses the old signed
+byte to read from `370ffc`; only after drawing does it mask the new byte by
+`1f`. The post-mask continuation therefore has 32 conditional entries, but
+the first lookup and external writers are not capped. A Llednar dialogue
+observed indices 12..14 (`e153-llednar-dialogue-residue-wine-g51e3yzn`), and
+the original reader is documented in `e153-dialogue-source-dis-wine-sro_6w4u`.
+E154-d153 serves the 32-byte `370ffc..37101c` fragment through the existing
+task-parameter resource, retaining older dataset parsing and the separately
+owned adjacent `37101c` threshold. Wine `e154-dialogue-sequence-wine-397wfb6_`
+validates all poisoned bytes, mixed boundaries including the `370`/`371` page
+crossing and adjacent owner, five original prefix cases including -1 and 32,
+and three ordinary interpreter/native-dispatch raw/managed frames with equal
+states and clocks. Each arm records three typed requests and no raw reads of
+the fragment. Initial values, other writers/consumers/scenes, per-read native
+attribution, frontend UI, Linux, USA and native Windows remain open. No
+performance measurement.
+
+Production Wine CLI `e154-dialogue-sequence-cli-wine-huydule1` passes create,
+no-write reuse, verification and one-frame managed startup, reporting one
+draw-sequence source byte; 102 unrelated resource files match E153.

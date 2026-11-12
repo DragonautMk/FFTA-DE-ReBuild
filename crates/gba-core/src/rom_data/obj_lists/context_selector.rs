@@ -57,7 +57,7 @@ impl Catalog {
             sources.push(SourceRange { offset, length: length as u32, sha256: expected.into(), role: "static-obj-list".into() });
             lists.push(list);
         }
-        let decoded = Lists { lists };
+        let decoded = Lists { lists, battle_directory: None, actor_lookup: None, title_opening_directory: None };
         decoded.validate()?;
         Ok(Self { decoded, sources })
     }

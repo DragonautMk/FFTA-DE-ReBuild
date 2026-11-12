@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "slug": "identify-eur-title-language-callback",
+  "title": "Identify the EUR title language callback",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Identify the alternate language publisher as part of the EUR title frontend and distinguish it from in-game Options."
+  ],
+  "validation": [
+    "Maintained ffta_mouse.rs identifies handler 08139d29, subpage 2 and five language selections; the retained e129-prefinal-title-start-qyb35ep8 EUR checkpoint visibly shows Language as the fourth title-menu entry.",
+    "Wine e154-language-screen-dis-wine-q6ywhlta verifies the callback registration and helper branch. The user independently identified the startup selector."
+  ],
+  "limitations": [
+    "The ordinary alternate publication and global writer/value domain remain unproved; Linux, USA and native Windows pending. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_obj.md"
+  ],
+  "references": []
+}

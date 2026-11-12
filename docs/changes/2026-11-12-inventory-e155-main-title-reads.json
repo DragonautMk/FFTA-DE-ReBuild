@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "slug": "inventory-e155-main-title-reads",
+  "title": "Inventory EUR main title menu reads",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Record a bounded high-ROM source ownership and runtime-service inventory for the EUR main title menu."
+  ],
+  "validation": [
+    "Wine e155-title-main-residue-wine-2gcsrjfn: three neutral frames, 611 high-ROM requests, no drops or raw overlap with declared sources; eight unowned bytes include the known helper and four cursor-source leads. No distinct second-bank read observed."
+  ],
+  "limitations": [
+    "Only this three-frame interpreter window is covered, and observed bytes do not establish asset extents or global absence. Linux, USA and native Windows pending. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md"
+  ],
+  "references": []
+}

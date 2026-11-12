@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "slug": "classify-battle-relative-directory",
+  "title": "Classify a EUR battle relative directory",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Bound the independent 40d300 kind-2 relative directory used by the observed battle draw producer without classifying all of its target payloads."
+  ],
+  "validation": [
+    "Wine battle-directory-dis-wine-nnfm38wz shows 0800720c retaining the low 16 bits of the selector, rejecting indices at or above the count at +2, reading kind at +0 and selecting 16-bit offsets relative to base+4 for kind 2. The byte at +1 is retained without an inferred meaning.",
+    "The exact EUR source has 103 entries and a 210-byte header/index, SHA-256 2c35f140bd943bb98726767c2a4032be05dee531b2c965b727a3dce867cd27da, disjoint from E148 declared sources. Wine battle-writer-observer-wine-q7qbukus observes selector 62 producing the managed 40dcba list; other selectors are source-only."
+  ],
+  "limitations": [
+    "No complete target payload, selector-domain, caller, managed serving or cross-region claim. Linux, USA and native Windows remain open. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_obj.md"
+  ],
+  "references": []
+}

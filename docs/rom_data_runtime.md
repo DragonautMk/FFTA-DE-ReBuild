@@ -2159,3 +2159,114 @@ pointer producer and other scenes remain open. See the
 same source owner with two earlier context geometries; the old six-record
 representation remains accepted. See the
 [scoped contract](rom_data_obj.md#earlier-context-geometry-source-contracts).
+
+
+## E150 ordinary Llednar read inventory
+
+Wine unit `e150-llednar-residue-wine-ek23m5tm` inventories three neutral
+interpreter frames from the authenticated EUR Llednar battle state against
+E150/d149. Of 3,477 high-ROM requests, none were dropped and none of the
+observed raw events overlapped declared source spans. The 52 distinct bytes
+outside the manifest comprise 20 bytes of previously classified DMA/branch
+support at `370e70..78`, `370e80..88` and `370eb0..b4`; 16 bytes of previously
+classified IWRAM branch support at `397f80..84` and `397f88..94`; and 16 bytes
+of source leads at `394e1c..20`, `395014..1c` and `398df0..f4`. The latter
+are observed read ranges, not established asset boundaries or formats.
+Instruction attribution may include nested execution. This is a bounded
+three-frame sample, not global coverage; Linux, USA and native Windows remain
+unverified, and performance was not measured.
+
+The EUR readers for those 16 bytes were examined in Wine unit
+`e150-llednar-sources-dis-wine-o4t2h6dz`. Original `080264f6` reads two
+signed corrections at indices 8 and 9 of the previously authenticated table
+at `394e0c`; the existing managed fragment covers indices 4 through 7.
+Original OBJ draw readers consume `395014..1c`; its signed count is one,
+consistent with one six-byte entry after the two-byte count. Original `080a3076`
+reads halfwords through base `398df0` with its input shifted left one; that
+reader has no local bounds check. The observed two indices do not establish
+the full table or callers. The OBJ list's producer and all three source domains
+remain open; these observations alone add no managed resource.
+
+Wine `e152-llednar-lookup-observer-wine-ro1bzrrb` observes `080a3076`
+reading both `398df0` and `398df2` from callback returns `0809b1c1` and
+`0809b1cf` during three neutral frames. The callback passes the same signed
+actor+`7e` value to the unguarded lookup twice; these two observed entries do
+not bound other inputs or establish the full table. See the
+[Llednar OBJ source](rom_data_obj.md#ordinary-llednar-draw-list-at-395014) for
+the related ordinary setter observation.
+
+
+## E153 Llednar dialogue read inventory
+
+Wine `e153-llednar-dialogue-residue-wine-g51e3yzn` inventories three neutral
+interpreter frames from an authenticated retained EUR Llednar dialogue against
+E153/d152. Of 2,990 high-ROM requests, none were dropped and none of the raw
+events overlapped declared source spans. The 43 unowned bytes include 36 bytes
+of previously classified hardware and branch support, plus observed ranges
+`371008..0b` (three bytes) and `397fa4..a8` (four bytes). The latter remain
+source leads, not established asset boundaries. The bounded sample does not
+establish global coverage; Linux, USA and native Windows remain pending. No
+performance measurement.
+
+Wine `e153-dialogue-source-dis-wine-sro_6w4u` classifies the remaining
+observations. At `0809b6fc`, word `397fa4` supplies Thumb IWRAM address
+`03006bbd` to the established `08145c10` indirect branch helper: this is
+conditional control support, not an exported asset, and the mutable IWRAM
+body is not authenticated by that classification. At `08013152`, original
+code increments task+`38` but reads the *old* signed byte as an index from
+`370ffc`; after the draw it masks the stored byte with `1f`. Thus repeated
+normal iterations yield a conditional 32-byte source `370ffc..37101c`, but
+the first lookup, external writers and all consumers have no inferred cap.
+The dialogue inventory observed indices 12..14 only. The conditional span is
+disjoint from E153 declared sources and ends at the separately managed
+`37101c` threshold fragment. Its SHA-256 is
+`8352f94c00b26d3b0834df0b3f1f16de59302e3dc4edf92de8625902dbdc12cc`.
+
+
+## E154 Llednar confirmation menu inventory
+
+Wine `e154-llednar-menu-residue-wine-yq2cxie0` records three neutral
+interpreter frames from the retained EUR Llednar confirmation menu against
+E154/d153. Of 2,982 high-ROM requests, none were dropped and no raw event
+overlapped declared source spans. All 36 distinct unowned bytes are previously
+classified DMA and IWRAM-branch support; no new data-source lead was observed
+in this window. Other frames and scenes, Linux, USA and native Windows remain
+open. No performance measurement.
+
+
+## E154 title language selector read inventory
+
+Wine `e154-title-language-residue-wine-ry8vy8i9` inventories three neutral
+interpreter frames at the authenticated EUR title-language selector against
+E154/d153. Of 997 high-ROM requests, none were dropped and no raw event
+overlapped declared source spans. The 62 unowned bytes consist of the known
+four-byte IWRAM helper vector at `370eb0`, four observed bytes at `3adcfc`,
+and 54 bytes in six observed ranges at `b8ed06..b8ee76`. These are reader
+leads only, not inferred source extents; other frames, Linux, USA and native
+Windows remain open. The first launch was refused before execution because its
+protected plan path pointed into retired scratch; correcting it to the retained
+evidence path allowed the run. No performance measurement.
+
+
+## E155 main title menu read inventory
+
+Wine `e155-title-main-residue-wine-2gcsrjfn` records three neutral interpreter
+frames from the authenticated EUR main title menu against E155/d154. Of 611
+high-ROM requests, none were dropped and no raw event overlapped declared
+sources. The eight unowned bytes comprise the previously classified `370eb0`
+helper vector and four observed bytes at `3adca4..a8`. No read from the
+distinct `b8ed28/b8ecb4` bank occurred in this window. This is a bounded
+negative, not proof of global absence or asset extent. Linux, USA and native
+Windows remain pending; no performance measurement.
+
+
+## E157 EUR title-opening OBJ sources
+
+The managed static OBJ resource now serves the 19 absolute pointers and
+11 counted lists from the conditional EUR title-opening contract. Existing
+datasets remain readable with this optional directory absent; the EUR
+extractor revision is 157 and decoder revision is 156. Wine controlled
+original initializer and draw comparisons pass (`pfxplazm`); production CLI
+create/reuse/verify and one-frame startup pass (`shuvdeal`). Ordinary drawing
+and native-dispatch attribution remain pending. Linux, USA
+and native Windows remain pending. No performance measurement.

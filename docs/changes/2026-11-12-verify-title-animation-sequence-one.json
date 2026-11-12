@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "slug": "verify-title-animation-sequence-one",
+  "title": "Verify EUR title animation sequence one under Wine",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add one bounded neutral ordinary title-selector interpreter comparison covering the six sequence-1 OBJ lists."
+  ],
+  "validation": [
+    "Wine e155-title-animation-ordinary-wine-fyt8q7px observes typed list headers for indices 9\u201314, no raw source reads and equal raw/managed state and clock across 22 neutral frames with poisoned list sources."
+  ],
+  "limitations": [
+    "Sequence 0, other scenes, native dispatch for this continuation, frontend UI, Linux, USA and native Windows remain open. No performance measurement."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/title_animation_ordinary_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

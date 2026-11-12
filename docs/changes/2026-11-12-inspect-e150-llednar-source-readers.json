@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "slug": "inspect-e150-llednar-source-readers",
+  "title": "Inspect E150 EUR Llednar source readers",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Identify original readers for the 16 previously unowned bytes in the bounded Llednar inventory."
+  ],
+  "validation": [
+    "Wine e150-llednar-sources-dis-wine-o4t2h6dz authenticates the original reader disassembly; inventory e150-llednar-residue-wine-ek23m5tm witnesses correction indices 8 and 9, the one-element OBJ draw source and two indexed halfwords."
+  ],
+  "limitations": [
+    "The lookup domains, list pointer producer and other consumers remain open. Source observations are not managed publication; Linux, USA and native Windows pending. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md"
+  ],
+  "references": []
+}

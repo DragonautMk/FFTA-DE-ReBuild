@@ -166,6 +166,8 @@ mod context_obj_selector_tests;
 #[cfg(test)]
 mod battle_obj_list_tests;
 #[cfg(test)]
+mod battle_directory_list_tests;
+#[cfg(test)]
 mod battle_phase_threshold_tests;
 #[cfg(test)]
 mod context_language_position_tests;
@@ -535,6 +537,32 @@ mod unit_obj_ffff_reader_fields_runtime_tests;
 mod slot_job_lookup_runtime_tests;
 #[cfg(test)]
 mod observed_task_parameters_runtime_tests;
+#[cfg(test)]
+mod vertical_correction_extension_tests;
+#[cfg(test)]
+mod llednar_draw_list_tests;
+#[cfg(test)]
+mod llednar_lookup_caller_tests;
+#[cfg(test)]
+mod llednar_actor_lookup_tests;
+#[cfg(test)]
+mod dialogue_draw_sequence_tests;
+#[cfg(test)]
+mod title_language_publisher_tests;
+#[cfg(test)]
+mod title_language_bank_tests;
+#[cfg(test)]
+mod title_cursor_languages_tests;
+#[cfg(test)]
+mod title_animation_ordinary_tests;
+#[cfg(test)]
+mod title_main_sources_tests;
+#[cfg(test)]
+mod title_main_bank_ordinary_tests;
+#[cfg(test)]
+mod title_opening_obj_tests;
+#[cfg(test)]
+mod title_opening_draw_tests;
 #[cfg(test)]
 mod phase_zero_threshold_tests;
 #[cfg(test)]
@@ -2759,7 +2787,7 @@ pub fn report_usage(machine: &gba_core::Machine) {
             eprintln!("ROM_DATA_USE resource={AUDIO_EXTENDED_DISPATCH_ID} dataset={} bus_reads={} source_bytes={} selector_mask={} host_reads={} host_source_bytes={}", resources.dataset_sha256(), i.bus_reads, i.source_bytes, i.selector_mask, i.host_reads, i.host_source_bytes);
         }
         if let Some(i)=resources.layered_obj_animations_stats() {
-            eprintln!("ROM_DATA_USE resource={LAYERED_OBJ_ANIMATIONS_ID} dataset={} bus_reads={} source_bytes={} descriptor_bytes={} coordinate_bytes={} timeline_table_bytes={} timeline_source_bytes={} event_bytes={} host_reads={} language_position_a_bytes={} language_position_b_bytes={} activation_tick_bytes={} activation_gate_bytes={} target_coordinate_bytes={} additional_geometry_bytes={}",resources.dataset_sha256(),i.fields.bus_reads + i.descriptor_reads + i.coordinate_reads + i.timeline_reads + i.event_reads + i.language_position_reads + i.activation_reads + i.target_coordinate_reads + i.additional_geometry_reads,i.fields.source_bytes + i.descriptor_bytes + i.coordinate_bytes + i.timeline_table_bytes + i.timeline_source_bytes + i.event_bytes + i.language_position_a_bytes + i.language_position_b_bytes + i.activation_tick_bytes + i.activation_gate_bytes + i.target_coordinate_bytes + i.additional_geometry_bytes,i.descriptor_bytes,i.coordinate_bytes,i.timeline_table_bytes,i.timeline_source_bytes,i.event_bytes,i.fields.host_reads,i.language_position_a_bytes,i.language_position_b_bytes,i.activation_tick_bytes,i.activation_gate_bytes,i.target_coordinate_bytes,i.additional_geometry_bytes);
+            eprintln!("ROM_DATA_USE resource={LAYERED_OBJ_ANIMATIONS_ID} dataset={} bus_reads={} source_bytes={} descriptor_bytes={} coordinate_bytes={} timeline_table_bytes={} timeline_source_bytes={} event_bytes={} host_reads={} language_position_a_bytes={} language_position_b_bytes={} activation_tick_bytes={} activation_gate_bytes={} target_coordinate_bytes={} additional_geometry_bytes={} title_position_bytes={} title_main_position_bytes={}",resources.dataset_sha256(),i.fields.bus_reads + i.descriptor_reads + i.coordinate_reads + i.timeline_reads + i.event_reads + i.language_position_reads + i.title_position_reads + i.title_main_position_reads + i.activation_reads + i.target_coordinate_reads + i.additional_geometry_reads,i.fields.source_bytes + i.descriptor_bytes + i.coordinate_bytes + i.timeline_table_bytes + i.timeline_source_bytes + i.event_bytes + i.language_position_a_bytes + i.language_position_b_bytes + i.title_position_bytes + i.title_main_position_bytes + i.activation_tick_bytes + i.activation_gate_bytes + i.target_coordinate_bytes + i.additional_geometry_bytes,i.descriptor_bytes,i.coordinate_bytes,i.timeline_table_bytes,i.timeline_source_bytes,i.event_bytes,i.fields.host_reads,i.language_position_a_bytes,i.language_position_b_bytes,i.activation_tick_bytes,i.activation_gate_bytes,i.target_coordinate_bytes,i.additional_geometry_bytes,i.title_position_bytes,i.title_main_position_bytes);
         }
         if let Some(i)=resources.conditional_descriptor_banks_stats() {
             eprintln!("ROM_DATA_USE resource={CONDITIONAL_DESCRIPTOR_BANKS_ID} dataset={} bus_reads={} source_bytes={} pointer_bytes={} field0_bytes={} field2_bytes={} field4_bytes={} kind_bytes={} byte7_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.pointer_bytes,i.field0_bytes,i.field2_bytes,i.field4_bytes,i.kind_bytes,i.byte7_bytes);
@@ -2894,7 +2922,7 @@ pub fn report_usage(machine: &gba_core::Machine) {
             eprintln!("ROM_DATA_USE resource={SLOT_JOB_LOOKUP_ID} dataset={} bus_reads={} source_bytes={} slots_used={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.slots_used);
         }
         if let Some(i)=resources.observed_task_parameters_stats() {
-            eprintln!("ROM_DATA_USE resource={OBSERVED_TASK_PARAMETERS_ID} dataset={} bus_reads={} source_bytes={} phase_threshold_bytes={} vertical_correction_bytes={} phases_used={} corrections_used={} battle_phase_threshold_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.phase_threshold_bytes,i.vertical_correction_bytes,i.phases_used,i.corrections_used,i.battle_phase_threshold_bytes);
+            eprintln!("ROM_DATA_USE resource={OBSERVED_TASK_PARAMETERS_ID} dataset={} bus_reads={} source_bytes={} phase_threshold_bytes={} vertical_correction_bytes={} phases_used={} corrections_used={} battle_phase_threshold_bytes={} battle_draw_sequence_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.phase_threshold_bytes,i.vertical_correction_bytes,i.phases_used,i.corrections_used,i.battle_phase_threshold_bytes,i.battle_draw_sequence_bytes);
         }
         if let Some(i)=resources.constructor_obj_animation_stats() {
             eprintln!("ROM_DATA_USE resource={CONSTRUCTOR_OBJ_ANIMATION_ID} dataset={} bus_reads={} source_bytes={} threshold_bytes={} pointer_bytes={} phases_used={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.threshold_bytes,i.pointer_bytes,i.phases_used);
@@ -2964,8 +2992,8 @@ pub fn report_usage(machine: &gba_core::Machine) {
                 resources.dataset_sha256(), a.bus_reads, a.source_bytes, a.index_bytes, a.count_bytes, a.attribute_bytes, a.sequence_header_bytes, a.frame_list_bytes, a.duration_bytes, a.host_reads, a.zero_count_selector_bytes, a.zero_count_host_reads, a.localized_selector_bytes, a.localized_source_bytes, a.localized_host_reads);
         }
         if let Some(l) = resources.obj_list_stats() {
-            eprintln!("ROM_DATA_USE resource={OBJ_STATIC_LISTS_ID} dataset={} bus_reads={} source_bytes={} count_bytes={} attribute_bytes={} host_reads={}",
-                resources.dataset_sha256(), l.bus_reads, l.source_bytes, l.count_bytes, l.attribute_bytes, l.host_reads);
+            eprintln!("ROM_DATA_USE resource={OBJ_STATIC_LISTS_ID} dataset={} bus_reads={} source_bytes={} count_bytes={} attribute_bytes={} host_reads={} directory_bytes={} actor_lookup_bytes={}",
+                resources.dataset_sha256(), l.bus_reads, l.source_bytes, l.count_bytes, l.attribute_bytes, l.host_reads, l.directory_bytes, l.actor_lookup_bytes);
         }
         for (offset, guest, host) in resources.obj_list_used_sources() {
             eprintln!("ROM_DATA_OBJ_SOURCE source={offset:08x} guest={guest} host={host}");

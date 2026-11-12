@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "slug": "extend-eur-vertical-corrections",
+  "title": "Serve observed EUR vertical correction indices",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Extend the managed task-parameter fragment by signed vertical correction indices 8 and 9 while accepting the older four-row representation.",
+    "Keep correction-use accounting independent of battle threshold bits."
+  ],
+  "validation": [
+    "Wine e151-vertical-extension-wine-92o14x87 preserves the E150 projection, checks four poisoned bytes, mixed boundaries and four original prefix cases, and passes three-frame interpreter/native-dispatch ordinary pairs with three typed requests and no raw reads per arm.",
+    "Wine e151-vertical-cli-wine-_w2bvosq passes production CLI create/reuse/verify and one-frame startup with two correction source bytes used; 102 unrelated resource files match E150."
+  ],
+  "limitations": [
+    "Other correction indices, consumers, per-read native attribution, frontend UI, Linux, USA and native Windows remain open; no performance measurement."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/observed_task_parameters.rs",
+    "crates/gba-core/src/rom_data/runtime/observed_task_parameters.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/vertical_correction_extension_tests.rs",
+    "docs/rom_data_gameplay.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

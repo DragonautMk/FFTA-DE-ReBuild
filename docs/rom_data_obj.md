@@ -3098,13 +3098,80 @@ full states and clocks with 198 typed requests and no raw reads per arm
 (`e147-battle-draw-wine-0zxq45dx`). Production Wine CLI create, no-write reuse,
 verification and one-frame startup pass (`e147-battle-draw-cli-wine-rusumaee`);
 102 other files match E146. This remains an observed draw argument; its original
-task-slot writer, other scenes and consumers, per-read native attribution,
+other scenes and consumers, per-read native attribution,
 frontend UI, Linux, USA and native Windows remain open. A focused Wine
 observation reaches `08001500` with this source through the established
 `0802e324 → 0802e36c → 08001d28` path; the pointer is read from live task
-offset `+24` (`e148-battle-caller-wine-qe49ajoc`). The earlier write to that
-slot has not been identified. No
+offset `+24` (`e148-battle-caller-wine-qe49ajoc`). A focused continuation from an earlier retained state observes the slot first
+cleared, then original `0800720c` resolving selector 62 from relative directory
+`0840d300`, followed by `0802e110` writing `0840dcba` to task `+24`
+(`battle-writer-observer-wine-q7qbukus`). Static inspection identifies a kind-2
+directory with 103 entries and selector 62 relative offset `09b6`; other
+selectors and consumers are not established by this observation. The watch
+records at most the first overlapping bus access per step, whose pre-step PC
+may include nested work. No
 performance was measured.
+
+## Battle relative directory at 40d300
+
+The original `0800720c` reader truncates its selector to 16 bits, compares it
+with the halfword count at `+2`, and for kind 2 reads a halfword offset from
+`base+4+2*selector`, returning `base+4+offset`. The byte at `+1` has no
+identified role in this reader. The exact EUR source at `40d300` has kind 2
+and 103 entries: its header and index occupy 210 bytes, SHA-256
+`2c35f140bd943bb98726767c2a4032be05dee531b2c965b727a3dce867cd27da`, and
+do not overlap E148's declared source spans. The Wine-disassembled reader is
+`battle-directory-dis-wine-nnfm38wz`. An ordinary continuation resolves
+selector 62 to the observed `40dcba` list
+(`battle-writer-observer-wine-q7qbukus`). Other target payloads, callers and
+ordinary selectors are not established. E149-d148 adds the independent index
+to the static OBJ resource; the target payloads are not inferred from it. Wine
+checks all 210 poisoned source bytes, mixed boundaries and six original-reader
+selector cases, including out-of-range and low-16-bit truncation. One ordinary
+selector-62 interpreter/native-dispatch raw/managed frame matches complete
+state and clock, with five typed bytes and no raw source reads per arm
+(`e149-battle-directory-wine-951r5cd9`). The production Wine CLI creates,
+reuses without writes, verifies and starts the dataset
+(`e149-battle-directory-cli-wine-602qybdq`); 102 other files match E148.
+Other ordinary selectors, per-read native attribution, frontend UI, Linux, USA
+and native Windows remain open. No performance was measured.
+
+## Conditional battle directory list projection
+
+When the original `080cf358 → 0802e110` path writes a directory result to
+task `+24` and the established task draw path consumes it, the directory
+entries resolve to counted OBJ lists. This is a conditional source contract,
+not a claim that all selectors or call paths occur in ordinary play. Wine
+`battle-directory-target-audit-wine-uf6zbm9k` authenticates the resolver,
+producer, draw consumer and existing six-byte reader, then independently
+checks the count and extent of each of 103 targets. The targets contain 576
+objects in 3,662 bytes; entries 32 and 62 exactly reuse existing static-list
+owners, and 101 additional disjoint lists occupy 3,574 bytes. There are no
+partial overlaps with E149 sources. The concatenated complete and new-source
+SHA-256 values are `bfcadc626d308693563396b9030f7ae097895c64b491467b90b01aca256f62ef`
+and `934b25f8b031dbd8282f69f30d121c6f55ad7c25b25e9bbee12c11a7f9142973`.
+Only selector 62 has ordinary directory-use evidence. E150-d149 adds the 101
+new lists to the existing static OBJ resource. Wine checks all 3,574 poisoned
+source bytes, representative mixed-width boundaries including the `40d/40e`
+page crossing, and six original draw cases with matching raw/managed state and
+clock (`e150-battle-directory-boundary-wine-2kzfs9br`). The first attempt
+exposed a missing `40e` source page (`e150-battle-directory-lists-wine-ul89n3af`);
+the corrected routing passes. A 120-frame neutral continuation did not reach a
+new-list draw; this does not establish global absence. An earlier retained
+checkpoint has index 56 in the live task slot, but three neutral Wine frames
+do not reach that list's draw (`battle-directory-index56-wine-kjyi2ycx`); no
+paired comparison ran for this candidate. The scheduler's command is `0105`
+and flags are `03` there; the original command path returns without drawing
+when flag `10` is clear (`battle-directory-scheduler-dis-wine-vmcqen6e`). The production Wine CLI
+creates, reuses without writes, verifies and starts the dataset
+(`e150-battle-directory-lists-cli-wine-qs_o6f1b`); 102 other files match E149.
+A separate retained pre-input battle state has scheduler command `0102` and
+reaches the original draw of new directory entry 56 (`40dc0a`) in one neutral
+Wine frame. Interpreter/native-dispatch raw/managed pairs match complete states
+and clocks with 58 typed requests and no raw source reads per arm
+(`battle-directory-index56-active-wine-qbzrv3ua`). Other ordinary lists,
+selectors/callers, per-read native attribution, frontend UI, Linux, USA and
+native Windows remain open. No performance was measured.
 
 ## Branch-selected static OBJ lists (E133)
 
@@ -3191,3 +3258,311 @@ unavailable and the ROM sources are poisoned
 (`e136-context-lifecycle-wine-5ncguagd`). This tests the backend, not the
 frontend UI. The two indexed lists not selected by this sequence have bounded
 index/data evidence only. No performance measurements were made.
+
+
+## Ordinary Llednar draw list at 395014
+
+A bounded ordinary EUR Llednar inventory observes the original OBJ draw
+readers consuming `395014..1c`: a signed count of one followed by one
+six-byte object (`e150-llednar-residue-wine-ek23m5tm`,
+`e150-llednar-sources-dis-wine-o4t2h6dz`). E152-d151 adds this independent
+source to `graphics.obj-static-lists` while retaining the E151 projection.
+Wine unit `e152-llednar-list-wine-92rch9l_` verifies the eight poisoned bytes,
+mixed boundaries, one original draw and three ordinary interpreter/native
+dispatch raw/managed frames. States and clocks match, with 155 typed requests
+and zero raw reads of this source per arm. Ordinary producer use, other scenes
+and consumers, native per-read attribution, frontend UI, Linux, USA and native
+Windows remain open. No performance was measured.
+
+Existing EUR creator evidence also identifies a conditional producer:
+`0809b1aa` obtains an object through actor+`48`, `0809b1ac` loads literal
+`0809b238` containing `08395014`, and the call at `0809b1ae` reaches setter
+`08022f10`, which replaces object+`28` and returns its former value. The
+creator window fingerprint, literal, branch target and setter opcodes were
+checked against the exact EUR ROM. Its flag, helper and actor-byte gates are
+recorded in `target/rom-data-constructor-slot-activation/creator-entry.txt`.
+This conditional source path has not been linked to the observed Llednar draw;
+its ordinary invocation and any other producers remain open. Focused Sol
+consultation requested `gpt-6.1-sol` at `xhigh`; effective settings could not
+be independently verified. An initial local opcode assertion used incorrect
+encoding constants and was corrected before the successful check.
+
+Production Wine CLI `e152-llednar-list-cli-wine-inu0hb6h` passes create,
+no-write reuse, verification and one-frame managed startup; 102 unrelated
+resource files match E151. Startup usage counters aggregate static OBJ lists.
+
+In `e152-llednar-lookup-observer-wine-ro1bzrrb`, the ordinary EUR checkpoint
+executes setter `08022f12` nine times over three neutral frames with return
+address `0809b1b3`. Three observed objects already contain `08395014` before
+and after each write. The same bounded run reaches original draws of that list;
+it does not establish which object supplied each draw or prove initial pointer
+assignment. Lookup `080a3076` is reached from both callback return addresses
+`0809b1c1` and `0809b1cf`, reading entries 0 and 1 of `398df0`. Other indices,
+other producers and scenes remain open.
+
+
+## Llednar actor lookup entries at 398df0
+
+Original callback `0809b11c` reads the signed halfword at actor+`7e` and
+passes it twice to `080a3070`, which performs an unguarded indexed halfword
+read from `398df0`. Its two results go through `08022e7c` into object fields
++`30` and +`32` (`e152-llednar-lookup-dis-wine-uxzq0l04`). Their downstream
+meaning and the full index domain are not assumed. E153-d152 stores only the
+two observed entries in the existing OBJ resource, preserving the E152
+projection and older dataset parsing. Other indices retain original behavior.
+Wine `e153-llednar-lookup-wine-3mck1vjs` validates four poisoned bytes,
+mixed boundaries, original lookups at indices -1, 0, 1 and 2, and three
+ordinary interpreter/native-dispatch raw/managed frames with equal states and
+clocks. Each arm observes 18 typed requests and zero raw reads of the fragment.
+Other indices, callers and scenes, per-read native attribution, frontend UI,
+Linux, USA and native Windows remain open. No performance was measured.
+
+Production Wine CLI `e153-llednar-lookup-cli-wine-29056g3o` passes create,
+no-write reuse, verification and one-frame managed startup, reporting 12
+actor-lookup source bytes and preserving 102 unrelated E152 resource files.
+
+
+## Bounded EUR language-byte writer inventory
+
+The existing first-entry chooser publication at `0813ff64` stores its selected
+byte into `02001f6e`; its ordinary paths for all five choices were already
+verified. Wine disassembly `e154-language-writer-dis-wine-rkhdqwg9` confirms
+that this writer derives the destination from base `020021a0` and offset
+`fffffdce`, so a search for the complete address alone cannot enumerate writes.
+
+Wine `e154-language-alternates-dis-wine-8mbnf7uq` identifies five additional
+original store sites. `080027aa` restores an earlier byte when its retained
+initialization condition is met or supplies zero otherwise; `0800981a`,
+`08000386` and `0813f660` preserve and restore a byte across initialization
+work. The independent title-frontend selection callback at `0813aafe` publishes the live byte
+at `*0200f3b0 + 8964` when it differs from the global byte, after calling the
+original language setup routines. Its ordinary direction controls wrap the
+normal selection around 0 and 4, but neither the loaded byte nor the eventual
+store imposes a universal clamp. The callback's register/source chain is also
+recorded in retained `obj-retained-candidate-windows-61ceiuwx` evidence.
+
+These are bounded original-code paths, not an exhaustive write census. Other ordinary
+selections and the full source-value/writer domain,
+indirect writes, frontend interaction, Linux, USA and native Windows remain
+open. The focused Sol consultation requested `gpt-6.1-sol` at `xhigh`;
+effective model and effort could not be independently verified. No performance
+measurement was made.
+
+A bounded Wine route from the retained EUR world menu reached System and then
+Options. Scrolling the complete visible Options list reached its `Default`
+end without a language item (`e154-language-options-capture-wine-quskrm71`,
+`e154-language-option-scan-wine-ia9yhlut`,
+`e154-language-option-scan2-wine-098p6b71`). This does not establish that the
+`0813aafe` callback belongs to that screen or prove its ordinary reachability.
+The initial System capture executed successfully but its unit
+`e154-language-system-capture-wine-o5r_2j1d` was retained as FAIL because
+intermediate generated states were not selected for retention. A separate
+read-only Wine preservation unit verified the original protected hashes and
+retained the already produced System checkpoint without replaying the route
+(`e154-language-system-preserve-wine-tcuplybv`).
+
+The callback screen is the EUR title frontend, not the in-game Options list.
+The maintained frontend input code identifies handler `08139d29`, title
+subpage 2 and its five-entry selection at context+`8964`
+(`crates/gba-core/src/ffta_mouse.rs`). The retained ordinary EUR title
+checkpoint `e129-prefinal-title-start-qyb35ep8/work/stage-1.ffstate` has
+`Saved Game` highlighted and visibly offers `Language` as its fourth entry.
+The user also identified the selector as an early-ROM screen. This supports
+a bounded ordinary route to the alternate publisher; it does not establish
+that no other access exists.
+
+Wine `e154-title-language-capture-wine-oh96r2eh` follows two Down taps and A
+from the retained title menu to the visible five-language selector. From that
+checkpoint, `e154-title-language-publisher-wine-ij_gnywg` uses Down, release
+and A to select French. It witnesses the original selection write at context
+`0200f3d4 + 8964`, then `0813aafe` publishing value 1 to `02001f6e`. Exact
+pre/post publication states are privately retained. This establishes one
+ordinary title path; other selections, indirect writers and the global value
+domain remain open. Linux, USA and native Windows remain pending, and no
+performance was measured.
+
+
+## Title language cursor and animation source contract
+
+The EUR title-language callback reads two original halfwords from
+`3adcfc + 4*selection`, then uses them as cursor coordinates. Its five normal
+language choices give a conditional five-pair, 20-byte projection
+`3adcfc..3add10`; the original lookup itself does not cap arbitrary selection
+bytes. Wine `e154-title-residue-sources-dis-wine-cxe2yngk` authenticates the
+reader; the projection is disjoint from E154 declared sources and hashes to
+`ffef7ade0828b2da33d4e71f9229241128a0a84919ed2cbedaac1c9a9ea39516`.
+
+The title animator initializer at `0813b224` supplies OBJ directory
+`b8eda4`, sequence directory `b8ecd4`, selector 1 and loop flag 1 to
+`08139ca0`. Original updater `08139ccc` indexes counted sequence pairs and
+the relative OBJ directory; its incremented counter advances when it exceeds
+the stored threshold. The rooted source projection has 15 counted OBJ lists
+and two counted sequences of 9 and 8 pairs: 19 disjoint source spans, 290
+bytes, concatenated source SHA-256
+`a20bf3c20bee033386435098276481c16ca2dc5a6fa6c6f9fe43c47dabc62396`.
+Three ordinary selector frames observed list indices 9, 10 and 13; the other
+entries are conditional directory-derived data, not all ordinarily reached.
+Original readers and producer were disassembled in
+`e154-title-bank-contract-dis-wine-hj04kd_b`; no overlap with E154 sources
+was found. Global directories/callers, other languages, Linux, USA and native
+Windows remain open. The focused Sol consultation requested `gpt-6.1-sol` at
+`xhigh`; effective settings cannot be independently verified. No performance
+measurement.
+
+E155-d154 serves the title cursor positions and the independent animation bank
+through `graphics.layered-obj-animations`, preserving the E154 projection and
+older dataset parsing. Wine `e155-title-language-bank-wine-clf3wf29` checks all
+310 poisoned source bytes across 20 spans, mixed-width boundaries, four
+original cursor cases (including out-of-fragment indices) and both original
+animator initializer/update sequences. Three ordinary interpreter/native
+dispatch title-selector frames match complete states and clocks: each arm
+records six typed cursor requests, 258 typed bank requests and zero raw
+requests over these sources. Other choices, source consumers, per-read native
+attribution, frontend UI, Linux, USA and native Windows remain open. No
+performance measurement.
+
+Production Wine CLI `e155-title-language-bank-cli-wine-f0s6bsao` passes create,
+no-write reuse, verification and one-frame managed startup; 102 unrelated
+resource files match E154, and startup reports four title-position bytes.
+
+Wine `e155-title-cursor-languages-wine-yx3vvt5x` follows the ordinary EUR title
+selector from English through the four subsequent choices without confirming a
+language change. For every choice 0–4, both original cursor halfword reads are
+served from the managed position source, with zero raw reads; complete
+interpreter raw/managed states and clocks match for all 33 observed frames.
+This proves the five cursor selections in that route, not all bank entries or
+native dispatch for the newly tested choices. The first observer build
+`ec2ayc3l` failed on the test's read-length type and was corrected before the
+successful build and Wine run. Linux, USA and native Windows remain pending;
+no performance measurement.
+
+Wine `e155-title-animation-ordinary-wine-fyt8q7px` follows one neutral EUR
+title-selector continuation until all six list indices used by sequence 1
+(9–14) have appeared. Their headers are served from poisoned managed sources
+with no raw reads, and all 22 interpreter raw/managed states and clocks match.
+This covers one ordinary sequence-1 continuation; sequence 0, other scenes
+and native dispatch for this continuation remain open. Linux, USA and native
+Windows remain pending; no performance measurement.
+
+
+## Title animation sequence-zero producer audit
+
+A bounded EUR scan of aligned direct Thumb calls to original initializer
+`08139ca0` in ROM offsets `0..370000` found two candidates. Wine
+`e155-title-sequence-zero-dis-wine-f4_b2apw` shows that `0813b224` passes
+selector 1 for the `b8eda4/b8ecd4` bank, while `0813a236` passes selector 0
+for the distinct `b8ed28/b8ecb4` bank. An aligned literal search found one
+reference to each first-bank root, at `13b2fc` and `13b300`. The original
+updater uses the resolved pair pointer and count rather than rereading the
+initial selector; changing that field alone would not switch sequences.
+These checks establish no ordinary sequence-0 producer for the first bank,
+not global absence: indirect calls, computed roots, mutable animator fields
+and other scenes remain open. Linux, USA and native Windows remain pending;
+no performance measurement.
+
+
+## Main title cursor and independent animation source contracts
+
+Original `0813ba10` reads the live language byte: values 0–4 dispatch to
+five separate coordinate tables at `3adca0`, `3adcb0`, `3adcc0`, `3adcd0`
+and `3adce0`; larger values return without writing coordinates. The menu row
+is narrowed to a byte but not clamped by this reader. The ordinary title
+menu has four rows, yielding a conditional 5 × 4 × two-halfword projection
+`3adca0..3adcf0` (80 bytes), disjoint from E155 sources and hashing to
+`7b0eb881e070b31ed8552874db7fa6d3b16aa635f500e39cafe22949e28f3092`.
+Wine units `e155-title-main-coordinates-dis-wine-uy12v_b5` and
+`e155-title-main-dispatch-dis-wine-y_lbrsdd` authenticate the reader and
+dispatch; ordinary title inventory observed only one pair.
+
+A separate original initializer at `0813a236` passes selector 0 and roots
+`b8ed28/b8ecb4` to `08139ca0`. Its conditional projection has six counted
+OBJ lists and one six-step sequence: nine disjoint spans, 150 bytes, with
+concatenated SHA-256
+`e7c8f21cd00e94be51f9bb764f655046f5100736097b6a0cd4dfb50ab8dde1d8`.
+All sequence indices and OBJ shapes are supported and the spans are disjoint
+from E155 sources. This is not the `b8eda4/b8ecd4` bank. No read of this
+second bank was seen in the three-frame title window; at that checkpoint its ordinary scene and
+other callers were unproved (`e155-title-sequence-zero-dis-wine-f4_b2apw`).
+Linux, USA and native Windows remain pending; no performance measurement.
+
+E156-d155 serves the 80-byte main-title cursor tables and the independent
+150-byte animation bank through `graphics.layered-obj-animations`, preserving
+the E155 projection and older dataset parsing. Wine
+`e156-title-main-sources-wine-nexxapjy` verifies all 230 poisoned source bytes,
+mixed boundaries including the adjacent E155 bank, eleven original cursor
+cases (including invalid languages and uncapped rows), and the original
+initializer/update of the separate bank. Three ordinary main-title
+interpreter/native-dispatch frames match complete states and clocks, with six
+typed cursor requests and no raw source reads per arm. The second bank was
+not read in this window. Other choices and scenes, per-read native
+attribution, frontend UI, Linux, USA and native Windows remain open. No
+performance measurement.
+
+Production Wine CLI `e156-title-main-sources-cli-wine-813gyofb` passes create,
+no-write reuse, verification and one-frame managed startup, reporting four
+main-title position bytes; 102 unrelated resource files match E155.
+
+A source-backed neutral opening reaches the separate bank without pressing
+Start. The title dispatch selects the bank path when the getter and skip
+flag permit it; Start can set the flag that bypasses that path. Wine
+`e156-title-main-bank-neutral-wine-vzea9l43` continues from the retained
+neutral EUR opening `e129-prefinal-neutral-boot-hc018h_n`: the title branch
+is observed with the skip flag zero, and at frame 2145 the bank receives
+two typed requests with its ROM spans poisoned and no raw bank requests.
+One interpreter frame matches the original full state and clock. This
+first-read witness does not establish the individual source offsets read,
+actual drawing, all bank lists, other scenes, or native-dispatch attribution.
+Linux, USA and native Windows remain pending; no performance measurement.
+
+## EUR neutral-opening OBJ pointer directory
+
+The title initializer at `0813a240..25e` copies exactly 19 absolute ROM
+pointers from `3ade64..3adeb0` into 28-byte RAM records. The pointers have
+11 distinct targets `3ade0a + 8*k`, k = 0..10. Each target has count one and
+a six-byte OBJ entry; their union is `3ade0a..3ade62`. The two-byte gap
+before the pointer directory is excluded. The directory hashes to
+`350064eeea9a5cdd4b984762c57d5f5b05cadfc56311d904cc0463ca4f0f856c`
+and the list union to
+`988bfca1254d75c8ab6e785da80e0d010295b8453df72e62d15aa7566080b953`.
+Both spans are disjoint from E156 declared sources; the accepted adjacent
+list at `3ade02` ends at `3ade0a`.
+
+Original `0813a5e8` checks record visibility at +18 and loads its pointer
+at +0 before calling either the affine or ordinary OBJ draw path according
+to record +5. The loop over 19 records and the count-one list headers
+establish their conditional extents, not ordinary drawing of every list.
+`e155-title-sequence-zero-dis-wine-f4_b2apw` supplies the initializer
+disassembly; retained `target/rom-data-obj-lists/callers-disassembly.txt`
+contains the draw helper. The first bank-read Wine witness precedes any
+confirmed draw of these targets. Linux, USA and native Windows remain
+pending; no performance measurement.
+
+E157-d156 adds the directory and its eleven lists to
+`graphics.obj-static-lists`, retaining absolute pointer aliases and the
+E156 projection. Wine `e157-title-opening-obj-fix-wine-pfxplazm` verifies
+all 164 new source bytes with poisoned ROM, mixed boundaries, unchanged
+other resource files, the original initializer and two original regular
+draw calls. The initializer has 19 typed requests; the two draw cases have
+10 each. These controlled calls match original full states, with no raw
+reads in the selected spans. The first attempt
+`e157-title-opening-obj-wine-mtbwmjz0` failed because its trace frame was
+not set; its diagnostics remain retained. Ordinary drawing,
+affine drawing, native-dispatch attribution, Linux, USA and native Windows
+remain pending; no performance measurement.
+
+Production Wine CLI `e157-title-opening-cli-wine-shuvdeal` creates, reuses
+without writes and verifies E157, preserves 102 unrelated resource files, and
+starts one managed title frame. That frame reports no directory bytes, so
+it does not prove ordinary use of the new opening directory.
+
+Wine `e157-title-opening-draw-wine-28msdufg` continues the retained neutral
+EUR opening to the first observed list. It records 19 typed directory
+requests and, at frame 2148, the `3ade0a` count-one list through the
+original affine draw reader (`08001998` and `0800199a` for its header).
+The selected source spans are poisoned, no raw requests occur, and the
+first list-read interpreter frame matches the original full state and clock.
+The pre-frame checkpoint is retained privately as `checkpoint.ffstate`,
+SHA-256 `0a439a15a0de6ccda64a8010d50da37b0ba5a4435b683adf45fb7cf68dec56e3`.
+This is one ordinary list and one frame, not coverage of all eleven lists,
+regular-path drawing or native dispatch. Linux, USA and native Windows
+remain pending; no performance measurement.

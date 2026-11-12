@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "slug": "classify-e153-dialogue-readers",
+  "title": "Classify EUR dialogue residue readers",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Classify the observed dialogue residue as a conditional 32-byte post-mask draw-index sequence and an IWRAM indirect-branch support word."
+  ],
+  "validation": [
+    "Wine e153-dialogue-source-dis-wine-sro_6w4u witnesses the original pre-mask signed lookup, post-draw 1f mask and IWRAM branch trampoline; E153 source intersection and exact ROM fingerprints are checked."
+  ],
+  "limitations": [
+    "The first lookup and external task-byte writers are not capped; only indices 12..14 are observed. Mutable IWRAM body, other consumers/scenes, Linux, USA and native Windows remain open. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md"
+  ],
+  "references": []
+}

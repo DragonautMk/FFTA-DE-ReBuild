@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "slug": "serve-llednar-actor-lookup",
+  "title": "Serve observed EUR Llednar actor lookup entries",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add the two observed actor callback lookup words to the existing OBJ resource, preserving older dataset representations and raw fallback outside the fragment.",
+    "Route the source page and report lookup source bytes independently from OBJ counts, attributes and directory bytes."
+  ],
+  "validation": [
+    "Wine e152-llednar-lookup-dis-wine-uxzq0l04 identifies the original unguarded lookup and its two object-field destinations.",
+    "Wine e153-llednar-lookup-wine-3mck1vjs preserves the E152 projection, tests poisoned bytes, mixed boundaries and original indices -1, 0, 1 and 2, and passes three-frame interpreter/native-dispatch ordinary pairs with 18 typed requests and no raw reads per arm.",
+    "Wine e153-llednar-lookup-cli-wine-29056g3o passes production CLI create/reuse/verify and one-frame startup with 12 lookup source bytes used; 102 unrelated files match E152."
+  ],
+  "limitations": [
+    "Other index values, callers, downstream meaning, scenes, per-read native attribution, frontend UI, Linux, USA and native Windows remain open. No performance measurement."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/obj_lists.rs",
+    "crates/gba-core/src/rom_data/obj_lists/conditional_markers.rs",
+    "crates/gba-core/src/rom_data/obj_lists/constructor_animation.rs",
+    "crates/gba-core/src/rom_data/obj_lists/context_selector.rs",
+    "crates/gba-core/src/rom_data/obj_lists/observed.rs",
+    "crates/gba-core/src/rom_data/runtime/obj_lists.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/llednar_actor_lookup_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

@@ -2271,6 +2271,47 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   target with state/clock/image/OAM equality; audio was not checked. Other
   consumers, Linux, USA and native Windows remain open; no performance measurement.
   [Contract](../rom_data_obj.md#context-target-rectangle-source-contract).
+- EUR title language publication has a Wine ordinary English-to-French witness;
+  other title selections and the global writer/value domain remain open.
+  [Contract](../rom_data_obj.md#bounded-eur-language-byte-writer-inventory).
+- EUR e157-d156 serves the opening's 19-pointer OBJ directory and 11 lists;
+  controlled readers, production CLI and one ordinary affine list-read frame
+  pass under Wine. Other lists, Linux, USA and native Windows remain open.
+  [Contract](../rom_data_obj.md#eur-neutral-opening-obj-pointer-directory).
+- EUR e156-d155 serves the main-title cursor and a separate conditional bank.
+  Wine validates original readers, a main-title pair and one neutral-opening
+  bank-read frame. Drawing, native attribution, Linux, USA and native Windows
+  remain open.
+  [Contract](../rom_data_obj.md#main-title-cursor-and-independent-animation-source-contracts).
+- EUR e155-d154 serves the title cursor and independent animation bank; Wine
+  validates original readers, a three-frame selector pair and all five cursor
+  choices and all six sequence-1 lists in interpreter pairs. Sequence 0,
+  Linux, USA and native Windows remain open.
+  [Contract](../rom_data_obj.md#title-language-cursor-and-animation-source-contract).
+- EUR e154-d153 serves the conditional 32-byte dialogue draw sequence. Wine
+  validates the original reader and a three-frame ordinary pair; initial
+  indices, other consumers, Linux, USA and native Windows remain open.
+  [Contract](../rom_data_gameplay.md#conditional-dialogue-draw-sequence-at-370ffc).
+- EUR e153-d152 serves two observed actor lookup entries; Wine validates the
+  unguarded original reader and a three-frame ordinary pair. Other inputs,
+  Linux, USA and native Windows remain open.
+  [Contract](../rom_data_obj.md#llednar-actor-lookup-entries-at-398df0).
+- EUR e152-d151 serves an observed one-object Llednar draw list. Wine validates
+  the original reader, a three-frame ordinary pair and the ordinary setter; other
+  consumers, Linux, USA and native Windows remain open.
+  [Contract](../rom_data_obj.md#ordinary-llednar-draw-list-at-395014).
+- EUR e151-d150 serves observed vertical correction indices 8 and 9. Wine
+  verifies original prefixes and a three-frame ordinary pair; other indices,
+  Linux, USA and native Windows remain open.
+  [Contract](../rom_data_gameplay.md#observed-vertical-correction-indices-8-and-9).
+- EUR e150-d149 adds 101 conditional battle directory OBJ lists (3,574 bytes).
+  Wine validates all poisoned bytes, the 40d/40e boundary, six original draws
+  and one ordinary index-56 pair; other lists, Linux, USA and native Windows remain open.
+  [Contract](../rom_data_obj.md#conditional-battle-directory-list-projection).
+- EUR e149-d148 serves the 210-byte battle relative directory; Wine verifies
+  original selector boundaries and one ordinary selector-62 pair. Other
+  selectors, target payloads, Linux, USA and native Windows remain open.
+  [Contract](../rom_data_obj.md#battle-relative-directory-at-40d300).
 - EUR e148-d147 adds three independent battle-task phase thresholds. Wine
   validates original signed-phase prefixes and a three-frame battle pair; phase
   0 ordinary use, Linux, USA and native Windows remain open.

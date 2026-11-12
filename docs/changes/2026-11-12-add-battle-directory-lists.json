@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "slug": "add-battle-directory-lists",
+  "title": "Serve conditional EUR battle directory lists",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Extend the static OBJ resource with 101 independently bounded directory-backed lists, sharing the two existing list owners and retaining the original selector, task and draw logic.",
+    "Extend static OBJ source-page routing to cover page 40e, which is crossed by one newly owned list."
+  ],
+  "validation": [
+    "Wine e150-battle-directory-boundary-wine-2kzfs9br preserves the E149 projection, validates all 3,574 poisoned source bytes, representative mixed-width boundaries including the 40d/40e crossing, and six original draw cases with matching raw/managed state and clock.",
+    "The first Wine attempt e150-battle-directory-lists-wine-ul89n3af failed because page 40e was not routed; the corrected build and explicit cross-page checks passed.",
+    "The retained 120-frame neutral continuation did not reach a new-list draw; this is a bounded negative, not global absence.",
+    "Wine e150-battle-directory-lists-cli-wine-qs_o6f1b passes production CLI create, no-write reuse, verification and one-frame startup; 102 other resource files match E149.",
+    "Wine battle-directory-index56-wine-kjyi2ycx confirms the retained stage-4 task slot points to index 56, but observes no corresponding draw in three neutral frames; the paired comparison was not run.",
+    "Read-only checksum-validated inspection and Wine disassembly battle-directory-scheduler-dis-wine-vmcqen6e identify the stage-4 negative as scheduler command 0105 with flags 03: its flag-10 guard returns without drawing. This is distinct from the task context field at +0.",
+    "Wine battle-directory-index56-active-wine-qbzrv3ua reaches the original draw of new list 40dc0a (directory index 56) in one neutral frame from a retained pre-input EUR battle state. Interpreter/native-dispatch raw/managed pairs match complete state and clock with 58 typed requests and no raw source reads per arm."
+  ],
+  "limitations": [
+    "Other ordinary list uses remain open, as do other consumers, per-read native attribution, frontend UI, Linux, USA and native Windows. No performance measurement."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/obj_lists.rs",
+    "crates/gba-core/src/rom_data/runtime/obj_lists.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/battle_directory_list_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

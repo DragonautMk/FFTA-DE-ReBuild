@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "slug": "inventory-e154-title-language-reads",
+  "title": "Inventory EUR title language selector reads",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Record a bounded high-ROM source ownership and runtime-service inventory for the EUR title language selector."
+  ],
+  "validation": [
+    "Wine e154-title-language-residue-wine-ry8vy8i9: three neutral frames, 997 high-ROM requests, no drops or raw events overlapping declared sources; 62 unowned bytes include four known support bytes and 58 source leads.",
+    "An initial launch was refused before command execution because the protected plan path was retired scratch; the retained evidence path fixed the wrapper."
+  ],
+  "limitations": [
+    "Observed ranges are not asset boundaries or global coverage; other frames, Linux, USA and native Windows pending. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md"
+  ],
+  "references": []
+}

@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "slug": "verify-title-cursor-languages",
+  "title": "Verify EUR title cursor choices under Wine",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add one bounded ordinary title-selector interpreter comparison covering the five language cursor positions without confirming a language change."
+  ],
+  "validation": [
+    "Wine e155-title-cursor-languages-wine-yx3vvt5x verifies both typed cursor halfwords for choices 0\u20134, zero raw source reads and equal raw/managed state and clock across 33 frames.",
+    "The first test build ec2ayc3l failed because a read length was declared u16 rather than usize; the corrected build c5alo8cq passed."
+  ],
+  "limitations": [
+    "Native dispatch for the new choices, other bank entries, frontend UI, Linux, USA and native Windows remain open. No performance measurement."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/title_cursor_languages_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

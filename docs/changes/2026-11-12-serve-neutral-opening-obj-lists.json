@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "slug": "serve-neutral-opening-obj-lists",
+  "title": "Serve the EUR opening OBJ pointer directory and lists",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Serve the 19 absolute title-opening OBJ pointers and 11 distinct lists from the existing managed static OBJ resource, preserving older dataset parsing and the E156 projection."
+  ],
+  "validation": [
+    "Wine e157-title-opening-obj-fix-wine-pfxplazm checks all 164 poisoned source bytes, mixed boundaries, 102 unchanged resource files, the original initializer and two original regular draw calls; typed requests are 19/10/10 with no raw source reads and matching full states.",
+    "The first Wine attempt mtbwmjz0 failed because the trace frame was unset; the corrected test passes and failed diagnostics remain retained.",
+    "Wine e157-title-opening-cli-wine-shuvdeal passes production CLI create/reuse/verify and one-frame startup; 102 unrelated files match E156 and the frame does not read the new directory."
+  ],
+  "limitations": [
+    "Ordinary drawing, affine drawing, native-dispatch attribution, Linux, USA and native Windows remain open. No performance measurement."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/obj_lists.rs",
+    "crates/gba-core/src/rom_data/obj_lists/conditional_markers.rs",
+    "crates/gba-core/src/rom_data/obj_lists/constructor_animation.rs",
+    "crates/gba-core/src/rom_data/obj_lists/context_selector.rs",
+    "crates/gba-core/src/rom_data/obj_lists/observed.rs",
+    "crates/gba-core/src/rom_data/runtime/obj_lists.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/title_opening_obj_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

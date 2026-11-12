@@ -10,11 +10,13 @@ pub struct ObjListStats {
     pub count_bytes: u64,
     pub attribute_bytes: u64,
     pub host_reads: u64,
+    pub directory_bytes: u64,
+    pub actor_lookup_bytes: u64,
 }
 
 pub(super) struct ObjListResources {
     lists: Lists,
-    counts: [AtomicU64; 4],
+    counts: [AtomicU64; 6],
     host_reads: AtomicU64,
     used: Vec<[AtomicBool; 2]>,
 }
@@ -34,11 +36,27 @@ impl ObjListResources {
     pub(super) fn source_page(index: usize) -> bool {
         matches!(
             index >> 12,
-            0x394 | 0x395 | 0x397 | 0x399 | 0x3ad | 0x3ae | 0x40d | 0x6df
+            0x394 | 0x395 | 0x397 | 0x398 | 0x399 | 0x3ad | 0x3ae | 0x40d..=0x40e | 0x6df
         )
     }
 
     fn byte(&self, index: usize) -> Option<(u8, usize)> {
+        if let Some(directory) = &self.lists.title_opening_directory {
+            if let Some(relative) = index.checked_sub(crate::rom_data::obj_lists::TITLE_OPENING_DIRECTORY_ROOT as usize) {
+                if let Some(pointer) = directory.get(relative / 4) {
+                    return Some((pointer.to_le_bytes()[relative % 4], 4));
+                }
+            }
+        }
+        if let Some(words) = &self.lists.actor_lookup {
+            if let Some(relative) = index.checked_sub(crate::rom_data::obj_lists::ACTOR_LOOKUP_ROOT as usize) {
+                if let Some(word) = words.get(relative / 2) { return Some((word.to_le_bytes()[relative % 2], 5)); }
+            }
+        }
+        if let Some(byte) = self.lists.battle_directory.as_ref()
+            .and_then(|directory| u32::try_from(index).ok().and_then(|at| directory.source_byte(at))) {
+            return Some((byte, 4));
+        }
         let i = self
             .lists
             .lists
@@ -96,7 +114,7 @@ impl ObjListResources {
         if !Self::source_page(index) {
             return prior;
         }
-        let mut counts = [0; 4];
+        let mut counts = [0; 6];
         let bytes = std::array::from_fn(|i| match self.byte(index + i) {
             Some((byte, kind)) => {
                 counts[1] += 1;
@@ -116,7 +134,7 @@ impl ObjListResources {
     }
 
     pub(super) fn stats(&self) -> ObjListStats {
-        let [bus_reads, source_bytes, count_bytes, attribute_bytes] =
+        let [bus_reads, source_bytes, count_bytes, attribute_bytes, directory_bytes, actor_lookup_bytes] =
             self.counts.each_ref().map(|c| c.load(Ordering::Relaxed));
         ObjListStats {
             bus_reads,
@@ -124,6 +142,8 @@ impl ObjListResources {
             count_bytes,
             attribute_bytes,
             host_reads: self.host_reads.load(Ordering::Relaxed),
+            directory_bytes,
+            actor_lookup_bytes,
         }
     }
 
@@ -131,6 +151,8 @@ impl ObjListResources {
         std::mem::size_of::<Self>()
             + self.used.capacity() * std::mem::size_of::<[AtomicBool; 2]>()
             + self.lists.lists.capacity() * std::mem::size_of::<List>()
+            + self.lists.battle_directory.as_ref().map_or(0, |d| d.offsets.capacity() * std::mem::size_of::<u16>())
+            + self.lists.title_opening_directory.as_ref().map_or(0, |d| d.capacity() * std::mem::size_of::<u32>())
             + self
                 .lists
                 .lists

@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "slug": "inspect-title-sequence-zero-producers",
+  "title": "Inspect EUR title animation sequence-zero producers",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Separate the known selector-one title animation bank from a distinct selector-zero bank and document the limits of the producer scan."
+  ],
+  "validation": [
+    "Wine e155-title-sequence-zero-dis-wine-f4_b2apw confirms two direct initializer calls use different bank roots and selectors; an exact EUR aligned literal/direct-call scan is bounded to its stated forms.",
+    "Focused Sol consultation requested gpt-6.1-sol xhigh; effective settings are not independently verifiable."
+  ],
+  "limitations": [
+    "No ordinary sequence-zero producer for the first bank is established; indirect calls, computed roots, mutable animator fields and other scenes remain open. Linux, USA and native Windows pending. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_obj.md"
+  ],
+  "references": []
+}

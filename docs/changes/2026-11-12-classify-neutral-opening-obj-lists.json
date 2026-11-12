@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "slug": "classify-neutral-opening-obj-lists",
+  "title": "Classify the EUR neutral-opening OBJ pointer directory",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Classify a 19-entry absolute pointer directory and eleven distinct one-object lists used conditionally by the title opening."
+  ],
+  "validation": [
+    "Existing EUR Wine initializer disassembly f4_b2apw establishes the 19-entry copy; retained draw-helper disassembly identifies visibility and the affine and regular draw paths.",
+    "Authenticated ROM source inspection confirms both hashes and disjointness from every E156 manifest span."
+  ],
+  "limitations": [
+    "Conditional source contract only; ordinary drawing, all consumers, Linux, USA and native Windows remain unverified. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_obj.md"
+  ],
+  "references": []
+}

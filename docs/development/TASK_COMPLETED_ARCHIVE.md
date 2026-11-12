@@ -22592,3 +22592,240 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: Source and preset previews retain long UTF-8 text across numbered pages and preserve preview-token handling; synthetic GUI navigated 21 and 17 pages and armed/disarmed while paused.
 - Evidence: Linux `dbg20-glyph-preview-linux-kop5ebfw`, Wine tests `dbg20-glyph-preview-wine-mjhe0zm9`, GUI `dbg20-glyph-preview-gui-final-1pnyxi0d`; change record `2026-11-12-identify-truncated-cheat-previews.json`.
 - Limits: Wine GUI used CPU scaling; native Windows and physical devices remain unverified. Previous wrapper failure on private scratch is retained; subsequent explicitly selected retention passed.
+
+### ROMDATA-01-BATTLE-40DCBA-PRODUCER
+
+- Outcome: completed for one observed EUR/Wine battle list producer path.
+- Verified criteria: In a retained neutral-input continuation, the task slot is first cleared and then original 0802e110 writes 0840dcba to task+24 after 0800720c resolves directory 0840d300 selector 62. Static inspection identifies kind 2/count 103 and relative offset 09b6. The watch had no width/value filter; it records at most one overlapping access per step.
+- Evidence: `battle-writer-observer-wine-q7qbukus`, `e148-battle-caller-wine-qe49ajoc`; `docs/changes/2026-11-12-identify-battle-obj-list-producer.json`. Sol `/root/sol_battle_writer` requested gpt-6.1-sol xhigh; effective settings were not independently confirmed.
+- Limits: Other directory selectors/consumers and frontend UI, Linux, USA and native Windows remain open. Pre-step PC may encompass nested work. No performance measurement.
+
+### ROMDATA-01-BATTLE-40D300-DIRECTORY
+
+- Outcome: completed for one bounded EUR relative-directory source contract.
+- Verified criteria: Original 0800720c applies the low-16-bit selector and count at +2, reads a kind-2 halfword offset and returns base+4+offset. The independent source has a 210-byte header/index with 103 entries; the byte at +1 remains opaque. Ordinary selector 62 resolves the observed 40dcba list. The header/index is disjoint from E148 declared sources.
+- Evidence: `battle-directory-dis-wine-nnfm38wz`, `battle-writer-observer-wine-q7qbukus`; `docs/changes/2026-11-12-classify-battle-relative-directory.json`.
+- Limits: Other target payloads, selector/caller domains, managed serving, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-02-BATTLE-40D300-DIRECTORY
+
+- Outcome: completed for the declared 210-byte EUR directory and one ordinary selector-62 route.
+- Verified criteria: E149-d148 adds the 103-entry index while preserving the E148 projection and other resources. All poisoned bytes, mixed boundaries and six original-reader selector cases pass. One-frame interpreter/native-dispatch raw/managed ordinary pairs match states and clocks with five typed bytes and no raw source reads per arm. Production CLI create/reuse/verify/startup passes; 102 other resource files are unchanged.
+- Evidence: `e149-battle-directory-wine-951r5cd9`, `e149-battle-directory-cli-wine-602qybdq`; `docs/changes/2026-11-12-add-battle-relative-directory.json`.
+- Limits: Other target payloads, ordinary selectors, per-read native attribution, frontend UI, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-01-BATTLE-40D300-TARGETS
+
+- Outcome: completed for the conditional EUR battle-directory list source projection.
+- Verified criteria: Original resolver, producer, task draw path and counted six-byte reader are authenticated. All 103 target extents and supported shapes are checked: 576 objects/3,662 bytes, of which indices 32 and 62 exactly reuse prior owners; 101 disjoint new lists total 3,574 bytes, with no partial E149 source overlaps. Ordered complete/new SHA-256 values are recorded in the change record.
+- Evidence: `battle-directory-target-audit-wine-uf6zbm9k`, `battle-writer-observer-wine-q7qbukus`; `docs/changes/2026-11-12-classify-battle-directory-lists.json`.
+- Limits: The projection is conditional; other callers and all-selector ordinary reachability, managed serving, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-02-BATTLE-40D300-LISTS
+
+- Outcome: completed for the conditional EUR source/model/runtime and production CLI scope.
+- Verified criteria: E150-d149 adds 101 independent lists/3,574 bytes and retains two shared owners and the E149 projection. Wine checks all poisoned bytes, mixed boundaries including 40d/40e and six original draw cases with matching states/clocks. CLI create/reuse/verify/startup passes and 102 other files match.
+- Evidence: `e150-battle-directory-boundary-wine-2kzfs9br`, `e150-battle-directory-lists-cli-wine-qs_o6f1b`; `docs/changes/2026-11-12-add-battle-directory-lists.json`.
+- Limits: The initial `ul89n3af` attempt exposed missing page 40e routing, fixed and retested. One 120-frame continuation had no new-list draw; ordinary new-list use, other scenes/consumers, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-04-BATTLE-40D300-ORDINARY
+
+- Outcome: completed for one EUR/Wine ordinary draw of new directory entry 56.
+- Verified criteria: In an unmodified retained pre-input battle state, command 0102 reaches original draw of 40dc0a in the first neutral frame. Interpreter/native-dispatch raw/managed pairs match states and clocks with 58 typed requests and no raw source reads per arm.
+- Evidence: `battle-directory-index56-active-wine-qbzrv3ua`, `battle-directory-scheduler-dis-wine-vmcqen6e`; `docs/changes/2026-11-12-add-battle-directory-lists.json`. Sol `/root/sol_battle_writer` requested gpt-6.1-sol xhigh; effective settings unconfirmed.
+- Limits: Earlier `kjyi2ycx` negative involved command 0105/flags 03, which suppresses draw; other lists/scenes, native per-read attribution, frontend UI, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-01-E150-LLEDNAR-RESIDUE
+
+- Outcome: completed for a bounded three-frame EUR Llednar high-ROM inventory.
+- Verified criteria: E150/d149, 3,477 requests, no drops or raw events overlapping declared sources; 52 distinct unowned bytes, including 36 previously classified control bytes and 16 source leads.
+- Evidence: `e150-llednar-residue-wine-ek23m5tm`; `docs/changes/2026-11-12-inventory-e150-llednar-high-rom-reads.json`.
+- Limits: Read ranges do not establish resource boundaries or all consumers; other scenes, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-01-E150-LLEDNAR-SOURCES
+
+- Outcome: completed for bounded classification of observed readers, with domains still open.
+- Verified criteria: Original signed table reader covers observed indices 8/9 at 394e1c..20; original counted OBJ draw reads one-element list 395014..1c; unguarded original 080a3076 reads halfwords indexed from 398df0.
+- Evidence: `e150-llednar-residue-wine-ek23m5tm`, `e150-llednar-sources-dis-wine-o4t2h6dz`; `docs/changes/2026-11-12-inspect-e150-llednar-source-readers.json`.
+- Limits: Source domains, OBJ pointer producer, all consumers and managed publication remain open; Linux, USA and native Windows pending. No performance measurement.
+
+### ROMDATA-02-VERTICAL-INDICES8-9
+
+- Outcome: completed for two observed EUR correction indices with ordinary Wine validation.
+- Verified criteria: E151-d150 extends the existing signed fragment by four bytes while retaining E150 projection and old four-row parsing; correction counters remain independent of battle bits. Four original prefix cases, poisoned/mixed boundaries and three-frame interpreter/native-dispatch ordinary raw/managed pairs pass with three typed requests and no raw reads per arm. Production CLI create/reuse/verify/startup passes; 102 unrelated files match.
+- Evidence: `e151-vertical-extension-wine-92o14x87`, `e151-vertical-cli-wine-_w2bvosq`; `docs/changes/2026-11-12-extend-eur-vertical-corrections.json`.
+- Limits: Other indices/consumers, native per-read attribution, frontend UI, Linux, USA and native Windows remain open; no performance measurement.
+
+### ROMDATA-02-OBJ-395014
+
+- Outcome: completed for the observed EUR one-object draw source and ordinary Wine pair.
+- Verified criteria: E152-d151 preserves E151 projection and serves eight source bytes; poisoned/mixed boundaries and original draw pass. Three-frame interpreter/native-dispatch raw/managed pairs match state and clock, 155 typed requests and zero raw per arm. Production CLI create/reuse/verify/startup passes and 102 unrelated files match. Existing original code identifies a conditional actor callback and setter to object+28; ordinary invocation not established.
+- Evidence: `e152-llednar-list-wine-92rch9l_`, `e152-llednar-list-cli-wine-inu0hb6h`, `target/rom-data-constructor-slot-activation/creator-entry.txt`; `docs/changes/2026-11-12-serve-llednar-draw-list.json`. Sol requested gpt-6.1-sol xhigh; effective settings unconfirmed.
+- Limits: Other producers/scenes/consumers, native per-read attribution, frontend UI, Linux, USA and native Windows open; no performance measurement.
+
+### ROMDATA-01-LOOKUP-398DF0
+
+- Outcome: completed for the bounded observed lookup callers and ordinary setter.
+- Verified criteria: Callback 0809b1bc/1ca passes signed actor+7e to unguarded 080a3070; both indices 0/1 were read from 398df0. Three-frame Wine observer records nine writes of 08395014 through 08022f12, with three objects already holding the value, and original list draw entries.
+- Evidence: `e152-llednar-lookup-observer-wine-ro1bzrrb`, `e150-llednar-sources-dis-wine-o4t2h6dz`, `target/rom-data-constructor-slot-activation/creator-entry.txt`; `docs/changes/2026-11-12-observe-llednar-lookup-and-setter.json`.
+- Limits: Destination semantics, all indices/callers, initial assignment, per-object draw linkage, Linux, USA and native Windows remain open; no performance measurement.
+
+### ROMDATA-02-LOOKUP-398DF0
+
+- Outcome: completed for two observed EUR actor lookup entries and ordinary Wine validation.
+- Verified criteria: E153-d152 extends OBJ resource by four bytes with older E152 projection accepted, separate lookup counter and fallback outside the fragment. Wine passes poisoned/mixed boundaries, original indices -1/0/1/2 and three-frame interpreter/native-dispatch ordinary pairs (18 typed, zero raw requests each). CLI create/reuse/verify/startup passes; 102 unrelated files match and startup reports 12 lookup bytes. Original callback writes results to object+30/+32.
+- Evidence: `e153-llednar-lookup-wine-3mck1vjs`, `e153-llednar-lookup-cli-wine-29056g3o`, `e152-llednar-lookup-dis-wine-uxzq0l04`; `docs/changes/2026-11-12-serve-llednar-actor-lookup.json`.
+- Limits: Other inputs/callers/meaning/scenes, native per-read attribution, frontend UI, Linux, USA and native Windows remain open; no performance measurement.
+
+### ROMDATA-01-E153-LLEDNAR-DIALOGUE
+
+- Outcome: completed for three neutral EUR dialogue frames against E153.
+- Verified criteria: 2,990 high-ROM requests, no drops or raw events overlapping declared source spans; 43 unowned bytes consist of 36 prior support bytes and seven source leads at 371008..0b and 397fa4..a8.
+- Evidence: `e153-llednar-dialogue-residue-wine-g51e3yzn`; `docs/changes/2026-11-12-inventory-e153-llednar-dialogue.json`.
+- Limits: Leads do not establish resource extents or all consumers; other scenes, Linux, USA and native Windows open. No performance measurement.
+
+### ROMDATA-01-DIALOGUE-371008
+
+- Outcome: completed for bounded EUR dialogue source and branch contracts.
+- Verified criteria: Original 08013152 indexes 370ffc with the old signed task byte; post-draw mask 1f gives a conditional 32-byte continuation, with indices 12..14 observed and no E153 overlap. Word 397fa4 selects Thumb IWRAM 03006bbd through the 145c10 branch helper.
+- Evidence: `e153-dialogue-source-dis-wine-sro_6w4u`, `e153-llednar-dialogue-residue-wine-g51e3yzn`; `docs/changes/2026-11-12-classify-e153-dialogue-readers.json`.
+- Limits: Initial index, other writers/consumers, IWRAM body, Linux, USA and native Windows open; no performance measurement.
+
+### ROMDATA-02-DIALOGUE-370FFC
+
+- Outcome: completed for the conditional EUR draw sequence and one ordinary Wine dialogue.
+- Verified criteria: E154-d153 serves 32 bytes while accepting E153 projection; five original prefix cases include signed indices -1 and 32. All poisoned bytes, mixed page/adjacent-owner boundaries and three-frame interpreter/native-dispatch raw/managed pairs pass, with three typed and zero raw source requests per arm. Production CLI create/reuse/verify/startup passes; 102 other files match.
+- Evidence: `e154-dialogue-sequence-wine-397wfb6_`, `e154-dialogue-sequence-cli-wine-huydule1`; `docs/changes/2026-11-12-serve-dialogue-draw-sequence.json`.
+- Limits: First lookup, external writers, other scenes/consumers, native per-read attribution, frontend UI, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-01-E154-LLEDNAR-MENU
+
+- Outcome: completed for three neutral EUR confirmation-menu frames against E154.
+- Verified criteria: 2,982 high-ROM requests, no drops or raw events overlapping declared sources; 36 unowned bytes are previously classified DMA/IWRAM-branch support.
+- Evidence: `e154-llednar-menu-residue-wine-yq2cxie0`; `docs/changes/2026-11-12-inventory-e154-llednar-menu.json`.
+- Limits: Bounded negative only; other scenes, Linux, USA and native Windows open. No performance measurement.
+
+### ROMDATA-01-LANGUAGE-WRITERS
+
+- Outcome: completed for bounded EUR original-code writer provenance; global domain remains partial.
+- Verified criteria: First chooser 13ff64 publishes its selection; stores 027aa, 0981a, 00386 and 13f660 preserve/default the byte under distinct conditions. Independent 13aafe publishes context+8964 when changed; normal controls wrap 0/4 but original source/store do not impose a global cap.
+- Evidence: `e154-language-writer-dis-wine-rkhdqwg9`, `e154-language-alternates-dis-wine-8mbnf7uq`, `obj-retained-candidate-windows-61ceiuwx`; `docs/changes/2026-11-12-inventory-eur-language-writers.json`. Sol requested gpt-6.1-sol xhigh; effective settings unconfirmed.
+- Limits: Alternate publisher ordinary reachability, indirect/other writers, global value domain, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-01-LANGUAGE-CALLBACK-SCREEN
+
+- Outcome: completed for identifying the bounded EUR title-frontend callback screen.
+- Verified criteria: Maintained frontend input code binds 08139d29, mode 2 and five language rows to the title. Retained ordinary title checkpoint shows Language as fourth entry; user independently identified startup access. Original registration and helper branch pass Wine disassembly. In-game Options is a distinct bounded negative.
+- Evidence: `e154-language-screen-dis-wine-q6ywhlta`, `e129-prefinal-title-start-qyb35ep8`, `crates/gba-core/src/ffta_mouse.rs`; `docs/changes/2026-11-12-identify-eur-title-language-callback.json`.
+- Limits: Alternate publisher ordinary invocation and complete writer domain remain open; Linux, USA and native Windows pending. No performance measurement.
+
+### ROMDATA-04-LANGUAGE-OPTION-ORDINARY
+
+- Outcome: completed for one ordinary EUR title language publication.
+- Verified criteria: From the retained title, normal Down/Down/A reaches the five-language selector; Down/release/A selects French and original 0813aafe writes 1 from context+8964 to 02001f6e. Exact pre/post checkpoints retained. In-game Options through Default has no language item in the bounded inspection.
+- Evidence: `e154-title-language-capture-wine-oh96r2eh`, `e154-title-language-publisher-wine-ij_gnywg`, `e154-language-option-scan2-wine-098p6b71`; `docs/changes/2026-11-12-observe-title-language-publication.json`. System capture o5r_2j1d exit0 but unit FAIL on intermediate retention, verified without replay by tcuplybv.
+- Limits: Other title selections/indirect writers/global value domain, Linux, USA and native Windows remain open; no performance measurement.
+
+### ROMDATA-01-E154-TITLE-LANGUAGE-RESIDUE
+
+- Outcome: completed for three neutral EUR title-language selector frames against E154.
+- Verified criteria: 997 high-ROM requests, no drops or raw overlap with declared sources; 62 unowned bytes comprise the known 370eb0 helper and 58 source leads at 3adcfc and b8ed06..b8ee76. An initial wrapper was refused before execution for a missing retired plan path, corrected to retained evidence.
+- Evidence: `e154-title-language-residue-wine-ry8vy8i9`; `docs/changes/2026-11-12-inventory-e154-title-language-reads.json`.
+- Limits: Observed ranges do not establish asset extents or global coverage; Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-01-TITLE-B8ED-SOURCES
+
+- Outcome: completed for bounded EUR title cursor and animation source contracts.
+- Verified criteria: 3adcfc holds five conditional u16 coordinate pairs. Original 13b224 supplies b8eda4/b8ecd4 directories, selector1 and loop flag to original initializer; 15 lists and two 9/8-step sequences form 19 nonoverlapping E154-disjoint spans/290 bytes. Observed indices 9/10/13 have exact counted OBJ lengths 8/8/14.
+- Evidence: `e154-title-residue-sources-dis-wine-cxe2yngk`, `e154-title-bank-contract-dis-wine-hj04kd_b`, `e154-title-language-residue-wine-ry8vy8i9`; `docs/changes/2026-11-12-classify-title-language-animation.json`. Sol requested gpt-6.1-sol xhigh; effective settings unconfirmed.
+- Limits: Remaining entries are conditional directory-derived sources; other selectors/callers, global extent, Linux, USA and native Windows open. No performance measurement.
+
+### ROMDATA-02-TITLE-LANGUAGE-BANK
+
+- Outcome: completed for conditional EUR title cursor/bank and one ordinary Wine selector scene.
+- Verified criteria: E155-d154 preserves E154 projection; 20 spans/310 bytes poisoned and boundary checked, four original cursor cases and two original animator sequences pass. Three-frame interpreter/native-dispatch pairs match states/clocks with six typed cursor and 258 typed bank requests, zero raw per arm. Production CLI create/reuse/verify/startup passes; 102 unrelated files match.
+- Evidence: `e155-title-language-bank-wine-clf3wf29`, `e155-title-language-bank-cli-wine-f0s6bsao`; `docs/changes/2026-11-12-serve-title-language-animation.json`. Wine emitted a nonfatal D-Bus diagnostic.
+- Limits: Other choices/entries/scenes/consumers, native per-read attribution, frontend UI, Linux, USA and native Windows open; no performance measurement.
+
+### ROMDATA-04-TITLE-CURSOR-LANGUAGES
+
+- Outcome: completed for all five EUR title cursor positions in one Wine interpreter route.
+- Verified criteria: Neutral then four Down/release steps select 0–4 without confirming a change; both original coordinate halfwords are typed, no raw source reads, and all 33 raw/managed states and clocks match.
+- Evidence: `e155-title-cursor-languages-wine-yx3vvt5x`; `docs/changes/2026-11-12-verify-title-cursor-languages.json`. First build ec2ayc3l failed on test read-length type; fixed c5alo8cq passed.
+- Limits: Native dispatch for new choices, bank entries, frontend UI, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-04-TITLE-ANIMATION-ORDINARY
+
+- Outcome: completed for one EUR title selector sequence-1 continuation under Wine.
+- Verified criteria: All six sequence-1 list indices 9–14 have typed header reads, no raw source reads and matching interpreter raw/managed states and clocks over 22 neutral frames with poisoned list sources.
+- Evidence: `e155-title-animation-ordinary-wine-fyt8q7px`; `docs/changes/2026-11-12-verify-title-animation-sequence-one.json`.
+- Limits: Sequence0 and other scenes, native dispatch for this continuation, frontend UI, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-01-TITLE-ANIMATION-ZERO
+
+- Outcome: completed for a bounded direct-call/literal source audit; first-bank sequence0 remains partial.
+- Verified criteria: Original initializer 139ca0 has two aligned direct-call candidates in ROM offsets 0..370000. Call 13b224 selects 1 for b8eda4/b8ecd4; call 13a236 selects 0 for distinct b8ed28/b8ecb4. Only one aligned exact literal for each first-bank root was found; the updater uses resolved pointer/count, not the stored ID alone.
+- Evidence: `e155-title-sequence-zero-dis-wine-f4_b2apw`; `docs/changes/2026-11-12-inspect-title-sequence-zero-producers.json`. Sol requested gpt-6.1-sol xhigh; effective settings unconfirmed.
+- Limits: Indirect calls, computed roots, mutable task fields and ordinary first-bank sequence0 remain unproved; Linux, USA and native Windows open. No performance measurement.
+
+### ROMDATA-01-E155-TITLE-MAIN-RESIDUE
+
+- Outcome: completed for three neutral EUR main title frames against E155.
+- Verified criteria: 611 high-ROM requests, no drops or raw events overlapping declared sources; eight unowned bytes comprise the known 370eb0 helper and four source leads at 3adca4..a8. No reads of the distinct selector-zero bank were seen in this window.
+- Evidence: `e155-title-main-residue-wine-2gcsrjfn`; `docs/changes/2026-11-12-inventory-e155-main-title-reads.json`.
+- Limits: The negative covers only this window; source extent, other scenes, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-01-TITLE-MAIN-COORDINATES
+
+- Outcome: completed for bounded EUR main-title coordinate and distinct animation source contracts.
+- Verified criteria: Original 13ba10 dispatches language 0–4 to five four-row coordinate tables, returns without writes for larger language and leaves the row byte uncapped. The conditional 80-byte projection is E155-disjoint. Original 13a236 initializes distinct b8ed28/b8ecb4 selector0 bank; six lists and one six-step sequence form nine disjoint E155-disjoint spans/150 bytes.
+- Evidence: `e155-title-main-dispatch-dis-wine-y_lbrsdd`, `e155-title-main-coordinates-dis-wine-uy12v_b5`, `e155-title-sequence-zero-dis-wine-f4_b2apw`; `docs/changes/2026-11-12-classify-main-title-sources.json`.
+- Limits: Only one cursor pair observed, second bank has no ordinary read in the sampled window; other inputs/callers, Linux, USA and native Windows open. No performance measurement.
+
+### ROMDATA-02-TITLE-MAIN-SOURCES
+
+- Outcome: completed for conditional EUR main-title coordinates/bank and one ordinary cursor scene.
+- Verified criteria: E156-d155 preserves E155 projection; 10 spans/230 bytes poisoned, mixed boundaries, eleven original cursor cases including invalid language, and one original bank initializer/update pass. Three-frame interpreter/native-dispatch title pairs match states/clocks, six typed cursor and zero raw per arm; bank has no ordinary read in this window. Production CLI create/reuse/verify/startup passes; 102 unrelated files match.
+- Evidence: `e156-title-main-sources-wine-nexxapjy`, `e156-title-main-sources-cli-wine-813gyofb`; `docs/changes/2026-11-12-serve-main-title-sources.json`.
+- Limits: Ordinary bank use, other inputs/scenes/consumers, native per-read attribution, frontend UI, Linux, USA and native Windows open; no performance measurement.
+
+### TARGET-STORAGE-CLEANUP-20261112B
+
+- Outcome: completed
+- Verified criteria: user requested renewed target cleanup and compression. Nineteen superseded EUR datasets E133..E153 (excluding E135 and E141) from completed units were reviewed against PASS receipts and exact inventories, archived and verified before retirement; E154/E155 and the active E156 unit were preserved. Net retained-file-block savings 9,468,792,832 bytes. A subsequent completed-only Docker batch found no further eligible paths under current/partial-work exclusions.
+- Evidence: target/local-superseded-datasets-20261112/receipt.json (10 archives, 4,982,898,688 bytes), target/local-superseded-datasets-20261112-cont/receipt.json (9 archives, 4,485,894,144 bytes), and target/cold-storage-batches/20261112-165814-b1a3f604/batch.json (PASS, zero candidates).
+- Limits: emergency space exception documented per archive: initial free space approximately 1.4 GiB, verified one-at-a-time streaming with a 512 MiB floor and capacity precheck; standard 5 GiB floor restored once possible. Fresh host activity checks and scope leases used; unreadable host process details remain a limit. No suites, builds, gameplay or benchmarks were run. Free-space totals include unrelated writers; archive receipts record attributed block savings.
+- Next action: consult catalog and restore on demand; do not interrupt or resume another owner's active unit.
+
+### ROMDATA-04-TITLE-MAIN-BANK-ORDINARY
+
+- Outcome: complete for the first EUR ordinary bank-read frame, Wine interpreter only.
+- Evidence: `e156-title-main-bank-neutral-wine-vzea9l43` continues the retained neutral opening and observes two typed bank requests, zero raw requests with poisoned sources, and matching original/managed full state and clock for one frame.
+- Limits: request offsets, drawing, remaining lists/scenes and native dispatch remain open; Linux, USA and native Windows are pending. No performance measurement.
+- Reference: `docs/changes/2026-11-12-verify-main-title-bank-opening.json`.
+
+### ROMDATA-01-TITLE-OPENING-SOURCES
+
+- Outcome: conditional EUR source contract complete for the 19 absolute pointers at `3ade64` and 11 distinct count-one OBJ lists at `3ade0a..3ade62`, disjoint from E156 sources.
+- Evidence: existing Wine initializer `f4_b2apw`, retained draw-helper disassembly and authenticated ROM/manifest inspection; `docs/changes/2026-11-12-classify-neutral-opening-obj-lists.json`.
+- Limits: ordinary drawing and global consumers, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-02-TITLE-OPENING-OBJ
+
+- Outcome: conditional EUR extraction and managed original readers complete under Wine for 19 pointers and 11 lists (164 bytes), preserving E156 projection.
+- Evidence: `e157-title-opening-obj-fix-wine-pfxplazm`: poisoned source, mixed boundaries, unchanged other files, original initializer and two regular draw cases match full states with typed requests and no raw reads. First attempt `mtbwmjz0` failed due to an unset trace frame, then corrected.
+- Limits: production CLI, ordinary/affine drawing, native dispatch, Linux, USA and native Windows remain open. No performance measurement.
+- Reference: `docs/changes/2026-11-12-serve-neutral-opening-obj-lists.json`.
+
+### ROMDATA-05-TITLE-OPENING-CLI
+
+- Outcome: production EUR/Wine CLI create, no-write reuse, verification and one managed title startup frame pass for E157 (`e157-title-opening-cli-wine-shuvdeal`); 102 unrelated files remain identical to E156.
+- Limits: this startup frame reads no new directory bytes; ordinary/affine drawing, native attribution, Linux, USA and native Windows remain pending. No performance measurement.
+- Reference: `docs/changes/2026-11-12-serve-neutral-opening-obj-lists.json`.
+
+### ROMDATA-04-TITLE-OPENING-DRAW
+
+- Outcome: complete for one EUR ordinary opening list-read frame under Wine interpreter.
+- Evidence: `e157-title-opening-draw-wine-28msdufg` observes 19 typed pointer-directory requests and affine reader `08001998/199a` consuming `3ade0a`; source poisoned, no raw source requests and original/managed full state and clock match for one frame. Private pre-frame checkpoint is retained under the unit.
+- Limits: other lists, regular/affine paths, other scenes, native dispatch, Linux, USA and native Windows remain open. No performance measurement.
+- Reference: `docs/changes/2026-11-12-observe-neutral-opening-obj-draw.json`.

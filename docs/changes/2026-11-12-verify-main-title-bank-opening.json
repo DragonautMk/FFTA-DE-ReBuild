@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "slug": "verify-main-title-bank-opening",
+  "title": "Observe the EUR title bank in a neutral opening",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add a source-backed bounded neutral opening test for the independent title animation bank."
+  ],
+  "validation": [
+    "Wine e156-title-main-bank-neutral-wine-vzea9l43 observes two typed bank requests and no raw requests with poisoned source spans; the first bank-read interpreter frame matches the original full state and clock.",
+    "The retained EUR opening checkpoint hc018h_n has a PASS provenance receipt; the observed title branch has the skip flag zero."
+  ],
+  "limitations": [
+    "The two requests are aggregate and are not attributed to individual source offsets; drawing, other lists and scenes, native dispatch, Linux, USA and native Windows remain open. No performance measurement."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/title_main_bank_ordinary_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

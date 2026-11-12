@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "slug": "classify-main-title-sources",
+  "title": "Classify EUR main title source projections",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Identify five conditional four-row main title coordinate tables and a separate six-list title animation bank."
+  ],
+  "validation": [
+    "Wine e155-title-main-coordinates-dis-wine-uy12v_b5 and e155-title-main-dispatch-dis-wine-y_lbrsdd authenticate the language dispatch and coordinate reader; the 80-byte projection is E155-disjoint.",
+    "Wine e155-title-sequence-zero-dis-wine-f4_b2apw identifies the separate bank initializer; exact EUR source inspection finds nine E155-disjoint spans totaling 150 bytes."
+  ],
+  "limitations": [
+    "Menu row inputs outside 0\u20133 remain uncapped, languages above 4 retain original no-write behavior, and ordinary second-bank use/global domains remain open. Linux, USA and native Windows pending. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_obj.md"
+  ],
+  "references": []
+}

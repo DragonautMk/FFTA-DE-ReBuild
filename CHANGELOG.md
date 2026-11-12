@@ -3,6 +3,62 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-12 — Verify EUR title cursor choices under Wine
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Add one bounded ordinary title-selector interpreter comparison covering the five language cursor positions without confirming a language change.
+
+**Validation**
+
+- Wine e155-title-cursor-languages-wine-yx3vvt5x verifies both typed cursor halfwords for choices 0–4, zero raw source reads and equal raw/managed state and clock across 33 frames.
+- The first test build ec2ayc3l failed because a read length was declared u16 rather than usize; the corrected build c5alo8cq passed.
+
+**Limitations**
+
+- Native dispatch for the new choices, other bank entries, frontend UI, Linux, USA and native Windows remain open. No performance measurement.
+
+[Change record](docs/changes/2026-11-12-verify-title-cursor-languages.json)
+
+## 2026-11-12 — Verify EUR title animation sequence one under Wine
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Add one bounded neutral ordinary title-selector interpreter comparison covering the six sequence-1 OBJ lists.
+
+**Validation**
+
+- Wine e155-title-animation-ordinary-wine-fyt8q7px observes typed list headers for indices 9–14, no raw source reads and equal raw/managed state and clock across 22 neutral frames with poisoned list sources.
+
+**Limitations**
+
+- Sequence 0, other scenes, native dispatch for this continuation, frontend UI, Linux, USA and native Windows remain open. No performance measurement.
+
+[Change record](docs/changes/2026-11-12-verify-title-animation-sequence-one.json)
+
+## 2026-11-12 — Observe the EUR title bank in a neutral opening
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Add a source-backed bounded neutral opening test for the independent title animation bank.
+
+**Validation**
+
+- Wine e156-title-main-bank-neutral-wine-vzea9l43 observes two typed bank requests and no raw requests with poisoned source spans; the first bank-read interpreter frame matches the original full state and clock.
+- The retained EUR opening checkpoint hc018h_n has a PASS provenance receipt; the observed title branch has the skip flag zero.
+
+**Limitations**
+
+- The two requests are aggregate and are not attributed to individual source offsets; drawing, other lists and scenes, native dispatch, Linux, USA and native Windows remain open. No performance measurement.
+
+[Change record](docs/changes/2026-11-12-verify-main-title-bank-opening.json)
+
 ## 2026-11-12 — Validate paired injured First Aid in Wine
 
 Type: docs. Platforms: Windows GNU executable / Wine / Xvfb.
@@ -20,6 +76,148 @@ Type: docs. Platforms: Windows GNU executable / Wine / Xvfb.
 - This covers one checkpoint and one ability, not all values or skills, native Windows, physical controllers or cheat devices. The earlier interrupted unit remains preserved.
 
 [Change record](docs/changes/2026-11-12-validate-injured-first-aid-wine.json)
+
+## 2026-11-12 — Trace a bounded EUR options route for language publication
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Record the source-backed ordinary world-menu to System and Options route and its bounded negative for a language entry.
+- Correct the unsupported association between the independent language publisher and the visible Options screen.
+
+**Validation**
+
+- The System capture e154-language-system-capture-wine-o5r_2j1d exited successfully but its unit was retained FAIL because unselected intermediate generated states remained. Wine preservation unit e154-language-system-preserve-wine-tcuplybv verifies protected hashes and retains the existing result without replay.
+- Wine e154-language-options-capture-wine-quskrm71, e154-language-option-scan-wine-ia9yhlut and e154-language-option-scan2-wine-098p6b71 reach and scroll Options through Default; no language item is visible.
+
+**Limitations**
+
+- This is a bounded negative for that Options list, not proof that the 13aafe callback is unreachable elsewhere. The correct callback screen, ordinary publication, Linux, USA and native Windows remain open. No performance measurement.
+
+[Change record](docs/changes/2026-11-12-trace-eur-language-option-route.json)
+
+## 2026-11-12 — Serve EUR title language cursor and animation sources
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Extend the layered OBJ resource with five title language cursor pairs and an independently rooted 15-list, two-sequence title animation bank.
+- Retain the previous dataset representation and account for title cursor reads separately.
+
+**Validation**
+
+- Wine e155-title-language-bank-wine-clf3wf29 preserves E154 projection, checks 310 poisoned bytes across 20 spans and mixed boundaries, four original cursor cases and two original animator sequences, and passes three-frame interpreter/native-dispatch title pairs with six cursor and 258 bank typed requests and no raw requests per arm.
+- Wine emitted a D-Bus diagnostic during the successful unit; the test and protected-input checks passed.
+- Wine e155-title-language-bank-cli-wine-f0s6bsao passes production CLI create/reuse/verify and one-frame startup with four title-position source bytes used; 102 unrelated files match E154.
+
+**Limitations**
+
+- Other choices, all entries/consumers, per-read native attribution, frontend UI, Linux, USA and native Windows remain open. No performance measurement.
+
+[Change record](docs/changes/2026-11-12-serve-title-language-animation.json)
+
+## 2026-11-12 — Serve the EUR opening OBJ pointer directory and lists
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Serve the 19 absolute title-opening OBJ pointers and 11 distinct lists from the existing managed static OBJ resource, preserving older dataset parsing and the E156 projection.
+
+**Validation**
+
+- Wine e157-title-opening-obj-fix-wine-pfxplazm checks all 164 poisoned source bytes, mixed boundaries, 102 unchanged resource files, the original initializer and two original regular draw calls; typed requests are 19/10/10 with no raw source reads and matching full states.
+- The first Wine attempt mtbwmjz0 failed because the trace frame was unset; the corrected test passes and failed diagnostics remain retained.
+- Wine e157-title-opening-cli-wine-shuvdeal passes production CLI create/reuse/verify and one-frame startup; 102 unrelated files match E156 and the frame does not read the new directory.
+
+**Limitations**
+
+- Ordinary drawing, affine drawing, native-dispatch attribution, Linux, USA and native Windows remain open. No performance measurement.
+
+[Change record](docs/changes/2026-11-12-serve-neutral-opening-obj-lists.json)
+
+## 2026-11-12 — Serve EUR main title cursor and separate animation bank
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Extend the layered OBJ resource with five four-row main-title cursor tables and a separate six-list, one-sequence title animation bank.
+- Retain E155 dataset compatibility and count main-title cursor reads separately.
+
+**Validation**
+
+- Wine e156-title-main-sources-wine-nexxapjy preserves the E155 projection, checks all 230 poisoned bytes and mixed boundaries, eleven original cursor cases including invalid language and uncapped row, and one original bank initializer/update. Three-frame interpreter/native-dispatch ordinary title pairs match state and clock with six typed cursor requests and zero raw reads per arm.
+- Wine e156-title-main-sources-cli-wine-813gyofb passes production CLI create/reuse/verify and one-frame startup with four main-title position bytes used; 102 unrelated files match E155.
+
+**Limitations**
+
+- The separate bank was not used in this ordinary window; its ordinary scene, other choices, per-read native attribution, frontend UI, Linux, USA and native Windows remain open. No performance measurement.
+
+[Change record](docs/changes/2026-11-12-serve-main-title-sources.json)
+
+## 2026-11-12 — Serve an observed EUR Llednar draw list
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Add the independently observed one-object Llednar list to the existing static OBJ source, retaining the prior dataset projection.
+
+**Validation**
+
+- Wine e152-llednar-list-wine-92rch9l_ preserves the E151 projection, checks all eight poisoned source bytes, mixed boundaries and the original draw, and passes three-frame interpreter/native-dispatch ordinary pairs with 155 typed requests and no raw reads per arm.
+- Read-only EUR creator-window fingerprint, literal 0809b238, call target 08022f10 and setter opcode check establishes a conditional producer writing 08395014 to object+28; its Llednar invocation is unproved. Initial opcode assertion used incorrect constants and was corrected. Focused Sol requested gpt-6.1-sol xhigh, effective settings unconfirmed.
+- Wine e152-llednar-list-cli-wine-inu0hb6h passes production CLI create/reuse/verify and one-frame startup; 102 other resource files match E151.
+
+**Limitations**
+
+- Ordinary use of the conditional producer, other producers, other scenes/consumers, per-read native attribution, frontend UI, Linux, USA and native Windows remain open. No performance measurement.
+
+[Change record](docs/changes/2026-11-12-serve-llednar-draw-list.json)
+
+## 2026-11-12 — Serve observed EUR Llednar actor lookup entries
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Add the two observed actor callback lookup words to the existing OBJ resource, preserving older dataset representations and raw fallback outside the fragment.
+- Route the source page and report lookup source bytes independently from OBJ counts, attributes and directory bytes.
+
+**Validation**
+
+- Wine e152-llednar-lookup-dis-wine-uxzq0l04 identifies the original unguarded lookup and its two object-field destinations.
+- Wine e153-llednar-lookup-wine-3mck1vjs preserves the E152 projection, tests poisoned bytes, mixed boundaries and original indices -1, 0, 1 and 2, and passes three-frame interpreter/native-dispatch ordinary pairs with 18 typed requests and no raw reads per arm.
+- Wine e153-llednar-lookup-cli-wine-29056g3o passes production CLI create/reuse/verify and one-frame startup with 12 lookup source bytes used; 102 unrelated files match E152.
+
+**Limitations**
+
+- Other index values, callers, downstream meaning, scenes, per-read native attribution, frontend UI, Linux, USA and native Windows remain open. No performance measurement.
+
+[Change record](docs/changes/2026-11-12-serve-llednar-actor-lookup.json)
+
+## 2026-11-12 — Serve the EUR conditional dialogue draw sequence
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Serve the conditional 32-byte post-mask dialogue draw sequence through the existing task-parameter resource while preserving earlier dataset representations and original out-of-fragment behavior.
+- Route page 370 and report the draw sequence source bytes separately from other task parameter fields.
+
+**Validation**
+
+- Wine e154-dialogue-sequence-wine-397wfb6_ preserves E153 projection, validates 32 poisoned bytes and mixed page/adjacent-owner boundaries, five original prefix cases including -1 and 32, and three-frame interpreter/native-dispatch ordinary pairs with three typed and zero raw requests per arm.
+- Wine e154-dialogue-sequence-cli-wine-huydule1 passes production CLI create/reuse/verify and one-frame startup with one sequence source byte used; 102 unrelated files match E153.
+
+**Limitations**
+
+- First indices, other task-byte writers/consumers/scenes, per-read native attribution, frontend UI, Linux, USA and native Windows remain open. No performance measurement.
+
+[Change record](docs/changes/2026-11-12-serve-dialogue-draw-sequence.json)
 
 ## 2026-11-12 — Page and render Unicode cheat details
 
@@ -70,6 +268,61 @@ Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/develo
 
 [Change record](docs/changes/2026-11-12-reconcile-usa-job-source-labels.json)
 
+## 2026-11-12 — Observe EUR title language publication
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Add a bounded passive observer of the original title language selector and publisher.
+
+**Validation**
+
+- Wine e154-title-language-capture-wine-oh96r2eh reaches the visible five-language title selector from a retained normal EUR title checkpoint.
+- Wine e154-title-language-publisher-wine-ij_gnywg observes normal Down/release/A selecting French, followed by original 0813aafe publishing value 1 to 02001f6e; source and destination are checked and pre/post states retained.
+
+**Limitations**
+
+- One ordinary title path is covered; other selections, indirect writers and global value domain remain open. Linux, USA and native Windows pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-12-observe-title-language-publication.json)
+
+## 2026-11-12 — Observe one EUR opening OBJ draw under Wine
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Add a bounded neutral-opening observation for the first managed title OBJ list and retain its immediately preceding private checkpoint.
+
+**Validation**
+
+- Wine e157-title-opening-draw-wine-28msdufg observes 19 typed directory requests and the 3ade0a list through original affine draw header readers 08001998/199a; poisoned source ranges have no raw reads and the first list-read interpreter frame matches the original full state and clock.
+
+**Limitations**
+
+- One ordinary list and frame only; other lists, regular drawing, native dispatch, Linux, USA and native Windows remain open. No performance measurement.
+
+[Change record](docs/changes/2026-11-12-observe-neutral-opening-obj-draw.json)
+
+## 2026-11-12 — Observe EUR Llednar lookup and OBJ setter
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Add a bounded interpreter observer for the two callback lookup sites and the conditional OBJ-list setter.
+
+**Validation**
+
+- Wine e152-llednar-lookup-observer-wine-ro1bzrrb records both callback return addresses reading lookup indices 0 and 1, nine setter writes across three frames and original draw entries. Three observed objects already contain the list pointer before each write.
+
+**Limitations**
+
+- No per-object draw association, initial pointer assignment or global lookup domain is proved; other scenes, Linux, USA and native Windows remain pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-12-observe-llednar-lookup-and-setter.json)
+
 ## 2026-11-12 — Locate the two CH-0236 candidate record spans
 
 Type: docs. Platforms: USA checkpoint / plaintext CodeBreaker interpretation.
@@ -89,6 +342,153 @@ Type: docs. Platforms: USA checkpoint / plaintext CodeBreaker interpretation.
 Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
 
 [Change record](docs/changes/2026-11-12-locate-ch0236-candidate-record-spans.json)
+
+## 2026-11-12 — Inventory bounded EUR language-byte writers
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Document five additional original language-byte stores and distinguish preservation paths from an independent selection callback publisher.
+
+**Validation**
+
+- Wine e154-language-writer-dis-wine-rkhdqwg9 and e154-language-alternates-dis-wine-8mbnf7uq authenticate original instruction windows. Existing obj-retained-candidate-windows-61ceiuwx links the alternative publisher to context+8964 and its ordinary selection controls.
+- Focused Sol consultation requested gpt-6.1-sol xhigh; effective model and effort are not independently verifiable.
+
+**Limitations**
+
+- The inventory is not exhaustive; the alternative callback ordinary invocation and global value/writer domain remain unproved. Linux, USA and native Windows pending; no performance measurement.
+
+[Change record](docs/changes/2026-11-12-inventory-eur-language-writers.json)
+
+## 2026-11-12 — Inventory EUR main title menu reads
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Record a bounded high-ROM source ownership and runtime-service inventory for the EUR main title menu.
+
+**Validation**
+
+- Wine e155-title-main-residue-wine-2gcsrjfn: three neutral frames, 611 high-ROM requests, no drops or raw overlap with declared sources; eight unowned bytes include the known helper and four cursor-source leads. No distinct second-bank read observed.
+
+**Limitations**
+
+- Only this three-frame interpreter window is covered, and observed bytes do not establish asset extents or global absence. Linux, USA and native Windows pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-12-inventory-e155-main-title-reads.json)
+
+## 2026-11-12 — Inventory EUR title language selector reads
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Record a bounded high-ROM source ownership and runtime-service inventory for the EUR title language selector.
+
+**Validation**
+
+- Wine e154-title-language-residue-wine-ry8vy8i9: three neutral frames, 997 high-ROM requests, no drops or raw events overlapping declared sources; 62 unowned bytes include four known support bytes and 58 source leads.
+- An initial launch was refused before command execution because the protected plan path was retired scratch; the retained evidence path fixed the wrapper.
+
+**Limitations**
+
+- Observed ranges are not asset boundaries or global coverage; other frames, Linux, USA and native Windows pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-12-inventory-e154-title-language-reads.json)
+
+## 2026-11-12 — Inventory E154 EUR Llednar menu reads
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Record a bounded high-ROM source ownership and runtime-service inventory in a retained EUR Llednar confirmation menu.
+
+**Validation**
+
+- Wine e154-llednar-menu-residue-wine-yq2cxie0: three neutral frames, 2,982 high-ROM requests, no drops or raw events overlapping declared sources. All 36 unowned bytes are previously classified code support.
+
+**Limitations**
+
+- This bounded negative covers only the selected three-frame interpreter window, not global coverage. Linux, USA and native Windows pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-12-inventory-e154-llednar-menu.json)
+
+## 2026-11-12 — Inventory E153 EUR Llednar dialogue reads
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Record a bounded high-ROM source ownership and runtime-service inventory in a retained EUR Llednar dialogue.
+
+**Validation**
+
+- Wine e153-llednar-dialogue-residue-wine-g51e3yzn: three neutral frames, 2,990 high-ROM requests, no drops and no raw events overlapping declared sources; 43 distinct unowned bytes comprising 36 known support bytes and seven observed source leads.
+
+**Limitations**
+
+- Only this three-frame interpreter window is covered; source leads do not establish boundaries or all consumers. Linux, USA and native Windows pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-12-inventory-e153-llednar-dialogue.json)
+
+## 2026-11-12 — Inventory E150 EUR Llednar high-ROM reads
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Record a bounded high-ROM source-ownership and runtime-service inventory for three neutral frames in an authenticated Llednar battle state.
+
+**Validation**
+
+- Wine e150-llednar-residue-wine-ek23m5tm PASS: 3,477 high-ROM requests, zero drops and no raw events overlapping declared source spans; 52 distinct unowned bytes in eight ranges. Thirty-six bytes are previously classified executable support and 16 are bounded source leads.
+
+**Limitations**
+
+- Only the selected three-frame interpreter window is covered; observed reads do not establish resource boundaries, full consumer domains or other scenes. Linux, USA and native Windows remain pending; no performance measurements.
+
+[Change record](docs/changes/2026-11-12-inventory-e150-llednar-high-rom-reads.json)
+
+## 2026-11-12 — Inspect EUR title animation sequence-zero producers
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Separate the known selector-one title animation bank from a distinct selector-zero bank and document the limits of the producer scan.
+
+**Validation**
+
+- Wine e155-title-sequence-zero-dis-wine-f4_b2apw confirms two direct initializer calls use different bank roots and selectors; an exact EUR aligned literal/direct-call scan is bounded to its stated forms.
+- Focused Sol consultation requested gpt-6.1-sol xhigh; effective settings are not independently verifiable.
+
+**Limitations**
+
+- No ordinary sequence-zero producer for the first bank is established; indirect calls, computed roots, mutable animator fields and other scenes remain open. Linux, USA and native Windows pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-12-inspect-title-sequence-zero-producers.json)
+
+## 2026-11-12 — Inspect E150 EUR Llednar source readers
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Identify original readers for the 16 previously unowned bytes in the bounded Llednar inventory.
+
+**Validation**
+
+- Wine e150-llednar-sources-dis-wine-o4t2h6dz authenticates the original reader disassembly; inventory e150-llednar-residue-wine-ek23m5tm witnesses correction indices 8 and 9, the one-element OBJ draw source and two indexed halfwords.
+
+**Limitations**
+
+- The lookup domains, list pointer producer and other consumers remain open. Source observations are not managed publication; Linux, USA and native Windows pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-12-inspect-e150-llednar-source-readers.json)
 
 ## 2026-11-12 — Page complete cheat previews
 
@@ -116,6 +516,178 @@ Type: changed. Platforms: Linux, Windows GNU / Wine.
 Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
 
 [Change record](docs/changes/2026-11-12-identify-truncated-cheat-previews.json)
+
+## 2026-11-12 — Identify the EUR title language callback
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Identify the alternate language publisher as part of the EUR title frontend and distinguish it from in-game Options.
+
+**Validation**
+
+- Maintained ffta_mouse.rs identifies handler 08139d29, subpage 2 and five language selections; the retained e129-prefinal-title-start-qyb35ep8 EUR checkpoint visibly shows Language as the fourth title-menu entry.
+- Wine e154-language-screen-dis-wine-q6ywhlta verifies the callback registration and helper branch. The user independently identified the startup selector.
+
+**Limitations**
+
+- The ordinary alternate publication and global writer/value domain remain unproved; Linux, USA and native Windows pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-12-identify-eur-title-language-callback.json)
+
+## 2026-11-12 — Identify the EUR battle OBJ list producer
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Identify the ordinary producer of the previously observed 40dcba battle list as a relative-directory lookup followed by a write to the live task slot.
+
+**Validation**
+
+- Wine battle-writer-observer-wine-q7qbukus follows one retained neutral-input continuation with a width/value-unfiltered watch on the task slot. It observes an initial clear, then 0800720c with directory 0840d300 and selector 62, followed by original 0802e110 writing 0840dcba to task+24. Matching pre-resolver and pre-writer states are retained privately.
+- Static EUR inspection identifies a kind-2 directory with 103 entries; selector 62 resolves through relative offset 09b6. The accepted three-frame E147 battle pair remains unchanged.
+
+**Limitations**
+
+- The watch captures the first overlapping bus access per step and its pre-step PC can include nested work. Other directory selectors and consumers, original entry payloads, frontend UI, Linux, USA and native Windows remain open. No performance measurements.
+
+[Change record](docs/changes/2026-11-12-identify-battle-obj-list-producer.json)
+
+## 2026-11-12 — Serve observed EUR vertical correction indices
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Extend the managed task-parameter fragment by signed vertical correction indices 8 and 9 while accepting the older four-row representation.
+- Keep correction-use accounting independent of battle threshold bits.
+
+**Validation**
+
+- Wine e151-vertical-extension-wine-92o14x87 preserves the E150 projection, checks four poisoned bytes, mixed boundaries and four original prefix cases, and passes three-frame interpreter/native-dispatch ordinary pairs with three typed requests and no raw reads per arm.
+- Wine e151-vertical-cli-wine-_w2bvosq passes production CLI create/reuse/verify and one-frame startup with two correction source bytes used; 102 unrelated resource files match E150.
+
+**Limitations**
+
+- Other correction indices, consumers, per-read native attribution, frontend UI, Linux, USA and native Windows remain open; no performance measurement.
+
+[Change record](docs/changes/2026-11-12-extend-eur-vertical-corrections.json)
+
+## 2026-11-12 — Classify EUR title language cursor and animation sources
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Identify a conditional five-pair title cursor source and the independently rooted title animation directories, sequences and counted OBJ lists.
+
+**Validation**
+
+- Wine e154-title-residue-sources-dis-wine-cxe2yngk and e154-title-bank-contract-dis-wine-hj04kd_b authenticate the title cursor and animator reader/producer code.
+- Exact EUR source inspection checks the 20-byte five-pair cursor and 19 disjoint animation spans totaling 290 bytes against the E154 manifest; three-frame title inventory ry8vy8i9 observed only indices 9, 10 and 13.
+- Focused Sol consultation requested gpt-6.1-sol xhigh; effective settings are not independently verifiable.
+
+**Limitations**
+
+- Other selectors and callers, ordinary use of remaining entries, global directory extent, Linux, USA and native Windows remain open. No performance measurement.
+
+[Change record](docs/changes/2026-11-12-classify-title-language-animation.json)
+
+## 2026-11-12 — Classify the EUR neutral-opening OBJ pointer directory
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Classify a 19-entry absolute pointer directory and eleven distinct one-object lists used conditionally by the title opening.
+
+**Validation**
+
+- Existing EUR Wine initializer disassembly f4_b2apw establishes the 19-entry copy; retained draw-helper disassembly identifies visibility and the affine and regular draw paths.
+- Authenticated ROM source inspection confirms both hashes and disjointness from every E156 manifest span.
+
+**Limitations**
+
+- Conditional source contract only; ordinary drawing, all consumers, Linux, USA and native Windows remain unverified. No performance measurement.
+
+[Change record](docs/changes/2026-11-12-classify-neutral-opening-obj-lists.json)
+
+## 2026-11-12 — Classify EUR main title source projections
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Identify five conditional four-row main title coordinate tables and a separate six-list title animation bank.
+
+**Validation**
+
+- Wine e155-title-main-coordinates-dis-wine-uy12v_b5 and e155-title-main-dispatch-dis-wine-y_lbrsdd authenticate the language dispatch and coordinate reader; the 80-byte projection is E155-disjoint.
+- Wine e155-title-sequence-zero-dis-wine-f4_b2apw identifies the separate bank initializer; exact EUR source inspection finds nine E155-disjoint spans totaling 150 bytes.
+
+**Limitations**
+
+- Menu row inputs outside 0–3 remain uncapped, languages above 4 retain original no-write behavior, and ordinary second-bank use/global domains remain open. Linux, USA and native Windows pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-12-classify-main-title-sources.json)
+
+## 2026-11-12 — Classify EUR dialogue residue readers
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Classify the observed dialogue residue as a conditional 32-byte post-mask draw-index sequence and an IWRAM indirect-branch support word.
+
+**Validation**
+
+- Wine e153-dialogue-source-dis-wine-sro_6w4u witnesses the original pre-mask signed lookup, post-draw 1f mask and IWRAM branch trampoline; E153 source intersection and exact ROM fingerprints are checked.
+
+**Limitations**
+
+- The first lookup and external task-byte writers are not capped; only indices 12..14 are observed. Mutable IWRAM body, other consumers/scenes, Linux, USA and native Windows remain open. No performance measurement.
+
+[Change record](docs/changes/2026-11-12-classify-e153-dialogue-readers.json)
+
+## 2026-11-12 — Classify a EUR battle relative directory
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Bound the independent 40d300 kind-2 relative directory used by the observed battle draw producer without classifying all of its target payloads.
+
+**Validation**
+
+- Wine battle-directory-dis-wine-nnfm38wz shows 0800720c retaining the low 16 bits of the selector, rejecting indices at or above the count at +2, reading kind at +0 and selecting 16-bit offsets relative to base+4 for kind 2. The byte at +1 is retained without an inferred meaning.
+- The exact EUR source has 103 entries and a 210-byte header/index, SHA-256 2c35f140bd943bb98726767c2a4032be05dee531b2c965b727a3dce867cd27da, disjoint from E148 declared sources. Wine battle-writer-observer-wine-q7qbukus observes selector 62 producing the managed 40dcba list; other selectors are source-only.
+
+**Limitations**
+
+- No complete target payload, selector-domain, caller, managed serving or cross-region claim. Linux, USA and native Windows remain open. No performance measurement.
+
+[Change record](docs/changes/2026-11-12-classify-battle-relative-directory.json)
+
+## 2026-11-12 — Classify conditional EUR battle directory lists
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Define the conditional list-source projection for the 103 entries of the battle relative directory, preserving the distinction between static source coverage and ordinary selector reachability.
+
+**Validation**
+
+- Wine battle-directory-target-audit-wine-uf6zbm9k authenticates original resolver, task-slot producer, draw consumer and counted six-byte OBJ reader code against the exact EUR ROM, then checks all 103 independently counted source extents and supported object shapes. There are 576 objects in 3,662 source bytes; indices 32 and 62 exactly match existing static-list owners and 101 other disjoint sources total 3,574 bytes. No partial overlaps with E149 source ranges occur.
+- The complete ordered source SHA-256 is bfcadc626d308693563396b9030f7ae097895c64b491467b90b01aca256f62ef; the 101 new sources concatenate to 934b25f8b031dbd8282f69f30d121c6f55ad7c25b25e9bbee12c11a7f9142973. Ordinary selector 62 was established separately by battle-writer-observer-wine-q7qbukus.
+
+**Limitations**
+
+- The source projection is conditional on the original task-slot/draw path; other callers, all-selector reachability, managed serving, Linux, USA and native Windows remain open. No performance measurement.
+
+[Change record](docs/changes/2026-11-12-classify-battle-directory-lists.json)
 
 ## 2026-11-12 — Clarify the cheat guide’s reported test context
 
@@ -183,6 +755,50 @@ Type: docs. Platforms: USA and EUR ROM static analysis.
 Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
 
 [Change record](docs/changes/2026-11-12-authenticate-job-item-consumers.json)
+
+## 2026-11-12 — Serve the EUR battle relative directory
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Add the independent 103-entry battle relative directory to the static OBJ resource, keeping its opaque header byte and all offsets while leaving target interpretation and original selection logic in the guest.
+
+**Validation**
+
+- Wine e149-battle-directory-wine-951r5cd9 preserves the E148 projection and other resources, verifies all 210 poisoned source bytes and mixed-width boundaries, and compares six original-reader selector cases including low-16-bit truncation and out-of-range inputs. One ordinary selector-62 interpreter/native-dispatch raw/managed pair matches complete state and clock, with five typed bytes and no raw source reads per arm.
+- Wine e149-battle-directory-cli-wine-602qybdq passes production CLI create, no-write reuse, verification and one-frame startup; 102 other resource files match E148.
+
+**Limitations**
+
+- other ordinary selectors, target payload classification, per-read native attribution, frontend save/load, Linux, USA and native Windows remain open. No performance measurement.
+
+[Change record](docs/changes/2026-11-12-add-battle-relative-directory.json)
+
+## 2026-11-12 — Serve conditional EUR battle directory lists
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Extend the static OBJ resource with 101 independently bounded directory-backed lists, sharing the two existing list owners and retaining the original selector, task and draw logic.
+- Extend static OBJ source-page routing to cover page 40e, which is crossed by one newly owned list.
+
+**Validation**
+
+- Wine e150-battle-directory-boundary-wine-2kzfs9br preserves the E149 projection, validates all 3,574 poisoned source bytes, representative mixed-width boundaries including the 40d/40e crossing, and six original draw cases with matching raw/managed state and clock.
+- The first Wine attempt e150-battle-directory-lists-wine-ul89n3af failed because page 40e was not routed; the corrected build and explicit cross-page checks passed.
+- The retained 120-frame neutral continuation did not reach a new-list draw; this is a bounded negative, not global absence.
+- Wine e150-battle-directory-lists-cli-wine-qs_o6f1b passes production CLI create, no-write reuse, verification and one-frame startup; 102 other resource files match E149.
+- Wine battle-directory-index56-wine-kjyi2ycx confirms the retained stage-4 task slot points to index 56, but observes no corresponding draw in three neutral frames; the paired comparison was not run.
+- Read-only checksum-validated inspection and Wine disassembly battle-directory-scheduler-dis-wine-vmcqen6e identify the stage-4 negative as scheduler command 0105 with flags 03: its flag-10 guard returns without drawing. This is distinct from the task context field at +0.
+- Wine battle-directory-index56-active-wine-qbzrv3ua reaches the original draw of new list 40dc0a (directory index 56) in one neutral frame from a retained pre-input EUR battle state. Interpreter/native-dispatch raw/managed pairs match complete state and clock with 58 typed requests and no raw source reads per arm.
+
+**Limitations**
+
+- Other ordinary list uses remain open, as do other consumers, per-read native attribution, frontend UI, Linux, USA and native Windows. No performance measurement.
+
+[Change record](docs/changes/2026-11-12-add-battle-directory-lists.json)
 
 ## 2026-11-11 — Validate ordinary EUR fixed OBJ transfer under Wine
 
