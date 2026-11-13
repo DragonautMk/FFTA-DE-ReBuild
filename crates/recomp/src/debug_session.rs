@@ -300,7 +300,7 @@ fn create_inner(destination: &Path, source: Source<'_>, assets: Option<&Path>) -
 
 fn session_ignore(versioned: bool) -> &'static [u8] {
     if versioned {
-        b"*\n!*/\n!.gitignore\n!*.ffstate\n!*.sav\n!*.sps\n!*.input\n!*.json\n!*.png\n!*.ppm\n!*.wav\n!*.csv\n!*.cfg\n!*.toml\n/Data/dataset/\n"
+        b"*\n!*/\n!.gitignore\n!*.ffstate\n!*.sav\n!*.sps\n!*.input\n!*.json\n!*.png\n!*.ppm\n!*.wav\n!*.csv\n!*.cfg\n!*.toml\n/Data/dataset/\n.debug-artifacts-lease/\n"
     } else { b"*\n" }
 }
 

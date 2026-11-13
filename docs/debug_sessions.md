@@ -58,10 +58,12 @@ tamper checks. Separate isolated Linux/X11 and Windows Wine GUI sessions opened
 the inherited catalog and exercised a supported cheat through the shared
 control channel. Native Windows and Wayland remain untested for this change.
 
-Menu-created sessions are under `Data/debug-sessions/` in portable mode, or
-`debug-sessions/` under the installed configuration directory. The log shows
-the full folder path. After eight folders, the menu asks you to reopen a
-session or move those to retain: it does not delete evidence or failed attempts.
+When the selected private debug-save worktree is available, menu-created
+sessions are under its `sessions/` directory. Otherwise they are under
+`Data/debug-sessions/` in portable mode, or `debug-sessions/` under the
+installed configuration directory. The log shows the full folder path. After
+eight folders, the menu asks you to reopen a session or move those to retain:
+it does not delete evidence or failed attempts.
 
 <a id="dalla-cli"></a>
 
@@ -131,12 +133,20 @@ Launches through `open` or the menu remove inherited `FFTA_*`, `RECOMP_*` and
 dumps. Direct launch with those variables present is refused. `play` overrides
 in the copy are refused: use `debug-session create` to configure a new case.
 
-The new folder immediately receives a `.gitignore` excluding all its contents.
-ROM, BIOS, dataset, snapshots and saves remain private and must not be included
-in packages. The initial copy is bounded to 768 MiB; inspection rejects trees
-over 2 GiB, 4096 entries or 16 levels, and linked files. A copy left incomplete
-by an I/O error remains for diagnosis without a valid manifest: it is neither
-launched nor removed automatically.
+The new folder immediately receives a `.gitignore`. In the private debug-save
+worktree it exposes selected debug artifacts, including the session's copied
+save and snapshots, while excluding the ROM, BIOS, executable and dataset.
+Elsewhere it excludes the entire session. Transient `.debug-artifacts-lease/`
+directories are excluded from Git in new versioned sessions; an active or
+interrupted lease still protects its files on disk. Private data must not be
+included in public commits or packages. The initial copy is bounded to 768 MiB;
+inspection rejects trees over 2 GiB, 4096 entries or 16 levels, and linked
+files. A copy left incomplete by an I/O error remains for diagnosis without a
+valid manifest: it is neither launched nor removed automatically.
+
+Linux tests cover staging debug artifacts while excluding synthetic root and
+nested leases, plus the eleven isolated-session checks. This does not validate
+native Windows or alter ignore files in sessions created by older versions.
 
 <a id="verifica-del-27-ottobre-2026"></a>
 

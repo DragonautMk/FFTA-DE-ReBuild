@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-13",
+  "slug": "keep-primary-backups-local",
+  "title": "Keep primary save backups local",
+  "kind": "fixed",
+  "platforms": [
+    "desktop"
+  ],
+  "changes": [
+    "Keep automatic backups of the primary cartridge save beside that save; continue routing numbered debug-save backups to the configured private worktree.",
+    "When the primary save and local backups are missing, copy earlier private primary backups locally without deleting them or merging existing local histories."
+  ],
+  "validation": [
+    "Linux synthetic tests passed: eight game-save, eight backup and three save-path tests; one optional backup test was ignored.",
+    "An isolated Linux X11 startup with synthetic saves confirmed local primary backup placement and private numbered-save backup routing after moving sibling folders."
+  ],
+  "limitations": [
+    "Real game saves, a real desktop file chooser and native Windows were not exercised; the installed portable application was not replaced."
+  ],
+  "files": [
+    "crates/recomp/src/game_saves.rs",
+    "crates/recomp/src/save_backups.rs"
+  ],
+  "references": [
+    "docs/save_backups.md",
+    "docs/extended_saves.md",
+    "docs/portable.md"
+  ]
+}

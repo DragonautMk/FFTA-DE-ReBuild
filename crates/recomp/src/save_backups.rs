@@ -58,6 +58,22 @@ impl Backups {
         Ok(routed)
     }
 
+    /// Keep primary-save backups local. If the primary is missing and only
+    /// backups from the earlier private routing exist, copy those back to the
+    /// local backup directory without replacing or deleting either source.
+    pub fn local_with_private_recovery(save: &Path, namespace: &Path) -> Result<Self, String> {
+        let local = Self::new(save);
+        let exists = save.try_exists().map_err(|e| format!("Cannot inspect cartridge save: {e}"))?;
+        if !exists && local.entries()?.is_empty() {
+            let previous = Self::at_namespace(save, namespace);
+            for entry in previous.entries()? {
+                let name = entry.path.file_name().ok_or("Backup filename is missing")?;
+                crate::save_state::copy_legacy_file(&entry.path, &local.directory.join(name))?;
+            }
+        }
+        Ok(local)
+    }
+
     fn entries(&self) -> Result<Vec<Entry>, String> {
         let items = match std::fs::read_dir(&self.directory) {
             Ok(v) => v,

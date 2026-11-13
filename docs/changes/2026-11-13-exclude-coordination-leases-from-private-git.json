@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-13",
+  "slug": "exclude-coordination-leases-from-private-git",
+  "title": "Exclude coordination leases from private Git history",
+  "kind": "fixed",
+  "platforms": [
+    "desktop"
+  ],
+  "changes": [
+    "Exclude transient coordination lease directories from new versioned debug sessions while keeping selected debug artifacts visible to Git.",
+    "Document private session placement, copied save visibility and the exclusion of coordination leases."
+  ],
+  "validation": [
+    "Eleven Linux isolated-session tests passed, including Git status checks for root and nested synthetic lease markers.",
+    "Synthetic Git add checks using all four private worktree rules excluded leases and ROM filenames while retaining debug saves, snapshots and inputs."
+  ],
+  "limitations": [
+    "Existing sessions retain their earlier ignore files; real active or interrupted leases were not modified. Native Windows was not tested."
+  ],
+  "files": [
+    "crates/recomp/src/debug_session.rs",
+    "crates/recomp/src/debug_session/tests.rs"
+  ],
+  "references": [
+    "docs/debug_sessions.md"
+  ]
+}

@@ -2,7 +2,8 @@
 
 For the desktop portable editions, settings are under `Data/config` and the
 normal cartridge save is `Data/saves/ffta.sav`. When the private debug-save
-worktree is available, backup copies are kept in that worktree.
+worktree is available, backups of numbered debug saves use that worktree.
+Backups of the normal cartridge save stay beside that save.
 See [portable storage and migration](portable.md). Installed-mode paths below
 apply when `portable.txt` is absent.
 
@@ -49,8 +50,9 @@ represent the reset.
 
 ## Files, integrity and failure behavior
 
-Backups are scoped to the selected save file. With the private debug-save
-worktree available, they use:
+Backups are scoped to the selected save file. The normal cartridge save uses
+`SaveBackups/<save-filename>/` beside that save, including in portable mode.
+With the private debug-save worktree available, numbered debug saves use:
 
 ```text
 <asset-root>/debug_saves/runtime/SaveBackups/<ROM-SHA-256>/<save-filename>/
@@ -58,10 +60,15 @@ worktree available, they use:
   backup-<20-digit-sequence>-<SHA-256>.sav
 ```
 
-Existing backups are copied into the private directory without replacing an
-existing destination; the previous copies remain available. Without the
-private worktree, the legacy `SaveBackups/<save-filename>/` directory beside
-the save is used. Names encode order and integrity without an extra index file; the UI displays
+Existing numbered-save backups are copied into the private directory without
+replacing an existing destination; the previous copies remain available.
+Without the private worktree, numbered saves use the legacy directory beside
+the save. The normal save is never copied to the private backup directory by
+this routing. If the normal save and its local backups are missing but a prior
+version left backups in the private directory, those copies are restored to the
+local backup directory without overwriting or deleting the private copies.
+Existing local backups are not merged with that earlier private history.
+Names encode order and integrity without an extra index file; the UI displays
 the friendly Copy 1/Copy 2 labels. The copies are raw cartridge bytes and can
 also be copied/renamed manually when recovering outside the application.
 Different selected save filenames have separate folders. A missing remembered
@@ -91,13 +98,18 @@ cannot be protected. When filesystem problems prevent launching the game, the ra
 backup files can still be recovered manually if readable.
 
 No ROMs, personal saves or backup files belong in public commits or releases.
-The selected private worktree can track its backup copies; Git still requires
+The selected private worktree can track numbered debug-save backups; Git still requires
 explicit review, commit and push. Existing packaging and audit rules apply.
 
 ## Validation
 
-The private routing and migration of legacy numbered-save backups passed Linux
-tests with synthetic saves. The Windows checks below precede this path change.
+On Linux, eight numbered-save tests, eight backup tests and three save-path
+tests passed with synthetic saves; one optional resource-backed test was
+ignored. An isolated X11 startup also confirmed that a normal save and its
+backup stay local while a numbered save and its backup use the selected private
+debug root. Recovery of older private primary-save backups was tested without
+deleting them. Real saves and native Windows were not used for these checks.
+The Windows checks below precede this path change.
 
 Windows GNU release under Wine: **33 menu + 42 runtime tests passed**. Coverage
 includes two-copy retention, exact raw-byte capture, per-save isolation, safe

@@ -110,7 +110,9 @@ machine. The normal autosave and exit paths subsequently use only the active
 filename. Switching clears snapshot Undo and resets frontend input/audio/video
 history like Restart ROM; it is refused during input recording.
 
-Each numbered file has its own [two backups](save_backups.md). The first nine
+Each numbered file has its own [two backups](save_backups.md); normal-save
+backups stay local, while numbered debug-save backups use the private root.
+The first nine
 snapshot slots are shared per ROM and save directory; higher slots are shared
 per ROM and private asset root. Loading a snapshot also restores cartridge memory,
 which may later be written to the currently active standard slot.

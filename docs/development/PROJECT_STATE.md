@@ -363,6 +363,8 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   are scrubbed. The normal window stays paused with unchanged progress while
   the copy runs; menu return, load/undo/restart/backups and relocation pass Wine
   checks. Default creation stops at eight retained sessions without deleting them.
+  New versioned sessions expose selected debug artifacts while excluding local
+  coordination leases from Git; existing sessions keep their original rules.
   DBG-03 adds the [shared save catalog](../debug_catalog.md): Debug > Debug
   catalog and `debug-catalog list/open/import` share region/status/kind/DS
   filters, recorded provenance/scope, file checksums and snapshot previews.
@@ -3405,8 +3407,12 @@ coverage refreshes its archived sources. The host checkout is unaffected.
   from user slot3, keeping both columns/selector intact and HUD separate.
 
 - [Cartridge save backups](../save_backups.md): capture the selected `.sav` at
-  desktop startup, retain two raw copies under `SaveBackups/<save-filename>/`,
-  and restore via the controller-operated Save backups menu. Sequence/hash
+  desktop startup and retain two raw copies. Primary-save backups stay under
+  `SaveBackups/<save-filename>/` beside the save; numbered debug-save backups
+  use the private debug root when available. If the primary and local backups
+  are missing, earlier private copies are copied locally without deletion;
+  existing local histories are not merged. The controller-operated Save backups
+  menu restores a chosen copy. Sequence/hash
   filenames identify order and integrity. Restore prepares a clean boot from
   the session's startup snapshot before atomic file replacement, resets the
   machine and frontend, and clears save-state undo. It preserves both backup

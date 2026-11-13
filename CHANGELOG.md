@@ -31,6 +31,50 @@ Documentation: [extended_saves.md](docs/extended_saves.md), [private_debug_asset
 
 [Change record](docs/changes/2026-11-13-relative-private-asset-routing.json)
 
+## 2026-11-13 — Keep primary save backups local
+
+Type: fixed. Platforms: desktop.
+
+**Changes**
+
+- Keep automatic backups of the primary cartridge save beside that save; continue routing numbered debug-save backups to the configured private worktree.
+- When the primary save and local backups are missing, copy earlier private primary backups locally without deleting them or merging existing local histories.
+
+**Validation**
+
+- Linux synthetic tests passed: eight game-save, eight backup and three save-path tests; one optional backup test was ignored.
+- An isolated Linux X11 startup with synthetic saves confirmed local primary backup placement and private numbered-save backup routing after moving sibling folders.
+
+**Limitations**
+
+- Real game saves, a real desktop file chooser and native Windows were not exercised; the installed portable application was not replaced.
+
+Documentation: [save_backups.md](docs/save_backups.md), [extended_saves.md](docs/extended_saves.md), [portable.md](docs/portable.md).
+
+[Change record](docs/changes/2026-11-13-keep-primary-backups-local.json)
+
+## 2026-11-13 — Exclude coordination leases from private Git history
+
+Type: fixed. Platforms: desktop.
+
+**Changes**
+
+- Exclude transient coordination lease directories from new versioned debug sessions while keeping selected debug artifacts visible to Git.
+- Document private session placement, copied save visibility and the exclusion of coordination leases.
+
+**Validation**
+
+- Eleven Linux isolated-session tests passed, including Git status checks for root and nested synthetic lease markers.
+- Synthetic Git add checks using all four private worktree rules excluded leases and ROM filenames while retaining debug saves, snapshots and inputs.
+
+**Limitations**
+
+- Existing sessions retain their earlier ignore files; real active or interrupted leases were not modified. Native Windows was not tested.
+
+Documentation: [debug_sessions.md](docs/debug_sessions.md).
+
+[Change record](docs/changes/2026-11-13-exclude-coordination-leases-from-private-git.json)
+
 ## 2026-11-13 — Add a reusable target cleanup skill
 
 Type: added. Platforms: tooling.

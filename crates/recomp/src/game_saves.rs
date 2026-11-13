@@ -60,6 +60,7 @@ impl GameSaves {
 
     pub fn prepare_backups(&self, save: &Path) -> Result<crate::save_backups::Backups, String> {
         match &self.backup_namespace {
+            Some(root) if save == self.base.as_path() => crate::save_backups::Backups::local_with_private_recovery(save, root),
             Some(root) => crate::save_backups::Backups::with_namespace(save, root),
             None => Ok(crate::save_backups::Backups::new(save)),
         }
@@ -67,6 +68,7 @@ impl GameSaves {
 
     pub fn current_backups(&self, save: &Path) -> crate::save_backups::Backups {
         match &self.backup_namespace {
+            Some(_) if save == self.base.as_path() => crate::save_backups::Backups::new(save),
             Some(root) => crate::save_backups::Backups::at_namespace(save, root),
             None => crate::save_backups::Backups::new(save),
         }
@@ -227,6 +229,101 @@ mod tests {
         let again = GameSaves::with_debug_root(&base, b"synthetic rom", &private).unwrap();
         assert_eq!(std::fs::read(again.path(2).unwrap()).unwrap(), b"private edit");
         assert_eq!(std::fs::read(&base).unwrap(), b"normal");
+    }
+
+    #[test]
+    fn primary_backups_stay_local_while_numbered_backups_use_debug_root() {
+        let dir = tempfile::tempdir().unwrap();
+        let normal = dir.path().join("normal");
+        std::fs::create_dir_all(&normal).unwrap();
+        let base = normal.join("ffta.sav");
+        std::fs::write(&base, vec![1; 65536]).unwrap();
+        let private = dir.path().join("private/debug_saves");
+        let namespace = crate::save_backups::Backups::debug_namespace(&private, b"synthetic rom");
+        let saves = GameSaves::with_debug_root(&base, b"synthetic rom", &private).unwrap();
+
+        saves.prepare_backups(&base).unwrap().capture_startup().unwrap();
+        let local = normal.join("SaveBackups/ffta.sav");
+        let copies: Vec<_> = std::fs::read_dir(&local).unwrap().map(|entry| entry.unwrap().path()).collect();
+        assert_eq!(copies.len(), 1);
+        assert_eq!(std::fs::read(&copies[0]).unwrap(), vec![1; 65536]);
+        assert!(!namespace.join("ffta.sav").exists());
+        assert_eq!(saves.current_backups(&base).choices(65536)[0].generation, Some(1));
+
+        let numbered = saves.path(2).unwrap();
+        std::fs::create_dir_all(numbered.parent().unwrap()).unwrap();
+        std::fs::write(&numbered, vec![2; 65536]).unwrap();
+        saves.prepare_backups(&numbered).unwrap().capture_startup().unwrap();
+        assert!(namespace.join("ffta-slot-02.sav").is_dir());
+        assert_eq!(saves.current_backups(&numbered).choices(65536)[0].generation, Some(1));
+        assert_eq!(std::fs::read(&base).unwrap(), vec![1; 65536]);
+        assert!(!namespace.join("ffta.sav").exists());
+    }
+
+    #[test]
+    fn missing_primary_can_recover_old_private_backups_without_deleting_them() {
+        let dir = tempfile::tempdir().unwrap();
+        let base = dir.path().join("ffta.sav");
+        std::fs::write(&base, vec![7; 65536]).unwrap();
+        let private = dir.path().join("private/debug_saves");
+        let namespace = crate::save_backups::Backups::debug_namespace(&private, b"synthetic rom");
+        let previous = crate::save_backups::Backups::at_namespace(&base, &namespace);
+        previous.capture_startup().unwrap();
+        std::fs::remove_file(&base).unwrap();
+
+        let saves = GameSaves::with_debug_root(&base, b"synthetic rom", &private).unwrap();
+        let recovered = saves.prepare_backups(&base).unwrap();
+        assert!(!base.exists());
+        assert_eq!(recovered.choices(65536)[0].generation, Some(1));
+        assert_eq!(previous.choices(65536)[0].generation, Some(1));
+        let local = dir.path().join("SaveBackups/ffta.sav");
+        let copy = std::fs::read_dir(&local).unwrap().next().unwrap().unwrap().path();
+        assert_eq!(std::fs::read(copy).unwrap(), vec![7; 65536]);
+    }
+
+    #[test]
+    fn existing_primary_does_not_import_old_private_backups() {
+        let dir = tempfile::tempdir().unwrap();
+        let base = dir.path().join("ffta.sav");
+        let private = dir.path().join("private/debug_saves");
+        let namespace = crate::save_backups::Backups::debug_namespace(&private, b"synthetic rom");
+        std::fs::write(&base, vec![3; 65536]).unwrap();
+        let previous = crate::save_backups::Backups::at_namespace(&base, &namespace);
+        previous.capture_startup().unwrap();
+        std::fs::write(&base, vec![4; 65536]).unwrap();
+
+        let saves = GameSaves::with_debug_root(&base, b"synthetic rom", &private).unwrap();
+        let local = saves.prepare_backups(&base).unwrap();
+        assert!(!local.has_copies());
+        local.capture_startup().unwrap();
+        let local_dir = dir.path().join("SaveBackups/ffta.sav");
+        let copies: Vec<_> = std::fs::read_dir(local_dir).unwrap().map(|entry| entry.unwrap().path()).collect();
+        assert_eq!(copies.len(), 1);
+        assert_eq!(std::fs::read(&copies[0]).unwrap(), vec![4; 65536]);
+        assert_eq!(previous.choices(65536)[0].generation, Some(1));
+    }
+
+    #[test]
+    fn existing_local_primary_backups_are_not_merged_with_old_private_history() {
+        let dir = tempfile::tempdir().unwrap();
+        let base = dir.path().join("ffta.sav");
+        let private = dir.path().join("private/debug_saves");
+        let namespace = crate::save_backups::Backups::debug_namespace(&private, b"synthetic rom");
+        std::fs::write(&base, vec![3; 65536]).unwrap();
+        let previous = crate::save_backups::Backups::at_namespace(&base, &namespace);
+        previous.capture_startup().unwrap();
+        std::fs::write(&base, vec![4; 65536]).unwrap();
+        crate::save_backups::Backups::new(&base).capture_startup().unwrap();
+        std::fs::remove_file(&base).unwrap();
+
+        let saves = GameSaves::with_debug_root(&base, b"synthetic rom", &private).unwrap();
+        let local = saves.prepare_backups(&base).unwrap();
+        assert_eq!(local.choices(65536)[0].generation, Some(1));
+        let local_dir = dir.path().join("SaveBackups/ffta.sav");
+        let copies: Vec<_> = std::fs::read_dir(local_dir).unwrap().map(|entry| entry.unwrap().path()).collect();
+        assert_eq!(copies.len(), 1);
+        assert_eq!(std::fs::read(&copies[0]).unwrap(), vec![4; 65536]);
+        assert_eq!(previous.choices(65536)[0].generation, Some(1));
     }
 
     #[test]

@@ -12,6 +12,10 @@ fn versioned_session_exposes_debug_artifacts_but_ignores_rom_and_binaries() {
     }
     fs::create_dir_all(session.join("Data/dataset")).unwrap();
     fs::write(session.join("Data/dataset/manifest.toml"),b"synthetic").unwrap();
+    for directory in [session.join(".debug-artifacts-lease"), session.join("Data/config/.debug-artifacts-lease")] {
+        fs::create_dir_all(&directory).unwrap();
+        fs::write(directory.join("owner.json"),b"synthetic lease").unwrap();
+    }
     let status=std::process::Command::new("git").args(["-C",root.to_str().unwrap(),"status","--porcelain","--untracked-files=all"]).output().unwrap();
     assert!(status.status.success());let status=String::from_utf8(status.stdout).unwrap();
     assert!(status.contains("session/seed.ffstate"));
@@ -20,6 +24,7 @@ fn versioned_session_exposes_debug_artifacts_but_ignores_rom_and_binaries() {
     assert!(!status.contains("gba_bios.bin"));
     assert!(!status.contains("recomp.exe"));
     assert!(!status.contains("Data/dataset"));
+    assert!(!status.contains(".debug-artifacts-lease"));
 }
 
 struct Fixture { dir: tempfile::TempDir, rom: Vec<u8>, save: Vec<u8>, state: Vec<u8>, executable: PathBuf }

@@ -66,7 +66,8 @@ An unwritable folder produces an error rather than redirecting save data.
 | `Data/cache/` | Regenerable native translations |
 | `Data/saves/ffta.sav` | Raw cartridge progress, shared when switching FFTA ROMs |
 | `Data/saves/SaveStates/<ROM SHA-256>/` | Nine state slots including previews |
-| `../FFTARecomp-private/debug_saves/runtime/` | Extended states, numbered saves and backups when the private worktree exists |
+| `Data/saves/SaveBackups/ffta.sav/` | Local backups of the normal cartridge save |
+| `../FFTARecomp-private/debug_saves/runtime/` | Extended states, numbered saves and their backups when the private worktree exists |
 | `gba_bios.bin` or `Data/config/gba_bios.bin` | Optional user BIOS |
 | `play-error.log` | Startup/runtime error details |
 | `play.log` (Linux) | Last runtime output |
