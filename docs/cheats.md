@@ -41,8 +41,10 @@ original line numbers and raw code lines (or the site's code ID), plus its
 <a id="readonly-index-and-cli--dbg2-17-in-progress"></a>
 ## Readonly index and CLI — DBG2-17
 
-`recomp debug-cheats list` reads `cheats/catalogo.json` beside the executable;
-if it is absent, the result is an explicit empty state. Select another local
+`recomp debug-cheats list` first looks for `cheats/catalogo.json` under the
+configured private asset root, then beside the executable; if neither exists,
+the result is an explicit empty state. Isolated sessions prefer their pinned
+local catalog. Select another local
 file for one invocation with `--catalog FILE`. Listing is paginated with
 `--offset N --limit 1..64`; `show CH-0001 --catalog FILE` returns the complete
 original entry, including its ordered lines, aliases, notes, provenance and

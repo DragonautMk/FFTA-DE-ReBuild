@@ -15,6 +15,16 @@ pub fn remember(save: &Path) {
     if let Err(e) = result { eprintln!("save: cannot remember shared save: {e}"); }
 }
 
+/// Whether the installed-mode selection came from the remembered family.
+/// Explicit environment paths always take precedence over a remembered slot.
+pub fn is_remembered_family(save: &Path) -> bool {
+    if std::env::var_os("FFTA_SAVE_PATH").is_some() || input_config::storage::portable_root().is_some() {
+        return false;
+    }
+    preference().and_then(|p| std::fs::read_to_string(p).ok())
+        .is_some_and(|value| Path::new(value.trim()) == save)
+}
+
 fn candidates(rom: &Path) -> Result<Vec<PathBuf>, String> {
     let dir = rom.parent().filter(|p| !p.as_os_str().is_empty()).unwrap_or(Path::new("."));
     let mut saves = Vec::new();
@@ -33,16 +43,20 @@ fn available_or_backed_up(save: &Path) -> bool {
     save.is_file() || crate::save_backups::Backups::new(save).has_copies()
 }
 
-pub fn resolve(rom: &Path) -> Result<PathBuf, String> {
-    resolve_with(rom, true)
+fn available_with_namespace(save: &Path, namespace: Option<&Path>) -> bool {
+    available_or_backed_up(save) || namespace.is_some_and(|root| crate::save_backups::Backups::at_namespace(save, root).has_copies())
+}
+
+pub fn resolve_routed(rom: &Path, namespace: Option<&Path>) -> Result<PathBuf, String> {
+    resolve_with(rom, true, namespace)
 }
 
 /// Same save selection, without creating directories or opening a picker.
 pub fn inspect(rom: &Path) -> Result<PathBuf, String> {
-    resolve_with(rom, false)
+    resolve_with(rom, false, None)
 }
 
-fn resolve_with(rom: &Path, interactive: bool) -> Result<PathBuf, String> {
+fn resolve_with(rom: &Path, interactive: bool, namespace: Option<&Path>) -> Result<PathBuf, String> {
     if let Some(path) = std::env::var_os("FFTA_SAVE_PATH") {
         return Ok(PathBuf::from(path));
     }
@@ -57,10 +71,10 @@ fn resolve_with(rom: &Path, interactive: bool) -> Result<PathBuf, String> {
     }
     if let Some(saved) = preference().and_then(|p| std::fs::read_to_string(p).ok()) {
         let saved = PathBuf::from(saved);
-        if available_or_backed_up(&saved) { return Ok(saved); }
+        if available_with_namespace(&saved, namespace) { return Ok(saved); }
     }
     let expected = rom.with_extension("sav");
-    if available_or_backed_up(&expected) { return Ok(expected); }
+    if available_with_namespace(&expected, namespace) { return Ok(expected); }
     let saves = candidates(rom)?;
     match saves.as_slice() {
         [] => Ok(expected),
@@ -85,6 +99,19 @@ fn resolve_with(rom: &Path, interactive: bool) -> Result<PathBuf, String> {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn private_backup_keeps_missing_primary_discoverable() {
+        let dir = tempfile::tempdir().unwrap();
+        let save = dir.path().join("ffta.sav");
+        std::fs::write(&save, vec![7; 65536]).unwrap();
+        let namespace = crate::save_backups::Backups::debug_namespace(&dir.path().join("private"), b"synthetic");
+        let backups = crate::save_backups::Backups::with_namespace(&save, &namespace).unwrap();
+        backups.capture_startup().unwrap();
+        std::fs::remove_file(&save).unwrap();
+        assert!(!super::available_or_backed_up(&save));
+        assert!(super::available_with_namespace(&save, Some(&namespace)));
+    }
+
     #[test]
     fn missing_primary_keeps_its_location_when_recovery_copies_exist() {
         let dir = tempfile::tempdir().unwrap();

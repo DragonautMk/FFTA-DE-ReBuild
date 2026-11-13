@@ -4,6 +4,16 @@ ROMs, saves, input recordings, generated datasets and test evidence have distinc
 lifetimes. Do not delete the entire `target/` tree or run a global Docker prune
 to clean one unit. The root workspace and AndroidPort remain separate.
 
+For repeatable agent maintenance, use the project skill
+[`ffta-cleanup`](../../.cursor/skills/ffta-cleanup/SKILL.md), explicitly or by
+asking to clean/compress `target`. It uses `batch --apply --completed-only`,
+adds exclusions from current work, reviews superseded hot datasets and retires
+only verified disposable copies/caches. A zero-candidate batch is followed by
+review of its exclusions; it does not prove that no compressible data remains.
+Routine maintenance uses existing receipts and archive integrity checks without
+rerunning builds or game tests. The skill is an agent workflow, not a scheduled
+background cleaner.
+
 ## Bounded retention policy
 
 Historical acceptance does not require keeping every generated dataset forever.

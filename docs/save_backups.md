@@ -1,7 +1,8 @@
 # Automatic cartridge-save backups
 
 For the desktop portable editions, settings are under `Data/config` and the
-cartridge save is `Data/saves/ffta.sav`, with backups and state slots beside it.
+normal cartridge save is `Data/saves/ffta.sav`. When the private debug-save
+worktree is available, backup copies are kept in that worktree.
 See [portable storage and migration](portable.md). Installed-mode paths below
 apply when `portable.txt` is absent.
 
@@ -48,15 +49,19 @@ represent the reset.
 
 ## Files, integrity and failure behavior
 
-Backups are scoped to the selected save file, alongside it:
+Backups are scoped to the selected save file. With the private debug-save
+worktree available, they use:
 
 ```text
-<save-directory>/SaveBackups/<save-filename>/
+<asset-root>/debug_saves/runtime/SaveBackups/<ROM-SHA-256>/<save-filename>/
   backup-<20-digit-sequence>-<SHA-256>.sav
   backup-<20-digit-sequence>-<SHA-256>.sav
 ```
 
-Names encode order and integrity without an extra index file; the UI displays
+Existing backups are copied into the private directory without replacing an
+existing destination; the previous copies remain available. Without the
+private worktree, the legacy `SaveBackups/<save-filename>/` directory beside
+the save is used. Names encode order and integrity without an extra index file; the UI displays
 the friendly Copy 1/Copy 2 labels. The copies are raw cartridge bytes and can
 also be copied/renamed manually when recovering outside the application.
 Different selected save filenames have separate folders. A missing remembered
@@ -85,10 +90,14 @@ The reader bounds cartridge saves to 128 KiB; FFTA's tested EUR Flash saves are
 cannot be protected. When filesystem problems prevent launching the game, the raw
 backup files can still be recovered manually if readable.
 
-No ROMs, personal saves or backup files belong in commits or releases. Existing
-`.sav` ignore, packaging and audit rules also apply to this backup directory.
+No ROMs, personal saves or backup files belong in public commits or releases.
+The selected private worktree can track its backup copies; Git still requires
+explicit review, commit and push. Existing packaging and audit rules apply.
 
 ## Validation
+
+The private routing and migration of legacy numbered-save backups passed Linux
+tests with synthetic saves. The Windows checks below precede this path change.
 
 Windows GNU release under Wine: **33 menu + 42 runtime tests passed**. Coverage
 includes two-copy retention, exact raw-byte capture, per-save isolation, safe

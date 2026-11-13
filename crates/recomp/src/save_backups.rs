@@ -36,6 +36,28 @@ impl Backups {
         }
     }
 
+    pub fn debug_namespace(root: &Path, rom: &[u8]) -> PathBuf {
+        root.join("runtime/SaveBackups").join(gba_core::ffta_rom::digest(rom))
+    }
+
+    /// Inspect a routed backup directory without creating or copying files.
+    pub fn at_namespace(save: &Path, namespace: &Path) -> Self {
+        Self { source: save.to_owned(), directory: namespace.join(save.file_name().unwrap_or_default()) }
+    }
+
+    /// Preserve old backup files and copy recognized entries without replacement.
+    pub fn with_namespace(save: &Path, namespace: &Path) -> Result<Self, String> {
+        let legacy = Self::new(save);
+        let routed = Self::at_namespace(save, namespace);
+        if legacy.directory != routed.directory {
+            for entry in legacy.entries()? {
+                let name = entry.path.file_name().ok_or("Backup filename is missing")?;
+                crate::save_state::copy_legacy_file(&entry.path, &routed.directory.join(name))?;
+            }
+        }
+        Ok(routed)
+    }
+
     fn entries(&self) -> Result<Vec<Entry>, String> {
         let items = match std::fs::read_dir(&self.directory) {
             Ok(v) => v,
@@ -237,6 +259,26 @@ mod tests {
         let mut rom = vec![0; 512];
         rom[256..265].copy_from_slice(b"FLASH_V12");
         super::super::make_machine(rom, None)
+    }
+
+    #[test]
+    fn routed_backups_keep_normal_save_and_copy_existing_backups() {
+        let dir = tempfile::tempdir().unwrap();
+        let normal = dir.path().join("normal");
+        std::fs::create_dir_all(&normal).unwrap();
+        let save = normal.join("ffta.sav");
+        std::fs::write(&save, vec![1; 65536]).unwrap();
+        let legacy = Backups::new(&save);
+        legacy.capture_startup().unwrap();
+        let root = dir.path().join("private/debug_saves");
+        let namespace = Backups::debug_namespace(&root, b"synthetic");
+        let routed = Backups::with_namespace(&save, &namespace).unwrap();
+        assert!(legacy.has_copies());
+        assert!(routed.has_copies());
+        assert!(routed.directory.starts_with(&root));
+        assert_eq!(std::fs::read(&save).unwrap(), vec![1; 65536]);
+        std::fs::remove_file(&save).unwrap();
+        assert!(Backups::at_namespace(&save, &namespace).has_copies());
     }
 
     #[test]

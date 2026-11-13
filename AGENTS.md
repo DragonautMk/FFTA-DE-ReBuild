@@ -68,6 +68,8 @@ directly when the client has not listed it in its skill catalog:
   Windows builds, runtime checks, performance comparisons and packaging.
 - [ffta-project-memory](.cursor/skills/ffta-project-memory/SKILL.md): recording
   implemented changes, validation and durable development knowledge.
+- [ffta-cleanup](.cursor/skills/ffta-cleanup/SKILL.md): reclaiming space through
+  verified compression in `target` and retirement of obsolete generated files.
 - [ffta-debugging](.cursor/skills/ffta-debugging/SKILL.md): Terra-led debugging
   with a focused Sol consultation when diagnosis or progress stalls.
 

@@ -123,6 +123,9 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   Docker Engine, preserving host PID visibility, identity, paths and the shared
   catalog; Docker Desktop, remote and rootless daemons are excluded.
   Native Windows archival remains a separate validation gate.
+  The project [`ffta-cleanup`](../../.cursor/skills/ffta-cleanup/SKILL.md) skill
+  routes requested maintenance through completed-only batches, current-resource
+  exclusions, superseded-hot reviews and exact-inventory cache retirement.
 
 - The desktop [Clan Atlas menu](../menu_clan_atlas.md) uses the existing native
   Canvas/tiny-skia fonts and the FFTA DE-ReBuild emblem with a permanent left sidebar (eight Game/eight Debug
@@ -3367,8 +3370,11 @@ coverage refreshes its archived sources. The host checkout is unaffected.
   UI caches stay hidden until the next completed guest frame rebuilds them;
   preview generation does not advance the machine or change its snapshot format.
 - [Extended saves](../extended_saves.md): Debug option defaults off and expands
-  snapshot slots from 9 to 99 without changing paths/formats or deleting hidden
-  files. Debug > Game saves selects 99 standard cartridge files: original slot 1,
+  snapshot slots from 9 to 99 without deleting hidden files. When a configured
+  private debug-save worktree is present, slots 10–99, numbered cartridge saves
+  and backups use it; the normal save and snapshot slots 1–9 stay in place.
+  Legacy files are copied without replacement and retained for review. Debug >
+  Game saves selects 99 standard cartridge files: original slot 1,
   `-slot-02.sav` through `-slot-99.sav`. Copy protects confirmed replacements;
   switching validates/prepares boot, backs up target, flushes old source and
   updates active path before frontend reset. Empty targets use erased memory.

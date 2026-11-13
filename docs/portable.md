@@ -52,7 +52,9 @@ is needed. ROMs and BIOS images are not distributed.
 
 The `portable.txt` marker beside both executables enables portable storage.
 Paths resolve from the actual executable, including symlink resolution, rather
-than the shell's working directory. The launcher and runtime do not fall back
+than the shell's working directory. The configurable private asset root is
+resolved relatively to the source workspace when the executable is inside it,
+or to the portable application root otherwise. The launcher and runtime do not fall back
 to an installed ROM, per-user settings, cache or remembered save in this mode.
 An unwritable folder produces an error rather than redirecting save data.
 
@@ -63,8 +65,8 @@ An unwritable folder produces an error rather than redirecting save data.
 | `Data/config/labels/` | Optional developer label accumulators |
 | `Data/cache/` | Regenerable native translations |
 | `Data/saves/ffta.sav` | Raw cartridge progress, shared when switching FFTA ROMs |
-| `Data/saves/SaveBackups/ffta.sav/` | Two startup copies of cartridge progress |
 | `Data/saves/SaveStates/<ROM SHA-256>/` | Nine state slots including previews |
+| `../FFTARecomp-private/debug_saves/runtime/` | Extended states, numbered saves and backups when the private worktree exists |
 | `gba_bios.bin` or `Data/config/gba_bios.bin` | Optional user BIOS |
 | `play-error.log` | Startup/runtime error details |
 | `play.log` (Linux) | Last runtime output |

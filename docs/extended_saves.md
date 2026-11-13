@@ -46,8 +46,12 @@ The existing **Save states** page offers slots **1–99** while enabled, and
 choice, Confirm applies it and Cancel keeps the previous slot. Within this
 picker Left/Right wraps, so Left from slot 1 highlights slot 99.
 Previews, overwrite confirmation and the session's single Undo work as before.
-Names remain `SaveStates/<ROM-SHA-256>/slot-1.ffstate` through
-`slot-99.ffstate`, beside the selected `.sav`.
+Slots 1–9 remain in `SaveStates/<ROM-SHA-256>/` beside the normal cartridge
+save. When the private debug-save Git worktree is available, slots 10–99 use
+`<asset root>/debug_saves/runtime/SaveStates/<ROM-SHA-256>/`. The runtime
+copies an existing legacy high slot to an empty new location without deleting
+the original or replacing an existing destination. If both copies exist, the
+private copy is used and the old one is retained for review.
 
 Disabling the option hides slots 10–99 without deleting or renaming them.
 The picker moves back into the 1–9 range. Undo save for a hidden slot requires
@@ -61,22 +65,32 @@ save files. Confirm on Slot opens the numbered picker; directions highlight a
 number and Confirm applies it. Cancel discards the pending number. The page shows the filename, whether the file is saved, empty or
 unreadable, and which slot is active.
 
-Slot 1 retains the existing filename. Slots 2–99 add the suffix `-slot-NN`
-before its extension. In a portable bundle the files are:
+Slot 1 retains its existing location and filename. Slots 2–99 add the suffix
+`-slot-NN` and use the private debug-save worktree when available:
 
 ```text
-Data/saves/ffta.sav          (slot 1)
-Data/saves/ffta-slot-02.sav  (slot 2)
+Data/saves/ffta.sav                                      (slot 1)
+<asset root>/debug_saves/runtime/GameSaves/<ROM-SHA-256>/ffta-slot-02.sav
 ...
-Data/saves/ffta-slot-99.sav  (slot 99)
+<asset root>/debug_saves/runtime/GameSaves/<ROM-SHA-256>/ffta-slot-99.sav
 ```
 
-An installed or explicitly selected `my.progress.sav` uses
-`my.progress-slot-02.sav`, etc., in the same directory. The two-digit suffix
+An installed or explicitly selected `my.progress.sav` keeps its primary path;
+the debug directory uses `my.progress-slot-02.sav`, etc. The two-digit suffix
 `-slot-02` through `-slot-99` is reserved for numbering; reopening such a file
-returns to the same family instead of appending another suffix. Existing
-unnumbered saves are not renamed, moved or converted. Files copied manually
-into these numbered paths appear on the next menu refresh.
+returns to the same family instead of appending another suffix. Legacy
+numbered saves are copied without replacing an existing private version; the
+originals remain available. Existing unnumbered saves are not renamed, moved or
+converted. Files placed in the debug paths appear on the next menu refresh.
+
+Choose **Game > Saves > Asset folder** to select the folder containing the
+private `debug_saves` and `FFTARecomp-private-recordings` Git worktrees; restart
+the game to apply the selection. The default is `../FFTARecomp-private`
+relative to the project or portable application root. A selection on the same
+filesystem root is saved relatively. Without the debug-save worktree the
+runtime retains legacy save locations. An explicit `FFTA_SAVE_PATH` pointing
+directly to a numbered save retains its legacy family for that launch.
+Git shows changes but does not commit or push them automatically.
 
 - **Copy current save** copies the cartridge memory to the selected file.
   Save using the game's own command first: this copies ordinary saved progress,
@@ -96,9 +110,10 @@ machine. The normal autosave and exit paths subsequently use only the active
 filename. Switching clears snapshot Undo and resets frontend input/audio/video
 history like Restart ROM; it is refused during input recording.
 
-Each numbered file has its own [two backups](save_backups.md). Snapshot slots
-remain shared per ROM and directory: loading a snapshot also restores cartridge
-memory, which may later be written to the currently active standard slot.
+Each numbered file has its own [two backups](save_backups.md). The first nine
+snapshot slots are shared per ROM and save directory; higher slots are shared
+per ROM and private asset root. Loading a snapshot also restores cartridge memory,
+which may later be written to the currently active standard slot.
 
 Portable mode remembers only `debug.game_save_slot = 1..99`, so moving the
 bundle keeps the selection valid. Installed mode remembers the selected path
@@ -112,7 +127,23 @@ feature changes the desktop workspace only; AndroidPort is separate.
 
 ## Validation
 
-The Windows GNU release builds of the affected tests and production CLI pass
+On Linux, 39 configuration and 154 menu tests passed, along with 57 focused
+runtime tests for saves, backups, state slots, asset references, sessions and
+recordings. One optional test in each group was ignored. These include synthetic
+legacy-copy and private Git visibility checks. An optimized Linux runtime also
+resolved a synthetic sibling catalog before and after moving both folders. An
+isolated Linux X11 session with synthetic data and a simulated folder chooser
+verified the menu's relative selection, copying slot 10 and numbered save 2 to
+the default debug worktree, and leaving the ordinary save and slot 9 in place.
+Another synthetic X11 startup after moving sibling folders confirmed that a
+persisted custom relative root is used for extended saves and startup backups.
+The updated frontend has not been verified with a real desktop folder chooser,
+real saves or native Windows.
+
+The Windows checks below cover the earlier extended-save implementation, before
+private asset routing.
+
+The Windows GNU release builds of the affected tests and production CLI passed
 without compiler warnings. Wine runs pass 29 input/config tests, 39 menu tests
 and 22 targeted runtime tests (3 numbered-save, 10 snapshot, 7 backup and
 2 save-path tests); one existing optional resource-backed backup check is
@@ -129,6 +160,7 @@ The screenshots were inspected and source ROM/save/snapshot hashes remain
 unchanged. Evidence is local under `target/extended-saves/`, including test
 logs, `windows-build.json`, GUI captures and `gui-results.json`.
 
-These GUI checks use Wine, interpreter execution and BIOS HLE, not native
-Windows hardware or a physical gamepad. New Linux runtime checks, the optional
-resource-backed check, release packaging and AndroidPort remain unverified.
+These earlier GUI checks use Wine, interpreter execution and BIOS HLE, not
+native Windows hardware or a physical gamepad. Real-save checks for the new
+routing, the optional resource-backed check, release packaging and AndroidPort
+remain unverified.

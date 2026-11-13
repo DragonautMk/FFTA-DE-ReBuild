@@ -456,8 +456,20 @@ fn execute(args:&[String],default_root:&Path)->Result<Value,String>{
     };
     Ok(json!({"schema":1,"kind":"ffta-debug-cheat-catalog","outcome":"loaded","source_sha256":catalog.source_sha256,"total":total,"enabled_count":0,"result":payload,"scope":"Readonly reference and explicitly assumed inspection only; no guest writes"}))
 }
+pub(crate) fn default_catalog(av: &input_config::AvConfig, executable_dir: &Path) -> PathBuf {
+    let local = executable_dir.join("cheats/catalogo.json");
+    // An isolated session pins its own catalog; keep that copy independent.
+    if executable_dir.join("debug-session.json").is_file() && local.is_file() { return local; }
+    input_config::storage::debug_asset_root(av)
+        .map(|root| root.join("cheats/catalogo.json"))
+        .filter(|path| path.is_file())
+        .unwrap_or(local)
+}
+
 pub(crate) fn cmd(args:&[String])->u8{
-    let Some(root)=input_config::exe_dir() else {eprintln!("Cannot locate executable directory");return 1;};
+    let Some(exe)=input_config::exe_dir() else {eprintln!("Cannot locate executable directory");return 1;};
+    let catalog=default_catalog(&input_config::AvConfig::load(),&exe);
+    let root=catalog.parent().and_then(Path::parent).unwrap_or(&exe).to_path_buf();
     match execute(args,&root){Ok(value)=>{println!("{value}");0},Err(error)=>{println!("{}",json!({"schema":1,"kind":"ffta-debug-cheat-error","outcome":"invalid-request","error":error}));1}}
 }
 

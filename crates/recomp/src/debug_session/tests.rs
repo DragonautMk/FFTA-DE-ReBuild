@@ -1,5 +1,27 @@
 use super::*;
 
+#[test]
+fn versioned_session_exposes_debug_artifacts_but_ignores_rom_and_binaries() {
+    let temp=tempfile::tempdir().unwrap();
+    let root=temp.path().join("private");fs::create_dir(&root).unwrap();
+    assert!(std::process::Command::new("git").arg("init").arg("-q").arg(&root).status().unwrap().success());
+    let session=root.join("session");fs::create_dir(&session).unwrap();
+    fs::write(session.join(".gitignore"),session_ignore(true)).unwrap();
+    for name in ["seed.ffstate","recording.json","ffta.gba","gba_bios.bin","recomp.exe"] {
+        fs::write(session.join(name),b"synthetic").unwrap();
+    }
+    fs::create_dir_all(session.join("Data/dataset")).unwrap();
+    fs::write(session.join("Data/dataset/manifest.toml"),b"synthetic").unwrap();
+    let status=std::process::Command::new("git").args(["-C",root.to_str().unwrap(),"status","--porcelain","--untracked-files=all"]).output().unwrap();
+    assert!(status.status.success());let status=String::from_utf8(status.stdout).unwrap();
+    assert!(status.contains("session/seed.ffstate"));
+    assert!(status.contains("session/recording.json"));
+    assert!(!status.contains("ffta.gba"));
+    assert!(!status.contains("gba_bios.bin"));
+    assert!(!status.contains("recomp.exe"));
+    assert!(!status.contains("Data/dataset"));
+}
+
 struct Fixture { dir: tempfile::TempDir, rom: Vec<u8>, save: Vec<u8>, state: Vec<u8>, executable: PathBuf }
 impl Fixture {
     fn new() -> Self {

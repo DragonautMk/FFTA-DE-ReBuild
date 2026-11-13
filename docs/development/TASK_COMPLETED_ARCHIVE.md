@@ -22829,3 +22829,27 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Evidence: `e157-title-opening-draw-wine-28msdufg` observes 19 typed pointer-directory requests and affine reader `08001998/199a` consuming `3ade0a`; source poisoned, no raw source requests and original/managed full state and clock match for one frame. Private pre-frame checkpoint is retained under the unit.
 - Limits: other lists, regular/affine paths, other scenes, native dispatch, Linux, USA and native Windows remain open. No performance measurement.
 - Reference: `docs/changes/2026-11-12-observe-neutral-opening-obj-draw.json`.
+
+### TARGET-CLEANUP-SKILL
+
+- Outcome: completed
+- Verified criteria: Created and registered the project ffta-cleanup skill. It reuses completed-only archive batches, current-resource exclusions, superseded-hot dataset review, legacy scratch retirement and guarded rebuildable-cache deletion. On-demand archive consultation and receipt-based space accounting are included.
+- Evidence: .cursor/skills/ffta-cleanup/SKILL.md; .cursor/skills/ffta-cleanup/references/cache-retirement.md; docs/changes/2026-11-13-add-target-cleanup-skill.json. Skill Creator validator, local link/registration/size checks and focused diff whitespace checks PASS.
+- Limits: Instruction-only change; no storage cleanup, archive mutation, build or gameplay test executed. Existing uncommitted application changes preserved; host visibility and tool platform limits still apply to future maintenance.
+- Next action: Apply the skill to requested storage maintenance; do not resume unrelated runtime work.
+- Final checks: task_handoff.py check and full git diff --check PASS. Global project_memory.py check flags only the pre-existing unrecorded crates/gba-core/src/rom_data.rs edit, preserved outside this task; the change record documents this limitation.
+
+### TARGET-CLEANUP-20261113
+
+- Outcome: completed
+- Verified criteria: Removed two rebuildable Cargo incremental caches under host-visible activity checks, held Cargo locks and profile leases; source inventories were compared before retirement, retained executables checked and external hard links excluded from accounting. Reclaimed 7,969,697,792 bytes. Completed-only Docker batch selected zero; no archive errors. Checked batch exclusions and legacy disposable fixture locations.
+- Evidence: target/local-incremental-cleanup-20261113-58769b34/receipt.json; target/cold-storage-batches/20261113-074757-a2240dcc/batch.json. Final filesystem available bytes: 10,129,899,520.
+- Limits: Three host process details were unreadable. Exact cache inventories were compared before removal but overwritten by the summary receipt after success. Suspended/current/private and unresolved scopes remain; zero selected does not establish that all target data is compressed. No builds, tests or gameplay were rerun.
+- Next action: Use cataloged payloads on demand; review remaining exclusions only with fresh completion and consumer evidence.
+
+### TARGET-CLEANUP-DEBUG-SAVES-20261113
+
+- Outcome: completed
+- Verified criteria: User-requested cleanup assessment used the completed-only Docker preview; no eligible candidate was selected and sufficient free space was available for the requested migration.
+- Evidence: target/cold-storage-batches/20261113-083240-837f8ddf/batch.json; free space 29,538,136,064 bytes at inspection.
+- Limits: No files were removed and this run reclaimed zero bytes; the increase in free space occurred externally and is not attributed to this task. Debug-save and suspended-work scopes were excluded.

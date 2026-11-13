@@ -10,6 +10,8 @@ pub const SLOT_COUNT: u8 = 99;
 
 pub struct GameSaves {
     base: PathBuf,
+    debug_directory: Option<PathBuf>,
+    backup_namespace: Option<PathBuf>,
     pub current: u8,
 }
 
@@ -34,7 +36,40 @@ impl GameSaves {
                 }
             }
         }
-        Self { base, current }
+        Self { base, current, debug_directory: None, backup_namespace: None }
+    }
+
+    /// Keep the first cartridge save in its original location. Numbered
+    /// debug saves live in a per-ROM directory under the selected asset root.
+    pub fn with_debug_root(selected: &Path, rom: &[u8], root: &Path) -> Result<Self, String> {
+        let mut saves = Self::new(selected);
+        let legacy = Self::new(&saves.base);
+        let dir = root.join("runtime/GameSaves").join(gba_core::ffta_rom::digest(rom));
+        let backup_namespace = crate::save_backups::Backups::debug_namespace(root, rom);
+        saves.debug_directory = Some(dir);
+        saves.backup_namespace = Some(backup_namespace.clone());
+        for slot in 2..=SLOT_COUNT {
+            let legacy_save = legacy.path(slot)?;
+            crate::save_state::copy_legacy_file(&legacy_save, &saves.path(slot)?)?;
+            crate::save_backups::Backups::with_namespace(&legacy_save, &backup_namespace)?;
+        }
+        Ok(saves)
+    }
+
+    pub fn base_path(&self) -> &Path { &self.base }
+
+    pub fn prepare_backups(&self, save: &Path) -> Result<crate::save_backups::Backups, String> {
+        match &self.backup_namespace {
+            Some(root) => crate::save_backups::Backups::with_namespace(save, root),
+            None => Ok(crate::save_backups::Backups::new(save)),
+        }
+    }
+
+    pub fn current_backups(&self, save: &Path) -> crate::save_backups::Backups {
+        match &self.backup_namespace {
+            Some(root) => crate::save_backups::Backups::at_namespace(save, root),
+            None => crate::save_backups::Backups::new(save),
+        }
     }
 
     pub fn path(&self, slot: u8) -> Result<PathBuf, String> {
@@ -54,7 +89,10 @@ impl GameSaves {
             name.push(".");
             name.push(ext);
         }
-        Ok(self.base.with_file_name(name))
+        Ok(match &self.debug_directory {
+            Some(directory) => directory.join(name),
+            None => self.base.with_file_name(name),
+        })
     }
 
     pub fn choices(&self, expected: usize) -> Vec<menu::GameSaveSlot> {
@@ -98,6 +136,8 @@ impl GameSaves {
         if path == old_path {
             return Ok(path);
         }
+        std::fs::create_dir_all(parent(&path)).map_err(|e| e.to_string())?;
+        std::fs::create_dir_all(parent(&old_path)).map_err(|e| e.to_string())?;
         let target = read_save(&path, old.len())?;
         let erased = vec![0xff; old.len()];
         let fresh = super::save_backups::prepare_boot(
@@ -105,7 +145,7 @@ impl GameSaves {
             boot,
             Some(target.as_deref().unwrap_or(&erased)),
         )?;
-        let protected = super::save_backups::Backups::new(&path).capture_startup()?;
+        let protected = self.prepare_backups(&path)?.capture_startup()?;
         if protected != target {
             return Err("The selected save changed. Select it again.".into());
         }
@@ -122,16 +162,21 @@ impl GameSaves {
             .bus
             .save_data()
             .ok_or("This cartridge has no save memory")?;
+        std::fs::create_dir_all(parent(&path)).map_err(|e| e.to_string())?;
         if path.try_exists().map_err(|e| e.to_string())? {
             if !overwrite {
                 return Err("Game save is occupied. Confirm replacement first.".into());
             }
             // Protect existing progress before an explicitly confirmed replacement.
             read_save(&path, bytes.len())?;
-            super::save_backups::Backups::new(&path).capture_startup()?;
+            self.prepare_backups(&path)?.capture_startup()?;
         }
         super::save_backups::atomic_write(&path, bytes, overwrite)
     }
+}
+
+fn parent(path: &Path) -> &Path {
+    path.parent().filter(|p| !p.as_os_str().is_empty()).unwrap_or(Path::new("."))
 }
 
 fn read_save(path: &Path, expected: usize) -> Result<Option<Vec<u8>>, String> {
@@ -157,6 +202,31 @@ mod tests {
         let mut rom = vec![0; 512];
         rom[256..265].copy_from_slice(b"FLASH_V12");
         super::super::make_machine(rom, None)
+    }
+
+    #[test]
+    fn routed_numbered_saves_preserve_primary_and_existing_private_versions() {
+        let dir = tempfile::tempdir().unwrap();
+        let normal = dir.path().join("normal");
+        std::fs::create_dir_all(&normal).unwrap();
+        let base = normal.join("ffta.sav");
+        let legacy = GameSaves::new(&base);
+        std::fs::write(&base, b"normal").unwrap();
+        std::fs::write(legacy.path(2).unwrap(), b"legacy").unwrap();
+        let legacy_backup = crate::save_backups::Backups::new(&legacy.path(2).unwrap());
+        legacy_backup.capture_startup().unwrap();
+        let private = dir.path().join("private/debug_saves");
+        let saves = GameSaves::with_debug_root(&base, b"synthetic rom", &private).unwrap();
+        assert_eq!(saves.path(1).unwrap(), base);
+        assert!(saves.path(2).unwrap().starts_with(&private));
+        assert_eq!(std::fs::read(saves.path(2).unwrap()).unwrap(), b"legacy");
+        assert_eq!(std::fs::read(legacy.path(2).unwrap()).unwrap(), b"legacy");
+        assert!(legacy_backup.has_copies());
+        assert_eq!(saves.prepare_backups(&saves.path(2).unwrap()).unwrap().choices(6)[0].generation, Some(1));
+        std::fs::write(saves.path(2).unwrap(), b"private edit").unwrap();
+        let again = GameSaves::with_debug_root(&base, b"synthetic rom", &private).unwrap();
+        assert_eq!(std::fs::read(again.path(2).unwrap()).unwrap(), b"private edit");
+        assert_eq!(std::fs::read(&base).unwrap(), b"normal");
     }
 
     #[test]

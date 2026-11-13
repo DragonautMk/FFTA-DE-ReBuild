@@ -3,6 +3,60 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-13 — Configure relative private asset storage
+
+Type: changed. Platforms: desktop.
+
+**Changes**
+
+- Add a selectable relative private asset root and route extended saves, recordings and debug-session artifacts to private worktrees when available.
+- Keep the primary cartridge save and state slots 1–9 in place; preserve legacy extended files while copying to empty private destinations.
+- Update private asset discovery and export defaults, excluding working sessions that also contain ROMs and executables.
+
+**Validation**
+
+- Synthetic relative-worktree relocation, private Git visibility and ROM exclusions passed on Linux.
+- On Linux, 39 input/config and 154 menu tests passed; one optional menu test was ignored.
+- The final runtime source passed 57 focused synthetic save, backup, state, path, session and recording tests; one optional backup test was ignored.
+- The exporter passed 17 synthetic tests with one optional test ignored.
+- An optimized Linux runtime built successfully, reported its version, and resolved a synthetic private catalog before and after moving sibling folders.
+- An isolated Linux X11 frontend with a simulated folder chooser stored a relative selection and routed synthetic extended saves while retaining the ordinary save and slot 9.
+- After relocating synthetic sibling folders, a Linux frontend startup applied a persisted custom relative root to extended saves and backups.
+
+**Limitations**
+
+- A real desktop folder chooser, real saves and native Windows have not been verified; no game ROM or real game save was used for these checks.
+
+Documentation: [extended_saves.md](docs/extended_saves.md), [private_debug_assets.md](docs/private_debug_assets.md), [portable.md](docs/portable.md).
+
+[Change record](docs/changes/2026-11-13-relative-private-asset-routing.json)
+
+## 2026-11-13 — Add a reusable target cleanup skill
+
+Type: added. Platforms: tooling.
+
+**Changes**
+
+- Add the project ffta-cleanup skill for verified compression under target/cold-storage and retirement of obsolete generated copies and rebuildable caches.
+- Reuse completed-only batches, dynamic current-resource exclusions, explicit superseded-hot reviews and on-demand archive consultation without rerunning builds or game tests.
+- Register the skill in AGENTS.md and document guarded cache retirement, receipt-based space accounting and completion limits.
+
+**Validation**
+
+- Skill Creator quick_validate.py passed; local Markdown reference targets, project registration and size checks passed.
+- Focused git diff --check passed; documented commands and safeguards were checked against existing tool implementations.
+- task_handoff.py check and full git diff --check passed. project_memory.py check reports the pre-existing unrecorded change in crates/gba-core/src/rom_data.rs; no skill implementation file is missing coverage.
+
+**Limitations**
+
+- Instruction-only workflow: no cleanup, archive mutation, build or gameplay test was run while creating the skill.
+- Host-aware execution remains required for cleanup; Docker supports local Linux Engine and does not enable native Windows archival.
+- The global project-memory check remains blocked by the unrelated pre-existing crates/gba-core/src/rom_data.rs edit, which was preserved without attributing it to this skill.
+
+Documentation: [LOCAL_ARTIFACTS.md](docs/development/LOCAL_ARTIFACTS.md), [cold_storage.py](scripts/cold_storage.py), [local_artifacts.py](scripts/local_artifacts.py).
+
+[Change record](docs/changes/2026-11-13-add-target-cleanup-skill.json)
+
 ## 2026-11-12 — Verify EUR title cursor choices under Wine
 
 Type: changed. Platforms: EUR / Wine.

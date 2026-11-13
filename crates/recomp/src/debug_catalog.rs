@@ -136,7 +136,7 @@ impl Catalog {
         let slot=slot.or_else(||(1..=slots.count()).find(|&n|slots.path(n).is_ok_and(|p|!p.exists()))).ok_or("No empty snapshot slot")?;
         slots.import(machine,slot,&self.bytes(index)?)?;Ok(slot)
     }
-    pub fn create(&self,index:usize,destination:&Path,rom:&[u8],bios:Option<&[u8]>,interp:bool,av:input_config::AvConfig,input:input_config::InputConfig,dataset:Option<&Path>)->Result<PathBuf,String> {
+    pub fn create(&self,index:usize,destination:&Path,rom:&[u8],bios:Option<&[u8]>,interp:bool,av:input_config::AvConfig,input:input_config::InputConfig,dataset:Option<&Path>,assets:Option<&Path>)->Result<PathBuf,String> {
         let entry=self.entries.get(index).ok_or("Unknown catalog entry")?;let bytes=self.bytes(index)?;
         let mut machine=crate::make_machine(rom.to_vec(),bios);
         let snapshot=matches!(entry.kind.as_str(),"case"|"variant");
@@ -146,8 +146,11 @@ impl Catalog {
         }
         let region=match gba_core::ffta_rom::version(rom) {Some(gba_core::ffta_rom::Version::Europe)=>"EUR",Some(gba_core::ffta_rom::Version::Usa)=>"USA",None=>""};
         if entry.region!=region {return Err("Catalog region does not match selected ROM".into());}
-        let root=crate::debug_session::create(destination,crate::debug_session::Source{rom,bios,save:machine.bus.save_data(),state:snapshot.then_some(bytes.as_slice()),
-            av,input,interp,dataset,executable:&std::env::current_exe().map_err(|e|e.to_string())?,cheat_favorites:None})?;
+        let executable=std::env::current_exe().map_err(|e|e.to_string())?;
+        let source=crate::debug_session::Source{rom,bios,save:machine.bus.save_data(),state:snapshot.then_some(bytes.as_slice()),
+            av,input,interp,dataset,executable:&executable,cheat_favorites:None};
+        let root=if let Some(assets)=assets {crate::debug_session::create_with_asset_root(destination,source,assets)?}
+            else {crate::debug_session::create(destination,source)?};
         std::fs::write(root.join("catalog-entry.json"),serde_json::to_vec_pretty(entry).map_err(|e|e.to_string())?).map_err(|e|e.to_string())?;
         // A portable, one-entry view reuses the existing seed/save: no third payload copy.
         std::fs::write(root.join("debug-catalog.json"),serde_json::to_vec_pretty(&portable_view(entry,snapshot)).map_err(|e|e.to_string())?).map_err(|e|e.to_string())?;
@@ -169,6 +172,9 @@ fn portable_view(entry:&Entry,snapshot:bool)->Value {
 
 pub(crate) fn default_path()->Option<PathBuf> {
     if crate::debug_session::present(){let path=input_config::exe_dir()?.join("debug-catalog.json");if path.is_file(){return Some(path);}}
+    if let Some(path)=input_config::storage::debug_asset_root(&input_config::AvConfig::load()).map(|root|root.join("debug_saves/ready/catalog.json")) {
+        if path.is_file(){return Some(path);}
+    }
     Some(input_config::config_root()?.join("debug-catalog/catalog.json"))
 }
 
@@ -211,7 +217,7 @@ pub(crate) fn cmd(args:&[String])->Result<(),String> {
             }else{
                 let rom=crate::diagnostics::read(&rom.ok_or("Open needs --rom FILE")?,32*1024*1024)?;
                 let bios=if no_bios{None}else{bios.or_else(input_config::find_bios)}.map(|p|crate::diagnostics::read(&p,16384)).transpose()?;
-                let root=catalog.create(index,&destination.ok_or("Open needs a new --dir DIR")?,&rom,bios.as_deref(),interp,input_config::AvConfig::load(),input_config::InputConfig::load(),dataset.as_deref())?;
+                let root=catalog.create(index,&destination.ok_or("Open needs a new --dir DIR")?,&rom,bios.as_deref(),interp,input_config::AvConfig::load(),input_config::InputConfig::load(),dataset.as_deref(),None)?;
                 println!("{}",json!({"schema":1,"kind":"ffta-catalog-session","entry":catalog.entries[index].key,"root":root}));
                 if launch {let status=crate::debug_session::launch(&root)?.wait().map_err(|e|e.to_string())?;if !status.success(){return Err(format!("Catalog session exited {status}"));}}
             }

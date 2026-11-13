@@ -1,5 +1,24 @@
 use super::*;
 #[test]
+fn private_asset_references_follow_the_relative_asset_root() {
+    let temp = tempfile::tempdir().unwrap();
+    let original = temp.path().join("personal");
+    let app = original.join("FFTARecomp");
+    let asset = original.join("FFTARecomp-private");
+    std::fs::create_dir_all(&app).unwrap();
+    std::fs::create_dir_all(asset.join("cheats")).unwrap();
+    let catalog = asset.join("cheats/catalog.json");
+    std::fs::write(&catalog, b"synthetic").unwrap();
+    let anchors = Anchors { app: app.clone(), config: app.join("config"), asset: Some(asset.clone()) };
+    let saved = Location::capture(&catalog, &anchors).unwrap();
+    assert_eq!(saved, Location::Asset("cheats/catalog.json".into()));
+    let moved = temp.path().join("moved");
+    std::fs::rename(original, &moved).unwrap();
+    let rebased = Anchors { app: moved.join("FFTARecomp"), config: moved.join("config"), asset: Some(moved.join("FFTARecomp-private")) };
+    assert_eq!(std::fs::read(saved.resolve(&rebased).unwrap()).unwrap(), b"synthetic");
+    assert!(Location::Asset("../outside".into()).validate().is_err());
+}
+#[test]
 fn internal_locations_move_but_explicit_external_paths_do_not_and_resolving_never_reads() {
     let t = tempfile::tempdir().unwrap();
     let app = t.path().join("Original è app");
@@ -10,6 +29,7 @@ fn internal_locations_move_but_explicit_external_paths_do_not_and_resolving_neve
     let file = config.join("recipe.json");
     std::fs::write(&file, b"PUBLIC").unwrap();
     let anchors = Anchors {
+            asset: None,
         app: app.clone(),
         config,
     };
@@ -24,6 +44,7 @@ fn internal_locations_move_but_explicit_external_paths_do_not_and_resolving_neve
     let moved = t.path().join("Moved folder è");
     std::fs::rename(app, &moved).unwrap();
     let rebased = Anchors {
+            asset: None,
         app: moved.clone(),
         config: moved.join("Data/config"),
     };
@@ -84,6 +105,7 @@ fn pins_restore_after_move_preserve_neutral_tools_and_refuse_changed_missing_or_
     let app = t.path().join("Before è");
     std::fs::create_dir(&app).unwrap();
     let anchors = Anchors {
+            asset: None,
         app: app.clone(),
         config: app.join("Data/config"),
     };
@@ -114,6 +136,7 @@ fn pins_restore_after_move_preserve_neutral_tools_and_refuse_changed_missing_or_
     let moved = t.path().join("After move è with spaces");
     std::fs::rename(&app, &moved).unwrap();
     let rebased = Anchors {
+            asset: None,
         app: moved.clone(),
         config: moved.join("Data/config"),
     };
@@ -128,6 +151,7 @@ fn pins_restore_after_move_preserve_neutral_tools_and_refuse_changed_missing_or_
 fn atomic_preferences_refuse_detected_external_edits_and_do_not_rewrite_unchanged_bytes() {
     let t = tempfile::tempdir().unwrap();
     let a = Anchors {
+            asset: None,
         app: t.path().into(),
         config: t.path().join("config"),
     };
@@ -154,6 +178,7 @@ fn selecting_before_first_config_write_does_not_require_a_config_directory() {
     let app = t.path().join("App è");
     std::fs::create_dir(&app).unwrap();
     let a = Anchors {
+            asset: None,
         app: app.clone(),
         config: app.join("Data/config"),
     };
@@ -179,6 +204,7 @@ fn preferences_publish_through_an_actual_canonical_verbatim_windows_root() {
     let app = std::fs::canonicalize(t.path()).unwrap();
     assert!(app.to_string_lossy().starts_with("\\\\?\\"));
     let anchors = Anchors {
+            asset: None,
         config: app.join("Data/config"),
         app,
     };

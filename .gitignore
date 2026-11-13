@@ -29,8 +29,8 @@ ffta-input-diagnostic*.txt
 
 # Local save fixture archive; never commit personal game progress.
 /saves.zip
-/saves/
-/debug_saves/
+/saves
+/debug_saves
 /FFTARecomp-debug-EUR/
 
 # Generated local report directory; contains paths to private validation copies.
@@ -39,4 +39,4 @@ ffta-input-diagnostic*.txt
 
 # Private third-party cheat compilations and local derived catalogs.
 # Sources include explicit copyright notices; redistribution rights are unverified.
-/cheats/
+/cheats

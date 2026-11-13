@@ -328,6 +328,7 @@ pub(super) const SAVES_ROWS: &[Row] = &[
     Row::ExtendedSaves,
     Row::GameSavesMenu,
     Row::SaveBackupsMenu,
+    Row::AssetFolder,
     Row::Back,
 ];
 pub(super) const SYSTEM_ROWS: &[Row] = &[Row::Language, Row::RestartRom, Row::SwitchRomMenu, Row::Quit, Row::Back];

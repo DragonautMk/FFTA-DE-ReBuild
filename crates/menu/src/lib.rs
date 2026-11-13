@@ -135,6 +135,7 @@ pub enum MenuAction {
     CheatManage,
     CheatRequest(CheatRequest),
     ChooseDebugCatalog,
+    ChooseAssetFolder,
     CatalogSelection(usize),
     CatalogImport(usize),
     CatalogOpen(usize),
@@ -245,6 +246,7 @@ enum Row {
     DebugResume,
     DebugMenu,
     ExtendedSaves,
+    AssetFolder,
     CompareReplay,
     CaptureReplay,
     AuditReplay,
@@ -476,6 +478,7 @@ impl Row {
             Row::DebugTool(tool) => tool.label(),
             Row::ToolInput(slot) => slot.label(),
             Row::ExtendedSaves => "Extended saves",
+            Row::AssetFolder => "Asset folder",
             Row::CaptureGraphics => "Capture graphics report",
             Row::CreateIssueReport => "Create issue report",
             Row::StartCodeTrace => "Start code trace",
@@ -1048,7 +1051,7 @@ impl Menu {
     fn rows(&self) -> &'static [Row] {
         if !self.debug_enabled() {
             if debug_unlock::debug_page(self.page){return &[Row::Back];}
-            if self.page==Page::Saves{return &[Row::SaveStatesMenu,Row::SaveBackupsMenu,Row::Back];}
+            if self.page==Page::Saves{return &[Row::SaveStatesMenu,Row::SaveBackupsMenu,Row::AssetFolder,Row::Back];}
         }
         match self.page {
             Page::Main => clan_atlas::OVERVIEW_ROWS,
@@ -1242,6 +1245,7 @@ impl Menu {
                 Row::DebugTool(tool) => Some(MenuAction::OpenDebugTool(tool)),
                 Row::ToolInput(slot) => Some(MenuAction::ChooseToolInput(slot)),
                 Row::ContentPicker => Some(MenuAction::ContentOpen),
+                Row::AssetFolder => Some(MenuAction::ChooseAssetFolder),
                 Row::DebugCatalog => Some(MenuAction::OpenDebugCatalog),
                 Row::CheatCatalog => Some(MenuAction::OpenCheatCatalog),
                 Row::StartRecentEvents|Row::SaveRecentEvents=>{if self.debug_session{Some(if row==Row::StartRecentEvents{MenuAction::StartRecentEvents}else{MenuAction::SaveRecentEvents})}else{self.debug_message="Open an isolated copy before recent-event capture.".into();None}},
@@ -1680,6 +1684,7 @@ fn value_of(
         Row::DebugMenu => ">".into(),
         Row::GameSavesMenu => if av.debug_extended_saves { ">" } else { "DISABLED" }.into(),
         Row::ExtendedSaves => if av.debug_extended_saves { "ON" } else { "OFF" }.into(),
+        Row::AssetFolder => if av.debug_asset_root.is_empty() { "DEFAULT" } else { "CUSTOM" }.into(),
         Row::ScriptLibraryMenu | Row::DebugToolsMenu | Row::DebugTool(_) | Row::ToolInputsMenu | Row::ToolInput(_) | Row::ContentPicker | Row::DebugCatalog | Row::CheatCatalog | Row::CatalogRegion | Row::CatalogStatus | Row::CatalogKind | Row::CatalogCase | Row::CatalogEntry | Row::CatalogImport | Row::CatalogOpen | Row::CatalogChoose
             | Row::StartRecentEvents | Row::SaveRecentEvents | Row::StartGameplayTrace | Row::SaveGameplayReport | Row::CreateIssueReport | Row::StartCodeTrace | Row::SaveCodeReport | Row::StartAudioCapture | Row::SaveAudioReport | Row::StartUiTrace | Row::SaveUiReport | Row::ToggleEventConsole | Row::OpenCommandConsole | Row::CaptureGraphics | Row::InspectPC | Row::DebugStepOne | Row::DebugStepTen | Row::DebugResume | Row::CompareReplay | Row::CaptureReplay | Row::AuditReplay | Row::ReplayCase | Row::ChooseReplayProfile | Row::CancelReplay | Row::StartInputRecording | Row::StopInputRecording | Row::StartDebugSession | Row::StartInterpreterDebugSession | Row::CloseDebugSession | Row::CopyDiagnosis | Row::GameSaveSlot | Row::UseGameSave | Row::CopyGameSave | Row::ConfirmSwitchGameSave | Row::ConfirmCopyGameSave => return None,
         Row::MouseMode => return None,
@@ -1840,7 +1845,7 @@ fn cycle(row: Row, av: &mut AvConfig, forward: bool) -> Option<Changed> {
         Row::ScriptLibraryMenu | Row::DebugToolsMenu | Row::DebugTool(_) | Row::ToolInputsMenu | Row::ToolInput(_) | Row::ContentPicker | Row::DebugCatalog | Row::CheatCatalog | Row::CatalogRegion | Row::CatalogStatus | Row::CatalogKind | Row::CatalogCase | Row::CatalogEntry | Row::CatalogImport | Row::CatalogOpen | Row::CatalogChoose
             | Row::StartRecentEvents | Row::SaveRecentEvents | Row::StartGameplayTrace | Row::SaveGameplayReport | Row::CreateIssueReport | Row::StartCodeTrace | Row::SaveCodeReport | Row::StartAudioCapture | Row::SaveAudioReport | Row::StartUiTrace | Row::SaveUiReport | Row::ToggleEventConsole | Row::OpenCommandConsole | Row::CaptureGraphics | Row::InspectPC | Row::DebugStepOne | Row::DebugStepTen | Row::DebugResume | Row::CompareReplay | Row::CaptureReplay | Row::AuditReplay | Row::ReplayCase | Row::ChooseReplayProfile | Row::CancelReplay | Row::StartInputRecording | Row::StopInputRecording | Row::StartDebugSession | Row::StartInterpreterDebugSession | Row::CloseDebugSession | Row::CopyDiagnosis | Row::DebugMenu | Row::GameSavesMenu | Row::GameSaveSlot | Row::UseGameSave | Row::CopyGameSave
             | Row::ConfirmSwitchGameSave | Row::ConfirmCopyGameSave => None,
-        Row::FastForwardToggle | Row::CliReference => None,
+        Row::FastForwardToggle | Row::CliReference | Row::AssetFolder => None,
         Row::Menu => None,
         Row::MouseMode => None,
         Row::Backup(_) | Row::ConfirmRestoreBackup | Row::StateSlot | Row::SaveStateConfirm | Row::SaveState | Row::LoadState | Row::UndoState | Row::Resume
@@ -2356,6 +2361,15 @@ mod tests {
             assert_eq!(menu.handle(MenuInput::Cancel,&mut av),None);assert_eq!(menu.page,Page::Main);
         }
         assert_eq!(menu.handle(MenuInput::Cancel,&mut av),Some(MenuAction::Resume));
+    }
+
+    #[test]
+    fn asset_folder_is_available_without_unlocking_debug() {
+        let mut menu = Menu::unlocked_for_test(false, false);
+        let mut av = AvConfig::default();
+        menu.open(Page::Saves);
+        at(&mut menu, Row::AssetFolder);
+        assert_eq!(menu.handle(MenuInput::Confirm, &mut av), Some(MenuAction::ChooseAssetFolder));
     }
 
     #[test]

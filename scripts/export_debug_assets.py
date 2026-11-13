@@ -18,6 +18,7 @@ from datetime import datetime
 import debug_asset_inventory as inventory
 
 ROOT = Path(__file__).resolve().parents[1]
+PRIVATE_ROOT = ROOT.parent / 'FFTARecomp-private'
 PREFIX = 'FFTARecomp-debug-EUR'
 BASE_PREFIX = 'FFTARecomp-portable/'
 EXCLUDED = {'.gba', '.agb', '.bin', '.ffstate', '.sav', '.input'}
@@ -30,7 +31,7 @@ def regular(path):
     return path
 
 
-def tree(path):
+def tree(path, *, skip_root_dirs=()):
     path = Path(path)
     if path.is_symlink() or not path.is_dir():
         raise ValueError(f'Expected a non-symlink directory: {path}')
@@ -39,7 +40,7 @@ def tree(path):
         subdirs.sort(); files.sort()
         # Git metadata is not part of a private asset collection. A linked
         # worktree may instead have a .git file containing a host-local path.
-        subdirs[:] = [name for name in subdirs if name != '.git']
+        subdirs[:] = [name for name in subdirs if name != '.git' and not (here == path and name in skip_root_dirs)]
         for name in subdirs:
             if (here / name).is_symlink():
                 raise ValueError(f'Symlink in source collection: {here / name}')
@@ -135,7 +136,9 @@ def export(args):
     assets = args.assets
     ready = assets / 'ready'
     legacy = args.legacy
-    original_files = list(tree(assets)); legacy_files = list(tree(legacy))
+    # Working debug sessions contain an isolated ROM and executable; their
+    # versioned outputs stay in the private repository, not this export.
+    original_files = list(tree(assets, skip_root_dirs=('sessions',))); legacy_files = list(tree(legacy))
     for path, _ in original_files + legacy_files: reject_rom(path)
     catalog = check_catalog(ready)
     source_catalog = json.loads((ready / 'catalog.json').read_text(encoding='utf-8'))
@@ -287,10 +290,13 @@ def export(args):
                     add_file(z,'Data/config/recordings/'+directory.name+'/'+rel,path,'accepted recording/'+directory.name+'/'+rel)
             if all(p.is_file() for p in pair):
                 for path in pair:add_file(z,'DebugAssets/replay-F-09/'+path.name,path,'F-09 replay/'+path.name)
-            roots = [ROOT] + list(args.scan_root)
+            # Private worktrees are now siblings of the public checkout. The
+            # checkout aliases are deliberately not followed by discovery.
+            private_roots = [assets, legacy, assets.parent / 'cheats']
+            roots = [ROOT] + [p for p in private_roots if p.is_dir() and not p.is_symlink()] + list(args.scan_root)
             print('Discovering workspace debug assets (including experimental and incomplete material)...',flush=True)
             rows, exclusions, guards = inventory.scan(roots, ROOT, reject_rom, digest,
-                excluded_paths=[out, temp, *args.exclude_scan])
+                excluded_paths=[out, temp, assets / 'sessions', *args.exclude_scan])
             discovered_snapshot_paths = sum(r['kind']=='snapshot' for r in rows)
             report_roots = sorted({r['path'].parent for r in rows if r['path'].suffix.lower()=='.html'},key=lambda p:(len(p.parts),str(p)))
             selected_roots = []
@@ -446,8 +452,8 @@ def main(argv=None, *, extended=False):
     p.add_argument('--base',type=Path,default=ROOT/'dist/debug-tools/FFTARecomp-windows-debug-tools.zip',help='existing Windows portable debug-tools ZIP')
     p.add_argument('--runtime',type=Path,default=ROOT/'target/x86_64-pc-windows-gnu/release/recomp.exe')
     p.add_argument('--launcher',type=Path,default=ROOT/'target/x86_64-pc-windows-gnu/release/ffta-play.exe')
-    p.add_argument('--assets',type=Path,default=ROOT/'debug_saves')
-    p.add_argument('--legacy',type=Path,default=ROOT/'saves/debug-cases')
+    p.add_argument('--assets',type=Path,default=PRIVATE_ROOT/'debug_saves')
+    p.add_argument('--legacy',type=Path,default=PRIVATE_ROOT/'saves/debug-cases')
     p.add_argument('--source-manifest',type=Path,default=ROOT/'target/debug-saves-audit/source-manifest.json')
     p.add_argument('--recordings',type=Path,default=ROOT/'target/debug-tools-recording/final recording case/Data/config/recordings')
     p.add_argument('--replay',type=Path,default=ROOT/'target/desktop-perf/ai-turn-replay')

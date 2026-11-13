@@ -1,7 +1,8 @@
 # Desktop save-state slots
 
 For the desktop portable editions, settings are under `Data/config` and the
-cartridge save is `Data/saves/ffta.sav`, with backups and state slots beside it.
+normal cartridge save is `Data/saves/ffta.sav`. The first nine state slots
+remain beside that save; additional debug saves can use a private asset root.
 See [portable storage and migration](portable.md). Installed-mode paths below
 apply when `portable.txt` is absent.
 
@@ -27,7 +28,9 @@ Slots remember the selected number while this game session is running; a new
 session starts at slot 1.
 
 **Debug > Extended saves** expands the picker to **1–99**. It defaults to OFF;
-disabling it preserves all files and hides slots above 9. See
+disabling it preserves all files and hides slots above 9. When the private
+debug-save Git worktree is available, slots 10–99 are under its
+`runtime/SaveStates/<ROM-SHA-256>/` directory. See
 [Extended saves](extended_saves.md) for the separate numbered cartridge-save
 picker and copy/restart behavior.
 
@@ -74,9 +77,9 @@ The folder is relative to the **currently selected cartridge `.sav` file**:
 ```
 
 The folder is created on the first save. Names never depend on the ROM filename;
-identical ROM content in the same save directory shares slots, while a different
-ROM/region has its own subfolder. Changing the cartridge save directory also
-changes where its slots are stored. Nine numbered slots are exposed by default,
+identical ROM content in the same save directory shares the first nine slots,
+while a different ROM/region has its own subfolder. High slots use the private
+debug path described above when available. Nine numbered slots are exposed by default,
 or 99 with Extended saves; there is no automatic rotation or deletion.
 
 The screenshot captures the current visible game view, with zoom/letterboxing
@@ -181,6 +184,10 @@ packaging and release auditing exclude it. No personal checkpoint ships in a
 release archive.
 
 ## Validation
+
+Linux synthetic tests cover routing slots 10–99 to a private worktree while
+preserving slots 1–9 and existing legacy copies. The Windows checks below
+precede this path change.
 
 Slot tests cover all nine generic paths, ROM isolation, persistence into a fresh
 machine, no-clobber versus confirmed atomic replacement, matching previews,

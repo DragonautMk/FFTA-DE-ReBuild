@@ -186,7 +186,7 @@ pub(crate) fn menu_operation(action: &menu::MenuAction) -> Option<&'static str> 
         RestartRom => "runtime.restart",
         Resume => "runtime.continue",
         Changed(menu::Changed::Debug) => "saves.extended",
-        Quit | ToggleFastForward | ToggleEventConsole | OpenCommandConsole | SwitchRom | Changed(_) | InputDevice(_) | ResetGamepad => return None,
+        Quit | ToggleFastForward | ToggleEventConsole | OpenCommandConsole | SwitchRom | ChooseAssetFolder | Changed(_) | InputDevice(_) | ResetGamepad => return None,
     })
 }
 

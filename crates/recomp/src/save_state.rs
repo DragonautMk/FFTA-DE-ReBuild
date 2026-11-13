@@ -22,6 +22,7 @@ pub(crate) const MAX_FILE_BYTES: usize = PREFIX + MAX_STATE_BYTES + 36 + MAX_MET
 
 pub struct Slots {
     directory: PathBuf,
+    debug_directory: Option<PathBuf>,
     count: u8,
     undo: Option<Undo>,
 }
@@ -63,9 +64,30 @@ impl Slots {
             .unwrap_or(Path::new("."));
         Self {
             directory: parent.join("SaveStates").join(sha),
+            debug_directory: None,
             count: SLOT_COUNT,
             undo: None,
         }
+    }
+
+    /// Keep ordinary slots beside the cartridge save, and copy existing high
+    /// slots into the private debug tree without replacing either copy.
+    pub fn with_debug_root(save: &Path, rom: &[u8], root: &Path) -> Result<Self, String> {
+        let slots = Self::inspect_with_debug_root(save, rom, root)?;
+        let debug = slots.debug_directory.as_ref().ok_or("Missing debug state directory")?;
+        for slot in (SLOT_COUNT + 1)..=EXTENDED_SLOT_COUNT {
+            let name = format!("slot-{slot}.ffstate");
+            copy_legacy_file(&slots.directory.join(&name), &debug.join(&name))?;
+        }
+        Ok(slots)
+    }
+
+    /// Resolve paths without creating files, for diagnostics and previews.
+    pub fn inspect_with_debug_root(save: &Path, rom: &[u8], root: &Path) -> Result<Self, String> {
+        let mut slots = Self::new(save, rom);
+        let hash = slots.directory.file_name().ok_or("Missing state identity")?;
+        slots.debug_directory = Some(root.join("runtime/SaveStates").join(hash));
+        Ok(slots)
     }
 
     pub fn set_extended(&mut self, enabled: bool) {
@@ -74,11 +96,14 @@ impl Slots {
 
     pub fn count(&self) -> u8 { self.count }
 
+    pub fn clear_undo(&mut self) { self.undo = None; }
+
     pub fn path(&self, slot: u8) -> Result<PathBuf, String> {
         if !(1..=self.count).contains(&slot) {
             return Err(format!("State slot must be between 1 and {}", self.count));
         }
-        Ok(self.directory.join(format!("slot-{slot}.ffstate")))
+        let directory = if slot > SLOT_COUNT { self.debug_directory.as_ref().unwrap_or(&self.directory) } else { &self.directory };
+        Ok(directory.join(format!("slot-{slot}.ffstate")))
     }
 
     pub fn info(&self, slot: u8) -> SlotInfo {
@@ -166,7 +191,7 @@ impl Slots {
             Err(e) if e.kind() == std::io::ErrorKind::NotFound => None,
             Err(e) => return Err(format!("Cannot preserve previous slot: {e}")),
         };
-        std::fs::create_dir_all(&self.directory).map_err(|e| e.to_string())?;
+        std::fs::create_dir_all(path.parent().ok_or("Missing slot directory")?).map_err(|e| e.to_string())?;
         atomic_write(&path, &bytes, overwrite)?;
         // Only a successful operation replaces the single undo entry.
         self.undo = Some(Undo::Save {
@@ -183,7 +208,7 @@ impl Slots {
         load_bytes(&mut scratch, bytes)?;
         let path = self.path(slot)?;
         if path.exists() { return Err("Import requires an empty snapshot slot".into()); }
-        std::fs::create_dir_all(&self.directory).map_err(|e| e.to_string())?;
+        std::fs::create_dir_all(path.parent().ok_or("Missing slot directory")?).map_err(|e| e.to_string())?;
         atomic_write(&path, bytes, false)?;
         self.undo = Some(Undo::Save { slot, previous: None, written: Sha256::digest(bytes).into() });
         Ok(())
@@ -258,6 +283,28 @@ impl Slots {
         self.undo = None; // Undo is consumed; it is not a redo stack.
         Ok((effect,exact))
     }
+}
+
+pub(crate) fn copy_legacy_file(source: &Path, target: &Path) -> Result<(), String> {
+    let before = match std::fs::symlink_metadata(source) {
+        Ok(meta) if meta.file_type().is_file() => meta,
+        Ok(_) => return Err("Legacy save is not a regular file".into()),
+        Err(e) if e.kind() == std::io::ErrorKind::NotFound => return Ok(()),
+        Err(e) => return Err(format!("Cannot inspect legacy save: {e}")),
+    };
+    match std::fs::symlink_metadata(target) {
+        Ok(meta) if meta.file_type().is_file() => return Ok(()), // Preserve both versions.
+        Ok(_) => return Err("Debug save destination is not a regular file".into()),
+        Err(e) if e.kind() == std::io::ErrorKind::NotFound => {},
+        Err(e) => return Err(format!("Cannot inspect debug save: {e}")),
+    }
+    let bytes = read_file(source).map_err(|e| format!("Cannot copy legacy save: {e}"))?;
+    let after = std::fs::symlink_metadata(source).map_err(|e| format!("Legacy save changed: {e}"))?;
+    if !after.file_type().is_file() || before.len() != after.len() || before.modified().ok() != after.modified().ok() {
+        return Err("Legacy save changed while being copied".into());
+    }
+    std::fs::create_dir_all(target.parent().ok_or("Missing debug state directory")?).map_err(|e| e.to_string())?;
+    atomic_write(target, &bytes, false)
 }
 
 fn read_file(path: &Path) -> std::io::Result<Vec<u8>> {
@@ -409,6 +456,28 @@ mod tests {
     use super::*;
     fn preview() -> Vec<[u8; 4]> {
         vec![[12, 34, 56, 255]; PREVIEW_W * PREVIEW_H]
+    }
+
+    #[test]
+    fn routed_high_slots_copy_legacy_without_overwriting_and_keep_normal_slots() {
+        let dir = tempfile::tempdir().unwrap();
+        let machine = Machine::new(vec![0; 256]);
+        let save = dir.path().join("normal/ffta.sav");
+        let legacy = Slots::new(&save, &machine.bus.rom);
+        std::fs::create_dir_all(&legacy.directory).unwrap();
+        std::fs::write(legacy.directory.join("slot-9.ffstate"), b"normal").unwrap();
+        std::fs::write(legacy.directory.join("slot-10.ffstate"), b"old debug").unwrap();
+        let debug = dir.path().join("private/debug_saves");
+        let mut slots = Slots::with_debug_root(&save, &machine.bus.rom, &debug).unwrap();
+        slots.set_extended(true);
+        assert_eq!(slots.path(9).unwrap(), legacy.directory.join("slot-9.ffstate"));
+        assert!(slots.path(10).unwrap().starts_with(&debug));
+        assert_eq!(std::fs::read(slots.path(10).unwrap()).unwrap(), b"old debug");
+        assert_eq!(std::fs::read(legacy.directory.join("slot-10.ffstate")).unwrap(), b"old debug");
+        std::fs::write(slots.path(10).unwrap(), b"new debug").unwrap();
+        let again = Slots::with_debug_root(&save, &machine.bus.rom, &debug).unwrap();
+        assert_eq!(std::fs::read(again.debug_directory.unwrap().join("slot-10.ffstate")).unwrap(), b"new debug");
+        assert_eq!(std::fs::read(legacy.directory.join("slot-9.ffstate")).unwrap(), b"normal");
     }
 
     #[test]

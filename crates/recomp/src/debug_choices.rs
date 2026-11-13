@@ -11,6 +11,7 @@ const MAX_PATH: usize = 2048;
 pub(crate) struct Anchors {
     pub app: PathBuf,
     pub config: PathBuf,
+    pub asset: Option<PathBuf>,
 }
 impl Anchors {
     pub fn current() -> Result<Self, String> {
@@ -19,6 +20,8 @@ impl Anchors {
                 .or_else(input_config::exe_dir)
                 .ok_or("No app root for saved choices")?,
             config: input_config::config_root().ok_or("No config root for saved choices")?,
+            asset: input_config::storage::debug_asset_root(&input_config::AvConfig::load())
+                .and_then(|root| std::fs::canonicalize(root).ok()),
         })
     }
 }
@@ -32,6 +35,7 @@ impl Anchors {
 pub(crate) enum Location {
     App(String),
     Config(String),
+    Asset(String),
     External(String),
 }
 fn relative(value: &str) -> bool {
@@ -59,7 +63,10 @@ impl Location {
         crate::debug_content::ordinary(path)?;
         let path = std::fs::canonicalize(path).map_err(|e| e.to_string())?;
         let app = std::fs::canonicalize(&anchors.app).map_err(|e| e.to_string())?;
-        let loc = if let Some(p) = portable_relative(&path, &app) {
+        let asset = anchors.asset.as_ref().and_then(|base| std::fs::canonicalize(base).ok());
+        let loc = if let Some(p) = asset.as_ref().and_then(|base| portable_relative(&path, base)) {
+            Self::Asset(p)
+        } else if let Some(p) = portable_relative(&path, &app) {
             Self::App(p)
         } else {
             let config = match std::fs::canonicalize(&anchors.config) {
@@ -81,7 +88,7 @@ impl Location {
     }
     pub fn validate(&self) -> Result<(), String> {
         let valid = match self {
-            Self::App(p) | Self::Config(p) => relative(p),
+            Self::App(p) | Self::Config(p) | Self::Asset(p) => relative(p),
             Self::External(p) => {
                 p.len() <= MAX_PATH
                     && !p.chars().any(char::is_control)
@@ -103,6 +110,7 @@ impl Location {
         Ok(match self {
             Self::App(p) => anchors.app.join(p),
             Self::Config(p) => anchors.config.join(p),
+            Self::Asset(p) => anchors.asset.as_ref().ok_or("Asset root is unavailable")?.join(p),
             Self::External(p) => p.into(),
         })
     }

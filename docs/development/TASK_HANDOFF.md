@@ -175,9 +175,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: TARGET-STORAGE-CLEANUP-20261112B completed; ROMDATA-02 remains active above.
-- Last verified result: 19 superseded datasets archived; 9,468,792,832 bytes reclaimed.
-- Remaining work: ROMDATA-02 criteria and running CLI unit as above.
-- Errors or blockers: no archive errors; host process-detail limits retained.
-- Next action: resume active work only through its owner; restore archived datasets on demand.
-- References: target/local-superseded-datasets-20261112/receipt.json and -cont/receipt.json.
+- Task: TARGET-CLEANUP-DEBUG-SAVES-20261113 completed.
+- Last verified result: Safe preview selected zero; 29,538,136,064 bytes available.
+- Remaining work: Other tasks retain their prior states.
+- Errors or blockers: None; no cleanup bytes reclaimed by this run.
+- Next action: Resume the private save migration.
+- References: target/cold-storage-batches/20261113-083240-837f8ddf/batch.json.

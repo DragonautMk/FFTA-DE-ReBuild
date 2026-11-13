@@ -357,6 +357,7 @@ mod tests {
         )
         .unwrap();
         let a = Anchors {
+            asset: None,
             app: app.clone(),
             config: app.join("Data/config"),
         };
@@ -397,6 +398,7 @@ mod tests {
         let moved = t.path().join("After move è spaces");
         std::fs::rename(&app, &moved).unwrap();
         let a = Anchors {
+            asset: None,
             app: moved.clone(),
             config: moved.join("Data/config"),
         };
@@ -426,6 +428,7 @@ mod tests {
     fn missing_pins_remain_saved_and_detected_external_preference_edits_are_preserved() {
         let t = tempfile::tempdir().unwrap();
         let a = Anchors {
+            asset: None,
             app: t.path().into(),
             config: t.path().join("Data/config"),
         };

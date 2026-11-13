@@ -47,6 +47,32 @@ fn complete(path: &Path) -> Machine {
 }
 
 #[test]
+fn versioned_recording_files_appear_in_private_git_status() {
+    let temp = tempfile::tempdir().unwrap();
+    let repo = temp.path().join("private-recordings");
+    fs::create_dir(&repo).unwrap();
+    assert!(std::process::Command::new("git").arg("init").arg("-q").arg(&repo).status().unwrap().success());
+    fs::write(repo.join(".gitignore"), b"*.gba\n*.bios\n").unwrap();
+    let driver = temp.path().join("synthetic-runtime");
+    fs::write(&driver, b"synthetic").unwrap();
+    let parent = repo.join("recordings");
+    fs::create_dir(&parent).unwrap();
+    let path = parent.join("capture");
+    let machine = machine();
+    let capture = Capture::start_inner(&path, &machine, true, None,
+        &input_config::AvConfig::default(), &input_config::InputConfig::default(),
+        &Default::default(), true, &driver).unwrap();
+    capture.finish(&machine, "synthetic", true).unwrap();
+    assert!(!path.join(".gitignore").exists());
+    let status = std::process::Command::new("git").args(["-C", repo.to_str().unwrap(), "status", "--porcelain", "--untracked-files=all"]).output().unwrap();
+    assert!(status.status.success());
+    let status = String::from_utf8(status.stdout).unwrap();
+    assert!(status.contains("recordings/capture/recording.json"));
+    assert!(status.contains("recordings/capture/start.ffstate"));
+    assert!(status.contains("recordings/capture/end.ffstate"));
+}
+
+#[test]
 fn snapshot_origin_held_keys_and_relative_events_replay_exact_state_clock() {
     let temp = tempfile::tempdir().unwrap();
     let root = temp.path().join("capture");

@@ -1825,19 +1825,25 @@ impl PlayApp {
                 crate::save_state::encode(&self.machine, &preview, &history)?
             };
             let exe = std::env::current_exe().map_err(|e| e.to_string())?;
-            let default_catalog=exe.parent().map(|p|p.join("cheats/catalogo.json"));
+            let default_catalog=exe.parent().map(|p|crate::debug_cheats::default_catalog(&self.av,p));
             let favorites=match (self.cheat_favorites.as_ref(),default_catalog.as_ref().and_then(|p|crate::debug_cheats::Catalog::load(p).ok())) {
                 (Some(f),Some(c)) if f.catalog()==c.source_sha256=>Some(f.snapshot()?),
                 _=>None,
             };
-            let destination = crate::debug_session::default_destination()?;
-            let root = crate::debug_session::create(&destination, crate::debug_session::Source {
+            let destination = crate::debug_session::default_destination(&self.av)?;
+            let source = crate::debug_session::Source {
                 rom: &self.machine.bus.rom,
                 bios: self.machine.bus.real_bios.then_some(self.machine.bus.bios.as_slice()),
                 save: self.machine.bus.save_data(), state: Some(&state),
                 av: self.av.clone(), input: self.icfg.clone(), interp: force_interpreter || self.native.is_none(),
                 dataset: self.diagnosis.dataset.as_deref(), executable: &exe, cheat_favorites: favorites.as_deref(),
-            })?;
+            };
+            let assets = input_config::storage::debug_asset_root(&self.av);
+            let root = if let Some(assets) = assets.filter(|p| p.is_dir()) {
+                crate::debug_session::create_with_asset_root(&destination, source, &assets)?
+            } else {
+                crate::debug_session::create(&destination, source)?
+            };
             crate::debug_session::launch(&root)?;
             eprintln!("Isolated debug session: {}", root.display());
             Ok(())
@@ -2812,9 +2818,14 @@ impl PlayApp {
             if self.recording_active() { return Err("An input recording is already active.".into()); }
             self.sync_view();
             self.game_mouse.cancel(); self.machine.bus.ffta_battle_mouse.cancel();
-            let directory = crate::debug_recording::destination()?;
-            self.capture = Some(crate::debug_recording::Capture::start_with_history(&directory, &self.machine,
-                self.native.is_none(), self.diagnosis.dataset.as_deref(), &self.av, &self.icfg, &self.cheat_history)?);
+            let (directory, versioned) = crate::debug_recording::destination(&self.av)?;
+            self.capture = Some(if versioned {
+                crate::debug_recording::Capture::start_versioned(&directory, &self.machine,
+                    self.native.is_none(), self.diagnosis.dataset.as_deref(), &self.av, &self.icfg, &self.cheat_history)?
+            } else {
+                crate::debug_recording::Capture::start_with_history(&directory, &self.machine,
+                    self.native.is_none(), self.diagnosis.dataset.as_deref(), &self.av, &self.icfg, &self.cheat_history)?
+            });
             eprintln!("Input recording started: {}", directory.display());
             if let Some(window) = &self.window { window.set_title(&format!("{} [REC]", self.title)); }
             Ok(())
@@ -2894,7 +2905,8 @@ impl PlayApp {
         let rom=gba_core::ffta_rom::digest(&self.machine.bus.rom);
         let result=(||->Result<Option<crate::debug_cheats::Catalog>,String>{
             if !self.content_picker.has_slot(menu::ContentSlot::CheatCatalog){
-                let path=input_config::exe_dir().ok_or("No executable directory")?.join("cheats").join("catalogo.json");
+                let exe=input_config::exe_dir().ok_or("No executable directory")?;
+                let path=crate::debug_cheats::default_catalog(&self.av,&exe);
                 if !path.exists(){return Ok(None);}
                 self.content_picker.adopt(menu::ContentSlot::CheatCatalog,&path,&rom,&mut self.menu)?;
             }
@@ -3024,13 +3036,14 @@ impl PlayApp {
         let result=(||->Result<(),String>{
             let catalog=self.debug_catalog.as_ref().ok_or("Open a catalog first")?;
             let e=catalog.entries.get(index).ok_or("Select a catalog entry")?;
-            let destination=crate::debug_session::default_destination()?;
+            let destination=crate::debug_session::default_destination(&self.av)?;
             let suffix=destination.file_name().unwrap_or_default().to_string_lossy();
             let label=format!("{}-{}-{suffix}",if e.id.is_empty(){"variant"}else{&e.id},e.region);
             let destination=destination.with_file_name(label);
+            let assets=input_config::storage::debug_asset_root(&self.av).filter(|p|p.is_dir());
             let root=catalog.create(index,&destination,&self.machine.bus.rom,
                 self.machine.bus.real_bios.then_some(self.machine.bus.bios.as_slice()),self.native.is_none(),
-                self.av.clone(),self.icfg.clone(),self.diagnosis.dataset.as_deref())?;
+                self.av.clone(),self.icfg.clone(),self.diagnosis.dataset.as_deref(),assets.as_deref())?;
             crate::debug_session::launch(&root)?;
             eprintln!("Catalog isolated case: {}",root.display());Ok(())
         })();
@@ -3040,6 +3053,7 @@ impl PlayApp {
     fn copy_diagnosis(&mut self) {
         self.diagnosis.save = Some(self.sav_path.clone().into());
         self.diagnosis.slot = Some(self.menu.selected_state_slot());
+        self.diagnosis.state = self.diagnosis.slot.and_then(|slot| self.state_slots.path(slot).ok());
         self.diagnosis.interp = self.native.is_none();
         self.diagnosis.recording = self.recording_active();
         if let Some(capture) = &self.capture { self.diagnosis.input = Some(capture.directory.join("input.input")); }
@@ -3148,6 +3162,35 @@ impl PlayApp {
         pixels
     }
 
+    fn choose_asset_folder(&mut self) {
+        if self.debug_session || self.recording_active() {
+            self.menu.diagnosis_result("Choose the asset folder from the normal game after stopping recording.".into());
+            self.menu_dirty = true;
+            return;
+        }
+        let Some(selected) = rfd::FileDialog::new().set_title("Choose the folder containing the private asset repositories").pick_folder() else { return };
+        let result = (|| -> Result<(), String> {
+            let anchor = input_config::storage::asset_anchor().ok_or("Cannot locate the application root")?;
+            for name in ["debug_saves", "FFTARecomp-private-recordings"] {
+                if !selected.join(name).join(".git").exists() {
+                    return Err(format!("Selected folder needs the {name} Git repository"));
+                }
+            }
+            let value = input_config::storage::asset_setting(&anchor, &selected)?;
+            let old = std::mem::replace(&mut self.av.debug_asset_root, value);
+            if let Err(error) = self.av.save() {
+                self.av.debug_asset_root = old;
+                return Err(error);
+            }
+            Ok(())
+        })();
+        self.menu.diagnosis_result(match result {
+            Ok(()) => self.menu_text("Asset folder saved. Restart the game to apply it.", &[]),
+            Err(error) => format!("Cannot save asset folder: {error}"),
+        });
+        self.menu_dirty = true;
+    }
+
     fn switch_game_save(&mut self, slot: u8) {
         if !self.av.debug_extended_saves { return; }
         if self.recording_active() {
@@ -3159,10 +3202,10 @@ impl PlayApp {
             Ok(path) => {
                 self.sav_path = path.to_string_lossy().into_owned();
                 self.sav_seen = self.machine.bus.save_data().map(fnv64);
-                self.save_backups = crate::save_backups::Backups::new(&path);
-                self.state_slots = crate::save_state::Slots::new(&path, &self.machine.bus.rom);
+                self.save_backups = self.game_saves.current_backups(&path);
+                self.state_slots.clear_undo();
                 self.av.debug_game_save_slot = slot;
-                crate::save_path::remember(&path);
+                crate::save_path::remember(self.game_saves.base_path());
                 let persisted = self.av.save();
                 let enabled = self.icfg.mouse_keyboard || std::env::var("FFTA_MOUSE").as_deref() == Ok("1");
                 self.game_mouse = gba_core::ffta_mouse::LanguageMouse::new(&self.machine.bus.rom, enabled);
@@ -3205,7 +3248,7 @@ impl PlayApp {
             Ok(()) => {
                 self.lifecycle_emit(crate::debug_lifecycle::Family::State,"completed",None,serde_json::json!({"operation":"restart","outcome":"completed","resume_requested":true}));
                 self.sav_seen = self.machine.bus.save_data().map(fnv64);
-                self.state_slots = crate::save_state::Slots::new(Path::new(&self.sav_path), &self.machine.bus.rom);
+                self.state_slots.clear_undo();
                 let enabled = self.icfg.mouse_keyboard || std::env::var("FFTA_MOUSE").as_deref() == Ok("1");
                 self.game_mouse = gba_core::ffta_mouse::LanguageMouse::new(&self.machine.bus.rom, enabled);
                 self.machine.bus.ffta_battle_mouse.set_enabled(self.icfg.mouse_keyboard);
@@ -3242,10 +3285,7 @@ impl PlayApp {
                 Ok(()) => {
                     self.lifecycle_emit(crate::debug_lifecycle::Family::State,"completed",None,serde_json::json!({"operation":"restore-backup","generation":generation,"outcome":"completed"}));
                     self.sav_seen = self.machine.bus.save_data().map(fnv64);
-                    self.state_slots = crate::save_state::Slots::new(
-                        Path::new(&self.sav_path),
-                        &self.machine.bus.rom,
-                    );
+                    self.state_slots.clear_undo();
                     let enabled = self.icfg.mouse_keyboard
                         || std::env::var("FFTA_MOUSE").as_deref() == Ok("1");
                     self.game_mouse =
@@ -4471,6 +4511,7 @@ impl PlayApp {
                     menu::MenuAction::CheatRequest(request) => {if let Err(error)=self.cheat_menu_request(request){self.menu.cheat_management_feedback(error,None);self.menu_dirty=true;}},
                     menu::MenuAction::CheatChoose => self.choose_tool_input(menu::ContentSlot::CheatCatalog,self.menu_text("Select the catalog, return and press Reload. No code is executed.",&[])),
                     menu::MenuAction::ChooseDebugCatalog => self.open_debug_catalog(true),
+                    menu::MenuAction::ChooseAssetFolder => self.choose_asset_folder(),
                     menu::MenuAction::CatalogSelection(index) => self.catalog_preview(index),
                     menu::MenuAction::CatalogImport(index) => self.catalog_import(index),
                     menu::MenuAction::CatalogOpen(index) => self.catalog_open(index),
@@ -5058,13 +5099,42 @@ fn cmd_play_inner(args: &[String], session: Option<&crate::debug_session::Sessio
     } else {
         None
     };
+    let mut av = input_config::AvConfig::load();
+    let route_session = session.is_none() || !av.debug_asset_root.is_empty();
+    let mut debug_root = if benchmark.is_none() && route_session {
+        let mut root = input_config::storage::debug_asset_root(&av).ok_or("Cannot locate debug asset root")?.join("debug_saves");
+        if !root.join(".git").exists() {
+            eprintln!("Debug-save repository unavailable; using the existing save locations");
+            None
+        } else {
+            if let Some(session) = session {
+                root = root.join("sessions").join(session.root.file_name().ok_or("Debug session directory has no name")?);
+            }
+            Some(root)
+        }
+    } else { None };
+    let backup_namespace = debug_root.as_ref().map(|root|crate::save_backups::Backups::debug_namespace(root,&rom));
     // A benchmark has no cartridge destination: avoid save discovery/pickers and
     // directory creation. This inert path only constructs unused slot owners.
-    let sav_path = if benchmark.is_some() {
+    let initial_save = if benchmark.is_some() {
         Path::new(&rom_path).with_extension("sav")
     } else {
-        crate::save_path::resolve(Path::new(&rom_path))?
-    }.to_string_lossy().into_owned();
+        crate::save_path::resolve_routed(Path::new(&rom_path),backup_namespace.as_deref())?
+    };
+    let legacy_saves = crate::game_saves::GameSaves::new(&initial_save);
+    let explicit_numbered = std::env::var_os("FFTA_SAVE_PATH").is_some() && legacy_saves.current > 1;
+    if explicit_numbered { debug_root = None; }
+    let mut game_saves = if let Some(root) = &debug_root {
+        crate::game_saves::GameSaves::with_debug_root(&initial_save, &rom, root)?
+    } else { legacy_saves };
+    if crate::save_path::is_remembered_family(&initial_save) && game_saves.current == 1 {
+        game_saves.current = av.debug_game_save_slot;
+    }
+    let selected_save = game_saves.path(game_saves.current)?;
+    if game_saves.current > 1 && debug_root.is_some() {
+        std::fs::create_dir_all(selected_save.parent().ok_or("Missing debug save directory")?).map_err(|e| e.to_string())?;
+    }
+    let sav_path = selected_save.to_string_lossy().into_owned();
 
     // Product boot path: real BIOS when an image is installed (explicit --bios
     // > the launcher-installed image via the shared resolution), BIOS HLE
@@ -5160,7 +5230,7 @@ Place your own dump as gba_bios.bin next to the executable:\n  {}",
     if let Some(directory) = &prepared_resources_directory {
         crate::rom_data::attach_from_directory(&mut machine, directory)?;
     }
-    let save_backups = crate::save_backups::Backups::new(Path::new(&sav_path));
+    let save_backups = game_saves.prepare_backups(Path::new(&sav_path))?;
     if benchmark.is_none() {
         if let Some(sav) = save_backups.capture_startup().map_err(|e| format!("Cannot protect cartridge save: {e}"))? {
             machine.bus.load_save_data(&sav);
@@ -5196,7 +5266,6 @@ Place your own dump as gba_bios.bin next to the executable:\n  {}",
     // armed when the stock driver is present so the enhanced path is ready the
     // instant it's selected; it's read-only, so arming it always is free of
     // correctness risk.
-    let mut av = input_config::AvConfig::load();
     if benchmark.is_some() { av.video_fps = "off".into(); show_stats = false; }
     if let Ok(aspect) = std::env::var("FFTA_WIDESCREEN") {
         if !aspect.trim().is_empty() {
@@ -5341,8 +5410,9 @@ Place your own dump as gba_bios.bin next to the executable:\n  {}",
     let menu_enabled = manifest.as_ref().map(|m| m.menu).unwrap_or(true);
 
     let sav_seen = machine.bus.save_data().map(fnv64);
-    let game_saves = crate::game_saves::GameSaves::new(Path::new(&sav_path));
-    let state_slots = crate::save_state::Slots::new(Path::new(&sav_path), &machine.bus.rom);
+    let state_slots = if let Some(root) = &debug_root {
+        crate::save_state::Slots::with_debug_root(game_saves.base_path(), &machine.bus.rom, root)?
+    } else { crate::save_state::Slots::new(Path::new(&sav_path), &machine.bus.rom) };
     let game_mouse=gba_core::ffta_mouse::LanguageMouse::new(&machine.bus.rom,icfg.mouse_keyboard || std::env::var("FFTA_MOUSE").as_deref()==Ok("1"));
     if icfg.mouse_keyboard {machine.bus.ffta_battle_mouse.set_enabled(true);}
     let boot_state = machine.save_state()?;

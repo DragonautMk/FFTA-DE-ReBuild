@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-11-13",
+  "slug": "add-target-cleanup-skill",
+  "title": "Add a reusable target cleanup skill",
+  "kind": "added",
+  "platforms": [
+    "tooling"
+  ],
+  "changes": [
+    "Add the project ffta-cleanup skill for verified compression under target/cold-storage and retirement of obsolete generated copies and rebuildable caches.",
+    "Reuse completed-only batches, dynamic current-resource exclusions, explicit superseded-hot reviews and on-demand archive consultation without rerunning builds or game tests.",
+    "Register the skill in AGENTS.md and document guarded cache retirement, receipt-based space accounting and completion limits."
+  ],
+  "validation": [
+    "Skill Creator quick_validate.py passed; local Markdown reference targets, project registration and size checks passed.",
+    "Focused git diff --check passed; documented commands and safeguards were checked against existing tool implementations.",
+    "task_handoff.py check and full git diff --check passed. project_memory.py check reports the pre-existing unrecorded change in crates/gba-core/src/rom_data.rs; no skill implementation file is missing coverage."
+  ],
+  "limitations": [
+    "Instruction-only workflow: no cleanup, archive mutation, build or gameplay test was run while creating the skill.",
+    "Host-aware execution remains required for cleanup; Docker supports local Linux Engine and does not enable native Windows archival.",
+    "The global project-memory check remains blocked by the unrelated pre-existing crates/gba-core/src/rom_data.rs edit, which was preserved without attributing it to this skill."
+  ],
+  "files": [
+    ".cursor/skills/ffta-cleanup/SKILL.md",
+    ".cursor/skills/ffta-cleanup/references/cache-retirement.md",
+    "AGENTS.md",
+    "docs/development/LOCAL_ARTIFACTS.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/development/LOCAL_ARTIFACTS.md",
+    "scripts/cold_storage.py",
+    "scripts/local_artifacts.py"
+  ]
+}

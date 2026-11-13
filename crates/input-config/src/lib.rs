@@ -730,6 +730,8 @@ pub struct AvConfig {
     pub debug_extended_saves: bool,
     /// Selected portable cartridge slot; numeric so moving the bundle is safe.
     pub debug_game_save_slot: u8,
+    /// Optional debug-asset directory. Empty selects the default relative root.
+    pub debug_asset_root: String,
     /// The premium audio path (final name TBD): band-limited sinc
     /// resampling, DC blocking, and buffer rate control instead of the
     /// hardware-faithful nearest-neighbor output. Off until the feature
@@ -782,6 +784,7 @@ impl Default for AvConfig {
             debug: false,
             debug_extended_saves: false,
             debug_game_save_slot: 1,
+            debug_asset_root: String::new(),
             audio_enhanced: false,
             audio_volume: 1.0,
             audio_mute: false,
@@ -825,6 +828,9 @@ impl AvConfig {
                 "debug.extended_saves" => cfg.debug_extended_saves = v.eq_ignore_ascii_case("true"),
                 "debug.game_save_slot" => {
                     if let Ok(slot @ 1..=99) = v.parse::<u8>() { cfg.debug_game_save_slot = slot; }
+                }
+                "debug.asset_root" => {
+                    if let Some(value) = storage::decode_path_value(v) { cfg.debug_asset_root = value; }
                 }
                 "audio.enhanced" => cfg.audio_enhanced = v.eq_ignore_ascii_case("true"),
                 "audio.mute" => cfg.audio_mute = v.eq_ignore_ascii_case("true"),
@@ -887,6 +893,7 @@ impl AvConfig {
              debug = {}\n\
              debug.extended_saves = {}\n\
              debug.game_save_slot = {}\n\
+             debug.asset_root = {}\n\
              audio.enhanced = {}\n\
              audio.volume = {}\n\
              audio.mute = {}\n\
@@ -911,6 +918,7 @@ impl AvConfig {
             self.debug,
             self.debug_extended_saves,
             self.debug_game_save_slot,
+            storage::encode_path_value(&self.debug_asset_root),
             self.audio_enhanced,
             self.audio_volume,
             self.audio_mute,

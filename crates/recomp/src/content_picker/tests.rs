@@ -34,10 +34,10 @@ fn wait_id(p: &mut Picker, m: &mut menu::Menu) -> Result<String, String> {
 fn recovery_input_tracks_role_location_and_hash_across_a_portable_move(){
     let t=tempfile::tempdir().unwrap();let before=t.path().join("before");let after=t.path().join("after");std::fs::create_dir_all(before.join("Data/config")).unwrap();
     let original=before.join("catalog.json");let other=before.join("other/catalog.json");std::fs::create_dir_all(other.parent().unwrap()).unwrap();std::fs::write(&original,br#"{"schema":1,"cases":[]}"#).unwrap();std::fs::copy(&original,&other).unwrap();let rom="a".repeat(64);
-    let anchors=crate::debug_choices::Anchors{app:before.clone(),config:before.join("Data/config")};let mut p=Picker::default();p.memory=Some(Memory::load(anchors,&rom).unwrap());let reference=Reference::explicit(&original,ContentSlot::Catalog,&rom).unwrap();p.remember_recovery_input(ContentSlot::Catalog,&reference);p.slots.insert(ContentSlot::Catalog,reference);
+    let anchors=crate::debug_choices::Anchors{app:before.clone(),config:before.join("Data/config"),asset:None};let mut p=Picker::default();p.memory=Some(Memory::load(anchors,&rom).unwrap());let reference=Reference::explicit(&original,ContentSlot::Catalog,&rom).unwrap();p.remember_recovery_input(ContentSlot::Catalog,&reference);p.slots.insert(ContentSlot::Catalog,reference);
     let pin=p.recovery_input(ContentSlot::Catalog).unwrap();assert!(p.check_recovery_inputs(std::slice::from_ref(&pin)).is_ok());
     let reference=Reference::explicit(&other,ContentSlot::Catalog,&rom).unwrap();p.remember_recovery_input(ContentSlot::Catalog,&reference);p.slots.insert(ContentSlot::Catalog,reference);assert!(p.check_recovery_inputs(std::slice::from_ref(&pin)).is_err());
-    std::fs::rename(&before,&after).unwrap();let moved=crate::debug_choices::Anchors{app:after.clone(),config:after.join("Data/config")};let reference=pin.restore(&moved,&rom).unwrap();let mut reopened=Picker::default();reopened.memory=Some(Memory::load(moved,&rom).unwrap());reopened.remember_recovery_input(ContentSlot::Catalog,&reference);reopened.slots.insert(ContentSlot::Catalog,reference);assert!(reopened.check_recovery_inputs(std::slice::from_ref(&pin)).is_ok());
+    std::fs::rename(&before,&after).unwrap();let moved=crate::debug_choices::Anchors{app:after.clone(),config:after.join("Data/config"),asset:None};let reference=pin.restore(&moved,&rom).unwrap();let mut reopened=Picker::default();reopened.memory=Some(Memory::load(moved,&rom).unwrap());reopened.remember_recovery_input(ContentSlot::Catalog,&reference);reopened.slots.insert(ContentSlot::Catalog,reference);assert!(reopened.check_recovery_inputs(std::slice::from_ref(&pin)).is_ok());
     std::fs::write(after.join("catalog.json"),b"changed").unwrap();assert!(pin.restore(&reopened.memory.as_ref().unwrap().anchors,&rom).is_err());
 }
 #[test]
@@ -318,6 +318,7 @@ fn saved_restore_fixture() -> (tempfile::TempDir, Picker, menu::Menu) {
     use crate::debug_choices::{memory::Memory, Anchors};
     let t = tempfile::tempdir().unwrap();
     let anchors = Anchors {
+        asset: None,
         app: t.path().into(),
         config: t.path().join("Data/config"),
     };

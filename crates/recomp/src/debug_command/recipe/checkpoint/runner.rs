@@ -179,7 +179,11 @@ fn recover(root:&Path,id:&str)->Result<Value,String>{
         // Recheck content and action-specific preflight outside the frontend
         // thread. The frontend separately checks the restored role and path
         // immediately before dispatch; actions also recheck before using it.
-        let anchors=crate::debug_choices::Anchors{app:root.to_owned(),config:root.join("Data/config")};
+        let config=root.join("Data/config");
+        let asset=std::fs::read_to_string(config.join("av.cfg")).ok().map(|text|input_config::AvConfig::parse(&text))
+            .filter(|av|!av.debug_asset_root.is_empty())
+            .and_then(|av|std::fs::canonicalize(input_config::storage::resolve_asset_root(root,&av.debug_asset_root,Path::new("../FFTARecomp-private"))).ok());
+        let anchors=crate::debug_choices::Anchors{app:root.to_owned(),config,asset};
         for input in inputs {input.restore(&anchors,&recipe.rom_sha256).map_err(|e|format!("Recovered selection unavailable: {e}"))?;}
     }
     if checkpoint.deadline_unix_ms.is_none_or(|deadline|now()>=deadline) || (waiting && checkpoint.steps[index].wait_deadline_unix_ms.is_none_or(|deadline|now()>=deadline)) {return Err("The original recovery deadline elapsed during input verification; no action sent".into());}
@@ -606,7 +610,7 @@ mod tests {
         let (t,mut server,id)=fixture(&["content refresh","catalog select chosen","step 1"]);let root=t.path().to_owned();let worker_id=id.clone();
         let catalog=root.join("catalog.json");fs::write(&catalog,br#"{"schema":1,"cases":[]}"#).unwrap();
         let reference=crate::debug_inputs::Reference::explicit(&catalog,menu::ContentSlot::Catalog,&"a".repeat(64)).unwrap();
-        let anchors=crate::debug_choices::Anchors{app:root.clone(),config:root.join("Data/config")};let pin=crate::debug_choices::SavedInput::capture(menu::ContentSlot::Catalog,&reference,&anchors).unwrap();
+        let anchors=crate::debug_choices::Anchors{app:root.clone(),config:root.join("Data/config"),asset:None};let pin=crate::debug_choices::SavedInput::capture(menu::ContentSlot::Catalog,&reference,&anchors).unwrap();
         let identity=digest(&serde_json::to_vec(&pin).unwrap());
         let status=json!({"paused":true,"remaining":0,"state_sha256":"a".repeat(64),"frame":1,"clock":100,"backend":"interp","cheat_armed":{"active":false},"replay":{"active":false},"ui_trace":{"has_trace":false},"content_picker":{"busy":false,"inputs":[{"slot":menu::ContentSlot::Catalog.label(),"id":"chosen","sha256":pin.sha256.clone(),"recovery_identity":identity}]},"recovery_input":pin});
         let first_status=status.clone();let worker=thread::spawn(move||{let mut n=0;while n<2{if let Ok(Some(request))=server.poll(){n+=1;if n==2{assert_eq!(cancel_command(&root,&worker_id)["ok"],true);}let _=server.reply(&request,first_status.clone(),None);}thread::sleep(Duration::from_millis(2));}});

@@ -18,6 +18,12 @@ bash scripts/linux/export_debug_assets.sh
 .\scripts\windows\export_debug_assets.ps1
 ```
 
+The default `debug_saves` and `saves` inputs are under the sibling
+`../FFTARecomp-private/` folder. The old checkout paths are relative links for
+compatibility; the exporter reads the real private directories. Working debug
+sessions are excluded because their isolated folders also contain a ROM and
+an executable. Their versioned outputs remain in the private worktree.
+
 Python 3 is required. `python3 scripts/export_debug_assets.py` also works
 (`py -3` on Windows). The script prints a new timestamped ZIP under
 `dist/debug-assets/`; it never overwrites an existing output. Extract into a

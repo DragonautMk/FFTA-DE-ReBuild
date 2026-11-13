@@ -94,6 +94,22 @@ impl Capture {
         directory:&Path,machine:&Machine,interp:bool,dataset:Option<&Path>,
         av:&input_config::AvConfig,input:&input_config::InputConfig,history:&crate::cheat_provenance::History,
     )->Result<Self,String>{
+        let executable=std::env::current_exe().map_err(|e|e.to_string())?;
+        Self::start_inner(directory,machine,interp,dataset,av,input,history,false,&executable)
+    }
+
+    pub fn start_versioned(
+        directory:&Path,machine:&Machine,interp:bool,dataset:Option<&Path>,
+        av:&input_config::AvConfig,input:&input_config::InputConfig,history:&crate::cheat_provenance::History,
+    )->Result<Self,String>{
+        let executable=std::env::current_exe().map_err(|e|e.to_string())?;
+        Self::start_inner(directory,machine,interp,dataset,av,input,history,true,&executable)
+    }
+
+    fn start_inner(
+        directory:&Path,machine:&Machine,interp:bool,dataset:Option<&Path>,
+        av:&input_config::AvConfig,input:&input_config::InputConfig,history:&crate::cheat_provenance::History,versioned:bool,executable:&Path,
+    )->Result<Self,String>{
         // All serialization/identity checks precede creation; never touch the machine.
         let start = machine.save_state()?;
         let ancestry=if history.is_empty(){None}else{
@@ -103,10 +119,7 @@ impl Capture {
             if bytes.len() as u64>MAX_ANCESTRY{return Err("Starting cheat ancestry exceeds the size limit".into());}
             Some(bytes)
         };
-        let executable_sha256 = identity(
-            &std::env::current_exe().map_err(|e| e.to_string())?,
-            256 * 1024 * 1024,
-        )?;
+        let executable_sha256 = identity(executable, 256 * 1024 * 1024)?;
         let dataset_manifest_sha256 = dataset
             .map(|p| {
                 identity(
@@ -142,7 +155,7 @@ impl Capture {
         };
         fs::create_dir(directory)
             .map_err(|e| format!("Cannot create new recording folder: {e}"))?;
-        publish(&directory.join(".gitignore"), b"*\n", false)?;
+        if !versioned { publish(&directory.join(".gitignore"), b"*\n", false)?; }
         publish(&directory.join("start.ffstate"), &start, false)?;
         if let Some(bytes)=&ancestry{publish(&directory.join("cheat-ancestry.json"),bytes,false)?;}
         publish(&directory.join("av.cfg"), av.serialize().as_bytes(), false)?;
@@ -281,12 +294,18 @@ impl Capture {
     }
 }
 
-pub(crate) fn destination() -> Result<PathBuf, String> {
-    let base = input_config::config_root()
-        .ok_or("Cannot locate recording storage")?
-        .join("recordings");
+pub(crate) fn destination(av: &input_config::AvConfig) -> Result<(PathBuf, bool), String> {
+    let repository = input_config::storage::debug_asset_root(av)
+        .map(|root| root.join("FFTARecomp-private-recordings"));
+    let versioned = repository.as_ref().is_some_and(|root| root.join(".git").exists());
+    let base = if versioned {
+        repository.expect("checked above").join("recordings")
+    } else {
+        eprintln!("Recording repository unavailable; retaining the recording in local session storage");
+        input_config::config_root().ok_or("Cannot locate recording storage")?.join("recordings")
+    };
     fs::create_dir_all(&base).map_err(|e| e.to_string())?;
-    if fs::read_dir(&base).map_err(|e| e.to_string())?.count() >= MAX_CAPTURES {
+    if !versioned && fs::read_dir(&base).map_err(|e| e.to_string())?.count() >= MAX_CAPTURES {
         return Err(
             "Eight recordings already exist. Move retained recordings before starting another."
                 .into(),
@@ -296,7 +315,7 @@ pub(crate) fn destination() -> Result<PathBuf, String> {
         .duration_since(std::time::UNIX_EPOCH)
         .map_err(|e| e.to_string())?
         .as_millis();
-    Ok(base.join(format!("recording-{stamp}-{}", std::process::id())))
+    Ok((base.join(format!("recording-{stamp}-{}", std::process::id())),versioned))
 }
 
 /// Validate monotonic order rather than silently sorting a damaged new capture.

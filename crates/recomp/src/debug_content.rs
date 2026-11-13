@@ -725,23 +725,27 @@ impl Index {
     }
 }
 pub(crate) fn defaults() -> Result<Vec<Root>, String> {
-    if let Some(root) = input_config::storage::portable_root() {
-        return Ok(vec![Root::new(&root, true)?]);
-    }
     let mut roots = Vec::new();
-    if let Some(root) = input_config::exe_dir() {
+    if let Some(root) = input_config::storage::portable_root() {
         roots.push(Root::new(&root, true)?);
-    }
-    if let Some(root) = input_config::config_root() {
-        roots.push(Root::new(&root, false)?);
-    }
-    if let Ok(root) = crate::rom_data::diagnosis::storage_root() {
-        if !roots.iter().any(|r| r.path == root) {
-            roots.push(Root::new(&root, false)?);
+    } else {
+        if let Some(root) = input_config::exe_dir() { roots.push(Root::new(&root, true)?); }
+        if let Some(root) = input_config::config_root() { roots.push(Root::new(&root, false)?); }
+        if let Ok(root) = crate::rom_data::diagnosis::storage_root() {
+            if !roots.iter().any(|r| r.path == root) { roots.push(Root::new(&root, false)?); }
+        }
+        if let Some(root) = dirs::cache_dir() {
+            roots.push(Root::new(&root.join("FFTARecomp"), false)?);
         }
     }
-    if let Some(root) = dirs::cache_dir() {
-        roots.push(Root::new(&root.join("FFTARecomp"), false)?);
+    if let Some(root) = input_config::storage::debug_asset_root(&input_config::AvConfig::load()) {
+        for name in ["cheats", "debug_saves", "FFTARecomp-private-recordings"] {
+            if let Ok(root) = std::fs::canonicalize(root.join(name)) {
+                if root.is_dir() && !roots.iter().any(|r| r.path == root) && roots.len() < MAX_ROOTS {
+            roots.push(Root::new(&root, false)?);
+                }
+            }
+        }
     }
     Ok(roots)
 }

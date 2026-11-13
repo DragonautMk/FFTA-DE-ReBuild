@@ -172,11 +172,13 @@ impl Session {
     }
 }
 
-pub(crate) fn default_destination() -> Result<PathBuf, String> {
-    let base = match input_config::storage::portable_root() {
+pub(crate) fn default_destination(av: &input_config::AvConfig) -> Result<PathBuf, String> {
+    let tracked = input_config::storage::debug_asset_root(av).map(|root|root.join("debug_saves"))
+        .filter(|root|root.join(".git").exists());
+    let base = if let Some(root)=tracked { root.join("sessions") } else { match input_config::storage::portable_root() {
         Some(root) => root.join("Data/debug-sessions"),
         None => input_config::config_root().ok_or("Cannot locate debug-session storage")?.join("debug-sessions"),
-    };
+    }};
     if base.exists() && fs::read_dir(&base).map_err(|e| e.to_string())?.count() >= MAX_DEFAULT_SESSIONS {
         return Err("Eight debug sessions already exist. Reopen one or move retained sessions before creating another.".into());
     }
@@ -185,6 +187,16 @@ pub(crate) fn default_destination() -> Result<PathBuf, String> {
 }
 
 pub(crate) fn create(destination: &Path, source: Source<'_>) -> Result<PathBuf, String> {
+    create_inner(destination, source, None)
+}
+
+/// A session created from the normal frontend can write selected debug assets
+/// to the configured private root; its executable, ROM and working data remain isolated.
+pub(crate) fn create_with_asset_root(destination: &Path, source: Source<'_>, assets: &Path) -> Result<PathBuf, String> {
+    create_inner(destination, source, Some(assets))
+}
+
+fn create_inner(destination: &Path, source: Source<'_>, assets: Option<&Path>) -> Result<PathBuf, String> {
     if crate::packfile::load().is_some() {
         return Err("Create debug sessions with the development runtime; pinned full-recomp packages are not copied by this tool".into());
     }
@@ -200,7 +212,13 @@ pub(crate) fn create(destination: &Path, source: Source<'_>) -> Result<PathBuf, 
     let library = if source.interp { None } else { Some(recomp_core::tcc_memory::library_path().ok_or("Bundled TinyCC is required for a movable native session; use --interp or install tcc/libtcc beside the source runtime")?) };
     let executable = crate::diagnostics::read(source.executable, 256 * 1024 * 1024)?;
     let catalog = if let Some(dir) = source.executable.parent() {
-        let path = dir.join("cheats").join("catalogo.json");
+        let local = dir.join("cheats").join("catalogo.json");
+        let path = if dir.join(MANIFEST).is_file() && local.is_file() {
+            local
+        } else {
+            assets.map(|root| root.join("cheats/catalogo.json"))
+                .filter(|path| path.is_file()).unwrap_or(local)
+        };
         if path.try_exists().map_err(|e| format!("Cheat catalog: {e}"))? {
             let checked = crate::debug_cheats::Catalog::load(&path)?;
             let bytes = crate::diagnostics::read(&path, 4 * 1024 * 1024)?;
@@ -223,7 +241,13 @@ pub(crate) fn create(destination: &Path, source: Source<'_>) -> Result<PathBuf, 
     fs::create_dir(&root).map_err(|e| e.to_string())?;
     let _artifact_lease=crate::artifact_lease::Lease::acquire(&root,"session-create")?;
     // Manifest is published last. I/O failures retain an incomplete private folder.
-    fs::write(root.join(".gitignore"), "*\n").map_err(|e| e.to_string())?;
+    // Only recognized debug artifacts are visible in an explicitly selected
+    // private worktree; ROMs, BIOS, executables and extracted datasets remain ignored.
+    let versioned = assets.is_some_and(|base| {
+        let repo=base.join("debug_saves");
+        repo.join(".git").exists() && root.starts_with(repo.join("sessions"))
+    });
+    fs::write(root.join(".gitignore"), session_ignore(versioned)).map_err(|e| e.to_string())?;
     let mut pins = BTreeMap::new();
     let mut total = 0;
     let mut put = |name: &str, bytes: &[u8], immutable: bool| -> Result<(), String> {
@@ -252,6 +276,9 @@ pub(crate) fn create(destination: &Path, source: Source<'_>) -> Result<PathBuf, 
         put(&format!("Data/saves/SaveStates/{}/slot-1.ffstate", gba_core::ffta_rom::digest(source.rom)), state, false)?;
     }
     let mut av = source.av; av.debug_game_save_slot = 1;
+    if let Some(assets) = assets {
+        av.debug_asset_root = input_config::storage::asset_setting(&root, assets)?;
+    }
     put("Data/config/av.cfg", av.serialize().as_bytes(), false)?;
     put("Data/config/input.cfg", source.input.serialize().as_bytes(), false)?;
     if let Some(dataset) = source.dataset {
@@ -269,6 +296,12 @@ pub(crate) fn create(destination: &Path, source: Source<'_>) -> Result<PathBuf, 
         real_bios:source.bios.is_some(), has_state:source.state.is_some(), has_dataset:source.dataset.is_some(), pins, artifact_coordination:Some(crate::artifact_lease::PROTOCOL.into()) };
     fs::write(root.join(MANIFEST), serde_json::to_vec_pretty(&manifest).map_err(|e| e.to_string())?).map_err(|e| e.to_string())?;
     Ok(root)
+}
+
+fn session_ignore(versioned: bool) -> &'static [u8] {
+    if versioned {
+        b"*\n!*/\n!.gitignore\n!*.ffstate\n!*.sav\n!*.sps\n!*.input\n!*.json\n!*.png\n!*.ppm\n!*.wav\n!*.csv\n!*.cfg\n!*.toml\n/Data/dataset/\n"
+    } else { b"*\n" }
 }
 
 fn scrub(command: &mut Command, names: impl Iterator<Item = std::ffi::OsString>) {

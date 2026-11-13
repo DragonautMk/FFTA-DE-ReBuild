@@ -67,6 +67,23 @@ class DebugAssetExportTests(unittest.TestCase):
             self.assertIsNone(z.testzip())
             return {n.removeprefix(exporter.PREFIX+'/'):z.read(n) for n in z.namelist()}
 
+    def test_private_sibling_assets_are_discovered_without_following_workspace_alias(self):
+        with tempfile.TemporaryDirectory(dir=self.root.parent) as temporary:
+            private = Path(temporary)
+            target = private / 'debug_saves'
+            shutil.move(str(self.assets), target)
+            self.assets.symlink_to(target, target_is_directory=True)
+            self.args.assets = target
+            files = self.export()
+            inventory = json.loads(files['DEBUG-ASSETS-INVENTORY.json'])
+            self.assertTrue(any(row['source'].startswith('external-') and row['source'].endswith('ffta.sav') for row in inventory['files']))
+
+    def test_working_sessions_with_rom_names_are_excluded_from_export(self):
+        self.write('debug_saves/sessions/synthetic/ffta.gba', b'not a ROM')
+        self.write('debug_saves/sessions/synthetic/seed.ffstate', snapshot())
+        files = self.export()
+        self.assertFalse(any('sessions/synthetic' in name for name in files))
+
     def test_complete_export_exposes_loaded_states_later_saves_and_all_aliases(self):
         self.write('target/later/EUR/scene.ffstate',snapshot(payload=b'new scene'))
         self.write('target/later/EUR/alias.ffstate',snapshot(payload=b'new scene'))

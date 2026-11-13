@@ -115,10 +115,13 @@ pub(crate) fn collect(request: &Request, live: Option<&gba_core::Machine>) -> Va
     let save = save_path.as_ref().and_then(|p| checked(&mut issues, "save-file", identity(p, request.save.is_none() || live.is_some()),
         "Select an existing save with --sav FILE; omit it for normal new-game selection."));
     let mut state_path = request.state.clone();
-    if let (Some(slot), Some(save), Some(rom)) = (request.slot, &save_path, &rom) {
-        let mut slots = crate::save_state::Slots::new(save, rom);
-        slots.set_extended(true);
-        state_path = checked(&mut issues, "state-slot", slots.path(slot), "Choose a snapshot slot between 1 and 99.");
+    if state_path.is_none() {
+        if let (Some(slot), Some(save), Some(rom)) = (request.slot, &save_path, &rom) {
+            let root = input_config::storage::debug_asset_root(&input_config::AvConfig::load()).map(|r|r.join("debug_saves"));
+            let slots = root.as_deref().map(|root|crate::save_state::Slots::inspect_with_debug_root(save,rom,root))
+                .unwrap_or_else(||Ok(crate::save_state::Slots::new(save,rom)));
+            state_path = checked(&mut issues, "state-slot", slots.and_then(|mut slots|{slots.set_extended(true);slots.path(slot)}), "Choose a snapshot slot between 1 and 99.");
+        }
     }
     let state = state_path.as_ref().and_then(|p| checked(&mut issues, "snapshot-file", identity(p, live.is_some()),
         "Select an existing snapshot or an occupied slot for this ROM and save directory."));
