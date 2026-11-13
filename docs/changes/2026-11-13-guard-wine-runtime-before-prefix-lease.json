@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-13",
+  "slug": "guard-wine-runtime-before-prefix-lease",
+  "title": "Guard Wine runtime access before leasing the shared prefix",
+  "kind": "changed",
+  "platforms": [
+    "Wine"
+  ],
+  "changes": [
+    "Refuse Wine validation before acquiring the shared prefix lease when the existing XDG Wine runtime directory is not writable, preventing the observed sandbox failure from retaining a prefix lease.",
+    "Recover only the failed aadspz22 unit and prefix leases after matching their owner tokens, checking host-visible process activity and successfully draining the Wine server; preserve both original owner records in a recovery receipt."
+  ],
+  "validation": [
+    "Wine-mode sandbox preflight wine-runtime-preflight-6120e8eq refuses the read-only runtime before launching Wine and records no retained unit or prefix lease.",
+    "Wine wine-runtime-recovery-smoke-lwzsvfgf runs a harmless Windows Python command against the managed prefix, passes and records a completed Wine server drain."
+  ],
+  "limitations": [
+    "The preflight covers an existing XDG Wine runtime directory only and does not grant sandbox access or prevent other runtime, race or filesystem failures. The paused ROM-data validation remains unrun. Automatic approval review availability is external to the project."
+  ],
+  "files": [
+    "scripts/validation_unit.py",
+    "docs/development/LOCAL_ARTIFACTS.md",
+    "docs/rom_data_obj.md"
+  ],
+  "references": []
+}

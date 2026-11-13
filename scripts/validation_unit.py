@@ -56,6 +56,19 @@ def retained(rel, paths):
     return any(rel == keep or keep in rel.parents for keep in paths)
 
 
+def check_wine_runtime_access(env):
+    """Refuse a known read-only Wine runtime before acquiring its prefix lease."""
+    runtime = env.get('XDG_RUNTIME_DIR')
+    if not runtime:
+        return
+    wine_runtime = Path(runtime) / 'wine'
+    # Check only an existing Wine runtime directory. Wine implementations can
+    # choose a different fallback when it has not been created yet.
+    if wine_runtime.is_dir() and not os.access(wine_runtime, os.W_OK):
+        raise ValueError(f'Wine runtime directory is not writable: {wine_runtime}; '
+                         'run Wine in a context with access to its runtime directory')
+
+
 def snapshot(path, *, hashes=False, disposable=False, read_only=False,
              owned=False, keep_paths=()):
     """Guard complete trees, including empty directories; refuse links/junctions."""
@@ -292,6 +305,7 @@ def _run_unit(args, *, root, inputs):
                 raise ValueError('WINEPREFIX is managed by the runner')
             env[key] = expand(val)
         if uses_wine:
+            check_wine_runtime_access(env)
             prefix = managed_prefix(base)
             wine_lease = leases.enter_context(Lease(prefix, 'validation-wine-prefix'))
             held.append(wine_lease)

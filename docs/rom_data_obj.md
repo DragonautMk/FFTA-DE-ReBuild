@@ -3566,3 +3566,53 @@ SHA-256 `0a439a15a0de6ccda64a8010d50da37b0ba5a4435b683adf45fb7cf68dec56e3`.
 This is one ordinary list and one frame, not coverage of all eleven lists,
 regular-path drawing or native dispatch. Linux, USA and native Windows
 remain pending; no performance measurement.
+
+
+## EUR title-opening coordinate sources
+
+Wine `e157-title-opening-source-dis-wine-7zhw27hj` identifies two original
+readers. At `0813a2ce/2e2`, a state-dependent unsigned record index reads
+two halfwords at `3adeb0 + 4*index` and stores them in the title record.
+The ordinary state transition starts at zero and advances through index 18,
+so its conditional projection contains 19 pairs (76 bytes), SHA-256
+`7bc8dda95bf14e172833e2a76b3a380aea113f77c584af6f67d0dcb2e216745d`.
+The reader does not bound an externally supplied initial index before reading.
+
+At `0813a368/36c`, a separate loop reads one halfword from each of 19
+addresses `3adefe + 4*index`, indices 0..18. The concatenated 38 observed
+source bytes hash to
+`49ce8883c044ca4234c83881749b6b31f7861c4d7bf3de0056199582cb177578`.
+The intervening halfwords are outside this conditional projection. Both
+projections are disjoint from E157 declared sources. Only index zero of the
+first reader has ordinary Wine evidence (`czpokl0v`); the other reader and
+other indices/scenes remain unverified. Linux, USA and native Windows remain
+pending; no performance measurement.
+
+E158-d157 serves these 114 bytes from `graphics.layered-obj-animations`,
+retaining the E157 projection and leaving each sparse gap to its previous
+owner or raw ROM. Wine `e158-opening-coordinates-wine-b8vylqkk` checks all
+poisoned source bytes, mixed boundaries, unchanged unrelated resource files
+and five original routine cases: state 1 with indices 0, 18, 19 and 255,
+plus the state 10 sparse loop. Three neutral opening interpreter frames match
+the original full state and clock, with two typed requests and zero raw
+requests in the selected spans. Ordinary execution of the
+sparse branch, native dispatch, Linux, USA and native Windows remain open.
+No performance measurement.
+
+Production Wine CLI `e158-opening-coordinates-cli-wine-tucnagm9` creates,
+reuses without writes and verifies E158, with 102 unrelated files matching
+E157. Its one-frame managed opening startup reports four coordinate bytes
+served from the new resource; this does not prove the sparse branch.
+
+A focused follow-up `title_opening_sparse_ordinary_tests.rs` is prepared to
+continue the retained neutral opening to the sparse reader and compare its
+first observed frame with the original. The Windows GNU test executable
+compiled successfully (`e158-sparse-ordinary-build-oljoq5_m`), but the
+follow-up has not executed: two elevated launches timed out during automatic
+approval review, and sandbox-only unit `e158-sparse-ordinary-wine-aadspz22`
+failed before the test because Wine could not create its runtime lock under
+`/run/user/1000/wine`. Existing E158 Wine results remain valid. The failed
+unit is retained for diagnosis. Its exact unit and Wine leases were later
+recovered after host-visible process checks and a successful server drain;
+`wine-runtime-recovery-smoke-lwzsvfgf` verifies Wine access. The paused sparse
+observation has not been rerun.

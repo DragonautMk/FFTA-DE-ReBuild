@@ -2,9 +2,9 @@
 use super::{obj_animations::ObjAnimationResources, ObjAnimationStats};
 use crate::ffta_rom;
 use crate::rom_data::{
-    layered_obj_animations::{ContextActivation, ContextCoordinateRecord, ContextLanguagePositions, ContextTimedEvent, ContextTimeline, ContextTimelineRecord, Descriptor, LayeredObjAnimations,
+    layered_obj_animations::{ContextActivation, ContextCoordinateRecord, ContextLanguagePositions, ContextTimedEvent, ContextTimeline, ContextTimelineRecord, Descriptor, LayeredObjAnimations, TitleOpeningCoordinates,
         CONTEXT_ACTIVATION_GATES, CONTEXT_ACTIVATION_TICKS,
-        CONTEXT_LANGUAGE_POSITION_A, CONTEXT_LANGUAGE_POSITION_B, TITLE_LANGUAGE_POSITION_ROOT, TITLE_MAIN_POSITION_ROOT,
+        CONTEXT_LANGUAGE_POSITION_A, CONTEXT_LANGUAGE_POSITION_B, TITLE_LANGUAGE_POSITION_ROOT, TITLE_MAIN_POSITION_ROOT, TITLE_OPENING_POSITION_ROOT, TITLE_OPENING_SPARSE_ROOT,
         CONTEXT_EVENT_ROOT, CONTEXT_TIMELINE_ROOT, CONTEXT_TIMELINE_SOURCE_A, CONTEXT_TIMELINE_SOURCE_B,
         DESCRIPTOR_BYTES, DESCRIPTOR_ROOT},
     obj_animations::Banks,
@@ -32,6 +32,8 @@ pub struct LayeredObjStats {
     pub title_position_bytes: u64,
     pub title_main_position_reads: u64,
     pub title_main_position_bytes: u64,
+    pub title_opening_coordinate_reads: u64,
+    pub title_opening_coordinate_bytes: u64,
     pub activation_reads: u64,
     pub activation_tick_bytes: u64,
     pub activation_gate_bytes: u64,
@@ -49,6 +51,7 @@ pub(super) struct LayeredObjResources {
     context_language_positions: Option<ContextLanguagePositions>,
     title_language_positions: Option<[[u16; 2]; 5]>,
     title_main_positions: Option<[[[u16; 2]; 4]; 5]>,
+    title_opening_coordinates: Option<TitleOpeningCoordinates>,
     context_activation: Option<ContextActivation>,
     context_target_coordinate: Option<ContextCoordinateRecord>,
     context_additional_geometry: Vec<ContextCoordinateRecord>,
@@ -69,6 +72,8 @@ pub(super) struct LayeredObjResources {
     title_position_bytes: AtomicU64,
     title_main_position_reads: AtomicU64,
     title_main_position_bytes: AtomicU64,
+    title_opening_coordinate_reads: AtomicU64,
+    title_opening_coordinate_bytes: AtomicU64,
     activation_reads: AtomicU64,
     activation_tick_bytes: AtomicU64,
     activation_gate_bytes: AtomicU64,
@@ -105,6 +110,7 @@ impl LayeredObjResources {
             context_language_positions: data.context_language_positions,
             title_language_positions: data.title_language_positions,
             title_main_positions: data.title_main_positions,
+            title_opening_coordinates: data.title_opening_coordinates,
             context_activation: data.context_activation,
             context_target_coordinate: data.context_target_coordinate,
             context_additional_geometry: data.context_additional_geometry,
@@ -128,6 +134,8 @@ impl LayeredObjResources {
             title_position_bytes: AtomicU64::new(0),
             title_main_position_reads: AtomicU64::new(0),
             title_main_position_bytes: AtomicU64::new(0),
+            title_opening_coordinate_reads: AtomicU64::new(0),
+            title_opening_coordinate_bytes: AtomicU64::new(0),
             activation_reads: AtomicU64::new(0),
             activation_tick_bytes: AtomicU64::new(0),
             activation_gate_bytes: AtomicU64::new(0),
@@ -209,6 +217,18 @@ impl LayeredObjResources {
         groups.get(relative / 16)?.get((relative % 16) / 4)?.get((relative % 4) / 2).map(|value| value.to_le_bytes()[relative % 2])
     }
 
+    fn title_opening_coordinate_byte(&self, index: usize) -> Option<u8> {
+        let data = self.title_opening_coordinates.as_ref()?;
+        if let Some(relative) = index.checked_sub(TITLE_OPENING_POSITION_ROOT as usize) {
+            if relative < 19 * 4 {
+                return Some(data.positions[relative / 4][relative % 4 / 2].to_le_bytes()[relative % 2]);
+            }
+        }
+        let relative = index.checked_sub(TITLE_OPENING_SPARSE_ROOT as usize)?;
+        if relative % 4 >= 2 { return None; }
+        data.sparse.get(relative / 4).map(|value| value.to_le_bytes()[relative % 4])
+    }
+
     fn activation_byte(&self, index: usize) -> Option<(u8, bool)> {
         let data = self.context_activation.as_ref()?;
         if let Some(relative) = index.checked_sub(CONTEXT_ACTIVATION_GATES as usize) {
@@ -256,6 +276,7 @@ impl LayeredObjResources {
         let mut language_b_used = 0;
         let mut title_position_used = 0;
         let mut title_main_position_used = 0;
+        let mut title_opening_coordinate_used = 0;
         let mut activation_tick_used = 0;
         let mut activation_gate_used = 0;
         let mut target_coordinate_used = 0;
@@ -282,6 +303,9 @@ impl LayeredObjResources {
             } else if let Some(byte) = self.title_main_position_byte(index + i) {
                 title_main_position_used += 1;
                 byte
+            } else if let Some(byte) = self.title_opening_coordinate_byte(index + i) {
+                title_opening_coordinate_used += 1;
+                byte
             } else if let Some((byte, tick)) = self.activation_byte(index + i) {
                 if tick { activation_tick_used += 1; } else { activation_gate_used += 1; }
                 byte
@@ -295,7 +319,7 @@ impl LayeredObjResources {
                 prior.as_ref().map_or_else(|| rom[index + i], |p| p[i])
             }
         });
-        if used == 0 && coordinate_used == 0 && timeline_table_used == 0 && timeline_source_used == 0 && event_used == 0 && language_a_used == 0 && language_b_used == 0 && title_position_used == 0 && title_main_position_used == 0 && activation_tick_used == 0 && activation_gate_used == 0 && target_coordinate_used == 0 && additional_geometry_used == 0 {
+        if used == 0 && coordinate_used == 0 && timeline_table_used == 0 && timeline_source_used == 0 && event_used == 0 && language_a_used == 0 && language_b_used == 0 && title_position_used == 0 && title_main_position_used == 0 && title_opening_coordinate_used == 0 && activation_tick_used == 0 && activation_gate_used == 0 && target_coordinate_used == 0 && additional_geometry_used == 0 {
             return prior;
         }
         if used > 0 {
@@ -327,6 +351,10 @@ impl LayeredObjResources {
         if title_main_position_used > 0 {
             self.title_main_position_reads.fetch_add(1, Ordering::Relaxed);
             self.title_main_position_bytes.fetch_add(title_main_position_used, Ordering::Relaxed);
+        }
+        if title_opening_coordinate_used > 0 {
+            self.title_opening_coordinate_reads.fetch_add(1, Ordering::Relaxed);
+            self.title_opening_coordinate_bytes.fetch_add(title_opening_coordinate_used, Ordering::Relaxed);
         }
         if activation_tick_used > 0 || activation_gate_used > 0 {
             self.activation_reads.fetch_add(1, Ordering::Relaxed);
@@ -367,6 +395,8 @@ impl LayeredObjResources {
             title_position_bytes: self.title_position_bytes.load(Ordering::Relaxed),
             title_main_position_reads: self.title_main_position_reads.load(Ordering::Relaxed),
             title_main_position_bytes: self.title_main_position_bytes.load(Ordering::Relaxed),
+            title_opening_coordinate_reads: self.title_opening_coordinate_reads.load(Ordering::Relaxed),
+            title_opening_coordinate_bytes: self.title_opening_coordinate_bytes.load(Ordering::Relaxed),
             activation_reads: self.activation_reads.load(Ordering::Relaxed),
             activation_tick_bytes: self.activation_tick_bytes.load(Ordering::Relaxed),
             activation_gate_bytes: self.activation_gate_bytes.load(Ordering::Relaxed),

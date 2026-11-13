@@ -35,9 +35,9 @@ it does not authorize stopping other work or changing another thread's goal.
 
 - State: suspended
 - Outcome: partial
-- Verified: E157 reader/CLI Wine PASS (`pfxplazm`, `shuvdeal`).
+- Verified: E158 reader/opening/CLI Wine PASS (`b8vylqkk`, `tucnagm9`).
 - Missing: EUR resources/consumers, ordinary evidence, ABI/global extent/indirect calls, ROMDATA-06/07; Linux/USA/native Windows/new32:9 distinct. EUR/Wine, no metrics or space limits; originals/saves protected.
-- Selection: paused by user; first opening affine list PASS (`28msdufg`). Other lists/paths, native, Linux/USA pending. Resume only on request; checkpoint retained in unit.
+- Selection: ROMDATA-04-E158-SPARSE-ORDINARY: partial; build `oljoq5_m` PASS; Wine test unrun. Lease recovered; Wine smoke `lwzsvfgf` PASS. Linux/USA pending; resume on request.
 - Title banks: main bank first read PASS (vzea9l43), draw/native open; FIRSTBANK-ZERO: no direct producer (f4_b2apw), other scenes open.
 - ROMDATA-04-BATTLE-40D300-OTHER: index56 ordinary PASS (`qbzrv3ua`); other new lists remain open.
 - ROMDATA-01-CONTEXT-3AE42C: partial; tables pass IDs 0–4; title French publisher PASS (ij_gnywg). Other writers/index extent open. Pre-selection: `e141-language-one-wine-i5_k9agp/work/pre-language.ffstate`.

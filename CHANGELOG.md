@@ -3,6 +3,26 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-13 — Serve EUR title-opening coordinate sources
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Serve 19 title-opening coordinate pairs and 19 sparse halfwords through the layered OBJ resource, preserving sparse gaps and older datasets.
+
+**Validation**
+
+- Wine e158-opening-coordinates-wine-b8vylqkk verifies 114 poisoned bytes, mixed boundaries, unchanged E157 projection and unrelated files, and five matching original routine cases including uncapped initial indices.
+- The same Wine unit matches three ordinary interpreter frames with two typed requests and no raw requests in the selected spans.
+- Wine e158-opening-coordinates-cli-wine-tucnagm9 passes production CLI create/reuse/verify and one-frame startup, serves four opening coordinate bytes, and preserves 102 unrelated files.
+
+**Limitations**
+
+- Ordinary execution of the sparse branch, native dispatch, other scenes, Linux, USA and native Windows remain open. No performance measurement.
+
+[Change record](docs/changes/2026-11-13-serve-title-opening-coordinates.json)
+
 ## 2026-11-13 — Configure relative private asset storage
 
 Type: changed. Platforms: desktop.
@@ -31,6 +51,24 @@ Documentation: [extended_saves.md](docs/extended_saves.md), [private_debug_asset
 
 [Change record](docs/changes/2026-11-13-relative-private-asset-routing.json)
 
+## 2026-11-13 — Prepare EUR opening sparse-coordinate observation
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Prepare a bounded neutral-opening Wine observation of the E158 sparse reader with one original/managed frame comparison and a retained checkpoint.
+
+**Validation**
+
+- Windows GNU test executable compiled without running tests in e158-sparse-ordinary-build-oljoq5_m.
+
+**Limitations**
+
+- The Wine observation did not run: two elevated launches timed out in automatic approval review; sandbox-only unit aadspz22 failed before the test because Wine could not create its lock under /run/user/1000/wine. Ordinary sparse-branch use, Linux, USA and native Windows remain open. No performance measurement.
+
+[Change record](docs/changes/2026-11-13-prepare-title-opening-sparse-observation.json)
+
 ## 2026-11-13 — Keep primary save backups local
 
 Type: fixed. Platforms: desktop.
@@ -53,6 +91,44 @@ Documentation: [save_backups.md](docs/save_backups.md), [extended_saves.md](docs
 
 [Change record](docs/changes/2026-11-13-keep-primary-backups-local.json)
 
+## 2026-11-13 — Inventory EUR opening high-ROM reads
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Record a bounded source ownership inventory during the neutral EUR opening.
+
+**Validation**
+
+- Wine e157-opening-inventory-wine-czpokl0v records three neutral interpreter frames without dropped requests or raw overlap with declared sources; unowned bytes comprise the known 370eb0 helper vector and the 3adeb0..3adeb4 lead.
+
+**Limitations**
+
+- Observed bytes do not establish source extent or global absence; other scenes, Linux, USA and native Windows remain unverified. No performance measurement.
+
+[Change record](docs/changes/2026-11-13-inventory-e157-opening-reads.json)
+
+## 2026-11-13 — Guard Wine runtime access before leasing the shared prefix
+
+Type: changed. Platforms: Wine.
+
+**Changes**
+
+- Refuse Wine validation before acquiring the shared prefix lease when the existing XDG Wine runtime directory is not writable, preventing the observed sandbox failure from retaining a prefix lease.
+- Recover only the failed aadspz22 unit and prefix leases after matching their owner tokens, checking host-visible process activity and successfully draining the Wine server; preserve both original owner records in a recovery receipt.
+
+**Validation**
+
+- Wine-mode sandbox preflight wine-runtime-preflight-6120e8eq refuses the read-only runtime before launching Wine and records no retained unit or prefix lease.
+- Wine wine-runtime-recovery-smoke-lwzsvfgf runs a harmless Windows Python command against the managed prefix, passes and records a completed Wine server drain.
+
+**Limitations**
+
+- The preflight covers an existing XDG Wine runtime directory only and does not grant sandbox access or prevent other runtime, race or filesystem failures. The paused ROM-data validation remains unrun. Automatic approval review availability is external to the project.
+
+[Change record](docs/changes/2026-11-13-guard-wine-runtime-before-prefix-lease.json)
+
 ## 2026-11-13 — Exclude coordination leases from private Git history
 
 Type: fixed. Platforms: desktop.
@@ -74,6 +150,25 @@ Type: fixed. Platforms: desktop.
 Documentation: [debug_sessions.md](docs/debug_sessions.md).
 
 [Change record](docs/changes/2026-11-13-exclude-coordination-leases-from-private-git.json)
+
+## 2026-11-13 — Classify EUR title-opening coordinate readers
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Classify conditional title-opening coordinate pairs and a separate sparse halfword sequence without inferring ownership of intervening bytes.
+
+**Validation**
+
+- Wine e157-title-opening-source-dis-wine-7zhw27hj establishes the readers and loop conditions; E157 manifest comparison confirms both projections are disjoint.
+- Wine e157-opening-inventory-wine-czpokl0v observes the first pair in one neutral opening window.
+
+**Limitations**
+
+- The first reader does not cap an externally supplied initial index; other indices, the second branch, other scenes, Linux, USA and native Windows remain open. No performance measurement.
+
+[Change record](docs/changes/2026-11-13-classify-title-opening-coordinates.json)
 
 ## 2026-11-13 — Add a reusable target cleanup skill
 

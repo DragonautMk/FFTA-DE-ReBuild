@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "date": "2026-11-13",
+  "slug": "inventory-e157-opening-reads",
+  "title": "Inventory EUR opening high-ROM reads",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Record a bounded source ownership inventory during the neutral EUR opening."
+  ],
+  "validation": [
+    "Wine e157-opening-inventory-wine-czpokl0v records three neutral interpreter frames without dropped requests or raw overlap with declared sources; unowned bytes comprise the known 370eb0 helper vector and the 3adeb0..3adeb4 lead."
+  ],
+  "limitations": [
+    "Observed bytes do not establish source extent or global absence; other scenes, Linux, USA and native Windows remain unverified. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md"
+  ],
+  "references": []
+}

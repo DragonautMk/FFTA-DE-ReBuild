@@ -14,6 +14,8 @@ pub const CONTEXT_ADDITIONAL_GEOMETRY: [u32; 8] = [0x3ae154, 0x3ae15c, 0x3ae174,
 pub const CONTEXT_TIMELINE_ROOT: u32 = 0x3ae038;
 pub const CONTEXT_EVENT_ROOT: u32 = 0x3adfe8;
 pub const TITLE_MAIN_POSITION_ROOT: u32 = 0x3adca0;
+pub const TITLE_OPENING_POSITION_ROOT: u32 = 0x3adeb0;
+pub const TITLE_OPENING_SPARSE_ROOT: u32 = 0x3adefe;
 pub const TITLE_MAIN_OBJECT_ROOT: u32 = 0xb8ed28;
 pub const TITLE_MAIN_SEQUENCE_ROOT: u32 = 0xb8ecb4;
 pub const TITLE_LANGUAGE_POSITION_ROOT: u32 = 0x3adcfc;
@@ -241,6 +243,9 @@ pub struct LayeredObjAnimations {
     /// Five language-specific sets of four main title cursor positions.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub title_main_positions: Option<[[[u16; 2]; 4]; 5]>,
+    /// Conditional opening coordinates and separately read sparse values.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub title_opening_coordinates: Option<TitleOpeningCoordinates>,
     /// A separate title animation selected through its own original producer.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub title_main_bank: Option<obj_animations::Bank>,
@@ -252,6 +257,13 @@ pub struct LayeredObjAnimations {
     /// Independent source rectangles; one is used both as a target and as a start.
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub context_additional_geometry: Vec<ContextCoordinateRecord>,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct TitleOpeningCoordinates {
+    pub positions: [[u16; 2]; 19],
+    pub sparse: [u16; 19],
 }
 
 impl LayeredObjAnimations {
@@ -386,6 +398,15 @@ impl LayeredObjAnimations {
         }
         if let Some(groups) = &self.title_main_positions {
             spans.push((TITLE_MAIN_POSITION_ROOT, groups.iter().flatten().flatten().flat_map(|value| value.to_le_bytes()).collect(), "title-main-positions".into()));
+        }
+        if let Some(opening) = &self.title_opening_coordinates {
+            spans.push((TITLE_OPENING_POSITION_ROOT,
+                opening.positions.iter().flatten().flat_map(|value| value.to_le_bytes()).collect(),
+                "title-opening-positions".into()));
+            for (index, value) in opening.sparse.iter().enumerate() {
+                spans.push((TITLE_OPENING_SPARSE_ROOT + 4 * index as u32,
+                    value.to_le_bytes().to_vec(), "title-opening-sparse-coordinate".into()));
+            }
         }
         if let Some(rows) = &self.title_language_positions {
             spans.push((TITLE_LANGUAGE_POSITION_ROOT, rows.iter().flatten().flat_map(|value| value.to_le_bytes()).collect(), "title-language-positions".into()));
@@ -679,6 +700,34 @@ impl Catalog {
         }
         let title_main_bank = Some(main_bank);
 
+        for (start, end, hash) in [
+            (0x13a294, 0x13a310, "6d9e73aaacd5ce57c69a702a88761ef7fd1e944a9ae58c39c902139652e052e1"),
+            (0x13a354, 0x13a386, "10ec47aecd1a87db9af580c3007df19ee5c734b42d6a8b4d28e38ff554a1c7fb"),
+        ] {
+            if ffta_rom::digest(&rom[start..end]) != hash { return Err("Title opening coordinate reader mismatch".into()); }
+        }
+        for (literal, root) in [(0x13a314, TITLE_OPENING_POSITION_ROOT), (0x13a388, TITLE_OPENING_SPARSE_ROOT)] {
+            if u32::from_le_bytes(rom[literal..literal + 4].try_into().unwrap()) != 0x0800_0000 + root {
+                return Err("Title opening coordinate literal mismatch".into());
+            }
+        }
+        let raw = &rom[TITLE_OPENING_POSITION_ROOT as usize..TITLE_OPENING_POSITION_ROOT as usize + 76];
+        if ffta_rom::digest(raw) != "7bc8dda95bf14e172833e2a76b3a380aea113f77c584af6f67d0dcb2e216745d" {
+            return Err("Title opening coordinate source mismatch".into());
+        }
+        let positions = std::array::from_fn(|index| std::array::from_fn(|axis| {
+            let at = 4 * index + 2 * axis; u16::from_le_bytes([raw[at], raw[at + 1]])
+        }));
+        let sparse = std::array::from_fn(|index| {
+            let at = TITLE_OPENING_SPARSE_ROOT as usize + 4 * index;
+            u16::from_le_bytes([rom[at], rom[at + 1]])
+        });
+        let sparse_bytes: Vec<_> = sparse.iter().flat_map(|value: &u16| value.to_le_bytes()).collect();
+        if ffta_rom::digest(&sparse_bytes) != "49ce8883c044ca4234c83881749b6b31f7861c4d7bf3de0056199582cb177578" {
+            return Err("Title opening sparse coordinate source mismatch".into());
+        }
+        let title_opening_coordinates = Some(TitleOpeningCoordinates { positions, sparse });
+
         let context_activation = Some(ContextActivation {
             ticks: (0..40).map(|index| {
                 let at = CONTEXT_ACTIVATION_TICKS as usize + 4 * index;
@@ -699,7 +748,7 @@ impl Catalog {
                 x_extent: half(4), y_extent: half(6) }
         }).collect();
         let decoded = LayeredObjAnimations { descriptors, banks, context_coordinate_records,
-            context_timeline, context_timed_events, context_language_positions, title_language_positions, title_language_bank, title_main_positions, title_main_bank, context_activation, context_target_coordinate, context_additional_geometry };
+            context_timeline, context_timed_events, context_language_positions, title_language_positions, title_language_bank, title_main_positions, title_opening_coordinates, title_main_bank, context_activation, context_target_coordinate, context_additional_geometry };
         let sources = decoded
             .source_spans()?
             .into_iter()

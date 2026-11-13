@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-13",
+  "slug": "serve-title-opening-coordinates",
+  "title": "Serve EUR title-opening coordinate sources",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Serve 19 title-opening coordinate pairs and 19 sparse halfwords through the layered OBJ resource, preserving sparse gaps and older datasets."
+  ],
+  "validation": [
+    "Wine e158-opening-coordinates-wine-b8vylqkk verifies 114 poisoned bytes, mixed boundaries, unchanged E157 projection and unrelated files, and five matching original routine cases including uncapped initial indices.",
+    "The same Wine unit matches three ordinary interpreter frames with two typed requests and no raw requests in the selected spans.",
+    "Wine e158-opening-coordinates-cli-wine-tucnagm9 passes production CLI create/reuse/verify and one-frame startup, serves four opening coordinate bytes, and preserves 102 unrelated files."
+  ],
+  "limitations": [
+    "Ordinary execution of the sparse branch, native dispatch, other scenes, Linux, USA and native Windows remain open. No performance measurement."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/layered_obj_animations.rs",
+    "crates/gba-core/src/rom_data/runtime/layered_obj_animations.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/title_opening_coordinates_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

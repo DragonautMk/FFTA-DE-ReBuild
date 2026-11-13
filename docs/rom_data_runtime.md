@@ -2270,3 +2270,26 @@ original initializer and draw comparisons pass (`pfxplazm`); production CLI
 create/reuse/verify and one-frame startup pass (`shuvdeal`). Ordinary drawing
 and native-dispatch attribution remain pending. Linux, USA
 and native Windows remain pending. No performance measurement.
+
+
+## E157 neutral opening read inventory
+
+Wine `e157-opening-inventory-wine-czpokl0v` inventories three neutral
+interpreter frames from the retained EUR pre-draw checkpoint against E157.
+No requests were dropped and no raw request overlapped declared source
+spans. The eight unowned bytes consist of the known four-byte IWRAM helper
+vector at `370eb0` and four observed bytes at `3adeb0..3adeb4`, read at
+original PCs `0813a2ce` and `0813a2e2`. The latter are leads, not a proved
+source extent. Other frames and scenes, Linux, USA and native Windows remain
+open. No performance measurement.
+
+
+## E158 EUR opening coordinate sources
+
+The layered OBJ resource serves 19 conditional coordinate pairs and 19
+separately sourced halfwords, preserving the intervening bytes and older
+dataset parsing. Wine original-reader and three-frame ordinary interpreter
+comparisons pass (`b8vylqkk`). Production CLI create/reuse/verify and
+one-frame managed startup pass (`tucnagm9`); ordinary execution of the
+sparse branch remains open. Linux, USA and native Windows remain pending.
+No performance measurement.

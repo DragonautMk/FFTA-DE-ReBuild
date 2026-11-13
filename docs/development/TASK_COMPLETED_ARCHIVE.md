@@ -22853,3 +22853,32 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: User-requested cleanup assessment used the completed-only Docker preview; no eligible candidate was selected and sufficient free space was available for the requested migration.
 - Evidence: target/cold-storage-batches/20261113-083240-837f8ddf/batch.json; free space 29,538,136,064 bytes at inspection.
 - Limits: No files were removed and this run reclaimed zero bytes; the increase in free space occurred externally and is not attributed to this task. Debug-save and suspended-work scopes were excluded.
+
+### ROMDATA-01-E157-OPENING-INVENTORY
+
+- Outcome: bounded EUR/Wine high-ROM inventory complete for three neutral opening frames (`e157-opening-inventory-wine-czpokl0v`). No dropped requests or raw overlap with declared sources; unowned bytes are the known `370eb0` helper and four-byte `3adeb0` lead.
+- Limits: other frames, source extents, Linux, USA and native Windows remain open; no performance measurement. Reference: `docs/changes/2026-11-13-inventory-e157-opening-reads.json`.
+
+### ROMDATA-01-TITLE-OPENING-3ADEB0
+
+- Outcome: conditional EUR source contracts complete for 19 coordinate pairs `3adeb0..3adefc` and 19 separate halfwords at `3adefe + 4*i`; first reader does not cap externally supplied initial index.
+- Evidence: `e157-title-opening-source-dis-wine-7zhw27hj`, E157 manifest disjointness and `e157-opening-inventory-wine-czpokl0v`; `docs/changes/2026-11-13-classify-title-opening-coordinates.json`.
+- Limits: other indices, second branch, scenes, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-02-TITLE-OPENING-COORDS
+
+- Outcome: E158 conditional EUR coordinate sources and original reader integration complete under Wine, 114 bytes in 20 spans; E157 projection preserved.
+- Evidence: `e158-opening-coordinates-wine-b8vylqkk` covers poisoned bytes, mixed boundaries, five original cases and three ordinary interpreter frames with matching states/clocks and two typed requests.
+- Limits: production CLI, ordinary sparse branch, other scenes, native dispatch, Linux, USA and native Windows remain open. No performance measurement. Reference: `docs/changes/2026-11-13-serve-title-opening-coordinates.json`.
+
+### ROMDATA-05-E158-CLI
+
+- Outcome: EUR/Wine production CLI create, no-write reuse, verify and one managed opening startup frame pass (`e158-opening-coordinates-cli-wine-tucnagm9`). The frame serves four coordinate bytes; 102 unrelated files match E157.
+- Limits: ordinary sparse-branch use, other scenes, native dispatch, Linux, USA and native Windows remain open. No performance measurement. Reference: `docs/changes/2026-11-13-serve-title-opening-coordinates.json`.
+
+### WINE-E158-LEASE-RECOVERY
+
+- Outcome: completed
+- Verified criteria: exact failed unit and shared Wine leases recovered after owner matching, host-visible process checks and successful server drain; read-only XDG Wine runtime rejected before prefix lease acquisition.
+- Evidence: `target/validation/lease-recovery/e158-sparse-ordinary-aadspz22/recovery.json`, `wine-runtime-preflight-6120e8eq`, `wine-runtime-recovery-smoke-lwzsvfgf`, `docs/changes/2026-11-13-guard-wine-runtime-before-prefix-lease.json`.
+- Limits: preflight covers an existing XDG Wine runtime directory; the sandbox remains read-only and approval review is external. The ROM-data sparse test remains paused and unrun.

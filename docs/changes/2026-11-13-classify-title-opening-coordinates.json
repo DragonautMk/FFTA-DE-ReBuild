@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-13",
+  "slug": "classify-title-opening-coordinates",
+  "title": "Classify EUR title-opening coordinate readers",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Classify conditional title-opening coordinate pairs and a separate sparse halfword sequence without inferring ownership of intervening bytes."
+  ],
+  "validation": [
+    "Wine e157-title-opening-source-dis-wine-7zhw27hj establishes the readers and loop conditions; E157 manifest comparison confirms both projections are disjoint.",
+    "Wine e157-opening-inventory-wine-czpokl0v observes the first pair in one neutral opening window."
+  ],
+  "limitations": [
+    "The first reader does not cap an externally supplied initial index; other indices, the second branch, other scenes, Linux, USA and native Windows remain open. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_obj.md"
+  ],
+  "references": []
+}

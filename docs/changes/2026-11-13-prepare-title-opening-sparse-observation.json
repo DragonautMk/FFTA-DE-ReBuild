@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-13",
+  "slug": "prepare-title-opening-sparse-observation",
+  "title": "Prepare EUR opening sparse-coordinate observation",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Prepare a bounded neutral-opening Wine observation of the E158 sparse reader with one original/managed frame comparison and a retained checkpoint."
+  ],
+  "validation": [
+    "Windows GNU test executable compiled without running tests in e158-sparse-ordinary-build-oljoq5_m."
+  ],
+  "limitations": [
+    "The Wine observation did not run: two elevated launches timed out in automatic approval review; sandbox-only unit aadspz22 failed before the test because Wine could not create its lock under /run/user/1000/wine. Ordinary sparse-branch use, Linux, USA and native Windows remain open. No performance measurement."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/title_opening_sparse_ordinary_tests.rs",
+    "docs/rom_data_obj.md"
+  ],
+  "references": []
+}
