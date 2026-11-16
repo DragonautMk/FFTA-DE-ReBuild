@@ -113,12 +113,12 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ### DBG2-22
 
-- State: suspended
+- State: active
 - Outcome: partial
-- Verified: CH-0340 EXP and CH-0320 Steal: Ability each accepted in a EUR Party scene with paired control and exact restoration. CH-0330 plan conditional; source has no notes. DS-13 is USA, not EUR.
-- User report: CH-0341 worked in final-battle phase two and after Energiga; no instrumented trace or details of actor, target, timing and side effects. Controlled proof remains phase one.
-- Missing: CH-0341 third phase, exact conditions and side effects; CH-0330 suitable EUR scene, other group entries, actual level-up and device-hook equivalence.
-- Resume: user-provided phase-three and victory snapshots are privately archived and structurally validated, not replayed; use on relevant request. `docs/debug_catalog.md`.
+- Verified: CH-0340/0320 EUR Party paired; CH-0330 conditional. CH-0341 first battle accepted; phase-two success user-reported. Phase-three Start/A and 2400 neutral: paired states identical, zero writes in 2432 applications, endpoint condition 3 (`dbg22-phase3-long-paired-melrkmru`, PASS). Shorter windows `jrwr046_`, `u_sxx94w`, `wrt01642`.
+- Missing: phase-three active-condition effects, CH-0330, other groups, level-up and device equivalence.
+- Selection: user requests Debug Tools v2 completion. Attesa navigation `_21t2h9d` PASS: two one-frame Down inputs left Muovi selected. Six-frame Down unit `dbg22-phase3-wait-six-frame-h4bxz91e`, session 87694 live; poll it. DBG2-20 paused. Model/effort unconfirmed.
+- Resume: no ordinary-progression inference; `docs/debug_catalog.md`.
 
 ### DBG2-27
 
@@ -175,9 +175,9 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 ## Final handover
 
-- Task: TARGET-CLEANUP-DEBUG-SAVES-20261113 completed.
-- Last verified result: Safe preview selected zero; 29,538,136,064 bytes available.
-- Remaining work: Other tasks retain their prior states.
-- Errors or blockers: None; no cleanup bytes reclaimed by this run.
-- Next action: Resume the private save migration.
-- References: target/cold-storage-batches/20261113-083240-837f8ddf/batch.json.
+- Task: DBG2-22 partial.
+- Last verified result: paired phase-three 2432 frames PASS, zero writes and identical states.
+- Remaining work: enemy-action window and other DBG2-22 criteria; DBG2-20 paused.
+- Errors or blockers: snapshot is cheat-derived.
+- Next action: poll Wine session 87694 and inspect menu images.
+- References: target/validation/units/dbg22-phase3-long-paired-melrkmru/; docs/cheats.md.

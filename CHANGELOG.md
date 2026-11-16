@@ -3,6 +3,28 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-16 — Compare phase-three deployment and battle entry with CH-0341
+
+Type: docs. Platforms: Windows GNU and Wine.
+
+**Changes**
+
+- Record paired observations of CH-0341 from the user-reported EUR phase-three snapshot during deployment and the transition into battle, keeping cheat-derived ancestry explicit.
+
+**Validation**
+
+- Protected same-seed Wine interpreter comparisons passed for 600 neutral deployment frames, Start followed by 600 neutral frames, and Start plus an explicit confirmation followed by 600 neutral frames. In each tested window the candidate made zero writes and both complete endpoint state hashes matched.
+- Captured deployment, confirmation and battle-entry images. The ROM, source snapshot, runtime and source catalog were protected; owned test scratch was retired after normal close and Wine server drain.
+- An extended paired Start/confirmation plus 2400-neutral-frame Wine comparison reached the player turn; all eight 300-frame state samples and the final complete state matched. The candidate recorded 2432 maintained applications and zero writes; the final sampled condition was 3.
+
+**Limitations**
+
+- These bounded windows start from a cheat-derived user snapshot and do not establish ordinary progression, later battle behavior, side effects at an active condition or original device-hook equivalence. Native Windows and physical input were not tested.
+
+Documentation: [debug_catalog.md](docs/debug_catalog.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-16-compare-phase-three-deployment-cheat.json)
+
 ## 2026-11-13 — Serve EUR title-opening coordinate sources
 
 Type: added. Platforms: EUR / Wine.

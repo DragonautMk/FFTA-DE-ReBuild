@@ -233,6 +233,18 @@ user observation, not an instrumented replay: the actor, target, exact trigger
 and side effects were not specified. The third phase and original device-hook
 equivalence remain unverified.
 
+On the user's cheat-derived EUR snapshot labeled as the start of phase three,
+paired Wine interpreter runs compared CH-0341 with the same seed and inputs
+without the cheat. During 600 neutral frames on the deployment screen, and in
+separate Start/confirmation windows through 600 neutral frames after entering
+the battle scene, the conditional plan made no writes. Each paired endpoint
+had the same complete state hash; the sampled condition was zero at those
+endpoints. An extended 2,400-neutral-frame pair reached the player turn; all
+eight sampled state hashes and the final state matched, with zero writes across
+2,432 maintained applications and condition 3 at the final sample. These bounded
+negative observations do not establish whether the cheat works during a later
+action, or validate the original device hook.
+
 In isolated Wine/Xvfb tests, keyboard navigation selected a synthetic source,
 reviewed its preview, armed and disarmed it, applied it once and disabled all.
 Attempts to arm without a selected source or reviewed preview were refused.
