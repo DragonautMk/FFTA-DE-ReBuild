@@ -33,15 +33,15 @@ it does not authorize stopping other work or changing another thread's goal.
 
 ### ROM-DATA-FULL-EUR
 
-- State: suspended
+- State: active
 - Outcome: partial
 - Verified: E158 reader/opening/CLI Wine PASS (`b8vylqkk`, `tucnagm9`).
 - Missing: EUR resources/consumers, ordinary evidence, ABI/global extent/indirect calls, ROMDATA-06/07; Linux/USA/native Windows/new32:9 distinct. EUR/Wine, no metrics or space limits; originals/saves protected.
-- Selection: ROMDATA-04-E158-SPARSE-ORDINARY: partial; build `oljoq5_m` PASS; Wine test unrun. Lease recovered; Wine smoke `lwzsvfgf` PASS. Linux/USA pending; resume on request.
-- Title banks: main bank first read PASS (vzea9l43), draw/native open; FIRSTBANK-ZERO: no direct producer (f4_b2apw), other scenes open.
+- Selection: TITLE-LANGUAGE-POST-PUBLICATION; `ij_gnywg` PASS. Wine inventory `13oct80b`/74741 live; poll, then classify unowned sources. Linux/USA pending.
+- Title main bank: all five nonempty sequence lists ordinary Wine PASS (`hhh7a8lg`); other scenes/native open. FIRSTBANK-ZERO producer open (`f4_b2apw`).
 - ROMDATA-04-BATTLE-40D300-OTHER: index56 ordinary PASS (`qbzrv3ua`); other new lists remain open.
-- ROMDATA-01-CONTEXT-3AE42C: partial; tables pass IDs 0–4; title French publisher PASS (ij_gnywg). Other writers/index extent open. Pre-selection: `e141-language-one-wine-i5_k9agp/work/pre-language.ffstate`.
-- E134 ordinary updater: augmented-table native reads and three-frame pair PASS (`m7063z21`); production table lacks keys (`x9h8ztad`). Draw remains open.
+- ROMDATA-01-CONTEXT-3AE42C: partial; initial IDs 0–4 and title IDs 1–4 PASS (`ij_gnywg`, `9k_mye2m`); title unchanged 0 PASS. Other writers/index and return to 0 open.
+- E134 ordinary updater: labeled native reads PASS (`yw62he9p`); isolated default uses interpreter scopes (`botzl4b6`). Runtime cache and draw remain open.
 - Resume: [validation recovery checklist](ROM_DATA_VALIDATION_RECOVERY_TODO.md) for skipped checks; [ROM_DATA_TODO](ROM_DATA_TODO.md), only the selected criterion's section (ROMDATA-01/02/03/04/05/06/07); [inventory](ROM_DATA_INVENTORY.md). Do not read the whole TODO. Children retain their IDs and limits:
   - `ROMDATA-01-PARAMETER-RECORDS27-DYNAMIC-SOURCES`: partial; writers map to 59 rows (js3rbve5); retained lists negative/inconclusive (m1p_8lhy). Live domain, save loads and aliases open. `docs/rom_data_gameplay.md`.
   - `ROMDATA-04-GAMEPLAY-6E84E0-BYTE00`: partial; static text screen 78suaoix found no token; generated/indirect sources open, no blind Select. `docs/rom_data_gameplay.md`.

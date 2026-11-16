@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "bound-byte00-dispatcher-direct-callers",
+  "title": "Bound EUR byte00 dispatcher direct callers",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Narrow the unresolved byte00 ordinary-use investigation to text-sourced direct dispatcher candidates within the scanned EUR code range."
+  ],
+  "validation": [
+    "Wine e158-byte00-dispatch-refs-wine-1quaoj7v finds two Thumb BL candidates to 08015e9c in 08000000..08150000 and no aligned callback words; prior caller windows show their text-sourced selector paths.",
+    "A focused gpt-6.1-sol xhigh consultation suggested this discriminating scan; effective model settings were not independently confirmed."
+  ],
+  "limitations": [
+    "Static candidates do not prove execution or exclude generated text, indirect calls, other code ranges or unaligned pointers. Linux, USA and native Windows remain unverified. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md"
+  ],
+  "references": []
+}

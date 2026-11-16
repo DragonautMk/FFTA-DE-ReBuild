@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "trace-byte00-mission-list-insertion",
+  "title": "Trace a EUR mission-list insertion path",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Identify a conditional loop-derived list insertion and distinguish it from reordering an existing node; do not infer a global list domain."
+  ],
+  "validation": [
+    "Wine e158-byte00-list-identity-dis-wine-4ajfe58a and e158-byte00-list-producer-dis-wine-aizksk7l inspect scratch ID creation, list insertion and reorder.",
+    "Wine e158-byte00-list-record-source-dis-wine-_13cqeec and e158-byte00-list-source-origin-dis-wine-nm930x2k retain the intervening original windows.",
+    "Focused read-only Sol consultation /root/sol_byte00_list_producer requested gpt-6.1-sol at xhigh; effective settings were not independently reported."
+  ],
+  "limitations": [
+    "The 1..511 result is conditional on the inspected scratch-record insertion and stable contents. The zero-argument call does not establish removal of pre-existing nodes; other producers, save restoration, aliases, execution and ordinary byte00 remain open. Linux, USA and native Windows pending. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": []
+}

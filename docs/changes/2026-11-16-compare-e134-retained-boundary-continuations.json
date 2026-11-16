@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "compare-e134-retained-boundary-continuations",
+  "title": "Compare E134 retained boundary-state continuations",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add a focused test comparing full snapshots from two retained failed-comparison states across independently stepped interpreter continuations."
+  ],
+  "validation": [
+    "Windows test executable cross-compiled by e134-common-point-build-retry-q9g7yzgm; the initial build unit 5czy55tf failed before compilation because its script path was relative to runner scratch.",
+    "Wine e134-common-point-wine-_b25rbot executed one test successfully: no identical full snapshot among the first 65 points per state. Its validation unit is FAIL because private state copies remain in scratch; the server drained.",
+    "Wine e134-common-preserve-wine-5igtz_67 verified all ten protected input hashes and both retained state copies without replaying the test."
+  ],
+  "limitations": [
+    "This bounded negative cannot establish permanent divergence, its first cause, updater semantics, production translation or ordinary translated drawing. Failed unit and diagnostic state copies remain retained. Linux, USA and native Windows pending. No performance measurement."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/obj_context_bank_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": []
+}

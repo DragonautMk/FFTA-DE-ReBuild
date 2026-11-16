@@ -115,9 +115,12 @@ the prefix lease through the final `wineserver -w`, including nonzero driver
 exit; a driver timeout or failed server drain retains diagnostic leases.
 Receipts record the mode, lease owner and whether server drain completed.
 When an existing `$XDG_RUNTIME_DIR/wine` directory is not writable, the runner
-refuses before acquiring the Wine prefix lease or starting Wine. Use a context
-with access to that runtime directory; this check does not grant sandbox
-permissions or cover every possible Wine runtime and filesystem failure.
+refuses before acquiring the Wine prefix lease or starting Wine. It also probes
+whether a Unix-domain socket can be bound in a temporary directory, before
+leasing the prefix. A sandbox can deny that operation even when its temporary
+directory is writable. Use a context with both runtime access and socket-bind
+permission; the probes do not grant sandbox permissions or cover every possible
+Wine runtime, socket path, race or filesystem failure.
 `--wine` still prepends Wine and supplies Windows paths; the modes are mutually
 exclusive. Wine path placeholders remain available in either mode.
 

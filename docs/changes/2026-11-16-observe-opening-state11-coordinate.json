@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "observe-opening-state11-coordinate",
+  "title": "Observe EUR opening state-11 coordinate use",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add a focused ordinary EUR opening observation for the state-11 coordinate reader."
+  ],
+  "validation": [
+    "Wine e158-state11-ordinary-wine-3m78lqs_ observes one typed request at original reader 0813a396 with poisoned 3adefe source and no raw reads; the reader frame matches the original full state and clock."
+  ],
+  "limitations": [
+    "One interpreter frame only; other scenes, native dispatch, Linux, USA and native Windows remain unverified. No performance measurement."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/title_main_bank_draw_tests.rs",
+    "docs/rom_data_obj.md"
+  ],
+  "references": []
+}

@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "trace-byte00-mission-variable-writers",
+  "title": "Trace EUR mission writers of the world index variable",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Trace two mission-key writer paths and screen all authenticated mission rows for writes to the world index source variable.",
+    "Bound a direct mission-state caller to six-bit indices before its two variable-setter paths."
+  ],
+  "validation": [
+    "Wine e158-byte00-all-setter-windows-wine-epy6ixhg retains bounded candidate setter windows; e158-byte00-dynamic-key-origins-wine-3b1ncdqm and e158-byte00-mission-key-loop-wine-9xmjtx3w establish key, mode and loop arithmetic.",
+    "Wine e158-byte00-mission-var80-screen-wine-jnkbjfyx authenticates 512 EUR mission records and screens four physical slots per row: 27 key 680 matches, all mode 3 operands 1..30.",
+    "Wine e158-byte00-world-clear-callers-wine-d8jrfcjt and e158-byte00-world-clear-caller-wine-pdzm4ife identify a direct caller that supplies 0..63; the two examined helpers add 14 hex.",
+    "Wine e158-byte00-world-init-callers-wine-17k0_b_u and e158-byte00-world-init-guard-wine-q0h2f10_ find two further direct helper candidates whose guarded keys yield variable indices 1b..32."
+  ],
+  "limitations": [
+    "The bound is conditional on a matched owned row, the examined path, stable view and last-writer order; out-of-catalog IDs, indirect and bulk writers, restores, aliases and ordinary byte00 reachability remain open. Linux, USA and native Windows pending. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": []
+}

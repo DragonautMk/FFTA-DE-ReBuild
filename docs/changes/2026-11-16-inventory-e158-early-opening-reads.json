@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "inventory-e158-early-opening-reads",
+  "title": "Inventory EUR early-opening reads against E158",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Record a bounded high-ROM source inventory at the EUR early-opening checkpoint against E158."
+  ],
+  "validation": [
+    "Wine e158-early-bank-inventory-wine-lnfgdwch covers three neutral interpreter frames with no dropped requests and no raw overlap with declared sources; the only unowned bytes are the known 370eb0 helper vector."
+  ],
+  "limitations": [
+    "This bounded window does not prove global source coverage; other scenes, Linux, USA and native Windows remain unverified. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md"
+  ],
+  "references": []
+}

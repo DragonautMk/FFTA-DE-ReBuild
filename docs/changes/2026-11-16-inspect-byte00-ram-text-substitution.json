@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "inspect-byte00-ram-text-substitution",
+  "title": "Inspect EUR byte00 RAM text substitution paths",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Trace the two local RAM text-substitution helpers and distinguish the authenticated short-string path from the live callback path."
+  ],
+  "validation": [
+    "Wine e158-byte00-buffer-helpers-dis-wine-8bksdmpz identifies helper 0801738c calling short-string selector 08016648 and copy/expander 08019d98, and helper 08019e94 dispatching through table 371158.",
+    "Original parser jump-table inspection maps command bytes 25/72/67 to these substitution and formatter branches; prior E132 expanded-string screen found no literal 40 67 01 in the authenticated short catalog."
+  ],
+  "limitations": [
+    "Callback index domain/output, out-of-catalog short selectors, parser reachability, generated text and ordinary byte00 use remain unproved; Linux, USA and native Windows remain pending. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md"
+  ],
+  "references": []
+}

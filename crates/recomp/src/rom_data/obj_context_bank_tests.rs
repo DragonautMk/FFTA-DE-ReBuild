@@ -341,13 +341,18 @@ fn european_context_bank_ordinary_augmented_updater() {
         &recomp_core::tcc_memory::library_path().expect("TinyCC required"), &object, &mut |_| {}).unwrap();
     let (_supplement_library, supplement) = crate::load_native(&object).unwrap();
     let (_production_library, mut table) = crate::load_native(&PathBuf::from(std::env::var_os("FFTA_STATE_TEST_NATIVE").unwrap())).unwrap();
+    let full_translation = std::env::var_os("FFTA_CONTEXT_FULL_TRANSLATION").is_some();
     for &(pc, thumb) in &visited {
         let key = pc | u32::from(thumb);
-        assert!(table.get(key).is_none(), "production already has updater entry {key:08x}");
-        let function = supplement.get(key).expect("compiled observed updater instruction");
-        let index = key.wrapping_sub(0x0800_0000) as usize;
-        if index >= table.rom.len() { table.rom.resize(index + 1, None); }
-        table.rom[index] = Some(function);
+        if full_translation {
+            assert!(table.get(key).is_some(), "current translation missing updater entry {key:08x}");
+        } else {
+            assert!(table.get(key).is_none(), "retained translation already has updater entry {key:08x}");
+            let function = supplement.get(key).expect("compiled observed updater instruction");
+            let index = key.wrapping_sub(0x0800_0000) as usize;
+            if index >= table.rom.len() { table.rom.resize(index + 1, None); }
+            table.rom[index] = Some(function);
+        }
     }
 
     let mut raw = crate::make_machine(rom.clone(), None);
@@ -404,12 +409,151 @@ fn european_context_bank_ordinary_augmented_updater() {
     assert!(updater_source_dispatches > 0, "no managed animation bytes served during augmented updater dispatch");
     assert!(unscoped > 0, "no selected-bank typed reads outside interpreter scope");
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "scope":"ordinary EUR checkpoint, temporary augmented translation table",
+        "status":"PASS", "scope": if full_translation { "ordinary EUR checkpoint, current explicitly labeled translation" } else { "ordinary EUR checkpoint, temporary augmented translation table" },
         "observed_updater_instructions":visited.len(), "native_updater_dispatches":updater_dispatches,
         "native_updater_dispatches_serving_animation_bytes":updater_source_dispatches,
         "unscoped_selected_bank_typed_reads":unscoped, "raw_selected_bank_reads":raw_reads,
         "full_state_clock_frames":3, "source_rom_poisoned":true,
-        "production_translation_coverage":"not established", "ordinary_translated_draw":"pending",
+        "production_translation_coverage":"not established", "ordinary_translated_draw":"pending", "full_translation":full_translation,
         "Linux":"pending", "USA":"pending", "native_windows":"pending", "performance_measurements":false
+    })).unwrap()).unwrap();
+}
+
+#[test]
+#[ignore = "retained E134 frame-boundary states and exact EUR ROM; Wine only"]
+fn european_context_bank_retained_boundary_common_point() {
+    use std::collections::HashMap;
+
+    let root = PathBuf::from(std::env::var_os("FFTA_CONTEXT_COMMON_ROOT").unwrap());
+    let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    let mut left = crate::make_machine(rom.clone(), None);
+    let mut right = crate::make_machine(rom, None);
+    left.load_state(&fs::read(root.join("left.ffstate")).unwrap()).unwrap();
+    right.load_state(&fs::read(root.join("right.ffstate")).unwrap()).unwrap();
+    assert_eq!(left.cpu.regs[15], 0x0800_044e);
+    assert_eq!(right.cpu.regs[15], 0x0800_044c);
+    assert_eq!(left.bus.clock + 14, right.bus.clock);
+
+    // Both are already past the failed comparison. Advance each retained
+    // state independently with the interpreter and compare entire snapshots.
+    let mut seen = HashMap::new();
+    for n in 0..=64 {
+        let snapshot = left.save_state().unwrap();
+        seen.insert(snapshot, n);
+        if n < 64 { left.step(); }
+    }
+    let mut common = None;
+    for n in 0..=64 {
+        let snapshot = right.save_state().unwrap();
+        if let Some(&left_steps) = seen.get(&snapshot) {
+            common = Some((left_steps, n, right.cpu.regs[15], right.bus.clock));
+            break;
+        }
+        if n < 64 { right.step(); }
+    }
+    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
+        "status": "PASS", "scope": "interpreter continuations from two retained E134 frame-boundary states",
+        "max_steps_each": 64, "common_full_state": common.is_some(), "common_point": common,
+        "limitations": "Bounded continuation of previously failed comparison; does not prove prior native/interpreter equivalence or production updater coverage.",
+        "Linux": "pending", "USA": "pending", "native_windows": "pending", "performance_measurements": false
+    })).unwrap()).unwrap();
+}
+
+#[test]
+#[ignore = "retained E134 checkpoint and translation artifacts; Wine only"]
+fn european_context_bank_first_dispatch_difference() {
+    const UPDATER: std::ops::Range<u32> = 0x080a_c640..0x080a_cd00;
+    let root = PathBuf::from(std::env::var_os("FFTA_CONTEXT_DIAG_ROOT").unwrap());
+    let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    let state = fs::read(std::env::var_os("FFTA_CONTEXT_ORDINARY_STATE").unwrap()).unwrap();
+    assert_eq!(gba_core::ffta_rom::digest(&state), "ca90c12b4564c21fd8cea20e65bcc2c017d0d3a1ee61e89623920dd1f9a00305");
+    let (_production_lib, mut table) = crate::load_native(&PathBuf::from(std::env::var_os("FFTA_STATE_TEST_NATIVE").unwrap())).unwrap();
+    let (_supplement_lib, supplement) = crate::load_native(&PathBuf::from(std::env::var_os("FFTA_CONTEXT_SUPPLEMENT").unwrap())).unwrap();
+    let full_translation = std::env::var_os("FFTA_CONTEXT_FULL_TRANSLATION").is_some();
+    let mut added = 0usize;
+    for (index, function) in supplement.rom.iter().enumerate() {
+        let key = 0x0800_0000u32 + index as u32;
+        if !UPDATER.contains(&(key & !1)) { continue; }
+        if let Some(function) = function {
+            if full_translation {
+                assert!(table.get(key).is_some(), "current translation missing updater key {key:08x}");
+            } else {
+                assert!(table.get(key).is_none());
+                if index >= table.rom.len() { table.rom.resize(index + 1, None); }
+                table.rom[index] = Some(*function);
+            }
+            added += 1;
+        }
+    }
+    assert_eq!(added, 43, "retained supplement must contain the observed updater entries");
+    let mut reference = crate::make_machine(rom.clone(), None);
+    let mut translated = crate::make_machine(rom, None);
+    reference.load_state(&state).unwrap();
+    translated.load_state(&state).unwrap();
+    assert!(reference.save_state().unwrap() == translated.save_state().unwrap());
+    reference.bus.frame_ready = false;
+    let mut mismatch = None;
+    let mut prior: Option<(u32, String)> = None;
+    let mut reference_steps = 0u64;
+    let mut updater_seen = false;
+    let mut boundaries = 0u64;
+    let mut compare = |actual: &Machine, kind: Option<crate::NativeDispatch>| {
+            if mismatch.is_some() { return; }
+            boundaries += 1;
+            while reference.bus.clock < actual.bus.clock && !reference.bus.frame_ready && reference_steps < 5_000_000 {
+                reference.step();
+                reference_steps += 1;
+            }
+            let mut changed = Vec::new();
+            for i in 0..16 {
+                if reference.cpu.regs[i] != actual.cpu.regs[i] { changed.push(i); }
+            }
+            let cpsr_differs = reference.cpu.cpsr != actual.cpu.cpsr;
+            if reference.bus.clock != actual.bus.clock || !changed.is_empty() || cpsr_differs {
+                let count = |a: &[u8], b: &[u8]| a.iter().zip(b).filter(|(x,y)| x != y).count();
+                mismatch = Some(serde_json::json!({
+                    "previous_dispatch": prior,
+                    "current_dispatch": kind.map(|k| format!("{:?}", k)).unwrap_or_else(|| "frame-end".into()),
+                    "native_pc": format!("{:08x}", actual.cpu.regs[15]),
+                    "reference_pc": format!("{:08x}", reference.cpu.regs[15]),
+                    "native_clock_minus_reference": actual.bus.clock as i64 - reference.bus.clock as i64,
+                    "reference_frame_ready": reference.bus.frame_ready,
+                    "native_frame_ready": actual.bus.frame_ready,
+                    "different_register_indices": changed,
+                    "cpsr_differs": cpsr_differs,
+                    "different_bytes": {
+                        "ewram": count(&actual.bus.ewram, &reference.bus.ewram),
+                        "iwram": count(&actual.bus.iwram, &reference.bus.iwram),
+                        "io": count(&actual.bus.io, &reference.bus.io),
+                        "palette": count(&actual.bus.palette, &reference.bus.palette),
+                        "vram": count(&actual.bus.vram, &reference.bus.vram),
+                        "oam": count(&actual.bus.oam, &reference.bus.oam),
+                    },
+                    "updater_native_seen_before_mismatch": updater_seen,
+                    "reference_steps": reference_steps,
+                }));
+                return;
+            }
+            if kind == Some(crate::NativeDispatch::Native) && UPDATER.contains(&actual.cpu.regs[15]) {
+                updater_seen = true;
+            }
+            if let Some(kind) = kind { prior = Some((actual.cpu.regs[15], format!("{:?}", kind))); }
+        };
+    let native_ptr = &mut translated as *mut Machine as *mut std::ffi::c_void;
+    crate::run_frame_native_traced(&mut translated, &table, native_ptr, 5_000_000,
+        |actual, kind| compare(actual, Some(kind)), |_, _, _| {});
+    assert!(translated.bus.frame_ready, "translated frame did not finish");
+    compare(&translated, None);
+    drop(compare);
+    let full_state_equal_at_frame_end = reference.bus.frame_ready
+        && translated.bus.frame_ready
+        && reference.save_state().unwrap() == translated.save_state().unwrap();
+    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
+        "status": "PASS", "scope": "first observed PC/register/clock difference at a native dispatcher boundary",
+        "supplement_entries": added, "checked_boundaries_including_frame_end": boundaries,
+        "full_translation": full_translation, "full_state_equal_at_frame_end": full_state_equal_at_frame_end,
+        "updater_native_seen_before_mismatch": updater_seen, "first_mismatch": mismatch,
+        "limitations": "Only one checkpoint/frame and dispatcher boundaries; earlier memory-only divergence, later behavior, ordinary production translation and drawing remain unproved.",
+        "Linux": "pending", "USA": "pending", "native_windows": "pending", "performance_measurements": false
     })).unwrap()).unwrap();
 }

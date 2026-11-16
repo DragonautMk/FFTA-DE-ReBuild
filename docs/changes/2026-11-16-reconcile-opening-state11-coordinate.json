@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "reconcile-opening-state11-coordinate",
+  "title": "Reconcile EUR opening state-11 coordinate source",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Resolve a state-11 literal reference against the existing E158 sparse coordinate source."
+  ],
+  "validation": [
+    "Wine e158-title-opening-state11-dis-wine-cq5x5sqb shows literal 3adefc and halfword load at offset +2, yielding already-owned 3adefe."
+  ],
+  "limitations": [
+    "Ordinary execution of this state-11 reader and other consumers remain unverified; Linux, USA and native Windows remain pending. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_obj.md"
+  ],
+  "references": []
+}

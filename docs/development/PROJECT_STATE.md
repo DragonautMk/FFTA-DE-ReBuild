@@ -2280,8 +2280,8 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   other title selections and the global writer/value domain remain open.
   [Contract](../rom_data_obj.md#bounded-eur-language-byte-writer-inventory).
 - EUR e158-d157 serves conditional opening coordinate pairs and sparse
-  halfwords; original-reader, opening-frame and production CLI Wine checks
-  pass. Other scenes, Linux, USA and native Windows remain open.
+  halfwords; original-reader, ordinary sparse-branch and production CLI Wine
+  checks pass. Other scenes, Linux, USA and native Windows remain open.
   [Contract](../rom_data_obj.md#eur-title-opening-coordinate-sources).
 - EUR e157-d156 serves the opening's 19-pointer OBJ directory and 11 lists;
   controlled readers, production CLI and one ordinary affine list-read frame

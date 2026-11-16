@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "trace-byte00-active-id-helper",
+  "title": "Trace a EUR active-index producer through its caller",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Identify mode-dependent return domains of the active-index helper and a conditional byte-valued path into the active selector."
+  ],
+  "validation": [
+    "Wine e158-byte00-active-id-helper-dis-wine-_emiu3kp and e158-byte00-active-id-preserve-dis-wine-kqba3yet inspect the original helper, caller and intervening routine.",
+    "Wine e158-byte00-active-id-callees-dis-wine-sy1sh_8p inspects additional intervening call windows; no gameplay execution was inferred."
+  ],
+  "limitations": [
+    "The byte bound assumes the observed mode and return register survive intervening calls and no later writer intervenes; mode 1 can produce a ten-bit value and object identity, aliases, other writers, callback invocation and ordinary byte00 use remain open. Linux, USA and native Windows pending. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": []
+}

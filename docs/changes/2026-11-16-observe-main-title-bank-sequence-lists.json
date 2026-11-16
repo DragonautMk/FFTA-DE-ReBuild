@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "observe-main-title-bank-sequence-lists",
+  "title": "Observe EUR opening animation sequence lists",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Verify the five nonempty lists in the extracted title animation sequence during a neutral ordinary EUR opening continuation."
+  ],
+  "validation": [
+    "Wine e158-main-bank-early-wine-hhh7a8lg observes indices 1\u20135 in 115 neutral interpreter frames with typed headers, poisoned source and no raw requests; the first frame for each observed list matches the original complete state and clock.",
+    "The earlier bounded window dqpspyyn only saw index 3; Sol was requested with gpt-6.1-sol and xhigh to inspect retained checkpoints, effective settings unconfirmed."
+  ],
+  "limitations": [
+    "Index 0 is empty and not referenced by the extracted sequence; other scenes, producers, native dispatch, Linux, USA and native Windows remain unverified. No performance measurement."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/title_main_bank_draw_tests.rs",
+    "docs/rom_data_obj.md"
+  ],
+  "references": []
+}

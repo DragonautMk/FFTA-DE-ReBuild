@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "bound-main-title-bank-following-lists",
+  "title": "Bound subsequent EUR title bank list observations",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add a bounded continuation that records which independent title animation bank lists appear and compares each first observed list frame with the original."
+  ],
+  "validation": [
+    "Wine e158-main-bank-other-wine-dqpspyyn runs 100 neutral interpreter frames: only index 3 b8ed6c appears, with 66 typed header requests and no raw source reads; its first frame matches the original complete state and clock."
+  ],
+  "limitations": [
+    "Other lists were not observed in this window; earlier or other scenes, native dispatch, Linux, USA and native Windows remain unverified. No performance measurement."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/title_main_bank_draw_tests.rs",
+    "docs/rom_data_obj.md"
+  ],
+  "references": []
+}

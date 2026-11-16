@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "screen-byte00-world-byte-indices",
+  "title": "Screen EUR world insertion byte indices",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Reconcile two bounded direct caller arguments with fixed-ROM world insertion arithmetic, retaining out-of-catalog and execution limits."
+  ],
+  "validation": [
+    "Wine e158-byte00-world-insert-callers-wine-d25kty3u finds two direct Thumb BL candidates; e158-byte00-world-insert-caller-dis-wine-a4_woxfy shows both pass a live unsigned byte.",
+    "Wine e158-byte00-world-byte-index-screen-wine-sli5ztgr examines all 256 byte indices: 75 outside the authenticated 31-row catalog yield IDs above 511, none matching the eight previously identified necessary helper candidates."
+  ],
+  "limitations": [
+    "The 225 out-of-catalog positions are arithmetic reads, not authenticated world records or observed inputs. Indirect callers, changed records, other producers, restoration, callback execution and ordinary byte00 use remain unproved. Linux, USA and native Windows pending. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": []
+}

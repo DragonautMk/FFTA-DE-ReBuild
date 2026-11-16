@@ -3232,7 +3232,7 @@ record 144 typed reads of the selected bank, no raw reads from its spans, and
 bank source spans poisoned (`e134-ordinary-pair-wine-x9h8ztad`). In the
 native-dispatch run those bank reads all have interpreter instruction scopes;
 the run does not establish ordinary execution of a translated updater.
-The exact translation artifact protected by that run has 28,859 block keys,
+The older translation artifact manually supplied to that run has 28,859 block keys,
 with none in the updater, its ordinary caller, or the OBJ draw ranges. This
 is a static inspection of that artifact, not a claim about other builds.
 The dispatcher also routes the draw range through the interpreter when the
@@ -3247,9 +3247,61 @@ raw reads during those entries. Raw and managed arms using this same temporary
 table match full machine states and clocks for three frames with the selected
 ROM spans poisoned (`e134-ordinary-augmented-wine-m7063z21`). The first attempt
 compared an interpreter arm against an augmented native arm and failed its
-first-frame state comparison (`e134-ordinary-augmented-wine-oq8pw9nm`); it did
-not establish the cause. This result does not prove production table coverage
-or translated draw execution, and the captured dispatch can contain nested work.
+first-frame state comparison (`e134-ordinary-augmented-wine-oq8pw9nm`). A
+read-only Wine analysis of the two saved assertion values verifies both
+checksums and finds just two payload-byte differences: the serialized program
+counter and clock (`e134-failed-state-diff-wine-ve41xbr3`). The logged left
+state has PC `0800044e`, the right has `0800044c`, and the left clock is 14
+cycles behind. All other serialized payload bytes match. The first state
+comparison was made at each runner's frame boundary; the differing PC and clock
+are consistent with different stop positions but do not establish the cause or
+prove equivalence at a common execution point. Wine disassembly
+`e134-frame-pc-dis-wine-j8rolnkj` places both PCs in the same original loop:
+`0800044c` loads an address, `0800044e` reads its halfword, and a zero result
+branches back to `0800044c`. This is static context, not a replay or proof
+that the two executions were synchronized. A focused Wine test loads both
+retained assertion states into separate machines and advances each through at
+most 64 interpreter steps. No byte-identical complete snapshot occurs between
+any pair of points in those two windows
+(`e134-common-point-wine-_b25rbot`). This is a bounded negative, not proof of
+permanent divergence or attribution to the updater. The test itself passed,
+but the unit is FAIL because its private state copies were retained; the Wine
+server drained and a separate read-only Wine unit verified the protected input
+hashes and both copies (`e134-common-preserve-wine-5igtz_67`). A focused Sol
+consultation was requested at `gpt-6.1-sol`/`xhigh` but stopped due to its
+usage limit; effective settings were not independently confirmed. A later
+dispatcher-boundary diagnostic of that older artifact advanced its interpreter
+reference beyond its own frame boundary; its final IRQ-state mismatch therefore
+is not a valid comparison of equivalent frame boundaries
+(`e134-final-dispatch-wine-jui0l9oq`). An exact byte screen finds none of the
+current event-guard tag in that artifact and 43 instances in the updater
+supplement (`e134-guard-object-screen-wine-_ziu3pif`). This static screen does
+not prove the absence of equivalent guards or establish the mismatch's cause.
+
+The current Windows translation builder was then run in isolated label storage
+with the same checkpoint's 43 observed updater entries explicitly supplied
+(`e134-current-translation-build-wine-e4c7wlpv`). For one frame, the interpreter
+and this translation have identical full final state and clock, with no
+PC/register/clock difference at the 870 checked dispatcher boundaries
+(`e134-current-parity-wine-9ymu0twl`). With the same translation, ordinary
+raw/managed pairs match full state and clock over three frames for both the
+interpreter and native dispatcher, with the selected ROM bank poisoned in the
+managed arm (`e134-current-managed-pair-wine-oz1t6jbr`). A more focused trace
+records 43 unscoped typed bank reads and no raw bank reads during nine native
+updater dispatches that served managed animation bytes; the three-frame
+raw/managed comparison also matches (`e134-current-attribution-wine-yw62he9p`).
+Those dispatches can include nested work. These results concern explicitly
+supplied entries, not the default production cache or ordinary translated draw.
+
+An isolated build with the current CLI and no extra labels contains none of the
+43 observed updater symbol names (`e134-default-translation-build-wine-qpbgtmmw`).
+On the same checkpoint, its three-frame interpreter and native-dispatch
+raw/managed pairs match full state and clock; all 144 selected-bank reads in
+the native-dispatch arm have interpreter instruction scopes, and no native
+updater dispatch was observed (`e134-default-managed-pair-wine-botzl4b6`).
+These results establish behavior for that isolated build and checkpoint, not
+which translation a particular production runtime cache selects. Other
+ordinary paths and ordinary translated draw require separate evidence.
 The earlier targeted translated updater/draw cases remain distinct. Full UI
 save/Load, other ordinary paths, Linux, USA and native Windows remain open.
 A separate Wine lifecycle test verifies all 24 bank source spans after isolated
@@ -3341,9 +3393,9 @@ normal selection around 0 and 4, but neither the loaded byte nor the eventual
 store imposes a universal clamp. The callback's register/source chain is also
 recorded in retained `obj-retained-candidate-windows-61ceiuwx` evidence.
 
-These are bounded original-code paths, not an exhaustive write census. Other ordinary
-selections and the full source-value/writer domain,
-indirect writes, frontend interaction, Linux, USA and native Windows remain
+These are bounded original-code paths, not an exhaustive write census. The
+full source-value/writer domain, indirect writes, other frontend interactions,
+Linux, USA and native Windows remain
 open. The focused Sol consultation requested `gpt-6.1-sol` at `xhigh`;
 effective model and effort could not be independently verified. No performance
 measurement was made.
@@ -3376,10 +3428,20 @@ from the retained title menu to the visible five-language selector. From that
 checkpoint, `e154-title-language-publisher-wine-ij_gnywg` uses Down, release
 and A to select French. It witnesses the original selection write at context
 `0200f3d4 + 8964`, then `0813aafe` publishing value 1 to `02001f6e`. Exact
-pre/post publication states are privately retained. This establishes one
-ordinary title path; other selections, indirect writers and the global value
-domain remain open. Linux, USA and native Windows remain pending, and no
-performance was measured.
+pre/post publication states are privately retained.
+
+From the same selector checkpoint, Wine
+`e154-title-other-publications-wine-9k_mye2m` observes confirmation of IDs 2
+and 3 using Down and ID 4 using Up to wrap from 0. The original publisher stores
+each selected byte to `02001f6e`. Confirming already-active ID 0 instead takes
+the unchanged branch and does not call that store. Across these four separate
+ordinary interpreter routes, raw/managed full states and clocks match at every
+frame through the observed confirmation; the two monitored position-source
+spans are poisoned in the managed arm. The trace records 128 typed requests,
+zero raw requests to those spans, and both selected title-cursor halfwords for
+each choice. This does not prove a later publication of ID 0, other writers,
+the global value domain or native-dispatch behavior for these routes. Linux,
+USA and native Windows remain pending; no performance was measured.
 
 
 ## Title language cursor and animation source contract
@@ -3514,6 +3576,31 @@ first-read witness does not establish the individual source offsets read,
 actual drawing, all bank lists, other scenes, or native-dispatch attribution.
 Linux, USA and native Windows remain pending; no performance measurement.
 
+Wine `e158-main-bank-draw-wine-88p3pl3x` continues the retained EUR opening
+at the pre-sparse checkpoint. In its first neutral interpreter frame, the
+original regular OBJ draw reader `0800153c` reads the `b8ed6c` list header
+from the managed bank, with poisoned source bytes and no raw source requests.
+The frame matches the original complete state and clock. Other bank lists,
+scenes and native dispatch remain open; Linux, USA and native Windows remain
+pending. No performance measurement.
+
+Wine `e158-main-bank-other-wine-dqpspyyn` continues the same neutral EUR
+checkpoint for 100 interpreter frames: only list index 3 (`b8ed6c`) is
+observed, with 66 typed header requests, no raw source reads and a matching
+original/managed complete state and clock on its first frame. The other
+indices were not observed in this bounded window; this is not proof of global
+absence. Other scenes, native dispatch, Linux, USA and native Windows remain
+open; no performance measurement.
+
+Wine `e158-main-bank-early-wine-hhh7a8lg` instead continues the earlier
+retained checkpoint `28msdufg` for 115 neutral interpreter frames. It
+observes each of the five nonempty sequence lists (indices 1–5), with typed
+headers, poisoned list source bytes and no raw source requests. The first
+frame for each observed list matches the original complete state and clock.
+Index 0 is an empty list and is not used by the extracted sequence; other
+scenes, producers, native dispatch, Linux, USA and native Windows remain
+open. No performance measurement.
+
 ## EUR neutral-opening OBJ pointer directory
 
 The title initializer at `0813a240..25e` copies exactly 19 absolute ROM
@@ -3595,8 +3682,8 @@ poisoned source bytes, mixed boundaries, unchanged unrelated resource files
 and five original routine cases: state 1 with indices 0, 18, 19 and 255,
 plus the state 10 sparse loop. Three neutral opening interpreter frames match
 the original full state and clock, with two typed requests and zero raw
-requests in the selected spans. Ordinary execution of the
-sparse branch, native dispatch, Linux, USA and native Windows remain open.
+requests in the selected spans. At that checkpoint, ordinary execution of the
+sparse branch, native dispatch, Linux, USA and native Windows remained open.
 No performance measurement.
 
 Production Wine CLI `e158-opening-coordinates-cli-wine-tucnagm9` creates,
@@ -3614,5 +3701,21 @@ failed before the test because Wine could not create its runtime lock under
 `/run/user/1000/wine`. Existing E158 Wine results remain valid. The failed
 unit is retained for diagnosis. Its exact unit and Wine leases were later
 recovered after host-visible process checks and a successful server drain;
-`wine-runtime-recovery-smoke-lwzsvfgf` verifies Wine access. The paused sparse
-observation has not been rerun.
+`wine-runtime-recovery-smoke-lwzsvfgf` verifies Wine access.
+
+Wine `e158-sparse-ordinary-wine-htdztv4y` continues the retained neutral
+opening: at frame 118, all 19 sparse halfwords are read with 38 typed requests
+and zero raw requests while source bytes are poisoned. The first reader
+frame matches the original complete state and clock. The pre-frame checkpoint
+is retained privately in the unit. Other scenes and native dispatch remain
+open; Linux, USA and native Windows remain pending. No performance measurement.
+
+Wine disassembly `e158-title-opening-state11-dis-wine-cq5x5sqb` resolves a
+separate state-11 literal at `0813a3c0`: it points to `3adefc`, but the
+actual halfword reader at `0813a396` applies offset +2 and reads `3adefe`.
+That exact halfword is already owned by E158 as sparse index zero; no new
+source is inferred from the base literal. Wine `e158-state11-ordinary-wine-3m78lqs_` observes the state-11 reader in
+the neutral opening: the managed halfword is read with its ROM source
+poisoned and no raw request, and the frame matches the original full state
+and clock. Other scenes and native dispatch remain open; Linux, USA and
+native Windows remain pending. No performance measurement.

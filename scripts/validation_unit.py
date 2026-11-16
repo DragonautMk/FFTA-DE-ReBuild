@@ -14,6 +14,7 @@ import os
 from pathlib import Path, PurePosixPath
 import re
 import shutil
+import socket
 import subprocess
 import sys
 import tempfile
@@ -57,16 +58,24 @@ def retained(rel, paths):
 
 
 def check_wine_runtime_access(env):
-    """Refuse a known read-only Wine runtime before acquiring its prefix lease."""
+    """Refuse known Wine runtime restrictions before acquiring its prefix lease."""
     runtime = env.get('XDG_RUNTIME_DIR')
-    if not runtime:
-        return
-    wine_runtime = Path(runtime) / 'wine'
-    # Check only an existing Wine runtime directory. Wine implementations can
-    # choose a different fallback when it has not been created yet.
-    if wine_runtime.is_dir() and not os.access(wine_runtime, os.W_OK):
-        raise ValueError(f'Wine runtime directory is not writable: {wine_runtime}; '
-                         'run Wine in a context with access to its runtime directory')
+    if runtime:
+        wine_runtime = Path(runtime) / 'wine'
+        # Wine implementations may choose another fallback if this is absent.
+        if wine_runtime.is_dir() and not os.access(wine_runtime, os.W_OK):
+            raise ValueError(f'Wine runtime directory is not writable: {wine_runtime}; '
+                             'run Wine in a context with access to its runtime directory')
+    # A writable directory alone is insufficient when sandbox policy denies
+    # Unix-domain socket binds, which the Wine server needs for communication.
+    try:
+        with tempfile.TemporaryDirectory(prefix='ffta-wine-socket-') as directory:
+            with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as probe:
+                probe.bind(str(Path(directory) / 'socket'))
+    except OSError as error:
+        raise ValueError('Wine socket preflight failed in the temporary directory; '
+                         'run Wine in a context that permits Unix-domain socket binds: '
+                         f'{error}') from error
 
 
 def snapshot(path, *, hashes=False, disposable=False, read_only=False,

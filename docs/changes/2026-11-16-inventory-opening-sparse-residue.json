@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "inventory-opening-sparse-residue",
+  "title": "Inventory EUR opening sparse-branch reads",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Record a bounded high-ROM source inventory at the ordinary EUR opening sparse-coordinate reader."
+  ],
+  "validation": [
+    "Wine e158-sparse-residue-wine-b81cszl2 records three neutral interpreter frames with no dropped requests and no raw overlap with declared sources; the only unowned bytes are the previously classified 370eb0 helper vector."
+  ],
+  "limitations": [
+    "The bounded window does not prove global absence of unowned sources; other scenes, Linux, USA and native Windows remain unverified. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md"
+  ],
+  "references": []
+}

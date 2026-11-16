@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "identify-byte00-field-initializers",
+  "title": "Identify localized initializers of the EUR text field",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Identify two conditional initial sources of the live context field, including a distinct localized pointer-table selector."
+  ],
+  "validation": [
+    "Wine e158-byte00-field-init-dis-wine-tdombygl traces state 0100 and both field-copy branches.",
+    "Wine e158-byte00-field-selectors-dis-wine-y865vpe4 identifies the language-dependent pointer-table selection in 08016828."
+  ],
+  "limitations": [
+    "The selected contents, actual state transitions, saved or aliased contents, other writers, callback invocation and ordinary byte00 use remain unproved. Linux, USA and native Windows pending. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": []
+}

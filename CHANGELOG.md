@@ -3,6 +3,506 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-16 — Verify additional EUR title language publications
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Add ordinary title-selector raw/managed frame comparisons for language IDs 2, 3 and 4 and confirmation of the already active ID 0.
+
+**Validation**
+
+- Wine e154-title-other-publications-wine-9k_mye2m observes original publication of IDs 2 and 3 after Down inputs and ID 4 after Up wrap from zero; confirming active ID 0 takes the unchanged branch.
+- The four interpreter raw/managed routes match complete state and clock at each observed frame with monitored position spans poisoned, 128 typed requests, no raw requests to those spans, and both selected title-cursor halfwords observed.
+- Windows GNU test executable cross-compiled in e154-title-other-publications-build-00uwpk23; the Wine validation unit passed and drained its server.
+
+**Limitations**
+
+- Publication of ID 0 after a different language, global writers and index domain, other scenes and native-dispatch behavior for these routes remain unverified. Linux, USA and native Windows are pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-verify-title-language-publication-choices.json)
+
+## 2026-11-16 — Validate E134 updater with current labeled and default translations
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Add a dispatcher-boundary comparison and allow the focused ordinary updater trace to use a current full translation with explicitly supplied updater entries.
+- Distinguish the previously retained older translation from isolated current builds and record default updater dispatch separately from explicitly labeled coverage.
+
+**Validation**
+
+- Wine e134-current-parity-wine-9ymu0twl matched complete interpreter/native state and clock for one frame across 870 checked boundaries using 43 explicit updater entries.
+- Wine e134-current-attribution-wine-yw62he9p matched three raw/managed frames and recorded 43 typed selected-bank reads during native updater dispatch with no raw reads.
+- Wine e134-default-managed-pair-wine-botzl4b6 matched three raw/managed frames using a current isolated no-extra-label translation; all 144 selected-bank reads had interpreter scopes and no native updater dispatch was observed.
+- Wine e134-guard-object-screen-wine-_ziu3pif screened the old artifact and supplement for the current event tag; byte-pattern absence does not establish causality.
+
+**Limitations**
+
+- Explicit labels do not establish default cache selection; traced dispatches may include nested work. The prior frame mismatch remains unexplained and ordinary translated drawing, other scenes, Linux, USA and native Windows remain open. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-validate-e134-current-translation.json)
+
+## 2026-11-16 — Track remaining ROM-data work in the recovery checklist
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Expand the ROM-data recovery checklist with unchecked outstanding source, runtime, ordinary-use and equivalence work through E158 while preserving accepted results and original task identifiers.
+- Clarify that the parameter-record ordinary pair passed from a save of unknown ancestry and still needs cheat-free provenance.
+
+**Validation**
+
+- Compared the added items against the current ROM-DATA-FULL-EUR operational handoff and retained deferred Linux, USA, native Windows and performance scopes.
+
+**Limitations**
+
+- The checklist references the parent ROM_DATA_TODO and is not a claim that all missing resources or consumers have been enumerated. No game execution or performance measurement.
+
+[Change record](docs/changes/2026-11-16-track-open-rom-data-recovery-work.json)
+
+## 2026-11-16 — Trace EUR world view index source byte
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Trace candidate world-view source writers to live variable 80 and bound one dynamic setter loop without inferring a global variable domain.
+
+**Validation**
+
+- Wine e158-byte00-view8c-store-scan-wine-fxi1vl_f, e158-byte00-view8c-writers-dis-wine-ye3ufpha and e158-byte00-view8c-source-dis-wine-acxbx3u4 inspect bounded candidate writers and the getter.
+- Wine e158-byte00-var80-setter-scan-wine-dl5g_k32 finds 51 direct setter candidates with no immediate movs r0,80 in the preceding 48 bytes; computed arguments remain unclassified.
+- Wine e158-byte00-var80-index-origin-dis-wine-7ic5mznx bounds one dynamic setter loop to variable indices 1b..32.
+
+**Limitations**
+
+- No proof of the value or complete set of writers of variable 80, execution, restore behavior or ordinary byte00 use. Linux, USA and native Windows pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-trace-byte00-world-view8c-source.json)
+
+## 2026-11-16 — Trace EUR world insertion view index writers
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Trace bounded immediate stores from the world-insertion argument to its source view byte and classify their local output ranges.
+
+**Validation**
+
+- Wine e158-byte00-view1d-store-scan-wine-93go4vih and e158-byte00-view1d-writers-dis-wine-hrbvrx_w inspect six immediate offset-1d candidates.
+- Wine e158-byte00-view1b-store-scan-wine-kjoamsgi, e158-byte00-view1b-writers-dis-wine-t_vqnwj1 and e158-byte00-view1b-helper-dis-wine-l4_ach_9 classify six offset-1b candidates and the helper return.
+- The accepted fixed-ROM screen sli5ztgr contains 26 indices 31..127 whose arithmetic values exceed 511; these are outside authenticated world-record ownership.
+
+**Limitations**
+
+- The 0..127 bound applies only to the examined stores with stable object identity and no intervening changes; it does not establish 0..30, valid out-of-catalog records, store completeness, save behavior, callback execution or ordinary byte00 use. Linux, USA and native Windows pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-trace-byte00-world-index-view-writers.json)
+
+## 2026-11-16 — Trace EUR mission writers of the world index variable
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Trace two mission-key writer paths and screen all authenticated mission rows for writes to the world index source variable.
+- Bound a direct mission-state caller to six-bit indices before its two variable-setter paths.
+
+**Validation**
+
+- Wine e158-byte00-all-setter-windows-wine-epy6ixhg retains bounded candidate setter windows; e158-byte00-dynamic-key-origins-wine-3b1ncdqm and e158-byte00-mission-key-loop-wine-9xmjtx3w establish key, mode and loop arithmetic.
+- Wine e158-byte00-mission-var80-screen-wine-jnkbjfyx authenticates 512 EUR mission records and screens four physical slots per row: 27 key 680 matches, all mode 3 operands 1..30.
+- Wine e158-byte00-world-clear-callers-wine-d8jrfcjt and e158-byte00-world-clear-caller-wine-pdzm4ife identify a direct caller that supplies 0..63; the two examined helpers add 14 hex.
+- Wine e158-byte00-world-init-callers-wine-17k0_b_u and e158-byte00-world-init-guard-wine-q0h2f10_ find two further direct helper candidates whose guarded keys yield variable indices 1b..32.
+
+**Limitations**
+
+- The bound is conditional on a matched owned row, the examined path, stable view and last-writer order; out-of-catalog IDs, indirect and bulk writers, restores, aliases and ordinary byte00 reachability remain open. Linux, USA and native Windows pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-trace-byte00-mission-variable-writers.json)
+
+## 2026-11-16 — Trace a EUR mission-list insertion path
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Identify a conditional loop-derived list insertion and distinguish it from reordering an existing node; do not infer a global list domain.
+
+**Validation**
+
+- Wine e158-byte00-list-identity-dis-wine-4ajfe58a and e158-byte00-list-producer-dis-wine-aizksk7l inspect scratch ID creation, list insertion and reorder.
+- Wine e158-byte00-list-record-source-dis-wine-_13cqeec and e158-byte00-list-source-origin-dis-wine-nm930x2k retain the intervening original windows.
+- Focused read-only Sol consultation /root/sol_byte00_list_producer requested gpt-6.1-sol at xhigh; effective settings were not independently reported.
+
+**Limitations**
+
+- The 1..511 result is conditional on the inspected scratch-record insertion and stable contents. The zero-argument call does not establish removal of pre-existing nodes; other producers, save restoration, aliases, execution and ordinary byte00 remain open. Linux, USA and native Windows pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-trace-byte00-mission-list-insertion.json)
+
+## 2026-11-16 — Trace candidate EUR substitution callback text sources
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Identify the text selector paths of a frequently occurring declared substitution candidate and reconcile them with existing authenticated catalogs.
+
+**Validation**
+
+- Wine e158-byte00-candidate-callbacks-dis-wine-nxd4bals and e158-byte00-callback28-selectors-dis-wine-6zw8vl88 inspect the original callback and selector branches.
+- Previously accepted Wine e132-byte00-textscan-78suaoix found no target sequence in expanded strings of the authenticated catalog; no scan was repeated.
+
+**Limitations**
+
+- The original live ten-bit and halfword indices are not constrained to the catalog, and 080d2588 derives additional indices from live state. Candidate opcode occurrences do not prove execution; other callbacks, generated sources and ordinary byte00 use remain open. Linux, USA and native Windows pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-trace-byte00-callback28-text-sources.json)
+
+## 2026-11-16 — Trace a EUR active-index producer through its caller
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Identify mode-dependent return domains of the active-index helper and a conditional byte-valued path into the active selector.
+
+**Validation**
+
+- Wine e158-byte00-active-id-helper-dis-wine-_emiu3kp and e158-byte00-active-id-preserve-dis-wine-kqba3yet inspect the original helper, caller and intervening routine.
+- Wine e158-byte00-active-id-callees-dis-wine-sy1sh_8p inspects additional intervening call windows; no gameplay execution was inferred.
+
+**Limitations**
+
+- The byte bound assumes the observed mode and return register survive intervening calls and no later writer intervenes; mode 1 can produce a ten-bit value and object identity, aliases, other writers, callback invocation and ordinary byte00 use remain open. Linux, USA and native Windows pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-trace-byte00-active-id-helper.json)
+
+## 2026-11-16 — Screen EUR world insertion byte indices
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Reconcile two bounded direct caller arguments with fixed-ROM world insertion arithmetic, retaining out-of-catalog and execution limits.
+
+**Validation**
+
+- Wine e158-byte00-world-insert-callers-wine-d25kty3u finds two direct Thumb BL candidates; e158-byte00-world-insert-caller-dis-wine-a4_woxfy shows both pass a live unsigned byte.
+- Wine e158-byte00-world-byte-index-screen-wine-sli5ztgr examines all 256 byte indices: 75 outside the authenticated 31-row catalog yield IDs above 511, none matching the eight previously identified necessary helper candidates.
+
+**Limitations**
+
+- The 225 out-of-catalog positions are arithmetic reads, not authenticated world records or observed inputs. Indirect callers, changed records, other producers, restoration, callback execution and ordinary byte00 use remain unproved. Linux, USA and native Windows pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-screen-byte00-world-byte-indices.json)
+
+## 2026-11-16 — Screen EUR text substitution candidates
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Screen authenticated declared text projections for opcode-25 substitution candidates and inspect their literal callback-table words.
+
+**Validation**
+
+- Wine e158-byte00-substitution-screen-wine-t03ndh68 finds 2,333 one-operand command units covering 75 candidate values and no 40 25 byte pattern in screened expanded strings; four candidate table words are zero.
+
+**Limitations**
+
+- Candidates and table words do not prove parser reachability, valid callback invocation or generated RAM output; ordinary byte00 use, other resources, Linux, USA and native Windows remain open. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-screen-byte00-substitution-candidates.json)
+
+## 2026-11-16 — Screen EUR script byte-variable setter destinations
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Screen the existing primary and auxiliary script projections for commands that pass dynamic destinations to the byte-variable setter.
+
+**Validation**
+
+- Wine e158-byte00-script-setter-dis-wine-s_dg62yh confirms both callback argument layouts.
+- Wine e158-byte00-script-var80-screen-wine-svjlcy7s authenticates and screens 207 primary and 133 auxiliary physical program projections: zero primary opcode 27 and auxiliary opcode 3 instructions.
+- A focused follow-up consultation with /root/sol_byte00_list_producer was requested as gpt-6.1-sol/xhigh; effective settings were not independently reported.
+
+**Limitations**
+
+- The result applies only to declared physical projections, not alternate entry offsets, other scripts or commands, direct/bulk writes, saves, aliases, guest execution or ordinary byte00 reachability. Linux, USA and native Windows pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-screen-byte00-script-variable-setters.json)
+
+## 2026-11-16 — Screen EUR ten-bit selectors beyond the text catalog
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Classify out-of-catalog selector words and narrow one mode-1 helper path with necessary source conditions, without assuming guest address mapping.
+
+**Validation**
+
+- Wine e158-byte00-outside-catalog-screen-wine-fnub_9js classifies 2,560 words from five roots and indices 512..1023; all fall outside the primary ROM window.
+- Wine e158-byte00-outside-id-candidates-wine-76wmjx5f finds eight indices meeting two necessary ROM conditions; e158-byte00-outside-candidate-pointers-wine-7vncx8y0 correlates their five literal words.
+
+**Limitations**
+
+- Those indices are outside the authenticated mission extent and the conditions are necessary only. Live list membership, other paths, memory mapping, callback execution and ordinary byte00 use remain unproved. Linux, USA and native Windows pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-screen-byte00-outside-catalog-indices.json)
+
+## 2026-11-16 — Reconcile EUR opening state-11 coordinate source
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Resolve a state-11 literal reference against the existing E158 sparse coordinate source.
+
+**Validation**
+
+- Wine e158-title-opening-state11-dis-wine-cq5x5sqb shows literal 3adefc and halfword load at offset +2, yielding already-owned 3adefe.
+
+**Limitations**
+
+- Ordinary execution of this state-11 reader and other consumers remain unverified; Linux, USA and native Windows remain pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-reconcile-opening-state11-coordinate.json)
+
+## 2026-11-16 — Observe EUR opening state-11 coordinate use
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Add a focused ordinary EUR opening observation for the state-11 coordinate reader.
+
+**Validation**
+
+- Wine e158-state11-ordinary-wine-3m78lqs_ observes one typed request at original reader 0813a396 with poisoned 3adefe source and no raw reads; the reader frame matches the original full state and clock.
+
+**Limitations**
+
+- One interpreter frame only; other scenes, native dispatch, Linux, USA and native Windows remain unverified. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-observe-opening-state11-coordinate.json)
+
+## 2026-11-16 — Observe EUR opening sparse coordinates in ordinary execution
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Confirm the E158 sparse-coordinate reader in a neutral ordinary EUR opening continuation.
+
+**Validation**
+
+- Wine e158-sparse-ordinary-wine-htdztv4y observes all 19 sparse halfwords with 38 typed requests and zero raw requests while source bytes are poisoned; the first reader frame matches the original complete state and clock.
+
+**Limitations**
+
+- Only one neutral interpreter continuation and one matching frame are covered; other scenes, native dispatch, Linux, USA and native Windows remain unverified. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-observe-opening-sparse-coordinates.json)
+
+## 2026-11-16 — Observe EUR opening animation sequence lists
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Verify the five nonempty lists in the extracted title animation sequence during a neutral ordinary EUR opening continuation.
+
+**Validation**
+
+- Wine e158-main-bank-early-wine-hhh7a8lg observes indices 1–5 in 115 neutral interpreter frames with typed headers, poisoned source and no raw requests; the first frame for each observed list matches the original complete state and clock.
+- The earlier bounded window dqpspyyn only saw index 3; Sol was requested with gpt-6.1-sol and xhigh to inspect retained checkpoints, effective settings unconfirmed.
+
+**Limitations**
+
+- Index 0 is empty and not referenced by the extracted sequence; other scenes, producers, native dispatch, Linux, USA and native Windows remain unverified. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-observe-main-title-bank-sequence-lists.json)
+
+## 2026-11-16 — Observe the EUR opening title animation draw
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Add a bounded ordinary EUR opening comparison for the independent title animation bank.
+
+**Validation**
+
+- Wine e158-main-bank-draw-wine-88p3pl3x observes the b8ed6c list header at original regular OBJ draw reader 0800153c with poisoned bank-list source and zero raw source reads; the first interpreter frame matches the original complete state and clock.
+
+**Limitations**
+
+- One list and one interpreter frame only; other lists and scenes, native dispatch, Linux, USA and native Windows remain unverified. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-observe-main-title-bank-draw.json)
+
+## 2026-11-16 — Inventory EUR opening sparse-branch reads
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Record a bounded high-ROM source inventory at the ordinary EUR opening sparse-coordinate reader.
+
+**Validation**
+
+- Wine e158-sparse-residue-wine-b81cszl2 records three neutral interpreter frames with no dropped requests and no raw overlap with declared sources; the only unowned bytes are the previously classified 370eb0 helper vector.
+
+**Limitations**
+
+- The bounded window does not prove global absence of unowned sources; other scenes, Linux, USA and native Windows remain unverified. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-inventory-opening-sparse-residue.json)
+
+## 2026-11-16 — Inventory EUR early-opening reads against E158
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Record a bounded high-ROM source inventory at the EUR early-opening checkpoint against E158.
+
+**Validation**
+
+- Wine e158-early-bank-inventory-wine-lnfgdwch covers three neutral interpreter frames with no dropped requests and no raw overlap with declared sources; the only unowned bytes are the known 370eb0 helper vector.
+
+**Limitations**
+
+- This bounded window does not prove global source coverage; other scenes, Linux, USA and native Windows remain unverified. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-inventory-e158-early-opening-reads.json)
+
+## 2026-11-16 — Inspect EUR variable address literal references
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Inspect bounded literal references and identify dynamic-base stores that require alias analysis for variable 80.
+- Trace one dynamic object pointer initialization to a 2038-byte allocator request and a live allocator context.
+
+**Validation**
+
+- Wine e158-byte00-var80-literals-wine-nm187c_p scans aligned literals and Thumb PC-relative loads in the documented range.
+- Wine e158-byte00-var80-offset-context-wine-5w9di6ai retains the offset-reference windows and halfword writer.
+- Wine e158-byte00-var80-pointer-literals-wine-vy7c2gwa, e158-byte00-var80-pointer-windows-wine-jaefvyhn and e158-byte00-var80-pointer-allocator-wine-phfyxv23 retain the bounded reference census and initializer path.
+
+**Limitations**
+
+- No global writer exclusion: pointer and index domains, bulk copies, other address construction, instruction sets/ranges, saves, aliases and execution remain open. Linux, USA and native Windows pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-inspect-byte00-variable-address-literals.json)
+
+## 2026-11-16 — Inspect EUR byte00 RAM text substitution paths
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Trace the two local RAM text-substitution helpers and distinguish the authenticated short-string path from the live callback path.
+
+**Validation**
+
+- Wine e158-byte00-buffer-helpers-dis-wine-8bksdmpz identifies helper 0801738c calling short-string selector 08016648 and copy/expander 08019d98, and helper 08019e94 dispatching through table 371158.
+- Original parser jump-table inspection maps command bytes 25/72/67 to these substitution and formatter branches; prior E132 expanded-string screen found no literal 40 67 01 in the authenticated short catalog.
+
+**Limitations**
+
+- Callback index domain/output, out-of-catalog short selectors, parser reachability, generated text and ordinary byte00 use remain unproved; Linux, USA and native Windows remain pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-inspect-byte00-ram-text-substitution.json)
+
+## 2026-11-16 — Identify a conditional EUR RAM text-buffer writer
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Identify a live-RAM-field writer of the text-substitution callback buffer, preserving the conditional nature of the path.
+
+**Validation**
+
+- Wine e158-byte00-ram-forward-dis-wine-ds4kthpq shows the caller passing 02001f1c as destination and 0812e464 copying trimmed live context+312 content through stack scratch with CpuSet.
+
+**Limitations**
+
+- The live field producer, legal contents, invocation order, callback reachability and ordinary byte00 use remain unproved; Linux, USA and native Windows remain pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-identify-byte00-ram-buffer-writer.json)
+
+## 2026-11-16 — Identify localized initializers of the EUR text field
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Identify two conditional initial sources of the live context field, including a distinct localized pointer-table selector.
+
+**Validation**
+
+- Wine e158-byte00-field-init-dis-wine-tdombygl traces state 0100 and both field-copy branches.
+- Wine e158-byte00-field-selectors-dis-wine-y865vpe4 identifies the language-dependent pointer-table selection in 08016828.
+
+**Limitations**
+
+- The selected contents, actual state transitions, saved or aliased contents, other writers, callback invocation and ordinary byte00 use remain unproved. Linux, USA and native Windows pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-identify-byte00-field-initializers.json)
+
+## 2026-11-16 — Guard Wine socket access before leasing the shared prefix
+
+Type: fixed. Platforms: Wine.
+
+**Changes**
+
+- Probe Unix-domain socket binding in a temporary directory before acquiring the shared Wine prefix lease, including when XDG_RUNTIME_DIR is unset.
+
+**Validation**
+
+- Wine-mode unit wine-socket-preflight-jtyb26w8 was refused on sandbox EPERM before Wine launched and retained no leases.
+- EUR Wine unit e134-default-managed-pair-wine-botzl4b6 passed with the preflight enabled and drained the Wine server.
+
+**Limitations**
+
+- The probe cannot grant sandbox permissions and cannot cover every runtime directory, socket path, race or filesystem failure; automatic approval review availability is external.
+
+[Change record](docs/changes/2026-11-16-guard-wine-socket-before-prefix-lease.json)
+
+## 2026-11-16 — Classify retained E134 execution comparison mismatch
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Classify the previously failed interpreter versus augmented translation frame-zero state comparison using its retained assertion values.
+
+**Validation**
+
+- Wine e134-failed-state-diff-wine-ve41xbr3 checks both serialized snapshot checksums and finds only program-counter and clock payload differences; the left clock is 14 cycles earlier.
+- Sol consultation /root/sol_byte00_list_producer requested gpt-6.1-sol/xhigh stopped at a usage limit; its effective settings were not independently confirmed.
+- Wine e134-frame-pc-dis-wine-j8rolnkj identifies both recorded PCs within one original halfword-polling loop.
+
+**Limitations**
+
+- The result does not identify the cause, prove equivalence at the same execution point, establish production updater coverage or ordinary translated drawing. Linux, USA and native Windows pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-diagnose-e134-frame-boundary-state-diff.json)
+
 ## 2026-11-16 — Compare phase-three deployment and battle entry with CH-0341
 
 Type: docs. Platforms: Windows GNU and Wine.
@@ -24,6 +524,235 @@ Type: docs. Platforms: Windows GNU and Wine.
 Documentation: [debug_catalog.md](docs/debug_catalog.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
 
 [Change record](docs/changes/2026-11-16-compare-phase-three-deployment-cheat.json)
+
+## 2026-11-16 — Compare E134 retained boundary-state continuations
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Add a focused test comparing full snapshots from two retained failed-comparison states across independently stepped interpreter continuations.
+
+**Validation**
+
+- Windows test executable cross-compiled by e134-common-point-build-retry-q9g7yzgm; the initial build unit 5czy55tf failed before compilation because its script path was relative to runner scratch.
+- Wine e134-common-point-wine-_b25rbot executed one test successfully: no identical full snapshot among the first 65 points per state. Its validation unit is FAIL because private state copies remain in scratch; the server drained.
+- Wine e134-common-preserve-wine-5igtz_67 verified all ten protected input hashes and both retained state copies without replaying the test.
+
+**Limitations**
+
+- This bounded negative cannot establish permanent divergence, its first cause, updater semantics, production translation or ordinary translated drawing. Failed unit and diagnostic state copies remain retained. Linux, USA and native Windows pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-compare-e134-retained-boundary-continuations.json)
+
+## 2026-11-16 — Bound subsequent EUR title bank list observations
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Add a bounded continuation that records which independent title animation bank lists appear and compares each first observed list frame with the original.
+
+**Validation**
+
+- Wine e158-main-bank-other-wine-dqpspyyn runs 100 neutral interpreter frames: only index 3 b8ed6c appears, with 66 typed header requests and no raw source reads; its first frame matches the original complete state and clock.
+
+**Limitations**
+
+- Other lists were not observed in this window; earlier or other scenes, native dispatch, Linux, USA and native Windows remain unverified. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-bound-main-title-bank-following-lists.json)
+
+## 2026-11-16 — Bound a EUR world-record list insertion
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Identify a separate world-record-derived insertion and the original list reset, while retaining live-index and restoration limits.
+
+**Validation**
+
+- Wine e158-byte00-world-id-domain-wine-m8am6hhs authenticates 31 existing world records and finds their low-ten-bit IDs in 0..358.
+- Wine e158-byte00-list-second-source-dis-wine-1jq3_d11 and e158-byte00-list-storage-writers-dis-wine-rwpkftan inspect the source and copy path.
+- Wine e158-byte00-list-reset-dis-wine-oc803tkd, e158-byte00-list-reset-caller-dis-wine-cy1tqrkx and e158-byte00-list-caller-scan-wine-9p3cag2u inspect the conditional reset and bounded caller candidates; ygyq6pf2 and zwt6r7cc retain reference and refresh windows.
+
+**Limitations**
+
+- The world insertion bound assumes a 0..30 live index and stable scratch data. Reset execution, later restoration, alternate indices, aliases, other writers and ordinary byte00 use remain unproved. Linux, USA and native Windows pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-bound-byte00-world-list-insertion.json)
+
+## 2026-11-16 — Bound EUR byte00 RAM substitution buffer references
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Identify conditional producers and source uses of the RAM buffer copied by one text-substitution callback.
+
+**Validation**
+
+- Wine e158-byte00-ram-source-literals-wine-rl7cunl4 finds seven exact aligned literal load candidates in the bounded EUR code scan; Wine e158-byte00-ram-source-dis-wine-1o2klth5 examines their original instruction windows.
+- Two conditional sites expand short-string selector 2 into the RAM buffer before using it as a CpuSet source; the callback uses that address as an input to the text expander.
+
+**Limitations**
+
+- Actual buffer contents at callback time, writer exclusivity, callback invocation and ordinary byte00 use remain unproved; address arithmetic, aliases, indirect references, Linux, USA and native Windows remain open. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-bound-byte00-ram-buffer-references.json)
+
+## 2026-11-16 — Bound EUR allocator-backed variable alias candidate
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Trace one allocator pool initialization and bound the examined object stores against the variable byte, including EWRAM mirroring.
+
+**Validation**
+
+- Wine e158-byte00-pool-context-literals-wine-cyganob6, e158-byte00-pool-init-wine-vsbrdslr and e158-byte00-pool-invariants-wine-i_i5iqa6 inspect bounded literal references, initialization and loop evidence.
+- Wine e158-byte00-pool-overlap-wine-q9cpd9yg checks a conditional interval including all byte indices and the runtime EWRAM mask.
+
+**Limitations**
+
+- The exclusion assumes the specific pool initialization, successful in-pool allocation, intact metadata and unchanged pointer; it does not prove actual state, other stores, restore, other mappings or ordinary byte00 reachability. Linux, USA and native Windows pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-bound-byte00-pool-store-overlap.json)
+
+## 2026-11-16 — Bound localized EUR field initializer text
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Bound the generated content of all five localized entry-zero strings used by a conditional field initializer.
+
+**Validation**
+
+- Wine e158-byte00-field-copy-dis-wine-wvq_b39w inspects the original 08019d98 expansion and termination grammar.
+- Wine e158-byte00-field-localized-screen-wine-dgzrlx3q authenticates the EUR ROM and checks the five pointer-table entries: none of the generated bytes through the terminator contains 40 67 01.
+
+**Limitations**
+
+- The fixed-size copy also includes bytes beyond the terminator, which may depend on previous buffer contents. Actual state transitions, saved and aliased bytes, other writers, callback invocation and ordinary byte00 use remain unproved. Linux, USA and native Windows pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-bound-byte00-localized-initial-text.json)
+
+## 2026-11-16 — Bound a EUR keyboard-generated text field
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Identify a conditional keyboard-driven writer of the live RAM field and bound the target byte sequence for valid selections from the authenticated keyboard.
+
+**Validation**
+
+- Wine e158-byte00-field-producers-dis-wine-74fsrd3b and e158-byte00-field-input-dis-wine-dj84lsa9 identify the original input writer and padding path.
+- Wine e158-byte00-keyboard-domain-wine-hlejcxyw checks 163 cells within declared navigation widths: only three 4073 codes are below 8000 and no adjacent pair of selected codes contains 40 67 01.
+
+**Limitations**
+
+- The bound assumes a field made exclusively from valid keyboard selections; initial/saved bytes, invalid selectors, aliases, other writers, callback invocation and ordinary byte00 use remain unproved. Linux, USA and native Windows pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-bound-byte00-keyboard-field-domain.json)
+
+## 2026-11-16 — Bound trailing bytes on an unmodified EUR text path
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Establish a conditional zero-terminator barrier between localized initial field contents and callback output, without assuming values of trailing copied bytes.
+
+**Validation**
+
+- Wine e158-byte00-field-zero-barrier-wine-m0m6rtgn checks all five authenticated expansions for aligned zero positions and 80 xx prefixes.
+- The source argument uses original windows e158-byte00-ram-forward-dis-wine-ds4kthpq and e158-byte00-field-copy-dis-wine-wvq_b39w; this does not execute the path.
+
+**Limitations**
+
+- Only the exact initialized, unmodified field through 0812e464 and callback 08019eb8 is bounded; intervening modifications, aliases, other producers and callbacks, execution order and ordinary byte00 use remain unproved. Linux, USA and native Windows pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-bound-byte00-field-zero-barrier.json)
+
+## 2026-11-16 — Bound EUR byte00 dispatcher direct callers
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Narrow the unresolved byte00 ordinary-use investigation to text-sourced direct dispatcher candidates within the scanned EUR code range.
+
+**Validation**
+
+- Wine e158-byte00-dispatch-refs-wine-1quaoj7v finds two Thumb BL candidates to 08015e9c in 08000000..08150000 and no aligned callback words; prior caller windows show their text-sourced selector paths.
+- A focused gpt-6.1-sol xhigh consultation suggested this discriminating scan; effective model settings were not independently confirmed.
+
+**Limitations**
+
+- Static candidates do not prove execution or exclude generated text, indirect calls, other code ranges or unaligned pointers. Linux, USA and native Windows remain unverified. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-bound-byte00-dispatcher-direct-callers.json)
+
+## 2026-11-16 — Bound the EUR event-derived substitution selector
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Bound the event-derived branch of callback 28 through authenticated event and parameter records to the existing localized text catalog.
+
+**Validation**
+
+- Wine e158-byte00-callback28-event-join-wine-k7p3b_ey checks all 256 event ordinals: all select one of 59 authenticated parameter records and all resulting header indices lie within 0..127.
+- Prior Wine source windows 6zw8vl88 and expanded-string screen 78suaoix establish the conditional selector path and its catalog-bounded absence of 40 67 01.
+
+**Limitations**
+
+- This is a source join, not proof of branch or callback execution. The live-halfword and direct callback paths, other producers, modified sources, aliases and ordinary byte00 use remain open. Linux, USA and native Windows pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-bound-byte00-callback28-event-selector.json)
+
+## 2026-11-16 — Bound additional EUR byte-variable setter paths
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Trace the calculated and inherited indices of two additional byte-variable setter paths.
+
+**Validation**
+
+- Wine e158-byte00-var-0390-index-wine-s17tfsmr, e158-byte00-var-0330-callers-wine-yubooxtq, e158-byte00-var-0330-caller-wine-dce65adz and e158-byte00-var-0390-callee-wine-l4kbmaue bound the examined direct caller including the inherited register path.
+- Wine e158-byte00-var-670be-index-wine-st534xw1 finds selected indices 1, 2 and 4 conditional on intervening register preservation.
+
+**Limitations**
+
+- The bounded direct caller scan and local paths do not establish indirect or alternate callers, other writes, save restoration, aliases, execution or ordinary byte00 reachability. Linux, USA and native Windows pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-bound-byte00-additional-variable-setters.json)
+
+## 2026-11-16 — Bound two EUR active-index writers
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Identify two conditional writers that constrain the active selector halfword to nine bits, and distinguish an unbounded live-halfword copy.
+
+**Validation**
+
+- Wine e158-byte00-active-id-literals-wine-c228ps17 and e158-byte00-active-id-windows-wine-k0siw7ox locate and inspect bounded literal-load candidates.
+- Wine e158-byte00-active-id-writers-dis-wine-tcle99g9 shows the two nine-bit stores and the distinct live halfword copy. Previously accepted Wine 78suaoix excludes the target from expanded catalog strings.
+
+**Limitations**
+
+- The nine-bit bound applies only when an examined writer supplies the value and no later writer intervenes; the other stores, aliases, callback execution and ordinary byte00 use remain open. Linux, USA and native Windows pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-bound-byte00-active-id-writers.json)
 
 ## 2026-11-13 — Serve EUR title-opening coordinate sources
 

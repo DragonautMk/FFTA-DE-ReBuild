@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "bound-byte00-keyboard-field-domain",
+  "title": "Bound a EUR keyboard-generated text field",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Identify a conditional keyboard-driven writer of the live RAM field and bound the target byte sequence for valid selections from the authenticated keyboard."
+  ],
+  "validation": [
+    "Wine e158-byte00-field-producers-dis-wine-74fsrd3b and e158-byte00-field-input-dis-wine-dj84lsa9 identify the original input writer and padding path.",
+    "Wine e158-byte00-keyboard-domain-wine-hlejcxyw checks 163 cells within declared navigation widths: only three 4073 codes are below 8000 and no adjacent pair of selected codes contains 40 67 01."
+  ],
+  "limitations": [
+    "The bound assumes a field made exclusively from valid keyboard selections; initial/saved bytes, invalid selectors, aliases, other writers, callback invocation and ordinary byte00 use remain unproved. Linux, USA and native Windows pending. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md"
+  ],
+  "references": []
+}

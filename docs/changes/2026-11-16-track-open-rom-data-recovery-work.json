@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "track-open-rom-data-recovery-work",
+  "title": "Track remaining ROM-data work in the recovery checklist",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Expand the ROM-data recovery checklist with unchecked outstanding source, runtime, ordinary-use and equivalence work through E158 while preserving accepted results and original task identifiers.",
+    "Clarify that the parameter-record ordinary pair passed from a save of unknown ancestry and still needs cheat-free provenance."
+  ],
+  "validation": [
+    "Compared the added items against the current ROM-DATA-FULL-EUR operational handoff and retained deferred Linux, USA, native Windows and performance scopes."
+  ],
+  "limitations": [
+    "The checklist references the parent ROM_DATA_TODO and is not a claim that all missing resources or consumers have been enumerated. No game execution or performance measurement."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": []
+}

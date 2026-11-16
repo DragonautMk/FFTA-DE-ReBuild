@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "bound-byte00-pool-store-overlap",
+  "title": "Bound EUR allocator-backed variable alias candidate",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Trace one allocator pool initialization and bound the examined object stores against the variable byte, including EWRAM mirroring."
+  ],
+  "validation": [
+    "Wine e158-byte00-pool-context-literals-wine-cyganob6, e158-byte00-pool-init-wine-vsbrdslr and e158-byte00-pool-invariants-wine-i_i5iqa6 inspect bounded literal references, initialization and loop evidence.",
+    "Wine e158-byte00-pool-overlap-wine-q9cpd9yg checks a conditional interval including all byte indices and the runtime EWRAM mask."
+  ],
+  "limitations": [
+    "The exclusion assumes the specific pool initialization, successful in-pool allocation, intact metadata and unchanged pointer; it does not prove actual state, other stores, restore, other mappings or ordinary byte00 reachability. Linux, USA and native Windows pending. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": []
+}

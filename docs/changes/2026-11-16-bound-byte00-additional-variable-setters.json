@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "bound-byte00-additional-variable-setters",
+  "title": "Bound additional EUR byte-variable setter paths",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Trace the calculated and inherited indices of two additional byte-variable setter paths."
+  ],
+  "validation": [
+    "Wine e158-byte00-var-0390-index-wine-s17tfsmr, e158-byte00-var-0330-callers-wine-yubooxtq, e158-byte00-var-0330-caller-wine-dce65adz and e158-byte00-var-0390-callee-wine-l4kbmaue bound the examined direct caller including the inherited register path.",
+    "Wine e158-byte00-var-670be-index-wine-st534xw1 finds selected indices 1, 2 and 4 conditional on intervening register preservation."
+  ],
+  "limitations": [
+    "The bounded direct caller scan and local paths do not establish indirect or alternate callers, other writes, save restoration, aliases, execution or ordinary byte00 reachability. Linux, USA and native Windows pending. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": []
+}

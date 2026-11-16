@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "bound-byte00-callback28-event-selector",
+  "title": "Bound the EUR event-derived substitution selector",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Bound the event-derived branch of callback 28 through authenticated event and parameter records to the existing localized text catalog."
+  ],
+  "validation": [
+    "Wine e158-byte00-callback28-event-join-wine-k7p3b_ey checks all 256 event ordinals: all select one of 59 authenticated parameter records and all resulting header indices lie within 0..127.",
+    "Prior Wine source windows 6zw8vl88 and expanded-string screen 78suaoix establish the conditional selector path and its catalog-bounded absence of 40 67 01."
+  ],
+  "limitations": [
+    "This is a source join, not proof of branch or callback execution. The live-halfword and direct callback paths, other producers, modified sources, aliases and ordinary byte00 use remain open. Linux, USA and native Windows pending. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": []
+}

@@ -231,12 +231,11 @@ Aggregate catalog counters alone do not identify a particular new root.
 Document the observed subset; one scene does not prove every selector or a
 complete animation. Rejected leads and closed negative locators remain closed.
 
-- [ ] **ROMDATA-04-PARAMETER-RECORDS27-ORDINARY:** establish positive ordinary
-  consumption and its paired comparison. Preserve the 59 observed records and
-  eleven closed negative captures; the full domain remains unproved. The
-  post-save Royal Valley first-phase Mission pages 1–5 are another bounded
-  zero-read observation, not the required positive pair; later phases remain
-  untested.
+- [ ] **ROMDATA-04-PARAMETER-RECORDS27-ORDINARY:** establish cheat-free ordinary
+  provenance for the positive full-state pair already observed from a save of
+  unknown ancestry. Preserve the 59 observed records and closed negative
+  captures; the live domain, other scenes and complete consumer set remain
+  unproved. Do not repeat accepted pairs to reconstruct context.
   [Gap](../rom_data_gameplay.md#ordinary-sparse-parameter-record-reachability-remains-partial).
 - [x] **ROMDATA-04-LOCALIZED-TABLE-GRAPHICS-ORDINARY:** White Flowers entry
   reads three aggregated groups and passes a 700-frame EUR Wine raw/managed
@@ -273,6 +272,82 @@ complete animation. Rejected leads and closed negative locators remain closed.
   complete animation and other consumers remain open.
   [Evidence](../rom_data_obj.md#ordinary-roulette-producer-and-eur-validation).
 
+### Additional open ROM-data work through E158
+
+These unchecked entries preserve incomplete work; they do not reopen any
+accepted child result. Select a source-backed criterion and inspect its
+current evidence before running another check.
+
+- [ ] **ROMDATA-01 / ROMDATA-02 / ROMDATA-03 / ROMDATA-04:** complete the EUR
+  source and consumer inventory, extract/decode remaining families, connect
+  them to preparation and managed runtime, and account for raw bytes, host
+  and translated consumers, DMA, indirect calls, ABI compatibility and guest
+  timing. E158 is a partial increment;
+  the unchecked parent criteria in [ROM_DATA_TODO](ROM_DATA_TODO.md) remain
+  authoritative.
+- [ ] **ROMDATA-01-CONTEXT-3AE42C:** establish remaining language-byte writers,
+  index extent and other ordinary publication paths. Title IDs 1–4 have
+  ordinary publication witnesses; confirming already-active ID 0 takes the
+  unchanged branch (`9k_mye2m`). Publication of 0 after another selection,
+  indirect writers and the global value domain remain open.
+- [ ] **ROMDATA-04-TITLE-MAIN-BANK-OTHER / FIRSTBANK-ZERO:** investigate other
+  scenes, producers and native-dispatch attribution. All five nonempty lists
+  in the E158 title main-bank sequence have one ordinary Wine interpreter
+  witness; first-bank sequence zero and the global producer domain remain open.
+- [ ] **ROMDATA-04-BATTLE-40D300-OTHER:** establish source-backed ordinary use
+  of the remaining directory-selected battle lists; index 56 has a scoped
+  Wine witness, not full-directory ordinary coverage.
+- [ ] **E134 ordinary updater:** establish production-cache entry availability,
+  other ordinary paths and translated drawing. Current explicitly labeled
+  translation has one-frame interpreter/native parity (`9ymu0twl`) and
+  three-frame raw/managed updater-dispatch evidence (`yw62he9p`); captured
+  dispatch may include nested work. An isolated no-extra-label build has none
+  of the 43 observed updater symbol names (`qpbgtmmw`); its ordinary paired
+  Wine frames pass without an observed native updater dispatch (`botzl4b6`),
+  but runtime cache selection remains unobserved. The old artifact's failed
+  comparison (`ve41xbr3`) is not explained; its later IRQ comparison crossed
+  the reference frame boundary (`jui0l9oq`).
+- [ ] **ROMDATA-01-PARAMETER-RECORDS27-DYNAMIC-SOURCES:** resolve the live
+  source domain, save-load behavior and aliases beyond the observed 59 rows.
+- [ ] **ROMDATA-04-GAMEPLAY-6E84E0-BYTE00:** find a source-backed ordinary
+  trigger for the unresolved byte, including generated/indirect sources.
+  The bounded direct-dispatcher scan finds only two text-sourced candidates
+  (`1quaoj7v`); RAM substitution includes callback table `371158` with live
+  index/output unproved (`8bksdmpz`). Declared text yields 75 opcode-25
+  candidate operands, four with zero table words (`t03ndh68`); execution is
+  unproved. Callback 0 copies a RAM buffer with conditional short-string and
+  live context+312 producers (`1o2klth5`, `ds4kthpq`). Valid keyboard-only
+  sequences exclude the target bytes (`hlejcxyw`). State `0100` initializes
+  the field through either `08016648(2)` or the distinct localized selector
+  `08016828(0)` (`tdombygl`, `y865vpe4`). All five generated strings omit
+  the target through the terminator (`dgzrlx3q`); on the exact unmodified
+  field-to-callback path the aligned zero blocks trailing bytes (`m0m6rtgn`).
+  Candidate callback 28 selects `08016768` or `08016828` (`nxd4bals`,
+  `6zw8vl88`): its event-derived branch is within the catalog for all 256
+  ordinals (`k7p3b_ey`). Two active-halfword stores are bounded to 0..511
+  (`tcle99g9`); mode-2 input to another store is a byte conditional on
+  intervening state (`_emiu3kp`, `kqba3yet`). Ten-bit values 512..1023
+  select words outside primary ROM (`fnub_9js`); eight satisfy two necessary
+  helper conditions (`76wmjx5f`, `7vncx8y0`), with execution/mapping
+  unproved. One insertion constructs IDs 1..511 (`4ajfe58a`, `aizksk7l`);
+  another has IDs 0..358 for its 31 authenticated rows (`m8am6hhs`). Its two
+  direct candidates pass a byte index (`a4_woxfy`); outside catalog, 75
+  values exceed 511 but none matches the eight helper candidates (`sli5ztgr`).
+  Bounded immediate-store windows trace view+1d from view+1b and restrict
+  specific source stores to 0..127 (`hrbvrx_w`, `t_vqnwj1`, `l4_ach_9`);
+  26 indices 31..127 still yield IDs above 511. Two view+8c writers read
+  live variable 80 (`acxbx3u4`); a dynamic setter candidate instead targets
+  1b..32 (`7ic5mznx`). Two script setter opcodes have no instructions in the
+  authenticated projections (`svjlcy7s`). Mission key writers have 27 owned
+  matches, mode 3 values 1..30 (`jnkbjfyx`); examined direct helper paths
+  exclude variable 80 (`pdzm4ife`, `q0h2f10_`, `dce65adz`, `st534xw1`).
+  One dynamic-base store cannot overlap variable 80 under a successful,
+  intact in-pool allocation, including EWRAM mirrors (`q9cpd9yg`); actual
+  allocation state, outside rows, other writers and restoration remain open.
+- [ ] **ROMDATA-05:** complete required equivalence, saves, audio and rendering
+  checks for each remaining migrated family and preserve guest timing and
+  side effects; bounded Wine witnesses do not establish global equivalence.
+
 ## 5. Resolve prerequisites before selecting further proofs
 
 - [x] **ROMDATA-02-04-6C1E78-DEFAULT-SELECTORS:** reconcile source geometry and
@@ -308,8 +383,13 @@ These items remain open outside the current EUR/Wine functional selection.
 They require an explicit scope change or their stated prerequisite; free disk
 space by itself does not select them.
 
-- [ ] **Linux:** validate changed integrations on native Linux when that platform
-  is selected; retain older accepted Linux results.
+- [ ] **Linux:** validate changed ROM integrations, including the E134 ordinary
+  updater and title-language publication routes, on native Linux when selected;
+  retain older accepted Linux results.
+- [ ] **Wine sandbox access:** if sandbox-only Wine execution is required,
+  provide access to its runtime directory and Unix-domain socket binds. The
+  runner now refuses these known restrictions before leasing the prefix;
+  automatic approval-review availability remains outside the project.
 - [ ] **USA:** validate regional extraction/readers/scenes when USA work resumes;
   EUR evidence does not prove USA compatibility.
 - [ ] **Native Windows:** run the selected build/runtime/input matrix on an

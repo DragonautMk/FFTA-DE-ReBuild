@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "trace-byte00-world-view8c-source",
+  "title": "Trace EUR world view index source byte",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Trace candidate world-view source writers to live variable 80 and bound one dynamic setter loop without inferring a global variable domain."
+  ],
+  "validation": [
+    "Wine e158-byte00-view8c-store-scan-wine-fxi1vl_f, e158-byte00-view8c-writers-dis-wine-ye3ufpha and e158-byte00-view8c-source-dis-wine-acxbx3u4 inspect bounded candidate writers and the getter.",
+    "Wine e158-byte00-var80-setter-scan-wine-dl5g_k32 finds 51 direct setter candidates with no immediate movs r0,80 in the preceding 48 bytes; computed arguments remain unclassified.",
+    "Wine e158-byte00-var80-index-origin-dis-wine-7ic5mznx bounds one dynamic setter loop to variable indices 1b..32."
+  ],
+  "limitations": [
+    "No proof of the value or complete set of writers of variable 80, execution, restore behavior or ordinary byte00 use. Linux, USA and native Windows pending. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": []
+}

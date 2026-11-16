@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "trace-byte00-callback28-text-sources",
+  "title": "Trace candidate EUR substitution callback text sources",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Identify the text selector paths of a frequently occurring declared substitution candidate and reconcile them with existing authenticated catalogs."
+  ],
+  "validation": [
+    "Wine e158-byte00-candidate-callbacks-dis-wine-nxd4bals and e158-byte00-callback28-selectors-dis-wine-6zw8vl88 inspect the original callback and selector branches.",
+    "Previously accepted Wine e132-byte00-textscan-78suaoix found no target sequence in expanded strings of the authenticated catalog; no scan was repeated."
+  ],
+  "limitations": [
+    "The original live ten-bit and halfword indices are not constrained to the catalog, and 080d2588 derives additional indices from live state. Candidate opcode occurrences do not prove execution; other callbacks, generated sources and ordinary byte00 use remain open. Linux, USA and native Windows pending. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": []
+}

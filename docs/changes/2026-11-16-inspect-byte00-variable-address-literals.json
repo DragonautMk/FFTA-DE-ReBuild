@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "inspect-byte00-variable-address-literals",
+  "title": "Inspect EUR variable address literal references",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Inspect bounded literal references and identify dynamic-base stores that require alias analysis for variable 80.",
+    "Trace one dynamic object pointer initialization to a 2038-byte allocator request and a live allocator context."
+  ],
+  "validation": [
+    "Wine e158-byte00-var80-literals-wine-nm187c_p scans aligned literals and Thumb PC-relative loads in the documented range.",
+    "Wine e158-byte00-var80-offset-context-wine-5w9di6ai retains the offset-reference windows and halfword writer.",
+    "Wine e158-byte00-var80-pointer-literals-wine-vy7c2gwa, e158-byte00-var80-pointer-windows-wine-jaefvyhn and e158-byte00-var80-pointer-allocator-wine-phfyxv23 retain the bounded reference census and initializer path."
+  ],
+  "limitations": [
+    "No global writer exclusion: pointer and index domains, bulk copies, other address construction, instruction sets/ranges, saves, aliases and execution remain open. Linux, USA and native Windows pending. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": []
+}

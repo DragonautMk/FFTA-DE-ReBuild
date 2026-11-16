@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "validate-e134-current-translation",
+  "title": "Validate E134 updater with current labeled and default translations",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add a dispatcher-boundary comparison and allow the focused ordinary updater trace to use a current full translation with explicitly supplied updater entries.",
+    "Distinguish the previously retained older translation from isolated current builds and record default updater dispatch separately from explicitly labeled coverage."
+  ],
+  "validation": [
+    "Wine e134-current-parity-wine-9ymu0twl matched complete interpreter/native state and clock for one frame across 870 checked boundaries using 43 explicit updater entries.",
+    "Wine e134-current-attribution-wine-yw62he9p matched three raw/managed frames and recorded 43 typed selected-bank reads during native updater dispatch with no raw reads.",
+    "Wine e134-default-managed-pair-wine-botzl4b6 matched three raw/managed frames using a current isolated no-extra-label translation; all 144 selected-bank reads had interpreter scopes and no native updater dispatch was observed.",
+    "Wine e134-guard-object-screen-wine-_ziu3pif screened the old artifact and supplement for the current event tag; byte-pattern absence does not establish causality."
+  ],
+  "limitations": [
+    "Explicit labels do not establish default cache selection; traced dispatches may include nested work. The prior frame mismatch remains unexplained and ordinary translated drawing, other scenes, Linux, USA and native Windows remain open. No performance measurement."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/obj_context_bank_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ],
+  "references": []
+}

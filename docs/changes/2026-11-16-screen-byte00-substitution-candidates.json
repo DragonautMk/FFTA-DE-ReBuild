@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "screen-byte00-substitution-candidates",
+  "title": "Screen EUR text substitution candidates",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Screen authenticated declared text projections for opcode-25 substitution candidates and inspect their literal callback-table words."
+  ],
+  "validation": [
+    "Wine e158-byte00-substitution-screen-wine-t03ndh68 finds 2,333 one-operand command units covering 75 candidate values and no 40 25 byte pattern in screened expanded strings; four candidate table words are zero."
+  ],
+  "limitations": [
+    "Candidates and table words do not prove parser reachability, valid callback invocation or generated RAM output; ordinary byte00 use, other resources, Linux, USA and native Windows remain open. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md"
+  ],
+  "references": []
+}

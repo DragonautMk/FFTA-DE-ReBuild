@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "bound-byte00-active-id-writers",
+  "title": "Bound two EUR active-index writers",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Identify two conditional writers that constrain the active selector halfword to nine bits, and distinguish an unbounded live-halfword copy."
+  ],
+  "validation": [
+    "Wine e158-byte00-active-id-literals-wine-c228ps17 and e158-byte00-active-id-windows-wine-k0siw7ox locate and inspect bounded literal-load candidates.",
+    "Wine e158-byte00-active-id-writers-dis-wine-tcle99g9 shows the two nine-bit stores and the distinct live halfword copy. Previously accepted Wine 78suaoix excludes the target from expanded catalog strings."
+  ],
+  "limitations": [
+    "The nine-bit bound applies only when an examined writer supplies the value and no later writer intervenes; the other stores, aliases, callback execution and ordinary byte00 use remain open. Linux, USA and native Windows pending. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": []
+}

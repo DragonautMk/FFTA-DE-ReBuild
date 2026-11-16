@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "screen-byte00-outside-catalog-indices",
+  "title": "Screen EUR ten-bit selectors beyond the text catalog",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Classify out-of-catalog selector words and narrow one mode-1 helper path with necessary source conditions, without assuming guest address mapping."
+  ],
+  "validation": [
+    "Wine e158-byte00-outside-catalog-screen-wine-fnub_9js classifies 2,560 words from five roots and indices 512..1023; all fall outside the primary ROM window.",
+    "Wine e158-byte00-outside-id-candidates-wine-76wmjx5f finds eight indices meeting two necessary ROM conditions; e158-byte00-outside-candidate-pointers-wine-7vncx8y0 correlates their five literal words."
+  ],
+  "limitations": [
+    "Those indices are outside the authenticated mission extent and the conditions are necessary only. Live list membership, other paths, memory mapping, callback execution and ordinary byte00 use remain unproved. Linux, USA and native Windows pending. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": []
+}

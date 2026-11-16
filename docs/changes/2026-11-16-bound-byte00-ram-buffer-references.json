@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "bound-byte00-ram-buffer-references",
+  "title": "Bound EUR byte00 RAM substitution buffer references",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Identify conditional producers and source uses of the RAM buffer copied by one text-substitution callback."
+  ],
+  "validation": [
+    "Wine e158-byte00-ram-source-literals-wine-rl7cunl4 finds seven exact aligned literal load candidates in the bounded EUR code scan; Wine e158-byte00-ram-source-dis-wine-1o2klth5 examines their original instruction windows.",
+    "Two conditional sites expand short-string selector 2 into the RAM buffer before using it as a CpuSet source; the callback uses that address as an input to the text expander."
+  ],
+  "limitations": [
+    "Actual buffer contents at callback time, writer exclusivity, callback invocation and ordinary byte00 use remain unproved; address arithmetic, aliases, indirect references, Linux, USA and native Windows remain open. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md"
+  ],
+  "references": []
+}

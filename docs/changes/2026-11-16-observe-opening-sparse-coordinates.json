@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "observe-opening-sparse-coordinates",
+  "title": "Observe EUR opening sparse coordinates in ordinary execution",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Confirm the E158 sparse-coordinate reader in a neutral ordinary EUR opening continuation."
+  ],
+  "validation": [
+    "Wine e158-sparse-ordinary-wine-htdztv4y observes all 19 sparse halfwords with 38 typed requests and zero raw requests while source bytes are poisoned; the first reader frame matches the original complete state and clock."
+  ],
+  "limitations": [
+    "Only one neutral interpreter continuation and one matching frame are covered; other scenes, native dispatch, Linux, USA and native Windows remain unverified. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_obj.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

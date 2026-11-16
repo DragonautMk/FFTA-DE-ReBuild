@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "verify-title-language-publication-choices",
+  "title": "Verify additional EUR title language publications",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add ordinary title-selector raw/managed frame comparisons for language IDs 2, 3 and 4 and confirmation of the already active ID 0."
+  ],
+  "validation": [
+    "Wine e154-title-other-publications-wine-9k_mye2m observes original publication of IDs 2 and 3 after Down inputs and ID 4 after Up wrap from zero; confirming active ID 0 takes the unchanged branch.",
+    "The four interpreter raw/managed routes match complete state and clock at each observed frame with monitored position spans poisoned, 128 typed requests, no raw requests to those spans, and both selected title-cursor halfwords observed.",
+    "Windows GNU test executable cross-compiled in e154-title-other-publications-build-00uwpk23; the Wine validation unit passed and drained its server."
+  ],
+  "limitations": [
+    "Publication of ID 0 after a different language, global writers and index domain, other scenes and native-dispatch behavior for these routes remain unverified. Linux, USA and native Windows are pending. No performance measurement."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/title_language_publisher_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": []
+}

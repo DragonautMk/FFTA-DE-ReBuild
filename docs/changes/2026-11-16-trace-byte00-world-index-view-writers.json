@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "trace-byte00-world-index-view-writers",
+  "title": "Trace EUR world insertion view index writers",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Trace bounded immediate stores from the world-insertion argument to its source view byte and classify their local output ranges."
+  ],
+  "validation": [
+    "Wine e158-byte00-view1d-store-scan-wine-93go4vih and e158-byte00-view1d-writers-dis-wine-hrbvrx_w inspect six immediate offset-1d candidates.",
+    "Wine e158-byte00-view1b-store-scan-wine-kjoamsgi, e158-byte00-view1b-writers-dis-wine-t_vqnwj1 and e158-byte00-view1b-helper-dis-wine-l4_ach_9 classify six offset-1b candidates and the helper return.",
+    "The accepted fixed-ROM screen sli5ztgr contains 26 indices 31..127 whose arithmetic values exceed 511; these are outside authenticated world-record ownership."
+  ],
+  "limitations": [
+    "The 0..127 bound applies only to the examined stores with stable object identity and no intervening changes; it does not establish 0..30, valid out-of-catalog records, store completeness, save behavior, callback execution or ordinary byte00 use. Linux, USA and native Windows pending. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": []
+}

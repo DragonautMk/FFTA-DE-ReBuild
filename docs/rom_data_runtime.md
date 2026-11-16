@@ -2293,3 +2293,26 @@ comparisons pass (`b8vylqkk`). Production CLI create/reuse/verify and
 one-frame managed startup pass (`tucnagm9`); ordinary execution of the
 sparse branch remains open. Linux, USA and native Windows remain pending.
 No performance measurement.
+
+
+## E158 opening sparse-branch read inventory
+
+Wine `e158-sparse-residue-wine-b81cszl2` inventories three neutral
+interpreter frames from the retained EUR pre-sparse checkpoint against E158.
+No requests were dropped and no raw request overlapped declared source spans.
+The only four unowned bytes are the previously classified `370eb0..b4`
+copied-IWRAM helper vector. This bounded window does not establish absence
+of other sources elsewhere. Linux, USA and native Windows remain pending;
+no performance measurement.
+
+
+## E158 early-opening read inventory
+
+Wine `e158-early-bank-inventory-wine-lnfgdwch` inventories three neutral
+interpreter frames from the retained EUR early-opening checkpoint against
+E158. No requests were dropped and no raw request overlapped declared source
+spans. The only four unowned bytes are the previously classified `370eb0..b4`
+copied-IWRAM helper vector. The same checkpoint's earlier E157 inventory had
+also identified the four coordinate bytes now owned in E158. This bounded
+window does not establish absence of other sources elsewhere. Linux, USA and
+native Windows remain pending; no performance measurement.

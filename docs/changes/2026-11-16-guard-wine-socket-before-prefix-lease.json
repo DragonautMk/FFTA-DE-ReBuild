@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "guard-wine-socket-before-prefix-lease",
+  "title": "Guard Wine socket access before leasing the shared prefix",
+  "kind": "fixed",
+  "platforms": [
+    "Wine"
+  ],
+  "changes": [
+    "Probe Unix-domain socket binding in a temporary directory before acquiring the shared Wine prefix lease, including when XDG_RUNTIME_DIR is unset."
+  ],
+  "validation": [
+    "Wine-mode unit wine-socket-preflight-jtyb26w8 was refused on sandbox EPERM before Wine launched and retained no leases.",
+    "EUR Wine unit e134-default-managed-pair-wine-botzl4b6 passed with the preflight enabled and drained the Wine server."
+  ],
+  "limitations": [
+    "The probe cannot grant sandbox permissions and cannot cover every runtime directory, socket path, race or filesystem failure; automatic approval review availability is external."
+  ],
+  "files": [
+    "scripts/validation_unit.py",
+    "docs/development/LOCAL_ARTIFACTS.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": []
+}

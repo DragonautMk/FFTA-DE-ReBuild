@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "bound-byte00-world-list-insertion",
+  "title": "Bound a EUR world-record list insertion",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Identify a separate world-record-derived insertion and the original list reset, while retaining live-index and restoration limits."
+  ],
+  "validation": [
+    "Wine e158-byte00-world-id-domain-wine-m8am6hhs authenticates 31 existing world records and finds their low-ten-bit IDs in 0..358.",
+    "Wine e158-byte00-list-second-source-dis-wine-1jq3_d11 and e158-byte00-list-storage-writers-dis-wine-rwpkftan inspect the source and copy path.",
+    "Wine e158-byte00-list-reset-dis-wine-oc803tkd, e158-byte00-list-reset-caller-dis-wine-cy1tqrkx and e158-byte00-list-caller-scan-wine-9p3cag2u inspect the conditional reset and bounded caller candidates; ygyq6pf2 and zwt6r7cc retain reference and refresh windows."
+  ],
+  "limitations": [
+    "The world insertion bound assumes a 0..30 live index and stable scratch data. Reset execution, later restoration, alternate indices, aliases, other writers and ordinary byte00 use remain unproved. Linux, USA and native Windows pending. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": []
+}

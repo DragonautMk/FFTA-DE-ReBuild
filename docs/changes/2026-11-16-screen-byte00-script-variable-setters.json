@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "screen-byte00-script-variable-setters",
+  "title": "Screen EUR script byte-variable setter destinations",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Screen the existing primary and auxiliary script projections for commands that pass dynamic destinations to the byte-variable setter."
+  ],
+  "validation": [
+    "Wine e158-byte00-script-setter-dis-wine-s_dg62yh confirms both callback argument layouts.",
+    "Wine e158-byte00-script-var80-screen-wine-svjlcy7s authenticates and screens 207 primary and 133 auxiliary physical program projections: zero primary opcode 27 and auxiliary opcode 3 instructions.",
+    "A focused follow-up consultation with /root/sol_byte00_list_producer was requested as gpt-6.1-sol/xhigh; effective settings were not independently reported."
+  ],
+  "limitations": [
+    "The result applies only to declared physical projections, not alternate entry offsets, other scripts or commands, direct/bulk writes, saves, aliases, guest execution or ordinary byte00 reachability. Linux, USA and native Windows pending. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": []
+}

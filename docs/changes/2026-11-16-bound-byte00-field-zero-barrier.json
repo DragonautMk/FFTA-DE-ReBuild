@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "bound-byte00-field-zero-barrier",
+  "title": "Bound trailing bytes on an unmodified EUR text path",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Establish a conditional zero-terminator barrier between localized initial field contents and callback output, without assuming values of trailing copied bytes."
+  ],
+  "validation": [
+    "Wine e158-byte00-field-zero-barrier-wine-m0m6rtgn checks all five authenticated expansions for aligned zero positions and 80 xx prefixes.",
+    "The source argument uses original windows e158-byte00-ram-forward-dis-wine-ds4kthpq and e158-byte00-field-copy-dis-wine-wvq_b39w; this does not execute the path."
+  ],
+  "limitations": [
+    "Only the exact initialized, unmodified field through 0812e464 and callback 08019eb8 is bounded; intervening modifications, aliases, other producers and callbacks, execution order and ordinary byte00 use remain unproved. Linux, USA and native Windows pending. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": []
+}

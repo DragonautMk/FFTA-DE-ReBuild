@@ -568,6 +568,8 @@ mod title_opening_coordinates_tests;
 #[cfg(test)]
 mod title_opening_sparse_ordinary_tests;
 #[cfg(test)]
+mod title_main_bank_draw_tests;
+#[cfg(test)]
 mod phase_zero_threshold_tests;
 #[cfg(test)]
 mod map_raster_palette_runtime_tests;

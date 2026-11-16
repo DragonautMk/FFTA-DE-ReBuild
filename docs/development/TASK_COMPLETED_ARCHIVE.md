@@ -22882,3 +22882,177 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: exact failed unit and shared Wine leases recovered after owner matching, host-visible process checks and successful server drain; read-only XDG Wine runtime rejected before prefix lease acquisition.
 - Evidence: `target/validation/lease-recovery/e158-sparse-ordinary-aadspz22/recovery.json`, `wine-runtime-preflight-6120e8eq`, `wine-runtime-recovery-smoke-lwzsvfgf`, `docs/changes/2026-11-13-guard-wine-runtime-before-prefix-lease.json`.
 - Limits: preflight covers an existing XDG Wine runtime directory; the sandbox remains read-only and approval review is external. The ROM-data sparse test remains paused and unrun.
+
+### ROMDATA-04-E158-SPARSE-ORDINARY
+
+- Outcome: complete for the first ordinary EUR opening sparse-coordinate reader frame under Wine interpreter.
+- Evidence: `e158-sparse-ordinary-wine-htdztv4y` observes all 19 halfwords, 38 typed requests and no raw reads with poisoned source; first reader frame matches original complete state/clock. Checkpoint retained.
+- Limits: other scenes and native dispatch, Linux, USA and native Windows remain open; no performance measurement. Reference: `docs/changes/2026-11-16-observe-opening-sparse-coordinates.json`.
+
+### ROMDATA-01-E158-SPARSE-RESIDUE
+
+- Outcome: bounded EUR/Wine high-ROM inventory complete for three neutral sparse-branch opening frames (`e158-sparse-residue-wine-b81cszl2`); no dropped requests or raw overlap with declared sources. The only unowned bytes are the known `370eb0` helper.
+- Limits: other frames, scenes, Linux, USA and native Windows remain open; no performance measurement. Reference: `docs/changes/2026-11-16-inventory-opening-sparse-residue.json`.
+
+### ROMDATA-04-TITLE-MAIN-BANK-DRAW
+
+- Outcome: complete for one EUR ordinary title animation bank list draw frame under Wine interpreter.
+- Evidence: `e158-main-bank-draw-wine-88p3pl3x` observes `b8ed6c` header read by original regular draw reader `0800153c` with poisoned sources, no raw reads and matching original/managed complete state and clock.
+- Limits: other lists/scenes, native dispatch, Linux, USA and native Windows remain open; no performance measurement. Reference: `docs/changes/2026-11-16-observe-main-title-bank-draw.json`.
+
+### ROMDATA-04-TITLE-MAIN-BANK-OTHER-WINDOW
+
+- Outcome: bounded EUR/Wine neutral continuation complete for 100 frames (`e158-main-bank-other-wine-dqpspyyn`); only index 3 is observed and its first frame matches.
+- Limits: other list use remains partial under `ROMDATA-04-TITLE-MAIN-BANK-OTHER`; other scenes, native dispatch, Linux, USA and native Windows remain open. No performance measurement. Reference: `docs/changes/2026-11-16-bound-main-title-bank-following-lists.json`.
+
+### ROMDATA-01-TITLE-OPENING-3ADEFC
+
+- Outcome: bounded EUR source reconciliation complete; state-11 literal 3adefc plus halfword offset 2 reads E158-owned 3adefe, not a new source.
+- Evidence: Wine `e158-title-opening-state11-dis-wine-cq5x5sqb`; `docs/changes/2026-11-16-reconcile-opening-state11-coordinate.json`.
+- Limits: ordinary state-11 invocation, other consumers, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-04-TITLE-OPENING-STATE11
+
+- Outcome: one ordinary EUR state-11 coordinate reader frame complete under Wine interpreter.
+- Evidence: `e158-state11-ordinary-wine-3m78lqs_` observes original reader `0813a396` use managed `3adefe` with poisoned source, no raw reads and matching original/managed complete state and clock.
+- Limits: other scenes, native dispatch, Linux, USA and native Windows remain open; no performance measurement. Reference: `docs/changes/2026-11-16-observe-opening-state11-coordinate.json`.
+
+### ROMDATA-04-TITLE-MAIN-BANK-OTHER
+
+- Outcome: complete for all five nonempty lists of the extracted EUR title animation sequence in one ordinary Wine interpreter continuation.
+- Evidence: `e158-main-bank-early-wine-hhh7a8lg` observes indices 1–5 with typed headers, poisoned sources, no raw reads and matching first-observed complete state/clock per list. Sol `/root/sol_bank_checkpoint` requested as gpt-6.1-sol xhigh identified the earlier retained checkpoint; effective settings unconfirmed.
+- Limits: empty index 0 is not referenced by the extracted sequence; other scenes/producers, native dispatch, Linux, USA and native Windows remain open. No performance measurement. Reference: `docs/changes/2026-11-16-observe-main-title-bank-sequence-lists.json`.
+
+### ROMDATA-01-E158-EARLY-BANK-RESIDUE
+
+- Outcome: bounded EUR/Wine high-ROM source inventory complete for three early-opening frames (`e158-early-bank-inventory-wine-lnfgdwch`); no dropped requests or raw overlap with declared sources. Only the known `370eb0` helper remains unowned in this window.
+- Limits: other frames/scenes, Linux, USA and native Windows remain open; no performance measurement. Reference: `docs/changes/2026-11-16-inventory-e158-early-opening-reads.json`.
+
+### ROMDATA-04-BYTE00-FIELD-INITIALIZERS
+
+- Outcome: bounded EUR/Wine static identification of state 0100 initial field-copy sources complete. `tdombygl` identifies the conditional `08016648(2)` and `08016828(0)` branches; `y865vpe4` identifies language-dependent pointer-table selection for the latter.
+- Limits: selected contents, other states/writers, saved and aliased contents, callback invocation and ordinary byte00 use remain open; Linux, USA and native Windows pending. No performance measurement. Reference: `docs/changes/2026-11-16-identify-byte00-field-initializers.json`.
+
+### ROMDATA-04-BYTE00-LOCALIZED-INITIAL-TEXT
+
+- Outcome: bounded EUR/Wine static screen of all five language-selected entry-zero strings complete; no target through generated terminators (`dgzrlx3q`), grammar inspected (`wvq_b39w`).
+- Limits: copy extends beyond terminator into prior buffer contents; actual state transitions, saved/aliased contents, other writers, callback invocation and ordinary byte00 remain open. Linux, USA and native Windows pending; no performance measurement. Reference: `docs/changes/2026-11-16-bound-byte00-localized-initial-text.json`.
+
+### ROMDATA-04-BYTE00-FIELD-ZERO-BARRIER
+
+- Outcome: conditional EUR/Wine source and data argument complete: all five initialized field strings retain an aligned terminator on the exact unmodified `0812e464` to `08019eb8` path (`m0m6rtgn`); trailing copied bytes cannot reach that callback output.
+- Limits: no execution observation; modifications, other writers/callbacks, aliases, invocation and ordinary byte00 use remain open. Linux, USA and native Windows pending; no performance measurement. Reference: `docs/changes/2026-11-16-bound-byte00-field-zero-barrier.json`.
+
+### ROMDATA-04-BYTE00-CALLBACK28-SOURCES
+
+- Outcome: bounded EUR/Wine source reconciliation complete: callback28 selects `08016768`/`08016828` conditionally (`nxd4bals`, `6zw8vl88`); existing authenticated expanded-string screen `78suaoix` excludes the target for catalog-valid indices.
+- Limits: original live indices can exceed catalog bounds; other callbacks, execution and ordinary byte00 use remain open. Linux, USA and native Windows pending; no performance measurement. Reference: `docs/changes/2026-11-16-trace-byte00-callback28-text-sources.json`.
+
+### ROMDATA-04-BYTE00-CALLBACK28-EVENT-SELECTOR
+
+- Outcome: bounded EUR/Wine source join complete: all 256 event ordinals select owned parameter records with headers 0..127 (`k7p3b_ey`), within `08016828`'s catalog whose expanded strings exclude the target (`78suaoix`).
+- Limits: only the conditional event-derived path; live-halfword/direct paths, modifications, aliases, callback execution and ordinary byte00 remain open. Linux, USA and native Windows pending; no performance measurement. Reference: `docs/changes/2026-11-16-bound-byte00-callback28-event-selector.json`.
+
+### ROMDATA-04-BYTE00-ACTIVE-ID-WRITERS
+
+- Outcome: bounded EUR/Wine source analysis complete for two nine-bit stores to `02003c28` (`tcle99g9`), while `0803d10a` copies an unbounded object+20 halfword. Candidate literal census `c228ps17` and windows `k0siw7ox` are bounded, not exhaustive.
+- Limits: other writers, mirrors, last-writer order, callback execution and ordinary byte00 remain open. Linux, USA and native Windows pending; no performance measurement. Reference: `docs/changes/2026-11-16-bound-byte00-active-id-writers.json`.
+
+### ROMDATA-04-BYTE00-ACTIVE-ID-HELPER
+
+- Outcome: bounded EUR/Wine source analysis complete: `080d5538` returns either a mode-2 byte or a mode-1 ten-bit list value (`_emiu3kp`); caller routes mode 2 to active-ID store (`kqba3yet`), conditional on intervening state/register preservation (`sy1sh_8p`).
+- Limits: mode1 object identity, intervening effects, other stores, aliases, execution and ordinary byte00 remain open. Linux, USA and native Windows pending; no performance measurement. Reference: `docs/changes/2026-11-16-trace-byte00-active-id-helper.json`.
+
+### ROMDATA-04-BYTE00-OUTSIDE-CATALOG-INDICES
+
+- Outcome: bounded EUR/Wine source screen complete: all 2,560 words for indices 512..1023 across five `08016768` roots lie outside primary ROM (`fnub_9js`). Eight indices satisfy two necessary mode-1 helper ROM conditions (`76wmjx5f`); their words have no high byte 02/03 (`7vncx8y0`).
+- Limits: these are outside the authenticated mission extent, with no list reachability, guest mapping, callback execution or global byte00 conclusion. Linux, USA and native Windows pending; no performance measurement. Reference: `docs/changes/2026-11-16-screen-byte00-outside-catalog-indices.json`.
+
+### ROMDATA-04-BYTE00-MISSION-LIST-INSERTION
+
+- Outcome: bounded EUR/Wine inspection links a scratch-record ID to loop ordinals 1..511 and a conditional list insertion (`4ajfe58a`, `aizksk7l`); `080d457c` can reorder an existing node. Sol `/root/sol_byte00_list_producer` requested gpt-6.1-sol/xhigh; effective settings unconfirmed.
+- Limits: the zero-argument list update does not establish removal of prior nodes; other producers, restoration, aliases and ordinary byte00 use remain open. Linux, USA and native Windows pending; no performance measurement. Reference: `docs/changes/2026-11-16-trace-byte00-mission-list-insertion.json`.
+
+### ROMDATA-04-BYTE00-WORLD-LIST-INSERTION
+
+- Outcome: bounded EUR/Wine source analysis complete: 31 authenticated world rows yield low-ten-bit IDs 0..358 (`m8am6hhs`) for conditional `080d4c4c` insertion. `oc803tkd` identifies a full list-storage reset; `9p3cag2u` finds its bounded direct call candidate.
+- Limits: live index, scratch stability, reset execution, subsequent restoration, aliases, other writers and ordinary byte00 remain open. Linux, USA and native Windows pending; no performance measurement. Reference: `docs/changes/2026-11-16-bound-byte00-world-list-insertion.json`.
+
+### ROMDATA-04-BYTE00-WORLD-BYTE-INDICES
+
+- Outcome: bounded EUR/Wine source screen complete: two direct candidate calls pass a live byte (`d25kty3u`, `a4_woxfy`); fixed-ROM arithmetic for all 256 byte indices yields 75 out-of-catalog IDs above 511, none of the eight mode-1 necessary candidates (`sli5ztgr`).
+- Limits: out-of-catalog bytes are not authenticated world records; actual input range, mutations, indirect calls, other producers and ordinary byte00 remain open. Linux, USA and native Windows pending; no performance measurement. Reference: `docs/changes/2026-11-16-screen-byte00-world-byte-indices.json`.
+
+### ROMDATA-04-BYTE00-WORLD-VIEW-INDEX-WRITERS
+
+- Outcome: bounded EUR/Wine immediate-store analysis complete: six view+1d candidates copy view+1b (`hrbvrx_w`), and six view+1b candidates locally yield 0..127 (`t_vqnwj1`, `l4_ach_9`). Prior screen `sli5ztgr` finds 26 indices in 31..127 with IDs above 511.
+- Limits: object/last-writer stability, alternate stores, save restoration, live execution and ordinary byte00 remain open; no global 0..30 bound. Linux, USA and native Windows pending; no performance measurement. Reference: `docs/changes/2026-11-16-trace-byte00-world-index-view-writers.json`.
+
+### ROMDATA-04-BYTE00-WORLD-VIEW8C-SOURCE
+
+- Outcome: bounded EUR/Wine source inspection identifies two view+8c stores from live variable 80 (`acxbx3u4`) and two constant stores (`ye3ufpha`). One dynamic setter loop instead targets variable indices 1b..32 (`7ic5mznx`); bounded direct-setter candidate screen `dl5g_k32` is heuristic.
+- Limits: variable 80 writers and values, other stores, save restoration, aliases, execution and ordinary byte00 remain open. Linux, USA and native Windows pending; no performance measurement. Reference: `docs/changes/2026-11-16-trace-byte00-world-view8c-source.json`.
+
+### ROMDATA-04-BYTE00-SCRIPT-VARIABLE-SETTERS
+
+- Outcome: EUR/Wine source join `svjlcy7s` finds zero primary opcode-27 and auxiliary opcode-3 instructions in the authenticated physical projections. Their callback argument layout was verified (`s_dg62yh`). Sol `/root/sol_byte00_list_producer` requested gpt-6.1-sol/xhigh; effective settings unconfirmed.
+- Limits: alternate entry offsets, other scripts/commands, writers, restoration, aliases, execution and ordinary byte00 remain open. Linux, USA and native Windows pending; no performance measurement. Reference: `docs/changes/2026-11-16-screen-byte00-script-variable-setters.json`.
+
+### ROMDATA-04-BYTE00-MISSION-VARIABLE-WRITERS
+
+- Outcome: EUR/Wine source analysis `3b1ncdqm`, `9xmjtx3w` and `jnkbjfyx` identifies two mission-key writer paths and 27 authenticated mode-3 key-680 slots with operands 1..30; those conditional writes yield view index 0..29.
+- Limits: live selection, last-writer order, out-of-catalog IDs, indirect/bulk writers, aliases, restoration and ordinary byte00 remain open. Linux, USA and native Windows pending; no performance measurement. Reference: `docs/changes/2026-11-16-trace-byte00-mission-variable-writers.json`.
+
+### ROMDATA-04-BYTE00-WORLD-CLEAR-CALLER
+
+- Outcome: bounded EUR/Wine direct-call census `d8jrfcjt` and caller `pdzm4ife` show two examined world-state helper paths pass six-bit arguments and select variable indices 14..53 hex, excluding variable 80.
+- Limits: other `080d347c` callers, indirect/alternate entries, direct writers, restoration and execution remain open. Linux, USA and native Windows pending; no performance measurement. Reference: `docs/changes/2026-11-16-trace-byte00-mission-variable-writers.json`.
+
+### ROMDATA-04-BYTE00-WORLD-INIT-CALLERS
+
+- Outcome: EUR/Wine direct BL census `17k0_b_u` finds three `080d347c` call candidates. The additional two guarded paths select variable indices 1b..32 (`q0h2f10_`, `3b1ncdqm`), excluding variable 80.
+- Limits: bounded census, indirect/alternate calls, direct writes, restoration, aliases and ordinary byte00 remain open. Linux, USA and native Windows pending; no performance measurement. Reference: `docs/changes/2026-11-16-trace-byte00-mission-variable-writers.json`.
+
+### ROMDATA-04-BYTE00-ADDITIONAL-VARIABLE-SETTERS
+
+- Outcome: EUR/Wine windows `s17tfsmr`, `dce65adz` and `l4kbmaue` exclude variable 80 on the examined `080d0390` direct-caller path, including its inherited register case; `st534xw1` bounds another path to indices 1, 2 or 4 with register-preservation conditions.
+- Limits: alternate/indirect calls, bulk/direct writes, restore, aliases and ordinary byte00 remain open. Linux, USA and native Windows pending; no performance measurement. Reference: `docs/changes/2026-11-16-bound-byte00-additional-variable-setters.json`.
+
+### ROMDATA-04-BYTE00-VARIABLE-ADDRESS-LITERALS
+
+- Outcome: EUR/Wine bounded literal census `nm187c_p` and windows `5w9di6ai` identify dynamic-base halfword stores through the pointer at `0200f42c`; overlap with variable 80 remains unproved.
+- Limits: pointer/index domains, alternate address construction, bulk writes, restores, aliases and execution remain open. Linux, USA and native Windows pending; no performance measurement. Reference: `docs/changes/2026-11-16-inspect-byte00-variable-address-literals.json`.
+
+### ROMDATA-04-BYTE00-VARIABLE-OBJECT-ALLOCATOR
+
+- Outcome: EUR/Wine `vy7c2gwa`, `jaefvyhn`, `phfyxv23` identify one `0200f42c` initialization as an allocation request for 2038 hex bytes using live allocator context `0200f434`.
+- Limits: allocation range, failure/stale state, alternative pointer writers, aliases, restores and ordinary byte00 remain open. Linux, USA and native Windows pending; no performance measurement. Reference: `docs/changes/2026-11-16-inspect-byte00-variable-address-literals.json`.
+
+### ROMDATA-04-BYTE00-POOL-STORE-OVERLAP
+
+- Outcome: bounded EUR/Wine `vsbrdslr`, `i_i5iqa6`, `q9cpd9yg` trace one pool initialization and exclude the examined halfword stores from variable 80, including EWRAM mirrors, conditional on a successful in-pool allocation and intact pointer/metadata.
+- Limits: actual allocation state, failure, restores, aliases, other stores and ordinary byte00 remain open. Linux, USA and native Windows pending; no performance measurement. Reference: `docs/changes/2026-11-16-bound-byte00-pool-store-overlap.json`.
+
+### ROMDATA-04-E134-FRAME-BOUNDARY-DIFF
+
+- Outcome: Wine `ve41xbr3` checks the retained failed comparison states: only PC and clock differ in payload; left clock 14 cycles earlier. This is a frame-boundary observation, not equivalence. Sol `/root/sol_byte00_list_producer` requested gpt-6.1-sol/xhigh, usage-limited without a diagnosis; effective settings unconfirmed.
+- Limits: cause, common-point state, production updater, ordinary draw, Linux, USA and native Windows remain open; no performance measurement. Reference: `docs/changes/2026-11-16-diagnose-e134-frame-boundary-state-diff.json`.
+
+### ROMDATA-04-E134-BOUNDARY-CONTINUATIONS
+
+- Outcome: Wine `_b25rbot` test finds no identical full state within 64 interpreter steps of either retained state; unit FAIL due to retained private scratch, server drained. Wine `5igtz_67` verifies all ten input hashes and the two copies; build `q9g7yzgm` PASS. Initial build `5czy55tf` failed before compilation on a relative script path.
+- Limits: bounded negative only; first divergence, updater equivalence, production translation and ordinary draw remain open. Linux, USA and native Windows pending; no performance measurement. Reference: `docs/changes/2026-11-16-compare-e134-retained-boundary-continuations.json`.
+
+### WINE-SOCKET-PREFLIGHT
+
+- Outcome: completed for early socket-bind refusal and Wine-path validation.
+- Verified criteria: sandbox socket bind denial is detected before the shared Wine prefix lease; the existing recovered E158 lease is not modified.
+- Evidence: `wine-socket-preflight-jtyb26w8` expected refusal with no retained lease; `e134-default-managed-pair-wine-botzl4b6` Wine PASS and server drained; `docs/changes/2026-11-16-guard-wine-socket-before-prefix-lease.json`.
+- Limits: sandbox permissions and external approval-review availability remain outside this guard; runtime/socket races and other filesystem failures are possible.
+
+### ROMDATA-01-TITLE-LANGUAGE-OTHER-PUBLICATIONS
+
+- Outcome: completed for four bounded ordinary EUR title routes under Wine interpreter.
+- Verified criteria: IDs 2, 3 and 4 published; confirming active ID 0 takes the unchanged branch. Raw/managed states and clocks match at each checked frame with poisoned position spans.
+- Evidence: `e154-title-other-publications-wine-9k_mye2m`, build `00uwpk23`, `docs/changes/2026-11-16-verify-title-language-publication-choices.json`.
+- Limits: return publication to ID 0, other writers/index domain, native dispatch for these routes, other scenes, Linux, USA and native Windows remain open; no performance measurement.

@@ -218,8 +218,10 @@ measurement. [Evidence](../rom_data_ui_raw_transfers.md#conditional-fixed-obj-tr
 **ROMDATA-02-OBJ-CONTEXT-UPDATER scoped EUR progress:** E134 adds one
 38-frame sequence and a 21-list OBJ bank. Wine verifies CLI create/reuse/verify/
 startup, source bytes and three updater/draw full-state/clock cases each in
-the interpreter and translated execution, including machine-state reload.
-Ordinary use, UI save/Load, Linux, USA and native Windows remain open; no
+the interpreter and translated execution, including machine-state reload. One
+ordinary checkpoint also has interpreter and explicitly labeled translated
+updater evidence. Other ordinary paths, translated drawing, production cache
+selection, UI save/Load, Linux, USA and native Windows remain open; no
 performance measurement.
 [Evidence](../rom_data_obj.md#conditional-context-updater-obj-bank-e134).
 

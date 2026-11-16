@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "observe-main-title-bank-draw",
+  "title": "Observe the EUR opening title animation draw",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add a bounded ordinary EUR opening comparison for the independent title animation bank."
+  ],
+  "validation": [
+    "Wine e158-main-bank-draw-wine-88p3pl3x observes the b8ed6c list header at original regular OBJ draw reader 0800153c with poisoned bank-list source and zero raw source reads; the first interpreter frame matches the original complete state and clock."
+  ],
+  "limitations": [
+    "One list and one interpreter frame only; other lists and scenes, native dispatch, Linux, USA and native Windows remain unverified. No performance measurement."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/title_main_bank_draw_tests.rs",
+    "docs/rom_data_obj.md"
+  ],
+  "references": []
+}

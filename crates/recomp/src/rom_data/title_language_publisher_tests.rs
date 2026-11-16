@@ -58,3 +58,131 @@ fn european_title_language_publisher_ordinary_observation() {
         "Linux":"pending","USA":"pending","native_windows":"pending","performance_measurements":false
     })).unwrap()).unwrap();
 }
+
+#[cfg(feature = "rom-data-read-audit")]
+#[test]
+#[ignore = "authenticated EUR title selector and managed dataset; Wine only"]
+fn european_title_language_other_publications_ordinary_pairs() {
+    use gba_core::rom_data::read_audit::{Service, TraceCapture, TraceFilter};
+    use std::collections::BTreeSet;
+
+    const GLOBAL: u32 = 0x0200_1f6e;
+    const CURSOR: u32 = 0x003a_dcfc;
+    const CONTEXT_PAIRS: u32 = 0x003a_e42c;
+    let root = PathBuf::from(std::env::var_os("FFTA_TITLE_LANGUAGE_ROOT").unwrap());
+    let state = fs::read(std::env::var_os("FFTA_TITLE_LANGUAGE_STATE").unwrap()).unwrap();
+    assert_eq!(gba_core::ffta_rom::digest(&state), "ce54d2693068161aa1452835109c7a44082fa9bd4e2777ab6976cddd88e192e1");
+    let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    assert_eq!(gba_core::ffta_rom::digest(&rom), gba_core::ffta_rom::EUROPE_SHA256);
+    let dataset = PathBuf::from(std::env::var_os("FFTA_TITLE_LANGUAGE_DATASET").unwrap());
+    let spans = [(CURSOR, CURSOR + 20), (CONTEXT_PAIRS, CONTEXT_PAIRS + 20)];
+    let mut observations = Vec::new();
+
+    // ID 1 already has its own ordinary publication witness. ID 4 is reached
+    // by wrapping upward from zero; IDs 2 and 3 use separate Down presses.
+    for target in [0u8, 2, 3, 4] {
+        let mut raw = crate::make_machine(rom.clone(), None);
+        let mut managed = crate::make_machine(rom.clone(), None);
+        attach_from_directory(&mut managed, &dataset).unwrap();
+        raw.load_state(&state).unwrap();
+        managed.load_state(&state).unwrap();
+        assert!(raw.save_state().unwrap() == managed.save_state().unwrap());
+        let context = raw.bus.read32(0x0200_f3b0);
+        assert_eq!(raw.bus.read8(GLOBAL), 0);
+        assert_eq!(raw.bus.read8(context + 0x8964), 0);
+        let presses = match target { 0 => 0, 4 => 1, _ => u32::from(target) };
+        let confirm_frame = 8 * presses.max(1);
+        let mut selected = BTreeSet::from([0u8]);
+        let mut cursor_offsets = BTreeSet::new();
+        let mut typed = 0u64;
+        let mut raw_reads = 0u64;
+        let mut publication = None;
+        let mut unchanged_branch = false;
+        let mut finished_frame = None;
+
+        for frame in 0..160u32 {
+            let keys = if frame < presses * 8 && frame % 8 < 2 {
+                if target == 4 { 0x3bf } else { 0x37f }
+            } else if (confirm_frame..confirm_frame + 2).contains(&frame) {
+                0x3fe
+            } else {
+                0x3ff
+            };
+            raw.bus.keys = keys;
+            managed.bus.keys = keys;
+            raw.bus.frame_ready = false;
+            for _ in 0..5_000_000 {
+                if raw.bus.frame_ready { break; }
+                let pc = raw.cpu.regs[15];
+                let regs = raw.cpu.regs;
+                let event = raw.step();
+                if !matches!(event, gba_core::StepEvent::Instr(ref i) if i.addr == pc) { continue; }
+                if pc == 0x0813_aadc && raw.cpu.regs[15] == 0x0813_ab30 {
+                    assert_eq!((regs[0] as u8, regs[3] as u8), (0, 0));
+                    unchanged_branch = true;
+                }
+                if pc == 0x0813_aafe {
+                    assert_eq!(regs[1], GLOBAL);
+                    assert_eq!(regs[0] as u8, target);
+                    assert_eq!(raw.bus.read8(context + 0x8964), target);
+                    assert_eq!(raw.bus.read8(GLOBAL), target);
+                    publication = Some(frame);
+                }
+            }
+            assert!(raw.bus.frame_ready, "raw title frame {frame}");
+            for &(lo, hi) in &spans { managed.bus.rom[lo as usize..hi as usize].fill(0xcd); }
+            let capture = TraceCapture::start(TraceFilter { readers: vec![], ranges: spans.to_vec() }, 10_000).unwrap();
+            capture.frame(Some(managed.bus.frames));
+            managed.bus.frame_ready = false;
+            for _ in 0..5_000_000 {
+                if managed.bus.frame_ready { break; }
+                managed.step();
+            }
+            assert!(managed.bus.frame_ready, "managed title frame {frame}");
+            let trace = capture.finish();
+            assert!(!trace.truncated);
+            for event in trace.events {
+                match event.key.service {
+                    Service::Typed => {
+                        typed += event.requests;
+                        if event.key.read.length == 2 { cursor_offsets.insert(event.key.read.physical_offset); }
+                    }
+                    Service::Raw => raw_reads += event.requests,
+                    Service::Unclassified => {}
+                }
+            }
+            for &(lo, hi) in &spans {
+                managed.bus.rom[lo as usize..hi as usize].copy_from_slice(&rom[lo as usize..hi as usize]);
+            }
+            assert!(raw.save_state().unwrap() == managed.save_state().unwrap(),
+                    "title full state/clock target {target}, frame {frame}");
+            selected.insert(raw.bus.read8(context + 0x8964));
+            if publication.is_some() || unchanged_branch {
+                finished_frame = Some(frame);
+                break;
+            }
+        }
+        let frame = finished_frame.expect("title confirmation did not reach the publisher or unchanged branch");
+        assert_eq!(raw.bus.read8(context + 0x8964), target);
+        assert_eq!(raw.bus.read8(GLOBAL), target);
+        assert_eq!(publication.is_some(), target != 0);
+        assert_eq!(unchanged_branch, target == 0);
+        assert!(typed > 0 && raw_reads == 0);
+        let cursor = CURSOR + 4 * u32::from(target);
+        assert!(cursor_offsets.contains(&cursor) && cursor_offsets.contains(&(cursor + 2)),
+                "both selected cursor coordinates for target {target}");
+        if target == 4 { assert!(selected.contains(&4), "upward wrap was not observed"); }
+        else { for value in 0..=target { assert!(selected.contains(&value)); } }
+        observations.push(serde_json::json!({
+            "target": target, "selection_values": selected, "frame": frame,
+            "published": publication.is_some(), "unchanged_branch": unchanged_branch,
+            "typed_requests": typed, "raw_requests": raw_reads,
+        }));
+    }
+    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
+        "status": "PASS", "scope": "ordinary EUR title selector, interpreter raw/managed pairs",
+        "observations": observations, "poisoned_source": true,
+        "limits": "ID 0 is already selected and follows the unchanged branch; publication of zero after another selection, global writer/value domain and other scenes remain open.",
+        "Linux": "pending", "USA": "pending", "native_windows": "pending", "performance_measurements": false
+    })).unwrap()).unwrap();
+}

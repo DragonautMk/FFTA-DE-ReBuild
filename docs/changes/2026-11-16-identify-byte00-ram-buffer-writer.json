@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "identify-byte00-ram-buffer-writer",
+  "title": "Identify a conditional EUR RAM text-buffer writer",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Identify a live-RAM-field writer of the text-substitution callback buffer, preserving the conditional nature of the path."
+  ],
+  "validation": [
+    "Wine e158-byte00-ram-forward-dis-wine-ds4kthpq shows the caller passing 02001f1c as destination and 0812e464 copying trimmed live context+312 content through stack scratch with CpuSet."
+  ],
+  "limitations": [
+    "The live field producer, legal contents, invocation order, callback reachability and ordinary byte00 use remain unproved; Linux, USA and native Windows remain pending. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md"
+  ],
+  "references": []
+}

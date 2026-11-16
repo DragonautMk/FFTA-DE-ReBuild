@@ -7016,6 +7016,468 @@ and global reachability remain unproved. Evidence under `target/validation/units
 `e132-byte00-textscan-78suaoix/`. New Linux, USA and native Windows checks
 remain pending; no performance measurements.
 
+Wine `e158-byte00-dispatch-refs-wine-1quaoj7v` scans aligned Thumb BL
+candidates in EUR ROM `08000000..08150000` and aligned words across the ROM
+for dispatcher `08015e9c/9d`. It finds only direct BL candidates `0801541e`
+and `080164f6`, and no aligned pointer words. The retained caller windows
+show the first obtains `r1` from byte +2 of a live text pointer; the second
+forwards its first argument, itself loaded from text at its known callers.
+This narrows the examined direct-call routes but does not establish actual
+execution or exclude computed/indirect calls, generated text, other code
+ranges or unaligned pointers. Linux, USA and native Windows remain pending;
+no performance measurement.
+
+Wine `e158-byte00-buffer-helpers-dis-wine-8bksdmpz` inspects the RAM text
+substitution path at `08015846..5c`. It invokes `08019e94` or `0801738c`
+with `SP+10` as destination, saves the old text pointer and returns to the
+parser with that RAM buffer. Helper `0801738c` calls the short-string selector
+`08016648`, then the expansion/copy routine `08019d98`; for entries in the
+already authenticated short catalog, the earlier expanded-string screen
+found no literal `40 67 01`. This is conditional on that catalog and does
+not bound the selector globally. Helper `08019e94` clears the output then
+calls a live indexed callback from table `371158`; its output, valid index
+domain and later parser reachability remain open. Original parser jump-table
+inspection maps command bytes `25`, `72` and `67` to the two substitutions
+and formatter path respectively. No generated output or ordinary byte00 use
+is claimed from these static observations. Linux, USA and native Windows
+remain pending; no performance measurement.
+
+Wine `e158-byte00-substitution-screen-wine-t03ndh68` screens the same
+authenticated declared text projections for command units with opcode `25`.
+It finds 2,333 units with one-byte operands covering 75 candidate values; no
+`40 25` byte pattern appears in the screened expanded strings. The words at
+`371158 + 4*operand` are zero for candidates 19, 85, 86 and 135, and nonzero
+for 71 others. These are source candidates and literal table words, not proof
+that those programs reach this parser or safely invoke those entries. The
+scan does not cover generated RAM text or other resources. Callback outputs,
+ordinary byte00 reachability, Linux, USA and native Windows remain open; no
+performance measurement.
+
+Wine `e158-byte00-ram-source-literals-wine-rl7cunl4` scans exact aligned
+`02001f1c` literal words and Thumb PC-relative loads in `08000000..08150000`,
+finding seven candidate load sites. The bounded disassembly
+`e158-byte00-ram-source-dis-wine-1o2klth5` shows that, at `0812dc7c` and
+`0812e198`, `08016648(2)` supplies a short-string source and `08019d98`
+writes its expansion to `02001f1c`; the following `08145230` CpuSet calls
+use that buffer as source for ten halfwords copied to a live RAM destination.
+The `08019eb8` callback later passes the same address as a source to
+`08019d98` when selected through table `371158`. Other literal loads include
+address forwarding and source use. These are conditional static paths: they
+do not prove the buffer's contents at callback time, writer exclusivity,
+callback invocation or ordinary byte00 use. Address arithmetic, mirrors,
+indirect pointers, other code ranges and unaligned literals remain outside
+the scan. Linux, USA and native Windows remain pending; no performance
+measurement.
+
+Wine `e158-byte00-ram-forward-dis-wine-ds4kthpq` resolves the candidate
+`0812e464`: its caller passes `02001f1c` as the second argument. The routine
+examines halfword-aligned `40 73` padding at live context+`312`, copies the
+remaining conditional segment to stack scratch, trims trailing zero/`40 73`
+pairs, then uses `08145230` CpuSet to copy ten halfwords from scratch into
+the passed destination. Thus this is another conditional writer of the
+callback buffer, sourcing a live RAM field rather than exclusively the
+short-string catalog. It does not establish the field's producer, allowed
+contents, invocation order, callback use or a `40 67 01` occurrence in
+ordinary execution. Aliases and other writers remain open; Linux, USA and
+native Windows remain pending. No performance measurement.
+
+Wine `e158-byte00-field-producers-dis-wine-74fsrd3b` and
+`e158-byte00-field-input-dis-wine-dj84lsa9` identify a conditional input
+path for live context+`312`: original `0812e6b4` obtains a two-byte code
+from `0812f15c`, writes its high and low bytes to the selected field position,
+and may restore the prior field after a length check. A separate path writes
+`40 73` padding. The previously authenticated name-keyboard contract describes
+three six-row pages and their navigation widths.
+
+Wine `e158-byte00-keyboard-domain-wine-hlejcxyw` checks the 163 cells within
+those declared widths: their only values below `8000` are three `4073` space
+codes, and no two consecutively selected two-byte codes contain `40 67 01`.
+Consequently the target sequence is absent from a field made exclusively
+from such valid selections. This conditional result does not authenticate
+initial/saved field bytes, other writers, invalid selectors, field aliases,
+callback invocation or ordinary byte00 reachability. Linux, USA and native
+Windows remain pending; no performance measurement.
+
+Wine `e158-byte00-field-init-dis-wine-tdombygl` identifies two conditional
+initialization branches of the same field at context+`312` in the handler
+starting at `0812dbe0`. When its state halfword is `0100`, the branch at
+`0812dc76` uses `08016648(2)` if context+`6` is nonzero, or `08016828(0)`
+if it is zero. Both expand the selected string with `08019d98` and copy ten
+halfwords to the field. Wine `e158-byte00-field-selectors-dis-wine-y865vpe4`
+shows `08016828` selects one of five ROM pointer-table bases according to
+live byte `02001f6e`, falling back to the default base for other values, and
+indexes that table with its argument. Thus the zero-context branch is a
+distinct localized source that must be checked independently; these static
+windows do not establish the selected contents, actual state transitions,
+callback invocation or ordinary byte00 use. Other initialization paths and
+saved or aliased contents remain open. Linux, USA and native Windows remain
+pending; no performance measurement.
+
+Wine `e158-byte00-field-copy-dis-wine-wvq_b39w` inspects the original
+`08019d98` expansion: an initial `01` expands each following nonzero byte to
+`80` plus that byte minus one; the other path copies low bytes singly and
+high-bit bytes in pairs, then writes a zero terminator. Wine
+`e158-byte00-field-localized-screen-wine-dgzrlx3q` authenticates the EUR ROM,
+reads entry zero at each of the five `08016828` table bases and applies that
+observed grammar. All five entries use the `01` format, produce 11–17 bytes
+including the terminator, and contain no `40 67 01` within those generated
+bytes. Other language-byte values use the default table. The ten-halfword
+copy includes bytes after the terminator, which this screen does not bound;
+prior buffer contents, subsequent field modifications, callback execution and
+ordinary byte00 reachability remain unproved. This is a conditional static
+source result, not a gameplay observation. Linux, USA and native Windows
+remain pending; no performance measurement.
+
+A conditional zero-barrier argument narrows the trailing-byte concern for the
+`08016828(0)` branch. Wine `e158-byte00-field-zero-barrier-wine-m0m6rtgn`
+checks the five authenticated expansions: each begins with `80`, consists
+of two-byte `80 xx` units and has its terminator at an even offset at most
+16. If the field is unchanged between the initial copy and `0812e464`, its
+first pair is not `40 73`, so the routine copies the first nine halfwords,
+including that terminator, to scratch. Its trailing cleanup can only replace
+bytes with zero. A subsequent callback through `08019eb8` calls `08019d98`,
+which copies the `80 xx` pairs and stops at that aligned terminator. Thus
+arbitrary copied bytes after the terminator cannot reach that callback's
+output on this exact, unmodified path. This combines checked source data and
+examined original instructions; it is not a guest-execution proof. Any field
+modification, alternate writer, aliases, different callback, execution order
+or ordinary byte00 use remains open. Linux, USA and native Windows remain
+pending; no performance measurement.
+
+Wine `e158-byte00-candidate-callbacks-dis-wine-nxd4bals` inspects callback
+candidate 28 (`0801a370`), corresponding to 374 opcode-25 candidate units
+in the earlier declared-text screen. It selects between a live-byte-driven
+`080d2588` path and `08016768`, then calls `08019d98` to expand the selected
+string. On the latter path, a non-null live pointer supplies a ten-bit index;
+the null-pointer fallback supplies a halfword index. Wine
+`e158-byte00-callback28-selectors-dis-wine-6zw8vl88` shows `080d2588` also
+conditionally returns a result of `08016768` or `08016828`, using live and
+ROM-derived indices. The authenticated catalog owns 512 and 128 entries per
+language for these selectors. Conditional on indices within those respective
+catalogs, the earlier `e132-byte00-textscan-78suaoix` checked their expanded
+strings and found no `40 67 01`. The original selectors do not enforce those
+catalog limits here: a ten-bit or halfword index can exceed 511, and the
+`080d2588` route's derived indices and live conditions are not globally
+bounded. Opcode occurrences do not prove parser or callback execution. Other
+callbacks, generated/indirect data, ordinary byte00 use, Linux, USA and native
+Windows remain open; no performance measurement.
+
+Wine `e158-byte00-callback28-event-join-wine-k7p3b_ey` bounds one of
+`080d2588`'s paths more tightly. On its event-derived branch, the routine
+uses the live byte at `02003c2a` to select one of 256 twelve-byte EUR event
+rows, uses row byte 6 to select a 27-byte parameter record, then passes that
+record's first byte to `08016828`. The Wine source join authenticates the
+exact EUR ROM and both existing source contracts: all 256 event ordinals
+select one of the 59 owned parameter indices, and every resulting first byte
+is in `0..127`, within the 128-entry selector catalog. Combined with the
+previous expanded-string screen, this conditional branch cannot produce
+`40 67 01` from these catalog strings. This is not evidence of branch or
+callback execution; the live-halfword branch, direct callback path, other
+producers, modified sources, aliases and ordinary byte00 use remain open.
+Linux, USA and native Windows remain pending; no performance measurement.
+
+Wine `e158-byte00-active-id-literals-wine-c228ps17` scans aligned EUR ROM
+literal words equal to `00003c28` and Thumb PC-relative loads in
+`08000000..08150000`. The candidate windows are retained in
+`e158-byte00-active-id-windows-wine-k0siw7ox`; this literal scan does not
+cover alternative address construction, aliases or indirect stores. Wine
+`e158-byte00-active-id-writers-dis-wine-tcle99g9` identifies two conditional
+stores at `0803592a` and `080359d0` to the `02003c28` halfword. Each combines
+a live low byte with bit 0 of a second live byte shifted by 8, so its stored
+value is in `0..511` regardless of those byte values. A separate branch at
+`0803594a` stores zero. If one of these is the last relevant store before
+`080d2588` reads that halfword, the value fits the 512-entry `08016768`
+catalog and its expanded strings exclude `40 67 01` under the existing
+screen. Another original store, `0803d10a`, copies an unbounded live halfword
+from an object at offset `20`; other inspected stores and the direct callback
+branch remain to be bounded. These source paths do not establish live
+execution, last-writer exclusivity, absence of mirrors or ordinary byte00 use.
+Linux, USA and native Windows remain pending; no performance measurement.
+
+Wine `e158-byte00-active-id-helper-dis-wine-_emiu3kp` inspects
+`080d5538`, which can store a ten-bit value assembled from a live list
+record into `02003c28`. When a selected record's ROM byte `45` is nonzero,
+the helper writes mode 2 and returns that unsigned byte; otherwise it writes
+mode 1 and returns the ten-bit value. An earlier zero return also exits the
+helper. Wine `e158-byte00-active-id-preserve-dis-wine-kqba3yet` shows the
+caller at `08033a54` rejects zero, tests the returned mode and routes mode 2
+to `08033b12`, which stores the returned value as the active halfword. Thus,
+conditional on the mode byte and returned register surviving intervening
+calls and on no later write, this specific mode-2 store is in `1..255` and
+fits the `08016768` catalog. The caller's mode-1 path instead writes the
+ten-bit return to object+`20`; `0803d10a` may later copy such an object
+field, but object identity, intervening mutations and live values are not
+established. Wine `e158-byte00-active-id-callees-dis-wine-sy1sh_8p` inspects
+the intervening original calls; it does not prove their complete indirect
+memory effects or runtime order. Other writers, aliases, callback execution
+and ordinary byte00 remain open. Linux, USA and native Windows remain pending;
+no performance measurement.
+
+Wine `e158-byte00-outside-catalog-screen-wine-fnub_9js` reads the literal
+pointer words selected by `08016768` for all indices `512..1023` at each of
+its five EUR roots. All 2,560 words lie outside the primary `08000000..08ffffff`
+ROM window; this is an address classification, not a claim about guest bus
+mapping or returned text. A separate Wine check
+`e158-byte00-outside-id-candidates-wine-76wmjx5f` applies two necessary
+ROM-byte conditions from the mode-1 `080d5538` path to these indices. Eight
+indices pass: 515, 524, 531, 536, 553, 574, 607 and 646. These reads are
+outside the 512-record authenticated mission extent; they do not establish
+valid missions, list membership or executable paths. Wine
+`e158-byte00-outside-candidate-pointers-wine-7vncx8y0` checks the five
+literal pointer words for each of those eight candidates: none has high byte
+`02` or `03`. Across all 2,560 words, one has each of those high bytes, but
+neither belongs to this restricted candidate set. Address mirrors, BIOS,
+other guest mappings, other writer paths, actual execution and parser behavior
+remain unclassified. In particular these observations do not prove a global
+absence of `40 67 01` or ordinary byte00 use. Linux, USA and native Windows
+remain pending; no performance measurement.
+
+A focused Sol consultation requested as `gpt-6.1-sol`/`xhigh`
+(`/root/sol_byte00_list_producer`; effective settings not independently
+reported) distinguished the `080d457c` record operation from a list insertion
+in `080d3704`. Wine `e158-byte00-list-identity-dis-wine-4ajfe58a` and
+`e158-byte00-list-producer-dis-wine-aizksk7l`, together with the retained
+`target/rom-data-mission-records70/index-one-0d3710.txt`, show one insertion
+path constructing a scratch record at `03002850`: its low ten ID bits come
+from the `080d3704` loop ordinal, which runs from 1 through 511. After the
+scratch record is prepared, the inspected path copies 16 bytes into an
+available live record slot and links a node at the `020028c8` list head or
+tail. Wine `e158-byte00-list-record-source-dis-wine-_13cqeec` and
+`e158-byte00-list-source-origin-dis-wine-nm930x2k` retain intervening
+windows. Conditional on the inspected path and scratch identity remaining
+unchanged, that insertion cannot itself create any of the eight IDs above
+511. This is not a global list invariant: `080d5538` calls `080d3704(0)`,
+which skips the three conditional initializers, so pre-existing nodes,
+other producers, save restoration, aliases and intervening effects remain
+open. Separately, the inspected tail of `080d457c` unlinks an existing node
+and appends it to the list tail; it does not establish the origin of that
+node or its ID. No gameplay execution or ordinary byte00 use is proved.
+Linux, USA and native Windows remain pending; no performance measurement.
+
+Wine `e158-byte00-list-reset-dis-wine-oc803tkd` identifies `080d6934` as
+a conditional reset of the 64 16-byte record slots at `020021c8`, 64 12-byte
+node slots at `020025c8`, and the list-head word at `020028c8`, using the
+previously classified zero-clear helper. A bounded direct Thumb BL scan
+`e158-byte00-list-caller-scan-wine-9p3cag2u` finds one candidate call at
+`0803153e`, whose surrounding original window is retained in
+`e158-byte00-list-reset-caller-dis-wine-cy1tqrkx`. This establishes neither
+when that path executes nor whether a later save restore or another writer
+changes the cleared memory. The same scan finds `080d3c4c` as the only direct
+candidate caller of `080d27fc`; that routine copies its live input record to
+a list slot, and its examined caller is inside the loop-based producer above.
+Indirect calls, alternative address construction and other ranges remain open.
+
+A distinct insertion inside `080d4c4c` builds a scratch record from a live
+index into root `71e0e0`, stride 38: its ID comes from the low ten bits of
+record bytes 4..5 (`e158-byte00-list-second-source-dis-wine-1jq3_d11`,
+`e158-byte00-list-storage-writers-dis-wine-rwpkftan`). Wine
+`e158-byte00-world-id-domain-wine-m8am6hhs` authenticates the existing 31-row
+world catalog and finds all 31 low-ten-bit IDs in `0..358`. Conditional on an
+index in `0..30` and an unmodified scratch record, this insertion cannot
+introduce an ID above 511. The examined function does not itself establish
+that live-index bound, ordinary execution or exclusivity; other indices,
+restore paths, callbacks, aliases and global byte00 reachability remain open.
+`e158-byte00-list-storage-literals-wine-ygyq6pf2` retains a bounded literal
+reference census; `e158-byte00-list-refresh-callees-dis-wine-zwt6r7cc`
+shows that another refresh helper conditionally updates or removes existing
+nodes rather than establishing a general reset. Linux, USA and native Windows
+remain pending; no performance measurement.
+
+Wine `e158-byte00-world-insert-callers-wine-d25kty3u` finds two candidate
+direct Thumb BL calls to `080d4c4c` in `08000000..08150000`. The original
+caller windows in `e158-byte00-world-insert-caller-dis-wine-a4_woxfy` show
+both pass an unsigned byte from live `view+1d` as the third argument. Wine
+`e158-byte00-world-byte-index-screen-wine-sli5ztgr` applies the original
+root/stride/field arithmetic to all 256 byte values on the exact EUR ROM.
+Indices `0..30` are the authenticated world records; among `31..255`, 75
+positions produce low-ten-bit values above 511. None produces any of the eight
+above-511 values satisfying the two necessary ROM conditions of the previously
+examined `080d5538` mode-1 branch. Thus, conditional on these direct callers,
+unchanged ROM and inserted record, and that exact subsequent helper path,
+those eight candidates are not introduced by this byte-index source. Bytes
+beyond row 30 are outside the world catalog: their arithmetic values do not
+establish valid records or reachability. Indirect callers, other producers,
+state mutations, save restoration, callback execution and ordinary byte00 use
+remain open. Linux, USA and native Windows remain pending; no performance
+measurement.
+
+Wine `e158-byte00-view1d-store-scan-wine-93go4vih` scans Thumb immediate
+`STRB` offset `1d` in `08030000..08050000`; its six instruction candidates,
+examined in `e158-byte00-view1d-writers-dis-wine-hrbvrx_w`, copy byte `1b`
+of a live view into byte `1d` on their respective paths. A matching bounded
+scan for offset `1b` (`e158-byte00-view1b-store-scan-wine-kjoamsgi`) finds
+six candidates. Their examined windows (`e158-byte00-view1b-writers-dis-wine-t_vqnwj1`)
+show two zero stores, three stores of `(view+8c - 1) & 7f`, and one store of
+the `0803784c` return. Wine `e158-byte00-view1b-helper-dis-wine-l4_ach_9`
+shows that helper returns zero or a one-based index 1..30. Therefore these
+specific writers produce `0..127`; this is conditional on the same live
+view, last-writer order and no intervening mutation. It does not prove a
+`0..30` bound: the existing fixed-ROM screen has 26 indices in `31..127`
+whose arithmetic yields IDs above 511. The immediate-store scans do not
+cover other code ranges, address arithmetic, indirect writes, aliases,
+save restoration or guest execution. Other callbacks and ordinary byte00
+use remain open. Linux, USA and native Windows remain pending; no performance
+measurement.
+
+
+Wine `e158-byte00-view8c-writers-dis-wine-ye3ufpha` examines candidate
+writers of the byte used above: `08031a5a` stores zero, `08031ad6` stores
+three, and `08031c5a` and `0804a6e6` store the return from
+`080ccf00(0x80)`. The getter reads the byte at `02002030 + index`, hence
+these two stores read live address `020020b0`; the nearby tests in the latter
+path do not bound that stored value (`e158-byte00-view8c-source-dis-wine-acxbx3u4`).
+The preceding address-add/store search is heuristic and bounded to
+`08030000..08050000` (`e158-byte00-view8c-store-scan-wine-fxi1vl_f`).
+
+A bounded scan of Thumb direct BL candidates to the generic byte setter
+`080ccf18` finds 51 candidates in `08000000..08150000`, none with a literal
+`movs r0, #0x80` in the preceding 48 bytes
+(`e158-byte00-var80-setter-scan-wine-dl5g_k32`). This is not a complete
+argument or writer analysis. One dynamic setter candidate at `080d35ce`
+belongs to a loop whose index runs from 6 through 29 and passes index plus
+`0x15`, yielding `0x1b..0x32`; its decrement does not write variable `0x80`
+(`e158-byte00-var80-index-origin-dis-wine-7ic5mznx`). Other setter calls,
+computed arguments, direct writes, restoration, aliases and actual execution
+remain open. In particular, the value of variable `0x80` and ordinary
+byte00 reachability remain unproved. Linux, USA and native Windows remain
+pending; no performance measurement.
+
+
+A focused Sol follow-up (`/root/sol_byte00_list_producer`, requested
+`gpt-6.1-sol`/`xhigh`, effective settings unconfirmed) identified script
+operands as a possible computed setter destination. Wine
+`e158-byte00-script-setter-dis-wine-s_dg62yh` confirms both primary callback
+`081269b8` and auxiliary callback `0800a2bc` assemble a little-endian index
+from script bytes 1..2 and pass byte 3 to `080ccf18`. Their authenticated
+command directories map them to primary opcode 27 and auxiliary opcode 3,
+respectively. The protected Wine source join
+`e158-byte00-script-var80-screen-wine-svjlcy7s` checks the existing 207
+primary and 133 auxiliary physical program projections against the EUR ROM:
+these contain zero primary opcode-27 instructions and zero auxiliary opcode-3
+instructions. Consequently neither callback has a declared instruction in
+those particular projections, including one targeting variable `0x80`.
+This does not rule out entry at other offsets, other scripts, commands, direct
+or bulk writes, restoration, aliases or live execution. Linux, USA and native
+Windows remain pending; no performance measurement.
+
+
+Wine `e158-byte00-all-setter-windows-wine-epy6ixhg` retains windows for the
+51 bounded direct setter candidates. Two candidate callers, `080d49a8` and
+`080d5990`, derive a mission-record address from a live ID and read two of
+four key/mode/operand slots at offsets `12`, `16`, `1a` and `1e`. The key is
+a little-endian halfword; modes 1, 2 and 3 can call `080ccf18` with key minus
+`0x600`, so key `0x680` selects variable `0x80`. Their instruction windows
+and two-iteration loops are retained in
+`e158-byte00-dynamic-key-origins-wine-3b1ncdqm` and
+`e158-byte00-mission-key-loop-wine-9xmjtx3w`.
+
+The Wine screen `e158-byte00-mission-var80-screen-wine-jnkbjfyx` hashes the
+complete 512-row EUR mission source and examines all four physical slots in
+each row. Exactly 27 slots use key `0x680`; all are slot 0, mode 3, with
+operands in `1..30`. On either examined mode-3 path, selecting one of these
+slots writes its operand directly to variable `0x80`. If this is the last
+relevant write and the same view subsequently copies the variable, the
+previous `(view+8c - 1) & 7f` writer produces an index in `0..29`. This
+conditional bound does not establish live selection or last-writer order.
+The `080d5990` path can derive a ten-bit mission ID and does not locally
+establish the authenticated `0..511` row bound; out-of-catalog data, other
+writers, restoration, aliases and ordinary byte00 execution remain open.
+Linux, USA and native Windows remain pending; no performance measurement.
+
+
+Wine `e158-byte00-world-clear-callers-wine-d8jrfcjt` finds one direct Thumb
+BL candidate to `080d6ae8` in `08000000..08150000`. At `0804a1d6`, the
+caller builds its argument from six bits of a mission record; the adjacent
+branch passes the same six-bit construction to `080d347c`
+(`e158-byte00-world-clear-caller-wine-pdzm4ife`). The setter indices at
+`080d6b0c` and `080d34d0` are the unsigned byte argument plus `0x14`
+(`e158-byte00-dynamic-key-origins-wine-3b1ncdqm`). Thus these two specific
+caller paths can select only variable indices `0x14..0x53`, excluding
+`0x80`, regardless of the selected record bytes. This bounded direct-call
+scan does not cover indirect callers, alternative entry points or direct
+writes, and it proves no live execution. A separate bounded direct BL census
+for `080d347c` finds this caller and two further candidates, `080d4b1a` and
+`080d5af6` (`e158-byte00-world-init-callers-wine-17k0_b_u`). Both latter
+callers require a key in `0x587..0x59e`, then pass `(key + 0x80) & 0xff`;
+the helper adds `0x14`, so these specific paths select variable indices
+`0x1b..0x32` and cannot target `0x80`
+(`e158-byte00-world-init-guard-wine-q0h2f10_`). Indirect calls, alternate
+entries and other stores remain open. Linux, USA and native Windows remain
+pending; no performance measurement.
+
+
+Wine `e158-byte00-var-0390-index-wine-s17tfsmr` shows the setter candidate
+at `080d0390` is inside `080d0330`. For byte arguments `2..6`, its jump
+table selects indices `0x0e..0x12`; for other arguments, it reaches the
+getter/setter path with the caller's `r6` instead. The intermediate helper
+`080d2728` saves and restores `r6`
+(`e158-byte00-var-0390-callee-wine-l4kbmaue`). A bounded direct BL census
+finds one candidate caller, `0806b184`
+(`e158-byte00-var-0330-callers-wine-yubooxtq`). On the examined normal caller
+path, its five-iteration loop leaves `r6` as `0x0839797c` or `0x00004bfc`
+(`e158-byte00-var-0330-caller-wine-dce65adz`); the generic getter and setter
+use only its low 16 bits. Therefore this caller's examined path cannot target
+variable `0x80`, even for an argument outside `2..6`. Alternate entries,
+indirect callers, intervening mutation and execution remain unproved.
+
+The `080670be` setter candidate similarly receives an index selected as
+`1`, `2` or `4` by the examined function, conditional on preservation of its
+`r5` across intervening calls (`e158-byte00-var-670be-index-wine-st534xw1`).
+Neither result establishes a complete writer inventory or an ordinary byte00
+trigger. Bulk and direct writes, restores and aliases remain open. Linux, USA
+and native Windows remain pending; no performance measurement.
+
+
+Wine `e158-byte00-var80-literals-wine-nm187c_p` screens aligned literal words
+in the EUR ROM and Thumb PC-relative loads in `08000000..08150000`. It finds
+13 words equal to `020020b0` but no matching loads in that code range, no
+aligned word equal to `02002030`, and five candidate loads of the offset
+`00002030`. Two are the known getter/setter; the other three occur in
+`0805ea16`, `0805eb78` and `0805f010`. Their local windows are retained in
+`e158-byte00-var80-offset-context-wine-5w9di6ai`. For example, `0805ea16`
+builds addresses from a live pointer read at `0200f42c` and calls `0805f15c`,
+which writes two halfwords at offsets `2030 + 2*i` and `2034 + 2*i` from
+that pointer. The live pointer and index domains are not established, so
+this access cannot be excluded as an alias of `020020b0`. The literal census
+is not a complete write search: alternative address arithmetic, pointers,
+bulk copies, unaligned data, other instruction sets/ranges, save restores,
+aliases and execution remain open. Linux, USA and native Windows remain
+pending; no performance measurement.
+
+
+A bounded Thumb literal-reference census for `0200f42c`
+(`e158-byte00-var80-pointer-literals-wine-vy7c2gwa`) identifies the window
+`0805e7e6..0805e7f0`, which requests `0x2038` bytes from `080239b0` and stores
+the returned pointer to `0200f42c`
+(`e158-byte00-var80-pointer-windows-wine-jaefvyhn`). The inspected wrapper
+reads its allocator context from `0200f434`, while `0800719c` returns zero
+on failure or an allocator result plus `0x0c`
+(`e158-byte00-var80-pointer-allocator-wine-phfyxv23`). This establishes one
+pointer initialization path, not the allocator's live address range or an
+exclusive last writer. Allocation failure, pool metadata, other pointer
+writers, stale values, aliases and save restoration remain open; no non-overlap
+or execution claim follows. Linux, USA and native Windows remain pending; no
+performance measurement.
+
+
+Wine `e158-byte00-pool-context-literals-wine-cyganob6` finds a bounded
+literal-reference candidate at `08023986`. Its original initialization
+window (`e158-byte00-pool-init-wine-vsbrdslr`) supplies start `020159d8`
+and size `02040000 - 020159d8` to `0800712c`, which initializes allocator
+metadata there (`e158-byte00-pool-invariants-wine-i_i5iqa6`). Conditional on
+that initialization, a successful `0x2038`-byte allocation entirely inside
+that interval, intact metadata and an unchanged pointer, the object base lies
+in `020159d8..0203dfc8`. For the `0805ea22` halfword stores and any eight-bit
+loop index, Wine `e158-byte00-pool-overlap-wine-q9cpd9yg` bounds byte offsets
+before mirroring to `17a08..401fb`. The runtime's EWRAM mask maps these to
+`17a08..3ffff` or `00000..001fb`; neither includes offset `020b0`.
+
+This excludes overlap only for that specific allocation and store path under
+the stated assumptions. It does not prove those assumptions during ordinary
+play or classify allocation failure, stale/restored pointers, other writers,
+other memory mappings or the ordinary byte00 trigger. Linux, USA and native
+Windows remain pending; no performance measurement.
+
 ### Conditional live event-selector sources for parameter records
 
 Two EUR writers at `0x08034d20` and `0x080351b4` read the live halfword
