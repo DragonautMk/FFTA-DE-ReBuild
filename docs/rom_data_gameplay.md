@@ -2911,8 +2911,10 @@ All14,250 equipment references fit the existing376 parsed items. Actual byte00
 values are special1 or valid metadata14 IDs2..94; actual byte01 values fit the
 116 metadata52 job owners. These are source/reference checks, not observed-value
 caps for a lossless model. Byte01 zero is still an original fallback branch.
-The later unconditional metadata14 lookup for descriptor1 reaches the unowned
-row1 prefix; no typed fallback or extra metadata row is invented.
+At e81, the later unconditional metadata14 lookup for descriptor1 reached a
+row1 prefix outside that revision's owners. The later e97 packed-lookup owner
+covers the same physical bytes; see the controlled alias proof below. No
+metadata14 row or guest fallback is invented.
 
 The existing `gameplay.constructor-alternate-templates` owner already has
 `6ECA78..6ECB38` (192 bytes), records225..228 in zero-based physical order,
@@ -2963,8 +2965,9 @@ records with matching pointers/counts/header IDs/ordinals; all four constructor
 alternate records must match their complete48 bytes; equipment, descriptor and
 resolved job selectors must reference actual parsed item/metadata14/metadata52
 owners. Byte01 zero retains the descriptor fallback or descriptor1's direct
-job0 path. Descriptor1's later raw metadata14-row1 prefix stays unowned. Full
-source authentication checks the exact EUR ROM, original reader windows, full
+job0 path. The descriptor1 metadata14-row1 prefix was outside the e81 owners;
+the later e97 packed-lookup owner covers its physical bytes. Full source
+authentication checks the exact EUR ROM, original reader windows, full
 source digest and decoded model. No guest constructor, live importer, random
 rule or dynamic bit loop is replaced.
 
@@ -6359,6 +6362,38 @@ by the existing metadata14 owner; the adjacent owner also supplied the mixed
 boundary. Evidence is under `target/rom-data-6e6ee4-runtime/`; protected inputs
 and frozen sources were unchanged. Production CLI, ordinary scene, Linux, USA
 and native Windows remain to verify. No performance measurements were made.
+
+## Special encounter descriptor aliases the packed lookup
+
+The original encounter importer computes the descriptor-1 row at
+`6e6f5e..6e6f6c`. Although that row is outside the separate metadata14
+resource, its 14 physical bytes lie within the later
+`gameplay.conditional-packed-lookup` projection `6e6ee8..6e6f6c`; adding a
+second owner would duplicate the source. The authenticated EUR encounter
+catalog contains 2,601 templates with descriptor byte 1. This count establishes
+source references, not how many are reached in ordinary play.
+
+Wine `e158-special-descriptor-alias-fix-wine-56wpztn8` executes the original
+`080cd42e..080cd43e` importer prefix with the first authenticated descriptor-1
+template. In both interpreter and translated execution, the selected template
+byte and row-1 byte are served by their respective typed owners while their
+ROM copies are poisoned; the trace records one typed row read and no raw reads
+in the selected spans. Full machine states and clocks match the raw-ROM
+interpreter. The packed owner records the row byte and metadata14 records none.
+The first attempt `c8t9zyf0` failed because the test did not activate a trace
+frame; its server drained and the corrected test passed. This controlled prefix
+alone does not prove ordinary invocation, full importer behavior or all alias
+consumers.
+
+Wine `e158-special-alias-ordinary-wine-gpir8qjh` then follows the retained
+normal-input Giza-to-White-Flowers battle-entry route against E158. At relative
+frame 186, the original `080cd43c` reader accesses the descriptor-1 row: the
+trace records one typed read, no raw reads of that row, and the packed owner
+serves one byte while the ROM source is poisoned. The first reader frame matches
+the original complete state and clock, framebuffer, wide framebuffer, OAM and
+mixed audio. This is one ordinary interpreter frame, not full importer or all
+scene/consumer coverage; translated dispatch for this route, Linux, USA and
+native Windows remain pending. No performance measurement was made.
 
 
 ## Conditional packed lookup production CLI

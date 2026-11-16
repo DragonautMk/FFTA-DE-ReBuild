@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "record-post-publication-rom-read-input",
+  "title": "Record retained input in ROM read inventories",
+  "kind": "fixed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Report the active-low key state and unchanged-input policy when recording three interpreter frame boundaries; the first boundary can complete a partial frame.",
+    "Record the bounded E158 inventory immediately after ordinary French-language publication, correcting the older generic no-input label for this held-A checkpoint."
+  ],
+  "validation": [
+    "Wine e158-title-post-publication-residue-wine-13oct80b records 224 high-ROM requests, no drops or raw overlap with declared sources, and only the previously classified 370eb0 helper outside them.",
+    "The corrected Windows test build e158-inventory-input-report-build-a40_vbzv and Wine e158-title-post-publication-input-report-wine-tc_c7quu pass; the report records active-low 03fe and reproduces the same inventory."
+  ],
+  "limitations": [
+    "The first observed boundary may end a partial frame. This held-A window does not establish global coverage or behavior for other languages, scenes and native dispatch; Linux, USA and native Windows remain pending. No performance measurement."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/context_event_tests.rs",
+    "docs/rom_data_runtime.md"
+  ],
+  "references": []
+}

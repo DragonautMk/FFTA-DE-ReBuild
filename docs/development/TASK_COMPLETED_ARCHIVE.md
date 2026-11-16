@@ -23056,3 +23056,38 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: IDs 2, 3 and 4 published; confirming active ID 0 takes the unchanged branch. Raw/managed states and clocks match at each checked frame with poisoned position spans.
 - Evidence: `e154-title-other-publications-wine-9k_mye2m`, build `00uwpk23`, `docs/changes/2026-11-16-verify-title-language-publication-choices.json`.
 - Limits: return publication to ID 0, other writers/index domain, native dispatch for these routes, other scenes, Linux, USA and native Windows remain open; no performance measurement.
+
+### ROMDATA-01-TITLE-LANGUAGE-POST-PUBLICATION
+
+- Outcome: completed for a bounded EUR/Wine high-ROM inventory and corrected input reporting.
+- Verified criteria: after French publication, 224 observed requests with zero drops or raw overlap with declared E158 sources; the only unowned bytes are the known helper vector. Corrected report identifies retained active-low key value 03fe.
+- Evidence: `e158-title-post-publication-residue-wine-13oct80b`, corrected `e158-title-post-publication-input-report-wine-tc_c7quu`, `docs/changes/2026-11-16-record-post-publication-rom-read-input.json`.
+- Limits: first boundary can be partial, A remains held; other languages/scenes, global sources, native dispatch, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-04-E158-SPARSE-GUIDE-RECONCILIATION
+
+- Outcome: completed for the stale runtime-guide claim.
+- Verified criteria: the guide now reflects the already accepted EUR/Wine sparse-reader witness and its limits.
+- Evidence: `e158-sparse-ordinary-wine-htdztv4y`; `docs/changes/2026-11-16-reconcile-e158-sparse-runtime-guide.json`.
+- Limits: other scenes, native dispatch, Linux, USA and native Windows remain open; no test was repeated.
+
+### ROMDATA-04-METADATA14-ID1-ALIAS-CONTROLLED
+
+- Outcome: completed for a controlled EUR/Wine original importer prefix.
+- Verified criteria: an authenticated descriptor-1 template reads its row byte through the existing packed owner in interpreter and translated execution; poisoned-source trace and complete state/clock comparisons pass.
+- Evidence: `e158-special-descriptor-alias-fix-wine-56wpztn8`, `docs/changes/2026-11-16-verify-special-encounter-packed-alias.json`. Initial `c8t9zyf0` failed because its trace frame was unset; server drained.
+- Limits: ordinary invocation, full importer and other consumers, Linux, USA and native Windows remain open; no performance measurement.
+
+### ROMDATA-04-METADATA14-ID1-ALIAS-ORDINARY
+
+- Outcome: completed for one EUR/Wine interpreter battle-entry reader frame.
+- Verified criteria: the original descriptor-1 reader consumes one typed packed-owner byte with the source poisoned; its first frame matches raw state, clock, image, OAM and mixed audio.
+- Evidence: `e158-special-alias-ordinary-wine-gpir8qjh`, build `ucioguoy`, `docs/changes/2026-11-16-observe-special-encounter-packed-alias.json`.
+- Limits: full importer, other scenes/consumers, ordinary translated dispatch, Linux, USA and native Windows remain open; no performance measurement.
+
+### ROMDATA-01-CONTEXT-3710D4-E159-SCOPED
+
+- Outcome: completed for the declared EUR indexed-graphics context projection and one bounded Wine ordinary window.
+- Verified criteria: e159 publication/reuse preserves all e158 prior resource projections; 132 poisoned-source bytes, boundaries and 24 original-reader state/clock comparisons pass. Eleven ordinary frames include four typed context-3 requests, zero raw context requests and matching state/clock, framebuffer, OAM and mixed audio.
+- Evidence: `e159-indexed-context-build-ordinary-v8dwm2f2`, `e159-indexed-context-wine-8dbsgppp`, `docs/changes/2026-11-16-integrate-european-indexed-graphics-contexts.json`. The current EUR dataset is retained under that Wine unit's `work/resources/`.
+- Limits: generated dispatch may fall back; other contexts/consumers, complete ABI, e159 production CLI, broader Wine regressions, Linux, USA and native Windows remain open. No performance measurement.

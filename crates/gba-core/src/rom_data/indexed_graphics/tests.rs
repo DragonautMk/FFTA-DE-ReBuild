@@ -105,16 +105,20 @@ fn european_indexed_graphics_match_source_and_original_wrapper() {
     let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
     let catalog = Catalog::from_rom(&rom).unwrap();
     let data = &catalog.decoded;
-    let independent: IndexedGraphics =
+    let independent: Value =
         serde_json::from_slice(&fs::read(root.join("independent-model.json")).unwrap()).unwrap();
     let sources: Vec<SourceRange> =
         serde_json::from_slice(&fs::read(root.join("independent-sources.json")).unwrap()).unwrap();
-    assert_eq!(*data, independent);
-    assert_eq!(catalog.sources, sources);
+    // The independently frozen model predates the separate context extension.
+    let mut current = serde_json::to_value(data).unwrap();
+    current.as_object_mut().unwrap().remove("contexts").unwrap();
+    assert_eq!(current, independent);
+    let prior_sources: Vec<_> = catalog.sources.iter().filter(|s| s.offset != CONTEXT_SOURCE).cloned().collect();
+    assert_eq!(prior_sources, sources);
     data.verify_source(&rom).unwrap();
     let spans = data.source_spans().unwrap();
-    assert_eq!(spans.len(), 24);
-    assert_eq!(spans.iter().map(|s| s.1.len()).sum::<usize>(), 74907);
+    assert_eq!(spans.len(), 25);
+    assert_eq!(spans.iter().map(|s| s.1.len()).sum::<usize>(), 75039);
     for (at, bytes, _) in &spans {
         assert_eq!(bytes, &rom[*at as usize..*at as usize + bytes.len()]);
         assert_eq!(data.byte_at(*at), bytes.first().copied());
@@ -295,7 +299,7 @@ fn european_indexed_graphics_match_source_and_original_wrapper() {
         }
     }
     assert_eq!(m.bus.rom, rom);
-    let result = json!({"status":"PASS-source-model-original-wrapper","guards":guards,"archives":20,"programs":649,"source_spans":24,"source_bytes":74907,"decoded_bytes":278336,
+    let result = json!({"status":"PASS-source-model-original-wrapper","guards":guards,"archives":20,"programs":649,"source_spans":25,"source_bytes":75039,"decoded_bytes":278336,
         "whole_archive_cases":canonical,"boundary_cases":boundary,"synthetic_cases":synthetic,"raw_language_selector_prefix_cases":selectors,"instructions_coverage_only":instructions,
         "complete_output_and_guards_exact":true,"wrapper_status_globals_exact":true,"SP_R4_R11_exact":true,"all_RAM_outside_expected_output_globals_stack_exact":true,"final_ROM_exact":true,
         "scope":"Full0537C canonical calls and low16start-count boundaries; controlled mode0width5 synthetic streams/failures and rawlanguage prefix. Original stack scratch excluded from preservation comparison. No nativeclock/ordinary/liveupload/fullroutineABI universal claim; mode3-widerwidth support pending.",
@@ -306,6 +310,6 @@ fn european_indexed_graphics_match_source_and_original_wrapper() {
     )
     .unwrap();
     eprintln!(
-        "ROM_DATA_INDEXED_GRAPHICS_MODEL source74907 decoded278336 guards{guards} whole{canonical} boundary{boundary} synthetic{synthetic} selectors{selectors} PASS"
+        "ROM_DATA_INDEXED_GRAPHICS_MODEL source75039 decoded278336 guards{guards} whole{canonical} boundary{boundary} synthetic{synthetic} selectors{selectors} PASS"
     );
 }

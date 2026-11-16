@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "verify-special-encounter-packed-alias",
+  "title": "Verify special encounter descriptor through the packed owner",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add a controlled original importer-prefix check using a source-authenticated descriptor-1 encounter template and trace its shared physical row through the existing packed-lookup owner.",
+    "Clarify that the descriptor-1 row was unowned at e81 but its physical bytes are covered by the later e97 resource, without creating duplicate ownership."
+  ],
+  "validation": [
+    "Wine e158-special-descriptor-alias-fix-wine-56wpztn8 passes interpreter and translated prefix comparisons with the template and row bytes poisoned: one typed row request, no raw requests in selected spans, and identical complete state and clock.",
+    "The authenticated EUR catalog has 2601 descriptor-1 templates; this is a source count, not proof of ordinary reachability. The first Wine unit c8t9zyf0 failed because the test left the trace frame unset; it drained the server. Corrected Windows build _vmlafdt and Wine unit passed."
+  ],
+  "limitations": [
+    "Only one controlled prefix and one template are executed; ordinary invocation, full importer behavior, other alias consumers, Linux, USA and native Windows remain open. No performance measurement."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/conditional_packed_lookup_runtime_tests.rs",
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": []
+}

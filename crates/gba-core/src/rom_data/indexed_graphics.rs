@@ -14,7 +14,10 @@ const COUNTS: [usize; 20] = [
 ];
 const SIZES: [u16; 4] = [192, 7168, 3840, 64];
 const ROM_LIMIT: usize = 0x1000000;
-pub const SOURCE_SHA256: &str = "ab21ada958cc5bcb13f06b59218bf9b4757155684c794881dd9ca7c0f4859006";
+pub const SOURCE_SHA256: &str = "9681595c842ad6b53ecf3841f8aca0ef10e6665b05ccdfb7f17694945f37c955";
+pub const CONTEXT_SOURCE: u32 = 0x3710d4;
+pub const CONTEXT_RECORDS: usize = 33;
+pub const CONTEXT_SHA256: &str = "3461a0d663b5f2a27d74ecaaf4670d3519a7e3eaad4f4161d41202866807d593";
 pub type SourceSpan = (u32, Vec<u8>, String);
 fn invalid() -> String {
     "Invalid declared indexed graphics archive".into()
@@ -290,18 +293,36 @@ impl PointerGroup {
             .collect()
     }
 }
+/// Four original bytes per context; the last byte has no established meaning.
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ContextRecord {
+    pub index: u8,
+    pub value: u8,
+    pub secondary_program: u8,
+    pub primary_program: u8,
+    pub opaque: u8,
+}
+
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct IndexedGraphics {
+    pub contexts: Vec<ContextRecord>,
     pub groups: Vec<PointerGroup>,
     pub archives: Vec<Archive>,
 }
 impl IndexedGraphics {
     pub fn source_spans(&self) -> Result<Vec<SourceSpan>, String> {
-        if self.groups.len() != 4 || self.archives.len() != 20 {
+        if self.contexts.len() != CONTEXT_RECORDS
+            || self.contexts.iter().enumerate().any(|(i, r)| usize::from(r.index) != i)
+            || self.groups.len() != 4 || self.archives.len() != 20 {
             return Err(invalid());
         }
-        let mut spans = Vec::new();
+        let mut spans = vec![(
+            CONTEXT_SOURCE,
+            self.contexts.iter().flat_map(|r| [r.value, r.secondary_program, r.primary_program, r.opaque]).collect(),
+            "indexed-archive-contexts".into(),
+        )];
         for (i, group) in self.groups.iter().enumerate() {
             if group.source_offset != GROUPS[i] || group.pointers != ARCHIVES[i * 5..i * 5 + 5] {
                 return Err(invalid());
@@ -382,7 +403,15 @@ impl Catalog {
             .iter()
             .map(|&at| Archive::from_source(&rom[at as usize..], at))
             .collect::<Result<_, _>>()?;
-        let decoded = IndexedGraphics { groups, archives };
+        let context_bytes = &rom[CONTEXT_SOURCE as usize..CONTEXT_SOURCE as usize + CONTEXT_RECORDS * 4];
+        if ffta_rom::digest(context_bytes) != CONTEXT_SHA256 {
+            return Err("Indexed graphics context fingerprint mismatch".into());
+        }
+        let contexts = context_bytes.chunks_exact(4).enumerate().map(|(i, row)| ContextRecord {
+            index: i as u8, value: row[0], secondary_program: row[1],
+            primary_program: row[2], opaque: row[3],
+        }).collect();
+        let decoded = IndexedGraphics { contexts, groups, archives };
         let spans = decoded.source_spans()?;
         let source: Vec<u8> = spans
             .iter()
@@ -406,6 +435,10 @@ impl Catalog {
 
 // Populated from the independently authenticated static reader windows.
 const SOURCE_WINDOWS: &[(usize, usize, &str)] = &[
+    (0x1967c, 0xa4, "0284ea9686537bc92459911070d8a184207431a562bbe799cab61398ae1347da"),
+    (0x1972c, 0x10, "72c52f641f2a1d63b5542c03d4e6b89b85ad0999b725d4937d641260033dc85d"),
+    (0x13cc3e, 0x10, "e71bb729cdaa3cd3473e1745674c710fa1fe876fdddc2605480db7389c8f11f0"),
+    (0x19e94, 0x24, "9b33d17cd67fa6242efc06b239135e0a6ddf9a0db64f0b1a4246b6b2de78efd9"),
     (
         0x19660,
         176,

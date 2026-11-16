@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "reconcile-e158-sparse-runtime-guide",
+  "title": "Reconcile E158 sparse opening evidence in runtime guide",
+  "kind": "docs",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Replace the stale statement that ordinary sparse-branch use was unobserved with the accepted bounded EUR interpreter result and its remaining limits."
+  ],
+  "validation": [
+    "Existing Wine receipt e158-sparse-ordinary-wine-htdztv4y records all 19 sparse halfwords and one matching full state and clock; the completed test was not repeated."
+  ],
+  "limitations": [
+    "Other scenes, native dispatch, Linux, USA and native Windows remain open. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md"
+  ],
+  "references": []
+}

@@ -14,6 +14,7 @@ pub struct IndexedGraphicsStats {
     pub literal_bytes: u64,
     pub dictionary_header_bytes: u64,
     pub dictionary_bytes: u64,
+    pub context_bytes: u64,
     pub archives_used: u64,
     pub programs_used: u64,
     pub groups_used: u64,
@@ -34,7 +35,7 @@ pub(super) struct IndexedGraphicsResources {
     spans: Vec<Span>,
     reads: AtomicU64,
     bytes: AtomicU64,
-    fields: [AtomicU64; 7],
+    fields: [AtomicU64; 8],
     banks: AtomicU64,
     groups: AtomicU64,
     programs: [AtomicU64; 11],
@@ -72,7 +73,11 @@ impl IndexedGraphicsResources {
                     program: u16::MAX,
                 })
                 .collect();
-            if let Some(group) = data.groups.iter().position(|g| g.source_offset == *offset) {
+            if *offset == model::CONTEXT_SOURCE {
+                for cell in &mut cells {
+                    cell.field = 7;
+                }
+            } else if let Some(group) = data.groups.iter().position(|g| g.source_offset == *offset) {
                 for cell in &mut cells {
                     cell.field = 0;
                     cell.group = group as u8;
@@ -162,7 +167,7 @@ impl IndexedGraphicsResources {
         if values.iter().all(Option::is_none) {
             return prior;
         }
-        let (mut fields, mut banks, mut groups, mut programs) = ([0u64; 7], 0u64, 0u64, [0u64; 11]);
+        let (mut fields, mut banks, mut groups, mut programs) = ([0u64; 8], 0u64, 0u64, [0u64; 11]);
         let result = std::array::from_fn(|i| match values[i] {
             Some(cell) => {
                 fields[cell.field as usize] += 1;
@@ -207,6 +212,7 @@ impl IndexedGraphicsResources {
             literal_bytes: v[4],
             dictionary_header_bytes: v[5],
             dictionary_bytes: v[6],
+            context_bytes: v[7],
             archives_used: u64::from(self.banks.load(Ordering::Relaxed).count_ones()),
             groups_used: u64::from(self.groups.load(Ordering::Relaxed).count_ones()),
             programs_used: self
@@ -226,6 +232,7 @@ impl IndexedGraphicsResources {
 
 // Source pages only; the exact byte membership is determined by the immutable spans.
 const SOURCE_BOUNDS: &[(usize, usize)] = &[
+    (model::CONTEXT_SOURCE as usize, model::CONTEXT_RECORDS * 4),
     (0x430248, 2580),
     (0x4334c4, 3923),
     (0x434418, 5067),

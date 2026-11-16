@@ -93,6 +93,7 @@ fn normal_gameplay_observes_indexed_graphics() {
                 stats.literal_bytes,
                 stats.dictionary_header_bytes,
                 stats.dictionary_bytes,
+                stats.context_bytes,
             ]
             .into_iter()
             .sum::<u64>()
@@ -101,7 +102,7 @@ fn normal_gameplay_observes_indexed_graphics() {
             activation_relative = Some(relative);
         }
         if relative % 16 == 0 || stats.source_bytes > 0 {
-            observations.push(serde_json::json!({"relative":relative,"guest_frame":m.bus.frames,"bus_reads":stats.bus_reads,"source_bytes":stats.source_bytes,"selector_bytes":stats.selector_bytes,"archive_header_bytes":stats.archive_header_bytes,"index_bytes":stats.index_bytes,"token_bytes":stats.token_bytes,"literal_bytes":stats.literal_bytes,"dictionary_header_bytes":stats.dictionary_header_bytes,"dictionary_bytes":stats.dictionary_bytes,"archives_used":stats.archives_used,"programs_used":stats.programs_used,"groups_used":stats.groups_used}));
+            observations.push(serde_json::json!({"relative":relative,"guest_frame":m.bus.frames,"bus_reads":stats.bus_reads,"source_bytes":stats.source_bytes,"selector_bytes":stats.selector_bytes,"archive_header_bytes":stats.archive_header_bytes,"index_bytes":stats.index_bytes,"token_bytes":stats.token_bytes,"literal_bytes":stats.literal_bytes,"dictionary_header_bytes":stats.dictionary_header_bytes,"dictionary_bytes":stats.dictionary_bytes,"context_bytes":stats.context_bytes,"archives_used":stats.archives_used,"programs_used":stats.programs_used,"groups_used":stats.groups_used}));
         }
         if activation_relative.is_some_and(|at| relative >= at + 31) {
             break;
@@ -138,7 +139,7 @@ fn normal_gameplay_observes_indexed_graphics() {
         "status":if positive {"POSITIVE/normalgameplay"}else{"NEGATIVE/selectednormalinputbound"},
         "first_guest_frame":first,"last_guest_frame":m.bus.frames,"executed_frames":keys.len(),
         "positive":positive,"suffix_frames":suffix_frames,"keys":keys,"observations":observations,
-        "new_table":{"bus_reads":stats.bus_reads,"source_bytes":stats.source_bytes,"selector_bytes":stats.selector_bytes,"archive_header_bytes":stats.archive_header_bytes,"index_bytes":stats.index_bytes,"token_bytes":stats.token_bytes,"literal_bytes":stats.literal_bytes,"dictionary_header_bytes":stats.dictionary_header_bytes,"dictionary_bytes":stats.dictionary_bytes,"archives_used":stats.archives_used,"programs_used":stats.programs_used,"groups_used":stats.groups_used},
+        "new_table":{"bus_reads":stats.bus_reads,"source_bytes":stats.source_bytes,"selector_bytes":stats.selector_bytes,"archive_header_bytes":stats.archive_header_bytes,"index_bytes":stats.index_bytes,"token_bytes":stats.token_bytes,"literal_bytes":stats.literal_bytes,"dictionary_header_bytes":stats.dictionary_header_bytes,"dictionary_bytes":stats.dictionary_bytes,"context_bytes":stats.context_bytes,"archives_used":stats.archives_used,"programs_used":stats.programs_used,"groups_used":stats.groups_used},
         "scope":"one ordinary decoded arm only, normalinput controls and passive source stats, original ROM/state/input preserved; no equivalence claim; positive only for indexed-graphics source/read/archive or group usage", "Linux":"pending","USA":"pending","nativeWindows":"pending","performance_measurements":false
     });
     fs::write(

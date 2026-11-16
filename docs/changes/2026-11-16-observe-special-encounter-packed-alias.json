@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "slug": "observe-special-encounter-packed-alias",
+  "title": "Observe the special encounter descriptor during battle entry",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add a bounded ordinary-input observer for the descriptor-1 packed-owner alias and compare the first reader frame with the original ROM path."
+  ],
+  "validation": [
+    "Wine e158-special-alias-ordinary-wine-gpir8qjh reaches original reader 080cd43c at relative frame 186 of the authenticated Giza-to-White-Flowers route, with one typed row request and no raw row requests while the ROM source is poisoned.",
+    "The first reader frame matches complete state, guest clock, framebuffer, wide framebuffer, OAM and mixed audio against an original-ROM interpreter; Windows test cross-build ucioguoy passed and the Wine server drained."
+  ],
+  "limitations": [
+    "One ordinary interpreter frame and one route do not prove full importer, other scenes or consumers, translated dispatch on this route, Linux, USA or native Windows. No performance measurement."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/conditional_packed_lookup_runtime_tests.rs",
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": []
+}

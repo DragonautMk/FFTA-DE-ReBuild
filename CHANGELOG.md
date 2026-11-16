@@ -23,6 +23,26 @@ Type: changed. Platforms: EUR / Wine.
 
 [Change record](docs/changes/2026-11-16-verify-title-language-publication-choices.json)
 
+## 2026-11-16 — Verify special encounter descriptor through the packed owner
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Add a controlled original importer-prefix check using a source-authenticated descriptor-1 encounter template and trace its shared physical row through the existing packed-lookup owner.
+- Clarify that the descriptor-1 row was unowned at e81 but its physical bytes are covered by the later e97 resource, without creating duplicate ownership.
+
+**Validation**
+
+- Wine e158-special-descriptor-alias-fix-wine-56wpztn8 passes interpreter and translated prefix comparisons with the template and row bytes poisoned: one typed row request, no raw requests in selected spans, and identical complete state and clock.
+- The authenticated EUR catalog has 2601 descriptor-1 templates; this is a source count, not proof of ordinary reachability. The first Wine unit c8t9zyf0 failed because the test left the trace frame unset; it drained the server. Corrected Windows build _vmlafdt and Wine unit passed.
+
+**Limitations**
+
+- Only one controlled prefix and one template are executed; ordinary invocation, full importer behavior, other alias consumers, Linux, USA and native Windows remain open. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-verify-special-encounter-packed-alias.json)
+
 ## 2026-11-16 — Validate E134 updater with current labeled and default translations
 
 Type: changed. Platforms: EUR / Wine.
@@ -260,6 +280,26 @@ Type: changed. Platforms: EUR / Wine.
 
 [Change record](docs/changes/2026-11-16-screen-byte00-outside-catalog-indices.json)
 
+## 2026-11-16 — Record retained input in ROM read inventories
+
+Type: fixed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Report the active-low key state and unchanged-input policy when recording three interpreter frame boundaries; the first boundary can complete a partial frame.
+- Record the bounded E158 inventory immediately after ordinary French-language publication, correcting the older generic no-input label for this held-A checkpoint.
+
+**Validation**
+
+- Wine e158-title-post-publication-residue-wine-13oct80b records 224 high-ROM requests, no drops or raw overlap with declared sources, and only the previously classified 370eb0 helper outside them.
+- The corrected Windows test build e158-inventory-input-report-build-a40_vbzv and Wine e158-title-post-publication-input-report-wine-tc_c7quu pass; the report records active-low 03fe and reproduces the same inventory.
+
+**Limitations**
+
+- The first observed boundary may end a partial frame. This held-A window does not establish global coverage or behavior for other languages, scenes and native dispatch; Linux, USA and native Windows remain pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-record-post-publication-rom-read-input.json)
+
 ## 2026-11-16 — Reconcile EUR opening state-11 coordinate source
 
 Type: changed. Platforms: EUR / Wine.
@@ -277,6 +317,43 @@ Type: changed. Platforms: EUR / Wine.
 - Ordinary execution of this state-11 reader and other consumers remain unverified; Linux, USA and native Windows remain pending. No performance measurement.
 
 [Change record](docs/changes/2026-11-16-reconcile-opening-state11-coordinate.json)
+
+## 2026-11-16 — Reconcile E158 sparse opening evidence in runtime guide
+
+Type: docs. Platforms: EUR / Wine.
+
+**Changes**
+
+- Replace the stale statement that ordinary sparse-branch use was unobserved with the accepted bounded EUR interpreter result and its remaining limits.
+
+**Validation**
+
+- Existing Wine receipt e158-sparse-ordinary-wine-htdztv4y records all 19 sparse halfwords and one matching full state and clock; the completed test was not repeated.
+
+**Limitations**
+
+- Other scenes, native dispatch, Linux, USA and native Windows remain open. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-reconcile-e158-sparse-runtime-guide.json)
+
+## 2026-11-16 — Observe the special encounter descriptor during battle entry
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Add a bounded ordinary-input observer for the descriptor-1 packed-owner alias and compare the first reader frame with the original ROM path.
+
+**Validation**
+
+- Wine e158-special-alias-ordinary-wine-gpir8qjh reaches original reader 080cd43c at relative frame 186 of the authenticated Giza-to-White-Flowers route, with one typed row request and no raw row requests while the ROM source is poisoned.
+- The first reader frame matches complete state, guest clock, framebuffer, wide framebuffer, OAM and mixed audio against an original-ROM interpreter; Windows test cross-build ucioguoy passed and the Wine server drained.
+
+**Limitations**
+
+- One ordinary interpreter frame and one route do not prove full importer, other scenes or consumers, translated dispatch on this route, Linux, USA or native Windows. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-observe-special-encounter-packed-alias.json)
 
 ## 2026-11-16 — Observe EUR opening state-11 coordinate use
 
@@ -386,6 +463,26 @@ Type: changed. Platforms: EUR / Wine.
 - This bounded window does not prove global source coverage; other scenes, Linux, USA and native Windows remain unverified. No performance measurement.
 
 [Change record](docs/changes/2026-11-16-inventory-e158-early-opening-reads.json)
+
+## 2026-11-16 — Integrate European indexed graphics contexts
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Extend the indexed-graphics catalog with 33 source-authenticated four-byte contexts and serve their 132 bytes from typed fields in EUR dataset e159-d158, preserving guest arithmetic and raw fallback outside the selected extent.
+- Update indexed-graphics diagnostics and the prior model comparison to include the new source class while retaining the earlier archive projection.
+
+**Validation**
+
+- Windows GNU test executable built in unit e159-indexed-context-build-ordinary-v8dwm2f2. Wine unit e159-indexed-context-wine-8dbsgppp passed e158 file comparison, e159 creation/reuse, poisoned-source and boundary reads, malformed-model checks and 24 original-reader state/clock comparisons.
+- The same Wine test replayed 11 ordinary interpreter frames from an authenticated world-map input: four typed requests to context 3, zero raw context requests, matching state/clock, framebuffer, OAM and mixed audio.
+
+**Limitations**
+
+- Generated dispatch cases can use interpreter fallback. Full reader ABI, other ordinary contexts and consumers, production CLI on e159, broader Wine regressions, Linux, USA and native Windows remain pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-16-integrate-european-indexed-graphics-contexts.json)
 
 ## 2026-11-16 — Inspect EUR variable address literal references
 

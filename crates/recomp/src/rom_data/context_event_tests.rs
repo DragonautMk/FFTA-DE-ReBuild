@@ -267,6 +267,9 @@ fn european_e139_ordinary_high_rom_read_inventory() {
             }
         }
     }
+    // The checkpoint may retain a pressed key; this observer does not change
+    // it during capture. The first boundary may also finish a partial frame.
+    let capture_keys = machine.bus.keys;
     let capture = TraceCapture::start(TraceFilter { readers: vec![], ranges: vec![(0x0030_0000, 0x0100_0000)] }, 50_000).unwrap();
     for _ in 0..3 {
         capture.frame(Some(machine.bus.frames));
@@ -305,9 +308,10 @@ fn european_e139_ordinary_high_rom_read_inventory() {
     unowned_events.truncate(200);
     owned_raw_events.truncate(200);
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "scope":"three no-input interpreter frames from authenticated ordinary EUR checkpoint; high ROM 300000..1000000",
+        "status":"PASS", "scope":"three interpreter frame boundaries from authenticated ordinary EUR checkpoint; high ROM 300000..1000000",
         "state_sha256":expected_state, "revision":[expected_extractor, expected_decoder],
         "prelude_target_tick":target_tick, "prelude_frames":prelude_frames,
+        "capture_keys_active_low":capture_keys, "input_policy":"retained key state, unchanged during capture",
         "matched_requests":report.matched_requests, "dropped_requests":report.dropped_requests,
         "instruction_fetch_requests_excluded":report.fetch_requests_excluded,
         "manifest_merged_source_ranges":merged.len(), "unowned_byte_count":unowned_bytes.len(),

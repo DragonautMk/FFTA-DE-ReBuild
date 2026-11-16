@@ -1193,6 +1193,14 @@ verified. **Overall closure:** all data families planned in the matrix are
 migrated and verified; justified exclusions are declared. One working example
 is a partial delivery, not completion.
 
+**ROMDATA-04-METADATA14-ID1-ALIAS scoped EUR progress:** the descriptor-1 row
+is physically owned by the later packed-lookup resource. A controlled Wine
+interpreter/translated importer prefix reads its first byte from that owner
+with poisoned sources and matching states/clocks. One ordinary battle-entry
+interpreter frame also reads that byte and matches the raw path (`gpir8qjh`).
+The full importer and other scenes/consumers remain open.
+[Evidence](../rom_data_gameplay.md#special-encounter-descriptor-aliases-the-packed-lookup).
+
 **ROMDATA-04-OBJ-CONSUMPTION completed for implementation and initial checks:**
 the first family is read from files in `play/frames/runc --rom-data`; fixed
 projections for CPU/DMA/native APIs, typed host reads, modified RAM preserved,
@@ -5571,11 +5579,18 @@ index-offset and fixed external dictionary, distinct 054A0; opaque 4137 is not a
 discriminator, raw u8 language without fallback and original low16 start-count. All
 source/output bytes reconstructed exactly, 22 windows 20 new 2 cached/101 pins/10 root
 literals/12 merged BL/121 guards/no overlap 82 owners 50498 spans/83 accepted files
-exact. Other 16 nearby groups/code-dictionary tails/context 3710D4/global extent not
+exact. At e90, other 16 nearby groups/code-dictionary tails/context 3710D4/global extent were not
 classified. No build-Wine-game-fixture/old proof/metric repeated; schema 1/e90-d89
 unchanged. Model/Wine oracle/runtime/CLI/ordinary/full ABI/indirect/Linux-USA-native
 Windows/new 32:9/full TODO open; sparse 27 ordinary partial.
 [Contract and limits](../rom_data_indexed_graphics.md).
+
+**ROMDATA-01-CONTEXT-3710D4 scoped EUR integration (2026-11-16).** E159-d158
+adds 33 four-byte contexts to the indexed-graphics resource. Wine publication,
+132 typed bytes, 24 original-reader cases and one 11-frame ordinary context-3
+window pass; the latter records four typed requests and no raw context reads.
+Full reader/other-context coverage, e159 production CLI, Linux, USA and native
+Windows remain open. [Evidence and scope](../rom_data_indexed_graphics.md#european-indexed-graphics-contexts).
 
 
 **ROMDATA-02-INDEXED-GRAPHICS-ARCHIVES completed EUR/Wine (2026-10-30).** Strict

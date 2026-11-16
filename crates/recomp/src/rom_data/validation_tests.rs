@@ -418,8 +418,8 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
     }
     if std::env::var_os("FFTA_STATE_TEST_REQUIRE_INDEXED_GRAPHICS").is_some() {
         let i = decoded.bus.rom_resources().unwrap().indexed_graphics_stats().expect("decoded EUR indexed graphics");
-        assert!(i.bus_reads > 0 && i.source_bytes > 0 && (i.archives_used > 0 || i.groups_used > 0) && i.selector_bytes+i.archive_header_bytes+i.index_bytes+i.token_bytes+i.literal_bytes+i.dictionary_header_bytes+i.dictionary_bytes == i.source_bytes, "ordinary scene must consume indexed-graphics storage");
-        eprintln!("ROM_DATA_INDEXED_GRAPHICS_SCENE frames={frames} bus_reads={} source_bytes={} selector_bytes={} archive_header_bytes={} index_bytes={} token_bytes={} literal_bytes={} dictionary_header_bytes={} dictionary_bytes={} archives_used={} programs_used={} groups_used={}",i.bus_reads,i.source_bytes,i.selector_bytes,i.archive_header_bytes,i.index_bytes,i.token_bytes,i.literal_bytes,i.dictionary_header_bytes,i.dictionary_bytes,i.archives_used,i.programs_used,i.groups_used);
+        assert!(i.bus_reads > 0 && i.source_bytes > 0 && (i.archives_used > 0 || i.groups_used > 0 || i.context_bytes > 0) && i.selector_bytes+i.archive_header_bytes+i.index_bytes+i.token_bytes+i.literal_bytes+i.dictionary_header_bytes+i.dictionary_bytes+i.context_bytes == i.source_bytes, "ordinary scene must consume indexed-graphics storage");
+        eprintln!("ROM_DATA_INDEXED_GRAPHICS_SCENE frames={frames} bus_reads={} source_bytes={} selector_bytes={} archive_header_bytes={} index_bytes={} token_bytes={} literal_bytes={} dictionary_header_bytes={} dictionary_bytes={} context_bytes={} archives_used={} programs_used={} groups_used={}",i.bus_reads,i.source_bytes,i.selector_bytes,i.archive_header_bytes,i.index_bytes,i.token_bytes,i.literal_bytes,i.dictionary_header_bytes,i.dictionary_bytes,i.context_bytes,i.archives_used,i.programs_used,i.groups_used);
     }
     if std::env::var_os("FFTA_STATE_TEST_REQUIRE_SELECTION_BYTE_TABLES").is_some() {
         let i = decoded.bus.rom_resources().unwrap().selection_byte_tables_stats().expect("decoded EUR selection-byte tables");

@@ -2069,6 +2069,13 @@ continues to serve overlapping lookup addresses beyond the projection. The
 focused Wine test covers publication, original native prefixes, mixed owner
 boundaries and coherent edit rejection, not ordinary gameplay or Linux/USA.
 [Contract and evidence](rom_data_gameplay.md#managed-conditional-packed-lookup).
+That packed owner also covers the physical metadata14 descriptor-1 alias at
+`6e6f5e..6e6f6c`. A controlled original encounter-importer prefix reads its
+first byte from the packed owner in interpreter and translated Wine runs with
+poisoned sources and matching states/clocks (`56wpztn8`). One ordinary EUR
+battle-entry interpreter frame also reaches the original reader and matches
+raw state, clock, image, OAM and mixed audio (`gpir8qjh`); full importer and
+other scene/consumer coverage remain open.
 
 
 ## Conditional descriptor banks managed projection
@@ -2290,9 +2297,10 @@ The layered OBJ resource serves 19 conditional coordinate pairs and 19
 separately sourced halfwords, preserving the intervening bytes and older
 dataset parsing. Wine original-reader and three-frame ordinary interpreter
 comparisons pass (`b8vylqkk`). Production CLI create/reuse/verify and
-one-frame managed startup pass (`tucnagm9`); ordinary execution of the
-sparse branch remains open. Linux, USA and native Windows remain pending.
-No performance measurement.
+one-frame managed startup pass (`tucnagm9`). A later neutral EUR opening
+continuation observes all 19 sparse halfwords and matches one original frame
+in Wine interpreter mode (`htdztv4y`); other scenes and native dispatch remain
+open. Linux, USA and native Windows remain pending. No performance measurement.
 
 
 ## E158 opening sparse-branch read inventory
@@ -2316,3 +2324,20 @@ copied-IWRAM helper vector. The same checkpoint's earlier E157 inventory had
 also identified the four coordinate bytes now owned in E158. This bounded
 window does not establish absence of other sources elsewhere. Linux, USA and
 native Windows remain pending; no performance measurement.
+
+## E158 title-language publication read inventory
+
+Wine `e158-title-post-publication-residue-wine-13oct80b` starts at the
+retained EUR title checkpoint immediately after the original French-language
+publication and observes the next three interpreter frame boundaries against
+E158. The initial boundary can finish a partial frame, and the checkpoint's
+pressed A key is retained throughout: the generic report's old description of
+the interval as no-input is inaccurate. The corrected observer records its
+active-low key value and input policy; Wine
+`e158-title-post-publication-input-report-wine-tc_c7quu` confirms `03fe`
+and the same source inventory. Of 224 matched requests none were
+dropped, and no raw request overlapped a declared source. The only four
+unowned bytes are the previously classified `370eb0..b4` copied-IWRAM helper
+vector. This bounded window does not establish absence of other sources or
+validate other languages, scenes, native dispatch, Linux, USA or native Windows.
+No performance measurement was made.

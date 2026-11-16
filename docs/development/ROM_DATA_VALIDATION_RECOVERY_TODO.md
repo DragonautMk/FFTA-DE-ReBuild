@@ -297,6 +297,14 @@ current evidence before running another check.
 - [ ] **ROMDATA-04-BATTLE-40D300-OTHER:** establish source-backed ordinary use
   of the remaining directory-selected battle lists; index 56 has a scoped
   Wine witness, not full-directory ordinary coverage.
+- [ ] **ROMDATA-04-METADATA14-ID1-ALIAS:** verify the full importer, other
+  scenes/consumers and native dispatch on the ordinary route. The controlled
+  Wine interpreter/native prefix (`56wpztn8`) and one ordinary interpreter
+  frame (`gpir8qjh`) read the row through the packed owner and match raw state.
+- [ ] **ROMDATA-01-CONTEXT-3710D4:** verify additional ordinary contexts,
+  remaining consumers and full reader ABI. EUR e159 Wine publication, original
+  reader cases and one ordinary context-3 window pass (`8dbsgppp`); the e159
+  production CLI and broader affected Wine regression filters remain pending.
 - [ ] **E134 ordinary updater:** establish production-cache entry availability,
   other ordinary paths and translated drawing. Current explicitly labeled
   translation has one-frame interpreter/native parity (`9ymu0twl`) and
@@ -384,8 +392,8 @@ They require an explicit scope change or their stated prerequisite; free disk
 space by itself does not select them.
 
 - [ ] **Linux:** validate changed ROM integrations, including the E134 ordinary
-  updater and title-language publication routes, on native Linux when selected;
-  retain older accepted Linux results.
+  updater, title-language routes, descriptor-1 alias and indexed graphics
+  contexts, on native Linux when selected; retain older accepted Linux results.
 - [ ] **Wine sandbox access:** if sandbox-only Wine execution is required,
   provide access to its runtime directory and Unix-domain socket binds. The
   runner now refuses these known restrictions before leasing the prefix;

@@ -1757,13 +1757,17 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   Chainclosed/oneordinary; no oldproof/negativebound/route replay ormetrics.
 
 - The [EUR indexed graphics archive source contract](../rom_data_indexed_graphics.md)
+  now includes 33 typed context records at `3710d4..371158` in e159-d158;
+  one Wine publication/reader test and an 11-frame ordinary context-3 window
+  pass. Full consumers, e159 production CLI and deferred platforms remain open.
+  [Details](../rom_data_indexed_graphics.md#european-indexed-graphics-contexts).
   declares four five-slot language pointer groups/20archives649programs,24disjoint
   source spans74907B/278336decodedB. Original05228/0537C uses BE offsets and a
   fixed external dictionary, distinct054A0;4137 stays opaque. Raw languageu8
   selectors and low16start-count semantics are uncapped by host ownership.
   Exact source/output reconstruction and22authenticatedwindows/101pins/121guards
   pass without a runtime build/run;82acceptedowners/83files stay unchanged.
-  Other16nearbygroups, dictionary tails/gaps/context3710D4/globalextent remain
+  At e90, other16nearbygroups, dictionary tails/gaps/context3710D4/globalextent remained
   unclassified. Strictmode0width5model nowpasses one595frozen/257core Windows
   buildd78a74d9 warningfree/oneWinefilter37guards/20wholearchivecalls+9start-count
   boundaries+9synthetic+28rawlanguageprefixes. Source/output/status/globals/

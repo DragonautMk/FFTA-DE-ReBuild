@@ -22,7 +22,8 @@ it by four and reads a little-endian pointer. Slots 0 through 4 are the declared
 physical banks. Typography/layout fallbacks elsewhere in the callers do not
 normalize this pointer index; `0ac2a8` loads the pointer before comparing with
 four. Queries outside the physical slots retain their original raw address.
-The separate context at `3710d4` remains unowned.
+The separate context at `3710d4` was unowned at this revision; its later
+EUR integration is described in [the context extension](#european-indexed-graphics-contexts).
 
 ## Archive and fixed dictionary encoding
 
@@ -246,3 +247,39 @@ measurements were not repeated. Other ordinary archives/programs/languages,
 mode3/wider widths/full ABI/live effects/indirect/global extent, Linux/USA/
 native Windows/new32:9 and the whole ROM TODO remain pending. Private evidence
 is retained under `target/rom-data-indexed-graphics-ordinary/`.
+
+## European indexed graphics contexts
+
+`ROMDATA-01-CONTEXT-3710D4` extends `graphics.indexed-archives` with 33
+four-byte context records at `3710d4..371158`. Original helper `019670`
+returns `3710d4 + 4 * index`; the caller at `01967c` uses fields 2 and 1 as
+archive program indices, and `01972c` reads field 0 after truncating its
+argument to a byte. The fourth byte is preserved as opaque. The explicit
+index 32 supplied at `13cc48` and the independently rooted table at `371158`
+support the selected extent. They do not prove that all 33 records are
+reachable in ordinary play, or that other callers cannot calculate addresses
+outside it. The original arithmetic and raw fallback remain unchanged.
+
+EUR schema 1/e159-d158 adds a strict context projection to the existing JSON
+resource, with one 132-byte source binding. The complete indexed resource now
+owns 25 spans and 75,039 bytes; its prior archive/group projection is unchanged.
+The context source SHA-256 is
+`3461a0d663b5f2a27d74ecaaf4670d3519a7e3eaad4f4161d41202866807d593`.
+The runtime supplies those bytes from the typed fields, composes boundary reads
+with prior owners or raw ROM, and exposes `context_bytes` in its existing
+usage report. This counter records source use, not performance.
+
+One focused Windows GNU/Wine test passed preparation and reuse, comparison
+with all e158 resource files, 132 poisoned-source byte reads, boundary/mirror
+reads, malformed-model and edited-source guards, and 24 original-reader cases.
+The latter compare complete state and clock for interpreter and generated
+dispatch; generated dispatch can fall back to interpretation. The same test
+reuses an authenticated ordinary world-map input for 11 interpreter frames:
+four typed requests hit context 3, none hit raw context bytes, and both arms
+match in state/clock, central and wide framebuffer, OAM and mixed audio. This
+is one bounded input window, not a full menu or all-context proof. Evidence:
+`target/validation/units/e159-indexed-context-wine-8dbsgppp/`.
+
+Actual production CLI creation/startup for e159, additional ordinary contexts,
+full reader ABI/indirect consumers, native Windows, Linux, USA and the remaining
+ROM-data TODO stay open. No performance measurement was performed.
