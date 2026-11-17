@@ -3439,9 +3439,25 @@ ordinary interpreter routes, raw/managed full states and clocks match at every
 frame through the observed confirmation; the two monitored position-source
 spans are poisoned in the managed arm. The trace records 128 typed requests,
 zero raw requests to those spans, and both selected title-cursor halfwords for
-each choice. This does not prove a later publication of ID 0, other writers,
-the global value domain or native-dispatch behavior for these routes. Linux,
-USA and native Windows remain pending; no performance was measured.
+each choice. This earlier scope did not prove a later publication of ID 0,
+other writers, the global value domain or native-dispatch behavior for these
+routes. Linux, USA and native Windows remain pending.
+
+A continuation of the retained French publication reaches the title again;
+the French introduction and title menu were inspected in Wine
+(`dd6nsaes`, `5e0rli8j`). The first capture `dgt80n0u` executed and drained
+Wine, but its validation unit failed because an intermediate private state was
+not selected for retention; the state and failure evidence remain preserved.
+Starting from the inspected French title checkpoint, Wine
+`e162-title-return-pair-wine-1riwnrce` opens Language, selects English with Up
+and observes the original store of ID 0 to `02001f6e`. Raw and E161 managed
+interpreter states and guest clocks match at each observed frame; the two
+position-source spans are altered in the managed ROM and the trace records 156
+typed requests and zero raw requests to them. The first pair `omcqo6kx` failed
+because its test watched the Down store `0813aa2a`; original disassembly shows
+that Up uses `0813aa52`. The corrected test passed. This is one ordinary title
+route, not a global writer/value or native-dispatch claim. Linux, USA and native
+Windows remain pending; no performance was measured.
 
 
 ## Title language cursor and animation source contract

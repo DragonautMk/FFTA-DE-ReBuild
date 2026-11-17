@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-17",
+  "slug": "verify-e162-european-scene-matrix",
+  "title": "Verify bounded European scene equivalence",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add one focused raw/managed interpreter comparison across retained opening, world-menu, language-selector and battle-menu checkpoints for the E162 dataset."
+  ],
+  "validation": [
+    "Windows GNU test build 30ygizkd and Wine ig6dmb65 passed three identical input frames per checkpoint with equal machine state, guest clock, framebuffer, wide framebuffer, OAM and audio. The selected substitution, range and geometry source bytes were altered in the managed ROM copy; none were read in these windows.",
+    "Wine production CLI dcq3ml1a passed an eight-frame neutral cold-boot raw/managed final-state and image comparison; the managed run read no geometry bytes. The snapshot-hash option did not measure timing and performance collectors were disabled.",
+    "The first Wine test pau01iy9 stopped before scene execution because the trace filter exceeded its 32-range limit; the corrected filter captures an enclosing interval and counts only overlaps with owned spans. Both Wine servers drained."
+  ],
+  "limitations": [
+    "These short windows do not prove full scenes, every input, native attribution, ordinary use of the selected sources or global equivalence. Linux, USA and native Windows remain pending; no performance measurements."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/e162_scene_matrix_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": []
+}

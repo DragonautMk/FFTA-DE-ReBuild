@@ -32,6 +32,22 @@ The evidence does not attribute every unchecked item to lack of disk space.
   [seventh model](../changes/2026-11-03-model-european-compact-obj-seventh-root.json),
   [seventh runtime](../changes/2026-11-03-publish-european-compact-obj-seventh-root.json),
   [seventh CLI](../changes/2026-11-03-verify-european-compact-obj-seventh-cli.json).
+- [x] **ROMDATA-04-CONTEXT-3710D4-CLI:** the EUR e159 production CLI creates,
+  reuses and verifies 104 matching files; its bounded Wine world-map run
+  observes four context bytes (`27uqnksb`). Other consumers remain open.
+- [x] **ROMDATA-04-SUBSTITUTION-371158-CLI:** the EUR e160 production CLI
+  creates, reuses and verifies 104 matching files under Wine (`mgaon9d6`).
+  Its bounded world-map scene reads no substitution callback bytes.
+- [x] **ROMDATA-04-RANGE-37140C-CLI:** the EUR e161 production CLI creates,
+  reuses and verifies 105 matching files under Wine (`emoffrjv`). Its bounded
+  world-map scene reads no range-lookup bytes.
+- [x] **ROMDATA-04-ADJACENT-371464-CLI:** the EUR e162 production CLI creates,
+  reuses and verifies 106 matching files under Wine (`j4r9sopl`). Its bounded
+  world-map scene reads no tilemap geometry bytes.
+- [x] **ROMDATA-05-E162-SCENES scoped:** compare four retained checkpoints for
+  three frames each (`ig6dmb65`) and an eight-frame production cold boot
+  (`dcq3ml1a`) on EUR/Wine. No selected new-source reads occurred in the
+  checkpoint windows; the cold boot read no geometry bytes.
 
 ## 1. Correct validation reports
 
@@ -288,8 +304,10 @@ current evidence before running another check.
 - [ ] **ROMDATA-01-CONTEXT-3AE42C:** establish remaining language-byte writers,
   index extent and other ordinary publication paths. Title IDs 1–4 have
   ordinary publication witnesses; confirming already-active ID 0 takes the
-  unchanged branch (`9k_mye2m`). Publication of 0 after another selection,
-  indirect writers and the global value domain remain open.
+  unchanged branch (`9k_mye2m`). Returning from French and publishing ID 0
+  now passes an ordinary EUR/Wine interpreter pair (`1riwnrce`). Other writers,
+  native dispatch, the global value domain, Linux, USA and native Windows
+  remain open.
 - [ ] **ROMDATA-04-TITLE-MAIN-BANK-OTHER / FIRSTBANK-ZERO:** investigate other
   scenes, producers and native-dispatch attribution. All five nonempty lists
   in the E158 title main-bank sequence have one ordinary Wine interpreter
@@ -303,8 +321,22 @@ current evidence before running another check.
   frame (`gpir8qjh`) read the row through the packed owner and match raw state.
 - [ ] **ROMDATA-01-CONTEXT-3710D4:** verify additional ordinary contexts,
   remaining consumers and full reader ABI. EUR e159 Wine publication, original
-  reader cases and one ordinary context-3 window pass (`8dbsgppp`); the e159
-  production CLI and broader affected Wine regression filters remain pending.
+  reader cases and one ordinary context-3 window pass (`8dbsgppp`); production
+  CLI passes (`27uqnksb`), while broader Wine regression filters remain pending.
+- [ ] **ROMDATA-01-SUBSTITUTION-371158:** establish remaining callback behavior,
+  parser-to-callback and ordinary text use, and unselected consumers. EUR e160
+  typed candidate slots and dispatcher prefixes pass under Wine (`2bltt60c`);
+  callbacks 0/3 and their truncated aliases now execute fully with controlled
+  RAM inputs (`rdulyaqw`). Production CLI passes (`mgaon9d6`); other callbacks,
+  broader Wine regressions, Linux, USA and native Windows remain open.
+- [ ] **ROMDATA-01-RANGE-37140C:** establish ordinary use and remaining reader
+  contexts. EUR e161 publication, typed bytes and original scan pass under Wine
+  (`t2mh2ei8`); production CLI passes (`emoffrjv`), while broader regressions
+  remain open.
+- [ ] **ROMDATA-01-ADJACENT-371464:** establish ordinary use, remaining readers,
+  selector domains and broader Wine regression coverage. EUR e162 publishes
+  six conditional geometry groups; the original-reader comparison passes
+  (`5zpi8vam`) and the CLI passes (`j4r9sopl`) without a positive ordinary read.
 - [ ] **E134 ordinary updater:** establish production-cache entry availability,
   other ordinary paths and translated drawing. Current explicitly labeled
   translation has one-frame interpreter/native parity (`9ymu0twl`) and
@@ -354,7 +386,8 @@ current evidence before running another check.
   allocation state, outside rows, other writers and restoration remain open.
 - [ ] **ROMDATA-05:** complete required equivalence, saves, audio and rendering
   checks for each remaining migrated family and preserve guest timing and
-  side effects; bounded Wine witnesses do not establish global equivalence.
+  side effects; the four short E162 scene windows and cold boot do not establish
+  full-scene, all-input, all-consumer or global equivalence.
 
 ## 5. Resolve prerequisites before selecting further proofs
 
@@ -393,7 +426,9 @@ space by itself does not select them.
 
 - [ ] **Linux:** validate changed ROM integrations, including the E134 ordinary
   updater, title-language routes, descriptor-1 alias and indexed graphics
-  contexts, on native Linux when selected; retain older accepted Linux results.
+  contexts, text substitution callbacks, bounded range lookup and tilemap
+  geometry, on native
+  Linux when selected; retain older accepted Linux results.
 - [ ] **Wine sandbox access:** if sandbox-only Wine execution is required,
   provide access to its runtime directory and Unix-domain socket binds. The
   runner now refuses these known restrictions before leasing the prefix;

@@ -186,3 +186,116 @@ fn european_title_language_other_publications_ordinary_pairs() {
         "Linux": "pending", "USA": "pending", "native_windows": "pending", "performance_measurements": false
     })).unwrap()).unwrap();
 }
+
+#[cfg(feature = "rom-data-read-audit")]
+#[test]
+#[ignore = "EUR French title checkpoint and managed dataset; Wine only"]
+fn european_title_language_return_to_english_ordinary_pair() {
+    use gba_core::rom_data::read_audit::{Service, TraceCapture, TraceFilter};
+    use std::collections::BTreeSet;
+
+    const GLOBAL: u32 = 0x0200_1f6e;
+    const CURSOR: u32 = 0x003a_dcfc;
+    const CONTEXT_PAIRS: u32 = 0x003a_e42c;
+    let root = PathBuf::from(std::env::var_os("FFTA_TITLE_LANGUAGE_ROOT").unwrap());
+    let state = fs::read(std::env::var_os("FFTA_TITLE_LANGUAGE_STATE").unwrap()).unwrap();
+    assert_eq!(gba_core::ffta_rom::digest(&state), "ccece459942747b2460d85f6a459ecd34bbb107afb49d25049dc9d3c25ca9749");
+    let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    assert_eq!(gba_core::ffta_rom::digest(&rom), gba_core::ffta_rom::EUROPE_SHA256);
+    let dataset = PathBuf::from(std::env::var_os("FFTA_TITLE_LANGUAGE_DATASET").unwrap());
+    let spans = [(CURSOR, CURSOR + 20), (CONTEXT_PAIRS, CONTEXT_PAIRS + 20)];
+    let mut raw = crate::make_machine(rom.clone(), None);
+    let mut managed = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut managed, &dataset).unwrap();
+    raw.load_state(&state).unwrap();
+    managed.load_state(&state).unwrap();
+    assert!(raw.save_state().unwrap() == managed.save_state().unwrap());
+    assert_eq!(raw.bus.read8(GLOBAL), 1, "French must still be active at the ordinary title");
+
+    let mut selection = None;
+    let mut publication = None;
+    let mut typed = 0u64;
+    let mut raw_reads = 0u64;
+    let mut cursor_offsets = BTreeSet::new();
+    for frame in 0..160u32 {
+        // From the visible Saved Game entry: Down twice, A, then return from
+        // French to English with Up and A. Gaps allow each key to be released.
+        let keys = match frame {
+            0..6 | 12..18 => 0x37f,
+            24..30 | 102..108 => 0x3fe,
+            90..96 => 0x3bf,
+            _ => 0x3ff,
+        };
+        raw.bus.keys = keys;
+        managed.bus.keys = keys;
+        raw.bus.frame_ready = false;
+        for _ in 0..5_000_000 {
+            if raw.bus.frame_ready { break; }
+            let pc = raw.cpu.regs[15];
+            let regs = raw.cpu.regs;
+            let event = raw.step();
+            if !matches!(event, gba_core::StepEvent::Instr(ref i) if i.addr == pc) { continue; }
+            if pc == 0x0813_aa52 && frame >= 90 {
+                let context = raw.bus.read32(0x0200_f3b0);
+                if regs[1] == context + 0x8964 && raw.bus.read8(regs[1]) == 0 {
+                    selection = Some(frame);
+                }
+            }
+            if pc == 0x0813_aafe {
+                let context = raw.bus.read32(0x0200_f3b0);
+                assert!(frame >= 102, "unexpected earlier language publication");
+                assert_eq!(regs[1], GLOBAL);
+                assert_eq!(regs[0] as u8, 0);
+                assert_eq!(raw.bus.read8(context + 0x8964), 0);
+                assert_eq!(raw.bus.read8(GLOBAL), 0);
+                publication = Some(frame);
+            }
+        }
+        assert!(raw.bus.frame_ready, "raw title frame {frame}");
+        if frame == 89 {
+            let context = raw.bus.read32(0x0200_f3b0);
+            assert_eq!(raw.bus.read8(context + 0x8994), 2, "language selector did not open");
+            assert_eq!(raw.bus.read8(context + 0x8964), 1, "selector must begin on French");
+            assert_eq!(raw.bus.read8(GLOBAL), 1);
+        }
+        for &(lo, hi) in &spans { managed.bus.rom[lo as usize..hi as usize].fill(0xcd); }
+        let capture = TraceCapture::start(TraceFilter { readers: vec![], ranges: spans.to_vec() }, 10_000).unwrap();
+        capture.frame(Some(managed.bus.frames));
+        managed.bus.frame_ready = false;
+        for _ in 0..5_000_000 {
+            if managed.bus.frame_ready { break; }
+            managed.step();
+        }
+        assert!(managed.bus.frame_ready, "managed title frame {frame}");
+        let trace = capture.finish();
+        assert!(!trace.truncated);
+        for event in trace.events {
+            match event.key.service {
+                Service::Typed => {
+                    typed += event.requests;
+                    if event.key.read.length == 2 { cursor_offsets.insert(event.key.read.physical_offset); }
+                }
+                Service::Raw => raw_reads += event.requests,
+                Service::Unclassified => {}
+            }
+        }
+        for &(lo, hi) in &spans {
+            managed.bus.rom[lo as usize..hi as usize].copy_from_slice(&rom[lo as usize..hi as usize]);
+        }
+        assert!(raw.save_state().unwrap() == managed.save_state().unwrap(), "title full state/clock frame {frame}");
+        if publication.is_some() { break; }
+    }
+    let selection = selection.expect("ordinary Up did not select English");
+    let publication = publication.expect("ordinary English publication was not reached");
+    assert!(selection < publication);
+    assert!(typed > 0 && raw_reads == 0);
+    assert!(cursor_offsets.contains(&CURSOR) && cursor_offsets.contains(&(CURSOR + 2)),
+            "both English cursor coordinates were not read");
+    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
+        "status": "PASS", "scope": "EUR title: return from French to English; interpreter raw/managed pair",
+        "selection_frame": selection, "publication_frame": publication,
+        "typed_requests": typed, "raw_requests": raw_reads, "poisoned_source": true,
+        "limits": "One ordinary title route; other writers, global value domain, native dispatch and other scenes remain open.",
+        "Linux": "pending", "USA": "pending", "native_windows": "pending", "performance_measurements": false
+    })).unwrap()).unwrap();
+}

@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-17",
+  "slug": "verify-european-return-to-english",
+  "title": "Verify European title return to English",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add an ordinary title-language test that follows an authenticated French title checkpoint back to English and observes the original publication of language ID 0."
+  ],
+  "validation": [
+    "Windows GNU test build e162-title-return-build-fix-2w1ygcgl and Wine e162-title-return-pair-wine-1riwnrce passed: raw and E161 managed interpreter states and guest clocks matched at every frame; poisoned position spans served 156 typed and zero raw requests.",
+    "The French intro and title were visually observed in Wine units dd6nsaes and 5e0rli8j. Earlier capture dgt80n0u executed and drained Wine but failed artifact retention because an intermediate state was not selected. Pair omcqo6kx failed because the test watched the Down store; the corrected Up store address was confirmed by retained original disassembly."
+  ],
+  "limitations": [
+    "One ordinary title route only; other writers, global index and value domains, native dispatch, Linux, USA and native Windows remain pending. No performance measurements."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/title_language_publisher_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

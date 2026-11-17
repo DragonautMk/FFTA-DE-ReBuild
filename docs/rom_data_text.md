@@ -628,3 +628,53 @@ retained checkpoint/save/input edits, Android changes, agent commit or push.
 Evidence: `windows-build.json`, `windows-cli-{processes,no-write,summary}.json`,
 `ordinary-text-context-audit.json` and `windows-cli-text-school3000.json` with
 corresponding logs under `target/rom-data-script-text/`.
+
+## European text substitution callback candidates
+
+`ROMDATA-01-SUBSTITUTION-371158` adds a sparse source projection to
+`text.catalogs` in EUR schema 1/e160-d159. It derives 75 distinct candidate
+indices from opcode `25` operands in the authenticated text and script-text
+programs, then preserves the exact four-byte words at `371158 + 4 * index`.
+Four of those words are zero. The concatenated 300 selected bytes have SHA-256
+`06e378864fcd292ab8d64869e572436287fb47c0ef7c542442136e8ca6c7e3f6`.
+The independently rooted structure at `37140c` bounds this table selection;
+unselected words remain with their existing owner or raw ROM.
+
+Original routine `019e94` truncates the index to a byte, clears the destination,
+loads the table word and passes it to the original callback dispatcher. The
+typed owner changes only the source of selected word bytes: it does not cap
+the guest index, replace dispatch, skip nulls or establish that a candidate
+program reaches this routine. Candidate operands are source evidence, not
+proof of safe callback execution or ordinary reachability.
+
+Wine unit `e160-substitution-wine-2bltt60c` passed e160 preparation/reuse and
+comparison with the e159 resource projection, all 300 selected bytes with raw
+source bytes altered, an unselected raw byte, boundary/mirror reads, malformed
+and edited-source guards, and 18 original dispatcher-prefix cases. Interpreter
+and generated-dispatch states/clocks agree; generated dispatch may fall back
+to interpretation. The prefix stops before callback invocation.
+
+Production Wine CLI unit `e160-substitution-cli-wine-mgaon9d6` created, reused
+and verified an e160 dataset whose 104 files matched the tested generation.
+The generation was unchanged after reuse and an 11-frame world-map input;
+that bounded run read four indexed-graphics context bytes and zero substitution
+callback bytes. It establishes startup and registration, not callback absence
+in other scenes. Linux, USA, native Windows, broader Wine regressions and
+ordinary use remain open. No performance measurement was performed.
+
+Wine `e163-substitution-dis-wine-0_b8y54q` shows that callbacks 0 and 3 call
+the original text-copy routine with distinct EWRAM sources at `02001f1c` and
+`020021a0`. A bounded source scan found five direct dispatcher call candidates;
+Wine `e163-substitution-callers-dis-wine-r31z9qd5` confirms their instructions,
+including contexts which read a byte at offset 2 before calling the dispatcher.
+This does not establish all callers or ordinary opcode reachability.
+
+Wine `e163-substitution-callback-wine-rdulyaqw` executes the complete original
+dispatcher, indirect branch, callbacks 0/3 and text-copy routine with controlled
+RAM inputs, as well as their byte-truncated aliases 256/259. Compact and extended
+copy outputs, return values and destination guards match expectations. Raw
+interpreter, managed interpreter and compiled instruction-block states and guest
+clocks match with all 75 candidate source words altered in the managed ROM copy;
+each managed execution serves four typed callback bytes. Other callbacks,
+actual parser-to-callback execution, ordinary use and deferred platforms remain
+open. This unit does not change the extractor revision.

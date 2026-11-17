@@ -6,6 +6,7 @@ use std::sync::Arc;
 pub(super) fn fixture() -> Extraction {
     let mut source = super::text_short_managed_tests::fixture();
     let mut value = TextCatalogs {
+        substitution_callbacks: Vec::new(),
         pointer_catalogs: Vec::new(),
         strings: Vec::new(),
         archive_catalogs: Vec::new(),
@@ -197,7 +198,7 @@ fn european_text_catalog_dataset_authenticates_repairs_moves_and_retains_e11() {
         (1, 12, 11)
     );
     assert_eq!(source.manifest.resources.len(), 9);
-    assert_eq!(source.manifest.resources[8].sources.len(), 33581);
+    assert_eq!(source.manifest.resources[8].sources.len(), 33581 + source.text_catalogs.as_ref().unwrap().decoded.substitution_callbacks.len());
     let offline = root.join("offline dataset");
     extract(&offline, &mut source).unwrap();
     assert_eq!(fs::read_dir(&offline).unwrap().count(), 10);

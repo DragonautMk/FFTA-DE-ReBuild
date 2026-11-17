@@ -3,6 +3,146 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-17 — Verify European text copy callbacks
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Extend EUR substitution validation through the original dispatcher, indirect branch and callbacks 0 and 3, including byte-truncated index aliases.
+
+**Validation**
+
+- Wine disassembly 0_b8y54q identifies the two distinct EWRAM string sources; r31z9qd5 confirms five bounded direct caller candidates.
+- Windows GNU test build 9_o95qj2 and Wine rdulyaqw passed four controlled cases: compact and extended string outputs, return values, destination guards, four typed callback bytes per managed path and identical full states and guest clocks for raw interpreter, managed interpreter and compiled instruction blocks with source words altered.
+
+**Limitations**
+
+- Controlled RAM inputs do not establish ordinary use or parser-to-callback execution. Other callbacks, unselected consumers, broader Wine regressions, Linux, USA and native Windows remain open. No performance measurements.
+
+[Change record](docs/changes/2026-11-17-verify-european-text-copy-callbacks.json)
+
+## 2026-11-17 — Verify European title return to English
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Add an ordinary title-language test that follows an authenticated French title checkpoint back to English and observes the original publication of language ID 0.
+
+**Validation**
+
+- Windows GNU test build e162-title-return-build-fix-2w1ygcgl and Wine e162-title-return-pair-wine-1riwnrce passed: raw and E161 managed interpreter states and guest clocks matched at every frame; poisoned position spans served 156 typed and zero raw requests.
+- The French intro and title were visually observed in Wine units dd6nsaes and 5e0rli8j. Earlier capture dgt80n0u executed and drained Wine but failed artifact retention because an intermediate state was not selected. Pair omcqo6kx failed because the test watched the Down store; the corrected Up store address was confirmed by retained original disassembly.
+
+**Limitations**
+
+- One ordinary title route only; other writers, global index and value domains, native dispatch, Linux, USA and native Windows remain pending. No performance measurements.
+
+[Change record](docs/changes/2026-11-17-verify-european-return-to-english.json)
+
+## 2026-11-17 — Verify bounded European scene equivalence
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Add one focused raw/managed interpreter comparison across retained opening, world-menu, language-selector and battle-menu checkpoints for the E162 dataset.
+
+**Validation**
+
+- Windows GNU test build 30ygizkd and Wine ig6dmb65 passed three identical input frames per checkpoint with equal machine state, guest clock, framebuffer, wide framebuffer, OAM and audio. The selected substitution, range and geometry source bytes were altered in the managed ROM copy; none were read in these windows.
+- Wine production CLI dcq3ml1a passed an eight-frame neutral cold-boot raw/managed final-state and image comparison; the managed run read no geometry bytes. The snapshot-hash option did not measure timing and performance collectors were disabled.
+- The first Wine test pau01iy9 stopped before scene execution because the trace filter exceeded its 32-range limit; the corrected filter captures an enclosing interval and counts only overlaps with owned spans. Both Wine servers drained.
+
+**Limitations**
+
+- These short windows do not prove full scenes, every input, native attribution, ordinary use of the selected sources or global equivalence. Linux, USA and native Windows remain pending; no performance measurements.
+
+[Change record](docs/changes/2026-11-17-verify-e162-european-scene-matrix.json)
+
+## 2026-11-17 — Verify European indexed graphics contexts in the production CLI
+
+Type: docs. Platforms: EUR / Wine.
+
+**Changes**
+
+- Record the production CLI create, reuse, verify and bounded ordinary-use checks for the e159 indexed graphics context resource.
+
+**Validation**
+
+- Windows GNU production build e159-indexed-context-cli-build-0cgxnfhb and Wine unit e159-indexed-context-cli-wine-27uqnksb passed. All 104 generated files matched the tested e159 dataset and remained unchanged during reuse and startup; the 11-frame world-map run reported four context bytes.
+- The Wine unit completed with a nonfatal D-Bus diagnostic and drained its server. The previously accepted interpreter pair remains the equivalence evidence for the bounded window.
+
+**Limitations**
+
+- Other ordinary contexts and consumers, full reader ABI, broader Wine regression filters, Linux, USA and native Windows remain pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-17-verify-e159-indexed-context-cli.json)
+
+## 2026-11-17 — Integrate European tilemap geometry
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Publish six separately rooted tilemap geometry groups as graphics.tilemap-geometry in EUR e162-d161, retaining the two physical copies and original unbounded guest indexing.
+- Serve the 48 source bytes through typed ROM reads with mixed-owner and raw fallback composition.
+
+**Validation**
+
+- Wine source disassembly i36cx5vz, vl8mhv5l and _9loiqbv establishes the two original readers, six roots and five observed direct constructor call sites with index zero.
+- Windows GNU test build wbix4esr and Wine 5zpi8vam passed creation/reuse, all 104 previous resource files unchanged, all 48 poisoned source bytes, boundaries, guards and 24 original-reader state/clock cases through interpreter and generated dispatch.
+- Production Windows build ws_q09i1 and Wine CLI j4r9sopl passed creation, reuse and verification of all 106 matching files; an 11-frame world-map window read no tilemap geometry bytes.
+
+**Limitations**
+
+- Generated dispatch may fall back to interpretation. Ordinary use, other readers, global index domains, broader Wine regressions, Linux, USA and native Windows remain pending. No performance measurements.
+
+[Change record](docs/changes/2026-11-17-integrate-european-tilemap-geometry.json)
+
+## 2026-11-17 — Integrate European text substitution callback candidates
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Derive 75 candidate substitution indices from authenticated text and script-text programs, preserve their 300 callback-table bytes including four null words in text.catalogs, and leave unselected guest addresses and callback execution unchanged.
+- Publish the sparse projection in EUR e160-d159 and report typed substitution source use; keep earlier text catalog projections intact.
+
+**Validation**
+
+- Windows GNU build e160-substitution-build-_wiucz_6 and Wine unit e160-substitution-wine-2bltt60c passed e159 comparison, e160 creation/reuse, all poisoned-source bytes and boundary/raw fallback checks, source guards, and 18 original dispatcher-prefix state/clock comparisons.
+- The Wine server drained after a nonfatal D-Bus diagnostic. The current e160 dataset is retained by the validation unit.
+- Production Windows build e160-substitution-cli-build-v7ztnkqz and Wine unit e160-substitution-cli-wine-mgaon9d6 passed dataset creation, reuse and verification against all 104 tested files; the 11-frame world-map input read four indexed-graphics context bytes and zero substitution callback bytes.
+
+**Limitations**
+
+- Candidates do not prove parser reachability or safe callback invocation; generated dispatch may fall back to interpretation. Callback output, ordinary use, broader Wine regressions, Linux, USA and native Windows remain pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-17-integrate-european-text-substitution-candidates.json)
+
+## 2026-11-17 — Integrate European bounded range lookup
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Publish an independent 11-record range lookup as engine.bounded-range-lookup in EUR e161-d160, preserving opaque bytes and the original guest-side scan and writes.
+- Serve the 88 source bytes through typed ROM reads and compose boundary reads with existing owners or raw ROM.
+
+**Validation**
+
+- Windows GNU build e161-range-lookup-build-fix2-zlxh65v6 and Wine unit e161-range-lookup-wine-t2mh2ei8 passed publication/reuse, preservation of all 103 prior resources, poisoned-source and boundary reads, source guards and 46 original-scan state/clock comparisons.
+- The first build 1zxknk54 failed on three missing size-check arguments; the first correction _0ta2f6l had a syntax error. The corrected build and Wine unit passed; a nonfatal D-Bus diagnostic was emitted and the server drained.
+- Production Windows build e161-range-lookup-cli-build-hwt3v892 and Wine unit e161-range-lookup-cli-wine-emoffrjv passed dataset creation, reuse and verification against all 105 tested files; the 11-frame world-map input read four indexed-graphics context bytes and zero range or substitution callback bytes.
+
+**Limitations**
+
+- Generated dispatch may fall back to interpretation. Ordinary use, broader Wine regressions, Linux, USA and native Windows remain pending. No performance measurement.
+
+[Change record](docs/changes/2026-11-17-integrate-european-bounded-range-lookup.json)
+
 ## 2026-11-16 — Verify additional EUR title language publications
 
 Type: changed. Platforms: EUR / Wine.

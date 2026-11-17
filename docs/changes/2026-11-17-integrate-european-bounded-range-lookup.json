@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-11-17",
+  "slug": "integrate-european-bounded-range-lookup",
+  "title": "Integrate European bounded range lookup",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Publish an independent 11-record range lookup as engine.bounded-range-lookup in EUR e161-d160, preserving opaque bytes and the original guest-side scan and writes.",
+    "Serve the 88 source bytes through typed ROM reads and compose boundary reads with existing owners or raw ROM."
+  ],
+  "validation": [
+    "Windows GNU build e161-range-lookup-build-fix2-zlxh65v6 and Wine unit e161-range-lookup-wine-t2mh2ei8 passed publication/reuse, preservation of all 103 prior resources, poisoned-source and boundary reads, source guards and 46 original-scan state/clock comparisons.",
+    "The first build 1zxknk54 failed on three missing size-check arguments; the first correction _0ta2f6l had a syntax error. The corrected build and Wine unit passed; a nonfatal D-Bus diagnostic was emitted and the server drained.",
+    "Production Windows build e161-range-lookup-cli-build-hwt3v892 and Wine unit e161-range-lookup-cli-wine-emoffrjv passed dataset creation, reuse and verification against all 105 tested files; the 11-frame world-map input read four indexed-graphics context bytes and zero range or substitution callback bytes."
+  ],
+  "limitations": [
+    "Generated dispatch may fall back to interpretation. Ordinary use, broader Wine regressions, Linux, USA and native Windows remain pending. No performance measurement."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/range_lookup.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/range_lookup.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/range_lookup_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": []
+}

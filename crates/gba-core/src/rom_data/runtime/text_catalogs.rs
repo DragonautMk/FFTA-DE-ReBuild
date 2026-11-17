@@ -15,6 +15,7 @@ pub struct TextCatalogStats {
     pub decoded_program_bytes: u64,
     pub glyph_bytes: u64,
     pub width_bytes: u64,
+    pub substitution_callback_bytes: u64,
 }
 
 #[cfg(test)]
@@ -28,6 +29,7 @@ enum Kind {
     Program(usize),
     Glyph(usize),
     Width(usize),
+    Substitution(usize),
 }
 struct Binding {
     offset: usize,
@@ -48,7 +50,7 @@ pub(super) struct TextCatalogResources {
     end: usize,
     file_sha256: String,
     bus_reads: AtomicU64,
-    counts: [AtomicU64; 8],
+    counts: [AtomicU64; 9],
 }
 impl TextCatalogResources {
     pub(super) fn without_font(mut self) -> Self {
@@ -61,7 +63,7 @@ impl TextCatalogResources {
         self
     }
     pub(super) fn source_page(index: usize) -> bool {
-        matches!(index>>12,0x495..=0x498|0x49a..=0x49e|0x4a4|0x4f8..=0x6b3|0x71e..=0x766)
+        matches!(index>>12,0x371|0x495..=0x498|0x49a..=0x49e|0x4a4|0x4f8..=0x6b3|0x71e..=0x766)
     }
     pub(super) fn new(
         texts: model::TextCatalogs,
@@ -158,6 +160,10 @@ impl TextCatalogResources {
                 Kind::Width(item),
             )?;
         }
+        for (item, callback) in texts.substitution_callbacks.iter().enumerate() {
+            add(callback.source_offset(), callback.target.to_le_bytes().to_vec(),
+                format!("text-substitution-callback/{}", callback.index), Kind::Substitution(item))?;
+        }
         if ranges.next().is_some() {
             return Err("Unexpected full text source binding".into());
         }
@@ -246,6 +252,7 @@ impl TextCatalogResources {
                 6,
             ),
             Kind::Width(id) => (self.texts.glyphs[id].width, 7),
+            Kind::Substitution(id) => (self.texts.substitution_callbacks[id].target.to_le_bytes()[at], 8),
         })
     }
     pub(super) fn guest_read<const N: usize>(
@@ -257,7 +264,7 @@ impl TextCatalogResources {
         if index >= self.end || index.saturating_add(N) <= self.bindings[0].offset {
             return prior;
         }
-        let mut counts = [0; 8];
+        let mut counts = [0; 9];
         let bytes = std::array::from_fn(|i| match self.byte(index + i) {
             Some((byte, kind)) => {
                 counts[kind] += 1;
@@ -277,7 +284,7 @@ impl TextCatalogResources {
         Some(bytes)
     }
     pub(super) fn stats(&self) -> TextCatalogStats {
-        let [pointer_table_bytes, string_bytes, archive_index_bytes, header_bytes, encoded_control_bytes, decoded_program_bytes, glyph_bytes, width_bytes] =
+        let [pointer_table_bytes, string_bytes, archive_index_bytes, header_bytes, encoded_control_bytes, decoded_program_bytes, glyph_bytes, width_bytes, substitution_callback_bytes] =
             self.counts.each_ref().map(|c| c.load(Ordering::Relaxed));
         TextCatalogStats {
             bus_reads: self.bus_reads.load(Ordering::Relaxed),
@@ -288,7 +295,8 @@ impl TextCatalogResources {
                 + encoded_control_bytes
                 + decoded_program_bytes
                 + glyph_bytes
-                + width_bytes,
+                + width_bytes
+                + substitution_callback_bytes,
             pointer_table_bytes,
             string_bytes,
             archive_index_bytes,
@@ -297,6 +305,7 @@ impl TextCatalogResources {
             decoded_program_bytes,
             glyph_bytes,
             width_bytes,
+            substitution_callback_bytes,
         }
     }
     pub(super) fn file_sha256(&self) -> &str {
@@ -306,6 +315,7 @@ impl TextCatalogResources {
         // Diagnostic accounting only, not a budget or performance measurement.
         std::mem::size_of::<Self>()
             + self.file_sha256.capacity()
+            + self.texts.substitution_callbacks.capacity() * std::mem::size_of::<model::SubstitutionCallback>()
             + self.bindings.capacity() * std::mem::size_of::<Binding>()
             + self.strings.capacity() * std::mem::size_of::<Vec<usize>>()
             + self

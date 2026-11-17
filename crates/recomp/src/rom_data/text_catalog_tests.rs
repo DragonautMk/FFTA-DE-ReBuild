@@ -36,7 +36,7 @@ fn european_pointer_and_relative_text_catalogs_match_original_readers() {
     let value = &catalog.decoded;
     assert_eq!(value.strings.len(), 16100);
     assert_eq!(value.glyphs.len(), 128);
-    assert_eq!(catalog.sources.len(), 33581);
+    assert_eq!(catalog.sources.len(), 33581 + value.substitution_callbacks.len());
     let bytes = serde_json::to_vec_pretty(value).unwrap();
     let parsed: TextCatalogs = serde_json::from_slice(&bytes).unwrap();
     parsed.verify_source(&rom).unwrap();

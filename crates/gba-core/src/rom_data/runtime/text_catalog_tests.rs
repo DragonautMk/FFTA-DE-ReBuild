@@ -2,6 +2,7 @@ use super::*;
 use crate::{capi::RT_API, Bus, Machine};
 fn fixture() -> (model::TextCatalogs, Vec<SourceRange>, Vec<u8>) {
     let mut value = model::TextCatalogs {
+        substitution_callbacks: Vec::new(),
         pointer_catalogs: Vec::new(),
         strings: Vec::new(),
         archive_catalogs: Vec::new(),

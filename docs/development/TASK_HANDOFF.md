@@ -36,13 +36,16 @@ it does not authorize stopping other work or changing another thread's goal.
 - State: active
 - Outcome: partial
 - Verified: E158 reader/opening/CLI Wine PASS (`b8vylqkk`, `tucnagm9`).
-- Missing: EUR resources/consumers, ordinary evidence, ABI/global extent/indirect calls, ROMDATA-06/07; Linux/USA/native Windows/new32:9 distinct. EUR/Wine, no metrics or space limits; originals/saves protected.
-- ROMDATA-04-METADATA14-ID1-ALIAS: controlled prefix and ordinary frame PASS (`56wpztn8`, `gpir8qjh`); full importer/other consumers open.
-- Title main bank: all five nonempty sequence lists ordinary Wine PASS (`hhh7a8lg`); other scenes/native open. FIRSTBANK-ZERO producer open (`f4_b2apw`).
-- ROMDATA-04-BATTLE-40D300-OTHER: index56 ordinary PASS (`qbzrv3ua`); other new lists remain open.
-- ROMDATA-01-CONTEXT-3AE42C: partial; initial IDs 0–4 and title IDs 1–4 PASS (`ij_gnywg`, `9k_mye2m`); title unchanged 0 PASS. Other writers/index and return to 0 open.
-- E134 ordinary updater: labeled native reads PASS (`yw62he9p`); isolated default uses interpreter scopes (`botzl4b6`). Runtime cache and draw remain open.
-- ROMDATA-01-CONTEXT-3710D4: e159 model/ordinary Wine PASS (8dbsgppp); production CLI build session 85610 live.
+- Missing: EUR resources/consumers, ordinary evidence, ABI/extent/indirect calls, ROMDATA-06/07; Linux/USA/native Windows/new32:9 distinct. EUR/Wine; originals/saves protected.
+- ROMDATA-04-METADATA14-ID1-ALIAS: Wine prefix/frame PASS (56wpztn8/gpir8qjh); importer/consumers open.
+- Title bank: five lists Wine PASS (hhh7a8lg); other scenes/native and FIRSTBANK-ZERO open (f4_b2apw).
+- BATTLE-40D300-OTHER: index56 Wine PASS (qbzrv3ua); other lists open.
+- CONTEXT-3AE42C: IDs 1–4 and return to 0 Wine PASS (ij_gnywg/9k_mye2m/1riwnrce); writers/index/native open.
+- E134 updater: native PASS (yw62he9p), default interpreter (botzl4b6); cache/draw open.
+- e159 CONTEXT-3710D4 (8dbsgppp/27uqnksb), e160 SUBSTITUTION-371158 (2bltt60c/mgaon9d6), e161 RANGE-37140C (t2mh2ei8/emoffrjv) PASS; consumers open.
+- ROMDATA-01-ADJACENT-371464: e162 PASS (5zpi8vam/j4r9sopl); consumers/domains open.
+- SUBSTITUTION-371158 callbacks 0/3 Wine PASS (rdulyaqw); others open.
+- Selection SUBSTITUTION-PARSER-25: EUR/Wine, no metrics/space limit; build xcthq8ru PASS. Wine miwjdo33 session 9047; Linux/USA deferred.
 - Resume: [validation recovery checklist](ROM_DATA_VALIDATION_RECOVERY_TODO.md) for skipped checks; [ROM_DATA_TODO](ROM_DATA_TODO.md), only the selected criterion's section (ROMDATA-01/02/03/04/05/06/07); [inventory](ROM_DATA_INVENTORY.md). Do not read the whole TODO. Children retain their IDs and limits:
   - `ROMDATA-01-PARAMETER-RECORDS27-DYNAMIC-SOURCES`: partial; writers map to 59 rows (js3rbve5); retained lists negative/inconclusive (m1p_8lhy). Live domain, save loads and aliases open. `docs/rom_data_gameplay.md`.
   - `ROMDATA-04-GAMEPLAY-6E84E0-BYTE00`: partial; static text screen 78suaoix found no token; generated/indirect sources open, no blind Select. `docs/rom_data_gameplay.md`.

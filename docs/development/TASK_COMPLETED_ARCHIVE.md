@@ -23091,3 +23091,62 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: e159 publication/reuse preserves all e158 prior resource projections; 132 poisoned-source bytes, boundaries and 24 original-reader state/clock comparisons pass. Eleven ordinary frames include four typed context-3 requests, zero raw context requests and matching state/clock, framebuffer, OAM and mixed audio.
 - Evidence: `e159-indexed-context-build-ordinary-v8dwm2f2`, `e159-indexed-context-wine-8dbsgppp`, `docs/changes/2026-11-16-integrate-european-indexed-graphics-contexts.json`. The current EUR dataset is retained under that Wine unit's `work/resources/`.
 - Limits: generated dispatch may fall back; other contexts/consumers, complete ABI, e159 production CLI, broader Wine regressions, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-04-CONTEXT-3710D4-CLI
+
+- Outcome: completed for the EUR e159 production CLI under Wine.
+- Verified criteria: create, reuse and verify pass; all 104 generated files match the tested e159 dataset and remain unchanged during reuse/startup. One bounded 11-frame world-map run reports four context bytes.
+- Evidence: `e159-indexed-context-cli-build-0cgxnfhb`, `e159-indexed-context-cli-wine-27uqnksb`, `docs/changes/2026-11-17-verify-e159-indexed-context-cli.json`. A nonfatal D-Bus diagnostic was emitted; Wine server drained.
+- Limits: this CLI run is not a full-scene equivalence proof; other contexts/consumers, full ABI, broader Wine regressions, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-01-SUBSTITUTION-371158-E160-SCOPED
+
+- Outcome: completed for 75 EUR source-candidate callback words and controlled original dispatcher prefixes under Wine.
+- Verified criteria: e160 preparation/reuse preserves e159 resource projections; all 300 selected bytes, four nulls, unselected raw fallback, boundary/mirror reads and 18 original-prefix state/clock cases pass with poisoned source.
+- Evidence: `e160-substitution-build-_wiucz_6`, `e160-substitution-wine-2bltt60c`, `docs/changes/2026-11-17-integrate-european-text-substitution-candidates.json`. The current dataset is retained under that Wine unit's `work/resources/`; a nonfatal D-Bus diagnostic was emitted and the server drained.
+- Limits: candidates do not prove callback invocation, output or ordinary reachability; generated dispatch may fall back. Production CLI, broader Wine regressions, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-04-SUBSTITUTION-371158-CLI
+
+- Outcome: completed for the EUR e160 production CLI under Wine.
+- Verified criteria: create, reuse and verify pass; all 104 files match the tested e160 dataset and remain unchanged during reuse/startup. An 11-frame world-map run reads four indexed-graphics context bytes and zero substitution callback bytes.
+- Evidence: `e160-substitution-cli-build-v7ztnkqz`, `e160-substitution-cli-wine-mgaon9d6`, `docs/changes/2026-11-17-integrate-european-text-substitution-candidates.json`; server drained.
+- Limits: no callback invocation or global absence is established; ordinary use, full ABI/consumers, broader Wine regressions, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-01-RANGE-37140C-E161-SCOPED
+
+- Outcome: completed for the EUR 11-record source and controlled original scan under Wine.
+- Verified criteria: e161 publication/reuse preserves all 103 prior resources; 88 poisoned-source bytes, boundary/mirror reads, source guards and 46 original-scan state/clock cases pass, including bounds and an unmatched input.
+- Evidence: `e161-range-lookup-build-fix2-zlxh65v6`, `e161-range-lookup-wine-t2mh2ei8`, `docs/changes/2026-11-17-integrate-european-bounded-range-lookup.json`. Builds `1zxknk54` and `_0ta2f6l` failed on missing arguments and then an introduced syntax error; the corrected build passed. Current e161 dataset is retained with the Wine unit; server drained.
+- Limits: generated dispatch may fall back. Ordinary use, e161 production CLI, broader Wine regressions, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-04-RANGE-37140C-CLI
+
+- Outcome: completed for the EUR e161 production CLI under Wine.
+- Verified criteria: create, reuse and verify pass; all 105 files match the tested e161 dataset and remain unchanged during reuse/startup. The 11-frame world-map run reads four indexed-graphics context bytes and zero range-lookup or substitution callback bytes.
+- Evidence: `e161-range-lookup-cli-build-hwt3v892`, `e161-range-lookup-cli-wine-emoffrjv`, `docs/changes/2026-11-17-integrate-european-bounded-range-lookup.json`; server drained.
+- Limits: the bounded run is not an ordinary range-use proof; other scenes, broader Wine regressions, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-01-CONTEXT-3AE42C-RETURN-ENGLISH — completed scoped EUR/Wine
+
+- Verified: from an ordinary French title checkpoint, the player reopened Language, selected English and the original publisher wrote ID 0. Raw and E161 managed interpreter full states and guest clocks matched through the selected confirmation; poisoned position spans yielded 156 typed requests and no raw requests. Wine `e162-title-return-pair-wine-1riwnrce`, build `e162-title-return-build-fix-2w1ygcgl`.
+- Evidence: `docs/changes/2026-11-17-verify-european-return-to-english.json`; `docs/rom_data_obj.md#bounded-eur-language-byte-writer-inventory`. French intro/title visual continuations `dd6nsaes`/`5e0rli8j` passed. Capture `dgt80n0u` executed and drained Wine but failed preservation inventory; pair `omcqo6kx` used the Down store to observe Up and failed, then corrected to `0813aa52`.
+- Limits: one route, not a global writer/value or native-dispatch proof. Parent `ROMDATA-01-CONTEXT-3AE42C`, other scenes and Linux/USA/native Windows remain open; no performance measurement.
+
+### ROMDATA-01-ADJACENT-371464 — completed scoped EUR integration
+
+- Verified: e162-d161 publishes six separately rooted four-halfword tilemap geometry projections (48 bytes). Original guest indexing remains unchanged. `e162-tilemap-geometry-wine-5zpi8vam` passes source binding, all typed bytes, mixed boundaries, all 104 previous resources and 24 original-reader comparisons, with states and guest clocks equal. Generated dispatch may fall back to interpretation.
+- Evidence: reader/caller disassembly Wine `i36cx5vz`, `vl8mhv5l`, `_9loiqbv`; Windows GNU test build `wbix4esr`. Production Windows build `ws_q09i1` and Wine `j4r9sopl` pass create/reuse/verify of 106 files matching the tested generation; 11 world-map frames read no geometry bytes. `docs/changes/2026-11-17-integrate-european-tilemap-geometry.json`; `docs/rom_data_runtime.md#european-tilemap-geometry-projections`.
+- Limits: ordinary use, other readers and index domains, broader Wine regressions, Linux/USA/native Windows remain open in the parent checklist. No performance measurement.
+
+### ROMDATA-05-E162-SCENES — completed bounded EUR/Wine matrix
+
+- Verified: four retained opening, world-menu, language-selector and battle-menu checkpoints match raw/managed interpreter state, clock, framebuffer, wide framebuffer, OAM and audio across three identical-input frames each. Wine `e162-scene-matrix-wine-ig6dmb65`; Windows GNU test build `e162-scene-matrix-build-fix-30ygizkd`. The 75 selected callback words, 88-byte range and 48-byte geometry projection were poisoned in the managed copy, but no selected-source reads occurred in the observed windows.
+- Wine `e162-cold-boot-pair-wine-dcq3ml1a` matches production raw/managed final machine state and image after eight neutral frames, with no geometry reads. First matrix attempt `pau01iy9` failed before execution due to the trace API's 32-range cap; corrected filtering passed. All relevant Wine servers drained. Evidence: `docs/changes/2026-11-17-verify-e162-european-scene-matrix.json`; `docs/rom_data_runtime.md#e162-bounded-european-scene-equivalence`.
+- Limits: short windows do not prove complete scene, other-input, native attribution, source-use or global equivalence. ROMDATA-05 and Linux/USA/native Windows remain open. Snapshot hashing was used without performance timing.
+
+### ROMDATA-04-SUBSTITUTION-371158-COPY-CALLBACKS — completed scoped EUR/Wine
+
+- Verified: original dispatcher, indirect branch, callbacks 0 and 3 and their byte-truncated aliases 256 and 259 execute with controlled EWRAM strings. Compact/extended expected output, return values and destination guards pass; raw interpreter, managed interpreter and compiled instruction blocks have identical state and guest clock, with four typed callback bytes served in each managed case and candidate source words poisoned. Wine `e163-substitution-callback-wine-rdulyaqw`, Windows GNU test build `e163-substitution-callback-build-9_o95qj2`.
+- Evidence: Wine disassemblies `e163-substitution-dis-wine-0_b8y54q` and `e163-substitution-callers-dis-wine-r31z9qd5`; `docs/changes/2026-11-17-verify-european-text-copy-callbacks.json`; `docs/rom_data_text.md#european-text-substitution-callback-candidates`.
+- Limits: controlled RAM, not ordinary or parser reachability; remaining callbacks, consumer/domain coverage, Linux/USA/native Windows and broader Wine checks remain open. No performance measurement.

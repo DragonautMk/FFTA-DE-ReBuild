@@ -366,8 +366,8 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
         assert!(t.archive_index_bytes > 0 && t.decoded_program_bytes > 0
             && t.glyph_bytes + complete_font.map_or(0, |f| f.glyph_bytes) > 0,
             "this scene must consume typed archive programs and font words");
-        eprintln!("ROM_DATA_TEXT_CATALOG_SCENE frames={frames} bus_reads={} source_bytes={} pointer_table_bytes={} string_bytes={} archive_index_bytes={} header_bytes={} encoded_control_bytes={} decoded_program_bytes={} glyph_bytes={} width_bytes={}",
-            t.bus_reads,t.source_bytes,t.pointer_table_bytes,t.string_bytes,t.archive_index_bytes,t.header_bytes,t.encoded_control_bytes,t.decoded_program_bytes,t.glyph_bytes,t.width_bytes);
+        eprintln!("ROM_DATA_TEXT_CATALOG_SCENE frames={frames} bus_reads={} source_bytes={} pointer_table_bytes={} string_bytes={} archive_index_bytes={} header_bytes={} encoded_control_bytes={} decoded_program_bytes={} glyph_bytes={} width_bytes={} substitution_callback_bytes={}",
+            t.bus_reads,t.source_bytes,t.pointer_table_bytes,t.string_bytes,t.archive_index_bytes,t.header_bytes,t.encoded_control_bytes,t.decoded_program_bytes,t.glyph_bytes,t.width_bytes,t.substitution_callback_bytes);
     }
     if std::env::var_os("FFTA_STATE_TEST_REQUIRE_COMPLETE_FONT").is_some() {
         let f = decoded.bus.rom_resources().unwrap().font_keyboard_stats().expect("decoded complete EUR font");

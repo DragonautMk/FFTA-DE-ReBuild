@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-17",
+  "slug": "verify-european-text-copy-callbacks",
+  "title": "Verify European text copy callbacks",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Extend EUR substitution validation through the original dispatcher, indirect branch and callbacks 0 and 3, including byte-truncated index aliases."
+  ],
+  "validation": [
+    "Wine disassembly 0_b8y54q identifies the two distinct EWRAM string sources; r31z9qd5 confirms five bounded direct caller candidates.",
+    "Windows GNU test build 9_o95qj2 and Wine rdulyaqw passed four controlled cases: compact and extended string outputs, return values, destination guards, four typed callback bytes per managed path and identical full states and guest clocks for raw interpreter, managed interpreter and compiled instruction blocks with source words altered."
+  ],
+  "limitations": [
+    "Controlled RAM inputs do not establish ordinary use or parser-to-callback execution. Other callbacks, unselected consumers, broader Wine regressions, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/text_substitution_callback_tests.rs",
+    "docs/rom_data_text.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": []
+}

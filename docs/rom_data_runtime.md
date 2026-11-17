@@ -2341,3 +2341,106 @@ unowned bytes are the previously classified `370eb0..b4` copied-IWRAM helper
 vector. This bounded window does not establish absence of other sources or
 validate other languages, scenes, native dispatch, Linux, USA or native Windows.
 No performance measurement was made.
+
+## European bounded range lookup
+
+EUR schema 1/e161-d160 adds `engine.bounded-range-lookup`, an independent
+11-record source at `37140c..371464`. Original routine `01abc0` scans the
+eight-byte records in order, compares the low 16 bits of its input to the
+inclusive halfword bounds at offsets 2 and 4, and on the first match writes
+the selector byte and the input's offset from the lower bound. On no match it
+leaves both output destinations unchanged. The byte at offset 1 and the last
+two bytes are preserved as opaque; guest code continues to perform the scan
+and writes. The original loop covers 11 records and an independently rooted
+structure starts at the exclusive end. Source SHA-256 is
+`4cae38f2a735087e740409ca58e5f19bce1614805347c472990b8419e493bb7d`.
+
+Wine unit `e161-range-lookup-wine-t2mh2ei8` passed publication and reuse,
+preserved all 103 prior e160 resources, and served all 88 source bytes with
+the raw bytes altered. Boundary/mirror reads and source guards passed. The
+original full scan matched the typed path in 46 state/clock cases covering the
+record bounds and an unmatched value, through interpretation and generated
+dispatch; generated dispatch may fall back to interpretation. The initial
+build `1zxknk54` failed because three size-check calls lacked the new argument;
+the first correction `_0ta2f6l` introduced a syntax error. Corrected build
+`zlxh65v6` and the Wine test passed. A nonfatal Wine D-Bus diagnostic appeared
+and the server drained.
+
+Production Wine CLI unit `e161-range-lookup-cli-wine-emoffrjv` created, reused
+and verified an e161 dataset whose 105 files matched the tested generation.
+That generation stayed unchanged through reuse and an 11-frame world-map run;
+the run read four indexed-graphics context bytes and zero range-lookup or
+substitution callback bytes. This establishes registration and bounded startup,
+not absence of those reads in other scenes.
+
+Ordinary use, broader Wine regressions, Linux, USA and native Windows remain
+open. The current EUR dataset is retained with the earlier Wine unit. No
+performance measurement was performed.
+
+
+## European tilemap geometry projections
+
+EUR schema 1/e162-d161 publishes `graphics.tilemap-geometry` for six
+independently rooted eight-byte groups at `371464..371494`. Each group
+represents four little-endian halfwords. The first three are read by the
+constructor at `0801c7a0`; the next three are read by `0801f208` and, for
+the width and height groups, by additional original readers. The fields
+retain separate tilemap-byte, width and height values for the constructor
+and global state, even where the current ROM values agree. The guest's
+index remains an unbounded byte: these four-entry physical projections do
+not impose a guest bound, and reads outside the covered addresses compose
+with other owners or raw ROM.
+
+Wine source units `e162-adjacent-range-dis-wine-i36cx5vz`,
+`e162-adjacent-callers-dis-wine-vl8mhv5l` and
+`e162-adjacent-second-dis-wine-_9loiqbv` authenticate the reader and five
+observed direct call sites; those five load index 0. This is a bounded scan
+and does not establish all indirect callers or the global selector domain.
+The 48-byte source SHA-256 is
+`955f43accb6baf3c8d6743c1838ecd5724f154ff1da17648f93f409b6f65b6e7`.
+
+Wine `e162-tilemap-geometry-wine-5zpi8vam` passes creation and reuse,
+preserves all 104 prior resources, and verifies all 48 typed source bytes,
+source guards and mixed boundaries with altered ROM source bytes. It checks
+24 original-reader cases over indices 0–4 and 255, including the full
+`0801f208` return and the `0801c7a0` prefix, against interpreter and generated
+dispatch states and guest clocks. Generated dispatch can fall back to the
+interpreter. Production Wine CLI `e162-tilemap-geometry-cli-wine-j4r9sopl`
+creates, reuses and verifies all 106 files against the tested generation. Its
+11-frame world-map window reads no geometry source bytes; this is not evidence
+of absence in other scenes.
+
+Ordinary use, other readers and index domains, broader Wine regression checks,
+Linux, USA and native Windows remain open. No performance measurement was made.
+
+
+## E162 bounded European scene equivalence
+
+Wine `e162-scene-matrix-wine-ig6dmb65` compares the unmodified ROM path
+with E162 managed resources at four authenticated retained EUR checkpoints:
+the opening, world menu, language selector and battle menu. Each pair uses
+three identical input frames. At every boundary the serialized machine state
+and guest clock, framebuffer, wide framebuffer, OAM and captured audio match.
+Loading each existing state after attaching the dataset also preserves the
+active resources for these windows. The two menu cases use A, the language
+selector uses Down, and the opening uses neutral input; no completed transition
+is inferred from these short windows.
+
+All 75 declared substitution callback words, the 88-byte range lookup and
+the 48-byte geometry projection were altered in the managed ROM copy while
+running. The bounded trace recorded no reads in those selected ranges in any
+of the four windows, so this is equivalence evidence, not a positive-use proof
+for the new sources. It does not establish absence elsewhere. The first Wine
+attempt `pau01iy9` stopped before scene execution because the diagnostic API
+accepts at most 32 filter ranges; the corrected test captures the enclosing
+range and retains only events overlapping the actual owned intervals. The
+server drained for both attempts.
+
+Separately, Wine `e162-cold-boot-pair-wine-dcq3ml1a` runs the production
+Windows CLI for eight neutral frames with no supplied save or state. The raw
+and managed final machine-state hashes and output images match; the managed
+run reads zero geometry source bytes. The snapshot-hash option does not measure
+time, and timing collectors were disabled. This checks the final state, not
+every frame. Both comparisons are limited to these windows; full scenes, other
+inputs, further consumers, Linux, USA and native Windows remain open. No
+performance measurement was made.

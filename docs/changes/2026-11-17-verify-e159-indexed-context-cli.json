@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-17",
+  "slug": "verify-e159-indexed-context-cli",
+  "title": "Verify European indexed graphics contexts in the production CLI",
+  "kind": "docs",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Record the production CLI create, reuse, verify and bounded ordinary-use checks for the e159 indexed graphics context resource."
+  ],
+  "validation": [
+    "Windows GNU production build e159-indexed-context-cli-build-0cgxnfhb and Wine unit e159-indexed-context-cli-wine-27uqnksb passed. All 104 generated files matched the tested e159 dataset and remained unchanged during reuse and startup; the 11-frame world-map run reported four context bytes.",
+    "The Wine unit completed with a nonfatal D-Bus diagnostic and drained its server. The previously accepted interpreter pair remains the equivalence evidence for the bounded window."
+  ],
+  "limitations": [
+    "Other ordinary contexts and consumers, full reader ABI, broader Wine regression filters, Linux, USA and native Windows remain pending. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_indexed_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": []
+}

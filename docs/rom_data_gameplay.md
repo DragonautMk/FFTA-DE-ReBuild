@@ -7088,6 +7088,11 @@ scan does not cover generated RAM text or other resources. Callback outputs,
 ordinary byte00 reachability, Linux, USA and native Windows remain open; no
 performance measurement.
 
+The same 75 candidate words are now managed by the EUR e160 text catalog;
+the Wine test verifies their source reads only up to the original dispatch
+prefix. This does not establish callback output or the byte00 trigger.
+[Source and limits](rom_data_text.md#european-text-substitution-callback-candidates).
+
 Wine `e158-byte00-ram-source-literals-wine-rl7cunl4` scans exact aligned
 `02001f1c` literal words and Thumb PC-relative loads in `08000000..08150000`,
 finding seven candidate load sites. The bounded disassembly

@@ -12,6 +12,10 @@ use std::collections::{BTreeMap, BTreeSet};
 mod roots;
 pub use roots::*;
 pub const MAX_PROGRAM_BYTES: usize = 4096;
+/// Source-backed candidates only; original guest indexing remains unbounded.
+pub const SUBSTITUTION_ROOT: u32 = 0x371158;
+pub const SUBSTITUTION_END: u32 = 0x37140c;
+pub const SUBSTITUTION_SOURCE_SHA256: &str = "06e378864fcd292ab8d64869e572436287fb47c0ef7c542442136e8ca6c7e3f6";
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -236,11 +240,23 @@ pub struct ArchiveCatalog {
 }
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
+pub struct SubstitutionCallback {
+    pub index: u8,
+    /// Exact word, including nulls; the guest remains responsible for dispatch.
+    pub target: u32,
+}
+impl SubstitutionCallback {
+    pub fn source_offset(&self) -> u32 { SUBSTITUTION_ROOT + u32::from(self.index) * 4 }
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct TextCatalogs {
     pub pointer_catalogs: Vec<PointerCatalog>,
     pub strings: Vec<Text>,
     pub archive_catalogs: Vec<ArchiveCatalog>,
     pub glyphs: Vec<Glyph>,
+    pub substitution_callbacks: Vec<SubstitutionCallback>,
 }
 impl TextCatalogs {
     pub fn validate(&self) -> Result<(), String> {
@@ -354,6 +370,16 @@ impl TextCatalogs {
             spans.push((glyph.source_offset(), glyph.source_offset() + 128));
             spans.push((glyph.width_offset(), glyph.width_offset() + 1));
         }
+        if self.substitution_callbacks.windows(2).any(|v| v[0].index >= v[1].index) {
+            return Err("Unordered or duplicate text substitution callback".into());
+        }
+        for callback in &self.substitution_callbacks {
+            let at = callback.source_offset();
+            if at + 4 > SUBSTITUTION_END {
+                return Err("Text substitution callback outside selected table".into());
+            }
+            spans.push((at, at + 4));
+        }
         spans.sort_unstable();
         if spans.windows(2).any(|v| v[0].1 > v[1].0) {
             return Err("Overlapping text sources".into());
@@ -399,6 +425,7 @@ impl Catalog {
             strings: Vec::new(),
             archive_catalogs: Vec::new(),
             glyphs: Vec::new(),
+            substitution_callbacks: Vec::new(),
         };
         let mut ids = BTreeMap::new();
         let mut glyphs = BTreeSet::new();
@@ -508,6 +535,36 @@ impl Catalog {
                     .collect(),
             });
         }
+        // Candidates come from the authenticated text programs; a candidate
+        // is not proof that its program reaches this guest-side dispatcher.
+        let script_text = super::script_text::Catalog::from_rom(rom)?.decoded;
+        let catalog_programs = decoded.archive_catalogs.iter().flat_map(|c| &c.languages)
+            .flat_map(|a| &a.programs);
+        let script_programs = script_text.languages.iter().flat_map(|l| &l.banks)
+            .flat_map(|b| &b.programs);
+        let mut candidates = BTreeSet::new();
+        for program in catalog_programs.chain(script_programs) {
+            for unit in &program.units {
+                if let ProgramUnit::Command { opcode: 0x25, operands } = unit {
+                    if operands.len() == 1 { candidates.insert(operands[0]); }
+                }
+            }
+        }
+        for index in candidates {
+            let at = SUBSTITUTION_ROOT as usize + usize::from(index) * 4;
+            if at + 4 > SUBSTITUTION_END as usize {
+                return Err("Text substitution candidate outside independently rooted table".into());
+            }
+            decoded.substitution_callbacks.push(SubstitutionCallback {
+                index, target: u32::from_le_bytes(rom[at..at + 4].try_into().unwrap()),
+            });
+        }
+        let selected: Vec<u8> = decoded.substitution_callbacks.iter().flat_map(|c| c.target.to_le_bytes()).collect();
+        if decoded.substitution_callbacks.len() != 75 || ffta_rom::digest(&selected) != SUBSTITUTION_SOURCE_SHA256
+            || ffta_rom::digest(&rom[0x19e94..0x19eb8]) != "9b33d17cd67fa6242efc06b239135e0a6ddf9a0db64f0b1a4246b6b2de78efd9"
+            || ffta_rom::digest(&rom[0x1abc0..0x1abfc]) != "606c326ff038d2f2b25578b111df54c2152dc1f5517711579585cac3f704edd7" {
+            return Err("Text substitution source or reader fingerprint mismatch".into());
+        }
         decoded.validate()?;
         let mut sources = Vec::new();
         let mut add = |offset, bytes: Vec<u8>, role| {
@@ -561,6 +618,10 @@ impl Catalog {
                 vec![g.width],
                 format!("text-font-width/{}", g.index),
             );
+        }
+        for callback in &decoded.substitution_callbacks {
+            add(callback.source_offset(), callback.target.to_le_bytes().to_vec(),
+                format!("text-substitution-callback/{}", callback.index));
         }
         Ok(Self { decoded, sources })
     }

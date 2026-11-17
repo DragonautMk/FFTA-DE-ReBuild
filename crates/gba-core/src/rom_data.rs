@@ -76,6 +76,8 @@ pub mod audio_tones;
 pub mod audio_sequences;
 pub mod audio_extended_dispatch;
 pub mod conditional_item_parameters;
+pub mod range_lookup;
+pub mod tilemap_geometry;
 pub mod audio_driver;
 pub mod palette_effect_dispatch;
 pub mod palette_programs;
@@ -114,8 +116,8 @@ mod custom_lz;
 pub mod lz77;
 
 pub const SCHEMA: u32 = 1;
-pub const EXTRACTOR_REV: u32 = 159;
-pub const DECODER_REV: u32 = 158;
+pub const EXTRACTOR_REV: u32 = 162;
+pub const DECODER_REV: u32 = 161;
 pub const METADATA16_ID: &str = "gameplay.linked-metadata16";
 pub const METADATA16_FILE: &str = "linked-metadata16.json";
 pub const METADATA16_FORMAT: &str = "linked-metadata16-v1-json";
@@ -376,6 +378,14 @@ pub const CONDITIONAL_ITEM_PARAMETERS_ID: &str = "gameplay.conditional-item-para
 pub const CONDITIONAL_ITEM_PARAMETERS_FILE: &str = "conditional-item-parameters.json";
 pub const CONDITIONAL_ITEM_PARAMETERS_FORMAT: &str = "conditional-item-parameters-v1-json";
 pub const MAX_CONDITIONAL_ITEM_PARAMETERS_FILE_BYTES: u64 = 16 * 1024;
+pub const RANGE_LOOKUP_ID: &str = "engine.bounded-range-lookup";
+pub const RANGE_LOOKUP_FILE: &str = "bounded-range-lookup.json";
+pub const RANGE_LOOKUP_FORMAT: &str = "bounded-range-lookup-v1-json";
+pub const MAX_RANGE_LOOKUP_FILE_BYTES: u64 = 64 * 1024 * 1024;
+pub const TILEMAP_GEOMETRY_ID: &str = "graphics.tilemap-geometry";
+pub const TILEMAP_GEOMETRY_FILE: &str = "tilemap-geometry.json";
+pub const TILEMAP_GEOMETRY_FORMAT: &str = "tilemap-geometry-v1-json";
+pub const MAX_TILEMAP_GEOMETRY_FILE_BYTES: u64 = 16 * 1024;
 pub const AUDIO_EXTENDED_DISPATCH_ID: &str = "audio.m4a-extended-dispatch";
 pub const AUDIO_EXTENDED_DISPATCH_FILE: &str = "audio-extended-dispatch.json";
 pub const AUDIO_EXTENDED_DISPATCH_FORMAT: &str = "audio-extended-dispatch-v1-json";
@@ -727,6 +737,8 @@ pub struct Extraction {
     pub layered_obj_animations: Option<layered_obj_animations::Catalog>,
     pub audio_extended_dispatch: Option<audio_extended_dispatch::Catalog>,
     pub conditional_item_parameters: Option<conditional_item_parameters::Catalog>,
+    pub range_lookup: Option<range_lookup::Catalog>,
+    pub tilemap_geometry: Option<tilemap_geometry::Catalog>,
     pub map_raster_palettes: Option<map_raster_palettes::Catalog>,
     pub auxiliary_scripts: Option<auxiliary_scripts::Catalog>,
     pub text_catalogs: Option<text_catalogs::Catalog>,
@@ -836,6 +848,8 @@ pub struct BaseFiles<'a> {
     pub layered_obj_animations: Option<(&'a layered_obj_animations::LayeredObjAnimations, &'a [u8])>,
     pub audio_extended_dispatch: Option<(&'a audio_extended_dispatch::AudioExtendedDispatch, &'a [u8])>,
     pub conditional_item_parameters: Option<(&'a conditional_item_parameters::ConditionalItemParameters, &'a [u8])>,
+    pub range_lookup: Option<(&'a range_lookup::RangeLookup, &'a [u8])>,
+    pub tilemap_geometry: Option<(&'a tilemap_geometry::TilemapGeometry, &'a [u8])>,
     pub map_raster_palettes: Option<(&'a map_raster_palettes::MapRasterPalettes, &'a [u8])>,
     pub auxiliary_commands: Option<(&'a auxiliary_scripts::AuxiliaryCommands, &'a [u8])>,
     pub auxiliary_archive: Option<(&'a auxiliary_scripts::AuxiliaryArchive, &'a [u8])>,
@@ -1514,6 +1528,14 @@ impl Extraction {
             result.manifest.coverage.push(CONDITIONAL_ITEM_PARAMETERS_ID.into());
             result.manifest.resources.push(Resource { id: CONDITIONAL_ITEM_PARAMETERS_ID.into(), path: CONDITIONAL_ITEM_PARAMETERS_FILE.into(), format: CONDITIONAL_ITEM_PARAMETERS_FORMAT.into(), sha256: String::new(), dependencies: vec![ITEM_RECORDS_ID.into()], sources: metadata.sources.clone() });
             result.conditional_item_parameters = Some(metadata);
+            let metadata = range_lookup::Catalog::from_rom(rom)?;
+            result.manifest.coverage.push(RANGE_LOOKUP_ID.into());
+            result.manifest.resources.push(Resource { id: RANGE_LOOKUP_ID.into(), path: RANGE_LOOKUP_FILE.into(), format: RANGE_LOOKUP_FORMAT.into(), sha256: String::new(), dependencies: vec![], sources: metadata.sources.clone() });
+            result.range_lookup = Some(metadata);
+            let metadata = tilemap_geometry::Catalog::from_rom(rom)?;
+            result.manifest.coverage.push(TILEMAP_GEOMETRY_ID.into());
+            result.manifest.resources.push(Resource { id: TILEMAP_GEOMETRY_ID.into(), path: TILEMAP_GEOMETRY_FILE.into(), format: TILEMAP_GEOMETRY_FORMAT.into(), sha256: String::new(), dependencies: vec![], sources: metadata.sources.clone() });
+            result.tilemap_geometry = Some(metadata);
         } else {
             result.manifest.extractor_revision = 8;
             result.manifest.decoder_revision = 7;
@@ -1651,6 +1673,8 @@ impl Extraction {
             layered_obj_animations: None,
             audio_extended_dispatch: None,
             conditional_item_parameters: None,
+            range_lookup: None,
+            tilemap_geometry: None,
             map_raster_palettes: None,
             auxiliary_scripts: None,
             font_bank: None,
@@ -1789,6 +1813,8 @@ impl Extraction {
             || self.compact_obj_catalog.is_some() != self.layered_obj_animations.is_some()
             || self.layered_obj_animations.is_some() != self.audio_extended_dispatch.is_some()
             || self.audio_extended_dispatch.is_some() != self.conditional_item_parameters.is_some()
+            || self.conditional_item_parameters.is_some() != self.range_lookup.is_some()
+            || self.range_lookup.is_some() != self.tilemap_geometry.is_some()
             || self.constructor_obj_animation.is_some() && self.obj_lists.is_none()
             || self.map_raster_palettes.is_some() && self.auxiliary_scripts.is_none()
             || self.auxiliary_scripts.is_some() && self.script_coordinates.is_none()
@@ -2573,6 +2599,24 @@ impl Extraction {
             (None, None) => {},
             _ => return Err("Missing or unexpected conditional_item_parameters".into()),
         }
+        match (&self.range_lookup, files.range_lookup) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_RANGE_LOOKUP_FILE_BYTES { return Err("Range lookup file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[103].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected range_lookup".into()),
+        }
+        match (&self.tilemap_geometry, files.tilemap_geometry) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_TILEMAP_GEOMETRY_FILE_BYTES { return Err("Tilemap geometry file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[104].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected tilemap_geometry".into()),
+        }
         match (&self.map_raster_palettes, files.map_raster_palettes) {
             (Some(_), Some((_, bytes))) => {
                 if bytes.len() as u64 > MAX_MAP_RASTER_PALETTES_FILE_BYTES { return Err("MapRasterPalettes file exceeds input guard".into()); }
@@ -3087,6 +3131,14 @@ impl Extraction {
             decoded.validate_items(files.items.ok_or("Missing conditional item parameter owner")?.0)?;
             if decoded != &expected.decoded { return Err("Decoded conditional_item_parameters differs from authenticated source".into()); }
         }
+        if let (Some(expected), Some((decoded, _))) = (&self.range_lookup, files.range_lookup) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded range_lookup differs from authenticated source".into()); }
+        }
+        if let (Some(expected), Some((decoded, _))) = (&self.tilemap_geometry, files.tilemap_geometry) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded tilemap_geometry differs from authenticated source".into()); }
+        }
         if let (Some(expected),Some((decoded,_))) = (&self.map_raster_palettes, files.map_raster_palettes) {
             let descriptors=files.background.ok_or("Missing raster palette descriptor dependency")?.0;
             decoded.validate_dependencies(descriptors)?;
@@ -3201,6 +3253,8 @@ impl Extraction {
             + usize::from(self.layered_obj_animations.is_some())
             + usize::from(self.audio_extended_dispatch.is_some())
             + usize::from(self.conditional_item_parameters.is_some())
+            + usize::from(self.range_lookup.is_some())
+            + usize::from(self.tilemap_geometry.is_some())
             + usize::from(self.map_raster_palettes.is_some())
             + 2 * usize::from(self.auxiliary_scripts.is_some())
     }
@@ -3358,6 +3412,8 @@ mod tests {
             layered_obj_animations: None,
             audio_extended_dispatch: None,
             conditional_item_parameters: None,
+            range_lookup: None,
+            tilemap_geometry: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -3468,6 +3524,8 @@ mod tests {
             layered_obj_animations: None,
             audio_extended_dispatch: None,
             conditional_item_parameters: None,
+            range_lookup: None,
+            tilemap_geometry: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -3588,6 +3646,8 @@ mod tests {
             layered_obj_animations: None,
             audio_extended_dispatch: None,
             conditional_item_parameters: None,
+            range_lookup: None,
+            tilemap_geometry: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -3697,6 +3757,8 @@ mod tests {
             layered_obj_animations: None,
             audio_extended_dispatch: None,
             conditional_item_parameters: None,
+            range_lookup: None,
+            tilemap_geometry: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,

@@ -280,6 +280,14 @@ match in state/clock, central and wide framebuffer, OAM and mixed audio. This
 is one bounded input window, not a full menu or all-context proof. Evidence:
 `target/validation/units/e159-indexed-context-wine-8dbsgppp/`.
 
-Actual production CLI creation/startup for e159, additional ordinary contexts,
-full reader ABI/indirect consumers, native Windows, Linux, USA and the remaining
+The production Windows CLI also passed under Wine in
+`e159-indexed-context-cli-wine-27uqnksb`: it created, reused and verified an
+e159 dataset whose 104 files matched the dataset above. Reuse and an 11-frame
+world-map run left the generation unchanged; the CLI reported four served
+context bytes. This run uses the retained translation cache and does not add a
+full-scene equivalence claim. A nonfatal Wine D-Bus diagnostic appeared, but
+the command and validation unit completed successfully and the server drained.
+
+Additional ordinary contexts, full reader ABI/indirect consumers, broader
+affected Wine regressions, native Windows, Linux, USA and the remaining
 ROM-data TODO stay open. No performance measurement was performed.

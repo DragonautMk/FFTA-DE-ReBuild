@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "date": "2026-11-17",
+  "slug": "integrate-european-text-substitution-candidates",
+  "title": "Integrate European text substitution callback candidates",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Derive 75 candidate substitution indices from authenticated text and script-text programs, preserve their 300 callback-table bytes including four null words in text.catalogs, and leave unselected guest addresses and callback execution unchanged.",
+    "Publish the sparse projection in EUR e160-d159 and report typed substitution source use; keep earlier text catalog projections intact."
+  ],
+  "validation": [
+    "Windows GNU build e160-substitution-build-_wiucz_6 and Wine unit e160-substitution-wine-2bltt60c passed e159 comparison, e160 creation/reuse, all poisoned-source bytes and boundary/raw fallback checks, source guards, and 18 original dispatcher-prefix state/clock comparisons.",
+    "The Wine server drained after a nonfatal D-Bus diagnostic. The current e160 dataset is retained by the validation unit.",
+    "Production Windows build e160-substitution-cli-build-v7ztnkqz and Wine unit e160-substitution-cli-wine-mgaon9d6 passed dataset creation, reuse and verification against all 104 tested files; the 11-frame world-map input read four indexed-graphics context bytes and zero substitution callback bytes."
+  ],
+  "limitations": [
+    "Candidates do not prove parser reachability or safe callback invocation; generated dispatch may fall back to interpretation. Callback output, ordinary use, broader Wine regressions, Linux, USA and native Windows remain pending. No performance measurement."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/text_catalogs.rs",
+    "crates/gba-core/src/rom_data/runtime/text_catalogs.rs",
+    "crates/gba-core/src/rom_data/runtime/text_catalog_tests.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/text_substitution_callback_tests.rs",
+    "crates/recomp/src/rom_data/text_catalog_managed_tests.rs",
+    "crates/recomp/src/rom_data/text_catalog_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_text.md",
+    "docs/rom_data_gameplay.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": []
+}

@@ -107,6 +107,28 @@ catalogs/languages; it does not claim a complete game resource catalog.
 EUR/USA verification is complete for the first family; regional and language
 catalogs of other families remain to be identified and verified.
 
+**ROMDATA-01-CONTEXT-3AE42C ordinary return to English (2026-11-17):**
+After French was selected, the title route returns to English and publishes
+language ID 0. The E161 raw/managed interpreter pair passes on Wine with both
+position spans altered (`1riwnrce`). Other writers, global index/value domains,
+native dispatch, Linux, USA and native Windows remain open.
+[Evidence](../rom_data_obj.md#bounded-eur-language-byte-writer-inventory).
+
+**ROMDATA-01-ADJACENT-371464 scoped EUR integration (2026-11-17):**
+e162-d161 publishes six rooted four-halfword tilemap geometry projections.
+Wine verifies 48 altered source bytes, 24 original-reader state/clock cases and
+all 104 previous resource files (`5zpi8vam`); the production CLI passes
+(`j4r9sopl`). Its bounded scene reads no geometry bytes. Ordinary use, other
+readers/index domains, Linux, USA and native Windows remain open.
+[Evidence](../rom_data_runtime.md#european-tilemap-geometry-projections).
+
+**ROMDATA-01-RANGE-37140C scoped EUR integration (2026-11-17):** e161-d160
+adds an independent 11-record bounded range resource. Wine publication, all
+88 typed bytes and 46 original-scan state/clock cases pass (`t2mh2ei8`); the
+production Wine CLI passes (`emoffrjv`). Its bounded scene reads zero range
+bytes. Ordinary use, broader Wine regressions, Linux, USA and native Windows
+remain open. [Evidence](../rom_data_runtime.md#european-bounded-range-lookup).
+
 **ROMDATA-01-GRAPHICS-LZ77 completed for initial observed producers:** four LZ77
 sources per region verified on clean 1200-frame Linux and Windows/Wine startups;
 stream boundaries and guest outputs match. Two regional roots of 88-byte
@@ -275,6 +297,16 @@ failed activation pass in three reduced Wine checks. Actual CLI prepare/reuse
 without writes/one-frame activation with old cache pass. e11 and eight previous
 files unchanged, USA remains e8. Extended 04 consumption verified-only and
 lifecycle/scenes 05 still open; Linux/USA pending.
+
+**ROMDATA-01-SUBSTITUTION-371158 scoped EUR integration (2026-11-17):**
+e160-d159 adds 75 source-candidate callback words (300 bytes, four null) to
+the text catalog. Wine publication, source-boundary reads and 18 original
+dispatcher-prefix comparisons pass (`2bltt60c`). Production CLI passes
+(`mgaon9d6`); its bounded scene reads zero callback bytes. Controlled full
+execution of callbacks 0/3 and their byte-truncated aliases passes under Wine
+(`rdulyaqw`); other callbacks, parser reachability, ordinary use, Linux, USA and
+native Windows remain open.
+[Evidence](../rom_data_text.md#european-text-substitution-callback-candidates).
 
 **ROMDATA-01-TEXT-SHORT-STRINGS / ROMDATA-02-TEXT-SHORT-DATA completed for the
 declared EUR catalog:** five original tables of 107 entries, 535 distinct strings
@@ -1388,6 +1420,14 @@ or ordinary proof repeated, no benchmark or dataset test copy.
 <a id="romdata-05--equivalenza-salvataggi-e-prestazioni"></a>
 
 ## ROMDATA-05 — Equivalence, saves and performance
+
+**ROMDATA-05-E162-SCENES scoped EUR/Wine (2026-11-17):** four retained
+opening/menu/battle checkpoints pass three-frame raw/managed interpreter
+comparisons of state, clock, image, OAM and audio (`ig6dmb65`). An eight-frame
+production cold boot also matches final state and image (`dcq3ml1a`). No
+substitution, range or geometry source was read in the four checkpoint windows;
+the cold boot reads no geometry bytes. Full scenes and source use remain open.
+[Evidence](../rom_data_runtime.md#e162-bounded-european-scene-equivalence).
 
 **ROMDATA-04-TEXT-CATALOG-CONSUMPTION completed for the stated EUR/Wine scope:**
 complete model from the tenth file, typed CPU/DMA/native reads for pointers,
@@ -5589,7 +5629,8 @@ Windows/new 32:9/full TODO open; sparse 27 ordinary partial.
 adds 33 four-byte contexts to the indexed-graphics resource. Wine publication,
 132 typed bytes, 24 original-reader cases and one 11-frame ordinary context-3
 window pass; the latter records four typed requests and no raw context reads.
-Full reader/other-context coverage, e159 production CLI, Linux, USA and native
+Production Wine CLI create/reuse/verify and the bounded input window also pass
+(`27uqnksb`), with all 104 files matching the tested dataset. Full reader/other-context coverage, Linux, USA and native
 Windows remain open. [Evidence and scope](../rom_data_indexed_graphics.md#european-indexed-graphics-contexts).
 
 

@@ -1188,6 +1188,16 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   witnesses.76actualinputguards exact. No newasset/revision/completeness claim.
   No fixture or performance campaign; e71/USA8-7 unchanged, platforms pending.
 
+- EUR e161-d160 adds an independent [bounded range lookup](../rom_data_runtime.md#european-bounded-range-lookup)
+  with 11 records and 88 typed bytes; one Wine publication/original-scan test
+  passes. The production Wine CLI also passes (`emoffrjv`); its bounded scene
+  reads no range bytes. Ordinary use and deferred platforms remain open.
+- EUR e162-d161 publishes six conditional [tilemap geometry groups](../rom_data_runtime.md#european-tilemap-geometry-projections).
+  Wine original-reader and production CLI checks pass; the bounded CLI scene
+  reads no geometry bytes. Four short interpreter scene pairs and an eight-frame
+  production boot pair also match. Ordinary source use, other domains and
+  deferred platforms remain open.
+
 - The [optional bus/host ROM audit](../rom_data_runtime.md#optional-bus-and-host-rom-read-audit)
   Cargo feature is absent by default. Scoped TLS collects successful bus and
   selected audio/sprite/table/keyboard source requests, suppressing interpreter
@@ -1759,9 +1769,11 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
 - The [EUR indexed graphics archive source contract](../rom_data_indexed_graphics.md)
   now includes 33 typed context records at `3710d4..371158` in e159-d158;
   one Wine publication/reader test and an 11-frame ordinary context-3 window
-  pass. Full consumers, e159 production CLI and deferred platforms remain open.
+  pass. The production Wine CLI creates, reuses and verifies the dataset, and
+  observes four context bytes in the same bounded input window (`27uqnksb`).
+  Full consumers and deferred platforms remain open.
   [Details](../rom_data_indexed_graphics.md#european-indexed-graphics-contexts).
-  declares four five-slot language pointer groups/20archives649programs,24disjoint
+  Its initial contract declared four five-slot language pointer groups/20archives649programs,24disjoint
   source spans74907B/278336decodedB. Original05228/0537C uses BE offsets and a
   fixed external dictionary, distinct054A0;4137 stays opaque. Raw languageu8
   selectors and low16start-count semantics are uncapped by host ownership.
@@ -2280,8 +2292,9 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   target with state/clock/image/OAM equality; audio was not checked. Other
   consumers, Linux, USA and native Windows remain open; no performance measurement.
   [Contract](../rom_data_obj.md#context-target-rectangle-source-contract).
-- EUR title language publication has a Wine ordinary English-to-French witness;
-  other title selections and the global writer/value domain remain open.
+- EUR title language publication has Wine ordinary witnesses for IDs 1–4
+  and a return from French to English (ID 0). Other writers, the global
+  writer/value domain and native dispatch remain open.
   [Contract](../rom_data_obj.md#bounded-eur-language-byte-writer-inventory).
 - EUR e158-d157 serves conditional opening coordinate pairs and sparse
   halfwords; original-reader, ordinary sparse-branch and production CLI Wine
@@ -3016,6 +3029,13 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   exactly as original. No schema/save/native ABI change. Manifest guard is1MiB.
   Other catalogs,
   full font/control/Unicode contracts and new Linux/USA verification remain open.
+  EUR e160-d159 additionally owns 75 candidate text substitution callback
+  words (300 bytes); one Wine publication and dispatcher-prefix check passes.
+  The production Wine CLI also passes (`mgaon9d6`); its bounded scene reads no
+  callbacks. Wine controlled execution of callbacks 0/3 passes (`rdulyaqw`);
+  other callbacks, parser reachability, ordinary use and deferred platforms
+  remain open.
+  [Details](../rom_data_text.md#european-text-substitution-callback-candidates).
   The broad EUR offline text model now covers all nine pointer selectors
   (16100strings/45tables) and29relative selectors (145archives/17035programs)
   in the declared reader block; all33581source ranges disjoint,128glyphs.
