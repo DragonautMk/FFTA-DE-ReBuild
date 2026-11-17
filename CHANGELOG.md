@@ -111,6 +111,26 @@ Documentation: [v1.1.0.md](docs/releases/v1.1.0.md).
 
 [Change record](docs/changes/2026-11-17-repair-docker-build-test-dependencies.json)
 
+## 2026-11-17 — Publish FFTA DE-ReBuild 1.1.0
+
+Type: docs. Platforms: Linux, Windows, Android.
+
+**Changes**
+
+- Publish the 1.1.0 release and correct the release notes to reflect availability and distinct internal version numbering.
+
+**Validation**
+
+- GitHub reports v1.1.0 as public and latest, with tag pointing to 6bcf5d27f1ce8a1395b40436f3760c7ee3f61166; all nine uploaded asset sizes and SHA256 digests matched the staged files.
+
+**Limitations**
+
+- The release tag is on decomp; the default main branch remains at the earlier release. Windows was validated under Wine; Android is a debug-signed preview and was not tested on a physical device.
+
+Documentation: [v1.1.0.md](docs/releases/v1.1.0.md).
+
+[Change record](docs/changes/2026-11-17-publish-release-1-1.json)
+
 ## 2026-11-17 — Integrate European tilemap geometry
 
 Type: added. Platforms: EUR / Wine.

@@ -23164,3 +23164,10 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: Linux Docker build and serial tests PASS; Windows cross-build, native container Git checks and Wine tests PASS; Android Docker build, 24 Kotlin and targeted Rust tests PASS without Rust warnings. Audit-feature test compilation PASS without warnings. Release notes, three verified candidate artifacts and SHA256SUMS prepared; optimizations branch deleted locally and remotely.
 - Evidence: docs/changes/2026-11-17-repair-docker-build-test-dependencies.json; docs/releases/v1.1.0.md; target/validation/units/release-11-linux-build-r90wsiu1/; target/validation/units/release-11-windows-build-7x8tuvpe/; target/validation/units/release-11-android-warning-fix-gc1n8q5u/; target/validation/units/release-11-android-rust-tests-7goqahbi/; target/validation/units/release-11-audit-feature-tests-z8rm33tg/; dist/release-v1.1.0-candidate/.
 - Limits: native Windows and physical Android untested; Android APK debug-signed. Desktop packages predate removal of four imports from disabled audit-only modules. Candidate not published.
+
+### RELEASE-11-PUBLICATION
+
+- Outcome: completed
+- Verified criteria: release v1.1.0 is public and latest; tag points to 6bcf5d27f1ce8a1395b40436f3760c7ee3f61166. GitHub reported matching SHA256 digests and sizes for all nine staged assets.
+- Evidence: https://github.com/DragonautMk/FFTA-DE-ReBuild/releases/tag/v1.1.0; docs/changes/2026-11-17-publish-release-1-1.json; dist/release-v1.1.0-publication/SHA256SUMS.txt.
+- Limits: default main remains at the earlier release; Windows validation used Wine, Android preview is debug-signed and no physical device was tested.

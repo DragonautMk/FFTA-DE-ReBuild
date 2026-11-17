@@ -171,9 +171,9 @@ it does not authorize stopping other work or changing another thread's goal.
 
 ## Final handover
 
-- Task: release 1.1 candidate and requested target cleanup completed.
-- Last verified result: desktop Docker builds and tests, Android APK/Kotlin/Rust tests, audit-feature compilation and candidate checksums PASS; 3.02 GiB reclaimed by cleanup.
-- Remaining work: optional release publication and native Windows/physical Android validation; unrelated partial tasks remain open above.
-- Errors or blockers: no published release; Android APK debug-signed. Four test-only imports changed after desktop packaging.
-- Next action: review the candidate in dist/release-v1.1.0-candidate/; resume unrelated work only on request.
-- References: docs/releases/v1.1.0.md; docs/changes/2026-11-17-repair-docker-build-test-dependencies.json; target/local-artifact-cleanup-incremental-1794908103268087513/summary.json.
+- Task: release 1.1.0 published.
+- Last verified result: GitHub release public/latest; tag points to 6bcf5d27 and all nine uploaded assets match local SHA256 digests.
+- Remaining work: native Windows and physical Android validation remain unperformed; unrelated tasks remain above.
+- Errors or blockers: Android APK is debug-signed; default main remains at 1.0.0 while release tag points to decomp commit.
+- Next action: review release and commit local documentation updates if desired; do not resume unrelated work without request.
+- References: docs/releases/v1.1.0.md; docs/changes/2026-11-17-publish-release-1-1.json; dist/release-v1.1.0-publication/.
