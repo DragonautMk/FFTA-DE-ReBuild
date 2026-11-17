@@ -1,6 +1,5 @@
 //! Ordinary neutral EUR opening, observed until the first managed OBJ list read.
 use super::*;
-use gba_core::Bus;
 
 #[cfg(feature = "rom-data-read-audit")]
 #[test]

@@ -12,7 +12,7 @@ ENV CARGO_HOME=/usr/local/cargo RUSTUP_HOME=/usr/local/rustup \
 RUN test "$(dpkg --print-architecture)" = amd64 \
     && apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-        build-essential ca-certificates curl python3 gcc-mingw-w64-x86-64 \
+        build-essential ca-certificates curl git pkg-config python3 libasound2-dev libudev-dev gcc-mingw-w64-x86-64 \
         binutils-mingw-w64-x86-64 wine64 \
     && rm -rf /var/lib/apt/lists/* \
     && rustup target add x86_64-pc-windows-gnu
@@ -48,8 +48,12 @@ RUN --mount=type=cache,id=ffta-linux-cargo-registry,target=/usr/local/cargo/regi
     && cargo build --locked --release --target x86_64-pc-windows-gnu -p recomp -p ffta-play \
     && python3 TinyCC/build.py --platform windows --cc x86_64-w64-mingw32-gcc --host-cc gcc \
         --output target/x86_64-pc-windows-gnu/release/tcc/libtcc.dll \
+    && cargo test --locked --release -p recomp --bin recomp -- --exact debug_recording::tests::versioned_recording_files_appear_in_private_git_status \
+    && cargo test --locked --release -p recomp --bin recomp -- --exact debug_session::tests::versioned_session_exposes_debug_artifacts_but_ignores_rom_and_binaries \
     && python3 scripts/windows/test_wine.py cargo test --locked --release --target x86_64-pc-windows-gnu \
         -p input-config -p menu -p gba-core -p screen -p recomp -- --test-threads=1 \
+        --skip debug_recording::tests::versioned_recording_files_appear_in_private_git_status \
+        --skip debug_session::tests::versioned_session_exposes_debug_artifacts_but_ignores_rom_and_binaries \
     && python3 scripts/package_ffta_portable.py --platform windows \
         --runtime-dir target/x86_64-pc-windows-gnu/release \
     && mkdir /artifacts \

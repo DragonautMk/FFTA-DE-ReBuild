@@ -163,19 +163,19 @@ mod obj_branch_list_tests;
 mod obj_branch_native_tests;
 #[cfg(test)]
 mod obj_context_bank_tests;
-#[cfg(test)]
+#[cfg(all(test, feature = "rom-data-read-audit"))]
 mod context_obj_selector_tests;
 #[cfg(test)]
 mod battle_obj_list_tests;
-#[cfg(test)]
+#[cfg(all(test, feature = "rom-data-read-audit"))]
 mod battle_directory_list_tests;
-#[cfg(test)]
+#[cfg(all(test, feature = "rom-data-read-audit"))]
 mod battle_phase_threshold_tests;
-#[cfg(test)]
+#[cfg(all(test, feature = "rom-data-read-audit"))]
 mod context_language_position_tests;
-#[cfg(test)]
+#[cfg(all(test, feature = "rom-data-read-audit"))]
 mod context_activation_tests;
-#[cfg(test)]
+#[cfg(all(test, feature = "rom-data-read-audit"))]
 mod context_target_coordinate_tests;
 #[cfg(test)]
 mod context_additional_geometry_tests;
@@ -539,35 +539,35 @@ mod unit_obj_ffff_reader_fields_runtime_tests;
 mod slot_job_lookup_runtime_tests;
 #[cfg(test)]
 mod observed_task_parameters_runtime_tests;
-#[cfg(test)]
+#[cfg(all(test, feature = "rom-data-read-audit"))]
 mod vertical_correction_extension_tests;
-#[cfg(test)]
+#[cfg(all(test, feature = "rom-data-read-audit"))]
 mod llednar_draw_list_tests;
 #[cfg(test)]
 mod llednar_lookup_caller_tests;
-#[cfg(test)]
+#[cfg(all(test, feature = "rom-data-read-audit"))]
 mod llednar_actor_lookup_tests;
-#[cfg(test)]
+#[cfg(all(test, feature = "rom-data-read-audit"))]
 mod dialogue_draw_sequence_tests;
 #[cfg(test)]
 mod title_language_publisher_tests;
-#[cfg(test)]
+#[cfg(all(test, feature = "rom-data-read-audit"))]
 mod title_language_bank_tests;
-#[cfg(test)]
+#[cfg(all(test, feature = "rom-data-read-audit"))]
 mod title_cursor_languages_tests;
-#[cfg(test)]
+#[cfg(all(test, feature = "rom-data-read-audit"))]
 mod title_animation_ordinary_tests;
-#[cfg(test)]
+#[cfg(all(test, feature = "rom-data-read-audit"))]
 mod title_main_sources_tests;
-#[cfg(test)]
+#[cfg(all(test, feature = "rom-data-read-audit"))]
 mod title_main_bank_ordinary_tests;
-#[cfg(test)]
+#[cfg(all(test, feature = "rom-data-read-audit"))]
 mod title_opening_obj_tests;
-#[cfg(test)]
+#[cfg(all(test, feature = "rom-data-read-audit"))]
 mod title_opening_draw_tests;
-#[cfg(test)]
+#[cfg(all(test, feature = "rom-data-read-audit"))]
 mod title_opening_coordinates_tests;
-#[cfg(test)]
+#[cfg(all(test, feature = "rom-data-read-audit"))]
 mod indexed_graphics_context_tests;
 #[cfg(test)]
 mod text_substitution_callback_tests;
@@ -577,9 +577,9 @@ mod range_lookup_tests;
 mod tilemap_geometry_tests;
 #[cfg(all(test, feature = "rom-data-read-audit"))]
 mod e162_scene_matrix_tests;
-#[cfg(test)]
+#[cfg(all(test, feature = "rom-data-read-audit"))]
 mod title_opening_sparse_ordinary_tests;
-#[cfg(test)]
+#[cfg(all(test, feature = "rom-data-read-audit"))]
 mod title_main_bank_draw_tests;
 #[cfg(test)]
 mod phase_zero_threshold_tests;

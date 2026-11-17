@@ -80,6 +80,37 @@ Type: docs. Platforms: EUR / Wine.
 
 [Change record](docs/changes/2026-11-17-verify-e159-indexed-context-cli.json)
 
+## 2026-11-17 — Repair desktop Docker test dependencies and prepare 1.1 notes
+
+Type: fixed. Platforms: Linux, Windows, Android.
+
+**Changes**
+
+- Install Git for Linux container tests; run the two Git-dependent checks natively in the Windows cross-build container and run the remaining Windows suite under Wine.
+- Gate ROM-data audit-only test modules behind the existing audit feature to eliminate their unused test helper warnings in default builds.
+- Draft user-facing 1.1 release notes describing the emphasis on decompilation and debugging.
+- Scope Android reference helpers to tests and remove an unused private layout wrapper, eliminating the Android Rust build warnings.
+- Remove unused imports from audit-feature test modules.
+
+**Validation**
+
+- Linux Docker portable build and serial test suite PASS; the two previously failing Git tests passed and the reported 62 Rust test warnings did not recur.
+- Windows cross-build and serial Wine suite PASS; both Git tests passed natively in the Linux container and were explicitly excluded from Wine.
+- AndroidPort Docker APK build and 24 Kotlin tests PASS without Rust warnings; host Rust PPU tests: 43 passed, Android frontend: 13 passed and 2 ignored.
+- Archive integrity and SHA256 checked for the Linux, Windows and Android artifacts; desktop archives contain no ROM, save, snapshot or input-recording filename.
+- Initial Android build was interrupted due to low disk space; a later build and warning-fix rebuild passed.
+- The rom-data-read-audit test target compiled without warnings after unused imports were removed; the first host attempt lacked ALSA development metadata and the retry used the existing project sysroot.
+- Release-candidate files and SHA256SUMS were staged under dist/release-v1.1.0-candidate and all checksums passed.
+
+**Limitations**
+
+- Native Windows and physical Android device testing were not performed; Android APK remains debug-signed.
+- Desktop release packages were built before four imports were removed from modules excluded in the default build; the affected audit-feature tests were recompiled separately.
+
+Documentation: [v1.1.0.md](docs/releases/v1.1.0.md).
+
+[Change record](docs/changes/2026-11-17-repair-docker-build-test-dependencies.json)
+
 ## 2026-11-17 — Integrate European tilemap geometry
 
 Type: added. Platforms: EUR / Wine.

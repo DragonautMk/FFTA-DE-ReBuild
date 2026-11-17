@@ -89,6 +89,12 @@ BuildKit manages Cargo registry/git and target caches. Only the final archive
 and build information are exported, using Docker's
 [local artifact exporter](https://docs.docker.com/build/building/export/).
 
+The Linux builder installs Git for the two tests that verify debug-session and
+recording files against real Git ignore rules. The Windows cross-builder runs
+those same two checks natively in its Linux container, where Git is available,
+and runs the remaining Windows test suite under Wine. This is not a native
+Windows Git or physical-device validation.
+
 On a Docker build-layer cache miss, the Linux and Windows recipes refresh the
 copied crate files before Cargo uses the shared target cache. This matters when
 switching between source snapshots with older timestamps: Cargo can otherwise

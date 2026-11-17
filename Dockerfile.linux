@@ -5,7 +5,7 @@ FROM rust:1.94.0-slim-bookworm@sha256:a86cada82e36ebd7a9bffed7548792c55a952fdb20
 RUN test "$(dpkg --print-architecture)" = amd64 \
     && apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-        build-essential ca-certificates pkg-config python3 libasound2-dev libudev-dev \
+        build-essential ca-certificates git pkg-config python3 libasound2-dev libudev-dev \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /workspace

@@ -23150,3 +23150,17 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified: original dispatcher, indirect branch, callbacks 0 and 3 and their byte-truncated aliases 256 and 259 execute with controlled EWRAM strings. Compact/extended expected output, return values and destination guards pass; raw interpreter, managed interpreter and compiled instruction blocks have identical state and guest clock, with four typed callback bytes served in each managed case and candidate source words poisoned. Wine `e163-substitution-callback-wine-rdulyaqw`, Windows GNU test build `e163-substitution-callback-build-9_o95qj2`.
 - Evidence: Wine disassemblies `e163-substitution-dis-wine-0_b8y54q` and `e163-substitution-callers-dis-wine-r31z9qd5`; `docs/changes/2026-11-17-verify-european-text-copy-callbacks.json`; `docs/rom_data_text.md#european-text-substitution-callback-candidates`.
 - Limits: controlled RAM, not ordinary or parser reachability; remaining callbacks, consumer/domain coverage, Linux/USA/native Windows and broader Wine checks remain open. No performance measurement.
+
+### TARGET-COMPRESSION-20261117
+
+- Outcome: completed
+- Verified criteria: reclaimed approximately 3.02 GiB from owned Cargo incremental cache and verified cold archives of superseded EUR E154/E155 datasets. Current E162, E161 baseline, pinned executables, private data and failed/live work remain.
+- Evidence: target/local-artifact-cleanup-incremental-1794908103268087513/summary.json; target/cold-storage-batches/20261117-093537-f4f8e436/batch.json. Free space also changed due to external activity.
+- Limits: host inspection recorded unreadable process details; no global inactivity claim.
+
+### RELEASE-11-BUILD-REPAIR
+
+- Outcome: completed
+- Verified criteria: Linux Docker build and serial tests PASS; Windows cross-build, native container Git checks and Wine tests PASS; Android Docker build, 24 Kotlin and targeted Rust tests PASS without Rust warnings. Audit-feature test compilation PASS without warnings. Release notes, three verified candidate artifacts and SHA256SUMS prepared; optimizations branch deleted locally and remotely.
+- Evidence: docs/changes/2026-11-17-repair-docker-build-test-dependencies.json; docs/releases/v1.1.0.md; target/validation/units/release-11-linux-build-r90wsiu1/; target/validation/units/release-11-windows-build-7x8tuvpe/; target/validation/units/release-11-android-warning-fix-gc1n8q5u/; target/validation/units/release-11-android-rust-tests-7goqahbi/; target/validation/units/release-11-audit-feature-tests-z8rm33tg/; dist/release-v1.1.0-candidate/.
+- Limits: native Windows and physical Android untested; Android APK debug-signed. Desktop packages predate removal of four imports from disabled audit-only modules. Candidate not published.

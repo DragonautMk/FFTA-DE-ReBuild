@@ -1,6 +1,5 @@
 //! Ordinary EUR opening: observe the independent title animation's OBJ draw.
 use super::*;
-use gba_core::Bus;
 
 #[cfg(feature = "rom-data-read-audit")]
 #[test]

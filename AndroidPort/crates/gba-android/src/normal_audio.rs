@@ -15,6 +15,7 @@ pub struct NormalAudio {
 }
 
 impl NormalAudio {
+    #[cfg(test)]
     pub fn new() -> io::Result<Self> {
         Self::new_in(&std::env::temp_dir())
     }

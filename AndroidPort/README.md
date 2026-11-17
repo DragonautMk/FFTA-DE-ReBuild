@@ -42,6 +42,11 @@ The script downloads and verifies TinyCC, builds ARM64 libraries, includes
 the required notices and source, builds the APK and runs the Kotlin tests.
 The first build needs available dependencies or a network connection.
 
+The 2026-11-17 Docker build and 24 Kotlin unit tests passed after test-only
+Rust helpers were scoped to tests; the local host Rust checks also passed
+(43 PPU tests and 13 Android frontend tests, with two ignored). This does not
+replace testing the APK on a physical device.
+
 <a id="subir-manualmente-a-github"></a>
 
 ## Upload manually to GitHub

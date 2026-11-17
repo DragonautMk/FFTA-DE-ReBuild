@@ -107,6 +107,7 @@ impl Engine {
         status(format!("Ready: {} native blocks, {} ms", self.code.as_ref().unwrap().blocks.len(), self.prepare_ms));
         Ok(())
     }
+    #[cfg(test)]
     pub fn frame(&mut self, count: usize, extra_x: usize, extra_y: usize, sound: bool) -> Result<(), String> {
         self.frame_audio(count,extra_x,extra_y,if sound{1}else{0})
     }

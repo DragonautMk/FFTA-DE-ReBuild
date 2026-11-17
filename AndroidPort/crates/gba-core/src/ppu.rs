@@ -82,12 +82,14 @@ fn visible_col(i: usize) -> Option<usize> {
 
 /// Window tests use hardware screen coordinates; margin columns inherit
 /// the nearest visible edge column.
+#[cfg(test)]
 fn win_x(i: usize) -> u8 {
     (i as isize - extra() as isize).clamp(0, VISIBLE_WIDTH as isize - 1) as u8
 }
 
 /// Store one composed pixel: always into the wide buffer, and into the
 /// legacy 240-wide framebuffer when the column is on the visible screen.
+#[cfg(test)]
 fn put_pixel(mem: &mut MemMap, line: usize, i: usize, color: u16) {
     let rw = render_width();
     let row = if mem.ffta_movement.zoom_output {

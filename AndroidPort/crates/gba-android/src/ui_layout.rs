@@ -24,15 +24,6 @@ impl Layout {
         let left=x+base_width*s*0.5-240.*k;
         Self{rect:[left.round(),(y+80.*(s-k)).round(),480.*k,160.*k],clip:[x,y,base_width*s,160.*s]}
     }
-    pub fn new(
-        window: (u32, u32),
-        base_width: f32,
-        right: bool,
-        size: f32,
-        offset: [f32; 2],
-    ) -> Self {
-        Self::new_with_anchor(window, base_width, right, size, offset, 0.)
-    }
     pub fn new_with_anchor(
         window: (u32, u32),
         base_width: f32,

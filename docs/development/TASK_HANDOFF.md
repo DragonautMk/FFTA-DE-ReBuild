@@ -61,13 +61,6 @@ it does not authorize stopping other work or changing another thread's goal.
 
 ## Incomplete tasks and open criteria
 
-DBG2 audit of 2026-11-01 found eleven parents 13..23 unchecked;
-8 had partial/integrated work and 3 lacked the requested implementation.
-DBG2-13 through DBG2-19 have since completed; current open criteria follow.
-Original criteria and audit notes: [DEBUG_TOOLS_V2_TODO](DEBUG_TOOLS_V2_TODO.md#p2--console-di-comandi-e-ricette-per-lassistente).
-DBG2-01..12 remain complete within their scope. Read historical details only
-for a specific question: archive legacy lines 179..744 or the named record below.
-
 ### CHEAT-DISTRIBUTION
 
 - State: active
@@ -171,17 +164,16 @@ for a specific question: archive legacy lines 179..744 or the named record below
 
 - A read-only coverage HTML character diff yielded with no retained handle on 2026-11-03; outcome/host status unknown. Do not restart or infer termination.
 
-- Async work: the collaboration inventory observed on 2026-11-01 showed only `/root`; ps visibility is limited to the sandbox namespace. Recent isolated Linux test builds completed; no Wine/runtime job was started or signaled. Host/other-thread state is unobservable: do not assert global inactivity. Historical results prove their children's closure, not today's host state. Before resuming, check handle/process, output and owner; no response or a lost handle does not establish failure.
-- Shared resources: checkout, handoff/archive/CHANGELOG, canonical targets, Wine prefixes, display, datasets and fixtures. Do not stop others' processes, restore source/binaries without ownership or clean live/failed tasks. Historical Wine retention audit: deleting a prefix requires coordination/host visibility, not sandbox ps. The 3 November cleanup removed 26.75 GiB; its receipt records host-visible selected-unit checks and preservation limits. Other tasks still require fresh coordination before cleanup.
-- Memory writes: one coordinated writer; proposals with both preimage hashes and common lock through scripts/task_handoff.py update. If changed, reread and merge before publication. No background writer; no lock authorizes interference with other jobs. Details in MEMORY_WORKFLOW.
-- Complete history: [TASK_COMPLETED_ARCHIVE](TASK_COMPLETED_ARCHIVE.md#legacy-handoff-snapshot), a provenance snapshot, not an operational queue. Old partial descriptions remain to prevent information loss: open tasks remain here, not promoted to closed. `TASK_HANDOFF_MIGRATION.json` records sections, hashes and terminal-outcome index. Search an ID and read only the necessary range.
+- Async work and shared resources: checkout, memory, canonical targets, Wine, display, datasets and fixtures may be in use elsewhere. Sandbox process visibility cannot establish host inactivity. Check ownership, handles and outputs before resuming; do not stop others' jobs or clean live/failed units. No response or lost handle does not establish failure. Historical cleanup receipts do not authorize further cleanup.
+- Memory: publish through the shared lock and both preimage hashes; merge conflicts. Do not remove another writer's lock or process. See MEMORY_WORKFLOW.
+- Complete history: [TASK_COMPLETED_ARCHIVE](TASK_COMPLETED_ARCHIVE.md#legacy-handoff-snapshot); migration metadata: TASK_HANDOFF_MIGRATION.json. Open tasks remain here.
 - Godot: planned assessment complete, implementation deferred, not a current dependency. AndroidPort is separate; originals/ROM/BIOS/private catalogs/saves/recordings stay out of commits/packages.
 
 ## Final handover
 
-- Task: DBG2-22 partial.
-- Last verified result: paired phase-three 2432 frames PASS, zero writes and identical states.
-- Remaining work: enemy-action window and other DBG2-22 criteria; DBG2-20 paused.
-- Errors or blockers: snapshot is cheat-derived.
-- Next action: poll Wine session 87694 and inspect menu images.
-- References: target/validation/units/dbg22-phase3-long-paired-melrkmru/; docs/cheats.md.
+- Task: release 1.1 candidate and requested target cleanup completed.
+- Last verified result: desktop Docker builds and tests, Android APK/Kotlin/Rust tests, audit-feature compilation and candidate checksums PASS; 3.02 GiB reclaimed by cleanup.
+- Remaining work: optional release publication and native Windows/physical Android validation; unrelated partial tasks remain open above.
+- Errors or blockers: no published release; Android APK debug-signed. Four test-only imports changed after desktop packaging.
+- Next action: review the candidate in dist/release-v1.1.0-candidate/; resume unrelated work only on request.
+- References: docs/releases/v1.1.0.md; docs/changes/2026-11-17-repair-docker-build-test-dependencies.json; target/local-artifact-cleanup-incremental-1794908103268087513/summary.json.

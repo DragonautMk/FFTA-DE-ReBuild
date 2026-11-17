@@ -1,6 +1,5 @@
 //! Bounded ordinary EUR title animation list coverage under Wine.
 use super::*;
-use gba_core::{Bus,Machine};
 
 #[cfg(feature = "rom-data-read-audit")]
 #[test]

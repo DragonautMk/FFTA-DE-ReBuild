@@ -1,6 +1,5 @@
 //! Ordinary EUR opening continuation to the sparse coordinate branch.
 use super::*;
-use gba_core::Bus;
 
 #[cfg(feature = "rom-data-read-audit")]
 #[test]
