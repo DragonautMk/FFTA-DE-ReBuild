@@ -131,6 +131,9 @@ pub use range_lookup::RangeLookupStats;
 mod tilemap_geometry;
 use tilemap_geometry::TilemapGeometryResources;
 pub use tilemap_geometry::TilemapGeometryStats;
+mod script39_registry_poses;
+use script39_registry_poses::Script39RegistryPoseResources;
+pub use script39_registry_poses::Script39RegistryPoseStats;
 mod audio_driver;
 use audio_driver::AudioDriverResources;
 pub use audio_driver::AudioDriverStats;
@@ -373,6 +376,7 @@ pub struct RuntimeResources {
     conditional_item_parameters: Option<Box<ConditionalItemParametersResources>>,
     range_lookup: Option<Box<RangeLookupResources>>,
     tilemap_geometry: Option<Box<TilemapGeometryResources>>,
+    script39_registry_poses: Option<Box<Script39RegistryPoseResources>>,
     audio_driver: Option<Box<AudioDriverResources>>,
     palette_effect_dispatch: Option<Box<PaletteEffectDispatchResources>>,
     palette_programs: Option<Box<PaletteProgramResources>>,
@@ -641,6 +645,9 @@ impl RuntimeResources {
         if let Some((data, _)) = files.tilemap_geometry {
             resources.tilemap_geometry = Some(Box::new(TilemapGeometryResources::new(data.clone(), &source.tilemap_geometry.as_ref().unwrap().sources)?));
         }
+        if let Some((data, _)) = files.script39_registry_poses {
+            resources.script39_registry_poses = Some(Box::new(Script39RegistryPoseResources::new(data.clone(), &source.script39_registry_poses.as_ref().unwrap().sources)?));
+        }
         if let Some((data,_))= files.audio_driver {
             resources.audio_driver = Some(Box::new(AudioDriverResources::new(data.clone(), &source.audio_driver.as_ref().unwrap().sources, files.audio_sequences.ok_or("Missing typed audio sequence owner")?.0)?));
         }
@@ -893,6 +900,7 @@ impl RuntimeResources {
             conditional_item_parameters: None,
             range_lookup: None,
             tilemap_geometry: None,
+            script39_registry_poses: None,
             audio_driver: None,
             palette_effect_dispatch: None,
             palette_programs: None,
@@ -1024,6 +1032,7 @@ impl RuntimeResources {
             + self.conditional_item_parameters.as_ref().map_or(0, |i| i.resident_bytes())
             + self.range_lookup.as_ref().map_or(0, |i| i.resident_bytes())
             + self.tilemap_geometry.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.script39_registry_poses.as_ref().map_or(0, |i| i.resident_bytes())
             + self.audio_driver.as_ref().map_or(0, |i| i.resident_bytes())
             + self.palette_effect_dispatch.as_ref().map_or(0, |i| i.resident_bytes())
             + self.palette_programs.as_ref().map_or(0, |i| i.resident_bytes())
@@ -1180,6 +1189,7 @@ impl RuntimeResources {
     pub fn conditional_item_parameters_stats(&self) -> Option<ConditionalItemParametersStats> {self.conditional_item_parameters.as_ref().map(|m|m.stats())}
     pub fn range_lookup_stats(&self) -> Option<RangeLookupStats> {self.range_lookup.as_ref().map(|m|m.stats())}
     pub fn tilemap_geometry_stats(&self) -> Option<TilemapGeometryStats> {self.tilemap_geometry.as_ref().map(|m|m.stats())}
+    pub fn script39_registry_pose_stats(&self) -> Option<Script39RegistryPoseStats> {self.script39_registry_poses.as_ref().map(|m|m.stats())}
     pub fn audio_driver_stats(&self) -> Option<AudioDriverStats> {self.audio_driver.as_ref().map(|m|m.stats())}
     pub fn palette_effect_dispatch_stats(&self) -> Option<PaletteEffectDispatchStats> {self.palette_effect_dispatch.as_ref().map(|m|m.stats())}
     pub fn palette_programs_stats(&self) -> Option<PaletteProgramStats> {self.palette_programs.as_ref().map(|m|m.stats())}
@@ -1451,6 +1461,10 @@ impl RuntimeResources {
                 None => prior,
             };
             let prior = match &self.tilemap_geometry {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.script39_registry_poses {
                 Some(data) => data.guest_read(index, rom, prior),
                 None => prior,
             };
@@ -1833,6 +1847,7 @@ impl crate::MemMap {
             || ConditionalItemParametersResources::source_page(index)
             || RangeLookupResources::source_page(index)
             || TilemapGeometryResources::source_page(index)
+            || Script39RegistryPoseResources::source_page(index)
             || AudioDriverResources::source_page(index)
             || PaletteEffectDispatchResources::source_page(index)
             || PaletteProgramResources::source_page(index)

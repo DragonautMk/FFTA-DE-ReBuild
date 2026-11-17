@@ -324,11 +324,13 @@ current evidence before running another check.
   reader cases and one ordinary context-3 window pass (`8dbsgppp`); production
   CLI passes (`27uqnksb`), while broader Wine regression filters remain pending.
 - [ ] **ROMDATA-01-SUBSTITUTION-371158:** establish remaining callback behavior,
-  parser-to-callback and ordinary text use, and unselected consumers. EUR e160
+  other parser-to-callback paths, ordinary text use and unselected consumers. EUR e160
   typed candidate slots and dispatcher prefixes pass under Wine (`2bltt60c`);
   callbacks 0/3 and their truncated aliases now execute fully with controlled
-  RAM inputs (`rdulyaqw`). Production CLI passes (`mgaon9d6`); other callbacks,
-  broader Wine regressions, Linux, USA and native Windows remain open.
+  RAM inputs (`rdulyaqw`). One real EUR program reaches callback 0 and returns
+  through the original handler in a controlled task context (`h9c0peco`).
+  Production CLI passes (`mgaon9d6`); ordinary use, other callbacks, broader Wine regressions,
+  Linux, USA and native Windows remain open.
 - [ ] **ROMDATA-01-RANGE-37140C:** establish ordinary use and remaining reader
   contexts. EUR e161 publication, typed bytes and original scan pass under Wine
   (`t2mh2ei8`); production CLI passes (`emoffrjv`), while broader regressions
@@ -349,6 +351,14 @@ current evidence before running another check.
   the reference frame boundary (`jui0l9oq`).
 - [ ] **ROMDATA-01-PARAMETER-RECORDS27-DYNAMIC-SOURCES:** resolve the live
   source domain, save-load behavior and aliases beyond the observed 59 rows.
+- [ ] **ROMDATA-01-SCRIPT39-REGISTRY-POSES:** authenticate and model the
+  original opcode-39 task producers and their conditional registry/actor/job
+  joins, then connect any new disjoint sources to the EUR resource path and
+  verify them under Wine. E162 contains 71 distinct high-registry selector/group
+  pairs. The typed source model and controlled task join pass under Wine
+  (`z2eftm1l`), but dataset publication, runtime readers and ordinary use remain
+  open. Source witness `B97ACB` can conditionally select four null sprite-0 cells
+  through normal job 2; this is not a guest index bound. See [the inventory](../rom_data_unit_obj.md#opcode-39-registry-pose-inventory).
 - [ ] **ROMDATA-04-GAMEPLAY-6E84E0-BYTE00:** find a source-backed ordinary
   trigger for the unresolved byte, including generated/indirect sources.
   The bounded direct-dispatcher scan finds only two text-sourced candidates

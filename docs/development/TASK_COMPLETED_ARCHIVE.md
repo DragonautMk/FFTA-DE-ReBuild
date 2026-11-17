@@ -23171,3 +23171,39 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: release v1.1.0 is public and latest; tag points to 6bcf5d27f1ce8a1395b40436f3760c7ee3f61166. GitHub reported matching SHA256 digests and sizes for all nine staged assets.
 - Evidence: https://github.com/DragonautMk/FFTA-DE-ReBuild/releases/tag/v1.1.0; docs/changes/2026-11-17-publish-release-1-1.json; dist/release-v1.1.0-publication/SHA256SUMS.txt.
 - Limits: default main remains at the earlier release; Windows validation used Wine, Android preview is debug-signed and no physical device was tested.
+
+### FORK-MAIN-SYNC-20261117
+
+- Outcome: completed
+- Verified criteria: fork origin/main advanced by fast-forward from 8d276a06 to 91d22adc088151ba49bc49b64132a73320a12ea2; origin/decomp and local main point to the same commit. Local main tracks origin/main instead of upstream/main.
+- Evidence: git push --set-upstream origin main:main; git ls-remote --heads origin main decomp; git rev-parse --abbrev-ref --symbolic-full-name @{upstream}.
+- Limits: no build repeated for branch synchronization; previously published v1.1.0 tag remains at 6bcf5d27.
+
+### SUBSTITUTION-PARSER-25 — completed scoped EUR/Wine
+
+- Verified: authenticated EUR program `52177c` command 25/0 takes the original opcode selector, handler and callback 0 in a controlled task/EWRAM context. Raw and managed interpreters and generated instruction blocks match output, guards, full state and guest clock through the callback return. With source bytes altered, each managed path serves two typed program bytes and four typed callback bytes. Windows GNU build `e163-substitution-event-build-c_wsbbbb`; Wine `e163-substitution-event-wine-rvwenv3x` PASS, server drained.
+- Diagnosis: Wine `miwjdo33` failed to advance compiled execution; `0uxh3ou0` localized the first yield to the initial instruction. The checkpoint has a pending frame, so the corrected probe consumes it before injected execution. Sol `gpt-6.1-sol` xhigh `/root/sol_parser_dispatch` was requested when the cause was unclear; no result survived the pause, and effective settings were not independently confirmed. Evidence: `docs/changes/2026-11-17-verify-european-substitution-parser.json`; `docs/rom_data_text.md#european-text-substitution-callback-candidates`.
+- Limits: execution stops immediately after callback return; ordinary use, other programs/callbacks, broader Wine checks, Linux/USA/native Windows and parent criteria remain open. No performance measurement.
+
+### SUBSTITUTION-HANDLER-25-RETURN — completed scoped EUR/Wine
+
+- Verified: the controlled EUR program `52177c` path now continues beyond callback 0 through the original handler return. Active program pointer, saved offset, flag increment, return value, output and guards match expectations; raw interpreter, managed interpreter and generated instruction-block full states and guest clocks agree. Each managed path serves two typed program bytes and four typed callback bytes with source ROM altered. Build `e164-substitution-handler-build-xtqnfzi_`; Wine `e164-substitution-handler-wine-h9c0peco` PASS, server drained.
+- Evidence: `docs/changes/2026-11-17-verify-european-substitution-parser.json`; `docs/rom_data_text.md#european-text-substitution-callback-candidates`. Prior parser-to-callback proof and initial event-guard diagnosis are recorded under SUBSTITUTION-PARSER-25.
+- Limits: controlled task and EWRAM input; ordinary use, other programs/callbacks, broader Wine checks, Linux/USA/native Windows and parent criteria remain open. No performance measurement.
+
+### ROMDATA-01-ADJACENT-371494-INVENTORY — rejected duplicate owner
+
+- Verified: EUR directory word `394834` points to `371494`, the existing sprite-0 initial-pose index root. Existing alternate-battle runtime checks attribute `371494..371498` to initial-pose and `371498..37149c` to normal-battle; the shared alias is already documented. No new owner or extraction is justified for those words. Evidence: `docs/rom_data_unit_obj.md`, shared index-root views; `crates/recomp/src/rom_data/unit_obj_alternate_battle_runtime_tests.rs` existing managed ownership checks; `crates/gba-core/src/rom_data/unit_obj_initial_pose.rs`.
+- Limits: this closes only the duplicate-owner lead, not the rest of the adjacent region, complete sprite/index coverage or ordinary use. No new test or performance measurement. Linux/USA remain deferred.
+
+### ROMDATA-01-ADJACENT-371494-GAPS — completed scoped source inventory
+
+- Verified: E162 manifest audit `e164-sprite0-index-inventory-nb3r6_uc` classifies an explicitly sampled 1008-byte window beginning at sprite-0 root `371494`: 416 bytes have declared owners, 592 have no manifest source binding. The interval is not a guest index cap, and unbound does not prove use.
+- Sol `gpt-6.1-sol` xhigh `/root/sol_sprite0_gaps` identified opcode 39 as a conditional producer for four unbound null cells through registry128/group1 and direct normal job2, given the original actor/branch/facing conditions. The exact E162 script source `B97ACB` and 71 high-registry selector/group pairs provide a broader source-backed lead. Effective model/effort could not be independently confirmed.
+- Evidence: `docs/rom_data_unit_obj.md#opcode-39-registry-pose-inventory`; `docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md` ID ROMDATA-01-SCRIPT39-REGISTRY-POSES. No original game execution or performance measurement; actor reachability, opcode39 source contract/implementation, other gaps and Linux/USA remain open.
+
+### ROMDATA-02-SCRIPT39-REGISTRY-SOURCE — completed scoped EUR/Wine model
+
+- Verified: the conditional high-registry/direct-job source projection authenticates 71 selector/group pairs, original opcode/task/manager code and prior source ownership; it derives 6,960 new index words, 410 sequences and 161 decoded pixel blocks, 91,712 source bytes across 2,301 ranges. Source reconstruction, strict ordering/guards and JSON round-trip pass. The controlled original task resolves a unit through registry128 and selects its matching actor after one nonmatching list node. Windows GNU build `e164-script39-model-join-build-edty2_sx`; Wine `e164-script39-model-wine-z2eftm1l` PASS, server drained.
+- Evidence: source audits `ofuwzj8a`, `gnd81dvw`, `c5fo5wt5`; Wine disassemblies `3e9ww7tc`, `0tx1tr41`, `w8l7gttx`; `docs/changes/2026-11-17-model-european-script39-registry-poses.json`; `docs/rom_data_unit_obj.md#opcode-39-registry-pose-inventory`. Initial build `28qkd4f1` failed on an import and was corrected. Sol `gpt-6.1-sol` xhigh `/root/sol_sprite0_gaps` supplied producer and resolver diagnoses; effective settings unconfirmed.
+- Limits: controlled conditional contexts, no ordinary reachability; dataset publication, runtime owners, original index readers, other producer domains, Linux/USA/native Windows remain open under ROMDATA-01-SCRIPT39-REGISTRY-POSES. No performance measurement.

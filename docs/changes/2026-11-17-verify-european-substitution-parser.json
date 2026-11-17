@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-17",
+  "slug": "verify-european-substitution-parser",
+  "title": "Verify European text substitution parser dispatch",
+  "kind": "fixed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Correct the controlled parser probe to consume the checkpoint frame and begin its injected task context awake, respecting the generated dispatcher event guard.",
+    "Extend the controlled opcode-25 probe through the original handler return and assert its active-program pointer, saved offset, flag update and return value."
+  ],
+  "validation": [
+    "Windows GNU build c_wsbbbb and Wine rvwenv3x pass: authenticated program 52177c selects the original opcode-25 handler and callback 0; raw interpreter, managed interpreter and generated instruction blocks match complete state, guest clock, output and guards. Managed paths each serve two program bytes and four callback bytes with source ROM altered.",
+    "Wine miwjdo33 failed to reach the endpoint and 0uxh3ou0 localized the yield to the first instruction. The checkpoint has frame_ready true and halted false; the successful probe consumes the pending frame.",
+    "Windows GNU build xtqnfzi_ and Wine h9c0peco pass the complete controlled handler: raw interpreter, managed interpreter and generated instruction-block states and guest clocks agree, with two typed program bytes and four typed callback bytes per managed path."
+  ],
+  "limitations": [
+    "The task context and substitution source are controlled; other programs and callbacks, ordinary use, broader Wine regression, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/text_substitution_callback_tests.rs",
+    "docs/rom_data_text.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": []
+}

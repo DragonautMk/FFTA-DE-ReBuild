@@ -271,7 +271,7 @@ fn european_text_substitution_program_dispatch() {
     const DEST: u32 = TASK + 0x70c;
     const PROGRAM_OFFSET: usize = 0x52177c;
     const PROGRAM: u32 = 0x0800_0000 + PROGRAM_OFFSET as u32 + 2;
-    const END: u32 = 0x0801_28f6;
+    const END: u32 = 0x0800_0300;
     let root = PathBuf::from(std::env::var_os("FFTA_SUBSTITUTION_ROOT").unwrap());
     let dataset = PathBuf::from(std::env::var_os("FFTA_SUBSTITUTION_DATASET").unwrap());
     let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
@@ -292,6 +292,10 @@ fn european_text_substitution_program_dispatch() {
 
     let configure = |machine: &mut Machine| {
         machine.bus.ffta_sprites.enabled = false;
+        // The checkpoint is at a frame boundary. This probe injects a live
+        // function context, so consume the pending frame and start it awake.
+        machine.bus.frame_ready = false;
+        machine.bus.halted = false;
         machine.cpu.regs = std::array::from_fn(|i| 0x1100_0000 + i as u32);
         machine.cpu.regs[13] = 0x0300_7c00;
         machine.cpu.regs[14] = 0x0800_0301;
@@ -299,6 +303,8 @@ fn european_text_substitution_program_dispatch() {
         machine.cpu.cpsr = 0xbf;
         machine.bus.write32(0x0200_918c, TASK);
         machine.bus.write32(TASK + 0x308, PROGRAM);
+        machine.bus.write16(TASK + 0x14, 0x7777);
+        machine.bus.write16(TASK + 0x18, 0x1234);
         for offset in 0..80 { machine.bus.write8(DEST - 8 + offset, 0x5a); }
         for (offset, value) in [1, 0x11, 0x12, 0].into_iter().enumerate() {
             machine.bus.write8(0x0200_1f1c + offset as u32, value);
@@ -311,18 +317,26 @@ fn european_text_substitution_program_dispatch() {
             assert_eq!(machine.bus.read8(DEST + offset as u32), value);
         }
         for offset in 0..8 { assert_eq!(machine.bus.read8(DEST + 64 + offset), 0x5a); }
+        assert_eq!(machine.bus.read32(TASK + 0x308), DEST, "substitution buffer becomes the active program");
+        assert_eq!(machine.bus.read16(TASK + 0x14), PROGRAM.wrapping_sub(TASK).wrapping_sub(0x309) as u16);
+        assert_eq!(machine.bus.read16(TASK + 0x18), 0x1334, "substitution flag update");
+        assert_eq!(machine.cpu.regs[0], 0, "handler return value");
     };
     let mut trace = crate::make_machine(rom.clone(), None);
     trace.load_state(&initial).unwrap();
+    let checkpoint_frame_ready = trace.bus.frame_ready;
+    let checkpoint_halted = trace.bus.halted;
+    assert!(checkpoint_frame_ready || checkpoint_halted, "checkpoint gate no longer explains the observed initial yield");
     configure(&mut trace);
     let mut visited = BTreeSet::new();
     for _ in 0..5000 {
         if trace.cpu.regs[15] == END { break; }
         visited.insert((trace.cpu.regs[15], trace.cpu.thumb()));
+        trace.bus.frame_ready = false;
         trace.step();
     }
     validate(&mut trace);
-    for address in [0x0801_2248, 0x0801_28d4, 0x0801_9e94, 0x0801_9eb8, 0x0300_5e78] {
+    for address in [0x0801_2248, 0x0801_28d4, 0x0801_9e94, 0x0801_9eb8, 0x0300_5e78, 0x0801_2902, 0x0801_290c, 0x0801_2910, 0x0801_291c, 0x0801_2a5e] {
         assert!(visited.contains(&(address, true)), "missing original instruction {address:08x}");
     }
     let view = View { rom: &rom, ewram: None, iwram: Some(&trace.bus.iwram), bios: None };
@@ -356,15 +370,20 @@ fn european_text_substitution_program_dispatch() {
         }
     }
     for machine in [&mut raw, &mut interpreted] {
-        for _ in 0..5000 { if machine.cpu.regs[15] == END { break; } machine.step(); }
+        for _ in 0..5000 {
+            if machine.cpu.regs[15] == END { break; }
+            machine.bus.frame_ready = false;
+            machine.step();
+        }
         validate(machine);
     }
     let mut compiled_steps = 0;
     while translated.cpu.regs[15] != END {
+        translated.bus.frame_ready = false;
         table.get(translated.cpu.regs[15] | u32::from(translated.cpu.thumb())).expect("compiled program instruction")(
             &RT_API, &mut translated as *mut Machine as *mut std::ffi::c_void);
         compiled_steps += 1;
-        assert!(compiled_steps < 5000, "compiled program did not reach callback return");
+        assert!(compiled_steps < 5000, "compiled program handler did not return");
     }
     validate(&mut translated);
     let after_i = owner_i.text_catalog_stats().unwrap();
@@ -385,10 +404,13 @@ fn european_text_substitution_program_dispatch() {
     assert_eq!(raw.save_state().unwrap(), interpreted.save_state().unwrap());
     assert_eq!(raw.save_state().unwrap(), translated.save_state().unwrap());
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "scope":"EUR source program 52177c, controlled parser dispatch through callback 0",
+        "status":"PASS", "scope":"EUR source program 52177c, controlled parser dispatch and handler return through callback 0",
         "revision":[162,161], "program_typed_bytes":[program_i,program_n],
         "callback_typed_bytes":[callback_i,callback_n], "source_rom_poisoned":true,
+        "checkpoint_frame_ready":checkpoint_frame_ready, "checkpoint_halted":checkpoint_halted,
+        "controlled_context_consumed_frame_and_started_awake":true,
         "original_parser_and_callback_instructions_visited":true, "destination_guards_and_expected_bytes":true,
+        "handler_pointer_flag_updates_and_return":true,
         "full_state_clock_equal":true, "ordinary_reachability":"pending", "other_callbacks":"pending",
         "Linux":"pending", "USA":"pending", "native_windows":"pending", "performance_measurements":false
     })).unwrap()).unwrap();

@@ -1115,6 +1115,12 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   bios_open/CPUrotation rather than a proved ROMsequence/null result.71readerpins/
   threecodeblocks/twoliterals pass. Both ROMreads total6Bcurrently unowned/raw;
   their migration and ordinaryreachability remainpending, no cap/pointerfix.
+- [Opcode-39 registry poses](../rom_data_unit_obj.md#opcode-39-registry-pose-inventory)
+  have an EUR conditional typed source model: 71 registry selector/group pairs,
+  6,960 new index words, 410 sequences and 161 pixel blocks after prior-owner
+  subtraction. Wine source reconstruction and a controlled unit-to-actor join
+  pass (`z2eftm1l`). Dataset publication, runtime readers, ordinary use and
+  Linux/USA remain open; this model alone changes no extractor revision.
 - [Actor property words](../rom_data_unit_obj.md#actor-property-words-from-known-sprite-assignments)
   have a separate source contract:221C4reads394C14+2*sprite, unsignedu16 through
   actor9AD0E/r8/constructor r3into allocation/task+16.398knownnormal/alternate
@@ -3033,8 +3039,9 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   words (300 bytes); one Wine publication and dispatcher-prefix check passes.
   The production Wine CLI also passes (`mgaon9d6`); its bounded scene reads no
   callbacks. Wine controlled execution of callbacks 0/3 passes (`rdulyaqw`);
-  other callbacks, parser reachability, ordinary use and deferred platforms
-  remain open.
+  one authenticated program reaches callback 0 via the original selector and
+  completes the handler in a controlled context (`h9c0peco`). Other callbacks,
+  ordinary use and deferred platforms remain open.
   [Details](../rom_data_text.md#european-text-substitution-callback-candidates).
   The broad EUR offline text model now covers all nine pointer selectors
   (16100strings/45tables) and29relative selectors (145archives/17035programs)

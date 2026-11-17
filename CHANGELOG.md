@@ -22,6 +22,27 @@ Type: changed. Platforms: EUR / Wine.
 
 [Change record](docs/changes/2026-11-17-verify-european-text-copy-callbacks.json)
 
+## 2026-11-17 — Verify European text substitution parser dispatch
+
+Type: fixed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Correct the controlled parser probe to consume the checkpoint frame and begin its injected task context awake, respecting the generated dispatcher event guard.
+- Extend the controlled opcode-25 probe through the original handler return and assert its active-program pointer, saved offset, flag update and return value.
+
+**Validation**
+
+- Windows GNU build c_wsbbbb and Wine rvwenv3x pass: authenticated program 52177c selects the original opcode-25 handler and callback 0; raw interpreter, managed interpreter and generated instruction blocks match complete state, guest clock, output and guards. Managed paths each serve two program bytes and four callback bytes with source ROM altered.
+- Wine miwjdo33 failed to reach the endpoint and 0uxh3ou0 localized the yield to the first instruction. The checkpoint has frame_ready true and halted false; the successful probe consumes the pending frame.
+- Windows GNU build xtqnfzi_ and Wine h9c0peco pass the complete controlled handler: raw interpreter, managed interpreter and generated instruction-block states and guest clocks agree, with two typed program bytes and four typed callback bytes per managed path.
+
+**Limitations**
+
+- The task context and substitution source are controlled; other programs and callbacks, ordinary use, broader Wine regression, Linux, USA and native Windows remain open. No performance measurements.
+
+[Change record](docs/changes/2026-11-17-verify-european-substitution-parser.json)
+
 ## 2026-11-17 — Verify European title return to English
 
 Type: changed. Platforms: EUR / Wine.
@@ -122,14 +143,53 @@ Type: docs. Platforms: Linux, Windows, Android.
 **Validation**
 
 - GitHub reports v1.1.0 as public and latest, with tag pointing to 6bcf5d27f1ce8a1395b40436f3760c7ee3f61166; all nine uploaded asset sizes and SHA256 digests matched the staged files.
+- After publication, the fork main was fast-forwarded to decomp at 91d22adc088151ba49bc49b64132a73320a12ea2 and local main now tracks origin/main.
 
 **Limitations**
 
-- The release tag is on decomp; the default main branch remains at the earlier release. Windows was validated under Wine; Android is a debug-signed preview and was not tested on a physical device.
+- The release tag points to 6bcf5d27; main and decomp include the later release-documentation commit. Windows was validated under Wine; Android is a debug-signed preview and was not tested on a physical device.
 
 Documentation: [v1.1.0.md](docs/releases/v1.1.0.md).
 
 [Change record](docs/changes/2026-11-17-publish-release-1-1.json)
+
+## 2026-11-17 — Model European opcode 39 registry poses
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Add a conditional typed source model for opcode-39 high-registry direct-job poses, retaining producer references and new index, sequence and decoded pixel data after prior-owner subtraction.
+
+**Validation**
+
+- Windows GNU build edty2_sx and Wine z2eftm1l passed exact EUR source and producer guards, reconstruction and JSON round-trip for 71 pairs, 6,960 index words, 410 sequences and 161 pixel blocks; the original task selected the correct actor after a nonmatching list node in a controlled context.
+- Static source plan c5fo5wt5 authenticates 2,301 disjoint new ranges and 91,712 source bytes; the existing normal-battle sprite-42 index root remains with its previous owner.
+
+**Limitations**
+
+- The model is conditional and not yet published or consumed at runtime. Original index-reader validation, ordinary use, other producer domains, Linux, USA and native Windows remain open. No performance measurements.
+
+[Change record](docs/changes/2026-11-17-model-european-script39-registry-poses.json)
+
+## 2026-11-17 — Inventory European opcode 39 registry poses
+
+Type: changed. Platforms: EUR source inventory.
+
+**Changes**
+
+- Record a source-backed conditional opcode-39 registry pose lead and add its remaining authentication, ownership and Wine integration work to the recovery checklist.
+
+**Validation**
+
+- E162 manifest inventory nb3r6_uc classified 416 declared-source bytes and 592 unbound bytes within the sampled 1008-byte sprite-0 index window. An independent static diagnosis identified the opcode-39 task chain and four conditional null-cell candidates; the E162 archive contains 71 distinct high-registry selector/group pairs.
+- Wine disassemblies 3e9ww7tc and 0tx1tr41 authenticate the opcode/task and unit-to-actor join. Static index audit ofuwzj8a and target audit gnd81dvw identify 6,960 unbound index cells, 410 new sequence candidates and 161 unbound pixel blocks; source plan c5fo5wt5 contains 2,301 disjoint ranges.
+
+**Limitations**
+
+- The projection is conditional on registry, manager, actor, job and facing state; it does not prove ordinary reachability or a guest index bound. Typed model validation, runtime integration, Linux and USA remain open. No performance measurements.
+
+[Change record](docs/changes/2026-11-17-inventory-european-script39-registry-poses.json)
 
 ## 2026-11-17 — Integrate European tilemap geometry
 

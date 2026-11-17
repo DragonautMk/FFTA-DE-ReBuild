@@ -13,7 +13,7 @@ fn european_tilemap_geometry_publication_and_original_readers() {
     let old: Manifest = toml::from_str(&fs::read_to_string(previous.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!((old.extractor_revision, old.decoder_revision), (161, 160));
     let mut source = Extraction::from_rom(&rom).unwrap();
-    assert_eq!((source.manifest.extractor_revision, source.manifest.decoder_revision), (162, 161));
+    assert_eq!((source.manifest.extractor_revision, source.manifest.decoder_revision), (163, 162));
     let prepared = preparation::prepare(&root.join("resources"), &mut source, &mut |_| Ok(())).unwrap();
     assert_eq!(prepared.action, "created");
     assert_eq!(preparation::prepare(&root.join("resources"), &mut source, &mut |_| Ok(())).unwrap().action, "reused");
@@ -22,7 +22,7 @@ fn european_tilemap_geometry_publication_and_original_readers() {
         assert_eq!(current, prior);
         assert_eq!(fs::read(prepared.directory.join(&current.path)).unwrap(), fs::read(previous.join(&prior.path)).unwrap());
     }
-    assert_eq!(source.manifest.resources.len(), old.resources.len() + 1);
+    assert_eq!(source.manifest.resources.len(), old.resources.len() + 2);
     let entry = source.manifest.resources.iter().find(|r| r.id == TILEMAP_GEOMETRY_ID).unwrap();
     assert_eq!(entry.sources.len(), 6);
     for (index, span) in entry.sources.iter().enumerate() {
@@ -106,7 +106,7 @@ fn european_tilemap_geometry_publication_and_original_readers() {
         }
     }
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "revision":[162,161], "previous_resources_preserved":old.resources.len(),
+        "status":"PASS", "revision":[163,162], "previous_resources_preserved":old.resources.len(),
         "groups":6, "owned_bytes":SOURCE_BYTES, "source_sha256":SOURCE_SHA256, "poisoned_raw_rom":true,
         "original_reader_cases":cases, "compiled_dispatch":"may use interpreter fallback", "full_state_clock_equal":true,
         "ordinary_use":"pending", "production_cli":"pending", "Linux":"pending", "USA":"pending", "native_windows":"pending", "performance_measurements":false

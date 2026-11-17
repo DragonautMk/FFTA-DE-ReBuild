@@ -33,7 +33,7 @@ it does not authorize stopping other work or changing another thread's goal.
 
 ### ROM-DATA-FULL-EUR
 
-- State: active
+- State: suspended
 - Outcome: partial
 - Verified: E158 reader/opening/CLI Wine PASS (`b8vylqkk`, `tucnagm9`).
 - Missing: EUR resources/consumers, ordinary evidence, ABI/extent/indirect calls, ROMDATA-06/07; Linux/USA/native Windows/new32:9 distinct. EUR/Wine; originals/saves protected.
@@ -44,8 +44,9 @@ it does not authorize stopping other work or changing another thread's goal.
 - E134 updater: native PASS (yw62he9p), default interpreter (botzl4b6); cache/draw open.
 - e159 CONTEXT-3710D4 (8dbsgppp/27uqnksb), e160 SUBSTITUTION-371158 (2bltt60c/mgaon9d6), e161 RANGE-37140C (t2mh2ei8/emoffrjv) PASS; consumers open.
 - ROMDATA-01-ADJACENT-371464: e162 PASS (5zpi8vam/j4r9sopl); consumers/domains open.
-- SUBSTITUTION-371158 callbacks 0/3 Wine PASS (rdulyaqw); others open.
-- Selection SUBSTITUTION-PARSER-25: EUR/Wine, no metrics/space limit; build xcthq8ru PASS. Wine miwjdo33 session 9047; Linux/USA deferred.
+- SUBSTITUTION-371158: callbacks 0/3 (rdulyaqw), one controlled program-to-0 handler return (h9c0peco) Wine PASS; ordinary/other paths open.
+- ROMDATA-01-SCRIPT39-REGISTRY-POSES partial: EUR/Wine, no metrics/space limit. Model/controlled actor join PASS (z2eftm1l); 6,960 indices/410 sequences/161 pixel blocks. Ordinary use, Linux/USA open.
+- Selection ROMDATA-03-SCRIPT39-REGISTRY-POSES: e163-d162 publication/runtime implemented, unverified; Wine reader proof pending. Build rfq1pf6e failed stale budget-test argument, corrected; build 3ecrjj2q PASS. User paused; Wine ga87pps5 session 89970 was live at last observation. Inspect its handle/receipt on resume; prior owners preserved by design. docs/rom_data_unit_obj.md#opcode-39-registry-pose-inventory.
 - Resume: [validation recovery checklist](ROM_DATA_VALIDATION_RECOVERY_TODO.md) for skipped checks; [ROM_DATA_TODO](ROM_DATA_TODO.md), only the selected criterion's section (ROMDATA-01/02/03/04/05/06/07); [inventory](ROM_DATA_INVENTORY.md). Do not read the whole TODO. Children retain their IDs and limits:
   - `ROMDATA-01-PARAMETER-RECORDS27-DYNAMIC-SOURCES`: partial; writers map to 59 rows (js3rbve5); retained lists negative/inconclusive (m1p_8lhy). Live domain, save loads and aliases open. `docs/rom_data_gameplay.md`.
   - `ROMDATA-04-GAMEPLAY-6E84E0-BYTE00`: partial; static text screen 78suaoix found no token; generated/indirect sources open, no blind Select. `docs/rom_data_gameplay.md`.
@@ -171,9 +172,9 @@ it does not authorize stopping other work or changing another thread's goal.
 
 ## Final handover
 
-- Task: release 1.1.0 published.
-- Last verified result: GitHub release public/latest; tag points to 6bcf5d27 and all nine uploaded assets match local SHA256 digests.
-- Remaining work: native Windows and physical Android validation remain unperformed; unrelated tasks remain above.
-- Errors or blockers: Android APK is debug-signed; default main remains at 1.0.0 while release tag points to decomp commit.
-- Next action: review release and commit local documentation updates if desired; do not resume unrelated work without request.
-- References: docs/releases/v1.1.0.md; docs/changes/2026-11-17-publish-release-1-1.json; dist/release-v1.1.0-publication/.
+- Task: fork main synchronization completed.
+- Last verified result: origin/main, origin/decomp and local main point to 91d22adc; local main tracks origin/main.
+- Remaining work: unrelated partial tasks remain above; release 1.1 native Windows and physical Android validation remain unperformed.
+- Errors or blockers: Android release preview is debug-signed; local memory updates are uncommitted.
+- Next action: resume unrelated work only on request.
+- References: docs/changes/2026-11-17-publish-release-1-1.json; docs/releases/v1.1.0.md.

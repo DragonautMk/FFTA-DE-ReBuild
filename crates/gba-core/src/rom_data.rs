@@ -99,6 +99,7 @@ pub mod unit_obj_script_special_alternate;
 pub mod unit_obj_script_override;
 pub mod unit_obj_script_registry_special;
 pub mod unit_obj_script_registry_generic;
+pub mod script39_registry_poses;
 pub mod unit_obj_property_words;
 pub mod unit_obj_ffff_reader_fields;
 pub mod slot_job_lookup;
@@ -116,8 +117,8 @@ mod custom_lz;
 pub mod lz77;
 
 pub const SCHEMA: u32 = 1;
-pub const EXTRACTOR_REV: u32 = 162;
-pub const DECODER_REV: u32 = 161;
+pub const EXTRACTOR_REV: u32 = 163;
+pub const DECODER_REV: u32 = 162;
 pub const METADATA16_ID: &str = "gameplay.linked-metadata16";
 pub const METADATA16_FILE: &str = "linked-metadata16.json";
 pub const METADATA16_FORMAT: &str = "linked-metadata16-v1-json";
@@ -386,6 +387,10 @@ pub const TILEMAP_GEOMETRY_ID: &str = "graphics.tilemap-geometry";
 pub const TILEMAP_GEOMETRY_FILE: &str = "tilemap-geometry.json";
 pub const TILEMAP_GEOMETRY_FORMAT: &str = "tilemap-geometry-v1-json";
 pub const MAX_TILEMAP_GEOMETRY_FILE_BYTES: u64 = 16 * 1024;
+pub const SCRIPT39_REGISTRY_POSES_ID: &str = "graphics.script39-registry-poses";
+pub const SCRIPT39_REGISTRY_POSES_FILE: &str = "script39-registry-poses.json";
+pub const SCRIPT39_REGISTRY_POSES_FORMAT: &str = "script39-registry-poses-v1-json";
+pub const MAX_SCRIPT39_REGISTRY_POSES_FILE_BYTES: u64 = 32 * 1024 * 1024;
 pub const AUDIO_EXTENDED_DISPATCH_ID: &str = "audio.m4a-extended-dispatch";
 pub const AUDIO_EXTENDED_DISPATCH_FILE: &str = "audio-extended-dispatch.json";
 pub const AUDIO_EXTENDED_DISPATCH_FORMAT: &str = "audio-extended-dispatch-v1-json";
@@ -739,6 +744,7 @@ pub struct Extraction {
     pub conditional_item_parameters: Option<conditional_item_parameters::Catalog>,
     pub range_lookup: Option<range_lookup::Catalog>,
     pub tilemap_geometry: Option<tilemap_geometry::Catalog>,
+    pub script39_registry_poses: Option<script39_registry_poses::Catalog>,
     pub map_raster_palettes: Option<map_raster_palettes::Catalog>,
     pub auxiliary_scripts: Option<auxiliary_scripts::Catalog>,
     pub text_catalogs: Option<text_catalogs::Catalog>,
@@ -850,6 +856,7 @@ pub struct BaseFiles<'a> {
     pub conditional_item_parameters: Option<(&'a conditional_item_parameters::ConditionalItemParameters, &'a [u8])>,
     pub range_lookup: Option<(&'a range_lookup::RangeLookup, &'a [u8])>,
     pub tilemap_geometry: Option<(&'a tilemap_geometry::TilemapGeometry, &'a [u8])>,
+    pub script39_registry_poses: Option<(&'a script39_registry_poses::Script39RegistryPoses, &'a [u8])>,
     pub map_raster_palettes: Option<(&'a map_raster_palettes::MapRasterPalettes, &'a [u8])>,
     pub auxiliary_commands: Option<(&'a auxiliary_scripts::AuxiliaryCommands, &'a [u8])>,
     pub auxiliary_archive: Option<(&'a auxiliary_scripts::AuxiliaryArchive, &'a [u8])>,
@@ -1536,6 +1543,21 @@ impl Extraction {
             result.manifest.coverage.push(TILEMAP_GEOMETRY_ID.into());
             result.manifest.resources.push(Resource { id: TILEMAP_GEOMETRY_ID.into(), path: TILEMAP_GEOMETRY_FILE.into(), format: TILEMAP_GEOMETRY_FORMAT.into(), sha256: String::new(), dependencies: vec![], sources: metadata.sources.clone() });
             result.tilemap_geometry = Some(metadata);
+            let metadata = script39_registry_poses::Catalog::from_rom(
+                rom, &result.manifest.resources,
+                &result.script_archive.as_ref().ok_or("Missing opcode-39 script archive")?.decoded,
+                &result.metadata52.as_ref().ok_or("Missing opcode-39 job metadata")?.decoded,
+            )?;
+            result.manifest.coverage.push(SCRIPT39_REGISTRY_POSES_ID.into());
+            result.manifest.resources.push(Resource {
+                id: SCRIPT39_REGISTRY_POSES_ID.into(), path: SCRIPT39_REGISTRY_POSES_FILE.into(),
+                format: SCRIPT39_REGISTRY_POSES_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![METADATA52_ID.into(), SCRIPT_ARCHIVE_ID.into(), UNIT_OBJ_INITIAL_POSE_ID.into(),
+                    UNIT_OBJ_EQUIPMENT_ID.into(), UNIT_OBJ_NORMAL_BATTLE_ID.into(), UNIT_OBJ_ALTERNATE_BATTLE_ID.into(),
+                    UNIT_OBJ_SCRIPT_SPECIAL_ALTERNATE_ID.into(), UNIT_OBJ_SCRIPT_REGISTRY_SPECIAL_ID.into(),
+                    UNIT_OBJ_SCRIPT_REGISTRY_GENERIC_ID.into()], sources: metadata.sources.clone(),
+            });
+            result.script39_registry_poses = Some(metadata);
         } else {
             result.manifest.extractor_revision = 8;
             result.manifest.decoder_revision = 7;
@@ -1675,6 +1697,7 @@ impl Extraction {
             conditional_item_parameters: None,
             range_lookup: None,
             tilemap_geometry: None,
+            script39_registry_poses: None,
             map_raster_palettes: None,
             auxiliary_scripts: None,
             font_bank: None,
@@ -1815,6 +1838,7 @@ impl Extraction {
             || self.audio_extended_dispatch.is_some() != self.conditional_item_parameters.is_some()
             || self.conditional_item_parameters.is_some() != self.range_lookup.is_some()
             || self.range_lookup.is_some() != self.tilemap_geometry.is_some()
+            || self.tilemap_geometry.is_some() != self.script39_registry_poses.is_some()
             || self.constructor_obj_animation.is_some() && self.obj_lists.is_none()
             || self.map_raster_palettes.is_some() && self.auxiliary_scripts.is_none()
             || self.auxiliary_scripts.is_some() && self.script_coordinates.is_none()
@@ -2617,6 +2641,15 @@ impl Extraction {
             (None, None) => {},
             _ => return Err("Missing or unexpected tilemap_geometry".into()),
         }
+        match (&self.script39_registry_poses, files.script39_registry_poses) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_SCRIPT39_REGISTRY_POSES_FILE_BYTES { return Err("Opcode-39 registry pose file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[105].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected script39_registry_poses".into()),
+        }
         match (&self.map_raster_palettes, files.map_raster_palettes) {
             (Some(_), Some((_, bytes))) => {
                 if bytes.len() as u64 > MAX_MAP_RASTER_PALETTES_FILE_BYTES { return Err("MapRasterPalettes file exceeds input guard".into()); }
@@ -3139,6 +3172,10 @@ impl Extraction {
             decoded.validate()?;
             if decoded != &expected.decoded { return Err("Decoded tilemap_geometry differs from authenticated source".into()); }
         }
+        if let (Some(expected), Some((decoded, _))) = (&self.script39_registry_poses, files.script39_registry_poses) {
+            decoded.validate_producers(files.script_archive.ok_or("Missing opcode-39 script archive dependency")?.0)?;
+            if decoded != &expected.decoded { return Err("Decoded script39_registry_poses differs from authenticated source".into()); }
+        }
         if let (Some(expected),Some((decoded,_))) = (&self.map_raster_palettes, files.map_raster_palettes) {
             let descriptors=files.background.ok_or("Missing raster palette descriptor dependency")?.0;
             decoded.validate_dependencies(descriptors)?;
@@ -3255,6 +3292,7 @@ impl Extraction {
             + usize::from(self.conditional_item_parameters.is_some())
             + usize::from(self.range_lookup.is_some())
             + usize::from(self.tilemap_geometry.is_some())
+            + usize::from(self.script39_registry_poses.is_some())
             + usize::from(self.map_raster_palettes.is_some())
             + 2 * usize::from(self.auxiliary_scripts.is_some())
     }
@@ -3414,6 +3452,7 @@ mod tests {
             conditional_item_parameters: None,
             range_lookup: None,
             tilemap_geometry: None,
+            script39_registry_poses: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -3526,6 +3565,7 @@ mod tests {
             conditional_item_parameters: None,
             range_lookup: None,
             tilemap_geometry: None,
+            script39_registry_poses: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -3648,6 +3688,7 @@ mod tests {
             conditional_item_parameters: None,
             range_lookup: None,
             tilemap_geometry: None,
+            script39_registry_poses: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -3759,6 +3800,7 @@ mod tests {
             conditional_item_parameters: None,
             range_lookup: None,
             tilemap_geometry: None,
+            script39_registry_poses: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,

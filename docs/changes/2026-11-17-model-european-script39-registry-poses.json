@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-17",
+  "slug": "model-european-script39-registry-poses",
+  "title": "Model European opcode 39 registry poses",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add a conditional typed source model for opcode-39 high-registry direct-job poses, retaining producer references and new index, sequence and decoded pixel data after prior-owner subtraction."
+  ],
+  "validation": [
+    "Windows GNU build edty2_sx and Wine z2eftm1l passed exact EUR source and producer guards, reconstruction and JSON round-trip for 71 pairs, 6,960 index words, 410 sequences and 161 pixel blocks; the original task selected the correct actor after a nonmatching list node in a controlled context.",
+    "Static source plan c5fo5wt5 authenticates 2,301 disjoint new ranges and 91,712 source bytes; the existing normal-battle sprite-42 index root remains with its previous owner."
+  ],
+  "limitations": [
+    "The model is conditional and not yet published or consumed at runtime. Original index-reader validation, ordinary use, other producer domains, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/script39_registry_poses.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/script39_registry_poses_tests.rs",
+    "docs/rom_data_unit_obj.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": []
+}

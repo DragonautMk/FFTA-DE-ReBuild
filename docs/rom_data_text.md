@@ -678,3 +678,30 @@ clocks match with all 75 candidate source words altered in the managed ROM copy;
 each managed execution serves four typed callback bytes. Other callbacks,
 actual parser-to-callback execution, ordinary use and deferred platforms remain
 open. This unit does not change the extractor revision.
+
+Wine `e163-substitution-event-wine-rvwenv3x` starts the original opcode
+selector at `08012248` with a controlled task context pointing at the actual
+uncompressed EUR archive program at source offset `52177c`. Its first command
+is `40 25 00`: the original jump table selects `080128d4`, which reads the
+operand and calls the original substitution dispatcher and callback 0. The
+test stops immediately after that callback returns, before the remaining
+handler work. It provides the callback's text in controlled EWRAM, rather than
+establishing that a normal scene reaches this program.
+
+The extended Wine check `e164-substitution-handler-wine-h9c0peco` continues the
+same controlled path through the handler's return. It verifies that the copied
+buffer becomes the active program, the saved offset and flag fields receive the
+expected values, and the handler returns zero. Raw interpreter, managed
+interpreter and generated instruction-block states and guest clocks match.
+
+Raw interpreter, managed interpreter and generated instruction blocks agree
+on the output, guards, complete state and guest clock. With the three source
+program bytes and all 75 callback words altered in the managed ROM copies,
+each managed path serves two typed program bytes and four typed callback bytes.
+Generated blocks may use interpreter fallback. The retained checkpoint had a
+completed frame pending; the first attempt (`miwjdo33`) repeatedly yielded at
+the compiled event guard, and a focused comparison (`0uxh3ou0`) localized the
+yield to the first instruction. The successful controlled setup consumes that
+pending frame and starts the injected function context awake; no runtime change
+was needed. Other programs, callback semantics, ordinary reachability, broader
+regressions and the deferred platforms remain open.

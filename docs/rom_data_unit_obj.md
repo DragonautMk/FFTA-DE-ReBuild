@@ -2554,3 +2554,61 @@ are authenticated. No game execution, new test/build, fixture, navigation or
 payload edit occurs. Linux/USA/native Windows/new32:9 remain pending; no
 performance/storage measurements. Evidence:
 `target/rom-data-unit-obj-ffff-reader-fields-ordinary/existing-context-leads.json`.
+
+## Opcode 39 registry pose inventory
+
+The E162 manifest inventory `e164-sprite0-index-inventory-nb3r6_uc` examines
+the explicit window `371494..371884`, beginning at the existing sprite-0 index
+root. It finds 416 bytes in declared source ranges and 592 bytes outside those
+ranges. The window is a sampling choice, not an index-bank extent or guest
+limit, and an absent manifest binding alone does not establish runtime use.
+The first index word remains with initial-pose and the next with normal-battle;
+their existing shared views must not acquire a second owner.
+
+An independent source diagnosis identifies a candidate missing producer:
+decimal opcode 39 dispatches through `08126b54` and `0812aa34` to task
+`0812a8c4`, which can call `0809d9c4` for the body and extra parts. E162's
+script archive contains 2,168 opcode-39 instructions and 71 distinct
+high-registry selector/group pairs. One authenticated instruction at `B97ACB`
+uses registry selector 128 and group 1. If that registry resolves a generic
+unit on direct normal job 2, its current actor retains the job's sprite 0, and
+the original branch and facing conditions hold, the extra-part queries select
+four currently unbound null words at `3714b0`, `3714b4`, `3714bc` and
+`3714c0`. This is a conditional source lead, not an ordinary scene witness.
+
+The existing registry-generic model selects opcode 49; it does not yet model
+this opcode-39 producer. Authenticate its code and the full selected producer
+domain, classify shared and new owners, implement disjoint resources and run
+focused Wine checks before claiming the gap is migrated. Other registry states,
+live actor assignments, ordinary use, Linux and USA remain open. No game run or
+performance measurement was performed for this inventory.
+
+Wine disassembly `e164-script39-dis-wine-3e9ww7tc` authenticates the opcode
+handler and task setup; `e164-script39-join-dis-wine-0tx1tr41` covers its
+unit-to-actor join. The positive conditional projection additionally requires
+a valid manager, a matching nonnull actor context, a direct job with a concrete
+sprite for the selected mode, an unchanged current assignment, no override and
+a covered facing. An installed registry slot containing null does not invoke
+the absent-registry fallback. The original fallback's zero-index path reads a
+guest address; this inventory does not replace it with an assumed null return.
+
+Static audit `e164-script39-source-graph-ofuwzj8a` derives 13,230 physical
+index cells from all 71 high-registry pairs and direct generic jobs in the two
+documented modes. Of these, 6,270 already have a declared E162 source owner;
+6,960 do not, including 578 nonnull pointers. The latter lead to 168 already
+owned sequences and 410 new sequence candidates; their OBJ lists are already
+owned, and 161 pixel blocks are outside declared source ranges. The proposed
+new source plan `e164-script39-source-plan-c5fo5wt5` contains 2,301 disjoint
+ranges and preserves prior owners. A shared index-root view for sprite 42 is
+backed by the normal-battle owner, not the initial-pose owner.
+
+The [typed source model](../crates/gba-core/src/rom_data/script39_registry_poses.rs)
+now derives those pairs from the authenticated archive and direct job fields,
+subtracts prior source ownership, and represents the new index targets,
+sequences and decoded pixel tiles. Wine `e164-script39-model-wine-z2eftm1l`
+passes source reconstruction, JSON round-trip, source guards and a controlled
+original task join in which a nonmatching actor precedes the matching one.
+The 91,712 new source bytes have SHA-256
+`2a43dc1998fc1a9eaff8308120aae1d6bd0d309c1fd3d8aa7c4cab39e310cadb`.
+This model is not yet published or used at runtime. Original index-reader
+validation, ordinary use, other producer domains, Linux and USA remain open.

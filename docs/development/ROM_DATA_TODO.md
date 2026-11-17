@@ -304,9 +304,18 @@ the text catalog. Wine publication, source-boundary reads and 18 original
 dispatcher-prefix comparisons pass (`2bltt60c`). Production CLI passes
 (`mgaon9d6`); its bounded scene reads zero callback bytes. Controlled full
 execution of callbacks 0/3 and their byte-truncated aliases passes under Wine
-(`rdulyaqw`); other callbacks, parser reachability, ordinary use, Linux, USA and
-native Windows remain open.
+(`rdulyaqw`). One authenticated EUR program reaches callback 0 through the
+original opcode selector and completes the handler in a controlled task context
+(`h9c0peco`). Other programs/callbacks, ordinary use, Linux, USA and native
+Windows remain open.
 [Evidence](../rom_data_text.md#european-text-substitution-callback-candidates).
+
+**ROMDATA-01-SCRIPT39-REGISTRY-POSES scoped EUR source model (2026-11-17):**
+the conditional high-registry/direct-job projection reconstructs 6,960 new
+index words, 410 sequences and 161 pixel blocks after prior-owner subtraction.
+Wine validates the typed model and a controlled original unit-to-actor join
+(`z2eftm1l`). Dataset publication, runtime consumers, ordinary use, Linux and
+USA remain open. [Evidence](../rom_data_unit_obj.md#opcode-39-registry-pose-inventory).
 
 **ROMDATA-01-TEXT-SHORT-STRINGS / ROMDATA-02-TEXT-SHORT-DATA completed for the
 declared EUR catalog:** five original tables of 107 entries, 535 distinct strings
