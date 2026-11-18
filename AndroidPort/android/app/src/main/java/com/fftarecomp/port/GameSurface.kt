@@ -18,9 +18,9 @@ import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
 // Desktop band-limited grid, translated from crates/screen/src/grid_filter.wgsl.
-// Android currently uses nearest scaling, so the same 0.05 footprint is used.
 private val gridShader="""
     uniform float gridStrength;
+    uniform float scaleMode;
     vec3 gridFetch(vec2 cell);
     float polyX(float z){float z2=z*z;return z*(1.0+z2*(-2.0/3.0+z2*(-0.2+z2*(4.0/7.0+z2*(-1.0/9.0+z2*(-2.0/11.0+z2/13.0))))));}
     float polyY(float z){float z2=z*z;return z*(1.0+z2*z2*(-4.0/5.0+z2*(2.0/7.0+z2*(4.0/9.0+z2*(-4.0/11.0+z2/13.0)))));}
@@ -28,8 +28,9 @@ private val gridShader="""
     float smearY(float x,float dx){float a=clamp((x-dx*.5)/.63,-1.0,1.0);float b=clamp((x+dx*.5)/.63,-1.0,1.0);return .63*(polyY(b)-polyY(a))/dx;}
     vec3 applyGrid(vec3 baseColor,vec2 p,vec2 scale){
         float strength=gridStrength*smoothstep(1.5,2.5,min(scale.x,scale.y));
-        if(strength<=0.0)return baseColor;
-        vec2 du=0.05/scale;float ix=floor(p.x);float iy=floor(p.y-.5);
+        if(strength<=0.0 || scaleMode>2.5)return baseColor;
+        float footprint=scaleMode>1.5?.5:(scaleMode>.5?.05:1.);
+        vec2 du=footprint/scale;float ix=floor(p.x);float iy=floor(p.y-.5);
         vec3 acc=vec3(0.0);
         for(int ry=0;ry<=1;ry++){
             float jy=iy+float(ry);float wy=smearY(jy+.5-p.y,du.y);
@@ -79,6 +80,14 @@ class GameSurface(context: Context, val onError: (String) -> Unit) : GLSurfaceVi
         set(value) {
             if(frames.gridStrength != value) {
                 frames.gridStrength=value
+                requestRender()
+            }
+        }
+    var scalingMode:ScalingMode
+        get() = frames.scalingMode
+        set(value) {
+            if(frames.scalingMode != value) {
+                frames.scalingMode=value
                 requestRender()
             }
         }
@@ -306,6 +315,7 @@ private class FrameRenderer(private val onError: (String) -> Unit) : GLSurfaceVi
     val drawnFrames=AtomicLong(0)
     @Volatile var brightness=1f
     @Volatile var gridStrength=0f
+    @Volatile var scalingMode=ScalingMode.NEAREST
     @Volatile var screenColors=ScreenColors(ScreenProfile.RAW,-1f)
     private var uploadedColors:ScreenColors?=null
     private var colorTexture=0
@@ -355,9 +365,44 @@ private class FrameRenderer(private val onError: (String) -> Unit) : GLSurfaceVi
                   vec3 raw=texture2D(image,q).bgra.rgb;
                   return min((useProfile>0.5?screenColor(raw):raw)*brightness,1.0);
                 }
+                float overlap(float cell,float p,float du){
+                  return max(min(cell+1.,p+du*.5)-max(cell,p-du*.5),0.)/du;
+                }
+                vec3 areaSample(vec2 p,vec2 scale){
+                  vec2 base=floor(p);vec2 du=1./scale;vec3 sum=vec3(0.);
+                  for(int y=-1;y<=1;y++)for(int x=-1;x<=1;x++){
+                    vec2 cell=base+vec2(float(x),float(y));
+                    sum+=gridFetch(cell)*overlap(cell.x,p.x,du.x)*overlap(cell.y,p.y,du.y);
+                  }
+                  return sum;
+                }
+                vec3 sharpSample(vec2 p,vec2 scale){
+                  vec2 e=floor(p+.5);vec2 w=clamp((p-e)*scale+.5,0.,1.);
+                  return mix(mix(gridFetch(e-vec2(1.,1.)),gridFetch(e-vec2(0.,1.)),w.x),
+                             mix(gridFetch(e-vec2(1.,0.)),gridFetch(e),w.x),w.y);
+                }
+                vec3 epxPixel(vec2 cell){
+                  vec2 q=mod(cell,2.);vec2 p=floor(cell/2.);
+                  vec3 m=gridFetch(p);vec3 a=gridFetch(p-vec2(0.,1.));vec3 b=gridFetch(p+vec2(1.,0.));
+                  vec3 c=gridFetch(p-vec2(1.,0.));vec3 d=gridFetch(p+vec2(0.,1.));
+                  if(q.x<.5 && q.y<.5 && all(equal(c,a)) && any(notEqual(c,d)) && any(notEqual(a,b)))return a;
+                  if(q.x>.5 && q.y<.5 && all(equal(a,b)) && any(notEqual(a,c)) && any(notEqual(b,d)))return b;
+                  if(q.x<.5 && q.y>.5 && all(equal(d,c)) && any(notEqual(d,b)) && any(notEqual(c,a)))return c;
+                  if(q.x>.5 && q.y>.5 && all(equal(b,d)) && any(notEqual(b,a)) && any(notEqual(d,c)))return d;
+                  return m;
+                }
+                vec3 epxSample(vec2 p,vec2 scale){
+                  vec2 p2=p*2.;vec2 e=floor(p2+.5);vec2 w=clamp((p2-e)*scale*.5+.5,0.,1.);
+                  return mix(mix(epxPixel(e-vec2(1.,1.)),epxPixel(e-vec2(0.,1.)),w.x),
+                             mix(epxPixel(e-vec2(1.,0.)),epxPixel(e),w.x),w.y);
+                }
                 void main(){vec4 c=texture2D(image,tex).bgra;
                   vec3 rgb=useProfile>0.5?screenColor(c.rgb):c.rgb;
-                  gl_FragColor=vec4(applyGrid(min(rgb*brightness,1.0),tex*sourceSize,outputScale),c.a);}""".trimIndent())
+                  vec2 p=tex*sourceSize;vec3 baseColor=min(rgb*brightness,1.0);
+                  if(scaleMode<.5)baseColor=areaSample(p,outputScale);
+                  else if(scaleMode>2.5)baseColor=epxSample(p,outputScale);
+                  else if(scaleMode>1.5)baseColor=sharpSample(p,outputScale);
+                  gl_FragColor=vec4(applyGrid(baseColor,p,outputScale),c.a);}""".trimIndent())
             program = glCreateProgram()
             glAttachShader(program,vertex); glAttachShader(program,fragment); glLinkProgram(program)
             val linked = IntArray(1); glGetProgramiv(program,GL_LINK_STATUS,linked,0)
@@ -502,7 +547,9 @@ private class FrameRenderer(private val onError: (String) -> Unit) : GLSurfaceVi
         val frameBrightness=brightness
         glUniform1f(glGetUniformLocation(program,"brightness"),frameBrightness)
         val frameGrid=gridStrength
+        val frameScaling=scalingMode.ordinal.toFloat()
         glUniform1f(glGetUniformLocation(program,"gridStrength"),frameGrid)
+        glUniform1f(glGetUniformLocation(program,"scaleMode"),frameScaling)
         glUniform2f(glGetUniformLocation(program,"sourceSize"),view.width.toFloat(),view.height.toFloat())
         glUniform2f(glGetUniformLocation(program,"outputScale"),width.toFloat()/view.width,height.toFloat()/view.height)
         glUniform1i(glGetUniformLocation(program,"colors"),2)
@@ -517,6 +564,7 @@ private class FrameRenderer(private val onError: (String) -> Unit) : GLSurfaceVi
             glUseProgram(uiProgram)
             glUniform1f(glGetUniformLocation(uiProgram,"brightness"),frameBrightness)
             glUniform1f(glGetUniformLocation(uiProgram,"gridStrength"),frameGrid)
+            glUniform1f(glGetUniformLocation(uiProgram,"scaleMode"),frameScaling)
             glUniform1i(glGetUniformLocation(uiProgram,"colors"),2)
             glUniform1f(glGetUniformLocation(uiProgram,"useProfile"),if(colors.profile==ScreenProfile.RAW)0f else 1f)
             glUniform2f(glGetUniformLocation(uiProgram,"screen"),screenWidth.toFloat(),screenHeight.toFloat())

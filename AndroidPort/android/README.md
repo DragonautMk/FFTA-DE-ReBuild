@@ -33,9 +33,12 @@ timers, DMA, interrupts, backup media, and C recompiler.
   panels and persist between launches.
 - Video & zoom includes a Grid setting with Auto and a 0–100% strength.
   Auto is off for Raw and Classic and on for the physical panel profiles.
-  Android uses the desktop grid's band-limited aperture calculation with
-  nearest scaling; the effect fades out when the image is too small to
-  resolve it. Other desktop scaling modes are not yet available on Android.
+  Android uses the desktop grid's band-limited aperture calculation; the
+  effect fades out when the image is too small to resolve it.
+- Scaling offers Off (area average), Nearest, Sharp and EPX as on desktop.
+  Nearest remains the Android default. EPX disables the pixel grid, while
+  the other modes select the corresponding desktop grid footprint. Scaling
+  applies to the game world; independent UI panels retain their native size.
 - Scrollable menus show a right-hand indicator when more content is available.
 - The optional FPS counter shows emulated frames, OpenGL draw callbacks, or
   both. The draw count is not a measurement of display refresh or successful
@@ -60,7 +63,7 @@ port has no interface-language selector. They do not change the language of
 the game or imported content.
 
 The Android pause menu is separate from the desktop menu. Desktop temporal
-response, other scaling modes, save states, backup management
+response, save states, backup management
 and debug tools are not yet available here.
 Desktop window and VSync settings also do not map directly to the Android
 full-screen renderer. The Android aspect choices include the desktop ratios,

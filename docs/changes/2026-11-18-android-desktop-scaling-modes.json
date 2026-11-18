@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "android-desktop-scaling-modes",
+  "title": "Add desktop scaling modes to Android",
+  "kind": "added",
+  "platforms": [
+    "Android"
+  ],
+  "changes": [
+    "Add persistent Off, Nearest, Sharp and EPX world scaling choices, using desktop grid footprints and disabling the grid in EPX; keep Nearest as Android default."
+  ],
+  "validation": [
+    "Mesa GLES compiled and linked both shaders and matched independent CPU reference samples for four scaling modes, edges, EPX grid disabling and three grid footprints in android-scaling-grid-reference-ozaacpls.",
+    "Android ARM64 Docker APK build and 27 Kotlin tests passed in android-desktop-scaling-apk-uobvsi4o; adb install -r updated the connected moto g34 5G."
+  ],
+  "limitations": [
+    "Physical-device rendering, readability, GPU performance and complete desktop pixel equivalence remain unverified; other Android menu features are still missing."
+  ],
+  "files": [
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/GameSurface.kt",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/MainActivity.kt",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/NativeBridge.kt",
+    "AndroidPort/android/README.md"
+  ],
+  "references": [
+    "AndroidPort/android/README.md"
+  ]
+}

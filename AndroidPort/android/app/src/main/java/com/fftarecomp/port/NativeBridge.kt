@@ -18,6 +18,8 @@ enum class AspectMode(val label: String, val baseExtra: Int, val baseHeight: Int
 enum class FastAudio(val label:String) { NORMAL("Normal"), SILENT("Silent"), FAST("Fast audio") }
 // Order matches ScreenKind::ALL in the native presentation code.
 enum class ScreenProfile(val label:String) { RAW("Raw"), UNLIT("Unlit"), FRONTLIT("Frontlit"), BACKLIT("Backlit"), CLASSIC("Classic") }
+// Values match the desktop renderer's scale modes.
+enum class ScalingMode(val label:String) { OFF("Off"), NEAREST("Nearest"), SHARP("Sharp"), EPX("EPX") }
 fun defaultGridStrength(profile:ScreenProfile):Float = when(profile) {
     ScreenProfile.RAW,ScreenProfile.CLASSIC->0f
     else->1f

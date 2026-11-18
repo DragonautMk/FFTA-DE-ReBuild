@@ -402,3 +402,97 @@ fn european_descriptor_alias_battle_translated_pair() {
     assert!(dispatch.0 > 0);
     fs::write(root.join("result.json"),serde_json::to_vec_pretty(&serde_json::json!({"status":"PASS","scope":"240-frame recorded EUR battle-entry raw/managed translated pair","revision":[170,169],"frames":240,"row_typed_requests":typed,"row_raw_requests":raw_reads,"row_unclassified_requests":unclassified,"packed_bytes_all":bytes,"trace_dropped":trace.dropped_requests,"source_row_poisoned":true,"full_state_clock_video_oam_audio_equal_each_frame":true,"audio_sample_counts":audio,"generated_dispatches":dispatch.0,"fallback_dispatches":dispatch.1,"limits":"Generated blocks may fall back to interpretation; row attribution is aggregate and full importer/other routes remain open.","performance_measurements":false})).unwrap()).unwrap();
 }
+
+#[cfg(feature = "rom-data-read-audit")]
+#[test]
+#[ignore = "authenticated EUR battle state/input and current dataset; Wine only"]
+fn european_descriptor_alias_complete_ordinary_importer() {
+    use gba_core::rom_data::read_audit::{Service, TraceCapture, TraceFilter};
+
+    const ENTRY: u32 = 0x080c_e18c;
+    const ROW: usize = 0x6e6f5e;
+    let root = PathBuf::from(std::env::var_os("FFTA_SPECIAL_ALIAS_ROOT").unwrap());
+    let dataset = PathBuf::from(std::env::var_os("FFTA_SPECIAL_ALIAS_DATASET").unwrap());
+    let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    assert_eq!(gba_core::ffta_rom::digest(&rom), gba_core::ffta_rom::EUROPE_SHA256);
+    let state = fs::read(std::env::var_os("FFTA_STATE_TEST_STATE").unwrap()).unwrap();
+    assert_eq!(gba_core::ffta_rom::digest(&state), "e91b8c594d3b7f10d6b815a61cc13943a7c86ea17a7c4cfc865f48eaaf37d84f");
+    let input_path = PathBuf::from(std::env::var_os("FFTA_STATE_TEST_INPUT").unwrap());
+    assert_eq!(gba_core::ffta_rom::digest(&fs::read(&input_path).unwrap()), "ca9b84ef9dbeb8d71c47552e9455a2c3fb636a0f7a4219196ce8d82270bf0ad9");
+    let input = crate::InputScript::load(input_path.to_str().unwrap()).unwrap();
+    let manifest: Manifest = toml::from_str(&fs::read_to_string(dataset.join(MANIFEST_FILE)).unwrap()).unwrap();
+    assert_eq!((manifest.extractor_revision, manifest.decoder_revision), (170, 169));
+    let mut raw = crate::make_machine(rom.clone(), None);
+    let mut managed = crate::make_machine(rom.clone(), None);
+    raw.load_state(&state).unwrap();
+    attach_from_directory(&mut managed, &dataset).unwrap();
+    let owner = managed.bus.rom_resources().unwrap().clone();
+    let mut calls = 0u64;
+    let mut outcome = None;
+
+    for frame in 0..240u64 {
+        raw.bus.keys = input.keys_at(frame);
+        input.apply_mouse(&mut raw.bus, frame).unwrap();
+        raw.bus.audio_buf.clear();
+        raw.bus.frame_ready = false;
+        for _ in 0..5_000_000 {
+            if raw.bus.frame_ready { break; }
+            if frame < 180 || raw.cpu.regs[15] != ENTRY {
+                raw.step();
+                continue;
+            }
+            calls += 1;
+            let return_pc = raw.cpu.regs[14] & !1;
+            let entry_sp = raw.cpu.regs[13];
+            let initial = raw.save_state().unwrap();
+            managed.load_state(&initial).unwrap();
+            managed.bus.audio_buf.clear();
+            raw.bus.audio_buf.clear();
+            managed.bus.rom[ROW..ROW + 14].fill(0xa7);
+            let mut raw_steps = 0u64;
+            loop {
+                assert!(raw_steps < 5_000_000, "raw importer did not return to {return_pc:08x}");
+                raw.step();
+                raw_steps += 1;
+                if raw.cpu.regs[15] == return_pc && raw.cpu.regs[13] == entry_sp { break; }
+            }
+            let before = owner.conditional_packed_lookup_stats().unwrap().source_bytes;
+            let capture = TraceCapture::start(TraceFilter { readers: vec![], ranges: vec![(ROW as u32, (ROW + 14) as u32)] }, 10000).unwrap();
+            capture.frame(Some(managed.bus.frames));
+            let mut managed_steps = 0u64;
+            loop {
+                assert!(managed_steps < 5_000_000, "managed importer did not return to {return_pc:08x}");
+                managed.step();
+                managed_steps += 1;
+                if managed.cpu.regs[15] == return_pc && managed.cpu.regs[13] == entry_sp { break; }
+            }
+            let trace = capture.finish();
+            assert!(!trace.truncated);
+            let typed: u64 = trace.events.iter().filter(|e| e.key.service == Service::Typed).map(|e| e.requests).sum();
+            let raw_reads: u64 = trace.events.iter().filter(|e| e.key.service == Service::Raw).map(|e| e.requests).sum();
+            let packed_bytes = owner.conditional_packed_lookup_stats().unwrap().source_bytes - before;
+            managed.bus.rom[ROW..ROW + 14].copy_from_slice(&rom[ROW..ROW + 14]);
+            assert_eq!(raw_steps, managed_steps, "importer instruction count");
+            assert!(raw.save_state().unwrap() == managed.save_state().unwrap(), "complete importer state/clock");
+            assert!(raw.bus.framebuffer == managed.bus.framebuffer && raw.bus.wide_framebuffer == managed.bus.wide_framebuffer
+                && raw.bus.oam == managed.bus.oam && raw.bus.audio_buf == managed.bus.audio_buf, "complete importer video/OAM/audio");
+            assert_eq!(raw_reads, 0, "raw fallback within selected row");
+            if typed > 0 {
+                assert!(packed_bytes > 0);
+                outcome = Some(serde_json::json!({"relative_frame":frame,"return_pc":return_pc,"instructions":raw_steps,
+                    "typed_row_requests":typed,"raw_row_requests":raw_reads,"packed_bytes":packed_bytes}));
+                break;
+            }
+        }
+        if outcome.is_some() { break; }
+        assert!(raw.bus.frame_ready, "ordinary route frame limit at {frame}");
+    }
+    let outcome = outcome.expect("no complete importer call consumed the descriptor-1 row");
+    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
+        "status":"PASS", "scope":"one ordinary EUR 080ce18c importer invocation, entry through return",
+        "candidate_calls":calls, "matched_call":outcome, "row_rom_poisoned":true,
+        "full_state_clock_video_oam_mixed_audio_equal_at_return":true,
+        "limits":"One interpreter invocation on one retained route; other calls, consumers, native attribution and platforms remain open.",
+        "performance_measurements":false
+    })).unwrap()).unwrap();
+}

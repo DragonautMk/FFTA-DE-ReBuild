@@ -23799,3 +23799,10 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: confirmed restart preserves cartridge data and refuses failed saves; tests and APK build pass; app updated on connected phone.
 - Evidence: `docs/changes/2026-11-18-android-restart-rom.json`; `_mcmcd54`, `f4ncn0cz`.
 - Limits: real game and menu operation not manually tested on device; broader Android menu parity remains open.
+
+### ANDROID-DESKTOP-SCALING-MODES
+
+- Outcome: completed
+- Verified criteria: four scaling modes and grid interaction implemented, scoped reference tests passed, APK built and installed.
+- Evidence: `docs/changes/2026-11-18-android-desktop-scaling-modes.json`; `ozaacpls`, `uobvsi4o`.
+- Limits: device rendering, performance and full pixel equivalence remain unverified; other Android menu parity remains open.

@@ -74,6 +74,7 @@ class GameSettings(context: Context) {
     // -1 selects the profile's default, as in the desktop menu.
     var screenDarken by mutableFloatStateOf(prefs.getFloat("screen_darken",-1f).coerceIn(-1f,1f))
     var gridStrength by mutableFloatStateOf(prefs.getFloat("grid_strength",-1f).coerceIn(-1f,1f))
+    var scalingMode by mutableStateOf(runCatching { ScalingMode.valueOf(prefs.getString("scaling_mode","NEAREST")!!) }.getOrDefault(ScalingMode.NEAREST))
     var fpsDisplay by mutableStateOf(FpsDisplay.entries.getOrElse(prefs.getInt("fps_display",0)){FpsDisplay.OFF})
     var menuTransparency by mutableFloatStateOf(prefs.getFloat("menu_transparency",0f).coerceIn(0f,1f))
     var controls by mutableStateOf(prefs.getBoolean("controls",true))
@@ -124,7 +125,7 @@ class GameSettings(context: Context) {
         .putFloat("opacity",opacity).putFloat("size",controlSize).putInt("speed",multiplier).putInt("ff_audio",audioMode.ordinal)
         .putFloat("bubble_size",bubbleSize).putFloat("bubble_length",bubbleLength)
         .putFloat("brightness",brightness).putInt("screen_profile",screenProfile.ordinal)
-        .putFloat("screen_darken",screenDarken).putFloat("grid_strength",gridStrength).putInt("fps_display",fpsDisplay.ordinal)
+        .putFloat("screen_darken",screenDarken).putFloat("grid_strength",gridStrength).putString("scaling_mode",scalingMode.name).putInt("fps_display",fpsDisplay.ordinal)
         .putFloat("menu_transparency",menuTransparency).apply() }
 }
 
@@ -428,6 +429,7 @@ private fun GameScreen(settings:GameSettings,input:GameInput,onExit:()->Unit,onS
     val brightness=settings.brightness
     val screenColors=ScreenColors(settings.screenProfile,settings.screenDarken)
     val gridStrength=if(settings.gridStrength<0f)defaultGridStrength(settings.screenProfile) else settings.gridStrength
+    val scalingMode=settings.scalingMode
     val touchClicks=settings.touch.experimentalClicks
     val bubbleSize=settings.bubbleSize
     val bubbleLength=settings.bubbleLength
@@ -488,6 +490,7 @@ private fun GameScreen(settings:GameSettings,input:GameInput,onExit:()->Unit,onS
         surface?.brightness=brightness
         surface?.screenColors=screenColors
         surface?.gridStrength=gridStrength
+        surface?.scalingMode=scalingMode
         surface?.experimentalClicks=touchClicks
         surface?.bubbleSize=bubbleSize
         surface?.bubbleLength=bubbleLength
@@ -604,6 +607,15 @@ private fun GameScreen(settings:GameSettings,input:GameInput,onExit:()->Unit,onS
                             }
                             if(settings.gridStrength>=0f) Slider(settings.gridStrength,{settings.gridStrength=it},
                                 steps=9,onValueChangeFinished={settings.save()})
+                            Text("Scaling")
+                            FlowRow(horizontalArrangement=Arrangement.spacedBy(6.dp)) {
+                                ScalingMode.entries.forEach { mode ->
+                                    FilterChip(settings.scalingMode==mode,{
+                                        settings.scalingMode=mode;settings.save()
+                                    },label={Text(mode.label)})
+                                }
+                            }
+                            if(settings.scalingMode==ScalingMode.EPX)Text("EPX disables the pixel grid.",fontSize=12.sp)
                             Text("Brightness: ${(settings.brightness*100).toInt()}%")
                             Slider(settings.brightness,{settings.brightness=it},valueRange=.5f..1.5f,
                                 steps=9,onValueChangeFinished={settings.save()})

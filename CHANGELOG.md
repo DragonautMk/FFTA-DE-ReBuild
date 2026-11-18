@@ -917,6 +917,27 @@ Documentation: [README.md](AndroidPort/android/README.md).
 
 [Change record](docs/changes/2026-11-18-android-grid-scroll-indicator.json)
 
+## 2026-11-18 — Add desktop scaling modes to Android
+
+Type: added. Platforms: Android.
+
+**Changes**
+
+- Add persistent Off, Nearest, Sharp and EPX world scaling choices, using desktop grid footprints and disabling the grid in EPX; keep Nearest as Android default.
+
+**Validation**
+
+- Mesa GLES compiled and linked both shaders and matched independent CPU reference samples for four scaling modes, edges, EPX grid disabling and three grid footprints in android-scaling-grid-reference-ozaacpls.
+- Android ARM64 Docker APK build and 27 Kotlin tests passed in android-desktop-scaling-apk-uobvsi4o; adb install -r updated the connected moto g34 5G.
+
+**Limitations**
+
+- Physical-device rendering, readability, GPU performance and complete desktop pixel equivalence remain unverified; other Android menu features are still missing.
+
+Documentation: [README.md](AndroidPort/android/README.md).
+
+[Change record](docs/changes/2026-11-18-android-desktop-scaling-modes.json)
+
 ## 2026-11-18 — Port desktop grid calculation to Android
 
 Type: changed. Platforms: Android.
