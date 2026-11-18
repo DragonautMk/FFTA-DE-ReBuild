@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "android-touch-menu-button",
+  "title": "Show the touch menu button above the D-pad",
+  "kind": "changed",
+  "platforms": [
+    "Android"
+  ],
+  "changes": [
+    "Show the Menu touch control above the D-pad by default, following the D-pad until moved separately; migrate older layouts while preserving customized positions and other controls."
+  ],
+  "validation": [
+    "Android ARM64 Docker build and 26 Kotlin unit tests passed in android-touch-menu-apk-1edzetc3, including default placement and drag unanchoring.",
+    "Installed the APK as an update on the connected moto g34 5G using adb install -r; package retained its original first-install time."
+  ],
+  "limitations": [
+    "The on-device button appearance and tapping behavior were not manually verified."
+  ],
+  "files": [
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/TouchControls.kt",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/TouchLayout.kt",
+    "AndroidPort/android/app/src/test/java/com/fftarecomp/port/TouchLayoutTest.kt",
+    "AndroidPort/android/README.md"
+  ],
+  "references": [
+    "AndroidPort/android/README.md"
+  ]
+}

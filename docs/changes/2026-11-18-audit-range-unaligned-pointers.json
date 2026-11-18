@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "audit-range-unaligned-pointers",
+  "title": "Audit unaligned range-source pointers",
+  "kind": "changed",
+  "platforms": [
+    "EUR / source census"
+  ],
+  "changes": [
+    "Extend the bounded-range exact-pointer census to every byte offset of the authenticated EUR ROM."
+  ],
+  "validation": [
+    "Protected census bounded-range-unaligned-pointer-census-l4aomd4j scans all byte offsets for exact little-endian 32-bit pointers into the 88-byte range on mirrors 08, 0a and 0c. It finds the previously known aligned 01abe8 literal and zero unaligned occurrences. The ROM and audit script remain protected; scratch removed."
+  ],
+  "limitations": [
+    "Exact byte patterns do not prove execution and do not cover computed or differently encoded addresses, RAM-built pointers, other mappings or indirect reads. Other range consumers and broader validation remain open; no performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-18-audit-range-nearby-pointer-roots.json"
+  ]
+}

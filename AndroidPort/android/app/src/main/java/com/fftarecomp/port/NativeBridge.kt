@@ -16,6 +16,14 @@ enum class AspectMode(val label: String, val baseExtra: Int, val baseHeight: Int
     SQUARE("1:1",8,256), NOTE10("19:9",49), DEVICE("Full screen",49)
 }
 enum class FastAudio(val label:String) { NORMAL("Normal"), SILENT("Silent"), FAST("Fast audio") }
+// Order matches ScreenKind::ALL in the native presentation code.
+enum class ScreenProfile(val label:String) { RAW("Raw"), UNLIT("Unlit"), FRONTLIT("Frontlit"), BACKLIT("Backlit"), CLASSIC("Classic") }
+fun defaultGridStrength(profile:ScreenProfile):Float = when(profile) {
+    ScreenProfile.RAW,ScreenProfile.CLASSIC->0f
+    else->1f
+}
+enum class FpsDisplay(val label:String) { OFF("Off"), EMULATED("Emulated"), DRAWN("GL draws"), BOTH("Both") }
+data class ScreenColors(val profile:ScreenProfile,val darken:Float)
 
 data class ViewRequest(val aspect:AspectMode,val zoom:Int)
 
@@ -53,6 +61,7 @@ object NativeBridge {
     private var hashes = "Not loaded"
 
     external fun gbaLoadRom(bytes: ByteArray, savePath: String): Int
+    external fun gbaScreenLut(profile:Int, darken:Float, output:ByteBuffer):Int
     external fun gbaPrepare(): Int
     external fun gbaFrame(keys: Int, extraX: Int, extraY: Int, frames: Int,
                           sound: Boolean, audioMode: Int, pixels: ByteBuffer, audio: ShortArray,

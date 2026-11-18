@@ -8,6 +8,18 @@ partial-write recovery, cancellation, competing publishers and portable paths.
 They do not load the E170 dataset or replace private-ROM integration filters;
 Linux, USA, native Windows and performance remain outside this result.
 
+An additional EUR/Wine regression loads the authenticated E170 dataset and
+checks all 74,225 distinct boundaries of its 54,792 declared source spans
+(`e170-all-source-boundaries-wine-yeg0bdt_`). With every backing-ROM byte
+inverted, 445,350 probes immediately at or before those boundaries across
+mirrors 08/0a/0c verify that bus and native API halfword/word reads match the
+four byte reads and that mirrors agree. The active bounded-range owner serves
+96 bytes during the check. Both original and inverted backing values occur;
+the counts include repeated observations and are not an ownership inventory.
+The result covers sampled boundary composition, not every source byte, guest
+execution, timing, or a scene. Inputs were protected, scratch removed, and
+Wine drained.
+
 EUR e88-d87 adds [event records](rom_data_gameplay.md#managed-event-records-and-typed-runtime-reads):
 81files/80resources, one3072-byte span/no dependency, all79 previous records/
 payloads exact. The shared row225 view retains the same owner; original script/
@@ -2402,8 +2414,16 @@ Protected census `bounded-range-direct-literal-census-_s7xtdr9` scans all
 aligned EUR ROM words for pointers into `37140c..371464`, including the three
 normal mirror pairs. The only match is the base literal at `01abe8`; the only
 candidate Thumb PC-relative load of that literal is `01abca`, in the identified
-reader, and no ARM PC-relative load candidate was found. This does not exclude
-unaligned pointers, computed addresses, RAM copies or indirect reads.
+reader, and no ARM PC-relative load candidate was found. That aligned census
+alone does not exclude unaligned pointers, computed addresses, RAM copies or
+indirect reads.
+
+Protected census `bounded-range-unaligned-pointer-census-l4aomd4j` also scans
+every byte offset of the authenticated EUR ROM for exact little-endian
+32-bit pointers into this 88-byte range through mirrors 08, 0a and 0c. It finds
+only the same aligned literal at `01abe8`, and no unaligned occurrence. This
+does not exclude computed or differently encoded addresses, RAM-built pointers,
+other mappings or indirect reads; an occurrence alone would not prove use.
 
 E170 Wine boundary regression `bounded-range-e170-boundary-wine-pbj0c8fy`
 flips the range source and its four immediate bytes on each side, then checks
@@ -2412,6 +2432,25 @@ all 1-, 2- and 4-byte reads wholly in that window through mirrors 08, 0a and
 the adjacent substitution and geometry owners each serve 63 bytes, and the
 range owner serves 1,848 bytes. This proves the tested mixed-owner bus/API
 composition, not ordinary execution or the complete set of consumers.
+
+E170 Wine lifecycle test `bounded-range-e170-lifecycle-wine-p55pua3g`
+checks a private dataset copy. Both a missing range file and a structurally
+valid altered range file with its manifest hash updated are rejected on
+reattachment, preserving the active owner and complete machine state. While
+the replacement is invalid, slot Load and Undo restore their respective full
+states and retain the owner. All 88 range bytes remain available with the raw
+source altered, and a fresh owner serves the same bytes after restoring the
+copy. Inputs were protected, test scratch was removed and Wine drained. This
+uses the slot API and a synthetic machine; GUI operations, Fast, backup
+restoration, restart and other resources are not covered by that test.
+
+Separate E170 Wine test `bounded-range-e170-backup-wine-tg0_or33` makes its
+dataset copy unavailable and calls the direct backup-restore and restart APIs
+with synthetic cartridge saves. Each operation preserves the attached owner,
+restores the expected complete boot state and cartridge bytes, and still serves
+all 88 range bytes with the raw source altered. Inputs were protected, scratch
+was removed and Wine drained. This does not cover GUI actions, Fast or the
+lifecycle of every migrated resource.
 
 The earlier full-byte ownership audit also identified a separate conditional
 context: original registry readers `019172` and `019424` can address all 22
@@ -2432,7 +2471,12 @@ A wider numerical census (`bounded-range-nearby-roots-census-wdb_l7ok`)
 finds 18 aligned ROM words pointing from 1,023 bytes before the range through
 its end, including the direct reader and the known computed readers. Four
 words have no candidate PC-relative immediate load in the scoped Thumb/ARM
-screen; that does not exclude other uses. Wine windows `7zra4rc1` cover the
+screen. Protected audit `bounded-range-four-root-use-audit-eqni5tiq` finds
+that their four bytes lie entirely within one E170 PCM wave source and three
+BG graphics source spans, respectively, and finds no exact little-endian ROM
+pointer to any byte of those words on mirrors 08/0a/0c. The source ownership
+and lack of exact references do not exclude alternate or computed uses. Wine
+windows `7zra4rc1` cover the
 other 11 Thumb load candidates beyond the five previously identified sites.
 One candidate follows a return in an apparent literal pool, but an alternate
 entry is not ruled out. For the other local windows, byte-indexed loads from
@@ -2562,8 +2606,52 @@ was available, before any replay frame was verified. Read-only audit
 startup log, the exact object hash and unchanged protected inputs. This is
 evidence of that isolated GUI cache selection, not a successful GUI replay.
 
-Other reader contexts, legacy cross-mode IRQ equivalence, a successful GUI
-replay, broader Wine regressions, Linux, USA and native Windows remain open.
+An independent pair of actual GUI debug sessions runs the authenticated Bank
+Select input under Wine/Xvfb (`bounded-range-bank-gui-pair-wine-t6rwu_qk`).
+The raw and E170 managed interpreter sessions match complete state hashes and
+guest clocks at the initial point and after 8, 20 and 120 frames; the managed
+session reports 12 range reads serving 23 bytes across five records. Both
+windows close normally, protected inputs remain unchanged and Wine drains.
+The Vulkan presenter uses llvmpipe. This comparison uses unaltered ROM bytes
+and does not compare video or audio per frame; it does not supersede the
+separate altered-source native pair or establish Fast coverage.
+
+A second independent Wine/Xvfb GUI pair uses native dispatch for the same
+120-frame input (`bounded-range-bank-gui-native-pair-wine-g3fnb1x5`). Both
+sessions select the previously verified guarded translation; complete-state
+hashes and clocks match at the same four endpoints, the managed session serves
+23 range bytes across five records, and both sessions close normally. Protected
+inputs remain unchanged, scratch is removed and Wine drains. The managed log
+contains a debug-control access-denied diagnostic and the raw log a D-Bus
+assertion; the requested controls and both closes nevertheless succeeded. Raw
+source bytes were unaltered and video/audio were not compared per frame;
+native dispatch may fall back to interpretation.
+
+Wine/Xvfb `bounded-range-bank-gui-fast-traced-wine-a6u0qv7x` follows the Bank
+input with 12 neutral frames in the managed GUI. The UI trace records the Fast
+toggle followed by eight completed frames, and the menu reports Fast 400% ON.
+A raw native-dispatch session takes the same input and 12 neutral controlled
+frames; complete-state hashes and clocks match at all four checked endpoints.
+The managed session reports 23 range-source bytes over its whole execution;
+the counter does not attribute any of those reads to Fast itself. Both sessions
+close normally, protected inputs pass, scratch is removed and Wine drains. The
+comparison uses unaltered ROM bytes and does not compare video or audio each
+frame; generated dispatch can fall back to interpretation. Earlier Fast run
+`sk4e6n7b` passed but did not retain the event order.
+
+Wine/Xvfb `bounded-range-bank-gui-fast-positive-wine-hr3m809u` activates
+Fast in the paused menu before the first guest frame, then executes 48 traced
+frames including Select. The managed GUI reports 12 range reads serving 23
+bytes over five records. A raw native-dispatch session replays the exact 48
+observed input masks and matches complete state and clock at the initial and
+final endpoints. Both sessions use the guarded translation, close normally,
+and preserve protected inputs; Wine drains and scratch is removed. The
+earlier attempt `kpt4doby` failed before guest execution because its driver
+looked for the wrong menu label. ROM bytes were not altered, video/audio were
+not compared per frame and generated dispatch may fall back to interpretation.
+
+Other reader contexts, legacy cross-mode IRQ equivalence, broader Wine
+regressions, Linux, USA and native Windows remain open.
 No performance measurement was performed.
 
 

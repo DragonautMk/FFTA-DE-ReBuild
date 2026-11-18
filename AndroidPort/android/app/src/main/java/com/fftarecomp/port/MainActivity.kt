@@ -17,9 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -70,6 +68,13 @@ class GameSettings(context: Context) {
     var zoom by mutableIntStateOf(prefs.getInt("zoom",0).coerceIn(0,ViewConfig.maxZoom(aspect)))
     var sound by mutableStateOf(prefs.getBoolean("sound",true))
     var volume by mutableFloatStateOf(prefs.getFloat("volume",0.8f).coerceIn(0f,1f))
+    var brightness by mutableFloatStateOf(prefs.getFloat("brightness",1f).coerceIn(.5f,1.5f))
+    var screenProfile by mutableStateOf(ScreenProfile.entries.getOrElse(prefs.getInt("screen_profile",0)){ScreenProfile.RAW})
+    // -1 selects the profile's default, as in the desktop menu.
+    var screenDarken by mutableFloatStateOf(prefs.getFloat("screen_darken",-1f).coerceIn(-1f,1f))
+    var gridStrength by mutableFloatStateOf(prefs.getFloat("grid_strength",-1f).coerceIn(-1f,1f))
+    var fpsDisplay by mutableStateOf(FpsDisplay.entries.getOrElse(prefs.getInt("fps_display",0)){FpsDisplay.OFF})
+    var menuTransparency by mutableFloatStateOf(prefs.getFloat("menu_transparency",0f).coerceIn(0f,1f))
     var controls by mutableStateOf(prefs.getBoolean("controls",true))
     var opacity by mutableFloatStateOf(prefs.getFloat("opacity",0.65f).coerceIn(0.2f,1f))
     var controlSize by mutableFloatStateOf(prefs.getFloat("size",1f).coerceIn(0.75f,1.25f))
@@ -116,7 +121,10 @@ class GameSettings(context: Context) {
     fun save() { prefs.edit().putInt("aspect",aspect.ordinal).putInt("zoom",zoom)
         .putBoolean("sound",sound).putFloat("volume",volume).putBoolean("controls",controls)
         .putFloat("opacity",opacity).putFloat("size",controlSize).putInt("speed",multiplier).putInt("ff_audio",audioMode.ordinal)
-        .putFloat("bubble_size",bubbleSize).putFloat("bubble_length",bubbleLength).apply() }
+        .putFloat("bubble_size",bubbleSize).putFloat("bubble_length",bubbleLength)
+        .putFloat("brightness",brightness).putInt("screen_profile",screenProfile.ordinal)
+        .putFloat("screen_darken",screenDarken).putFloat("grid_strength",gridStrength).putInt("fps_display",fpsDisplay.ordinal)
+        .putFloat("menu_transparency",menuTransparency).apply() }
 }
 
 class MainActivity : AppCompatActivity(), InputManager.InputDeviceListener {
@@ -339,7 +347,7 @@ private fun MainScreen(settings: GameSettings, input: GameInput, setInGame: (Boo
         Box(Modifier.fillMaxSize().background(Forest).safeDrawingPadding(),contentAlignment=Alignment.Center) {
             Column(Modifier.widthIn(max=540.dp).fillMaxWidth().padding(20.dp)
                 .background(Paper,RoundedCornerShape(20.dp)).border(1.dp,Gold,RoundedCornerShape(20.dp))
-                .padding(24.dp).verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(16.dp)) {
+                .padding(24.dp).scrollWithIndicator(),verticalArrangement=Arrangement.spacedBy(16.dp)) {
                 Text("FFTA DE-ReBuild",fontFamily=FontFamily.Serif,fontWeight=FontWeight.Bold,fontSize=32.sp,color=Ink)
                 Text("ANDROID PREVIEW",color=Gold,letterSpacing=3.sp,fontSize=11.sp)
                 HorizontalDivider(color=Gold)
@@ -406,17 +414,27 @@ private fun GameScreen(settings:GameSettings,input:GameInput,onExit:()->Unit,onS
     var failure by remember {mutableStateOf<String?>(null)}
     var switchRomError by remember {mutableStateOf<String?>(null)}
     var page by remember {mutableStateOf("main")}
+    var fpsRates by remember {mutableStateOf<FpsRates?>(null)}
     // Snapshot reads must happen during composition, not only inside SideEffect.
     val request=ViewRequest(settings.aspect,settings.zoom)
     val speed=if(settings.fastForward!=settings.holdFast)settings.multiplier else 1
     val audioMode=settings.audioMode
     val sound=settings.sound
     val volume=settings.volume
+    val brightness=settings.brightness
+    val screenColors=ScreenColors(settings.screenProfile,settings.screenDarken)
+    val gridStrength=if(settings.gridStrength<0f)defaultGridStrength(settings.screenProfile) else settings.gridStrength
     val touchClicks=settings.touch.experimentalClicks
     val bubbleSize=settings.bubbleSize
     val bubbleLength=settings.bubbleLength
     LaunchedEffect(settings.pauseRequest){
         if(settings.pauseRequest>0){paused=true;page="main";input.clear();settings.pad.clear();settings.holdFast=false}
+    }
+    LaunchedEffect(surface,settings.fpsDisplay,paused,editingTouch) {
+        fpsRates=null
+        if(settings.fpsDisplay!=FpsDisplay.OFF && !paused && !editingTouch) {
+            while(true) { fpsRates=surface?.fpsRates; delay(500) }
+        }
     }
     BackHandler {
         if(editingTouch){
@@ -461,6 +479,9 @@ private fun GameScreen(settings:GameSettings,input:GameInput,onExit:()->Unit,onS
         surface?.audioMode=audioMode
         surface?.soundEnabled=sound
         surface?.volume=volume
+        surface?.brightness=brightness
+        surface?.screenColors=screenColors
+        surface?.gridStrength=gridStrength
         surface?.experimentalClicks=touchClicks
         surface?.bubbleSize=bubbleSize
         surface?.bubbleLength=bubbleLength
@@ -473,12 +494,26 @@ private fun GameScreen(settings:GameSettings,input:GameInput,onExit:()->Unit,onS
             onPause={paused=true;page="main";input.clear();settings.pad.clear();settings.holdFast=false},
             onSave={settings.touch.save();editingTouch=false},
             onCancel={settings.touch.layout.restore(originalTouch);settings.touch.vibration=originalVibration;editingTouch=false})
+        if(settings.fpsDisplay!=FpsDisplay.OFF && !paused && !editingTouch) {
+            val rates=fpsRates
+            val emulated=rates?.let{"%.1f".format(java.util.Locale.ROOT,it.emulated)}?:"--"
+            val drawn=rates?.let{"%.1f".format(java.util.Locale.ROOT,it.drawn)}?:"--"
+            val label=when(settings.fpsDisplay) {
+                FpsDisplay.EMULATED->"FPS emulated: $emulated"
+                FpsDisplay.DRAWN->"FPS GL draws: $drawn"
+                FpsDisplay.BOTH->"FPS emulated: $emulated\nFPS GL draws: $drawn"
+                FpsDisplay.OFF->""
+            }
+            Text(label,Modifier.align(Alignment.TopStart).padding(8.dp)
+                .background(Color.Black.copy(alpha=.7f),RoundedCornerShape(4.dp)).padding(6.dp),
+                color=Color.White,fontSize=12.sp)
+        }
         if(paused&&!editingTouch) {
             Dialog(onDismissRequest={if(failure==null)paused=false},properties=DialogProperties(usePlatformDefaultWidth=false)) {
                 Column(Modifier.widthIn(max=490.dp).fillMaxWidth(0.9f)
                     .heightIn(max=(LocalConfiguration.current.screenHeightDp-28).dp)
-                    .background(Paper,RoundedCornerShape(18.dp)).border(1.dp,Gold,RoundedCornerShape(18.dp))
-                    .padding(20.dp).verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(8.dp)) {
+                    .background(Paper.copy(alpha=1f-settings.menuTransparency),RoundedCornerShape(18.dp)).border(1.dp,Gold,RoundedCornerShape(18.dp))
+                    .padding(20.dp).scrollWithIndicator(),verticalArrangement=Arrangement.spacedBy(8.dp)) {
                     Text(when(page){"main"->"FFTA DE-ReBuild";"rom"->"Switch ROM";else->page.replaceFirstChar{it.uppercase()}},fontFamily=FontFamily.Serif,fontSize=26.sp,fontWeight=FontWeight.Bold,color=Ink)
                     Text("PAUSED",letterSpacing=3.sp,fontSize=10.sp,color=Gold)
                     HorizontalDivider(color=Gold)
@@ -512,6 +547,45 @@ private fun GameScreen(settings:GameSettings,input:GameInput,onExit:()->Unit,onS
                             }
                             val view=ViewConfig.create(settings.aspect,settings.zoom)
                             Text("Render: ${view.width} x ${view.height}",fontSize=12.sp)
+                            Text("Screen")
+                            FlowRow(horizontalArrangement=Arrangement.spacedBy(6.dp)) {
+                                ScreenProfile.entries.forEach { profile ->
+                                    FilterChip(settings.screenProfile==profile,{
+                                        settings.screenProfile=profile;settings.save()
+                                    },label={Text(profile.label)})
+                                }
+                            }
+                            if(settings.screenProfile==ScreenProfile.UNLIT || settings.screenProfile==ScreenProfile.FRONTLIT) {
+                                Row(verticalAlignment=Alignment.CenterVertically) {
+                                    Switch(settings.screenDarken<0f,{
+                                        settings.screenDarken=if(it)-1f else 0.5f;settings.save()
+                                    })
+                                    Text("Darken: ${if(settings.screenDarken<0f) "Auto" else "${(settings.screenDarken*100).toInt()}%"}")
+                                }
+                                if(settings.screenDarken>=0f) Slider(settings.screenDarken,{settings.screenDarken=it},
+                                    steps=9,onValueChangeFinished={settings.save()})
+                            }
+                            Row(verticalAlignment=Alignment.CenterVertically) {
+                                Switch(settings.gridStrength<0f,{
+                                    settings.gridStrength=if(it)-1f else defaultGridStrength(settings.screenProfile);settings.save()
+                                })
+                                Text("Grid: ${if(settings.gridStrength<0f) "Auto" else "${(settings.gridStrength*100).toInt()}%"}")
+                            }
+                            if(settings.gridStrength>=0f) Slider(settings.gridStrength,{settings.gridStrength=it},
+                                steps=9,onValueChangeFinished={settings.save()})
+                            Text("Brightness: ${(settings.brightness*100).toInt()}%")
+                            Slider(settings.brightness,{settings.brightness=it},valueRange=.5f..1.5f,
+                                steps=9,onValueChangeFinished={settings.save()})
+                            Text("FPS counter")
+                            FlowRow(horizontalArrangement=Arrangement.spacedBy(6.dp)) {
+                                FpsDisplay.entries.forEach { mode ->
+                                    FilterChip(settings.fpsDisplay==mode,{settings.fpsDisplay=mode;settings.save()},
+                                        label={Text(mode.label)})
+                                }
+                            }
+                            Text("Menu transparency: ${(settings.menuTransparency*100).toInt()}%")
+                            Slider(settings.menuTransparency,{settings.menuTransparency=it},
+                                steps=9,onValueChangeFinished={settings.save()})
                         }
                         "fast forward"->{
                             Row(verticalAlignment=Alignment.CenterVertically){Switch(settings.fastForward,{settings.fastForward=it});Text("Always on")}

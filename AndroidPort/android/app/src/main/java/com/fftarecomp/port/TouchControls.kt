@@ -10,9 +10,7 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -141,6 +139,10 @@ fun TouchOverlay(settings:GameSettings,input:GameInput,editing:Boolean,onPause:(
             val rowAnchor=settings.touch.layout.positions.getValue(TouchControl.SELECT)
             val rowAnchorHeight=TouchControl.SELECT.height*rowAnchor.scale*density.density
             val rowCenterY=TouchGeometry.rowCenterY(canvasHeight,rowAnchorHeight,rowAnchor.y)
+            val dpadPose=settings.touch.layout.positions.getValue(TouchControl.DPAD)
+            val dpadSize=TouchControl.DPAD.width*dpadPose.scale*settings.controlSize*density.density
+            val dpadX=dpadPose.x*(canvasWidth-dpadSize).coerceAtLeast(0f)
+            val dpadY=dpadPose.y*(canvasHeight-dpadSize).coerceAtLeast(0f)
             TouchControl.entries.forEach{control->
                 val pose=settings.touch.layout.positions.getValue(control)
                 val utility=control in listOf(TouchControl.PAUSE,TouchControl.FAST_TOGGLE,TouchControl.ZOOM_IN,TouchControl.ZOOM_OUT)
@@ -150,7 +152,10 @@ fun TouchOverlay(settings:GameSettings,input:GameInput,editing:Boolean,onPause:(
                     val availableX=(canvasWidth-with(density){w.toPx()}).coerceAtLeast(0f)
                     val availableY=(canvasHeight-with(density){h.toPx()}).coerceAtLeast(0f)
                     val rowIndex=TouchGeometry.bottomRow.indexOf(control)
-                    val alignedX=if(pose.centeredRow && rowIndex>=0)TouchGeometry.rowLeft(rowIndex,canvasWidth,rowWidths,12*density.density)else pose.x*availableX
+                    val menuPosition=if(control==TouchControl.PAUSE&&pose.aboveDpad)
+                        TouchGeometry.menuAboveDpad(canvasWidth,canvasHeight,with(density){w.toPx()},with(density){h.toPx()},dpadX,dpadY,dpadSize,8*density.density) else null
+                    val currentMenuPosition by rememberUpdatedState(menuPosition)
+                    val alignedX=menuPosition?.first ?: if(pose.centeredRow && rowIndex>=0)TouchGeometry.rowLeft(rowIndex,canvasWidth,rowWidths,12*density.density)else pose.x*availableX
                     val draggable=if(editing)Modifier.pointerInput(control,availableX,availableY){
                         detectDragGestures(onDragStart={selected=control},onDrag={change,amount->
                             change.consume()
@@ -165,12 +170,15 @@ fun TouchOverlay(settings:GameSettings,input:GameInput,editing:Boolean,onPause:(
                                         y=if(rowAvailable>0f)top/rowAvailable else 0f,centeredRow=true)
                                 }
                             }else{
-                                val current=settings.touch.layout.positions.getValue(control)
+                                val current=settings.touch.layout.positions.getValue(control).let {
+                                    val anchor=currentMenuPosition
+                                    if(it.aboveDpad && anchor!=null)it.copy(x=if(availableX>0)anchor.first/availableX else 0f,y=if(availableY>0)anchor.second/availableY else 0f) else it
+                                }
                                 settings.touch.layout.positions[control]=current.move(amount.x,amount.y,availableX,availableY)
                             }
                         })
                     }else Modifier
-                    val alignedY=if(rowIndex>=0&&pose.centeredRow){
+                    val alignedY=menuPosition?.second ?: if(rowIndex>=0&&pose.centeredRow){
                         val itemHeight=with(density){h.toPx()}
                         TouchGeometry.rowItemTop(canvasHeight,itemHeight,rowCenterY)
                     }else pose.y*availableY
@@ -257,7 +265,7 @@ fun TouchOverlay(settings:GameSettings,input:GameInput,editing:Boolean,onPause:(
                     .padding(16.dp)){
                     Text("Buttons",fontSize=21.sp,color=TouchInk)
                     Text("Tap a name to change its size",fontSize=12.sp,color=TouchInk)
-                    Column(Modifier.weight(1f,fill=false).verticalScroll(rememberScrollState())){
+                    Column(Modifier.weight(1f,fill=false).scrollWithIndicator()){
                     TouchControl.entries.forEach{control->
                         val pose=settings.touch.layout.positions.getValue(control)
                         Row(verticalAlignment=Alignment.CenterVertically){

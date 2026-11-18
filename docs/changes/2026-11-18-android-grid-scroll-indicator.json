@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "android-grid-scroll-indicator",
+  "title": "Add Android grid control and menu scroll indicators",
+  "kind": "added",
+  "platforms": [
+    "Android"
+  ],
+  "changes": [
+    "Show a persistent right-hand indicator on scrollable Android menu panels and controller and touch dialogs.",
+    "Add persistent Grid auto and 0–100% strength controls using a filtered mobile LCD-grid approximation for world and game UI layers; Auto follows desktop profile defaults."
+  ],
+  "validation": [
+    "ARM64 Docker build and 27 Kotlin tests passed in android-grid-scroll-apk-1ta3fdgb.",
+    "Mesa GLES compiled and linked both shaders and verified grid off/on and screen profile samples for world and panel layers in android-screen-grid-gles-f2wvtrg8.",
+    "Updated the connected moto g34 5G using adb install -r; original first-install time retained."
+  ],
+  "limitations": [
+    "Android grid is a simplified filtered model, not pixel-equivalent to the desktop grid; physical-device visual appearance, scrolling and touch were not manually verified."
+  ],
+  "files": [
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/ScrollIndicator.kt",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/MainActivity.kt",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/GameSurface.kt",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/NativeBridge.kt",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/GamepadSettings.kt",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/TouchControls.kt",
+    "AndroidPort/android/app/src/test/java/com/fftarecomp/port/ViewAndInputTest.kt",
+    "AndroidPort/android/README.md"
+  ],
+  "references": [
+    "AndroidPort/android/README.md"
+  ]
+}

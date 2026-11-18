@@ -85,6 +85,26 @@ Documentation: [2026-11-18-verify-range-indirect-registry-readers.json](docs/cha
 
 [Change record](docs/changes/2026-11-18-verify-range-substitution-dispatcher-domain.json)
 
+## 2026-11-18 — Verify positive range reads during Fast
+
+Type: changed. Platforms: EUR / Windows GNU under Wine and Xvfb.
+
+**Changes**
+
+- Run the Bank Select input with Fast enabled in the paused GUI before guest execution, and compare the exact observed input sequence with a raw reference.
+
+**Validation**
+
+- Wine bounded-range-bank-gui-fast-positive-wine-hr3m809u passes: Fast 400% ON precedes all 48 traced guest frames; the managed path serves 23 range bytes across five records. A raw native-dispatch GUI session replays the same 48 input masks and matches complete state and clock initially and at the end. Guarded translation hashes match, sessions close normally, inputs remain protected, scratch removed and Wine drains. Initial kpt4doby failed before guest execution because the driver selected a nonexistent menu label; Wine drained.
+
+**Limitations**
+
+- ROM bytes are unaltered, video and audio are not compared per frame, native dispatch may fall back to interpretation, and physical Windows and other reader contexts remain open. This does not complete the parent ROM validation tasks.
+
+Documentation: [2026-11-18-verify-range-bank-fast-gui.json](docs/changes/2026-11-18-verify-range-bank-fast-gui.json).
+
+[Change record](docs/changes/2026-11-18-verify-range-positive-fast-gui.json)
+
 ## 2026-11-18 — Verify indirect registry reads of the bounded-range source
 
 Type: changed. Platforms: EUR / Windows GNU under Wine.
@@ -124,6 +144,66 @@ Type: changed. Platforms: EUR / Windows GNU under Wine.
 Documentation: [2026-11-18-verify-range-substitution-dispatcher-domain.json](docs/changes/2026-11-18-verify-range-substitution-dispatcher-domain.json).
 
 [Change record](docs/changes/2026-11-18-verify-range-indexed-context-overlap.json)
+
+## 2026-11-18 — Verify range lookup in native-dispatch Bank GUI sessions
+
+Type: changed. Platforms: EUR / Windows GNU under Wine and Xvfb.
+
+**Changes**
+
+- Compare the source-guided Bank Select input in isolated raw and E170 managed GUI sessions with native dispatch and the verified guarded translation.
+
+**Validation**
+
+- Wine bounded-range-bank-gui-native-pair-wine-g3fnb1x5 passes: 120 input frames, equal complete-state hashes and guest clocks at initial, 8, 20 and 120 frames, 12 managed range reads serving 23 bytes across five records, and the expected cache hash in both sessions. GUI sessions close normally, inputs remain protected, scratch removed and Wine drains. The managed log reports a debug-control access-denied diagnostic and the raw log a D-Bus assertion; requested controls and closes succeed.
+
+**Limitations**
+
+- The GUI pair uses unaltered ROM bytes and does not compare video/audio every frame; native dispatch may fall back to interpretation. Fast, physical Windows, other readers, legacy IRQ equivalence and broader regressions remain open.
+
+Documentation: [2026-11-18-verify-range-bank-gui-pair.json](docs/changes/2026-11-18-verify-range-bank-gui-pair.json).
+
+[Change record](docs/changes/2026-11-18-verify-range-bank-native-gui-pair.json)
+
+## 2026-11-18 — Verify range lookup in paired Bank GUI sessions
+
+Type: changed. Platforms: EUR / Windows GNU under Wine and Xvfb.
+
+**Changes**
+
+- Compare the source-guided Bank Select input in isolated raw and E170 managed GUI debug sessions using interpreter execution.
+
+**Validation**
+
+- Wine bounded-range-bank-gui-pair-wine-t6rwu_qk passes: 120 input frames, equal complete-state hashes and guest clocks at initial, 8, 20 and 120 frames, and 12 managed range reads serving 23 bytes across five records. Both GUI sessions close normally, the llvmpipe Vulkan presenter is active, protected inputs are unchanged, scratch is removed and Wine drains.
+
+**Limitations**
+
+- This GUI pair does not alter the raw ROM source or compare video/audio every frame; generated/native GUI, Fast and physical Windows remain untested. The earlier GUI unit wamu6k3z remains FAIL; this successful normal debug-session run does not reclassify it. Other readers, legacy IRQ equivalence and broader regressions remain open.
+
+Documentation: [2026-11-18-verify-e170-range-backup-restart.json](docs/changes/2026-11-18-verify-e170-range-backup-restart.json), [2026-11-18-verify-bounded-range-bank-select.json](docs/changes/2026-11-18-verify-bounded-range-bank-select.json).
+
+[Change record](docs/changes/2026-11-18-verify-range-bank-gui-pair.json)
+
+## 2026-11-18 — Verify Bank Fast continuation against raw GUI
+
+Type: changed. Platforms: EUR / Windows GNU under Wine and Xvfb.
+
+**Changes**
+
+- Compare a managed GUI Fast continuation following Bank input against an equal-input, equal-frame raw reference with native dispatch.
+
+**Validation**
+
+- Wine unit bounded-range-bank-gui-fast-traced-wine-a6u0qv7x passes: the UI trace records a Fast toggle followed by eight completed neutral frames, and the menu reports Fast 400% ON. Twelve neutral continuation frames and the preceding Bank input match full-state hashes and clock at four endpoints. The managed session serves 23 aggregate range bytes. Inputs protected, sessions close normally, scratch removed and Wine drains. Earlier sk4e6n7b passed but did not retain event order.
+
+**Limitations**
+
+- Range reads are aggregated across the whole session, so no read is attributed specifically to Fast. ROM bytes are unaltered, video/audio are not compared per frame, and native dispatch can fall back. Other readers, broader regressions, physical Windows and deferred platforms remain open.
+
+Documentation: [2026-11-18-verify-range-bank-native-gui-pair.json](docs/changes/2026-11-18-verify-range-bank-native-gui-pair.json).
+
+[Change record](docs/changes/2026-11-18-verify-range-bank-fast-gui.json)
 
 ## 2026-11-18 — Verify ordinary text reader audio and registry sources
 
@@ -253,6 +333,46 @@ Documentation: [2026-11-17-integrate-european-script39-special-poses.json](docs/
 
 [Change record](docs/changes/2026-11-18-verify-european-special-geometry-ordinary-use.json)
 
+## 2026-11-18 — Verify E170 range owner Load and Undo
+
+Type: changed. Platforms: EUR / Windows GNU under Wine.
+
+**Changes**
+
+- Check failed range dataset replacement and slot Load/Undo with an isolated E170 dataset copy and an active bounded-range owner.
+
+**Validation**
+
+- Windows GNU build bounded-range-e170-lifecycle-build-awvwepf1 and Wine bounded-range-e170-lifecycle-wine-p55pua3g pass. Missing and coherently modified range files are rejected without changing the active owner or complete state; slot Load and Undo restore exact states and retain the owner. All 88 bytes are served with altered raw source after Undo and by a fresh owner after restoration. Inputs protected, synthetic slots and scratch removed, Wine drained.
+
+**Limitations**
+
+- This uses the direct slot API and a synthetic machine; GUI, Fast, backup restoration, restart and other resource lifecycles are not tested. Other range readers and broader regressions remain open; Linux, USA, native Windows and performance are deferred.
+
+Documentation: [2026-11-18-verify-bounded-range-bank-select.json](docs/changes/2026-11-18-verify-bounded-range-bank-select.json).
+
+[Change record](docs/changes/2026-11-18-verify-e170-range-load-undo.json)
+
+## 2026-11-18 — Verify E170 range owner backup and restart
+
+Type: changed. Platforms: EUR / Windows GNU under Wine.
+
+**Changes**
+
+- Check range-owner continuity through backup restoration and restart with synthetic cartridge saves and the copied dataset unavailable.
+
+**Validation**
+
+- Windows GNU build bounded-range-e170-backup-build-abitraof and Wine bounded-range-e170-backup-wine-tg0_or33 pass. Backup restoration and restart preserve the owner, restore the expected complete boot state and cartridge bytes, and each serve all 88 range bytes with raw bytes altered. Inputs protected, synthetic saves and scratch removed, Wine drained.
+
+**Limitations**
+
+- Direct backup and restart APIs and synthetic saves do not establish GUI actions, Fast or other migrated resource lifecycles. Other range readers and broader regressions remain open; Linux, USA, native Windows and performance are deferred.
+
+Documentation: [2026-11-18-verify-e170-range-load-undo.json](docs/changes/2026-11-18-verify-e170-range-load-undo.json).
+
+[Change record](docs/changes/2026-11-18-verify-e170-range-backup-restart.json)
+
 ## 2026-11-18 — Verify E170 bounded-range neighboring owners
 
 Type: changed. Platforms: EUR / Windows GNU under Wine.
@@ -273,6 +393,26 @@ Type: changed. Platforms: EUR / Windows GNU under Wine.
 Documentation: [2026-11-18-verify-bounded-range-wrapper-prefixes.json](docs/changes/2026-11-18-verify-bounded-range-wrapper-prefixes.json).
 
 [Change record](docs/changes/2026-11-18-verify-e170-range-adjacent-owner-boundaries.json)
+
+## 2026-11-18 — Verify E170 source-boundary read composition
+
+Type: changed. Platforms: EUR / Windows GNU under Wine.
+
+**Changes**
+
+- Exercise bus and native API read-width composition at every distinct source boundary in the E170 manifest with altered backing ROM.
+
+**Validation**
+
+- Windows GNU build e170-all-source-boundaries-build-daq6ns_h and Wine e170-all-source-boundaries-wine-yeg0bdt_ pass 445,350 probes across all 74,225 distinct boundaries of 54,792 source spans and mirrors 08/0a/0c. Halfword and word results match byte composition; the range owner serves 96 bytes. Inputs protected, scratch removed and Wine drained.
+
+**Limitations**
+
+- Boundary samples use no guest execution and do not establish every source byte, ordinary usage or timing. Byte-origin counts include repeated observations and are not resource ownership attribution; both managed and raw backing values are expected. Linux, USA, native Windows and performance remain deferred.
+
+Documentation: [2026-11-18-verify-e170-range-adjacent-owner-boundaries.json](docs/changes/2026-11-18-verify-e170-range-adjacent-owner-boundaries.json).
+
+[Change record](docs/changes/2026-11-18-verify-e170-all-source-boundaries.json)
 
 ## 2026-11-18 — Verify current Windows ROM-data synthetic regressions
 
@@ -587,6 +727,26 @@ Documentation: [2026-11-17-audit-european-text-reader-e170-ownership.json](docs/
 
 [Change record](docs/changes/2026-11-18-close-text-reader-physical-ownership-audit.json)
 
+## 2026-11-18 — Audit unaligned range-source pointers
+
+Type: changed. Platforms: EUR / source census.
+
+**Changes**
+
+- Extend the bounded-range exact-pointer census to every byte offset of the authenticated EUR ROM.
+
+**Validation**
+
+- Protected census bounded-range-unaligned-pointer-census-l4aomd4j scans all byte offsets for exact little-endian 32-bit pointers into the 88-byte range on mirrors 08, 0a and 0c. It finds the previously known aligned 01abe8 literal and zero unaligned occurrences. The ROM and audit script remain protected; scratch removed.
+
+**Limitations**
+
+- Exact byte patterns do not prove execution and do not cover computed or differently encoded addresses, RAM-built pointers, other mappings or indirect reads. Other range consumers and broader validation remain open; no performance measurements.
+
+Documentation: [2026-11-18-audit-range-nearby-pointer-roots.json](docs/changes/2026-11-18-audit-range-nearby-pointer-roots.json).
+
+[Change record](docs/changes/2026-11-18-audit-range-unaligned-pointers.json)
+
 ## 2026-11-18 — Audit nearby range-source pointer roots
 
 Type: changed. Platforms: EUR / Windows GNU under Wine.
@@ -606,6 +766,114 @@ Type: changed. Platforms: EUR / Windows GNU under Wine.
 Documentation: [2026-11-18-verify-range-indexed-context-overlap.json](docs/changes/2026-11-18-verify-range-indexed-context-overlap.json).
 
 [Change record](docs/changes/2026-11-18-audit-range-nearby-pointer-roots.json)
+
+## 2026-11-18 — Classify four nearby range pointer patterns
+
+Type: changed. Platforms: EUR / source audit.
+
+**Changes**
+
+- Cross-check the four nearby aligned pointer patterns without PC-relative candidates against E170 source spans and exact references to their locations.
+
+**Validation**
+
+- Protected audit bounded-range-four-root-use-audit-eqni5tiq finds one pattern entirely within an E170 PCM wave source and three entirely within BG graphics source spans. No exact little-endian ROM pointer targets their byte positions or the three preceding positions through 08/0a/0c mirrors. The authenticated ROM, manifest and inputs remain protected; scratch removed.
+
+**Limitations**
+
+- Source ownership and absence of exact matches do not prove a pattern cannot be interpreted as code or data, nor exclude computed or RAM-built references and other mappings. Other reader contexts and parent validation remain open; no performance measurement.
+
+Documentation: [2026-11-18-audit-range-nearby-pointer-roots.json](docs/changes/2026-11-18-audit-range-nearby-pointer-roots.json).
+
+[Change record](docs/changes/2026-11-18-audit-four-near-range-root-uses.json)
+
+## 2026-11-18 — Show the touch menu button above the D-pad
+
+Type: changed. Platforms: Android.
+
+**Changes**
+
+- Show the Menu touch control above the D-pad by default, following the D-pad until moved separately; migrate older layouts while preserving customized positions and other controls.
+
+**Validation**
+
+- Android ARM64 Docker build and 26 Kotlin unit tests passed in android-touch-menu-apk-1edzetc3, including default placement and drag unanchoring.
+- Installed the APK as an update on the connected moto g34 5G using adb install -r; package retained its original first-install time.
+
+**Limitations**
+
+- The on-device button appearance and tapping behavior were not manually verified.
+
+Documentation: [README.md](AndroidPort/android/README.md).
+
+[Change record](docs/changes/2026-11-18-android-touch-menu-button.json)
+
+## 2026-11-18 — Add Android screen profiles and video controls
+
+Type: added. Platforms: Android.
+
+**Changes**
+
+- Add persistent Raw, Unlit, Frontlit, Backlit and Classic screen profiles using the desktop color model and sRGB output, with automatic or manual darkening for reflective profiles.
+- Add an optional emulated-frame and OpenGL draw callback counter and adjustable pause-menu background transparency.
+
+**Validation**
+
+- Android ARM64 Docker build and 25 Kotlin tests passed in android-video-menu-apk-resume-agi0r44k.
+- Serial Android host Rust tests: 30 passed, 2 ignored; Mesa GLES world and panel color samples matched desktop lookup tables for four profiles and three darkening settings, with raw brightness samples checked.
+
+**Limitations**
+
+- No physical Android device test; OpenGL callback counts do not measure display refresh. Temporal response, grid, scaling and other desktop menu features remain unported.
+
+Documentation: [README.md](AndroidPort/android/README.md).
+
+[Change record](docs/changes/2026-11-18-android-screen-profiles-fps.json)
+
+## 2026-11-18 — Add Android game brightness control
+
+Type: added. Platforms: Android.
+
+**Changes**
+
+- Add a persistent 50%–150% game brightness control to Video & zoom, applied to the world and independent game UI panels.
+- Document the Android menu differences from desktop.
+
+**Validation**
+
+- ARM64 Docker APK build and Kotlin unit tests passed in android-menu-brightness-retry-bo68b3mn.
+- Mesa EGL compiled and linked both GLES2 shaders; world pixel output passed at 50%, 100% and 150% in android-menu-render-i55j9x69.
+
+**Limitations**
+
+- Physical Android device rendering and input were not tested; the remaining desktop menu features are not ported.
+
+Documentation: [README.md](AndroidPort/android/README.md).
+
+[Change record](docs/changes/2026-11-18-android-menu-brightness.json)
+
+## 2026-11-18 — Add Android grid control and menu scroll indicators
+
+Type: added. Platforms: Android.
+
+**Changes**
+
+- Show a persistent right-hand indicator on scrollable Android menu panels and controller and touch dialogs.
+- Add persistent Grid auto and 0–100% strength controls using a filtered mobile LCD-grid approximation for world and game UI layers; Auto follows desktop profile defaults.
+
+**Validation**
+
+- ARM64 Docker build and 27 Kotlin tests passed in android-grid-scroll-apk-1ta3fdgb.
+- Mesa GLES compiled and linked both shaders and verified grid off/on and screen profile samples for world and panel layers in android-screen-grid-gles-f2wvtrg8.
+- Updated the connected moto g34 5G using adb install -r; original first-install time retained.
+
+**Limitations**
+
+- Android grid is a simplified filtered model, not pixel-equivalent to the desktop grid; physical-device visual appearance, scrolling and touch were not manually verified.
+
+Documentation: [README.md](AndroidPort/android/README.md).
+
+[Change record](docs/changes/2026-11-18-android-grid-scroll-indicator.json)
 
 ## 2026-11-17 — Verify European text copy callbacks
 

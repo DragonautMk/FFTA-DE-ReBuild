@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "verify-range-positive-fast-gui",
+  "title": "Verify positive range reads during Fast",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Windows GNU under Wine and Xvfb"
+  ],
+  "changes": [
+    "Run the Bank Select input with Fast enabled in the paused GUI before guest execution, and compare the exact observed input sequence with a raw reference."
+  ],
+  "validation": [
+    "Wine bounded-range-bank-gui-fast-positive-wine-hr3m809u passes: Fast 400% ON precedes all 48 traced guest frames; the managed path serves 23 range bytes across five records. A raw native-dispatch GUI session replays the same 48 input masks and matches complete state and clock initially and at the end. Guarded translation hashes match, sessions close normally, inputs remain protected, scratch removed and Wine drains. Initial kpt4doby failed before guest execution because the driver selected a nonexistent menu label; Wine drained."
+  ],
+  "limitations": [
+    "ROM bytes are unaltered, video and audio are not compared per frame, native dispatch may fall back to interpretation, and physical Windows and other reader contexts remain open. This does not complete the parent ROM validation tasks."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-18-verify-range-bank-fast-gui.json"
+  ]
+}

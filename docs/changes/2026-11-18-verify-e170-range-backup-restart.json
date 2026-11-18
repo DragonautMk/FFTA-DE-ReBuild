@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "verify-e170-range-backup-restart",
+  "title": "Verify E170 range owner backup and restart",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Windows GNU under Wine"
+  ],
+  "changes": [
+    "Check range-owner continuity through backup restoration and restart with synthetic cartridge saves and the copied dataset unavailable."
+  ],
+  "validation": [
+    "Windows GNU build bounded-range-e170-backup-build-abitraof and Wine bounded-range-e170-backup-wine-tg0_or33 pass. Backup restoration and restart preserve the owner, restore the expected complete boot state and cartridge bytes, and each serve all 88 range bytes with raw bytes altered. Inputs protected, synthetic saves and scratch removed, Wine drained."
+  ],
+  "limitations": [
+    "Direct backup and restart APIs and synthetic saves do not establish GUI actions, Fast or other migrated resource lifecycles. Other range readers and broader regressions remain open; Linux, USA, native Windows and performance are deferred."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/range_lookup_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-18-verify-e170-range-load-undo.json"
+  ]
+}

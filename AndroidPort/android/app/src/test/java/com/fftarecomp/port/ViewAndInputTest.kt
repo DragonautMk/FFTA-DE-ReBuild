@@ -4,6 +4,13 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class ViewAndInputTest {
+    @Test fun automaticGridFollowsScreenProfile() {
+        assertEquals(0f,defaultGridStrength(ScreenProfile.RAW))
+        assertEquals(0f,defaultGridStrength(ScreenProfile.CLASSIC))
+        assertEquals(1f,defaultGridStrength(ScreenProfile.UNLIT))
+        assertEquals(1f,defaultGridStrength(ScreenProfile.FRONTLIT))
+        assertEquals(1f,defaultGridStrength(ScreenProfile.BACKLIT))
+    }
     @Test fun zoomExpandsWorldInBothAxesWithinCoreLimits() {
         AspectMode.entries.forEach { aspect ->
             val base=ViewConfig.create(aspect,0)

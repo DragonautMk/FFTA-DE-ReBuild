@@ -23711,3 +23711,71 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Outcome: completed for the scoped aligned-pointer and local-window census
 - Evidence: protected EUR `wdb_l7ok` screens 18 aligned pointer words within 1,023 bytes before or inside the range. Wine `7zra4rc1` and `rm4e5mhp` bound the shown extra byte-index and normal geometry reads before the range; inputs protected, Wine drained. See `docs/changes/2026-11-18-audit-range-nearby-pointer-roots.json`.
 - Limits: one apparent pool candidate and four words without scoped PC-relative candidates remain unresolved; unaligned or RAM-built pointers, alternate entries, larger/dynamic offsets and indirect calls remain outside this census. Parent remains partial.
+
+### ROMDATA-05-RANGE-37140C-E170-LOAD-UNDO
+
+- Outcome: completed for direct slot and replacement checks
+- Evidence: Windows GNU build `awvwepf1` and Wine `p55pua3g` reject missing and coherently altered range replacement without changing owner or full state. Slot Load/Undo restore exact states and preserve the owner; all 88 bytes are served after Undo and by a fresh owner. Inputs protected, scratch removed and Wine drained. See `docs/changes/2026-11-18-verify-e170-range-load-undo.json`.
+- Limits: synthetic machine and slot API; GUI, Fast, backup restoration, restart, other resource lifecycles and parent tasks remain open.
+
+### ROMDATA-05-RANGE-37140C-E170-BACKUP-RESTART
+
+- Outcome: completed for direct backup and restart APIs
+- Evidence: Windows GNU build `abitraof` and Wine `tg0_or33` preserve the active owner with the dataset unavailable. Backup restoration and restart each match expected complete boot state and cartridge bytes and serve all 88 range bytes with raw source altered. Inputs protected, synthetic saves and scratch removed; Wine drained. See `docs/changes/2026-11-18-verify-e170-range-backup-restart.json`.
+- Limits: synthetic saves and direct APIs; GUI, Fast, other resources and parent tasks remain open.
+
+### ROMDATA-05-RANGE-37140C-BANK-GUI-PAIR
+
+- Outcome: completed for the interpreter GUI comparison
+- Evidence: Wine/Xvfb `t6rwu_qk` runs the authenticated 120-frame Bank input in isolated raw and E170 managed GUI sessions. Full-state hashes and guest clocks match at initial, 8, 20 and 120 frames; managed range reads 23 bytes across five records. Windows close normally; protected inputs pass, scratch removed, Wine drained. See `docs/changes/2026-11-18-verify-range-bank-gui-pair.json`.
+- Limits: raw ROM is unaltered, video/audio are not compared per frame, native GUI, Fast and physical Windows are untested. Parent tasks remain partial.
+
+### ROMDATA-05-RANGE-37140C-BANK-NATIVE-GUI-PAIR
+
+- Outcome: completed for native-dispatch GUI endpoints
+- Evidence: Wine/Xvfb `g3fnb1x5` runs the authenticated 120-frame Bank input in isolated raw and E170 managed sessions with the verified guarded object. State hashes and clocks match at four endpoints; managed reads 23 range bytes across five records; both windows close normally, inputs protected, scratch removed and Wine drained. The managed log has a debug-control access-denied diagnostic and raw log a D-Bus assertion; requested controls succeeded. See `docs/changes/2026-11-18-verify-range-bank-native-gui-pair.json`.
+- Limits: ROM not altered, no per-frame video/audio comparison, generated dispatch may fall back, Fast and physical Windows untested. Parent tasks remain partial.
+
+### ROMDATA-05-RANGE-37140C-BANK-FAST-CONTINUATION
+
+- Outcome: completed for the traced neutral Fast continuation
+- Evidence: Wine/Xvfb `a6u0qv7x` runs the Bank input, then 12 neutral managed frames; the UI records eight after the Fast toggle and reports 400% ON. A raw reference with identical inputs and frame count matches state/clock at four endpoints. Managed session totals 23 range bytes; protected inputs pass, windows close, scratch removed and Wine drains. See `docs/changes/2026-11-18-verify-range-bank-fast-gui.json`.
+- Limits: range reads cannot be attributed specifically to Fast, raw ROM unaltered, video/audio not compared per frame, native dispatch may fall back; parent remains partial. Earlier `sk4e6n7b` passed without retaining event order.
+
+### ROMDATA-05-RANGE-37140C-POSITIVE-FAST-GUI
+
+- Outcome: completed for the selected Bank Fast scene
+- Evidence: Wine/Xvfb `hr3m809u` enables Fast before all 48 traced frames, observes 23 managed range bytes, and matches initial/final complete state and clock against raw GUI with identical input masks. Guarded cache verified, inputs protected, sessions closed, scratch removed and Wine drained. Initial `kpt4doby` failed before guest execution due to wrong menu label; Wine drained. See `docs/changes/2026-11-18-verify-range-positive-fast-gui.json`.
+- Limits: unaltered ROM, no per-frame video/audio comparison, native dispatch may fall back; physical Windows and parent tasks remain open.
+
+### ROMDATA-01-RANGE-37140C-UNALIGNED-POINTER-CENSUS
+
+- Outcome: completed for exact 32-bit source-pointer byte patterns
+- Evidence: protected EUR full-ROM census `l4aomd4j` checks every byte offset for pointers into the 88-byte range on 08/0a/0c mirrors. It finds only the known aligned literal and no unaligned matches. Scratch removed. See `docs/changes/2026-11-18-audit-range-unaligned-pointers.json`.
+- Limits: computed or differently encoded addresses, RAM-built pointers, other mappings and indirect readers remain outside scope; parent remains partial.
+
+### ROMDATA-01-RANGE-37140C-FOUR-NEARBY-ROOT-USES
+
+- Outcome: completed for E170 source and exact-reference classification
+- Evidence: protected audit `eqni5tiq` locates the four patterns without PC-relative candidates inside one PCM wave and three BG graphics source spans and finds no exact ROM pointer to their bytes or three preceding positions on mirrors 08/0a/0c. Inputs protected, scratch removed. See `docs/changes/2026-11-18-audit-four-near-range-root-uses.json`.
+- Limits: ownership and exact-reference absence do not exclude alternate interpretation or computed/RAM-built references; parent remains partial.
+
+### ROMDATA-05-E170-SOURCE-BOUNDARY-WIDTH-REGRESSION
+
+- Outcome: completed for all E170 manifest source boundaries
+- Evidence: Windows GNU build `daq6ns_h` and Wine `yeg0bdt_` pass 445,350 probes over all 74,225 distinct boundaries of 54,792 E170 spans on 08/0a/0c. Halfword/word bus and native API results match byte composition with all backing ROM inverted; range owner serves 96 bytes. Protected inputs pass, scratch removed and Wine drains. See `docs/changes/2026-11-18-verify-e170-all-source-boundaries.json`.
+- Limits: sampled boundaries, not all bytes or guest execution; both raw and managed values expected, repeated byte counts not ownership attribution. Parent tasks remain partial.
+
+### ANDROID-TOUCH-MENU-BUTTON
+
+- Outcome: completed
+- Verified criteria: visible Menu control defaults above D-pad, remains editable, and app updated on connected device.
+- Evidence: `docs/changes/2026-11-18-android-touch-menu-button.json`; APK build and 26 Kotlin tests `1edzetc3`.
+- Limits: on-device appearance and touch not manually checked; broader Android menu parity remains open.
+
+### ANDROID-GRID-SCROLL-INDICATOR
+
+- Outcome: completed
+- Verified criteria: scrollable Android menus show a right-hand indicator; Grid auto and manual controls render a mobile grid on world and UI, and the APK was installed.
+- Evidence: `docs/changes/2026-11-18-android-grid-scroll-indicator.json`; build/tests `1ta3fdgb`, Mesa GLES `f2wvtrg8`.
+- Limits: physical-device visual and touch checks and exact desktop grid equivalence remain open.

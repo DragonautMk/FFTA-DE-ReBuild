@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "verify-range-bank-fast-gui",
+  "title": "Verify Bank Fast continuation against raw GUI",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Windows GNU under Wine and Xvfb"
+  ],
+  "changes": [
+    "Compare a managed GUI Fast continuation following Bank input against an equal-input, equal-frame raw reference with native dispatch."
+  ],
+  "validation": [
+    "Wine unit bounded-range-bank-gui-fast-traced-wine-a6u0qv7x passes: the UI trace records a Fast toggle followed by eight completed neutral frames, and the menu reports Fast 400% ON. Twelve neutral continuation frames and the preceding Bank input match full-state hashes and clock at four endpoints. The managed session serves 23 aggregate range bytes. Inputs protected, sessions close normally, scratch removed and Wine drains. Earlier sk4e6n7b passed but did not retain event order."
+  ],
+  "limitations": [
+    "Range reads are aggregated across the whole session, so no read is attributed specifically to Fast. ROM bytes are unaltered, video/audio are not compared per frame, and native dispatch can fall back. Other readers, broader regressions, physical Windows and deferred platforms remain open."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-18-verify-range-bank-native-gui-pair.json"
+  ]
+}

@@ -27,6 +27,31 @@ unsafe fn java_string(env: *mut JNIEnv, text: &str) -> jstring {
 }
 
 #[no_mangle]
+pub unsafe extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaScreenLut(
+    env: *mut JNIEnv, _: jobject, profile: jint, darken: jfloat, output: jobject,
+) -> jint {
+    guarded(|| {
+        let screen = *crate::profile::ScreenKind::ALL.get(profile as usize).ok_or("Invalid screen profile")?;
+        if !darken.is_finite() || !(-1.0..=1.0).contains(&darken) {
+            return Err("Invalid screen darkening".into());
+        }
+        let api = &**env;
+        if output.is_null() || api.GetDirectBufferCapacity.unwrap()(env,output)<(32768*4) as i64 {
+            return Err("Invalid screen color buffer".into());
+        }
+        let target=api.GetDirectBufferAddress.unwrap()(env,output) as *mut u8;
+        if target.is_null() { return Err("Expected a direct color buffer".into()); }
+        let settings=crate::lut::ColorSettings {
+            screen, darken: if darken<0.0 { f64::NAN } else { darken as f64 },
+            target: crate::color::SRGB,
+        };
+        let lut=crate::lut::ColorLut::build(&settings);
+        std::ptr::copy_nonoverlapping(lut.table.as_ptr() as *const u8,target,32768*4);
+        Ok(1)
+    })
+}
+
+#[no_mangle]
 pub unsafe extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaLoadRom(
     env: *mut JNIEnv, _: jobject, bytes: jbyteArray, save_path: jstring,
 ) -> jint {

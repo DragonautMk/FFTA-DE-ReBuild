@@ -12,9 +12,28 @@ import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer
 import java.util.concurrent.atomic.AtomicInteger
+import java.util.concurrent.atomic.AtomicLong
 import java.util.concurrent.locks.LockSupport
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
+
+// Mobile approximation of the LCD grid. Integrate a smooth periodic pattern
+// over each output pixel and fade it at small scales to avoid visible moire.
+private val gridShader="""
+    uniform float gridStrength;
+    float sincGrid(float x){return abs(x)<0.0001?1.0:sin(x)/x;}
+    vec3 applyGrid(vec3 rgb, vec2 p, vec2 scale){
+        float strength=gridStrength*smoothstep(1.5,2.5,min(scale.x,scale.y));
+        if(strength<=0.0)return rgb;
+        float stripe=sincGrid(9.42477796/max(scale.x,0.001));
+        float row=sincGrid(3.14159265/max(scale.y,0.001));
+        vec3 phase=vec3(2.0,1.0,0.0)*2.09439510;
+        vec3 stripes=cos(vec3(18.84955592*p.x)-phase)*stripe;
+        float rows=cos(6.28318531*p.y)*row;
+        vec3 mask=clamp(vec3(0.72+0.14*rows)+0.14*stripes,0.0,1.0);
+        return mix(rgb,rgb*mask,strength);
+    }
+""".trimIndent()
 
 /** Simulation and audio run together off the UI thread; GL only uploads completed frames. */
 class GameSurface(context: Context, val onError: (String) -> Unit) : GLSurfaceView(context) {
@@ -28,6 +47,30 @@ class GameSurface(context: Context, val onError: (String) -> Unit) : GLSurfaceVi
     @Volatile var audioMode=FastAudio.NORMAL
     @Volatile var soundEnabled = true
     @Volatile var volume = 0.8f
+    var brightness:Float
+        get() = frames.brightness
+        set(value) {
+            if(frames.brightness != value) {
+                frames.brightness=value
+                requestRender()
+            }
+        }
+    var screenColors:ScreenColors
+        get() = frames.screenColors
+        set(value) {
+            if(frames.screenColors != value) {
+                frames.screenColors=value
+                requestRender()
+            }
+        }
+    var gridStrength:Float
+        get() = frames.gridStrength
+        set(value) {
+            if(frames.gridStrength != value) {
+                frames.gridStrength=value
+                requestRender()
+            }
+        }
     @Volatile var experimentalClicks=false
     @Volatile var bubbleSize=1f
     @Volatile var bubbleLength=1f
@@ -56,6 +99,8 @@ class GameSurface(context: Context, val onError: (String) -> Unit) : GLSurfaceVi
         return true
     }
     @Volatile var performance = "Starting..."
+    @Volatile var fpsRates:FpsRates? = null
+        private set
     @Volatile private var running = false
     private var worker: Thread? = null
     private val frames = FrameRenderer(onError)
@@ -112,6 +157,7 @@ class GameSurface(context: Context, val onError: (String) -> Unit) : GLSurfaceVi
         var deadline = System.nanoTime()
         var count = 0
         var sampleStart = deadline
+        val fpsMeter=FpsMeter(deadline,frames.drawnFrames.get())
         var simulationNanos = 0L
         var wasPaused = false
         try {
@@ -131,6 +177,10 @@ class GameSurface(context: Context, val onError: (String) -> Unit) : GLSurfaceVi
                     deadline = System.nanoTime()
                     sampleStart = deadline; count = 0; simulationNanos = 0
                     continue
+                }
+                if(wasPaused) {
+                    fpsMeter.reset(System.nanoTime(),frames.drawnFrames.get())
+                    fpsRates=null
                 }
                 wasPaused = false
                 val request=viewRequest
@@ -163,6 +213,7 @@ class GameSurface(context: Context, val onError: (String) -> Unit) : GLSurfaceVi
                 val frameNanos=System.nanoTime()-start
                 simulationNanos += frameNanos
                 if (samples < 0) throw IllegalStateException(NativeBridge.gbaStatus())
+                fpsMeter.record(multiplier,start+frameNanos,frames.drawnFrames.get())?.let { fpsRates=it }
                 val recycled=frames.publish(back, config,uiBack)
                 back=recycled.first
                 uiBack=recycled.second?:UiBuffers(bytes)
@@ -237,6 +288,13 @@ private class UiBuffers(bytes:Int){
 }
 
 private class FrameRenderer(private val onError: (String) -> Unit) : GLSurfaceView.Renderer {
+    val drawnFrames=AtomicLong(0)
+    @Volatile var brightness=1f
+    @Volatile var gridStrength=0f
+    @Volatile var screenColors=ScreenColors(ScreenProfile.RAW,-1f)
+    private var uploadedColors:ScreenColors?=null
+    private var colorTexture=0
+    private val colorBuffer=ByteBuffer.allocateDirect(32768*4)
     @Volatile var displayedView=ViewConfig(0,0)
         private set
     private data class PublishedFrame(val pixels:ByteBuffer,val view:ViewConfig,val ui:UiBuffers)
@@ -272,7 +330,14 @@ private class FrameRenderer(private val onError: (String) -> Unit) : GLSurfaceVi
             val vertex = shader(GL_VERTEX_SHADER,
                 "attribute vec2 position; attribute vec2 uv; varying vec2 tex; void main(){ gl_Position=vec4(position,0.0,1.0);tex=uv; }")
             val fragment = shader(GL_FRAGMENT_SHADER,
-                "precision mediump float; varying vec2 tex; uniform sampler2D image; void main(){ gl_FragColor=texture2D(image,tex).bgra; }")
+                """precision highp float; varying vec2 tex; uniform sampler2D image; uniform sampler2D colors;
+                uniform float brightness; uniform float useProfile; uniform vec2 sourceSize; uniform vec2 outputScale;
+                $gridShader
+                vec3 screenColor(vec3 c){vec3 v=floor(c*31.0+0.5);float n=v.r+v.g*32.0+v.b*1024.0;
+                  return texture2D(colors,vec2((mod(n,256.0)+0.5)/256.0,(floor(n/256.0)+0.5)/128.0)).rgb;}
+                void main(){vec4 c=texture2D(image,tex).bgra;
+                  vec3 rgb=useProfile>0.5?screenColor(c.rgb):c.rgb;
+                  gl_FragColor=vec4(applyGrid(min(rgb*brightness,1.0),tex*sourceSize,outputScale),c.a);}""".trimIndent())
             program = glCreateProgram()
             glAttachShader(program,vertex); glAttachShader(program,fragment); glLinkProgram(program)
             val linked = IntArray(1); glGetProgramiv(program,GL_LINK_STATUS,linked,0)
@@ -286,6 +351,14 @@ private class FrameRenderer(private val onError: (String) -> Unit) : GLSurfaceVi
             glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST)
             glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_CLAMP_TO_EDGE)
             glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_CLAMP_TO_EDGE)
+            glGenTextures(1,textures,0); colorTexture=textures[0]
+            glBindTexture(GL_TEXTURE_2D,colorTexture)
+            glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST)
+            glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST)
+            glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_CLAMP_TO_EDGE)
+            glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_CLAMP_TO_EDGE)
+            glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA,1,1,0,GL_RGBA,GL_UNSIGNED_BYTE,null)
+            uploadedColors=null
             textureWidth = 0; textureHeight = 0
         uploadedView=null
             uiProgram=glCreateProgram()
@@ -297,8 +370,12 @@ private class FrameRenderer(private val onError: (String) -> Unit) : GLSurfaceVi
             """.trimIndent()))
             glAttachShader(uiProgram,shader(GL_FRAGMENT_SHADER,"""
                 precision highp float;
-                varying vec2 tex; uniform sampler2D panel; uniform sampler2D world;
-                uniform vec2 screen; uniform vec4 worldRect; uniform vec4 clip;
+                varying vec2 tex; uniform sampler2D panel; uniform sampler2D world; uniform sampler2D colors;
+                uniform vec2 screen; uniform vec4 worldRect; uniform vec4 clip; uniform float brightness; uniform float useProfile;
+                uniform vec4 rect;
+                $gridShader
+                vec3 screenColor(vec3 v){float n=v.r+v.g*32.+v.b*1024.;
+                  return texture2D(colors,vec2((mod(n,256.)+.5)/256.,(floor(n/256.)+.5)/128.)).rgb;}
                 void main(){vec2 p=vec2(gl_FragCoord.x,screen.y-gl_FragCoord.y);
                   if(p.x<clip.x||p.y<clip.y||p.x>=clip.x+clip.z||p.y>=clip.y+clip.w)discard;
                   vec4 data=floor(texture2D(panel,tex)*255.+.5);
@@ -308,7 +385,8 @@ private class FrameRenderer(private val onError: (String) -> Unit) : GLSurfaceVi
                   vec3 bg=floor(texture2D(world,(p-worldRect.xy)/worldRect.zw).bgra.rgb*31.+.5);
                   vec3 lane=vec3(1.,2.,1.);
                   vec3 color=floor(min(floor((fg*lane*data.b+bg*lane*data.a+8.)/16.),vec3(31.,63.,31.))/lane);
-                  gl_FragColor=vec4(color/31.,1.);
+                  vec3 rgb=useProfile>0.5?screenColor(color):color/31.;
+                  gl_FragColor=vec4(applyGrid(min(rgb*brightness,1.),tex*vec2(480.,160.),rect.zw/vec2(480.,160.)),1.);
                 }
             """.trimIndent()))
             glLinkProgram(uiProgram)
@@ -370,6 +448,21 @@ private class FrameRenderer(private val onError: (String) -> Unit) : GLSurfaceVi
             mailbox.release(pending)
         }
         val view=uploadedView ?: return
+        val colors=screenColors
+        if(uploadedColors!=colors) {
+            if(colors.profile!=ScreenProfile.RAW) {
+                colorBuffer.position(0)
+                if(NativeBridge.gbaScreenLut(colors.profile.ordinal,colors.darken,colorBuffer)<0) {
+                    onError("Screen colors: ${NativeBridge.gbaStatus()}")
+                    return
+                }
+                colorBuffer.position(0)
+                glActiveTexture(GL_TEXTURE2);glBindTexture(GL_TEXTURE_2D,colorTexture)
+                glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA,256,128,0,GL_RGBA,GL_UNSIGNED_BYTE,colorBuffer)
+            }
+            uploadedColors=colors
+        }
+        glActiveTexture(GL_TEXTURE2);glBindTexture(GL_TEXTURE_2D,colorTexture)
         val uiParams=uploadedUiParams
         val scale = if(view.fillScreen)maxOf(screenWidth.toFloat()/view.width, screenHeight.toFloat()/view.height)
             else minOf(screenWidth.toFloat()/view.width, screenHeight.toFloat()/view.height)
@@ -377,6 +470,14 @@ private class FrameRenderer(private val onError: (String) -> Unit) : GLSurfaceVi
         glViewport((screenWidth-width)/2,(screenHeight-height)/2,width,height)
         glActiveTexture(GL_TEXTURE0);glBindTexture(GL_TEXTURE_2D,texture)
         glUseProgram(program); glUniform1i(glGetUniformLocation(program,"image"),0)
+        val frameBrightness=brightness
+        glUniform1f(glGetUniformLocation(program,"brightness"),frameBrightness)
+        val frameGrid=gridStrength
+        glUniform1f(glGetUniformLocation(program,"gridStrength"),frameGrid)
+        glUniform2f(glGetUniformLocation(program,"sourceSize"),view.width.toFloat(),view.height.toFloat())
+        glUniform2f(glGetUniformLocation(program,"outputScale"),width.toFloat()/view.width,height.toFloat()/view.height)
+        glUniform1i(glGetUniformLocation(program,"colors"),2)
+        glUniform1f(glGetUniformLocation(program,"useProfile"),if(colors.profile==ScreenProfile.RAW)0f else 1f)
         glEnableVertexAttribArray(position); glEnableVertexAttribArray(coordinates)
         vertices.position(0); uv.position(0)
         glVertexAttribPointer(position,2,GL_FLOAT,false,0,vertices)
@@ -385,6 +486,10 @@ private class FrameRenderer(private val onError: (String) -> Unit) : GLSurfaceVi
         if(uiProgram!=0){
             glViewport(0,0,screenWidth,screenHeight)
             glUseProgram(uiProgram)
+            glUniform1f(glGetUniformLocation(uiProgram,"brightness"),frameBrightness)
+            glUniform1f(glGetUniformLocation(uiProgram,"gridStrength"),frameGrid)
+            glUniform1i(glGetUniformLocation(uiProgram,"colors"),2)
+            glUniform1f(glGetUniformLocation(uiProgram,"useProfile"),if(colors.profile==ScreenProfile.RAW)0f else 1f)
             glUniform2f(glGetUniformLocation(uiProgram,"screen"),screenWidth.toFloat(),screenHeight.toFloat())
             glUniform4f(glGetUniformLocation(uiProgram,"worldRect"),((screenWidth-width)/2).toFloat(),
                 ((screenHeight-height)/2).toFloat(),width.toFloat(),height.toFloat())
@@ -404,6 +509,7 @@ private class FrameRenderer(private val onError: (String) -> Unit) : GLSurfaceVi
             glActiveTexture(GL_TEXTURE0)
         }
         displayedView=view
+        drawnFrames.incrementAndGet()
     }
     private fun shader(type: Int, source: String): Int {
         val shader = glCreateShader(type); glShaderSource(shader,source); glCompileShader(shader)

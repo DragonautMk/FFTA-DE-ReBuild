@@ -455,8 +455,15 @@ current evidence before running another check.
   state/clock for that frame (`u_28pjng`) and passes the 120-frame managed pair
   (`jyionxk1`). Both direct wrapper prefixes pass 92 controlled cases across
   all range bounds and an unmatched input (`xfsk4jgx`). Literal census
-  `_s7xtdr9` finds only the reader's aligned source pointer; E170 mixed-owner
+  `_s7xtdr9` finds only the reader's aligned source pointer; full-ROM exact
+  byte-offset census `l4aomd4j` finds no unaligned pointer into the range on
+  mirrors 08/0a/0c. Computed or differently encoded pointers remain open.
+  E170 mixed-owner
   boundary regression `pbj0c8fy` passes 852 typed reads over three mirrors.
+  E170 lifecycle `p55pua3g` verifies failed replacement, slot Load/Undo and
+  all 88 range bytes through a retained or freshly attached owner. Direct
+  backup restoration and restart with an unavailable copy also pass for this
+  owner (`tg0_or33`); these synthetic checks do not cover GUI or Fast.
   Both text-registry prefixes pass all 22 conditional range indices, neighbors
   and high-byte aliases in 192 controlled cases (`44qwhqj_`); the substitution
   dispatcher passes the corresponding 96 cases (`knxnixuk`). The indexed
@@ -467,10 +474,24 @@ current evidence before running another check.
   zero-exit results and unchanged inputs are verified by read-only audit
   `s_g0xk37`. Actual GUI startup cold-builds and loads the same object under
   Wine/Xvfb (`wamu6k3z`, audit `p7tuq7iz`), but its replay fails before any
-  verified frame because no GPU presenter is available. Nearby aligned-pointer
+  verified frame because no GPU presenter is available. A later normal GUI
+  interpreter pair `t6rwu_qk` executes the Bank input for 120 frames and
+  matches state/clock at four endpoints, with 23 managed range bytes and
+  normal close. The native-dispatch GUI pair `g3fnb1x5` matches the same
+  endpoints and reads with the guarded cache. Neither compares video/audio
+  per frame; native dispatch may fall back to interpretation. A traced GUI
+  Fast continuation `a6u0qv7x` matches the raw reference after 12 neutral
+  frames, eight after the toggle; aggregate range reads cannot be attributed
+  specifically to Fast. A later GUI run `hr3m809u` enables Fast before any
+  guest frame and observes 23 range bytes during 48 traced frames; an exact
+  input-matched raw reference has equal initial/final state and clock. It
+  does not compare video/audio per frame or alter ROM bytes.
+  Nearby aligned-pointer
   census `wdb_l7ok` and disassembly `7zra4rc1`/`rm4e5mhp` bound the shown
   additional byte-index and geometry reads before the range in their normal
-  paths; four words lack scoped PC-relative candidates and other address
+  paths. The four words without scoped PC-relative candidates lie in one
+  E170 PCM wave and three BG graphics sources, with no exact ROM pointer to
+  their bytes in the scoped mirror audit (`eqni5tiq`); other address
   constructions remain unexamined. Other computed
   consumers, ordinary indices, legacy IRQ equivalence and broader regressions
   remain open.
@@ -581,7 +602,10 @@ current evidence before running another check.
 - [ ] **ROMDATA-05:** complete required equivalence, saves, audio and rendering
   checks for each remaining migrated family and preserve guest timing and
   side effects; the four short E162 scene windows and cold boot do not establish
-  full-scene, all-input, all-consumer or global equivalence.
+  full-scene, all-input, all-consumer or global equivalence. E170 Wine
+  `yeg0bdt_` checks byte/halfword/word composition at all 74,225 distinct
+  manifest source boundaries with inverted backing ROM and three mirrors;
+  this is a boundary regression, not guest execution or whole-source coverage.
 
 ## 5. Resolve prerequisites before selecting further proofs
 

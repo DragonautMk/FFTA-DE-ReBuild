@@ -20,7 +20,8 @@ class TouchLayoutTest {
         layout.positions[TouchControl.DPAD]=TouchPlacement(.5f,.2f,false)
         layout.reset()
         assertEquals(original,layout.snapshot())
-        assertFalse(layout.positions.getValue(TouchControl.PAUSE).visible)
+        assertTrue(layout.positions.getValue(TouchControl.PAUSE).visible)
+        assertTrue(layout.positions.getValue(TouchControl.PAUSE).aboveDpad)
         assertFalse(layout.positions.getValue(TouchControl.FAST_HOLD).visible)
     }
     @Test fun invalidStoredCoordinatesCannotMakeAControlUnreachable(){
@@ -43,5 +44,15 @@ class TouchLayoutTest {
             assertEquals(12f,left[2]-left[1]-widths[1],.001f)
             assertEquals(width/2,(left.first()+left.last()+widths.last())/2,.001f)
         }
+    }
+    @Test fun menuDefaultsAboveDpadAndDraggingUnanchorsIt(){
+        val menu=TouchPositions().positions.getValue(TouchControl.PAUSE)
+        for((width,height) in listOf(640f to 320f, 900f to 420f)) {
+            val dpadY=.98f*(height-140f)
+            val (x,y)=TouchGeometry.menuAboveDpad(width,height,86f,40f,0f,dpadY,140f,8f)
+            assertEquals(70f,x+43f,.001f)
+            assertEquals(dpadY-8f,y+40f,.001f)
+        }
+        assertFalse(menu.move(10f,10f,500f,200f).aboveDpad)
     }
 }

@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "android-menu-brightness",
+  "title": "Add Android game brightness control",
+  "kind": "added",
+  "platforms": [
+    "Android"
+  ],
+  "changes": [
+    "Add a persistent 50%–150% game brightness control to Video & zoom, applied to the world and independent game UI panels.",
+    "Document the Android menu differences from desktop."
+  ],
+  "validation": [
+    "ARM64 Docker APK build and Kotlin unit tests passed in android-menu-brightness-retry-bo68b3mn.",
+    "Mesa EGL compiled and linked both GLES2 shaders; world pixel output passed at 50%, 100% and 150% in android-menu-render-i55j9x69."
+  ],
+  "limitations": [
+    "Physical Android device rendering and input were not tested; the remaining desktop menu features are not ported."
+  ],
+  "files": [
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/MainActivity.kt",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/GameSurface.kt",
+    "AndroidPort/android/README.md"
+  ],
+  "references": [
+    "AndroidPort/android/README.md"
+  ]
+}

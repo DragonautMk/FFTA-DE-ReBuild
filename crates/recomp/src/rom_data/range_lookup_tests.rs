@@ -1004,3 +1004,315 @@ fn european_range_lookup_production_cache_selection() {
         "performance_measurements":false
     })).unwrap()).unwrap();
 }
+
+#[test]
+#[ignore = "authenticated EUR ROM and E170 dataset; Wine only"]
+fn european_range_lookup_e170_load_undo_failed_replacement() {
+    use std::sync::Arc;
+
+    let root = PathBuf::from(std::env::var_os("FFTA_RANGE_LOOKUP_ROOT").unwrap());
+    let source = PathBuf::from(std::env::var_os("FFTA_RANGE_LOOKUP_DATASET").unwrap());
+    let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    assert_eq!(gba_core::ffta_rom::digest(&rom), gba_core::ffta_rom::EUROPE_SHA256);
+    let replacement = root.join("replacement");
+    assert!(!replacement.exists());
+    fs::create_dir(&replacement).unwrap();
+    for entry in fs::read_dir(&source).unwrap() {
+        let entry = entry.unwrap();
+        assert!(entry.file_type().unwrap().is_file());
+        fs::copy(entry.path(), replacement.join(entry.file_name())).unwrap();
+    }
+    let current = read_dataset(&replacement).unwrap();
+    assert_eq!((current.manifest.extractor_revision, current.manifest.decoder_revision), (170, 169));
+    let index = current.manifest.resources.iter().position(|entry| entry.id == RANGE_LOOKUP_ID).unwrap();
+    let original_manifest = fs::read(replacement.join(MANIFEST_FILE)).unwrap();
+    let original_range = fs::read(replacement.join(RANGE_LOOKUP_FILE)).unwrap();
+    let mut changed_range = current.range_lookup.as_ref().unwrap().clone();
+    changed_range.records[0].opaque_01 ^= 1;
+    let changed_bytes = encode_range_lookup(&changed_range).unwrap();
+    let mut changed_manifest = current.manifest.clone();
+    changed_manifest.resources[index].sha256 = gba_core::ffta_rom::digest(&changed_bytes);
+    drop(current);
+
+    let mut machine = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut machine, &replacement).unwrap();
+    let owner = machine.bus.rom_resources().unwrap().clone();
+    let initial = machine.save_state().unwrap();
+    let aside = root.join("unavailable-range.json");
+    fs::rename(replacement.join(RANGE_LOOKUP_FILE), &aside).unwrap();
+    assert!(attach_from_directory(&mut machine, &replacement).is_err());
+    assert!(Arc::ptr_eq(machine.bus.rom_resources().unwrap(), &owner));
+    assert_eq!(machine.save_state().unwrap(), initial);
+    fs::rename(&aside, replacement.join(RANGE_LOOKUP_FILE)).unwrap();
+    fs::write(replacement.join(RANGE_LOOKUP_FILE), &changed_bytes).unwrap();
+    fs::write(replacement.join(MANIFEST_FILE), toml::to_string_pretty(&changed_manifest).unwrap()).unwrap();
+    let parsed = read_dataset(&replacement).unwrap();
+    assert_eq!(parsed.range_lookup.as_ref().unwrap(), &changed_range);
+    assert_eq!(parsed.manifest.resources[index].sha256, gba_core::ffta_rom::digest(&changed_bytes));
+    drop(parsed);
+    assert!(attach_from_directory(&mut machine, &replacement).is_err());
+    assert!(Arc::ptr_eq(machine.bus.rom_resources().unwrap(), &owner));
+    assert_eq!(machine.save_state().unwrap(), initial);
+
+    let slots_dir = root.join("synthetic-slots");
+    fs::create_dir(&slots_dir).unwrap();
+    let mut slots = crate::save_state::Slots::new(&slots_dir.join("test.sav"), &rom);
+    slots.save(&machine, 1, &vec![[0; 4]; 240 * 160], false).unwrap();
+    machine.cpu.regs[4] = 123;
+    let changed_state = machine.save_state().unwrap();
+    slots.load(&mut machine, 1).unwrap();
+    assert_eq!(machine.save_state().unwrap(), initial);
+    assert!(Arc::ptr_eq(machine.bus.rom_resources().unwrap(), &owner));
+    slots.undo(&mut machine).unwrap();
+    assert_eq!(machine.save_state().unwrap(), changed_state);
+    assert!(Arc::ptr_eq(machine.bus.rom_resources().unwrap(), &owner));
+    let start = SOURCE as usize;
+    machine.bus.rom[start..start + 88].fill(0xa7);
+    let before = owner.range_lookup_stats().unwrap().source_bytes;
+    for offset in start..start + 88 {
+        assert_eq!(machine.bus.read8(0x0800_0000 + offset as u32), rom[offset]);
+    }
+    assert_eq!(owner.range_lookup_stats().unwrap().source_bytes - before, 88);
+    machine.bus.rom[start..start + 88].copy_from_slice(&rom[start..start + 88]);
+    assert_eq!(machine.save_state().unwrap(), changed_state);
+    fs::write(replacement.join(RANGE_LOOKUP_FILE), original_range).unwrap();
+    fs::write(replacement.join(MANIFEST_FILE), original_manifest).unwrap();
+    let mut fresh = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut fresh, &replacement).unwrap();
+    let fresh_owner = fresh.bus.rom_resources().unwrap().clone();
+    fresh.bus.rom[start..start + 88].fill(0xa7);
+    let before = fresh_owner.range_lookup_stats().unwrap().source_bytes;
+    for offset in start..start + 88 {
+        assert_eq!(fresh.bus.read8(0x0a00_0000 + offset as u32), rom[offset]);
+    }
+    assert_eq!(fresh_owner.range_lookup_stats().unwrap().source_bytes - before, 88);
+    drop(slots);
+    fs::remove_dir_all(&slots_dir).unwrap();
+    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
+        "status":"PASS", "revision":[170,169], "missing_and_coherently_altered_replacements_rejected":true,
+        "owner_and_full_state_preserved_on_failed_replacement":true,
+        "load_and_undo_full_state_and_owner_equal":true, "all_88_bytes_served_after_undo_and_fresh_reattach":true,
+        "limits":"Direct slot API and synthetic machine; not GUI, Fast, backup restoration, restart or every resource lifecycle.",
+        "performance_measurements":false
+    })).unwrap()).unwrap();
+}
+
+#[test]
+#[ignore = "authenticated EUR ROM and E170 dataset; Wine only"]
+fn european_range_lookup_e170_backup_restore_restart() {
+    use std::sync::Arc;
+
+    let root = PathBuf::from(std::env::var_os("FFTA_RANGE_LOOKUP_ROOT").unwrap());
+    let source = PathBuf::from(std::env::var_os("FFTA_RANGE_LOOKUP_DATASET").unwrap());
+    let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    assert_eq!(gba_core::ffta_rom::digest(&rom), gba_core::ffta_rom::EUROPE_SHA256);
+    let dataset = root.join("dataset");
+    fs::create_dir(&dataset).unwrap();
+    for entry in fs::read_dir(&source).unwrap() {
+        let entry = entry.unwrap();
+        assert!(entry.file_type().unwrap().is_file());
+        fs::copy(entry.path(), dataset.join(entry.file_name())).unwrap();
+    }
+    let manifest: Manifest = toml::from_str(&fs::read_to_string(dataset.join(MANIFEST_FILE)).unwrap()).unwrap();
+    assert_eq!((manifest.extractor_revision, manifest.decoder_revision), (170, 169));
+    let mut machine = crate::make_machine(rom.clone(), None);
+    let boot = machine.save_state().unwrap();
+    attach_from_directory(&mut machine, &dataset).unwrap();
+    let owner = machine.bus.rom_resources().unwrap().clone();
+    let unavailable = root.join("unavailable");
+    fs::rename(&dataset, &unavailable).unwrap();
+    assert!(attach_from_directory(&mut machine, &dataset).is_err());
+    assert!(Arc::ptr_eq(machine.bus.rom_resources().unwrap(), &owner));
+    let save_dir = root.join("synthetic-saves");
+    fs::create_dir(&save_dir).unwrap();
+    let save = save_dir.join("test.sav");
+    let len = machine.bus.save_data().unwrap().len();
+    assert!(len > 0);
+    fs::write(&save, vec![7; len]).unwrap();
+    let backups = crate::save_backups::Backups::new(&save);
+    backups.capture_startup().unwrap();
+    machine.cpu.regs[4] = 123;
+    machine.bus.load_save_data(&vec![3; len]);
+    backups.restore(backups.choices(len)[0].generation.unwrap(), &mut machine, &boot).unwrap();
+    assert_eq!(machine.bus.save_data().unwrap(), vec![7; len]);
+    assert_eq!(fs::read(&save).unwrap(), vec![7; len]);
+    assert!(Arc::ptr_eq(machine.bus.rom_resources().unwrap(), &owner));
+    let mut expected = crate::make_machine(rom.clone(), None);
+    expected.load_state(&boot).unwrap();
+    expected.bus.load_save_data(&vec![7; len]);
+    assert_eq!(machine.save_state().unwrap(), expected.save_state().unwrap());
+    let start = SOURCE as usize;
+    let check_range = |m: &mut Machine| {
+        m.bus.rom[start..start + 88].fill(0xa7);
+        let before = owner.range_lookup_stats().unwrap().source_bytes;
+        for offset in start..start + 88 {
+            assert_eq!(m.bus.read8(0x0800_0000 + offset as u32), rom[offset]);
+        }
+        assert_eq!(owner.range_lookup_stats().unwrap().source_bytes - before, 88);
+        m.bus.rom[start..start + 88].copy_from_slice(&rom[start..start + 88]);
+    };
+    check_range(&mut machine);
+    machine.bus.load_save_data(&vec![9; len]);
+    machine.cpu.regs[4] = 456;
+    crate::save_backups::restart(&mut machine, &boot, &save).unwrap();
+    assert_eq!(machine.bus.save_data().unwrap(), vec![9; len]);
+    assert_eq!(fs::read(&save).unwrap(), vec![9; len]);
+    assert!(Arc::ptr_eq(machine.bus.rom_resources().unwrap(), &owner));
+    expected.load_state(&boot).unwrap();
+    expected.bus.load_save_data(&vec![9; len]);
+    assert_eq!(machine.save_state().unwrap(), expected.save_state().unwrap());
+    check_range(&mut machine);
+    fs::remove_dir_all(&save_dir).unwrap();
+    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
+        "status":"PASS", "revision":[170,169], "dataset_unavailable":true,
+        "backup_restore_and_restart_exact_boot_state_and_cartridge":true,
+        "owner_preserved_and_all_88_bytes_served_after_each":true,
+        "limits":"Direct backup/restart APIs and synthetic saves; not GUI, Fast or all migrated resources.",
+        "performance_measurements":false
+    })).unwrap()).unwrap();
+}
+
+#[test]
+#[ignore = "authenticated EUR ROM and E170 dataset; Wine only"]
+fn european_e170_all_source_boundaries_width_consistency() {
+    use std::collections::BTreeSet;
+
+    let root = PathBuf::from(std::env::var_os("FFTA_RANGE_LOOKUP_ROOT").unwrap());
+    let dataset = PathBuf::from(std::env::var_os("FFTA_RANGE_LOOKUP_DATASET").unwrap());
+    let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    assert_eq!(gba_core::ffta_rom::digest(&rom), gba_core::ffta_rom::EUROPE_SHA256);
+    let manifest: Manifest = toml::from_str(&fs::read_to_string(dataset.join(MANIFEST_FILE)).unwrap()).unwrap();
+    assert_eq!((manifest.extractor_revision, manifest.decoder_revision), (170, 169));
+    assert_eq!(manifest.resources.len(), 113);
+    let mut boundaries = BTreeSet::new();
+    let mut spans = 0usize;
+    for resource in &manifest.resources {
+        for source in &resource.sources {
+            let start = source.offset as usize;
+            let end = start.checked_add(source.length as usize).unwrap();
+            assert!(start < end && end <= rom.len());
+            boundaries.insert(start);
+            boundaries.insert(end);
+            spans += 1;
+        }
+    }
+    assert_eq!(spans, 54_792);
+    assert_eq!(boundaries.len(), 74_225);
+    let mut managed = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut managed, &dataset).unwrap();
+    let owner = managed.bus.rom_resources().unwrap().clone();
+    let before = owner.range_lookup_stats().unwrap().source_bytes;
+    for byte in &mut managed.bus.rom { *byte ^= 0xff; }
+    let pointer = &mut managed as *mut Machine as *mut std::ffi::c_void;
+    let mut probes = 0u64;
+    let mut from_original = 0u64;
+    let mut from_altered = 0u64;
+    let mut distinct_boundaries = 0usize;
+    for boundary in boundaries {
+        let mut tested = false;
+        for at in [boundary.saturating_sub(1), boundary] {
+            if at + 4 > rom.len() { continue; }
+            // GPIO and cartridge peripherals are not ordinary ROM reads.
+            if (0xc4..=0xc9).any(|gpio| at <= gpio && gpio < at + 4) { continue; }
+            let mut canonical = None;
+            for mirror in [0x0800_0000u32, 0x0a00_0000, 0x0c00_0000] {
+                let address = mirror + at as u32;
+                let bytes: [u8; 4] = std::array::from_fn(|i| managed.bus.read8(address + i as u32));
+                for (i, byte) in bytes.iter().enumerate() {
+                    if *byte == rom[at + i] { from_original += 1; }
+                    else if *byte == (rom[at + i] ^ 0xff) { from_altered += 1; }
+                    else { panic!("unexpected byte at {:x} mirror {:x}", at + i, mirror); }
+                }
+                let half = u16::from_le_bytes([bytes[0], bytes[1]]);
+                let word = u32::from_le_bytes(bytes);
+                assert_eq!(managed.bus.read16(address), half, "bus halfword {at:x} {mirror:x}");
+                assert_eq!(managed.bus.read32(address), word, "bus word {at:x} {mirror:x}");
+                assert_eq!((RT_API.read16)(pointer, address), u32::from(half), "API halfword {at:x} {mirror:x}");
+                assert_eq!((RT_API.read32)(pointer, address), word, "API word {at:x} {mirror:x}");
+                if let Some(expected) = canonical { assert_eq!(bytes, expected, "mirror {at:x} {mirror:x}"); }
+                else { canonical = Some(bytes); }
+                probes += 1;
+            }
+            tested = true;
+        }
+        if tested { distinct_boundaries += 1; }
+    }
+    let range_bytes = owner.range_lookup_stats().unwrap().source_bytes - before;
+    assert!(range_bytes > 0);
+    assert!(from_original > 0 && from_altered > 0);
+    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
+        "status":"PASS", "revision":[170,169], "resources":manifest.resources.len(), "source_spans":spans,
+        "distinct_source_boundaries_tested":distinct_boundaries, "three_mirror_probes":probes,
+        "bus_and_native_api_halfword_word_match_byte_composition":true,
+        "all_rom_backing_bytes_xor_ff":true, "byte_values_from_original":from_original,
+        "byte_values_from_altered_backing":from_altered, "range_owner_bytes":range_bytes,
+        "limits":"Boundary samples only; counts reflect repeated byte observations, not unique bytes or resource ownership. Mixed raw/managed bytes are expected. No guest execution, performance, whole-source coverage or other platforms.",
+        "performance_measurements":false
+    })).unwrap()).unwrap();
+}
+
+#[test]
+#[ignore = "authenticated EUR ROM and E170 dataset; Wine only"]
+fn european_e170_all_source_bytes_read_consistency() {
+    let root = PathBuf::from(std::env::var_os("FFTA_RANGE_LOOKUP_ROOT").unwrap());
+    let dataset = PathBuf::from(std::env::var_os("FFTA_RANGE_LOOKUP_DATASET").unwrap());
+    let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    assert_eq!(gba_core::ffta_rom::digest(&rom), gba_core::ffta_rom::EUROPE_SHA256);
+    let manifest: Manifest = toml::from_str(&fs::read_to_string(dataset.join(MANIFEST_FILE)).unwrap()).unwrap();
+    assert_eq!((manifest.extractor_revision, manifest.decoder_revision, manifest.resources.len()), (170, 169, 113));
+    let mut covered = vec![false; rom.len()];
+    let mut spans = 0usize;
+    for resource in &manifest.resources {
+        for source in &resource.sources {
+            let start = source.offset as usize;
+            let end = start.checked_add(source.length as usize).unwrap();
+            assert!(start < end && end <= rom.len());
+            covered[start..end].fill(true);
+            spans += 1;
+        }
+    }
+    let unique_bytes = covered.iter().filter(|&&v| v).count();
+    assert_eq!((spans, unique_bytes), (54_792, 10_948_338));
+    assert!(!(0xc4..0xca).any(|i| covered[i]), "GPIO is not ordinary ROM");
+    let mut managed = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut managed, &dataset).unwrap();
+    let owner = managed.bus.rom_resources().unwrap().clone();
+    let before = owner.range_lookup_stats().unwrap().source_bytes;
+    for byte in &mut managed.bus.rom { *byte ^= 0xff; }
+    let pointer = &mut managed as *mut Machine as *mut std::ffi::c_void;
+    let mut original = 0u64;
+    let mut inverted = 0u64;
+    let mut byte_reads = 0u64;
+    let mut word_checks = 0u64;
+    for at in 0..rom.len() {
+        if !covered[at] { continue; }
+        let expected = managed.bus.read8(0x0800_0000 + at as u32);
+        if expected == rom[at] { original += 1; }
+        else if expected == (rom[at] ^ 0xff) { inverted += 1; }
+        else { panic!("unexpected value at {at:x}"); }
+        for mirror in [0x0a00_0000u32, 0x0c00_0000] {
+            assert_eq!(managed.bus.read8(mirror + at as u32), expected, "byte mirror {at:x} {mirror:x}");
+        }
+        assert_eq!((RT_API.read8)(pointer, 0x0800_0000 + at as u32), u32::from(expected), "native byte {at:x}");
+        byte_reads += 4;
+        if at % 4 == 0 && at + 4 <= rom.len() && covered[at..at+4].iter().all(|&v| v) {
+            let bytes: [u8; 4] = std::array::from_fn(|i| managed.bus.read8(0x0800_0000 + (at + i) as u32));
+            let word = u32::from_le_bytes(bytes);
+            assert_eq!(managed.bus.read32(0x0800_0000 + at as u32), word, "bus word {at:x}");
+            assert_eq!((RT_API.read32)(pointer, 0x0a00_0000 + at as u32), word, "native word {at:x}");
+            assert_eq!(managed.bus.read32(0x0c00_0000 + at as u32), word, "mirror word {at:x}");
+            word_checks += 3;
+        }
+    }
+    let range_bytes = owner.range_lookup_stats().unwrap().source_bytes - before;
+    assert_eq!(original + inverted, unique_bytes as u64);
+    assert!(original > 0 && inverted > 0 && range_bytes > 0);
+    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
+        "status":"PASS", "revision":[170,169], "resources":manifest.resources.len(), "source_spans":spans,
+        "unique_source_bytes":unique_bytes, "byte_reads_including_native_api":byte_reads,
+        "aligned_fully_covered_word_checks":word_checks, "all_rom_backing_bytes_xor_ff":true,
+        "bytes_equal_original":original, "bytes_equal_inverted_backing":inverted, "range_owner_served_bytes":range_bytes,
+        "limits":"Original/inverted classification is by returned byte value, not a trace of resource ownership. Verified-only or raw-backed sources can return inverted bytes. No guest execution, arbitrary unaligned interiors, performance or other platforms.",
+        "performance_measurements":false
+    })).unwrap()).unwrap();
+}

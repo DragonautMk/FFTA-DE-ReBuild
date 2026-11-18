@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "android-screen-profiles-fps",
+  "title": "Add Android screen profiles and video controls",
+  "kind": "added",
+  "platforms": [
+    "Android"
+  ],
+  "changes": [
+    "Add persistent Raw, Unlit, Frontlit, Backlit and Classic screen profiles using the desktop color model and sRGB output, with automatic or manual darkening for reflective profiles.",
+    "Add an optional emulated-frame and OpenGL draw callback counter and adjustable pause-menu background transparency."
+  ],
+  "validation": [
+    "Android ARM64 Docker build and 25 Kotlin tests passed in android-video-menu-apk-resume-agi0r44k.",
+    "Serial Android host Rust tests: 30 passed, 2 ignored; Mesa GLES world and panel color samples matched desktop lookup tables for four profiles and three darkening settings, with raw brightness samples checked."
+  ],
+  "limitations": [
+    "No physical Android device test; OpenGL callback counts do not measure display refresh. Temporal response, grid, scaling and other desktop menu features remain unported."
+  ],
+  "files": [
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/MainActivity.kt",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/GameSurface.kt",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/NativeBridge.kt",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/FpsMeter.kt",
+    "AndroidPort/android/app/src/test/java/com/fftarecomp/port/FpsMeterTest.kt",
+    "AndroidPort/crates/gba-android/src/color.rs",
+    "AndroidPort/crates/gba-android/src/profile.rs",
+    "AndroidPort/crates/gba-android/src/lut.rs",
+    "AndroidPort/crates/gba-android/src/jni.rs",
+    "AndroidPort/crates/gba-android/src/lib.rs",
+    "AndroidPort/android/README.md"
+  ],
+  "references": [
+    "AndroidPort/android/README.md"
+  ]
+}

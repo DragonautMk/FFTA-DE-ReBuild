@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "verify-range-bank-native-gui-pair",
+  "title": "Verify range lookup in native-dispatch Bank GUI sessions",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Windows GNU under Wine and Xvfb"
+  ],
+  "changes": [
+    "Compare the source-guided Bank Select input in isolated raw and E170 managed GUI sessions with native dispatch and the verified guarded translation."
+  ],
+  "validation": [
+    "Wine bounded-range-bank-gui-native-pair-wine-g3fnb1x5 passes: 120 input frames, equal complete-state hashes and guest clocks at initial, 8, 20 and 120 frames, 12 managed range reads serving 23 bytes across five records, and the expected cache hash in both sessions. GUI sessions close normally, inputs remain protected, scratch removed and Wine drains. The managed log reports a debug-control access-denied diagnostic and the raw log a D-Bus assertion; requested controls and closes succeed."
+  ],
+  "limitations": [
+    "The GUI pair uses unaltered ROM bytes and does not compare video/audio every frame; native dispatch may fall back to interpretation. Fast, physical Windows, other readers, legacy IRQ equivalence and broader regressions remain open."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-18-verify-range-bank-gui-pair.json"
+  ]
+}

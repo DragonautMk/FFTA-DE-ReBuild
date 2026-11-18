@@ -23,6 +23,25 @@ timers, DMA, interrupts, backup media, and C recompiler.
   and exit. Settings persist between launches. Full screen
   adapts to the actual viewport; 1:1 and the Note10's 19:9 are also available.
   Zoom and speed changes are applied live without opening another menu.
+- Video & zoom also controls game brightness from 50% to 150%, in 10% steps.
+  The default is 100%; the setting persists and affects the game image and
+  its independent UI panels, not Android's system brightness.
+- The Screen setting offers Raw, Unlit, Frontlit, Backlit and Classic, using
+  the desktop color models with an sRGB output target. Raw is the default and
+  preserves the existing Android appearance. Unlit and Frontlit also offer
+  automatic or manual Darken. These settings apply to the game and its UI
+  panels and persist between launches.
+- Video & zoom includes a Grid setting with Auto and a 0–100% strength.
+  Auto is off for Raw and Classic and on for the physical panel profiles.
+  Android uses a filtered mobile approximation of the desktop grid; the
+  effect fades out when the image is too small to resolve it.
+- Scrollable menus show a right-hand indicator when more content is available.
+- The optional FPS counter shows emulated frames, OpenGL draw callbacks, or
+  both. The draw count is not a measurement of display refresh or successful
+  buffer swaps; fast-forward can produce multiple emulated frames per draw.
+- Menu transparency adjusts the pause panel background from opaque to
+  transparent; text and controls stay visible. Android may still dim the
+  background while its dialog is open.
 - Multitouch supports diagonal movement and simultaneous action buttons.
   Controller defaults: A/B, stick/D-pad, Start/Select, LT/RT for L/R, LB/RB
   for zoom, L3 for temporary speed switching and R3 for toggle fast-forward.
@@ -35,6 +54,13 @@ timers, DMA, interrupts, backup media, and C recompiler.
 The Android interface and native status messages currently use English; this
 port has no interface-language selector. They do not change the language of
 the game or imported content.
+
+The Android pause menu is separate from the desktop menu. Desktop temporal
+response, desktop grid equivalence, scaling modes, save states, backup management
+and debug tools are not yet available here.
+Desktop window and VSync settings also do not map directly to the Android
+full-screen renderer. The Android aspect choices include the desktop ratios,
+as well as device, square and 19:9 modes; mobile zoom is capped at level 6.
 
 ## Build on Windows
 
@@ -98,3 +124,8 @@ hold-fast-forward button). Save persists normalized positions and visibility;
 Cancel discards edits; Default restores the initial layout. Optional brief
 haptics respect Android's system feedback settings. Android Back remains
 available if the on-screen Pause button is hidden.
+
+The on-screen Menu button opens the pause menu and appears above the D-pad by
+default. It follows the D-pad until moved separately in Edit layout. Existing
+custom button positions are preserved when upgrading; Menu can still be hidden
+through Buttons.

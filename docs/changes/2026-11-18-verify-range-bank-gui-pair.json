@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "verify-range-bank-gui-pair",
+  "title": "Verify range lookup in paired Bank GUI sessions",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Windows GNU under Wine and Xvfb"
+  ],
+  "changes": [
+    "Compare the source-guided Bank Select input in isolated raw and E170 managed GUI debug sessions using interpreter execution."
+  ],
+  "validation": [
+    "Wine bounded-range-bank-gui-pair-wine-t6rwu_qk passes: 120 input frames, equal complete-state hashes and guest clocks at initial, 8, 20 and 120 frames, and 12 managed range reads serving 23 bytes across five records. Both GUI sessions close normally, the llvmpipe Vulkan presenter is active, protected inputs are unchanged, scratch is removed and Wine drains."
+  ],
+  "limitations": [
+    "This GUI pair does not alter the raw ROM source or compare video/audio every frame; generated/native GUI, Fast and physical Windows remain untested. The earlier GUI unit wamu6k3z remains FAIL; this successful normal debug-session run does not reclassify it. Other readers, legacy IRQ equivalence and broader regressions remain open."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-18-verify-e170-range-backup-restart.json",
+    "docs/changes/2026-11-18-verify-bounded-range-bank-select.json"
+  ]
+}

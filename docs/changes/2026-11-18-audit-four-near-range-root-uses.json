@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "audit-four-near-range-root-uses",
+  "title": "Classify four nearby range pointer patterns",
+  "kind": "changed",
+  "platforms": [
+    "EUR / source audit"
+  ],
+  "changes": [
+    "Cross-check the four nearby aligned pointer patterns without PC-relative candidates against E170 source spans and exact references to their locations."
+  ],
+  "validation": [
+    "Protected audit bounded-range-four-root-use-audit-eqni5tiq finds one pattern entirely within an E170 PCM wave source and three entirely within BG graphics source spans. No exact little-endian ROM pointer targets their byte positions or the three preceding positions through 08/0a/0c mirrors. The authenticated ROM, manifest and inputs remain protected; scratch removed."
+  ],
+  "limitations": [
+    "Source ownership and absence of exact matches do not prove a pattern cannot be interpreted as code or data, nor exclude computed or RAM-built references and other mappings. Other reader contexts and parent validation remain open; no performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-18-audit-range-nearby-pointer-roots.json"
+  ]
+}

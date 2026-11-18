@@ -6,7 +6,7 @@ English-first; Italian optional. Accepted report/guide/export scopes remain reco
 
 Read only relevant sections; do not preload archives, CHANGELOG, PROJECT_STATE or large TODOs. Retired artifacts do not invalidate accepted evidence. Rules: [MEMORY_WORKFLOW](MEMORY_WORKFLOW.md#resume-and-repeat-decisions).
 
-States `active`, `suspended`, `interrupted`, `failed`, `waiting` and outcomes `partial`, `integrated_unverified`, `not_started` are distinct. Archive completed/rejected tasks; an open parent does not reopen closed children. `suspended` is outside this session's selection and does not authorize stopping other work or changing another thread's goal.
+Archive completed tasks; open parents do not reopen closed children. Do not stop other work.
 
 ## Running or suspended tasks
 
@@ -29,9 +29,9 @@ States `active`, `suspended`, `interrupted`, `failed`, `waiting` and outcomes `p
 
 ### ROM-DATA-FULL-EUR
 
-- State: active
+- State: suspended
 - Outcome: partial
-- Selection: ROMDATA-01-RANGE-37140C partial. Nearby-root census (`wdb_l7ok`) and candidate windows (`7zra4rc1`, `rm4e5mhp`) bound the shown byte-index and normal geometry reads before the range; other address constructions remain open.
+- Selection: paused by user. ROMDATA-05 partial: full E170 source-byte test is authored but unverified; build `q08ldflm` was live at pause. Do not select or launch further work until resumed.
 - Verified: E158 reader/opening/CLI Wine PASS (`b8vylqkk`, `tucnagm9`).
 - Missing: EUR inventory/consumers/ordinary/ABI/extent/indirect calls, ROMDATA-06/07; Linux/USA/native Windows/new32:9 deferred. Protect originals/saves.
 - ROMDATA-04-METADATA14-ID1-ALIAS: Wine prefix/frame PASS (56wpztn8/gpir8qjh); E170 `3s1xbvpx` 240-frame generated-dispatch row-poisoned state/audio pair PASS. Full importer, per-read native attribution/consumers open.
@@ -66,6 +66,15 @@ States `active`, `suspended`, `interrupted`, `failed`, `waiting` and outcomes `p
   - `ROMDATA-04-LOOP-COMPACT-CATALOG-ORDINARY`: five-loop source/model/native/CLI accepted; Soil Evidence 6bac28/6c0614, Freezeblink 6babc4, Stardust 6bb574, Blue Screw 6c1e78 selector6 paired Wine scenes PASS. Other banks, full animation/domain open. docs/rom_data_compact_catalog.md.
 
 ## Incomplete tasks and open criteria
+
+### ANDROID-MENU-PARITY
+
+- State: active
+- Outcome: partial
+- Verified: brightness, screen profiles, FPS and menu transparency; ARM64/Kotlin, serial Rust and Mesa PASS. `docs/changes/2026-11-18-android-screen-profiles-fps.json`.
+- Missing: response, desktop grid equivalence, scaling, save states, backups, debug and device checks.
+- Resume: Android grid/scroll indicators installed (`1ta3fdgb`); physical UI verification and desktop grid parity open. Preserve `7br7_rwa`.
+
 
 ### CHEAT-DISTRIBUTION
 
@@ -169,8 +178,8 @@ States `active`, `suspended`, `interrupted`, `failed`, `waiting` and outcomes `p
 ## Final handover
 
 - Task: ROMDATA-01-RANGE-37140C; user prioritizes completing existing TODO tasks.
-- Last verified result: `wdb_l7ok`/`7zra4rc1`/`rm4e5mhp` screen 18 nearby aligned words and bound the shown extra byte-index/geometry reads; no complete indirect-reader census claimed.
-- Remaining work: other computed consumers, successful GUI replay and broader regressions before closing; legacy IRQ equivalence and deferred platforms remain open. Controlled indices do not prove ordinary reachability.
-- Errors or blockers: `kitubxih` remains FAIL due to retained ROM copy; `wamu6k3z` remains FAIL because its GUI replay lacked a GPU presenter. Both drained and their read-only audits passed. Preserve failed units; no owned job remains.
-- Next action: assess remaining computed reader evidence and broader regressions; preserve the GUI replay failure and do not repeat accepted pairs.
-- References: `docs/rom_data_runtime.md#european-bounded-range-lookup`; `docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md`; `docs/changes/2026-11-18-audit-range-nearby-pointer-roots.json`.
+- Last verified result: Wine `yeg0bdt_` passes 445,350 mixed-source width/mirror probes at 74,225 distinct E170 boundaries with inverted backing ROM.
+- Remaining work: other computed consumers and broader regressions; legacy IRQ equivalence and deferred platforms remain open.
+- Errors or blockers: user paused; build `q08ldflm` was live at handoff (exec 87700). Preserve it and inspect receipt on resume. `kitubxih` and `wamu6k3z` remain FAIL. Concurrent Android work remains intact.
+- Next action: on explicit resume, inspect owned build `q08ldflm` (exec 87700) and its receipt before any retry or Wine run; source test is unverified.
+- References: `docs/rom_data_runtime.md#european-bounded-range-lookup`; `docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md`; `docs/changes/2026-11-18-verify-e170-all-source-boundaries.json`.

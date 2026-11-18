@@ -2,6 +2,10 @@
 mod compiler;
 mod engine;
 mod jni;
+// Presentation-only color models mirrored from the desktop screen crate.
+mod color;
+mod profile;
+mod lut;
 
 mod audio;
 mod normal_audio;

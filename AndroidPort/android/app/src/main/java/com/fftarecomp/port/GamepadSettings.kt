@@ -8,10 +8,8 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -66,7 +64,7 @@ fun GamepadSettings(settings:GameSettings){
             CaptureControllerEvents(settings)
             Column(Modifier.widthIn(max=500.dp).fillMaxWidth(0.92f).heightIn(max=320.dp)
                 .background(PadPaper,RoundedCornerShape(18.dp)).border(1.dp,PadGold,RoundedCornerShape(18.dp))
-                .padding(18.dp).verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(10.dp)){
+                .padding(18.dp).scrollWithIndicator(),verticalArrangement=Arrangement.spacedBy(10.dp)){
                 Text("Assign "+action.label,fontFamily=FontFamily.Serif,fontSize=23.sp,color=PadInk)
                 Text("Press the button you want to use on your gamepad.",fontSize=13.sp)
                 Text("Waiting for controller input...",color=PadGold,fontSize=15.sp)

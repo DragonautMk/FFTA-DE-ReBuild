@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "verify-e170-range-load-undo",
+  "title": "Verify E170 range owner Load and Undo",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Windows GNU under Wine"
+  ],
+  "changes": [
+    "Check failed range dataset replacement and slot Load/Undo with an isolated E170 dataset copy and an active bounded-range owner."
+  ],
+  "validation": [
+    "Windows GNU build bounded-range-e170-lifecycle-build-awvwepf1 and Wine bounded-range-e170-lifecycle-wine-p55pua3g pass. Missing and coherently modified range files are rejected without changing the active owner or complete state; slot Load and Undo restore exact states and retain the owner. All 88 bytes are served with altered raw source after Undo and by a fresh owner after restoration. Inputs protected, synthetic slots and scratch removed, Wine drained."
+  ],
+  "limitations": [
+    "This uses the direct slot API and a synthetic machine; GUI, Fast, backup restoration, restart and other resource lifecycles are not tested. Other range readers and broader regressions remain open; Linux, USA, native Windows and performance are deferred."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/range_lookup_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-18-verify-bounded-range-bank-select.json"
+  ]
+}
