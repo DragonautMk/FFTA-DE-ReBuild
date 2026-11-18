@@ -107,6 +107,7 @@ pub fn render_height() -> usize {
 pub const HBLANK_FLAG_CYCLE: u64 = 1006;
 
 #[derive(Default, Clone, Copy)]
+#[derive(serde::Serialize, serde::Deserialize)]
 struct Timer {
     reload: u16,
     control: u8,
@@ -132,6 +133,7 @@ impl Timer {
 }
 
 #[derive(Default, Clone, Copy)]
+#[derive(serde::Serialize, serde::Deserialize)]
 struct Dma {
     src: u32,
     dst: u32,
@@ -162,13 +164,17 @@ impl Dma {
 
 /// Video event phase within the current scanline.
 #[derive(Clone, Copy, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize)]
 enum VPhase {
     Hblank,
     LineEnd,
 }
+#[derive(serde::Serialize, serde::Deserialize)]
 
 pub struct MemMap {
+    #[serde(skip)]
     pub ffta_diagnostics: Option<Box<crate::ffta_log::Diagnostics>>,
+    #[serde(skip)]
     pub bios: Vec<u8>,
     pub ewram: Vec<u8>,
     pub iwram: Vec<u8>,
@@ -176,12 +182,14 @@ pub struct MemMap {
     pub palette: Vec<u8>,
     pub vram: Vec<u8>,
     pub oam: Vec<u8>,
+    #[serde(skip)]
     pub rom: Vec<u8>,
     /// Verified, per-cartridge terrain edge policy; never modifies guest memory.
     pub(crate) ffta_bg_edge: crate::ppu::FftaBgEdge,
     pub ffta_sprites: crate::ffta_sprites::SpriteState,
     pub ffta_movement: crate::ffta_movement::MovementState,
     pub ffta_stage: crate::ffta_stage::StageState,
+    #[serde(skip)]
     pub ffta_battle_mouse: crate::ffta_battle_mouse::State,
     pub sram: Vec<u8>,
 
@@ -224,6 +232,7 @@ pub struct MemMap {
     /// render_width()), column i = screen column i - extra(), row j =
     /// screen row j - extra_y(). Allocated for the maximum size.
     pub wide_framebuffer: Vec<u16>,
+    #[serde(skip)]
     pub(crate) zoom_scratch: Vec<u16>,
     pub ffta_dialogue: crate::ffta_dialogue::DialogueState,
     /// Affine BG reference-point accumulators (bg2x, bg2y, bg3x, bg3y),
@@ -303,6 +312,24 @@ pub const AUDIO_SAMPLE_CYCLES: u64 = 256;
 pub const AUDIO_RATE_HZ: u32 = ((1u64 << 24) / AUDIO_SAMPLE_CYCLES) as u32;
 
 impl MemMap {
+    pub(crate) fn validate_state(&self, current: &Self) -> Result<(), String> {
+        let lengths = [(&self.ewram, 0x40000), (&self.iwram, 0x8000),
+            (&self.io, 0x400), (&self.palette, 0x400), (&self.vram, 0x18000),
+            (&self.oam, 0x400), (&self.sram, 0x10000)];
+        if lengths.iter().any(|(v, n)| v.len() != *n)
+            || self.framebuffer.len() != current.framebuffer.len()
+            || self.wide_framebuffer.len() != current.wide_framebuffer.len()
+            || self.backup != current.backup || self.real_bios != current.real_bios
+            || self.flash.as_ref().map(|v| v.data.len()) != current.flash.as_ref().map(|v| v.data.len())
+            || self.eeprom.as_ref().map(|v| v.data.len()) != current.eeprom.as_ref().map(|v| v.data.len())
+            || self.rtc.is_some() != current.rtc.is_some()
+            || self.vline_start > self.clock || self.audio_cursor > self.clock.saturating_add(AUDIO_SAMPLE_CYCLES)
+            || self.fifo.iter().any(|f| f.len() > 32)
+        {
+            return Err("Invalid or incompatible machine state".into());
+        }
+        Ok(())
+    }
     pub fn new(rom: Vec<u8>) -> MemMap {
         let backup = backup::detect(&rom);
         let flash = match backup {

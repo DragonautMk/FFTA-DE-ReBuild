@@ -48,12 +48,14 @@ pub fn detect(rom: &[u8]) -> bool {
 }
 
 #[derive(Clone, Copy, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize)]
 enum Phase {
     Idle,
     Command,
     Read,
     Write,
 }
+#[derive(serde::Serialize, serde::Deserialize)]
 
 pub struct Rtc {
     // --- GPIO port registers (low nibble significant) ---

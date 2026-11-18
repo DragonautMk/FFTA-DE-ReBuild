@@ -2,6 +2,7 @@
 //! future Settings controls; it never changes OAM, VRAM or game coordinates.
 
 #[derive(Clone, Copy, Debug)]
+#[derive(serde::Serialize, serde::Deserialize)]
 pub struct DialogueStyle {
     /// Relative to the normal screen-space size, independently of world zoom.
     pub scale: f32,
@@ -21,6 +22,7 @@ impl Default for DialogueStyle {
     }
 }
 #[derive(Clone, Copy, Debug)]
+#[derive(serde::Serialize, serde::Deserialize)]
 pub struct Placement {
     pub scale: f32,
     pub left: f32,
@@ -72,15 +74,21 @@ pub struct UiProfile {
 }
 
 #[derive(Default)]
+#[derive(serde::Serialize, serde::Deserialize)]
 pub struct DialogueState {
+    #[serde(skip)]
     pub profile: UiProfile,
     /// Debug A/B oracle; normal gameplay uses the optimized extractor.
+    #[serde(skip)]
     pub reference_capture: bool,
     /// Debug oracle for Android's frame-work elimination, not guest behavior.
+    #[serde(skip)]
     pub reference_frame: bool,
     /// Debug A/B for native-row reuse and ordered UI layer merging.
+    #[serde(skip)]
     pub reference_dialogue: bool,
     /// This hardware row contains no UI; its first pass is already the world.
+    #[serde(skip)]
     pub(crate) reuse_world_row: bool,
     pub style: DialogueStyle,
     /// Desktop opt-in: extract native UI instead of drawing it into the world.
@@ -165,6 +173,7 @@ pub const LAYER_INSET: i32 = 120;
 /// Transparent pixels have eva=0, evb=16. No encoded-color alpha approximation.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 #[repr(C)]
+#[derive(serde::Serialize, serde::Deserialize)]
 pub struct UiPixel {
     pub color: u16,
     pub eva: u8,
@@ -274,6 +283,7 @@ mod layer_tests {
 }
 
 #[derive(Default, Clone, Copy, PartialEq, Eq, Debug)]
+#[derive(serde::Serialize, serde::Deserialize)]
 pub enum PanelKind {
     #[default]
     None,
@@ -282,6 +292,7 @@ pub enum PanelKind {
     Notice,
 }
 #[derive(Default)]
+#[derive(serde::Serialize, serde::Deserialize)]
 pub struct Panel {
     pub backing: Vec<UiPixel>,
     /// Raw top BG, before effects or OBJ, for native semitransparent OBJ blending.

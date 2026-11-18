@@ -34,7 +34,8 @@ Archive completed tasks; open parents do not reopen closed children. Do not stop
 - ROMDATA-05 source-byte regression: E170 Wine `ffhtpvms` PASS for all 10,948,338 distinct declared bytes and aligned covered words; raw control confirms inverted backing. Parent equivalence remains partial. `8oo4pd4m` failed an invalid counter assumption; retained.
 - Verified: E158 reader/opening/CLI Wine PASS (`b8vylqkk`, `tucnagm9`).
 - Missing: EUR inventory/consumers/ordinary/ABI/extent/indirect calls, ROMDATA-06/07; Linux/USA/native Windows/new32:9 deferred. Protect originals/saves.
-- Selection: ROMDATA-04-METADATA14-ID1-ALIAS partial; converter `_hfk7lti`, batch `g2cugem4`, dispatch trace `049hqes5` PASS. User prioritizes closure. Missing direct native API attribution; instrument test-only API callbacks on the recorded route and compare row reads, retaining guest-PC limitations. Other routes/consumers open.
+- Failed `kitubxih` and `wamu6k3z` remain retained; do not repeat failed locator `l4i2lrcu`.
+- Selection: ROMDATA-04-METADATA14-ID1-ALIAS partial; converter `_hfk7lti`, batch `g2cugem4`, five direct native API reads `1gs1xgeu` PASS. User prioritizes closure. Ordinary `080ce18c` batch reachability remains unproved; census direct callers and match to retained ordinary routes before a targeted scene. Exact guest PCs/other consumers remain open.
 - Title bank: five lists Wine PASS (hhh7a8lg); other scenes/native and FIRSTBANK-ZERO open (f4_b2apw).
 - BATTLE-40D300-OTHER: index56 Wine PASS (qbzrv3ua); other lists open.
 - CONTEXT-3AE42C: IDs 1–4/return 0 Wine PASS; E168 owns 261/261 pairs (4ami2zcc); meaning/writers/domain/native open.
@@ -72,8 +73,9 @@ Archive completed tasks; open parents do not reopen closed children. Do not stop
 - State: active
 - Outcome: partial
 - Verified: brightness, screen profiles, FPS and menu transparency; ARM64/Kotlin, serial Rust and Mesa PASS. `docs/changes/2026-11-18-android-screen-profiles-fps.json`.
-- Missing: response, full video equivalence, save states, debug and device checks.
-- Resume: user confirms Play works after backup fix (`hjq6ah6k`); full Android menu parity and device readability remain open.
+- Save states: slots, confirmations and undo implemented; synthetic replay/slot tests, ARM64/Kotlin build and moto g34 install PASS. `docs/changes/2026-11-18-android-save-states.json`.
+- Missing: phone save/load and undo test; previews, response, full video parity, debug and device checks. Android states differ from desktop.
+- Resume: await user phone test; preserve personal saves.
 
 
 ### CHEAT-DISTRIBUTION
@@ -177,9 +179,9 @@ Archive completed tasks; open parents do not reopen closed children. Do not stop
 
 ## Final handover
 
-- Task: ROM data validation; user prioritizes completing existing TODO tasks.
-- Last verified result: Wine `049hqes5` finds all five typed alias reads during generated dispatch with no interpreter scope; 240-frame state/video/OAM/audio pair passes.
-- Remaining work: ordinary batch-wrapper reachability, other headers/consumers/scenes/native attribution, broader equivalence and deferred platforms remain open.
-- Errors or blockers: `kitubxih` and `wamu6k3z` remain FAIL. Preserve concurrent work and protected inputs.
-- Next action: inspect live direct-native build `60m29opn` (exec 79588); if PASS run protected Wine attribution test.
-- References: `docs/rom_data_runtime.md#european-bounded-range-lookup`; `docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md`; `docs/changes/2026-11-18-trace-descriptor-native-dispatch-reads.json`.
+- Task: Android save states.
+- Last verified result: synthetic replay, slots, ARM64/Kotlin build and moto g34 install PASS.
+- Remaining work: phone save/load and undo; previews and menu parity. Android states differ from desktop.
+- Errors or blockers: Preserve personal saves and concurrent ROM-data work.
+- Next action: await the user's phone test; use isolated fixtures for failures.
+- References: `docs/changes/2026-11-18-android-save-states.json`; `AndroidPort/android/README.md`.

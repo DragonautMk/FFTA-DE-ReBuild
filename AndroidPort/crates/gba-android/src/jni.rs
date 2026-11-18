@@ -207,6 +207,27 @@ pub extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaRestart(_: *mut 
 }
 
 #[no_mangle]
+pub extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaStateSlots(_: *mut JNIEnv, _: jobject) -> jint {
+    guarded(|| ENGINE.lock().map_err(|_| "Engine mutex poisoned")?.as_ref().ok_or("ROM not loaded")?.state_occupied())
+}
+
+#[no_mangle]
+pub extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaStateAction(_: *mut JNIEnv, _: jobject, action: jint, slot: jint, overwrite: jboolean) -> jint {
+    guarded(|| {
+        let mut lock = ENGINE.lock().map_err(|_| "Engine mutex poisoned")?;
+        let engine = lock.as_mut().ok_or("ROM not loaded")?;
+        match action {
+            0 if (1..=9).contains(&slot) => engine.state_save(slot as u8, overwrite != 0)?,
+            1 if (1..=9).contains(&slot) => engine.state_load(slot as u8)?,
+            2 => engine.state_undo()?,
+            _ => return Err("Invalid save-state action".into()),
+        }
+        engine::status("Save-state operation completed");
+        Ok(1)
+    })
+}
+
+#[no_mangle]
 pub unsafe extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaBackupChoices(env:*mut JNIEnv,_:jobject)->jstring {
     let mut result=String::new();
     let code=guarded(||{

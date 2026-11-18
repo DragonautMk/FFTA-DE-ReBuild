@@ -6426,6 +6426,15 @@ The shared unfiltered test also passes (`t8kj9i3n`). Both units protect inputs,
 remove successful scratch and drain Wine; other routes and native Windows remain
 open.
 
+Wine `alias-direct-native-wine-1gs1xgeu` strengthens that observation with
+test-only wrappers around the memory API passed to generated blocks. All five
+observed row requests call that API directly, serve five packed-owner bytes,
+and occur outside an `interp_one` call; the 240-frame state, clock, video, OAM
+and nonempty audio comparison still passes. The original comparison without
+the wrappers also passes (`0zpte7lm`). Both units protect inputs, remove
+successful scratch and drain Wine. This attributes the five API requests on
+this route, not their exact guest instruction PCs or all other consumers.
+
 Wine `alias-batch-importer-wine-g2cugem4` calls the complete `080ce18c`
 batch wrapper in a controlled state derived from the retained ordinary route.
 It uses authenticated encounter header 3, whose two unit templates both use

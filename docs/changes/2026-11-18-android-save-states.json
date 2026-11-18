@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "android-save-states",
+  "title": "Add Android save states",
+  "kind": "added",
+  "platforms": [
+    "Android"
+  ],
+  "changes": [
+    "Add nine app-private, ROM-specific save-state slots with overwrite and load confirmations and one session-level undo for a save or load.",
+    "Serialize the Android machine in a bounded, versioned, checksummed ROM/BIOS-bound format; validate before restoring and reset host audio and input after a load."
+  ],
+  "validation": [
+    "Synthetic Android core tests passed four cases, including deterministic CPU/video/audio/backup replay and transactional rejection of damage and incompatible layouts, in android-savestate-tests-0f5w99ah.",
+    "Android Rust host suite passed 36 tests with two ignored; the slot/overwrite/load/undo safety test passed separately in android-savestate-slots-rxriwihl.",
+    "ARM64 Docker APK build and Kotlin unit tests passed in android-savestate-apk-qgxd00s1; adb install -r succeeded on the connected moto g34 5G."
+  ],
+  "limitations": [
+    "Real-game save/load and undo remain unverified on the phone. Android states use a different format from desktop, and Android slot previews are not implemented.",
+    "Loading a state restores cartridge memory and subsequent automatic saves may write it to the normal cartridge save."
+  ],
+  "files": [
+    "AndroidPort/Cargo.lock",
+    "AndroidPort/android/README.md",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/MainActivity.kt",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/NativeBridge.kt",
+    "AndroidPort/crates/gba-android/src/engine.rs",
+    "AndroidPort/crates/gba-android/src/jni.rs",
+    "AndroidPort/crates/gba-android/src/lib.rs",
+    "AndroidPort/crates/gba-android/src/save_backups.rs",
+    "AndroidPort/crates/gba-android/src/save_states.rs",
+    "AndroidPort/crates/gba-core/Cargo.toml",
+    "AndroidPort/crates/gba-core/src/apu.rs",
+    "AndroidPort/crates/gba-core/src/backup.rs",
+    "AndroidPort/crates/gba-core/src/cpu.rs",
+    "AndroidPort/crates/gba-core/src/ffta_dialogue.rs",
+    "AndroidPort/crates/gba-core/src/ffta_movement.rs",
+    "AndroidPort/crates/gba-core/src/ffta_rom.rs",
+    "AndroidPort/crates/gba-core/src/ffta_sprites.rs",
+    "AndroidPort/crates/gba-core/src/ffta_stage.rs",
+    "AndroidPort/crates/gba-core/src/gax.rs",
+    "AndroidPort/crates/gba-core/src/lib.rs",
+    "AndroidPort/crates/gba-core/src/mem.rs",
+    "AndroidPort/crates/gba-core/src/mp2k.rs",
+    "AndroidPort/crates/gba-core/src/ppu.rs",
+    "AndroidPort/crates/gba-core/src/rdrv.rs",
+    "AndroidPort/crates/gba-core/src/rtc.rs",
+    "AndroidPort/crates/gba-core/src/save_state.rs",
+    "AndroidPort/crates/gba-core/src/shadow.rs"
+  ],
+  "references": [
+    "AndroidPort/android/README.md"
+  ]
+}

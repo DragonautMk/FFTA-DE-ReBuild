@@ -891,6 +891,27 @@ Documentation: [2026-11-18-audit-range-nearby-pointer-roots.json](docs/changes/2
 
 [Change record](docs/changes/2026-11-18-audit-four-near-range-root-uses.json)
 
+## 2026-11-18 — Attribute descriptor alias reads to generated memory calls
+
+Type: changed. Platforms: EUR / Windows GNU under Wine.
+
+**Changes**
+
+- Add a scoped test-only native runtime API override and count the selected descriptor row reads through generated-code memory callbacks, including interpreter nesting and packed-owner bytes.
+
+**Validation**
+
+- Windows GNU build 60m29opn and Wine 1gs1xgeu passed: five direct generated memory API requests supplied five typed owner bytes and none was nested in interp_one; the altered-row raw/managed state, clock, video, OAM and five nonempty audio streams matched for 240 frames.
+- The unwrapped 240-frame regression 0zpte7lm passed. Both Wine units protected inputs, removed scratch and drained Wine.
+
+**Limitations**
+
+- Attribution covers the five requests on one recorded EUR/Wine route; it does not identify the exact guest instruction PCs, establish other consumers or ordinary batch-wrapper reachability, or validate other platforms. The API override is compiled only for tests.
+
+Documentation: [2026-11-18-trace-descriptor-native-dispatch-reads.json](docs/changes/2026-11-18-trace-descriptor-native-dispatch-reads.json).
+
+[Change record](docs/changes/2026-11-18-attribute-descriptor-native-api-reads.json)
+
 ## 2026-11-18 — Show the touch menu button above the D-pad
 
 Type: changed. Platforms: Android.
@@ -933,6 +954,30 @@ Type: added. Platforms: Android.
 Documentation: [README.md](AndroidPort/android/README.md).
 
 [Change record](docs/changes/2026-11-18-android-screen-profiles-fps.json)
+
+## 2026-11-18 — Add Android save states
+
+Type: added. Platforms: Android.
+
+**Changes**
+
+- Add nine app-private, ROM-specific save-state slots with overwrite and load confirmations and one session-level undo for a save or load.
+- Serialize the Android machine in a bounded, versioned, checksummed ROM/BIOS-bound format; validate before restoring and reset host audio and input after a load.
+
+**Validation**
+
+- Synthetic Android core tests passed four cases, including deterministic CPU/video/audio/backup replay and transactional rejection of damage and incompatible layouts, in android-savestate-tests-0f5w99ah.
+- Android Rust host suite passed 36 tests with two ignored; the slot/overwrite/load/undo safety test passed separately in android-savestate-slots-rxriwihl.
+- ARM64 Docker APK build and Kotlin unit tests passed in android-savestate-apk-qgxd00s1; adb install -r succeeded on the connected moto g34 5G.
+
+**Limitations**
+
+- Real-game save/load and undo remain unverified on the phone. Android states use a different format from desktop, and Android slot previews are not implemented.
+- Loading a state restores cartridge memory and subsequent automatic saves may write it to the normal cartridge save.
+
+Documentation: [README.md](AndroidPort/android/README.md).
+
+[Change record](docs/changes/2026-11-18-android-save-states.json)
 
 ## 2026-11-18 — Add Android ROM restart
 

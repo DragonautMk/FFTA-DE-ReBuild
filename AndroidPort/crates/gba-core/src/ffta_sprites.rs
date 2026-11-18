@@ -6,6 +6,7 @@ pub fn stats_panel_enabled() -> bool {
 }
 
 #[derive(Clone, Debug, Default)]
+#[derive(serde::Serialize, serde::Deserialize)]
 pub struct HostSprite {
     pub owner: u32,
     pub group: u64,
@@ -22,6 +23,7 @@ pub struct HostSprite {
 }
 
 #[derive(Default)]
+#[derive(serde::Serialize, serde::Deserialize)]
 pub struct SpriteState {
     pub enabled: bool,
     rom_valid: bool,

@@ -16,6 +16,7 @@
 //! 512-byte and 8-KB parts differ; we infer it from the request length.
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(serde::Serialize, serde::Deserialize)]
 pub enum BackupKind {
     None,
     Sram,
@@ -44,6 +45,7 @@ pub fn detect(rom: &[u8]) -> BackupKind {
 // ---- Flash ----
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(serde::Serialize, serde::Deserialize)]
 enum FlashState {
     Ready,
     Cmd1,  // saw AA @ 5555
@@ -54,6 +56,7 @@ enum FlashState {
     Write, // next byte write goes to the array
     Bank,  // next write to 0x0E000000 selects the bank
 }
+#[derive(serde::Serialize, serde::Deserialize)]
 
 pub struct Flash {
     pub data: Vec<u8>,
@@ -146,10 +149,12 @@ impl Flash {
 // ---- EEPROM ----
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(serde::Serialize, serde::Deserialize)]
 enum EepromMode {
     Idle,
     Reading { addr: usize, bit: u32 },
 }
+#[derive(serde::Serialize, serde::Deserialize)]
 
 pub struct Eeprom {
     pub data: Vec<u8>,

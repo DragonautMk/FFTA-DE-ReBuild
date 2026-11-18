@@ -75,7 +75,7 @@ impl Backups {
     pub fn replace_save(&self,bytes:&[u8])->Result<(),String>{atomic_write(&self.source,bytes,true)}
 }
 
-fn atomic_write(path:&Path,bytes:&[u8],replace:bool)->Result<(),String>{
+pub(crate) fn atomic_write(path:&Path,bytes:&[u8],replace:bool)->Result<(),String>{
     let parent=path.parent().ok_or("Save directory missing")?;
     let temporary=parent.join(format!(".ffta-backup-{}-{}.tmp",std::process::id(),NEXT.fetch_add(1,Ordering::Relaxed)));
     let result=(||{

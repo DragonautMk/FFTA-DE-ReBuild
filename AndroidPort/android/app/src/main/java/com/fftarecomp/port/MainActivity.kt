@@ -421,8 +421,35 @@ private fun GameScreen(settings:GameSettings,input:GameInput,onExit:()->Unit,onS
     var backupChoices by remember {mutableStateOf<List<SaveBackupChoice>>(emptyList())}
     var selectedBackup by remember {mutableStateOf<SaveBackupChoice?>(null)}
     var restarting by remember {mutableStateOf(false)}
+    var stateMask by remember {mutableIntStateOf(0)}
+    var stateSlot by remember {mutableIntStateOf(1)}
+    var stateError by remember {mutableStateOf<String?>(null)}
+    var stateMessage by remember {mutableStateOf<String?>(null)}
     var page by remember {mutableStateOf("main")}
     var fpsRates by remember {mutableStateOf<FpsRates?>(null)}
+    fun stateAction(action:Int, overwrite:Boolean=false) {
+        restarting=true;stateError=null;stateMessage=null
+        surface?.gamePaused=true
+        input.clear();settings.pad.clear();settings.holdFast=false
+        surface?.clearPendingTouches()
+        scope.launch {
+            val result=runCatching {
+                val gameSurface=checkNotNull(surface){"Game display is unavailable"}
+                withTimeout(5000){while(!gameSurface.pauseAcknowledged)delay(10)}
+                withContext(Dispatchers.IO) {
+                    check(NativeBridge.gbaStateAction(action,stateSlot,overwrite)==1){NativeBridge.gbaStatus()}
+                    val mask=NativeBridge.gbaStateSlots()
+                    check(mask>=0){NativeBridge.gbaStatus()}
+                    mask
+                }
+            }
+            restarting=false
+            result.onSuccess {
+                stateMask=it;page="states"
+                stateMessage=when(action){0->"State saved.";1->"State loaded. Resume to continue.";else->"Last state operation undone."}
+            }.onFailure {stateError=it.message ?: it.toString()}
+        }
+    }
     // Snapshot reads must happen during composition, not only inside SideEffect.
     val request=ViewRequest(settings.aspect,settings.zoom)
     val speed=if(settings.fastForward!=settings.holdFast)settings.multiplier else 1
@@ -533,9 +560,21 @@ private fun GameScreen(settings:GameSettings,input:GameInput,onExit:()->Unit,onS
                     switchRomError?.let{Text("Could not save before switching: $it",color=Color(0xFF9B2929),fontSize=12.sp)}
                     restartError?.let{Text("Could not restart: $it",color=Color(0xFF9B2929),fontSize=12.sp)}
                     backupError?.let{Text("Backup: $it",color=Color(0xFF9B2929),fontSize=12.sp)}
+                    stateError?.let{Text("Save state: $it",color=Color(0xFF9B2929),fontSize=12.sp)}
+                    stateMessage?.let{Text(it,color=Ink,fontSize=12.sp)}
                     when(page) {
                         "main"->{
                             MenuButton("Resume",failure==null){paused=false}
+                            MenuButton("Save states",failure==null&&!restarting){
+                                page="states";stateError=null;stateMessage=null;restarting=true
+                                scope.launch {
+                                    val result=runCatching {withContext(Dispatchers.IO){
+                                        val mask=NativeBridge.gbaStateSlots();check(mask>=0){NativeBridge.gbaStatus()};mask
+                                    }}
+                                    restarting=false
+                                    result.onSuccess{stateMask=it}.onFailure{stateError=it.message ?: it.toString()}
+                                }
+                            }
                             MenuButton("Save backups",failure==null){
                                 page="backups";backupError=null;backupChoices=emptyList();restarting=true
                                 scope.launch {
@@ -578,6 +617,33 @@ private fun GameScreen(settings:GameSettings,input:GameInput,onExit:()->Unit,onS
                                     else restartError=error
                                 }
                             }
+                        }
+                        "states"->{
+                            Text("Choose a slot. States include the current game and cartridge memory.")
+                            if(restarting)Text("Working...")
+                            (1..9).forEach { slot ->
+                                val occupied=(stateMask and (1 shl (slot-1)))!=0
+                                MenuButton("Slot $slot: ${if(occupied) "Saved" else "Empty"}",!restarting){
+                                    stateSlot=slot;stateError=null;stateMessage=null;page="state slot"
+                                }
+                            }
+                            MenuButton("Undo last save or load",!restarting){stateAction(2)}
+                        }
+                        "state slot"->{
+                            val occupied=(stateMask and (1 shl (stateSlot-1)))!=0
+                            Text("Slot $stateSlot: ${if(occupied) "Saved" else "Empty"}")
+                            MenuButton("Save state",!restarting){
+                                if(occupied)page="overwrite state" else stateAction(0)
+                            }
+                            MenuButton("Load state",occupied&&!restarting){page="load state"}
+                        }
+                        "overwrite state"->{
+                            Text("Replace the state in slot $stateSlot?")
+                            MenuButton(if(restarting)"Saving..." else "Overwrite state",!restarting){stateAction(0,true)}
+                        }
+                        "load state"->{
+                            Text("Load slot $stateSlot? Current progress and cartridge memory will be replaced; later autosaves may update the cartridge save. You can undo this load during this session.")
+                            MenuButton(if(restarting)"Loading..." else "Load state",!restarting){stateAction(1)}
                         }
                         "backups"->{
                             Text("The two latest cartridge saves captured when the game was loaded.")
@@ -713,7 +779,7 @@ private fun GameScreen(settings:GameSettings,input:GameInput,onExit:()->Unit,onS
                         "gamepad"->GamepadSettings(settings)
 
                     }
-                    if(page!="main")MenuButton("Back",!restarting){settings.save();page=when(page){"touchscreen","gamepad"->"input";"restore backup"->"backups";else->"main"}}
+                    if(page!="main")MenuButton("Back",!restarting){settings.save();page=when(page){"touchscreen","gamepad"->"input";"restore backup"->"backups";"state slot"->"states";"overwrite state","load state"->"state slot";else->"main"}}
                 }
             }
         }

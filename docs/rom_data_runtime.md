@@ -2129,6 +2129,12 @@ scope. This does not identify the guest PC of an unscoped access or exclude
 every nested non-interpreter helper; exact per-instruction attribution and
 other routes remain open.
 
+Wine `1gs1xgeu` then wraps the test runtime API and confirms that all five
+row requests directly invoke generated-code memory API callbacks, serving five
+packed-owner bytes with none nested in `interp_one`. The 240-frame comparison
+passes with and without the wrappers (`0zpte7lm`). The exact guest instruction
+PC of each callback and other routes remain unproved.
+
 
 ## Conditional descriptor banks managed projection
 

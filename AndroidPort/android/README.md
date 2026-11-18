@@ -57,6 +57,15 @@ timers, DMA, interrupts, backup media, and C recompiler.
 - Pause > Restart ROM asks for confirmation, writes the current cartridge save,
   then restarts from boot. Progress not saved inside the game is lost. If the
   cartridge save cannot be written, the game remains paused and is not reset.
+- Pause > Save states offers nine ROM-specific slots. Select a slot to save or
+  load; replacing an occupied slot and loading a state both require confirmation.
+  Undo reverses the most recent successful save or load during the current game
+  session. States are private to the app, use an Android-specific format and
+  are not interchangeable with desktop states. Corrupt, incompatible, wrong-ROM
+  and wrong-BIOS files are rejected before the running machine is changed.
+  A state includes cartridge memory: after loading, subsequent automatic saves
+  can replace the ordinary cartridge save with the restored contents. The
+  separate cartridge-save backups remain available.
 - Save backups keeps the two most recent automatic copies of the cartridge save
   made when a ROM is loaded, separately for each ROM. Pause > Save backups
   lists them and asks for confirmation before restoring one and restarting.
@@ -72,7 +81,7 @@ port has no interface-language selector. They do not change the language of
 the game or imported content.
 
 The Android pause menu is separate from the desktop menu. Desktop temporal
-response, save states and debug tools are not yet available here.
+response and debug tools are not yet available here.
 Desktop window and VSync settings also do not map directly to the Android
 full-screen renderer. The Android aspect choices include the desktop ratios,
 as well as device, square and 19:9 modes; mobile zoom is capped at level 6.

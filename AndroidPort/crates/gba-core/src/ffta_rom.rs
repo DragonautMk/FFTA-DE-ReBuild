@@ -65,6 +65,7 @@ const EUR_SIZE_TABLE: &str = "6ff886b23cde2726a4ceb9cba8c5569bbb4dc6a1185769547f
 /// Exact-build addresses for host-side sprite expansion. Both ROM identity and
 /// each copied/native function body are verified before these hooks can run.
 #[derive(Clone, Copy, Debug)]
+#[derive(serde::Serialize, serde::Deserialize)]
 pub struct SpriteProfile {
     pub draw_a: u32,
     pub draw_b: u32,

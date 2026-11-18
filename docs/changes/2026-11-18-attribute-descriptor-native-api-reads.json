@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "attribute-descriptor-native-api-reads",
+  "title": "Attribute descriptor alias reads to generated memory calls",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Windows GNU under Wine"
+  ],
+  "changes": [
+    "Add a scoped test-only native runtime API override and count the selected descriptor row reads through generated-code memory callbacks, including interpreter nesting and packed-owner bytes."
+  ],
+  "validation": [
+    "Windows GNU build 60m29opn and Wine 1gs1xgeu passed: five direct generated memory API requests supplied five typed owner bytes and none was nested in interp_one; the altered-row raw/managed state, clock, video, OAM and five nonempty audio streams matched for 240 frames.",
+    "The unwrapped 240-frame regression 0zpte7lm passed. Both Wine units protected inputs, removed scratch and drained Wine."
+  ],
+  "limitations": [
+    "Attribution covers the five requests on one recorded EUR/Wine route; it does not identify the exact guest instruction PCs, establish other consumers or ordinary batch-wrapper reachability, or validate other platforms. The API override is compiled only for tests."
+  ],
+  "files": [
+    "crates/recomp/src/main.rs",
+    "crates/recomp/src/rom_data/conditional_packed_lookup_runtime_tests.rs",
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-18-trace-descriptor-native-dispatch-reads.json"
+  ]
+}

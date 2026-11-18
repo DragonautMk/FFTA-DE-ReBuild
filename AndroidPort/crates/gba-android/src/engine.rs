@@ -31,6 +31,7 @@ pub struct Engine {
     pub cache_dir: Option<PathBuf>,
     pub cache_hit: bool,
     rom_cache_key: String,
+    state_undo: Option<crate::save_states::Undo>,
 }
 pub fn verify_rom(bytes: &[u8]) -> bool {
     let sha1=format!("{:x}", Sha1::digest(bytes));
@@ -48,7 +49,7 @@ impl Engine {
             missed: BTreeSet::new(), adaptive: cfg!(target_os="android"), pixels: Vec::new(),
             audio: Vec::with_capacity(4096), pcm: crate::audio::Audio::default(), native_blocks: 0,
             fallback_steps: 0, frame_ns: 0, prepare_ms: 0, save_path: None, cache_dir: None, cache_hit: false,
-            rom_cache_key }
+            rom_cache_key, state_undo: None }
     }
     pub fn prepare(&mut self) -> Result<(), String> {
         let start = Instant::now();
@@ -237,6 +238,10 @@ impl Engine {
     }
     fn replace_machine(&mut self, fresh:Box<Machine>) {
         self.machine = fresh;
+        self.state_undo = None;
+        self.reset_after_state_load();
+    }
+    fn reset_after_state_load(&mut self) {
         self.mouse = gba_core::ffta_mouse::LanguageMouse::new(&self.machine.bus.rom,self.touch_enabled);
         self.machine.bus.ffta_battle_mouse.set_enabled(self.touch_enabled);
         self.pcm = crate::audio::Audio::default();
@@ -244,6 +249,25 @@ impl Engine {
         self.audio.clear();
         self.pixels.clear();
         KEYS.store(0x3ff, Ordering::Relaxed);
+    }
+    fn state_slots(&self) -> Result<crate::save_states::Slots, String> {
+        crate::save_states::Slots::new(self.save_path.as_deref().ok_or("No save path is available")?, &self.rom_cache_key)
+    }
+    pub fn state_occupied(&self) -> Result<i32, String> { self.state_slots()?.occupied() }
+    pub fn state_save(&mut self, slot: u8, overwrite: bool) -> Result<(), String> {
+        self.state_undo = Some(self.state_slots()?.save(&self.machine, slot, overwrite)?);
+        Ok(())
+    }
+    pub fn state_load(&mut self, slot: u8) -> Result<(), String> {
+        self.state_undo = Some(self.state_slots()?.load(&mut self.machine, slot)?);
+        self.reset_after_state_load();
+        Ok(())
+    }
+    pub fn state_undo(&mut self) -> Result<(), String> {
+        self.state_slots()?.undo(&mut self.machine, self.state_undo.as_ref().ok_or("Nothing to undo")?)?;
+        if matches!(self.state_undo, Some(crate::save_states::Undo::Load { .. })) { self.reset_after_state_load(); }
+        self.state_undo = None;
+        Ok(())
     }
     fn backups(&self)->Result<crate::save_backups::Backups,String> {
         Ok(crate::save_backups::Backups::new(self.save_path.as_deref().ok_or("No cartridge save path is available")?,&self.rom_cache_key))

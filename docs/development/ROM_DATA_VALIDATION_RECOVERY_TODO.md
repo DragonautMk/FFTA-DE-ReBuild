@@ -388,9 +388,14 @@ current evidence before running another check.
   return, including bounds and an occupied destination slot, using an
   authenticated two-unit header. Ordinary batch reachability, other headers,
   Wine `049hqes5` observes all five ordinary row requests during generated
-  dispatches without interpreter instruction scope. Their exact guest PCs and
-  any nested non-interpreter helper remain unattributed. Other calls and scenes
-  remain open.
+  dispatches without interpreter instruction scope. Wine `1gs1xgeu` confirms
+  all five requests directly invoke the generated-code memory API and none is
+  nested in `interp_one`. Exact guest PCs and other calls and scenes remain open.
+- [x] **ROMDATA-04-METADATA14-ID1-ALIAS-NATIVE-READS scoped:** attribute all
+  five row requests on the recorded EUR battle route to direct generated-code
+  memory API calls while preserving the 240-frame raw/managed comparison.
+  Wine `1gs1xgeu` and the unwrapped regression `0zpte7lm` pass; this does not
+  identify the individual guest PCs or cover other routes.
 - [ ] **ROMDATA-01-CONTEXT-3710D4:** verify additional ordinary contexts,
   remaining consumers and full reader ABI. EUR e159 Wine publication, original
   reader cases and one ordinary context-3 window pass (`8dbsgppp`); production
