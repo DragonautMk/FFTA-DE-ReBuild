@@ -103,8 +103,9 @@ remain cached. The refresh happens inside the image, without touching the host
 checkout. The coverage recipe already refreshes its Git archive at extraction.
 
 The Bash Linux and Windows builders use English diagnostics and terminal prompts.
-Each invocation prints its new log path under `target/build-logs/linux-*.log` or
-`target/build-logs/windows-*.log` and saves both normal output and errors there. When a build fails in an interactive terminal, it waits for
+Successful Bash runs replace `target/build-logs/linux-latest.log`,
+`windows-latest.log` or `rom-coverage-latest.log`. Failed runs keep their
+individual logs with stdout and stderr. An interactive terminal waits for
 Enter before exiting, so a terminal opened by a file manager keeps the error
 visible. Noninteractive runs return the original failure code without waiting;
 failed builds do not report a successful export.
@@ -350,11 +351,35 @@ socket mount inside the build. Save data stays under the extracted folder's
 
 ## Cache maintenance
 
-Subsequent builds reuse downloaded crates and compiled dependencies through
-[BuildKit cache mounts](https://docs.docker.com/build/cache/optimize/).
-The container's `target` cache is separate from the checkout's `target/`.
-Manage Docker cache using your normal Docker workflow; the build script does
-not prune images, containers, caches or unrelated projects.
+The standard Docker Engine and Docker Desktop builders keep the installed
+toolchains in local images. The Linux build, extractor and coverage tool share
+one image. Windows uses a separate MinGW/Wine image, and Android keeps its
+SDK/NDK image. Each launcher prepares only the requested platform. The tag
+contains a hash of the toolchain recipe, so application edits and repeat
+builds reuse the same image. A toolchain change creates a new tag. Inspect the
+installed versions with:
+
+```sh
+docker image ls --filter 'reference=ffta-toolchain-*'
+```
+
+A first build may use additional disk space while Docker stores the named
+image. The engine keeps it independently of BuildKit's disposable build
+cache. Cargo downloads and compiled outputs continue to use the existing
+locked cache mounts. Custom container and remote Buildx drivers use their
+own cached toolchain stages. Deleting an image or evicting a package cache
+can require downloads again. [Docker cache mounts](https://docs.docker.com/build/cache/optimize/)
+
+Each local desktop target cache also holds one successful archive and its
+build report. If BuildKit reruns the packaging step, the launcher supplies
+the engine image ID. The step checks that identity, the recipe, all copied
+inputs and both output checksums. A match restores the tested result. Changed
+inputs or damaged outputs run the full build and tests before replacing it.
+
+Debug and archive tools reuse their existing tagged images. Coverage reads
+its temporary source tar through a build mount. The desktop recipes move the
+finished archive into the export and discard the Windows test Wine prefix
+after successful tests. The launchers perform no daemon-wide cleanup.
 
 ## Build warnings
 
@@ -507,8 +532,9 @@ archive/canonical bytes, is retained rather than claimed preserved.
 [DBG-18](debug_artifacts.md) provides reviewed preview/apply and logged Bash/
 PowerShell launchers. Dockerfile.debug-tools derives from the existing public
 coverage image and adds Git for tracked-file guards; it performs no Cargo or
-game-data build/copy. Initial image preparation needs Debian package access;
-tool invocations use network none. The selected checkout bind is writable for
+game-data build/copy. The current coverage image already provides Git, so
+debug-tool preparation also works offline. An older base missing Git needs
+Debian package access once. Tool invocations use network none. The selected checkout bind is writable for
 leases and explicitly reviewed cleanup; dataset reader mounts stay readonly
 with a separate cache coordination root where needed. Host Python and Docker
 plans use different absolute namespaces: use one launcher for preview/apply and

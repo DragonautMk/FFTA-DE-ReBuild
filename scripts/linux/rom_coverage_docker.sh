@@ -126,7 +126,9 @@ cp -- "$repo_dir/docs/changes/"*.json "$context_dir/docs/changes/"
 cp -- "$repo_dir/docs/development/rom-coverage/evidence.json" \
     "$repo_dir/docs/development/rom-coverage/code-seeds.json" "$context_dir/docs/development/rom-coverage/"
 printf 'Building ROM coverage tools inside Docker from commit %s...\n' "$source_revision"
-docker buildx build --platform linux/amd64 \
+source "$repo_dir/scripts/linux/docker_toolchain.sh"
+prepare_toolchain linux "$repo_dir/Dockerfile.coverage" "$context_dir"
+docker buildx build "${toolchain_args[@]}" --platform linux/amd64 \
     --file "$repo_dir/Dockerfile.coverage" --build-arg "COVERAGE_SOURCE_REVISION=$source_revision" \
     --load --tag "$image" --progress plain "$context_dir"
 docker run --rm --platform linux/amd64 --network none \
@@ -139,6 +141,7 @@ printf '\nROM coverage on host: %s/index.html\n' "$output_dir"
 printf 'JSON data on host: %s/coverage.json\n' "$output_dir"
 }
 
+case ${1-} in --help|-h) usage; exit 0 ;; esac
 log_dir="$repo_dir/target/build-logs"
 mkdir -p -- "$log_dir"
 log_file=$(mktemp -- "$log_dir/rom-coverage-$(date +%Y%m%d-%H%M%S)-XXXXXX.log")
@@ -155,5 +158,8 @@ if (( status == 0 )); then status=${statuses[1]}; fi
 if (( status != 0 )); then
     printf '\nROM coverage failed (exit %s). Log: %s\n' "$status" "$log_file" | tee -a -- "$log_file" >&2
     if [[ -t 0 && -t 2 ]]; then read -r -p 'Press Enter to close...' _ || true; fi
+else
+    mv -f -- "$log_file" "$log_dir/rom-coverage-latest.log"
+    printf 'Build log: %s\n' "$log_dir/rom-coverage-latest.log"
 fi
 exit "$status"

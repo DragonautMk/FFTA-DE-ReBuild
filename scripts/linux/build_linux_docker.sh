@@ -16,7 +16,9 @@ main() {
     fi
     command -v docker >/dev/null || { printf 'Docker with Buildx is required.\n' >&2; exit 1; }
     mkdir -p -- "$output_dir"
-    docker buildx build \
+    source "$repo_dir/scripts/linux/docker_toolchain.sh"
+    prepare_toolchain linux "$repo_dir/Dockerfile.linux" "$repo_dir" export
+    docker buildx build "${toolchain_args[@]}" \
         --platform linux/amd64 \
         --file "$repo_dir/Dockerfile.linux" \
         --target export \
@@ -45,5 +47,8 @@ if (( status != 0 )); then
     if [[ -t 0 && -t 2 ]]; then
         read -r -p 'Press Enter to close this window...' _ || true
     fi
+else
+    mv -f -- "$log_file" "$log_dir/linux-latest.log"
+    printf 'Build log: %s\n' "$log_dir/linux-latest.log"
 fi
 exit "$status"

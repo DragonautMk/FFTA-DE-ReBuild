@@ -49,7 +49,9 @@ if [[ "$output_parent" == *','* || "$output_parent" == *$'\n'* || "$output_paren
     exit 2
 fi
 image=ffta-rom-data-extractor:local
-docker buildx build --platform linux/amd64 \
+source "$repo_dir/scripts/linux/docker_toolchain.sh"
+prepare_toolchain linux "$repo_dir/Dockerfile.linux" "$repo_dir"
+docker buildx build "${toolchain_args[@]}" --platform linux/amd64 \
     --file "$repo_dir/Dockerfile.linux" --target extract \
     --load --tag "$image" --progress plain "$repo_dir"
 docker run --rm --platform linux/amd64 --network none \

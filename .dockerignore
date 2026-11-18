@@ -24,6 +24,7 @@
 !scripts/linux/package_ffta_linux.sh
 !scripts/package_ffta_portable.py
 !scripts/build_desktop.py
+!scripts/docker_cached_export.sh
 !scripts/extract_rom_data.py
 !scripts/rom_coverage.py
 !scripts/rom_coverage.html

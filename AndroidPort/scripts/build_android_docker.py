@@ -23,9 +23,9 @@ SOURCE_SUFFIXES = {'.rs', '.toml', '.lock', '.py', '.c', '.h', '.inc', '.wgsl', 
 
 def project_layout(project):
     if (project / 'scripts/build_android.py').is_file():
-        return 'scripts/build_android.py', 'APK/' + APK_NAME, 'androidport'
+        return 'scripts/build_android.py', 'androidport'
     if (project / 'scripts/android/build_android.py').is_file():
-        return 'scripts/android/build_android.py', 'Installer/Android/' + APK_NAME, 'root'
+        return 'scripts/android/build_android.py', 'root'
     raise ValueError(f'No supported Android builder under {project}')
 
 
@@ -44,7 +44,7 @@ def source_allowed(relative):
 
 def stage(project, context):
     """Copy public working-tree sources only; never bind-mount or modify the checkout."""
-    script, apk, scope = project_layout(project)
+    script, scope = project_layout(project)
     output = context / 'project'
     output.mkdir(parents=True)
     paths = [project / 'Cargo.toml', project / 'Cargo.lock', project / script]
@@ -74,7 +74,7 @@ def stage(project, context):
     (output / 'BUILD-SOURCE.json').write_text(json.dumps(metadata, indent=2) + '\n', encoding='utf-8')
     shutil.copyfile(ROOT / 'Dockerfile.android', context / 'Dockerfile')
     shutil.copyfile(SCRIPTS / 'export_android.py', context / 'export_android.py')
-    return script, apk, scope, metadata
+    return script, scope, metadata
 
 
 def stream(command, log):
@@ -87,6 +87,27 @@ def stream(command, log):
         return process.wait()
 
 
+def prepare_toolchain(context, log):
+    builder = subprocess.check_output(['docker', 'buildx', 'inspect'], text=True)
+    driver = next((line.split(':', 1)[1].strip() for line in builder.splitlines()
+                   if line.startswith('Driver:')), None)
+    if driver != 'docker':
+        return []
+    recipe = context / 'Dockerfile'
+    prefix, marker, _ = recipe.read_text(encoding='utf-8').partition('# End of cached toolchain\n')
+    if not marker:
+        raise ValueError('Missing toolchain boundary in Dockerfile.android')
+    image = 'ffta-toolchain-android:' + hashlib.sha256(prefix.encode()).hexdigest()[:20]
+    if not subprocess.check_output(['docker', 'image', 'ls', '--quiet', image]).strip():
+        build = ['docker', 'buildx', 'build', '--platform', 'linux/amd64', '--target',
+                 'toolchain', '--file', str(recipe), '--output', 'type=image,unpack=false',
+                 '--tag', image, str(context)]
+        status = stream(build, log)
+        if status:
+            raise subprocess.CalledProcessError(status, build)
+    return ['--build-arg', f'FFTA_TOOLCHAIN={image}']
+
+
 def main(argv=None, *, default_project=None, default_output=None, log_root=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--project-dir', type=Path, default=default_project or ROOT,
@@ -94,6 +115,8 @@ def main(argv=None, *, default_project=None, default_output=None, log_root=None)
     parser.add_argument('--output', type=Path, default=default_output or ROOT / 'dist/docker-android',
                         help='APK, checksums and build/test evidence destination')
     parser.add_argument('--dry-run', action='store_true', help='Validate public inputs and show the build command without Docker')
+    parser.add_argument('--keep-failed-context', action='store_true',
+                        help='Keep a copy of the staged public sources if the APK build fails')
     args = parser.parse_args(argv)
     project = args.project_dir.resolve()
     output = args.output.resolve()
@@ -104,10 +127,10 @@ def main(argv=None, *, default_project=None, default_output=None, log_root=None)
     try:
         with tempfile.TemporaryDirectory(prefix='ffta-android-context-') as temporary:
             context = Path(temporary)
-            script, apk, scope, metadata = stage(project, context)
+            script, scope, metadata = stage(project, context)
             command = ['docker', 'buildx', 'build', '--platform', 'linux/amd64',
                        '--file', str(context / 'Dockerfile'), '--target', 'export',
-                       '--build-arg', f'BUILD_SCRIPT={script}', '--build-arg', f'APK_PATH={apk}',
+                       '--build-arg', f'BUILD_SCRIPT={script}',
                        '--build-arg', f'CACHE_SCOPE={scope}', '--output', f'type=local,dest={output}',
                        '--progress', 'plain', str(context)]
             print(f"Android project: {project}\nPublic source files: {len(metadata['files'])}\nSource SHA256: {metadata['source_sha256']}", flush=True)
@@ -121,17 +144,17 @@ def main(argv=None, *, default_project=None, default_output=None, log_root=None)
             with tempfile.NamedTemporaryFile(mode='w', encoding='utf-8', prefix=f'android-{timestamp}-',
                                              suffix='.log', dir=logs, delete=False) as log:
                 print(f'Android Docker build log: {log.name}', flush=True)
+                command[3:3] = prepare_toolchain(context, log)
                 log.write(json.dumps({'command': command, 'source': metadata}) + '\n')
                 status = stream(command, log)
                 if status:
-                    failed_context = logs / (Path(log.name).stem + '-context')
-                    try:
-                        shutil.copytree(context, failed_context)
-                        log.write(f'Failed public build context retained: {failed_context}\n')
-                        print(f'Failed public build context retained: {failed_context}', file=sys.stderr)
-                    except OSError as error:
-                        log.write(f'Could not retain failed context: {error}\n')
-                        print(f'Could not retain failed context: {error}', file=sys.stderr)
+                    if args.keep_failed_context:
+                        failed_context = logs / (Path(log.name).stem + '-context')
+                        try:
+                            shutil.copytree(context, failed_context)
+                            log.write(f'Failed public build context retained: {failed_context}\n')
+                        except OSError as error:
+                            log.write(f'Could not retain failed context: {error}\n')
                     print(f'Android build failed (exit {status}). Log retained: {log.name}', file=sys.stderr)
                     return status
             artifact = output / APK_NAME
@@ -139,8 +162,14 @@ def main(argv=None, *, default_project=None, default_output=None, log_root=None)
             expected = (output / 'SHA256.txt').read_text().split()[0]
             if actual != expected:
                 raise ValueError('Exported APK checksum mismatch')
+            latest = logs / f'android-{scope}-latest.log'
+            os.replace(log.name, latest)
+            print(f'Build log: {latest}', flush=True)
             print(f'APK: {artifact}\nSHA256: {actual}', flush=True)
             return 0
+    except subprocess.CalledProcessError as error:
+        print(f'Android Docker build: {error}', file=sys.stderr)
+        return error.returncode or 1
     except (OSError, ValueError) as error:
         print(f'Android Docker build: {error}', file=sys.stderr)
         return 1

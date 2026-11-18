@@ -21,6 +21,7 @@ class DockerExtractionTests(unittest.TestCase):
         self.script = self.repo / 'scripts/linux/extract_rom_data_docker.sh'
         self.script.parent.mkdir(parents=True)
         shutil.copy2(SCRIPT, self.script)
+        shutil.copy2(ROOT / 'scripts/linux/docker_toolchain.sh', self.script.parent)
         self.default_rom = self.repo / 'rom/1194 - Final Fantasy Tactics Advance (E)(Surplus).gba'
         self.default_rom.parent.mkdir()
         self.default_rom.write_bytes(b'default argument routing fixture, not a ROM')
@@ -31,6 +32,9 @@ class DockerExtractionTests(unittest.TestCase):
         binary = self.directory / 'docker'
         binary.write_text('''#!/usr/bin/env python3
 import json, os, sys
+if sys.argv[1:] == ['buildx', 'inspect']:
+    print('Driver: docker-container')
+    sys.exit(0)
 with open(os.environ['DOCKER_TEST_LOG'], 'a') as log:
     log.write(json.dumps(sys.argv[1:]) + '\\n')
 key = 'DOCKER_TEST_BUILD_STATUS' if sys.argv[1] == 'buildx' else 'DOCKER_TEST_RUN_STATUS'

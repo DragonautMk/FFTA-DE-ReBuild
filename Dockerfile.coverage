@@ -1,20 +1,25 @@
 # Use BuildKit's bundled frontend; no Docker Hub syntax-image lookup is needed.
-# Context is staged by the launchers: committed runtime + current public tools.
-FROM rust:1.94.0-slim-bookworm@sha256:a86cada82e36ebd7a9bffed7548792c55a952fdb20718eea9278a936bcb76e62
-RUN apt-get update \
+# Build on Bookworm rather than inheriting the developer machine's newer glibc.
+ARG FFTA_TOOLCHAIN=toolchain
+FROM rust:1.94.0-slim-bookworm@sha256:a86cada82e36ebd7a9bffed7548792c55a952fdb20718eea9278a936bcb76e62 AS toolchain
+
+RUN test "$(dpkg --print-architecture)" = amd64 \
+    && apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-        build-essential ca-certificates pkg-config python3 libasound2-dev libudev-dev \
+        build-essential ca-certificates git pkg-config python3 libasound2-dev libudev-dev \
     && rm -rf /var/lib/apt/lists/*
+
+# End of cached toolchain
+FROM ${FFTA_TOOLCHAIN} AS coverage
 WORKDIR /workspace
-COPY runtime.tar /tmp/runtime.tar
 # The archive includes committed scripts embedded by Rust's include_bytes!.
-# Fresh mtimes force Cargo to check these sources against a shared warm cache.
-# Git archive preserves older commit times, which could otherwise reuse WIP bins.
-RUN tar -xmf /tmp/runtime.tar && rm /tmp/runtime.tar
-RUN --mount=type=cache,id=ffta-linux-cargo-registry,target=/usr/local/cargo/registry,sharing=locked \
+# Unpack after locking the target so Cargo sees fresh mtimes on every compile.
+RUN --mount=type=bind,source=runtime.tar,target=/tmp/runtime.tar \
+    --mount=type=cache,id=ffta-linux-cargo-registry,target=/usr/local/cargo/registry,sharing=locked \
     --mount=type=cache,id=ffta-linux-cargo-git,target=/usr/local/cargo/git,sharing=locked \
     --mount=type=cache,id=ffta-linux-target-amd64,target=/workspace/target,sharing=locked \
-    cargo build --locked --release -p recomp --bin recomp \
+    tar -xmf /tmp/runtime.tar \
+    && cargo build --locked --release -p recomp --bin recomp \
     && cargo build --locked --release -p recomp-core --example rom_code_ranges \
     && mkdir -p /opt/ffta \
     && cp target/release/recomp /opt/ffta/recomp \

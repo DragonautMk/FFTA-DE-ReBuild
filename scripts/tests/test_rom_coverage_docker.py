@@ -21,6 +21,7 @@ class DockerCoverageTests(unittest.TestCase):
         self.script = self.repo / 'scripts/linux/rom_coverage_docker.sh'
         self.script.parent.mkdir(parents=True)
         shutil.copy2(ROOT / 'scripts/linux/rom_coverage_docker.sh', self.script)
+        shutil.copy2(ROOT / 'scripts/linux/docker_toolchain.sh', self.script.parent)
         self.defaults = {
             'rom': 'rom/1194 - Final Fantasy Tactics Advance (E)(Surplus).gba',
             'dataset': 'target/rom-data-rank-gates/windows-managed-europe/offline dataset',
@@ -36,10 +37,11 @@ class DockerCoverageTests(unittest.TestCase):
         self.bin = self.directory / 'bin'
         self.bin.mkdir()
         # The child PATH deliberately contains no Python, Cargo or nm.
-        for name in ('dirname', 'basename', 'mkdir', 'id', 'mktemp', 'date', 'tee', 'git', 'cp', 'rm'):
+        for name in ('dirname', 'basename', 'mkdir', 'id', 'mktemp', 'date', 'tee', 'git', 'cp', 'rm', 'mv'):
             (self.bin / name).symlink_to(shutil.which(name))
         docker = self.bin / 'docker'
         docker.write_text('''#!/bin/bash
+if [[ "$1 $2" == "buildx inspect" ]]; then echo 'Driver: docker-container'; exit 0; fi
 printf '%s\\0' "$@" > "$DOCKER_TEST_LOG/$1.args"
 if [[ "$1" == buildx ]]; then
     cp "${!#}/runtime.tar" "$DOCKER_TEST_LOG/runtime.tar"
@@ -114,6 +116,10 @@ exit "${DOCKER_TEST_RUN_STATUS:-0}"
         self.assertEqual(run[run.index('--user') + 1], f'{os.getuid()}:{os.getgid()}')
         self.assertNotIn('/var/run/docker.sock', ' '.join(run))
         self.assertIn(str(output / 'index.html'), result.stdout)
+        latest = self.repo / 'target/build-logs/rom-coverage-latest.log'
+        previous = latest.read_bytes()
+        self.assertEqual(self.run_script('--help').returncode, 0)
+        self.assertEqual(latest.read_bytes(), previous)
 
     def test_relative_overrides_and_absolute_output_preserve_spaces(self):
         args = []

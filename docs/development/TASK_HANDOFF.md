@@ -72,9 +72,9 @@ Archive completed tasks; open parents do not reopen closed children. Do not stop
 
 - State: active
 - Outcome: partial
-- Verified: brightness, profiles, FPS, transparency; slots/undo and PC/Android snapshot transfer including SL2/SL3 ancestry; synthetic bridge/replay and Android/PC builds PASS. `docs/changes/2026-11-18-android-desktop-snapshot-compatibility.json`.
-- Missing: phone install and real-game transfer/undo; previews, response, video parity and debug. Cross-core timer state differed after synthetic replay despite matching CPU/RAM/video/audio.
-- Resume: user chose installation later; reconnect and verify safe install/gameplay only when requested. Preserve saves and concurrent work.
+- Verified: brightness, profiles, FPS, transparency; slots/undo and PC/Android snapshot transfer including SL2/SL3 ancestry; synthetic bridge/replay, builds and moto g34 install PASS. `docs/changes/2026-11-18-android-desktop-snapshot-compatibility.json`.
+- Missing: real-game phone transfer/undo; previews, response, video parity and debug. Cross-core timer state differed after synthetic replay despite matching CPU/RAM/video/audio.
+- Resume: installed and verified final APK checksum on moto g34; await user real-game transfer/undo test. Preserve personal saves and concurrent work.
 
 
 ### CHEAT-DISTRIBUTION
@@ -178,9 +178,9 @@ Archive completed tasks; open parents do not reopen closed children. Do not stop
 
 ## Final handover
 
-- Task: PC/Android snapshot compatibility.
-- Last verified result: cross-load/replay, cheat ancestry bridge, slots and both builds PASS; final APK retained.
-- Remaining work: phone install/test, broader timing equivalence and menu parity.
-- Errors or blockers: phone disconnected; core schedulers differ.
-- Next action: when requested, reconnect phone and validate transfer without touching personal saves.
-- References: `docs/changes/2026-11-18-android-desktop-snapshot-compatibility.json`; `AndroidPort/android/README.md`.
+- Task: DOCKER-CACHE completed.
+- Last verified result: Android and Linux warm exports, Linux offline restore, Windows cross-link, coverage and debug tools PASS.
+- Remaining work: none for this selection.
+- Errors or blockers: baseline Linux timing probe timed out. Final verification passed.
+- Next action: use the usual project build launchers.
+- References: `docs/changes/2026-11-18-retain-project-docker-toolchains.json`.

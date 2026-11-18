@@ -1,5 +1,6 @@
 # Used by scripts/build_android_docker.py with its filtered, temporary context.
 # BuildKit's bundled frontend avoids an extra syntax-image download.
+ARG FFTA_TOOLCHAIN=toolchain
 FROM rust:1.94.0-slim-bookworm@sha256:a86cada82e36ebd7a9bffed7548792c55a952fdb20718eea9278a936bcb76e62 AS rust
 FROM eclipse-temurin:25-jdk-noble@sha256:7247bd8d2aeec64efe908dc72396d88101417d24ce3642703728382d96afb965 AS toolchain
 
@@ -32,23 +33,31 @@ RUN yes | sdkmanager --licenses >/dev/null \
 # cached toolchain layer, rather than letting each source build download it.
 RUN sdkmanager 'platform-tools' && test -x "$ANDROID_HOME/platform-tools/adb"
 
-FROM toolchain AS build
+# End of cached toolchain
+FROM ${FFTA_TOOLCHAIN} AS native
 WORKDIR /workspace
-COPY project/ ./
-COPY export_android.py /opt/ffta/export_android.py
 ARG BUILD_SCRIPT=scripts/build_android.py
-ARG APK_PATH=APK/FFTARecomp-android-arm64-preview.apk
 ARG CACHE_SCOPE=androidport
-# All caches belong to Docker. Never mount the checkout, host SDK or signing keys.
-# The signing-key cache keeps successive builds install-compatible on this daemon.
+COPY project/Cargo.toml project/Cargo.lock ./
+COPY project/crates/ crates/
+COPY project/Licenses/ Licenses/
+COPY project/${BUILD_SCRIPT} ${BUILD_SCRIPT}
 RUN --mount=type=cache,id=ffta-android-cargo-registry,target=/usr/local/cargo/registry,sharing=locked \
     --mount=type=cache,id=ffta-android-cargo-git,target=/usr/local/cargo/git,sharing=locked \
     --mount=type=cache,id=ffta-android-${CACHE_SCOPE}-target,target=/workspace/target,sharing=locked \
-    --mount=type=cache,id=ffta-android-${CACHE_SCOPE}-gradle,target=/root/.gradle,sharing=locked \
-    --mount=type=cache,id=ffta-android-${CACHE_SCOPE}-signing,target=/root/.android,sharing=locked \
     find crates -type f -exec touch {} + \
-    && python3 "$BUILD_SCRIPT" --sdk "$ANDROID_HOME" --ndk 28.2.13676358 \
-    && python3 /opt/ffta/export_android.py "$APK_PATH" /artifacts \
+    && python3 "$BUILD_SCRIPT" --native-only --sdk "$ANDROID_HOME" --ndk 28.2.13676358
+
+FROM native AS build
+COPY project/android/ android/
+COPY project/BUILD-SOURCE.json ./
+COPY export_android.py /opt/ffta/export_android.py
+# Keep the original scope and signing cache so installed APKs can be updated.
+RUN --mount=type=cache,id=ffta-android-${CACHE_SCOPE}-gradle,target=/root/.gradle,sharing=locked \
+    --mount=type=cache,id=ffta-android-${CACHE_SCOPE}-signing,target=/root/.android,sharing=locked \
+    bash android/gradlew -p android :app:assembleDebug :app:testDebugUnitTest --build-cache --no-daemon --console=plain \
+    && python3 /opt/ffta/export_android.py android/app/build/outputs/apk/debug/app-debug.apk /artifacts \
+    && rm -rf android/app/build android/build android/.gradle android/.kotlin \
     && { rustc --version; cargo --version; java -version 2>&1; \
          printf '\nSDK35 / build-tools35.0.0 / NDK28.2.13676358 / ARM64 / API24\n'; \
          cat "$ANDROID_HOME/platform-tools/source.properties"; \

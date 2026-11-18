@@ -584,6 +584,34 @@ Documentation: [2026-11-18-verify-battle-descriptor-alias-translated.json](docs/
 
 [Change record](docs/changes/2026-11-18-trace-descriptor-native-dispatch-reads.json)
 
+## 2026-11-18 — Retain project Docker toolchains and verified build outputs
+
+Type: performance. Platforms: Android, Linux, Windows, Docker.
+
+**Changes**
+
+- Standard Docker Engine and Desktop launchers reuse recipe-tagged local toolchain images. Linux, extraction and coverage share an image. Windows and Android have separate images. Custom Buildx drivers continue to use their own cache.
+- Android builds Rust and TinyCC separately from Gradle, reuses eligible Gradle task outputs and preserves the existing signing-cache ID. Verified runs replace one log per tree. Failure logs remain available, with the public context copy available on request.
+- Local desktop builds retain one tested archive and build report per locked Cargo target cache. Reuse requires an exact toolchain image ID, matching recipe and input contents, and valid checksums for both outputs. Publication follows successful tests.
+- Desktop recipes move the archive into the export and remove the temporary Wine prefix. Coverage unpacks its source tar from a bind mount while holding the Cargo target lock. Debug tools reuse Git from the coverage image. Successful build logs are bounded.
+
+**Validation**
+
+- Android ARM64 produced the same APK in 0.61 seconds on an unchanged repeat. A Kotlin source edit reused the Rust/TinyCC stage and finished in 37.60 seconds. All 29 Kotlin tests passed and apksigner matched the previously installed build's signer (el0lhhar). A separate edited APK build passed all 29 tests with build networking disabled (oyuvh_4p).
+- The final Linux portable build passed 971 tests with 463 ignored and finished in 482.21 seconds. The repeat took 0.60 seconds. With build networking disabled, BuildKit reran the packaging step and restored the identical archive and report in 1.02 seconds. Managed validation removed scratch (ixja1boc).
+- MinGW linked a Windows x64 PE executable offline, and extraction and coverage selected the same Linux image (1tr0kr1o). The final Windows Dockerfile check and a synthetic Windows package restore passed (v8y2jkhy). PowerShell 7.4.6 parsed four launchers/helpers and exercised cold and warm Windows/Linux command routing on a simulated Docker CLI (0ovyllah).
+- The real coverage image built and started offline with its analyzer and extractor present and its temporary source tar absent (y0jou9sd). The debug image built offline and ran Git (0jfji_7y). All 46 focused launcher, packaging and cache tests passed (zkdu9h7w), including invalidation, damaged output, failed builds and log retention.
+
+**Limitations**
+
+- Measurements apply to this local Docker Engine and its populated dependency caches. BuildKit may evict mutable Cargo/Gradle/target and signing mounts. Toolchain images occupy engine storage and are prepared once per recipe and platform.
+- The initial Linux two-export timing unit exceeded its timeout when Docker compiled twice (2pz_wydl). An intermediate probe was cancelled before requesting cache bypass (n1zsauvj). The final offline repeat used the existing caches.
+- Native Windows Docker Desktop, PowerShell 5.1 and a full Windows application export were not run in this change. Custom and remote builders use their own BuildKit state. No gameplay or device deployment was part of this build-tool change.
+
+Documentation: [docker.md](docs/docker.md), [android_docker.md](docs/android_docker.md), [README.md](AndroidPort/README.md).
+
+[Change record](docs/changes/2026-11-18-retain-project-docker-toolchains.json)
+
 ## 2026-11-18 — Recover the interrupted E170 cold-storage lease
 
 Type: changed. Platforms: EUR / Wine.

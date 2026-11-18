@@ -1,6 +1,7 @@
 # Use BuildKit's bundled frontend; no Docker Hub syntax-image lookup is needed.
 # Build on Bookworm rather than inheriting the developer machine's newer glibc.
-FROM rust:1.94.0-slim-bookworm@sha256:a86cada82e36ebd7a9bffed7548792c55a952fdb20718eea9278a936bcb76e62 AS source
+ARG FFTA_TOOLCHAIN=toolchain
+FROM rust:1.94.0-slim-bookworm@sha256:a86cada82e36ebd7a9bffed7548792c55a952fdb20718eea9278a936bcb76e62 AS toolchain
 
 RUN test "$(dpkg --print-architecture)" = amd64 \
     && apt-get update \
@@ -8,6 +9,8 @@ RUN test "$(dpkg --print-architecture)" = amd64 \
         build-essential ca-certificates git pkg-config python3 libasound2-dev libudev-dev \
     && rm -rf /var/lib/apt/lists/*
 
+# End of cached toolchain
+FROM ${FFTA_TOOLCHAIN} AS source
 WORKDIR /workspace
 COPY Cargo.toml Cargo.lock ./
 COPY crates/ crates/
@@ -52,21 +55,25 @@ COPY docs/development/rom-coverage/code-seeds.json docs/development/rom-coverage
 ENTRYPOINT ["python3", "/workspace/scripts/rom_coverage.py", "--analyzer", "/opt/ffta/rom_code_ranges", "--extractor", "/opt/ffta/recomp"]
 
 FROM source AS build
+ARG FFTA_TOOLCHAIN_ID
+COPY Dockerfile.linux scripts/docker_cached_export.sh /opt/ffta/cache-inputs/
 # Source, game data and Docker sockets are never bind-mounted into the build.
 # Export outside the cache mount so a warm build still has real output files.
 RUN --mount=type=cache,id=ffta-linux-cargo-registry,target=/usr/local/cargo/registry,sharing=locked \
     --mount=type=cache,id=ffta-linux-cargo-git,target=/usr/local/cargo/git,sharing=locked \
     --mount=type=cache,id=ffta-linux-target-amd64,target=/workspace/target,sharing=locked \
-    find crates -type f -exec touch {} + \
+    /bin/bash /opt/ffta/cache-inputs/docker_cached_export.sh linux /artifacts /bin/sh -e <<'PACKAGE'
+find crates -type f -exec touch {} + \
     && bash scripts/linux/package_ffta_linux.sh \
     && cargo test --locked --release -p input-config -p menu -p gba-core -p screen -p recomp -- --test-threads=1 \
     && mkdir /artifacts \
-    && cp dist/FFTARecomp-linux-portable.tar.gz /artifacts/ \
+    && mv dist/FFTARecomp-linux-portable.tar.gz /artifacts/ \
     && { rustc --version; cargo --version; cat /etc/os-release; \
          ldd --version | head -n 1; \
          ldd target/release/recomp; ldd target/release/ffta-play; \
          sha256sum /artifacts/FFTARecomp-linux-portable.tar.gz; \
        } > /artifacts/BUILD-INFO.txt
+PACKAGE
 
 # This stage exports files only; it is not an image for running the GUI.
 FROM scratch AS export

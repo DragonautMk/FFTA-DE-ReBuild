@@ -59,10 +59,9 @@ class AndroidDockerTests(unittest.TestCase):
                     (project / 'crates/test/linked.rs').symlink_to(project / builder)
                 before = {p: p.read_bytes() for p in project.rglob('*') if p.is_file()}
                 context = self.root / f'context-{root}'
-                script, apk, scope, metadata = self.driver.stage(project, context)
+                script, scope, metadata = self.driver.stage(project, context)
                 self.assertEqual(script, builder)
                 self.assertEqual(scope, 'root' if root else 'androidport')
-                self.assertEqual(apk.startswith('Installer/'), root)
                 self.assertTrue(set(private).isdisjoint(metadata['files']))
                 self.assertNotIn('crates/test/linked.rs', metadata['files'])
                 self.assertEqual((context / 'project/android/gradlew').read_bytes(), b'public source\n')
@@ -77,9 +76,10 @@ class AndroidDockerTests(unittest.TestCase):
             log.write('retained failure diagnostics\n')
             return 17
         with mock.patch.object(self.driver.shutil, 'which', return_value='/fake/docker'), \
+             mock.patch.object(self.driver, 'prepare_toolchain', return_value=[]), \
              mock.patch.object(self.driver, 'stream', side_effect=fail), \
              contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
-            status = self.driver.main(['--project-dir', str(project), '--output', str(self.root / 'export with spaces')], log_root=logs)
+            status = self.driver.main(['--keep-failed-context', '--project-dir', str(project), '--output', str(self.root / 'export with spaces')], log_root=logs)
         self.assertEqual(status, 17)
         command = commands[0]
         self.assertNotIn('--mount', command)
@@ -89,6 +89,32 @@ class AndroidDockerTests(unittest.TestCase):
         retained = list(logs.glob('*-context'))
         self.assertEqual(len(retained), 1)
         self.assertTrue((retained[0] / 'project/BUILD-SOURCE.json').is_file())
+
+    def test_default_failure_keeps_only_the_diagnostic_log(self):
+        project, _ = self.project()
+        logs = self.root / 'logs'
+        with mock.patch.object(self.driver.shutil, 'which', return_value='/fake/docker'), \
+             mock.patch.object(self.driver, 'prepare_toolchain', return_value=[]), \
+             mock.patch.object(self.driver, 'stream', return_value=19), \
+             contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+            self.assertEqual(self.driver.main(['--project-dir', str(project),
+                             '--output', str(self.root / 'out')], log_root=logs), 19)
+        self.assertEqual([path.suffix for path in logs.iterdir()], ['.log'])
+
+    def test_named_toolchain_reuse_and_remote_driver(self):
+        context = self.root / 'context'
+        self.driver.stage(self.project()[0], context)
+        with mock.patch.object(self.driver.subprocess, 'check_output',
+                               side_effect=['Driver: docker\n', b'', 'Driver: docker\n', b'abc',
+                                            'Driver: docker-container\n']), \
+             mock.patch.object(self.driver, 'stream', return_value=0) as build:
+            args = self.driver.prepare_toolchain(context, io.StringIO())
+            self.assertEqual(self.driver.prepare_toolchain(context, io.StringIO()), args)
+            self.assertEqual(self.driver.prepare_toolchain(context, io.StringIO()), [])
+        build.assert_called_once()
+        command = build.call_args.args[0]
+        self.assertEqual(command[command.index('--target') + 1], 'toolchain')
+        self.assertEqual(args, ['--build-arg', 'FFTA_TOOLCHAIN=' + command[command.index('--tag') + 1]])
 
     def test_unsafe_output_and_missing_required_inputs_refuse_before_docker(self):
         for suffix in [',', '"', '\n', '\r']:
@@ -110,6 +136,7 @@ class AndroidDockerTests(unittest.TestCase):
             (output / 'SHA256.txt').write_text(hashlib.sha256(data).hexdigest() + '  ' + self.driver.APK_NAME)
             return 0
         with mock.patch.object(self.driver.shutil, 'which', return_value='/fake/docker'), \
+             mock.patch.object(self.driver, 'prepare_toolchain', return_value=[]), \
              mock.patch.object(self.driver, 'stream', side_effect=export), contextlib.redirect_stdout(io.StringIO()):
             self.assertEqual(self.driver.main(['--project-dir', str(project), '--output', str(output)], log_root=self.root / 'logs'), 0)
 

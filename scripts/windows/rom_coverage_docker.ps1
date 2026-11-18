@@ -69,8 +69,12 @@ Get-ChildItem -LiteralPath (Join-Path $repoDir 'docs/changes') -Filter '*.json' 
 foreach ($name in @('evidence.json', 'code-seeds.json')) {
     Copy-Item -LiteralPath (Join-Path $repoDir "docs/development/rom-coverage/$name") -Destination (Join-Path $contextDir 'docs/development/rom-coverage')
 }
+. (Join-Path $PSScriptRoot 'docker_toolchain.ps1')
+$toolchainArgs = @(Get-ToolchainArguments 'linux' (Join-Path $repoDir 'Dockerfile.coverage') $contextDir)
 $buildArgs = @(
-    'buildx', 'build', '--platform', 'linux/amd64',
+    'buildx', 'build'
+    $toolchainArgs
+    '--platform', 'linux/amd64',
     '--file', (Join-Path $repoDir 'Dockerfile.coverage'), '--build-arg', "COVERAGE_SOURCE_REVISION=$sourceRevision",
     '--load', '--tag', $image, '--progress', 'plain', $contextDir
 )
@@ -128,12 +132,19 @@ if ($OpenReport) {
     Start-Process -FilePath $reportUri
 }
 } catch {
-    Write-Host "ROM coverage failed: $_"
+    Write-Host "ROM coverage failed: $_. Log: $logFile"
     throw
 } finally {
     if ($contextDir -and (Test-Path -LiteralPath $contextDir)) {
         Remove-Item -LiteralPath $contextDir -Recurse -Force
     }
     Stop-Transcript | Out-Null
-    Write-Host "ROM coverage log: $logFile"
 }
+$latest = Join-Path $logDir 'rom-coverage-latest.log'
+try {
+    [IO.File]::Move($logFile, $latest)
+} catch [IO.IOException] {
+    if (-not [IO.File]::Exists($latest)) { throw }
+    [IO.File]::Replace($logFile, $latest, [NullString]::Value)
+}
+Write-Host "ROM coverage log: $latest"

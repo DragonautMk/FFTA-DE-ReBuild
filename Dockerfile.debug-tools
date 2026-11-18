@@ -3,8 +3,10 @@
 ARG BASE_IMAGE=ffta-rom-coverage:local
 FROM ${BASE_IMAGE}
 USER root
-RUN apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends git \
-    && rm -rf /var/lib/apt/lists/*
+RUN if ! command -v git >/dev/null; then \
+        apt-get update \
+        && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends git \
+        && rm -rf /var/lib/apt/lists/*; \
+    fi
 WORKDIR /project
 ENTRYPOINT ["python3", "/project/scripts/debug_artifacts.py"]

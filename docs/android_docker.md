@@ -68,17 +68,20 @@ NDK 28.2.13676358 and the project's Gradle 9.5.0 wrapper. The native target is
 `aarch64-linux-android`, with minimum API 24. The Android command-line tools
 and TinyCC source are verified by SHA256; the wrapper verifies its Gradle
 download. Tool versions and source/APK hashes are recorded in the exported files.
-Platform-tools are installed in a separate cached Docker toolchain layer, so
-changing application sources does not make Gradle download them again. Their
-installed revision is recorded in `BUILD-INFO.txt`. The first build or a build
-after Docker's cache has been removed may download them again.
+The standard Docker Engine/Desktop builder keeps the SDK, NDK, platform-tools,
+Rust and Java in a local `ffta-toolchain-android` image tagged by toolchain
+recipe hash. A source edit reuses that image. Container and remote Buildx
+drivers use their own cached toolchain stage. The first preparation may need
+network access and disk space to store the image.
 
-The first build downloads images and dependencies. BuildKit caches retain
-Cargo, Gradle, compilation outputs and the **debug key generated inside Docker**.
-The port and main workspace use separate caches. This key supports updates
-between successive APKs produced by the same builder/cache; keys from earlier
-native builds are not imported. Removing the signing cache changes the key
-used by subsequent builds. Personal signing keys are not read.
+Rust/TinyCC and Gradle have separate build steps. A Kotlin or resource edit
+reuses the native libraries, and Gradle can restore eligible task outputs from
+its build cache. Cargo, Gradle and compiled outputs retain their existing
+BuildKit cache IDs. The port and main workspace keep their original, separate
+debug signing caches. Continue using the same builder for compatible APK
+updates. Deleting the signing cache changes the key, and evicting package
+caches can require dependency downloads. The toolchain image contains no
+signing key.
 
 The base images are pinned, but package repositories and downloadable
 dependencies remain external services: this is not a promise of byte-identical
@@ -95,13 +98,12 @@ intermediates remain inside Docker; only final artifacts are exported.
 
 ## Logs and validation
 
-The main launcher retains builder stdout/stderr in
-`target/build-logs/android-*.log`, including on Docker failure, and returns
-the error code. The self-contained entry point uses the port's
-`target/build-logs/`. Selected source paths and hashes remain in the log.
-If Docker fails, the public context is retained beside the log in an
-`android-…-context` directory, so the exact inputs can be inspected.
-Temporary contexts from successful builds are removed.
+The launcher keeps the latest verified build log for each source tree in
+`target/build-logs/android-androidport-latest.log` or `android-root-latest.log`.
+The standalone launcher uses the port's own log directory. Failed runs keep
+their individual logs and return an error. Temporary source contexts are
+removed by default. Pass `--keep-failed-context` to retain the exact staged
+sources alongside the log when diagnosing an APK build failure.
 
 Launcher checks cover context filtering, tree selection, paths with spaces,
 errors and checksums. The existing builders' adapters separately check the

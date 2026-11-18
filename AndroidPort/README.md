@@ -25,8 +25,10 @@ This exports the ARM64 APK, SHA256 and test results to `dist/docker-android/`.
 The recipe and script live inside this folder and continue to work when it is
 copied separately. On Windows, Docker Desktop must use Linux containers.
 Logs are saved in `target/build-logs/`; the first run downloads the tools.
-SDK, NDK and platform-tools remain in Docker's cached toolchain layers across
-source builds; removing Docker's build cache requires downloading them again.
+The standard Docker builder keeps the SDK, NDK and platform-tools in a local
+`ffta-toolchain-android` image. Kotlin-only edits reuse the compiled native
+libraries. Successful builds replace the latest log for this tree. Use
+`--keep-failed-context` when a failed build needs its temporary sources.
 The debug signing key is retained in the Docker cache; keys from previous
 builds made outside Docker are not imported.
 

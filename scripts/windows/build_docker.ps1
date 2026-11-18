@@ -17,8 +17,11 @@ if (-not (Get-Command docker -CommandType Application -ErrorAction SilentlyConti
     throw 'Docker Desktop with Buildx is required. Start Docker Desktop using Linux containers.'
 }
 New-Item -ItemType Directory -Force -Path $exportDir | Out-Null
+. (Join-Path $PSScriptRoot 'docker_toolchain.ps1')
+$toolchainArgs = @(Get-ToolchainArguments $Platform (Join-Path $repoDir "Dockerfile.$Platform") $repoDir -Export)
 $dockerArgs = @(
-    'buildx', 'build',
+    'buildx', 'build'
+    $toolchainArgs
     '--platform', 'linux/amd64',
     '--file', (Join-Path $repoDir "Dockerfile.$Platform"),
     '--target', 'export',

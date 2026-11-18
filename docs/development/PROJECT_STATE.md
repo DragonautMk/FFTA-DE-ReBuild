@@ -3168,7 +3168,11 @@ artifact output. Bundles and Docker contexts include Atlas/extended-save docs.
 
 The Linux, Windows and coverage Dockerfiles use BuildKit's bundled frontend,
 avoiding a separate Docker Hub `docker/dockerfile:1` fetch before compilation.
-Uncached base images and build dependencies still require working network/DNS.
+Standard Docker launchers keep the installed toolchains in recipe-tagged engine
+images. Linux, extraction and coverage share one. Each desktop target cache
+can restore one verified package for the exact sources, recipe and toolchain
+image. Android separates Rust/TinyCC from Gradle and retains its signing cache.
+Uncached dependencies need network access.
 Desktop Docker stages refresh copied crate-file timestamps before using Cargo's
 shared target cache, preventing stale reuse across older source snapshots;
 coverage refreshes its archived sources. The host checkout is unaffected.

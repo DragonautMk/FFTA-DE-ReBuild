@@ -23851,3 +23851,10 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Outcome: completed for the five row requests on the retained EUR battle route.
 - Evidence: build `60m29opn`, Wine `1gs1xgeu` and unwrapped regression `0zpte7lm` PASS. Test-only API wrappers count five direct generated-code memory calls, five typed packed-owner bytes and zero requests inside `interp_one`. Raw/managed 240-frame state, clock, video, OAM and five nonempty audio streams match. Inputs protected, scratch removed and Wine drained. See `docs/changes/2026-11-18-attribute-descriptor-native-api-reads.json`.
 - Limits: exact guest instruction PC, other routes and consumers, ordinary batch reachability and other platforms remain open. Parent remains partial.
+
+### DOCKER-CACHE
+
+- Outcome: completed
+- Verified criteria: project-scoped toolchain image reuse, bounded successful logs and temporary output, warm Android/Linux exports, APK signing continuity, offline package and tool checks.
+- Evidence: docs/changes/2026-11-18-retain-project-docker-toolchains.json and linked build guides.
+- Limits: full Windows game export and native Windows Desktop were not repeated. Docker may evict mutable caches. No daemon-wide cleanup was performed.

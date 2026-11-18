@@ -37,8 +37,12 @@ if (-not (Get-Command docker -CommandType Application -ErrorAction SilentlyConti
 # Mount the parent so the extractor can publish the dataset by atomic rename.
 [System.IO.Directory]::CreateDirectory($outputParent) | Out-Null
 $image = 'ffta-rom-data-extractor:local'
+. (Join-Path $PSScriptRoot 'docker_toolchain.ps1')
+$toolchainArgs = @(Get-ToolchainArguments 'linux' (Join-Path $repoDir 'Dockerfile.linux') $repoDir)
 $buildArgs = @(
-    'buildx', 'build', '--platform', 'linux/amd64',
+    'buildx', 'build'
+    $toolchainArgs
+    '--platform', 'linux/amd64',
     '--file', (Join-Path $repoDir 'Dockerfile.linux'), '--target', 'extract',
     '--load', '--tag', $image, '--progress', 'plain', $repoDir
 )
