@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "verify-range-substitution-dispatcher-domain",
+  "title": "Verify substitution dispatcher range-source overlap",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Windows GNU under Wine"
+  ],
+  "changes": [
+    "Compare the original byte-indexed substitution dispatcher prefix for all indices conditionally addressing the bounded-range owner, adjacent indices and high-byte aliases."
+  ],
+  "validation": [
+    "Windows GNU build bounded-range-dispatcher-domain-build-zykm8vbp and Wine bounded-range-dispatcher-domain-wine-knxnixuk pass 96 complete-state/clock comparisons with all 88 range bytes altered: 88 in-range cases each serve four range bytes and eight adjacent cases serve none. Interpreter and generated instruction dispatch run; protected inputs pass, scratch removed and Wine drains."
+  ],
+  "limitations": [
+    "The prefix stops before callback invocation; conditional indices do not establish ordinary reachability or callback safety. Other computed consumers, production cache selection, legacy IRQ equivalence, broader regressions, Linux, USA, native Windows and performance remain open; generated blocks may fall back to interpretation."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/conditional_substitution_words_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_text.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-18-verify-range-indirect-registry-readers.json"
+  ]
+}

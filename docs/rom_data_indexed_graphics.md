@@ -302,6 +302,14 @@ reachability nor every caller or the complete reader ABI. The first attempt
 the corrected build includes it. An intervening build ended with a broken-pipe
 unit error after its terminal handle was interrupted; it was not used as proof.
 
+The same getter can address the separately owned bounded-range source at
+indices 206..227. E170 Wine `bounded-range-context-overlap-wine-3lrpx1l2`
+checks those indices, both neighboring indices and `0x100` aliases in both
+dispatch modes: 96 full-state/clock comparisons pass with all 88 range-source
+bytes altered. The 88 in-range cases each serve one range byte, and the eight
+neighbor cases serve none. This controlled test does not establish ordinary
+index reachability or all callers; generated blocks may fall back.
+
 The production Windows CLI also passed under Wine in
 `e159-indexed-context-cli-wine-27uqnksb`: it created, reused and verified an
 e159 dataset whose 104 files matched the dataset above. Reuse and an 11-frame

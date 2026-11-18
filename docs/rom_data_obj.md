@@ -3384,8 +3384,16 @@ On the same checkpoint, its three-frame interpreter and native-dispatch
 raw/managed pairs match full state and clock; all 144 selected-bank reads in
 the native-dispatch arm have interpreter instruction scopes, and no native
 updater dispatch was observed (`e134-default-managed-pair-wine-botzl4b6`).
-These results establish behavior for that isolated build and checkpoint, not
-which translation a particular production runtime cache selects. Other
+An isolated portable test subsequently calls the same cache selector as
+`play`: its revision-8 cold build and unchanged warm reuse select a file with
+exactly the SHA-256 of `qpbgtmmw`. The test is not an actual GUI session.
+Its original Wine unit `bounded-range-production-cache-wine-kitubxih` is FAIL
+because a private ROM copy remained in scratch; the tests exited zero, Wine
+drained and the read-only evidence audit `s_g0xk37` confirms the protected
+inputs and object hash. The failed unit remains retained. The actual isolated
+GUI also cold-built and loaded that object under Wine/Xvfb (`wamu6k3z`, audit
+`p7tuq7iz`); its GUI replay failed before any verified frame because no GPU
+presenter was available. Other
 ordinary paths and ordinary translated draw require separate evidence.
 The earlier targeted translated updater/draw cases remain distinct. Full UI
 save/Load, other ordinary paths, Linux, USA and native Windows remain open.

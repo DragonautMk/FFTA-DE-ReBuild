@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "verify-range-indirect-registry-readers",
+  "title": "Verify indirect registry reads of the bounded-range source",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Windows GNU under Wine"
+  ],
+  "changes": [
+    "Compare both original byte-indexed text-registry reader prefixes for every conditional index addressing the bounded-range owner, its neighboring indices and high-byte aliases."
+  ],
+  "validation": [
+    "Windows GNU build bounded-range-indirect-registry-build-yt13a3vw and Wine bounded-range-indirect-registry-wine-44qwhqj_ pass 192 complete-state/clock comparisons with all 88 range source bytes altered: 176 in-range cases serve four typed bytes each and 16 neighboring cases serve none from the range owner. Both interpreter and generated instruction dispatch run; protected inputs pass, scratch removed and Wine drains."
+  ],
+  "limitations": [
+    "These prefixes stop before callback invocation; conditional indices do not establish ordinary reachability or callback safety. Other computed consumers, production cache selection, legacy IRQ equivalence, broader regressions, Linux, USA, native Windows and performance remain open. Generated blocks may fall back to interpretation."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/conditional_substitution_words_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_text.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-17-audit-european-text-reader-e170-ownership.json",
+    "docs/changes/2026-11-18-verify-e170-range-adjacent-owner-boundaries.json"
+  ]
+}

@@ -29,16 +29,16 @@ States `active`, `suspended`, `interrupted`, `failed`, `waiting` and outcomes `p
 
 ### ROM-DATA-FULL-EUR
 
-- State: suspended
+- State: active
 - Outcome: partial
-- Pause: user paused the goal. ROMDATA-01-RANGE-37140C remains partial; Bank pairs `acebndyu`/`jyionxk1`, interpreter caller `hbu4s4d0` and wrapper prefixes `xfsk4jgx` pass. Resume only on request; upstream consumers and broader regressions remain open.
+- Selection: ROMDATA-01-RANGE-37140C partial. Nearby-root census (`wdb_l7ok`) and candidate windows (`7zra4rc1`, `rm4e5mhp`) bound the shown byte-index and normal geometry reads before the range; other address constructions remain open.
 - Verified: E158 reader/opening/CLI Wine PASS (`b8vylqkk`, `tucnagm9`).
 - Missing: EUR inventory/consumers/ordinary/ABI/extent/indirect calls, ROMDATA-06/07; Linux/USA/native Windows/new32:9 deferred. Protect originals/saves.
 - ROMDATA-04-METADATA14-ID1-ALIAS: Wine prefix/frame PASS (56wpztn8/gpir8qjh); E170 `3s1xbvpx` 240-frame generated-dispatch row-poisoned state/audio pair PASS. Full importer, per-read native attribution/consumers open.
 - Title bank: five lists Wine PASS (hhh7a8lg); other scenes/native and FIRSTBANK-ZERO open (f4_b2apw).
 - BATTLE-40D300-OTHER: index56 Wine PASS (qbzrv3ua); other lists open.
 - CONTEXT-3AE42C: IDs 1–4/return 0 Wine PASS; E168 owns 261/261 pairs (4ami2zcc); meaning/writers/domain/native open.
-- E134 updater: native PASS (yw62he9p), default interpreter (botzl4b6); cache/draw open.
+- E134 updater: native PASS (yw62he9p), default interpreter (botzl4b6); GUI loads default object (p7tuq7iz); translated draw open.
 - CONTEXT-3710D4: e159, E170 world-map pair (5eyv63je) and controlled byte-domain/33-record fields (9l5p79sq) PASS; other callers/ordinary contexts/ABI open. e160 SUBSTITUTION-371158 (2bltt60c/mgaon9d6), e161 RANGE-37140C (t2mh2ei8/emoffrjv) PASS; consumers open.
 - ADJACENT-371464: e162 PASS (5zpi8vam/j4r9sopl); E170 home `lby31j3d` identifies state-width/height groups, 56 bytes and 1,800-frame altered-source state/audio pair PASS. Other readers/domains open.
 - SUBSTITUTION-371158: callbacks 0/3 and handler Wine PASS (rdulyaqw/h9c0peco); ordinary/other paths open.
@@ -168,9 +168,9 @@ States `active`, `suspended`, `interrupted`, `failed`, `waiting` and outcomes `p
 
 ## Final handover
 
-- Task: ROMDATA-01-RANGE-37140C; goal paused by user, partial.
-- Last verified result: source-guided Bank pairs `acebndyu`/`jyionxk1`, interpreter attribution `hbu4s4d0`, guarded cross-mode frame `u_28pjng` and 92 wrapper cases `xfsk4jgx` pass.
-- Remaining work: classify upstream consumers and broader regressions before closing; legacy IRQ equivalence, production cache selection and deferred platforms remain open.
-- Errors or blockers: legacy frame differs by 10 cycles (`je_s2es2`, `7tgvy6tq`); guarded object matches this frame. Sol xhigh requested, effective and primary Terra/xhigh unconfirmed. No Wine job.
-- Next action: wait for explicit resume; do not select work or repeat accepted Bank scene or wrapper checks while paused.
-- References: `docs/rom_data_runtime.md#european-bounded-range-lookup`; `docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md`; `docs/changes/2026-11-18-verify-bounded-range-wrapper-prefixes.json`.
+- Task: ROMDATA-01-RANGE-37140C; user prioritizes completing existing TODO tasks.
+- Last verified result: `wdb_l7ok`/`7zra4rc1`/`rm4e5mhp` screen 18 nearby aligned words and bound the shown extra byte-index/geometry reads; no complete indirect-reader census claimed.
+- Remaining work: other computed consumers, successful GUI replay and broader regressions before closing; legacy IRQ equivalence and deferred platforms remain open. Controlled indices do not prove ordinary reachability.
+- Errors or blockers: `kitubxih` remains FAIL due to retained ROM copy; `wamu6k3z` remains FAIL because its GUI replay lacked a GPU presenter. Both drained and their read-only audits passed. Preserve failed units; no owned job remains.
+- Next action: assess remaining computed reader evidence and broader regressions; preserve the GUI replay failure and do not repeat accepted pairs.
+- References: `docs/rom_data_runtime.md#european-bounded-range-lookup`; `docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md`; `docs/changes/2026-11-18-audit-range-nearby-pointer-roots.json`.

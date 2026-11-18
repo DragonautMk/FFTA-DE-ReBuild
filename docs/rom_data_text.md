@@ -809,3 +809,12 @@ performance measurement was involved in the recheck.
 The `ROMDATA-01-TEXT-READER-FULL-BYTE-DOMAIN` physical ownership audit is
 complete. The separate registry and substitution tasks retain the unresolved
 ordinary indices, callback behavior and other dispatcher domains.
+The 22 registry indices 233..254 that conditionally address the adjacent
+bounded-range owner were subsequently checked through both original reader
+prefixes in 192 controlled E170 Wine cases (`44qwhqj_`), including boundaries
+and high-byte aliases. The test stops before indirect invocation and does not
+establish ordinary index values or callback safety. See [the range validation](rom_data_runtime.md#european-bounded-range-lookup).
+The separately rooted substitution dispatcher can conditionally select the
+same range at indices 173..194; all 22 indices, their neighbors and `0x100`
+aliases pass 96 controlled Wine comparisons before indirect invocation
+(`knxnixuk`). This does not prove those indices are reached in ordinary play.

@@ -2398,8 +2398,72 @@ all 88 source bytes altered. The unmatched output sentinels are preserved.
 The comparison stops after the helper returns, before later rendering; it does
 not prove execution of all upstream callers or guest input bounds.
 
+Protected census `bounded-range-direct-literal-census-_s7xtdr9` scans all
+aligned EUR ROM words for pointers into `37140c..371464`, including the three
+normal mirror pairs. The only match is the base literal at `01abe8`; the only
+candidate Thumb PC-relative load of that literal is `01abca`, in the identified
+reader, and no ARM PC-relative load candidate was found. This does not exclude
+unaligned pointers, computed addresses, RAM copies or indirect reads.
+
+E170 Wine boundary regression `bounded-range-e170-boundary-wine-pbj0c8fy`
+flips the range source and its four immediate bytes on each side, then checks
+all 1-, 2- and 4-byte reads wholly in that window through mirrors 08, 0a and
+0c. All 852 requests are typed with zero raw/unclassified/dropped requests;
+the adjacent substitution and geometry owners each serve 63 bytes, and the
+range owner serves 1,848 bytes. This proves the tested mixed-owner bus/API
+composition, not ordinary execution or the complete set of consumers.
+
+The earlier full-byte ownership audit also identified a separate conditional
+context: original registry readers `019172` and `019424` can address all 22
+four-byte words of this range using byte indices 233..254. Wine
+`bounded-range-indirect-registry-wine-44qwhqj_` compares both original prefixes
+for every such index, neighboring indices 232 and 255, and their `0x100`
+aliases in interpreter and generated instruction dispatch: 192 complete
+state/clock cases. All 88 range-source bytes are altered in the managed copy;
+the owner serves four bytes for each of 176 in-range cases and zero for the 16
+neighbor cases. This stops before callback invocation. It establishes the
+conditional read behavior, not that these byte values occur in ordinary play
+or are safe to invoke; generated blocks may fall back to interpretation.
+
 Patterns and disassembly do not prove code reachability or exclude computed
-calls or alternate entries. A separate aligned ARM BL pattern census
+calls or alternate entries.
+
+A wider numerical census (`bounded-range-nearby-roots-census-wdb_l7ok`)
+finds 18 aligned ROM words pointing from 1,023 bytes before the range through
+its end, including the direct reader and the known computed readers. Four
+words have no candidate PC-relative immediate load in the scoped Thumb/ARM
+screen; that does not exclude other uses. Wine windows `7zra4rc1` cover the
+other 11 Thumb load candidates beyond the five previously identified sites.
+One candidate follows a return in an apparent literal pool, but an alternate
+entry is not ruled out. For the other local windows, byte-indexed loads from
+`371020`, `37101c`, `371064` and `371034` cannot reach `37140c` using their
+shown unsigned or signed byte indices. For the `371024` geometry loads, the
+normal entry at `017708` requires the relevant dimension to equal eight;
+the shown loops constrain both row and column calculations to the 16 bytes
+`371024..371034` (`bounded-range-geometry-windows-rm4e5mhp`). These are
+bounded static conclusions, not a proof of ordinary reachability or complete
+control flow. Unaligned literals, alternate entries, larger or dynamic
+offsets, RAM-built pointers and indirect loads remain outside the census.
+
+A third conditional consumer is substitution dispatcher `019e94`, whose
+byte index can calculate the same 22 words as indices 173..194. Wine
+`bounded-range-dispatcher-domain-wine-knxnixuk` compares its original prefix
+for those indices, neighbors 172/195 and `0x100` aliases: 96 full-state/clock
+cases in interpreter and generated instruction dispatch with all 88 range
+bytes altered. Eight neighboring cases serve no range bytes; each of 88
+in-range cases serves four. The test stops before indirect invocation and
+therefore proves neither ordinary use nor callback safety.
+
+Indexed-context getter `01972c` can also address the range owner through
+indices 206..227. Wine `bounded-range-context-overlap-wine-3lrpx1l2`
+compares those indices, neighbors 205/228 and `0x100` aliases with all 88
+range-source bytes altered: 96 complete state/clock cases in interpreter and
+generated instruction dispatch. Each of 88 in-range cases serves one range
+byte; the eight neighbor cases serve none. These controlled inputs do not
+establish ordinary reachability or exclude other consumers, and generated
+blocks may fall back to interpretation.
+
+A separate aligned ARM BL pattern census
 `bounded-range-arm-caller-census-odbnk6j8` finds no direct candidates to the
 reader or either wrapper; it does not exclude indirect or register calls.
 A passive search of 428 previously protected target checkpoint paths
@@ -2471,12 +2535,36 @@ The same raw/raw frame using the previously retained event-guarded translation
 raw/managed E170 pair on that translation (`jyionxk1`) also passes the complete
 state, clock, video, OAM and audio comparison, with 23 typed source bytes and
 five records, zero raw/unclassified or dropped requests. Both dispatch modes
-occur. This is one isolated guarded translation; production cache selection and
-other scenes are not established.
+occur. This is one isolated guarded translation; other scenes are not established.
 
-Other reader contexts, legacy cross-mode IRQ equivalence, production cache
-selection, broader Wine regressions, Linux, USA and native Windows remain open. No performance measurement was
-performed.
+An isolated portable test now calls the same cache selector used by `play`.
+It cold-builds revision 8, removes an older revision only inside its owned
+temporary root, and then reuses the same file without changing its hash or
+modification time. The selected object has 29,196 blocks, 58,381 occurrences
+of the event-guard tag and exactly the SHA-256 of the guarded translation
+above. A 120-frame Bank pair using that selected object also matches full
+state, clock, video, OAM and audio with 23 typed range bytes. Wine unit
+`bounded-range-production-cache-wine-kitubxih` remains **FAIL**: although
+both tests exited successfully and Wine drained, its temporary ROM copy
+violated the runner's private-input retention check and the unit was retained.
+Read-only audit `bounded-range-production-cache-evidence-audit-s_g0xk37`
+confirms the results, object hash and unchanged protected inputs without
+rerunning the tests or reclassifying the failed unit. This calls the selector
+in a test process, not a packaged translation; tag presence does not prove
+guard coverage for every block.
+
+The actual portable Windows GUI subsequently cold-built and loaded the same
+29,196-block object under Wine/Xvfb. Its unit
+`bounded-range-production-gui-cache-wine-wamu6k3z` remains **FAIL**: it reached
+`STATUS playing`, but the bounded GUI replay aborted because no GPU presenter
+was available, before any replay frame was verified. Read-only audit
+`bounded-range-production-gui-cache-evidence-audit-p7tuq7iz` confirms the
+startup log, the exact object hash and unchanged protected inputs. This is
+evidence of that isolated GUI cache selection, not a successful GUI replay.
+
+Other reader contexts, legacy cross-mode IRQ equivalence, a successful GUI
+replay, broader Wine regressions, Linux, USA and native Windows remain open.
+No performance measurement was performed.
 
 
 ## European tilemap geometry projections

@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "verify-range-indexed-context-overlap",
+  "title": "Verify indexed-context getter range overlap",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Windows GNU under Wine"
+  ],
+  "changes": [
+    "Compare the original indexed-context getter for all byte indices conditionally addressing the bounded-range owner, adjacent indices and high-byte aliases."
+  ],
+  "validation": [
+    "Windows GNU build bounded-range-context-overlap-build-mcl2h3ml and Wine bounded-range-context-overlap-wine-3lrpx1l2 pass 96 complete-state/clock comparisons with all 88 range bytes altered: 88 in-range cases each serve one range byte and eight adjacent cases serve none. Interpreter and generated dispatch run; protected inputs pass, scratch removed and Wine drains."
+  ],
+  "limitations": [
+    "Controlled indices do not establish ordinary reachability or other callers; generated blocks may fall back to interpretation. Other computed consumers, production cache selection, legacy IRQ equivalence, broader regressions, Linux, USA, native Windows and performance remain open."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/indexed_graphics_context_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_indexed_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-18-verify-range-substitution-dispatcher-domain.json"
+  ]
+}

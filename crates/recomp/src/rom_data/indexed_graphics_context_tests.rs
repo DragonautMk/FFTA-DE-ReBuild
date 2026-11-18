@@ -642,3 +642,130 @@ fn european_indexed_context_full_byte_domain_and_fields() {
         "performance_measurements":false
     })).unwrap()).unwrap();
 }
+#[cfg(feature = "rom-data-read-audit")]
+#[test]
+#[ignore = "authenticated EUR ROM, E170 dataset and TinyCC; Wine only"]
+fn european_range_lookup_indirect_context_getter_domain() {
+    let root = PathBuf::from(std::env::var_os("FFTA_INDEXED_CONTEXT_ROOT").unwrap());
+    let dataset = PathBuf::from(std::env::var_os("FFTA_INDEXED_CONTEXT_DATASET").unwrap());
+    let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    assert_eq!(
+        gba_core::ffta_rom::digest(&rom),
+        gba_core::ffta_rom::EUROPE_SHA256
+    );
+    let manifest: Manifest =
+        toml::from_str(&fs::read_to_string(dataset.join(MANIFEST_FILE)).unwrap()).unwrap();
+    assert_eq!(
+        (manifest.extractor_revision, manifest.decoder_revision),
+        (170, 169)
+    );
+    const RANGE: usize = 0x37140c;
+    const LEN: usize = 88;
+    assert_eq!(RANGE, CONTEXT_SOURCE as usize + 206 * 4);
+    assert_eq!(RANGE + LEN, CONTEXT_SOURCE as usize + 228 * 4);
+    let view = View {
+        rom: &rom,
+        ewram: None,
+        iwram: None,
+        bios: None,
+    };
+    let blocks = (0x0801_9670..0x0801_9678)
+        .step_by(2)
+        .chain((0x0801_972c..0x0801_973c).step_by(2))
+        .map(|addr| Block {
+            addr,
+            thumb: true,
+            instrs: vec![armv4t::decode_thumb(view.read16(addr), addr)],
+        })
+        .collect();
+    let object = root.join("context-range-getter.o");
+    recomp_core::tcc_memory::build(
+        &Analysis { blocks },
+        &view,
+        &recomp_core::tcc_memory::library_path().unwrap(),
+        &object,
+        &mut |_| {},
+    )
+    .unwrap();
+    let (_library, table) = crate::load_native(&object).unwrap();
+    let mut raw = crate::make_machine(rom.clone(), None);
+    let mut managed = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut managed, &dataset).unwrap();
+    let owner = managed.bus.rom_resources().unwrap().clone();
+    let initial = raw.save_state().unwrap();
+    let mut cases = 0u32;
+    let mut selected = 0u32;
+    let mut boundary = 0u32;
+    for native in [false, true] {
+        for high in [0u32, 0x100] {
+            for index in 205u32..=228 {
+                for m in [&mut raw, &mut managed] {
+                    m.load_state(&initial).unwrap();
+                    m.bus.ffta_sprites.enabled = false;
+                    m.cpu.regs = std::array::from_fn(|i| 0x1100_0000 + i as u32);
+                    m.cpu.regs[0] = high | index;
+                    m.cpu.regs[13] = 0x0300_7c00;
+                    m.cpu.regs[14] = 0x0800_0301;
+                    m.cpu.regs[15] = 0x0801_972c;
+                    m.cpu.cpsr = 0xbf;
+                }
+                for i in RANGE..RANGE + LEN {
+                    managed.bus.rom[i] = rom[i] ^ 0xff;
+                }
+                let before = owner.range_lookup_stats().unwrap().source_bytes;
+                for _ in 0..32 {
+                    if raw.cpu.regs[15] == 0x0800_0300 {
+                        break;
+                    }
+                    raw.step();
+                }
+                assert_eq!(raw.cpu.regs[15], 0x0800_0300);
+                for _ in 0..32 {
+                    if managed.cpu.regs[15] == 0x0800_0300 {
+                        break;
+                    }
+                    if native {
+                        table.get(managed.cpu.regs[15] | 1).unwrap()(
+                            &RT_API,
+                            &mut managed as *mut Machine as *mut std::ffi::c_void,
+                        );
+                    } else {
+                        managed.step();
+                    }
+                }
+                assert_eq!(managed.cpu.regs[15], 0x0800_0300);
+                assert_eq!(
+                    raw.cpu.regs[0],
+                    u32::from(rom[CONTEXT_SOURCE as usize + index as usize * 4])
+                );
+                let bytes = owner.range_lookup_stats().unwrap().source_bytes - before;
+                if (206..=227).contains(&index) {
+                    assert_eq!(bytes, 1, "index {index}, native {native}");
+                    selected += 1;
+                } else {
+                    assert_eq!(bytes, 0, "neighbor index {index}");
+                    boundary += 1;
+                }
+                managed.bus.rom[RANGE..RANGE + LEN].copy_from_slice(&rom[RANGE..RANGE + LEN]);
+                assert_eq!(
+                    raw.save_state().unwrap(),
+                    managed.save_state().unwrap(),
+                    "index {}, native {native}",
+                    high | index
+                );
+                cases += 1;
+            }
+        }
+    }
+    assert_eq!((cases, selected, boundary), (96, 88, 8));
+    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
+        "status":"PASS", "scope":"original indexed-context getter for conditional addresses in the E170 bounded-range owner",
+        "revision":[170,169], "range_owned_context_indices":[206,227],
+        "neighbor_indices":[205,228], "high_alias":256,
+        "controlled_cases":cases, "range_owned_cases":selected, "neighbor_cases":boundary,
+        "full_state_clock_equal":true, "all_88_range_source_bytes_poisoned":true,
+        "interpreter_and_generated_block_dispatch":true,
+        "limits":"Controlled input indices are conditional addresses, not proof of ordinary reachability or other callers. Generated blocks may use interpreter fallback.",
+        "performance_measurements":false
+    })).unwrap()).unwrap();
+}

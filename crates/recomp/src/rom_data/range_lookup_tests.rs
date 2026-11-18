@@ -847,3 +847,160 @@ fn european_range_lookup_both_original_wrapper_prefixes() {
         "performance_measurements":false
     })).unwrap()).unwrap();
 }
+#[cfg(feature = "rom-data-read-audit")]
+#[test]
+#[ignore = "authenticated EUR ROM and E170 dataset; Wine only"]
+fn european_range_lookup_e170_adjacent_owner_boundaries() {
+    use gba_core::rom_data::read_audit::{Service, TraceCapture, TraceFilter};
+    let root = PathBuf::from(std::env::var_os("FFTA_RANGE_LOOKUP_ROOT").unwrap());
+    let dataset = PathBuf::from(std::env::var_os("FFTA_RANGE_LOOKUP_DATASET").unwrap());
+    let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    assert_eq!(
+        gba_core::ffta_rom::digest(&rom),
+        gba_core::ffta_rom::EUROPE_SHA256
+    );
+    let manifest: Manifest =
+        toml::from_str(&fs::read_to_string(dataset.join(MANIFEST_FILE)).unwrap()).unwrap();
+    assert_eq!(
+        (manifest.extractor_revision, manifest.decoder_revision),
+        (170, 169)
+    );
+    let start = SOURCE as usize;
+    let end = start + RECORD_COUNT * 8;
+    let lo = start - 4;
+    let hi = end + 4;
+    let mut managed = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut managed, &dataset).unwrap();
+    let owner = managed.bus.rom_resources().unwrap().clone();
+    let before_sub = owner
+        .conditional_substitution_words_stats()
+        .unwrap()
+        .source_bytes;
+    let before_range = owner.range_lookup_stats().unwrap().source_bytes;
+    let before_geometry = owner.tilemap_geometry_stats().unwrap().source_bytes;
+    for i in lo..hi {
+        managed.bus.rom[i] = rom[i] ^ 0xff;
+    }
+    let trace = TraceCapture::start(
+        TraceFilter {
+            readers: vec![],
+            ranges: vec![(lo as u32, hi as u32)],
+        },
+        20_000,
+    )
+    .unwrap();
+    trace.frame(Some(managed.bus.frames));
+    let ptr = &mut managed as *mut Machine as *mut std::ffi::c_void;
+    let mut cases = [0u32; 3];
+    for mirror in [0x0800_0000u32, 0x0a00_0000, 0x0c00_0000] {
+        for at in lo..hi {
+            assert_eq!(
+                managed.bus.read8(mirror + at as u32),
+                rom[at],
+                "byte {at:x}, mirror {mirror:x}"
+            );
+            cases[0] += 1;
+            if at + 2 <= hi {
+                assert_eq!(
+                    (RT_API.read16)(ptr, mirror + at as u32),
+                    u32::from(u16::from_le_bytes(rom[at..at + 2].try_into().unwrap())),
+                    "halfword {at:x}, mirror {mirror:x}"
+                );
+                cases[1] += 1;
+            }
+            if at + 4 <= hi {
+                assert_eq!(
+                    (RT_API.read32)(ptr, mirror + at as u32),
+                    u32::from_le_bytes(rom[at..at + 4].try_into().unwrap()),
+                    "word {at:x}, mirror {mirror:x}"
+                );
+                cases[2] += 1;
+            }
+        }
+    }
+    trace.frame(None);
+    let trace = trace.finish();
+    assert!(!trace.truncated && trace.dropped_requests == 0);
+    let requests = |service| {
+        trace
+            .events
+            .iter()
+            .filter(|e| e.key.service == service)
+            .map(|e| e.requests)
+            .sum::<u64>()
+    };
+    let typed = requests(Service::Typed);
+    let raw = requests(Service::Raw);
+    let unclassified = requests(Service::Unclassified);
+    let sub = owner
+        .conditional_substitution_words_stats()
+        .unwrap()
+        .source_bytes
+        - before_sub;
+    let range = owner.range_lookup_stats().unwrap().source_bytes - before_range;
+    let geometry = owner.tilemap_geometry_stats().unwrap().source_bytes - before_geometry;
+    assert!(
+        sub > 0 && range > 0 && geometry > 0,
+        "owner bytes: {sub}, {range}, {geometry}"
+    );
+    assert_eq!((raw, unclassified), (0, 0));
+    assert_eq!(typed, cases.iter().map(|&x| u64::from(x)).sum::<u64>());
+    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
+        "status":"PASS", "scope":"E170 range source and immediate substitution/geometry boundaries, 1/2/4-byte reads at all offsets and three ROM mirrors",
+        "revision":[170,169], "poisoned_bytes":hi-lo, "cases_byte_halfword_word":cases,
+        "typed_requests":typed, "raw_requests":raw, "unclassified_requests":unclassified,
+        "trace_dropped":trace.dropped_requests,
+        "substitution_source_bytes":sub, "range_source_bytes":range, "geometry_source_bytes":geometry,
+        "limits":"Direct controlled bus/API reads do not prove ordinary execution, other source owners or indirect caller coverage.",
+        "performance_measurements":false
+    })).unwrap()).unwrap();
+}
+
+#[test]
+#[ignore = "isolated portable Windows executable, authenticated EUR ROM and TinyCC; Wine only"]
+fn european_range_lookup_production_cache_selection() {
+    let work = fs::canonicalize(std::env::var_os("FFTA_RANGE_LOOKUP_ROOT").unwrap()).unwrap();
+    let portable = fs::canonicalize(input_config::storage::portable_root().unwrap()).unwrap();
+    assert!(portable.starts_with(&work), "portable root must be inside owned work");
+    let rom_path = fs::canonicalize(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    assert!(rom_path.starts_with(&work), "ROM test copy must be inside owned work");
+    let rom = fs::read(&rom_path).unwrap();
+    assert_eq!(gba_core::ffta_rom::digest(&rom), gba_core::ffta_rom::EUROPE_SHA256);
+    assert_eq!(crate::TRANSLATION_REV, 8);
+    assert!(matches!(recomp_core::Compiler::detect().backend, recomp_core::Backend::MemoryTcc(_)));
+    let cache = portable.join("Data").join("cache");
+    assert!(!cache.exists(), "test requires a fresh owned cache");
+    let previous = cache.join("t7");
+    fs::create_dir_all(&previous).unwrap();
+    fs::write(previous.join("old-translation-canary.dll"), b"not a translation").unwrap();
+    let (cold_library, cold_table) = crate::ensure_native(rom_path.to_str().unwrap(), &rom, false, None, None).unwrap();
+    let selected = fs::canonicalize(cold_table.source.as_ref().unwrap()).unwrap();
+    assert!(selected.starts_with(fs::canonicalize(cache.join("t8")).unwrap()));
+    assert!(!previous.exists(), "old revision was not swept inside owned cache");
+    let bytes = fs::read(&selected).unwrap();
+    let guard = gba_core::capi::EVENT_GUARD_TAG.to_le_bytes();
+    let guard_count = bytes.windows(guard.len()).filter(|window| *window == guard).count();
+    assert!(guard_count > 0, "selected translation has no event guard tag");
+    let digest = gba_core::ffta_rom::digest(&bytes);
+    let modified = fs::metadata(&selected).unwrap().modified().unwrap();
+    let count = cold_table.len;
+    assert!(count > 0);
+    drop(cold_table);
+    drop(cold_library);
+    let (warm_library, warm_table) = crate::ensure_native(rom_path.to_str().unwrap(), &rom, false, None, None).unwrap();
+    assert_eq!(fs::canonicalize(warm_table.source.as_ref().unwrap()).unwrap(), selected);
+    assert_eq!(warm_table.len, count);
+    assert_eq!(gba_core::ffta_rom::digest(&fs::read(&selected).unwrap()), digest);
+    assert_eq!(fs::metadata(&selected).unwrap().modified().unwrap(), modified);
+    drop(warm_table);
+    drop(warm_library);
+    fs::write(work.join("cache-path.txt"), selected.to_str().unwrap()).unwrap();
+    fs::write(work.join("cache-result.json"), serde_json::to_vec_pretty(&serde_json::json!({
+        "status":"PASS", "scope":"isolated portable production cache cold build and warm reuse",
+        "revision":crate::TRANSLATION_REV, "blocks":count, "event_guard_tag_occurrences":guard_count,
+        "selected_sha256":digest, "old_revision_removed_inside_owned_work":true,
+        "warm_path_hash_and_mtime_equal":true,
+        "limits":"Explicit portable test calls the same cache selector as play; no actual GUI play or packaged translation is exercised. Tag presence does not establish guard coverage of every block.",
+        "performance_measurements":false
+    })).unwrap()).unwrap();
+}

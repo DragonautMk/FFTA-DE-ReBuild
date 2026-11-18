@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "verify-isolated-production-cache-selection",
+  "title": "Verify isolated production cache selection",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Windows GNU under Wine"
+  ],
+  "changes": [
+    "Exercise the production cache selector in an isolated portable test process and compare the selected translation against the guarded Bank scene and the previously verified default object."
+  ],
+  "validation": [
+    "Windows GNU build b1i1_8td passes. Wine kitubxih test commands exit zero and drain: revision-8 cold build and unchanged warm reuse select 29,196 blocks with 58,381 guard-tag occurrences and the exact qpbgtmmw object hash; its 120-frame Bank pair matches full state, clock, video, OAM and audio with 23 typed source bytes. The Wine unit remains FAIL because its private ROM test copy was retained. Read-only evidence audit s_g0xk37 verifies the results, object hash and unchanged protected inputs; no tests rerun.",
+    "Read-only Wine folder probe u4fhwpt3 finds the requested APPDATA override does not isolate the actual known-folder path. Initial probe xbfo8ia_ failed from duplicate wine invocation; initial build 7aihe14h failed from a relative driver path.",
+    "Actual isolated portable GUI Wine/Xvfb startup wamu6k3z cold-builds and loads the same 29,196-block guarded object. The GUI unit remains FAIL: benchmark replay aborts before any verified frame because no GPU presenter is available. Read-only audit p7tuq7iz confirms the startup log, exact object hash and unchanged protected inputs; Wine drained."
+  ],
+  "limitations": [
+    "The portable test and actual isolated GUI startup select the same object; the GUI replay did not complete and packaged translation is untested. Event-tag occurrences do not prove all blocks are guarded. Both failed Wine units and their private copies remain retained. Other readers, legacy IRQ equivalence, broader regressions, Linux, USA, native Windows and performance remain open."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/range_lookup_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-18-verify-bounded-range-bank-select.json"
+  ]
+}

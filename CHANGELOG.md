@@ -65,6 +65,66 @@ Documentation: [2026-11-18-verify-special-pose-task-allocation-identity.json](do
 
 [Change record](docs/changes/2026-11-18-verify-special-pose-home-body-sources.json)
 
+## 2026-11-18 — Verify substitution dispatcher range-source overlap
+
+Type: changed. Platforms: EUR / Windows GNU under Wine.
+
+**Changes**
+
+- Compare the original byte-indexed substitution dispatcher prefix for all indices conditionally addressing the bounded-range owner, adjacent indices and high-byte aliases.
+
+**Validation**
+
+- Windows GNU build bounded-range-dispatcher-domain-build-zykm8vbp and Wine bounded-range-dispatcher-domain-wine-knxnixuk pass 96 complete-state/clock comparisons with all 88 range bytes altered: 88 in-range cases each serve four range bytes and eight adjacent cases serve none. Interpreter and generated instruction dispatch run; protected inputs pass, scratch removed and Wine drains.
+
+**Limitations**
+
+- The prefix stops before callback invocation; conditional indices do not establish ordinary reachability or callback safety. Other computed consumers, production cache selection, legacy IRQ equivalence, broader regressions, Linux, USA, native Windows and performance remain open; generated blocks may fall back to interpretation.
+
+Documentation: [2026-11-18-verify-range-indirect-registry-readers.json](docs/changes/2026-11-18-verify-range-indirect-registry-readers.json).
+
+[Change record](docs/changes/2026-11-18-verify-range-substitution-dispatcher-domain.json)
+
+## 2026-11-18 — Verify indirect registry reads of the bounded-range source
+
+Type: changed. Platforms: EUR / Windows GNU under Wine.
+
+**Changes**
+
+- Compare both original byte-indexed text-registry reader prefixes for every conditional index addressing the bounded-range owner, its neighboring indices and high-byte aliases.
+
+**Validation**
+
+- Windows GNU build bounded-range-indirect-registry-build-yt13a3vw and Wine bounded-range-indirect-registry-wine-44qwhqj_ pass 192 complete-state/clock comparisons with all 88 range source bytes altered: 176 in-range cases serve four typed bytes each and 16 neighboring cases serve none from the range owner. Both interpreter and generated instruction dispatch run; protected inputs pass, scratch removed and Wine drains.
+
+**Limitations**
+
+- These prefixes stop before callback invocation; conditional indices do not establish ordinary reachability or callback safety. Other computed consumers, production cache selection, legacy IRQ equivalence, broader regressions, Linux, USA, native Windows and performance remain open. Generated blocks may fall back to interpretation.
+
+Documentation: [2026-11-17-audit-european-text-reader-e170-ownership.json](docs/changes/2026-11-17-audit-european-text-reader-e170-ownership.json), [2026-11-18-verify-e170-range-adjacent-owner-boundaries.json](docs/changes/2026-11-18-verify-e170-range-adjacent-owner-boundaries.json).
+
+[Change record](docs/changes/2026-11-18-verify-range-indirect-registry-readers.json)
+
+## 2026-11-18 — Verify indexed-context getter range overlap
+
+Type: changed. Platforms: EUR / Windows GNU under Wine.
+
+**Changes**
+
+- Compare the original indexed-context getter for all byte indices conditionally addressing the bounded-range owner, adjacent indices and high-byte aliases.
+
+**Validation**
+
+- Windows GNU build bounded-range-context-overlap-build-mcl2h3ml and Wine bounded-range-context-overlap-wine-3lrpx1l2 pass 96 complete-state/clock comparisons with all 88 range bytes altered: 88 in-range cases each serve one range byte and eight adjacent cases serve none. Interpreter and generated dispatch run; protected inputs pass, scratch removed and Wine drains.
+
+**Limitations**
+
+- Controlled indices do not establish ordinary reachability or other callers; generated blocks may fall back to interpretation. Other computed consumers, production cache selection, legacy IRQ equivalence, broader regressions, Linux, USA, native Windows and performance remain open.
+
+Documentation: [2026-11-18-verify-range-substitution-dispatcher-domain.json](docs/changes/2026-11-18-verify-range-substitution-dispatcher-domain.json).
+
+[Change record](docs/changes/2026-11-18-verify-range-indexed-context-overlap.json)
+
 ## 2026-11-18 — Verify ordinary text reader audio and registry sources
 
 Type: changed. Platforms: EUR / Wine.
@@ -128,6 +188,28 @@ Documentation: [2026-11-17-integrate-european-context-callback-descriptor.json](
 
 [Change record](docs/changes/2026-11-18-verify-ordinary-callback-audio-and-source.json)
 
+## 2026-11-18 — Verify isolated production cache selection
+
+Type: changed. Platforms: EUR / Windows GNU under Wine.
+
+**Changes**
+
+- Exercise the production cache selector in an isolated portable test process and compare the selected translation against the guarded Bank scene and the previously verified default object.
+
+**Validation**
+
+- Windows GNU build b1i1_8td passes. Wine kitubxih test commands exit zero and drain: revision-8 cold build and unchanged warm reuse select 29,196 blocks with 58,381 guard-tag occurrences and the exact qpbgtmmw object hash; its 120-frame Bank pair matches full state, clock, video, OAM and audio with 23 typed source bytes. The Wine unit remains FAIL because its private ROM test copy was retained. Read-only evidence audit s_g0xk37 verifies the results, object hash and unchanged protected inputs; no tests rerun.
+- Read-only Wine folder probe u4fhwpt3 finds the requested APPDATA override does not isolate the actual known-folder path. Initial probe xbfo8ia_ failed from duplicate wine invocation; initial build 7aihe14h failed from a relative driver path.
+- Actual isolated portable GUI Wine/Xvfb startup wamu6k3z cold-builds and loads the same 29,196-block guarded object. The GUI unit remains FAIL: benchmark replay aborts before any verified frame because no GPU presenter is available. Read-only audit p7tuq7iz confirms the startup log, exact object hash and unchanged protected inputs; Wine drained.
+
+**Limitations**
+
+- The portable test and actual isolated GUI startup select the same object; the GUI replay did not complete and packaged translation is untested. Event-tag occurrences do not prove all blocks are guarded. Both failed Wine units and their private copies remain retained. Other readers, legacy IRQ equivalence, broader regressions, Linux, USA, native Windows and performance remain open.
+
+Documentation: [2026-11-18-verify-bounded-range-bank-select.json](docs/changes/2026-11-18-verify-bounded-range-bank-select.json).
+
+[Change record](docs/changes/2026-11-18-verify-isolated-production-cache-selection.json)
+
 ## 2026-11-18 — Verify the indexed-context getter byte domain
 
 Type: changed. Platforms: EUR / Windows GNU under Wine.
@@ -170,6 +252,27 @@ Type: changed. Platforms: EUR / Wine.
 Documentation: [2026-11-17-integrate-european-script39-special-poses.json](docs/changes/2026-11-17-integrate-european-script39-special-poses.json).
 
 [Change record](docs/changes/2026-11-18-verify-european-special-geometry-ordinary-use.json)
+
+## 2026-11-18 — Verify E170 bounded-range neighboring owners
+
+Type: changed. Platforms: EUR / Windows GNU under Wine.
+
+**Changes**
+
+- Add a controlled E170 regression for every 1-, 2- and 4-byte access within the bounded-range source and its immediate neighboring owners across three ROM mirrors.
+
+**Validation**
+
+- Windows GNU build bounded-range-e170-boundary-build-3rk9ajsu and Wine bounded-range-e170-boundary-wine-pbj0c8fy pass 852 typed reads with 96 source bytes altered: substitution and geometry owners each serve 63 bytes, range owner serves 1848; no raw, unclassified or dropped requests. Protected inputs pass, scratch removed and Wine drains.
+- Protected aligned pointer census bounded-range-direct-literal-census-_s7xtdr9 finds one ROM word pointing into the range source, loaded by the original reader at 01abca; no ARM literal-load candidate is found.
+
+**Limitations**
+
+- Controlled bus/API reads do not establish ordinary execution or all indirect consumers. The static census excludes unaligned pointers, calculated addresses and RAM copies. Legacy IRQ equivalence, production cache selection, broader regressions, Linux, USA, native Windows and performance remain open.
+
+Documentation: [2026-11-18-verify-bounded-range-wrapper-prefixes.json](docs/changes/2026-11-18-verify-bounded-range-wrapper-prefixes.json).
+
+[Change record](docs/changes/2026-11-18-verify-e170-range-adjacent-owner-boundaries.json)
 
 ## 2026-11-18 — Verify current Windows ROM-data synthetic regressions
 
@@ -483,6 +586,26 @@ Type: changed. Platforms: EUR.
 Documentation: [2026-11-17-audit-european-text-reader-e170-ownership.json](docs/changes/2026-11-17-audit-european-text-reader-e170-ownership.json), [2026-11-17-integrate-european-conditional-substitution-words.json](docs/changes/2026-11-17-integrate-european-conditional-substitution-words.json).
 
 [Change record](docs/changes/2026-11-18-close-text-reader-physical-ownership-audit.json)
+
+## 2026-11-18 — Audit nearby range-source pointer roots
+
+Type: changed. Platforms: EUR / Windows GNU under Wine.
+
+**Changes**
+
+- Inventory aligned pointers near the bounded-range source, then inspect candidate Thumb literal loads and the bounded geometry routine to distinguish known overlapping readers from other local byte-index uses.
+
+**Validation**
+
+- Protected static census wdb_l7ok identifies 18 aligned words; four have no scoped PC-relative load candidate. Wine disassembly 7zra4rc1 examines 11 other Thumb load candidates, and rm4e5mhp covers geometry entry and both index loops. Shown byte indices for roots 371020, 37101c, 371064 and 371034 cannot reach the range; normal geometry entry requires dimension eight and bounds both calculated accesses to 371024..371034. Inputs protected, scratch removed and Wine drained.
+
+**Limitations**
+
+- Numerical patterns and linear disassembly do not prove global instruction boundaries, ordinary reachability or all paths. One apparent literal-pool candidate and four words without scoped PC-relative loads remain unresolved; unaligned or RAM-built pointers, larger or dynamic offsets, alternate entries and indirect consumers are outside scope. Parent validation remains partial; no performance measurement.
+
+Documentation: [2026-11-18-verify-range-indexed-context-overlap.json](docs/changes/2026-11-18-verify-range-indexed-context-overlap.json).
+
+[Change record](docs/changes/2026-11-18-audit-range-nearby-pointer-roots.json)
 
 ## 2026-11-17 — Verify European text copy callbacks
 

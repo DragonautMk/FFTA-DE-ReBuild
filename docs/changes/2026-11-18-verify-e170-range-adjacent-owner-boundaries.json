@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "verify-e170-range-adjacent-owner-boundaries",
+  "title": "Verify E170 bounded-range neighboring owners",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Windows GNU under Wine"
+  ],
+  "changes": [
+    "Add a controlled E170 regression for every 1-, 2- and 4-byte access within the bounded-range source and its immediate neighboring owners across three ROM mirrors."
+  ],
+  "validation": [
+    "Windows GNU build bounded-range-e170-boundary-build-3rk9ajsu and Wine bounded-range-e170-boundary-wine-pbj0c8fy pass 852 typed reads with 96 source bytes altered: substitution and geometry owners each serve 63 bytes, range owner serves 1848; no raw, unclassified or dropped requests. Protected inputs pass, scratch removed and Wine drains.",
+    "Protected aligned pointer census bounded-range-direct-literal-census-_s7xtdr9 finds one ROM word pointing into the range source, loaded by the original reader at 01abca; no ARM literal-load candidate is found."
+  ],
+  "limitations": [
+    "Controlled bus/API reads do not establish ordinary execution or all indirect consumers. The static census excludes unaligned pointers, calculated addresses and RAM copies. Legacy IRQ equivalence, production cache selection, broader regressions, Linux, USA, native Windows and performance remain open."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/range_lookup_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-18-verify-bounded-range-wrapper-prefixes.json"
+  ]
+}

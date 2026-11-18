@@ -23675,3 +23675,39 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Outcome: completed
 - Evidence: Windows GNU build `bounded-range-wrapper-build-efo9lv8n` and Wine `bounded-range-wrapper-wine-xfsk4jgx` compare both original direct wrappers through the range-reader return for 23 bound/unmatched values, in interpreter and generated dispatch: 92 full-state/clock cases with all 88 source bytes altered. Unmatched output sentinels remain unchanged; inputs protected, scratch removed and Wine drained.
 - Limits: later rendering calls, upstream consumers, other scenes, production cache selection and legacy cross-mode IRQ equivalence remain open. Generated blocks may fall back to interpretation; Linux, USA and native Windows deferred. No performance measurements.
+
+### ROMDATA-01-RANGE-37140C-E170-ADJACENT-OWNER-BOUNDARIES
+
+- Outcome: completed
+- Evidence: Windows GNU build `bounded-range-e170-boundary-build-3rk9ajsu` and Wine `bounded-range-e170-boundary-wine-pbj0c8fy` pass all 852 typed byte/halfword/word reads across the 88-byte range source and four immediately adjacent bytes per side on ROM mirrors 08/0a/0c, with all 96 bytes altered. Adjacent substitution and geometry owners each serve 63 bytes, range owner 1,848; no raw/unclassified/dropped requests. Inputs protected, scratch removed, Wine drained.
+- Limits: controlled bus/API reads do not prove ordinary use or indirect consumers; aligned literal census `_s7xtdr9` has explicit unaligned/computed/RAM blind spots. Parent remains partial. No performance measurement.
+
+### ROMDATA-01-RANGE-37140C-INDIRECT-REGISTRY-READERS
+
+- Outcome: completed
+- Evidence: Windows GNU build `bounded-range-indirect-registry-build-yt13a3vw` and Wine `bounded-range-indirect-registry-wine-44qwhqj_` pass 192 full-state/clock comparisons for original text-registry readers 019172/019424, indices 232..255 and 0x100 aliases, interpreter and generated instruction dispatch. All 88 range bytes altered; 176 in-range cases serve four typed bytes each, 16 adjacent cases serve zero range bytes. Inputs protected, scratch removed and Wine drained.
+- Limits: prefixes stop before indirect callback invocation; conditional indices do not prove ordinary use or callback safety. Other computed consumers and parent validation remain open. No performance measurement.
+
+### ROMDATA-01-RANGE-37140C-SUBSTITUTION-DISPATCHER-DOMAIN
+
+- Outcome: completed
+- Evidence: Windows GNU build `bounded-range-dispatcher-domain-build-zykm8vbp` and Wine `bounded-range-dispatcher-domain-wine-knxnixuk` pass 96 complete-state/clock cases for original dispatcher 019e94, indices 172..195 and 0x100 aliases, interpreter and generated dispatch. All 88 range bytes altered; 88 in-range cases serve four bytes each and eight adjacent cases serve none. Inputs protected, scratch removed and Wine drained.
+- Limits: prefix stops before indirect invocation; selected conditional indices do not prove ordinary reachability or callback safety. Parent remains partial. No performance measurement.
+
+### ROMDATA-01-RANGE-37140C-CONTEXT-GETTER-DOMAIN
+
+- Outcome: completed
+- Evidence: Windows GNU build `bounded-range-context-overlap-build-mcl2h3ml` and Wine `bounded-range-context-overlap-wine-3lrpx1l2` pass 96 complete-state/clock comparisons for original getter 01972c, indices 205..228 and 0x100 aliases in interpreter and generated dispatch. All 88 range bytes altered; 88 in-range cases serve one byte each and eight adjacent cases serve none. Inputs protected, scratch removed and Wine drained.
+- Limits: conditional indices do not prove ordinary reachability or other callers; generated blocks may fall back. Parent remains partial; no performance measurement.
+
+### ROMDATA-01-RANGE-37140C-GUI-CACHE-SELECTION
+
+- Outcome: completed for isolated GUI cold cache selection
+- Evidence: actual portable GUI Wine/Xvfb startup `wamu6k3z` cold-built and loaded the same 29,196-block guarded object as accepted 120-frame Bank pair `jyionxk1`; audit `p7tuq7iz` verifies exact SHA-256 and protected inputs. Wine drained.
+- Limits: original GUI unit remains FAIL because the bounded replay aborted before any verified frame without a GPU presenter; failed unit and its private ROM copy remain retained. No GUI replay, native Windows, other cache configurations or performance claims. Parent remains partial.
+
+### ROMDATA-01-RANGE-37140C-NEARBY-ROOT-CENSUS
+
+- Outcome: completed for the scoped aligned-pointer and local-window census
+- Evidence: protected EUR `wdb_l7ok` screens 18 aligned pointer words within 1,023 bytes before or inside the range. Wine `7zra4rc1` and `rm4e5mhp` bound the shown extra byte-index and normal geometry reads before the range; inputs protected, Wine drained. See `docs/changes/2026-11-18-audit-range-nearby-pointer-roots.json`.
+- Limits: one apparent pool candidate and four words without scoped PC-relative candidates remain unresolved; unaligned or RAM-built pointers, alternate entries, larger/dynamic offsets and indirect calls remain outside this census. Parent remains partial.

@@ -454,8 +454,26 @@ current evidence before running another check.
   `je_s2es2`, `7tgvy6tq`); the retained guarded translation matches interpreter
   state/clock for that frame (`u_28pjng`) and passes the 120-frame managed pair
   (`jyionxk1`). Both direct wrapper prefixes pass 92 controlled cases across
-  all range bounds and an unmatched input (`xfsk4jgx`). Legacy IRQ equivalence,
-  production cache selection, upstream consumers and regressions remain open.
+  all range bounds and an unmatched input (`xfsk4jgx`). Literal census
+  `_s7xtdr9` finds only the reader's aligned source pointer; E170 mixed-owner
+  boundary regression `pbj0c8fy` passes 852 typed reads over three mirrors.
+  Both text-registry prefixes pass all 22 conditional range indices, neighbors
+  and high-byte aliases in 192 controlled cases (`44qwhqj_`); the substitution
+  dispatcher passes the corresponding 96 cases (`knxnixuk`). The indexed
+  context getter passes its 96 range-overlap and neighbor cases (`3lrpx1l2`).
+  An isolated portable call to the production cache selector cold-builds and
+  reuses the same guarded object, and its 120-frame Bank pair matches. Wine
+  unit `kitubxih` remains FAIL because a private ROM copy was retained; its
+  zero-exit results and unchanged inputs are verified by read-only audit
+  `s_g0xk37`. Actual GUI startup cold-builds and loads the same object under
+  Wine/Xvfb (`wamu6k3z`, audit `p7tuq7iz`), but its replay fails before any
+  verified frame because no GPU presenter is available. Nearby aligned-pointer
+  census `wdb_l7ok` and disassembly `7zra4rc1`/`rm4e5mhp` bound the shown
+  additional byte-index and geometry reads before the range in their normal
+  paths; four words lack scoped PC-relative candidates and other address
+  constructions remain unexamined. Other computed
+  consumers, ordinary indices, legacy IRQ equivalence and broader regressions
+  remain open.
 - [ ] **ROMDATA-01-ADJACENT-371464:** establish remaining readers, selector
   domains and broader Wine regression coverage. EUR e162 publishes
   six conditional geometry groups; the original-reader comparison passes
@@ -472,7 +490,11 @@ current evidence before running another check.
   dispatch may include nested work. An isolated no-extra-label build has none
   of the 43 observed updater symbol names (`qpbgtmmw`); its ordinary paired
   Wine frames pass without an observed native updater dispatch (`botzl4b6`),
-  but runtime cache selection remains unobserved. The old artifact's failed
+  A later isolated portable test of the production selector chooses the same
+  object (`kitubxih`, evidence audit `s_g0xk37`); the original Wine unit is
+  FAIL due to a retained private ROM copy. The GUI also loads that object
+  (`wamu6k3z`, audit `p7tuq7iz`), but its replay fails without a GPU
+  presenter. The old artifact's failed
   comparison (`ve41xbr3`) is not explained; its later IRQ comparison crossed
   the reference frame boundary (`jui0l9oq`).
 - [ ] **ROMDATA-01-PARAMETER-RECORDS27-DYNAMIC-SOURCES:** resolve the live

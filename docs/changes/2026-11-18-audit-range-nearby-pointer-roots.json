@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "audit-range-nearby-pointer-roots",
+  "title": "Audit nearby range-source pointer roots",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Windows GNU under Wine"
+  ],
+  "changes": [
+    "Inventory aligned pointers near the bounded-range source, then inspect candidate Thumb literal loads and the bounded geometry routine to distinguish known overlapping readers from other local byte-index uses."
+  ],
+  "validation": [
+    "Protected static census wdb_l7ok identifies 18 aligned words; four have no scoped PC-relative load candidate. Wine disassembly 7zra4rc1 examines 11 other Thumb load candidates, and rm4e5mhp covers geometry entry and both index loops. Shown byte indices for roots 371020, 37101c, 371064 and 371034 cannot reach the range; normal geometry entry requires dimension eight and bounds both calculated accesses to 371024..371034. Inputs protected, scratch removed and Wine drained."
+  ],
+  "limitations": [
+    "Numerical patterns and linear disassembly do not prove global instruction boundaries, ordinary reachability or all paths. One apparent literal-pool candidate and four words without scoped PC-relative loads remain unresolved; unaligned or RAM-built pointers, larger or dynamic offsets, alternate entries and indirect consumers are outside scope. Parent validation remains partial; no performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-18-verify-range-indexed-context-overlap.json"
+  ]
+}
