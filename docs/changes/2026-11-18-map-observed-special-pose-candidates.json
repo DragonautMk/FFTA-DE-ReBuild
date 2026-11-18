@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "map-observed-special-pose-candidates",
+  "title": "Map observed special pose index candidates",
+  "kind": "changed",
+  "platforms": [
+    "EUR"
+  ],
+  "changes": [
+    "Join twelve ordinary observed null special-pose index cells to the authenticated conditional opcode-39 producer projection."
+  ],
+  "validation": [
+    "Protected static audit special-home-producer-join-pot_cegy authenticated E170 manifest resource files and ROM source hashes, reconstructed all 285 modeled producer pairs from 1857 script instructions, checked metadata and original index arithmetic, and cross-checked prior E163 source-graph evidence. Each of the twelve observed cells has exactly one conditional modeled query, forming six selector/group combinations; input guards passed and scratch was removed."
+  ],
+  "limitations": [
+    "The join covers the documented low-selector opcode-39 projection only. Shared addresses, other readers and live actor state mean it does not establish which producer or script executed, nor complete animation or checkpoint lineage. No guest execution or performance measurement; Linux, USA and native Windows remain open."
+  ],
+  "files": [
+    "docs/rom_data_unit_obj.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-18-verify-ordinary-geometry-special-index.json"
+  ]
+}

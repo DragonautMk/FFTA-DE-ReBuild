@@ -1,5 +1,13 @@
 # Direct decoded resource consumption
 
+The current E170-era Windows GNU `recomp` test executable passed its complete
+non-ignored `rom_data::` filter under Wine (`e170-rom-data-synthetic-regression-
+cpyhx1cy`): 31 passed, zero failed, and 451 ignored. The executed synthetic
+checks cover strict formats, publication/reuse/relocation, corruption and
+partial-write recovery, cancellation, competing publishers and portable paths.
+They do not load the E170 dataset or replace private-ROM integration filters;
+Linux, USA, native Windows and performance remain outside this result.
+
 EUR e88-d87 adds [event records](rom_data_gameplay.md#managed-event-records-and-typed-runtime-reads):
 81files/80resources, one3072-byte span/no dependency, all79 previous records/
 payloads exact. The shared row225 view retains the same owner; original script/
@@ -2074,8 +2082,11 @@ That packed owner also covers the physical metadata14 descriptor-1 alias at
 first byte from the packed owner in interpreter and translated Wine runs with
 poisoned sources and matching states/clocks (`56wpztn8`). One ordinary EUR
 battle-entry interpreter frame also reaches the original reader and matches
-raw state, clock, image, OAM and mixed audio (`gpir8qjh`); full importer and
-other scene/consumer coverage remain open.
+raw state, clock, image, OAM and mixed audio (`gpir8qjh`). E170 Wine
+`3s1xbvpx` compares 240 recorded battle-entry frames with the row altered,
+including state, clock, video, OAM and nonempty audio; five typed row requests
+occur. Generated dispatch can fall back to interpretation, and full importer
+and other scene/consumer coverage remain open.
 
 
 ## Conditional descriptor banks managed projection
@@ -2373,9 +2384,99 @@ the run read four indexed-graphics context bytes and zero range-lookup or
 substitution callback bytes. This establishes registration and bounded startup,
 not absence of those reads in other scenes.
 
-Ordinary use, broader Wine regressions, Linux, USA and native Windows remain
-open. The current EUR dataset is retained with the earlier Wine unit. No
-performance measurement was performed.
+A protected full-ROM Thumb BL candidate census `bounded-range-caller-census-
+yeizv0zb` finds two encoded calls to `01abc0`, at `01ac18` and `01ac78`, in
+the existing disassembly of wrappers `01abfc` and `01ac54`. A separate census
+`bounded-range-wrapper-census-bpuinw0u` finds respectively 32 and nine encoded
+Thumb calls to those wrapper entries, with no exact Thumb-pointer occurrence;
+41 local windows are retained in `bounded-range-caller-windows-tq88gscc`.
+Both original direct wrapper prefixes were then checked under E170/Wine
+(`bounded-range-wrapper-wine-xfsk4jgx`): 23 values covering every recorded
+lower and upper bound plus one unmatched input, in each wrapper and both
+interpreter/generated dispatch, for 92 complete-state/clock comparisons with
+all 88 source bytes altered. The unmatched output sentinels are preserved.
+The comparison stops after the helper returns, before later rendering; it does
+not prove execution of all upstream callers or guest input bounds.
+
+Patterns and disassembly do not prove code reachability or exclude computed
+calls or alternate entries. A separate aligned ARM BL pattern census
+`bounded-range-arm-caller-census-odbnk6j8` finds no direct candidates to the
+reader or either wrapper; it does not exclude indirect or register calls.
+A passive search of 428 previously protected target checkpoint paths
+(`bounded-range-checkpoint-pointer-scan-50n30lt7`) validates 339 unique
+payloads, of which 15 are invalid or another region, and finds no exact Thumb
+pointer to the 16 nearest preceding push candidates. Nearest pushes need not
+be actual function starts, serialized matches need not prove execution, and
+other possible entries/checkpoints remain unexamined. Eight paths under a
+symbolic ancestor were excluded after the validation runner refused them.
+
+Three distinct recorded E170 Wine CLI windows read zero range-source bytes:
+240 frames entering the Giza battle (`bounded-range-battle-locator-dpeuvczs`),
+372 frames from Royal Valley's system menu to Mission (`bounded-range-mission-
+locator-hn5vy0hm`), and 120 frames of Bank entry (`bounded-range-bank-locator-
+bfqintcy`). These are bounded aggregate-counter negatives, not proof that the
+candidate calls cannot run elsewhere. Protected inputs passed and Wine drained;
+no raw/managed pair was run for a negative window. The Royal Valley checkpoint's
+prior save ancestry is not independently established.
+
+A separate source-guided EUR Bank continuation starts from the retained
+`open-monster-3` state, whose EWRAM task-list candidate contains callback
+`05b625` and state byte 24. The task resides in EWRAM; an earlier scan restricted
+to IWRAM headers (`b8j9lctj`) did not find it, while the EWRAM scan
+`_zm3zlw2` finds this candidate among five saved task slots. The original
+state-24 code tests input bit 4 before
+either `05be34` or `05be8a` invokes wrapper `01abfc`. A new isolated Select
+input produces a positive E170 Wine locator (`5n6dsl9_`): 23 source bytes and
+five records, while the retained neutral/Down windows above remain negative.
+The source and saved task are a conditional lead; the locator alone does not
+prove which instruction executed or establish pre-checkpoint ancestry.
+
+Wine pair `bounded-range-bank-pair-wine-acebndyu` repeats that 120-frame input
+with all 88 managed source bytes altered. Full machine state, guest clock,
+central/wide framebuffer, OAM, dispatch counts and nonempty mixed, PSG, both
+FIFO and HLE audio match each frame. At guest frame 3669 the trace records 12
+typed requests, 23 bytes across five records, zero raw/unclassified or dropped
+requests. The production CLI reports the same byte/record totals. The 254,538
+generated and 819,919 fallback dispatches are aggregate; all 12 events in that
+trace lack interpreter instruction attribution. A separate interpreter replay
+of the positive frame (`hbu4s4d0`) observes `05be8a → 01abfc → 01abc0` and
+12 typed requests at original reader PCs `01abce`, `01abd4`, `01abda` and
+`01abde`. Raw and managed interpreter state, clock, video, OAM and audio match
+for that frame with the source bytes altered. The initial locator `asue_kh1`
+produced positive logs but its unit failed the private-input retention guard;
+`5n6dsl9_` explicitly retains the input for this pair.
+
+The initial attribution attempt (`6s36aeat`) compared a native raw frame with
+an interpreter managed frame and stopped at clocks 1030804556 and 1030804546,
+respectively, before its state or output assertions. The raw/raw diagnostic
+`ln8zprqs` reproduces those endpoints without managed resources; one additional
+interpreter step advances to 1030804570, skipping the native clock, so complete
+state equality at a common clock was not established. Its audio buffers match
+at the observed, unequal endpoints; the original result key incorrectly says
+`at_aligned_clock`. The source test now names that comparison accurately.
+A Sol consultation (`/root/sol_range_clock_diagnosis`, requested
+`gpt-6.1-sol`/`xhigh`; effective settings unconfirmed) identified that the
+protected legacy native cache lacks the current event-guard tag. The follow-up
+`je_s2es2` confirms interpreter PC `08000450`, native PC `0800044c` and an
+unmasked pending IRQ in both; the source loop suffix is consistent with the
+10-cycle difference. Protected snapshot audit `7tgvy6tq` finds two differing
+payload bytes, accounted for by the serialized PC and a unique varint matching
+clock, but does not independently parse the full schema. Native instruction
+attribution and cross-mode IRQ equivalence for that legacy object remain
+unproved. Primary Terra and effort could not be independently confirmed.
+
+The same raw/raw frame using the previously retained event-guarded translation
+`qpbgtmmw` passes (`u_28pjng`): both paths stop at clock 1030804546 and
+`08000450`, with equal complete serialized state and audio. A separate 120-frame
+raw/managed E170 pair on that translation (`jyionxk1`) also passes the complete
+state, clock, video, OAM and audio comparison, with 23 typed source bytes and
+five records, zero raw/unclassified or dropped requests. Both dispatch modes
+occur. This is one isolated guarded translation; production cache selection and
+other scenes are not established.
+
+Other reader contexts, legacy cross-mode IRQ equivalence, production cache
+selection, broader Wine regressions, Linux, USA and native Windows remain open. No performance measurement was
+performed.
 
 
 ## European tilemap geometry projections
@@ -2417,9 +2518,15 @@ paths match framebuffer and OAM for 1,800 frames, final serialized state and
 final image. Read-only evidence audit
 `e169-special-geometry-existing-evidence-db6l43_0` verifies the retained logs,
 input guards and runtime counter implementation. The counters do not identify
-the groups or readers; the scene did not compare audio or altered ROM sources,
-guest clocks, or full state at every frame. The checkpoint's recorded lineage
-was not independently reconstructed end-to-end.
+the groups or readers. A subsequent E170 Wine pair
+(`geometry-special-ordinary-wine-lby31j3d`) identifies the two groups as
+state width and state height (group indices 4 and 5): 28 typed requests serve
+56 source bytes. With all 48 geometry bytes and 3,856 special-pose index bytes
+altered in the managed machine, full state, guest clock, central/wide video,
+OAM and five nonempty audio streams match at each of the 1,800 frames. The
+trace dropped no requests; it identifies addresses, not the original reader
+instruction. The checkpoint's recorded lineage was not independently
+reconstructed end-to-end.
 
 Other readers and index domains, broader Wine regression checks, Linux, USA and
 native Windows remain open. No performance measurement was made.

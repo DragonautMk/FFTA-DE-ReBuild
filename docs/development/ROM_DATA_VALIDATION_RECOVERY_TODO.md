@@ -331,9 +331,10 @@ current evidence before running another check.
   pass; static join `1rjf486k` links an ordinary retained trace and checkpoint
   to the descriptor. Wine continuation `wklf6sch` reads 14 managed descriptor
   bytes and matches three framebuffer/OAM frames and the final serialized
-  state; audio and source-poisoned scene comparisons remain open. Initial
-  `yxtwldmj` failed an intermediate call-PC observation hidden by compiled
-  chaining. The final descriptor byte is opaque; other scenes, Linux, USA and
+  state. E170 Wine `hf5czvkg` additionally compares three frames of full state,
+  clock, video, OAM and nonempty audio with the 12 source bytes altered; 14
+  typed descriptor bytes are read. Initial `yxtwldmj` failed an intermediate
+  call-PC observation hidden by compiled chaining. The final descriptor byte is opaque; other scenes, Linux, USA and
   native Windows remain open.
 - [ ] **ROMDATA-01-INDEXED-DIRECT-3AE484:** extend coverage of the EUR
   four-program archive identified by `08023c98`; source audit (`j80q8jx4`),
@@ -378,10 +379,20 @@ current evidence before running another check.
   scenes/consumers and native dispatch on the ordinary route. The controlled
   Wine interpreter/native prefix (`56wpztn8`) and one ordinary interpreter
   frame (`gpir8qjh`) read the row through the packed owner and match raw state.
+  E170 Wine `3s1xbvpx` passes a 240-frame raw/managed generated-dispatch pair
+  with the row altered, five typed reads and matching state/video/OAM/audio;
+  per-read native attribution, full importer and other scenes remain open.
 - [ ] **ROMDATA-01-CONTEXT-3710D4:** verify additional ordinary contexts,
   remaining consumers and full reader ABI. EUR e159 Wine publication, original
   reader cases and one ordinary context-3 window pass (`8dbsgppp`); production
-  CLI passes (`27uqnksb`), while broader Wine regression filters remain pending.
+  CLI passes (`27uqnksb`). E170 generated-dispatch Wine pair `5eyv63je` matches
+  41 world-map frames with altered sources and four typed context-3 reads;
+  controlled Wine `9l5p79sq` additionally compares all 256 getter byte values
+  and their 0x100 aliases plus three field loads across all 33 records, using
+  interpreter and generated instruction dispatch. Other callers, ordinary
+  reachability, per-read native attribution and broader private-ROM regressions
+  remain pending. Current Wine `cpyhx1cy` passes all 31 non-ignored synthetic
+  ROM-data tests; 451 ignored tests were not run.
 - [ ] **ROMDATA-01-SUBSTITUTION-371158:** establish remaining callback behavior,
   other parser-to-callback paths, ordinary text use and unselected consumers. EUR e160
   typed candidate slots and dispatcher prefixes pass under Wine (`2bltt60c`);
@@ -404,11 +415,13 @@ current evidence before running another check.
   (`j15jcf44`), preserving all 111 earlier resources and checking mixed-owner
   boundaries. Production Wine CLI `mr5vn2od` passes creation/reuse/verify and
   a recorded 1,800-frame home continuation with 28 managed callback bytes,
-  matching framebuffer/OAM hashes and final state; audio and poisoned-source
-  scene comparisons remain open. Kind 11 conditionally selects `08016c00`,
-  but aggregate counters do not identify its use. Other scenes, translated
-  prefixes, Linux, USA and native Windows remain open.
-- [ ] **ROMDATA-01-TEXT-READER-FULL-BYTE-DOMAIN:** audit physical ownership
+  matching framebuffer/OAM hashes and final state. E170 Wine `8672kdim` compares
+  all 1,800 frames of full state, clock, video, OAM and nonempty audio with 116
+  source bytes altered. Seven typed table reads address only null slot 3; no
+  callback invocation is established. Kind 11 conditionally selects `08016c00`,
+  but its ordinary use remains unproved. Other scenes, translated prefixes,
+  Linux, USA and native Windows remain open.
+- [x] **ROMDATA-01-TEXT-READER-FULL-BYTE-DOMAIN:** audit physical ownership
   for the original registry readers' full byte-index address range against
   E169, preserving independently rooted neighboring data and distinguishing
   conditional addresses from ordinary index reachability. Static audit
@@ -421,19 +434,37 @@ current evidence before running another check.
   preserves the previous 158 owners. Production Wine CLI `alfjrf8b` passes
   create/reuse/verify; its three-frame scene reads zero new words. Callback
   semantics, ordinary indices and other dispatcher domains remain open. No
-  guest bound is imposed.
+  guest bound is imposed. The stated ownership audit is complete; the remaining
+  execution and semantic questions belong to the separate registry and
+  substitution tasks above. [Evidence](../changes/2026-11-17-audit-european-text-reader-e170-ownership.json).
 - [ ] **ROMDATA-01-RANGE-37140C:** establish ordinary use and remaining reader
   contexts. EUR e161 publication, typed bytes and original scan pass under Wine
-  (`t2mh2ei8`); production CLI passes (`emoffrjv`), while broader regressions
-  remain open.
+  (`t2mh2ei8`); production CLI passes (`emoffrjv`). E170 caller census finds
+  two Thumb wrapper calls and 41 candidate upstream calls (`yeizv0zb`,
+  `bpuinw0u`, `tq88gscc`); no direct ARM BL candidate (`odbnk6j8`) and no
+  matching candidate pointer in the scoped checkpoint scan (`50n30lt7`).
+  Code execution, indirect calls and other entries remain unproved. Three
+  distinct E170 Wine locators read zero source bytes: Giza battle entry
+  (`dpeuvczs`), Royal Valley Mission (`hn5vy0hm`), Bank entry (`bfqintcy`).
+  Do not repeat these windows. A source-guided Bank Select scene reads 23 bytes
+  across five records (`5n6dsl9_`); the 120-frame full state/clock/video/OAM/
+  audio pair with altered sources passes (`acebndyu`); interpreter attribution
+  confirms `05be8a → 01abfc → 01abc0` (`hbu4s4d0`). Mixed native/interpreter
+  frame clocks differ by 10 cycles with a legacy cache (`6s36aeat`,
+  `je_s2es2`, `7tgvy6tq`); the retained guarded translation matches interpreter
+  state/clock for that frame (`u_28pjng`) and passes the 120-frame managed pair
+  (`jyionxk1`). Both direct wrapper prefixes pass 92 controlled cases across
+  all range bounds and an unmatched input (`xfsk4jgx`). Legacy IRQ equivalence,
+  production cache selection, upstream consumers and regressions remain open.
 - [ ] **ROMDATA-01-ADJACENT-371464:** establish remaining readers, selector
   domains and broader Wine regression coverage. EUR e162 publishes
   six conditional geometry groups; the original-reader comparison passes
   (`5zpi8vam`) and its CLI scene has no positive ordinary read (`j4r9sopl`). A
   later E169 Wine home continuation reads 56 managed bytes across two aggregate
   groups and matches 1,800 framebuffer/OAM frames and final state (`mr5vn2od`,
-  evidence audit `db6l43_0`); the group identities and scene audio/altered-ROM
-  comparison remain unproved.
+  evidence audit `db6l43_0`). E170 Wine `lby31j3d` identifies state-width and
+  state-height groups and compares full state, clock, video, OAM and nonempty
+  audio per frame with geometry and special-pose index sources altered.
 - [ ] **E134 ordinary updater:** establish production-cache entry availability,
   other ordinary paths and translated drawing. Current explicitly labeled
   translation has one-frame interpreter/native parity (`9ymu0twl`) and
@@ -465,7 +496,23 @@ current evidence before running another check.
   (`72_aby76`) without a positive ordinary read in that window. The later E169
   Wine home continuation reads 48 index bytes, zero sequence/OBJ/pixel bytes,
   and matches 1,800 framebuffer/OAM frames and final state (`mr5vn2od`, audit
-  `db6l43_0`); index identities and complete animation remain unproved. Two
+  `db6l43_0`). E170 Wine `lby31j3d` identifies 12 null index cells and passes
+  the full 1,800-frame state/clock/video/OAM/audio pair with index sources
+  altered. Static join `pot_cegy` finds one modeled opcode-39 query per cell,
+  grouped as selectors/groups 15/22, 16/4, 16/16, 17/6, 17/16 and 78/5.
+  Wine `bxmz57hb` locates a read at relative frame 345; interpreter replay reads
+  two cells in Thumb `080227a8` scope and matches native frame state, image and
+  OAM. Follow-up `b56w86ji` observes caller `0809ae70`, sprite 48, animation
+  65 and parts 1/2 in the interpreter. Wine `_uuybpg0` observes the upstream
+  `0812a8c4` task → `0809d9c4` → `0809ae1c` chain, with animation base 64.
+  Wine `v6ydjwg7` observes task selector 17, group 16, state 0 and flag 0.
+  Wine `7hy1jqxu` observes opcode39 `b95917`, its matching creator and task
+  entry in that frame. Wine `s4quofvj` and static join `1zjiaoiz` connect the
+  allocator return and synchronous callback to the same task. Wine `lwnzoodb`
+  observes typed reads of the matching body index, one-frame sequence, OBJ and
+  pixels and passes a 1,800-frame state/clock/video/OAM/audio pair with those
+  sources altered. Complete animation lifecycle and per-request task attribution
+  remain unproved. Two
   excluded group-9 instructions (`B96A1E`, `BA0841`) call `0809BA84` with argument 13; their
   conditional index and downstream sources are already owned (`wnmiows2`,
   `4p7yr_3v`). The original task prefix selects the expected callees in three

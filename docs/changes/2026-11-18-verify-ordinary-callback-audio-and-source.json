@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "verify-ordinary-callback-audio-and-source",
+  "title": "Verify ordinary callback audio and altered sources",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add a bounded ordinary callback scene comparison that checks audio and machine state while managed descriptor sources are altered."
+  ],
+  "validation": [
+    "Windows GNU release test build callback-ordinary-audio-build-retry-wj4fezdi passed; Wine callback-ordinary-audio-wine-hf5czvkg passed three frames from the authenticated mid-frame checkpoint with E170-d169. Fourteen typed descriptor bytes were read while 12 source bytes were altered. Full state, guest clock, central and wide framebuffers, OAM, mixed audio, PSG, FIFO and HLE taps matched each frame; all five streams contained samples. Protected inputs passed and Wine server drained.",
+    "The first build invocation exited 2 because its script path was relative to the isolated work directory. Wine tdj6u_8n was refused before prefix lease by sandbox runtime permissions; Wine 52lwooom failed before comparison because the driver omitted the TinyCC path. The corrected Wine retry passed."
+  ],
+  "limitations": [
+    "Three-frame checkpoint continuation only; generated dispatch may fall back to interpretation. Other scenes and consumers, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/context_callback_descriptor_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-17-integrate-european-context-callback-descriptor.json"
+  ]
+}

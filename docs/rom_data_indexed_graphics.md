@@ -280,6 +280,28 @@ match in state/clock, central and wide framebuffer, OAM and mixed audio. This
 is one bounded input window, not a full menu or all-context proof. Evidence:
 `target/validation/units/e159-indexed-context-wine-8dbsgppp/`.
 
+The E170 dataset also passed the complete 41-frame recorded world-map input in
+Wine (`indexed-context-route-wine-5eyv63je`), with all 132 source bytes altered
+in the managed machine. Both arms matched full state, clock, central and wide
+framebuffer, OAM, mixed audio, PSG, both FIFOs and HLE audio each frame; all
+five audio streams contained samples. Four typed requests consumed four bytes
+of context 3; no raw or unclassified requests and no dropped trace requests
+were observed. There were 205,083 generated and 283,493 fallback dispatches;
+the aggregate trace does not attribute individual reads to native instructions.
+Other contexts and the full reader ABI are not covered by this input.
+
+A separate controlled E170 Wine test (`indexed-context-domain-wine-9l5p79sq`)
+compares getter `01972c` for all 256 byte indices and their `0x100` aliases,
+using both interpreter and generated instruction-block dispatch: 1,024 cases.
+It also compares the three original field-load instructions for every one of
+the 33 records in both modes: 198 cases. All complete states and clocks match
+with the 132 managed source bytes altered. The generated blocks may fall back
+to interpretation; controlled registers establish neither ordinary index
+reachability nor every caller or the complete reader ABI. The first attempt
+`dyn2l97k` failed because the test object omitted the called helper `019670`;
+the corrected build includes it. An intervening build ended with a broken-pipe
+unit error after its terminal handle was interrupted; it was not used as proof.
+
 The production Windows CLI also passed under Wine in
 `e159-indexed-context-cli-wine-27uqnksb`: it created, reused and verified an
 e159 dataset whose 104 files matched the dataset above. Reuse and an 11-frame

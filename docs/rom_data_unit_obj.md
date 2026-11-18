@@ -2659,11 +2659,112 @@ special-pose index bytes in 12 bus reads, and zero sequence, OBJ or pixel bytes
 OAM match for 1,800 frames, along with the final serialized state and image.
 Read-only evidence audit `e169-special-geometry-existing-evidence-db6l43_0`
 checks the retained input guards, logs and runtime counter implementation.
-The aggregate counter does not identify index slots or prove an uninterrupted
-opcode-39 pose animation. Audio, altered ROM sources, guest clocks and full
-state at every frame were not compared in this scene. Its recorded checkpoint
-lineage was not independently reconstructed end-to-end. Other ordinary paths,
-Linux, USA and native Windows remain open. No performance measurement was made.
+A subsequent E170 Wine pair (`geometry-special-ordinary-wine-lby31j3d`)
+traces twelve typed index reads, each from a different null cell: `37c580`,
+`37c584`, `37c790`, `37c794`, `37c8b0`, `37c8b4`, `37cf04`, `37cf08`,
+`37cff4`, `37cff8`, `383c78` and `383c7c`. The managed machine's 3,856
+special-pose index bytes and 48 geometry bytes are altered during execution;
+full state, guest clock, central/wide video, OAM and five nonempty audio streams
+match at each of 1,800 frames. No trace requests were dropped. Address reads do
+not establish the producer identities or an uninterrupted opcode-39 animation.
+The checkpoint's recorded lineage was not independently reconstructed end to
+end. Other ordinary paths, Linux, USA and native Windows remain open; generated
+dispatch may fall back to interpretation. No performance measurement was made.
+
+A protected static join (`special-home-producer-join-pot_cegy`) compares those
+12 observed cells against all 285 authenticated low-selector/group pairs,
+metadata rows and the original index-address calculation. Within that modeled
+opcode-39 projection, each cell has one conditional query; the six paired
+combinations are selector/group 15/22, 16/4, 16/16, 17/6, 17/16 and 78/5,
+all using the normal metadata sprite. Their respective sprites are 44, 46,
+46, 48, 48 and 116. Each pair addresses parts 1 and 2; direction classes 0/3
+apply to the first three and last pairs, and 1/2 to the other two. The six
+pairs have respectively 1, 1, 1, 1, 7 and 1 matching script instructions.
+This exhaustive join is restricted to the modeled opcode-39 projection: it
+does not identify the actual live reader or establish that any corresponding
+script instruction ran in the scene. Other callers and dynamic actor state
+remain possible. Input guards passed; no guest execution occurred.
+
+Wine locator `special-reader-attribution-wine-bxmz57hb` observes the first
+selected native-dispatch read at relative frame 345, from `37cff4`. Replaying
+that frame through the interpreter reads both `37cff4` and `37cff8` through the
+typed bus with execution scope `080227a8` in Thumb mode; the full serialized
+state, central framebuffer and OAM match the native continuation at the frame
+boundary. There are no dropped trace events. The EUR ROM halfword at `080227a8`
+is `6800` (`LDR r0, [r0]`), within the original `08022788` pose routine. The
+trace's execution scope can include nested operations; this observation does
+not independently prove an opcode-39 caller, identify the live unit, establish
+an uninterrupted animation or attribute the same instruction to native code.
+The static model's selector 17/group 16 is a conditional candidate for these
+cells, not evidence that that script ran. Wine drained and input guards passed.
+
+A bounded follow-up (`special-caller-observation-wine-b56w86ji`) observes the
+same frame under the interpreter. The entries corresponding to the two loads
+have link register `0809ae75`; the authenticated original instruction at
+`0809ae70` calls `08022788` and returns at `0809ae74`. Its stack arguments
+contain sprite 48, animation 65 and parts 1 and 2 respectively. This matches
+the source-address calculation for `37cff4` and `37cff8` and the previously
+identified conditional selector 17/group 16 candidate. State, central image
+and OAM again match the native continuation; no trace events were dropped.
+This establishes the direct caller and arguments in the interpreter replay,
+not the earlier task, actual script selector, native instruction attribution,
+or a complete animation. Wine drained and protected inputs passed.
+
+A further bounded interpreter observation (`special-task-chain-wine-_uuybpg0`)
+records the upstream calls in that frame: task entry `0812a8c4` calls
+`0809d9c4` from `0812a93c`, which calls `0809ae1c` from `0809d9e6`, then
+`0809ae70` calls the pose reader. The observed link registers and authenticated
+original call instructions agree. The task supplies animation base 64,
+compatible with group 16 under the task's 16-bit shift and truncation; this
+alone does not identify the full task group or the opcode that created it.
+The frame's serialized state, central image and OAM match the native
+continuation, with no dropped trace events. The actual script selector and
+instruction, complete animation, checkpoint ancestry and native instruction
+attribution remain unproved. Wine drained; protected inputs passed.
+
+Wine `special-task-fields-wine-v6ydjwg7` repeats the selected interpreter
+frame and reads the task input fields at entry: state 0, selector 17, group 16
+and flag 0. These observed values agree with the static candidate for the two
+null cells and with the task's downstream animation base 64. The frame state,
+central framebuffer and OAM match the native continuation; no trace requests
+were dropped and protected inputs passed. This observes task fields at
+execution; it does not identify the instruction or opcode that created the
+task, prove native instruction attribution or establish a complete animation.
+
+Wine `special-creator-candidate-wine-7hy1jqxu` observes the source-backed
+candidate at `b95917` in the same relative frame 345. The original interpreter
+reads its opcode and four operands through typed sources, enters opcode-39
+handler `08126b54` with `r1 = 08b95917`, then enters `0812aa34` with selector
+17, group 16 and flag 0. It reaches the allocator `0812569c` with callback
+`0812a8c5`, then the previously observed task `0812a8c4` in the same frame.
+The task entry registers match the earlier observation; complete frame state,
+central image and OAM match native continuation, with zero dropped trace
+requests. These observations establish execution of the candidate and a matching
+task in the same frame. A subsequent Wine replay (`special-task-identity-wine-s4quofvj`) observes the
+task callback before the allocator returns; both its `r0` and the returned
+`r0` equal `020163cc`. Protected join `special-task-identity-join-1zjiaoiz`
+authenticates the original call chain: `0812569c` calls `080059b8`, whose
+`08005a68` loads the task callback, passes the task pointer and calls the
+`08145c14` `BX r3` trampoline. The task entry link register points back to
+`08005a70`, immediately after that call. Together these observations connect
+opcode `b95917` to the task that reads the two null cells in this interpreter
+frame. The full animation, native instruction attribution, other paths and
+complete checkpoint ancestry remain open. Wine drained and protected inputs
+passed.
+
+For the same sprite 48 and animation 65, body part 0 uses the existing
+normal-battle owner: index `37cff0` points to the one-frame sequence `a9c660`,
+whose frame references OBJ list `a50046` and pixel block `974240`. Wine
+`special-body-ordinary-wine-lwnzoodb` compares the recorded 1,800-frame home
+continuation with those four source spans altered in the managed machine.
+Full state, guest clock, central/wide video, OAM and five nonempty audio
+streams match each frame. The trace records respectively 2, 11, 25,941 and 64
+typed requests overlapping the index, sequence, OBJ and pixel spans, with no
+raw, unclassified or dropped requests in those spans. These address overlaps
+establish source use in this scene, not attribution of every request to the
+observed task or completion of an animation lifecycle. Generated dispatch may
+fall back to interpretation; other scenes and platforms remain open. Protected
+inputs passed and Wine drained; no performance measurement was made.
 
 For the excluded instructions, original task disassembly selects action 13
 through `0809ba84`: under the same unchanged-assignment and actor conditions it

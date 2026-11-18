@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "observe-special-pose-home-reader",
+  "title": "Observe the ordinary special pose reader",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Locate the first observed special-pose index read in the recorded home scene and trace the same frame under interpretation."
+  ],
+  "validation": [
+    "Windows GNU test build special-reader-attribution-build-x7jp8j6e passed. Wine special-reader-attribution-wine-bxmz57hb locates a typed native-dispatch read of 37cff4 at relative frame 345. Interpreter replay reads 37cff4 and 37cff8 in Thumb 080227a8 execution scope, with zero dropped trace requests; full serialized state, central framebuffer and OAM match the native frame. The EUR opcode at that scope is 6800, Thumb LDR r0,[r0]. Protected inputs passed, scratch was removed and Wine drained."
+  ],
+  "limitations": [
+    "Interpreter read scope may include nested work and does not prove native instruction attribution, opcode-39 caller, live unit, actual selector/group or full animation; the static selector 17/group 16 mapping is conditional. The test records negative or unequal replay observations as diagnostic data rather than asserting them. Checkpoint lineage, other paths, Linux, USA and native Windows remain open; no performance measurement."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/text_reader_registry_tests.rs",
+    "docs/rom_data_unit_obj.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-18-map-observed-special-pose-candidates.json"
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "verify-bounded-range-wrapper-prefixes",
+  "title": "Verify both bounded-range wrapper prefixes",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Windows GNU under Wine"
+  ],
+  "changes": [
+    "Compare both original range-reader wrapper prefixes through the helper return against E170 typed reads, covering each recorded bound and an unmatched value."
+  ],
+  "validation": [
+    "Windows GNU build bounded-range-wrapper-build-efo9lv8n and Wine bounded-range-wrapper-wine-xfsk4jgx pass 92 controlled cases: two wrappers, 23 values and interpreter/generated instruction-block dispatch. Full machine state and clock match, all 88 source bytes are altered, and unmatched outputs retain sentinels. Protected inputs pass, scratch is removed and Wine drains."
+  ],
+  "limitations": [
+    "The cases stop before the subsequent rendering calls and do not establish ordinary execution of upstream callers, full input domains, production cache selection, legacy cross-mode IRQ equivalence, Linux, USA, native Windows or performance. Generated blocks may fall back to interpretation."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/range_lookup_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-18-verify-bounded-range-bank-select.json"
+  ]
+}

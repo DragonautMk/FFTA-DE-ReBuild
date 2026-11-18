@@ -23573,3 +23573,105 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: Existing EUR/Wine E169 home continuation consumed 56 managed geometry bytes across two aggregate groups and 48 managed special-pose index bytes. The raw/managed pair matches 1,800 framebuffer/OAM frames, final serialized state and image.
 - Evidence: Wine `e181-text-reader-registry-cli-wine-mr5vn2od`; read-only receipt, source-hash and log audit `e169-special-geometry-existing-evidence-db6l43_0`; `docs/changes/2026-11-18-verify-european-special-geometry-ordinary-use.json`.
 - Limits: Counters identify neither geometry groups nor index slots; sequence/OBJ/pixel reads were zero. No scene audio, altered ROM, guest clock or per-frame full-state comparison; checkpoint lineage not independently reconstructed end-to-end. Other EUR contexts, Linux, USA and native Windows remain open; no performance measurements.
+
+### ROMDATA-01-CONTEXT-CALLBACK-ORDINARY-AUDIO
+
+- Outcome: completed
+- Evidence: E170 Wine `callback-ordinary-audio-wine-hf5czvkg` compares three frames of full state, clock, central/wide video, OAM and five nonempty audio streams from the authenticated ordinary checkpoint, with 12 source bytes altered and 14 descriptor bytes read. Protected inputs passed and Wine drained; Windows GNU test build `callback-ordinary-audio-build-retry-wj4fezdi` passed.
+- Limits: generated dispatch may fall back to interpretation; other scenes/consumers, Linux, USA, native Windows and performance remain open. Initial setup failures are recorded in `docs/changes/2026-11-18-verify-ordinary-callback-audio-and-source.json`.
+
+### ROMDATA-01-TEXT-READER-REGISTRY-ORDINARY-AUDIO
+
+- Outcome: completed
+- Evidence: E170 Wine `registry-ordinary-audio-wine-8672kdim` compares 1,800 recorded home frames with 116 registry/literal source bytes altered; state, clock, video, OAM and five nonempty audio streams match each frame. Twenty-eight callback bytes and seven typed reads of null slot 3; zero dropped trace requests. Protected inputs passed, scratch removed and Wine drained. Build `registry-ordinary-audio-build-retry-ubarl3z6` passed.
+- Limits: slot 3 address read does not prove callback execution; other slots/scenes/consumers, Linux, USA and native Windows remain open. D-Bus assertion logged during passing run; initial build receipt failed after a broken pipe. No performance measurement.
+
+### ROMDATA-01-GEOMETRY-SPECIAL-ORDINARY-IDENTITIES
+
+- Outcome: completed
+- Evidence: E170 Wine `geometry-special-ordinary-wine-lby31j3d` compares 1,800 recorded frames of state, clock, central/wide video, OAM and nonempty audio with 48 geometry and 3,856 special index bytes altered. Twenty-eight typed reads identify state-width/height groups; twelve typed reads identify twelve null index cells, with no dropped trace requests. Inputs passed, scratch removed and Wine drained; build `geometry-special-ordinary-build-8vye9kkd` passed.
+- Limits: original reader and producer identities, animation and other scenes/domains remain open. Checkpoint lineage is not fully reconstructed; generated dispatch may fall back to interpretation. D-Bus assertion logged during passing test; Linux, USA and native Windows deferred, no performance measurements.
+
+### ROMDATA-01-SCRIPT39-SPECIAL-OBSERVED-CANDIDATES
+
+- Outcome: completed
+- Evidence: protected static `special-home-producer-join-pot_cegy` authenticates E170 resources/ROM, reconstructs 285 modeled opcode-39 producer pairs and cross-checks prior E163 source graph. The 12 previously observed null cells each have one modeled conditional query, forming six selector/group pairs; protected inputs passed, scratch removed.
+- Limits: the projection cannot identify the actual reader or executed producer; other callers and dynamic actor state remain possible. No guest execution or performance measurement; other paths, Linux, USA and native Windows remain open.
+
+### ROMDATA-01-SCRIPT39-SPECIAL-ORDINARY-READER
+
+- Outcome: completed
+- Evidence: Windows GNU build `special-reader-attribution-build-x7jp8j6e` and Wine `special-reader-attribution-wine-bxmz57hb` pass. First selected typed read is at relative frame 345; interpreter replay reads cells `37cff4` and `37cff8` in Thumb `080227a8` scope, with zero dropped events. Frame state, central framebuffer and OAM match native continuation; guarded inputs pass and Wine drains.
+- Limits: trace scope may include nested work; native instruction attribution, actual caller/producer and full animation remain open. Other paths, Linux, USA and native Windows deferred; no performance measurement.
+
+### ROMDATA-01-SCRIPT39-SPECIAL-ORDINARY-DIRECT-CALLER
+
+- Outcome: completed
+- Evidence: Windows GNU build `special-caller-observation-build-a8gm1ac2` and Wine `special-caller-observation-wine-b56w86ji` pass. In the recorded home frame 345 interpreter replay, the routine entries for two typed reads carry link register `0809ae75` and sprite 48, animation 65, parts 1/2. Authenticated code at `0809ae70` calls `08022788`. State, image and OAM match native continuation; no dropped trace events, inputs preserved and Wine drained.
+- Limits: earlier task/script selector, native instruction attribution and full animation are unproved; other paths/platforms remain open. No performance measurements.
+
+### ROMDATA-01-SCRIPT39-SPECIAL-ORDINARY-TASK-CHAIN
+
+- Outcome: completed
+- Evidence: Windows GNU build `special-task-chain-build-ddr8e8bg` and Wine `special-task-chain-wine-_uuybpg0` pass. Interpreter frame 345 observes task `0812a8c4` call `0809d9c4`, then `0809ae1c` and the pose reader; link registers match original call sites and task animation base is 64. State, image and OAM match native continuation; no dropped trace events, inputs preserved and Wine drained.
+- Limits: creating opcode, full task group, script selector, native instruction attribution and animation remain unproved. Other paths/platforms remain open; no performance measurements.
+
+### ROMDATA-01-SCRIPT39-SPECIAL-ORDINARY-TASK-FIELDS
+
+- Outcome: completed
+- Evidence: Windows GNU build `special-task-fields-build-0mnavnp1` and Wine `special-task-fields-wine-v6ydjwg7` pass. At the authenticated home frame 345, interpreter task entry has state 0, selector 17, group 16 and flag 0; full state, central image and OAM match native continuation. No dropped trace events, inputs preserved and Wine drained.
+- Limits: creating opcode/instruction, native instruction attribution and full animation remain unproved. Other paths/platforms remain open; no performance measurements.
+
+### ROMDATA-01-SCRIPT39-SPECIAL-ORDINARY-OPCODE
+
+- Outcome: completed
+- Evidence: Windows GNU build `special-creator-candidate-build-6njd6m23` and Wine `special-creator-candidate-wine-7hy1jqxu` pass. Frame 345 executes opcode39 `b95917` with selector17/group16, reaches creator and allocator for callback `0812a8c5`, and observes the matching task entry in that frame. State, image and OAM match native continuation; no dropped trace events, inputs preserved and Wine drained.
+- Limits: allocator returned identity and causal link to task are unproved; full animation, native instruction attribution, other paths/platforms remain open. No performance measurements.
+
+### ROMDATA-01-SCRIPT39-SPECIAL-ORDINARY-ALLOCATION-IDENTITY
+
+- Outcome: completed
+- Evidence: Windows GNU build `special-task-identity-build-kt4abqc0`, Wine `special-task-identity-wine-s4quofvj` and protected static join `special-task-identity-join-1zjiaoiz` pass. Frame 345 executes opcode39 `b95917`; synchronous callback entry and allocator return both identify task `020163cc`. Authenticated call sequence passes that task to callback `0812a8c4`, which reaches the two observed null cells. Frame state, image and OAM match native continuation; trace and input guards pass, Wine drained.
+- Limits: one recorded interpreter frame; native instruction attribution, full animation, other paths and complete checkpoint ancestry remain open. Linux, USA and native Windows deferred; no performance measurements.
+
+### ROMDATA-01-SCRIPT39-SPECIAL-ORDINARY-BODY-SOURCES
+
+- Outcome: completed
+- Evidence: Windows GNU build `special-body-ordinary-build-qa57qshm` and Wine `special-body-ordinary-wine-lwnzoodb` pass. E170 compares 1,800 recorded home frames with body index, sequence, OBJ and pixel spans altered; full state, clock, video, OAM and nonempty audio match each frame. The trace records 2, 11, 25,941 and 64 typed requests respectively, zero raw/unclassified or dropped; guarded inputs pass, scratch removed and Wine drained.
+- Limits: address overlaps do not attribute every request to the task or establish a complete animation lifecycle; other paths, native instruction attribution and platforms remain open. No performance measurements.
+
+### ROMDATA-04-METADATA14-ID1-ALIAS-TRANSLATED-SCENE
+
+- Outcome: completed
+- Evidence: Windows GNU build `alias-battle-translated-build-l2ak3_g2` and Wine `alias-battle-translated-wine-3s1xbvpx` pass 240 recorded EUR battle-entry frames with the aliased row altered. Full state, clock, video, OAM and five nonempty audio streams match each frame; five typed row requests, no raw/unclassified/dropped requests. Inputs preserved, scratch removed and Wine drained. Preexisting test-file formatting restored with normalized source matching tested build.
+- Limits: generated dispatch may fall back to interpretation; native per-read attribution, full importer and other scenes/consumers remain open. Linux, USA and native Windows deferred; no performance measurements.
+
+### ROMDATA-01-CONTEXT-3710D4-WORLD-MAP-GENERATED
+
+- Outcome: completed
+- Evidence: Windows GNU build `indexed-context-route-build-13y3sjt0` and Wine `indexed-context-route-wine-5eyv63je` pass 41 recorded EUR world-map frames with all 132 context source bytes altered. State, clock, central/wide video, OAM and five nonempty audio streams match each frame. Four typed requests touch context 3; zero raw/unclassified or dropped requests. Inputs protected, scratch removed and Wine drained.
+- Limits: generated dispatch may fall back to interpretation; per-read native attribution, other contexts and full reader ABI remain open. Linux, USA and native Windows deferred; no performance measurements.
+
+### ROMDATA-E170-WINE-SYNTHETIC-REGRESSION
+
+- Outcome: completed
+- Evidence: `e170-rom-data-synthetic-regression-cpyhx1cy` passes all 31 non-ignored `recomp` `rom_data::` Windows GNU tests under Wine, with zero failures, one test thread and 451 ignored. The authenticated current executable and build sources were protected, temporary files owned, scratch removed and Wine drained. Coverage includes strict format checks, publication, corruption and partial-write recovery, concurrency and relocation.
+- Limits: ignored private-ROM filters did not run; synthetic cases do not exercise the E170 dataset. Native Windows, Linux, USA and performance remain open.
+
+### ROMDATA-01-TEXT-READER-FULL-BYTE-DOMAIN
+
+- Outcome: completed
+- Evidence: the stated EUR physical ownership audit covers all 256 conditional byte-index words. `nw66w3v6` identified 158 owned and 98 unowned under E169; `xf27x8sa` authenticated their independently rooted substitution complement; E170 `thuu27et` assigns all 256, preserves all 158 prior owners and finds no mixed or multiple ownership. E170 Wine `sjojlovh` verifies the projection and 66 original reader/dispatcher prefixes. See `docs/changes/2026-11-18-close-text-reader-physical-ownership-audit.json`.
+- Limits: conditional addresses do not prove ordinary index values, callback behavior or other dispatchers' domains; those remain separate open tasks. No guest index bound was added. Linux, USA and native Windows remain deferred; no performance measurements.
+
+### ROMDATA-01-CONTEXT-3710D4-INDEX-DOMAIN
+
+- Outcome: completed
+- Evidence: Windows GNU build `indexed-context-domain-build-nb7kbu5_` and Wine `indexed-context-domain-wine-9l5p79sq` pass 1,024 controlled getter cases across 0..255 and 0x100..0x1ff, plus 198 field-instruction cases for three loads and all 33 records. Interpreter and generated-block paths match complete state/clock with all 132 context source bytes altered; inputs protected, scratch removed and Wine drained.
+- Limits: controlled inputs do not prove ordinary reachability, other high-byte aliases, all callers or full reader ABI; generated blocks may use interpreter fallback. Initial test `dyn2l97k` omitted helper 019670; corrected. Intermediate build `bv5plr0x` reported broken pipe after terminal interruption; it is not accepted. Linux, USA and native Windows deferred; no performance measurements.
+
+### ROMDATA-01-RANGE-37140C-DIRECT-WRAPPER-PREFIXES
+
+- Outcome: completed
+- Evidence: Windows GNU build `bounded-range-wrapper-build-efo9lv8n` and Wine `bounded-range-wrapper-wine-xfsk4jgx` compare both original direct wrappers through the range-reader return for 23 bound/unmatched values, in interpreter and generated dispatch: 92 full-state/clock cases with all 88 source bytes altered. Unmatched output sentinels remain unchanged; inputs protected, scratch removed and Wine drained.
+- Limits: later rendering calls, upstream consumers, other scenes, production cache selection and legacy cross-mode IRQ equivalence remain open. Generated blocks may fall back to interpretation; Linux, USA and native Windows deferred. No performance measurements.

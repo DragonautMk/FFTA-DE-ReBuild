@@ -292,3 +292,121 @@ fn european_context_callback_descriptor_publication_and_dispatch() {
         "remaining_halfword":"3ae472..3ae474 unclassified", "Linux":"pending", "USA":"pending", "native_windows":"pending", "performance_measurements":false
     })).unwrap()).unwrap();
 }
+
+#[test]
+#[ignore = "authenticated EUR callback checkpoint, current dataset and native library; Wine only"]
+fn european_context_callback_ordinary_poisoned_audio_pair() {
+    use gba_core::rom_data::context_callback_descriptor::{CONSTRUCTOR_LITERAL, DESCRIPTOR_OFFSET};
+    crate::configure_headless_widescreen();
+    let root = PathBuf::from(std::env::var_os("FFTA_CONTEXT_CALLBACK_ROOT").unwrap());
+    let dataset = PathBuf::from(std::env::var_os("FFTA_STATE_TEST_DATASET").unwrap());
+    let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    assert_eq!(
+        gba_core::ffta_rom::digest(&rom),
+        gba_core::ffta_rom::EUROPE_SHA256
+    );
+    let state = fs::read(std::env::var_os("FFTA_STATE_TEST_STATE").unwrap()).unwrap();
+    assert_eq!(
+        gba_core::ffta_rom::digest(&state),
+        "9d68a0e85fecf7c8d9f314d92f21773cf5d3d5648ea051988185a2e28801e74d"
+    );
+    let manifest: Manifest =
+        toml::from_str(&fs::read_to_string(dataset.join(MANIFEST_FILE)).unwrap()).unwrap();
+    assert_eq!(
+        (manifest.extractor_revision, manifest.decoder_revision),
+        (170, 169)
+    );
+    let (_library, table) = crate::load_native(Path::new(
+        &std::env::var_os("FFTA_STATE_TEST_NATIVE").unwrap(),
+    ))
+    .unwrap();
+    let mut raw = crate::make_machine(rom.clone(), None);
+    let mut managed = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut managed, &dataset).unwrap();
+    for m in [&mut raw, &mut managed] {
+        m.load_state(&state).unwrap();
+        crate::arm_audio_hle(m, None);
+        m.bus.tap_channels = true;
+        m.bus.audio_buf.clear();
+        m.bus.psg_tap.clear();
+        m.bus.fifo_tap[0].clear();
+        m.bus.fifo_tap[1].clear();
+        m.bus.hle_tap.clear();
+    }
+    assert_eq!(raw.save_state().unwrap(), managed.save_state().unwrap());
+    let spans = [
+        (CONSTRUCTOR_LITERAL as usize, 4usize),
+        (DESCRIPTOR_OFFSET as usize, 8usize),
+    ];
+    let owner = managed.bus.rom_resources().unwrap().clone();
+    let before = owner
+        .context_callback_descriptor_stats()
+        .unwrap()
+        .source_bytes;
+    let start = raw.bus.frames;
+    let mut samples = [0usize; 5];
+    for frame in 0..3 {
+        for (at, len) in spans {
+            managed.bus.rom[at..at + len].fill(0xcd);
+        }
+        let mut dispatch = [(0, 0); 2];
+        for (arm, m) in [&mut raw, &mut managed].into_iter().enumerate() {
+            m.bus.keys = 0x03ff;
+            let pointer = m as *mut Machine as *mut std::ffi::c_void;
+            dispatch[arm] = crate::run_frame_native(m, &table, pointer, crate::FRAME_STEP_GUARD);
+            assert_eq!(m.bus.frames, start + frame + 1);
+        }
+        assert_eq!(dispatch[0], dispatch[1]);
+        assert_eq!(raw.bus.clock, managed.bus.clock);
+        assert_eq!(raw.bus.framebuffer, managed.bus.framebuffer);
+        assert_eq!(raw.bus.wide_framebuffer, managed.bus.wide_framebuffer);
+        assert_eq!(raw.bus.oam, managed.bus.oam);
+        assert_eq!(raw.bus.audio_buf, managed.bus.audio_buf);
+        assert_eq!(raw.bus.psg_tap, managed.bus.psg_tap);
+        assert_eq!(raw.bus.fifo_tap, managed.bus.fifo_tap);
+        assert_eq!(raw.bus.hle_tap.len(), managed.bus.hle_tap.len());
+        assert!(raw
+            .bus
+            .hle_tap
+            .iter()
+            .zip(&managed.bus.hle_tap)
+            .all(|(a, b)| a.to_bits() == b.to_bits()));
+        for (count, len) in samples.iter_mut().zip([
+            managed.bus.audio_buf.len(),
+            managed.bus.psg_tap.len(),
+            managed.bus.fifo_tap[0].len(),
+            managed.bus.fifo_tap[1].len(),
+            managed.bus.hle_tap.len(),
+        ]) {
+            *count += len;
+        }
+        for (at, len) in spans {
+            managed.bus.rom[at..at + len].copy_from_slice(&rom[at..at + len]);
+        }
+        assert_eq!(raw.save_state().unwrap(), managed.save_state().unwrap());
+        for m in [&mut raw, &mut managed] {
+            m.bus.audio_buf.clear();
+            m.bus.psg_tap.clear();
+            m.bus.fifo_tap[0].clear();
+            m.bus.fifo_tap[1].clear();
+            m.bus.hle_tap.clear();
+        }
+    }
+    let source_bytes = owner
+        .context_callback_descriptor_stats()
+        .unwrap()
+        .source_bytes
+        - before;
+    assert!(
+        source_bytes > 0,
+        "ordinary scene must consume the descriptor"
+    );
+    assert!(samples[0] > 0, "mixed audio must contain samples");
+    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
+        "status":"PASS", "scope":"three frames from authenticated EUR ordinary callback checkpoint, Wine",
+        "revision":[170,169], "source_bytes":source_bytes, "poisoned_bytes":12,
+        "full_state_clock_framebuffer_wide_oam_audio_equal_each_frame":true, "audio_sample_counts":samples,
+        "dispatch":"generated blocks may fall back to interpretation", "Linux":"pending", "USA":"pending",
+        "native_windows":"pending", "performance_measurements":false
+    })).unwrap()).unwrap();
+}

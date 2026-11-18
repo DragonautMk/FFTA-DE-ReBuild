@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "verify-indexed-context-byte-domain",
+  "title": "Verify the indexed-context getter byte domain",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Windows GNU under Wine"
+  ],
+  "changes": [
+    "Add a controlled E170 comparison of the original context getter over all byte values and 0x100 aliases, plus three field-load instructions for all 33 records, with source bytes altered."
+  ],
+  "validation": [
+    "Windows GNU build indexed-context-domain-build-nb7kbu5_ and Wine indexed-context-domain-wine-9l5p79sq pass 1024 getter and 198 field-instruction cases across interpreter and generated block dispatch, matching complete state and clock. Protected inputs pass, scratch removed and Wine drained.",
+    "Initial Wine dyn2l97k failed because the test object omitted called helper 019670; the corrected test includes it. Intervening build bv5plr0x completed compilation but its validation unit reported broken pipe after the terminal handle was interrupted; it is not accepted as evidence."
+  ],
+  "limitations": [
+    "Controlled registers do not establish ordinary reachability, all callers, other high-byte aliases or the complete reader ABI; generated blocks can fall back to interpretation. Linux, USA, native Windows and performance remain open."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/indexed_graphics_context_tests.rs",
+    "docs/rom_data_indexed_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-18-verify-world-map-indexed-context-dispatch.json"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "verify-battle-descriptor-alias-translated",
+  "title": "Verify the battle descriptor alias with generated dispatch",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Compare the recorded battle-entry route using the shared descriptor-1 row while generated dispatch is enabled and managed ROM source bytes are altered."
+  ],
+  "validation": [
+    "Windows GNU build alias-battle-translated-build-l2ak3_g2 and Wine alias-battle-translated-wine-3s1xbvpx passed. E170-d169 raw/managed paths match full state, clock, central/wide video, OAM and five nonempty audio streams on each of 240 frames with 14 row bytes altered. Five typed row requests occurred, with no raw, unclassified or dropped requests; guarded inputs passed, scratch was removed and Wine drained.",
+    "Restored the preexisting test-file formatting after execution; rustfmt-normalized source was verified identical to the tested build."
+  ],
+  "limitations": [
+    "Generated blocks can fall back to interpretation; aggregate row reads do not establish per-read native attribution or complete importer behavior. Other scenes, consumers, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/conditional_packed_lookup_runtime_tests.rs",
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-16-observe-special-encounter-packed-alias.json"
+  ]
+}

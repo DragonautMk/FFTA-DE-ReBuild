@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "verify-world-map-indexed-context-dispatch",
+  "title": "Verify indexed context on generated-dispatch world map",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Windows GNU under Wine"
+  ],
+  "changes": [
+    "Add a 41-frame recorded world-map raw/managed generated-dispatch comparison for indexed graphics context sources, tracing touched records with all 132 source bytes altered."
+  ],
+  "validation": [
+    "Windows GNU release test build indexed-context-route-build-13y3sjt0 and Wine unit indexed-context-route-wine-5eyv63je passed: four typed reads from context 3, no raw or unclassified reads or dropped trace requests, and equal full state, clock, framebuffer, OAM and nonempty mixed, PSG, FIFO and HLE audio each frame."
+  ],
+  "limitations": [
+    "Generated dispatch includes interpreter fallback; aggregate tracing does not attribute individual reads to native instructions. Other contexts, full reader ABI, broader regressions, Linux, USA, native Windows and performance remain open."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/indexed_graphics_context_tests.rs",
+    "docs/rom_data_indexed_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-16-integrate-european-indexed-graphics-contexts.json"
+  ]
+}

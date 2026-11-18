@@ -746,14 +746,21 @@ existing owner at index 27. The Wine server drained. Production Wine CLI
 113 files matching the tested generation. A recorded cold-origin home
 continuation reads 28 managed callback bytes; over 1,800 frames raw/managed
 framebuffer and OAM hashes match, as do final serialized-state and framebuffer
-hashes. Aggregate counters do not identify a slot. The scene does not compare
-audio or poison ROM sources; the controlled test above covers altered source
-bytes. Native dispatch can fall back to interpretation. Other scenes,
-translated-prefix attribution, Linux, USA and native Windows remain open.
-No performance measurement was made.
+hashes. A subsequent E170-d169 Wine pair
+(`registry-ordinary-audio-wine-8672kdim`) follows the same recorded 1,800
+frames while altering all 116 registry and literal source bytes in the managed
+machine. Complete state and guest clock, central and wide framebuffer, OAM,
+mixed audio, PSG, both FIFO taps and HLE samples match at every frame; each
+stream contains samples. Seven typed table reads address only slot 3, a null
+pointer. The trace dropped no requests. This identifies an ordinary lookup, not
+execution of a callback or the conditional slot 11. Generated dispatch may fall
+back to interpretation; other scenes and consumers, translated-prefix
+attribution, Linux, USA and native Windows remain open. A D-Bus assertion was
+logged by Wine while the test continued and passed. No performance measurement
+was made.
 
 The E169 conditional byte-index ownership audit `nw66w3v6` examines all 256
-word addresses reachable by the two original byte-truncating readers. It finds
+word addresses conditionally addressed by the two original byte-truncating readers. It finds
 158 wholly assigned words and 98 unowned words, all within the independently
 rooted substitution-source vicinity `371158..37140c`. Of the unowned words,
 93 are zero and five resemble Thumb ROM pointers. Neither zero values nor
@@ -799,3 +806,6 @@ resource; the 158 earlier owners are unchanged. No mixed or multiply owned
 word is found. This inventory does not establish which byte values occur in
 ordinary play or the full domain of other dispatchers. No guest code or
 performance measurement was involved in the recheck.
+The `ROMDATA-01-TEXT-READER-FULL-BYTE-DOMAIN` physical ownership audit is
+complete. The separate registry and substitution tasks retain the unresolved
+ordinary indices, callback behavior and other dispatcher domains.

@@ -3,6 +3,152 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-18 — Verify indexed context on generated-dispatch world map
+
+Type: changed. Platforms: EUR / Windows GNU under Wine.
+
+**Changes**
+
+- Add a 41-frame recorded world-map raw/managed generated-dispatch comparison for indexed graphics context sources, tracing touched records with all 132 source bytes altered.
+
+**Validation**
+
+- Windows GNU release test build indexed-context-route-build-13y3sjt0 and Wine unit indexed-context-route-wine-5eyv63je passed: four typed reads from context 3, no raw or unclassified reads or dropped trace requests, and equal full state, clock, framebuffer, OAM and nonempty mixed, PSG, FIFO and HLE audio each frame.
+
+**Limitations**
+
+- Generated dispatch includes interpreter fallback; aggregate tracing does not attribute individual reads to native instructions. Other contexts, full reader ABI, broader regressions, Linux, USA, native Windows and performance remain open.
+
+Documentation: [2026-11-16-integrate-european-indexed-graphics-contexts.json](docs/changes/2026-11-16-integrate-european-indexed-graphics-contexts.json).
+
+[Change record](docs/changes/2026-11-18-verify-world-map-indexed-context-dispatch.json)
+
+## 2026-11-18 — Verify ordinary special pose task identity
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Connect the observed opcode 39 task allocation and callback to the ordinary special-pose reads in the recorded scene.
+
+**Validation**
+
+- Windows GNU build special-task-identity-build-kt4abqc0 and Wine special-task-identity-wine-s4quofvj passed. At frame 345 the interpreter observes opcode b95917, creator and allocator, then task callback 0812a8c4 with r0=020163cc before the allocator returns the same r0. Full state, central framebuffer and OAM match native continuation; no trace events dropped, protected inputs passed and Wine drained.
+- Protected static join special-task-identity-join-1zjiaoiz authenticates the EUR ROM, checks the observed order and return addresses, and verifies 0812569c calls 080059b8; 08005a68 loads the callback, passes the task and calls the 08145c14 BX r3 trampoline, matching callback link register 08005a71. Inputs passed and scratch was removed.
+
+**Limitations**
+
+- This establishes the allocation/callback link in one recorded interpreter frame. Native instruction attribution, full animation, other paths and complete checkpoint ancestry remain unproved; Linux, USA and native Windows remain open. No performance measurement.
+
+Documentation: [2026-11-18-observe-special-pose-home-opcode.json](docs/changes/2026-11-18-observe-special-pose-home-opcode.json).
+
+[Change record](docs/changes/2026-11-18-verify-special-pose-task-allocation-identity.json)
+
+## 2026-11-18 — Verify ordinary special pose body sources
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Validate the body index, one-frame sequence, OBJ list and pixels associated with the observed special-pose task in the recorded home scene.
+
+**Validation**
+
+- Windows GNU build special-body-ordinary-build-qa57qshm and Wine special-body-ordinary-wine-lwnzoodb passed. E170-d169 compares 1800 recorded frames with selected body index, sequence, OBJ and pixel spans altered in the managed machine; full state, clock, central/wide video, OAM and five nonempty audio streams match each frame.
+- The trace records respectively 2, 11, 25941 and 64 typed requests overlapping the four selected spans, zero raw or unclassified requests and zero drops. The spans belong to the existing normal-battle owner. Protected inputs passed, successful scratch was removed and Wine drained.
+
+**Limitations**
+
+- Address overlap does not attribute every request to the observed task or establish a complete animation lifecycle. Generated dispatch may fall back to interpretation; checkpoint ancestry, other paths, Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [2026-11-18-verify-special-pose-task-allocation-identity.json](docs/changes/2026-11-18-verify-special-pose-task-allocation-identity.json).
+
+[Change record](docs/changes/2026-11-18-verify-special-pose-home-body-sources.json)
+
+## 2026-11-18 — Verify ordinary text reader audio and registry sources
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Compare the recorded home scene with registry sources altered, including full state, audio and exact observed table slots.
+
+**Validation**
+
+- Windows GNU release test build registry-ordinary-audio-build-retry-ubarl3z6 passed. Wine registry-ordinary-audio-wine-8672kdim passed all 1800 recorded frames against E170-d169: complete state, clock, central/wide video, OAM and five nonempty audio streams matched each frame while 116 registry/literal source bytes were altered. The managed path read 28 callback bytes; seven typed table requests address only null slot 3, with no dropped trace requests. Protected inputs passed, scratch was removed and Wine server drained.
+- Build m8_zss8o compiled and checked inputs but its final receipt was marked FAIL after the session pipe broke. The subsequent build passed. Wine logged a D-Bus assertion but continued to a passing test.
+
+**Limitations**
+
+- Observed slot 3 is null; address observation does not establish callback invocation or ordinary slot 11. Generated dispatch may fall back to interpretation. Other scenes and consumers, Linux, USA and native Windows remain open; no performance measurement.
+
+Documentation: [2026-11-17-integrate-european-text-reader-registry.json](docs/changes/2026-11-17-integrate-european-text-reader-registry.json).
+
+[Change record](docs/changes/2026-11-18-verify-ordinary-text-reader-audio-source.json)
+
+## 2026-11-18 — Verify ordinary geometry and special pose indices
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Identify ordinary geometry groups and special-pose index cells while comparing the recorded home scene with managed sources altered.
+
+**Validation**
+
+- Windows GNU test build geometry-special-ordinary-build-8vye9kkd and Wine geometry-special-ordinary-wine-lby31j3d passed. E170-d169 compares 1800 recorded frames: full state, clock, central/wide video, OAM and five nonempty audio streams match each frame with 48 geometry and 3856 special index bytes altered in the managed machine.
+- The trace observed 28 typed geometry requests and 56 bytes in state-width and state-height groups, plus 12 typed requests and 48 bytes from 12 distinct null special index cells; zero trace requests were dropped. Protected inputs passed, scratch was removed and Wine server drained. A D-Bus assertion was logged but the test completed successfully.
+
+**Limitations**
+
+- Address attribution does not prove original reader instructions, producer identities or an uninterrupted pose animation. The checkpoint lineage is not independently reconstructed end-to-end; generated dispatch may fall back to interpretation. Other paths and domains, Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [2026-11-17-integrate-european-script39-special-poses.json](docs/changes/2026-11-17-integrate-european-script39-special-poses.json).
+
+[Change record](docs/changes/2026-11-18-verify-ordinary-geometry-special-index.json)
+
+## 2026-11-18 — Verify ordinary callback audio and altered sources
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Add a bounded ordinary callback scene comparison that checks audio and machine state while managed descriptor sources are altered.
+
+**Validation**
+
+- Windows GNU release test build callback-ordinary-audio-build-retry-wj4fezdi passed; Wine callback-ordinary-audio-wine-hf5czvkg passed three frames from the authenticated mid-frame checkpoint with E170-d169. Fourteen typed descriptor bytes were read while 12 source bytes were altered. Full state, guest clock, central and wide framebuffers, OAM, mixed audio, PSG, FIFO and HLE taps matched each frame; all five streams contained samples. Protected inputs passed and Wine server drained.
+- The first build invocation exited 2 because its script path was relative to the isolated work directory. Wine tdj6u_8n was refused before prefix lease by sandbox runtime permissions; Wine 52lwooom failed before comparison because the driver omitted the TinyCC path. The corrected Wine retry passed.
+
+**Limitations**
+
+- Three-frame checkpoint continuation only; generated dispatch may fall back to interpretation. Other scenes and consumers, Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [2026-11-17-integrate-european-context-callback-descriptor.json](docs/changes/2026-11-17-integrate-european-context-callback-descriptor.json).
+
+[Change record](docs/changes/2026-11-18-verify-ordinary-callback-audio-and-source.json)
+
+## 2026-11-18 — Verify the indexed-context getter byte domain
+
+Type: changed. Platforms: EUR / Windows GNU under Wine.
+
+**Changes**
+
+- Add a controlled E170 comparison of the original context getter over all byte values and 0x100 aliases, plus three field-load instructions for all 33 records, with source bytes altered.
+
+**Validation**
+
+- Windows GNU build indexed-context-domain-build-nb7kbu5_ and Wine indexed-context-domain-wine-9l5p79sq pass 1024 getter and 198 field-instruction cases across interpreter and generated block dispatch, matching complete state and clock. Protected inputs pass, scratch removed and Wine drained.
+- Initial Wine dyn2l97k failed because the test object omitted called helper 019670; the corrected test includes it. Intervening build bv5plr0x completed compilation but its validation unit reported broken pipe after the terminal handle was interrupted; it is not accepted as evidence.
+
+**Limitations**
+
+- Controlled registers do not establish ordinary reachability, all callers, other high-byte aliases or the complete reader ABI; generated blocks can fall back to interpretation. Linux, USA, native Windows and performance remain open.
+
+Documentation: [2026-11-18-verify-world-map-indexed-context-dispatch.json](docs/changes/2026-11-18-verify-world-map-indexed-context-dispatch.json).
+
+[Change record](docs/changes/2026-11-18-verify-indexed-context-byte-domain.json)
+
 ## 2026-11-18 — Verify European geometry and pose index use in retained Wine evidence
 
 Type: changed. Platforms: EUR / Wine.
@@ -25,6 +171,93 @@ Documentation: [2026-11-17-integrate-european-script39-special-poses.json](docs/
 
 [Change record](docs/changes/2026-11-18-verify-european-special-geometry-ordinary-use.json)
 
+## 2026-11-18 — Verify current Windows ROM-data synthetic regressions
+
+Type: changed. Platforms: Windows GNU under Wine.
+
+**Changes**
+
+- Document the complete non-ignored recomp rom_data test filter on the current audited Windows executable, including exact excluded-test counts.
+
+**Validation**
+
+- Wine unit e170-rom-data-synthetic-regression-cpyhx1cy passes 31 tests with zero failures, one test thread, protected build inputs and executable, owned temporary files, removed successful scratch and drained Wine server. The checks cover strict formats, publication, repair, cancellation, concurrency and relocation.
+
+**Limitations**
+
+- 451 ignored tests were not run, including private-ROM integration filters. The synthetic cases do not exercise the E170 real-ROM dataset; native Windows, Linux, USA and performance remain open.
+
+Documentation: [2026-11-18-verify-world-map-indexed-context-dispatch.json](docs/changes/2026-11-18-verify-world-map-indexed-context-dispatch.json).
+
+[Change record](docs/changes/2026-11-18-verify-current-wine-rom-data-synthetic-regressions.json)
+
+## 2026-11-18 — Verify both bounded-range wrapper prefixes
+
+Type: changed. Platforms: EUR / Windows GNU under Wine.
+
+**Changes**
+
+- Compare both original range-reader wrapper prefixes through the helper return against E170 typed reads, covering each recorded bound and an unmatched value.
+
+**Validation**
+
+- Windows GNU build bounded-range-wrapper-build-efo9lv8n and Wine bounded-range-wrapper-wine-xfsk4jgx pass 92 controlled cases: two wrappers, 23 values and interpreter/generated instruction-block dispatch. Full machine state and clock match, all 88 source bytes are altered, and unmatched outputs retain sentinels. Protected inputs pass, scratch is removed and Wine drains.
+
+**Limitations**
+
+- The cases stop before the subsequent rendering calls and do not establish ordinary execution of upstream callers, full input domains, production cache selection, legacy cross-mode IRQ equivalence, Linux, USA, native Windows or performance. Generated blocks may fall back to interpretation.
+
+Documentation: [2026-11-18-verify-bounded-range-bank-select.json](docs/changes/2026-11-18-verify-bounded-range-bank-select.json).
+
+[Change record](docs/changes/2026-11-18-verify-bounded-range-wrapper-prefixes.json)
+
+## 2026-11-18 — Verify ordinary bounded-range use during Bank selection
+
+Type: changed. Platforms: EUR / Windows GNU under Wine.
+
+**Changes**
+
+- Add a source-guided Bank Select raw/managed comparison for the bounded-range table with all source bytes altered, preserving the original task and guest input path.
+
+**Validation**
+
+- EWRAM task scan _zm3zlw2 identifies callback 05b625 and saved state 24; disassembly gk1j6own identifies its input-bit-4 branch to 01abfc. Wine CLI 5n6dsl9_ reads 23 bytes in five records. Windows build ymc4m9d5 and Wine pair acebndyu match full state, clock, central/wide video, OAM, dispatch and five nonempty audio streams for 120 frames; 12 typed requests, no raw/unclassified/dropped, match the CLI byte and record totals. Inputs protected, Wine drained.
+- Initial positive locator asue_kh1 was retained as FAIL because its generated input was not declared for retention; corrected locator 5n6dsl9_ retained that input explicitly. A source-disassembly preflight was refused while another unit held the shared lease; gk1j6own passed after that unit finished.
+- Wine hbu4s4d0 identifies original interpreter caller 05be8a, wrapper 01abfc and reader 01abc0 on the positive frame; its 12 typed requests use PCs 01abce/01abd4/01abda/01abde and raw/managed interpreter state, clock, video, OAM and audio match with altered sources.
+- Initial cross-mode attribution 6s36aeat fails at native clock 1030804556 versus interpreter 1030804546 before state/output checks. Raw/raw diagnostic ln8zprqs reproduces the clocks; one interpreter step reaches 1030804570, skipping exact alignment. Audio buffers match at unequal endpoints. The original diagnostic JSON key says at_aligned_clock despite no alignment; the test field name was corrected without changing the comparison.
+- Legacy native endpoint diagnostic je_s2es2 observes PC 0800044c/clock 1030804556 versus interpreter PC 08000450/clock 1030804546, both with pending unmasked IRQ. Protected payload audit 7tgvy6tq finds only two differing bytes, accounted for by PC and a unique varint matching clock; full schema not independently parsed.
+- Retained event-guarded translation qpbgtmmw passes raw native/interpreter frame alignment with equal complete state/clock/audio under Wine u_28pjng. Its separate 120-frame E170 raw/managed Wine pair jyionxk1 passes full state, clock, video, OAM and audio with 23 typed bytes, five records and no raw/unclassified/dropped requests.
+
+**Limitations**
+
+- The locator is source-guided; the generated-dispatch trace has no per-instruction attribution and can include interpreter fallback; a separate one-frame interpreter trace supplies its own caller attribution. Prior checkpoint ancestry, other reader contexts, broader Wine regressions, Linux, USA, native Windows and performance remain open.
+- The 10-cycle discrepancy remains for the legacy object; matching endpoint PCs and source loop are consistent with late boundary yield but do not prove native instruction history or cross-mode IRQ equivalence. Guarded translation is isolated and production cache selection is unproved. Sol /root/sol_range_clock_diagnosis was requested as gpt-6.1-sol/xhigh (effective settings unconfirmed); primary Terra/xhigh was unavailable or unconfirmed.
+
+Documentation: [2026-11-17-integrate-european-bounded-range-lookup.json](docs/changes/2026-11-17-integrate-european-bounded-range-lookup.json).
+
+[Change record](docs/changes/2026-11-18-verify-bounded-range-bank-select.json)
+
+## 2026-11-18 — Verify the battle descriptor alias with generated dispatch
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Compare the recorded battle-entry route using the shared descriptor-1 row while generated dispatch is enabled and managed ROM source bytes are altered.
+
+**Validation**
+
+- Windows GNU build alias-battle-translated-build-l2ak3_g2 and Wine alias-battle-translated-wine-3s1xbvpx passed. E170-d169 raw/managed paths match full state, clock, central/wide video, OAM and five nonempty audio streams on each of 240 frames with 14 row bytes altered. Five typed row requests occurred, with no raw, unclassified or dropped requests; guarded inputs passed, scratch was removed and Wine drained.
+- Restored the preexisting test-file formatting after execution; rustfmt-normalized source was verified identical to the tested build.
+
+**Limitations**
+
+- Generated blocks can fall back to interpretation; aggregate row reads do not establish per-read native attribution or complete importer behavior. Other scenes, consumers, Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [2026-11-16-observe-special-encounter-packed-alias.json](docs/changes/2026-11-16-observe-special-encounter-packed-alias.json).
+
+[Change record](docs/changes/2026-11-18-verify-battle-descriptor-alias-translated.json)
+
 ## 2026-11-18 — Recover the interrupted E170 cold-storage lease
 
 Type: changed. Platforms: EUR / Wine.
@@ -45,6 +278,148 @@ Type: changed. Platforms: EUR / Wine.
 Documentation: [2026-11-17-integrate-european-conditional-substitution-words.json](docs/changes/2026-11-17-integrate-european-conditional-substitution-words.json).
 
 [Change record](docs/changes/2026-11-18-recover-interrupted-e170-cold-lease.json)
+
+## 2026-11-18 — Observe the ordinary special pose task chain
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Trace the upstream task and pose call entries for the previously witnessed ordinary special-pose reads.
+
+**Validation**
+
+- Windows GNU build special-task-chain-build-ddr8e8bg and Wine special-task-chain-wine-_uuybpg0 passed. In the frame-345 interpreter replay, ordered entries and link registers observe task 0812a8c4 calling 0809d9c4 at 0812a93c, which calls 0809ae1c at 0809d9e6, followed by the established 0809ae70 pose reader. The task supplies animation base 64. Full serialized state, central framebuffer and OAM match native continuation, zero trace events were dropped, protected inputs passed and Wine drained.
+
+**Limitations**
+
+- The task address and observed call chain do not prove which opcode created it, full task group or actual script selector. Native instruction attribution, complete animation, other paths and checkpoint ancestry remain unproved. Linux, USA and native Windows remain open; no performance measurements.
+
+Documentation: [2026-11-18-observe-special-pose-home-caller.json](docs/changes/2026-11-18-observe-special-pose-home-caller.json).
+
+[Change record](docs/changes/2026-11-18-observe-special-pose-home-task.json)
+
+## 2026-11-18 — Observe ordinary special pose task fields
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Observe the live task selector and group for the previously witnessed ordinary special-pose index reads.
+
+**Validation**
+
+- Windows GNU build special-task-fields-build-0mnavnp1 and Wine special-task-fields-wine-v6ydjwg7 passed. Interpreter replay of the authenticated home frame 345 observes task state 0, selector 17, group 16 and flag 0, matching the conditional candidate and downstream animation base 64. Frame state, central framebuffer and OAM match native continuation; zero trace requests dropped, protected inputs passed and Wine drained.
+
+**Limitations**
+
+- Task field values do not establish the creating opcode or script instruction, native instruction attribution or full animation. Other paths, checkpoint ancestry, Linux, USA and native Windows remain open; no performance measurements.
+
+Documentation: [2026-11-18-observe-special-pose-home-task.json](docs/changes/2026-11-18-observe-special-pose-home-task.json).
+
+[Change record](docs/changes/2026-11-18-observe-special-pose-home-task-fields.json)
+
+## 2026-11-18 — Observe the ordinary special pose reader
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Locate the first observed special-pose index read in the recorded home scene and trace the same frame under interpretation.
+
+**Validation**
+
+- Windows GNU test build special-reader-attribution-build-x7jp8j6e passed. Wine special-reader-attribution-wine-bxmz57hb locates a typed native-dispatch read of 37cff4 at relative frame 345. Interpreter replay reads 37cff4 and 37cff8 in Thumb 080227a8 execution scope, with zero dropped trace requests; full serialized state, central framebuffer and OAM match the native frame. The EUR opcode at that scope is 6800, Thumb LDR r0,[r0]. Protected inputs passed, scratch was removed and Wine drained.
+
+**Limitations**
+
+- Interpreter read scope may include nested work and does not prove native instruction attribution, opcode-39 caller, live unit, actual selector/group or full animation; the static selector 17/group 16 mapping is conditional. The test records negative or unequal replay observations as diagnostic data rather than asserting them. Checkpoint lineage, other paths, Linux, USA and native Windows remain open; no performance measurement.
+
+Documentation: [2026-11-18-map-observed-special-pose-candidates.json](docs/changes/2026-11-18-map-observed-special-pose-candidates.json).
+
+[Change record](docs/changes/2026-11-18-observe-special-pose-home-reader.json)
+
+## 2026-11-18 — Observe ordinary special pose opcode candidate
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Trace the source-backed opcode 39 candidate and matching task creation in the previously observed home frame.
+
+**Validation**
+
+- Windows GNU build special-creator-candidate-build-6njd6m23 and Wine special-creator-candidate-wine-7hy1jqxu passed. At relative frame 345 the interpreter reads opcode39 b95917 and its four operands, enters handler 08126b54 with the instruction pointer, enters 0812aa34 with selector17/group16/flag0, then allocator 0812569c with callback 0812a8c5 and the previously observed task entry 0812a8c4 in the same frame. Task entry registers match the earlier observation; full frame state, central framebuffer and OAM match native continuation. Zero trace requests dropped, guarded inputs passed, scratch removed and Wine drained.
+
+**Limitations**
+
+- The test does not capture allocator return identity, so the causal link from this allocation to the observed task remains unproved. Native instruction attribution, complete animation, checkpoint ancestry, other paths, Linux, USA and native Windows remain open; no performance measurements.
+
+Documentation: [2026-11-18-observe-special-pose-home-task-fields.json](docs/changes/2026-11-18-observe-special-pose-home-task-fields.json).
+
+[Change record](docs/changes/2026-11-18-observe-special-pose-home-opcode.json)
+
+## 2026-11-18 — Observe the ordinary special pose caller
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Record routine-entry registers and stack arguments for the previously located special-pose reads in the recorded home frame.
+
+**Validation**
+
+- Windows GNU build special-caller-observation-build-a8gm1ac2 and Wine special-caller-observation-wine-b56w86ji passed. At relative frame 345 the interpreter observes the two 37cff4/37cff8 loads following entries to 08022788 with link register 0809ae75; the authenticated ROM call at 0809ae70 returns at 0809ae74. Stack arguments are sprite 48, animation 65 and parts 1/2. Frame state, central framebuffer and OAM match the native continuation; zero trace requests dropped, protected inputs passed and Wine drained.
+
+**Limitations**
+
+- Direct caller and arguments are observed in the interpreter replay. Earlier task or script selector, live unit, native instruction attribution and complete animation remain unproved; selector 17/group 16 remains a conditional source-model candidate. Other paths, checkpoint lineage, Linux, USA and native Windows remain open; no performance measurements.
+
+Documentation: [2026-11-18-observe-special-pose-home-reader.json](docs/changes/2026-11-18-observe-special-pose-home-reader.json).
+
+[Change record](docs/changes/2026-11-18-observe-special-pose-home-caller.json)
+
+## 2026-11-18 — Map observed special pose index candidates
+
+Type: changed. Platforms: EUR.
+
+**Changes**
+
+- Join twelve ordinary observed null special-pose index cells to the authenticated conditional opcode-39 producer projection.
+
+**Validation**
+
+- Protected static audit special-home-producer-join-pot_cegy authenticated E170 manifest resource files and ROM source hashes, reconstructed all 285 modeled producer pairs from 1857 script instructions, checked metadata and original index arithmetic, and cross-checked prior E163 source-graph evidence. Each of the twelve observed cells has exactly one conditional modeled query, forming six selector/group combinations; input guards passed and scratch was removed.
+
+**Limitations**
+
+- The join covers the documented low-selector opcode-39 projection only. Shared addresses, other readers and live actor state mean it does not establish which producer or script executed, nor complete animation or checkpoint lineage. No guest execution or performance measurement; Linux, USA and native Windows remain open.
+
+Documentation: [2026-11-18-verify-ordinary-geometry-special-index.json](docs/changes/2026-11-18-verify-ordinary-geometry-special-index.json).
+
+[Change record](docs/changes/2026-11-18-map-observed-special-pose-candidates.json)
+
+## 2026-11-18 — Investigate bounded-range reader callers and ordinary windows
+
+Type: changed. Platforms: EUR / Windows GNU under Wine.
+
+**Changes**
+
+- Record an authenticated candidate-call census and bounded ordinary locators for the still-open range-lookup task; preserve the requirement for positive ordinary use and remaining reader contexts.
+
+**Validation**
+
+- Protected full-ROM Thumb candidate census yeizv0zb finds calls at 01ac18 and 01ac78; wrapper census bpuinw0u finds 32 and nine candidate Thumb call sites, with 41 disassembly windows in tq88gscc. Wine E170 locators dpeuvczs, hn5vy0hm and bfqintcy report zero source bytes across 240 Giza battle, 372 Mission-menu and 120 Bank-entry frames respectively; input guards pass and Wine drains.
+- Protected ARM BL candidate census odbnk6j8 finds no aligned direct branch candidates to the reader or either wrapper. Passive checkpoint scan 50n30lt7 checks 428 previously protected target paths, 339 unique payloads including 15 invalid or other-region, and finds no exact Thumb pointer to 16 nearest-push candidates; inputs unchanged.
+
+**Limitations**
+
+- Encoded calls and windows do not prove execution or exclude ARM, computed and alternate-entry callers; aggregate zero counters cover only these windows. The Royal Valley save ancestry is not independently established. No positive ordinary pair, complete reader-context inventory, Linux, USA, native Windows or performance validation was established.
+- Nearest push patterns are not proven function entries, serialized-pointer matches would not prove execution, and other snapshots, entries and indirect callers remain unexamined. The first checkpoint selection was refused because eight paths had a symbolic ancestor; those paths were excluded without modification.
+
+Documentation: [2026-11-17-integrate-european-bounded-range-lookup.json](docs/changes/2026-11-17-integrate-european-bounded-range-lookup.json).
+
+[Change record](docs/changes/2026-11-18-investigate-bounded-range-reader-callers.json)
 
 ## 2026-11-18 — Complete the bounded advanced cheat comparison audit
 
@@ -88,6 +463,26 @@ Type: docs. Platforms: Windows GNU and Wine.
 Documentation: [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
 
 [Change record](docs/changes/2026-11-18-compare-european-mastery-record-boundary.json)
+
+## 2026-11-18 — Close the completed text-reader physical ownership audit
+
+Type: changed. Platforms: EUR.
+
+**Changes**
+
+- Close the full-byte-domain physical ownership checklist item after reconciling its stated criteria with the E169 and E170 audit evidence; keep callback execution, ordinary reachability and other dispatcher domains in their separate open tasks.
+
+**Validation**
+
+- Existing protected E169 audit nw66w3v6 accounts for all 256 conditional addresses and identifies 98 unowned words; source audit xf27x8sa authenticates their complement; E170 audit thuu27et assigns all 256 words with all 158 prior owners preserved and no mixed or multiply owned words. Wine sjojlovh verifies the conditional source projection and 66 original prefixes.
+
+**Limitations**
+
+- The audits establish conditional physical ownership, not ordinary index values, callback behavior or full domains of other dispatchers. E170 generated blocks can fall back to interpretation; Linux, USA, native Windows and performance remain open.
+
+Documentation: [2026-11-17-audit-european-text-reader-e170-ownership.json](docs/changes/2026-11-17-audit-european-text-reader-e170-ownership.json), [2026-11-17-integrate-european-conditional-substitution-words.json](docs/changes/2026-11-17-integrate-european-conditional-substitution-words.json).
+
+[Change record](docs/changes/2026-11-18-close-text-reader-physical-ownership-audit.json)
 
 ## 2026-11-17 — Verify European text copy callbacks
 

@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "verify-special-pose-home-body-sources",
+  "title": "Verify ordinary special pose body sources",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Validate the body index, one-frame sequence, OBJ list and pixels associated with the observed special-pose task in the recorded home scene."
+  ],
+  "validation": [
+    "Windows GNU build special-body-ordinary-build-qa57qshm and Wine special-body-ordinary-wine-lwnzoodb passed. E170-d169 compares 1800 recorded frames with selected body index, sequence, OBJ and pixel spans altered in the managed machine; full state, clock, central/wide video, OAM and five nonempty audio streams match each frame.",
+    "The trace records respectively 2, 11, 25941 and 64 typed requests overlapping the four selected spans, zero raw or unclassified requests and zero drops. The spans belong to the existing normal-battle owner. Protected inputs passed, successful scratch was removed and Wine drained."
+  ],
+  "limitations": [
+    "Address overlap does not attribute every request to the observed task or establish a complete animation lifecycle. Generated dispatch may fall back to interpretation; checkpoint ancestry, other paths, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/text_reader_registry_tests.rs",
+    "docs/rom_data_unit_obj.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-18-verify-special-pose-task-allocation-identity.json"
+  ]
+}

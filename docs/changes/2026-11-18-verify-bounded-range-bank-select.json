@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "verify-bounded-range-bank-select",
+  "title": "Verify ordinary bounded-range use during Bank selection",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Windows GNU under Wine"
+  ],
+  "changes": [
+    "Add a source-guided Bank Select raw/managed comparison for the bounded-range table with all source bytes altered, preserving the original task and guest input path."
+  ],
+  "validation": [
+    "EWRAM task scan _zm3zlw2 identifies callback 05b625 and saved state 24; disassembly gk1j6own identifies its input-bit-4 branch to 01abfc. Wine CLI 5n6dsl9_ reads 23 bytes in five records. Windows build ymc4m9d5 and Wine pair acebndyu match full state, clock, central/wide video, OAM, dispatch and five nonempty audio streams for 120 frames; 12 typed requests, no raw/unclassified/dropped, match the CLI byte and record totals. Inputs protected, Wine drained.",
+    "Initial positive locator asue_kh1 was retained as FAIL because its generated input was not declared for retention; corrected locator 5n6dsl9_ retained that input explicitly. A source-disassembly preflight was refused while another unit held the shared lease; gk1j6own passed after that unit finished.",
+    "Wine hbu4s4d0 identifies original interpreter caller 05be8a, wrapper 01abfc and reader 01abc0 on the positive frame; its 12 typed requests use PCs 01abce/01abd4/01abda/01abde and raw/managed interpreter state, clock, video, OAM and audio match with altered sources.",
+    "Initial cross-mode attribution 6s36aeat fails at native clock 1030804556 versus interpreter 1030804546 before state/output checks. Raw/raw diagnostic ln8zprqs reproduces the clocks; one interpreter step reaches 1030804570, skipping exact alignment. Audio buffers match at unequal endpoints. The original diagnostic JSON key says at_aligned_clock despite no alignment; the test field name was corrected without changing the comparison.",
+    "Legacy native endpoint diagnostic je_s2es2 observes PC 0800044c/clock 1030804556 versus interpreter PC 08000450/clock 1030804546, both with pending unmasked IRQ. Protected payload audit 7tgvy6tq finds only two differing bytes, accounted for by PC and a unique varint matching clock; full schema not independently parsed.",
+    "Retained event-guarded translation qpbgtmmw passes raw native/interpreter frame alignment with equal complete state/clock/audio under Wine u_28pjng. Its separate 120-frame E170 raw/managed Wine pair jyionxk1 passes full state, clock, video, OAM and audio with 23 typed bytes, five records and no raw/unclassified/dropped requests."
+  ],
+  "limitations": [
+    "The locator is source-guided; the generated-dispatch trace has no per-instruction attribution and can include interpreter fallback; a separate one-frame interpreter trace supplies its own caller attribution. Prior checkpoint ancestry, other reader contexts, broader Wine regressions, Linux, USA, native Windows and performance remain open.",
+    "The 10-cycle discrepancy remains for the legacy object; matching endpoint PCs and source loop are consistent with late boundary yield but do not prove native instruction history or cross-mode IRQ equivalence. Guarded translation is isolated and production cache selection is unproved. Sol /root/sol_range_clock_diagnosis was requested as gpt-6.1-sol/xhigh (effective settings unconfirmed); primary Terra/xhigh was unavailable or unconfirmed."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/range_lookup_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-17-integrate-european-bounded-range-lookup.json"
+  ]
+}

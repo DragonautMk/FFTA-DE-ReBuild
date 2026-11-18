@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "observe-special-pose-home-caller",
+  "title": "Observe the ordinary special pose caller",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Record routine-entry registers and stack arguments for the previously located special-pose reads in the recorded home frame."
+  ],
+  "validation": [
+    "Windows GNU build special-caller-observation-build-a8gm1ac2 and Wine special-caller-observation-wine-b56w86ji passed. At relative frame 345 the interpreter observes the two 37cff4/37cff8 loads following entries to 08022788 with link register 0809ae75; the authenticated ROM call at 0809ae70 returns at 0809ae74. Stack arguments are sprite 48, animation 65 and parts 1/2. Frame state, central framebuffer and OAM match the native continuation; zero trace requests dropped, protected inputs passed and Wine drained."
+  ],
+  "limitations": [
+    "Direct caller and arguments are observed in the interpreter replay. Earlier task or script selector, live unit, native instruction attribution and complete animation remain unproved; selector 17/group 16 remains a conditional source-model candidate. Other paths, checkpoint lineage, Linux, USA and native Windows remain open; no performance measurements."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/text_reader_registry_tests.rs",
+    "docs/rom_data_unit_obj.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-18-observe-special-pose-home-reader.json"
+  ]
+}

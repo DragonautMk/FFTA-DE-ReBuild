@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "investigate-bounded-range-reader-callers",
+  "title": "Investigate bounded-range reader callers and ordinary windows",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Windows GNU under Wine"
+  ],
+  "changes": [
+    "Record an authenticated candidate-call census and bounded ordinary locators for the still-open range-lookup task; preserve the requirement for positive ordinary use and remaining reader contexts."
+  ],
+  "validation": [
+    "Protected full-ROM Thumb candidate census yeizv0zb finds calls at 01ac18 and 01ac78; wrapper census bpuinw0u finds 32 and nine candidate Thumb call sites, with 41 disassembly windows in tq88gscc. Wine E170 locators dpeuvczs, hn5vy0hm and bfqintcy report zero source bytes across 240 Giza battle, 372 Mission-menu and 120 Bank-entry frames respectively; input guards pass and Wine drains.",
+    "Protected ARM BL candidate census odbnk6j8 finds no aligned direct branch candidates to the reader or either wrapper. Passive checkpoint scan 50n30lt7 checks 428 previously protected target paths, 339 unique payloads including 15 invalid or other-region, and finds no exact Thumb pointer to 16 nearest-push candidates; inputs unchanged."
+  ],
+  "limitations": [
+    "Encoded calls and windows do not prove execution or exclude ARM, computed and alternate-entry callers; aggregate zero counters cover only these windows. The Royal Valley save ancestry is not independently established. No positive ordinary pair, complete reader-context inventory, Linux, USA, native Windows or performance validation was established.",
+    "Nearest push patterns are not proven function entries, serialized-pointer matches would not prove execution, and other snapshots, entries and indirect callers remain unexamined. The first checkpoint selection was refused because eight paths had a symbolic ancestor; those paths were excluded without modification."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-17-integrate-european-bounded-range-lookup.json"
+  ]
+}

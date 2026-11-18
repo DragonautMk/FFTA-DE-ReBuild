@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "verify-ordinary-text-reader-audio-source",
+  "title": "Verify ordinary text reader audio and registry sources",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Compare the recorded home scene with registry sources altered, including full state, audio and exact observed table slots."
+  ],
+  "validation": [
+    "Windows GNU release test build registry-ordinary-audio-build-retry-ubarl3z6 passed. Wine registry-ordinary-audio-wine-8672kdim passed all 1800 recorded frames against E170-d169: complete state, clock, central/wide video, OAM and five nonempty audio streams matched each frame while 116 registry/literal source bytes were altered. The managed path read 28 callback bytes; seven typed table requests address only null slot 3, with no dropped trace requests. Protected inputs passed, scratch was removed and Wine server drained.",
+    "Build m8_zss8o compiled and checked inputs but its final receipt was marked FAIL after the session pipe broke. The subsequent build passed. Wine logged a D-Bus assertion but continued to a passing test."
+  ],
+  "limitations": [
+    "Observed slot 3 is null; address observation does not establish callback invocation or ordinary slot 11. Generated dispatch may fall back to interpretation. Other scenes and consumers, Linux, USA and native Windows remain open; no performance measurement."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/text_reader_registry_tests.rs",
+    "docs/rom_data_text.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-17-integrate-european-text-reader-registry.json"
+  ]
+}

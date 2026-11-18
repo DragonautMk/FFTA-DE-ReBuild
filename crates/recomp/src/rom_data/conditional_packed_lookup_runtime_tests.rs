@@ -250,3 +250,155 @@ fn european_encounter_special_descriptor_ordinary_observation() {
         "Linux":"pending", "USA":"pending", "native_windows":"pending", "performance_measurements":false
     })).unwrap()).unwrap();
 }
+
+#[cfg(feature = "rom-data-read-audit")]
+#[test]
+#[ignore = "authenticated EUR battle state/input, current dataset and native library; Wine only"]
+fn european_descriptor_alias_battle_translated_pair() {
+    use gba_core::rom_data::read_audit::{Service, TraceCapture, TraceFilter};
+    crate::configure_headless_widescreen();
+    const ROW: usize = 0x6e6f5e;
+    let root = PathBuf::from(std::env::var_os("FFTA_SPECIAL_ALIAS_ROOT").unwrap());
+    let dataset = PathBuf::from(std::env::var_os("FFTA_SPECIAL_ALIAS_DATASET").unwrap());
+    let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    assert_eq!(
+        gba_core::ffta_rom::digest(&rom),
+        gba_core::ffta_rom::EUROPE_SHA256
+    );
+    let state = fs::read(std::env::var_os("FFTA_STATE_TEST_STATE").unwrap()).unwrap();
+    assert_eq!(
+        gba_core::ffta_rom::digest(&state),
+        "e91b8c594d3b7f10d6b815a61cc13943a7c86ea17a7c4cfc865f48eaaf37d84f"
+    );
+    let input_path = PathBuf::from(std::env::var_os("FFTA_STATE_TEST_INPUT").unwrap());
+    assert_eq!(
+        gba_core::ffta_rom::digest(&fs::read(&input_path).unwrap()),
+        "ca9b84ef9dbeb8d71c47552e9455a2c3fb636a0f7a4219196ce8d82270bf0ad9"
+    );
+    let input = crate::InputScript::load(input_path.to_str().unwrap()).unwrap();
+    let manifest: Manifest =
+        toml::from_str(&fs::read_to_string(dataset.join(MANIFEST_FILE)).unwrap()).unwrap();
+    assert_eq!(
+        (manifest.extractor_revision, manifest.decoder_revision),
+        (170, 169)
+    );
+    let (_library, table) = crate::load_native(Path::new(
+        &std::env::var_os("FFTA_STATE_TEST_NATIVE").unwrap(),
+    ))
+    .unwrap();
+    let mut raw = crate::make_machine(rom.clone(), None);
+    let mut managed = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut managed, &dataset).unwrap();
+    for m in [&mut raw, &mut managed] {
+        m.load_state(&state).unwrap();
+        crate::arm_audio_hle(m, None);
+        m.bus.tap_channels = true;
+        m.bus.audio_buf.clear();
+        m.bus.psg_tap.clear();
+        m.bus.fifo_tap[0].clear();
+        m.bus.fifo_tap[1].clear();
+        m.bus.hle_tap.clear();
+    }
+    assert_eq!(raw.save_state().unwrap(), managed.save_state().unwrap());
+    let owner = managed.bus.rom_resources().unwrap().clone();
+    let before = owner
+        .conditional_packed_lookup_stats()
+        .unwrap()
+        .source_bytes;
+    let trace = TraceCapture::start(
+        TraceFilter {
+            readers: vec![],
+            ranges: vec![(ROW as u32, (ROW + 14) as u32)],
+        },
+        10000,
+    )
+    .unwrap();
+    let start = raw.bus.frames;
+    let mut audio = [0u64; 5];
+    let mut dispatch = (0u64, 0u64);
+    for frame in 0..240u64 {
+        managed.bus.rom[ROW..ROW + 14].fill(0xa7);
+        let mut counts = [(0, 0); 2];
+        for (arm, m) in [&mut raw, &mut managed].into_iter().enumerate() {
+            m.bus.keys = input.keys_at(frame);
+            input.apply_mouse(&mut m.bus, frame).unwrap();
+            trace.frame(if arm == 1 { Some(m.bus.frames) } else { None });
+            let ptr = m as *mut Machine as *mut std::ffi::c_void;
+            counts[arm] = crate::run_frame_native(m, &table, ptr, crate::FRAME_STEP_GUARD);
+            assert_eq!(m.bus.frames, start + frame + 1);
+        }
+        trace.frame(None);
+        assert_eq!(counts[0], counts[1], "dispatch at {frame}");
+        dispatch.0 += counts[0].0;
+        dispatch.1 += counts[0].1;
+        assert_eq!(raw.bus.clock, managed.bus.clock);
+        assert_eq!(raw.bus.framebuffer, managed.bus.framebuffer);
+        assert_eq!(raw.bus.wide_framebuffer, managed.bus.wide_framebuffer);
+        assert_eq!(raw.bus.oam, managed.bus.oam);
+        assert_eq!(raw.bus.audio_buf, managed.bus.audio_buf);
+        assert_eq!(raw.bus.psg_tap, managed.bus.psg_tap);
+        assert_eq!(raw.bus.fifo_tap, managed.bus.fifo_tap);
+        assert_eq!(raw.bus.hle_tap.len(), managed.bus.hle_tap.len());
+        assert!(raw
+            .bus
+            .hle_tap
+            .iter()
+            .zip(&managed.bus.hle_tap)
+            .all(|(a, b)| a.to_bits() == b.to_bits()));
+        for (sum, len) in audio.iter_mut().zip([
+            managed.bus.audio_buf.len(),
+            managed.bus.psg_tap.len(),
+            managed.bus.fifo_tap[0].len(),
+            managed.bus.fifo_tap[1].len(),
+            managed.bus.hle_tap.len(),
+        ]) {
+            *sum += len as u64;
+        }
+        managed.bus.rom[ROW..ROW + 14].copy_from_slice(&rom[ROW..ROW + 14]);
+        assert_eq!(
+            raw.save_state().unwrap(),
+            managed.save_state().unwrap(),
+            "full state at {frame}"
+        );
+        for m in [&mut raw, &mut managed] {
+            m.bus.audio_buf.clear();
+            m.bus.psg_tap.clear();
+            m.bus.fifo_tap[0].clear();
+            m.bus.fifo_tap[1].clear();
+            m.bus.hle_tap.clear();
+        }
+    }
+    let trace = trace.finish();
+    assert!(!trace.truncated && trace.dropped_requests == 0);
+    let typed: u64 = trace
+        .events
+        .iter()
+        .filter(|e| e.key.service == Service::Typed)
+        .map(|e| e.requests)
+        .sum();
+    let raw_reads: u64 = trace
+        .events
+        .iter()
+        .filter(|e| e.key.service == Service::Raw)
+        .map(|e| e.requests)
+        .sum();
+    let unclassified: u64 = trace
+        .events
+        .iter()
+        .filter(|e| e.key.service == Service::Unclassified)
+        .map(|e| e.requests)
+        .sum();
+    let bytes = owner
+        .conditional_packed_lookup_stats()
+        .unwrap()
+        .source_bytes
+        - before;
+    assert!(
+        typed > 0 && bytes > 0,
+        "ordinary alias row must be consumed"
+    );
+    assert_eq!((raw_reads, unclassified), (0, 0));
+    assert!(audio.iter().all(|&v| v > 0));
+    assert!(dispatch.0 > 0);
+    fs::write(root.join("result.json"),serde_json::to_vec_pretty(&serde_json::json!({"status":"PASS","scope":"240-frame recorded EUR battle-entry raw/managed translated pair","revision":[170,169],"frames":240,"row_typed_requests":typed,"row_raw_requests":raw_reads,"row_unclassified_requests":unclassified,"packed_bytes_all":bytes,"trace_dropped":trace.dropped_requests,"source_row_poisoned":true,"full_state_clock_video_oam_audio_equal_each_frame":true,"audio_sample_counts":audio,"generated_dispatches":dispatch.0,"fallback_dispatches":dispatch.1,"limits":"Generated blocks may fall back to interpretation; row attribution is aggregate and full importer/other routes remain open.","performance_measurements":false})).unwrap()).unwrap();
+}

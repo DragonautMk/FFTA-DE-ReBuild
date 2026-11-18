@@ -31,25 +31,24 @@ States `active`, `suspended`, `interrupted`, `failed`, `waiting` and outcomes `p
 
 - State: suspended
 - Outcome: partial
+- Pause: user paused the goal. ROMDATA-01-RANGE-37140C remains partial; Bank pairs `acebndyu`/`jyionxk1`, interpreter caller `hbu4s4d0` and wrapper prefixes `xfsk4jgx` pass. Resume only on request; upstream consumers and broader regressions remain open.
 - Verified: E158 reader/opening/CLI Wine PASS (`b8vylqkk`, `tucnagm9`).
 - Missing: EUR inventory/consumers/ordinary/ABI/extent/indirect calls, ROMDATA-06/07; Linux/USA/native Windows/new32:9 deferred. Protect originals/saves.
-- ROMDATA-04-METADATA14-ID1-ALIAS: Wine prefix/frame PASS (56wpztn8/gpir8qjh); importer/consumers open.
+- ROMDATA-04-METADATA14-ID1-ALIAS: Wine prefix/frame PASS (56wpztn8/gpir8qjh); E170 `3s1xbvpx` 240-frame generated-dispatch row-poisoned state/audio pair PASS. Full importer, per-read native attribution/consumers open.
 - Title bank: five lists Wine PASS (hhh7a8lg); other scenes/native and FIRSTBANK-ZERO open (f4_b2apw).
 - BATTLE-40D300-OTHER: index56 Wine PASS (qbzrv3ua); other lists open.
 - CONTEXT-3AE42C: IDs 1–4/return 0 Wine PASS; E168 owns 261/261 pairs (4ami2zcc); meaning/writers/domain/native open.
 - E134 updater: native PASS (yw62he9p), default interpreter (botzl4b6); cache/draw open.
-- e159 CONTEXT-3710D4 (8dbsgppp/27uqnksb), e160 SUBSTITUTION-371158 (2bltt60c/mgaon9d6), e161 RANGE-37140C (t2mh2ei8/emoffrjv) PASS; consumers open.
-- ADJACENT-371464: e162 PASS (5zpi8vam/j4r9sopl); E169 home reads 56 bytes/two aggregate groups, pair PASS (mr5vn2od/db6l43_0); group IDs/other consumers/domains open.
+- CONTEXT-3710D4: e159, E170 world-map pair (5eyv63je) and controlled byte-domain/33-record fields (9l5p79sq) PASS; other callers/ordinary contexts/ABI open. e160 SUBSTITUTION-371158 (2bltt60c/mgaon9d6), e161 RANGE-37140C (t2mh2ei8/emoffrjv) PASS; consumers open.
+- ADJACENT-371464: e162 PASS (5zpi8vam/j4r9sopl); E170 home `lby31j3d` identifies state-width/height groups, 56 bytes and 1,800-frame altered-source state/audio pair PASS. Other readers/domains open.
 - SUBSTITUTION-371158: callbacks 0/3 and handler Wine PASS (rdulyaqw/h9c0peco); ordinary/other paths open.
 - SUBSTITUTION-ORDINARY: Sol /root/sol_context_callback xhigh unconfirmed; home source gk6kl05w conditional; Wine zonc4h0q reads seven programs, zero callbacks. Other scenes open.
-- TEXT-READER-REGISTRY-371068: E169 Wine j15jcf44/mr5vn2od PASS; 28 ordinary bytes and 1,800-frame video/OAM/final-state pair. Audio/poisoned scene/other paths/Linux/USA open.
-- TEXT-READER-FULL-BYTE-DOMAIN: E169 audit nw66w3v6 owns 158/256 words; 98 in 371158..37140c lack owners. Values/reachability unproved.
+- TEXT-READER-REGISTRY-371068: E170 Wine `8672kdim` 1,800-frame state/clock/video/OAM/audio altered-source pair PASS; 28 bytes, seven typed reads of null slot 3. Callback execution/other slots/scenes/Linux/USA open.
 - SUBSTITUTION-REMAINING: E170 Wine sjojlovh/alfjrf8b PASS; CLI scene zero new reads. Ordinary indices/callbacks open. Sol /root/sol_indexed_ordinary xhigh unconfirmed.
-- TEXT-READER-E170-OWNERSHIP: thuu27et assigns all 256 physical words; ordinary indices open.
 - SCRIPT39-REGISTRY-POSES: e163 runtime/12 readers/CLI PASS (ga87pps5/vgo1cewu); ordinary/domains/Linux/USA open.
-- SCRIPT39-SPECIAL-POSES: e164 Wine PASS (jrp5fb0y/72_aby76); action13 PASS (uto86fc6/_mvdi9t3); E169 home reads 48 index bytes, no sequence/OBJ/pixels (mr5vn2od/db6l43_0). Slot IDs, allocation/overrides/other paths/Linux/USA open.
+- SCRIPT39-SPECIAL-POSES: e164 Wine PASS (jrp5fb0y/72_aby76), action13 (uto86fc6/_mvdi9t3); home `s4quofvj`/`1zjiaoiz` link opcode39 to task/null parts; `lwnzoodb` body index/sequence/OBJ/pixel reads and 1,800-frame altered-source pair PASS. Full animation/other paths open.
 - INDEXED-DIRECT-3AE484/3AE5A4: e165 qk3xqc4z/e87ug9pq, e166 puxz2kz7/ozq4vcii PASS; other scenes/consumers/Linux/USA open.
-- CONTEXT-CALLBACK-3AE47C: E167 Wine PASS (md0zxb9k/555lr8qm); ordinary wklf6sch reads 14 bytes, 3-frame video/OAM and final state match. Audio/poisoned scene/other paths/Linux/USA open.
+- CONTEXT-CALLBACK-3AE47C: E167 Wine PASS (md0zxb9k/555lr8qm); ordinary Wine `hf5czvkg` reads 14 bytes with altered sources; three-frame state/clock/video/OAM/nonempty audio pair PASS. Other paths/Linux/USA/native Windows open.
 - INDEXED-DIRECT-ORDINARY: cold-origin abz4lk0q reads both; 11-frame state/clock/video/OAM/audio pair PASS with altered sources. Other scenes/consumers open.
 - INDEXED-DS20 waiting: slot65 ancestry unknown; E167 build 4q2i907e PASS. Lower priority; rebuild run-ds20-wine.py if needed.
 - LANGUAGE-GAP partial: E168 controlled Wine mncnsstk and CLI wklf6sch PASS; ordinary 30/35, meaning, Linux/USA open. Sol /root/sol_indexed_ordinary xhigh unconfirmed.
@@ -169,9 +168,9 @@ States `active`, `suspended`, `interrupted`, `failed`, `waiting` and outcomes `p
 
 ## Final handover
 
-- Task: ROM-DATA-FULL-EUR suspended by user; Wine only, no performance measurements.
-- Last verified result: existing E169 home pair reads geometry and special-pose index bytes (`mr5vn2od`, audit `db6l43_0`); scoped evidence closed.
-- Remaining work: broader EUR inventory/consumers/ordinary/ABI; Linux, USA and native Windows deferred.
-- Errors or blockers: scene has aggregate counters, no audio or altered-ROM comparison; no active Wine job owned here.
-- Next action: wait for explicit resume; then read the handoff and select only from the current request.
-- References: `docs/development/ROM_DATA_TODO.md`; `docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md`; `docs/development/ROM_DATA_INVENTORY.md`.
+- Task: ROMDATA-01-RANGE-37140C; goal paused by user, partial.
+- Last verified result: source-guided Bank pairs `acebndyu`/`jyionxk1`, interpreter attribution `hbu4s4d0`, guarded cross-mode frame `u_28pjng` and 92 wrapper cases `xfsk4jgx` pass.
+- Remaining work: classify upstream consumers and broader regressions before closing; legacy IRQ equivalence, production cache selection and deferred platforms remain open.
+- Errors or blockers: legacy frame differs by 10 cycles (`je_s2es2`, `7tgvy6tq`); guarded object matches this frame. Sol xhigh requested, effective and primary Terra/xhigh unconfirmed. No Wine job.
+- Next action: wait for explicit resume; do not select work or repeat accepted Bank scene or wrapper checks while paused.
+- References: `docs/rom_data_runtime.md#european-bounded-range-lookup`; `docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md`; `docs/changes/2026-11-18-verify-bounded-range-wrapper-prefixes.json`.

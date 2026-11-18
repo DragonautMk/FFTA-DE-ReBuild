@@ -2971,9 +2971,14 @@ pointer in `r2`; the saved live object still points to the one-row descriptor.
 Wine CLI continuation `e179-language-pair-cli-wine-wklf6sch` reads 14 managed
 descriptor bytes from this retained cold-origin checkpoint. Across three frames,
 raw and managed framebuffer and OAM hashes match, as do the final serialized
-state and final framebuffer hashes. Native dispatch can fall back to the
-interpreter. This bounded scene does not compare audio or alter the ROM source;
-the separate controlled dispatch above covers altered source bytes.
+state and final framebuffer hashes. A subsequent E170-d169 Wine pair
+(`callback-ordinary-audio-wine-hf5czvkg`) compares three frames from the same
+checkpoint while the managed machine's 12 callback descriptor source bytes
+are altered. It reads 14 typed descriptor bytes and matches full state, guest
+clock, central and wide framebuffers, OAM, mixed audio, PSG, FIFO and HLE taps
+at each frame. All five audio streams contain samples (4,646, 4,646, 559, 559
+and 4,190 respectively). Generated dispatch can fall back to interpretation;
+this short continuation does not establish other scenes or consumers.
 
 A bounded source audit (`e176-language-gap-source-audit-s82earyr`) places that
 pair between two separately owned eight-byte OBJ lists, immediately before a

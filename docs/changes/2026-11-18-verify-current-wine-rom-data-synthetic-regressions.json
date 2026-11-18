@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "verify-current-wine-rom-data-synthetic-regressions",
+  "title": "Verify current Windows ROM-data synthetic regressions",
+  "kind": "changed",
+  "platforms": [
+    "Windows GNU under Wine"
+  ],
+  "changes": [
+    "Document the complete non-ignored recomp rom_data test filter on the current audited Windows executable, including exact excluded-test counts."
+  ],
+  "validation": [
+    "Wine unit e170-rom-data-synthetic-regression-cpyhx1cy passes 31 tests with zero failures, one test thread, protected build inputs and executable, owned temporary files, removed successful scratch and drained Wine server. The checks cover strict formats, publication, repair, cancellation, concurrency and relocation."
+  ],
+  "limitations": [
+    "451 ignored tests were not run, including private-ROM integration filters. The synthetic cases do not exercise the E170 real-ROM dataset; native Windows, Linux, USA and performance remain open."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-18-verify-world-map-indexed-context-dispatch.json"
+  ]
+}

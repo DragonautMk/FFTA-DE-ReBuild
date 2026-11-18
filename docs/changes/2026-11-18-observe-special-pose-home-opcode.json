@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "observe-special-pose-home-opcode",
+  "title": "Observe ordinary special pose opcode candidate",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Trace the source-backed opcode 39 candidate and matching task creation in the previously observed home frame."
+  ],
+  "validation": [
+    "Windows GNU build special-creator-candidate-build-6njd6m23 and Wine special-creator-candidate-wine-7hy1jqxu passed. At relative frame 345 the interpreter reads opcode39 b95917 and its four operands, enters handler 08126b54 with the instruction pointer, enters 0812aa34 with selector17/group16/flag0, then allocator 0812569c with callback 0812a8c5 and the previously observed task entry 0812a8c4 in the same frame. Task entry registers match the earlier observation; full frame state, central framebuffer and OAM match native continuation. Zero trace requests dropped, guarded inputs passed, scratch removed and Wine drained."
+  ],
+  "limitations": [
+    "The test does not capture allocator return identity, so the causal link from this allocation to the observed task remains unproved. Native instruction attribution, complete animation, checkpoint ancestry, other paths, Linux, USA and native Windows remain open; no performance measurements."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/text_reader_registry_tests.rs",
+    "docs/rom_data_unit_obj.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-18-observe-special-pose-home-task-fields.json"
+  ]
+}

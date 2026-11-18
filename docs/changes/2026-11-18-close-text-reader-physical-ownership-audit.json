@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "close-text-reader-physical-ownership-audit",
+  "title": "Close the completed text-reader physical ownership audit",
+  "kind": "changed",
+  "platforms": [
+    "EUR"
+  ],
+  "changes": [
+    "Close the full-byte-domain physical ownership checklist item after reconciling its stated criteria with the E169 and E170 audit evidence; keep callback execution, ordinary reachability and other dispatcher domains in their separate open tasks."
+  ],
+  "validation": [
+    "Existing protected E169 audit nw66w3v6 accounts for all 256 conditional addresses and identifies 98 unowned words; source audit xf27x8sa authenticates their complement; E170 audit thuu27et assigns all 256 words with all 158 prior owners preserved and no mixed or multiply owned words. Wine sjojlovh verifies the conditional source projection and 66 original prefixes."
+  ],
+  "limitations": [
+    "The audits establish conditional physical ownership, not ordinary index values, callback behavior or full domains of other dispatchers. E170 generated blocks can fall back to interpretation; Linux, USA, native Windows and performance remain open."
+  ],
+  "files": [
+    "docs/rom_data_text.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-17-audit-european-text-reader-e170-ownership.json",
+    "docs/changes/2026-11-17-integrate-european-conditional-substitution-words.json"
+  ]
+}

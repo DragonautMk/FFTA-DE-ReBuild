@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "verify-special-pose-task-allocation-identity",
+  "title": "Verify ordinary special pose task identity",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Connect the observed opcode 39 task allocation and callback to the ordinary special-pose reads in the recorded scene."
+  ],
+  "validation": [
+    "Windows GNU build special-task-identity-build-kt4abqc0 and Wine special-task-identity-wine-s4quofvj passed. At frame 345 the interpreter observes opcode b95917, creator and allocator, then task callback 0812a8c4 with r0=020163cc before the allocator returns the same r0. Full state, central framebuffer and OAM match native continuation; no trace events dropped, protected inputs passed and Wine drained.",
+    "Protected static join special-task-identity-join-1zjiaoiz authenticates the EUR ROM, checks the observed order and return addresses, and verifies 0812569c calls 080059b8; 08005a68 loads the callback, passes the task and calls the 08145c14 BX r3 trampoline, matching callback link register 08005a71. Inputs passed and scratch was removed."
+  ],
+  "limitations": [
+    "This establishes the allocation/callback link in one recorded interpreter frame. Native instruction attribution, full animation, other paths and complete checkpoint ancestry remain unproved; Linux, USA and native Windows remain open. No performance measurement."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/text_reader_registry_tests.rs",
+    "docs/rom_data_unit_obj.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-18-observe-special-pose-home-opcode.json"
+  ]
+}

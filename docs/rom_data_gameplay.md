@@ -6391,9 +6391,16 @@ frame 186, the original `080cd43c` reader accesses the descriptor-1 row: the
 trace records one typed read, no raw reads of that row, and the packed owner
 serves one byte while the ROM source is poisoned. The first reader frame matches
 the original complete state and clock, framebuffer, wide framebuffer, OAM and
-mixed audio. This is one ordinary interpreter frame, not full importer or all
-scene/consumer coverage; translated dispatch for this route, Linux, USA and
-native Windows remain pending. No performance measurement was made.
+mixed audio. A later E170-d169 Wine run
+`alias-battle-translated-wine-3s1xbvpx` compares 240 frames of the same recorded
+route with the 14 row bytes altered in the managed machine. At every frame,
+full state and guest clock, central/wide framebuffer, OAM and five nonempty
+audio streams match. Five typed row requests and no raw, unclassified or
+dropped requests are observed. Generated dispatch executes but can fall back
+to interpretation, so the row reads are not attributed to translated code.
+Full importer, other scenes/consumers, Linux, USA and native Windows remain
+open. Protected inputs passed and Wine drained. No performance measurement
+was made.
 
 
 ## Conditional packed lookup production CLI

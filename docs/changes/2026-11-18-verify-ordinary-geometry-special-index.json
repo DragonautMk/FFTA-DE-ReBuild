@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "verify-ordinary-geometry-special-index",
+  "title": "Verify ordinary geometry and special pose indices",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Identify ordinary geometry groups and special-pose index cells while comparing the recorded home scene with managed sources altered."
+  ],
+  "validation": [
+    "Windows GNU test build geometry-special-ordinary-build-8vye9kkd and Wine geometry-special-ordinary-wine-lby31j3d passed. E170-d169 compares 1800 recorded frames: full state, clock, central/wide video, OAM and five nonempty audio streams match each frame with 48 geometry and 3856 special index bytes altered in the managed machine.",
+    "The trace observed 28 typed geometry requests and 56 bytes in state-width and state-height groups, plus 12 typed requests and 48 bytes from 12 distinct null special index cells; zero trace requests were dropped. Protected inputs passed, scratch was removed and Wine server drained. A D-Bus assertion was logged but the test completed successfully."
+  ],
+  "limitations": [
+    "Address attribution does not prove original reader instructions, producer identities or an uninterrupted pose animation. The checkpoint lineage is not independently reconstructed end-to-end; generated dispatch may fall back to interpretation. Other paths and domains, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/text_reader_registry_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_unit_obj.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-17-integrate-european-script39-special-poses.json"
+  ]
+}
