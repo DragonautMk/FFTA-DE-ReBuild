@@ -232,6 +232,10 @@ impl Engine {
         let mut fresh = Box::new(Machine::new(self.machine.bus.rom.clone()));
         if let Some(bytes) = &save { fresh.bus.load_save_data(bytes); }
         self.save().map_err(|e| format!("Cannot save before restart: {e}"))?;
+        self.replace_machine(fresh);
+        Ok(())
+    }
+    fn replace_machine(&mut self, fresh:Box<Machine>) {
         self.machine = fresh;
         self.mouse = gba_core::ffta_mouse::LanguageMouse::new(&self.machine.bus.rom,self.touch_enabled);
         self.machine.bus.ffta_battle_mouse.set_enabled(self.touch_enabled);
@@ -240,6 +244,22 @@ impl Engine {
         self.audio.clear();
         self.pixels.clear();
         KEYS.store(0x3ff, Ordering::Relaxed);
+    }
+    fn backups(&self)->Result<crate::save_backups::Backups,String> {
+        Ok(crate::save_backups::Backups::new(self.save_path.as_deref().ok_or("No cartridge save path is available")?,&self.rom_cache_key))
+    }
+    pub fn backup_choices(&self)->Result<Vec<(String,bool)>,String> {
+        let size=self.machine.bus.save_data().ok_or("This cartridge has no save memory")?.len();
+        self.backups()?.choices(size)
+    }
+    pub fn restore_backup(&mut self,id:&str)->Result<(),String> {
+        let size=self.machine.bus.save_data().ok_or("This cartridge has no save memory")?.len();
+        let backups=self.backups()?;
+        let bytes=backups.read_choice(id,size)?;
+        let mut fresh=Box::new(Machine::new(self.machine.bus.rom.clone()));
+        fresh.bus.load_save_data(&bytes);
+        backups.replace_save(&bytes).map_err(|e|format!("Cannot restore cartridge save: {e}"))?;
+        self.replace_machine(fresh);
         Ok(())
     }
     pub fn diagnostics(&self) -> String {
@@ -319,6 +339,78 @@ mod tests {
         assert_eq!(engine.machine.bus.save_data().unwrap()[17],0x53);
         assert_eq!(engine.machine.bus.ewram[31],0x99);
         assert_eq!(engine.machine.cpu.regs[3],42);
+    }
+    #[test]
+    fn backups_rotate_validate_and_restore_without_stale_ram() {
+        let _lock=VIEW_TEST.lock().unwrap();
+        let root=std::env::var_os("FFTA_VALIDATION_WORK").map(std::path::PathBuf::from).unwrap_or_else(std::env::temp_dir)
+            .join(format!("android-backup-test-{}",std::process::id()));
+        std::fs::create_dir(&root).unwrap();
+        let save=root.join("game.sav");
+        let mut engine=restart_test_engine();
+        engine.save_path=Some(save.clone());
+        let store=engine.backups().unwrap();
+        let size=engine.machine.bus.save_data().unwrap().len();
+        for value in [1u8,2,3] {
+            let bytes=vec![value;size];std::fs::write(&save,&bytes).unwrap();
+            assert_eq!(store.capture_startup(size).unwrap(),Some(bytes));
+        }
+        let choices=store.choices(size).unwrap();
+        assert_eq!(choices.len(),2);assert!(choices.iter().all(|(_,valid)|*valid));
+        let previous=choices[1].0.clone();
+        engine.machine.bus.sram[0]=99;engine.machine.bus.ewram[31]=9;
+        engine.restore_backup(&previous).unwrap();
+        assert_eq!(engine.machine.bus.save_data().unwrap(),&vec![2;size]);
+        assert_eq!(std::fs::read(&save).unwrap(),vec![2;size]);
+        assert_eq!(engine.machine.bus.ewram[31],0);
+        engine.save().unwrap();assert_eq!(std::fs::read(&save).unwrap(),vec![2;size]);
+        // Tampering and stale selection must not replace the live save or machine.
+        let backup=root.join("SaveBackups").join(&engine.rom_cache_key).join("game.sav").join(format!("backup-{previous}.sav"));
+        std::fs::write(backup,vec![7;size]).unwrap();
+        engine.machine.bus.ewram[31]=77;
+        assert!(engine.restore_backup(&previous).is_err());
+        assert!(engine.restore_backup("missing").is_err());
+        assert_eq!(engine.machine.bus.ewram[31],77);
+        assert_eq!(std::fs::read(&save).unwrap(),vec![2;size]);
+        // A failed atomic replacement must leave the current machine intact.
+        let newest=engine.backup_choices().unwrap()[0].0.clone();
+        std::fs::remove_file(&save).unwrap();std::fs::create_dir(&save).unwrap();
+        assert!(engine.restore_backup(&newest).is_err());
+        assert!(save.is_dir());assert_eq!(engine.machine.bus.ewram[31],77);
+        assert_eq!(engine.machine.bus.save_data().unwrap(),&vec![2;size]);
+        std::fs::remove_dir_all(root).unwrap();
+    }
+    #[test]
+    fn backups_refuse_invalid_startup_save_without_modification() {
+        let _lock=VIEW_TEST.lock().unwrap();
+        let root=std::env::var_os("FFTA_VALIDATION_WORK").map(std::path::PathBuf::from).unwrap_or_else(std::env::temp_dir)
+            .join(format!("android-backup-invalid-{}",std::process::id()));
+        std::fs::create_dir(&root).unwrap();
+        let save=root.join("game.sav");std::fs::write(&save,[1,2,3]).unwrap();
+        let engine=restart_test_engine();
+        let store=crate::save_backups::Backups::new(&save,&engine.rom_cache_key);
+        assert!(store.capture_startup(engine.machine.bus.save_data().unwrap().len()).is_err());
+        assert_eq!(std::fs::read(save).unwrap(),vec![1,2,3]);
+        std::fs::remove_dir_all(root).unwrap();
+    }
+    #[test]
+    fn backups_are_isolated_by_save_path_and_rom() {
+        let _lock=VIEW_TEST.lock().unwrap();
+        let root=std::env::var_os("FFTA_VALIDATION_WORK").map(std::path::PathBuf::from).unwrap_or_else(std::env::temp_dir)
+            .join(format!("android-backup-scope-{}",std::process::id()));
+        std::fs::create_dir(&root).unwrap();
+        let game=root.join("ffta.sav");let benchmark=root.join("benchmark.sav");
+        let regular=crate::save_backups::Backups::new(&game,"rom-a");
+        let test=crate::save_backups::Backups::new(&benchmark,"rom-a");
+        let other_rom=crate::save_backups::Backups::new(&game,"rom-b");
+        std::fs::write(&game,[1,1]).unwrap();regular.capture_startup(2).unwrap();
+        std::fs::write(&benchmark,[2,2]).unwrap();test.capture_startup(2).unwrap();
+        std::fs::write(&game,[3,3]).unwrap();other_rom.capture_startup(2).unwrap();
+        for (store,expected) in [(&regular,1),(&test,2),(&other_rom,3)] {
+            let entries=store.choices(2).unwrap();assert_eq!(entries.len(),1);
+            assert_eq!(store.read_choice(&entries[0].0,2).unwrap(),vec![expected;2]);
+        }
+        std::fs::remove_dir_all(root).unwrap();
     }
     #[test]
     fn cached_color_conversion_matches_every_hardware_color(){

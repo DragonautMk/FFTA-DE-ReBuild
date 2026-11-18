@@ -2111,6 +2111,12 @@ including state, clock, video, OAM and nonempty audio; five typed row requests
 occur. Generated dispatch can fall back to interpretation, and full importer
 and other scene/consumer coverage remain open.
 
+E170 Wine `_hfk7lti` observes a full ordinary `080ccf9c` converter call
+from entry to return: the original row reader receives one typed byte while
+the source row is altered, and raw/managed interpreter state, clock, video,
+OAM and mixed audio match at return. This covers one call, not the `080ce18c`
+batch wrapper, all consumers or per-read native attribution. [Details](rom_data_gameplay.md#special-encounter-descriptor-aliases-the-packed-lookup).
+
 
 ## Conditional descriptor banks managed projection
 

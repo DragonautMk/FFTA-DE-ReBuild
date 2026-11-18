@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "android-cartridge-save-backups",
+  "title": "Add Android cartridge save backups",
+  "kind": "added",
+  "platforms": [
+    "Android"
+  ],
+  "changes": [
+    "Capture up to two ROM- and save-file-scoped, SHA256-verified cartridge backups on load and provide a confirmed restore that prepares a clean machine and atomically replaces the current save.",
+    "Refuse invalid-size startup saves, damaged or stale backups, and failed restore writes without replacing the live machine."
+  ],
+  "validation": [
+    "Serial Android Rust suite passed 35 tests with 2 ignored in android-save-backup-isolation-lhvx0kvw, including rotation, synthetic restoration, tampering, failed replacement and ROM/save isolation.",
+    "ARM64 Docker build and 29 Kotlin tests passed in android-save-backup-final-apk-7ttxwbla; updated the connected moto g34 5G with adb install -r."
+  ],
+  "limitations": [
+    "On-device startup, visual menu and restoration with a real cartridge save have not been exercised. Android still uses one shared primary save when switching ROMs; backup association reflects the loaded ROM and cannot prove the origin of the shared file."
+  ],
+  "files": [
+    "AndroidPort/crates/gba-android/src/save_backups.rs",
+    "AndroidPort/crates/gba-android/src/engine.rs",
+    "AndroidPort/crates/gba-android/src/jni.rs",
+    "AndroidPort/crates/gba-android/src/lib.rs",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/MainActivity.kt",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/NativeBridge.kt",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/SaveBackupChoices.kt",
+    "AndroidPort/android/app/src/test/java/com/fftarecomp/port/SaveBackupChoicesTest.kt",
+    "AndroidPort/android/README.md"
+  ],
+  "references": [
+    "AndroidPort/android/README.md"
+  ]
+}

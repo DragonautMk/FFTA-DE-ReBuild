@@ -455,6 +455,27 @@ Documentation: [2026-11-18-verify-world-map-indexed-context-dispatch.json](docs/
 
 [Change record](docs/changes/2026-11-18-verify-current-wine-rom-data-synthetic-regressions.json)
 
+## 2026-11-18 — Verify a complete ordinary descriptor converter call
+
+Type: changed. Platforms: EUR / Windows GNU under Wine.
+
+**Changes**
+
+- Add an entry-to-return comparison for the original descriptor converter on the retained ordinary battle-entry route, with the shared descriptor row altered in the managed machine.
+
+**Validation**
+
+- Windows GNU build we2i_qjd and Wine _hfk7lti passed: one 25,222-instruction interpreter call returned with matching full state, clock, video, OAM and mixed audio; the original reader issued one typed row request, with no raw or unclassified row reads. Protected inputs passed, scratch was removed and Wine drained.
+- Initial Wine l4i2lrcu failed to locate a matching call to batch wrapper 080ce18c; that failed unit remains retained.
+
+**Limitations**
+
+- One interpreter call on one route within one input frame; the batch wrapper, other calls, consumers, per-read native attribution and other platforms remain open. The audio equality check does not require nonempty audio.
+
+Documentation: [2026-11-18-verify-battle-descriptor-alias-translated.json](docs/changes/2026-11-18-verify-battle-descriptor-alias-translated.json).
+
+[Change record](docs/changes/2026-11-18-verify-complete-descriptor-converter.json)
+
 ## 2026-11-18 — Verify both bounded-range wrapper prefixes
 
 Type: changed. Platforms: EUR / Windows GNU under Wine.
@@ -958,6 +979,28 @@ Type: changed. Platforms: Android.
 Documentation: [README.md](AndroidPort/android/README.md).
 
 [Change record](docs/changes/2026-11-18-android-desktop-grid-model.json)
+
+## 2026-11-18 — Add Android cartridge save backups
+
+Type: added. Platforms: Android.
+
+**Changes**
+
+- Capture up to two ROM- and save-file-scoped, SHA256-verified cartridge backups on load and provide a confirmed restore that prepares a clean machine and atomically replaces the current save.
+- Refuse invalid-size startup saves, damaged or stale backups, and failed restore writes without replacing the live machine.
+
+**Validation**
+
+- Serial Android Rust suite passed 35 tests with 2 ignored in android-save-backup-isolation-lhvx0kvw, including rotation, synthetic restoration, tampering, failed replacement and ROM/save isolation.
+- ARM64 Docker build and 29 Kotlin tests passed in android-save-backup-final-apk-7ttxwbla; updated the connected moto g34 5G with adb install -r.
+
+**Limitations**
+
+- On-device startup, visual menu and restoration with a real cartridge save have not been exercised. Android still uses one shared primary save when switching ROMs; backup association reflects the loaded ROM and cannot prove the origin of the shared file.
+
+Documentation: [README.md](AndroidPort/android/README.md).
+
+[Change record](docs/changes/2026-11-18-android-cartridge-save-backups.json)
 
 ## 2026-11-17 — Verify European text copy callbacks
 

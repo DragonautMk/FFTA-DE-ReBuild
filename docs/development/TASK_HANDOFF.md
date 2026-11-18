@@ -34,7 +34,7 @@ Archive completed tasks; open parents do not reopen closed children. Do not stop
 - ROMDATA-05 source-byte regression: E170 Wine `ffhtpvms` PASS for all 10,948,338 distinct declared bytes and aligned covered words; raw control confirms inverted backing. Parent equivalence remains partial. `8oo4pd4m` failed an invalid counter assumption; retained.
 - Verified: E158 reader/opening/CLI Wine PASS (`b8vylqkk`, `tucnagm9`).
 - Missing: EUR inventory/consumers/ordinary/ABI/extent/indirect calls, ROMDATA-06/07; Linux/USA/native Windows/new32:9 deferred. Protect originals/saves.
-- Selection: ROMDATA-04-METADATA14-ID1-ALIAS partial. Wine prefix/frame `56wpztn8`/`gpir8qjh` and 240-frame pair `3s1xbvpx` PASS. Missing full importer/return; test added for `080ce18c` entry-to-return on retained route. Other consumers/native attribution open.
+- Selection: ROMDATA-04-METADATA14-ID1-ALIAS partial; converter `_hfk7lti` and pair `3s1xbvpx` PASS. User prioritizes closure. Missing batch wrapper `080ce18c`; prepare controlled full calls from real state and authenticated header, including bounds and occupied slots. Native attribution/consumers open; locator `l4i2lrcu` FAIL retained.
 - Title bank: five lists Wine PASS (hhh7a8lg); other scenes/native and FIRSTBANK-ZERO open (f4_b2apw).
 - BATTLE-40D300-OTHER: index56 Wine PASS (qbzrv3ua); other lists open.
 - CONTEXT-3AE42C: IDs 1–4/return 0 Wine PASS; E168 owns 261/261 pairs (4ami2zcc); meaning/writers/domain/native open.
@@ -72,8 +72,8 @@ Archive completed tasks; open parents do not reopen closed children. Do not stop
 - State: active
 - Outcome: partial
 - Verified: brightness, screen profiles, FPS and menu transparency; ARM64/Kotlin, serial Rust and Mesa PASS. `docs/changes/2026-11-18-android-screen-profiles-fps.json`.
-- Missing: response, full video equivalence, save states, backups, debug and device checks.
-- Resume: scaling installed (`uobvsi4o`); menu parity/device readability open. Memory check reports concurrent ROM test lacking a record; preserve it.
+- Missing: response, full video equivalence, save states, debug and device checks.
+- Resume: backups installed (`7ttxwbla`); physical restore, menu parity and readability remain open. Cancelled pre-fix build `clv6vvl1` retained.
 
 
 ### CHEAT-DISTRIBUTION
@@ -178,8 +178,8 @@ Archive completed tasks; open parents do not reopen closed children. Do not stop
 ## Final handover
 
 - Task: ROM data validation; user prioritizes completing existing TODO tasks.
-- Last verified result: Wine `ffhtpvms` passes all 10,948,338 declared E170 source bytes, aligned word composition and an inverted raw control; inputs protected, scratch removed, Wine drained.
-- Remaining work: other computed consumers and broader regressions; legacy IRQ equivalence and deferred platforms remain open.
+- Last verified result: Wine `_hfk7lti` matches one complete `080ccf9c` converter call and its typed alias read, with poisoned row; protected inputs pass, scratch removed, Wine drained.
+- Remaining work: batch importer wrapper, other consumers/scenes/native attribution, broader equivalence and deferred platforms remain open.
 - Errors or blockers: `kitubxih` and `wamu6k3z` remain FAIL. Preserve concurrent work and protected inputs.
-- Next action: inspect live importer Wine unit `l4i2lrcu` (exec 16949); build `zmi5vrql` PASS.
-- References: `docs/rom_data_runtime.md#european-bounded-range-lookup`; `docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md`; `docs/changes/2026-11-18-verify-e170-all-source-bytes.json`.
+- Next action: inspect live batch build `g8sp7nqz` (exec 98007), then run its Wine test if PASS.
+- References: `docs/rom_data_runtime.md#european-bounded-range-lookup`; `docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md`; `docs/changes/2026-11-18-verify-complete-descriptor-converter.json`.

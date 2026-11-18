@@ -23806,3 +23806,16 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: four scaling modes and grid interaction implemented, scoped reference tests passed, APK built and installed.
 - Evidence: `docs/changes/2026-11-18-android-desktop-scaling-modes.json`; `ozaacpls`, `uobvsi4o`.
 - Limits: device rendering, performance and full pixel equivalence remain unverified; other Android menu parity remains open.
+
+### ROMDATA-04-METADATA14-ID1-ALIAS-COMPLETE-CONVERTER
+
+- Outcome: completed for one ordinary `080ccf9c` converter call from entry through return.
+- Evidence: build `we2i_qjd` and Wine `_hfk7lti` PASS; 25,222 interpreter instructions, one typed original-reader request, zero raw/unclassified row reads, poisoned row and matching full state/clock/video/OAM/mixed audio. Protected inputs passed, scratch removed, Wine drained. See `docs/changes/2026-11-18-verify-complete-descriptor-converter.json`.
+- Limits: one call on one route and within one input frame; no nonempty-audio requirement, wrapper `080ce18c`, other consumers/calls, translated attribution or deferred platforms. `l4i2lrcu` failed to locate a matching wrapper call and remains retained. Sol `/root/sol_source_byte_diagnosis` requested gpt-6.1-sol/xhigh; effective model/effort and primary Terra/xhigh were not independently confirmed. Parent remains partial.
+
+### ANDROID-CARTRIDGE-BACKUPS
+
+- Outcome: completed
+- Verified criteria: automatic two-copy backup and confirmed transactional restore implemented; synthetic integrity, isolation and failure tests pass; APK installed.
+- Evidence: `docs/changes/2026-11-18-android-cartridge-save-backups.json`; `lhvx0kvw`, `7ttxwbla`.
+- Limits: no real device restore or visual test; shared primary save cannot prove source ROM; remaining Android parity stays open.

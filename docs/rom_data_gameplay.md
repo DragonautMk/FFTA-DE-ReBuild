@@ -6402,6 +6402,19 @@ Full importer, other scenes/consumers, Linux, USA and native Windows remain
 open. Protected inputs passed and Wine drained. No performance measurement
 was made.
 
+Wine `alias-full-importer-wine-_hfk7lti` additionally observes the ordinary
+`080ccf9c` converter from its real entry through its return to the caller.
+For this invocation, the original `080cd43c` instruction performs one typed
+descriptor-1 row read with the row's ROM bytes altered; no row reads are raw
+or unclassified. The raw and managed interpreter executions match after
+25,222 instructions in full serialized state, clock, framebuffer, wide
+framebuffer, OAM and mixed audio. The call stays within one input frame.
+The trace does not establish that batch wrapper `080ce18c` was the caller,
+nor does it prove other calls, consumers or translated attribution. Protected
+inputs passed, scratch was removed and Wine drained. Initial Wine unit
+`l4i2lrcu` sought the batch wrapper and did not find a matching call; it is
+retained as a failure, not evidence against the converter.
+
 
 ## Conditional packed lookup production CLI
 

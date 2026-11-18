@@ -417,6 +417,9 @@ private fun GameScreen(settings:GameSettings,input:GameInput,onExit:()->Unit,onS
     var failure by remember {mutableStateOf<String?>(null)}
     var switchRomError by remember {mutableStateOf<String?>(null)}
     var restartError by remember {mutableStateOf<String?>(null)}
+    var backupError by remember {mutableStateOf<String?>(null)}
+    var backupChoices by remember {mutableStateOf<List<SaveBackupChoice>>(emptyList())}
+    var selectedBackup by remember {mutableStateOf<SaveBackupChoice?>(null)}
     var restarting by remember {mutableStateOf(false)}
     var page by remember {mutableStateOf("main")}
     var fpsRates by remember {mutableStateOf<FpsRates?>(null)}
@@ -529,9 +532,18 @@ private fun GameScreen(settings:GameSettings,input:GameInput,onExit:()->Unit,onS
                     failure?.let{Text(it,color=Color(0xFF9B2929),fontSize=12.sp)}
                     switchRomError?.let{Text("Could not save before switching: $it",color=Color(0xFF9B2929),fontSize=12.sp)}
                     restartError?.let{Text("Could not restart: $it",color=Color(0xFF9B2929),fontSize=12.sp)}
+                    backupError?.let{Text("Backup: $it",color=Color(0xFF9B2929),fontSize=12.sp)}
                     when(page) {
                         "main"->{
                             MenuButton("Resume",failure==null){paused=false}
+                            MenuButton("Save backups",failure==null){
+                                page="backups";backupError=null;backupChoices=emptyList();restarting=true
+                                scope.launch {
+                                    val result=runCatching {withContext(Dispatchers.IO){parseSaveBackupChoices(NativeBridge.gbaBackupChoices())}}
+                                    restarting=false
+                                    result.onSuccess{backupChoices=it}.onFailure{backupError=it.message ?: it.toString()}
+                                }
+                            }
                             MenuButton("Video & zoom"){page="video"}
                             MenuButton("Fast forward"){page="fast forward"}
                             MenuButton("Text bubbles"){page="text bubbles"}
@@ -564,6 +576,36 @@ private fun GameScreen(settings:GameSettings,input:GameInput,onExit:()->Unit,onS
                                     restarting=false
                                     if(error==null){page="main";paused=false}
                                     else restartError=error
+                                }
+                            }
+                        }
+                        "backups"->{
+                            Text("The two latest cartridge saves captured when the game was loaded.")
+                            if(restarting)Text("Loading backups...")
+                            if(!restarting && backupChoices.isEmpty() && backupError==null)Text("No backups yet.")
+                            backupChoices.forEachIndexed { index,choice ->
+                                MenuButton("Backup ${index+1}: ${if(choice.valid) "Ready" else "Damaged or incompatible"}",choice.valid&&!restarting){
+                                    selectedBackup=choice;backupError=null;page="restore backup"
+                                }
+                            }
+                        }
+                        "restore backup"->{
+                            Text("Restore this backup and restart the game? Current cartridge progress will be replaced.")
+                            MenuButton(if(restarting)"Restoring..." else "Restore backup",!restarting&&selectedBackup!=null){
+                                val choice=selectedBackup ?: return@MenuButton
+                                restarting=true;backupError=null
+                                surface?.gamePaused=true
+                                input.clear();settings.pad.clear();settings.holdFast=false
+                                surface?.clearPendingTouches()
+                                scope.launch {
+                                    val error=runCatching {
+                                        val gameSurface=checkNotNull(surface){"Game display is unavailable"}
+                                        withTimeout(5000){while(!gameSurface.pauseAcknowledged)delay(10)}
+                                        withContext(Dispatchers.IO){check(NativeBridge.gbaRestoreBackup(choice.id)==1){NativeBridge.gbaStatus()}}
+                                    }.exceptionOrNull()?.let{it.message ?: it.toString()}
+                                    restarting=false
+                                    if(error==null){selectedBackup=null;page="main";paused=false}
+                                    else backupError=error
                                 }
                             }
                         }
@@ -671,7 +713,7 @@ private fun GameScreen(settings:GameSettings,input:GameInput,onExit:()->Unit,onS
                         "gamepad"->GamepadSettings(settings)
 
                     }
-                    if(page!="main")MenuButton("Back",!restarting){settings.save();page=if(page=="touchscreen"||page=="gamepad")"input" else "main"}
+                    if(page!="main")MenuButton("Back",!restarting){settings.save();page=when(page){"touchscreen","gamepad"->"input";"restore backup"->"backups";else->"main"}}
                 }
             }
         }

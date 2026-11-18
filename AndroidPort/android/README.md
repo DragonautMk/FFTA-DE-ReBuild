@@ -57,14 +57,20 @@ timers, DMA, interrupts, backup media, and C recompiler.
 - Pause > Restart ROM asks for confirmation, writes the current cartridge save,
   then restarts from boot. Progress not saved inside the game is lost. If the
   cartridge save cannot be written, the game remains paused and is not reset.
+- Save backups keeps the two most recent automatic copies of the cartridge save
+  made when a ROM is loaded, separately for each ROM. Pause > Save backups
+  lists them and asks for confirmation before restoring one and restarting.
+  Damaged, stale or incorrectly sized backups are refused. Backups are private
+  to the app and are not save states. The existing Android cartridge-save file
+  is shared when switching ROMs; backups are grouped by the ROM being loaded,
+  so a backup cannot establish which ROM originally created that shared file.
 
 The Android interface and native status messages currently use English; this
 port has no interface-language selector. They do not change the language of
 the game or imported content.
 
 The Android pause menu is separate from the desktop menu. Desktop temporal
-response, save states, backup management
-and debug tools are not yet available here.
+response, save states and debug tools are not yet available here.
 Desktop window and VSync settings also do not map directly to the Android
 full-screen renderer. The Android aspect choices include the desktop ratios,
 as well as device, square and 19:9 modes; mobile zoom is capped at level 6.

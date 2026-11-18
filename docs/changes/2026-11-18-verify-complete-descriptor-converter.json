@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "verify-complete-descriptor-converter",
+  "title": "Verify a complete ordinary descriptor converter call",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Windows GNU under Wine"
+  ],
+  "changes": [
+    "Add an entry-to-return comparison for the original descriptor converter on the retained ordinary battle-entry route, with the shared descriptor row altered in the managed machine."
+  ],
+  "validation": [
+    "Windows GNU build we2i_qjd and Wine _hfk7lti passed: one 25,222-instruction interpreter call returned with matching full state, clock, video, OAM and mixed audio; the original reader issued one typed row request, with no raw or unclassified row reads. Protected inputs passed, scratch was removed and Wine drained.",
+    "Initial Wine l4i2lrcu failed to locate a matching call to batch wrapper 080ce18c; that failed unit remains retained."
+  ],
+  "limitations": [
+    "One interpreter call on one route within one input frame; the batch wrapper, other calls, consumers, per-read native attribution and other platforms remain open. The audio equality check does not require nonempty audio."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/conditional_packed_lookup_runtime_tests.rs",
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-18-verify-battle-descriptor-alias-translated.json"
+  ]
+}

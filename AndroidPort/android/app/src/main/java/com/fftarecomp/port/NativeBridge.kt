@@ -83,6 +83,8 @@ object NativeBridge {
     external fun gbaCamera():Long
     external fun gbaSave(): Int
     external fun gbaRestart(): Int
+    external fun gbaBackupChoices(): String
+    external fun gbaRestoreBackup(id:String): Int
     external fun gbaStatus(): String
     external fun gbaDiagnostics(): String
 

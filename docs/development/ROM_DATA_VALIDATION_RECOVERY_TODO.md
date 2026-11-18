@@ -381,7 +381,10 @@ current evidence before running another check.
   frame (`gpir8qjh`) read the row through the packed owner and match raw state.
   E170 Wine `3s1xbvpx` passes a 240-frame raw/managed generated-dispatch pair
   with the row altered, five typed reads and matching state/video/OAM/audio;
-  per-read native attribution, full importer and other scenes remain open.
+  Wine `_hfk7lti` now compares one complete ordinary `080ccf9c` converter
+  invocation through return, with the actual alias read typed and the row
+  altered; state, clock, video, OAM and mixed audio match. The batch wrapper
+  `080ce18c`, per-read native attribution, other calls and scenes remain open.
 - [ ] **ROMDATA-01-CONTEXT-3710D4:** verify additional ordinary contexts,
   remaining consumers and full reader ABI. EUR e159 Wine publication, original
   reader cases and one ordinary context-3 window pass (`8dbsgppp`); production

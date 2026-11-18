@@ -66,9 +66,11 @@ pub unsafe extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaLoadRom(
         if !engine::verify_rom(&rom) { return Err("ROM SHA1/SHA256 mismatch: exact FFTA USA or Europe is required".into()); }
         let save = PathBuf::from(string(env,save_path)?);
         let mut loaded = Engine::new(rom);
-        if save.is_file() {
-            let bytes = std::fs::read(&save).map_err(|e|format!("Read save: {e}"))?;
-            loaded.machine.bus.load_save_data(&bytes);
+        if let Some(expected)=loaded.machine.bus.save_data().map(|b|b.len()) {
+            let backups=crate::save_backups::Backups::new(&save,&gba_core::ffta_rom::digest(&loaded.machine.bus.rom));
+            if let Some(bytes)=backups.capture_startup(expected)? {
+                loaded.machine.bus.load_save_data(&bytes);
+            }
         }
         loaded.save_path = Some(save);
         loaded.cache_dir = loaded.save_path.as_ref().and_then(|path|path.parent()).map(|path|path.join("compiled"));
@@ -200,6 +202,30 @@ pub extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaRestart(_: *mut 
         let mut lock=ENGINE.lock().map_err(|_|"Engine mutex poisoned")?;
         lock.as_mut().ok_or("ROM not loaded")?.restart()?;
         engine::status("Game restarted");
+        Ok(1)
+    })
+}
+
+#[no_mangle]
+pub unsafe extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaBackupChoices(env:*mut JNIEnv,_:jobject)->jstring {
+    let mut result=String::new();
+    let code=guarded(||{
+        let lock=ENGINE.lock().map_err(|_|"Engine mutex poisoned")?;
+        let choices=lock.as_ref().ok_or("ROM not loaded")?.backup_choices()?;
+        for (id,valid) in choices {result.push_str(&format!("{}|{}\n",id,if valid {"ready"} else {"damaged"}));}
+        Ok(1)
+    });
+    if code<0 {return java_string(env,&format!("ERROR|{}",STATUS.lock().unwrap_or_else(|e|e.into_inner())));}
+    java_string(env,&result)
+}
+
+#[no_mangle]
+pub unsafe extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaRestoreBackup(env:*mut JNIEnv,_:jobject,id:jstring)->jint {
+    guarded(||{
+        let id=string(env,id)?;
+        let mut lock=ENGINE.lock().map_err(|_|"Engine mutex poisoned")?;
+        lock.as_mut().ok_or("ROM not loaded")?.restore_backup(&id)?;
+        engine::status("Cartridge backup restored");
         Ok(1)
     })
 }

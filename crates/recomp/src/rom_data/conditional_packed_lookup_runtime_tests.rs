@@ -409,7 +409,8 @@ fn european_descriptor_alias_battle_translated_pair() {
 fn european_descriptor_alias_complete_ordinary_importer() {
     use gba_core::rom_data::read_audit::{Service, TraceCapture, TraceFilter};
 
-    const ENTRY: u32 = 0x080c_e18c;
+    const ENTRY: u32 = 0x080c_cf9c;
+    const READER: u32 = 0x080c_d43c;
     const ROW: usize = 0x6e6f5e;
     let root = PathBuf::from(std::env::var_os("FFTA_SPECIAL_ALIAS_ROOT").unwrap());
     let dataset = PathBuf::from(std::env::var_os("FFTA_SPECIAL_ALIAS_DATASET").unwrap());
@@ -437,25 +438,33 @@ fn european_descriptor_alias_complete_ordinary_importer() {
         raw.bus.frame_ready = false;
         for _ in 0..5_000_000 {
             if raw.bus.frame_ready { break; }
-            if frame < 180 || raw.cpu.regs[15] != ENTRY {
+            if raw.cpu.regs[15] != ENTRY {
                 raw.step();
                 continue;
             }
             calls += 1;
             let return_pc = raw.cpu.regs[14] & !1;
             let entry_sp = raw.cpu.regs[13];
+            let entry_frame = raw.bus.frames;
             let initial = raw.save_state().unwrap();
-            managed.load_state(&initial).unwrap();
-            managed.bus.audio_buf.clear();
             raw.bus.audio_buf.clear();
-            managed.bus.rom[ROW..ROW + 14].fill(0xa7);
             let mut raw_steps = 0u64;
+            let mut reader_seen = false;
             loop {
                 assert!(raw_steps < 5_000_000, "raw importer did not return to {return_pc:08x}");
+                if raw.cpu.regs[15] == READER && raw.cpu.regs[1] == 0x0800_0000 + ROW as u32 {
+                    reader_seen = true;
+                }
                 raw.step();
                 raw_steps += 1;
                 if raw.cpu.regs[15] == return_pc && raw.cpu.regs[13] == entry_sp { break; }
+                assert!(!raw.bus.frame_ready, "converter crossed an input frame boundary, relative frame {frame}");
             }
+            if !reader_seen { continue; }
+            println!("matched converter call {calls}: relative frame={frame}, guest frame={entry_frame}, return={return_pc:08x}, sp={entry_sp:08x}");
+            managed.load_state(&initial).unwrap();
+            managed.bus.audio_buf.clear();
+            managed.bus.rom[ROW..ROW + 14].fill(0xa7);
             let before = owner.conditional_packed_lookup_stats().unwrap().source_bytes;
             let capture = TraceCapture::start(TraceFilter { readers: vec![], ranges: vec![(ROW as u32, (ROW + 14) as u32)] }, 10000).unwrap();
             capture.frame(Some(managed.bus.frames));
@@ -470,29 +479,161 @@ fn european_descriptor_alias_complete_ordinary_importer() {
             assert!(!trace.truncated);
             let typed: u64 = trace.events.iter().filter(|e| e.key.service == Service::Typed).map(|e| e.requests).sum();
             let raw_reads: u64 = trace.events.iter().filter(|e| e.key.service == Service::Raw).map(|e| e.requests).sum();
+            let unclassified: u64 = trace.events.iter().filter(|e| e.key.service == Service::Unclassified).map(|e| e.requests).sum();
             let packed_bytes = owner.conditional_packed_lookup_stats().unwrap().source_bytes - before;
             managed.bus.rom[ROW..ROW + 14].copy_from_slice(&rom[ROW..ROW + 14]);
             assert_eq!(raw_steps, managed_steps, "importer instruction count");
             assert!(raw.save_state().unwrap() == managed.save_state().unwrap(), "complete importer state/clock");
             assert!(raw.bus.framebuffer == managed.bus.framebuffer && raw.bus.wide_framebuffer == managed.bus.wide_framebuffer
                 && raw.bus.oam == managed.bus.oam && raw.bus.audio_buf == managed.bus.audio_buf, "complete importer video/OAM/audio");
-            assert_eq!(raw_reads, 0, "raw fallback within selected row");
-            if typed > 0 {
-                assert!(packed_bytes > 0);
-                outcome = Some(serde_json::json!({"relative_frame":frame,"return_pc":return_pc,"instructions":raw_steps,
-                    "typed_row_requests":typed,"raw_row_requests":raw_reads,"packed_bytes":packed_bytes}));
-                break;
-            }
+            assert_eq!((raw_reads, unclassified), (0, 0), "non-typed row reads");
+            assert!(typed > 0 && packed_bytes > 0);
+            assert!(trace.events.iter().any(|e| e.key.service == Service::Typed
+                && e.key.read.physical_offset == ROW as u32
+                && e.key.instruction.is_some_and(|site| site.pc == READER)), "missing typed original-reader trace");
+            assert_eq!(raw.bus.frames, entry_frame, "converter crossed an input frame boundary");
+            outcome = Some(serde_json::json!({"relative_frame":frame,"guest_frame":entry_frame,"return_pc":return_pc,"instructions":raw_steps,
+                "typed_row_requests":typed,"raw_row_requests":raw_reads,"unclassified_row_requests":unclassified,"packed_bytes":packed_bytes}));
+            break;
         }
         if outcome.is_some() { break; }
         assert!(raw.bus.frame_ready, "ordinary route frame limit at {frame}");
     }
-    let outcome = outcome.expect("no complete importer call consumed the descriptor-1 row");
+    let outcome = outcome.unwrap_or_else(|| panic!("no complete converter call consumed descriptor-1 row; calls={calls}"));
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "scope":"one ordinary EUR 080ce18c importer invocation, entry through return",
+        "status":"PASS", "scope":"one ordinary EUR 080ccf9c descriptor converter invocation, entry through return",
         "candidate_calls":calls, "matched_call":outcome, "row_rom_poisoned":true,
         "full_state_clock_video_oam_mixed_audio_equal_at_return":true,
-        "limits":"One interpreter invocation on one retained route; other calls, consumers, native attribution and platforms remain open.",
+        "limits":"One interpreter converter invocation on one retained route, within one input frame; batch wrapper 080ce18c, other calls, consumers, native attribution and platforms remain open.",
+        "performance_measurements":false
+    })).unwrap()).unwrap();
+}
+
+#[cfg(feature = "rom-data-read-audit")]
+#[test]
+#[ignore = "authenticated EUR battle state/input and current dataset; Wine only"]
+fn european_descriptor_alias_controlled_batch_importer() {
+    use gba_core::rom_data::read_audit::{Service, TraceCapture, TraceFilter};
+
+    const CONVERTER: u32 = 0x080c_cf9c;
+    const BATCH: u32 = 0x080c_e18c;
+    const READER: u32 = 0x080c_d43c;
+    const RETURN: u32 = 0x0800_0300;
+    const ROW: usize = 0x6e6f5e;
+    const SLOT: u32 = 264;
+    let root = PathBuf::from(std::env::var_os("FFTA_SPECIAL_ALIAS_ROOT").unwrap());
+    let dataset = PathBuf::from(std::env::var_os("FFTA_SPECIAL_ALIAS_DATASET").unwrap());
+    let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    assert_eq!(gba_core::ffta_rom::digest(&rom), gba_core::ffta_rom::EUROPE_SHA256);
+    let state = fs::read(std::env::var_os("FFTA_STATE_TEST_STATE").unwrap()).unwrap();
+    assert_eq!(gba_core::ffta_rom::digest(&state), "e91b8c594d3b7f10d6b815a61cc13943a7c86ea17a7c4cfc865f48eaaf37d84f");
+    let input_path = PathBuf::from(std::env::var_os("FFTA_STATE_TEST_INPUT").unwrap());
+    assert_eq!(gba_core::ffta_rom::digest(&fs::read(&input_path).unwrap()), "ca9b84ef9dbeb8d71c47552e9455a2c3fb636a0f7a4219196ce8d82270bf0ad9");
+    let input = crate::InputScript::load(input_path.to_str().unwrap()).unwrap();
+    let manifest: Manifest = toml::from_str(&fs::read_to_string(dataset.join(MANIFEST_FILE)).unwrap()).unwrap();
+    assert_eq!((manifest.extractor_revision, manifest.decoder_revision), (170, 169));
+    let headers = parse_encounter_headers(&fs::read(dataset.join(ENCOUNTER_HEADERS_FILE)).unwrap()).unwrap();
+    let templates = parse_encounter_unit_templates(&fs::read(dataset.join(ENCOUNTER_UNIT_TEMPLATES_FILE)).unwrap()).unwrap();
+    let header = headers.header(3).unwrap();
+    assert_eq!(header.unit_count, 2);
+    let records: Vec<_> = templates.records.iter().filter(|r| r.header_index == 3).collect();
+    assert_eq!(records.len(), 2);
+    assert!(records.iter().all(|r| r.byte00 == 1));
+    let header_address = 0x0800_0000 + gba_core::rom_data::encounter_headers::INDEX_ORIGIN + 3 * 40;
+    assert_eq!(header.unit_templates_pointer, 0x0800_0000 + records[0].source_offset);
+
+    let mut raw = crate::make_machine(rom.clone(), None);
+    raw.load_state(&state).unwrap();
+    let mut context = None;
+    for frame in 0..240u64 {
+        raw.bus.keys = input.keys_at(frame);
+        input.apply_mouse(&mut raw.bus, frame).unwrap();
+        raw.bus.frame_ready = false;
+        for _ in 0..5_000_000 {
+            if raw.bus.frame_ready { break; }
+            if raw.cpu.regs[15] == CONVERTER {
+                context = Some((raw.save_state().unwrap(), raw.cpu.regs[0], frame));
+                break;
+            }
+            raw.step();
+        }
+        if context.is_some() { break; }
+        assert!(raw.bus.frame_ready, "ordinary context frame limit {frame}");
+    }
+    let (initial, destination, context_frame) = context.expect("ordinary converter entry not found");
+    assert_eq!(destination >> 24, 0x02, "expected ordinary EWRAM unit destination");
+    assert!((destination & 0x00ff_ffff) + 3 * SLOT <= 0x40000);
+    let mut managed = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut managed, &dataset).unwrap();
+    let owner = managed.bus.rom_resources().unwrap().clone();
+    let mut results = Vec::new();
+
+    for (limit, occupied, expected) in [(0u32, false, 0u32), (1, false, 1), (2, false, 2), (2, true, 2), (3, false, 2)] {
+        raw.load_state(&initial).unwrap();
+        for i in 0..3 * SLOT { raw.bus.write8(destination + i, 0); }
+        if occupied {
+            for i in 0..SLOT { raw.bus.write8(destination + i, 0x5a); }
+            raw.bus.write8(destination + 4, 1);
+        }
+        raw.cpu.regs[0] = header_address;
+        raw.cpu.regs[1] = destination;
+        raw.cpu.regs[2] = limit;
+        raw.cpu.regs[14] = RETURN | 1;
+        raw.cpu.regs[15] = BATCH;
+        raw.bus.frame_ready = false;
+        raw.bus.audio_buf.clear();
+        let start_sp = raw.cpu.regs[13];
+        let prepared = raw.save_state().unwrap();
+        managed.load_state(&prepared).unwrap();
+        managed.bus.audio_buf.clear();
+        managed.bus.rom[ROW..ROW + 14].fill(0xa7);
+        let mut raw_steps = 0u64;
+        let mut converter_calls = 0u32;
+        loop {
+            assert!(raw_steps < 5_000_000, "raw batch did not return");
+            if raw.cpu.regs[15] == CONVERTER { converter_calls += 1; }
+            raw.bus.frame_ready = false;
+            raw.step();
+            raw_steps += 1;
+            if raw.cpu.regs[15] == RETURN && raw.cpu.regs[13] == start_sp { break; }
+        }
+        assert_eq!((raw.cpu.regs[0], converter_calls), (expected, expected), "batch count and calls");
+        let before = owner.conditional_packed_lookup_stats().unwrap().source_bytes;
+        let capture = TraceCapture::start(TraceFilter { readers: vec![], ranges: vec![(ROW as u32, (ROW + 14) as u32)] }, 10000).unwrap();
+        capture.frame(Some(managed.bus.frames));
+        let mut managed_steps = 0u64;
+        loop {
+            assert!(managed_steps < 5_000_000, "managed batch did not return");
+            managed.bus.frame_ready = false;
+            managed.step();
+            managed_steps += 1;
+            if managed.cpu.regs[15] == RETURN && managed.cpu.regs[13] == start_sp { break; }
+        }
+        let trace = capture.finish();
+        assert!(!trace.truncated);
+        let typed: u64 = trace.events.iter().filter(|e| e.key.service == Service::Typed && e.key.read.physical_offset == ROW as u32
+            && e.key.instruction.is_some_and(|site| site.pc == READER)).map(|e| e.requests).sum();
+        let non_typed: u64 = trace.events.iter().filter(|e| e.key.service != Service::Typed).map(|e| e.requests).sum();
+        let packed_bytes = owner.conditional_packed_lookup_stats().unwrap().source_bytes - before;
+        managed.bus.rom[ROW..ROW + 14].copy_from_slice(&rom[ROW..ROW + 14]);
+        assert_eq!((typed, non_typed, packed_bytes), (u64::from(expected), 0, u64::from(expected)), "batch typed alias reads");
+        assert_eq!(raw_steps, managed_steps);
+        assert!(raw.save_state().unwrap() == managed.save_state().unwrap(), "batch state/clock, limit={limit}, occupied={occupied}");
+        assert!(raw.bus.framebuffer == managed.bus.framebuffer && raw.bus.wide_framebuffer == managed.bus.wide_framebuffer
+            && raw.bus.oam == managed.bus.oam && raw.bus.audio_buf == managed.bus.audio_buf, "batch video/OAM/audio");
+        if occupied {
+            for i in 0..SLOT {
+                assert_eq!(raw.bus.read8(destination + i), if i == 4 { 1 } else { 0x5a }, "occupied slot changed at {i}");
+            }
+        }
+        results.push(serde_json::json!({"limit":limit,"occupied_first_slot":occupied,"returned":expected,
+            "converter_calls":converter_calls,"typed_row_requests":typed,"instructions":raw_steps}));
+    }
+    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
+        "status":"PASS", "scope":"controlled 080ce18c batch calls using authenticated two-record header and ordinary-state context",
+        "revision":[170,169], "header_index":3, "context_relative_frame":context_frame, "cases":results,
+        "row_rom_poisoned":true, "full_state_clock_video_oam_mixed_audio_equal_at_return":true,
+        "limits":"Controlled calls with synthetic unit occupancy and fixed input; ordinary batch-wrapper reachability, other headers, native attribution and platforms remain open.",
         "performance_measurements":false
     })).unwrap()).unwrap();
 }
