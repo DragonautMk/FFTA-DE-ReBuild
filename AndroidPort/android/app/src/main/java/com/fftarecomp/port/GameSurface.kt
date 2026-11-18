@@ -17,21 +17,30 @@ import java.util.concurrent.locks.LockSupport
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
-// Mobile approximation of the LCD grid. Integrate a smooth periodic pattern
-// over each output pixel and fade it at small scales to avoid visible moire.
+// Desktop band-limited grid, translated from crates/screen/src/grid_filter.wgsl.
+// Android currently uses nearest scaling, so the same 0.05 footprint is used.
 private val gridShader="""
     uniform float gridStrength;
-    float sincGrid(float x){return abs(x)<0.0001?1.0:sin(x)/x;}
-    vec3 applyGrid(vec3 rgb, vec2 p, vec2 scale){
+    vec3 gridFetch(vec2 cell);
+    float polyX(float z){float z2=z*z;return z*(1.0+z2*(-2.0/3.0+z2*(-0.2+z2*(4.0/7.0+z2*(-1.0/9.0+z2*(-2.0/11.0+z2/13.0))))));}
+    float polyY(float z){float z2=z*z;return z*(1.0+z2*z2*(-4.0/5.0+z2*(2.0/7.0+z2*(4.0/9.0+z2*(-4.0/11.0+z2/13.0)))));}
+    float smearX(float x,float dx){float a=clamp((x-dx*.5)/1.5,-1.0,1.0);float b=clamp((x+dx*.5)/1.5,-1.0,1.0);return 1.5*(polyX(b)-polyX(a))/dx;}
+    float smearY(float x,float dx){float a=clamp((x-dx*.5)/.63,-1.0,1.0);float b=clamp((x+dx*.5)/.63,-1.0,1.0);return .63*(polyY(b)-polyY(a))/dx;}
+    vec3 applyGrid(vec3 baseColor,vec2 p,vec2 scale){
         float strength=gridStrength*smoothstep(1.5,2.5,min(scale.x,scale.y));
-        if(strength<=0.0)return rgb;
-        float stripe=sincGrid(9.42477796/max(scale.x,0.001));
-        float row=sincGrid(3.14159265/max(scale.y,0.001));
-        vec3 phase=vec3(2.0,1.0,0.0)*2.09439510;
-        vec3 stripes=cos(vec3(18.84955592*p.x)-phase)*stripe;
-        float rows=cos(6.28318531*p.y)*row;
-        vec3 mask=clamp(vec3(0.72+0.14*rows)+0.14*stripes,0.0,1.0);
-        return mix(rgb,rgb*mask,strength);
+        if(strength<=0.0)return baseColor;
+        vec2 du=0.05/scale;float ix=floor(p.x);float iy=floor(p.y-.5);
+        vec3 acc=vec3(0.0);
+        for(int ry=0;ry<=1;ry++){
+            float jy=iy+float(ry);float wy=smearY(jy+.5-p.y,du.y);
+            for(int rx=-1;rx<=1;rx++){
+                float jx=ix+float(rx);vec3 lin=pow(max(gridFetch(vec2(jx,jy))*1.5,vec3(0.0)),vec3(2.2));
+                float sx=p.x*3.0;float dx=du.x*3.0;
+                vec3 wx=vec3(smearX(jx*3.0+2.5-sx,dx),smearX(jx*3.0+1.5-sx,dx),smearX(jx*3.0+.5-sx,dx));
+                acc+=lin*wx*wy;
+            }
+        }
+        return mix(baseColor,pow(max(acc*.75,vec3(0.0)),vec3(1.0/2.2)),strength);
     }
 """.trimIndent()
 
@@ -41,6 +50,8 @@ class GameSurface(context: Context, val onError: (String) -> Unit) : GLSurfaceVi
     val buttons = AtomicInteger(0)
     @Volatile var inputSource: AtomicInteger = buttons
     @Volatile var gamePaused = false
+    @Volatile var pauseAcknowledged = false
+        private set
     @Volatile var appActive = true
     @Volatile var viewRequest = ViewRequest(AspectMode.DEVICE,0)
     @Volatile var speed = 1
@@ -75,6 +86,7 @@ class GameSurface(context: Context, val onError: (String) -> Unit) : GLSurfaceVi
     @Volatile var bubbleSize=1f
     @Volatile var bubbleLength=1f
     private val taps=java.util.concurrent.ConcurrentLinkedQueue<ScreenTap>()
+    fun clearPendingTouches(){taps.clear()}
     private var touchingGame=false
     private var downX=0f
     private var downY=0f
@@ -173,6 +185,7 @@ class GameSurface(context: Context, val onError: (String) -> Unit) : GLSurfaceVi
                         audible = false
                         wasPaused = true
                     }
+                    pauseAcknowledged=true
                     LockSupport.parkNanos(10_000_000)
                     deadline = System.nanoTime()
                     sampleStart = deadline; count = 0; simulationNanos = 0
@@ -182,6 +195,7 @@ class GameSurface(context: Context, val onError: (String) -> Unit) : GLSurfaceVi
                     fpsMeter.reset(System.nanoTime(),frames.drawnFrames.get())
                     fpsRates=null
                 }
+                pauseAcknowledged=false
                 wasPaused = false
                 val request=viewRequest
                 val config = benchmark?.view ?: ViewConfig.create(request.aspect,request.zoom,frames.screenWidth,frames.screenHeight)
@@ -271,6 +285,7 @@ class GameSurface(context: Context, val onError: (String) -> Unit) : GLSurfaceVi
             gamePaused = true
             post { onError(error.stackTraceToString()) }
         } finally {
+            pauseAcknowledged=false
             normalOutput.close()
             NativeBridge.gbaNormalAudioReader(false)
             try { NativeBridge.gbaSave() } catch (_: Throwable) {}
@@ -335,6 +350,11 @@ private class FrameRenderer(private val onError: (String) -> Unit) : GLSurfaceVi
                 $gridShader
                 vec3 screenColor(vec3 c){vec3 v=floor(c*31.0+0.5);float n=v.r+v.g*32.0+v.b*1024.0;
                   return texture2D(colors,vec2((mod(n,256.0)+0.5)/256.0,(floor(n/256.0)+0.5)/128.0)).rgb;}
+                vec3 gridFetch(vec2 cell){
+                  vec2 q=(clamp(cell,vec2(0.0),sourceSize-1.0)+.5)/sourceSize;
+                  vec3 raw=texture2D(image,q).bgra.rgb;
+                  return min((useProfile>0.5?screenColor(raw):raw)*brightness,1.0);
+                }
                 void main(){vec4 c=texture2D(image,tex).bgra;
                   vec3 rgb=useProfile>0.5?screenColor(c.rgb):c.rgb;
                   gl_FragColor=vec4(applyGrid(min(rgb*brightness,1.0),tex*sourceSize,outputScale),c.a);}""".trimIndent())
@@ -376,17 +396,26 @@ private class FrameRenderer(private val onError: (String) -> Unit) : GLSurfaceVi
                 $gridShader
                 vec3 screenColor(vec3 v){float n=v.r+v.g*32.+v.b*1024.;
                   return texture2D(colors,vec2((mod(n,256.)+.5)/256.,(floor(n/256.)+.5)/128.)).rgb;}
+                vec3 panelColor(vec4 data,vec2 pos){
+                  float code=data.r+data.g*256.;
+                  vec3 fg=vec3(mod(code,32.),mod(floor(code/32.),32.),mod(floor(code/1024.),32.));
+                  vec3 bg=floor(texture2D(world,(pos-worldRect.xy)/worldRect.zw).bgra.rgb*31.+.5);
+                  vec3 lane=vec3(1.,2.,1.);
+                  vec3 color=floor(min(floor((fg*lane*data.b+bg*lane*data.a+8.)/16.),vec3(31.,63.,31.))/lane);
+                  return min((useProfile>0.5?screenColor(color):color/31.)*brightness,1.);
+                }
+                vec3 gridFetch(vec2 cell){
+                  vec2 q=clamp(cell,vec2(0.),vec2(479.,159.))+.5;
+                  vec4 data=floor(texture2D(panel,q/vec2(480.,160.))*255.+.5);
+                  vec2 pos=rect.xy+q*rect.zw/vec2(480.,160.);
+                  return panelColor(data,pos);
+                }
                 void main(){vec2 p=vec2(gl_FragCoord.x,screen.y-gl_FragCoord.y);
                   if(p.x<clip.x||p.y<clip.y||p.x>=clip.x+clip.z||p.y>=clip.y+clip.w)discard;
                   vec4 data=floor(texture2D(panel,tex)*255.+.5);
                   if(data.b==0.&&data.a==16.)discard;
-                  float code=data.r+data.g*256.;
-                  vec3 fg=vec3(mod(code,32.),mod(floor(code/32.),32.),mod(floor(code/1024.),32.));
-                  vec3 bg=floor(texture2D(world,(p-worldRect.xy)/worldRect.zw).bgra.rgb*31.+.5);
-                  vec3 lane=vec3(1.,2.,1.);
-                  vec3 color=floor(min(floor((fg*lane*data.b+bg*lane*data.a+8.)/16.),vec3(31.,63.,31.))/lane);
-                  vec3 rgb=useProfile>0.5?screenColor(color):color/31.;
-                  gl_FragColor=vec4(applyGrid(min(rgb*brightness,1.),tex*vec2(480.,160.),rect.zw/vec2(480.,160.)),1.);
+                  vec3 rgb=panelColor(data,p);
+                  gl_FragColor=vec4(applyGrid(rgb,tex*vec2(480.,160.),rect.zw/vec2(480.,160.)),1.);
                 }
             """.trimIndent()))
             glLinkProgram(uiProgram)

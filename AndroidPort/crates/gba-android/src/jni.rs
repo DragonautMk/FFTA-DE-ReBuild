@@ -195,6 +195,16 @@ pub extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaSave(_: *mut JNI
 }
 
 #[no_mangle]
+pub extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaRestart(_: *mut JNIEnv, _: jobject) -> jint {
+    guarded(|| {
+        let mut lock=ENGINE.lock().map_err(|_|"Engine mutex poisoned")?;
+        lock.as_mut().ok_or("ROM not loaded")?.restart()?;
+        engine::status("Game restarted");
+        Ok(1)
+    })
+}
+
+#[no_mangle]
 pub unsafe extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaStatus(env: *mut JNIEnv, _: jobject) -> jstring {
     java_string(env,&STATUS.lock().unwrap_or_else(|e|e.into_inner()))
 }

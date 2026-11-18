@@ -1306,12 +1306,25 @@ fn european_e170_all_source_bytes_read_consistency() {
     }
     let range_bytes = owner.range_lookup_stats().unwrap().source_bytes - before;
     assert_eq!(original + inverted, unique_bytes as u64);
-    assert!(original > 0 && inverted > 0 && range_bytes > 0);
+    println!("source-byte observations: original={original}, inverted={inverted}, range_bytes={range_bytes}, byte_reads={byte_reads}, word_checks={word_checks}");
+    assert!(original > 0, "no original-valued source bytes; inverted={inverted}, range_bytes={range_bytes}");
+    assert!(range_bytes > 0, "range owner served no bytes; original={original}, inverted={inverted}");
+    // Source spans can all be managed; demonstrate the inverted backing with a
+    // separate uncovered, non-peripheral control rather than assuming a hole.
+    let control = (0..rom.len()).find(|&at| {
+        !covered[at] && !(0xc4..0xca).contains(&at)
+            && managed.bus.read8(0x0800_0000 + at as u32) == (rom[at] ^ 0xff)
+    }).expect("no uncovered inverted-backing control byte");
+    for mirror in [0x0800_0000u32, 0x0a00_0000, 0x0c00_0000] {
+        assert_eq!(managed.bus.read8(mirror + control as u32), rom[control] ^ 0xff);
+        assert_eq!((RT_API.read8)(pointer, mirror + control as u32), u32::from(rom[control] ^ 0xff));
+    }
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
         "status":"PASS", "revision":[170,169], "resources":manifest.resources.len(), "source_spans":spans,
         "unique_source_bytes":unique_bytes, "byte_reads_including_native_api":byte_reads,
         "aligned_fully_covered_word_checks":word_checks, "all_rom_backing_bytes_xor_ff":true,
         "bytes_equal_original":original, "bytes_equal_inverted_backing":inverted, "range_owner_served_bytes":range_bytes,
+        "uncovered_inverted_control_offset":control,
         "limits":"Original/inverted classification is by returned byte value, not a trace of resource ownership. Verified-only or raw-backed sources can return inverted bytes. No guest execution, arbitrary unaligned interiors, performance or other platforms.",
         "performance_measurements":false
     })).unwrap()).unwrap();

@@ -80,6 +80,7 @@ object NativeBridge {
     external fun gbaParallelZoom(enabled:Boolean)
     external fun gbaCamera():Long
     external fun gbaSave(): Int
+    external fun gbaRestart(): Int
     external fun gbaStatus(): String
     external fun gbaDiagnostics(): String
 

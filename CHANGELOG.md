@@ -394,6 +394,27 @@ Documentation: [2026-11-18-verify-bounded-range-wrapper-prefixes.json](docs/chan
 
 [Change record](docs/changes/2026-11-18-verify-e170-range-adjacent-owner-boundaries.json)
 
+## 2026-11-18 — Verify E170 declared source byte reads
+
+Type: changed. Platforms: EUR / Windows GNU under Wine.
+
+**Changes**
+
+- Correct the E170 source-byte regression to allow a fully managed source union, retain explicit owner checks and verify an uncovered inverted-backing control.
+
+**Validation**
+
+- Wine ffhtpvms passes all 10,948,338 unique source bytes, 43,793,352 byte reads and 8,186,274 aligned covered word checks; protected inputs passed, scratch was removed and Wine drained. Build ou5f9uch passed.
+- Initial Wine unit 8oo4pd4m failed only at an invalid combined counter assumption; its diagnostics remain retained.
+
+**Limitations**
+
+- Returned values do not attribute every source byte to an owner; guest execution, arbitrary unaligned interiors, timing, other platforms and overall ROMDATA-05 equivalence remain unproved.
+
+Documentation: [2026-11-18-verify-e170-all-source-boundaries.json](docs/changes/2026-11-18-verify-e170-all-source-boundaries.json).
+
+[Change record](docs/changes/2026-11-18-verify-e170-all-source-bytes.json)
+
 ## 2026-11-18 — Verify E170 source-boundary read composition
 
 Type: changed. Platforms: EUR / Windows GNU under Wine.
@@ -830,6 +851,27 @@ Documentation: [README.md](AndroidPort/android/README.md).
 
 [Change record](docs/changes/2026-11-18-android-screen-profiles-fps.json)
 
+## 2026-11-18 — Add Android ROM restart
+
+Type: added. Platforms: Android.
+
+**Changes**
+
+- Add a confirmation-based Restart ROM action that waits for the game worker to pause, saves cartridge data, resets machine, audio and input, and retains the live session on save failure.
+
+**Validation**
+
+- Serial Android host Rust tests passed: 32 passed and 2 ignored, including synthetic save preservation, clean reboot and failed-write isolation in android-rom-restart-tests-_mcmcd54.
+- ARM64 Docker build and 27 Kotlin tests passed in android-rom-restart-apk-f4ncn0cz; updated the connected moto g34 5G with adb install -r.
+
+**Limitations**
+
+- The restart menu and real game behavior were not manually exercised on the physical device; progress not saved inside the game is lost on restart.
+
+Documentation: [README.md](AndroidPort/android/README.md).
+
+[Change record](docs/changes/2026-11-18-android-restart-rom.json)
+
 ## 2026-11-18 — Add Android game brightness control
 
 Type: added. Platforms: Android.
@@ -874,6 +916,27 @@ Type: added. Platforms: Android.
 Documentation: [README.md](AndroidPort/android/README.md).
 
 [Change record](docs/changes/2026-11-18-android-grid-scroll-indicator.json)
+
+## 2026-11-18 — Port desktop grid calculation to Android
+
+Type: changed. Platforms: Android.
+
+**Changes**
+
+- Replace the mobile grid approximation with the desktop band-limited aperture calculation for Android nearest scaling, including world and game UI layers.
+
+**Validation**
+
+- Mesa GLES shaders compiled and rendered both layers; nearest-mode output for three colors at twelve positions and scales matched an independent desktop-formula calculation within one channel value in android-grid-desktop-reference-wide-xe4le1ab.
+- ARM64 Docker build and Kotlin tests passed in android-grid-desktop-apk-ltq_cl99; installed with adb install -r on the connected Android phone.
+
+**Limitations**
+
+- Pixel-perfect GPU equivalence over all content and device performance remain unverified. Android lacks the other desktop scaling modes, temporal response and other menu features; on-device menu readability was not verified.
+
+Documentation: [README.md](AndroidPort/android/README.md).
+
+[Change record](docs/changes/2026-11-18-android-desktop-grid-model.json)
 
 ## 2026-11-17 — Verify European text copy callbacks
 

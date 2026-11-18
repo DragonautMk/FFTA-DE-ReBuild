@@ -223,6 +223,25 @@ impl Engine {
         }
         Ok(())
     }
+    /// Reboot only after the current cartridge save has been published.
+    pub fn restart(&mut self) -> Result<(), String> {
+        let save = self.machine.bus.save_data().map(|bytes| bytes.to_vec());
+        if save.is_some() && self.save_path.is_none() {
+            return Err("No cartridge save path is available".into());
+        }
+        let mut fresh = Box::new(Machine::new(self.machine.bus.rom.clone()));
+        if let Some(bytes) = &save { fresh.bus.load_save_data(bytes); }
+        self.save().map_err(|e| format!("Cannot save before restart: {e}"))?;
+        self.machine = fresh;
+        self.mouse = gba_core::ffta_mouse::LanguageMouse::new(&self.machine.bus.rom,self.touch_enabled);
+        self.machine.bus.ffta_battle_mouse.set_enabled(self.touch_enabled);
+        self.pcm = crate::audio::Audio::default();
+        crate::normal_audio::publish(None);
+        self.audio.clear();
+        self.pixels.clear();
+        KEYS.store(0x3ff, Ordering::Relaxed);
+        Ok(())
+    }
     pub fn diagnostics(&self) -> String {
         let state=&self.machine.bus.ffta_dialogue;
         let ui_hash=state.layer().map(|(p,_)|p).unwrap_or(&[]).iter()
@@ -259,6 +278,48 @@ fn valid_cache(path:&std::path::Path)->bool{
 #[cfg(test)]
 mod tests {
     use super::*;
+    fn restart_test_engine() -> Engine {
+        let mut rom=vec![0;512];
+        rom[..4].copy_from_slice(&0xeafffffeu32.to_le_bytes());
+        rom[256..262].copy_from_slice(b"SRAM_V");
+        Engine::new(rom)
+    }
+    #[test]
+    fn restart_preserves_cartridge_save_and_resets_machine() {
+        let _lock=VIEW_TEST.lock().unwrap();
+        let root=std::env::var_os("FFTA_VALIDATION_WORK").map(std::path::PathBuf::from).unwrap_or_else(std::env::temp_dir);
+        let path=root.join(format!("restart-test-{}.sav",std::process::id()));
+        let mut engine=restart_test_engine();
+        engine.save_path=Some(path.clone());
+        engine.machine.bus.sram[17]=0x53;
+        engine.machine.bus.ewram[31]=0x99;
+        engine.machine.cpu.regs[3]=42;
+        engine.audio.extend([100,200]);
+        engine.pixels.push(123);
+        KEYS.store(0,Ordering::Relaxed);
+        engine.restart().unwrap();
+        assert_eq!(std::fs::read(&path).unwrap()[17],0x53);
+        assert_eq!(engine.machine.bus.save_data().unwrap()[17],0x53);
+        assert_eq!(engine.machine.bus.ewram[31],0);
+        assert_eq!(engine.machine.cpu.regs[3],0);
+        assert!(engine.audio.is_empty() && engine.pixels.is_empty());
+        assert_eq!(KEYS.load(Ordering::Relaxed),0x3ff);
+        std::fs::remove_file(path).unwrap();
+    }
+    #[test]
+    fn failed_restart_keeps_the_live_machine_and_save_bytes() {
+        let _lock=VIEW_TEST.lock().unwrap();
+        let root=std::env::var_os("FFTA_VALIDATION_WORK").map(std::path::PathBuf::from).unwrap_or_else(std::env::temp_dir);
+        let mut engine=restart_test_engine();
+        engine.save_path=Some(root.join("missing-directory").join("save.sav"));
+        engine.machine.bus.sram[17]=0x53;
+        engine.machine.bus.ewram[31]=0x99;
+        engine.machine.cpu.regs[3]=42;
+        assert!(engine.restart().is_err());
+        assert_eq!(engine.machine.bus.save_data().unwrap()[17],0x53);
+        assert_eq!(engine.machine.bus.ewram[31],0x99);
+        assert_eq!(engine.machine.cpu.regs[3],42);
+    }
     #[test]
     fn cached_color_conversion_matches_every_hardware_color(){
         for pixel in 0u32..65536{

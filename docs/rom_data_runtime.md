@@ -20,6 +20,17 @@ The result covers sampled boundary composition, not every source byte, guest
 execution, timing, or a scene. Inputs were protected, scratch removed, and
 Wine drained.
 
+EUR/Wine `e170-all-source-bytes-wine-ffhtpvms` also scans all 10,948,338
+distinct bytes in the 54,792 declared E170 source spans with every backing-ROM
+byte inverted. All returned original-valued bytes; 43,793,352 byte reads cover
+three bus mirrors and the native API. Another 8,186,274 checks compare aligned,
+fully covered word reads with byte composition. A separate uncovered byte
+returns the inverted backing value across the mirrors and native API, and the
+bounded-range owner reports 704 served bytes during the scan. Byte values do
+not attribute individual reads to resource owners. This does not cover guest
+execution, arbitrary unaligned interior reads, timing or other platforms.
+Protected inputs passed, successful scratch was removed and Wine drained.
+
 EUR e88-d87 adds [event records](rom_data_gameplay.md#managed-event-records-and-typed-runtime-reads):
 81files/80resources, one3072-byte span/no dependency, all79 previous records/
 payloads exact. The shared row225 view retains the same owner; original script/

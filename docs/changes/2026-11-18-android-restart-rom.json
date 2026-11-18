@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "android-restart-rom",
+  "title": "Add Android ROM restart",
+  "kind": "added",
+  "platforms": [
+    "Android"
+  ],
+  "changes": [
+    "Add a confirmation-based Restart ROM action that waits for the game worker to pause, saves cartridge data, resets machine, audio and input, and retains the live session on save failure."
+  ],
+  "validation": [
+    "Serial Android host Rust tests passed: 32 passed and 2 ignored, including synthetic save preservation, clean reboot and failed-write isolation in android-rom-restart-tests-_mcmcd54.",
+    "ARM64 Docker build and 27 Kotlin tests passed in android-rom-restart-apk-f4ncn0cz; updated the connected moto g34 5G with adb install -r."
+  ],
+  "limitations": [
+    "The restart menu and real game behavior were not manually exercised on the physical device; progress not saved inside the game is lost on restart."
+  ],
+  "files": [
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/MainActivity.kt",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/GameSurface.kt",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/NativeBridge.kt",
+    "AndroidPort/crates/gba-android/src/engine.rs",
+    "AndroidPort/crates/gba-android/src/jni.rs",
+    "AndroidPort/android/README.md"
+  ],
+  "references": [
+    "AndroidPort/android/README.md"
+  ]
+}

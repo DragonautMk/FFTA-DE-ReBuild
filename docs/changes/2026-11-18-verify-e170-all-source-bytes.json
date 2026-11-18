@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "verify-e170-all-source-bytes",
+  "title": "Verify E170 declared source byte reads",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Windows GNU under Wine"
+  ],
+  "changes": [
+    "Correct the E170 source-byte regression to allow a fully managed source union, retain explicit owner checks and verify an uncovered inverted-backing control."
+  ],
+  "validation": [
+    "Wine ffhtpvms passes all 10,948,338 unique source bytes, 43,793,352 byte reads and 8,186,274 aligned covered word checks; protected inputs passed, scratch was removed and Wine drained. Build ou5f9uch passed.",
+    "Initial Wine unit 8oo4pd4m failed only at an invalid combined counter assumption; its diagnostics remain retained."
+  ],
+  "limitations": [
+    "Returned values do not attribute every source byte to an owner; guest execution, arbitrary unaligned interiors, timing, other platforms and overall ROMDATA-05 equivalence remain unproved."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/range_lookup_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-18-verify-e170-all-source-boundaries.json"
+  ]
+}

@@ -41,6 +41,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeout
 import java.io.File
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -404,6 +405,7 @@ private fun LoadingScreen() {
 @Composable
 private fun GameScreen(settings:GameSettings,input:GameInput,onExit:()->Unit,onSwitchRom:()->Boolean) {
     val context=LocalContext.current
+    val scope=rememberCoroutineScope()
     val activity=context as AppCompatActivity
     val lifecycle=activity.lifecycle
     var surface by remember {mutableStateOf<GameSurface?>(null)}
@@ -413,6 +415,8 @@ private fun GameScreen(settings:GameSettings,input:GameInput,onExit:()->Unit,onS
     var originalVibration by remember {mutableStateOf(false)}
     var failure by remember {mutableStateOf<String?>(null)}
     var switchRomError by remember {mutableStateOf<String?>(null)}
+    var restartError by remember {mutableStateOf<String?>(null)}
+    var restarting by remember {mutableStateOf(false)}
     var page by remember {mutableStateOf("main")}
     var fpsRates by remember {mutableStateOf<FpsRates?>(null)}
     // Snapshot reads must happen during composition, not only inside SideEffect.
@@ -437,7 +441,9 @@ private fun GameScreen(settings:GameSettings,input:GameInput,onExit:()->Unit,onS
         }
     }
     BackHandler {
-        if(editingTouch){
+        if(restarting){
+            return@BackHandler
+        } else if(editingTouch){
             settings.touch.layout.restore(originalTouch);settings.touch.vibration=originalVibration;editingTouch=false
         }else paused=!paused
         input.clear();settings.pad.clear();settings.holdFast=false
@@ -509,7 +515,7 @@ private fun GameScreen(settings:GameSettings,input:GameInput,onExit:()->Unit,onS
                 color=Color.White,fontSize=12.sp)
         }
         if(paused&&!editingTouch) {
-            Dialog(onDismissRequest={if(failure==null)paused=false},properties=DialogProperties(usePlatformDefaultWidth=false)) {
+            Dialog(onDismissRequest={if(failure==null&&!restarting)paused=false},properties=DialogProperties(usePlatformDefaultWidth=false)) {
                 Column(Modifier.widthIn(max=490.dp).fillMaxWidth(0.9f)
                     .heightIn(max=(LocalConfiguration.current.screenHeightDp-28).dp)
                     .background(Paper.copy(alpha=1f-settings.menuTransparency),RoundedCornerShape(18.dp)).border(1.dp,Gold,RoundedCornerShape(18.dp))
@@ -519,6 +525,7 @@ private fun GameScreen(settings:GameSettings,input:GameInput,onExit:()->Unit,onS
                     HorizontalDivider(color=Gold)
                     failure?.let{Text(it,color=Color(0xFF9B2929),fontSize=12.sp)}
                     switchRomError?.let{Text("Could not save before switching: $it",color=Color(0xFF9B2929),fontSize=12.sp)}
+                    restartError?.let{Text("Could not restart: $it",color=Color(0xFF9B2929),fontSize=12.sp)}
                     when(page) {
                         "main"->{
                             MenuButton("Resume",failure==null){paused=false}
@@ -527,11 +534,35 @@ private fun GameScreen(settings:GameSettings,input:GameInput,onExit:()->Unit,onS
                             MenuButton("Text bubbles"){page="text bubbles"}
                             MenuButton("Audio"){page="audio"}
                             MenuButton("Input"){page="input"}
+                            MenuButton("Restart ROM",failure==null){restartError=null;page="restart"}
                             MenuButton("Switch ROM"){
                                 switchRomError=null
                                 if(!onSwitchRom()) switchRomError=NativeBridge.gbaStatus()
                             }
                             MenuButton("Exit Game"){onExit()}
+                        }
+                        "restart"->{
+                            Text("Restart the game? Progress not saved in the game will be lost.")
+                            MenuButton(if(restarting)"Restarting..." else "Restart ROM",!restarting){
+                                restarting=true;restartError=null
+                                surface?.gamePaused=true
+                                input.clear();settings.pad.clear();settings.holdFast=false
+                                surface?.clearPendingTouches()
+                                scope.launch {
+                                    val error=runCatching {
+                                        val gameSurface=checkNotNull(surface){"Game display is unavailable"}
+                                        withTimeout(5000) {
+                                            while(!gameSurface.pauseAcknowledged)delay(10)
+                                        }
+                                        withContext(Dispatchers.IO) {
+                                            check(NativeBridge.gbaRestart()==1){NativeBridge.gbaStatus()}
+                                        }
+                                    }.exceptionOrNull()?.let{it.message ?: it.toString()}
+                                    restarting=false
+                                    if(error==null){page="main";paused=false}
+                                    else restartError=error
+                                }
+                            }
                         }
                         "video"->{
                             Text("Aspect ratio")
@@ -628,7 +659,7 @@ private fun GameScreen(settings:GameSettings,input:GameInput,onExit:()->Unit,onS
                         "gamepad"->GamepadSettings(settings)
 
                     }
-                    if(page!="main")MenuButton("Back"){settings.save();page=if(page=="touchscreen"||page=="gamepad")"input" else "main"}
+                    if(page!="main")MenuButton("Back",!restarting){settings.save();page=if(page=="touchscreen"||page=="gamepad")"input" else "main"}
                 }
             }
         }

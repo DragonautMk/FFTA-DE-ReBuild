@@ -23779,3 +23779,23 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: scrollable Android menus show a right-hand indicator; Grid auto and manual controls render a mobile grid on world and UI, and the APK was installed.
 - Evidence: `docs/changes/2026-11-18-android-grid-scroll-indicator.json`; build/tests `1ta3fdgb`, Mesa GLES `f2wvtrg8`.
 - Limits: physical-device visual and touch checks and exact desktop grid equivalence remain open.
+
+### ANDROID-GRID-NEAREST-MODEL
+
+- Outcome: completed
+- Verified criteria: desktop nearest-grid formula ported to Android; scoped shader comparisons and APK build passed; update installed.
+- Evidence: `docs/changes/2026-11-18-android-desktop-grid-model.json`; `xe4le1ab`, `ltq_cl99`.
+- Limits: all-pixel/device equivalence and performance unverified; full Android menu parity and readability remain open.
+
+### ROMDATA-05-E170-ALL-SOURCE-BYTE-REGRESSION
+
+- Outcome: completed for the E170 declared source-byte consistency regression.
+- Evidence: Windows GNU build `ou5f9uch` and Wine `ffhtpvms` PASS: 10,948,338 distinct source bytes, 43,793,352 mirror/API byte reads, 8,186,274 aligned covered-word checks; raw negative control observed inverted backing. Protected inputs passed, scratch removed and Wine drained. See `docs/changes/2026-11-18-verify-e170-all-source-bytes.json`.
+- Limits: returned values do not identify every owner; no guest execution, arbitrary unaligned interiors, timing or other platforms. ROMDATA-05 remains partial. Initial unit `8oo4pd4m` retained after failure of an invalid counter assumption; Sol `/root/sol_source_byte_diagnosis` requested gpt-6.1-sol/xhigh, effective settings unconfirmed.
+
+### ANDROID-RESTART-ROM
+
+- Outcome: completed
+- Verified criteria: confirmed restart preserves cartridge data and refuses failed saves; tests and APK build pass; app updated on connected phone.
+- Evidence: `docs/changes/2026-11-18-android-restart-rom.json`; `_mcmcd54`, `f4ncn0cz`.
+- Limits: real game and menu operation not manually tested on device; broader Android menu parity remains open.

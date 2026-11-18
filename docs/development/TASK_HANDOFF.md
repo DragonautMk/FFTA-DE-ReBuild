@@ -29,12 +29,12 @@ Archive completed tasks; open parents do not reopen closed children. Do not stop
 
 ### ROM-DATA-FULL-EUR
 
-- State: suspended
+- State: active
 - Outcome: partial
-- Selection: paused by user. ROMDATA-05 partial: full E170 source-byte test is authored but unverified; build `q08ldflm` was live at pause. Do not select or launch further work until resumed.
+- ROMDATA-05 source-byte regression: E170 Wine `ffhtpvms` PASS for all 10,948,338 distinct declared bytes and aligned covered words; raw control confirms inverted backing. Parent equivalence remains partial. `8oo4pd4m` failed an invalid counter assumption; retained.
 - Verified: E158 reader/opening/CLI Wine PASS (`b8vylqkk`, `tucnagm9`).
 - Missing: EUR inventory/consumers/ordinary/ABI/extent/indirect calls, ROMDATA-06/07; Linux/USA/native Windows/new32:9 deferred. Protect originals/saves.
-- ROMDATA-04-METADATA14-ID1-ALIAS: Wine prefix/frame PASS (56wpztn8/gpir8qjh); E170 `3s1xbvpx` 240-frame generated-dispatch row-poisoned state/audio pair PASS. Full importer, per-read native attribution/consumers open.
+- Selection: user prioritizes closing ROM validation tasks. ROMDATA-04-METADATA14-ID1-ALIAS partial: Wine prefix/frame `56wpztn8`/`gpir8qjh` and 240-frame pair `3s1xbvpx` PASS. Missing full importer/return proof. Next inspect source-backed `080ce18c` caller and retained route; construct a complete call comparison if feasible. Other consumers/native attribution remain open.
 - Title bank: five lists Wine PASS (hhh7a8lg); other scenes/native and FIRSTBANK-ZERO open (f4_b2apw).
 - BATTLE-40D300-OTHER: index56 Wine PASS (qbzrv3ua); other lists open.
 - CONTEXT-3AE42C: IDs 1–4/return 0 Wine PASS; E168 owns 261/261 pairs (4ami2zcc); meaning/writers/domain/native open.
@@ -73,7 +73,7 @@ Archive completed tasks; open parents do not reopen closed children. Do not stop
 - Outcome: partial
 - Verified: brightness, screen profiles, FPS and menu transparency; ARM64/Kotlin, serial Rust and Mesa PASS. `docs/changes/2026-11-18-android-screen-profiles-fps.json`.
 - Missing: response, desktop grid equivalence, scaling, save states, backups, debug and device checks.
-- Resume: Android grid/scroll indicators installed (`1ta3fdgb`); physical UI verification and desktop grid parity open. Preserve `7br7_rwa`.
+- Resume: restart installed (`f4ncn0cz`); full PC menu parity and device readability remain open. Preserve `7br7_rwa`.
 
 
 ### CHEAT-DISTRIBUTION
@@ -177,9 +177,9 @@ Archive completed tasks; open parents do not reopen closed children. Do not stop
 
 ## Final handover
 
-- Task: ROMDATA-01-RANGE-37140C; user prioritizes completing existing TODO tasks.
-- Last verified result: Wine `yeg0bdt_` passes 445,350 mixed-source width/mirror probes at 74,225 distinct E170 boundaries with inverted backing ROM.
+- Task: ROM data validation; user prioritizes completing existing TODO tasks.
+- Last verified result: Wine `ffhtpvms` passes all 10,948,338 declared E170 source bytes, aligned word composition and an inverted raw control; inputs protected, scratch removed, Wine drained.
 - Remaining work: other computed consumers and broader regressions; legacy IRQ equivalence and deferred platforms remain open.
-- Errors or blockers: user paused; build `q08ldflm` was live at handoff (exec 87700). Preserve it and inspect receipt on resume. `kitubxih` and `wamu6k3z` remain FAIL. Concurrent Android work remains intact.
-- Next action: on explicit resume, inspect owned build `q08ldflm` (exec 87700) and its receipt before any retry or Wine run; source test is unverified.
-- References: `docs/rom_data_runtime.md#european-bounded-range-lookup`; `docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md`; `docs/changes/2026-11-18-verify-e170-all-source-boundaries.json`.
+- Errors or blockers: `kitubxih` and `wamu6k3z` remain FAIL. Preserve concurrent work and protected inputs.
+- Next action: inspect `080ce18c` importer and retained alias route; prepare an entry-to-return raw/managed comparison with poisoned row if supported.
+- References: `docs/rom_data_runtime.md#european-bounded-range-lookup`; `docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md`; `docs/changes/2026-11-18-verify-e170-all-source-bytes.json`.

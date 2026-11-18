@@ -605,7 +605,11 @@ current evidence before running another check.
   full-scene, all-input, all-consumer or global equivalence. E170 Wine
   `yeg0bdt_` checks byte/halfword/word composition at all 74,225 distinct
   manifest source boundaries with inverted backing ROM and three mirrors;
-  this is a boundary regression, not guest execution or whole-source coverage.
+  E170 Wine `ffhtpvms` additionally scans all 10,948,338 distinct declared
+  source bytes through three mirrors and the native API and compares aligned,
+  fully covered words with byte composition against inverted backing ROM.
+  Both are read regressions, not guest execution, arbitrary unaligned interior
+  reads or full equivalence.
 
 ## 5. Resolve prerequisites before selecting further proofs
 

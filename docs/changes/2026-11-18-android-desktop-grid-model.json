@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "android-desktop-grid-model",
+  "title": "Port desktop grid calculation to Android",
+  "kind": "changed",
+  "platforms": [
+    "Android"
+  ],
+  "changes": [
+    "Replace the mobile grid approximation with the desktop band-limited aperture calculation for Android nearest scaling, including world and game UI layers."
+  ],
+  "validation": [
+    "Mesa GLES shaders compiled and rendered both layers; nearest-mode output for three colors at twelve positions and scales matched an independent desktop-formula calculation within one channel value in android-grid-desktop-reference-wide-xe4le1ab.",
+    "ARM64 Docker build and Kotlin tests passed in android-grid-desktop-apk-ltq_cl99; installed with adb install -r on the connected Android phone."
+  ],
+  "limitations": [
+    "Pixel-perfect GPU equivalence over all content and device performance remain unverified. Android lacks the other desktop scaling modes, temporal response and other menu features; on-device menu readability was not verified."
+  ],
+  "files": [
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/GameSurface.kt",
+    "AndroidPort/android/README.md"
+  ],
+  "references": [
+    "AndroidPort/android/README.md"
+  ]
+}
