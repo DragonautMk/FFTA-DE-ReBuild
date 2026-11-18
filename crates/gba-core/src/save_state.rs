@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 
 const MAGIC: &[u8; 8] = b"FFTA-ST\0";
+const LEGACY_ANDROID_MAGIC: &[u8; 8] = b"FFTA-AN\0";
 // Increment whenever serialized layout or execution semantics become incompatible.
 const VERSION: u32 = 1;
 const HEADER: usize = 8 + 4 + 32 * 3;
@@ -43,7 +44,7 @@ impl Machine {
 
     /// Decode and validate entirely before replacing the live machine.
     pub fn load_state(&mut self, data: &[u8]) -> Result<(), String> {
-        if data.len() < HEADER || data.len() > MAX_STATE_BYTES || &data[..8] != MAGIC {
+        if data.len() < HEADER || data.len() > MAX_STATE_BYTES || (&data[..8] != MAGIC && &data[..8] != LEGACY_ANDROID_MAGIC) {
             return Err("Not a valid FFTARecomp save state".into());
         }
         if u32::from_le_bytes(data[8..12].try_into().unwrap()) != VERSION {
@@ -221,6 +222,17 @@ mod tests {
             assert!(m.load_state(&original[..size]).is_err());
             assert_eq!(m.save_state().unwrap(), original);
         }
+    }
+
+    #[test]
+    fn legacy_android_header_loads_without_changing_the_payload() {
+        let mut machine = machine();
+        machine.cpu.regs[4] = 0x1234;
+        let mut state = machine.save_state().unwrap();
+        state[..8].copy_from_slice(b"FFTA-AN\0");
+        machine.cpu.regs[4] = 0;
+        machine.load_state(&state).unwrap();
+        assert_eq!(machine.cpu.regs[4], 0x1234);
     }
 
     #[test]

@@ -59,10 +59,18 @@ timers, DMA, interrupts, backup media, and C recompiler.
   cartridge save cannot be written, the game remains paused and is not reset.
 - Pause > Save states offers nine ROM-specific slots. Select a slot to save or
   load; replacing an occupied slot and loading a state both require confirmation.
-  Undo reverses the most recent successful save or load during the current game
-  session. States are private to the app, use an Android-specific format and
-  are not interchangeable with desktop states. Corrupt, incompatible, wrong-ROM
-  and wrong-BIOS files are rejected before the running machine is changed.
+  A successful save or load returns directly to the game. Undo reverses the most
+  recent successful save, load or import during the current game session.
+  Choose a slot and use Import state file or Export state file to transfer it
+  through Android's document picker. New Android states use the desktop raw
+  format; desktop also accepts legacy Android raw states. Android accepts raw
+  states and desktop SL1, SL2 and SL3 slots with checked previews and preserved
+  cheat ancestry. Further saves retain that ancestry and a preview for desktop.
+  Match the exact ROM and BIOS. Corrupt or incompatible files are rejected
+  before the running machine or occupied slot is changed. An imported desktop
+  preview remains in the slot file but is not displayed in the Android menu.
+  The desktop and Android cores have different event timing; cross-platform
+  restore is not a promise of bit-identical execution after loading.
   A state includes cartridge memory: after loading, subsequent automatic saves
   can replace the ordinary cartridge save with the restored contents. The
   separate cartridge-save backups remain available.

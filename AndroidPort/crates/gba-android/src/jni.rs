@@ -228,6 +228,36 @@ pub extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaStateAction(_: *
 }
 
 #[no_mangle]
+pub unsafe extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaImportState(env: *mut JNIEnv, _: jobject, slot: jint, input: jbyteArray, overwrite: jboolean) -> jint {
+    guarded(|| {
+        if !(1..=9).contains(&slot) || input.is_null() { return Err("Invalid save-state import".into()); }
+        let api = &**env;
+        let len = api.GetArrayLength.unwrap()(env, input);
+        if len < 0 || len as usize > crate::save_states::MAX_SLOT_BYTES { return Err("Save state exceeds the size limit".into()); }
+        let mut bytes = vec![0u8; len as usize];
+        api.GetByteArrayRegion.unwrap()(env, input, 0, len, bytes.as_mut_ptr() as *mut _);
+        if api.ExceptionCheck.unwrap()(env) != 0 { return Err("Cannot read save-state bytes".into()); }
+        ENGINE.lock().map_err(|_| "Engine mutex poisoned")?.as_mut().ok_or("ROM not loaded")?.state_import(slot as u8, &bytes, overwrite != 0)?;
+        Ok(1)
+    })
+}
+
+#[no_mangle]
+pub unsafe extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaExportState(env: *mut JNIEnv, _: jobject, slot: jint) -> jbyteArray {
+    let mut bytes = Vec::new();
+    let code = guarded(|| {
+        if !(1..=9).contains(&slot) { return Err("Invalid save-state slot".into()); }
+        bytes = ENGINE.lock().map_err(|_| "Engine mutex poisoned")?.as_ref().ok_or("ROM not loaded")?.state_export(slot as u8)?;
+        Ok(1)
+    });
+    if code < 0 { return std::ptr::null_mut(); }
+    let api = &**env;
+    let output = api.NewByteArray.unwrap()(env, bytes.len() as jint);
+    if !output.is_null() { api.SetByteArrayRegion.unwrap()(env, output, 0, bytes.len() as jint, bytes.as_ptr() as *const _); }
+    output
+}
+
+#[no_mangle]
 pub unsafe extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaBackupChoices(env:*mut JNIEnv,_:jobject)->jstring {
     let mut result=String::new();
     let code=guarded(||{

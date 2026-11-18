@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "android-desktop-snapshot-compatibility",
+  "title": "Share save states between Android and desktop",
+  "kind": "changed",
+  "platforms": [
+    "Android",
+    "Linux"
+  ],
+  "changes": [
+    "Share the raw state format and accept legacy Android states on both platforms. Android imports and exports desktop SL1/SL2/SL3 and raw files, preserving checked cheat ancestry across load, save, undo and restart, with overwrite confirmation.",
+    "Return to gameplay after successful save or load on Android and desktop, while keeping failed operations in the menu and respecting the desktop replay guard."
+  ],
+  "validation": [
+    "Both core state suites passed five tests each; two Android slot/import tests and the cross-workspace synthetic cross-load and CPU/RAM/video/audio replay passed in android-pc-savestate-compat-ty7r3bgg.",
+    "Desktop legacy Android slot test passed in pc-android-state-slot-vxymprzz; Linux desktop build passed in pc-state-compat-build-fzvd9tju.",
+    "Final Android ARM64 Docker build and Kotlin unit tests passed in android-state-compat-final-apk-c1rjvc8q; user requested installation later.",
+    "Synthetic desktop SL3 -> Android import/load/save -> desktop verification passed in pc-android-state-history-bridge-kg8t1k25; Android SL2/SL3 validation and undo/restart history tests passed in android-state-provenance-ji4kuloh and android-state-history-engine-4pfuit96."
+  ],
+  "limitations": [
+    "The separate core schedulers are not bit-identical: a synthetic timer/audio state differed in two payload bytes after replay despite matching CPU, RAM, video and audio summaries. Broader gameplay equivalence is unverified.",
+    "No real-game transfer or physical-device UI validation was performed; the phone was not present in adb after the build."
+  ],
+  "files": [
+    "AndroidPort/android/README.md",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/MainActivity.kt",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/NativeBridge.kt",
+    "AndroidPort/crates/gba-android/src/engine.rs",
+    "AndroidPort/crates/gba-android/src/jni.rs",
+    "AndroidPort/crates/gba-android/src/save_states.rs",
+    "AndroidPort/crates/gba-core/src/save_state.rs",
+    "crates/gba-core/src/save_state.rs",
+    "crates/recomp/src/play.rs",
+    "crates/recomp/src/save_state.rs",
+    "docs/save_states.md",
+    "scripts/validate_android_state_compat.py",
+    "AndroidPort/Cargo.lock",
+    "AndroidPort/crates/gba-android/Cargo.toml",
+    "AndroidPort/crates/gba-android/src/lib.rs",
+    "AndroidPort/crates/gba-android/src/cheat_provenance.rs"
+  ],
+  "references": [
+    "AndroidPort/android/README.md",
+    "docs/save_states.md"
+  ]
+}

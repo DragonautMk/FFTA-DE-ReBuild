@@ -18,8 +18,9 @@ menu, including feedback and overwrite confirmation; no file picker is needed.
   replacement confirmation, initially selecting Cancel. Choose Replace state
   explicitly to overwrite it. Empty slots cannot be loaded.
 - **Back** (B/East, or Escape) returns to the previous page; from the overwrite
-  confirmation it returns to the slot picker. Loading leaves the game paused.
-  Return to the main menu and choose Resume when ready.
+  confirmation it returns to the slot picker. A successful save or load returns
+  directly to the game, unless an active replay prevents resuming. Errors keep
+  the menu open.
 
 The selected slot shows Empty, Saved or Unreadable, plus a screenshot when
 available. Success and errors appear in the same panel and need no OS dialog.
@@ -133,6 +134,13 @@ exact application sequence is unknown. Older application versions cannot read
 SL2 or SL3. Interpreter recordings can start from a cheat-derived state and pin
 its ancestry without replaying the prior applications; see [recordings](debug_recordings.md).
 These private checkpoints do not require sharing the local cheat catalog.
+
+Android can import desktop SL1, SL2 and SL3 slots and raw checkpoints through
+the Android slot's document picker. Android preserves cheat ancestry, including
+across save, load and undo, and exports a compatible file that an updated PC
+build can place in the matching ROM's slot folder. The updated PC build also
+reads legacy `FFTA-AN` Android raw files. Exact ROM/BIOS identity is required. The two cores have different event timing; a restored game need not
+execute bit-identically across platforms. See [Android save states](../AndroidPort/android/README.md).
 
 Compatible builds can share files with matching ROM/BIOS and formats. Changes
 to incompatible machine layouts or execution semantics require incrementing

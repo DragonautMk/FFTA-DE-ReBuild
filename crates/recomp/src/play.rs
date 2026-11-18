@@ -3403,6 +3403,7 @@ impl PlayApp {
         } else {
             self.state_slots.load_with_exact_undo(&mut self.machine, slot, self.cheat_history.exact.clone()).map(Some)
         };
+        let resume = result.is_ok() && self.replay_job.is_none();
         let message = match result {
             Ok(history) => {
                 if let Some(history) = history { self.cheat_history.include(&history);self.cheat_history.restore_exact(history.exact); }
@@ -3417,6 +3418,10 @@ impl PlayApp {
         self.refresh_state_slots();
         self.menu.state_result(message);
         self.menu_dirty = true;
+        if resume {
+            self.paused = false;
+            self.lifecycle_emit(crate::debug_lifecycle::Family::Machine,"menu-resume",None,serde_json::json!({"paused":false,"reason":"state-operation"}));
+        }
         self.next_frame = Instant::now();
     }
 

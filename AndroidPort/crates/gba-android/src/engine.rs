@@ -32,6 +32,7 @@ pub struct Engine {
     pub cache_hit: bool,
     rom_cache_key: String,
     state_undo: Option<crate::save_states::Undo>,
+    state_history: crate::cheat_provenance::History,
 }
 pub fn verify_rom(bytes: &[u8]) -> bool {
     let sha1=format!("{:x}", Sha1::digest(bytes));
@@ -49,7 +50,7 @@ impl Engine {
             missed: BTreeSet::new(), adaptive: cfg!(target_os="android"), pixels: Vec::new(),
             audio: Vec::with_capacity(4096), pcm: crate::audio::Audio::default(), native_blocks: 0,
             fallback_steps: 0, frame_ns: 0, prepare_ms: 0, save_path: None, cache_dir: None, cache_hit: false,
-            rom_cache_key, state_undo: None }
+            rom_cache_key, state_undo: None, state_history: Default::default() }
     }
     pub fn prepare(&mut self) -> Result<(), String> {
         let start = Instant::now();
@@ -239,6 +240,7 @@ impl Engine {
     fn replace_machine(&mut self, fresh:Box<Machine>) {
         self.machine = fresh;
         self.state_undo = None;
+        self.state_history.restore_exact(None);
         self.reset_after_state_load();
     }
     fn reset_after_state_load(&mut self) {
@@ -254,18 +256,29 @@ impl Engine {
         crate::save_states::Slots::new(self.save_path.as_deref().ok_or("No save path is available")?, &self.rom_cache_key)
     }
     pub fn state_occupied(&self) -> Result<i32, String> { self.state_slots()?.occupied() }
+    pub fn state_export(&self, slot: u8) -> Result<Vec<u8>, String> { self.state_slots()?.export(slot) }
+    pub fn state_import(&mut self, slot: u8, bytes: &[u8], overwrite: bool) -> Result<(), String> {
+        self.state_undo = Some(self.state_slots()?.import(&self.machine, slot, bytes, overwrite)?);
+        Ok(())
+    }
     pub fn state_save(&mut self, slot: u8, overwrite: bool) -> Result<(), String> {
-        self.state_undo = Some(self.state_slots()?.save(&self.machine, slot, overwrite)?);
+        self.state_undo = Some(self.state_slots()?.save_with_history(&self.machine, slot, overwrite, &self.state_history)?);
         Ok(())
     }
     pub fn state_load(&mut self, slot: u8) -> Result<(), String> {
-        self.state_undo = Some(self.state_slots()?.load(&mut self.machine, slot)?);
+        let (undo, history) = self.state_slots()?.load_with_history(&mut self.machine, slot, self.state_history.exact.clone())?;
+        self.state_history.include(&history);
+        self.state_history.restore_exact(history.exact);
+        self.state_undo = Some(undo);
         self.reset_after_state_load();
         Ok(())
     }
     pub fn state_undo(&mut self) -> Result<(), String> {
-        self.state_slots()?.undo(&mut self.machine, self.state_undo.as_ref().ok_or("Nothing to undo")?)?;
-        if matches!(self.state_undo, Some(crate::save_states::Undo::Load { .. })) { self.reset_after_state_load(); }
+        let exact = self.state_slots()?.undo(&mut self.machine, self.state_undo.as_ref().ok_or("Nothing to undo")?)?;
+        if matches!(self.state_undo, Some(crate::save_states::Undo::Load { .. })) {
+            self.state_history.restore_exact(exact);
+            self.reset_after_state_load();
+        }
         self.state_undo = None;
         Ok(())
     }
@@ -327,6 +340,44 @@ mod tests {
         rom[..4].copy_from_slice(&0xeafffffeu32.to_le_bytes());
         rom[256..262].copy_from_slice(b"SRAM_V");
         Engine::new(rom)
+    }
+    #[test]
+    fn desktop_cheat_history_bridge() {
+        let Ok(work)=std::env::var("FFTA_STATE_BRIDGE_WORK") else {return;};
+        let _lock=VIEW_TEST.lock().unwrap();
+        let root=std::path::PathBuf::from(&work).join("android-bridge");
+        std::fs::create_dir(&root).unwrap();
+        let mut engine=Engine::new(vec![0;256]);engine.save_path=Some(root.join("game.sav"));
+        let bytes=std::fs::read(std::path::Path::new(&work).join("pc-state.bin")).unwrap();
+        engine.state_import(1,&bytes,false).unwrap();
+        engine.state_load(1).unwrap();
+        assert_eq!(engine.machine.cpu.regs[4],42);
+        engine.state_save(2,false).unwrap();
+        std::fs::write(std::path::Path::new(&work).join("android-state.bin"),engine.state_export(2).unwrap()).unwrap();
+        std::fs::remove_dir_all(root).unwrap();
+    }
+    #[test]
+    fn imported_history_follows_load_undo_and_restart() {
+        let _lock=VIEW_TEST.lock().unwrap();
+        let root=std::env::var_os("FFTA_VALIDATION_WORK").map(std::path::PathBuf::from).unwrap_or_else(std::env::temp_dir)
+            .join(format!("engine-history-{}",std::process::id()));
+        std::fs::create_dir(&root).unwrap();
+        let mut engine=restart_test_engine();engine.save_path=Some(root.join("game.sav"));
+        engine.state_history.record("once",serde_json::json!({"id":"A"}),1,2,1);
+        let a=serde_json::to_value(&engine.state_history.exact).unwrap();
+        engine.state_save(1,false).unwrap();
+        engine.state_history.record("once",serde_json::json!({"id":"B"}),2,3,1);
+        let b=serde_json::to_value(&engine.state_history.exact).unwrap();
+        engine.state_load(1).unwrap();
+        assert_eq!(serde_json::to_value(&engine.state_history.exact).unwrap(),a);
+        engine.state_undo().unwrap();
+        assert_eq!(serde_json::to_value(&engine.state_history.exact).unwrap(),b);
+        assert_eq!(engine.state_history.events.len(),2);
+        engine.restart().unwrap();
+        assert!(engine.state_history.exact.is_none());
+        engine.state_save(2,false).unwrap();
+        assert!(engine.state_export(2).unwrap().starts_with(b"FFTA-SL2"));
+        std::fs::remove_dir_all(root).unwrap();
     }
     #[test]
     fn restart_preserves_cartridge_save_and_resets_machine() {

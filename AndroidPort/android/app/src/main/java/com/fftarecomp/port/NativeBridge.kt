@@ -82,6 +82,8 @@ object NativeBridge {
     external fun gbaParallelZoom(enabled:Boolean)
     external fun gbaCamera():Long
     external fun gbaSave(): Int
+    external fun gbaImportState(slot: Int, bytes: ByteArray, overwrite: Boolean): Int
+    external fun gbaExportState(slot: Int): ByteArray?
     external fun gbaStateSlots(): Int
     external fun gbaStateAction(action: Int, slot: Int, overwrite: Boolean): Int
     external fun gbaRestart(): Int

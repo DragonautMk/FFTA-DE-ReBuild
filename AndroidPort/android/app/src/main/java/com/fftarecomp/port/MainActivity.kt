@@ -423,10 +423,57 @@ private fun GameScreen(settings:GameSettings,input:GameInput,onExit:()->Unit,onS
     var restarting by remember {mutableStateOf(false)}
     var stateMask by remember {mutableIntStateOf(0)}
     var stateSlot by remember {mutableIntStateOf(1)}
+    var stateImportOverwrite by remember {mutableStateOf(false)}
     var stateError by remember {mutableStateOf<String?>(null)}
     var stateMessage by remember {mutableStateOf<String?>(null)}
     var page by remember {mutableStateOf("main")}
     var fpsRates by remember {mutableStateOf<FpsRates?>(null)}
+    val stateImportPicker=rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+        if(uri!=null) {
+            restarting=true;stateError=null;stateMessage=null
+            val slot=stateSlot;val overwrite=stateImportOverwrite
+            scope.launch {
+                val result=runCatching {
+                    withContext(Dispatchers.IO) {
+                        val bytes=context.contentResolver.openInputStream(uri)?.use { source ->
+                            val output=java.io.ByteArrayOutputStream()
+                            val buffer=ByteArray(8192);var total=0
+                            val limit=64*1024*1024+48+240*160*4+36+256*1024
+                            while(true) {
+                                val count=source.read(buffer);if(count<0)break
+                                total+=count;require(total<=limit){"Save-state file is too large"}
+                                output.write(buffer,0,count)
+                            }
+                            output.toByteArray()
+                        } ?: error("Cannot open the selected file")
+                        check(NativeBridge.gbaImportState(slot,bytes,overwrite)==1){NativeBridge.gbaStatus()}
+                        val mask=NativeBridge.gbaStateSlots();check(mask>=0){NativeBridge.gbaStatus()};mask
+                    }
+                }
+                restarting=false
+                result.onSuccess{stateMask=it;page="states";stateMessage="State imported into slot $slot."}
+                    .onFailure{stateError=it.message ?: it.toString()}
+            }
+        }
+    }
+    val stateExportPicker=rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/octet-stream")) { uri ->
+        if(uri!=null) {
+            restarting=true;stateError=null;stateMessage=null
+            val slot=stateSlot
+            scope.launch {
+                val result=runCatching {
+                    withContext(Dispatchers.IO) {
+                        val bytes=checkNotNull(NativeBridge.gbaExportState(slot)){NativeBridge.gbaStatus()}
+                        context.contentResolver.openOutputStream(uri,"wt")?.use{it.write(bytes)}
+                            ?: error("Cannot write the selected file")
+                    }
+                }
+                restarting=false
+                result.onSuccess{stateMessage="State exported from slot $slot."}
+                    .onFailure{stateError=it.message ?: it.toString()}
+            }
+        }
+    }
     fun stateAction(action:Int, overwrite:Boolean=false) {
         restarting=true;stateError=null;stateMessage=null
         surface?.gamePaused=true
@@ -438,15 +485,20 @@ private fun GameScreen(settings:GameSettings,input:GameInput,onExit:()->Unit,onS
                 withTimeout(5000){while(!gameSurface.pauseAcknowledged)delay(10)}
                 withContext(Dispatchers.IO) {
                     check(NativeBridge.gbaStateAction(action,stateSlot,overwrite)==1){NativeBridge.gbaStatus()}
-                    val mask=NativeBridge.gbaStateSlots()
-                    check(mask>=0){NativeBridge.gbaStatus()}
-                    mask
+                    if(action==2) {
+                        val mask=NativeBridge.gbaStateSlots()
+                        check(mask>=0){NativeBridge.gbaStatus()}
+                        mask
+                    } else 0
                 }
             }
             restarting=false
             result.onSuccess {
-                stateMask=it;page="states"
-                stateMessage=when(action){0->"State saved.";1->"State loaded. Resume to continue.";else->"Last state operation undone."}
+                if(action==2) {
+                    stateMask=it;page="states";stateMessage="Last state operation undone."
+                } else {
+                    page="main";paused=false
+                }
             }.onFailure {stateError=it.message ?: it.toString()}
         }
     }
@@ -636,6 +688,14 @@ private fun GameScreen(settings:GameSettings,input:GameInput,onExit:()->Unit,onS
                                 if(occupied)page="overwrite state" else stateAction(0)
                             }
                             MenuButton("Load state",occupied&&!restarting){page="load state"}
+                            MenuButton("Import state file",!restarting){
+                                if(occupied)page="import state" else {stateImportOverwrite=false;stateImportPicker.launch(arrayOf("*/*"))}
+                            }
+                            MenuButton("Export state file",occupied&&!restarting){stateExportPicker.launch("slot-$stateSlot.ffstate")}
+                        }
+                        "import state"->{
+                            Text("Replace the state in slot $stateSlot with an imported file?")
+                            MenuButton("Choose file",!restarting){stateImportOverwrite=true;stateImportPicker.launch(arrayOf("*/*"))}
                         }
                         "overwrite state"->{
                             Text("Replace the state in slot $stateSlot?")
@@ -779,7 +839,7 @@ private fun GameScreen(settings:GameSettings,input:GameInput,onExit:()->Unit,onS
                         "gamepad"->GamepadSettings(settings)
 
                     }
-                    if(page!="main")MenuButton("Back",!restarting){settings.save();page=when(page){"touchscreen","gamepad"->"input";"restore backup"->"backups";"state slot"->"states";"overwrite state","load state"->"state slot";else->"main"}}
+                    if(page!="main")MenuButton("Back",!restarting){settings.save();page=when(page){"touchscreen","gamepad"->"input";"restore backup"->"backups";"state slot"->"states";"overwrite state","load state","import state"->"state slot";else->"main"}}
                 }
             }
         }

@@ -119,7 +119,7 @@ impl Slots {
             }
             let mut magic = [0; 8];
             file.read_exact(&mut magic).map_err(|e| e.to_string())?;
-            if &magic == b"FFTA-ST\0" {
+            if &magic == b"FFTA-ST\0" || &magic == b"FFTA-AN\0" {
                 return Ok(Some((Vec::new(), false)));
             } // Older, preview-less checkpoint.
             if &magic == TAGGED_MAGIC || &magic == EXACT_MAGIC {
@@ -410,7 +410,7 @@ pub(crate) fn preview(bytes: &[u8]) -> Result<Vec<[u8;4]>, String> {
     let preview = if bytes.starts_with(SLOT_MAGIC) || bytes.starts_with(TAGGED_MAGIC) || bytes.starts_with(EXACT_MAGIC) {
         bytes[HEADER..PREFIX].chunks_exact(4).map(|p|p.try_into().unwrap()).collect()
     } else { Vec::new() };
-    if core.len() < 108 || core.len() > MAX_STATE_BYTES || &core[..8] != b"FFTA-ST\0"
+    if core.len() < 108 || core.len() > MAX_STATE_BYTES || (&core[..8] != b"FFTA-ST\0" && &core[..8] != b"FFTA-AN\0")
         || u32::from_le_bytes(core[8..12].try_into().unwrap()) != 1 {
         return Err("Invalid or incompatible snapshot header".into());
     }
@@ -456,6 +456,44 @@ mod tests {
     use super::*;
     fn preview() -> Vec<[u8; 4]> {
         vec![[12, 34, 56, 255]; PREVIEW_W * PREVIEW_H]
+    }
+
+    #[test]
+    fn android_cheat_history_bridge() {
+        let Ok(work) = std::env::var("FFTA_STATE_BRIDGE_WORK") else { return; };
+        let phase = std::env::var("FFTA_STATE_BRIDGE_PHASE").unwrap();
+        let mut machine = Machine::new(vec![0; 256]);
+        if phase == "write" {
+            machine.cpu.regs[4] = 42;
+            let mut history = crate::cheat_provenance::History::default();
+            history.record("once", serde_json::json!({"id":"bridge"}), 12, 34, 1);
+            std::fs::write(Path::new(&work).join("pc-state.bin"), encode(&machine, &preview(), &history).unwrap()).unwrap();
+        } else {
+            let bytes = std::fs::read(Path::new(&work).join("android-state.bin")).unwrap();
+            let history = load_bytes_with_history(&mut machine, &bytes).unwrap();
+            assert_eq!(machine.cpu.regs[4], 42);
+            assert_eq!(history.events.len(), 1);
+            assert_eq!(history.events[0]["identity"]["id"], "bridge");
+            assert!(history.exact.is_some());
+            assert_eq!(super::preview(&bytes).unwrap().len(), PREVIEW_W * PREVIEW_H);
+        }
+    }
+
+    #[test]
+    fn legacy_android_slot_is_listed_and_loadable() {
+        let dir = tempfile::tempdir().unwrap();
+        let mut machine = Machine::new(vec![0; 256]);
+        let slots = Slots::new(&dir.path().join("game.sav"), &machine.bus.rom);
+        std::fs::create_dir_all(&slots.directory).unwrap();
+        machine.cpu.regs[4] = 42;
+        let mut state = machine.save_state().unwrap();
+        state[..8].copy_from_slice(b"FFTA-AN\0");
+        std::fs::write(slots.path(1).unwrap(), &state).unwrap();
+        assert!(slots.info(1).status.contains("Saved"));
+        assert!(super::preview(&state).unwrap().is_empty());
+        machine.cpu.regs[4] = 0;
+        super::load_bytes(&mut machine, &state).unwrap();
+        assert_eq!(machine.cpu.regs[4], 42);
     }
 
     #[test]

@@ -1045,6 +1045,31 @@ Documentation: [README.md](AndroidPort/android/README.md).
 
 [Change record](docs/changes/2026-11-18-android-grid-scroll-indicator.json)
 
+## 2026-11-18 — Share save states between Android and desktop
+
+Type: changed. Platforms: Android, Linux.
+
+**Changes**
+
+- Share the raw state format and accept legacy Android states on both platforms. Android imports and exports desktop SL1/SL2/SL3 and raw files, preserving checked cheat ancestry across load, save, undo and restart, with overwrite confirmation.
+- Return to gameplay after successful save or load on Android and desktop, while keeping failed operations in the menu and respecting the desktop replay guard.
+
+**Validation**
+
+- Both core state suites passed five tests each; two Android slot/import tests and the cross-workspace synthetic cross-load and CPU/RAM/video/audio replay passed in android-pc-savestate-compat-ty7r3bgg.
+- Desktop legacy Android slot test passed in pc-android-state-slot-vxymprzz; Linux desktop build passed in pc-state-compat-build-fzvd9tju.
+- Final Android ARM64 Docker build and Kotlin unit tests passed in android-state-compat-final-apk-c1rjvc8q; user requested installation later.
+- Synthetic desktop SL3 -> Android import/load/save -> desktop verification passed in pc-android-state-history-bridge-kg8t1k25; Android SL2/SL3 validation and undo/restart history tests passed in android-state-provenance-ji4kuloh and android-state-history-engine-4pfuit96.
+
+**Limitations**
+
+- The separate core schedulers are not bit-identical: a synthetic timer/audio state differed in two payload bytes after replay despite matching CPU, RAM, video and audio summaries. Broader gameplay equivalence is unverified.
+- No real-game transfer or physical-device UI validation was performed; the phone was not present in adb after the build.
+
+Documentation: [README.md](AndroidPort/android/README.md), [save_states.md](docs/save_states.md).
+
+[Change record](docs/changes/2026-11-18-android-desktop-snapshot-compatibility.json)
+
 ## 2026-11-18 — Add desktop scaling modes to Android
 
 Type: added. Platforms: Android.

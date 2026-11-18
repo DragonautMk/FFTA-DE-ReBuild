@@ -29,13 +29,13 @@ Archive completed tasks; open parents do not reopen closed children. Do not stop
 
 ### ROM-DATA-FULL-EUR
 
-- State: active
+- State: suspended
 - Outcome: partial
 - ROMDATA-05 source-byte regression: E170 Wine `ffhtpvms` PASS for all 10,948,338 distinct declared bytes and aligned covered words; raw control confirms inverted backing. Parent equivalence remains partial. `8oo4pd4m` failed an invalid counter assumption; retained.
 - Verified: E158 reader/opening/CLI Wine PASS (`b8vylqkk`, `tucnagm9`).
 - Missing: EUR inventory/consumers/ordinary/ABI/extent/indirect calls, ROMDATA-06/07; Linux/USA/native Windows/new32:9 deferred. Protect originals/saves.
 - Failed `kitubxih` and `wamu6k3z` remain retained; do not repeat failed locator `l4i2lrcu`.
-- Selection: ROMDATA-04-METADATA14-ID1-ALIAS partial; converter `_hfk7lti`, batch `g2cugem4`, five direct native API reads `1gs1xgeu` PASS. User prioritizes closure. Ordinary `080ce18c` batch reachability remains unproved; census direct callers and match to retained ordinary routes before a targeted scene. Exact guest PCs/other consumers remain open.
+- Selection: user paused ROMDATA-04-METADATA14-ID1-ALIAS. Converter `_hfk7lti`, batch `g2cugem4`, native `1gs1xgeu` PASS. Source `7xxd2a4i` links key161/opcode74 to batch; `yzy24ob_` found no key161 in 279 states, `n18roaxx` no immediate queue lead. On explicit resume inspect PASS receipt `nz5ytza5`.
 - Title bank: five lists Wine PASS (hhh7a8lg); other scenes/native and FIRSTBANK-ZERO open (f4_b2apw).
 - BATTLE-40D300-OTHER: index56 Wine PASS (qbzrv3ua); other lists open.
 - CONTEXT-3AE42C: IDs 1–4/return 0 Wine PASS; E168 owns 261/261 pairs (4ami2zcc); meaning/writers/domain/native open.
@@ -72,10 +72,9 @@ Archive completed tasks; open parents do not reopen closed children. Do not stop
 
 - State: active
 - Outcome: partial
-- Verified: brightness, screen profiles, FPS and menu transparency; ARM64/Kotlin, serial Rust and Mesa PASS. `docs/changes/2026-11-18-android-screen-profiles-fps.json`.
-- Save states: slots, confirmations and undo implemented; synthetic replay/slot tests, ARM64/Kotlin build and moto g34 install PASS. `docs/changes/2026-11-18-android-save-states.json`.
-- Missing: phone save/load and undo test; previews, response, full video parity, debug and device checks. Android states differ from desktop.
-- Resume: await user phone test; preserve personal saves.
+- Verified: brightness, profiles, FPS, transparency; slots/undo and PC/Android snapshot transfer including SL2/SL3 ancestry; synthetic bridge/replay and Android/PC builds PASS. `docs/changes/2026-11-18-android-desktop-snapshot-compatibility.json`.
+- Missing: phone install and real-game transfer/undo; previews, response, video parity and debug. Cross-core timer state differed after synthetic replay despite matching CPU/RAM/video/audio.
+- Resume: user chose installation later; reconnect and verify safe install/gameplay only when requested. Preserve saves and concurrent work.
 
 
 ### CHEAT-DISTRIBUTION
@@ -179,9 +178,9 @@ Archive completed tasks; open parents do not reopen closed children. Do not stop
 
 ## Final handover
 
-- Task: Android save states.
-- Last verified result: synthetic replay, slots, ARM64/Kotlin build and moto g34 install PASS.
-- Remaining work: phone save/load and undo; previews and menu parity. Android states differ from desktop.
-- Errors or blockers: Preserve personal saves and concurrent ROM-data work.
-- Next action: await the user's phone test; use isolated fixtures for failures.
-- References: `docs/changes/2026-11-18-android-save-states.json`; `AndroidPort/android/README.md`.
+- Task: PC/Android snapshot compatibility.
+- Last verified result: cross-load/replay, cheat ancestry bridge, slots and both builds PASS; final APK retained.
+- Remaining work: phone install/test, broader timing equivalence and menu parity.
+- Errors or blockers: phone disconnected; core schedulers differ.
+- Next action: when requested, reconnect phone and validate transfer without touching personal saves.
+- References: `docs/changes/2026-11-18-android-desktop-snapshot-compatibility.json`; `AndroidPort/android/README.md`.
