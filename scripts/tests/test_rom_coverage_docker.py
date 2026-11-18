@@ -22,6 +22,7 @@ class DockerCoverageTests(unittest.TestCase):
         self.script.parent.mkdir(parents=True)
         shutil.copy2(ROOT / 'scripts/linux/rom_coverage_docker.sh', self.script)
         shutil.copy2(ROOT / 'scripts/linux/docker_toolchain.sh', self.script.parent)
+        shutil.copy2(ROOT / 'scripts/linux/build_terminal.sh', self.script.parent)
         self.defaults = {
             'rom': 'rom/1194 - Final Fantasy Tactics Advance (E)(Surplus).gba',
             'dataset': 'target/rom-data-rank-gates/windows-managed-europe/offline dataset',
@@ -37,7 +38,7 @@ class DockerCoverageTests(unittest.TestCase):
         self.bin = self.directory / 'bin'
         self.bin.mkdir()
         # The child PATH deliberately contains no Python, Cargo or nm.
-        for name in ('dirname', 'basename', 'mkdir', 'id', 'mktemp', 'date', 'tee', 'git', 'cp', 'rm', 'mv'):
+        for name in ('dirname', 'basename', 'mkdir', 'id', 'mktemp', 'date', 'tee', 'git', 'cp', 'rm', 'mv', 'awk'):
             (self.bin / name).symlink_to(shutil.which(name))
         docker = self.bin / 'docker'
         docker.write_text('''#!/bin/bash

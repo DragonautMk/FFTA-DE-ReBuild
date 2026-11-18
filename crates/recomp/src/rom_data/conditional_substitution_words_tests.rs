@@ -3,7 +3,7 @@ use super::*;
 use gba_core::{
     capi::RT_API,
     rom_data::conditional_substitution_words::{
-        Catalog, ConditionalSubstitutionWords, DISPATCH_LITERAL, TABLE_END, TABLE_OFFSET,
+        Catalog, ConditionalSubstitutionWords, TABLE_END, TABLE_OFFSET,
     },
     Bus, Machine,
 };

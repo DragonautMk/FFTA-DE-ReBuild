@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "unify-powershell-docker-builds",
+  "title": "Build Android, Windows and Linux from one PowerShell command",
+  "kind": "added",
+  "platforms": [
+    "PowerShell",
+    "Android",
+    "Windows",
+    "Linux"
+  ],
+  "changes": [
+    "The existing Docker PowerShell launcher accepts android and all alongside windows and linux. A single platform exports to its selected directory. A combined build puts each platform in its own directory and stops at the first failure.",
+    "Android delegates to the maintained port launcher with its working-tree filter, Docker toolchains, caches, signing and checksum validation. The script checks for host Python 3.9+ before starting an Android or combined build. An interactive failure waits for Enter."
+  ],
+  "validation": [
+    "PowerShell 7.4.6 on Linux exercised default and explicit platform selection, paths with spaces, combined output layout, failure propagation and early exit. All 12 launcher and Android adapter checks passed. A pseudo-terminal acknowledged the failure with Enter and a missing-Python check stopped before the combined build (bng6em3q).",
+    "The real Android path exported the maintained APK into dist/docker-android with a matching SHA-256 and reports for 29 passing Kotlin tests from the Docker cache (sop1z5h8)."
+  ],
+  "limitations": [
+    "Desktop routing used a simulated Docker CLI in this validation. Native Windows PowerShell 5.1 and Docker Desktop were not exercised.",
+    "The initial scratch export succeeded but validation retained its diagnostics after encountering a symlink in the extracted test shell (a09tlc7u). A subsequent terminal probe timed out with Read-Host (176_qtfg). The final check passed with console input."
+  ],
+  "files": [
+    "scripts/windows/build_docker.ps1",
+    "scripts/tests/test_powershell_docker_build.py",
+    "README.md",
+    "scripts/README.md",
+    "docs/android_docker.md",
+    "docs/docker.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/docker.md",
+    "docs/android_docker.md"
+  ]
+}

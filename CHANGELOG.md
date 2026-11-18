@@ -563,6 +563,29 @@ Documentation: [2026-11-16-observe-special-encounter-packed-alias.json](docs/cha
 
 [Change record](docs/changes/2026-11-18-verify-battle-descriptor-alias-translated.json)
 
+## 2026-11-18 — Build Android, Windows and Linux from one PowerShell command
+
+Type: added. Platforms: PowerShell, Android, Windows, Linux.
+
+**Changes**
+
+- The existing Docker PowerShell launcher accepts android and all alongside windows and linux. A single platform exports to its selected directory. A combined build puts each platform in its own directory and stops at the first failure.
+- Android delegates to the maintained port launcher with its working-tree filter, Docker toolchains, caches, signing and checksum validation. The script checks for host Python 3.9+ before starting an Android or combined build. An interactive failure waits for Enter.
+
+**Validation**
+
+- PowerShell 7.4.6 on Linux exercised default and explicit platform selection, paths with spaces, combined output layout, failure propagation and early exit. All 12 launcher and Android adapter checks passed. A pseudo-terminal acknowledged the failure with Enter and a missing-Python check stopped before the combined build (bng6em3q).
+- The real Android path exported the maintained APK into dist/docker-android with a matching SHA-256 and reports for 29 passing Kotlin tests from the Docker cache (sop1z5h8).
+
+**Limitations**
+
+- Desktop routing used a simulated Docker CLI in this validation. Native Windows PowerShell 5.1 and Docker Desktop were not exercised.
+- The initial scratch export succeeded but validation retained its diagnostics after encountering a symlink in the extracted test shell (a09tlc7u). A subsequent terminal probe timed out with Read-Host (176_qtfg). The final check passed with console input.
+
+Documentation: [docker.md](docs/docker.md), [android_docker.md](docs/android_docker.md).
+
+[Change record](docs/changes/2026-11-18-unify-powershell-docker-builds.json)
+
 ## 2026-11-18 — Trace descriptor alias reads during native dispatch
 
 Type: changed. Platforms: EUR / Windows GNU under Wine.
@@ -611,6 +634,30 @@ Type: performance. Platforms: Android, Linux, Windows, Docker.
 Documentation: [docker.md](docs/docker.md), [android_docker.md](docs/android_docker.md), [README.md](AndroidPort/README.md).
 
 [Change record](docs/changes/2026-11-18-retain-project-docker-toolchains.json)
+
+## 2026-11-18 — Repair the Windows test gate and add a Linux launcher for Android
+
+Type: fixed. Platforms: Linux, Windows (MinGW and Wine), Android.
+
+**Changes**
+
+- The Bash Android launcher runs the maintained Python Docker driver, accepts a positional output directory or driver options, and shares the failure prompt with the desktop launchers. It preserves the exit status and uses the existing Android log, SDK cache and signing key.
+- The finite checkpoint recovery test worker drains its queued response on transient mailbox publication failures, including the last response. The original request runs once. The worker reports an error if publication still fails after a bounded wait.
+- An unused Rust import was removed. Only test builds with the read-audit feature compile the native API override. The Windows build runs both host Git tests in one Cargo invocation and its Wine fixture provides a private XDG runtime directory.
+
+**Validation**
+
+- The earlier 21:05 Windows run failed before packaging with error 5 in the collector worker. Full Docker build hrakras6 completed at 21:43 with 972 tests passed, 463 ignored and zero compiler warnings. The verified ZIP contains two x86-64 PE executables and the x86-64 TinyCC DLL. Its SHA-256 matches BUILD-INFO.txt.
+- Unit 5nh1nh7o passed 36 launcher/driver tests and a redirected-input terminal acknowledgement. The actual Bash launcher exported the maintained APK with its expected hash and reports for 29 passing Kotlin tests.
+- Host test compilation with the rom-data-read-audit feature passed in qbg89r6b. Initial supplemental check tch12mu5 lacked ALSA pkg-config metadata. The passing check reused the project sysroot.
+
+**Limitations**
+
+- Wine bootstrap still prints a missing 32-bit syswow64/rundll32 message when creating the 64-bit test prefix. Windows validation used MinGW and Wine. Native Windows and device gameplay were outside this change.
+
+Documentation: [docker.md](docs/docker.md), [android_docker.md](docs/android_docker.md).
+
+[Change record](docs/changes/2026-11-18-repair-windows-export-and-add-android-bash-launcher.json)
 
 ## 2026-11-18 — Recover the interrupted E170 cold-storage lease
 
@@ -752,6 +799,28 @@ Type: changed. Platforms: EUR.
 Documentation: [2026-11-18-verify-ordinary-geometry-special-index.json](docs/changes/2026-11-18-verify-ordinary-geometry-special-index.json).
 
 [Change record](docs/changes/2026-11-18-map-observed-special-pose-candidates.json)
+
+## 2026-11-18 — Keep failed Docker builds visible in the terminal
+
+Type: fixed. Platforms: Linux host (Bash).
+
+**Changes**
+
+- The Linux, Windows cross-build and ROM coverage launchers display the failure code, diagnostic lines and run log, then wait for Enter on an attached output terminal even with redirected input. Fully captured runs return the failure code immediately.
+- Log setup and publication errors use the same failure path. A setup error tries a temporary fallback log. A failure keeps the previous successful log, and a simultaneous build and logging failure returns the build status.
+
+**Validation**
+
+- The retained 21:03 Linux export completed from cached Docker layers. The SHA-256 of the exported portable archive matches BUILD-INFO.txt.
+- Managed unit build-terminal-acknowledgement-0jkz7rg2 passed all 26 Bash launcher checks, including acknowledgement on a pseudo-terminal, redirected input and stderr, unattended failures, log setup, capture and publication. The initial unit wl4g3spe exposed a stderr redirection defect, corrected before the passing run.
+
+**Limitations**
+
+- Terminal checks used Linux pseudo-terminals and controlled Docker output. The desktop file manager itself was not exercised.
+
+Documentation: [docker.md](docs/docker.md).
+
+[Change record](docs/changes/2026-11-18-keep-build-terminal-open-on-errors.json)
 
 ## 2026-11-18 — Investigate bounded-range reader callers and ordinary windows
 

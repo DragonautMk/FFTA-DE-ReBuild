@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "repair-windows-export-and-add-android-bash-launcher",
+  "title": "Repair the Windows test gate and add a Linux launcher for Android",
+  "kind": "fixed",
+  "platforms": [
+    "Linux",
+    "Windows (MinGW and Wine)",
+    "Android"
+  ],
+  "changes": [
+    "The Bash Android launcher runs the maintained Python Docker driver, accepts a positional output directory or driver options, and shares the failure prompt with the desktop launchers. It preserves the exit status and uses the existing Android log, SDK cache and signing key.",
+    "The finite checkpoint recovery test worker drains its queued response on transient mailbox publication failures, including the last response. The original request runs once. The worker reports an error if publication still fails after a bounded wait.",
+    "An unused Rust import was removed. Only test builds with the read-audit feature compile the native API override. The Windows build runs both host Git tests in one Cargo invocation and its Wine fixture provides a private XDG runtime directory."
+  ],
+  "validation": [
+    "The earlier 21:05 Windows run failed before packaging with error 5 in the collector worker. Full Docker build hrakras6 completed at 21:43 with 972 tests passed, 463 ignored and zero compiler warnings. The verified ZIP contains two x86-64 PE executables and the x86-64 TinyCC DLL. Its SHA-256 matches BUILD-INFO.txt.",
+    "Unit 5nh1nh7o passed 36 launcher/driver tests and a redirected-input terminal acknowledgement. The actual Bash launcher exported the maintained APK with its expected hash and reports for 29 passing Kotlin tests.",
+    "Host test compilation with the rom-data-read-audit feature passed in qbg89r6b. Initial supplemental check tch12mu5 lacked ALSA pkg-config metadata. The passing check reused the project sysroot."
+  ],
+  "limitations": [
+    "Wine bootstrap still prints a missing 32-bit syswow64/rundll32 message when creating the 64-bit test prefix. Windows validation used MinGW and Wine. Native Windows and device gameplay were outside this change."
+  ],
+  "files": [
+    "Dockerfile.windows",
+    "scripts/windows/test_wine.py",
+    "crates/recomp/src/debug_command/recipe/checkpoint/runner.rs",
+    "crates/recomp/src/debug_control.rs",
+    "crates/recomp/src/main.rs",
+    "crates/recomp/src/rom_data/conditional_substitution_words_tests.rs",
+    "scripts/linux/build_android_docker.sh",
+    "scripts/linux/build_terminal.sh",
+    "scripts/tests/test_build_android_docker.py",
+    "README.md",
+    "scripts/README.md",
+    "docs/android_docker.md",
+    "docs/docker.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/docker.md",
+    "docs/android_docker.md"
+  ]
+}

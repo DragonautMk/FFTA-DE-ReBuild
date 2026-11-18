@@ -1,4 +1,4 @@
-# Desktop portable builds with Docker
+# Build Windows, Linux and Android with Docker
 
 For the ARM64 Android APK, use
 `python3 scripts/android/build_android_docker.py`. It defaults to the maintained
@@ -21,12 +21,27 @@ installation is needed. The builder is a Linux container that cross-compiles
 `x86_64-pc-windows-gnu` using MinGW; it is not a Windows container. The exported
 `.exe` files run on Windows normally, without Docker or Wine.
 
-The same entry point can build Linux from Windows:
+Use the same PowerShell entry point for a single platform or for all three:
 
 ```powershell
 .\scripts\windows\build_docker.ps1 -Platform linux
+.\scripts\windows\build_docker.ps1 -Platform android
+.\scripts\windows\build_docker.ps1 -Platform all
 .\scripts\windows\build_docker.ps1 -Platform windows -OutputDir 'D:\FFTA builds'
 ```
+
+`all` builds Windows, Linux and Android in order and stops on the first error.
+Each export goes to its usual directory under `dist/`. In a combined build,
+`-OutputDir 'D:\FFTA builds'` places `docker-windows/`, `docker-linux/`
+and `docker-android/` in that directory. A single-platform `-OutputDir`
+selects the exact export directory.
+
+Android uses the existing AndroidPort Docker launcher, its source filter,
+toolchain cache, signing key cache and APK checksum verification. Python 3.9+
+must be available on the host for `android` and `all`.
+On a build error, an interactive PowerShell console displays the failure
+and waits for Enter. Noninteractive builds with redirected input return
+the error immediately.
 
 The script targets Windows PowerShell 5.1+ and PowerShell 7. If local policy
 blocks the script, run it in a single process with:
@@ -35,7 +50,7 @@ blocks the script, run it in a single process with:
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\windows\build_docker.ps1
 ```
 
-This does not change the user's persistent execution policy. Both platforms
+This does not change the user's persistent execution policy. Both desktop platforms
 use Docker Buildx's local exporter and the same private-data exclusions.
 Build context resolution is relative to the script, not the calling directory;
 paths containing spaces are passed as individual native-command arguments.
@@ -48,13 +63,19 @@ From the repository root:
 bash scripts/linux/build_linux_docker.sh
 ```
 
-To build the Windows package from a Linux host instead:
+From the same Linux host, select the Windows or Android launcher:
 
 ```bash
 bash scripts/linux/build_windows_docker.sh
+bash scripts/linux/build_android_docker.sh
 ```
 
-The host only needs a working Docker Engine/Desktop with Buildx. Rust, GCC,
+The Android launcher exports the maintained ARM64 APK under
+`dist/docker-android/`. It accepts an optional output directory or the
+Android driver's options, including `--dry-run`. It uses Python 3.9+ on the
+host and the existing Android Docker caches and signing key.
+
+The desktop launchers only need a working Docker Engine/Desktop with Buildx. Rust, GCC,
 Python, pkg-config, ALSA and udev development packages are installed in the
 build container. Network access is needed on the first build for the base image,
 Debian packages and Cargo dependencies. The script explicitly builds
@@ -102,13 +123,14 @@ reuse a binary produced from different source content. Unchanged Docker layers
 remain cached. The refresh happens inside the image, without touching the host
 checkout. The coverage recipe already refreshes its Git archive at extraction.
 
-The Bash Linux and Windows builders use English diagnostics and terminal prompts.
-Successful Bash runs replace `target/build-logs/linux-latest.log`,
-`windows-latest.log` or `rom-coverage-latest.log`. Failed runs keep their
-individual logs with stdout and stderr. An interactive terminal waits for
-Enter before exiting, so a terminal opened by a file manager keeps the error
-visible. Noninteractive runs return the original failure code without waiting;
-failed builds do not report a successful export.
+The Bash launchers for Linux builds, Windows builds and ROM coverage exit
+immediately on success. Each replaces its own `*-latest.log` under
+`target/build-logs/`. On failure, the launcher displays the exit code,
+diagnostic lines and the path to the individual run log. If it cannot create
+the usual log, it tries the temporary directory (`TMPDIR`, default `/tmp`).
+When either stdout or stderr goes to a terminal, the launcher waits there for
+Enter, even with redirected input. When both outputs are captured, it returns
+the failure code immediately.
 
 ## Compress local validation artifacts (Linux)
 

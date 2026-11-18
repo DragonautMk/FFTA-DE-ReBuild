@@ -31,6 +31,27 @@ class AndroidDockerTests(unittest.TestCase):
         self.root = Path(self.temp.name)
         self.driver = module(ROOT / 'AndroidPort/scripts/build_android_docker.py')
 
+    @unittest.skipUnless(os.name == 'posix' and shutil.which('bash'), 'requires Bash')
+    def test_linux_launcher_forwards_the_output_and_the_driver_exit_status(self):
+        launcher = ROOT / 'scripts/linux/build_android_docker.sh'
+        probe = self.root / 'python3'
+        probe.write_text('#!/bin/sh\nprintf "%s\\n" "$@"\nexit 17\n')
+        probe.chmod(0o755)
+        env = dict(os.environ, PATH=str(self.root) + os.pathsep + os.environ['PATH'])
+        for arguments, expected in [
+            ([], []),
+            (['apk with spaces'], ['--output', 'apk with spaces']),
+            (['--dry-run', '--output', 'preview'], ['--dry-run', '--output', 'preview']),
+        ]:
+            with self.subTest(arguments=arguments):
+                result = subprocess.run([str(launcher), *arguments], cwd=self.root, env=env,
+                                        capture_output=True, text=True, timeout=5)
+                self.assertEqual(result.stdout.splitlines(),
+                                 [str(ROOT / 'scripts/android/build_android_docker.py'), *expected])
+                self.assertEqual(result.returncode, 17)
+                self.assertIn('Android build failed (exit 17)', result.stderr)
+                self.assertNotIn('Press Enter', result.stderr)
+
     def project(self, root=False):
         project = self.root / ('root tree' if root else 'standalone port')
         builder = 'scripts/android/build_android.py' if root else 'scripts/build_android.py'

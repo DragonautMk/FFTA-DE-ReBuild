@@ -100,10 +100,13 @@ For portable builds:
 ```bash
 bash scripts/linux/build_linux_docker.sh
 bash scripts/linux/build_windows_docker.sh
+bash scripts/linux/build_android_docker.sh
 ```
 
 ```powershell
 .\scripts\windows\build_docker.ps1
+.\scripts\windows\build_docker.ps1 -Platform android
+.\scripts\windows\build_docker.ps1 -Platform all
 ```
 
 Both extraction entry points use
@@ -129,10 +132,11 @@ paths and neighbors with complete state/clock/image/audio equivalence. Other
 nodes/maps, opaque ordinary use and new Linux/USA checks remain pending.
 
 
-The Linux and Windows Bash Docker builders save each run's output and errors
-under `target/build-logs/linux-*.log` and `target/build-logs/windows-*.log`.
-On failure they wait for Enter in an interactive terminal; noninteractive
-automation receives the original exit code immediately. The Windows container
+The Linux and Windows Bash Docker builders and the ROM coverage launcher keep
+the latest successful log and individual failure logs in `target/build-logs/`.
+On failure, the terminal displays the exit code, diagnostic lines and log path,
+then waits for Enter. Automation that captures both outputs receives the exit
+code immediately. The Windows container
 test helper `windows/test_wine.py` selects UTF-8, supplies real filesystem aliases
 to the negative content test and drains its owned wineserver before cleanup.
 

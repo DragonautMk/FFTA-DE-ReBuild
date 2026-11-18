@@ -6,13 +6,30 @@ The host needs **Docker with Buildx** and **Python 3.9+**. On Windows,
 Docker Desktop must use Linux containers. Rust, Java, the SDK and the NDK
 do not need to be installed on the host; no ROM is needed to build the APK.
 
-From the repository root:
+From the repository root in PowerShell:
+
+```powershell
+.\scripts\windows\build_docker.ps1 -Platform android
+```
+
+On Linux, use the executable Bash launcher:
+
+```bash
+./scripts/linux/build_android_docker.sh
+```
+
+Pass an output directory as the sole argument to change the destination, or
+use the Python driver's options such as `--output` and `--dry-run`. On failure
+the launcher preserves the driver's exit code and waits for Enter in a terminal.
+
+Use `-Platform all` on the same script to also build Windows and Linux.
+PowerShell calls the Android launcher below, so both commands use the same
+sources, signing cache and APK destination.
 
 ```sh
 python3 scripts/android/build_android_docker.py
 ```
 
-In PowerShell, the same command can use `python` instead of `python3`.
 The default source tree is the maintained **`AndroidPort/`**. The output is:
 
 ```text

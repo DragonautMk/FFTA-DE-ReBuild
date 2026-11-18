@@ -178,9 +178,9 @@ Archive completed tasks; open parents do not reopen closed children. Do not stop
 
 ## Final handover
 
-- Task: DOCKER-CACHE completed.
-- Last verified result: Android and Linux warm exports, Linux offline restore, Windows cross-link, coverage and debug tools PASS.
-- Remaining work: none for this selection.
-- Errors or blockers: baseline Linux timing probe timed out. Final verification passed.
-- Next action: use the usual project build launchers.
-- References: `docs/changes/2026-11-18-retain-project-docker-toolchains.json`.
+- Task: DOCKER-WINDOWS-EXPORT-ANDROID-BASH completed.
+- Last verified result: Windows x64 ZIP exported at 21:43 with 972 tests passed and zero Rust warnings. Android Bash exported the verified APK.
+- Remaining work: none for this request.
+- Errors or blockers: Wine prints an optional 32-bit prefix initialization diagnostic.
+- Next action: await a new selection.
+- References: docs/changes/2026-11-18-repair-windows-export-and-add-android-bash-launcher.json, hrakras6, 5nh1nh7o, qbg89r6b.

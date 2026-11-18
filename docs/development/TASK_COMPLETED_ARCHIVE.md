@@ -23858,3 +23858,24 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: project-scoped toolchain image reuse, bounded successful logs and temporary output, warm Android/Linux exports, APK signing continuity, offline package and tool checks.
 - Evidence: docs/changes/2026-11-18-retain-project-docker-toolchains.json and linked build guides.
 - Limits: full Windows game export and native Windows Desktop were not repeated. Docker may evict mutable caches. No daemon-wide cleanup was performed.
+
+### BUILD-TERMINAL-ERRORS
+
+- Outcome: completed
+- Verified criteria: the 21:03 Linux build exported its archive from cache with the recorded SHA-256. The Linux, Windows cross-build and ROM coverage Bash launchers retain diagnostics and return the failure status. An attached terminal shows the error and waits for Enter, including redirected input and log I/O failures.
+- Evidence: docs/changes/2026-11-18-keep-build-terminal-open-on-errors.json, managed unit build-terminal-acknowledgement-0jkz7rg2 (26 passing tests).
+- Limits: interactive failures were exercised on Linux pseudo-terminals with a Docker test double. The actual file manager was not exercised.
+
+### POWERSHELL-DOCKER-PLATFORMS
+
+- Outcome: completed
+- Verified criteria: one PowerShell entry point builds a selected platform or sequentially dispatches all three. Paths with spaces, separate outputs, first failure, terminal acknowledgement and the Android Python preflight passed. The maintained Android APK was exported with a verified SHA-256 to dist/docker-android.
+- Evidence: docs/changes/2026-11-18-unify-powershell-docker-builds.json, bng6em3q (12 checks and PTY), sop1z5h8 (real cached APK, reports for 29 Kotlin tests).
+- Limits: PowerShell 7.4.6 on Linux. Desktop calls were simulated for the combined path. Native Windows PowerShell and Docker Desktop were not exercised. The initial a09tlc7u scratch remains diagnostic after the runner refused a packaged symlink.
+
+### DOCKER-WINDOWS-EXPORT-ANDROID-BASH
+
+- Outcome: completed
+- Verified criteria: executable Linux Android launcher, terminal acknowledgement, APK hash and 36 launcher/driver checks passed. The 21:05 Windows build failed before packaging. The repaired Wine collector test and full gated export passed with zero Rust warnings, 972 passing tests and 463 ignored. The Windows ZIP passed CRC, SHA-256 and PE x64 inspection.
+- Evidence: docs/changes/2026-11-18-repair-windows-export-and-add-android-bash-launcher.json, hrakras6, 5nh1nh7o, qbg89r6b. Sol consultation /root/sol_windows_mailbox requested gpt-6.1-sol at xhigh: transient atomic mailbox replacement, existing outbox retries and a finite test worker. Effective model/effort unconfirmed.
+- Limits: Wine 64-bit initialization logs an unavailable optional 32-bit rundll32 component. Native Windows and Android device gameplay were not exercised. Initial supplementary host check tch12mu5 lacked ALSA metadata and was superseded using the existing sysroot.

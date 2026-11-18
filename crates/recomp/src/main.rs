@@ -2900,12 +2900,12 @@ enum NativeDispatch {
     Hook = 3,
 }
 
-#[cfg(test)]
+#[cfg(all(test, feature = "rom-data-read-audit"))]
 thread_local! {
     static TEST_NATIVE_API: std::cell::Cell<Option<&'static gba_core::capi::RtApi>> = const { std::cell::Cell::new(None) };
 }
 
-#[cfg(test)]
+#[cfg(all(test, feature = "rom-data-read-audit"))]
 fn with_test_native_api<T>(api: &'static gba_core::capi::RtApi, run: impl FnOnce() -> T) -> T {
     struct Restore(Option<&'static gba_core::capi::RtApi>);
     impl Drop for Restore {
@@ -3020,9 +3020,9 @@ fn run_frame_native_traced(
                 if trace_iwram && key >> 24 == 3 {
                     IWRAM_HITS.with(|h| *h.borrow_mut().entry(key).or_insert(0u64) += 1);
                 }
-                #[cfg(test)]
+                #[cfg(all(test, feature = "rom-data-read-audit"))]
                 let api = TEST_NATIVE_API.with(|current| current.get()).unwrap_or(&RT_API);
-                #[cfg(not(test))]
+                #[cfg(not(all(test, feature = "rom-data-read-audit")))]
                 let api = &RT_API;
                 f(api, mptr);
                 native += 1;

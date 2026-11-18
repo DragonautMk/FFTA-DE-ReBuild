@@ -24,6 +24,9 @@ def run(command):
     if not server:
         raise ValueError('The container must provide a matching WINESERVER')
     fixture = Path(tempfile.mkdtemp(prefix='ffta-wine-tests-')).resolve()
+    runtime = fixture / 'runtime'
+    runtime.mkdir(mode=0o700)
+    env['XDG_RUNTIME_DIR'] = str(runtime)
     external = fixture / 'external'
     inputs = fixture / 'inputs'
     external.mkdir()

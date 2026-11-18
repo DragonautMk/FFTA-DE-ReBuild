@@ -490,10 +490,32 @@ mod tests {
         let (t,mut server,id)=fixture(&["status","audio-start","step 1","audio-report"]);let root=t.path().to_owned();let worker_id=id.clone();
         let status=json!({"paused":true,"remaining":0,"state_sha256":"a".repeat(64),"frame":1,"clock":100,"backend":"interp","cheat_armed":{"active":false},"replay":{"active":false},"ui_trace":{"has_trace":false}});
         let first_status=status.clone();
-        let worker=thread::spawn(move||loop{if let Ok(Some(request))=server.poll_query(){assert_eq!(cancel_command(&root,&worker_id)["ok"],true);server.reply(&request,first_status,None).unwrap();break;}thread::sleep(Duration::from_millis(2));});
+        let worker = thread::spawn(move || loop {
+            if let Ok(Some(request)) = server.poll_query() {
+                assert_eq!(cancel_command(&root, &worker_id)["ok"], true);
+                server.reply_and_flush_for_test(&request, first_status).unwrap();
+                break;
+            }
+            thread::sleep(Duration::from_millis(2));
+        });
         let first=drive(t.path(),&id,false).unwrap();assert_eq!(first["outcome"],"cancelled");worker.join().unwrap();
         let mut server=crate::debug_control::Server::new(t.path()).unwrap();assert_eq!(recover(t.path(),&id).unwrap()["outcome"],"rebound");
-        let worker=thread::spawn(move||{let mut seen=Vec::new();while seen.len()<3{if let Ok(Some(request))=server.poll(){if seen.is_empty(){request.expected_boundary.as_ref().unwrap().check(&status).unwrap();}else{assert!(request.expected_boundary.is_none());}seen.push(format!("{:?}",request.command));server.reply(&request,status.clone(),None).unwrap();}thread::sleep(Duration::from_millis(2));}seen});
+        let worker = thread::spawn(move || {
+            let mut seen = Vec::new();
+            while seen.len() < 3 {
+                if let Ok(Some(request)) = server.poll() {
+                    if seen.is_empty() {
+                        request.expected_boundary.as_ref().unwrap().check(&status).unwrap();
+                    } else {
+                        assert!(request.expected_boundary.is_none());
+                    }
+                    seen.push(format!("{:?}", request.command));
+                    server.reply_and_flush_for_test(&request, status.clone()).unwrap();
+                }
+                thread::sleep(Duration::from_millis(2));
+            }
+            seen
+        });
         let done=drive(t.path(),&id,true).unwrap();assert_eq!(done["outcome"],"completed");let seen=worker.join().unwrap();
         assert!(seen[0].starts_with("AudioStart"));assert!(seen[1].starts_with("Step"));assert!(seen[2].starts_with("AudioReport"));
         assert_eq!(done["checkpoint"]["steps"][0]["result"],first["checkpoint"]["steps"][0]["result"]);

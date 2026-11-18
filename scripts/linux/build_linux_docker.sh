@@ -28,27 +28,5 @@ main() {
     printf 'Portable archive and BUILD-INFO.txt exported to %s\n' "$output_dir"
 }
 
-# Preserve diagnostics when a file manager closes its terminal after exit.
-log_dir="$repo_dir/target/build-logs"
-mkdir -p -- "$log_dir"
-log_file=$(mktemp -- "$log_dir/linux-$(date +%Y%m%d-%H%M%S)-XXXXXX.log")
-printf 'Linux build log: %s\n' "$log_file"
-set +e
-(
-    set -e
-    main "$@"
-) 2>&1 | tee -- "$log_file"
-statuses=("${PIPESTATUS[@]}")
-set -e
-status=${statuses[0]}
-if (( status == 0 )); then status=${statuses[1]}; fi
-if (( status != 0 )); then
-    printf '\nLinux build failed (exit %s). Log: %s\n' "$status" "$log_file" >&2
-    if [[ -t 0 && -t 2 ]]; then
-        read -r -p 'Press Enter to close this window...' _ || true
-    fi
-else
-    mv -f -- "$log_file" "$log_dir/linux-latest.log"
-    printf 'Build log: %s\n' "$log_dir/linux-latest.log"
-fi
-exit "$status"
+source "$repo_dir/scripts/linux/build_terminal.sh"
+run_logged_build linux 'Linux build' "$repo_dir/target/build-logs" "$@"

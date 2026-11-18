@@ -165,6 +165,9 @@ The portable archive and build information appear in `dist/docker-linux/`.
 The host needs Docker with Buildx; compiler and development packages stay in the
 container. See [Docker builds and runtime requirements](docs/docker.md).
 
+To build the Android APK from Linux, run `./scripts/linux/build_android_docker.sh`.
+It exports the maintained ARM64 preview to `dist/docker-android/`.
+
 For Windows with dependencies inside Docker Desktop (Linux containers), run
 from PowerShell:
 
@@ -172,9 +175,11 @@ from PowerShell:
 .\scripts\windows\build_docker.ps1
 ```
 
-The Windows ZIP appears in `dist/docker-windows/`. Add `-Platform linux` to
-build Linux from the same Windows host. No Rust, MSYS2 or Python host install
-is required for this Docker workflow. See [Docker builds](docs/docker.md).
+The default builds the Windows ZIP. Select `-Platform linux` for the portable
+tarball, `-Platform android` for the maintained AndroidPort APK, or
+`-Platform all` to build all three into `dist/docker-<platform>/`.
+The Android launcher uses Python 3.9+ on the host. Docker supplies the SDK,
+NDK, Rust and Java. See [Docker builds](docs/docker.md).
 
 For native builds without Docker, install Rust with a working linker for its
 selected target, Python 3.11+ and GCC/Clang for TinyCC. On Linux also install

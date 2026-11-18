@@ -2536,9 +2536,11 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   Docker extraction defaults to the EUR filename under root `rom/`; no ROM
   argument is required. Custom relative ROM arguments also resolve from the
   repository root, while absolute overrides remain available.
-  The Linux Docker build wrapper saves every run's stdout/stderr under
-  target/build-logs/ and waits for Enter on interactive failure, retaining
-  the original exit status for noninteractive automation.
+  The Linux build, Windows cross-build and ROM coverage Bash launchers share
+  failure handling. They show the exit code, diagnostic lines and retained log
+  path, then wait for Enter on a terminal attached to stdout or stderr.
+  Captured runs return the failure code immediately. The normal log directory
+  is `target/build-logs/`, with a temporary fallback for log setup failures.
   [Inventory/contract](ROM_DATA_INVENTORY.md) documents other families' unknowns.
   The [overall ROM coverage atlas](ROM_COVERAGE.md) follows the latest committed
   EUR extractor generation with metadata-only HTML/JSON and separate candidate
@@ -3197,11 +3199,15 @@ coverage refreshes its archived sources. The host checkout is unaffected.
 - `Dockerfile.windows` cross-compiles Windows GNU x86_64 with MinGW from the
   pinned Linux Rust base, builds TinyCC with distinct native/target compilers,
   and runs input/config, menu and runtime tests under container Wine.
-  `scripts/windows/build_docker.ps1` is the Windows-host entry point: default Windows,
-  `-Platform linux` for Linux. Docker Desktop must use Linux containers.
+  `scripts/windows/build_docker.ps1` defaults to Windows and also accepts
+  `linux`, `android` and `all`. Android uses the maintained port's Python
+  Docker launcher and signing cache. The combined build keeps separate export
+  directories under a common root. Docker Desktop must use Linux containers.
   `scripts/linux/build_windows_docker.sh` offers the Windows target from Bash,
   retains output/errors under `target/build-logs/windows-*.log` and waits for
   Enter on interactive failure while preserving noninteractive exit status.
+  `scripts/linux/build_android_docker.sh` invokes the maintained AndroidPort
+  Docker driver with the same terminal acknowledgement and APK signing cache.
   The container selects C.UTF-8 before Wine starts and uses
   `scripts/windows/test_wine.py` to supply genuine Unix link fixtures to the
   existing negative content-index test; no test assertions are skipped.

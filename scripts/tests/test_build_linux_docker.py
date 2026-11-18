@@ -2,6 +2,7 @@ import json
 import os
 from pathlib import Path
 import select
+import shlex
 import shutil
 import subprocess
 import tempfile
@@ -25,6 +26,7 @@ class LinuxBuilderTests(unittest.TestCase):
         self.script.parent.mkdir(parents=True)
         shutil.copy2(ROOT / 'scripts/linux' / self.script.name, self.script)
         shutil.copy2(ROOT / 'scripts/linux/docker_toolchain.sh', self.script.parent)
+        shutil.copy2(ROOT / 'scripts/linux/build_terminal.sh', self.script.parent)
         self.recipe = self.repo / f'Dockerfile.{self.platform}'
         shutil.copy2(ROOT / self.recipe.name, self.recipe)
         self.arguments = self.directory / 'docker-arguments.json'
@@ -49,6 +51,9 @@ if '--target' in args and args[args.index('--target') + 1] == 'toolchain':
 Path(os.environ['DOCKER_TEST_ARGUMENTS']).write_text(json.dumps(sys.argv[1:]))
 print('builder stdout', flush=True)
 print('builder stderr', file=sys.stderr, flush=True)
+if os.environ.get('DOCKER_TEST_STATUS'):
+    print('#9 1.0 error[E0001]: fixture compiler error', flush=True)
+    print('trailing Docker output', flush=True)
 sys.exit(int(os.environ.get('DOCKER_TEST_STATUS', '0')))
 ''')
         docker.chmod(0o755)
@@ -97,6 +102,8 @@ sys.exit(int(os.environ.get('DOCKER_TEST_STATUS', '0')))
                                 capture_output=True, text=True, timeout=10)
         self.assertEqual(result.returncode, 17)
         self.assertIn('exit 17', result.stderr)
+        self.assertIn('fixture compiler error', result.stderr)
+        self.assertIn('failed (exit 17)', self.log())
         self.assertIn('builder stdout', self.log())
         self.assertIn('builder stderr', self.log())
         self.assertNotIn('Portable archive', result.stdout)
@@ -112,13 +119,52 @@ sys.exit(int(os.environ.get('DOCKER_TEST_STATUS', '0')))
                 self.assertFalse(self.arguments.exists())
 
     def test_terminal_failure_stays_open_until_enter(self):
+        self.check_failure_terminal(17, b'fixture compiler error', status='17')
+
+    def test_log_capture_failure_preserves_build_status_and_last_success(self):
+        logs = self.repo / 'target/build-logs'
+        logs.mkdir(parents=True)
+        latest = logs / f'{self.platform}-latest.log'
+        latest.write_text('previous success')
+        tee = self.directory / 'tee'
+        tee.write_text(f'#!/bin/sh\n{shlex.quote(shutil.which("tee"))} "$@"\nexit 31\n')
+        tee.chmod(0o755)
+        for build_status, expected in [('0', 31), ('17', 17)]:
+            with self.subTest(build_status=build_status):
+                self.check_failure_terminal(expected, b'tee exit 31', status=build_status)
+                self.assertEqual(latest.read_text(), 'previous success')
+
+    def test_redirected_input_and_error_still_pause_in_visible_terminal(self):
+        self.check_failure_terminal(17, b'fixture compiler error', status='17', redirected=True)
+
+    def test_log_setup_error_pauses_and_keeps_a_fallback_log(self):
+        target = self.repo / 'target'
+        target.mkdir()
+        (target / 'build-logs').touch()
+        self.check_failure_terminal(1, b'Could not create the build log', redirected=True)
+        fallback, = self.directory.glob(f'ffta-{self.platform}-*.log')
+        self.assertIn('failed (exit 1)', fallback.read_text())
+        self.assertIn('Could not create the build log', fallback.read_text())
+
+    def test_log_publication_error_pauses_and_keeps_the_run_log(self):
+        logs = self.repo / 'target/build-logs'
+        (logs / f'{self.platform}-latest.log').mkdir(parents=True)
+        self.check_failure_terminal(1, b'Could not publish the success log', redirected=True)
+        retained, = (p for p in logs.glob('*.log') if p.is_file())
+        self.assertIn('Could not publish the success log', retained.read_text())
+        self.assertIn('failed (exit 1)', retained.read_text())
+
+    def check_failure_terminal(self, expected_status, diagnostic, *, status=None, redirected=False):
         import pty
         master, slave = pty.openpty()
         process = None
         try:
+            env = dict(self.environment, TMPDIR=str(self.directory))
+            if status:
+                env['DOCKER_TEST_STATUS'] = status
             process = subprocess.Popen(['bash', str(self.script)], cwd=self.directory,
-                                       env=dict(self.environment, DOCKER_TEST_STATUS='17'),
-                                       stdin=slave, stdout=slave, stderr=slave)
+                                       env=env, stdin=subprocess.DEVNULL if redirected else slave,
+                                       stdout=slave, stderr=subprocess.DEVNULL if redirected else slave)
             os.close(slave)
             slave = None
             output = b''
@@ -130,9 +176,10 @@ sys.exit(int(os.environ.get('DOCKER_TEST_STATUS', '0')))
                 self.assertTrue(ready, output.decode(errors='replace'))
                 output += os.read(master, 4096)
             self.assertIsNone(process.poll(), 'the terminal must remain open after failure')
+            self.assertIn(diagnostic, output.split(b'ERROR:')[-1])
+            self.assertIn(f'failed (exit {expected_status})'.encode(), output)
             os.write(master, b'\n')
-            self.assertEqual(process.wait(timeout=5), 17)
-            self.assertIn('builder stderr', self.log())
+            self.assertEqual(process.wait(timeout=5), expected_status)
         finally:
             if process is not None and process.poll() is None:
                 process.kill()

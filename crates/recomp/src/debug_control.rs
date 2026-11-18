@@ -432,6 +432,22 @@ impl Server {
     pub fn reply(&mut self,request:&Request,status:Value,error:Option<String>)->Result<(),String>{
         self.reply_classified(request,status,error,None)
     }
+    #[cfg(test)]
+    pub(crate) fn reply_and_flush_for_test(&mut self, request: &Request, status: Value) -> Result<(), String> {
+        // A finite fixture must drain the queued reply just as a running server
+        // does on its next poll, including after the final request.
+        let deadline = Instant::now() + Duration::from_secs(1);
+        let mut result = self.reply(request, status, None);
+        while let Err(error) = result {
+            let pending = if request.query { &self.query_outbox } else { &self.outbox };
+            if pending.is_none() || Instant::now() >= deadline {
+                return Err(error);
+            }
+            std::thread::sleep(Duration::from_millis(2));
+            result = self.flush_channel(request.query);
+        }
+        Ok(())
+    }
     fn reply_classified(&mut self,request:&Request,status:Value,mut error:Option<String>,classification:Option<&str>)->Result<(),String>{
         let completed_unix_ms=unix_ms();let expired=request.deadline_unix_ms.is_some_and(|deadline|completed_unix_ms>=deadline);
         if expired && error.is_none(){error=Some("Command completed after deadline; inspect returned state before retrying".into());}

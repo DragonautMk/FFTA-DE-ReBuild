@@ -142,24 +142,6 @@ printf 'JSON data on host: %s/coverage.json\n' "$output_dir"
 }
 
 case ${1-} in --help|-h) usage; exit 0 ;; esac
-log_dir="$repo_dir/target/build-logs"
-mkdir -p -- "$log_dir"
-log_file=$(mktemp -- "$log_dir/rom-coverage-$(date +%Y%m%d-%H%M%S)-XXXXXX.log")
-printf 'ROM coverage log: %s\n' "$log_file"
-set +e
-(
-    set -e
-    main "$@"
-) 2>&1 | tee -- "$log_file"
-statuses=("${PIPESTATUS[@]}")
-set -e
-status=${statuses[0]}
-if (( status == 0 )); then status=${statuses[1]}; fi
-if (( status != 0 )); then
-    printf '\nROM coverage failed (exit %s). Log: %s\n' "$status" "$log_file" | tee -a -- "$log_file" >&2
-    if [[ -t 0 && -t 2 ]]; then read -r -p 'Press Enter to close...' _ || true; fi
-else
-    mv -f -- "$log_file" "$log_dir/rom-coverage-latest.log"
-    printf 'Build log: %s\n' "$log_dir/rom-coverage-latest.log"
-fi
-exit "$status"
+
+source "$repo_dir/scripts/linux/build_terminal.sh"
+run_logged_build rom-coverage 'ROM coverage' "$repo_dir/target/build-logs" "$@"

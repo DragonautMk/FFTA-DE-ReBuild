@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "keep-build-terminal-open-on-errors",
+  "title": "Keep failed Docker builds visible in the terminal",
+  "kind": "fixed",
+  "platforms": [
+    "Linux host (Bash)"
+  ],
+  "changes": [
+    "The Linux, Windows cross-build and ROM coverage launchers display the failure code, diagnostic lines and run log, then wait for Enter on an attached output terminal even with redirected input. Fully captured runs return the failure code immediately.",
+    "Log setup and publication errors use the same failure path. A setup error tries a temporary fallback log. A failure keeps the previous successful log, and a simultaneous build and logging failure returns the build status."
+  ],
+  "validation": [
+    "The retained 21:03 Linux export completed from cached Docker layers. The SHA-256 of the exported portable archive matches BUILD-INFO.txt.",
+    "Managed unit build-terminal-acknowledgement-0jkz7rg2 passed all 26 Bash launcher checks, including acknowledgement on a pseudo-terminal, redirected input and stderr, unattended failures, log setup, capture and publication. The initial unit wl4g3spe exposed a stderr redirection defect, corrected before the passing run."
+  ],
+  "limitations": [
+    "Terminal checks used Linux pseudo-terminals and controlled Docker output. The desktop file manager itself was not exercised."
+  ],
+  "files": [
+    "scripts/linux/build_terminal.sh",
+    "scripts/linux/build_linux_docker.sh",
+    "scripts/linux/build_windows_docker.sh",
+    "scripts/linux/rom_coverage_docker.sh",
+    "scripts/tests/test_build_linux_docker.py",
+    "scripts/tests/test_rom_coverage_docker.py",
+    "scripts/README.md",
+    "docs/docker.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/docker.md"
+  ]
+}
